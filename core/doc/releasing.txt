@@ -1,0 +1,29 @@
+Releasing ibator:
+
+1. Build and test the base ibator (make sure to use JDK 5.0)
+
+2. Move the base JAR and src JAR into the appropriate eclipse project
+
+3. Build the new version of the plugin:
+  - Build the doc
+  - Build the update site
+
+4. Zip the contents of the update site
+  
+5. Commit everything
+
+6. Make an SVN label
+
+7. Put the new base JAR file in /www/people.apache.org/builds/ibatis/alpha
+
+8. Put the new zipped eclipse site in /www/people.apache.org/builds/ibatis/alpha
+
+9. Update /www/ibatis.apache.org/doc/tools/ibator from SVN (this updates the documentation)
+
+10. Update /www/ibatis.apache.org/tools/ibator from SVN (this updates the Eclipse site)
+
+11. Update the DTD (if required)
+
+12. Update the web site
+
+13. Send out the announcement

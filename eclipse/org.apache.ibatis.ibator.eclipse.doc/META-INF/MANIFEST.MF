@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Apache iBATIS Ibator Documentation Plug-in
+Bundle-SymbolicName: org.apache.ibatis.ibator.eclipse.doc; singleton:=true
+Bundle-Version: 1.2.2
+Bundle-Vendor: ibatis.apache.org

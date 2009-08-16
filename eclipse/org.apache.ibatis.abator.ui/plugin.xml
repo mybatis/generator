@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+   <extension point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            objectClass="org.apache.ibatis.abator.ui.content.AbatorConfigurationFileAdapter"
+            adaptable="true"
+            id="org.apache.ibatis.abator.ui.contribution1">
+         <action
+               enablesFor="1"
+               label="Generate iBATIS Artifacts"
+               icon="icons/iBatisLogo.gif"
+               class="org.apache.ibatis.abator.ui.actions.RunAbatorAction"
+               menubarPath="additions"
+               id="org.apache.ibatis.abator.ui.actions.RunAbatorAction">
+         </action>
+      </objectContribution>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="Abator for iBATIS Wizards"
+            id="org.apache.ibatis.abator.ui.wizards"/>
+      <wizard
+            class="org.apache.ibatis.abator.ui.wizards.NewConfigFileWizard"
+            icon="icons/iBatisLogo.gif"
+            category="org.apache.ibatis.abator.ui.wizards"
+            name="Abator for iBATIS Configuration File"
+            id="org.apache.ibatis.abator.ui.wizards.NewConfigFileWizard"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            label="Sample Action Set"
+            visible="true"
+            id="org.apache.ibatis.abator.ui.actionSet">
+         <action
+               label="&amp;Abator for iBATIS Configuration File"
+               class="org.apache.ibatis.abator.ui.actions.NewConfigFileAction"
+               tooltip="Create a new iBatis Generator configuration file"
+               icon="icons/iBatisLogo.gif"
+               menubarPath="file/new/additions"
+               id="org.apache.ibatis.abator.ui.actions.NewConfigFileAction"/>
+      </actionSet>
+   </extension>
+   
+   <extension
+         point="org.eclipse.jdt.core.classpathVariableInitializer">
+      <classpathVariableInitializer
+            class="org.apache.ibatis.abator.ui.AbatorHomeInitializer"
+            variable="ABATOR_HOME"/>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="org.apache.ibatis.abator.ui.editors.ConfigFileEditor"
+            contributorClass="org.apache.ibatis.abator.ui.editors.ConfigFileEditorActionBarContributor"
+            icon="icons/iBatisLogo.gif"
+            id="org.apache.ibatis.abator.ui.editors.ConfigFileEditor"
+            name="Abator for iBATIS Configuration File Editor">
+         <contentTypeBinding contentTypeId="org.apache.ibatis.abator.ui.abator.configuration.file"/>
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ant.core.antTasks">
+      <antTask
+            class="org.apache.ibatis.abator.ui.ant.AbatorUIAntTask"
+            library="abatoruiant.jar"
+            name="abator.generate"/>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.adapters">
+      <factory
+            adaptableType="org.eclipse.core.resources.IFile"
+            class="org.apache.ibatis.abator.ui.content.AdapterFactory">
+         <adapter type="org.apache.ibatis.abator.ui.content.AbatorConfigurationFileAdapter"/>
+      </factory>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.contentTypes">
+      <content-type
+            base-type="org.eclipse.core.runtime.xml"
+            file-extensions="xml"
+            file-names="abatorConfig.xml"
+            id="org.apache.ibatis.abator.ui.abator.configuration.file"
+            name="Abator for iBATIS Configuration File"
+            priority="normal">
+         <describer class="org.eclipse.core.runtime.content.XMLRootElementContentDescriber">
+            <parameter
+                  name="element"
+                  value="abatorConfiguration"/>
+         </describer>
+      </content-type>
+   </extension>
+
+</plugin>

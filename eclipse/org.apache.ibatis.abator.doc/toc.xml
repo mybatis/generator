@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Abator for iBATIS User Guide">
+  <topic label="Eclipse Plugin Documentation">
+	<topic label="Plugin Release Notes"  href="html/releasenotes.html"/> 
+	<topic label="Eclipse Plugin Quick Start Guide"  href="html/quickstart.html"/>
+	<topic label="Using the Eclipse User Interface"  href="html/eclipseui.html"/> 
+	<topic label="Using the Integrated Ant Task"  href="html/usingAnt.html"/> 
+	<topic label="Abator Feature Debug Reference"  href="html/buildingFromSVN.html"/> 
+  </topic>
+  
+  <topic label="Core Abator Documentation">
+    <topic href="core/htmldoc/intro.html" label="Introduction"/>
+    <topic href="core/htmldoc/whatsNew.html" label="What's New?"/>
+    <topic href="core/htmldoc/quickstart.html" label="Quick Start Guide"/>
+    <topic href="core/htmldoc/running.html" label="Running Abator"/>
+    <topic href="core/htmldoc/afterRunning.html" label="Tasks After Running Abator"/>
+
+    <topic href="core/htmldoc/configreference/xmlconfig.html" label="XML Configuration File Reference">
+      <topic href="core/htmldoc/configreference/abatorConfiguration.html" label="&lt;abatorConfiguration&gt;"/>
+      <topic href="core/htmldoc/configreference/abatorContext.html" label="&lt;abatorContext&gt;"/>
+      <topic href="core/htmldoc/configreference/classPathEntry.html" label="&lt;classPathEntry&gt;"/>
+      <topic href="core/htmldoc/configreference/columnOverride.html" label="&lt;columnOverride&gt;"/>
+      <topic href="core/htmldoc/configreference/columnRenamingRule.html" label="&lt;columnRenamingRule&gt;"/>
+      <topic href="core/htmldoc/configreference/commentGenerator.html" label="&lt;commentGenerator&gt;"/>
+      <topic href="core/htmldoc/configreference/daoGenerator.html" label="&lt;daoGenerator&gt;"/>
+      <topic href="core/htmldoc/configreference/generatedKey.html" label="&lt;generatedKey&gt;"/>
+      <topic href="core/htmldoc/configreference/ignoreColumn.html" label="&lt;ignoreColumn&gt;"/>
+      <topic href="core/htmldoc/configreference/javaModelGenerator.html" label="&lt;javaModelGenerator&gt;"/>
+      <topic href="core/htmldoc/configreference/javaTypeResolver.html" label="&lt;javaTypeResolver&gt;"/>
+      <topic href="core/htmldoc/configreference/jdbcConnection.html" label="&lt;jdbcConnection&gt;"/>
+      <topic href="core/htmldoc/configreference/properties.html" label="&lt;properties&gt;"/>
+      <topic href="core/htmldoc/configreference/property.html" label="&lt;property&gt;"/>
+      <topic href="core/htmldoc/configreference/sqlMapGenerator.html" label="&lt;sqlMapGenerator&gt;"/>
+      <topic href="core/htmldoc/configreference/table.html" label="&lt;table&gt;"/>
+    </topic>
+
+    <topic href="core/htmldoc/generatedobjects/results.html" label="Using the Generated Objects">
+      <topic href="core/htmldoc/generatedobjects/javamodel.html" label="Java Model Objects"/>
+      <topic href="core/htmldoc/generatedobjects/sqlmap.html" label="SQL Map Files"/>
+      <topic href="core/htmldoc/generatedobjects/javadao.html" label="DAO Interfaces and Classes"/>
+      <topic href="core/htmldoc/generatedobjects/exampleClassUsage.html" label="Example Class Usage Notes"/>
+      <topic href="core/htmldoc/generatedobjects/extendingExampleClass.html" label="Extending the Example Classes"/>
+    </topic>
+
+    <topic href="core/htmldoc/usage/intro.html" label="Database Specific Information">
+      <topic href="core/htmldoc/usage/db2.html" label="DB2"/>
+      <topic href="core/htmldoc/usage/mysql.html" label="MySql"/>
+      <topic href="core/htmldoc/usage/oracle.html" label="Oracle"/>
+    </topic>
+
+    <topic href="core/htmldoc/reference/intro.html" label="Other Reference Information">
+      <topic href="core/htmldoc/reference/building.html" label="Building Abator from Source"/>
+      <topic href="core/htmldoc/reference/extending.html" label="Extending Abator"/>
+    </topic>
+    
+    <topic href="core/htmldoc/philosophy.html" label="Design Philosophy"/>
+    <topic href="core/htmldoc/license.html" label="Licensing Information"/>
+  </topic>
+  
+  <topic label="Javadocs" href="html/javadoc/overview-summary.html"> 
+    <topic label="org.apache.ibatis.abator.ant" href="html/javadoc/org/apache/ibatis/abator/ant/package-summary.html" />
+    <topic label="org.apache.ibatis.abator.api" href="html/javadoc/org/apache/ibatis/abator/api/package-summary.html" />
+    <topic label="org.apache.ibatis.abator.api.dom" href="html/javadoc/org/apache/ibatis/abator/api/dom/package-summary.html" />
+    <topic label="org.apache.ibatis.abator.api.dom.java" href="html/javadoc/org/apache/ibatis/abator/api/dom/java/package-summary.html" />
+    <topic label="org.apache.ibatis.abator.api.dom.xml" href="html/javadoc/org/apache/ibatis/abator/api/dom/xml/package-summary.html" />
+    <topic label="org.apache.ibatis.abator.config" href="html/javadoc/org/apache/ibatis/abator/config/package-summary.html" />
+    <topic label="org.apache.ibatis.abator.config.xml" href="html/javadoc/org/apache/ibatis/abator/config/xml/package-summary.html" />
+    <topic label="org.apache.ibatis.abator.exception" href="html/javadoc/org/apache/ibatis/abator/exception/package-summary.html" />
+    <topic label="org.apache.ibatis.abator.internal" href="html/javadoc/org/apache/ibatis/abator/internal/package-summary.html" />
+    <topic label="org.apache.ibatis.abator.internal.db" href="html/javadoc/org/apache/ibatis/abator/internal/db/package-summary.html" />
+    <topic label="org.apache.ibatis.abator.internal.java.dao" href="html/javadoc/org/apache/ibatis/abator/internal/java/dao/package-summary.html" />
+    <topic label="org.apache.ibatis.abator.internal.java.model" href="html/javadoc/org/apache/ibatis/abator/internal/java/model/package-summary.html" />
+    <topic label="org.apache.ibatis.abator.internal.rules" href="html/javadoc/org/apache/ibatis/abator/internal/rules/package-summary.html" />
+    <topic label="org.apache.ibatis.abator.internal.sqlmap" href="html/javadoc/org/apache/ibatis/abator/internal/sqlmap/package-summary.html" />
+    <topic label="org.apache.ibatis.abator.internal.types" href="html/javadoc/org/apache/ibatis/abator/internal/types/package-summary.html" />
+    <topic label="org.apache.ibatis.abator.internal.util" href="html/javadoc/org/apache/ibatis/abator/internal/util/package-summary.html" />
+    <topic label="org.apache.ibatis.abator.internal.util.messages" href="html/javadoc/org/apache/ibatis/abator/internal/util/messages/package-summary.html" />
+    <topic label="org.apache.ibatis.abator.ui" href="html/javadoc/org/apache/ibatis/abator/ui/package-summary.html" />
+    <topic label="org.apache.ibatis.abator.ui.actions" href="html/javadoc/org/apache/ibatis/abator/ui/actions/package-summary.html" />
+    <topic label="org.apache.ibatis.abator.ui.ant" href="html/javadoc/org/apache/ibatis/abator/ui/ant/package-summary.html" />
+    <topic label="org.apache.ibatis.abator.ui.content" href="html/javadoc/org/apache/ibatis/abator/ui/content/package-summary.html" />
+    <topic label="org.apache.ibatis.abator.ui.editors" href="html/javadoc/org/apache/ibatis/abator/ui/editors/package-summary.html" />
+    <topic label="org.apache.ibatis.abator.ui.plugin" href="html/javadoc/org/apache/ibatis/abator/ui/plugin/package-summary.html" />
+    <topic label="org.apache.ibatis.abator.ui.wizards" href="html/javadoc/org/apache/ibatis/abator/ui/wizards/package-summary.html" />
+  </topic>
+</toc>

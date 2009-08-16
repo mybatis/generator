@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/org.apache.ibatis.abator_0.6.5.jar" id="org.apache.ibatis.abator" version="0.6.5">
+      <category name="Eclipse 3.0 Compatible Versions"/>
+   </feature>
+   <feature url="features/org.apache.ibatis.abator_1.0.0.jar" id="org.apache.ibatis.abator" version="1.0.0">
+      <category name="Eclipse 3.1 and Higher Compatible Versions"/>
+   </feature>
+   <feature url="features/org.apache.ibatis.abator_1.1.0.jar" id="org.apache.ibatis.abator" version="1.1.0">
+      <category name="Eclipse 3.2 and Higher Compatible Versions"/>
+   </feature>
+   <category-def name="Eclipse 3.1 and Higher Compatible Versions" label="Abator for Eclipse 3.1 and Higher">
+      <description>
+         Abator code generator for iBATIS. If you are using Eclipse 3.0, then uncheck the box labled &quot;Show the Latest Version of the Feature Only&quot; and install the 0.6.5 version.
+      </description>
+   </category-def>
+   <category-def name="Eclipse 3.0 Compatible Versions" label="Abator for Eclipse 3.0">
+      <description>
+         Abator code generator for iBATIS.
+      </description>
+   </category-def>
+   <category-def name="Eclipse 3.2 and Higher Compatible Versions" label="Abator for Eclipse 3.2"/>
+</site>

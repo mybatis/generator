@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3c.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Abator for Eclipse Quick Start Guide</title>
+  <link type="text/css" rel="stylesheet" href="abator.css"/>
+</head>
+<body>
+<h1>Abator for Eclipse Quick Start Guide</h1>
+<p>To get up and running quickly with Abator in the Eclipse environment, follow these steps:</p>
+<ol>
+  <li>Create an Abator configuration file:
+    <ol type="a">
+      <li>File&gt;New&gt;Abator for iBATIS Configuration File</li>
+      <li>Specify the location of the file, and the name of the file (defaults to abatorConfig.xml)</li>
+      <li>Finish the wizard</li>
+    </ol>
+  </li>
+  <li>Fill out the configuration file appropriately.  At a minimum, you must specify:
+    <ol type="a">
+      <li>jdbcConnection information to specify how to connect to the target database</li>
+      <li>A target package, and target project for the javaModelGenerator</li>
+      <li>A target package, and target project for the sqlMapGenerator</li>
+      <li>A target package, target project, and type for the daoGenerator (or you can remove the
+          daoGenerator element if you don't wish to generate DAOs)</li>
+      <li>At least one database table</li>
+    </ol>
+  </li>
+  <li>Save the file</li>
+  <li>Right click on the configuration file in Eclipse's navigator, or package explorer, view and take the
+      menu option to "Generate iBATIS Artifacts"</li>
+</ol>
+<p>Important things to note:</p>
+<ol>
+  <li>Abator will not overwrite any custom changes you make to the objects it generates.  You can
+      run it over and over again without fear of losing custom changes.</li>
+  <li>Abator does supply a custom editor for Abator configuration files, but it is very low
+      function.  The editor is associated with all XML files that are Abator configuration
+      files.
+      If you are using RAD/RSA, then
+      the included XML editor is much more useful.  Or if you use some other XML plug-in (like
+      XML Buddy),
+      it is likely that the editor supplied with the plug-in will be more useful.</li>
+</ol>
+</body>
+</html>

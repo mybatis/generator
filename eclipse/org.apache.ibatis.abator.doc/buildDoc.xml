@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="refresh">
+  <path id="org.abache.ibatis.abator.doc.javadocclasspath">
+  	<pathelement location="../org.apache.ibatis.abator.ui/bin"/>
+  	<pathelement location="../org.apache.ibatis.abator.core/abator.jar"/>
+  </path>
+
+  <target name="javadoc">
+  	<delete dir="html/javadoc"/>
+
+    <javadoc 
+      access="protected" 
+      author="true" 
+      destdir="html/javadoc" 
+      doctitle="Abator for iBATIS" 
+      nodeprecated="false" 
+      nodeprecatedlist="false" 
+      noindex="false" 
+      nonavbar="false" 
+      notree="false"
+      source="1.4"
+      splitindex="true" 
+      use="true" 
+      version="true"
+      classpathref="org.abache.ibatis.abator.doc.javadocclasspath">
+    	<packageset dir="../../core/src" />
+    	<packageset dir="../org.apache.ibatis.abator.ui/src" />
+    	<packageset dir="../org.apache.ibatis.abator.ui/antsrc" />
+    </javadoc>
+  	
+  	<zip destfile="doc.zip" >
+  		<fileset dir="." includes="html/**/*" />
+  		<fileset dir="../.." includes="core/htmldoc/**/*" />
+  		
+  	</zip>
+
+  	<delete dir="html/javadoc"/>
+  	
+  </target>
+	
+  <target name="refresh" depends="javadoc" if="eclipse.running">
+  	<echo message="Refreshing the Eclipse Project..."/>
+  	<eclipse.refreshLocal resource="org.apache.ibatis.abator.doc"/>
+  </target>
+	
+</project>

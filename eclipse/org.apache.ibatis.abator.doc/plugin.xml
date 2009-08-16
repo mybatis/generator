@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin
+   id="org.apache.ibatis.abator.doc"
+   name="Abator Documentation Plug-in"
+   version="1.1.0"
+   provider-name="ibatis.apache.org">
+   <requires>
+      <import plugin="org.eclipse.help"/>
+   </requires>
+   <extension
+         point="org.eclipse.help.toc">
+      <toc file="toc.xml" primary="true"/>
+   </extension>
+
+</plugin>

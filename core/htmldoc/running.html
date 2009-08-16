@@ -1,0 +1,238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3c.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Running Abator</title>
+  <link type="text/css" rel="stylesheet" href="abator.css"/>
+</head>
+<body>
+<p align="right">
+  <font size="-2">
+    <a href="index.html" target="_top">Frames</a>
+    <a href="running.html" target="_top">No Frames</a>
+  </font>
+</p>
+<h1>Running Abator</h1>
+<p>Abator can be run in the following ways:</p>
+<ul>
+  <li>From the command line with an XML configuration</li>
+  <li>As an Ant task with an XML configuration</li>
+  <li>From another Java program with an XML configuration</li>
+  <li>From another Java program with a Java based configuration</li>
+</ul>
+<p>Each method is described in detail below.</p>
+<p><b>Note:</b> there is also an Eclipse
+plugin for Abator that adds extra function - namely good integration into Eclipse,
+an Eclipse enabled Ant task, and support for automatic merging of
+Java files.  See the
+<a target="_blank" href="http://ibatis.apache.org/abator.html">Abator</a>
+home page for information on installing the Eclipse plugin.</p>
+
+<p><b>Important:</b> When running outside of an IDE environment like Eclipse,
+  Abator interprets the <code>targetProject</code> and
+  <code>targetPackage</code> attributes in all XML configurations as follows:</p>
+<ul>
+  <li><code>targetProject</code> is assumed to be an existing directory structure.
+    Abator will fail if this directory structure does not exist.</li>
+   <li><code>targetPackage</code> will be translated to a suitable subdirectory
+     structure of the <code>targetProject</code>
+     directory structure.  Abator will create these subdirectories if necessary.</li>
+</ul>
+
+<h2>Running Abator from the Command Line</h2>
+<p>Abator may be run directly from the command line.  The JAR manifest includes the
+   name of the default class (<code>org.apache.ibatis.abator.api.AbatorRunner</code>)
+   or you may specify it yourself.  The <code>AbatorRunner</code>
+   class accepts several arguments as detailed below:</p>
+<table border="1" cellspacing="0" cellpadding="5">
+<tr>
+  <th>Argument</th>
+  <th>Value</th>
+</tr>
+<tr>
+  <td>-configfile (required)</td>
+  <td>Specifies the name of the configuration file.</td>
+</tr>
+<tr>
+  <td>-overwrite (optional)</td>
+  <td>If specified, then existing Java files will be overwritten if an existing Java
+      file if found with the same nae as a generated file.  If not specified, and a
+      Java file already exists with the same name as a generated file, then Abator
+      will write the newly generated Java file to the proper directory with a
+      unique name (e.g. MyClass.java.1, MyClass.java.2, etc.).
+      <b>Important: Abator will always merge and overwrite XML files.</b></td>
+</tr>
+<tr>
+  <td>-contextids (optional)</td>
+  <td>If specified, then this is a comma delimited list of contexts to use in
+      the current run of Abator.  Any id specified in the list must exactly
+      match the value of the <code>id</code> attribute of an
+      &lt;abatorContext&gt; configuration element.  Only ids specified
+      in this list will be active for this run of Abator.  If this argument
+      is not specified, then all contexts will be active.</td>
+</tr>
+<tr>
+  <td>-tables (optional)</td>
+  <td>If specified, then this is a comma delimited list of tables to use in
+      the current run of Abator.  Any table specified in the list must exactly
+      match the fully qualified table name specified in a
+      &lt;table&gt; configuration element.  Only tables specified
+      in this list will be active for this run of Abator.  If this argument
+      is not specified, then all tables will be active.
+      Specify table names as: <br/><br/>
+      <code>table</code><br/>
+      <code>schema.table</code><br/>
+      <code>catalog..table</code><br/>
+      etc.</td>
+</tr>
+</table>
+
+<p>You must create an Abator XML configuration file to run Abator from the
+   command line.  If the file is
+   named "abatorConfig.xml", then any of the following command lines will run
+   Abator:</p>
+<pre>
+   java -jar abator.jar -configfile abatorConfig.xml
+   java -jar abator.jar -configfile abatorConfig.xml -overwrite
+   java -cp abator.jar org.apache.ibatis.abator.api.AbatorRunner -configfile abatorConfig.xml
+   java -cp abator.jar org.apache.ibatis.abator.api.AbatorRunner -configfile abatorConfig.xml -overwrite
+</pre>
+
+<h2>Running Abator from Ant</h2>
+<p>Abator includes a simple Ant task.  The task must be defined in your
+  build.xml file, and the task has three parameters.  Here is an example
+  build.xml file:</p>
+<pre>
+   &lt;project default="genfiles" basedir="."&gt;
+     &lt;property name="generated.source.dir" value="${basedir}" /&gt;
+
+     &lt;target name="genfiles" description="Generate the files"&gt;
+       &lt;taskdef name="abator"
+                classname="org.apache.ibatis.abator.ant.AbatorAntTask"
+                classpath="abator.jar" /&gt;
+       &lt;abator overwrite="true" configfile="abatorConfig.xml" verbose="false" &gt;
+         &lt;propertyset&gt;
+           &lt;propertyref name="generated.source.dir"/&gt;
+         &lt;/propertyset&gt;
+       &lt;/abator&gt;
+     &lt;/target&gt;
+   &lt;/project&gt;
+</pre>
+
+<p>Abator task attributes are as follows:</p>
+<table border="1" cellspacing="0" cellpadding="5">
+<tr>
+  <th>Attribute</th>
+  <th>Value</th>
+</tr>
+<tr>
+  <td>configfile (required)</td>
+  <td>Specifies the name of the configuration file.</td>
+</tr>
+<tr>
+  <td>overwrite (optional)</td>
+  <td>If "true", "yes", etc., then existing Java files will be overwritten if an existing Java
+      file if found with the same nae as a generated file.  If "false", "no", etc., and a
+      Java file already exists with the same name as a generated file, then Abator
+      will write the newly generated Java file to the proper directory with a
+      unique name (e.g. MyClass.java.1, MyClass.java.2, etc.).
+      <b>Important: Abator will always merge and overwrite XML files.</b></td>
+</tr>
+<tr>
+  <td>contextids (optional)</td>
+  <td>If specified, then this is a comma delimited list of contexts to use in
+      the current run of Abator.  Any id specified in the list must exactly
+      match the value of the <code>id</code> attribute of an
+      &lt;abatorContext&gt; configuration element.  Only ids specified
+      in this list will be active for this run of Abator.  If this argument
+      is not specified, then all contexts will be active.</td>
+</tr>
+<tr>
+  <td>tables (optional)</td>
+  <td>If specified, then this is a comma delimited list of tables to use in
+      the current run of Abator.  Any table specified in the list must exactly
+      match the fully qualified table name specified in a
+      &lt;table&gt; configuration element.  Only tables specified
+      in this list will be active for this run of Abator.  If this argument
+      is not specified, then all tables will be active.
+      Specify table names as: <br/><br/>
+      <code>table</code><br/>
+      <code>schema.table</code><br/>
+      <code>catalog..table</code><br/>
+      etc.</td>
+</tr>
+<tr>
+  <td>verbose (optional)</td>
+  <td>If "true", "yes", etc., then Abator will log progress messages to the
+      ant console.  The default is "false".</td>
+</tr>
+</table>
+
+<p>Notes:</p>
+<ul>
+  <li>The classpath on the &lt;taskdef&gt; is used to tell Ant where the Abator JAR file
+     is.  This is optional if you add Abator to the Ant classpath in one
+     of the other ways described in the Ant manual</li>
+   <li>The name of the task can be anything you desire, "abator" is
+     simply an example</li>
+   <li>The task supports an optional nested <code>&lt;propertyset&gt;</code> element which
+       is the standard Ant property set type.  This can be used to pass parameters into
+       a configuration file.  For example, the above property
+       <code>generated.source.dir</code> can be
+       accessed in the Abator configuration file with the escape sequence
+       <code>${generated.source.dir}</code>
+   </li>
+   <li>If a property is specified in the configuration file and is not resolved,
+       then the escaped property string will be passed "as is" into the generated code.
+   </li>
+</ul>
+
+<h2>Running Abator from Java with an XML Configuration File</h2>
+<p>The following code sample shows how to call Abator from Java.  It does not
+   show exception handling, but that should be obvious from the compiler
+   errors :)</p>
+<pre>
+   List warnings = new ArrayList();  // Abator will add Strings to this list
+   boolean overwrite = true;
+   File configFile = new File("abatorConfig.xml");
+   AbatorConfigurationParser cp = new AbatorConfigurationParser(warnings);
+   AbatorConfiguration config = cp.parseAbatorConfiguration(configFile);
+   DefaultShellCallback callback = new DefaultShellCallback(overwrite);
+   Abator abator = new Abator(config, callback, warnings);
+   abator.generate(null);
+</pre>
+
+<p>Notes:</p>
+<ul>
+   <li>Configuration file properties may be passed to the parser as a parameter on
+       the AbatorConfigurationParser constructor.  If not passed explicitly, the JVM
+       system properties will be searched for the value of configuration file
+       properties.  For example, the property
+       <code>generated.source.dir</code> can be
+       accessed in the Abator configuration file with the escape sequence
+       <code>${generated.source.dir}</code>
+   </li>
+   <li>If a property is specified in the configuration file and is not resolved,
+       then the escaped property string will be passed "as is" into the generated code.
+   </li>
+</ul>
+
+<h2>Running Abator from Java with a Java Based Configuration</h2>
+<p>The following code sample shows how to call Abator from Java only.  It does
+   not show exception handling, but that should be obvious from the compiler
+   errors :)</p>
+<pre>
+   List warnings = new ArrayList();  // Abator will add Strings to this list
+   boolean overwrite = true;
+   AbatorConfiguration config = new AbatorConfiguration();
+
+   //   ... fill out the config object as appropriate...
+
+   DefaultShellCallback callback = new DefaultShellCallback(overwrite);
+   Abator abator = new Abator(config, callback, warnings);
+   abator.generate(null);
+</pre>
+
+</body>
+</html>

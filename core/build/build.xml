@@ -1,0 +1,357 @@
+<project name="Abator for iBATIS" default="buildAbator" basedir=".">
+
+  <!-- 
+    This is the build file for Abator.  To run the build,
+    execute this command:
+    
+       ant -lib ../devlib
+       
+       (This will execute the default build target of buildAbator)
+       
+       It is required to add the -lib parameter, the tests will not run
+       properly without it.
+    
+    You can also delete the generated artifacts with:
+    
+       ant clean
+    
+    Important: the build will run with either JDK 1.4, or JDK 5.0.
+      If you use JDK 5.0, more tests will run - this is the only way to
+      effectively test that the Java5 generator set is functioning properly.
+      But we should still run with JDK 1.4 for a release build.
+    
+    Note: to update the version of Abator, change the 
+       version.properties file (the "version" property).
+  -->
+  
+  <property name="src.dir" value="${basedir}/../src" />
+  <property name="doc.dir" value="${basedir}/../doc" />
+  <property name="html.doc.dir" value="${basedir}/../htmldoc" />
+  <property name="deploy.dir" value="${basedir}/deploy" />
+  <property name="deploy.files" value="${deploy.dir}/files" />
+  <property name="work.dir" value="${basedir}/work" />
+  <property name="work.classes" value="${work.dir}/bin" />
+  <property name="work.javadoc" value="${work.dir}/javadoc" />
+  <property name="generated.source.dir.java2" value="${work.dir}/test/java2/src" />
+  <property name="generated.source.dir.java5" value="${work.dir}/test/java5/src" />
+  <property name="generated.bin.dir.java2" value="${work.dir}/test/java2/bin" />
+  <property name="generated.bin.dir.java5" value="${work.dir}/test/java5/bin" />
+  <property name="abator.test.bin.dir" value="${work.dir}/test/abator/bin" />
+  <property name="reports.dir" value="${basedir}/reports" />
+  <property name="reports.junit" value="${reports.dir}/junit" />
+  
+  <target name="clean" unless="${TSTAMP}">
+    <tstamp/>
+    <available classname="java.lang.annotation.Annotation" property="usingJava5"/>
+    <delete dir="${work.dir}" />
+    <delete dir="${deploy.dir}" />
+    <delete dir="${reports.dir}" />
+  </target>
+	
+  <target name="build.prepare" depends="clean">
+  	<echo message="Using JDK version ${ant.java.version} for compilation." />
+  	
+    <mkdir dir="${deploy.dir}"/>
+    <mkdir dir="${work.dir}"/>
+    <mkdir dir="${work.classes}"/>
+
+    <copy todir="${deploy.files}">
+      <fileset dir="${doc.dir}">
+        <exclude name="**/.svn/**"/>
+      </fileset>
+    </copy>
+    
+    <copy todir="${deploy.files}/doc">
+      <fileset dir="${html.doc.dir}">
+        <exclude name="**/.svn/**"/>
+      </fileset>
+    </copy>
+  	
+    <propertyfile file="version.properties" comment="Abator build version info">
+      <entry key="buildNum" default="0" type="int" operation="+" value="1"/>
+    </propertyfile>
+  </target>
+  
+  <target name="build.compile" depends="build.prepare">
+    <javac srcdir="${src.dir}"
+    	destdir="${work.classes}"
+    	deprecation="true" 
+    	debug="true" 
+    	source="1.4"
+    	target="1.4"
+        classpath="../devlib/ant.jar"/>
+  </target>
+	  	
+  <target name="build.abator.jar" depends="build.compile">
+
+    <!-- copy non-compilable resources -->    
+    <copy todir="${work.classes}">
+      <fileset dir="${src.dir}" >
+        <exclude name="**/*.java"/>
+        <exclude name="**/.*/**"/>  <!-- exclude any . files (SVN) -->
+      </fileset>
+    </copy>
+    
+    <property file="version.properties"/>
+    
+    <jar destfile="${deploy.files}/abator.jar" basedir="${work.classes}" >
+      <manifest>
+        <attribute name="Main-Class" value="org.apache.ibatis.abator.api.AbatorRunner"/>
+        <attribute name="Specification-Title" value="Abator for iBATIS"/>
+        <attribute name="Specification-Version" value="${version}"/>
+        <attribute name="Specification-Vendor" value="The Apache Software Foundation"/>
+      </manifest>
+    </jar>
+  </target>
+  
+  <target name="build.abator.javadoc">
+    <javadoc destdir="${work.javadoc}" use="true" defaultexcludes="false" verbose="false">
+      <packageset dir="${src.dir}">
+        <include name="org/apache/ibatis/abator/**"/>
+      </packageset>
+    </javadoc>
+    
+    <zip destfile="${deploy.files}/abator-javadoc.zip" basedir="${work.javadoc}" />
+  </target>
+  
+  <target name="build.zip.abator.source">
+    <zip destfile="${deploy.files}/abator-src.zip" basedir="${src.dir}" />
+  </target>
+  
+  <target name="assemble.zipfile" depends="build.abator.jar, build.abator.javadoc, build.zip.abator.source">
+    <property file="version.properties"/>
+    
+    <zip destfile="${deploy.dir}/abator-${version}-${buildNum}.zip" basedir="${deploy.files}" />
+  </target>
+  
+  <target name="buildAbator" depends="assemble.zipfile, test.report" >
+    <fail if="testsFailed" message="The tests did not pass"/>
+  </target>
+  
+  <target name="build.test" depends="build.compile">
+    <mkdir dir="${abator.test.bin.dir}"/>
+    <mkdir dir="${reports.dir}"/>
+    <mkdir dir="${reports.junit}"/>
+
+    <javac destdir="${abator.test.bin.dir}"
+    	deprecation="true" 
+    	debug="true"
+    	source="1.4"
+    	target="1.4">
+      <src path="${basedir}/../test"/>
+      <classpath>
+        <pathelement location="${deploy.files}/abator.jar"/>
+      </classpath>
+    </javac>
+
+    <junit printsummary="true" showoutput="true">
+      <formatter type="xml"/>
+      <batchtest todir="${reports.junit}" fork="yes" haltonerror="no" failureproperty="testsFailed">
+        <fileset dir="${abator.test.bin.dir}">
+          <include name="**/*Tests.class"/>
+        </fileset>
+      </batchtest>
+      <classpath>
+      	<pathelement location="${abator.test.bin.dir}"/>
+        <pathelement location="${deploy.files}/abator.jar"/>
+      </classpath>
+    </junit>
+  </target>
+  	
+  <target name="test.prepare" depends="build.test">
+    <mkdir dir="${generated.source.dir.java2}"/>
+    <mkdir dir="${generated.source.dir.java5}"/>
+    <mkdir dir="${generated.bin.dir.java2}"/>
+    <mkdir dir="${generated.bin.dir.java5}"/>
+	  	
+    <!-- note that the class does not exist until the build runs.
+    	 Validating Ant editors will complain that the task cannot be
+    	 found, but it's not really an error. -->
+    <taskdef name="runscript"
+             classname="org.apache.ibatis.abator.ant.SqlScriptRunnerTask">
+      <classpath>
+    	  <pathelement location="${deploy.files}/abator.jar"/>
+      </classpath>
+    </taskdef>
+  	
+  	<!-- create the test database -->
+  	<runscript driver="org.hsqldb.jdbcDriver"
+  		url="jdbc:hsqldb:mem:aname"
+  		userid="sa"
+  		password=""
+  		src="${basedir}/../testJava5/abatortest/CreateDB.sql"/>
+	  	
+  </target>
+	  
+  <target name="test.generate.test.code.java2" depends="test.prepare">
+  	<echo message="Expect three warnings from Abator (BLOBSONLY, NonExistantTable, FRED)" />
+	  	
+    <!-- note that the class does not exist until the build runs.
+    	 Validating Ant editors will complain that the task cannot be
+    	 found, but it's not really an error. -->
+    <taskdef name="abator"
+             classname="org.apache.ibatis.abator.ant.AbatorAntTask">
+      <classpath>
+    	  <pathelement location="${deploy.files}/abator.jar"/>
+      </classpath>
+    </taskdef>
+  	
+  	<abator configfile="${basedir}/../testJava2/abatortest/java2/abatorConfig.xml" >
+  		<propertyset>
+  			<propertyref name="generated.source.dir.java2"/>
+  		</propertyset>
+  	</abator>
+  </target>
+	  	
+  <target name="test.generate.test.code.java5" depends="test.prepare" if="usingJava5">
+    <!-- note that the class does not exist until the build runs.
+    	 Validating Ant editors will complain that the task cannot be
+    	 found, but it's not really an error. -->
+    <taskdef name="abator"
+             classname="org.apache.ibatis.abator.ant.AbatorAntTask">
+      <classpath>
+    	  <pathelement location="${deploy.files}/abator.jar"/>
+      </classpath>
+    </taskdef>
+    
+    <!-- compile the base class so Abator can load it -->
+    <javac destdir="${generated.bin.dir.java5}"
+    	deprecation="true" 
+    	debug="true"
+    	source="1.5"
+    	target="1.5">
+      <src path="${basedir}/../testJava5"/>
+      <include name="abatortest/execute/miscellaneous/BaseClass.java" />
+    </javac>
+  	
+    <echo message="Expect three warnings from Abator (BLOBSONLY, NonExistantTable, FRED)" />
+    
+    <abator configfile="${basedir}/../testJava5/abatortest/abatorConfig.xml" >
+      <propertyset>
+        <propertyref name="generated.source.dir.java5"/>
+        <propertyref name="generated.bin.dir.java5"/>
+      </propertyset>
+    </abator>
+  </target>
+	
+  <target name="test.compile.test.code.java2" depends="test.generate.test.code.java2">
+    <javac destdir="${generated.bin.dir.java2}"
+           deprecation="true" 
+           debug="true"
+           source="1.4"
+           target="1.4">
+      <src path="${generated.source.dir.java2}"/>
+      <src path="${basedir}/../testJava2"/>
+    </javac>
+
+    <!-- copy non-compilable resources -->    
+    <copy todir="${generated.bin.dir.java2}">
+      <fileset dir="${basedir}/../testJava2" >
+        <exclude name="**/*.java"/>
+        <exclude name="**/.*/**"/>  <!-- exclude any . files (SVN) -->
+      </fileset>
+    </copy>
+    <copy todir="${generated.bin.dir.java2}">
+      <fileset dir="${generated.source.dir.java2}" >
+        <exclude name="**/*.java"/>
+        <exclude name="**/.*/**"/>  <!-- exclude any . files (SVN) -->
+      </fileset>
+    </copy>
+  </target>
+		
+  <target name="test.compile.test.code.java5" depends="test.generate.test.code.java5" if="usingJava5">
+    <javac destdir="${generated.bin.dir.java5}"
+    	deprecation="true" 
+    	debug="true"
+    	source="1.5"
+    	target="1.5">
+      <src path="${generated.source.dir.java5}"/>
+      <src path="${basedir}/../testJava5"/>
+    </javac>
+
+    <!-- copy non-compilable resources -->    
+    <copy todir="${generated.bin.dir.java5}">
+      <fileset dir="${basedir}/../testJava5" >
+        <exclude name="**/*.java"/>
+        <exclude name="**/.*/**"/>  <!-- exclude any . files (SVN) -->
+      </fileset>
+    </copy>
+    <copy todir="${generated.bin.dir.java5}">
+      <fileset dir="${generated.source.dir.java5}" >
+        <exclude name="**/*.java"/>
+        <exclude name="**/.*/**"/>  <!-- exclude any . files (SVN) -->
+      </fileset>
+    </copy>
+  </target>
+			
+  <target name="test.run.java2" depends="test.compile.test.code.java2">
+    <junit printsummary="true" showoutput="true">
+      <formatter type="xml"/>
+      <batchtest todir="${reports.junit}" fork="yes" haltonerror="no" failureproperty="testsFailed">
+        <fileset dir="${generated.bin.dir.java2}">
+          <include name="**/*Tests.class"/>
+        </fileset>
+      </batchtest>
+      <classpath>
+      	<pathelement location="${generated.bin.dir.java2}"/>
+		<pathelement location="${basedir}/../devlib/ibatis-2.3.0.677.jar" />
+		<pathelement location="${basedir}/../devlib/hsqldb1.8.0.7.jar" />
+      </classpath>
+    </junit>
+  </target>
+	  
+  <target name="test.run.java5" depends="test.compile.test.code.java5" if="usingJava5">
+    <junit printsummary="true" showoutput="true">
+      <formatter type="xml"/>
+      <batchtest todir="${reports.junit}" fork="yes" haltonerror="no" failureproperty="testsFailed">
+        <fileset dir="${generated.bin.dir.java5}">
+          <include name="**/*Tests.class"/>
+        </fileset>
+      </batchtest>
+      <classpath>
+      	<pathelement location="${generated.bin.dir.java5}"/>
+		<pathelement location="${basedir}/../devlib/ibatis-2.3.0.677.jar" />
+		<pathelement location="${basedir}/../devlib/hsqldb1.8.0.7.jar" />
+      </classpath>
+    </junit>
+  </target>
+	
+  <target name="test.run.no.compile" >
+    <junit printsummary="true" showoutput="true">
+      <formatter type="xml"/>
+      <batchtest todir="${reports.junit}" fork="yes" haltonerror="no" failureproperty="testsFailed">
+        <fileset dir="${generated.source.dir.java5}">
+          <include name="**/*Tests.class"/>
+        </fileset>
+      </batchtest>
+      <classpath>
+      	<pathelement location="${generated.source.dir.java5}"/>
+		<pathelement location="${basedir}/../devlib/ibatis-2.3.0.677.jar" />
+		<pathelement location="${basedir}/../devlib/hsqldb1.8.0.7.jar" />
+      </classpath>
+    </junit>
+
+    <junit printsummary="true" showoutput="true">
+      <formatter type="xml"/>
+      <batchtest todir="${reports.junit}" fork="yes" haltonerror="no" failureproperty="testsFailed">
+        <fileset dir="${generated.source.dir.java2}">
+          <include name="**/*Tests.class"/>
+        </fileset>
+      </batchtest>
+      <classpath>
+      	<pathelement location="${generated.source.dir.java2}"/>
+		<pathelement location="${basedir}/../devlib/ibatis-2.3.0.677.jar" />
+		<pathelement location="${basedir}/../devlib/hsqldb1.8.0.7.jar" />
+      </classpath>
+    </junit>
+  </target>
+	
+  <target name="test.report" depends="test.run.java2, test.run.java5" >
+    <junitreport todir="${reports.junit}">
+      <fileset dir="${reports.junit}">
+        <include name="TEST-*.xml"/>
+      </fileset>
+	      <report format="frames" todir="${reports.junit}"/>
+    </junitreport>
+  </target>
+</project>

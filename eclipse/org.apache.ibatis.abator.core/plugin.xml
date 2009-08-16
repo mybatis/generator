@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin
+   id="org.apache.ibatis.abator.core"
+   name="Abator for iBATIS"
+   version="1.1.0"
+   provider-name="ibatis.apache.org">
+   <runtime>
+      <library name="abator.jar">
+         <export name="*"/>
+      </library>
+   </runtime>
+
+</plugin>

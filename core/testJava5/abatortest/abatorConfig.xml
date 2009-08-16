@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE abatorConfiguration
+  PUBLIC "-//Apache Software Foundation//DTD Abator for iBATIS Configuration 1.0//EN"
+  "http://ibatis.apache.org/dtd/abator-config_1_0.dtd">
+
+<abatorConfiguration>
+  
+  <abatorContext generatorSet="Java5" defaultModelType="flat">
+    <property name="suppressTypeWarnings" value="true" /> <!-- should be ignored -->
+    
+    <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
+        connectionURL="jdbc:hsqldb:mem:aname"
+        userId="sa" />
+
+    <javaModelGenerator targetPackage="abatortest.generated.flat.java5.model" targetProject="${generated.source.dir.java5}">
+      <property name="enableSubPackages" value="true" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+
+    <sqlMapGenerator targetPackage="abatortest.generated.flat.java5.xml"  targetProject="${generated.source.dir.java5}">
+      <property name="enableSubPackages" value="true" />
+    </sqlMapGenerator>
+
+    <daoGenerator type="GENERIC-CI" targetPackage="abatortest.generated.flat.java5.dao"  targetProject="${generated.source.dir.java5}">
+      <property name="enableSubPackages" value="true" />
+    </daoGenerator>
+
+    <table tableName="FieldsOnly" />
+    <table tableName="PKOnly" />
+    <table tableName="PKFields" />
+    <table tableName="PKBlobs" />
+    <table tableName="PKFieldsBlobs" />
+    <table tableName="FieldsBlobs" />
+    <table tableName="awful table" alias="A">
+      <property name="useColumnIndexes" value="true"/>
+      <generatedKey column="CuStOmEr iD" sqlStatement="HSQLDB" identity="true" />
+      <columnOverride column="customer id" property="secondCustomerId" />
+      <columnOverride column="first name" property="firstFirstName" />
+      <columnOverride column="First Name" property="secondFirstName" />
+      <ignoreColumn column="first Name" />
+      <columnOverride column="first_name" property="thirdFirstName" />
+      <columnOverride column="firstName" property="fourthFirstName" />
+      <columnOverride column="from" delimitedColumnName="true" />
+    </table>
+  </abatorContext>
+
+  <abatorContext generatorSet="Java2" defaultModelType="flat">
+    <property name="suppressTypeWarnings" value="true" />
+    
+    <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
+        connectionURL="jdbc:hsqldb:mem:aname"
+        userId="sa" />
+
+    <javaModelGenerator targetPackage="abatortest.generated.flat.java2.model" targetProject="${generated.source.dir.java5}">
+      <property name="enableSubPackages" value="true" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+
+    <sqlMapGenerator targetPackage="abatortest.generated.flat.java2.xml"  targetProject="${generated.source.dir.java5}">
+      <property name="enableSubPackages" value="true" />
+    </sqlMapGenerator>
+
+    <daoGenerator type="GENERIC-CI" targetPackage="abatortest.generated.flat.java2.dao"  targetProject="${generated.source.dir.java5}">
+      <property name="enableSubPackages" value="true" />
+    </daoGenerator>
+
+    <table tableName="FieldsOnly" />
+    <table tableName="PKOnly" />
+    <table tableName="PKFields" />
+    <table tableName="PKBlobs" />
+    <table tableName="PKFieldsBlobs" />
+    <table tableName="FieldsBlobs" />
+    <table tableName="awful table" alias="A">
+      <property name="useColumnIndexes" value="true"/>
+      <generatedKey column="CuStOmEr iD" sqlStatement="HSQLDB" identity="true" />
+      <columnOverride column="customer id" property="secondCustomerId" />
+      <columnOverride column="first name" property="firstFirstName" />
+      <columnOverride column="First Name" property="secondFirstName" />
+      <ignoreColumn column="first Name" />
+      <columnOverride column="first_name" property="thirdFirstName" />
+      <columnOverride column="firstName" property="fourthFirstName" />
+      <columnOverride column="from" delimitedColumnName="true" />
+    </table>
+  </abatorContext>
+
+  <abatorContext generatorSet="Legacy" defaultModelType="flat">
+    <property name="suppressTypeWarnings" value="true" />
+    
+    <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
+        connectionURL="jdbc:hsqldb:mem:aname"
+        userId="sa" />
+
+    <javaModelGenerator targetPackage="abatortest.generated.flat.legacy.model" targetProject="${generated.source.dir.java5}">
+      <property name="enableSubPackages" value="true" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+
+    <sqlMapGenerator targetPackage="abatortest.generated.flat.legacy.xml"  targetProject="${generated.source.dir.java5}">
+      <property name="enableSubPackages" value="true" />
+    </sqlMapGenerator>
+
+    <daoGenerator type="GENERIC-CI" targetPackage="abatortest.generated.flat.legacy.dao"  targetProject="${generated.source.dir.java5}">
+      <property name="enableSubPackages" value="true" />
+    </daoGenerator>
+
+    <table tableName="FieldsOnly" />
+    <table tableName="PKOnly" />
+    <table tableName="PKFields" />
+    <table tableName="PKBlobs" />
+    <table tableName="PKFieldsBlobs" />
+    <table tableName="FieldsBlobs" />
+    <table tableName="awful table" alias="A">
+      <property name="useColumnIndexes" value="true"/>
+      <generatedKey column="CuStOmEr iD" sqlStatement="HSQLDB" identity="true" />
+      <columnOverride column="customer id" property="secondCustomerId" />
+      <columnOverride column="first name" property="firstFirstName" />
+      <columnOverride column="First Name" property="secondFirstName" />
+      <ignoreColumn column="first Name" />
+      <columnOverride column="first_name" property="thirdFirstName" />
+      <columnOverride column="firstName" property="fourthFirstName" />
+      <columnOverride column="from" delimitedColumnName="true" />
+    </table>
+  </abatorContext>
+
+  <abatorContext generatorSet="Java5" defaultModelType="hierarchical">
+    <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
+        connectionURL="jdbc:hsqldb:mem:aname"
+        userId="sa" />
+
+    <javaModelGenerator targetPackage="abatortest.generated.hierarchical.java5.model" targetProject="${generated.source.dir.java5}">
+      <property name="enableSubPackages" value="true" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+
+    <sqlMapGenerator targetPackage="abatortest.generated.hierarchical.java5.xml"  targetProject="${generated.source.dir.java5}">
+      <property name="enableSubPackages" value="true" />
+    </sqlMapGenerator>
+
+    <daoGenerator type="GENERIC-CI" targetPackage="abatortest.generated.hierarchical.java5.dao"  targetProject="${generated.source.dir.java5}">
+      <property name="enableSubPackages" value="true" />
+    </daoGenerator>
+
+    <table tableName="FieldsOnly" />
+    <table tableName="PKOnly" />
+    <table tableName="PKFields" />
+    <table tableName="PKBlobs" />
+    <table tableName="PKFieldsBlobs" />
+    <table tableName="FieldsBlobs" />
+    <table tableName="awful table" alias="A">
+      <property name="useColumnIndexes" value="true"/>
+      <generatedKey column="CuStOmEr iD" sqlStatement="HSQLDB" identity="true" />
+      <columnOverride column="customer id" property="secondCustomerId" />
+      <columnOverride column="first name" property="firstFirstName" />
+      <columnOverride column="First Name" property="secondFirstName" />
+      <ignoreColumn column="first Name" />
+      <columnOverride column="first_name" property="thirdFirstName" />
+      <columnOverride column="firstName" property="fourthFirstName" />
+      <columnOverride column="from" delimitedColumnName="true" />
+    </table>
+  </abatorContext>
+
+  <abatorContext generatorSet="Java2" defaultModelType="hierarchical">
+    <property name="suppressTypeWarnings" value="true" />
+    
+    <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
+        connectionURL="jdbc:hsqldb:mem:aname"
+        userId="sa" />
+
+    <javaModelGenerator targetPackage="abatortest.generated.hierarchical.java2.model" targetProject="${generated.source.dir.java5}">
+      <property name="enableSubPackages" value="true" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+
+    <sqlMapGenerator targetPackage="abatortest.generated.hierarchical.java2.xml"  targetProject="${generated.source.dir.java5}">
+      <property name="enableSubPackages" value="true" />
+    </sqlMapGenerator>
+
+    <daoGenerator type="GENERIC-CI" targetPackage="abatortest.generated.hierarchical.java2.dao"  targetProject="${generated.source.dir.java5}">
+      <property name="enableSubPackages" value="true" />
+    </daoGenerator>
+
+    <table tableName="FieldsOnly" />
+    <table tableName="PKOnly" />
+    <table tableName="PKFields" />
+    <table tableName="PKBlobs" />
+    <table tableName="PKFieldsBlobs" />
+    <table tableName="FieldsBlobs" />
+    <table tableName="awful table" alias="A">
+      <property name="useColumnIndexes" value="true"/>
+      <generatedKey column="CuStOmEr iD" sqlStatement="HSQLDB" identity="true" />
+      <columnOverride column="customer id" property="secondCustomerId" />
+      <columnOverride column="first name" property="firstFirstName" />
+      <columnOverride column="First Name" property="secondFirstName" />
+      <ignoreColumn column="first Name" />
+      <columnOverride column="first_name" property="thirdFirstName" />
+      <columnOverride column="firstName" property="fourthFirstName" />
+      <columnOverride column="from" delimitedColumnName="true" />
+    </table>
+  </abatorContext>
+
+  <abatorContext generatorSet="Legacy" defaultModelType="hierarchical">
+    <property name="suppressTypeWarnings" value="true" />
+    
+    <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
+        connectionURL="jdbc:hsqldb:mem:aname"
+        userId="sa" />
+
+    <javaModelGenerator targetPackage="abatortest.generated.hierarchical.legacy.model" targetProject="${generated.source.dir.java5}">
+      <property name="enableSubPackages" value="true" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+
+    <sqlMapGenerator targetPackage="abatortest.generated.hierarchical.legacy.xml"  targetProject="${generated.source.dir.java5}">
+      <property name="enableSubPackages" value="true" />
+    </sqlMapGenerator>
+
+    <daoGenerator type="GENERIC-CI" targetPackage="abatortest.generated.hierarchical.legacy.dao"  targetProject="${generated.source.dir.java5}">
+      <property name="enableSubPackages" value="true" />
+    </daoGenerator>
+
+    <table tableName="FieldsOnly" />
+    <table tableName="PKOnly" />
+    <table tableName="PKFields" />
+    <table tableName="PKBlobs" />
+    <table tableName="PKFieldsBlobs" />
+    <table tableName="FieldsBlobs" />
+    <table tableName="awful table" alias="A">
+      <property name="useColumnIndexes" value="true"/>
+      <generatedKey column="CuStOmEr iD" sqlStatement="HSQLDB" identity="true" />
+      <columnOverride column="customer id" property="secondCustomerId" />
+      <columnOverride column="first name" property="firstFirstName" />
+      <columnOverride column="First Name" property="secondFirstName" />
+      <ignoreColumn column="first Name" />
+      <columnOverride column="first_name" property="thirdFirstName" />
+      <columnOverride column="firstName" property="fourthFirstName" />
+      <columnOverride column="from" delimitedColumnName="true" />
+    </table>
+  </abatorContext>
+
+  <abatorContext generatorSet="Java5" defaultModelType="conditional">
+    <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
+        connectionURL="jdbc:hsqldb:mem:aname"
+        userId="sa" />
+
+    <javaModelGenerator targetPackage="abatortest.generated.conditional.java5.model" targetProject="${generated.source.dir.java5}">
+      <property name="enableSubPackages" value="true" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+
+    <sqlMapGenerator targetPackage="abatortest.generated.conditional.java5.xml"  targetProject="${generated.source.dir.java5}">
+      <property name="enableSubPackages" value="true" />
+    </sqlMapGenerator>
+
+    <daoGenerator type="GENERIC-CI" targetPackage="abatortest.generated.conditional.java5.dao"  targetProject="${generated.source.dir.java5}">
+      <property name="enableSubPackages" value="true" />
+    </daoGenerator>
+
+    <table tableName="FieldsOnly" />
+    <table tableName="PKOnly" />
+    <table tableName="PKFields" />
+    <table tableName="PKBlobs" />
+    <table tableName="PKFieldsBlobs" />
+    <table tableName="FieldsBlobs" />
+    <table tableName="awful table" alias="A">
+      <property name="useColumnIndexes" value="true"/>
+      <generatedKey column="CuStOmEr iD" sqlStatement="HSQLDB" identity="true" />
+      <columnOverride column="customer id" property="secondCustomerId" />
+      <columnOverride column="first name" property="firstFirstName" />
+      <columnOverride column="First Name" property="secondFirstName" />
+      <ignoreColumn column="first Name" />
+      <columnOverride column="first_name" property="thirdFirstName" />
+      <columnOverride column="firstName" property="fourthFirstName" />
+      <columnOverride column="from" delimitedColumnName="true" />
+    </table>
+  </abatorContext>
+
+  <abatorContext generatorSet="Java2" defaultModelType="conditional">
+    <property name="suppressTypeWarnings" value="true" />
+    
+    <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
+        connectionURL="jdbc:hsqldb:mem:aname"
+        userId="sa" />
+
+    <javaModelGenerator targetPackage="abatortest.generated.conditional.java2.model" targetProject="${generated.source.dir.java5}">
+      <property name="enableSubPackages" value="true" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+
+    <sqlMapGenerator targetPackage="abatortest.generated.conditional.java2.xml"  targetProject="${generated.source.dir.java5}">
+      <property name="enableSubPackages" value="true" />
+    </sqlMapGenerator>
+
+    <daoGenerator type="GENERIC-CI" targetPackage="abatortest.generated.conditional.java2.dao"  targetProject="${generated.source.dir.java5}">
+      <property name="enableSubPackages" value="true" />
+    </daoGenerator>
+
+    <table tableName="FieldsOnly" />
+    <table tableName="PKOnly" />
+    <table tableName="PKFields" />
+    <table tableName="PKBlobs" />
+    <table tableName="PKFieldsBlobs" />
+    <table tableName="FieldsBlobs" />
+    <table tableName="awful table" alias="A">
+      <property name="useColumnIndexes" value="true"/>
+      <generatedKey column="CuStOmEr iD" sqlStatement="HSQLDB" identity="true" />
+      <columnOverride column="customer id" property="secondCustomerId" />
+      <columnOverride column="first name" property="firstFirstName" />
+      <columnOverride column="First Name" property="secondFirstName" />
+      <ignoreColumn column="first Name" />
+      <columnOverride column="first_name" property="thirdFirstName" />
+      <columnOverride column="firstName" property="fourthFirstName" />
+      <columnOverride column="from" delimitedColumnName="true" />
+    </table>
+  </abatorContext>
+
+  <abatorContext generatorSet="Legacy" defaultModelType="conditional">
+    <property name="suppressTypeWarnings" value="true" />
+    
+    <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
+        connectionURL="jdbc:hsqldb:mem:aname"
+        userId="sa" />
+
+    <javaModelGenerator targetPackage="abatortest.generated.conditional.legacy.model" targetProject="${generated.source.dir.java5}">
+      <property name="enableSubPackages" value="true" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+
+    <sqlMapGenerator targetPackage="abatortest.generated.conditional.legacy.xml"  targetProject="${generated.source.dir.java5}">
+      <property name="enableSubPackages" value="true" />
+    </sqlMapGenerator>
+
+    <daoGenerator type="GENERIC-CI" targetPackage="abatortest.generated.conditional.legacy.dao"  targetProject="${generated.source.dir.java5}">
+      <property name="enableSubPackages" value="true" />
+    </daoGenerator>
+
+    <table tableName="FieldsOnly" />
+    <table tableName="PKOnly" />
+    <table tableName="PKFields" />
+    <table tableName="PKBlobs" />
+    <table tableName="PKFieldsBlobs" />
+    <table tableName="FieldsBlobs" />
+    <table tableName="awful table" alias="A">
+      <property name="useColumnIndexes" value="true"/>
+      <generatedKey column="CuStOmEr iD" sqlStatement="HSQLDB" identity="true" />
+      <columnOverride column="customer id" property="secondCustomerId" />
+      <columnOverride column="first name" property="firstFirstName" />
+      <columnOverride column="First Name" property="secondFirstName" />
+      <ignoreColumn column="first Name" />
+      <columnOverride column="first_name" property="thirdFirstName" />
+      <columnOverride column="firstName" property="fourthFirstName" />
+      <columnOverride column="from" delimitedColumnName="true" />
+    </table>
+  </abatorContext>
+
+  <abatorContext id="miscellaneousTests" generatorSet="Java5">
+    <commentGenerator>
+      <property name="suppressDate" value="true"/>
+    </commentGenerator>
+    
+    <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
+        connectionURL="jdbc:hsqldb:mem:aname"
+        userId="sa" />
+
+    <javaModelGenerator targetPackage="abatortest.generated.miscellaneous.model" targetProject="${generated.source.dir.java5}">
+      <property name="trimStrings" value="true" />
+      <property name="rootClass" value="abatortest.execute.miscellaneous.BaseClass" />
+      <property name="rootClasspath" value="${generated.bin.dir.java5}"/>
+    </javaModelGenerator>
+
+    <sqlMapGenerator targetPackage="abatortest.generated.miscellaneous.xml"  targetProject="${generated.source.dir.java5}">
+    </sqlMapGenerator>
+
+    <daoGenerator type="GENERIC-CI" targetPackage="abatortest.generated.miscellaneous.dao"  targetProject="${generated.source.dir.java5}">
+      <property name="rootInterface" value="abatortest.execute.miscellaneous.BaseInterface" />
+      <property name="methodNameCalculator" value="EXTENDED"/>
+    </daoGenerator>
+
+    <table tableName="BlobsOnly" /> <!-- should generate a warning -->
+    <table tableName="NonExistantTable" /> <!-- should generate a warning -->
+    <table tableName="PKFields" domainObjectName="MyObject" alias="A" >
+      <ignoreColumn column="fred" /> <!-- should generate a warning -->
+      <ignoreColumn column="decimal30Field" />
+      <columnOverride column="datefield" property="startDate"/>
+      <columnOverride column="decimal155Field" javaType="java.lang.Double" />
+      <columnOverride column="decimal60Field" javaType="int" />
+      <columnOverride column="firstName" javaType="abatortest.execute.miscellaneous.FirstName"
+         typeHandler="abatortest.execute.miscellaneous.FirstNameTypeHandler"/>
+      <columnOverride column="timeField" javaType="abatortest.execute.miscellaneous.MyTime"
+         typeHandler="abatortest.execute.miscellaneous.MyTimeTypeHandler"/>
+    </table>
+    <table tableName="RegexRename">
+      <columnRenamingRule searchString="^CUST" />
+    </table>
+  </abatorContext>
+</abatorConfiguration>

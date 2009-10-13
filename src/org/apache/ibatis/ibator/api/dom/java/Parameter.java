@@ -15,6 +15,9 @@
  */
 package org.apache.ibatis.ibator.api.dom.java;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * @author Jeff Butler
@@ -23,10 +26,13 @@ public class Parameter {
     private String name;
     private FullyQualifiedJavaType type;
 
+    private List<String> annotations;
+
     public Parameter(FullyQualifiedJavaType type, String name) {
         super();
         this.name = name;
         this.type = type;
+        annotations = new ArrayList<String>();
     }
 
     /**
@@ -40,5 +46,33 @@ public class Parameter {
      */
     public FullyQualifiedJavaType getType() {
         return type;
+    }
+
+    public List<String> getAnnotations() {
+        return annotations;
+    }
+    
+    public void addAnnotation(String annotation) {
+        annotations.add(annotation);
+    }
+    
+    public String getFormattedContent() {
+        StringBuilder sb = new StringBuilder();
+        
+        for (String annotation : annotations) {
+            sb.append(annotation);
+            sb.append(' ');
+        }
+        
+        sb.append(type.getShortName());
+        sb.append(' ');
+        sb.append(name);
+        
+        return sb.toString();
+    }
+
+    @Override
+    public String toString() {
+        return getFormattedContent();
     }
 }

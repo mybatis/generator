@@ -116,9 +116,7 @@ public class Method extends JavaElement {
                 comma = true;
             }
 
-            sb.append(parameter.getType().getShortName());
-            sb.append(' ');
-            sb.append(parameter.getName());
+            sb.append(parameter.getFormattedContent());
         }
 
         sb.append(')');

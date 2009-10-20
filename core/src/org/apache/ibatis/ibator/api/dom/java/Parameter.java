@@ -35,6 +35,11 @@ public class Parameter {
         annotations = new ArrayList<String>();
     }
 
+    public Parameter(FullyQualifiedJavaType type, String name, String annotation) {
+        this(type, name);
+        addAnnotation(annotation);
+    }
+
     /**
      * @return Returns the name.
      */

@@ -83,7 +83,7 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
                 new FullyQualifiedJavaType(Object.class.getName())));
         typeMap.put(Types.LONGVARBINARY, new JdbcTypeInformation("LONGVARBINARY", //$NON-NLS-1$
                 new FullyQualifiedJavaType("byte[]"))); //$NON-NLS-1$
-        typeMap.put(Types.LONGVARCHAR, new JdbcTypeInformation("LONCVARCHAR", //$NON-NLS-1$
+        typeMap.put(Types.LONGVARCHAR, new JdbcTypeInformation("LONGVARCHAR", //$NON-NLS-1$
                 new FullyQualifiedJavaType(String.class.getName())));
         typeMap.put(Types.NULL, new JdbcTypeInformation("NULL", //$NON-NLS-1$
                 new FullyQualifiedJavaType(Object.class.getName())));

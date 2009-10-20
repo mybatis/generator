@@ -12,6 +12,7 @@ Bugs:
    fields are null - thanks to Benjamin Klatt for finding this bug
 4. Fixed IBATIS-601 - improper validation of <generatedKey>
 5. Fixed IBATIS-609 - incorrect parsing of Java generic types
+6. Fixed spelling error LONCVARCHAR->LONGVARCHAR (thanks Allard)
 
 Enhancements:
 1. IBATIS-569 - Make it easier to override IbatorRules in plugins
@@ -34,6 +35,7 @@ Enhancements:
     the prefix "ibatorgenerated_"
 15. Many refactorings to make way for iBATIS3
 16. IBATIS-605 - Added Informix Dialect
+17. Added ability to set annotations on method parameters
 
 -------------------------------------------------------------------------------
 Version 1.2.1:

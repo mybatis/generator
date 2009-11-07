@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+   Copyright 2008 The Apache Software Foundation
+ 
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+ 
+       http://www.apache.org/licenses/LICENSE-2.0
+ 
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+
+<!--
+  This DTD defines the structure of the ibator configuration file.
+  iBATOR configuration files should declare the DOCTYPE as follows:
+  
+  <!DOCTYPE ibatorConfiguration PUBLIC
+    "-//Apache Software Foundation//DTD Apache iBATIS ibator Configuration 1.0//EN"
+    "http://ibatis.apache.org/dtd/ibator-config_1_0.dtd">
+  
+  Please see the documentation included with ibator for details on each option
+  in the DTD.  You may also view documentation on-line here:
+  
+  http://ibatis.apache.org/docs/tools/ibator
+  
+-->
+
+<!--
+  The ibatorConfiguration element is the root element for ibator configurations.
+-->
+<!ELEMENT ibatorConfiguration (properties?, classPathEntry*, ibatorContext+)>
+                        
+<!--
+  The properties element is used to define a standard Java properties file
+  that contains placeholders for use in the remainder of the configuration
+  file.
+-->
+<!ELEMENT properties EMPTY>
+<!ATTLIST properties
+  resource CDATA #IMPLIED
+  url CDATA #IMPLIED>
+  
+<!--
+  The ibatorContext element is used to describe a context for generating files, and the source
+  tables.
+-->
+<!ELEMENT ibatorContext (property*, ibatorPlugin*, commentGenerator?, jdbcConnection, javaTypeResolver?,
+                         javaModelGenerator, sqlMapGenerator, daoGenerator?, table+)>
+<!ATTLIST ibatorContext id ID #REQUIRED
+  defaultModelType CDATA #IMPLIED
+  targetRuntime CDATA #IMPLIED
+  introspectedColumnImpl CDATA #IMPLIED>
+
+<!--
+  The jdbcConnection element is used to describe the JDBC connection that ibator
+  will use to introspect the database.
+-->
+<!ELEMENT jdbcConnection (property*)>
+<!ATTLIST jdbcConnection 
+  driverClass CDATA #REQUIRED
+  connectionURL CDATA #REQUIRED
+  userId CDATA #IMPLIED
+  password CDATA #IMPLIED>
+
+<!--
+  The classPathEntry element is used to add the JDBC driver to the run-time classpath.
+  Repeat this element as often as needed to add elements to the classpath.
+-->
+<!ELEMENT classPathEntry EMPTY>
+<!ATTLIST classPathEntry
+  location CDATA #REQUIRED>
+
+<!--
+  The property element is used to add custom properties to many of ibator's
+  configuration elements.  See each element for example properties.
+  Repeat this element as often as needed to add as many properties as necessary
+  to the configuration element.
+-->
+<!ELEMENT property EMPTY>
+<!ATTLIST property
+  name CDATA #REQUIRED
+  value CDATA #REQUIRED>
+
+<!--
+  The ibatorPlugin element is used to define an ibator plugin.
+-->
+<!ELEMENT ibatorPlugin (property*)>
+<!ATTLIST ibatorPlugin
+  type CDATA #REQUIRED>
+
+<!--
+  The javaModelGenerator element is used to define properties of the Java Model Generator.
+  The Java Model Generator builds primary key classes, record classes, and Query by Example 
+  indicator classes.
+-->
+<!ELEMENT javaModelGenerator (property*)>
+<!ATTLIST javaModelGenerator
+  targetPackage CDATA #REQUIRED
+  targetProject CDATA #REQUIRED>
+
+<!--
+  The javaTypeResolver element is used to define properties of the Java Type Resolver.
+  The Java Type Resolver is used to calculate Java types from database column information.
+  The default Java Type Resolver attempts to make JDBC DECIMAL and NUMERIC types easier
+  to use by substituting Integral types if possible (Long, Integer, Short, etc.)
+-->
+<!ELEMENT javaTypeResolver (property*)>
+<!ATTLIST javaTypeResolver
+  type CDATA #IMPLIED>
+
+<!--
+  The sqlMapGenerator element is used to define properties of the SQL Map Generator.
+  The SQL Map Generator builds an XML file for each table that conforms to iBATIS'
+  SqlMap DTD.
+-->
+<!ELEMENT sqlMapGenerator (property*)>
+<!ATTLIST sqlMapGenerator
+  targetPackage CDATA #REQUIRED
+  targetProject CDATA #REQUIRED>
+
+<!--
+  The daoGenerator element is used to define properties of the DAO Generator.
+  The DAO Generator builds DAO an interface and implementation class for each table.
+  If this element is missing, then ibator will not build DAO classes.
+-->
+<!ELEMENT daoGenerator (property*)>
+<!ATTLIST daoGenerator
+  type CDATA #REQUIRED
+  targetPackage CDATA #REQUIRED
+  targetProject CDATA #REQUIRED
+  implementationPackage CDATA #IMPLIED>
+
+<!--
+  The table element is used to specify a database table that will be the source information
+  for a set of generated objects.
+-->
+<!ELEMENT table (property*, generatedKey?, columnRenamingRule?, (columnOverride | ignoreColumn)*) >
+<!ATTLIST table
+  catalog CDATA #IMPLIED
+  schema CDATA #IMPLIED
+  tableName CDATA #REQUIRED
+  alias CDATA #IMPLIED
+  domainObjectName CDATA #IMPLIED
+  enableInsert CDATA #IMPLIED
+  enableSelectByPrimaryKey CDATA #IMPLIED
+  enableSelectByExample CDATA #IMPLIED
+  enableUpdateByPrimaryKey CDATA #IMPLIED
+  enableDeleteByPrimaryKey CDATA #IMPLIED
+  enableDeleteByExample CDATA #IMPLIED
+  enableCountByExample CDATA #IMPLIED
+  enableUpdateByExample CDATA #IMPLIED
+  selectByPrimaryKeyQueryId CDATA #IMPLIED
+  selectByExampleQueryId CDATA #IMPLIED
+  modelType CDATA #IMPLIED
+  escapeWildcards CDATA #IMPLIED
+  delimitIdentifiers CDATA #IMPLIED
+  delimitAllColumns CDATA #IMPLIED>
+
+<!--
+  The columnOverride element is used to change certain attributes of the column
+  from their default values.
+-->
+<!ELEMENT columnOverride (property*)>
+<!ATTLIST columnOverride
+  column CDATA #REQUIRED
+  property CDATA #IMPLIED
+  javaType CDATA #IMPLIED
+  jdbcType CDATA #IMPLIED
+  typeHandler CDATA #IMPLIED
+  delimitedColumnName CDATA #IMPLIED>
+
+<!--
+  The ignoreColumn element is used to identify a column that should be ignored.
+  No generated SQL will refer to the column, and no property will be generated
+  for the column in the model objects.
+-->
+<!ELEMENT ignoreColumn EMPTY>
+<!ATTLIST ignoreColumn
+  column CDATA #REQUIRED
+  delimitedColumnName CDATA #IMPLIED>
+
+<!--
+  The generatedKey element is used to identify a column in the table whose value
+  is calculated - either from a sequence (or some other query), or as an identity column.
+-->
+<!ELEMENT generatedKey EMPTY>
+<!ATTLIST generatedKey
+  column CDATA #REQUIRED
+  sqlStatement CDATA #REQUIRED
+  identity CDATA #IMPLIED
+  type CDATA #IMPLIED>
+
+<!--
+  The columnRenamingRule element is used to specify a rule for renaming
+  columns before the corresponding property name is calculated
+-->
+<!ELEMENT columnRenamingRule EMPTY>
+<!ATTLIST columnRenamingRule
+  searchString CDATA #REQUIRED
+  replaceString CDATA #IMPLIED>
+
+<!--
+  The commentGenerator element is used to define properties of the Comment Generator.
+  The Comment Generator adds comments to generated elements.
+-->
+<!ELEMENT commentGenerator (property*)>
+<!ATTLIST commentGenerator
+  type CDATA #IMPLIED>
+  

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.apache.ibatis.ibator</groupId>
+  <artifactId>ibator</artifactId>
+  <name>ibator</name>
+  <version>1.2.2-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <modules>
+    <module>ibator-core</module>
+    <module>ibator-maven-plugin</module>
+    <module>ibator-systests-ibatis2-java2</module>
+    <module>ibator-systests-ibatis2-java5</module>
+  </modules>
+</project>

@@ -25,12 +25,12 @@ import org.junit.Test;
  * @author Jeff Butler
  *
  */
-public class JavaBeansUtilTests {
-    
+public class JavaBeansUtilTest {
+
     /**
-     * 
+     *
      */
-    public JavaBeansUtilTests() {
+    public JavaBeansUtilTest() {
         super();
     }
 

@@ -26,8 +26,8 @@ import org.junit.Test;
  * @author Jeff Butler
  *
  */
-public class FullyQualifiedJavaTypeTests {
-    
+public class FullyQualifiedJavaTypeTest {
+
     @Test
     public void testJavaType() {
         FullyQualifiedJavaType fqjt =
@@ -80,19 +80,19 @@ public class FullyQualifiedJavaTypeTests {
     public void testGenericType3() {
         FullyQualifiedJavaType listOfStrings = new FullyQualifiedJavaType("java.util.List"); //$NON-NLS-1$
         listOfStrings.addTypeArgument(new FullyQualifiedJavaType("java.lang.String")); //$NON-NLS-1$
-        
+
         FullyQualifiedJavaType fqjt =
             new FullyQualifiedJavaType("java.util.Map"); //$NON-NLS-1$
         fqjt.addTypeArgument(new FullyQualifiedJavaType("java.lang.String")); //$NON-NLS-1$
         fqjt.addTypeArgument(listOfStrings);
-        
+
         assertTrue(fqjt.isExplicitlyImported());
         assertEquals("Map<String, List<String>>", fqjt.getShortName()); //$NON-NLS-1$
         assertEquals("java.util.Map<java.lang.String, java.util.List<java.lang.String>>", fqjt.getFullyQualifiedName()); //$NON-NLS-1$
         assertEquals("java.util", fqjt.getPackageName()); //$NON-NLS-1$
         assertEquals(2, fqjt.getImportList().size());
     }
-    
+
     @Test
     public void testGenericType4() {
         FullyQualifiedJavaType fqjt =
@@ -103,7 +103,7 @@ public class FullyQualifiedJavaTypeTests {
         assertEquals("java.util", fqjt.getPackageName()); //$NON-NLS-1$
         assertEquals(2, fqjt.getImportList().size());
     }
-    
+
     @Test
     public void testWildcardType1() {
         FullyQualifiedJavaType fqjt =
@@ -160,7 +160,7 @@ public class FullyQualifiedJavaTypeTests {
         assertEquals("java.util", fqjt.getPackageName()); //$NON-NLS-1$
         assertEquals(2, fqjt.getImportList().size());
     }
-    
+
     @Test
     public void testNestedClass1() {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType("org.foo.Bar.Inner");

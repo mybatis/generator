@@ -69,4 +69,32 @@ public class IbatisGenerationTest {
             
         ibator.generate(progressCallback, null, null);
     }
+    
+    @Test
+    public void testGenerateIbatis3() throws Exception {
+        SqlScriptRunner scriptRunner = new SqlScriptRunner(
+                this.getClass().getClassLoader().getResourceAsStream("CreateDbIbatis3.sql"),
+                "org.hsqldb.jdbcDriver",
+                "jdbc:hsqldb:mem:aname",
+                "sa",
+                "");
+        
+        scriptRunner.executeScript();
+        
+        File file = new File("target/generated-sources/ibator/ibatis3");
+        file.mkdirs();
+        
+        List<String> warnings = new ArrayList<String>();
+        IbatorConfigurationParser cp = new IbatorConfigurationParser(
+                warnings);
+        IbatorConfiguration config = cp.parseIbatorConfiguration(this.getClass().getClassLoader().getResourceAsStream("ibatorConfigIbatis3.xml"));
+            
+        DefaultShellCallback shellCallback = new DefaultShellCallback(true);
+            
+        Ibator ibator = new Ibator(config, shellCallback, warnings);
+            
+        ProgressCallback progressCallback = new VerboseProgressCallback();
+            
+        ibator.generate(progressCallback, null, null);
+    }
 }

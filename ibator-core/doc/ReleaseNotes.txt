@@ -3,6 +3,8 @@ Version 1.2.2:
 
 Announcements:
 1. CommentGenerator interface has changed
+2. Ibator is now built with Maven
+3. Added support for iBATIS version 3
 
 Bugs:
 1. Fixed NPE when no DAOs are generated

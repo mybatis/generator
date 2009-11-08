@@ -6,6 +6,8 @@ drop table PKFieldsBlobs if exists;
 drop table FieldsBlobs if exists;
 drop table "awful table" if exists;
 drop table BlobsOnly if exists;
+drop table RegexRename if exists;
+drop table AnotherAwfulTable if exists;
 
 create table FieldsOnly (
   IntegerField int,

@@ -84,9 +84,9 @@ public class FullyQualifiedJavaType implements Comparable<FullyQualifiedJavaType
             sb.append('?');
             if (boundedWildcard) {
                 if (extendsBoundedWildcard) {
-                    sb.append(" extends ");
+                    sb.append(" extends "); //$NON-NLS-1$
                 } else {
-                    sb.append(" super ");
+                    sb.append(" super "); //$NON-NLS-1$
                 }
                 
                 sb.append(baseQualifiedName);
@@ -157,9 +157,9 @@ public class FullyQualifiedJavaType implements Comparable<FullyQualifiedJavaType
             sb.append('?');
             if (boundedWildcard) {
                 if (extendsBoundedWildcard) {
-                    sb.append(" extends ");
+                    sb.append(" extends "); //$NON-NLS-1$
                 } else {
-                    sb.append(" super ");
+                    sb.append(" super "); //$NON-NLS-1$
                 }
                 
                 sb.append(baseShortName);
@@ -321,14 +321,14 @@ public class FullyQualifiedJavaType implements Comparable<FullyQualifiedJavaType
     private void parse(String fullTypeSpecification) {
         String spec = fullTypeSpecification.trim();
         
-        if (spec.startsWith("?")) {
+        if (spec.startsWith("?")) { //$NON-NLS-1$
             wildcardType = true;
             spec = spec.substring(1).trim();
-            if (spec.startsWith("extends ")) {
+            if (spec.startsWith("extends ")) { //$NON-NLS-1$
                 boundedWildcard = true;
                 extendsBoundedWildcard = true;
                 spec = spec.substring(8);
-            } else if (spec.startsWith("super ")) {
+            } else if (spec.startsWith("super ")) { //$NON-NLS-1$
                 boundedWildcard = true;
                 extendsBoundedWildcard = false;
                 spec = spec.substring(6);
@@ -349,7 +349,7 @@ public class FullyQualifiedJavaType implements Comparable<FullyQualifiedJavaType
     
     private void simpleParse(String typeSpecification) {
         baseQualifiedName = typeSpecification.trim();
-        if (baseQualifiedName.contains(".")) {
+        if (baseQualifiedName.contains(".")) { //$NON-NLS-1$
             packageName = getPackage(baseQualifiedName);
             baseShortName = baseQualifiedName.substring(packageName.length() + 1);
             if ("java.lang".equals(packageName)) { //$NON-NLS-1$
@@ -405,13 +405,13 @@ public class FullyQualifiedJavaType implements Comparable<FullyQualifiedJavaType
         StringBuilder sb = new StringBuilder();
         while (st.hasMoreTokens()) {
             String token = st.nextToken();
-            if ("<".equals(token)) {
+            if ("<".equals(token)) { //$NON-NLS-1$
                 sb.append(token);
                 openCount++;
-            } else if (">".equals(token)) {
+            } else if (">".equals(token)) { //$NON-NLS-1$
                 sb.append(token);
                 openCount--;
-            } else if (",".equals(token)) {
+            } else if (",".equals(token)) { //$NON-NLS-1$
                 if (openCount == 0) {
                     typeArguments.add(new FullyQualifiedJavaType(sb.toString()));
                     sb.setLength(0);
@@ -445,7 +445,7 @@ public class FullyQualifiedJavaType implements Comparable<FullyQualifiedJavaType
      */
     private static String getPackage(String baseQualifiedName) {
         StringBuilder sb = new StringBuilder();
-        StringTokenizer st = new StringTokenizer(baseQualifiedName, ".");
+        StringTokenizer st = new StringTokenizer(baseQualifiedName, "."); //$NON-NLS-1$
         while (st.hasMoreTokens()) {
             String s = st.nextToken();
             if (Character.isUpperCase(s.charAt(0))) {

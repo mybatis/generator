@@ -128,6 +128,10 @@ public class IbatorRulesDelegate implements IbatorRules {
         return ibatorRules.generateSQLExampleWhereClause();
     }
 
+    public boolean generateIbatis3UpdateByExampleWhereClause() {
+        return ibatorRules.generateIbatis3UpdateByExampleWhereClause();
+    }
+
     public boolean generateUpdateByExampleSelective() {
         return ibatorRules.generateUpdateByExampleSelective();
     }

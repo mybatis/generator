@@ -47,6 +47,11 @@ import org.apache.ibatis.ibator.internal.util.StringUtility;
  *
  */
 public abstract class IntrospectedTable {
+    public enum TargetRuntime {
+        IBATIS2,
+        IBATIS3
+    }
+    
     protected enum InternalAttribute {
         ATTR_DAO_IMPLEMENTATION_TYPE,
         ATTR_DAO_INTERFACE_TYPE,
@@ -59,7 +64,7 @@ public abstract class IntrospectedTable {
         ATTR_IBATIS2_SQL_MAP_NAMESPACE,
         ATTR_IBATIS3_XML_MAPPER_PACKAGE,
         ATTR_IBATIS3_XML_MAPPER_FILE_NAME,
-        ATTR_IBATIS3_JAVA_MAPPER_TYPE, // also used as XML Mapper namespace
+        ATTR_IBATIS3_JAVA_MAPPER_TYPE, // also used as XML Mapper namespace if a DAO mapper is generated
         ATTR_FULLY_QUALIFIED_TABLE_NAME_AT_RUNTIME,
         ATTR_ALIASED_FULLY_QUALIFIED_TABLE_NAME_AT_RUNTIME,
         ATTR_COUNT_BY_EXAMPLE_STATEMENT_ID,
@@ -80,7 +85,8 @@ public abstract class IntrospectedTable {
         ATTR_RESULT_MAP_WITH_BLOBS_ID,
         ATTR_EXAMPLE_WHERE_CLAUSE_ID,
         ATTR_BASE_COLUMN_LIST_ID,
-        ATTR_BLOB_COLUMN_LIST_ID
+        ATTR_BLOB_COLUMN_LIST_ID,
+        ATTR_IBATIS3_UPDATE_BY_EXAMPLE_WHERE_CLAUSE_ID
     }
     
     protected TableConfiguration tableConfiguration;
@@ -90,6 +96,7 @@ public abstract class IntrospectedTable {
     protected List<IntrospectedColumn> primaryKeyColumns;
     protected List<IntrospectedColumn> baseColumns;
     protected List<IntrospectedColumn> blobColumns;
+    protected TargetRuntime targetRuntime;
     
     /**
      * Attributes may be used by plugins to capture table related state
@@ -103,8 +110,9 @@ public abstract class IntrospectedTable {
      */
     protected Map<IntrospectedTable.InternalAttribute, String> internalAttributes;
     
-    public IntrospectedTable() {
+    public IntrospectedTable(TargetRuntime targetRuntime) {
         super();
+        this.targetRuntime = targetRuntime;
         primaryKeyColumns = new ArrayList<IntrospectedColumn>();
         baseColumns = new ArrayList<IntrospectedColumn>();
         blobColumns = new ArrayList<IntrospectedColumn>();
@@ -496,6 +504,7 @@ public abstract class IntrospectedTable {
         setExampleWhereClauseId("Example_Where_Clause"); //$NON-NLS-1$
         setBaseColumnListId("Base_Column_List"); //$NON-NLS-1$
         setBlobColumnListId("Blob_Column_List"); //$NON-NLS-1$
+        setIbatis3UpdateByExampleWhereClauseId("Update_By_Example_Where_Clause"); //$NON-NLS-1$
         applyLegacyXMLPrefix();
     }
     
@@ -618,6 +627,10 @@ public abstract class IntrospectedTable {
         internalAttributes.put(InternalAttribute.ATTR_EXAMPLE_WHERE_CLAUSE_ID, s);
     }
 
+    public void setIbatis3UpdateByExampleWhereClauseId(String s) {
+        internalAttributes.put(InternalAttribute.ATTR_IBATIS3_UPDATE_BY_EXAMPLE_WHERE_CLAUSE_ID, s);
+    }
+
     public void setResultMapWithBLOBsId(String s) {
         internalAttributes.put(InternalAttribute.ATTR_RESULT_MAP_WITH_BLOBS_ID, s);
     }
@@ -692,6 +705,10 @@ public abstract class IntrospectedTable {
 
     public String getExampleWhereClauseId() {
         return internalAttributes.get(InternalAttribute.ATTR_EXAMPLE_WHERE_CLAUSE_ID);
+    }
+
+    public String getIbatis3UpdateByExampleWhereClauseId() {
+        return internalAttributes.get(InternalAttribute.ATTR_IBATIS3_UPDATE_BY_EXAMPLE_WHERE_CLAUSE_ID);
     }
 
     public String getResultMapWithBLOBsId() {
@@ -1035,5 +1052,9 @@ public abstract class IntrospectedTable {
 
     public void setIbatis3JavaMapperType(String ibatis3JavaMapperType) {
         internalAttributes.put(InternalAttribute.ATTR_IBATIS3_JAVA_MAPPER_TYPE, ibatis3JavaMapperType);
+    }
+
+    public TargetRuntime getTargetRuntime() {
+        return targetRuntime;
     }
 }

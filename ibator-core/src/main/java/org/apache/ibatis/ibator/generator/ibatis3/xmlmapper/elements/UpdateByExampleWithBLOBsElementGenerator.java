@@ -76,7 +76,7 @@ public class UpdateByExampleWithBLOBsElementGenerator extends
             }
         }
         
-        answer.addElement(getExampleIncludeElement());
+        answer.addElement(getUpdateByExampleIncludeElement());
 
         if (ibatorContext.getPlugins().sqlMapUpdateByExampleWithBLOBsElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);

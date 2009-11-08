@@ -40,6 +40,7 @@ import org.apache.ibatis.ibator.generator.ibatis3.javamapper.elements.UpdateByEx
 import org.apache.ibatis.ibator.generator.ibatis3.javamapper.elements.UpdateByPrimaryKeySelectiveMethodGenerator;
 import org.apache.ibatis.ibator.generator.ibatis3.javamapper.elements.UpdateByPrimaryKeyWithBLOBsMethodGenerator;
 import org.apache.ibatis.ibator.generator.ibatis3.javamapper.elements.UpdateByPrimaryKeyWithoutBLOBsMethodGenerator;
+import org.apache.ibatis.ibator.internal.util.messages.Messages;
 
 /**
  * @author Jeff Butler
@@ -59,7 +60,8 @@ public class JavaMapperGenerator extends AbstractJavaGenerator {
      */
     @Override
     public List<CompilationUnit> getCompilationUnits() {
-        progressCallback.startTask("Generating Mapper class");
+        progressCallback.startTask(Messages.getString("Progress.17", //$NON-NLS-1$
+                introspectedTable.getFullyQualifiedTable().toString()));
         CommentGenerator commentGenerator = ibatorContext.getCommentGenerator();
         
         FullyQualifiedJavaType type = new FullyQualifiedJavaType(introspectedTable.getIbatis3JavaMapperType());

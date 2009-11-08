@@ -69,7 +69,7 @@ public class UpdateByExampleSelectiveElementGenerator extends
             isNotNullElement.addElement(new TextElement(sb.toString()));
         }
 
-        answer.addElement(getExampleIncludeElement());
+        answer.addElement(getUpdateByExampleIncludeElement());
 
         if (ibatorContext.getPlugins().sqlMapUpdateByExampleSelectiveElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);

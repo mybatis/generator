@@ -77,7 +77,7 @@ public class UpdateByExampleWithoutBLOBsElementGenerator extends
             }
         }
         
-        answer.addElement(getExampleIncludeElement());
+        answer.addElement(getUpdateByExampleIncludeElement());
 
         if (ibatorContext.getPlugins().sqlMapUpdateByExampleWithoutBLOBsElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);

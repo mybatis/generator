@@ -263,18 +263,18 @@ public class FlatJava5Test extends AbstractTest {
             Pkonly key = new Pkonly();
             key.setId(1);
             key.setSeqNum(3);
-            mapper.insert(key);
+            int rows = mapper.insert(key);
 
             key = new Pkonly();
             key.setId(5);
             key.setSeqNum(6);
-            mapper.insert(key);
+            rows = mapper.insert(key);
 
             PkonlyExample example = new PkonlyExample();
             List<Pkonly> answer = mapper.selectByExample(example);
             assertEquals(2, answer.size());
 
-            int rows = mapper.deleteByPrimaryKey(5, 6);
+            rows = mapper.deleteByPrimaryKey(5, 6);
             assertEquals(1, rows);
 
             answer = mapper.selectByExample(example);
@@ -2010,7 +2010,8 @@ public class FlatJava5Test extends AbstractTest {
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
 
-            Integer generatedCustomerId = mapper.insert(record);
+            mapper.insert(record);
+            Integer generatedCustomerId = record.getCustomerId();
             assertEquals(57, generatedCustomerId.intValue());
 
             AwfulTable returnedRecord = mapper
@@ -2056,7 +2057,8 @@ public class FlatJava5Test extends AbstractTest {
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
 
-            Integer generatedCustomerId = mapper.insertSelective(record);
+            mapper.insertSelective(record);
+            Integer generatedCustomerId = record.getCustomerId();
             assertEquals(57, generatedCustomerId.intValue());
 
             AwfulTable returnedRecord = mapper
@@ -2101,7 +2103,8 @@ public class FlatJava5Test extends AbstractTest {
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
 
-            Integer generatedCustomerId = mapper.insert(record);
+            mapper.insert(record);
+            Integer generatedCustomerId = record.getCustomerId();
 
             record.setId1(11);
             record.setId2(22);
@@ -2151,7 +2154,8 @@ public class FlatJava5Test extends AbstractTest {
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
 
-            Integer generatedCustomerId = mapper.insert(record);
+            mapper.insert(record);
+            Integer generatedCustomerId = record.getCustomerId();
 
             AwfulTable newRecord = new AwfulTable();
             newRecord.setCustomerId(generatedCustomerId);
@@ -2203,7 +2207,8 @@ public class FlatJava5Test extends AbstractTest {
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
 
-            Integer generatedCustomerId = mapper.insert(record);
+            mapper.insert(record);
+            Integer generatedCustomerId = record.getCustomerId();
 
             int rows = mapper.deleteByPrimaryKey(generatedCustomerId);
             assertEquals(1, rows);
@@ -2303,7 +2308,8 @@ public class FlatJava5Test extends AbstractTest {
             record.setSecondFirstName("fred22");
             record.setThirdFirstName("fred33");
 
-            Integer generatedKey = mapper.insert(record);
+            mapper.insert(record);
+            Integer generatedKey = record.getCustomerId();
 
             AwfulTable returnedRecord = mapper.selectByPrimaryKey(generatedKey);
 

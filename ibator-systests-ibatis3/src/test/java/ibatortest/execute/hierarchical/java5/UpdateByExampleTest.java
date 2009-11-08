@@ -445,7 +445,7 @@ public class UpdateByExampleTest extends AbstractTest {
             
             PkblobsExample example = new PkblobsExample();
             example.createCriteria().andIdGreaterThan(4);
-            int rows = mapper.updateByExample(newRecord, example);
+            int rows = mapper.updateByExampleWithBLOBs(newRecord, example);
             assertEquals(1, rows);
             
             List<PkblobsWithBLOBs> answer = mapper.selectByExampleWithBLOBs(example);
@@ -581,7 +581,7 @@ public class UpdateByExampleTest extends AbstractTest {
             newRecord.setFirstname("Fred");
             PkfieldsblobsExample example = new PkfieldsblobsExample();
             example.createCriteria().andId1EqualTo(3);
-            int rows = mapper.updateByExample(newRecord, example);
+            int rows = mapper.updateByExampleWithBLOBs(newRecord, example);
             assertEquals(1, rows);
     
             List<PkfieldsblobsWithBLOBs> answer = mapper.selectByExampleWithBLOBs(example);
@@ -708,7 +708,7 @@ public class UpdateByExampleTest extends AbstractTest {
             newRecord.setLastname("Doe");
             FieldsblobsExample example = new FieldsblobsExample();
             example.createCriteria().andFirstnameLike("S%");
-            int rows = mapper.updateByExample(newRecord, example);
+            int rows = mapper.updateByExampleWithBLOBs(newRecord, example);
             assertEquals(1, rows);
             
             List<FieldsblobsWithBLOBs> answer = mapper.selectByExampleWithBLOBs(example);

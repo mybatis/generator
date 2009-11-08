@@ -51,9 +51,14 @@ public class SelectByPrimaryKeyElementGenerator extends AbstractXmlElementGenera
         if (introspectedTable.getRules().generatePrimaryKeyClass()) {
             parameterType = introspectedTable.getPrimaryKeyType();
         } else {
-            // select by primary key, but no primary key class.  Fields
-            // must be in the base record
-            parameterType = introspectedTable.getBaseRecordType();
+            // PK fields are in the base class.  If more than on PK
+            // field, then they are coming in a map.
+            if (introspectedTable.getPrimaryKeyColumns().size() > 1) {
+                parameterType = "map"; //$NON-NLS-1$
+            } else {
+                parameterType = introspectedTable.getPrimaryKeyColumns().get(0)
+                    .getFullyQualifiedJavaType().toString();
+            }
         }
         
         answer.addAttribute(new Attribute("parameterType", //$NON-NLS-1$

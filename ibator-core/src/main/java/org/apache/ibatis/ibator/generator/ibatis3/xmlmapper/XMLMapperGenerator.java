@@ -72,6 +72,7 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
         addResultMapWithoutBLOBsElement(answer);
         addResultMapWithBLOBsElement(answer);
         addExampleWhereClauseElement(answer);
+        addIbatis3UpdateByExampleWhereClauseElement(answer);
         addBaseColumnListElement(answer);
         addBlobColumnListElement(answer);
         addSelectByExampleWithBLOBsElement(answer);
@@ -108,7 +109,14 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
     
     protected void addExampleWhereClauseElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateSQLExampleWhereClause()) {
-            AbstractXmlElementGenerator elementGenerator = new ExampleWhereClauseElementGenerator();
+            AbstractXmlElementGenerator elementGenerator = new ExampleWhereClauseElementGenerator(false);
+            initializeAndExecuteGenerator(elementGenerator, parentElement);
+        }
+    }
+    
+    protected void addIbatis3UpdateByExampleWhereClauseElement(XmlElement parentElement) {
+        if (introspectedTable.getRules().generateIbatis3UpdateByExampleWhereClause()) {
+            AbstractXmlElementGenerator elementGenerator = new ExampleWhereClauseElementGenerator(true);
             initializeAndExecuteGenerator(elementGenerator, parentElement);
         }
     }

@@ -2104,7 +2104,10 @@ public class HierarchicalJava5Test extends AbstractTest {
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
 
-            Integer generatedCustomerId = mapper.insert(record);
+            int count = mapper.insert(record);
+            assertEquals(1, count);
+            
+            Integer generatedCustomerId = record.getCustomerId();
             assertEquals(57, generatedCustomerId.intValue());
 
             AwfulTableKey key = new AwfulTableKey();
@@ -2151,9 +2154,12 @@ public class HierarchicalJava5Test extends AbstractTest {
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
 
-            Integer generatedCustomerId = mapper.insertSelective(record);
+            int count = mapper.insertSelective(record);
+            assertEquals(1, count);
+            
+            Integer generatedCustomerId = record.getCustomerId();
             assertEquals(57, generatedCustomerId.intValue());
-
+            
             AwfulTableKey key = new AwfulTableKey();
             key.setCustomerId(generatedCustomerId);
             AwfulTable returnedRecord = mapper.selectByPrimaryKey(key);
@@ -2197,7 +2203,8 @@ public class HierarchicalJava5Test extends AbstractTest {
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
 
-            Integer generatedCustomerId = mapper.insert(record);
+            mapper.insert(record);
+            Integer generatedCustomerId = record.getCustomerId();
 
             record.setId1(11);
             record.setId2(22);
@@ -2249,7 +2256,8 @@ public class HierarchicalJava5Test extends AbstractTest {
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
 
-            Integer generatedCustomerId = mapper.insert(record);
+            mapper.insert(record);
+            Integer generatedCustomerId = record.getCustomerId();
 
             AwfulTable newRecord = new AwfulTable();
             newRecord.setCustomerId(generatedCustomerId);
@@ -2303,7 +2311,8 @@ public class HierarchicalJava5Test extends AbstractTest {
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
 
-            Integer generatedCustomerId = mapper.insert(record);
+            mapper.insert(record);
+            Integer generatedCustomerId = record.getCustomerId();
 
             AwfulTableKey key = new AwfulTableKey();
             key.setCustomerId(generatedCustomerId);
@@ -2405,7 +2414,8 @@ public class HierarchicalJava5Test extends AbstractTest {
             record.setSecondFirstName("fred22");
             record.setThirdFirstName("fred33");
 
-            Integer generatedKey = mapper.insert(record);
+            mapper.insert(record);
+            Integer generatedKey = record.getCustomerId();
 
             AwfulTableKey key = new AwfulTableKey();
             key.setCustomerId(generatedKey);

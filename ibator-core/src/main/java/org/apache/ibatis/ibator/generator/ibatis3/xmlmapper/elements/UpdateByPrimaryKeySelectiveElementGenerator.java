@@ -67,7 +67,7 @@ public class UpdateByPrimaryKeySelectiveElementGenerator extends
             sb.setLength(0);
             sb.append(introspectedColumn.getJavaProperty());
             sb.append(" != null"); //$NON-NLS-1$
-            isNotNullElement.addAttribute(new Attribute("test", sb.toString()));
+            isNotNullElement.addAttribute(new Attribute("test", sb.toString())); //$NON-NLS-1$
             dynamicElement.addElement(isNotNullElement);
 
             sb.setLength(0);

@@ -16,6 +16,7 @@
 package org.apache.ibatis.ibator.internal.rules;
 
 import org.apache.ibatis.ibator.api.IntrospectedTable;
+import org.apache.ibatis.ibator.api.IntrospectedTable.TargetRuntime;
 import org.apache.ibatis.ibator.api.dom.java.FullyQualifiedJavaType;
 import org.apache.ibatis.ibator.config.TableConfiguration;
 
@@ -192,7 +193,11 @@ public abstract class BaseIbatorRules implements IbatorRules {
     
     /**
      * Implements the rule for generating the SQL example where clause element.
-     * Generate the element if the selectByExample or deleteByExample
+     * 
+     * In iBATIS2, generate the element if the selectByExample, deleteByExample,
+     * updateByExample, or countByExample statements are allowed.
+     * 
+     * In iBATIS3, generate the element if the selectByExample, deleteByExample,
      * or countByExample statements are allowed.
      * 
      * @return true if the SQL where clause element should be generated
@@ -200,10 +205,29 @@ public abstract class BaseIbatorRules implements IbatorRules {
     public boolean generateSQLExampleWhereClause() {
         boolean rc = tableConfiguration.isSelectByExampleStatementEnabled()
             || tableConfiguration.isDeleteByExampleStatementEnabled()
-            || tableConfiguration.isCountByExampleStatementEnabled()
-            || tableConfiguration.isUpdateByExampleStatementEnabled();
+            || tableConfiguration.isCountByExampleStatementEnabled();
+        
+        if (introspectedTable.getTargetRuntime() == TargetRuntime.IBATIS2) {
+            rc |= tableConfiguration.isUpdateByExampleStatementEnabled();
+        }
         
         return rc;
+    }
+    
+    /**
+     * Implements the rule for generating the SQL example where clause element
+     * specifically for use in the update by example methods.
+     * 
+     * In iBATIS2, do not generate the element.
+     * 
+     * In iBATIS3, generate the element if the updateByExample
+     * statements are allowed.
+     * 
+     * @return true if the SQL where clause element should be generated
+     */
+    public boolean generateIbatis3UpdateByExampleWhereClause() {
+        return introspectedTable.getTargetRuntime() == TargetRuntime.IBATIS3
+            && tableConfiguration.isUpdateByExampleStatementEnabled();
     }
     
     /**

@@ -174,49 +174,49 @@ public class ExampleGenerator extends AbstractJavaGenerator {
                 introspectedTable);
         
         field = new Field();
-        field.setName("condition");
+        field.setName("condition"); //$NON-NLS-1$
         field.setType(FullyQualifiedJavaType.getStringInstance());
         field.setVisibility(JavaVisibility.PRIVATE);
         answer.addField(field);
         answer.addMethod(getGetter(field));
 
         field = new Field();
-        field.setName("value");
+        field.setName("value"); //$NON-NLS-1$
         field.setType(FullyQualifiedJavaType.getObjectInstance());
         field.setVisibility(JavaVisibility.PRIVATE);
         answer.addField(field);
         answer.addMethod(getGetter(field));
 
         field = new Field();
-        field.setName("secondValue");
+        field.setName("secondValue"); //$NON-NLS-1$
         field.setType(FullyQualifiedJavaType.getObjectInstance());
         field.setVisibility(JavaVisibility.PRIVATE);
         answer.addField(field);
         answer.addMethod(getGetter(field));
 
         field = new Field();
-        field.setName("noValue");
+        field.setName("noValue"); //$NON-NLS-1$
         field.setType(FullyQualifiedJavaType.getBooleanPrimitiveInstance());
         field.setVisibility(JavaVisibility.PRIVATE);
         answer.addField(field);
         answer.addMethod(getGetter(field));
 
         field = new Field();
-        field.setName("singleValue");
+        field.setName("singleValue"); //$NON-NLS-1$
         field.setType(FullyQualifiedJavaType.getBooleanPrimitiveInstance());
         field.setVisibility(JavaVisibility.PRIVATE);
         answer.addField(field);
         answer.addMethod(getGetter(field));
 
         field = new Field();
-        field.setName("betweenValue");
+        field.setName("betweenValue"); //$NON-NLS-1$
         field.setType(FullyQualifiedJavaType.getBooleanPrimitiveInstance());
         field.setVisibility(JavaVisibility.PRIVATE);
         answer.addField(field);
         answer.addMethod(getGetter(field));
 
         field = new Field();
-        field.setName("listValue");
+        field.setName("listValue"); //$NON-NLS-1$
         field.setType(FullyQualifiedJavaType.getBooleanPrimitiveInstance());
         field.setVisibility(JavaVisibility.PRIVATE);
         answer.addField(field);
@@ -226,7 +226,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         method.setVisibility(JavaVisibility.PROTECTED);
         method.setName("Criterion"); //$NON-NLS-1$
         method.setConstructor(true);
-        method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "condition"));
+        method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "condition")); //$NON-NLS-1$
         method.addBodyLine("super();"); //$NON-NLS-1$
         method.addBodyLine("this.condition = condition;"); //$NON-NLS-1$
         method.addBodyLine("this.noValue = true;"); //$NON-NLS-1$
@@ -236,8 +236,8 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         method.setVisibility(JavaVisibility.PROTECTED);
         method.setName("Criterion"); //$NON-NLS-1$
         method.setConstructor(true);
-        method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "condition"));
-        method.addParameter(new Parameter(FullyQualifiedJavaType.getObjectInstance(), "value"));
+        method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "condition")); //$NON-NLS-1$
+        method.addParameter(new Parameter(FullyQualifiedJavaType.getObjectInstance(), "value")); //$NON-NLS-1$
         method.addBodyLine("super();"); //$NON-NLS-1$
         method.addBodyLine("this.condition = condition;"); //$NON-NLS-1$
         method.addBodyLine("this.value = value;"); //$NON-NLS-1$
@@ -252,9 +252,9 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         method.setVisibility(JavaVisibility.PROTECTED);
         method.setName("Criterion"); //$NON-NLS-1$
         method.setConstructor(true);
-        method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "condition"));
-        method.addParameter(new Parameter(FullyQualifiedJavaType.getObjectInstance(), "value"));
-        method.addParameter(new Parameter(FullyQualifiedJavaType.getObjectInstance(), "secondValue"));
+        method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "condition")); //$NON-NLS-1$
+        method.addParameter(new Parameter(FullyQualifiedJavaType.getObjectInstance(), "value")); //$NON-NLS-1$
+        method.addParameter(new Parameter(FullyQualifiedJavaType.getObjectInstance(), "secondValue")); //$NON-NLS-1$
         method.addBodyLine("super();"); //$NON-NLS-1$
         method.addBodyLine("this.condition = condition;"); //$NON-NLS-1$
         method.addBodyLine("this.value = value;"); //$NON-NLS-1$

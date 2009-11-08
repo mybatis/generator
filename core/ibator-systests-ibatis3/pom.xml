@@ -62,20 +62,17 @@
       <version>4.6</version>
       <scope>test</scope>
     </dependency>
+<!--
     <dependency>
     	<groupId>org.apache.ibatis</groupId>
     	<artifactId>ibatis-3-core</artifactId>
     	<version>3.0-SNAPSHOT</version>
     </dependency>
+-->
     <dependency>
-    	<groupId>org.springframework</groupId>
-    	<artifactId>spring-orm</artifactId>
-    	<version>2.5.6</version>
-    </dependency>
-    <dependency>
-    	<groupId>org.springframework</groupId>
-    	<artifactId>spring-jdbc</artifactId>
-    	<version>2.5.6</version>
+    	<groupId>org.apache.ibatis</groupId>
+    	<artifactId>ibatis-sqlmap</artifactId>
+    	<version>3.0-beta-5</version>
     </dependency>
     <dependency>
     	<groupId>org.hsqldb</groupId>

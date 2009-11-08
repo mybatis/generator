@@ -123,12 +123,29 @@ public interface IbatorRules {
     
     /**
      * Implements the rule for generating the SQL example where clause element.
-     * Generate the element if the selectByExample, deleteByExample,
+     * 
+     * In iBATIS2, generate the element if the selectByExample, deleteByExample,
      * updateByExample, or countByExample statements are allowed.
+     * 
+     * In iBATIS3, generate the element if the selectByExample, deleteByExample,
+     * or countByExample statements are allowed.
      * 
      * @return true if the SQL where clause element should be generated
      */
     boolean generateSQLExampleWhereClause();
+    
+    /**
+     * Implements the rule for generating the SQL example where clause element
+     * specifically for use in the update by example methods.
+     * 
+     * In iBATIS2, do not generate the element.
+     * 
+     * In iBATIS3, generate the element if the updateByExample
+     * statements are allowed.
+     * 
+     * @return true if the SQL where clause element should be generated
+     */
+    boolean generateIbatis3UpdateByExampleWhereClause();
     
     /**
      * Implements the rule for generating the SQL base column list element.

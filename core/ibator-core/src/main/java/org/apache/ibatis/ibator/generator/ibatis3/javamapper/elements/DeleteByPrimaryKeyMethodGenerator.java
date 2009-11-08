@@ -15,6 +15,7 @@
  */
 package org.apache.ibatis.ibator.generator.ibatis3.javamapper.elements;
 
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -49,11 +50,28 @@ public class DeleteByPrimaryKeyMethodGenerator extends AbstractJavaMapperMethodG
             importedTypes.add(type);
             method.addParameter(new Parameter(type, "key")); //$NON-NLS-1$
         } else {
-            for (IntrospectedColumn introspectedColumn : introspectedTable.getPrimaryKeyColumns()) {
+            // no primary key class - fields are in the base class
+            // if more than one PK field, then we need to annotate the parameters
+            // for iBATIS3
+            List<IntrospectedColumn> introspectedColumns = introspectedTable.getPrimaryKeyColumns();
+            boolean annotate = introspectedColumns.size() > 1;
+            if (annotate) {
+                importedTypes.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param")); //$NON-NLS-1$
+            }
+            StringBuilder sb = new StringBuilder();
+            for (IntrospectedColumn introspectedColumn : introspectedColumns) {
                 FullyQualifiedJavaType type = introspectedColumn
                         .getFullyQualifiedJavaType();
                 importedTypes.add(type);
-                method.addParameter(new Parameter(type, introspectedColumn.getJavaProperty()));
+                Parameter parameter = new Parameter(type, introspectedColumn.getJavaProperty());
+                if (annotate) {
+                    sb.setLength(0);
+                    sb.append("@Param(\""); //$NON-NLS-1$
+                    sb.append(introspectedColumn.getJavaProperty());
+                    sb.append("\")"); //$NON-NLS-1$
+                    parameter.addAnnotation(sb.toString());
+                }
+                method.addParameter(parameter);
             }
         }
 

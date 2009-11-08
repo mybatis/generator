@@ -51,7 +51,7 @@ public class IntrospectedTableIbatis2Java2Impl extends IntrospectedTable {
     protected AbstractXmlGenerator sqlMapGenerator;
 
     public IntrospectedTableIbatis2Java2Impl() {
-        super();
+        super(TargetRuntime.IBATIS2);
         javaModelGenerators = new ArrayList<AbstractJavaGenerator>();
         daoGenerators = new ArrayList<AbstractJavaGenerator>();
     }

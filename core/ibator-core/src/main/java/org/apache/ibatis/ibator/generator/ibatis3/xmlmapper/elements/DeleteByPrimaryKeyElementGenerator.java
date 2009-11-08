@@ -42,7 +42,14 @@ public class DeleteByPrimaryKeyElementGenerator extends AbstractXmlElementGenera
         if (introspectedTable.getRules().generatePrimaryKeyClass()) {
             parameterClass = introspectedTable.getPrimaryKeyType();
         } else {
-            parameterClass = introspectedTable.getBaseRecordType();
+            // PK fields are in the base class.  If more than on PK
+            // field, then they are coming in a map.
+            if (introspectedTable.getPrimaryKeyColumns().size() > 1) {
+                parameterClass = "map"; //$NON-NLS-1$
+            } else {
+                parameterClass = introspectedTable.getPrimaryKeyColumns().get(0)
+                    .getFullyQualifiedJavaType().toString();
+            }
         }
         answer.addAttribute(new Attribute("parameterType", //$NON-NLS-1$
                 parameterClass));

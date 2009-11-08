@@ -77,11 +77,23 @@ public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
     
     protected XmlElement getExampleIncludeElement() {
         XmlElement ifElement = new XmlElement("if"); //$NON-NLS-1$
-        ifElement.addAttribute(new Attribute("test", "_parameter != null"));
+        ifElement.addAttribute(new Attribute("test", "_parameter != null")); //$NON-NLS-1$ //$NON-NLS-2$
         
         XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
         includeElement.addAttribute(new Attribute("refid", //$NON-NLS-1$
                 introspectedTable.getExampleWhereClauseId())); //$NON-NLS-1$
+        ifElement.addElement(includeElement);
+        
+        return ifElement;
+    }
+    
+    protected XmlElement getUpdateByExampleIncludeElement() {
+        XmlElement ifElement = new XmlElement("if"); //$NON-NLS-1$
+        ifElement.addAttribute(new Attribute("test", "_parameter != null")); //$NON-NLS-1$ //$NON-NLS-2$
+        
+        XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
+        includeElement.addAttribute(new Attribute("refid", //$NON-NLS-1$
+                introspectedTable.getIbatis3UpdateByExampleWhereClauseId())); //$NON-NLS-1$
         ifElement.addElement(includeElement);
         
         return ifElement;

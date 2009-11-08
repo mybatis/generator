@@ -11,5 +11,6 @@
     <module>ibator-maven-plugin</module>
     <module>ibator-systests-ibatis2-java2</module>
     <module>ibator-systests-ibatis2-java5</module>
+    <module>ibator-systests-ibatis3</module>
   </modules>
 </project>

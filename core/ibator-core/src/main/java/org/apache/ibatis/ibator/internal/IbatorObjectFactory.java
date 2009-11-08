@@ -30,6 +30,7 @@ import org.apache.ibatis.ibator.config.JavaTypeResolverConfiguration;
 import org.apache.ibatis.ibator.config.TableConfiguration;
 import org.apache.ibatis.ibator.generator.ibatis2.IntrospectedTableIbatis2Java2Impl;
 import org.apache.ibatis.ibator.generator.ibatis2.IntrospectedTableIbatis2Java5Impl;
+import org.apache.ibatis.ibator.generator.ibatis3.IntrospectedTableIbatis3Impl;
 import org.apache.ibatis.ibator.internal.types.JavaTypeResolverDefaultImpl;
 import org.apache.ibatis.ibator.internal.util.StringUtility;
 import org.apache.ibatis.ibator.internal.util.messages.Messages;
@@ -202,6 +203,8 @@ public class IbatorObjectFactory {
             type = IntrospectedTableIbatis2Java2Impl.class.getName();
         } else if ("Ibatis2Java5".equalsIgnoreCase(type)) { //$NON-NLS-1$
             type = IntrospectedTableIbatis2Java5Impl.class.getName();
+        } else if ("Ibatis3".equalsIgnoreCase(type)) { //$NON-NLS-1$
+            type = IntrospectedTableIbatis3Impl.class.getName();
         }
         
         IntrospectedTable answer = (IntrospectedTable) createInternalObject(type);

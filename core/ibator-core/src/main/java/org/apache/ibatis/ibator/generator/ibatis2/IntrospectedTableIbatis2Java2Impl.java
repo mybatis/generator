@@ -28,7 +28,6 @@ import org.apache.ibatis.ibator.generator.AbstractGenerator;
 import org.apache.ibatis.ibator.generator.AbstractJavaGenerator;
 import org.apache.ibatis.ibator.generator.AbstractXmlGenerator;
 import org.apache.ibatis.ibator.generator.ibatis2.dao.DAOGenerator;
-import org.apache.ibatis.ibator.generator.ibatis2.dao.templates.AbstractDAOTemplate;
 import org.apache.ibatis.ibator.generator.ibatis2.dao.templates.GenericCIDAOTemplate;
 import org.apache.ibatis.ibator.generator.ibatis2.dao.templates.GenericSIDAOTemplate;
 import org.apache.ibatis.ibator.generator.ibatis2.dao.templates.IbatisDAOTemplate;
@@ -75,20 +74,19 @@ public class IntrospectedTableIbatis2Java2Impl extends IntrospectedTable {
         
         String type = ibatorContext.getDaoGeneratorConfiguration().getConfigurationType();
         
-        AbstractDAOTemplate abstractDAOTemplate;
+        AbstractJavaGenerator javaGenerator;
         if ("IBATIS".equalsIgnoreCase(type)) { //$NON-NLS-1$
-            abstractDAOTemplate = new IbatisDAOTemplate();
+            javaGenerator = new DAOGenerator(new IbatisDAOTemplate(), isJava5Targeted());
         } else if ("SPRING".equalsIgnoreCase(type)) { //$NON-NLS-1$
-            abstractDAOTemplate = new SpringDAOTemplate();
+            javaGenerator = new DAOGenerator(new SpringDAOTemplate(), isJava5Targeted());
         } else if ("GENERIC-CI".equalsIgnoreCase(type)) { //$NON-NLS-1$
-            abstractDAOTemplate = new GenericCIDAOTemplate();
+            javaGenerator = new DAOGenerator(new GenericCIDAOTemplate(), isJava5Targeted());
         } else if ("GENERIC-SI".equalsIgnoreCase(type)) { //$NON-NLS-1$
-            abstractDAOTemplate = new GenericSIDAOTemplate();
+            javaGenerator = new DAOGenerator(new GenericSIDAOTemplate(), isJava5Targeted());
         } else {
-            abstractDAOTemplate = (AbstractDAOTemplate) IbatorObjectFactory.createInternalObject(type);
+            javaGenerator = (AbstractJavaGenerator) IbatorObjectFactory.createInternalObject(type);
         }
 
-        AbstractJavaGenerator javaGenerator = new DAOGenerator(abstractDAOTemplate, isJava5Targeted());
         initializeAbstractGenerator(javaGenerator, warnings, progressCallback);
         daoGenerators.add(javaGenerator);
     }

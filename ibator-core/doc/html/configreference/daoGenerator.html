@@ -30,10 +30,10 @@ specify this element, then Ibator will not generate DAO interfaces and classes.<
   </tr>
   <tr>
     <td valign="top">type</td>
-    <td>This attribute is used to select one of the predefined DAO templates, or
-        to specify a user provided DAO template.
-        Any user provided DAO template must extend the class
-        <code>org.apache.ibatis.ibator.generator.ibatis2.dao.templates.AbstractDAOTemplate</code>
+    <td>This attribute is used to select one of the predefined DAO generators, or
+        to specify a user provided DAO generator.
+        Any user provided DAO generator must extend the class
+        <code>org.apache.ibatis.ibator.generator.AbstractJavaGenerator</code>
         class, and must have a public default constructor.
         <p>The attribute accepts the following four values for selecting one of the
         predefined DAO generators:</p>

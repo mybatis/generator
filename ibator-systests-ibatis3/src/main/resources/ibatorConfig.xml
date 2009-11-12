@@ -165,6 +165,9 @@
     <table tableName="RegexRename">
       <columnRenamingRule searchString="^CUST" />
     </table>
+    <table tableName="EnumTest">
+      <columnOverride column="name" javaType="ibatortest.execute.miscellaneous.TestEnum"/>
+    </table>
   </ibatorContext>
   
   <ibatorContext id="miscellaneousTests_NoDAO" targetRuntime="Ibatis3">

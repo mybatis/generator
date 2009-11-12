@@ -53,6 +53,7 @@
     <mapper resource="ibatortest/generated/miscellaneous/xml/AnotherawfultableMapper.xml" />
     <mapper resource="ibatortest/generated/miscellaneous/xml/MyObjectMapper.xml" />
     <mapper resource="ibatortest/generated/miscellaneous/xml/RegexrenameMapper.xml" />
+    <mapper resource="ibatortest/generated/miscellaneous/xml/EnumtestMapper.xml" />
   </mappers>
 
 </configuration>

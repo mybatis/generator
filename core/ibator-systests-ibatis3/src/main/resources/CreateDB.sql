@@ -8,6 +8,7 @@ drop table "awful table" if exists;
 drop table BlobsOnly if exists;
 drop table RegexRename if exists;
 drop table AnotherAwfulTable if exists;
+drop table EnumTest if exists;
 
 create table FieldsOnly (
   IntegerField int,
@@ -99,5 +100,11 @@ create table AnotherAwfulTable (
   "insert" varchar(30),
   "update" varchar(30),
   "delete" varchar(30),
+  primary key(id)
+);
+
+create table EnumTest (
+  id int not null,
+  name varchar(20) not null,
   primary key(id)
 );

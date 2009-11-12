@@ -17,9 +17,11 @@ package ibatortest.execute.miscellaneous;
 
 import static org.junit.Assert.*;
 import ibatortest.AbstractTest;
+import ibatortest.generated.miscellaneous.dao.EnumtestMapper;
 import ibatortest.generated.miscellaneous.dao.MyObjectMapper;
 import ibatortest.generated.miscellaneous.dao.RegexrenameMapper;
 import ibatortest.generated.miscellaneous.model.Anotherawfultable;
+import ibatortest.generated.miscellaneous.model.Enumtest;
 import ibatortest.generated.miscellaneous.model.MyObject;
 import ibatortest.generated.miscellaneous.model.MyObjectCriteria;
 import ibatortest.generated.miscellaneous.model.MyObjectKey;
@@ -1013,6 +1015,30 @@ public class MiscellaneousTest extends AbstractTest {
             returnedRecord = answer.get(2);
             assertEquals(2, returnedRecord.getId1().intValue());
             assertEquals(3, returnedRecord.getId2().intValue());
+        } finally {
+            sqlSession.close();
+        }
+    }
+    
+    @Test
+    public void testEnum() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        try {
+            EnumtestMapper mapper = sqlSession.getMapper(EnumtestMapper.class);
+            
+            Enumtest enumTest = new Enumtest();
+            enumTest.setId(1);
+            enumTest.setName(TestEnum.FRED);
+            int rows = mapper.insert(enumTest);
+            assertEquals(1, rows);
+            
+            List<Enumtest> returnedRecords = mapper.selectByExample(null);
+            assertEquals(1, returnedRecords.size());
+            
+            Enumtest returnedRecord = returnedRecords.get(0);
+            assertEquals(1, returnedRecord.getId().intValue());
+            assertEquals(TestEnum.FRED, returnedRecord.getName());
         } finally {
             sqlSession.close();
         }

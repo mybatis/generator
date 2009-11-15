@@ -61,6 +61,8 @@ public class IntrospectedColumn {
     
     // any database comment associated with this column.  May be null
     protected String remarks;
+    
+    protected String defaultValue;
 
     /**
      * Constructs a Column definition.  This object holds all the 
@@ -277,5 +279,13 @@ public class IntrospectedColumn {
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
+    }
+
+    public String getDefaultValue() {
+        return defaultValue;
+    }
+
+    public void setDefaultValue(String defaultValue) {
+        this.defaultValue = defaultValue;
     }
 }

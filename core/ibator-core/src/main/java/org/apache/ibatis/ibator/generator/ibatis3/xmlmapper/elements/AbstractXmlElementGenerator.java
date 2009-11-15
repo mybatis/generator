@@ -54,7 +54,13 @@ public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
         answer.addAttribute(new Attribute(
                 "keyProperty", introspectedColumn.getJavaProperty())); //$NON-NLS-1$
         if(StringUtility.stringHasValue(generatedKey.getType())) {
-          answer.addAttribute(new Attribute("type", generatedKey.getType())); //$NON-NLS-1$  
+            if ("pre".equalsIgnoreCase(generatedKey.getType())) { //$NON-NLS-1$
+                answer.addAttribute(new Attribute("order", "BEFORE")); //$NON-NLS-1$ //$NON-NLS-2$  
+            } else if ("post".equalsIgnoreCase(generatedKey.getType())) { //$NON-NLS-1$
+                answer.addAttribute(new Attribute("order", "AFTER")); //$NON-NLS-1$ //$NON-NLS-2$  
+            } else {
+                answer.addAttribute(new Attribute("order", generatedKey.getType())); //$NON-NLS-1$  
+            }
         }
         answer.addElement(new TextElement(generatedKey.getRuntimeSqlStatement()));
     

@@ -42,7 +42,7 @@ public class UpdateByExampleParmsInnerclassGenerator extends
         
         InnerClass innerClass = new InnerClass(
                 new FullyQualifiedJavaType("UpdateByExampleParms")); //$NON-NLS-1$
-        innerClass.setVisibility(JavaVisibility.PRIVATE);
+        innerClass.setVisibility(JavaVisibility.PROTECTED);
         innerClass.setStatic(true);
         innerClass.setSuperClass(introspectedTable.getExampleType());
         ibatorContext.getCommentGenerator().addClassComment(innerClass, introspectedTable);

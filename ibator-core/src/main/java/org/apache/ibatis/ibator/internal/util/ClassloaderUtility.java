@@ -53,7 +53,7 @@ public class ClassloaderUtility {
                 }
 
                 try {
-                    urls.add(file.toURL());
+                    urls.add(file.toURI().toURL());
                 } catch (MalformedURLException e) {
                     // this shouldn't happen, but just in case...
                     throw new RuntimeException(

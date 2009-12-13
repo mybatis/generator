@@ -241,7 +241,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         method.addBodyLine("super();"); //$NON-NLS-1$
         method.addBodyLine("this.condition = condition;"); //$NON-NLS-1$
         method.addBodyLine("this.value = value;"); //$NON-NLS-1$
-        method.addBodyLine("if (value instanceof List) {"); //$NON-NLS-1$
+        method.addBodyLine("if (value instanceof List<?>) {"); //$NON-NLS-1$
         method.addBodyLine("this.listValue = true;"); //$NON-NLS-1$
         method.addBodyLine("} else {"); //$NON-NLS-1$
         method.addBodyLine("this.singleValue = true;"); //$NON-NLS-1$

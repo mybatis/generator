@@ -38,6 +38,7 @@ Enhancements:
 15. Many refactorings to make way for iBATIS3
 16. IBATIS-605 - Added Informix Dialect
 17. Added ability to set annotations on method parameters
+18. Addedd support for "distinct" on select by example methods
 
 -------------------------------------------------------------------------------
 Version 1.2.1:

@@ -95,6 +95,31 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         commentGenerator.addGeneralMethodComment(method, introspectedTable);
         topLevelClass.addMethod(method);
 
+        // add field, getter, setter for distinct
+        field = new Field();
+        field.setVisibility(JavaVisibility.PROTECTED);
+        field.setType(FullyQualifiedJavaType.getBooleanPrimitiveInstance());
+        field.setName("distinct"); //$NON-NLS-1$
+        commentGenerator.addFieldComment(field, introspectedTable);
+        topLevelClass.addField(field);
+
+        method = new Method();
+        method.setVisibility(JavaVisibility.PUBLIC);
+        method.setName("setDistinct"); //$NON-NLS-1$
+        method.addParameter(new Parameter(FullyQualifiedJavaType
+                .getBooleanPrimitiveInstance(), "distinct")); //$NON-NLS-1$
+        method.addBodyLine("this.distinct = distinct;"); //$NON-NLS-1$
+        commentGenerator.addGeneralMethodComment(method, introspectedTable);
+        topLevelClass.addMethod(method);
+
+        method = new Method();
+        method.setVisibility(JavaVisibility.PUBLIC);
+        method.setReturnType(FullyQualifiedJavaType.getBooleanPrimitiveInstance());
+        method.setName("isDistinct"); //$NON-NLS-1$
+        method.addBodyLine("return distinct;"); //$NON-NLS-1$
+        commentGenerator.addGeneralMethodComment(method, introspectedTable);
+        topLevelClass.addMethod(method);
+        
         // add field and methods for the list of ored criteria
         field = new Field();
         field.setVisibility(JavaVisibility.PROTECTED);
@@ -148,6 +173,8 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setName("clear"); //$NON-NLS-1$
         method.addBodyLine("oredCriteria.clear();"); //$NON-NLS-1$
+        method.addBodyLine("orderByClause = null;"); //$NON-NLS-1$
+        method.addBodyLine("distinct = false;"); //$NON-NLS-1$
         commentGenerator.addGeneralMethodComment(method, introspectedTable);
         topLevelClass.addMethod(method);
 

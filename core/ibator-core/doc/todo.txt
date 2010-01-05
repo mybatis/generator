@@ -5,6 +5,8 @@ Core:
     1. Add a way to override default types in the JavaTypeResolver
     2. Document change to JavaTypeResolver interface in release notes
     3. Document attributes
+    4. <tableSet> - to allow specification of common attributes for a set of
+       tables
 
 
   Future

@@ -46,15 +46,20 @@ public class SelectByExampleWithBLOBsElementGenerator extends
 
         ibatorContext.getCommentGenerator().addComment(answer);
 
+        answer.addElement(new TextElement("select")); //$NON-NLS-1$
+        XmlElement ifElement = new XmlElement("if"); //$NON-NLS-1$
+        ifElement.addAttribute(new Attribute("test", "distinct")); //$NON-NLS-1$ //$NON-NLS-2$
+        ifElement.addElement(new TextElement("distinct")); //$NON-NLS-1$
+        answer.addElement(ifElement);
+        
         StringBuilder sb = new StringBuilder();
-        sb.append("select "); //$NON-NLS-1$
-
         if (StringUtility.stringHasValue(introspectedTable.getSelectByExampleQueryId())) {
             sb.append('\'');
             sb.append(introspectedTable.getSelectByExampleQueryId());
             sb.append("' as QUERYID,"); //$NON-NLS-1$
+            answer.addElement(new TextElement(sb.toString()));
         }
-        answer.addElement(new TextElement(sb.toString()));
+        
         answer.addElement(getBaseColumnListElement());
         answer.addElement(new TextElement(",")); //$NON-NLS-1$
         answer.addElement(getBlobColumnListElement());
@@ -65,7 +70,7 @@ public class SelectByExampleWithBLOBsElementGenerator extends
         answer.addElement(new TextElement(sb.toString()));
         answer.addElement(getExampleIncludeElement());
 
-        XmlElement ifElement = new XmlElement("if"); //$NON-NLS-1$
+        ifElement = new XmlElement("if"); //$NON-NLS-1$
         ifElement.addAttribute(new Attribute("test", "orderByClause != null")); //$NON-NLS-1$ //$NON-NLS-2$
         ifElement
                 .addElement(new TextElement("order by $orderByClause$")); //$NON-NLS-1$

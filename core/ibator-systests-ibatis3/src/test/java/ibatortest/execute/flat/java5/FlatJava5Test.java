@@ -123,6 +123,47 @@ public class FlatJava5Test extends AbstractTest {
     }
 
     @Test
+    public void testFieldsOnlySelectByExampleDistinct() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        try {
+            FieldsonlyMapper mapper = sqlSession.getMapper(FieldsonlyMapper.class);
+            Fieldsonly record = new Fieldsonly();
+            record.setDoublefield(11.22);
+            record.setFloatfield(33.44);
+            record.setIntegerfield(5);
+            mapper.insert(record);
+            mapper.insert(record);
+            mapper.insert(record);
+
+            record = new Fieldsonly();
+            record.setDoublefield(44.55);
+            record.setFloatfield(66.77);
+            record.setIntegerfield(8);
+            mapper.insert(record);
+
+            record = new Fieldsonly();
+            record.setDoublefield(88.99);
+            record.setFloatfield(100.111);
+            record.setIntegerfield(9);
+            mapper.insert(record);
+
+            FieldsonlyExample example = new FieldsonlyExample();
+            example.createCriteria().andIntegerfieldEqualTo(5);
+            example.setDistinct(true);
+
+            List<Fieldsonly> answer = mapper.selectByExample(example);
+            assertEquals(1, answer.size());
+
+            example.clear();
+            answer = mapper.selectByExample(example);
+            assertEquals(5, answer.size());
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+    @Test
     public void testFieldsOnlySelectByExampleNoCriteria() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
@@ -150,6 +191,9 @@ public class FlatJava5Test extends AbstractTest {
             example.createCriteria();
 
             List<Fieldsonly> answer = mapper.selectByExample(example);
+            assertEquals(3, answer.size());
+
+            answer = mapper.selectByExample(null);
             assertEquals(3, answer.size());
         } finally {
             sqlSession.close();

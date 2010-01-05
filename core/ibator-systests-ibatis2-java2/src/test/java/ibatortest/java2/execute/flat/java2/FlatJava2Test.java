@@ -113,6 +113,45 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
         }
     }
 
+    public void testFieldsOnlySelectByExampleDistinct() {
+        FieldsonlyDAO dao = getFieldsonlyDAO();
+
+        try {
+            Fieldsonly record = new Fieldsonly();
+            record.setDoublefield(new Double(11.22));
+            record.setFloatfield(new Double(33.44));
+            record.setIntegerfield(new Integer(5));
+            dao.insert(record);
+            dao.insert(record);
+            dao.insert(record);
+
+            record = new Fieldsonly();
+            record.setDoublefield(new Double(44.55));
+            record.setFloatfield(new Double(66.77));
+            record.setIntegerfield(new Integer(8));
+            dao.insert(record);
+
+            record = new Fieldsonly();
+            record.setDoublefield(new Double(88.99));
+            record.setFloatfield(new Double(100.111));
+            record.setIntegerfield(new Integer(9));
+            dao.insert(record);
+
+            FieldsonlyExample example = new FieldsonlyExample();
+            example.createCriteria().andIntegerfieldEqualTo(new Integer(5));
+            example.setDistinct(true);
+
+            List answer = dao.selectByExample(example);
+            assertEquals(1, answer.size());
+
+            example.clear();
+            answer = dao.selectByExample(example);
+            assertEquals(5, answer.size());
+        } catch (SQLException e) {
+            fail(e.getMessage());
+        }
+    }
+    
     public void testFieldsOnlySelectByExampleNoCriteria() {
         FieldsonlyDAO dao = getFieldsonlyDAO();
 
@@ -139,6 +178,9 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             example.createCriteria();
 
             List answer = dao.selectByExample(example);
+            assertEquals(3, answer.size());
+
+            answer = dao.selectByExample(null);
             assertEquals(3, answer.size());
         } catch (SQLException e) {
             fail(e.getMessage());

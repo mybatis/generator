@@ -44,15 +44,23 @@ public class SelectByExampleWithBLOBsElementGenerator extends
 
         ibatorContext.getCommentGenerator().addComment(answer);
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("select "); //$NON-NLS-1$
+        answer.addElement(new TextElement("select")); //$NON-NLS-1$
+        XmlElement isParameterPresent = new XmlElement("isParameterPresent"); //$NON-NLS-1$
+        XmlElement isEqualElement = new XmlElement("isEqual"); //$NON-NLS-1$
+        isEqualElement.addAttribute(new Attribute("property", "distinct")); //$NON-NLS-1$ //$NON-NLS-2$
+        isEqualElement.addAttribute(new Attribute("compareValue", "true")); //$NON-NLS-1$ //$NON-NLS-2$
+        isEqualElement.addElement(new TextElement("distinct")); //$NON-NLS-1$
+        isParameterPresent.addElement(isEqualElement);
+        answer.addElement(isParameterPresent);
 
+        StringBuilder sb = new StringBuilder();
         if (StringUtility.stringHasValue(introspectedTable.getSelectByExampleQueryId())) {
             sb.append('\'');
             sb.append(introspectedTable.getSelectByExampleQueryId());
             sb.append("' as QUERYID,"); //$NON-NLS-1$
+            answer.addElement(new TextElement(sb.toString()));
         }
-        answer.addElement(new TextElement(sb.toString()));
+        
         answer.addElement(getBaseColumnListElement());
         answer.addElement(new TextElement(",")); //$NON-NLS-1$
         answer.addElement(getBlobColumnListElement());

@@ -95,6 +95,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
             method.addParameter(new Parameter(type, "example")); //$NON-NLS-1$
             method.addBodyLine("this.orderByClause = example.orderByClause;"); //$NON-NLS-1$
             method.addBodyLine("this.oredCriteria = example.oredCriteria;"); //$NON-NLS-1$
+            method.addBodyLine("this.distinct = example.distinct;"); //$NON-NLS-1$
             commentGenerator.addGeneralMethodComment(method, introspectedTable);
             topLevelClass.addMethod(method);
         }
@@ -188,7 +189,19 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         method.addParameter(new Parameter(FullyQualifiedJavaType
                 .getCriteriaInstance(), "criteria")); //$NON-NLS-1$
         method.addBodyLine("oredCriteria.add(criteria);"); //$NON-NLS-1$
+        commentGenerator.addGeneralMethodComment(method, introspectedTable);
+        topLevelClass.addMethod(method);
 
+        method = new Method();
+        method.setVisibility(JavaVisibility.PUBLIC);
+        if (ibatorContext.getSuppressTypeWarnings(introspectedTable)) {
+            method.addSuppressTypeWarningsAnnotation();
+        }
+        method.setName("or"); //$NON-NLS-1$
+        method.setReturnType(FullyQualifiedJavaType.getCriteriaInstance());
+        method.addBodyLine("Criteria criteria = createCriteriaInternal();"); //$NON-NLS-1$
+        method.addBodyLine("oredCriteria.add(criteria);"); //$NON-NLS-1$
+        method.addBodyLine("return criteria;"); //$NON-NLS-1$
         commentGenerator.addGeneralMethodComment(method, introspectedTable);
         topLevelClass.addMethod(method);
 

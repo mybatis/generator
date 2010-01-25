@@ -2828,8 +2828,8 @@ public class ConditionalJava5Test extends AbstractTest {
             mapper.insert(record);
 
             AwfulTableExample example = new AwfulTableExample();
-            example.createCriteria().andFirstFirstNameLike("b%").andId2EqualTo(222222);
-            example.or(example.createCriteria().andFirstFirstNameLike("wi%"));
+            example.or().andFirstFirstNameLike("b%").andId2EqualTo(222222);
+            example.or().andFirstFirstNameLike("wi%");
             example.setOrderByClause("\"A_CuStOmEr iD\"");
             List<AwfulTable> answer = mapper.selectByExample(example);
             assertEquals(2, answer.size());

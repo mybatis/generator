@@ -1224,8 +1224,8 @@ public class SelectByExampleTest extends AbstractConditionalJava2Test {
             dao.insert(record);
     
             AwfulTableExample example = new AwfulTableExample();
-            example.createCriteria().andFirstFirstNameLike("b%").andId2EqualTo(new Integer(222222));
-            example.or(example.createCriteria().andFirstFirstNameLike("wi%"));
+            example.or().andFirstFirstNameLike("b%").andId2EqualTo(new Integer(222222));
+            example.or().andFirstFirstNameLike("wi%");
             example.setOrderByClause("\"A_CuStOmEr iD\"");
             List answer = dao.selectByExample(example);
             assertEquals(2, answer.size());

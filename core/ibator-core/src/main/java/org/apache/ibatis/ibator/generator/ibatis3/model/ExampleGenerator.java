@@ -144,7 +144,16 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         method.addParameter(new Parameter(FullyQualifiedJavaType
                 .getCriteriaInstance(), "criteria")); //$NON-NLS-1$
         method.addBodyLine("oredCriteria.add(criteria);"); //$NON-NLS-1$
+        commentGenerator.addGeneralMethodComment(method, introspectedTable);
+        topLevelClass.addMethod(method);
 
+        method = new Method();
+        method.setVisibility(JavaVisibility.PUBLIC);
+        method.setName("or"); //$NON-NLS-1$
+        method.setReturnType(FullyQualifiedJavaType.getCriteriaInstance());
+        method.addBodyLine("Criteria criteria = createCriteriaInternal();"); //$NON-NLS-1$
+        method.addBodyLine("oredCriteria.add(criteria);"); //$NON-NLS-1$
+        method.addBodyLine("return criteria;"); //$NON-NLS-1$
         commentGenerator.addGeneralMethodComment(method, introspectedTable);
         topLevelClass.addMethod(method);
 

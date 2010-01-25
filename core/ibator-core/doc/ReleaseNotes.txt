@@ -30,7 +30,7 @@ Enhancements:
    columnOverrides (thanks to Dan Turkenkopf for the idea and a nice initial patch)
 10. Gather column comments during introspection
 11. IBATIS-592 - Additional attributes for SqlMaps
-12. Fixed addCriterionfor JDBC* methods so that they all do a null check
+12. Fixed addCriterionforJDBC* methods so that they all do a null check
 13. Fixed IbatorRunner so that configuration errors are shown (thanks to Karel Rank)
 14. Added XML ids to changeable attributes on introspected table, also
     change the XML merger so that the XML ids no longer need to contain
@@ -39,6 +39,7 @@ Enhancements:
 16. IBATIS-605 - Added Informix Dialect
 17. Added ability to set annotations on method parameters
 18. Addedd support for "distinct" on select by example methods
+19. Added new "or" method to example classes
 
 -------------------------------------------------------------------------------
 Version 1.2.1:

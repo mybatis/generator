@@ -112,6 +112,7 @@ public class JavaBeansUtil {
             case '$':
             case '#':
             case ' ':
+            case '/':
 				if (sb.length() > 0) {
 					nextUpperCase = true;
 				}

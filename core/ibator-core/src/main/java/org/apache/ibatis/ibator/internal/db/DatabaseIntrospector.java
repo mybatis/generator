@@ -214,6 +214,7 @@ public class DatabaseIntrospector {
     
     private void calculateExtraColumnInformation(TableConfiguration tc,
     		Map<ActualTableName, List<IntrospectedColumn>> columns) {
+    	StringBuilder sb = new StringBuilder();
         Pattern pattern = null;
         String replaceString = null;
         if (tc.getColumnRenamingRule() != null) {
@@ -234,6 +235,12 @@ public class DatabaseIntrospector {
                 
                 if (StringUtility.isTrue(tc.getProperty(PropertyRegistry.TABLE_USE_ACTUAL_COLUMN_NAMES))) {
                     introspectedColumn.setJavaProperty(JavaBeansUtil.getValidPropertyName(calculatedColumnName));
+                } else if (StringUtility.isTrue(tc.getProperty(PropertyRegistry.TABLE_USE_COMPOUND_COLUMN_NAMES))) {
+                	sb.setLength(0);
+                	sb.append(calculatedColumnName);
+                	sb.append('_');
+                	sb.append(JavaBeansUtil.getCamelCaseString(introspectedColumn.getRemarks(), true));
+                	introspectedColumn.setJavaProperty(JavaBeansUtil.getValidPropertyName(sb.toString()));
                 } else {
                     introspectedColumn.setJavaProperty(JavaBeansUtil.getCamelCaseString(calculatedColumnName, false));
                 }

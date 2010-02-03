@@ -40,6 +40,7 @@ Enhancements:
 17. Added ability to set annotations on method parameters
 18. Addedd support for "distinct" on select by example methods
 19. Added new "or" method to example classes
+20. Added new "useCompoundColumnNames" property on <table>
 
 -------------------------------------------------------------------------------
 Version 1.2.1:

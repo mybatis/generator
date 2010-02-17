@@ -234,6 +234,10 @@ public class Ibator {
                 if (targetFile.exists()) {
                     if (gxf.isMergeable()) {
                         source = XmlFileMergerJaxp.getMergedSource(gxf, targetFile);
+                    } else if (shellCallback.isOverwriteEnabled()) {
+                    	source = gxf.getFormattedContent();
+                        warnings.add(Messages.getString("Warning.11", //$NON-NLS-1$
+                                targetFile.getAbsolutePath()));
                     } else {
                         source = gxf.getFormattedContent();
                         targetFile = getUniqueFileName(directory, gxf.getFileName());

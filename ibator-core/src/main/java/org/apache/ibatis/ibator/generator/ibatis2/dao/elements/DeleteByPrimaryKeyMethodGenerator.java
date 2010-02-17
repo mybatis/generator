@@ -54,14 +54,14 @@ public class DeleteByPrimaryKeyMethodGenerator extends AbstractDAOElementGenerat
 
             sb.setLength(0);
             sb.append(keyType.getShortName());
-            sb.append(" key = new "); //$NON-NLS-1$
+            sb.append(" _key = new "); //$NON-NLS-1$
             sb.append(keyType.getShortName());
             sb.append("();"); //$NON-NLS-1$
             method.addBodyLine(sb.toString());
 
             for (IntrospectedColumn introspectedColumn : introspectedTable.getPrimaryKeyColumns()) {
                 sb.setLength(0);
-                sb.append("key."); //$NON-NLS-1$
+                sb.append("_key."); //$NON-NLS-1$
                 sb.append(JavaBeansUtil.getSetterMethodName(introspectedColumn
                         .getJavaProperty()));
                 sb.append('(');
@@ -74,7 +74,7 @@ public class DeleteByPrimaryKeyMethodGenerator extends AbstractDAOElementGenerat
         sb.setLength(0);
         sb.append("int rows = "); //$NON-NLS-1$
         sb.append(daoTemplate.getDeleteMethod(introspectedTable.getIbatis2SqlMapNamespace(),
-                introspectedTable.getDeleteByPrimaryKeyStatementId(), "key")); //$NON-NLS-1$
+                introspectedTable.getDeleteByPrimaryKeyStatementId(), "_key")); //$NON-NLS-1$
         method.addBodyLine(sb.toString());
         method.addBodyLine("return rows;"); //$NON-NLS-1$
 
@@ -105,7 +105,7 @@ public class DeleteByPrimaryKeyMethodGenerator extends AbstractDAOElementGenerat
         if (introspectedTable.getRules().generatePrimaryKeyClass()) {
             FullyQualifiedJavaType type = new FullyQualifiedJavaType(introspectedTable.getPrimaryKeyType());
             importedTypes.add(type);
-            method.addParameter(new Parameter(type, "key")); //$NON-NLS-1$
+            method.addParameter(new Parameter(type, "_key")); //$NON-NLS-1$
         } else {
             for (IntrospectedColumn introspectedColumn : introspectedTable.getPrimaryKeyColumns()) {
                 FullyQualifiedJavaType type = introspectedColumn

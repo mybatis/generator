@@ -15,6 +15,7 @@ Bugs:
 4. Fixed IBATIS-601 - improper validation of <generatedKey>
 5. Fixed IBATIS-609 - incorrect parsing of Java generic types
 6. Fixed spelling error LONCVARCHAR->LONGVARCHAR (thanks Allard)
+7. Fixed IBATIS-731 - change name of primary key variable to avoid conflicts
 
 Enhancements:
 1. IBATIS-569 - Make it easier to override IbatorRules in plugins
@@ -41,6 +42,7 @@ Enhancements:
 18. Addedd support for "distinct" on select by example methods
 19. Added new "or" method to example classes
 20. Added new "useCompoundColumnNames" property on <table>
+
 
 -------------------------------------------------------------------------------
 Version 1.2.1:

@@ -62,10 +62,10 @@
       <plugin>
       	<groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
-        <version>2.2-beta-4</version>
+        <version>2.2-beta-5</version>
         <configuration>
           <descriptors>
-            <descriptor>src/main/assembly/main.xml</descriptor>
+            <descriptor>src/main/assembly/src.xml</descriptor>
           </descriptors>
         </configuration>        
       </plugin>

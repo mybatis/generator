@@ -25,18 +25,29 @@ or other classes that are a necessary part of the build.  If you would like to
 inspect those classes, or build Ibator from the very latest version of the source code
 at Apache then follow these steps:</p>
 <ol>
-  <li>Do a SubVersion checkout of the Ibator source tree from the location
-    <a target="_blank" href="http://svn.apache.org/repos/asf/ibatis/trunk/java/tools/ibator/core/">
-    http://svn.apache.org/repos/asf/ibatis/trunk/java/tools/ibator/core/</a>
-    (You may use any SubVersion client you prefer.  We recommend
+  <li>Ibator is built with Apache Maven2.  First you must get maven
+      running.  If you are new to Maven, here are the most simple steps (for Windows):</li>
+      <ol type="a">
+        <li>Download a Maven distribution from <a target="_blank" href="http://maven.apache.org/">
+          http://maven.apache.org/</a></li>
+        <li>Unzip the distribution somewhere convenient</li>
+        <li>Setup environment variables and the PATH.  Examples:<br/>
+            set JAVA_HOME=C:\JavaTools\jdk1.6.0_17<br/>
+            set M2_HOME=C:\JavaTools\apache-maven-2.2.1<br/>
+            set PATH=%PATH%;%M2_HOME%\bin;
+        </li>
+      </ol>
+  <li>Do a Subversion checkout of the Ibator source tree from the location
+    <a target="_blank" href="http://svn.apache.org/repos/asf/ibatis/java/ibator/trunk/core/">
+    http://svn.apache.org/repos/asf/ibatis/java/ibator/trunk/core/</a>
+    (You may use any Subversion client you prefer.  We recommend
     <a target="_blank" href="http://tortoisesvn.tigris.org/">TortoiseSVN</a>.)
   </li>
-  <li>The build file only requires that the JAVA_HOME environment variable be defined.
-      If it is not already defined on your system, then
-      modify the file <code>../build/setupCmdLine.bat</code> to specify
-      the proper values on your machine.</li>
-  <li>Run the Ant build script by running the batch file <code>../build/build.bat</code>
-    from the checked out directory.</li>
+  <li>Open a command window in the directory where you checked out the Ibator source and
+      run the command <code>mvn clean install</code> - or any of the other Maven lifecycle commands.
+      You can use the <code>mvn site</code> command to generate the code coverage reports, but the
+      Ibator website is not built with Maven at this time.
+  </li>
 </ol>
 
 

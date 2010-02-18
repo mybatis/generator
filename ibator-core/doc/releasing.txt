@@ -1,11 +1,11 @@
 Releasing Ibator:
 
-1. Increment the version number of Ibator in version.properties
+1. Increment the version number in the POMs
 
-2. Build and test the base Ibator (make sure to use JDK 5.0)
+2. Build and test the base Ibator with Maven
 
 3. Build the new version of the Eclipse feature:
-  - Copy new ibator.jar and ibator-src.zip into the core plugin 
+  - Copy new ibator-core-x.x.x.jar and ibator-core-x.x.x-sources.jar into the core plugin 
   - Increment the version number of the feature
   - Increment the version number of any plugin that has changed
   - Build the doc
@@ -26,9 +26,13 @@ Releasing Ibator:
 
 7. Make an SVN label
 
-8. Put the new base Ibator zip file in /www/people.apache.org/builds/ibatis/alpha
+8. Run mvn assembly:assembly on the ibator-core project to create the base zip file.  Put the
+   new base Ibator zip file in /www/people.apache.org/builds/ibatis/alpha
 
 9. Put the new zipped eclipse site in /www/people.apache.org/builds/ibatis/alpha
+
+10. Copy the new versions of ibator-core and ibator-maven-plugin from the local maven repo
+    to the Apache repo at ???
 
 10. Update /www/ibatis.apache.org/doc/tools/ibator from SVN (this updates the documentation)
 

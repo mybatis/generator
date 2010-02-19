@@ -22,7 +22,7 @@ import java.io.StringReader;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import org.apache.ibatis.ibator.generator.ibatis2.XmlConstants;
+import org.apache.ibatis.ibator.generator.XmlConstants;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;

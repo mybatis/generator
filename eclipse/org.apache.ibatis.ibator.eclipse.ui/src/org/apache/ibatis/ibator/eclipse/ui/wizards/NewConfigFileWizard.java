@@ -24,7 +24,7 @@ import org.apache.ibatis.ibator.api.dom.xml.Attribute;
 import org.apache.ibatis.ibator.api.dom.xml.Document;
 import org.apache.ibatis.ibator.api.dom.xml.XmlElement;
 import org.apache.ibatis.ibator.eclipse.ui.IbatorUIPlugin;
-import org.apache.ibatis.ibator.generator.ibatis2.XmlConstants;
+import org.apache.ibatis.ibator.generator.XmlConstants;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;

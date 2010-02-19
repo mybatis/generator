@@ -21,30 +21,9 @@
       <update label="%updateSiteName" url="http://ibatis.apache.org/tools/ibator/"/>
    </url>
 
-   <plugin
-         id="org.apache.ibatis.ibator.core"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.apache.ibatis.ibator.eclipse.core"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.ibatis.ibator.eclipse.doc"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.ibatis.ibator.eclipse.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
+   <plugin id="org.apache.ibatis.ibator.core" version="0.0.0"/>
+   <plugin id="org.apache.ibatis.ibator.eclipse.core" version="0.0.0" unpack="false"/>
+   <plugin id="org.apache.ibatis.ibator.eclipse.doc" version="0.0.0" unpack="false"/>
+   <plugin id="org.apache.ibatis.ibator.eclipse.ui" version="0.0.0"/>
 
 </feature>

@@ -57,16 +57,15 @@ follows:</p>
 latest source
 in the Subversion repository.  We assume that you are somewhat familiar with Subversion
 and the Eclipse plug-in development environment (PDE).  These instructions also assume
-you are using Eclipse version 3.4.1.  The plug-in
-code is not supported in versions of Eclipse prior to version 3.4.1.</p>
+you are using Eclipse version 3.5.1.</p>
 <ol>
   <li>Checkout the latest source code from Subversion
     <ol type="a">
       <li>Create a local directory where the source will be stored (for example
-      /Ibator/source)</li>
+      /Apache/Ibator)</li>
       <li>Check out the source tree from the Subversion repository at
-       <a href="http://svn.apache.org/repos/asf/ibatis/trunk/java/tools/ibator/">
-       http://svn.apache.org/repos/asf/ibatis/trunk/java/tools/ibator/</a>
+       <a href="http://svn.apache.org/repos/asf/ibatis/java/ibator/trunk/">
+       http://svn.apache.org/repos/asf/ibatis/java/ibator/trunk/</a>
        <b>Note:</b> this will also checkout the source for the Ibator core JAR.</li>
     </ol>
   </li>
@@ -81,9 +80,12 @@ code is not supported in versions of Eclipse prior to version 3.4.1.</p>
         (File&gt;Import&gt;General&gt;Existing Projects into Workspace)
       </li>
       <li>Set the root directory to the "eclipse" sub-directory of the directory where
-        you did the SVN checkout (for example, /Ibator/source/eclipse)</li>
+        you did the SVN checkout (for example, /Apache/Ibator/eclipse)</li>
       <li>Select the five projects under the directory, do not copy the projects into
-        your workspace.  The filled out wizard looks like this: <br />
+        your workspace.  Note that there is one other project - the Ibator Update Site
+        project.  You do not need to import this project unless you want to build a
+        local copy of the Eclipse Update site for Ibator.
+        The filled out wizard looks like this: <br />
         <p><img src="importWizard.gif" alt="Eclipse Project Import Wizard"/></p>
       </li>
       <li>Press "Finish", wait for the workspace to build.</li>

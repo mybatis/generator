@@ -141,34 +141,12 @@ This full documentation set is not in Subversion because it is partially generat
 like to rebuild the documentation, simply execute the <code>buildDoc.xml</code> file
 in the <code>org.apache.ibatis.ibator.eclipse.doc</code> project (an Ant build file).</p>
 
-<h2>Building the Ibator Core JAR in Eclipse</h2>
-<p>The core Ibator JAR file has it's source code attached in the plugin, so you
-should be able to step into core Ibator methods for debug.  If you have found a bug
-in Ibator, or would like to test an enhancement, you should modify the Ibator source code,
-and then rebuild the JAR for inclusion in the plugin.</p>
-<p>If you would like to modify/enhance the Ibator core JAR, then you can create a
-Java project for the core JAR by following these steps:</p>
-<ol>
-  <li>Start the Eclipse new project wizard
-     (File&gt;New&gt;Project...)
-  </li>
-  <li>Select the "Java Project from Existing Ant Buildfile" wizard, press "Next"</li>
-  <li>Browse to the "build.xml" file in the checked out project (for example
-    /Ibator/source/core/build/build.xml).  Select the javac task found in target "build.compile".
-    The other javac tasks are used during the normal Ibator build to compile tests
-    and test support classes.
-    Accept the default for the other fields and press "Finish".</li>
-  <li>Wait for the workspace to build.  <b>Note:</b> you will need to add Ant to the
-      build path for the project for a successful compile.  You can find an Ant JAR
-      in the ../core/devlib subdirectory of your SVN checkout directory.</li>
-</ol>
-
-<p>Note that Ibator is compiled with JDK 5.0 for distribution.</p>
-
-<p>If you make a change in the Ibator core files, you can use the <code>buildIbator.xml</code>
-Ant build file in the <code>org.apache.ibatis.ibator.core</code> project to update the
-JAR in the plug-in.  Note that this build file does not run the entire Ibator build (i.e. it
-does not run the tests).</p>
+<h2>Updating the Ibator Core JAR in Eclipse</h2>
+<p>The core Ibator JAR is built with Maven.  If you want to make a change to the core
+Ibator JAR then you will need to build the new JAR with Maven and then copy the new
+JAR into the <code>org.apache.ibatis.ibator.core</code> project in Eclipse.  You might
+need to update the <code>MANIFEST.MF</code> file in this project also if you have changed
+the name of the Ibator JAR file.</p>
 
 </body>
 </html>

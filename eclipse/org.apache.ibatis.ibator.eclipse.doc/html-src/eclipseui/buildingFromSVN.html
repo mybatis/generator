@@ -66,14 +66,17 @@ you are using Eclipse version 3.5.1.</p>
       <li>Check out the source tree from the Subversion repository at
        <a href="http://svn.apache.org/repos/asf/ibatis/java/ibator/trunk/">
        http://svn.apache.org/repos/asf/ibatis/java/ibator/trunk/</a>
-       <b>Note:</b> this will also checkout the source for the Ibator core JAR.</li>
+       <b>Note:</b> this will also checkout the source for the Ibator core JAR which is required.</li>
     </ol>
   </li>
   <li>Create a new Eclipse workspace directory (for example /EclipseWorkspaces/Ibator)</li>
+  <li>Start Eclipse and point it to the new workspace directory</li>
   <li><b>Important:</b> make sure that a version 5.0 or higher JDK is configured as the default
      JRE in Eclipse (Window&gt;Preferences&gt;Java&gt;Installed JREs).  A JDK is required - a JRE
      alone will cause problems.</li>
-  <li>Start Eclipse and point it to the new workspace directory</li>
+  <li><b>Important:</b> create a path variable named IBATOR_SOURCE that points to the
+    <code>.../core/ibator-core/src</code> folder in the source tree from SVN
+    (Window&gt;Preferences&gt;General&gt;Workspace&gt;Linked Resources)</li>
   <li>Import the plug-in projects into the workspace
     <ol type="a">
       <li>Start the Eclipse project import wizard
@@ -140,13 +143,6 @@ core Ibator source tree, and partially maintained in the plugin itself.
 This full documentation set is not in Subversion because it is partially generated.  If you would
 like to rebuild the documentation, simply execute the <code>buildDoc.xml</code> file
 in the <code>org.apache.ibatis.ibator.eclipse.doc</code> project (an Ant build file).</p>
-
-<h2>Updating the Ibator Core JAR in Eclipse</h2>
-<p>The core Ibator JAR is built with Maven.  If you want to make a change to the core
-Ibator JAR then you will need to build the new JAR with Maven and then copy the new
-JAR into the <code>org.apache.ibatis.ibator.core</code> project in Eclipse.  You might
-need to update the <code>MANIFEST.MF</code> file in this project also if you have changed
-the name of the Ibator JAR file.</p>
 
 </body>
 </html>

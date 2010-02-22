@@ -23,7 +23,6 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.IJavaElement;
-import org.eclipse.jface.dialogs.IDialogPage;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardPage;
@@ -63,9 +62,6 @@ public class NewConfigFileWizardPage1 extends WizardPage {
 		this.selection = selection;
 	}
 
-	/**
-	 * @see IDialogPage#createControl(Composite)
-	 */
 	public void createControl(Composite parent) {
 		Composite container = new Composite(parent, SWT.NULL);
 		GridLayout layout = new GridLayout();

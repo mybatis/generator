@@ -1,0 +1,86 @@
+<!--
+	This program and the accompanying materials are made available
+	under the terms of the Eclipse Public License v1.0 which
+	accompanies this distribution, and is available at
+  	http://www.eclipse.org/legal/epl-v10.html
+	
+	This build script creates a build directory containing the plugins
+	and features to be built, and then kicks off the PDE build process.
+	You could just as easily do this from a shell script or cron job.
+	
+	Also, the script can be run inside the Eclipse IDE by choosing 
+	Run As -> Ant Build from the context menu. It could obviously be
+	run outside of the IDE if you have ANT installed on your path.
+	
+	If you have any questions about this build, feel free to contact me
+	at patrick@rcpquickstart.com.
+-->
+<project name="org.apache.ibatis.ibator.build" default="build">
+	<property file="build.properties" />
+
+	<!--
+		PDE Build expects that the build directory contains a "plugins" 
+		directory and a "features" directory. These directories should contain
+		the various plug-ins and features to be built.
+		
+		It's possible to use the CVS checkout process that is built into 
+		PDE Build. This is done with map files and is beyond the scope of 
+		this tutorial. 
+		
+		This tutorial simply copies the projects directly from your workspace
+		into the appropriate build directory folders.
+	-->
+	<target name="init">
+		<mkdir dir="${buildDirectory}" />
+		<mkdir dir="${buildDirectory}/plugins" />
+		<mkdir dir="${buildDirectory}/features" />
+		<copy todir="${buildDirectory}/plugins">
+			<fileset dir="../">
+				<include name="org.apache.ibatis.ibator.core/**" />
+				<include name="org.apache.ibatis.ibator.eclipse.core/**" />
+				<include name="org.apache.ibatis.ibator.eclipse.doc/**" />
+				<include name="org.apache.ibatis.ibator.eclipse.ui/**" />
+			</fileset>
+		</copy>
+		<copy todir="${buildDirectory}/features">
+			<fileset dir="../">
+				<include name="org.apache.ibatis.ibator/**" />
+			</fileset>
+		</copy>
+		<copy todir="${buildDirectory}/plugins/org.apache.ibatis.ibator.core/src/main">
+			<fileset dir="../../core/ibator-core/src/main">
+				<include name="java/**" />
+				<include name="resources/**" />
+			</fileset>
+		</copy>
+	</target>
+	
+	<!--
+		This target actually executes the PDE Build process by launching the 
+		Eclipse antRunner application.
+		
+		NOTE: If you are using Eclipse 3.2, switch out the pathelement below
+		with the one that is commented out.
+	-->
+	<target name="pde-build">
+		<dirname file="build.properties" property="builder"/>
+		
+		<java classname="org.eclipse.equinox.launcher.Main" fork="true" failonerror="true">
+			<arg value="-application" />
+			<arg value="org.eclipse.ant.core.antRunner" />
+			<arg value="-buildfile" />
+			<arg value="${baseLocation}/plugins/org.eclipse.pde.build_${pdeBuildPluginVersion}/scripts/build.xml" />
+			<arg value="-Dtimestamp=${timestamp}" />
+			<arg value="-Dbuilder=${builder}" />
+			<classpath>
+				<pathelement location="${baseLocation}/plugins/org.eclipse.equinox.launcher_${equinoxLauncherPluginVersion}.jar" />
+			</classpath>
+		</java>
+	</target>
+		
+	<target name="clean">
+		<delete dir="${buildDirectory}" />
+	</target>
+	
+	<target name="build" depends="clean, init, pde-build" />
+</project>

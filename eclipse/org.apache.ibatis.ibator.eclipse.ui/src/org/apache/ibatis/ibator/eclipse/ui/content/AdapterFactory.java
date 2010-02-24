@@ -113,7 +113,7 @@ public class AdapterFactory implements IAdapterFactory {
                 }
                 
                 IPath path = iClasspathEntry.getPath();
-                if (path.segment(0).equals(IbatorClasspathVariableInitializer.IBATOR_JAR)) {
+                if (path.segment(0).equals(IbatorClasspathVariableInitializer.IBATOR_HOME)) {
                     rc = true;
                     break;
                 }

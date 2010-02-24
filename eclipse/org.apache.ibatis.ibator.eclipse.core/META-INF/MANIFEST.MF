@@ -11,4 +11,4 @@ Require-Bundle: org.eclipse.jdt.core;bundle-version="3.4.2",
  org.eclipse.jface.text;bundle-version="3.4.1",
  org.eclipse.core.resources;bundle-version="3.4.1",
  org.eclipse.core.runtime;bundle-version="3.4.0",
- org.apache.ibatis.ibator.core;bundle-version="1.2.0"
+ org.apache.ibatis.ibator.core;bundle-version="1.2.2"

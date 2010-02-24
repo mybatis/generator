@@ -17,9 +17,11 @@ package org.apache.ibatis.ibator.eclipse.ui;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jdt.core.ClasspathVariableInitializer;
@@ -34,8 +36,8 @@ import org.osgi.framework.Bundle;
 public class IbatorClasspathVariableInitializer extends
         ClasspathVariableInitializer {
 
-    public static final String IBATOR_JAR = "IBATOR_JAR"; //$NON-NLS-1$
-    public static final String IBATOR_JAR_SRC = "IBATOR_JAR_SRC"; //$NON-NLS-1$
+    public static final String IBATOR_HOME = "IBATOR_HOME"; //$NON-NLS-1$
+    public static final String IBATOR_SRC_HOME = "IBATOR_SRC_HOME"; //$NON-NLS-1$
     
     /**
      * 
@@ -49,54 +51,76 @@ public class IbatorClasspathVariableInitializer extends
      */
     @Override
     public void initialize(String variable) {
-        if (IBATOR_JAR.equals(variable)) {
+        if (IBATOR_HOME.equals(variable)) {
             initializeIbatorJar();
-        } else if (IBATOR_JAR_SRC.equals(variable)) {
+        } else if (IBATOR_SRC_HOME.equals(variable)) {
             initializeIbatorJarSource();
         }
     }
     
     private void initializeIbatorJar() {
-        Bundle bundle= Platform.getBundle("org.apache.ibatis.ibator.core"); //$NON-NLS-1$
-        if (bundle == null) {
-            JavaCore.removeClasspathVariable(IBATOR_JAR, null);
+    	IPath path = IbatorClasspathVariableInitializer.getIbatorPath();
+        if (path == null) {
+            JavaCore.removeClasspathVariable(IBATOR_HOME, null);
             return;
         }
-        URL installLocation= bundle.getEntry("/ibator.jar"); //$NON-NLS-1$
-        URL local= null;
+        
         try {
-            local= FileLocator.toFileURL(installLocation);
-        } catch (IOException e) {
-            JavaCore.removeClasspathVariable(IBATOR_JAR, null);
-            return;
-        }
-        try {
-            String fullPath= new File(local.getPath()).getAbsolutePath();
-            JavaCore.setClasspathVariable(IBATOR_JAR, new Path(fullPath), null);
-        } catch (JavaModelException e1) {
-            JavaCore.removeClasspathVariable(IBATOR_JAR, null);
+        	JavaCore.setClasspathVariable(IBATOR_HOME, path, null);
+        } catch (JavaModelException e) {
+            JavaCore.removeClasspathVariable(IBATOR_HOME, null);
         }
     }
 
     private void initializeIbatorJarSource() {
+    	IPath path = IbatorClasspathVariableInitializer.getIbatorSourcePath();
+        if (path == null) {
+            JavaCore.removeClasspathVariable(IBATOR_SRC_HOME, null);
+            return;
+        }
+
+        try {
+            JavaCore.setClasspathVariable(IBATOR_SRC_HOME, path, null);
+        } catch (JavaModelException e1) {
+            JavaCore.removeClasspathVariable(IBATOR_SRC_HOME, null);
+        }
+    }
+    
+    public static IPath getIbatorPath() {
         Bundle bundle= Platform.getBundle("org.apache.ibatis.ibator.core"); //$NON-NLS-1$
         if (bundle == null) {
-            JavaCore.removeClasspathVariable(IBATOR_JAR_SRC, null);
-            return;
+            return null;
         }
-        URL installLocation= bundle.getEntry("/ibator-src.zip"); //$NON-NLS-1$
-        URL local= null;
+        
         try {
-            local= FileLocator.toFileURL(installLocation);
+            URL devPath = bundle.getEntry("bin/");
+            File fullPath;
+            if (devPath != null) {
+                devPath = FileLocator.toFileURL(devPath);
+                fullPath = new File(devPath.toURI());
+            } else {
+                fullPath = FileLocator.getBundleFile(bundle);
+            }
+            
+        	return new Path(fullPath.getAbsolutePath());
         } catch (IOException e) {
-            JavaCore.removeClasspathVariable(IBATOR_JAR_SRC, null);
-            return;
+            return null;
+        } catch (URISyntaxException e) {
+            return null;
         }
+    }
+    
+    public static IPath getIbatorSourcePath() {
+        Bundle bundle= Platform.getBundle("org.apache.ibatis.ibator.core.source"); //$NON-NLS-1$
+        if (bundle == null) {
+            return null;
+        }
+        
         try {
-            String fullPath= new File(local.getPath()).getAbsolutePath();
-            JavaCore.setClasspathVariable(IBATOR_JAR_SRC, new Path(fullPath), null);
-        } catch (JavaModelException e1) {
-            JavaCore.removeClasspathVariable(IBATOR_JAR_SRC, null);
+        	File fullPath = FileLocator.getBundleFile(bundle);
+        	return new Path(fullPath.getAbsolutePath());
+        } catch (IOException e) {
+        	return null;
         }
     }
 }

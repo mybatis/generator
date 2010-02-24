@@ -94,12 +94,12 @@
       <classpathVariableInitializer
             class="org.apache.ibatis.ibator.eclipse.ui.IbatorClasspathVariableInitializer"
             readOnly="true"
-            variable="IBATOR_JAR">
+            variable="IBATOR_HOME">
       </classpathVariableInitializer>
       <classpathVariableInitializer
             class="org.apache.ibatis.ibator.eclipse.ui.IbatorClasspathVariableInitializer"
             readOnly="true"
-            variable="IBATOR_JAR_SRC">
+            variable="IBATOR_SRC_HOME">
       </classpathVariableInitializer>
    </extension>
 </plugin>

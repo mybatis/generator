@@ -1,4 +1,4 @@
-<project default="refresh">
+<project default="refresh" basedir=".">
   <path id="org.abache.ibatis.ibator.doc.javadocclasspath">
   	<pathelement location="../org.apache.ibatis.ibator.eclipse.ui/bin"/>
   	<pathelement location="../org.apache.ibatis.ibator.core/ibator.jar"/>

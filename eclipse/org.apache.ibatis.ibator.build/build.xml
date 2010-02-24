@@ -1,36 +1,11 @@
-<!--
-	This program and the accompanying materials are made available
-	under the terms of the Eclipse Public License v1.0 which
-	accompanies this distribution, and is available at
-  	http://www.eclipse.org/legal/epl-v10.html
-	
-	This build script creates a build directory containing the plugins
-	and features to be built, and then kicks off the PDE build process.
-	You could just as easily do this from a shell script or cron job.
-	
-	Also, the script can be run inside the Eclipse IDE by choosing 
-	Run As -> Ant Build from the context menu. It could obviously be
-	run outside of the IDE if you have ANT installed on your path.
-	
-	If you have any questions about this build, feel free to contact me
-	at patrick@rcpquickstart.com.
--->
 <project name="org.apache.ibatis.ibator.build" default="build">
 	<property file="build.properties" />
 
-	<!--
-		PDE Build expects that the build directory contains a "plugins" 
-		directory and a "features" directory. These directories should contain
-		the various plug-ins and features to be built.
-		
-		It's possible to use the CVS checkout process that is built into 
-		PDE Build. This is done with map files and is beyond the scope of 
-		this tutorial. 
-		
-		This tutorial simply copies the projects directly from your workspace
-		into the appropriate build directory folders.
-	-->
 	<target name="init">
+		<!-- First, regenerate the documentation -->
+		<ant antfile="../org.apache.ibatis.ibator.eclipse.doc/buildDoc.xml"
+		  dir="../org.apache.ibatis.ibator.eclipse.doc" />
+		
 		<mkdir dir="${buildDirectory}" />
 		<mkdir dir="${buildDirectory}/plugins" />
 		<mkdir dir="${buildDirectory}/features" />
@@ -58,9 +33,6 @@
 	<!--
 		This target actually executes the PDE Build process by launching the 
 		Eclipse antRunner application.
-		
-		NOTE: If you are using Eclipse 3.2, switch out the pathelement below
-		with the one that is commented out.
 	-->
 	<target name="pde-build">
 		<dirname file="build.properties" property="builder"/>
@@ -83,4 +55,18 @@
 	</target>
 	
 	<target name="build" depends="clean, init, pde-build" />
+	
+	<target name="jeffDev">
+		<delete dir="C:/JavaTools/eclipse" failonerror="false"/>
+		<delete dir="C:/EclipseWorkspaces/IbatorTest" failonerror="false"/>
+		<mkdir dir="C:/EclipseWorkspaces/IbatorTest"/>
+		<unzip dest="C:/Apache/Ibator/eclipse/IbatorUpdateSite"
+			src="C:/Temp/ibator.build/I.TestBuild/org.apache.ibatis.ibator-TestBuild.zip"
+			overwrite="true" />
+		<unzip dest="C:/JavaTools"
+			src="C:/Downloads/Eclipse/eclipse-SDK-3.5.1-win32.zip" />
+	</target>
+	
+	<target name="buildInDev" depends="build, jeffDev" />
+	
 </project>

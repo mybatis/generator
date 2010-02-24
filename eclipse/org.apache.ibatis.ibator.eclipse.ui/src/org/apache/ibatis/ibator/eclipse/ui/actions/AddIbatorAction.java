@@ -19,7 +19,6 @@ package org.apache.ibatis.ibator.eclipse.ui.actions;
 import org.apache.ibatis.ibator.eclipse.ui.IbatorClasspathVariableInitializer;
 import org.apache.ibatis.ibator.eclipse.ui.content.JavaProjectAdapter;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
@@ -47,10 +46,10 @@ public class AddIbatorAction implements IObjectActionDelegate {
      * @see org.eclipse.ui.IActionDelegate#run(org.eclipse.jface.action.IAction)
      */
     public void run(IAction action) {
-        IPath jarPath = new Path(IbatorClasspathVariableInitializer.IBATOR_JAR);
-        IPath srcPath = new Path(IbatorClasspathVariableInitializer.IBATOR_JAR_SRC);
+        IPath jarPath = IbatorClasspathVariableInitializer.getIbatorPath();
+        IPath srcPath = IbatorClasspathVariableInitializer.getIbatorSourcePath();
         
-        IClasspathEntry newEntry = JavaCore.newVariableEntry(jarPath, srcPath, null);
+        IClasspathEntry newEntry = JavaCore.newLibraryEntry(jarPath, srcPath, null);
         
         try {
             IClasspathEntry[] oldClasspath = iJavaProject.getRawClasspath();

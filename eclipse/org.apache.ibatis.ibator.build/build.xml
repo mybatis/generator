@@ -1,7 +1,10 @@
 <project name="org.apache.ibatis.ibator.build" default="build">
 	<property file="build.properties" />
+	<property name="callbacks.file" value="devBuildCallbacks.xml" />
 
 	<target name="init">
+		<available file="${callbacks.file}" property="callbacks.enabled"/>
+		
 		<!-- First, regenerate the documentation -->
 		<ant antfile="../org.apache.ibatis.ibator.eclipse.doc/buildDoc.xml"
 		  dir="../org.apache.ibatis.ibator.eclipse.doc" />
@@ -54,19 +57,11 @@
 		<delete dir="${buildDirectory}" />
 	</target>
 	
-	<target name="build" depends="clean, init, pde-build" />
-	
-	<target name="jeffDev">
-		<delete dir="C:/JavaTools/eclipse" failonerror="false"/>
-		<delete dir="C:/EclipseWorkspaces/IbatorTest" failonerror="false"/>
-		<mkdir dir="C:/EclipseWorkspaces/IbatorTest"/>
-		<unzip dest="C:/Apache/Ibator/eclipse/IbatorUpdateSite"
-			src="C:/Temp/ibator.build/I.TestBuild/org.apache.ibatis.ibator-TestBuild.zip"
-			overwrite="true" />
-		<unzip dest="C:/JavaTools"
-			src="C:/Downloads/Eclipse/eclipse-SDK-3.5.1-win32.zip" />
+	<target name="postBuildDevCallback" if="callbacks.enabled">
+		<subant antfile="${callbacks.file}" failonerror="false" buildpath="." target="post.build">
+		</subant>
 	</target>
 	
-	<target name="buildInDev" depends="build, jeffDev" />
+	<target name="build" depends="clean, init, pde-build, postBuildDevCallback" />
 	
 </project>

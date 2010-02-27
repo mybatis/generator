@@ -19,14 +19,79 @@
 <p>After you run Ibator, you will need to create or modify other iBATIS configuration
    artifacts.  The main tasks are as follows:</p>
 <ul>
-  <li>Create or Modify the SqlMapConfig.xml file</li>
-  <li>Create or modify the dao.xml file (only if using the iBATIS DAO Framework)</li>
+  <li>For iBATIS 3.x:
+    <ul>
+      <li>Create or Modify the MapperConfig.xml file</li>
+    </ul>
+  </li>
+  <li>For iBATIS 2.x:
+    <ul>
+      <li>Create or Modify the SqlMapConfig.xml file</li>
+      <li>Create or modify the dao.xml file (only if using the iBATIS DAO Framework)</li>
+    </ul>
+  </li>
 </ul>
 
 <p>Each task is described in detail below.</p>
 
-<h2>Updating the SqlMapConfig.xml File</h2>
-<p>iBATIS uses an XML file, commonly named <code>SqlMapConfig.xml</code>,
+<h2>Updating the MapperConfig.xml File (iBATIS 3.x)</h2>
+<p>iBATIS 3 uses an XML file, commonly named <code>MapperConfig.xml</code>,
+to specify
+information for a database connection, a transaction management scheme, and XML mapper
+files that will be used in an iBATIS session.  Ibator cannot create this file for you
+because Ibator knows nothing about your execution environment.  However, some of the
+items in this file relate directly to Ibator generated items.  Please refer to
+the standard iBATIS data mapper developer guide for details about the different
+configuration options.</p>
+
+<p>Ibator specific needs in the configuration file are as follows:</p>
+<ul>
+  <li>Ibator generated XML mapper files must be listed</li>
+</ul>
+
+<p>For example, suppose that Ibator has generated an XML mapper file called
+<code>MyTableMapper.xml</code>, and that the file has been placed in the
+<code>test.xml</code> package
+of your project.  The <code>MapperConfig.xml</code> file should have these entries:</p>
+<pre>
+  &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+  &lt;!DOCTYPE configuration
+    PUBLIC "-//ibatis.apache.org//DTD Config 3.0//EN"
+    "http://ibatis.apache.org/dtd/ibatis-3-config.dtd"&gt;
+
+  &lt;configuration&gt;
+    &lt;!-- Setup the transaction manager and data source that are
+         appropriate for your environment
+    --&gt;
+    &lt;environments default"..."&gt;
+      &lt;environment id"..."&gt;
+        &lt;transactionManager type="..."&gt;
+        &lt;/transactionManager&gt;
+        &lt;dataSource type="..."&gt;
+        &lt;/dataSource&gt;
+      &lt;/environment&gt;
+    &lt;/environments&gt;
+
+    &lt;mappers&gt;
+      &lt;!-- XML mapper files should be listed here --&gt;
+      &lt;mapper resource="test/xml/MyTable_SqlMap.xml" /&gt;
+    &lt;/mappers&gt;
+
+  &lt;/configuration&gt;
+</pre>
+
+<p>If there is more than one XML mapper file (as is quite common),
+then the files can be listed in any order with repeated <code>&lt;mapper&gt;</code>
+elements after the <code>&lt;mappers&gt;</code> element.</p>
+
+<p><b>Generated MapperConfig.xml</b> You may ask
+Ibator to generate a skeleton Mapper Configuration file with the MapperConfigPlugin.
+See the <a href="configreference/ibatorPlugin.html">&lt;ibatorPlugin&gt;</a>
+page for more information.</p>
+
+
+<h2>Updating the SqlMapConfig.xml File (iBATIS 2.x)</h2>
+<p>iBATIS 2 uses an XML file, commonly named <code>SqlMapConfig.xml</code>,
 to specify
 information for a database connection, a transaction management scheme, and SQL map XML
 files that will be used in an iBATIS session.  Ibator cannot create this file for you
@@ -77,7 +142,8 @@ elements after the <code>&lt;transactionManager&gt;</code> element.</p>
 Ibator to generate a skeleton SQL Map Configuration file with the SqlMapConfigPlugin.
 See the <a href="configreference/ibatorPlugin.html">&lt;ibatorPlugin&gt;</a>
 page for more information.</p>
-<h2>Updating the dao.xml File</h2>
+
+<h2>Updating the dao.xml File (iBATIS 2.x)</h2>
 <p><b>Important Note:</b> this step is only required if you generated DAOs for the iBATIS DAO
 framework.</p>
 <p>The iBATIS DAO framework is configured by an xml file commonly called

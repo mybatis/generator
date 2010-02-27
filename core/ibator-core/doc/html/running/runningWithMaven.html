@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3c.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Running Ibator With Maven</title>
+  <link type="text/css" rel="stylesheet" href="../ibator.css"/>
+</head>
+<body>
+
+<div class="menuNav">
+  <p>
+    <a href="../index.html" target="_top">Show Menu</a>
+    <a href="runningWithMaven.html" target="_top">Hide Menu</a>
+  </p>
+</div>
+
+<h1>Running Ibator With Maven</h1>
+<p>Ibator includes a Maven plugin for integration into a maven build.  In
+keeping with Maven's configuration by convention strategy, including Ibator
+in a Maven build can be very simple.  The minimum configuration is shown below:</p>
+
+<pre>
+   &lt;project ...&gt;
+     ...
+     &lt;build&gt;
+       ...
+       &lt;plugins&gt;
+        ...
+        &lt;plugin&gt;
+      	  &lt;groupId&gt;org.apache.ibatis.ibator&lt;/groupId&gt;
+      	  &lt;artifactId&gt;ibator-maven-plugin&lt;/artifactId&gt;
+          &lt;version&gt;1.2.2&lt;/version&gt;
+        &lt;/plugin&gt;
+        ...
+      &lt;/plugins&gt;
+      ...
+    &lt;/build&gt;
+    ...
+  &lt;/project&gt;
+
+</pre>
+
+<p>Of course, things are never that easy!  </p>
+
+</body>
+</html>

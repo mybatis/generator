@@ -17,7 +17,20 @@
 
 <h1>What's New in Ibator</h1>
 <h2>Version 1.2.2</h2>
-<h3>Announcements</h3>
+<h3>iBATIS 3.x Support</h3>
+<p>Ibator now includes support for iBATIS version 3, as well as maintinaing
+the existing support for iBATIS version 2.2.0 and later.  For most users, upgrading
+to iBATIS 3.x only requires two changes to existing Ibator configurations:</p>
+<ol>
+  <li>The <code>targetRuntime</code> attribute of
+      <a href="configreference/ibatorContext.html">&lt;ibatorContext&gt;</a>
+      element must be changed to <b>Ibatis3</b></li>
+  <li>The <code>type</code> attribute of
+      <a href="configreference/daoGenerator.html">&lt;daoGenerator&gt;</a>
+      element must be changed to <b>MAPPER</b></li>
+</ol>
+
+<h3>Other Announcements</h3>
 <ul>
   <li>The <code>org.apache.ibatis.ibator.api.CommentGenerator</code> interface
       has changed.  Classes that implement this interface <b>must be changed</b>.  With
@@ -49,6 +62,7 @@
       generated names in other code, you can force Ibator to prepend the string
       with the property <code>useLegacyXMLIds</code> on the
       <a href="configreference/sqlMapGenerator.html">&lt;SqlMapGenerator&gt;</a> configuration.</li>
+  <li>Ibator is now built with Maven and includes a Maven plugin</li>
 
 </ul>
 <h3>Bugs Fixed</h3>
@@ -61,6 +75,9 @@
       fields are null - thanks to Benjamin Klatt for finding this bug.</li>
   <li>IBATIS-601 - improper validation of &lt;generatedKey&gt;</li>
   <li>IBATIS-609 - incorrect parsing of Java generic types</li>
+  <li>Fixed spelling error LONCVARCHAR->LONGVARCHAR (thanks Allard)</li>
+  <li>Fixed IBATIS-731 - change name of primary key variable to avoid conflicts</li>
+  <li>Fixed IBATIS-699 - Overwrite unmergeable XML files if enabled</li>
 </ul>
 
 <h3>Enhancements</h3>
@@ -107,6 +124,10 @@
   <li>Fixed IbatorRunner so that configuration errors are shown (thanks to Karel Rank)</li>
   <li>IBATIS-605 - Added Informix Dialect for
       <a href="configreference/generatedKey.html">&lt;generatedKey&gt;</a></li>
+  <li>Addedd support for "distinct" on select by example methods</li>
+  <li>Added new "or" method to example classes</li>
+  <li>Added new "useCompoundPropertyNames" property on &lt;table&gt;</li>
+
 </ul>
 
 <h2>Version 1.2.1</h2>

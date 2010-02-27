@@ -8,7 +8,15 @@
    </topic>
    <topic href="html/ibatordoc/quickstart.html" label="Quick Start Guide">
    </topic>
-   <topic href="html/ibatordoc/running.html" label="Running Ibator">
+   <topic href="html/ibatordoc/running/running.html" label="Running Ibator">
+      <topic href="html/ibatordoc/running/runningFromCmdLine.html" label="From the Command Line">
+      </topic>
+      <topic href="html/ibatordoc/running/runningWithAnt.html" label="With Ant">
+      </topic>
+      <topic href="html/ibatordoc/running/runningWithMaven.html" label="With Maven">
+      </topic>
+      <topic href="html/ibatordoc/running/runningWithJava.html" label="With Java">
+      </topic>
    </topic>
    <topic href="html/ibatordoc/afterRunning.html" label="Tasks After Running Ibator">
    </topic>

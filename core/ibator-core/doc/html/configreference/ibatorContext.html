@@ -86,7 +86,7 @@ databases, or with different generation parameters, in the same run of Ibator.</
           <th valign="top">Ibatis2Java2</th>
           <td><i>This is the default value</i>
             <br/>With this value, Ibator will generate objects that are compatible
-            with iBATIS versions 2.2.0 and higher, and all levels of Java 2.
+            with iBATIS versions 2.2.0 and higher (but not iBATIS 3), and all levels of Java 2.
             The "by example" methods in these generated objects support virtually
             unlimited dynamic where clauses.  The objects generated with
             this set of generators are not 100% compatible with the
@@ -96,8 +96,8 @@ databases, or with different generation parameters, in the same run of Ibator.</
         <tr>
           <th valign="top">Ibatis2Java5</th>
           <td>With the value, Ibator will generate objects that are compatible
-            with iBATIS versions 2.2.0 and higher, and JSE 5.0 and higher (e.g. the
-            Java model and DAO classes will use generic types).
+            with iBATIS versions 2.2.0 and higher (but not iBATIS 3), and JSE 5.0 and higher
+            (e.g. the Java model and DAO classes will use generic types).
             The "by example" methods in these generated objects support virtually
             unlimited dynamic where clauses.  Additionally, the Java objects
             generated with these generators support many JSE 5.0 features including
@@ -105,6 +105,16 @@ databases, or with different generation parameters, in the same run of Ibator.</
             this set of generators are not 100% compatible with the
             objects generated with the original version of Abator, or one
             of the other sets of code generators.</td>
+        </tr>
+        <tr>
+          <th valign="top">Ibatis3</th>
+          <td>With the value, Ibator will generate objects that are compatible
+            with iBATIS versions 3.0 and higher, and JSE 5.0 and higher (e.g. the
+            Java model and mapper interfaces will use generic types).
+            The "by example" methods in these generated objects support virtually
+            unlimited dynamic where clauses.  Additionally, the Java objects
+            generated with these generators support many JSE 5.0 features including
+            parameterized types and annotations.</td>
         </tr>
       </table>
       <p>If you want to create a different code generator in entirety,

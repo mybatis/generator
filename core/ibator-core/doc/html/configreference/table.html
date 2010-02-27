@@ -289,6 +289,16 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
         <p><i>The default value is false.</i></p></td>
   </tr>
   <tr>
+    <td valign="top">useCompoundPropertyNames</td>
+    <td>If true, then
+        Ibator will use generate property names by contatenating the column name with the
+        column reparks.  This can be usefull in databases created by 4th generation languages
+        where the column names are generated (e.g. FLD2237), but the remarks contain useful
+        information (e.g. "customer id").  In this case, Ibator will generate a property
+        name of FLD2237_CustomerId.
+        <p><i>The default value is false.</i></p></td>
+  </tr>
+  <tr>
     <td valign="top">ignoreQualifiersAtRuntime</td>
     <td>If true, then
         Ibator will not add the schema or catalog to the table name in the generated SQL.

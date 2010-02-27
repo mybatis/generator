@@ -29,7 +29,7 @@
       <plugin>
       	<groupId>org.apache.ibatis.ibator</groupId>
       	<artifactId>ibator-maven-plugin</artifactId>
-      	<version>1.2.2-SNAPSHOT</version>
+        <version>1.2.2-SNAPSHOT</version>
       	<executions>
       	  <execution>
       	    <id>Generate iBATIS Artifacts</id>
@@ -42,9 +42,9 @@
       	  <sqlScript>src/main/resources/CreateDB.sql</sqlScript>
       	  <jdbcDriver>org.hsqldb.jdbcDriver</jdbcDriver>
        	  <jdbcURL>jdbc:hsqldb:mem:aname</jdbcURL>
-   	      <jdbcUserId>sa</jdbcUserId>
-   	      <overwrite>true</overwrite>
-   	    </configuration>
+          <jdbcUserId>sa</jdbcUserId>
+          <overwrite>true</overwrite>
+        </configuration>
       	<dependencies>
           <dependency>
     	    <groupId>org.hsqldb</groupId>

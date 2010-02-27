@@ -17,6 +17,7 @@
 
 <h1>Introduction to Ibator</h1>
 <p>Ibator is a code generator for <a target="_blank" href="http://ibatis.apache.org">iBATIS</a>.
+ Ibator generates code for all version of iBATIS after version 2.2.0 (including iBATIS 3).
  Ibator will introspect a database
  table (or many tables) and will generate iBATIS artifacts that can be used to
  access the table(s).  This lessens the initial nuisance of setting up objects and configuration
@@ -58,7 +59,7 @@ percentage of database operations that are simple CRUD (Create, Retrieve, Update
   </li>
   <li>DAO interface and implementation classes that make appropriate use of the
     above objects.  The generation of DAO classes is optional.  Ibator will
-    generate DAOs of the following types:
+    generate DAOs of the following types for iBATIS 2.x:
     <ul>
       <li>DAOs that conform to the
           <a target="_blank" href="http://www.springframework.org">Spring</a> framework</li>
@@ -69,11 +70,16 @@ percentage of database operations that are simple CRUD (Create, Retrieve, Update
           framework is now deprecated and we suggest that you use the Spring framework
           instead)</li>
     </ul>
+    Ibator will generate DAOs of the following type for iBATIS 3.x:
+    <ul>
+      <li>A mapper interface that works with the iBATIS 3.x mapper infrastructure</li>
+    </ul>
   </li>
 </ul>
 
 <p>Ibator is designed to run well in an iterative development environment, and
-  Ibator can even be included as an Ant task in a continuous build environment.
+  Ibator can even be included as an Ant task, or a Maven plugin, in a continuous
+  build environment.
   Important things to note when running Ibator iteratively include:</p>
 
 <ol>
@@ -101,8 +107,6 @@ DatabaseMetaData interface, especially the <code>getColumns</code> and
 <p>"Ibator" is an iBATIS styled version of the noun abator.  "Abator" means "one who
 abates a nuisance".  This describes the purpose of Ibator - it abates some of the nuisance
 of creating objects and configuration files for iBATIS.</p>
-<p>Ibator was originally named "Abator", but the name was changed as the result of
-a federal trade registration dispute.</p>
 
 <h2>Support</h2>
 <p>Support for Ibator is provided through the iBATIS user mailing list.
@@ -140,7 +144,7 @@ you may open a JIRA issue for Ibator at</p>
   </p>
 </blockquote>
 
-<p>Please select the "Tools" component when creating any JIRA issues for Ibator.</p>
+<p>Please select the "Ibator" component when creating any JIRA issues for Ibator.</p>
 
 </body>
 </html>

@@ -235,7 +235,7 @@ public class DatabaseIntrospector {
                 
                 if (StringUtility.isTrue(tc.getProperty(PropertyRegistry.TABLE_USE_ACTUAL_COLUMN_NAMES))) {
                     introspectedColumn.setJavaProperty(JavaBeansUtil.getValidPropertyName(calculatedColumnName));
-                } else if (StringUtility.isTrue(tc.getProperty(PropertyRegistry.TABLE_USE_COMPOUND_COLUMN_NAMES))) {
+                } else if (StringUtility.isTrue(tc.getProperty(PropertyRegistry.TABLE_USE_COMPOUND_PROPERTY_NAMES))) {
                 	sb.setLength(0);
                 	sb.append(calculatedColumnName);
                 	sb.append('_');

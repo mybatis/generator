@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.StringTokenizer;
 
 import org.apache.ibatis.ibator.api.Ibator;
 import org.apache.ibatis.ibator.api.ShellCallback;
@@ -29,6 +30,7 @@ import org.apache.ibatis.ibator.config.IbatorConfiguration;
 import org.apache.ibatis.ibator.config.xml.IbatorConfigurationParser;
 import org.apache.ibatis.ibator.exception.InvalidConfigurationException;
 import org.apache.ibatis.ibator.exception.XMLParserException;
+import org.apache.ibatis.ibator.internal.util.StringUtility;
 import org.apache.ibatis.ibator.internal.util.messages.Messages;
 import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.AbstractMojo;
@@ -84,8 +86,8 @@ public class IbatorMojo extends AbstractMojo {
     /**
      * Location of a SQL script file to run before generating code.
      * If null, then no script will be run.  If not null,
-     * then jdbc.driver, jdbc.url must be supplies also,
-     * and jdbc.user.id and jdbc.password may be supplied.
+     * then jdbcDriver, jdbcURL must be supplied also,
+     * and jdbcUserId and jdbcPassword may be supplied.
      * 
      * @parameter expression="${ibator.sqlScript}"
      */
@@ -119,6 +121,20 @@ public class IbatorMojo extends AbstractMojo {
      */
     private String jdbcPassword;
     
+    /**
+     * Comma delimited list of table names to generate
+     * 
+     * @parameter expression="${ibator.tableNames}"
+     */
+    private String tableNames;
+    
+    /**
+     * Comma delimited list of contexts to generate
+     * 
+     * @parameter expression="${ibator.contexts}"
+     */
+    private String contexts;
+    
     public void execute() throws MojoExecutionException {
         if (configurationFile == null) {
             throw new MojoExecutionException(Messages.getString("RuntimeError.0")); //$NON-NLS-1$
@@ -134,29 +150,27 @@ public class IbatorMojo extends AbstractMojo {
         runScriptIfNecessary();
 
         Set<String> fullyqualifiedTables = new HashSet<String>();
-        // TODO...
-//        if (StringUtility.stringHasValue(fullyQualifiedTableNames)) {
-//            StringTokenizer st = new StringTokenizer(fullyQualifiedTableNames,
-//                    ","); //$NON-NLS-1$
-//            while (st.hasMoreTokens()) {
-//                String s = st.nextToken().trim();
-//                if (s.length() > 0) {
-//                    fullyqualifiedTables.add(s);
-//                }
-//            }
-//        }
+        if (StringUtility.stringHasValue(tableNames)) {
+            StringTokenizer st = new StringTokenizer(tableNames,
+                    ","); //$NON-NLS-1$
+            while (st.hasMoreTokens()) {
+                String s = st.nextToken().trim();
+                if (s.length() > 0) {
+                    fullyqualifiedTables.add(s);
+                }
+            }
+        }
 
-        Set<String> contexts = new HashSet<String>();
-        // TODO...
-//        if (StringUtility.stringHasValue(contextIds)) {
-//            StringTokenizer st = new StringTokenizer(contextIds, ","); //$NON-NLS-1$
-//            while (st.hasMoreTokens()) {
-//                String s = st.nextToken().trim();
-//                if (s.length() > 0) {
-//                    contexts.add(s);
-//                }
-//            }
-//        }
+        Set<String> contextsToRun = new HashSet<String>();
+        if (StringUtility.stringHasValue(contexts)) {
+            StringTokenizer st = new StringTokenizer(contexts, ","); //$NON-NLS-1$
+            while (st.hasMoreTokens()) {
+                String s = st.nextToken().trim();
+                if (s.length() > 0) {
+                    contextsToRun.add(s);
+                }
+            }
+        }
 
         try {
             IbatorConfigurationParser cp = new IbatorConfigurationParser(project.getProperties(), warnings);
@@ -167,7 +181,7 @@ public class IbatorMojo extends AbstractMojo {
 
             Ibator ibator = new Ibator(config, callback, warnings);
 
-            ibator.generate(new MavenProgressCallback(getLog(), verbose), contexts,
+            ibator.generate(new MavenProgressCallback(getLog(), verbose), contextsToRun,
                     fullyqualifiedTables);
 
         } catch (XMLParserException e) {

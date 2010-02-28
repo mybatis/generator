@@ -58,7 +58,7 @@ public class FullyQualifiedJavaType implements Comparable<FullyQualifiedJavaType
      * Use this constructor to construct a generic type with the specified
      * type parameters
      * 
-     * @param fullyQualifiedName
+     * @param fullTypeSpecification
      */
     public FullyQualifiedJavaType(String fullTypeSpecification) {
         super();

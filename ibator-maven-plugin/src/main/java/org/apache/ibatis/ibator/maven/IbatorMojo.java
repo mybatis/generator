@@ -21,7 +21,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Properties;
 import java.util.Set;
 
 import org.apache.ibatis.ibator.api.Ibator;
@@ -53,7 +52,7 @@ public class IbatorMojo extends AbstractMojo {
     private MavenProject project;
     
     /**
-     * @parameter expression="${ibator.output.directory}" 
+     * @parameter expression="${ibator.outputDirectory}" 
      *             default-value="${project.build.directory}/generated-sources/ibator"
      * @required
      */
@@ -62,11 +61,11 @@ public class IbatorMojo extends AbstractMojo {
     /**
      * Location of the configuration file.
      * 
-     * @parameter expression="${ibator.configuration.file}"
+     * @parameter expression="${ibator.configurationFile}"
      *             default-value="${basedir}/src/main/resources/ibatorConfig.xml"
      * @required
      */
-    private File configFile;
+    private File configurationFile;
     
     /**
      * Specifies whether the mojo writes progress messages to the log
@@ -88,58 +87,54 @@ public class IbatorMojo extends AbstractMojo {
      * then jdbc.driver, jdbc.url must be supplies also,
      * and jdbc.user.id and jdbc.password may be supplied.
      * 
-     * @parameter expression="${ibator.sql.script.file}"
+     * @parameter expression="${ibator.sqlScript}"
      */
     private File sqlScript;
     
     /**
      * JDBC Driver to use if a sql.script.file is specified
      * 
-     * @parameter expression="${ibator.jdbc.driver}"
+     * @parameter expression="${ibator.jdbcDriver}"
      */
     private String jdbcDriver;
     
     /**
      * JDBC URL to use if a sql.script.file is specified
      * 
-     * @parameter expression="${ibator.jdbc.url}"
+     * @parameter expression="${ibator.jdbcURL}"
      */
     private String jdbcURL;
     
     /**
      * JDBC user ID to use if a sql.script.file is specified
      * 
-     * @parameter expression="${ibator.jdbc.user.id}"
+     * @parameter expression="${ibator.jdbcUserId}"
      */
     private String jdbcUserId;
     
     /**
      * JDBC password to use if a sql.script.file is specified
      * 
-     * @parameter expression="${ibator.jdbc.password}"
+     * @parameter expression="${ibator.jdbcPassword}"
      */
     private String jdbcPassword;
     
-    /**
-     * @parameter expression=${ibator.configuration.properties}
-     */
-    private Properties configurationProperties;
-    
     public void execute() throws MojoExecutionException {
-        if (configFile == null) {
+        if (configurationFile == null) {
             throw new MojoExecutionException(Messages.getString("RuntimeError.0")); //$NON-NLS-1$
         }
 
         List<String> warnings = new ArrayList<String>();
 
-        if (!configFile.exists()) {
+        if (!configurationFile.exists()) {
             throw new MojoExecutionException(Messages.getString(
-                    "RuntimeError.1", configFile.toString())); //$NON-NLS-1$
+                    "RuntimeError.1", configurationFile.toString())); //$NON-NLS-1$
         }
         
         runScriptIfNecessary();
 
         Set<String> fullyqualifiedTables = new HashSet<String>();
+        // TODO...
 //        if (StringUtility.stringHasValue(fullyQualifiedTableNames)) {
 //            StringTokenizer st = new StringTokenizer(fullyQualifiedTableNames,
 //                    ","); //$NON-NLS-1$
@@ -152,6 +147,7 @@ public class IbatorMojo extends AbstractMojo {
 //        }
 
         Set<String> contexts = new HashSet<String>();
+        // TODO...
 //        if (StringUtility.stringHasValue(contextIds)) {
 //            StringTokenizer st = new StringTokenizer(contextIds, ","); //$NON-NLS-1$
 //            while (st.hasMoreTokens()) {
@@ -163,9 +159,9 @@ public class IbatorMojo extends AbstractMojo {
 //        }
 
         try {
-            IbatorConfigurationParser cp = new IbatorConfigurationParser(configurationProperties, warnings);
+            IbatorConfigurationParser cp = new IbatorConfigurationParser(project.getProperties(), warnings);
             IbatorConfiguration config = cp
-                    .parseIbatorConfiguration(configFile);
+                    .parseIbatorConfiguration(configurationFile);
 
             ShellCallback callback = new MavenShellCallback(this, overwrite);
 

@@ -5,7 +5,7 @@
   <artifactId>ibator-maven-plugin</artifactId>
   <packaging>maven-plugin</packaging>
   <version>1.2.2-SNAPSHOT</version>
-  <name>ibator-maven-plugin Maven Mojo</name>
+  <name>Apache iBATIS Ibator - Maven Plugin</name>
   <url>http://ibatis.apache.org/ibator.html</url>
   <build>
     <plugins>

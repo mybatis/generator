@@ -39,7 +39,9 @@ home page for information on installing the Eclipse plugin.</p>
   <code>targetPackage</code> attributes in all XML configurations as follows:</p>
 <ul>
   <li><code>targetProject</code> is assumed to be an existing directory structure.
-    Ibator will fail if this directory structure does not exist.</li>
+    Ibator will fail if this directory structure does not exist.  There is one exception to this
+    rule - when Ibator is running through the Maven plugin.  See the Maven plugin page
+    for information about how <code>targetProject</code> is interpreted in Maven.</li>
    <li><code>targetPackage</code> will be translated to a suitable subdirectory
      structure of the <code>targetProject</code>
      directory structure.  Ibator will create these subdirectories if necessary.</li>

@@ -51,12 +51,8 @@ public class ResultMapWithBLOBsElementGenerator extends AbstractXmlElementGenera
         answer.addAttribute(new Attribute("type", //$NON-NLS-1$
                 returnType));
 
-        StringBuilder sb = new StringBuilder();
-// TODO - what do we need to do here for iBATIS3?
-//        sb.append(introspectedTable.getSqlMapNamespace());
-//        sb.append('.');
-        sb.append(introspectedTable.getBaseResultMapId());
-        answer.addAttribute(new Attribute("extends", sb.toString())); //$NON-NLS-1$
+        answer.addAttribute(new Attribute("extends", //$NON-NLS-1$
+                introspectedTable.getBaseResultMapId()));
 
         ibatorContext.getCommentGenerator().addComment(answer);
 

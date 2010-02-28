@@ -478,7 +478,7 @@ public abstract class IntrospectedTable {
     protected void calculateXmlAttributes() {
         setIbatis2SqlMapPackage(calculateIbatis2SqlMapPackage());
         setIbatis2SqlMapFileName(calculateIbatis2SqlMapFileName());
-        setIbatis3XmlMapperFileName(calculateIbatis3XmlMapperFileName()); // TODO? works for now
+        setIbatis3XmlMapperFileName(calculateIbatis3XmlMapperFileName());
         setIbatis3XmlMapperPackage(getIbatis2SqlMapPackage()); // TODO? works for now
         
         setIbatis2SqlMapNamespace(calculateIbatis2SqlMapNamespace());

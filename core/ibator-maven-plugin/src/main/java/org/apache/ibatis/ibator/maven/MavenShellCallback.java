@@ -40,6 +40,10 @@ public class MavenShellCallback extends DefaultShellCallback {
     @Override
     public File getDirectory(String targetProject, String targetPackage)
             throws ShellException {
+        if (!"MAVEN".equals(targetProject)) {
+            return super.getDirectory(targetProject, targetPackage);
+        }
+        
         // targetProject is the output directory from the ibator Mojo.
         // it will be created if necessary
         //

@@ -43,5 +43,12 @@ in a Maven build can be very simple.  The minimum configuration is shown below:<
 
 <p>Of course, things are never that easy!  </p>
 
+<h2>Interpretation of targetProject</h2>
+<p>The <code>targetProject</code> attribute of the generator configurations is interpreted
+somewhat differently when running with Maven.  If set to the special value "MAVEN" (case
+sensitive), then <code>targetProject</code> will be set to the plugin's output directory,
+and that directory will be created if it doesn't already exist.  If not set to "MAVEN", then
+<code>targetProject</code> will be interpreted as normal by Ibator - it must be set
+to a directory that already exists.</p>
 </body>
 </html>

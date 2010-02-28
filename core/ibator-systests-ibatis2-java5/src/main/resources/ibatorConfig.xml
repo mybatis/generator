@@ -10,23 +10,23 @@
     <ibatorPlugin type="org.apache.ibatis.ibator.plugins.EqualsHashCodePlugin" />
     <ibatorPlugin type="org.apache.ibatis.ibator.plugins.SqlMapConfigPlugin" >
       <property name="targetPackage" value="ibatortest.generated.flat" />
-      <property name="targetProject" value="${generated.source.dir.java5}" />
+      <property name="targetProject" value="MAVEN" />
     </ibatorPlugin>
 
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
         connectionURL="jdbc:hsqldb:mem:aname"
         userId="sa" />
 
-    <javaModelGenerator targetPackage="ibatortest.generated.flat.java5.model" targetProject="${generated.source.dir.java5}">
+    <javaModelGenerator targetPackage="ibatortest.generated.flat.java5.model" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
-    <sqlMapGenerator targetPackage="ibatortest.generated.flat.java5.xml"  targetProject="${generated.source.dir.java5}">
+    <sqlMapGenerator targetPackage="ibatortest.generated.flat.java5.xml"  targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
 
-    <daoGenerator type="GENERIC-CI" targetPackage="ibatortest.generated.flat.java5.dao"  targetProject="${generated.source.dir.java5}">
+    <daoGenerator type="GENERIC-CI" targetPackage="ibatortest.generated.flat.java5.dao"  targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </daoGenerator>
 
@@ -59,16 +59,16 @@
         connectionURL="jdbc:hsqldb:mem:aname"
         userId="sa" />
 
-    <javaModelGenerator targetPackage="ibatortest.generated.flat.java2.model" targetProject="${generated.source.dir.java5}">
+    <javaModelGenerator targetPackage="ibatortest.generated.flat.java2.model" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
-    <sqlMapGenerator targetPackage="ibatortest.generated.flat.java2.xml"  targetProject="${generated.source.dir.java5}">
+    <sqlMapGenerator targetPackage="ibatortest.generated.flat.java2.xml"  targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
 
-    <daoGenerator type="GENERIC-SI" targetPackage="ibatortest.generated.flat.java2.dao"  targetProject="${generated.source.dir.java5}">
+    <daoGenerator type="GENERIC-SI" targetPackage="ibatortest.generated.flat.java2.dao"  targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </daoGenerator>
 
@@ -99,16 +99,16 @@
         connectionURL="jdbc:hsqldb:mem:aname"
         userId="sa" />
 
-    <javaModelGenerator targetPackage="ibatortest.generated.hierarchical.java5.model" targetProject="${generated.source.dir.java5}">
+    <javaModelGenerator targetPackage="ibatortest.generated.hierarchical.java5.model" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
-    <sqlMapGenerator targetPackage="ibatortest.generated.hierarchical.java5.xml"  targetProject="${generated.source.dir.java5}">
+    <sqlMapGenerator targetPackage="ibatortest.generated.hierarchical.java5.xml"  targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
 
-    <daoGenerator type="SPRING" targetPackage="ibatortest.generated.hierarchical.java5.dao"  targetProject="${generated.source.dir.java5}">
+    <daoGenerator type="SPRING" targetPackage="ibatortest.generated.hierarchical.java5.dao"  targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </daoGenerator>
 
@@ -141,16 +141,16 @@
         connectionURL="jdbc:hsqldb:mem:aname"
         userId="sa" />
 
-    <javaModelGenerator targetPackage="ibatortest.generated.hierarchical.java2.model" targetProject="${generated.source.dir.java5}">
+    <javaModelGenerator targetPackage="ibatortest.generated.hierarchical.java2.model" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
-    <sqlMapGenerator targetPackage="ibatortest.generated.hierarchical.java2.xml"  targetProject="${generated.source.dir.java5}">
+    <sqlMapGenerator targetPackage="ibatortest.generated.hierarchical.java2.xml"  targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
 
-    <daoGenerator type="GENERIC-CI" targetPackage="ibatortest.generated.hierarchical.java2.dao"  targetProject="${generated.source.dir.java5}">
+    <daoGenerator type="GENERIC-CI" targetPackage="ibatortest.generated.hierarchical.java2.dao"  targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </daoGenerator>
 
@@ -182,16 +182,16 @@
         connectionURL="jdbc:hsqldb:mem:aname"
         userId="sa" />
 
-    <javaModelGenerator targetPackage="ibatortest.generated.conditional.java5.model" targetProject="${generated.source.dir.java5}">
+    <javaModelGenerator targetPackage="ibatortest.generated.conditional.java5.model" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
-    <sqlMapGenerator targetPackage="ibatortest.generated.conditional.java5.xml"  targetProject="${generated.source.dir.java5}">
+    <sqlMapGenerator targetPackage="ibatortest.generated.conditional.java5.xml"  targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
 
-    <daoGenerator type="GENERIC-SI" targetPackage="ibatortest.generated.conditional.java5.dao"  targetProject="${generated.source.dir.java5}">
+    <daoGenerator type="GENERIC-SI" targetPackage="ibatortest.generated.conditional.java5.dao"  targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </daoGenerator>
 
@@ -224,16 +224,16 @@
         connectionURL="jdbc:hsqldb:mem:aname"
         userId="sa" />
 
-    <javaModelGenerator targetPackage="ibatortest.generated.conditional.java2.model" targetProject="${generated.source.dir.java5}">
+    <javaModelGenerator targetPackage="ibatortest.generated.conditional.java2.model" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
-    <sqlMapGenerator targetPackage="ibatortest.generated.conditional.java2.xml"  targetProject="${generated.source.dir.java5}">
+    <sqlMapGenerator targetPackage="ibatortest.generated.conditional.java2.xml"  targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
 
-    <daoGenerator type="SPRING" targetPackage="ibatortest.generated.conditional.java2.dao"  targetProject="${generated.source.dir.java5}">
+    <daoGenerator type="SPRING" targetPackage="ibatortest.generated.conditional.java2.dao"  targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </daoGenerator>
 
@@ -273,15 +273,15 @@
         connectionURL="jdbc:hsqldb:mem:aname"
         userId="sa" />
 
-    <javaModelGenerator targetPackage="ibatortest.generated.miscellaneous.model" targetProject="${generated.source.dir.java5}">
+    <javaModelGenerator targetPackage="ibatortest.generated.miscellaneous.model" targetProject="MAVEN">
       <property name="trimStrings" value="true" />
       <property name="rootClass" value="ibatortest.execute.miscellaneous.BaseClass" />
     </javaModelGenerator>
 
-    <sqlMapGenerator targetPackage="ibatortest.generated.miscellaneous.xml"  targetProject="${generated.source.dir.java5}">
+    <sqlMapGenerator targetPackage="ibatortest.generated.miscellaneous.xml"  targetProject="MAVEN">
     </sqlMapGenerator>
 
-    <daoGenerator type="GENERIC-CI" targetPackage="ibatortest.generated.miscellaneous.dao"  targetProject="${generated.source.dir.java5}"
+    <daoGenerator type="GENERIC-CI" targetPackage="ibatortest.generated.miscellaneous.dao"  targetProject="MAVEN"
         implementationPackage="ibatortest.generated.miscellaneous.dao.impl">
       <property name="rootInterface" value="ibatortest.execute.miscellaneous.BaseInterface" />
       <property name="methodNameCalculator" value="EXTENDED"/>
@@ -312,12 +312,12 @@
         connectionURL="jdbc:hsqldb:mem:aname"
         userId="sa" />
 
-    <javaModelGenerator targetPackage="ibatortest.generated.miscellaneous.model" targetProject="${generated.source.dir.java5}">
+    <javaModelGenerator targetPackage="ibatortest.generated.miscellaneous.model" targetProject="MAVEN">
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
     <sqlMapGenerator targetPackage="ibatortest.generated.miscellaneous.xml"
-                     targetProject="${generated.source.dir.java5}"/>
+                     targetProject="MAVEN"/>
 
     <table tableName="AnotherAwfulTable" />
   </ibatorContext>

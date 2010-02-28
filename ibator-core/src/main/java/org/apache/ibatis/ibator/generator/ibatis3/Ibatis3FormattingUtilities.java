@@ -164,21 +164,7 @@ public class Ibatis3FormattingUtilities {
     }
 
     public static String escapeStringForIbatis3(String s) {
-        // TODO - not sure what to do here
+        // nothing to do for iBATIS3 so far
         return s;
-//        StringTokenizer st = new StringTokenizer(s, "$#", true); //$NON-NLS-1$
-//        StringBuilder sb = new StringBuilder();
-//        while (st.hasMoreTokens()) {
-//            String token = st.nextToken();
-//            if ("$".equals(token)) { //$NON-NLS-1$
-//                sb.append("$$"); //$NON-NLS-1$
-//            } else if ("#".equals(token)) { //$NON-NLS-1$
-//                sb.append("##"); //$NON-NLS-1$
-//            } else {
-//                sb.append(token);
-//            }
-//        }
-//        
-//        return sb.toString();
     }
 }

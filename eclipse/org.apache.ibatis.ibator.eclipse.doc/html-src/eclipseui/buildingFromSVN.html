@@ -3,6 +3,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
+  <meta http-equiv="Content-Type" content="text/html" />
   <title>Ibator Feature Debug Reference</title>
   <link type="text/css" rel="stylesheet" href="../ibatordoc/ibator.css"/>
 </head>
@@ -77,6 +78,9 @@ you are using Eclipse version 3.5.1.</p>
   <li><b>Important:</b> create a path variable named IBATOR_SOURCE that points to the
     <code>.../core/ibator-core/src</code> folder in the source tree from SVN
     (Window&gt;Preferences&gt;General&gt;Workspace&gt;Linked Resources)</li>
+  <li><b>Important:</b> the core Ibator project requires log4j to compile.  Some eclipse
+    distributions do not include log4j.  You can get it by adding the WTP XSL Developer Tools from
+    eclipse (Help>Install New Software, etc.)</li>
   <li>Import the plug-in projects into the workspace
     <ol type="a">
       <li>Start the Eclipse project import wizard

@@ -18,7 +18,7 @@ package org.apache.ibatis.ibator.eclipse.ui.content;
 import org.eclipse.core.resources.IFile;
 
 /**
- * This is the adapter class for files that are abator configuration files.
+ * This is the adapter class for files that are Ibator configuration files.
  * 
  * @author Jeff Butler
  */
@@ -34,5 +34,4 @@ public class IbatorConfigurationFileAdapter {
     public IFile getBaseFile() {
         return baseFile;
     }
-
 }

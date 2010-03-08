@@ -74,7 +74,7 @@ public class RunIbatorAction implements IObjectActionDelegate{
                 }
 
                 ErrorDialog.openError(shell, "Ibator for iBATIS",
-                        "Run Complete With Warninigs", ms, Status.WARNING);
+                        "Run Complete With Warnings", ms, Status.WARNING);
             }
         } catch (Exception e) {
             handleException(e, shell);
@@ -131,8 +131,7 @@ public class RunIbatorAction implements IObjectActionDelegate{
         public void run(IProgressMonitor monitor)
                 throws InvocationTargetException, InterruptedException {
             try {
-                RunIbatorThread thread = new RunIbatorThread(selectedFile
-                        .getLocation().toFile(), warnings);
+                RunIbatorThread thread = new RunIbatorThread(selectedFile, warnings);
 
                 ResourcesPlugin.getWorkspace().run(thread, monitor);
             } catch (CoreException e) {

@@ -13,6 +13,14 @@
   <li>Upgraded to Ibator Version 1.2.2</li>
   <li>Fixed divide by zero error when there are no tables that match
       the configuration</li>
+  <li>Changed build process to use PDE Headless build.  The Ibator feature now includes source bundles
+      for all plugins!  Also, the feature is now well behaved according to Eclipse
+      standards (no bundle is unpack upon install).</li>
+  <li>Enhanced the classloading strategy for generating iBATIS artifacts from the popup menu.
+      Ibator will now find resources and JAR files in project where the configuration file
+      lives if that project is a Java project.</li>
+  <li>Changed classpath variable IBATOR_JAR to IBATOR_HOME</li>
+  <li>Changed classpath variable IBATOR_JAR_SRC to IBATOR_SRC_HOME</li>
 </ul>
 
 <h2>Version 1.2.1</h2>

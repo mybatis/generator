@@ -15,9 +15,11 @@
  */
 package org.apache.ibatis.ibator.eclipse.ui.actions;
 
-import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -29,28 +31,37 @@ import org.apache.ibatis.ibator.eclipse.core.callback.EclipseShellCallback;
 import org.apache.ibatis.ibator.eclipse.ui.IbatorUIPlugin;
 import org.apache.ibatis.ibator.exception.InvalidConfigurationException;
 import org.apache.ibatis.ibator.exception.XMLParserException;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.IWorkspaceRunnable;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.jdt.core.IClasspathEntry;
+import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.JavaCore;
 
 /**
  * @author Jeff Butler
  *
  */
 public class RunIbatorThread implements IWorkspaceRunnable {
-    private File inputFile;
-
+    private IFile inputFile;
     private List<String> warnings;
+    private ClassLoader oldClassLoader;
 
     /**
      *  
      */
-    public RunIbatorThread(File inputFile, List<String> warnings) {
+    public RunIbatorThread(IFile inputFile, List<String> warnings) {
         super();
         this.inputFile = inputFile;
         this.warnings = warnings;
@@ -64,13 +75,15 @@ public class RunIbatorThread implements IWorkspaceRunnable {
     public void run(IProgressMonitor monitor) throws CoreException {
         SubMonitor subMonitor = SubMonitor.convert(monitor, 1000);
         subMonitor.beginTask("Generating iBATIS Artifacts:", 1000);
-
+        
+        setClassLoader();
+        
         try {
             subMonitor.subTask("Parsing Configuration");
 
             IbatorConfigurationParser cp = new IbatorConfigurationParser(
                     warnings);
-            IbatorConfiguration config = cp.parseIbatorConfiguration(inputFile);
+            IbatorConfiguration config = cp.parseIbatorConfiguration(inputFile.getLocation().toFile());
 
             subMonitor.worked(50);
 
@@ -123,6 +136,81 @@ public class RunIbatorThread implements IWorkspaceRunnable {
             throw new CoreException(multiStatus);
         } finally {
             monitor.done();
+            restoreClassLoader();
         }
+    }
+    
+    private void setClassLoader() {
+        IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+        IJavaProject javaProject = getJavaProject();
+        
+        try {
+            if (javaProject != null) {
+                List<URL> entries = new ArrayList<URL>();
+                IPath path = javaProject.getOutputLocation();
+                IResource iResource = root.findMember(path);
+                path = iResource.getLocation();
+                path = path.addTrailingSeparator();
+                entries.add(path.toFile().toURL());
+                
+                IClasspathEntry[] cpEntries = javaProject.getRawClasspath();
+                for (IClasspathEntry cpEntry : cpEntries) {
+                    switch (cpEntry.getEntryKind()) {
+                    case IClasspathEntry.CPE_SOURCE:
+                        path = cpEntry.getOutputLocation();
+                        if (path != null) {
+                            iResource = root.findMember(path);
+                            path = iResource.getLocation();
+                            path = path.addTrailingSeparator();
+                            entries.add(path.toFile().toURL());
+                        }
+                        break;
+                    
+                    case IClasspathEntry.CPE_LIBRARY:
+                        iResource = root.findMember(cpEntry.getPath());
+                        if (iResource == null) {
+                            // resource is not in workspace, must be an external JAR
+                            path = cpEntry.getPath();
+                        } else {
+                            path = iResource.getLocation();
+                        }
+                        entries.add(path.toFile().toURL());
+                        break;
+                    }
+                }
+            
+                ClassLoader oldCl = Thread.currentThread().getContextClassLoader();
+                URL[] entryArray = new URL[entries.size()];
+                entries.toArray(entryArray);
+                ClassLoader newCl = new URLClassLoader(entryArray, oldCl);
+                Thread.currentThread().setContextClassLoader(newCl);
+                oldClassLoader = oldCl;
+            }
+        } catch (Exception e) {
+            // ignore - something too complex is wrong
+            ;
+        }
+        
+    }
+    
+    private void restoreClassLoader() {
+        if (oldClassLoader != null) {
+            Thread.currentThread().setContextClassLoader(oldClassLoader);
+        }
+    }
+    
+    private IJavaProject getJavaProject() {
+        IJavaProject answer = null;
+        IProject project = inputFile.getProject();
+        try {
+            if (project.hasNature(JavaCore.NATURE_ID)) {
+                answer = JavaCore.create(project);
+            }
+        } catch (CoreException e) {
+            // ignore - something is wrong
+            ;
+        }
+            
+        return answer;
     }
 }

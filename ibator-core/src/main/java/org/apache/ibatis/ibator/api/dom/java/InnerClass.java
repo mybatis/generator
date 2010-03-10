@@ -44,6 +44,8 @@ public class InnerClass extends JavaElement {
 
     private List<Method> methods;
     
+    private boolean isAbstract;
+    
     /**
      *  
      */
@@ -117,6 +119,10 @@ public class InnerClass extends JavaElement {
         
         OutputUtilities.javaIndent(sb, indentLevel);
         sb.append(getVisibility().getValue());
+        
+        if (isAbstract()) {
+            sb.append("abstract "); //$NON-NLS-1$
+        }
         
         if (isStatic()) {
             sb.append("static "); //$NON-NLS-1$
@@ -238,5 +244,13 @@ public class InnerClass extends JavaElement {
      */
     public FullyQualifiedJavaType getType() {
         return type;
+    }
+
+    public boolean isAbstract() {
+        return isAbstract;
+    }
+
+    public void setAbstract(boolean isAbtract) {
+        this.isAbstract = isAbtract;
     }
 }

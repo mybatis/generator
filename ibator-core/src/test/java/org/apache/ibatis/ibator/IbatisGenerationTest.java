@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.ibator.api.Ibator;
-import org.apache.ibatis.ibator.api.ProgressCallback;
-import org.apache.ibatis.ibator.api.VerboseProgressCallback;
 import org.apache.ibatis.ibator.config.IbatorConfiguration;
 import org.apache.ibatis.ibator.config.xml.IbatorConfigurationParser;
 import org.apache.ibatis.ibator.internal.DefaultShellCallback;
@@ -37,9 +35,7 @@ public class IbatisGenerationTest {
             
         Ibator ibator = new Ibator(config, shellCallback, warnings);
             
-        ProgressCallback progressCallback = new VerboseProgressCallback();
-            
-        ibator.generate(progressCallback, null, null);
+        ibator.generate(null, null, null);
     }
 
     @Test
@@ -65,9 +61,7 @@ public class IbatisGenerationTest {
             
         Ibator ibator = new Ibator(config, shellCallback, warnings);
             
-        ProgressCallback progressCallback = new VerboseProgressCallback();
-            
-        ibator.generate(progressCallback, null, null);
+        ibator.generate(null, null, null);
     }
     
     @Test
@@ -93,8 +87,6 @@ public class IbatisGenerationTest {
             
         Ibator ibator = new Ibator(config, shellCallback, warnings);
             
-        ProgressCallback progressCallback = new VerboseProgressCallback();
-            
-        ibator.generate(progressCallback, null, null);
+        ibator.generate(null, null, null);
     }
 }

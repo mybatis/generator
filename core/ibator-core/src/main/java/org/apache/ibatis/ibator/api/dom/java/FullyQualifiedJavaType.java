@@ -32,6 +32,7 @@ public class FullyQualifiedJavaType implements Comparable<FullyQualifiedJavaType
     private static FullyQualifiedJavaType objectInstance = null;
     private static FullyQualifiedJavaType dateInstance = null;
     private static FullyQualifiedJavaType criteriaInstance = null;
+    private static FullyQualifiedJavaType generatedCriteriaInstance = null;
     
     /**
      * The short name without any generic arguments
@@ -305,6 +306,14 @@ public class FullyQualifiedJavaType implements Comparable<FullyQualifiedJavaType
         }
         
         return criteriaInstance;
+    }
+    
+    public static final FullyQualifiedJavaType getGeneratedCriteriaInstance() {
+        if (generatedCriteriaInstance == null) {
+            generatedCriteriaInstance = new FullyQualifiedJavaType("GeneratedCriteria"); //$NON-NLS-1$
+        }
+        
+        return generatedCriteriaInstance;
     }
     
     /* (non-Javadoc)

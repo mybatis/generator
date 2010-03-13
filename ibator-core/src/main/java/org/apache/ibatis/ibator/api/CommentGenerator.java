@@ -62,6 +62,8 @@ public interface CommentGenerator {
 
     public void addClassComment(InnerClass innerClass, IntrospectedTable introspectedTable);
 
+    public void addClassComment(InnerClass innerClass, IntrospectedTable introspectedTable, boolean markAsDoNotDelete);
+    
     public void addEnumComment(InnerEnum innerEnum, IntrospectedTable introspectedTable);
 
     public void addGetterComment(Method method, IntrospectedTable introspectedTable, IntrospectedColumn introspectedColumn);

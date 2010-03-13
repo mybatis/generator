@@ -71,7 +71,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
         sb.append(columnName);
         field.addJavaDocLine(sb.toString());
         
-        addIbatorJavadocTag(field);
+        addIbatorJavadocTag(field, false);
         
         field.addJavaDocLine(" */"); //$NON-NLS-1$
     }
@@ -94,7 +94,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
         sb.append(table);
         field.addJavaDocLine(sb.toString());
         
-        addIbatorJavadocTag(field);
+        addIbatorJavadocTag(field, false);
 
         field.addJavaDocLine(" */"); //$NON-NLS-1$
     }
@@ -107,7 +107,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
      * @deprecated as of version 1.2.2.
      * @see DefaultCommentGenerator#addClassComment(InnerClass, IntrospectedTable)
      */
-    public void addClassComment(InnerClass innerClass, FullyQualifiedTable table) {
+    public void addClassComment(InnerClass innerClass, FullyQualifiedTable table, boolean markAsDoNotDelete) {
         StringBuilder sb = new StringBuilder();
         
         innerClass.addJavaDocLine("/**"); //$NON-NLS-1$
@@ -117,7 +117,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
         sb.append(table);
         innerClass.addJavaDocLine(sb.toString());
         
-        addIbatorJavadocTag(innerClass);
+        addIbatorJavadocTag(innerClass, markAsDoNotDelete);
         
         innerClass.addJavaDocLine(" */"); //$NON-NLS-1$
     }
@@ -140,7 +140,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
         sb.append(table);
         innerEnum.addJavaDocLine(sb.toString());
         
-        addIbatorJavadocTag(innerEnum);
+        addIbatorJavadocTag(innerEnum, false);
         
         innerEnum.addJavaDocLine(" */"); //$NON-NLS-1$
     }
@@ -174,7 +174,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
         sb.append(columnName);
         method.addJavaDocLine(sb.toString());
         
-        addIbatorJavadocTag(method);
+        addIbatorJavadocTag(method, false);
         
         method.addJavaDocLine(" */"); //$NON-NLS-1$
     }
@@ -211,7 +211,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
         sb.append(columnName);
         method.addJavaDocLine(sb.toString());
         
-        addIbatorJavadocTag(method);
+        addIbatorJavadocTag(method, false);
         
         method.addJavaDocLine(" */"); //$NON-NLS-1$
     }
@@ -234,7 +234,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
         sb.append(table);
         method.addJavaDocLine(sb.toString());
         
-        addIbatorJavadocTag(method);
+        addIbatorJavadocTag(method, false);
         
         method.addJavaDocLine(" */"); //$NON-NLS-1$
     }
@@ -291,11 +291,14 @@ public class DefaultCommentGenerator implements CommentGenerator {
      * 
      * @param javaElement the java element
      */
-    protected void addIbatorJavadocTag(JavaElement javaElement) {
+    protected void addIbatorJavadocTag(JavaElement javaElement, boolean markAsDoNotDelete) {
         javaElement.addJavaDocLine(" *"); //$NON-NLS-1$
         StringBuilder sb = new StringBuilder();
         sb.append(" * "); //$NON-NLS-1$
         sb.append(MergeConstants.NEW_JAVA_ELEMENT_TAG);
+        if (markAsDoNotDelete) {
+            sb.append(" do_not_delete_during_merge"); //$NON-NLS-1$
+        }
         String s = getDateString();
         if (s != null) {
             sb.append(' ');
@@ -321,7 +324,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
 
     public void addClassComment(InnerClass innerClass,
             IntrospectedTable introspectedTable) {
-        addClassComment(innerClass, introspectedTable.getFullyQualifiedTable());
+        addClassComment(innerClass, introspectedTable.getFullyQualifiedTable(), false);
     }
 
     public void addEnumComment(InnerEnum innerEnum,
@@ -357,5 +360,10 @@ public class DefaultCommentGenerator implements CommentGenerator {
             IntrospectedColumn introspectedColumn) {
         addSetterComment(method, introspectedTable.getFullyQualifiedTable(),
                 introspectedColumn.getActualColumnName());
+    }
+
+    public void addClassComment(InnerClass innerClass,
+            IntrospectedTable introspectedTable, boolean markAsDoNotDelete) {
+        addClassComment(innerClass, introspectedTable.getFullyQualifiedTable(), markAsDoNotDelete);
     }
 }

@@ -1,10 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.apache.ibatis.ibator</groupId>
+  <parent>
+    <groupId>org.apache.ibatis.ibator</groupId>
+    <artifactId>ibator</artifactId>
+    <version>1.2.2-SNAPSHOT</version>
+  </parent>
+
   <artifactId>ibator-maven-plugin</artifactId>
   <packaging>maven-plugin</packaging>
-  <version>1.2.2-SNAPSHOT</version>
   <name>Apache iBATIS Ibator - Maven Plugin</name>
   <url>http://ibatis.apache.org/ibator.html</url>
   <build>
@@ -16,6 +20,28 @@
         <configuration>
           <source>1.5</source>
           <target>1.5</target>
+        </configuration>
+      </plugin>
+      <plugin>
+      	<groupId>org.apache.maven.plugins</groupId>
+      	<artifactId>maven-source-plugin</artifactId>
+      	<version>2.1</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>      	
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>2.5</version>
+        <configuration>
+          <updateReleaseInfo>true</updateReleaseInfo>
         </configuration>
       </plugin>
     </plugins>

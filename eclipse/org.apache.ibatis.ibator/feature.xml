@@ -2,7 +2,7 @@
 <feature
       id="org.apache.ibatis.ibator"
       label="%featureName"
-      version="1.2.2"
+      version="1.2.2.qualifier"
       provider-name="%providerName">
 
    <description>

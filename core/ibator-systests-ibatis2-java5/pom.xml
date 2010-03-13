@@ -1,9 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.apache.ibatis.ibator</groupId>
+    <artifactId>ibator</artifactId>
+    <version>1.2.2-SNAPSHOT</version>
+  </parent>
   <groupId>org.apache.ibatis.ibator</groupId>
   <artifactId>ibator-systests-ibatis2-java5</artifactId>
-  <version>1.2.2-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>ibator-systests-ibatis2-java5</name>
   <url>http://ibatis.apache.org/ibator.html</url>
@@ -52,6 +56,14 @@
     	    <version>1.8.0.10</version>
           </dependency>
       	</dependencies>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>2.5</version>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
       </plugin>
     </plugins>
   </build>

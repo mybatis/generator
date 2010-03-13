@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Apache iBATIS Ibator Core Plug-in
 Bundle-SymbolicName: org.apache.ibatis.ibator.core
-Bundle-Version: 1.2.2
+Bundle-Version: 1.2.2.qualifier
 Bundle-Vendor: ibatis.apache.org
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.apache.ant;bundle-version="1.7.1";resolution:=optional,

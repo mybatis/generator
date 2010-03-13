@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Apache iBATIS Ibator Ui Plug-in
 Bundle-SymbolicName: org.apache.ibatis.ibator.eclipse.ui;singleton:=true
-Bundle-Version: 1.2.2
+Bundle-Version: 1.2.2.qualifier
 Bundle-Activator: org.apache.ibatis.ibator.eclipse.ui.IbatorUIPlugin
 Bundle-Vendor: ibatis.apache.org
 Require-Bundle: org.eclipse.ui;bundle-version="3.4.1",

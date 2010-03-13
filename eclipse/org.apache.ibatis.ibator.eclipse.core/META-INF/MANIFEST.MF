@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Apache iBATIS Ibator Eclipse Core Support Plug-in
 Bundle-SymbolicName: org.apache.ibatis.ibator.eclipse.core
-Bundle-Version: 1.2.2
+Bundle-Version: 1.2.2.qualifier
 Bundle-Vendor: ibatis.apache.org
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.apache.ibatis.ibator.eclipse.core.callback,

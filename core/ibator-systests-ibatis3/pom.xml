@@ -1,9 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.apache.ibatis.ibator</groupId>
+    <artifactId>ibator</artifactId>
+    <version>1.2.2-SNAPSHOT</version>
+  </parent>
   <groupId>org.apache.ibatis.ibator</groupId>
   <artifactId>ibator-systests-ibatis3</artifactId>
-  <version>1.2.2-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>ibator-systests-ibatis3</name>
   <url>http://ibatis.apache.org/ibator.html</url>
@@ -53,6 +57,14 @@
           </dependency>
       	</dependencies>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>2.5</version>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
   <dependencies>
@@ -72,7 +84,7 @@
     <dependency>
     	<groupId>org.apache.ibatis</groupId>
     	<artifactId>ibatis-sqlmap</artifactId>
-    	<version>3.0-beta-9</version>
+    	<version>3.0-beta-10</version>
     </dependency>
     <dependency>
     	<groupId>org.hsqldb</groupId>

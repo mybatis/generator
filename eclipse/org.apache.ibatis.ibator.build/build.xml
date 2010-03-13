@@ -1,4 +1,14 @@
 <project name="org.apache.ibatis.ibator.build" default="build">
+	
+	<!--
+	   IMPORTANT NOTE: the following four properties may need to
+	   be changed in your local build environment 
+	 -->
+	<property name="baseLocation" value="/JavaTools/eclipse_galileo"/>
+	<property name="pdeBuildPluginVersion" value="3.5.1.R35x_20090820"/>
+	<property name="equinoxLauncherPluginVersion" value="1.0.201.R35x_v20090715"/>
+	<property name="buildDirectory" value="/temp/ibator.build"/>
+	
 	<property file="build.properties" />
 	<property name="callbacks.file" value="devBuildCallbacks.xml" />
 
@@ -47,6 +57,8 @@
 			<arg value="${baseLocation}/plugins/org.eclipse.pde.build_${pdeBuildPluginVersion}/scripts/build.xml" />
 			<arg value="-Dtimestamp=${timestamp}" />
 			<arg value="-Dbuilder=${builder}" />
+			<arg value="-DbaseLocation=${baseLocation}" />
+			<arg value="-DbuildDirectory=${buildDirectory}" />
 			<classpath>
 				<pathelement location="${baseLocation}/plugins/org.eclipse.equinox.launcher_${equinoxLauncherPluginVersion}.jar" />
 			</classpath>

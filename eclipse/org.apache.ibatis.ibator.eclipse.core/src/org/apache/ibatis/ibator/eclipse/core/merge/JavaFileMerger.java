@@ -175,7 +175,16 @@ public class JavaFileMerger {
         Iterator<ASTNode> astIter = newJavaFileVisitor.getNewNodes().iterator();
         int i = 0;
         while (astIter.hasNext()) {
-            listRewrite.insertAt(astIter.next(), i++, null);
+            ASTNode node = astIter.next();
+            
+            if (node.getNodeType() == ASTNode.TYPE_DECLARATION) {
+                String name = ((TypeDeclaration) node).getName().getFullyQualifiedName();
+                if (visitor.containsInnerClass(name)) {
+                    continue;
+                }
+            }
+            
+            listRewrite.insertAt(node, i++, null);
         }
 
         textEdit = rewrite.rewriteAST(document, JavaCore.getOptions());

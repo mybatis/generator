@@ -25,16 +25,13 @@ follows:</p>
   </tr>
   <tr>
     <td><code>org.apache.ibatis.ibator.core</code></td>
-    <td>This plugin is an Eclipse library plugin for the standard Ibator JAR file.
-      The purpose of this plug-in is to package the standard JAR and make it available to the
-      other plugins.  There is a build file in this plug-in (buildIbator.xml) that
-      will compile the core Ibator JAR file and update the wrapped JAR files.  This makes
-      it easy to keep the plugin up to date as the core functionality is developed.</td>
+    <td>This plugin holds the Java source for the core Ibator library.  The project for
+      this plugin contains linked folders to the Ibator source tree.</td>
   </tr>
   <tr>
     <td><code>org.apache.ibatis.ibator.eclipse.core</code></td>
     <td>This plugin holds Java support classes for the other plugins.  This plugin does not contribute
-        to the Eclipse user interface.  Currently, this plugin includes classes for Java file
+        to the Eclipse user interface.  This plugin includes classes for Java file
         merging, and Eclipse implementations of the Ibator callback interfaces.</td>
   </tr>
   <tr>
@@ -52,13 +49,34 @@ follows:</p>
   </tr>
 </table>
 
+<h2>Other Projects</h2>
+<p>There are three other Eclipse projects that complete the feature:</p>
+<table cellspacing="0" cellpadding="5" border="1">
+  <tr>
+    <th>Project</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td><code>IbatorUpdateSite</code></td>
+    <td>This project holds the artifacts for the Ibator update site.  The artifacts in this project are used
+     a new version of the feature is published at Apache.  Most users will not need to access the
+     artifacts in this project.</td>
+  </tr>
+  <tr>
+    <td><code>org.apache.ibatis.ibator</code></td>
+    <td>This project is the Eclipse feature project for Ibator.</td>
+  </tr>
+  <tr>
+    <td><code>org.apache.ibatis.ibator.build</code></td>
+    <td>This project holds the build script and properties for the Ibator build.</td>
+  </tr>
+</table>
 
-<h2>Building the Feature and Plug-ins from Source</h2>
-<p>The following instructions show how to build the Ibator feature and plug-ins from the
-latest source
-in the Subversion repository.  We assume that you are somewhat familiar with Subversion
-and the Eclipse plug-in development environment (PDE).  These instructions also assume
-you are using Eclipse version 3.5.1.</p>
+<h2>Eclipse Workspace Setup</h2>
+<p>The following instructions show how to setup an Eclipse workspace for building the Ibator feature
+and plug-ins from the latest source in the Subversion repository.  We assume that you are somewhat
+familiar with Subversion and the Eclipse plug-in development environment (PDE).  These instructions
+also assume you are using Eclipse version 3.5.1 (Galileo).</p>
 <ol>
   <li>Checkout the latest source code from Subversion
     <ol type="a">
@@ -88,10 +106,10 @@ you are using Eclipse version 3.5.1.</p>
       </li>
       <li>Set the root directory to the "eclipse" sub-directory of the directory where
         you did the SVN checkout (for example, /Apache/Ibator/eclipse)</li>
-      <li>Select the five projects under the directory, do not copy the projects into
-        your workspace.  Note that there is one other project - the Ibator Update Site
-        project.  You do not need to import this project unless you want to build a
-        local copy of the Eclipse Update site for Ibator.
+      <li>Select all projects except the <code>IbatorUpdateSite</code> project,
+        do not copy the projects into
+        your workspace.  Note that the Ibator Update Site is not needed unless you
+        intending to release a new version of the the project at Apache.
         The filled out wizard looks like this: <br />
         <p><img src="importWizard.gif" alt="Eclipse Project Import Wizard"/></p>
       </li>
@@ -147,6 +165,55 @@ core Ibator source tree, and partially maintained in the plugin itself.
 This full documentation set is not in Subversion because it is partially generated.  If you would
 like to rebuild the documentation, simply execute the <code>buildDoc.xml</code> file
 in the <code>org.apache.ibatis.ibator.eclipse.doc</code> project (an Ant build file).</p>
+
+<h2>Building the Feature for Distribution</h2>
+<p>If you want to build an updated version of the feature and distribute it locally, then
+follow these steps:</p>
+<ol>
+  <li>Open the file <code>build.xml</code> in the <code>org.apache.ibatis.ibator.build</code>
+      project.  There are four properties at the beginning of the file that may need to
+      change for your local environment.
+      <p/>
+      <table cellspacing="0" border="1">
+        <tr>
+          <th>Property</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td>baseLocation</td>
+          <td>This should be set to the location on disk of an eclipse distribution that
+              includes the plug in development environment.
+          </td>
+        </tr>
+        <tr>
+          <td>pdeBuildPluginVersion</td>
+          <td>This is the version of the <code>org.eclipse.pde.build</code> plugin.
+              The value in the file is the correct version for Eclipse 3.5.1
+          </td>
+        </tr>
+        <tr>
+          <td>equinoxLauncherPluginVersion</td>
+          <td>This is the version of the <code>org.eclipse.equinox.launcher</code> plugin.
+              The value in the file is the correct version for Eclipse 3.5.1
+          </td>
+        </tr>
+        <tr>
+          <td>buildDirectory</td>
+          <td>This is the target directory for the build.</td>
+        </tr>
+      </table>
+      <p/>
+  </li>
+  <li>Once you have verified or updated the properties, you can close the
+      <code>build.xml</code> file.
+  <li>Execute the <code>build.xml</code> file (right click, Run As>Ant Build)</li>
+</ol>
+
+<p>Once the build executes successfully, the new feature will be available
+on your local drive at
+<code>\Temp\ibator.build\I.TestBuild\org.apache.ibatis.ibator-TestBuild.zip</code>
+unless you change the <code>buildDirectory</code> property above.
+</p>
 
 </body>
 </html>

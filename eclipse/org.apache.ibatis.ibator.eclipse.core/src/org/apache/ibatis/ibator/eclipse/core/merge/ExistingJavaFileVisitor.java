@@ -16,6 +16,7 @@
 
 package org.apache.ibatis.ibator.eclipse.core.merge;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jdt.core.dom.ASTNode;
@@ -34,6 +35,7 @@ import org.eclipse.jdt.core.dom.TypeDeclaration;
 public class ExistingJavaFileVisitor extends ASTVisitor {
     private TypeDeclaration typeDeclaration;
     private String[] javadocTags;
+    private List<String> generatedInnerClassesToKeep;
 
     /**
      * 
@@ -41,6 +43,7 @@ public class ExistingJavaFileVisitor extends ASTVisitor {
     public ExistingJavaFileVisitor(String[] javadocTags) {
         super();
         this.javadocTags = javadocTags;
+        generatedInnerClassesToKeep = new ArrayList<String>();
     }
 
     /**
@@ -51,7 +54,7 @@ public class ExistingJavaFileVisitor extends ASTVisitor {
         if (isIbatorGenerated(node)) {
             node.delete();
         }
-
+        
         return false;
     }
 
@@ -77,7 +80,7 @@ public class ExistingJavaFileVisitor extends ASTVisitor {
             typeDeclaration = node;
             return true;
         } else {
-            // is this an iBATOR generated inner class? If so, then delete
+            // is this an Ibator generated inner class? If so, then delete
             if (isIbatorGenerated(node)) {
                 node.delete();
             }
@@ -103,13 +106,25 @@ public class ExistingJavaFileVisitor extends ASTVisitor {
                 }
                 for (String javadocTag : javadocTags) {
                     if (tagName.equals(javadocTag)) {
-                        rc = true;
+                        String string = tag.toString();
+                        if (string.contains("do_not_delete_during_merge")) {
+                            if (node.getNodeType() == ASTNode.TYPE_DECLARATION) {
+                                String name = ((TypeDeclaration) node).getName().getFullyQualifiedName();
+                                generatedInnerClassesToKeep.add(name);
+                            }
+                        } else {
+                            rc = true;
+                        }
                         break;
                     }
                 }
             }
         }
-
+        
         return rc;
+    }
+    
+    public boolean containsInnerClass(String name) {
+        return generatedInnerClassesToKeep.contains(name);
     }
 }

@@ -32,43 +32,16 @@ specific needs of your application.  This may include adding support for non-sta
 predicates, or for using database specific functions in your where clauses.</p>
 
 <p>The generated "example" class includes a nested inner class where the actual
-functionality of the predicates exists.  This inner class is always named <code>Criteria</code>.
-If you wish to add predicates to dynamic where clauses, you must extend
-both the "example" class and the <code>Criteria</code> class.  For example, suppose there is a
+functionality of the predicates exists.  This inner class is always named <code>GeneratedCriteria</code>.
+Ibator also generates an inner class named <code>Criteria</code> which extends
+<code>GeneratedCriteria</code> and which you may
+use for adding your own functions to the example classes.  The <code>Criteria</code>
+class will not be deleted by the Eclipse Java code merger, so you may add to it without
+fear of losing your changes upon regeneration.</p>
+<p>For example, suppose there is a
 table called CUSTOMER.  Typically, Ibator would generate a class named
-<code>CustomerExample</code>.  To add functionality to the <code>CustomerExample</code> class, you must
-follow these steps:</p>
-<ul>
-  <li>Extend the <code>CustomerExample</code> class</li>
-  <li>Extend the nested <code>CustomerExample$Criteria</code> class</li>
-  <li>Override the <code>createCriteriaInternal()</code> method of the
-      <code>CustomerExample</code> class so that the extended Criteria
-      class is created</li>
-  <li>Add functionality to the extended Criteria class</li>
-</ul>
-
-<p>The following code fragment shows the basic requirements of an extended
-example class:</p>
-<pre>
-import ibatortest.generated.CustomerExample;
-
-public class ExtendedCustomerExample extends CustomerExample {
-
-  @Override
-  protected Criteria createCriteriaInternal() {
-    return new ExtendedCriteria();
-  }
-
-  public static class ExtendedCriteria extends CustomerExample.Criteria {
-
-    // add additional predicate support here...
-
-  }
-}
-</pre>
-
-<p>Once the basic class is created, adding additional predicates is a matter
-of adding additional methods to the extended <code>Criteria</code> class.</p>
+<code>CustomerExample</code>.  To add functionality to the <code>CustomerExample</code> class, you
+should add additional methods to the <code>CustomerExample.Criteria</code> class.</p>
 
 <h2>Extending vs. Plugging In</h2>
 <p>If you find that you are extending the example classes frequently, it might be
@@ -82,7 +55,8 @@ as demonstrated by the class
 <p>Ibator generates a dynamic SQL fragment that allows virtually unlimited
 where clauses to be created at run-time.  To accomplish this, the generated SQL
 fragment supports four broad types of SQL predicates.  For each type of
-SQL predicate, there is a corresponding method in the generated <code>Criteria</code> class
+SQL predicate, there is a corresponding method in the <code>GeneratedCriteria</code>
+inner class
 that can be used to add a predicate to the dynamic where clause.</p>
 
 <h3>1. Simple String Substitution</h3>
@@ -92,7 +66,7 @@ include:</p>
 <p><code>FIRST_NAME is null</code><br/>
    <code>LAST_NAME is not null</code></p>
 
-<p>The generated <code>Criteria</code> class method for this predicate is:</p>
+<p>The <code>GeneratedCriteria</code> class method for this predicate is:</p>
 &nbsp;&nbsp;&nbsp;<code>addCriterion(String anyString)</code>
 
 <p>Where "anyString" is the string to be substituted into the where clauses.
@@ -103,9 +77,9 @@ name search.  In MySQL, the predicate should look like this:</p>
 <code>SOUNDEX(FIRST_NAME) = SOUNDEX('frod')</code>
 <p>This predicate is too complex to use one of the other methods, so it must
 be inserted into the where clause by simple string substitution.  Add the following
-method to the <code>ExtendedCriteria</code> for this functionality:</p>
+method to the <code>Criteria</code> inner class for this functionality:</p>
 <pre>
-public ExtendedCriteria andFirstNameSoundsLike(String value) {
+public Criteria andFirstNameSoundsLike(String value) {
   StringBuffer sb = new StringBuffer("SOUNDEX(FIRST_NAME) = SOUNDEX('");
   sb.append(value);
   sb.append("')");
@@ -118,8 +92,8 @@ public ExtendedCriteria andFirstNameSoundsLike(String value) {
 
 <p>The following code shows the use of this new functionality with the <code>selectByExample</code> method:</p>
 <pre>
-ExtendedExample example = new ExtendedExample();
-ExtendedCriteria criteria = (ExtendedCriteria) example.createCriteria();
+CustomerExample example = new CustomerExample();
+Criteria criteria = example.createCriteria();
 criteria.andFirstNameSoundsLike("frod");
 List results = selectByExample(example);
 </pre>

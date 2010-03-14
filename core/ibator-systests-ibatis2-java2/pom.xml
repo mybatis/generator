@@ -102,4 +102,10 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  <scm>
+    <connection>scm:svn:http://svn.apache.org/repos/asf/ibatis/java/ibator/trunk/core/ibator-systests-ibatis2-java2/</connection>
+    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/ibatis/java/ibator/trunk/core/ibator-systests-ibatis2-java2/</developerConnection>
+    <tag>HEAD</tag>
+    <url>http://svn.apache.org/viewvc/ibatis/java/ibator/trunk/core/ibator-systests-ibatis2-java2/</url>
+  </scm>
 </project>

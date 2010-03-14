@@ -36,14 +36,6 @@
           </execution>
         </executions>      	
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-deploy-plugin</artifactId>
-        <version>2.5</version>
-        <configuration>
-          <updateReleaseInfo>true</updateReleaseInfo>
-        </configuration>
-      </plugin>
     </plugins>
   </build>
   <dependencies>
@@ -69,4 +61,10 @@
     	<version>2.1.0</version>
     </dependency>
   </dependencies>
+  <scm>
+    <connection>scm:svn:http://svn.apache.org/repos/asf/ibatis/java/ibator/trunk/core/ibator-maven-plugin/</connection>
+    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/ibatis/java/ibator/trunk/core/ibator-maven-plugin/</developerConnection>
+    <tag>HEAD</tag>
+    <url>http://svn.apache.org/viewvc/ibatis/java/ibator/trunk/core/ibator-maven-plugin/</url>
+  </scm>
 </project>

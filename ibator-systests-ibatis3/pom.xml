@@ -74,13 +74,6 @@
       <version>4.6</version>
       <scope>test</scope>
     </dependency>
-<!--
-    <dependency>
-    	<groupId>org.apache.ibatis</groupId>
-    	<artifactId>ibatis-3-core</artifactId>
-    	<version>3.0-SNAPSHOT</version>
-    </dependency>
--->
     <dependency>
     	<groupId>org.apache.ibatis</groupId>
     	<artifactId>ibatis-sqlmap</artifactId>
@@ -93,4 +86,10 @@
     	<scope>test</scope>
     </dependency>
   </dependencies>
+  <scm>
+    <connection>scm:svn:http://svn.apache.org/repos/asf/ibatis/java/ibator/trunk/core/ibator-systests-ibatis3/</connection>
+    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/ibatis/java/ibator/trunk/core/ibator-systests-ibatis3/</developerConnection>
+    <tag>HEAD</tag>
+    <url>http://svn.apache.org/viewvc/ibatis/java/ibator/trunk/core/ibator-systests-ibatis3/</url>
+  </scm>
 </project>

@@ -90,19 +90,6 @@
     </plugins>      
   </reporting>  
   
-  <licenses>
-    <license>
-      <name>Apache 2</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
-
-  <organization>
-    <name>The Apache Software Foundation</name>
-    <url>http://www.apache.org</url>
-  </organization>
-
   <dependencies>
     <dependency>
       <groupId>log4j</groupId>
@@ -130,4 +117,10 @@
     </dependency>
   </dependencies>
   
+  <scm>
+    <connection>scm:svn:http://svn.apache.org/repos/asf/ibatis/java/ibator/trunk/core/ibator-core/</connection>
+    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/ibatis/java/ibator/trunk/core/ibator-core/</developerConnection>
+    <tag>HEAD</tag>
+    <url>http://svn.apache.org/viewvc/ibatis/java/ibator/trunk/core/ibator-core/</url>
+  </scm>
 </project>

@@ -4,7 +4,7 @@
   <groupId>org.apache.ibatis.ibator</groupId>
   <artifactId>ibator</artifactId>
   <name>ibator</name>
-  <version>1.2.2</version>
+  <version>1.2.3-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
     <module>ibator-core</module>
@@ -28,10 +28,9 @@
   </organization>
 
   <scm>
-    <connection>scm:svn:http://svn.apache.org/repos/asf/ibatis/java/ibator/tags/ibator-1.2.2</connection>
-    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/ibatis/java/ibator/tags/ibator-1.2.2</developerConnection>
-    <tag>HEAD</tag>
-    <url>http://svn.apache.org/viewvc/ibatis/java/ibator/tags/ibator-1.2.2</url>
+    <connection>scm:svn:http://svn.apache.org/repos/asf/ibatis/java/ibator/trunk/core/</connection>
+    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/ibatis/java/ibator/trunk/core/</developerConnection>
+    <url>http://svn.apache.org/viewvc/ibatis/java/ibator/trunk/core/</url>
   </scm>
 
   <build>

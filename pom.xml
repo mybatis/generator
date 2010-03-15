@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.apache.ibatis.ibator</groupId>
   <artifactId>ibator</artifactId>
   <name>ibator</name>
-  <version>1.2.3-SNAPSHOT</version>
+  <version>1.2.2-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
     <module>ibator-core</module>
@@ -30,6 +30,7 @@
   <scm>
     <connection>scm:svn:http://svn.apache.org/repos/asf/ibatis/java/ibator/trunk/core/</connection>
     <developerConnection>scm:svn:https://svn.apache.org/repos/asf/ibatis/java/ibator/trunk/core/</developerConnection>
+    <tag>HEAD</tag>
     <url>http://svn.apache.org/viewvc/ibatis/java/ibator/trunk/core/</url>
   </scm>
 

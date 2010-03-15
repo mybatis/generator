@@ -30,7 +30,6 @@
   <scm>
     <connection>scm:svn:http://svn.apache.org/repos/asf/ibatis/java/ibator/trunk/core/</connection>
     <developerConnection>scm:svn:https://svn.apache.org/repos/asf/ibatis/java/ibator/trunk/core/</developerConnection>
-    <tag>HEAD</tag>
     <url>http://svn.apache.org/viewvc/ibatis/java/ibator/trunk/core/</url>
   </scm>
 
@@ -44,6 +43,22 @@
           <useReleaseProfile>false</useReleaseProfile>
           <arguments>-Papache-release</arguments>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-remote-resources-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>process</goal>
+            </goals>
+            <configuration>
+              <resourceBundles>
+                <resourceBundle>org.apache:apache-jar-resource-bundle:1.4</resourceBundle>
+              </resourceBundles>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
@@ -72,6 +87,41 @@
               </execution>
             </executions>
           </plugin>
+          <plugin>
+            <inherited>true</inherited>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-deploy-plugin</artifactId>
+            <configuration>
+              <updateReleaseInfo>true</updateReleaseInfo>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <configuration>
+              <encoding>${project.build.sourceEncoding}</encoding>
+            </configuration>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
         </plugins>
       </build>
     </profile>
@@ -81,7 +131,7 @@
     <repository>
       <id>releases</id>
       <name>Apache Releases</name>
-      <url>scpexe://people.apache.org/www/people.apache.org/repo/m2-ibiblio-rsync-repository/org/apache/ibatis/ibator</url>
+      <url>scpexe://people.apache.org/www/people.apache.org/repo/m2-ibiblio-rsync-repository/</url>
     </repository>
   </distributionManagement>
   

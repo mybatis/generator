@@ -16,6 +16,8 @@
 
 package ibatortest.java2.execute.miscellaneous;
 
+import ibatortest.common.FirstName;
+import ibatortest.common.MyTime;
 import ibatortest.java2.generated.miscellaneous.dao.MyObjectDAO;
 import ibatortest.java2.generated.miscellaneous.dao.RegexrenameDAO;
 import ibatortest.java2.generated.miscellaneous.model.MyObject;

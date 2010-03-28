@@ -16,6 +16,8 @@
 
 package ibatortest.java2.execute.miscellaneous;
 
+import ibatortest.common.MyTime;
+
 import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Types;

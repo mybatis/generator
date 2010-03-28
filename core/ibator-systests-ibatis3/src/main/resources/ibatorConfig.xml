@@ -138,14 +138,14 @@
 
     <javaModelGenerator targetPackage="ibatortest.generated.miscellaneous.model" targetProject="MAVEN">
       <property name="trimStrings" value="true" />
-      <property name="rootClass" value="ibatortest.execute.miscellaneous.BaseClass" />
+      <property name="rootClass" value="ibatortest.common.BaseClass" />
     </javaModelGenerator>
 
     <sqlMapGenerator targetPackage="ibatortest.generated.miscellaneous.xml"  targetProject="MAVEN">
     </sqlMapGenerator>
 
     <daoGenerator type="MAPPER" targetPackage="ibatortest.generated.miscellaneous.dao"  targetProject="MAVEN">
-      <property name="rootInterface" value="ibatortest.execute.miscellaneous.BaseInterface" />
+      <property name="rootInterface" value="ibatortest.common.BaseInterface" />
       <property name="methodNameCalculator" value="EXTENDED"/>
     </daoGenerator>
 
@@ -157,9 +157,9 @@
       <columnOverride column="datefield" property="startDate"/>
       <columnOverride column="decimal155Field" javaType="java.lang.Double" />
       <columnOverride column="decimal60Field" javaType="int" />
-      <columnOverride column="firstName" javaType="ibatortest.execute.miscellaneous.FirstName"
+      <columnOverride column="firstName" javaType="ibatortest.common.FirstName"
          typeHandler="ibatortest.execute.miscellaneous.FirstNameTypeHandler"/>
-      <columnOverride column="timeField" javaType="ibatortest.execute.miscellaneous.MyTime"
+      <columnOverride column="timeField" javaType="ibatortest.common.MyTime"
          typeHandler="ibatortest.execute.miscellaneous.MyTimeTypeHandler"/>
     </table>
     <table tableName="RegexRename">

@@ -15,8 +15,14 @@
  */
 package ibatortest.execute.miscellaneous;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import ibatortest.AbstractTest;
+import ibatortest.common.FirstName;
+import ibatortest.common.MyTime;
 import ibatortest.generated.miscellaneous.dao.EnumtestMapper;
 import ibatortest.generated.miscellaneous.dao.MyObjectMapper;
 import ibatortest.generated.miscellaneous.dao.RegexrenameMapper;

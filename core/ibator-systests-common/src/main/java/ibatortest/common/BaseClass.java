@@ -1,5 +1,5 @@
 /*
- *  Copyright 2009 The Apache Software Foundation
+ *  Copyright 2010 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,43 +13,30 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package ibatortest.execute.miscellaneous;
+package ibatortest.common;
 
 /**
  * @author Jeff Butler
- *
  */
-public class FirstName {
-
-    private String value;
+public class BaseClass {
+    private String lastname;
     
     /**
      * 
      */
-    public FirstName() {
+    public BaseClass() {
         super();
     }
 
-    public String getValue() {
-        return value;
+    // these methods are final so that an error will be generated
+    // if the extended class tries to overwrite them.  This
+    // will break the build as the generator should
+    // see a duplicate property.
+    public final String getLastname() {
+        return lastname;
     }
-
-    public void setValue(String value) {
-        this.value = value;
+    
+    public final void setLastname(String lastname) {
+        this.lastname = lastname;
     }
-
-    @Override
-    public boolean equals(Object arg0) {
-        if (arg0 == null) {
-            return false;
-        }
-        
-        return value.equals(((FirstName)arg0).getValue());
-    }
-
-    @Override
-    public int hashCode() {
-        return value == null ? 0 : value.hashCode();
-    }
-
 }

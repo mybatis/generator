@@ -55,6 +55,11 @@
     	    <artifactId>hsqldb</artifactId>
     	    <version>1.8.0.10</version>
           </dependency>
+          <dependency>
+            <groupId>org.apache.ibatis.ibator</groupId>
+            <artifactId>ibator-systests-common</artifactId>
+            <version>1.2.2-SNAPSHOT</version>
+          </dependency>
       	</dependencies>
       </plugin>
       <plugin>
@@ -68,6 +73,11 @@
     </plugins>
   </build>
   <dependencies>
+    <dependency>
+      <groupId>org.apache.ibatis.ibator</groupId>
+      <artifactId>ibator-systests-common</artifactId>
+      <version>1.2.2-SNAPSHOT</version>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>

@@ -163,6 +163,7 @@
          typeHandler="ibatortest.execute.miscellaneous.MyTimeTypeHandler"/>
     </table>
     <table tableName="RegexRename">
+      <generatedKey column="CUST_ID" sqlStatement="call next value for TestSequence" type="pre" />
       <columnRenamingRule searchString="^CUST" />
     </table>
     <table tableName="EnumTest">

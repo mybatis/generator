@@ -889,17 +889,40 @@ public class MiscellaneousTest extends AbstractTest {
             RegexrenameMapper mapper = sqlSession.getMapper(RegexrenameMapper.class);
             Regexrename record = new Regexrename();
             record.setAddress("123 Main Street");
-            record.setId(22);
             record.setName("Fred");
             record.setZipCode("99999");
             
             mapper.insert(record);
             
-            Regexrename returnedRecord = mapper.selectByPrimaryKey(22);
+            Regexrename returnedRecord = mapper.selectByPrimaryKey(1);
             
             assertEquals(record.getAddress(), returnedRecord.getAddress());
-            assertEquals(record.getId(), returnedRecord.getId());
+            assertEquals(1, returnedRecord.getId().intValue());
             assertEquals(record.getName(), returnedRecord.getName());
+            assertEquals(record.getZipCode(), returnedRecord.getZipCode());
+        } finally {
+            sqlSession.close();
+        }
+    }
+    
+    @Test
+    public void testRegexRenameInsertSelective() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        
+        try {
+            RegexrenameMapper mapper = sqlSession.getMapper(RegexrenameMapper.class);
+            Regexrename record = new Regexrename();
+            record.setZipCode("99999");
+            
+            mapper.insertSelective(record);
+            Integer key = 1;
+            assertEquals(key, record.getId());
+            
+            Regexrename returnedRecord = mapper.selectByPrimaryKey(key);
+            
+            assertNull(returnedRecord.getAddress());
+            assertEquals(record.getId(), returnedRecord.getId());
+            assertNull(record.getName(), returnedRecord.getName());
             assertEquals(record.getZipCode(), returnedRecord.getZipCode());
         } finally {
             sqlSession.close();

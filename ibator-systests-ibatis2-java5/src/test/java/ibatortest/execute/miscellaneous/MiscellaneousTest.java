@@ -877,17 +877,38 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         try {
             Regexrename record = new Regexrename();
             record.setAddress("123 Main Street");
-            record.setId(22);
             record.setName("Fred");
             record.setZipCode("99999");
             
             dao.insertRegexrename(record);
             
-            Regexrename returnedRecord = dao.selectRegexrenameByPrimaryKey(22);
+            Regexrename returnedRecord = dao.selectRegexrenameByPrimaryKey(1);
             
             assertEquals(record.getAddress(), returnedRecord.getAddress());
             assertEquals(record.getId(), returnedRecord.getId());
             assertEquals(record.getName(), returnedRecord.getName());
+            assertEquals(record.getZipCode(), returnedRecord.getZipCode());
+        } catch (SQLException e) {
+            fail(e.getMessage());
+        }
+    }
+    
+    public void testRegexRenameInsertSelective() {
+        RegexrenameDAO dao = getRegexrenameDAO();
+        
+        try {
+            Regexrename record = new Regexrename();
+            record.setZipCode("99999");
+            
+            dao.insertRegexrenameSelective(record);
+            Integer key = 1;
+            assertEquals(key, record.getId());
+            
+            Regexrename returnedRecord = dao.selectRegexrenameByPrimaryKey(key);
+            
+            assertNull(returnedRecord.getAddress());
+            assertEquals(record.getId(), returnedRecord.getId());
+            assertNull(returnedRecord.getName());
             assertEquals(record.getZipCode(), returnedRecord.getZipCode());
         } catch (SQLException e) {
             fail(e.getMessage());

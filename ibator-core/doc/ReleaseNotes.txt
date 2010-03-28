@@ -17,6 +17,8 @@ Bugs:
 6. Fixed spelling error LONCVARCHAR->LONGVARCHAR (thanks Allard)
 7. Fixed IBATIS-731 - change name of primary key variable to avoid conflicts
 8. Fixed IBATIS-699 - Overwrite unmergeable XML files if enabled
+9. Fixed issue where insertSelective failed if there is a sequence generating the
+   primary key (issue only with iBATIS3)
 
 Enhancements:
 1. IBATIS-569 - Make it easier to override IbatorRules in plugins

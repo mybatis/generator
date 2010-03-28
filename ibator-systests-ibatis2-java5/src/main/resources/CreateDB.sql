@@ -8,6 +8,9 @@ drop table "awful table" if exists;
 drop table BlobsOnly if exists;
 drop table RegexRename if exists;
 drop table AnotherAwfulTable if exists;
+drop sequence TestSequence if exists;
+
+create sequence TestSequence as integer start with 1;
 
 create table FieldsOnly (
   IntegerField int,
@@ -89,7 +92,7 @@ create table BlobsOnly (
 );
 
 create table RegexRename (
-  CUST_ID integer,
+  CUST_ID integer not null,
   CUST_NAME varchar(30),
   CUST_ADDRESS varchar(30),
   ZIP_CODE char(5),

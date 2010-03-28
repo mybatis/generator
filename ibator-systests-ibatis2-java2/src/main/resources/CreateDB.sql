@@ -6,6 +6,10 @@ drop table PKFieldsBlobs if exists;
 drop table FieldsBlobs if exists;
 drop table "awful table" if exists;
 drop table BlobsOnly if exists;
+drop table RegexRename if exists;
+drop sequence TestSequence if exists;
+
+create sequence TestSequence as integer start with 1;
 
 create table FieldsOnly (
   IntegerField int,
@@ -84,4 +88,12 @@ create table "awful table" (
 create table BlobsOnly (
   blob1 longvarbinary,
   blob2 longvarbinary
+);
+
+create table RegexRename (
+  CUST_ID integer not null,
+  CUST_NAME varchar(30),
+  CUST_ADDRESS varchar(30),
+  ZIP_CODE char(5),
+  primary key(CUST_ID)
 );

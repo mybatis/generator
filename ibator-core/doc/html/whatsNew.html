@@ -78,6 +78,8 @@ to iBATIS 3.x only requires two changes to existing Ibator configurations:</p>
   <li>Fixed spelling error LONCVARCHAR->LONGVARCHAR (thanks Allard)</li>
   <li>Fixed IBATIS-731 - change name of primary key variable to avoid conflicts</li>
   <li>Fixed IBATIS-699 - Overwrite unmergeable XML files if enabled</li>
+  <li>Fixed issue where insertSelective failed if there is a sequence generating the
+      primary key (issue only with iBATIS3)</li>
 </ul>
 
 <h3>Enhancements</h3>

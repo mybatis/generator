@@ -17,9 +17,11 @@
 package ibatortest.java2.execute.miscellaneous;
 
 import ibatortest.java2.generated.miscellaneous.dao.MyObjectDAO;
+import ibatortest.java2.generated.miscellaneous.dao.RegexrenameDAO;
 import ibatortest.java2.generated.miscellaneous.model.MyObject;
 import ibatortest.java2.generated.miscellaneous.model.MyObjectExample;
 import ibatortest.java2.generated.miscellaneous.model.MyObjectKey;
+import ibatortest.java2.generated.miscellaneous.model.Regexrename;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -829,6 +831,50 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
             assertNull(returnedRecord.getFirstname());
             assertEquals(newRecord.getId1(), returnedRecord.getId1());
             assertEquals(newRecord.getId2(), returnedRecord.getId2());
+        } catch (SQLException e) {
+            fail(e.getMessage());
+        }
+    }
+
+    public void testRegexRenameInsert() {
+        RegexrenameDAO dao = getRegexrenameDAO();
+        
+        try {
+            Regexrename record = new Regexrename();
+            record.setAddress("123 Main Street");
+            record.setName("Fred");
+            record.setZipCode("99999");
+            
+            dao.insertRegexrename(record);
+            
+            Regexrename returnedRecord = dao.selectRegexrenameByPrimaryKey(new Integer(1));
+            
+            assertEquals(record.getAddress(), returnedRecord.getAddress());
+            assertEquals(record.getId(), returnedRecord.getId());
+            assertEquals(record.getName(), returnedRecord.getName());
+            assertEquals(record.getZipCode(), returnedRecord.getZipCode());
+        } catch (SQLException e) {
+            fail(e.getMessage());
+        }
+    }
+
+    public void testRegexRenameInsertSelective() {
+        RegexrenameDAO dao = getRegexrenameDAO();
+        
+        try {
+            Regexrename record = new Regexrename();
+            record.setZipCode("99999");
+            
+            dao.insertRegexrenameSelective(record);
+            Integer key = new Integer(1);
+            assertEquals(key, record.getId());
+            
+            Regexrename returnedRecord = dao.selectRegexrenameByPrimaryKey(key);
+            
+            assertNull(returnedRecord.getAddress());
+            assertEquals(record.getId(), returnedRecord.getId());
+            assertNull(returnedRecord.getName());
+            assertEquals(record.getZipCode(), returnedRecord.getZipCode());
         } catch (SQLException e) {
             fail(e.getMessage());
         }

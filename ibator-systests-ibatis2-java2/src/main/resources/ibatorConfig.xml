@@ -162,5 +162,9 @@
       <columnOverride column="timeField" javaType="ibatortest.java2.execute.miscellaneous.MyTime"
          typeHandler="ibatortest.java2.execute.miscellaneous.MyTimeTypeHandler"/>
     </table>
+    <table tableName="RegexRename">
+      <generatedKey column="CUST_ID" sqlStatement="call next value for TestSequence" type="pre" />
+      <columnRenamingRule searchString="^CUST" />
+    </table>
   </ibatorContext>
 </ibatorConfiguration>

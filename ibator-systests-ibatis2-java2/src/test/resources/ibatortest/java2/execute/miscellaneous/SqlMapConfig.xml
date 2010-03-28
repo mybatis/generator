@@ -18,5 +18,6 @@
   </transactionManager>
 
   <sqlMap resource="ibatortest/java2/generated/miscellaneous/xml/PKFIELDS_SqlMap.xml" />
+  <sqlMap resource="ibatortest/java2/generated/miscellaneous/xml/REGEXRENAME_SqlMap.xml" />
 
 </sqlMapConfig>

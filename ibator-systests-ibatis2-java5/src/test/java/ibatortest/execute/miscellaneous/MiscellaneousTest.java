@@ -31,6 +31,8 @@ package ibatortest.execute.miscellaneous;
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
+import ibatortest.common.FirstName;
+import ibatortest.common.MyTime;
 import ibatortest.generated.miscellaneous.dao.MyObjectDAO;
 import ibatortest.generated.miscellaneous.dao.RegexrenameDAO;
 import ibatortest.generated.miscellaneous.model.Anotherawfultable;

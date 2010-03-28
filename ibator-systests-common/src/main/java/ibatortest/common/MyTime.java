@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package ibatortest.java2.execute.miscellaneous;
+package ibatortest.common;
 
 /**
  * @author Jeff Butler
@@ -26,7 +26,7 @@ public class MyTime {
     private int seconds;
 
     /**
-     *
+     * 
      */
     public MyTime() {
         super();
@@ -60,9 +60,9 @@ public class MyTime {
         if (arg0 == null) {
             return false;
         }
-
+        
         MyTime other = (MyTime) arg0;
-
+        
         return this.hours == other.hours
             && this.minutes == other.minutes
             && this.seconds == other.seconds;
@@ -71,5 +71,4 @@ public class MyTime {
     public int hashCode() {
         return hours + minutes + seconds;
     }
-
 }

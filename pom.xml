@@ -9,6 +9,7 @@
   <modules>
     <module>ibator-core</module>
     <module>ibator-maven-plugin</module>
+    <module>ibator-systests-common</module>
     <module>ibator-systests-ibatis2-java2</module>
     <module>ibator-systests-ibatis2-java5</module>
     <module>ibator-systests-ibatis3</module>
@@ -27,6 +28,10 @@
     <url>http://www.apache.org</url>
   </organization>
 
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  
   <scm>
     <connection>scm:svn:http://svn.apache.org/repos/asf/ibatis/java/ibator/trunk/core/</connection>
     <developerConnection>scm:svn:https://svn.apache.org/repos/asf/ibatis/java/ibator/trunk/core/</developerConnection>

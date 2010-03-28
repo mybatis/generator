@@ -16,6 +16,8 @@
 
 package ibatortest.execute.miscellaneous;
 
+import ibatortest.common.MyTime;
+
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

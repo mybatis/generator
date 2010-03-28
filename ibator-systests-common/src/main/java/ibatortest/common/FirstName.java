@@ -13,16 +13,41 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package ibatortest.java2.execute.miscellaneous;
+package ibatortest.common;
 
 /**
  * @author Jeff Butler
+ *
  */
-public class BaseClass {
+public class FirstName {
+
+    private String value;
+    
     /**
-     *
+     * 
      */
-    public BaseClass() {
+    public FirstName() {
         super();
     }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public boolean equals(Object arg0) {
+        if (arg0 == null) {
+            return false;
+        }
+        
+        return value.equals(((FirstName)arg0).getValue());
+    }
+
+    public int hashCode() {
+        return value == null ? 0 : value.hashCode();
+    }
+
 }

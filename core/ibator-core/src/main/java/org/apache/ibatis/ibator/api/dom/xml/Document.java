@@ -36,6 +36,10 @@ public class Document {
         this.systemId = systemId;
     }
 
+    public Document() {
+        super();
+    }
+    
     /**
      * @return Returns the rootElement.
      */
@@ -70,14 +74,16 @@ public class Document {
         
         sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"); //$NON-NLS-1$
 
-        OutputUtilities.newLine(sb);
-        sb.append("<!DOCTYPE "); //$NON-NLS-1$
-        sb.append(rootElement.getName());
-        sb.append(" PUBLIC \""); //$NON-NLS-1$
-        sb.append(publicId);
-        sb.append("\" \""); //$NON-NLS-1$
-        sb.append(systemId);
-        sb.append("\" >"); //$NON-NLS-1$
+        if (publicId != null && systemId != null) {
+            OutputUtilities.newLine(sb);
+            sb.append("<!DOCTYPE "); //$NON-NLS-1$
+            sb.append(rootElement.getName());
+            sb.append(" PUBLIC \""); //$NON-NLS-1$
+            sb.append(publicId);
+            sb.append("\" \""); //$NON-NLS-1$
+            sb.append(systemId);
+            sb.append("\" >"); //$NON-NLS-1$
+        }
         
         OutputUtilities.newLine(sb);
         sb.append(rootElement.getFormattedContent(0));

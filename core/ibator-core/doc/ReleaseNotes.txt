@@ -46,6 +46,7 @@ Enhancements:
 19. Added new "or" method to example classes
 20. Added new "useCompoundPropertyNames" property on <table>
 21. Further improved extensibility of the example classes
+22. EqulasHashCodePlugin now generates far superior methods
 
 
 -------------------------------------------------------------------------------

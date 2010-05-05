@@ -16,21 +16,12 @@
 
 package ibatortest.execute.miscellaneous;
 
-/*
- *  Copyright 2006 The Apache Software Foundation
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- */
+import static ibatortest.util.TestUtilities.datesAreEqual;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import ibatortest.common.FirstName;
 import ibatortest.common.MyTime;
 import ibatortest.generated.miscellaneous.dao.MyObjectDAO;
@@ -46,6 +37,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.Test;
+
 import com.ibatis.sqlmap.client.SqlMapClient;
 
 /**
@@ -54,12 +47,7 @@ import com.ibatis.sqlmap.client.SqlMapClient;
  */
 public class MiscellaneousTest extends AbstractMiscellaneousTest {
 
-    protected void setUp() throws Exception {
-        super.setUp();
-        initSqlMapClient("ibatortest/execute/miscellaneous/SqlMapConfig.xml",
-                null);
-    }
-
+    @Test
     public void testMyObjectinsertMyObject() {
         MyObjectDAO dao = getMyObjectDAO();
 
@@ -112,6 +100,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         }
     }
 
+    @Test
     public void testMyObjectUpdateByPrimaryKey() {
         MyObjectDAO dao = getMyObjectDAO();
 
@@ -149,6 +138,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         }
     }
 
+    @Test
     public void testMyObjectUpdateByPrimaryKeySelective() {
         MyObjectDAO dao = getMyObjectDAO();
 
@@ -207,6 +197,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
     }
 
     @SuppressWarnings("unchecked")
+    @Test
     public void testMyObjectDeleteByPrimaryKey() {
         MyObjectDAO dao = getMyObjectDAO();
 
@@ -237,6 +228,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
     }
 
     @SuppressWarnings("unchecked")
+    @Test
     public void testMyObjectDeleteByExample() {
         MyObjectDAO dao = getMyObjectDAO();
 
@@ -277,6 +269,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         }
     }
 
+    @Test
     public void testMyObjectSelectByPrimaryKey() {
         MyObjectDAO dao = getMyObjectDAO();
 
@@ -315,6 +308,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
     }
 
     @SuppressWarnings("unchecked")
+    @Test
     public void testMyObjectSelectByExampleLike() {
         MyObjectDAO dao = getMyObjectDAO();
 
@@ -395,6 +389,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
     }
 
     @SuppressWarnings("unchecked")
+    @Test
     public void testMyObjectSelectByExampleNotLike() {
         MyObjectDAO dao = getMyObjectDAO();
 
@@ -475,6 +470,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
     }
 
     @SuppressWarnings("unchecked")
+    @Test
     public void testMyObjectSelectByExampleComplexLike() {
         MyObjectDAO dao = getMyObjectDAO();
 
@@ -555,6 +551,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         }
     }
 
+    @Test
     public void testMyObjectSelectByExampleIn() {
         MyObjectDAO dao = getMyObjectDAO();
 
@@ -648,6 +645,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
     }
 
     @SuppressWarnings("unchecked")
+    @Test
     public void testMyObjectSelectByExampleBetween() {
         MyObjectDAO dao = getMyObjectDAO();
 
@@ -717,6 +715,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         }
     }
 
+    @Test
     public void testMyObjectSelectByExampleTimeEquals() {
         MyObjectDAO dao = getMyObjectDAO();
 
@@ -768,6 +767,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         }
     }
 
+    @Test
     public void testFieldIgnored() {
         try {
             MyObject.class.getDeclaredField("decimal30field");
@@ -777,6 +777,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         }
     }
 
+    @Test
     public void testMyObjectUpdateByExampleSelective() {
         MyObjectDAO dao = getMyObjectDAO();
 
@@ -824,6 +825,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         }
     }
 
+    @Test
     public void testMyObjectUpdateByExample() {
         MyObjectDAO dao = getMyObjectDAO();
 
@@ -873,6 +875,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         }
     }
     
+    @Test
     public void testRegexRenameInsert() {
         RegexrenameDAO dao = getRegexrenameDAO();
         
@@ -895,6 +898,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         }
     }
     
+    @Test
     public void testRegexRenameInsertSelective() {
         RegexrenameDAO dao = getRegexrenameDAO();
         
@@ -917,6 +921,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         }
     }
     
+    @Test
     public void testAnotherAwfulTableInsert() {
         SqlMapClient sqlMap = getSqlMapClient();
         
@@ -946,6 +951,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
     }
 
     @SuppressWarnings("unchecked")
+    @Test
     public void testMyObjectSelectByExampleLikeInsensitive() {
         MyObjectDAO dao = getMyObjectDAO();
 

@@ -18,10 +18,6 @@ public abstract class AbstractConditionalJava2Test extends AbstractTest {
     
     private BeanFactory factory;
 
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-    
     public AbstractConditionalJava2Test() {
         Resource res = new ClassPathResource("/ibatortest/execute/conditional/java2/SpringBeans.xml");
         factory = new XmlBeanFactory(res);

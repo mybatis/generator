@@ -43,6 +43,7 @@ import ibatortest.java2.generated.hierarchical.java2.model.PkfieldsblobsKey;
 import ibatortest.java2.generated.hierarchical.java2.model.PkfieldsblobsWithBLOBs;
 import ibatortest.java2.generated.hierarchical.java2.model.PkonlyExample;
 import ibatortest.java2.generated.hierarchical.java2.model.PkonlyKey;
+import ibatortest.util.TestUtilities;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -420,7 +421,7 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
             Pkfields returnedRecord = dao.selectByPrimaryKey(key);
             assertNotNull(returnedRecord);
 
-            assertTrue(datesAreEqual(record.getDatefield(), returnedRecord
+            assertTrue(TestUtilities.datesAreEqual(record.getDatefield(), returnedRecord
                     .getDatefield()));
             assertEquals(record.getDecimal100field(), returnedRecord
                     .getDecimal100field());
@@ -434,7 +435,7 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
             assertEquals(record.getId1(), returnedRecord.getId1());
             assertEquals(record.getId2(), returnedRecord.getId2());
             assertEquals(record.getLastname(), returnedRecord.getLastname());
-            assertTrue(timesAreEqual(record.getTimefield(), returnedRecord
+            assertTrue(TestUtilities.timesAreEqual(record.getTimefield(), returnedRecord
                     .getTimefield()));
             assertEquals(record.getTimestampfield(), returnedRecord
                     .getTimestampfield());
@@ -504,7 +505,7 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
 
             Pkfields returnedRecord = dao.selectByPrimaryKey(key);
 
-            assertTrue(datesAreEqual(record.getDatefield(), returnedRecord
+            assertTrue(TestUtilities.datesAreEqual(record.getDatefield(), returnedRecord
                     .getDatefield()));
             assertEquals(record.getDecimal100field(), returnedRecord
                     .getDecimal100field());
@@ -519,7 +520,7 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
             assertEquals(record.getId1(), returnedRecord.getId1());
             assertEquals(record.getId2(), returnedRecord.getId2());
             assertEquals(record.getLastname(), returnedRecord.getLastname());
-            assertTrue(timesAreEqual(record.getTimefield(), returnedRecord
+            assertTrue(TestUtilities.timesAreEqual(record.getTimefield(), returnedRecord
                     .getTimefield()));
             assertEquals(record.getTimestampfield(), returnedRecord
                     .getTimestampfield());
@@ -1113,8 +1114,8 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
         try {
             PkblobsWithBLOBs record = new PkblobsWithBLOBs();
             record.setId(new Integer(3));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             PkblobsExample example = new PkblobsExample();
@@ -1123,9 +1124,9 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
 
             PkblobsWithBLOBs returnedRecord = (PkblobsWithBLOBs) answer.get(0);
             assertEquals(record.getId(), returnedRecord.getId());
-            assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob1(), returnedRecord
                     .getBlob1()));
-            assertTrue(blobsAreEqual(record.getBlob2(), returnedRecord
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob2(), returnedRecord
                     .getBlob2()));
         } catch (SQLException e) {
             fail(e.getMessage());
@@ -1138,14 +1139,14 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
         try {
             PkblobsWithBLOBs record = new PkblobsWithBLOBs();
             record.setId(new Integer(3));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new PkblobsWithBLOBs();
             record.setId(new Integer(3));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             int rows = dao.updateByPrimaryKey(record);
             assertEquals(1, rows);
 
@@ -1156,8 +1157,8 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
 
             assertNotNull(newRecord);
             assertEquals(record.getId(), newRecord.getId());
-            assertTrue(blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
-            assertTrue(blobsAreEqual(record.getBlob2(), newRecord.getBlob2()));
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob2(), newRecord.getBlob2()));
         } catch (SQLException e) {
             fail(e.getMessage());
         }
@@ -1169,13 +1170,13 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
         try {
             PkblobsWithBLOBs record = new PkblobsWithBLOBs();
             record.setId(new Integer(3));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             PkblobsWithBLOBs newRecord = new PkblobsWithBLOBs();
             newRecord.setId(new Integer(3));
-            newRecord.setBlob2(generateRandomBlob());
+            newRecord.setBlob2(TestUtilities.generateRandomBlob());
             dao.updateByPrimaryKeySelective(newRecord);
 
             PkblobsKey key = new PkblobsKey();
@@ -1184,9 +1185,9 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
             PkblobsWithBLOBs returnedRecord = dao.selectByPrimaryKey(key);
             assertNotNull(returnedRecord);
             assertEquals(record.getId(), returnedRecord.getId());
-            assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob1(), returnedRecord
                     .getBlob1()));
-            assertTrue(blobsAreEqual(newRecord.getBlob2(), returnedRecord
+            assertTrue(TestUtilities.blobsAreEqual(newRecord.getBlob2(), returnedRecord
                     .getBlob2()));
         } catch (SQLException e) {
             fail(e.getMessage());
@@ -1199,8 +1200,8 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
         try {
             PkblobsWithBLOBs record = new PkblobsWithBLOBs();
             record.setId(new Integer(3));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             PkblobsExample example = new PkblobsExample();
@@ -1226,14 +1227,14 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
         try {
             PkblobsWithBLOBs record = new PkblobsWithBLOBs();
             record.setId(new Integer(3));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new PkblobsWithBLOBs();
             record.setId(new Integer(6));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             PkblobsExample example = new PkblobsExample();
@@ -1259,14 +1260,14 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
         try {
             PkblobsWithBLOBs record = new PkblobsWithBLOBs();
             record.setId(new Integer(3));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new PkblobsWithBLOBs();
             record.setId(new Integer(6));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             PkblobsKey key = new PkblobsKey();
@@ -1274,8 +1275,8 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
             PkblobsWithBLOBs newRecord = dao.selectByPrimaryKey(key);
             assertNotNull(newRecord);
             assertEquals(record.getId(), newRecord.getId());
-            assertTrue(blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
-            assertTrue(blobsAreEqual(record.getBlob2(), newRecord.getBlob2()));
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob2(), newRecord.getBlob2()));
         } catch (SQLException e) {
             fail(e.getMessage());
         }
@@ -1287,14 +1288,14 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
         try {
             PkblobsWithBLOBs record = new PkblobsWithBLOBs();
             record.setId(new Integer(3));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new PkblobsWithBLOBs();
             record.setId(new Integer(6));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             PkblobsExample example = new PkblobsExample();
@@ -1317,14 +1318,14 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
         try {
             PkblobsWithBLOBs record = new PkblobsWithBLOBs();
             record.setId(new Integer(3));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new PkblobsWithBLOBs();
             record.setId(new Integer(6));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             PkblobsExample example = new PkblobsExample();
@@ -1343,14 +1344,14 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
         try {
             PkblobsWithBLOBs record = new PkblobsWithBLOBs();
             record.setId(new Integer(3));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new PkblobsWithBLOBs();
             record.setId(new Integer(6));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             PkblobsExample example = new PkblobsExample();
@@ -1361,8 +1362,8 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
 
             PkblobsWithBLOBs newRecord = (PkblobsWithBLOBs) answer.get(0);
             assertEquals(record.getId(), newRecord.getId());
-            assertTrue(blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
-            assertTrue(blobsAreEqual(record.getBlob2(), newRecord.getBlob2()));
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob2(), newRecord.getBlob2()));
         } catch (SQLException e) {
             fail(e.getMessage());
         }
@@ -1374,14 +1375,14 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
         try {
             PkblobsWithBLOBs record = new PkblobsWithBLOBs();
             record.setId(new Integer(3));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new PkblobsWithBLOBs();
             record.setId(new Integer(6));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             PkblobsExample example = new PkblobsExample();
@@ -1406,7 +1407,7 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
             record.setId2(new Integer(4));
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             PkfieldsblobsExample example = new PkfieldsblobsExample();
@@ -1419,7 +1420,7 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
             assertEquals(record.getId2(), returnedRecord.getId2());
             assertEquals(record.getFirstname(), returnedRecord.getFirstname());
             assertEquals(record.getLastname(), returnedRecord.getLastname());
-            assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob1(), returnedRecord
                     .getBlob1()));
         } catch (SQLException e) {
             fail(e.getMessage());
@@ -1435,7 +1436,7 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
             record.setId2(new Integer(4));
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             PkfieldsblobsWithBLOBs updateRecord = new PkfieldsblobsWithBLOBs();
@@ -1443,7 +1444,7 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
             updateRecord.setId2(new Integer(4));
             updateRecord.setFirstname("Scott");
             updateRecord.setLastname("Jones");
-            updateRecord.setBlob1(generateRandomBlob());
+            updateRecord.setBlob1(TestUtilities.generateRandomBlob());
 
             int rows = dao.updateByPrimaryKey(updateRecord);
             assertEquals(1, rows);
@@ -1456,7 +1457,7 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
             assertEquals(updateRecord.getLastname(), newRecord.getLastname());
             assertEquals(record.getId1(), newRecord.getId1());
             assertEquals(record.getId2(), newRecord.getId2());
-            assertTrue(blobsAreEqual(updateRecord.getBlob1(), newRecord
+            assertTrue(TestUtilities.blobsAreEqual(updateRecord.getBlob1(), newRecord
                     .getBlob1()));
         } catch (SQLException e) {
             fail(e.getMessage());
@@ -1472,7 +1473,7 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
             record.setId2(new Integer(4));
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             Pkfieldsblobs updateRecord = new Pkfieldsblobs();
@@ -1492,7 +1493,7 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
             assertEquals(updateRecord.getLastname(), newRecord.getLastname());
             assertEquals(record.getId1(), newRecord.getId1());
             assertEquals(record.getId2(), newRecord.getId2());
-            assertTrue(blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
         } catch (SQLException e) {
             fail(e.getMessage());
         }
@@ -1507,7 +1508,7 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
             record.setId2(new Integer(4));
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             PkfieldsblobsWithBLOBs updateRecord = new PkfieldsblobsWithBLOBs();
@@ -1527,7 +1528,7 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
                     .getLastname());
             assertEquals(record.getId1(), returnedRecord.getId1());
             assertEquals(record.getId2(), returnedRecord.getId2());
-            assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob1(), returnedRecord
                     .getBlob1()));
         } catch (SQLException e) {
             fail(e.getMessage());
@@ -1543,7 +1544,7 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
             record.setId2(new Integer(4));
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new PkfieldsblobsWithBLOBs();
@@ -1551,7 +1552,7 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
             record.setId2(new Integer(6));
             record.setFirstname("Scott");
             record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             PkfieldsblobsExample example = new PkfieldsblobsExample();
@@ -1581,7 +1582,7 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
             record.setId2(new Integer(4));
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new PkfieldsblobsWithBLOBs();
@@ -1589,7 +1590,7 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
             record.setId2(new Integer(6));
             record.setFirstname("Scott");
             record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             PkfieldsblobsExample example = new PkfieldsblobsExample();
@@ -1618,7 +1619,7 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
             record.setId2(new Integer(4));
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new PkfieldsblobsWithBLOBs();
@@ -1626,7 +1627,7 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
             record.setId2(new Integer(6));
             record.setFirstname("Scott");
             record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             PkfieldsblobsExample example = new PkfieldsblobsExample();
@@ -1641,7 +1642,7 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
             assertEquals(record.getId2(), newRecord.getId2());
             assertEquals(record.getFirstname(), newRecord.getFirstname());
             assertEquals(record.getLastname(), newRecord.getLastname());
-            assertTrue(blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
         } catch (SQLException e) {
             fail(e.getMessage());
         }
@@ -1656,7 +1657,7 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
             record.setId2(new Integer(4));
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new PkfieldsblobsWithBLOBs();
@@ -1664,7 +1665,7 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
             record.setId2(new Integer(6));
             record.setFirstname("Scott");
             record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             PkfieldsblobsExample example = new PkfieldsblobsExample();
@@ -1692,7 +1693,7 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
             record.setId2(new Integer(4));
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new PkfieldsblobsWithBLOBs();
@@ -1700,7 +1701,7 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
             record.setId2(new Integer(6));
             record.setFirstname("Scott");
             record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             PkfieldsblobsExample example = new PkfieldsblobsExample();
@@ -1714,7 +1715,7 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
             assertEquals(record.getId2(), newRecord.getId2());
             assertEquals(record.getFirstname(), newRecord.getFirstname());
             assertEquals(record.getLastname(), newRecord.getLastname());
-            assertTrue(blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
         } catch (SQLException e) {
             fail(e.getMessage());
         }
@@ -1729,7 +1730,7 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
             record.setId2(new Integer(4));
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new PkfieldsblobsWithBLOBs();
@@ -1737,7 +1738,7 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
             record.setId2(new Integer(6));
             record.setFirstname("Scott");
             record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             PkfieldsblobsExample example = new PkfieldsblobsExample();
@@ -1758,7 +1759,7 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
             record.setId2(new Integer(4));
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new PkfieldsblobsWithBLOBs();
@@ -1766,7 +1767,7 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
             record.setId2(new Integer(6));
             record.setFirstname("Scott");
             record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             PkfieldsblobsExample example = new PkfieldsblobsExample();
@@ -1789,8 +1790,8 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
             FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs();
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             FieldsblobsExample example = new FieldsblobsExample();
@@ -1801,9 +1802,9 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
                     .get(0);
             assertEquals(record.getFirstname(), returnedRecord.getFirstname());
             assertEquals(record.getLastname(), returnedRecord.getLastname());
-            assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob1(), returnedRecord
                     .getBlob1()));
-            assertTrue(blobsAreEqual(record.getBlob2(), returnedRecord
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob2(), returnedRecord
                     .getBlob2()));
         } catch (SQLException e) {
             fail(e.getMessage());
@@ -1817,15 +1818,15 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
             FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs();
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new FieldsblobsWithBLOBs();
             record.setFirstname("Scott");
             record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             FieldsblobsExample example = new FieldsblobsExample();
@@ -1852,15 +1853,15 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
             FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs();
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new FieldsblobsWithBLOBs();
             record.setFirstname("Scott");
             record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             FieldsblobsExample example = new FieldsblobsExample();
@@ -1884,15 +1885,15 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
             FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs();
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new FieldsblobsWithBLOBs();
             record.setFirstname("Scott");
             record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             FieldsblobsExample example = new FieldsblobsExample();
@@ -1904,8 +1905,8 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
                     .get(0);
             assertEquals(record.getFirstname(), newRecord.getFirstname());
             assertEquals(record.getLastname(), newRecord.getLastname());
-            assertTrue(blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
-            assertTrue(blobsAreEqual(record.getBlob2(), newRecord.getBlob2()));
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob2(), newRecord.getBlob2()));
         } catch (SQLException e) {
             fail(e.getMessage());
         }
@@ -1918,15 +1919,15 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
             FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs();
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new FieldsblobsWithBLOBs();
             record.setFirstname("Scott");
             record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             FieldsblobsExample example = new FieldsblobsExample();
@@ -1945,15 +1946,15 @@ public class HierarchicalJava2Test extends AbstractHierarchicalJava2Test {
             FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs();
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new FieldsblobsWithBLOBs();
             record.setFirstname("Scott");
             record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             FieldsblobsExample example = new FieldsblobsExample();

@@ -20,6 +20,7 @@ import ibatortest.java2.generated.conditional.java2.model.Pkfieldsblobs;
 import ibatortest.java2.generated.conditional.java2.model.PkfieldsblobsExample;
 import ibatortest.java2.generated.conditional.java2.model.PkonlyExample;
 import ibatortest.java2.generated.conditional.java2.model.PkonlyKey;
+import ibatortest.util.TestUtilities;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -101,7 +102,7 @@ public class InsertTest extends AbstractConditionalJava2Test {
             Pkfields returnedRecord = dao.selectByPrimaryKey(key);
             assertNotNull(returnedRecord);
     
-            assertTrue(datesAreEqual(record.getDatefield(), returnedRecord
+            assertTrue(TestUtilities.datesAreEqual(record.getDatefield(), returnedRecord
                     .getDatefield()));
             assertEquals(record.getDecimal100field(), returnedRecord
                     .getDecimal100field());
@@ -115,7 +116,7 @@ public class InsertTest extends AbstractConditionalJava2Test {
             assertEquals(record.getId1(), returnedRecord.getId1());
             assertEquals(record.getId2(), returnedRecord.getId2());
             assertEquals(record.getLastname(), returnedRecord.getLastname());
-            assertTrue(timesAreEqual(record.getTimefield(), returnedRecord
+            assertTrue(TestUtilities.timesAreEqual(record.getTimefield(), returnedRecord
                     .getTimefield()));
             assertEquals(record.getTimestampfield(), returnedRecord
                     .getTimestampfield());
@@ -130,8 +131,8 @@ public class InsertTest extends AbstractConditionalJava2Test {
         try {
             Pkblobs record = new Pkblobs();
             record.setId(new Integer(3));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
     
             PkblobsExample example = new PkblobsExample();
@@ -140,9 +141,9 @@ public class InsertTest extends AbstractConditionalJava2Test {
     
             Pkblobs returnedRecord = (Pkblobs) answer.get(0);
             assertEquals(record.getId(), returnedRecord.getId());
-            assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob1(), returnedRecord
                     .getBlob1()));
-            assertTrue(blobsAreEqual(record.getBlob2(), returnedRecord
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob2(), returnedRecord
                     .getBlob2()));
         } catch (Exception e) {
             fail(e.getMessage());
@@ -158,7 +159,7 @@ public class InsertTest extends AbstractConditionalJava2Test {
             record.setId2(new Integer(4));
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
     
             PkfieldsblobsExample example = new PkfieldsblobsExample();
@@ -170,7 +171,7 @@ public class InsertTest extends AbstractConditionalJava2Test {
             assertEquals(record.getId2(), returnedRecord.getId2());
             assertEquals(record.getFirstname(), returnedRecord.getFirstname());
             assertEquals(record.getLastname(), returnedRecord.getLastname());
-            assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob1(), returnedRecord
                     .getBlob1()));
         } catch (Exception e) {
             fail(e.getMessage());
@@ -184,8 +185,8 @@ public class InsertTest extends AbstractConditionalJava2Test {
             FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs();
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
     
             FieldsblobsExample example = new FieldsblobsExample();
@@ -196,9 +197,9 @@ public class InsertTest extends AbstractConditionalJava2Test {
                     .get(0);
             assertEquals(record.getFirstname(), returnedRecord.getFirstname());
             assertEquals(record.getLastname(), returnedRecord.getLastname());
-            assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob1(), returnedRecord
                     .getBlob1()));
-            assertTrue(blobsAreEqual(record.getBlob2(), returnedRecord
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob2(), returnedRecord
                     .getBlob2()));
         } catch (Exception e) {
             fail(e.getMessage());

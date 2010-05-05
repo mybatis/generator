@@ -16,6 +16,12 @@
 
 package ibatortest.execute.hierarchical.java2;
 
+import static ibatortest.util.TestUtilities.blobsAreEqual;
+import static ibatortest.util.TestUtilities.generateRandomBlob;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import ibatortest.generated.hierarchical.java2.dao.AwfulTableDAO;
 import ibatortest.generated.hierarchical.java2.dao.FieldsblobsDAO;
 import ibatortest.generated.hierarchical.java2.dao.FieldsonlyDAO;
@@ -44,6 +50,7 @@ import ibatortest.generated.hierarchical.java2.model.PkonlyKey;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.junit.Test;
 /**
  * 
  * @author Jeff Butler
@@ -52,6 +59,7 @@ import java.util.List;
 public class UpdateByExampleTest extends AbstractHierarchicalJava2Test {
 
     @SuppressWarnings("unchecked")
+    @Test
     public void testFieldsOnlyUpdateByExampleSelective() {
         FieldsonlyDAO dao = getFieldsonlyDAO();
 
@@ -87,8 +95,8 @@ public class UpdateByExampleTest extends AbstractHierarchicalJava2Test {
             List answer = dao.selectByExample(example);
             assertEquals(1, answer.size());
             record = (Fieldsonly) answer.get(0);
-            assertEquals(record.getDoublefield(), 11.22);
-            assertEquals(record.getFloatfield(), 33.44);
+            assertEquals(record.getDoublefield(), 11.22, 0.001);
+            assertEquals(record.getFloatfield(), 33.44, 0.001);
             assertEquals(record.getIntegerfield().intValue(), 5);
             
             example.clear();
@@ -96,8 +104,8 @@ public class UpdateByExampleTest extends AbstractHierarchicalJava2Test {
             answer = dao.selectByExample(example);
             assertEquals(1, answer.size());
             record = (Fieldsonly) answer.get(0);
-            assertEquals(record.getDoublefield(), 99d);
-            assertEquals(record.getFloatfield(), 66.77);
+            assertEquals(record.getDoublefield(), 99, 0.001);
+            assertEquals(record.getFloatfield(), 66.77, 0.001);
             assertEquals(record.getIntegerfield().intValue(), 8);
             
             example.clear();
@@ -105,8 +113,8 @@ public class UpdateByExampleTest extends AbstractHierarchicalJava2Test {
             answer = dao.selectByExample(example);
             assertEquals(1, answer.size());
             record = (Fieldsonly) answer.get(0);
-            assertEquals(record.getDoublefield(), 99d);
-            assertEquals(record.getFloatfield(), 100.111);
+            assertEquals(record.getDoublefield(), 99, 0.001);
+            assertEquals(record.getFloatfield(), 100.111, 0.001);
             assertEquals(record.getIntegerfield().intValue(), 9);
         } catch (SQLException e) {
             fail(e.getMessage());
@@ -114,6 +122,7 @@ public class UpdateByExampleTest extends AbstractHierarchicalJava2Test {
     }
 
     @SuppressWarnings("unchecked")
+    @Test
     public void testFieldsOnlyUpdateByExample() {
         FieldsonlyDAO dao = getFieldsonlyDAO();
 
@@ -157,6 +166,7 @@ public class UpdateByExampleTest extends AbstractHierarchicalJava2Test {
         }
     }
 
+    @Test
     public void testPKOnlyUpdateByExampleSelective() {
         PkonlyDAO dao = getPkonlyDAO();
 
@@ -203,6 +213,7 @@ public class UpdateByExampleTest extends AbstractHierarchicalJava2Test {
         }
     }
 
+    @Test
     public void testPKOnlyUpdateByExample() {
         PkonlyDAO dao = getPkonlyDAO();
 
@@ -243,6 +254,7 @@ public class UpdateByExampleTest extends AbstractHierarchicalJava2Test {
         }
     }
 
+    @Test
     public void testPKFieldsUpdateByExampleSelective() {
         PkfieldsDAO dao = getPkfieldsDAO();
     
@@ -283,6 +295,7 @@ public class UpdateByExampleTest extends AbstractHierarchicalJava2Test {
         }
     }
 
+    @Test
     public void testPKFieldsUpdateByExample() {
         PkfieldsDAO dao = getPkfieldsDAO();
     
@@ -329,6 +342,7 @@ public class UpdateByExampleTest extends AbstractHierarchicalJava2Test {
     }
 
     @SuppressWarnings("unchecked")
+    @Test
     public void testPKBlobsUpdateByExampleSelective() {
         PkblobsDAO dao = getPkblobsDAO();
     
@@ -367,6 +381,7 @@ public class UpdateByExampleTest extends AbstractHierarchicalJava2Test {
     }
 
     @SuppressWarnings("unchecked")
+    @Test
     public void testPKBlobsUpdateByExampleWithoutBLOBs() {
         PkblobsDAO dao = getPkblobsDAO();
     
@@ -405,6 +420,7 @@ public class UpdateByExampleTest extends AbstractHierarchicalJava2Test {
     }
 
     @SuppressWarnings("unchecked")
+    @Test
     public void testPKBlobsUpdateByExampleWithBLOBs() {
         PkblobsDAO dao = getPkblobsDAO();
     
@@ -443,6 +459,7 @@ public class UpdateByExampleTest extends AbstractHierarchicalJava2Test {
     }
 
     @SuppressWarnings("unchecked")
+    @Test
     public void testPKFieldsBlobsUpdateByExampleSelective() {
         PkfieldsblobsDAO dao = getPkfieldsblobsDAO();
     
@@ -487,6 +504,7 @@ public class UpdateByExampleTest extends AbstractHierarchicalJava2Test {
     }
 
     @SuppressWarnings("unchecked")
+    @Test
     public void testPKFieldsBlobsUpdateByExampleWithoutBLOBs() {
         PkfieldsblobsDAO dao = getPkfieldsblobsDAO();
     
@@ -533,6 +551,7 @@ public class UpdateByExampleTest extends AbstractHierarchicalJava2Test {
     }
 
     @SuppressWarnings("unchecked")
+    @Test
     public void testPKFieldsBlobsUpdateByExampleWithBLOBs() {
         PkfieldsblobsDAO dao = getPkfieldsblobsDAO();
     
@@ -579,6 +598,7 @@ public class UpdateByExampleTest extends AbstractHierarchicalJava2Test {
     }
 
     @SuppressWarnings("unchecked")
+    @Test
     public void testFieldsBlobsUpdateByExampleSelective() {
         FieldsblobsDAO dao = getFieldsblobsDAO();
     
@@ -619,6 +639,7 @@ public class UpdateByExampleTest extends AbstractHierarchicalJava2Test {
     }
 
     @SuppressWarnings("unchecked")
+    @Test
     public void testFieldsBlobsUpdateByExampleWithoutBLOBs() {
         FieldsblobsDAO dao = getFieldsblobsDAO();
     
@@ -660,6 +681,7 @@ public class UpdateByExampleTest extends AbstractHierarchicalJava2Test {
     }
 
     @SuppressWarnings("unchecked")
+    @Test
     public void testFieldsBlobsUpdateByExampleWithBLOBs() {
         FieldsblobsDAO dao = getFieldsblobsDAO();
     
@@ -701,6 +723,7 @@ public class UpdateByExampleTest extends AbstractHierarchicalJava2Test {
     }
 
     @SuppressWarnings("unchecked")
+    @Test
     public void testAwfulTableUpdateByExampleSelective() {
         AwfulTableDAO dao = getAwfulTableDAO();
     
@@ -772,6 +795,7 @@ public class UpdateByExampleTest extends AbstractHierarchicalJava2Test {
     }
 
     @SuppressWarnings("unchecked")
+    @Test
     public void testAwfulTableUpdateByExample() {
         AwfulTableDAO dao = getAwfulTableDAO();
     

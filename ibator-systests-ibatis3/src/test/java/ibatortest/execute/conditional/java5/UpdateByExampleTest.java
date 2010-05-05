@@ -16,6 +16,8 @@
 
 package ibatortest.execute.conditional.java5;
 
+import static ibatortest.util.TestUtilities.blobsAreEqual;
+import static ibatortest.util.TestUtilities.generateRandomBlob;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;

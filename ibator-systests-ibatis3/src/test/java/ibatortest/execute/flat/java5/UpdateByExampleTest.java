@@ -16,8 +16,11 @@
 
 package ibatortest.execute.flat.java5;
 
-import static org.junit.Assert.*;
-
+import static ibatortest.util.TestUtilities.blobsAreEqual;
+import static ibatortest.util.TestUtilities.generateRandomBlob;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import ibatortest.AbstractTest;
 import ibatortest.generated.flat.java5.dao.AwfulTableMapper;
 import ibatortest.generated.flat.java5.dao.FieldsblobsMapper;

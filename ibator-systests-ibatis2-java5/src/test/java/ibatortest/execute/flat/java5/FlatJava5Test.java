@@ -16,6 +16,16 @@
 
 package ibatortest.execute.flat.java5;
 
+import static ibatortest.util.TestUtilities.blobsAreEqual;
+import static ibatortest.util.TestUtilities.datesAreEqual;
+import static ibatortest.util.TestUtilities.generateRandomBlob;
+import static ibatortest.util.TestUtilities.timesAreEqual;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import ibatortest.generated.flat.java5.dao.AwfulTableDAO;
 import ibatortest.generated.flat.java5.dao.FieldsblobsDAO;
 import ibatortest.generated.flat.java5.dao.FieldsonlyDAO;
@@ -44,12 +54,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.Test;
+
 /**
  * @author Jeff Butler
  * 
  */
 public class FlatJava5Test extends AbstractFlatJava5Test {
 
+    @Test
     public void testFieldsOnlyInsert() {
         FieldsonlyDAO dao = getFieldsonlyDAO();
 
@@ -77,6 +90,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testFieldsOnlySelectByExample() {
         FieldsonlyDAO dao = getFieldsonlyDAO();
 
@@ -113,6 +127,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testFieldsOnlySelectByExampleDistinct() {
         FieldsonlyDAO dao = getFieldsonlyDAO();
 
@@ -152,6 +167,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
     
+    @Test
     public void testFieldsOnlySelectByExampleNoCriteria() {
         FieldsonlyDAO dao = getFieldsonlyDAO();
 
@@ -187,6 +203,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testFieldsOnlyDeleteByExample() {
         FieldsonlyDAO dao = getFieldsonlyDAO();
 
@@ -223,6 +240,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testFieldsOnlyCountByExample() {
         FieldsonlyDAO dao = getFieldsonlyDAO();
 
@@ -258,6 +276,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKOnlyInsert() {
         PkonlyDAO dao = getPkonlyDAO();
 
@@ -279,6 +298,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKOnlyDeleteByPrimaryKey() {
         PkonlyDAO dao = getPkonlyDAO();
 
@@ -307,6 +327,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKOnlyDeleteByExample() {
         PkonlyDAO dao = getPkonlyDAO();
 
@@ -339,6 +360,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKOnlySelectByExample() {
         PkonlyDAO dao = getPkonlyDAO();
 
@@ -367,6 +389,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKOnlySelectByExampleNoCriteria() {
         PkonlyDAO dao = getPkonlyDAO();
 
@@ -395,6 +418,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKOnlyCountByExample() {
         PkonlyDAO dao = getPkonlyDAO();
 
@@ -427,6 +451,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKFieldsInsert() {
         PkfieldsDAO dao = getPkfieldsDAO();
 
@@ -472,6 +497,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKFieldsUpdateByPrimaryKey() {
         PkfieldsDAO dao = getPkfieldsDAO();
 
@@ -501,6 +527,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKFieldsUpdateByPrimaryKeySelective() {
         PkfieldsDAO dao = getPkfieldsDAO();
 
@@ -549,6 +576,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKfieldsDeleteByPrimaryKey() {
         PkfieldsDAO dao = getPkfieldsDAO();
 
@@ -572,6 +600,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKFieldsDeleteByExample() {
         PkfieldsDAO dao = getPkfieldsDAO();
 
@@ -608,6 +637,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKFieldsSelectByPrimaryKey() {
         PkfieldsDAO dao = getPkfieldsDAO();
 
@@ -638,6 +668,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKFieldsSelectByExampleLike() {
         PkfieldsDAO dao = getPkfieldsDAO();
 
@@ -703,6 +734,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKFieldsSelectByExampleNotLike() {
         PkfieldsDAO dao = getPkfieldsDAO();
 
@@ -768,6 +800,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKFieldsSelectByExampleComplexLike() {
         PkfieldsDAO dao = getPkfieldsDAO();
 
@@ -832,6 +865,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKFieldsSelectByExampleIn() {
         PkfieldsDAO dao = getPkfieldsDAO();
 
@@ -905,6 +939,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKFieldsSelectByExampleBetween() {
         PkfieldsDAO dao = getPkfieldsDAO();
 
@@ -962,6 +997,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKFieldsSelectByExampleNoCriteria() {
         PkfieldsDAO dao = getPkfieldsDAO();
 
@@ -1019,6 +1055,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKFieldsSelectByExampleEscapedFields() {
         PkfieldsDAO dao = getPkfieldsDAO();
 
@@ -1087,6 +1124,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKFieldsCountByExample() {
         PkfieldsDAO dao = getPkfieldsDAO();
 
@@ -1118,6 +1156,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKBlobsInsert() {
         PkblobsDAO dao = getPkblobsDAO();
 
@@ -1143,6 +1182,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKBlobsUpdateByPrimaryKeyWithBLOBs() {
         PkblobsDAO dao = getPkblobsDAO();
 
@@ -1171,6 +1211,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKBlobsUpdateByPrimaryKeySelective() {
         PkblobsDAO dao = getPkblobsDAO();
 
@@ -1198,6 +1239,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKBlobsDeleteByPrimaryKey() {
         PkblobsDAO dao = getPkblobsDAO();
 
@@ -1223,6 +1265,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKBlobsDeleteByExample() {
         PkblobsDAO dao = getPkblobsDAO();
 
@@ -1256,6 +1299,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKBlobsSelectByPrimaryKey() {
         PkblobsDAO dao = getPkblobsDAO();
 
@@ -1282,6 +1326,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKBlobsSelectByExampleWithoutBlobs() {
         PkblobsDAO dao = getPkblobsDAO();
 
@@ -1313,6 +1358,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKBlobsSelectByExampleWithoutBlobsNoCriteria() {
         PkblobsDAO dao = getPkblobsDAO();
 
@@ -1339,6 +1385,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKBlobsSelectByExampleWithBlobs() {
         PkblobsDAO dao = getPkblobsDAO();
 
@@ -1370,6 +1417,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKBlobsCountByExample() {
         PkblobsDAO dao = getPkblobsDAO();
 
@@ -1399,6 +1447,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKFieldsBlobsInsert() {
         PkfieldsblobsDAO dao = getPkfieldsblobsDAO();
 
@@ -1427,6 +1476,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKFieldsBlobsUpdateByPrimaryKeyWithBLOBs() {
         PkfieldsblobsDAO dao = getPkfieldsblobsDAO();
 
@@ -1461,6 +1511,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKFieldsBlobsUpdateByPrimaryKeyWithoutBLOBs() {
         PkfieldsblobsDAO dao = getPkfieldsblobsDAO();
 
@@ -1493,6 +1544,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKFieldsBlobsUpdateByPrimaryKeySelective() {
         PkfieldsblobsDAO dao = getPkfieldsblobsDAO();
 
@@ -1526,6 +1578,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKFieldsBlobsDeleteByPrimaryKey() {
         PkfieldsblobsDAO dao = getPkfieldsblobsDAO();
 
@@ -1562,6 +1615,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKFieldsBlobsDeleteByExample() {
         PkfieldsblobsDAO dao = getPkfieldsblobsDAO();
 
@@ -1600,6 +1654,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKFieldsBlobsSelectByPrimaryKey() {
         PkfieldsblobsDAO dao = getPkfieldsblobsDAO();
 
@@ -1636,6 +1691,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKFieldsBlobsSelectByExampleWithoutBlobs() {
         PkfieldsblobsDAO dao = getPkfieldsblobsDAO();
 
@@ -1673,6 +1729,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKFieldsBlobsSelectByExampleWithBlobs() {
         PkfieldsblobsDAO dao = getPkfieldsblobsDAO();
 
@@ -1709,6 +1766,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKFieldsBlobsSelectByExampleWithBlobsNoCriteria() {
         PkfieldsblobsDAO dao = getPkfieldsblobsDAO();
 
@@ -1738,6 +1796,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testFieldsBlobsInsert() {
         FieldsblobsDAO dao = getFieldsblobsDAO();
 
@@ -1765,6 +1824,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testFieldsBlobsDeleteByExample() {
         FieldsblobsDAO dao = getFieldsblobsDAO();
 
@@ -1800,6 +1860,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testFieldsBlobsSelectByExampleWithoutBlobs() {
         FieldsblobsDAO dao = getFieldsblobsDAO();
 
@@ -1833,6 +1894,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testFieldsBlobsSelectByExampleWithBlobs() {
         FieldsblobsDAO dao = getFieldsblobsDAO();
 
@@ -1866,6 +1928,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testFieldsBlobsSelectByExampleWithBlobsNoCriteria() {
         FieldsblobsDAO dao = getFieldsblobsDAO();
 
@@ -1893,6 +1956,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testPKFieldsBlobsCountByExample() {
         PkfieldsblobsDAO dao = getPkfieldsblobsDAO();
 
@@ -1926,6 +1990,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testAwfulTableInsert() {
         AwfulTableDAO dao = getAwfulTableDAO();
 
@@ -1977,6 +2042,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testAwfulTableInsertSelective() {
         AwfulTableDAO dao = getAwfulTableDAO();
 
@@ -2026,6 +2092,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
     
+    @Test
     public void testAwfulTableUpdateByPrimaryKey() {
         AwfulTableDAO dao = getAwfulTableDAO();
 
@@ -2080,6 +2147,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testAwfulTableUpdateByPrimaryKeySelective() {
         AwfulTableDAO dao = getAwfulTableDAO();
 
@@ -2136,6 +2204,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testAwfulTableDeleteByPrimaryKey() {
         AwfulTableDAO dao = getAwfulTableDAO();
 
@@ -2168,6 +2237,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testAwfulTableDeleteByExample() {
         AwfulTableDAO dao = getAwfulTableDAO();
 
@@ -2223,6 +2293,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testAwfulTableSelectByPrimaryKey() {
         AwfulTableDAO dao = getAwfulTableDAO();
 
@@ -2289,6 +2360,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testAwfulTableSelectByExampleLike() {
         AwfulTableDAO dao = getAwfulTableDAO();
 
@@ -2408,6 +2480,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testAwfulTableSelectByExampleNotLike() {
         AwfulTableDAO dao = getAwfulTableDAO();
 
@@ -2527,6 +2600,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
     
+    @Test
     public void testAwfulTableSelectByExampleComplexLike() {
         AwfulTableDAO dao = getAwfulTableDAO();
 
@@ -2644,6 +2718,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testAwfulTableSelectByExampleIn() {
         AwfulTableDAO dao = getAwfulTableDAO();
 
@@ -2765,6 +2840,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testAwfulTableSelectByExampleBetween() {
         AwfulTableDAO dao = getAwfulTableDAO();
 
@@ -2874,6 +2950,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testAwfulTableSelectByExampleNoCriteria() {
         AwfulTableDAO dao = getAwfulTableDAO();
 
@@ -2997,6 +3074,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
 
+    @Test
     public void testAwfulTableCountByExample() {
         AwfulTableDAO dao = getAwfulTableDAO();
 
@@ -3048,17 +3126,20 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         }
     }
     
+    @Test
     public void testEquals1() {
         Pkfields pkfields1 = new Pkfields();
         assertFalse(pkfields1.equals(null));
     }
     
+    @Test
     public void testEquals2() {
         Pkfields pkfields1 = new Pkfields();
         Pkfields pkfields2 = new Pkfields();
         assertTrue(pkfields1.equals(pkfields2));
     }
     
+    @Test
     public void testEquals3() {
         Pkfields pkfields1 = new Pkfields();
         pkfields1.setId1(2);
@@ -3069,6 +3150,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         assertTrue(pkfields1.equals(pkfields2));
     }
     
+    @Test
     public void testEquals4() {
         Pkfields pkfields1 = new Pkfields();
         pkfields1.setId1(2);
@@ -3079,6 +3161,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         assertFalse(pkfields1.equals(pkfields2));
     }
 
+    @Test
     public void testEquals5() {
         AwfulTable awfulTable1 = new AwfulTable();
         awfulTable1.setActive(false);
@@ -3122,12 +3205,14 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         assertFalse(awfulTable1.equals(awfulTable2));
     }
 
+    @Test
     public void testHashCode1() {
         Pkfields pkfields1 = new Pkfields();
         Pkfields pkfields2 = new Pkfields();
         assertTrue(pkfields1.hashCode() == pkfields2.hashCode());
     }
     
+    @Test
     public void testHashCode2() {
         Pkfields pkfields1 = new Pkfields();
         pkfields1.setId1(2);
@@ -3138,6 +3223,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         assertTrue(pkfields1.hashCode() == pkfields2.hashCode());
     }
 
+    @Test
     public void testHashCode3() {
         AwfulTable awfulTable1 = new AwfulTable();
         awfulTable1.setActive(false);

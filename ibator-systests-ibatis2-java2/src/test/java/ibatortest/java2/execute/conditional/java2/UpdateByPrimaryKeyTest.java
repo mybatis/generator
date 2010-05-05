@@ -10,6 +10,7 @@ import ibatortest.java2.generated.conditional.java2.model.Pkfields;
 import ibatortest.java2.generated.conditional.java2.model.PkfieldsKey;
 import ibatortest.java2.generated.conditional.java2.model.Pkfieldsblobs;
 import ibatortest.java2.generated.conditional.java2.model.PkfieldsblobsKey;
+import ibatortest.util.TestUtilities;
 
 public class UpdateByPrimaryKeyTest extends AbstractConditionalJava2Test {
 
@@ -74,7 +75,7 @@ public class UpdateByPrimaryKeyTest extends AbstractConditionalJava2Test {
     
             Pkfields returnedRecord = dao.selectByPrimaryKey(key);
     
-            assertTrue(datesAreEqual(record.getDatefield(), returnedRecord
+            assertTrue(TestUtilities.datesAreEqual(record.getDatefield(), returnedRecord
                     .getDatefield()));
             assertEquals(record.getDecimal100field(), returnedRecord
                     .getDecimal100field());
@@ -89,7 +90,7 @@ public class UpdateByPrimaryKeyTest extends AbstractConditionalJava2Test {
             assertEquals(record.getId1(), returnedRecord.getId1());
             assertEquals(record.getId2(), returnedRecord.getId2());
             assertEquals(record.getLastname(), returnedRecord.getLastname());
-            assertTrue(timesAreEqual(record.getTimefield(), returnedRecord
+            assertTrue(TestUtilities.timesAreEqual(record.getTimefield(), returnedRecord
                     .getTimefield()));
             assertEquals(record.getTimestampfield(), returnedRecord
                     .getTimestampfield());
@@ -104,22 +105,22 @@ public class UpdateByPrimaryKeyTest extends AbstractConditionalJava2Test {
         try {
             Pkblobs record = new Pkblobs();
             record.setId(new Integer(3));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
     
             record = new Pkblobs();
             record.setId(new Integer(3));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.updateByPrimaryKey(record);
     
             Pkblobs newRecord = dao.selectByPrimaryKey(new Integer(3));
     
             assertNotNull(newRecord);
             assertEquals(record.getId(), newRecord.getId());
-            assertTrue(blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
-            assertTrue(blobsAreEqual(record.getBlob2(), newRecord.getBlob2()));
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob2(), newRecord.getBlob2()));
         } catch (Exception e) {
             fail(e.getMessage());
         }
@@ -131,21 +132,21 @@ public class UpdateByPrimaryKeyTest extends AbstractConditionalJava2Test {
         try {
             Pkblobs record = new Pkblobs();
             record.setId(new Integer(3));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
     
             Pkblobs newRecord = new Pkblobs();
             newRecord.setId(new Integer(3));
-            newRecord.setBlob2(generateRandomBlob());
+            newRecord.setBlob2(TestUtilities.generateRandomBlob());
             dao.updateByPrimaryKeySelective(newRecord);
     
             Pkblobs returnedRecord = dao.selectByPrimaryKey(new Integer(3));
             assertNotNull(returnedRecord);
             assertEquals(record.getId(), returnedRecord.getId());
-            assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob1(), returnedRecord
                     .getBlob1()));
-            assertTrue(blobsAreEqual(newRecord.getBlob2(), returnedRecord
+            assertTrue(TestUtilities.blobsAreEqual(newRecord.getBlob2(), returnedRecord
                     .getBlob2()));
         } catch (Exception e) {
             fail(e.getMessage());
@@ -161,7 +162,7 @@ public class UpdateByPrimaryKeyTest extends AbstractConditionalJava2Test {
             record.setId2(new Integer(4));
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
     
             Pkfieldsblobs updateRecord = new Pkfieldsblobs();
@@ -169,7 +170,7 @@ public class UpdateByPrimaryKeyTest extends AbstractConditionalJava2Test {
             updateRecord.setId2(new Integer(4));
             updateRecord.setFirstname("Scott");
             updateRecord.setLastname("Jones");
-            updateRecord.setBlob1(generateRandomBlob());
+            updateRecord.setBlob1(TestUtilities.generateRandomBlob());
     
             int rows = dao.updateByPrimaryKeyWithBLOBs(updateRecord);
             assertEquals(1, rows);
@@ -182,7 +183,7 @@ public class UpdateByPrimaryKeyTest extends AbstractConditionalJava2Test {
             assertEquals(updateRecord.getLastname(), newRecord.getLastname());
             assertEquals(record.getId1(), newRecord.getId1());
             assertEquals(record.getId2(), newRecord.getId2());
-            assertTrue(blobsAreEqual(updateRecord.getBlob1(), newRecord
+            assertTrue(TestUtilities.blobsAreEqual(updateRecord.getBlob1(), newRecord
                     .getBlob1()));
         } catch (Exception e) {
             fail(e.getMessage());
@@ -198,7 +199,7 @@ public class UpdateByPrimaryKeyTest extends AbstractConditionalJava2Test {
             record.setId2(new Integer(4));
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
     
             Pkfieldsblobs updateRecord = new Pkfieldsblobs();
@@ -218,7 +219,7 @@ public class UpdateByPrimaryKeyTest extends AbstractConditionalJava2Test {
             assertEquals(updateRecord.getLastname(), newRecord.getLastname());
             assertEquals(record.getId1(), newRecord.getId1());
             assertEquals(record.getId2(), newRecord.getId2());
-            assertTrue(blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
         } catch (Exception e) {
             fail(e.getMessage());
         }
@@ -233,7 +234,7 @@ public class UpdateByPrimaryKeyTest extends AbstractConditionalJava2Test {
             record.setId2(new Integer(4));
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
     
             Pkfieldsblobs updateRecord = new Pkfieldsblobs();
@@ -253,7 +254,7 @@ public class UpdateByPrimaryKeyTest extends AbstractConditionalJava2Test {
                     .getLastname());
             assertEquals(record.getId1(), returnedRecord.getId1());
             assertEquals(record.getId2(), returnedRecord.getId2());
-            assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob1(), returnedRecord
                     .getBlob1()));
         } catch (Exception e) {
             fail(e.getMessage());

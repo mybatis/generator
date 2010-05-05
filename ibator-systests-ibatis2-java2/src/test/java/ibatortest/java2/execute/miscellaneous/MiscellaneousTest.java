@@ -24,6 +24,7 @@ import ibatortest.java2.generated.miscellaneous.model.MyObject;
 import ibatortest.java2.generated.miscellaneous.model.MyObjectExample;
 import ibatortest.java2.generated.miscellaneous.model.MyObjectKey;
 import ibatortest.java2.generated.miscellaneous.model.Regexrename;
+import ibatortest.util.TestUtilities;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -68,7 +69,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
             MyObject returnedRecord = dao.selectMyObjectByPrimaryKey(key);
             assertNotNull(returnedRecord);
 
-            assertTrue(datesAreEqual(record.getStartDate(), returnedRecord
+            assertTrue(TestUtilities.datesAreEqual(record.getStartDate(), returnedRecord
                     .getStartDate()));
             assertEquals(record.getDecimal100field(), returnedRecord
                     .getDecimal100field());
@@ -157,7 +158,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
 
             MyObject returnedRecord = dao.selectMyObjectByPrimaryKey(key);
 
-            assertTrue(datesAreEqual(newRecord.getStartDate(), returnedRecord
+            assertTrue(TestUtilities.datesAreEqual(newRecord.getStartDate(), returnedRecord
                     .getStartDate()));
             assertEquals(record.getDecimal100field(), returnedRecord
                     .getDecimal100field());
@@ -713,7 +714,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
             assertEquals(1, results.size());
             MyObject returnedRecord = (MyObject) results.get(0);
 
-            assertTrue(datesAreEqual(record.getStartDate(), returnedRecord
+            assertTrue(TestUtilities.datesAreEqual(record.getStartDate(), returnedRecord
                     .getStartDate()));
             assertEquals(record.getDecimal100field(), returnedRecord
                     .getDecimal100field());

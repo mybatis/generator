@@ -17,6 +17,7 @@ import ibatortest.java2.generated.conditional.java2.model.PkfieldsblobsExample;
 import ibatortest.java2.generated.conditional.java2.model.PkfieldsblobsKey;
 import ibatortest.java2.generated.conditional.java2.model.PkonlyExample;
 import ibatortest.java2.generated.conditional.java2.model.PkonlyKey;
+import ibatortest.util.TestUtilities;
 
 import java.util.List;
 
@@ -86,8 +87,8 @@ public class DeleteByPrimaryKeyTest extends AbstractConditionalJava2Test {
         try {
             Pkblobs record = new Pkblobs();
             record.setId(new Integer(3));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
     
             PkblobsExample example = new PkblobsExample();
@@ -114,7 +115,7 @@ public class DeleteByPrimaryKeyTest extends AbstractConditionalJava2Test {
             record.setId2(new Integer(4));
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
     
             record = new Pkfieldsblobs();
@@ -122,7 +123,7 @@ public class DeleteByPrimaryKeyTest extends AbstractConditionalJava2Test {
             record.setId2(new Integer(6));
             record.setFirstname("Scott");
             record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
     
             PkfieldsblobsExample example = new PkfieldsblobsExample();

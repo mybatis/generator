@@ -18,7 +18,7 @@ import ibatortest.generated.conditional.java5.dao.PkonlyDAOImpl;
 
 public abstract class AbstractConditionalJava5Test extends AbstractTest {
 
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         super.setUp();
         initSqlMapClient(
                 "ibatortest/execute/conditional/java5/SqlMapConfig.xml", null);

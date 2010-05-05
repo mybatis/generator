@@ -8,7 +8,7 @@ import ibatortest.generated.miscellaneous.dao.impl.RegexrenameDAOImpl;
 
 public abstract class AbstractMiscellaneousTest extends AbstractTest {
 
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         super.setUp();
         initSqlMapClient("ibatortest/execute/miscellaneous/SqlMapConfig.xml",
                 null);

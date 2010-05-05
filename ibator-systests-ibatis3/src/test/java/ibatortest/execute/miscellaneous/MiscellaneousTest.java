@@ -15,6 +15,7 @@
  */
 package ibatortest.execute.miscellaneous;
 
+import static ibatortest.util.TestUtilities.datesAreEqual;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;

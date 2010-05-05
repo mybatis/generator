@@ -18,7 +18,7 @@ import ibatortest.generated.hierarchical.java2.dao.PkonlyDAOImpl;
 
 public abstract class AbstractHierarchicalJava2Test extends AbstractTest {
 
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         super.setUp();
         initSqlMapClient(
                 "ibatortest/execute/hierarchical/java2/SqlMapConfig.xml", null);

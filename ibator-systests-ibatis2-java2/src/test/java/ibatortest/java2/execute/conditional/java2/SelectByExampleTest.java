@@ -22,6 +22,7 @@ import ibatortest.java2.generated.conditional.java2.model.Pkfieldsblobs;
 import ibatortest.java2.generated.conditional.java2.model.PkfieldsblobsExample;
 import ibatortest.java2.generated.conditional.java2.model.PkonlyExample;
 import ibatortest.java2.generated.conditional.java2.model.PkonlyKey;
+import ibatortest.util.TestUtilities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -609,14 +610,14 @@ public class SelectByExampleTest extends AbstractConditionalJava2Test {
         try {
             Pkblobs record = new Pkblobs();
             record.setId(new Integer(3));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
     
             record = new Pkblobs();
             record.setId(new Integer(6));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
     
             PkblobsExample example = new PkblobsExample();
@@ -640,14 +641,14 @@ public class SelectByExampleTest extends AbstractConditionalJava2Test {
         try {
             Pkblobs record = new Pkblobs();
             record.setId(new Integer(3));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
     
             record = new Pkblobs();
             record.setId(new Integer(6));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
     
             PkblobsExample example = new PkblobsExample();
@@ -666,14 +667,14 @@ public class SelectByExampleTest extends AbstractConditionalJava2Test {
         try {
             Pkblobs record = new Pkblobs();
             record.setId(new Integer(3));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
     
             record = new Pkblobs();
             record.setId(new Integer(6));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
     
             PkblobsExample example = new PkblobsExample();
@@ -684,8 +685,8 @@ public class SelectByExampleTest extends AbstractConditionalJava2Test {
     
             Pkblobs newRecord = (Pkblobs) answer.get(0);
             assertEquals(record.getId(), newRecord.getId());
-            assertTrue(blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
-            assertTrue(blobsAreEqual(record.getBlob2(), newRecord.getBlob2()));
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob2(), newRecord.getBlob2()));
         } catch (Exception e) {
             fail(e.getMessage());
         }
@@ -700,7 +701,7 @@ public class SelectByExampleTest extends AbstractConditionalJava2Test {
             record.setId2(new Integer(4));
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
     
             record = new Pkfieldsblobs();
@@ -708,7 +709,7 @@ public class SelectByExampleTest extends AbstractConditionalJava2Test {
             record.setId2(new Integer(6));
             record.setFirstname("Scott");
             record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
     
             PkfieldsblobsExample example = new PkfieldsblobsExample();
@@ -736,7 +737,7 @@ public class SelectByExampleTest extends AbstractConditionalJava2Test {
             record.setId2(new Integer(4));
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
     
             record = new Pkfieldsblobs();
@@ -744,7 +745,7 @@ public class SelectByExampleTest extends AbstractConditionalJava2Test {
             record.setId2(new Integer(6));
             record.setFirstname("Scott");
             record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
     
             PkfieldsblobsExample example = new PkfieldsblobsExample();
@@ -757,7 +758,7 @@ public class SelectByExampleTest extends AbstractConditionalJava2Test {
             assertEquals(record.getId2(), newRecord.getId2());
             assertEquals(record.getFirstname(), newRecord.getFirstname());
             assertEquals(record.getLastname(), newRecord.getLastname());
-            assertTrue(blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
         } catch (Exception e) {
             fail(e.getMessage());
         }
@@ -772,7 +773,7 @@ public class SelectByExampleTest extends AbstractConditionalJava2Test {
             record.setId2(new Integer(4));
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
     
             record = new Pkfieldsblobs();
@@ -780,7 +781,7 @@ public class SelectByExampleTest extends AbstractConditionalJava2Test {
             record.setId2(new Integer(6));
             record.setFirstname("Scott");
             record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
     
             PkfieldsblobsExample example = new PkfieldsblobsExample();
@@ -799,15 +800,15 @@ public class SelectByExampleTest extends AbstractConditionalJava2Test {
             FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs();
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
     
             record = new FieldsblobsWithBLOBs();
             record.setFirstname("Scott");
             record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
     
             FieldsblobsExample example = new FieldsblobsExample();
@@ -831,15 +832,15 @@ public class SelectByExampleTest extends AbstractConditionalJava2Test {
             FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs();
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
     
             record = new FieldsblobsWithBLOBs();
             record.setFirstname("Scott");
             record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
     
             FieldsblobsExample example = new FieldsblobsExample();
@@ -851,8 +852,8 @@ public class SelectByExampleTest extends AbstractConditionalJava2Test {
                     .get(0);
             assertEquals(record.getFirstname(), newRecord.getFirstname());
             assertEquals(record.getLastname(), newRecord.getLastname());
-            assertTrue(blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
-            assertTrue(blobsAreEqual(record.getBlob2(), newRecord.getBlob2()));
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob2(), newRecord.getBlob2()));
         } catch (Exception e) {
             fail(e.getMessage());
         }
@@ -865,15 +866,15 @@ public class SelectByExampleTest extends AbstractConditionalJava2Test {
             FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs();
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
     
             record = new FieldsblobsWithBLOBs();
             record.setFirstname("Scott");
             record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
     
             FieldsblobsExample example = new FieldsblobsExample();

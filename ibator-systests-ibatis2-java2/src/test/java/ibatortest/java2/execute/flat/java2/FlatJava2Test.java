@@ -37,6 +37,7 @@ import ibatortest.java2.generated.flat.java2.model.Pkfieldsblobs;
 import ibatortest.java2.generated.flat.java2.model.PkfieldsblobsExample;
 import ibatortest.java2.generated.flat.java2.model.Pkonly;
 import ibatortest.java2.generated.flat.java2.model.PkonlyExample;
+import ibatortest.util.TestUtilities;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -451,7 +452,7 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
                     new Integer(2));
             assertNotNull(returnedRecord);
 
-            assertTrue(datesAreEqual(record.getDatefield(), returnedRecord
+            assertTrue(TestUtilities.datesAreEqual(record.getDatefield(), returnedRecord
                     .getDatefield()));
             assertEquals(record.getDecimal100field(), returnedRecord
                     .getDecimal100field());
@@ -465,7 +466,7 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             assertEquals(record.getId1(), returnedRecord.getId1());
             assertEquals(record.getId2(), returnedRecord.getId2());
             assertEquals(record.getLastname(), returnedRecord.getLastname());
-            assertTrue(timesAreEqual(record.getTimefield(), returnedRecord
+            assertTrue(TestUtilities.timesAreEqual(record.getTimefield(), returnedRecord
                     .getTimefield()));
             assertEquals(record.getTimestampfield(), returnedRecord
                     .getTimestampfield());
@@ -529,7 +530,7 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             Pkfields returnedRecord = dao.selectByPrimaryKey(new Integer(1),
                     new Integer(2));
 
-            assertTrue(datesAreEqual(record.getDatefield(), returnedRecord
+            assertTrue(TestUtilities.datesAreEqual(record.getDatefield(), returnedRecord
                     .getDatefield()));
             assertEquals(record.getDecimal100field(), returnedRecord
                     .getDecimal100field());
@@ -544,7 +545,7 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             assertEquals(record.getId1(), returnedRecord.getId1());
             assertEquals(record.getId2(), returnedRecord.getId2());
             assertEquals(record.getLastname(), returnedRecord.getLastname());
-            assertTrue(timesAreEqual(record.getTimefield(), returnedRecord
+            assertTrue(TestUtilities.timesAreEqual(record.getTimefield(), returnedRecord
                     .getTimefield()));
             assertEquals(record.getTimestampfield(), returnedRecord
                     .getTimestampfield());
@@ -1132,8 +1133,8 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
         try {
             Pkblobs record = new Pkblobs();
             record.setId(new Integer(3));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             PkblobsExample example = new PkblobsExample();
@@ -1142,9 +1143,9 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
 
             Pkblobs returnedRecord = (Pkblobs) answer.get(0);
             assertEquals(record.getId(), returnedRecord.getId());
-            assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob1(), returnedRecord
                     .getBlob1()));
-            assertTrue(blobsAreEqual(record.getBlob2(), returnedRecord
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob2(), returnedRecord
                     .getBlob2()));
         } catch (SQLException e) {
             fail(e.getMessage());
@@ -1157,14 +1158,14 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
         try {
             Pkblobs record = new Pkblobs();
             record.setId(new Integer(3));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new Pkblobs();
             record.setId(new Integer(3));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             int rows = dao.updateByPrimaryKey(record);
             assertEquals(1, rows);
 
@@ -1172,8 +1173,8 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
 
             assertNotNull(newRecord);
             assertEquals(record.getId(), newRecord.getId());
-            assertTrue(blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
-            assertTrue(blobsAreEqual(record.getBlob2(), newRecord.getBlob2()));
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob2(), newRecord.getBlob2()));
         } catch (SQLException e) {
             fail(e.getMessage());
         }
@@ -1185,21 +1186,21 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
         try {
             Pkblobs record = new Pkblobs();
             record.setId(new Integer(3));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             Pkblobs newRecord = new Pkblobs();
             newRecord.setId(new Integer(3));
-            newRecord.setBlob2(generateRandomBlob());
+            newRecord.setBlob2(TestUtilities.generateRandomBlob());
             dao.updateByPrimaryKeySelective(newRecord);
 
             Pkblobs returnedRecord = dao.selectByPrimaryKey(new Integer(3));
             assertNotNull(returnedRecord);
             assertEquals(record.getId(), returnedRecord.getId());
-            assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob1(), returnedRecord
                     .getBlob1()));
-            assertTrue(blobsAreEqual(newRecord.getBlob2(), returnedRecord
+            assertTrue(TestUtilities.blobsAreEqual(newRecord.getBlob2(), returnedRecord
                     .getBlob2()));
         } catch (SQLException e) {
             fail(e.getMessage());
@@ -1212,8 +1213,8 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
         try {
             Pkblobs record = new Pkblobs();
             record.setId(new Integer(3));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             PkblobsExample example = new PkblobsExample();
@@ -1237,14 +1238,14 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
         try {
             Pkblobs record = new Pkblobs();
             record.setId(new Integer(3));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new Pkblobs();
             record.setId(new Integer(6));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             PkblobsExample example = new PkblobsExample();
@@ -1270,21 +1271,21 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
         try {
             Pkblobs record = new Pkblobs();
             record.setId(new Integer(3));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new Pkblobs();
             record.setId(new Integer(6));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             Pkblobs newRecord = dao.selectByPrimaryKey(new Integer(6));
             assertNotNull(newRecord);
             assertEquals(record.getId(), newRecord.getId());
-            assertTrue(blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
-            assertTrue(blobsAreEqual(record.getBlob2(), newRecord.getBlob2()));
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob2(), newRecord.getBlob2()));
         } catch (SQLException e) {
             fail(e.getMessage());
         }
@@ -1296,14 +1297,14 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
         try {
             Pkblobs record = new Pkblobs();
             record.setId(new Integer(3));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new Pkblobs();
             record.setId(new Integer(6));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             PkblobsExample example = new PkblobsExample();
@@ -1327,14 +1328,14 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
         try {
             Pkblobs record = new Pkblobs();
             record.setId(new Integer(3));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new Pkblobs();
             record.setId(new Integer(6));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             PkblobsExample example = new PkblobsExample();
@@ -1353,14 +1354,14 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
         try {
             Pkblobs record = new Pkblobs();
             record.setId(new Integer(3));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new Pkblobs();
             record.setId(new Integer(6));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             PkblobsExample example = new PkblobsExample();
@@ -1371,8 +1372,8 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
 
             Pkblobs newRecord = (Pkblobs) answer.get(0);
             assertEquals(record.getId(), newRecord.getId());
-            assertTrue(blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
-            assertTrue(blobsAreEqual(record.getBlob2(), newRecord.getBlob2()));
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob2(), newRecord.getBlob2()));
         } catch (SQLException e) {
             fail(e.getMessage());
         }
@@ -1384,14 +1385,14 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
         try {
             Pkblobs record = new Pkblobs();
             record.setId(new Integer(3));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new Pkblobs();
             record.setId(new Integer(6));
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             PkblobsExample example = new PkblobsExample();
@@ -1416,7 +1417,7 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             record.setId2(new Integer(4));
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             PkfieldsblobsExample example = new PkfieldsblobsExample();
@@ -1428,7 +1429,7 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             assertEquals(record.getId2(), returnedRecord.getId2());
             assertEquals(record.getFirstname(), returnedRecord.getFirstname());
             assertEquals(record.getLastname(), returnedRecord.getLastname());
-            assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob1(), returnedRecord
                     .getBlob1()));
         } catch (SQLException e) {
             fail(e.getMessage());
@@ -1444,7 +1445,7 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             record.setId2(new Integer(4));
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             Pkfieldsblobs updateRecord = new Pkfieldsblobs();
@@ -1452,7 +1453,7 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             updateRecord.setId2(new Integer(4));
             updateRecord.setFirstname("Scott");
             updateRecord.setLastname("Jones");
-            updateRecord.setBlob1(generateRandomBlob());
+            updateRecord.setBlob1(TestUtilities.generateRandomBlob());
 
             int rows = dao.updateByPrimaryKeyWithBLOBs(updateRecord);
             assertEquals(1, rows);
@@ -1463,7 +1464,7 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             assertEquals(updateRecord.getLastname(), newRecord.getLastname());
             assertEquals(record.getId1(), newRecord.getId1());
             assertEquals(record.getId2(), newRecord.getId2());
-            assertTrue(blobsAreEqual(updateRecord.getBlob1(), newRecord
+            assertTrue(TestUtilities.blobsAreEqual(updateRecord.getBlob1(), newRecord
                     .getBlob1()));
         } catch (SQLException e) {
             fail(e.getMessage());
@@ -1479,7 +1480,7 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             record.setId2(new Integer(4));
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             Pkfieldsblobs updateRecord = new Pkfieldsblobs();
@@ -1497,7 +1498,7 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             assertEquals(updateRecord.getLastname(), newRecord.getLastname());
             assertEquals(record.getId1(), newRecord.getId1());
             assertEquals(record.getId2(), newRecord.getId2());
-            assertTrue(blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
         } catch (SQLException e) {
             fail(e.getMessage());
         }
@@ -1512,7 +1513,7 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             record.setId2(new Integer(4));
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             Pkfieldsblobs updateRecord = new Pkfieldsblobs();
@@ -1530,7 +1531,7 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
                     .getLastname());
             assertEquals(record.getId1(), returnedRecord.getId1());
             assertEquals(record.getId2(), returnedRecord.getId2());
-            assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob1(), returnedRecord
                     .getBlob1()));
         } catch (SQLException e) {
             fail(e.getMessage());
@@ -1546,7 +1547,7 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             record.setId2(new Integer(4));
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new Pkfieldsblobs();
@@ -1554,7 +1555,7 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             record.setId2(new Integer(6));
             record.setFirstname("Scott");
             record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             PkfieldsblobsExample example = new PkfieldsblobsExample();
@@ -1581,7 +1582,7 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             record.setId2(new Integer(4));
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new Pkfieldsblobs();
@@ -1589,7 +1590,7 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             record.setId2(new Integer(6));
             record.setFirstname("Scott");
             record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             PkfieldsblobsExample example = new PkfieldsblobsExample();
@@ -1618,7 +1619,7 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             record.setId2(new Integer(4));
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new Pkfieldsblobs();
@@ -1626,7 +1627,7 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             record.setId2(new Integer(6));
             record.setFirstname("Scott");
             record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             PkfieldsblobsExample example = new PkfieldsblobsExample();
@@ -1639,7 +1640,7 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             assertEquals(record.getId2(), newRecord.getId2());
             assertEquals(record.getFirstname(), newRecord.getFirstname());
             assertEquals(record.getLastname(), newRecord.getLastname());
-            assertTrue(blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
         } catch (SQLException e) {
             fail(e.getMessage());
         }
@@ -1654,7 +1655,7 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             record.setId2(new Integer(4));
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new Pkfieldsblobs();
@@ -1662,7 +1663,7 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             record.setId2(new Integer(6));
             record.setFirstname("Scott");
             record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             PkfieldsblobsExample example = new PkfieldsblobsExample();
@@ -1690,7 +1691,7 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             record.setId2(new Integer(4));
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new Pkfieldsblobs();
@@ -1698,7 +1699,7 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             record.setId2(new Integer(6));
             record.setFirstname("Scott");
             record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             PkfieldsblobsExample example = new PkfieldsblobsExample();
@@ -1711,7 +1712,7 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             assertEquals(record.getId2(), newRecord.getId2());
             assertEquals(record.getFirstname(), newRecord.getFirstname());
             assertEquals(record.getLastname(), newRecord.getLastname());
-            assertTrue(blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
         } catch (SQLException e) {
             fail(e.getMessage());
         }
@@ -1726,7 +1727,7 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             record.setId2(new Integer(4));
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new Pkfieldsblobs();
@@ -1734,7 +1735,7 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             record.setId2(new Integer(6));
             record.setFirstname("Scott");
             record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             PkfieldsblobsExample example = new PkfieldsblobsExample();
@@ -1755,7 +1756,7 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             record.setId2(new Integer(4));
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new Pkfieldsblobs();
@@ -1763,7 +1764,7 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             record.setId2(new Integer(6));
             record.setFirstname("Scott");
             record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             PkfieldsblobsExample example = new PkfieldsblobsExample();
@@ -1786,8 +1787,8 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             Fieldsblobs record = new Fieldsblobs();
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             FieldsblobsExample example = new FieldsblobsExample();
@@ -1797,9 +1798,9 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             Fieldsblobs returnedRecord = (Fieldsblobs) answer.get(0);
             assertEquals(record.getFirstname(), returnedRecord.getFirstname());
             assertEquals(record.getLastname(), returnedRecord.getLastname());
-            assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob1(), returnedRecord
                     .getBlob1()));
-            assertTrue(blobsAreEqual(record.getBlob2(), returnedRecord
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob2(), returnedRecord
                     .getBlob2()));
         } catch (SQLException e) {
             fail(e.getMessage());
@@ -1813,15 +1814,15 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             Fieldsblobs record = new Fieldsblobs();
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new Fieldsblobs();
             record.setFirstname("Scott");
             record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             FieldsblobsExample example = new FieldsblobsExample();
@@ -1848,15 +1849,15 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             Fieldsblobs record = new Fieldsblobs();
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new Fieldsblobs();
             record.setFirstname("Scott");
             record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             FieldsblobsExample example = new FieldsblobsExample();
@@ -1881,15 +1882,15 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             Fieldsblobs record = new Fieldsblobs();
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new Fieldsblobs();
             record.setFirstname("Scott");
             record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             FieldsblobsExample example = new FieldsblobsExample();
@@ -1900,8 +1901,8 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             Fieldsblobs newRecord = (Fieldsblobs) answer.get(0);
             assertEquals(record.getFirstname(), newRecord.getFirstname());
             assertEquals(record.getLastname(), newRecord.getLastname());
-            assertTrue(blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
-            assertTrue(blobsAreEqual(record.getBlob2(), newRecord.getBlob2()));
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
+            assertTrue(TestUtilities.blobsAreEqual(record.getBlob2(), newRecord.getBlob2()));
         } catch (SQLException e) {
             fail(e.getMessage());
         }
@@ -1914,15 +1915,15 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             Fieldsblobs record = new Fieldsblobs();
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new Fieldsblobs();
             record.setFirstname("Scott");
             record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             FieldsblobsExample example = new FieldsblobsExample();
@@ -1941,15 +1942,15 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             Fieldsblobs record = new Fieldsblobs();
             record.setFirstname("Jeff");
             record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             record = new Fieldsblobs();
             record.setFirstname("Scott");
             record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
+            record.setBlob1(TestUtilities.generateRandomBlob());
+            record.setBlob2(TestUtilities.generateRandomBlob());
             dao.insert(record);
 
             FieldsblobsExample example = new FieldsblobsExample();

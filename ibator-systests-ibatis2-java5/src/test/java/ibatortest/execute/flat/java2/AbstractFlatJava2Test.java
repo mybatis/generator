@@ -17,7 +17,8 @@ import ibatortest.generated.flat.java2.dao.PkonlyDAO;
 import ibatortest.generated.flat.java2.dao.PkonlyDAOImpl;
 
 public abstract class AbstractFlatJava2Test extends AbstractTest {
-    protected void setUp() throws Exception {
+    
+    public void setUp() throws Exception {
         super.setUp();
         initSqlMapClient("ibatortest/execute/flat/java2/SqlMapConfig.xml", null);
     }

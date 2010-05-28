@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+  <bean id="dataSource" class="com.ibatis.common.jdbc.SimpleDataSource">
+    <constructor-arg>
+      <map>
+        <entry key="JDBC.Driver"><value>org.hsqldb.jdbcDriver</value></entry>
+        <entry key="JDBC.ConnectionURL"><value>jdbc:hsqldb:mem:aname</value></entry>
+        <entry key="JDBC.Username"><value>sa</value></entry>
+        <entry key="JDBC.Password"><value></value></entry>
+        <entry key="JDBC.DefaultAutoCommit"><value>true</value></entry>
+      </map> 
+    </constructor-arg>
+  </bean>
+
+  <bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+    <property name="configLocation" value="classpath:/mbg/test/ib2j2/conditional/SqlMapConfig.xml"/>
+    <property name="dataSource" ref="dataSource"/>
+  </bean>
+
+  <bean id="FieldsonlyDAO" class="mbg.test.ib2j2.generated.conditional.dao.FieldsonlyDAOImpl">
+    <property name="sqlMapClient" ref="sqlMapClient" />
+  </bean>
+  
+  <bean id="PkonlyDAO" class="mbg.test.ib2j2.generated.conditional.dao.PkonlyDAOImpl">
+    <property name="sqlMapClient" ref="sqlMapClient" />
+  </bean>
+  
+  <bean id="PkfieldsDAO" class="mbg.test.ib2j2.generated.conditional.dao.PkfieldsDAOImpl">
+    <property name="sqlMapClient" ref="sqlMapClient" />
+  </bean>
+  
+  <bean id="PkblobsDAO" class="mbg.test.ib2j2.generated.conditional.dao.PkblobsDAOImpl">
+    <property name="sqlMapClient" ref="sqlMapClient" />
+  </bean>
+  
+  <bean id="PkfieldsblobsDAO" class="mbg.test.ib2j2.generated.conditional.dao.PkfieldsblobsDAOImpl">
+    <property name="sqlMapClient" ref="sqlMapClient" />
+  </bean>
+  
+  <bean id="FieldsblobsDAO" class="mbg.test.ib2j2.generated.conditional.dao.FieldsblobsDAOImpl">
+    <property name="sqlMapClient" ref="sqlMapClient" />
+  </bean>
+  
+  <bean id="AwfulTableDAO" class="mbg.test.ib2j2.generated.conditional.dao.AwfulTableDAOImpl">
+    <property name="sqlMapClient" ref="sqlMapClient" />
+  </bean>
+  
+</beans>

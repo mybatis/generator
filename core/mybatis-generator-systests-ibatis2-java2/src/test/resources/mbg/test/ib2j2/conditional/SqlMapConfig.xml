@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig
+  PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
+  "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+
+  <settings useStatementNamespaces="true" />
+
+  <sqlMap resource="mbg/test/ib2j2/generated/conditional/xml/FIELDSBLOBS_SqlMap.xml" />
+  <sqlMap resource="mbg/test/ib2j2/generated/conditional/xml/FIELDSONLY_SqlMap.xml" />
+  <sqlMap resource="mbg/test/ib2j2/generated/conditional/xml/PKBLOBS_SqlMap.xml" />
+  <sqlMap resource="mbg/test/ib2j2/generated/conditional/xml/PKFIELDS_SqlMap.xml" />
+  <sqlMap resource="mbg/test/ib2j2/generated/conditional/xml/PKFIELDSBLOBS_SqlMap.xml" />
+  <sqlMap resource="mbg/test/ib2j2/generated/conditional/xml/PKONLY_SqlMap.xml" />
+  <sqlMap resource="mbg/test/ib2j2/generated/conditional/xml/awful table_SqlMap.xml" />
+
+</sqlMapConfig>

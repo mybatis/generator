@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.apache.ibatis.ibator</groupId>
-  <artifactId>ibator</artifactId>
-  <name>ibator</name>
-  <version>1.2.2-SNAPSHOT</version>
+  <groupId>org.mybatis.generator</groupId>
+  <artifactId>mybatis-generator</artifactId>
+  <name>MyBatis Generator</name>
+  <version>1.3.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
-    <module>ibator-core</module>
-    <module>ibator-maven-plugin</module>
-    <module>ibator-systests-common</module>
-    <module>ibator-systests-ibatis2-java2</module>
-    <module>ibator-systests-ibatis2-java5</module>
-    <module>ibator-systests-ibatis3</module>
+    <module>mybatis-generator-core</module>
+    <module>mybatis-generator-maven-plugin</module>
+    <module>mybatis-generator-systests-common</module>
+    <module>mybatis-generator-systests-ibatis2-java2</module>
+    <module>mybatis-generator-systests-ibatis2-java5</module>
+    <module>mybatis-generator-systests-mybatis3</module>
   </modules>
 
   <licenses>
@@ -24,20 +24,14 @@
   </licenses>
 
   <organization>
-    <name>The Apache Software Foundation</name>
-    <url>http://www.apache.org</url>
+    <name>MyBatis</name>
+    <url>http://www.mybatis.org</url>
   </organization>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   
-  <scm>
-    <connection>scm:svn:http://svn.apache.org/repos/asf/ibatis/java/ibator/trunk/core/</connection>
-    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/ibatis/java/ibator/trunk/core/</developerConnection>
-    <url>http://svn.apache.org/viewvc/ibatis/java/ibator/trunk/core/</url>
-  </scm>
-
   <build>
     <plugins>
       <plugin>
@@ -131,13 +125,5 @@
       </build>
     </profile>
   </profiles>
-  
-  <distributionManagement>
-    <repository>
-      <id>releases</id>
-      <name>Apache Releases</name>
-      <url>scpexe://people.apache.org/www/people.apache.org/repo/m2-ibiblio-rsync-repository/</url>
-    </repository>
-  </distributionManagement>
   
 </project>

@@ -65,7 +65,7 @@ public class MyBatisGeneratorTest {
     @Test
     public void testGenerateMyBatis3() throws Exception {
         SqlScriptRunner scriptRunner = new SqlScriptRunner(
-                this.getClass().getClassLoader().getResourceAsStream("CreateDbMyBatis3.sql"),
+                this.getClass().getClassLoader().getResourceAsStream("CreateDBMyBatis3.sql"),
                 "org.hsqldb.jdbcDriver",
                 "jdbc:hsqldb:mem:aname",
                 "sa",

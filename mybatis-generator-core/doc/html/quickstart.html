@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3c.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>MyBatis Generator Quick Start Guide</title>
+  <link type="text/css" rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<div class="menuNav">
+  <p>
+    <a href="index.html" target="_top">Show Menu</a>
+    <a href="quickstart.html" target="_top">Hide Menu</a>
+  </p>
+</div>
+
+<h1>MyBatis Generator Quick Start Guide</h1>
+<p>To get up and running quickly with MyBatis Generator (MBG), follow these steps:</p>
+<ol>
+  <li>Create and fill out a configuration file appropriately.
+      At a minimum, you must specify:
+    <ol type="a">
+      <li>A <code>&lt;jdbcConnection&gt;</code> element to specify how to connect to
+          the target database</li>
+      <li>A <code>&lt;javaModelGenerator&gt;</code> element to specify target package
+          and target project for generated Java model objects</li>
+      <li>A <code>&lt;sqlMapGenerator&gt;</code> element to specify target package
+          and target project for generated SQL map files</li>
+      <li>(Optionally) A <code>&lt;javaClientGenerator&gt;</code> element to specify target package
+           and target project for generated client interfaces and classes (you may
+          omit the <code>&lt;javaClientGenerator&gt;</code> element if you don't wish to generate Java client code)</li>
+      <li>At least one database <code>&lt;table&gt;</code> element</li>
+    </ol>
+    <p>See the <a href="configreference/xmlconfig.html">XML Configuration File Reference</a>
+       page for an example of a configuration file.</p>
+  </li>
+  <li>Save the file in some convenient location (like \temp\generatorConfig.xml)</li>
+  <li>Run MBG from the command line with a command like this:
+    <pre>
+
+      java -jar mybatis-generator-core-x.x.x.jar -configfile \temp\generatorConfig.xml -overwrite
+    </pre>
+    <p>This will tell MBG to run using your configuration file.  It will also tell MBG
+    to overwrite any existing Java files with the same name.  If you want to save any existing
+    Java files, then omit the <code>-overwrite</code> parameter.  If there is a conflict, MBG
+    will save the newly generated file with a unique name (e.g. MyClass.java.1).</p>
+  </li>
+  <li>After running MBG, you will need to create or modify the standard MyBatis or iBATIS
+      configuration files to make use of your newly generated code.  See the
+      <a href="afterRunning.html">Tasks After Running MyBatis Generator</a> page for more
+      information.</li>
+</ol>
+<p><b>Important:</b> Generated code for iBATIS2 requires that statement namespaces are enabled
+  in your iBATIS configuration.  See the <a href="afterRunning.html">Tasks After Running MyBatis Generator</a>
+  page for more information.</p>
+</body>
+</html>

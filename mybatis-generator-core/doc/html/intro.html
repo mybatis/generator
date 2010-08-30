@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3c.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Introduction to MyBatis Generator</title>
+  <link type="text/css" rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<div class="menuNav">
+  <p>
+    <a href="index.html" target="_top">Show Menu</a>
+    <a href="intro.html" target="_top">Hide Menu</a>
+  </p>
+</div>
+
+<h1>Introduction to MyBatis Generator</h1>
+<p>MyBatis Generator (MBG) is a code generator for MyBatis <a target="_blank" href="http://mybatis.org">MyBatis</a>
+ and <a target="_blank" href="http://ibatis.apache.org">iBATIS</a>.
+ It will generate code for all versions of MyBatis, and versions of iBATIS after version 2.2.0.
+ It will introspect a database
+ table (or many tables) and will generate artifacts that can be used to
+ access the table(s).  This lessens the initial nuisance of setting up objects and configuration
+ files to interact with database tables.  MBG seeks to make a major impact on the large
+ percentage of database operations that are simple CRUD (Create, Retrieve, Update, Delete).  You will
+ still need to hand code SQL and objects for join queries, or stored procedures.
+</p>
+<p>MyBatis Generator will generate:</p>
+<ul>
+  <li>Java POJOs that match the table structure.  This may include:
+    <ul>
+      <li>a class to match the primary key of the table (if there is a primary key)</li>
+      <li>a class to match the non-primary key fields of the table (except BLOB fields)</li>
+      <li>a class to include the BLOB fields of a table (if the table has BLOB fields)</li>
+      <li>a class to enable dynamic selects, updates, and deletes</li>
+    </ul>
+    <p>There is an inheritance relationship between these classes as appropriate.
+       Note that the generator may be configured to generate different types of POJO hierarchies -
+       for example, you may choose to generate a single domain object for each table if you so
+       desire.</p>
+  </li>
+  <li>MyBatis/iBATIS Compatible SQL Map XML Files.  MBG generates SQL for simple
+   CRUD functions on each table in a configuration.  The generated SQL
+   statements include:
+    <ul>
+      <li>insert</li>
+      <li>update by primary key</li>
+      <li>update by example (using a dynamic where clause)</li>
+      <li>delete by primary key</li>
+      <li>delete by example (using a dynamic where clause)</li>
+      <li>select by primary key</li>
+      <li>select by example (using a dynamic where clause)</li>
+      <li>count by example</li>
+    </ul>
+   <p>There are different variations of these statements depending on the
+   structure of the table (for example, if the table doesn't have a primary key,
+   then MBG will not generate an update by primary key function).</p>
+  </li>
+  <li>Java client classes that make appropriate use of the
+    above objects.  The generation of Java client classes is optional.
+    MBG will generate Java clients of the following type for MyBatis 3.x:
+    <ul>
+      <li>A mapper interface that works with the MyBatis 3.x mapper infrastructure</li>
+    </ul>
+    MBG will generate Java clients of the following types for iBATIS 2.x:
+    <ul>
+      <li>DAOs that conform to the
+          <a target="_blank" href="http://www.springframework.org">Spring</a> framework</li>
+      <li>DAOs that only use the iBATIS SQL mapping API.  These DAOs can be
+          generated in two varieties: supplying the <code>SqlMapClient</code> through
+          either constructor or setter injection.</li>
+      <li>DAOs that conform to the iBATIS DAO Framework (an optional part of iBATIS, this
+          framework is now deprecated and we suggest that you use the Spring framework
+          instead)</li>
+    </ul>
+  </li>
+</ul>
+
+<p>MyBatis generator is designed to run well in an iterative development environment, and
+  can be included as an Ant task, or a Maven plugin, in a continuous
+  build environment.
+  Important things to note when running MBG iteratively include:</p>
+
+<ol>
+  <li>MBG will automatically merge XML files if there is an existing file
+      with the same name as the newly generated XML file.  MBG will not overwrite
+      any custom changes you make to the XML files it generates.
+      You can run it over and over again without fear of losing custom changes to you XML.
+      MBG will replace any XML elements that were generated in a previous run.
+      </li>
+  <li>MBG will <b>not</b> merge Java files, it can either overwrite existing files
+      or save newly generated files with a different unique name.  If you make changes
+      to the generated Java files and run MBG iteratively you will have to
+      merge the changes by hand.  When run as an
+      <a target="_blank" href="http://www.eclipse.org">Eclipse</a>
+      plugin, then MBG can automatically merge Java files.</li>
+</ol>
+
+<h2>Dependencies</h2>
+<p>MBG has no dependencies beyond the JRE.  JRE 5.0 or
+above is required.  Also, a JDBC driver that implements the
+DatabaseMetaData interface, especially the <code>getColumns</code> and
+<code>getPrimaryKeys</code> methods is required.</p>
+
+<h2>Support</h2>
+<p>Support for MyBatis Generator is provided through the MyBatis user mailing list.
+You may subscribe to or view the mailing list through Google code here:</p>
+
+<blockquote>
+  <p>
+  <a target="_blank" href="http://groups.google.com/group/mybatis-user">http://groups.google.com/group/mybatis-user</a>
+  </p>
+</blockquote>
+
+<p>If you think you have found a bug, please ask a question about it on the user list first,
+before creating a new ticket.  If you find a bug, or have a new feature request,
+you may open a new issue at the google code project here:</p>
+
+<blockquote>
+  <p>
+  <a target="_blank" href="http://code.google.com/p/mybatis/">
+    http://code.google.com/p/mybatis/
+  </a>
+  </p>
+</blockquote>
+
+</body>
+</html>

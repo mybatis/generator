@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3c.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>The &lt;columnOverride&gt; Element</title>
+  <link type="text/css" rel="stylesheet" href="../style.css"/>
+</head>
+<body>
+
+<div class="menuNav">
+  <p>
+    <a href="../index.html" target="_top">Show Menu</a>
+    <a href="columnOverride.html" target="_top">Hide Menu</a>
+  </p>
+</div>
+
+<h1>The &lt;columnOverride&gt; Element</h1>
+<p>MyBatis Generator (MBG) uses the &lt;columnOverride&gt; element to change certain
+attributes of an introspected database column from the values that would be calculated by
+default.  This element is an optional child
+element of the <a href="table.html">&lt;table&gt;</a> element.</p>
+
+<h2>Required Attributes</h2>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>Attribute</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>column</td>
+    <td>The column name of the introspected.</td>
+  </tr>
+</table>
+
+<h2>Optional Attributes</h2>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>Attribute</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td valign="top">property</td>
+    <td>The name of a Java property to be used.  If not specified,
+        MBG will generate properties based on the column name.
+        For example, if a table has a column named "STRT_DTE" then MBG
+        will generate the property name as either "STRT_DTE" or "strtDte"
+        based on the value of the "useActualColumnNames" property (see the
+        description of the <a href="table.html">&lt;table&gt;</a> element for more information).
+        This property could be used to rename the column "startDate"</td>
+  </tr>
+  <tr>
+    <td valign="top">javaType</td>
+    <td>The fully qualified Java Type of the property for this column.  This
+        can be used to override the type calculated by the <code>JavaTypeResolver</code>
+        if required.  For some databases, this is necessary to handle
+        "odd" database types (e.g. MySql's unsigned bigint type
+        should be mapped to java.lang.Object).</td>
+  </tr>
+  <tr>
+    <td valign="top">jdbcType</td>
+    <td>The JDBC Type (INTEGER, DECIMAL, NUMERIC, VARCHAR, etc.) for the column.
+        This can be used to override the type calculated by the <code>JavaTypeResolver</code>
+        if required.  For some databases this is necessary to handle JDBC driver
+        quirks (e.g. DB2's LONGVARCHAR type should be mapped to VARCHAR for iBATIS).</td>
+  </tr>
+  <tr>
+    <td valign="top">typeHandler</td>
+    <td>A user defined type handler that should be used for this column.
+      This should be the fully
+      qualified name of a class that implements iBATIS'
+      <code>TypeHandler</code> or <code>TypeHandlerCallback</code>
+      interface (<code>TypeHandlerCallback</code> is simpler to implement).
+      If unspecified, or blank,
+      then iBATIS will use the default type facility for handling types.
+      <b>Important:</b> MBG does not verify that this type handler exists,
+      or is valid.  MBG simply inserts this value at the appropriate places
+      in the generated SQL Map configuration file.
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">delimitedColumnName</td>
+    <td>Specifies whether the column name should be delimited in the generated SQL.
+        MBG will automatically delimit the column name if the name contains a space,
+        so this override is only necessary when the column name must be forced to a certain
+        case, or when the column name is a reserved word in the database.
+        <p>When "true", the <code>column</code> attribute for the override
+        must exactly match the case of the column name returned from the database.</p>
+        <p>The delimiter characters are specified on the
+        <a href="context.html">&lt;context&gt;</a> element.</p>
+        <p><i>The default value is false.  However, MBG will automatically
+        delimit column names that contain a space, so no override is necessary
+        in that case.</i></p>
+    </td>
+  </tr>
+</table>
+
+<h2>Child Elements</h2>
+<ul>
+  <li><a href="property.html">&lt;property&gt;</a> (0..N)
+    Note: any properties specified here will be added to the
+    properties collection of the corresponding IntrospectedColumn.  MBG does not currently
+    respond to any properties.  This element is provided so that special values
+    for each column may be provided to a plugin in the event that a plugin is
+    coded to generate or modify something unique to a particular column.</li>
+</ul>
+
+</body>
+</html>

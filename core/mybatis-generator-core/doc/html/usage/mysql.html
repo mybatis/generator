@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3c.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>MySql Usage Notes</title>
+  <link type="text/css" rel="stylesheet" href="../style.css"/>
+</head>
+<body>
+
+<div class="menuNav">
+  <p>
+    <a href="../index.html" target="_top">Show Menu</a>
+    <a href="mysql.html" target="_top">Hide Menu</a>
+  </p>
+</div>
+
+<h1>MySql Usage Notes</h1>
+<h2>Unsigned Fields</h2>
+<p>MySql supports both signed, and unsigned, numeric fields.  These are not JDBC types, so MyBatis
+generator cannot automatically account for these types of fields.  The Java data types are always signed.
+This can
+lead to a loss of precision when using unsigned fields.  The solution is to provide a
+<code>&lt;columnOverride&gt;</code> for any unsigned numeric field in MySql.  Here is an example
+of how to deal with an unsigned bigint field in MySql:</p>
+<pre>
+  &lt;table tableName="ALLTYPES" &gt;
+    &lt;columnOverride column="UNSIGNED_BIGINT_FIELD" javaType="java.lang.Object" jdbcType="LONG" /&gt;
+  &lt;/table&gt;
+</pre>
+<p>You will have to cast the returned value to the appropriate type yourself (in this case,
+<code>java.math.BigInteger</code>).</p>
+</body>
+</html>

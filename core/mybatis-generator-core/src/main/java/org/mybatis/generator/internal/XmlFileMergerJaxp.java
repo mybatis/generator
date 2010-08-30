@@ -184,10 +184,9 @@ public class XmlFileMergerJaxp {
             }
 
             if (rc == false) {
-                // TODO - make this work for old and new nodes
                 // check for new node format - if the first non-whitespace node
-                // is an XML comment, and the comment include
-                // "@ibatorgenerated",
+                // is an XML comment, and the comment includes
+                // one of the old element tags,
                 // then it is a generated node
                 NodeList children = node.getChildNodes();
                 int length = children.getLength();
@@ -197,10 +196,12 @@ public class XmlFileMergerJaxp {
                         continue;
                     } else if (childNode.getNodeType() == Node.COMMENT_NODE) {
                         Comment comment = (Comment) childNode;
-                        if (comment.getData().indexOf(
-                                MergeConstants.NEW_JAVA_ELEMENT_TAG) != -1) {
-                            rc = true;
-                            break;
+                        String commentData = comment.getData();
+                        for (String tag : MergeConstants.OLD_ELEMENT_TAGS) {
+                            if (commentData.contains(tag)) {
+                                rc = true;
+                                break;
+                            }
                         }
                     } else {
                         break;

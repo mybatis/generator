@@ -6,6 +6,7 @@ drop table PKFieldsBlobs if exists;
 drop table FieldsBlobs if exists;
 drop table "awful table" if exists;
 drop table BlobsOnly if exists;
+drop view NameView if exists;
 drop table RegexRename if exists;
 drop table AnotherAwfulTable if exists;
 drop table EnumTest if exists;
@@ -96,6 +97,9 @@ create table RegexRename (
   ZIP_CODE char(5),
   primary key(CUST_ID)
 );
+
+create view NameView (id, name) as
+  select CUST_ID, CUST_NAME from RegexRename;
 
 create table AnotherAwfulTable (
   id int not null,

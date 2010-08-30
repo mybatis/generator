@@ -64,7 +64,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
 
         StringBuilder sb = new StringBuilder();
         sb.append("  WARNING - "); //$NON-NLS-1$
-        sb.append(MergeConstants.NEW_JAVA_ELEMENT_TAG);
+        sb.append(MergeConstants.NEW_ELEMENT_TAG);
         xmlElement.addElement(new TextElement(sb.toString()));
         xmlElement
                 .addElement(new TextElement(
@@ -108,7 +108,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
         javaElement.addJavaDocLine(" *"); //$NON-NLS-1$
         StringBuilder sb = new StringBuilder();
         sb.append(" * "); //$NON-NLS-1$
-        sb.append(MergeConstants.NEW_JAVA_ELEMENT_TAG);
+        sb.append(MergeConstants.NEW_ELEMENT_TAG);
         if (markAsDoNotDelete) {
             sb.append(" do_not_delete_during_merge"); //$NON-NLS-1$
         }

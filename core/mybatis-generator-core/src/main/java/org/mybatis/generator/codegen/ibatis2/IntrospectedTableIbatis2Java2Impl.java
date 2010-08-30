@@ -71,11 +71,11 @@ public class IntrospectedTableIbatis2Java2Impl extends IntrospectedTable {
 
     protected void calculateDAOGenerators(List<String> warnings,
             ProgressCallback progressCallback) {
-        if (context.getDaoGeneratorConfiguration() == null) {
+        if (context.getJavaClientGeneratorConfiguration() == null) {
             return;
         }
 
-        String type = context.getDaoGeneratorConfiguration()
+        String type = context.getJavaClientGeneratorConfiguration()
                 .getConfigurationType();
 
         AbstractJavaGenerator javaGenerator;
@@ -161,7 +161,7 @@ public class IntrospectedTableIbatis2Java2Impl extends IntrospectedTable {
                     .getCompilationUnits();
             for (CompilationUnit compilationUnit : compilationUnits) {
                 GeneratedJavaFile gjf = new GeneratedJavaFile(compilationUnit,
-                        context.getDaoGeneratorConfiguration()
+                        context.getJavaClientGeneratorConfiguration()
                                 .getTargetProject());
                 answer.add(gjf);
             }

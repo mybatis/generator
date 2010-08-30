@@ -154,7 +154,7 @@ public class DAOGenerator extends AbstractJavaGenerator {
         String rootInterface = introspectedTable
                 .getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
         if (rootInterface == null) {
-            rootInterface = context.getDaoGeneratorConfiguration()
+            rootInterface = context.getJavaClientGeneratorConfiguration()
                     .getProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
         }
 

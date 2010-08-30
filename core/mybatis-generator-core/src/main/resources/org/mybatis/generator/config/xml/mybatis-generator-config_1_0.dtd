@@ -49,7 +49,7 @@
   tables.
 -->
 <!ELEMENT context (property*, plugin*, commentGenerator?, jdbcConnection, javaTypeResolver?,
-                         javaModelGenerator, sqlMapGenerator, daoGenerator?, table+)>
+                         javaModelGenerator, sqlMapGenerator, javaClientGenerator?, table+)>
 <!ATTLIST context id ID #REQUIRED
   defaultModelType CDATA #IMPLIED
   targetRuntime CDATA #IMPLIED
@@ -123,12 +123,13 @@
   targetProject CDATA #REQUIRED>
 
 <!--
-  The daoGenerator element is used to define properties of the DAO Generator.
-  The DAO Generator builds DAO an interface and implementation class for each table.
-  If this element is missing, then the generator will not build DAO classes.
+  The javaClientGenerator element is used to define properties of the Java client Generator.
+  The Java Client Generator builds Java interface and implementation classes
+  (as required) for each table.
+  If this element is missing, then the generator will not build Java Client classes.
 -->
-<!ELEMENT daoGenerator (property*)>
-<!ATTLIST daoGenerator
+<!ELEMENT javaClientGenerator (property*)>
+<!ATTLIST javaClientGenerator
   type CDATA #REQUIRED
   targetPackage CDATA #REQUIRED
   targetProject CDATA #REQUIRED

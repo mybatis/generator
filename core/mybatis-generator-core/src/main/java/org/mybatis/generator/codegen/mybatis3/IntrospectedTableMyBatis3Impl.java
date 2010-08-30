@@ -68,15 +68,17 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
 
     protected void calculateDAOGenerators(List<String> warnings,
             ProgressCallback progressCallback) {
-        if (context.getDaoGeneratorConfiguration() == null) {
+        if (context.getJavaClientGeneratorConfiguration() == null) {
             return;
         }
 
-        String type = context.getDaoGeneratorConfiguration()
+        String type = context.getJavaClientGeneratorConfiguration()
                 .getConfigurationType();
 
         AbstractJavaGenerator javaGenerator;
-        if ("MAPPER".equalsIgnoreCase(type)) { //$NON-NLS-1$
+        if ("XMLMAPPER".equalsIgnoreCase(type)) { //$NON-NLS-1$
+            javaGenerator = new JavaMapperGenerator();
+        } else if ("MAPPER".equalsIgnoreCase(type)) { //$NON-NLS-1$
             javaGenerator = new JavaMapperGenerator();
         } else {
             javaGenerator = (AbstractJavaGenerator) ObjectFactory
@@ -147,7 +149,7 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
                     .getCompilationUnits();
             for (CompilationUnit compilationUnit : compilationUnits) {
                 GeneratedJavaFile gjf = new GeneratedJavaFile(compilationUnit,
-                        context.getDaoGeneratorConfiguration()
+                        context.getJavaClientGeneratorConfiguration()
                                 .getTargetProject());
                 answer.add(gjf);
             }
@@ -182,10 +184,5 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
     @Override
     public boolean isJava5Targeted() {
         return true;
-    }
-
-    @Override
-    protected boolean useLegacyXMLIds() {
-        return false;
     }
 }

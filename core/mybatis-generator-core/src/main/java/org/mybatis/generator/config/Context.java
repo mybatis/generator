@@ -51,7 +51,7 @@ public class Context extends PropertyHolder {
 
     private JavaModelGeneratorConfiguration javaModelGeneratorConfiguration;
 
-    private DAOGeneratorConfiguration daoGeneratorConfiguration;
+    private JavaClientGeneratorConfiguration javaClientGeneratorConfiguration;
 
     private ArrayList<TableConfiguration> tableConfigurations;
 
@@ -104,8 +104,8 @@ public class Context extends PropertyHolder {
         return jdbcConnectionConfiguration;
     }
 
-    public DAOGeneratorConfiguration getDaoGeneratorConfiguration() {
-        return daoGeneratorConfiguration;
+    public JavaClientGeneratorConfiguration getJavaClientGeneratorConfiguration() {
+        return javaClientGeneratorConfiguration;
     }
 
     public JavaModelGeneratorConfiguration getJavaModelGeneratorConfiguration() {
@@ -154,8 +154,8 @@ public class Context extends PropertyHolder {
             sqlMapGeneratorConfiguration.validate(errors, id);
         }
 
-        if (daoGeneratorConfiguration != null) {
-            daoGeneratorConfiguration.validate(errors, id);
+        if (javaClientGeneratorConfiguration != null) {
+            javaClientGeneratorConfiguration.validate(errors, id);
         }
 
         if (tableConfigurations.size() == 0) {
@@ -181,9 +181,9 @@ public class Context extends PropertyHolder {
         this.id = id;
     }
 
-    public void setDaoGeneratorConfiguration(
-            DAOGeneratorConfiguration daoGeneratorConfiguration) {
-        this.daoGeneratorConfiguration = daoGeneratorConfiguration;
+    public void setJavaClientGeneratorConfiguration(
+            JavaClientGeneratorConfiguration javaClientGeneratorConfiguration) {
+        this.javaClientGeneratorConfiguration = javaClientGeneratorConfiguration;
     }
 
     public void setJavaModelGeneratorConfiguration(
@@ -258,8 +258,8 @@ public class Context extends PropertyHolder {
             xmlElement.addElement(sqlMapGeneratorConfiguration.toXmlElement());
         }
 
-        if (daoGeneratorConfiguration != null) {
-            xmlElement.addElement(daoGeneratorConfiguration.toXmlElement());
+        if (javaClientGeneratorConfiguration != null) {
+            xmlElement.addElement(javaClientGeneratorConfiguration.toXmlElement());
         }
 
         for (TableConfiguration tableConfiguration : tableConfigurations) {

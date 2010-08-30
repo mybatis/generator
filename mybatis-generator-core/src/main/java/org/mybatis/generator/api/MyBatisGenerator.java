@@ -291,7 +291,7 @@ public class MyBatisGenerator {
                         source = shellCallback.mergeJavaFile(gjf
                                 .getFormattedContent(), targetFile
                                 .getAbsolutePath(),
-                                MergeConstants.OLD_JAVA_ELEMENT_TAGS);
+                                MergeConstants.OLD_ELEMENT_TAGS);
                     } else if (shellCallback.isOverwriteEnabled()) {
                         source = gjf.getFormattedContent();
                         warnings.add(Messages.getString("Warning.11", //$NON-NLS-1$

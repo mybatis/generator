@@ -23,10 +23,10 @@ import java.util.Properties;
 import org.mybatis.generator.config.ColumnOverride;
 import org.mybatis.generator.config.ColumnRenamingRule;
 import org.mybatis.generator.config.CommentGeneratorConfiguration;
-import org.mybatis.generator.config.DAOGeneratorConfiguration;
 import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.Context;
+import org.mybatis.generator.config.JavaClientGeneratorConfiguration;
 import org.mybatis.generator.config.PluginConfiguration;
 import org.mybatis.generator.config.IgnoredColumn;
 import org.mybatis.generator.config.JDBCConnectionConfiguration;
@@ -530,9 +530,9 @@ public class IbatorConfigurationParser {
     }
 
     private void parseDaoGenerator(Context context, Node node) {
-        DAOGeneratorConfiguration daoGeneratorConfiguration = new DAOGeneratorConfiguration();
+        JavaClientGeneratorConfiguration javaClientGeneratorConfiguration = new JavaClientGeneratorConfiguration();
 
-        context.setDaoGeneratorConfiguration(daoGeneratorConfiguration);
+        context.setJavaClientGeneratorConfiguration(javaClientGeneratorConfiguration);
 
         Properties attributes = parseAttributes(node);
         String type = attributes.getProperty("type"); //$NON-NLS-1$
@@ -541,10 +541,10 @@ public class IbatorConfigurationParser {
         String implementationPackage = attributes
                 .getProperty("implementationPackage"); //$NON-NLS-1$
 
-        daoGeneratorConfiguration.setConfigurationType(type);
-        daoGeneratorConfiguration.setTargetPackage(targetPackage);
-        daoGeneratorConfiguration.setTargetProject(targetProject);
-        daoGeneratorConfiguration
+        javaClientGeneratorConfiguration.setConfigurationType(type);
+        javaClientGeneratorConfiguration.setTargetPackage(targetPackage);
+        javaClientGeneratorConfiguration.setTargetProject(targetProject);
+        javaClientGeneratorConfiguration
                 .setImplementationPackage(implementationPackage);
 
         NodeList nodeList = node.getChildNodes();
@@ -556,7 +556,7 @@ public class IbatorConfigurationParser {
             }
 
             if ("property".equals(childNode.getNodeName())) { //$NON-NLS-1$
-                parseProperty(daoGeneratorConfiguration, childNode);
+                parseProperty(javaClientGeneratorConfiguration, childNode);
             }
         }
     }

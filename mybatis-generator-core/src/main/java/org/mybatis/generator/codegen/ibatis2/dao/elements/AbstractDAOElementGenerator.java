@@ -51,7 +51,7 @@ public abstract class AbstractDAOElementGenerator extends AbstractGenerator {
 
     public DAOMethodNameCalculator getDAOMethodNameCalculator() {
         if (dAOMethodNameCalculator == null) {
-            String type = context.getDaoGeneratorConfiguration()
+            String type = context.getJavaClientGeneratorConfiguration()
                     .getProperty(PropertyRegistry.DAO_METHOD_NAME_CALCULATOR);
             if (StringUtility.stringHasValue(type)) {
                 if ("extended".equalsIgnoreCase(type)) { //$NON-NLS-1$
@@ -79,7 +79,7 @@ public abstract class AbstractDAOElementGenerator extends AbstractGenerator {
     public JavaVisibility getExampleMethodVisibility() {
         if (exampleMethodVisibility == null) {
             String type = context
-                    .getDaoGeneratorConfiguration()
+                    .getJavaClientGeneratorConfiguration()
                     .getProperty(PropertyRegistry.DAO_EXAMPLE_METHOD_VISIBILITY);
             if (StringUtility.stringHasValue(type)) {
                 if ("public".equalsIgnoreCase(type)) { //$NON-NLS-1$

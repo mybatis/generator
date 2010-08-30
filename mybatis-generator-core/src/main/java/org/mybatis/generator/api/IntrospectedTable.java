@@ -22,11 +22,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.mybatis.generator.config.DAOGeneratorConfiguration;
-import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.config.Context;
+import org.mybatis.generator.config.GeneratedKey;
+import org.mybatis.generator.config.JavaClientGeneratorConfiguration;
 import org.mybatis.generator.config.JavaModelGeneratorConfiguration;
-import org.mybatis.generator.config.MergeConstants;
 import org.mybatis.generator.config.ModelType;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.config.SqlMapGeneratorConfiguration;
@@ -442,7 +441,7 @@ public abstract class IntrospectedTable {
     }
 
     public void initialize() {
-        calculateDAOAttributes();
+        calculateJavaClientAttributes();
         calculateModelAttributes();
         calculateXmlAttributes();
 
@@ -491,116 +490,6 @@ public abstract class IntrospectedTable {
         setBaseColumnListId("Base_Column_List"); //$NON-NLS-1$
         setBlobColumnListId("Blob_Column_List"); //$NON-NLS-1$
         setMyBatis3UpdateByExampleWhereClauseId("Update_By_Example_Where_Clause"); //$NON-NLS-1$
-        applyLegacyXMLPrefix();
-    }
-
-    protected boolean useLegacyXMLIds() {
-        SqlMapGeneratorConfiguration config = context
-                .getSqlMapGeneratorConfiguration();
-
-        return StringUtility.isTrue(config
-                .getProperty(PropertyRegistry.SQL_MAP_USE_LEGACY_XML_IDS));
-    }
-
-    protected void applyLegacyXMLPrefix() {
-        if (!useLegacyXMLIds()) {
-            return;
-        }
-
-        StringBuilder sb = new StringBuilder();
-        sb.append(MergeConstants.NEW_XML_ELEMENT_PREFIX);
-        sb.append(getCountByExampleStatementId());
-        setCountByExampleStatementId(sb.toString());
-
-        sb.setLength(0);
-        sb.append(MergeConstants.NEW_XML_ELEMENT_PREFIX);
-        sb.append(getDeleteByExampleStatementId());
-        setDeleteByExampleStatementId(sb.toString());
-
-        sb.setLength(0);
-        sb.append(MergeConstants.NEW_XML_ELEMENT_PREFIX);
-        sb.append(getDeleteByPrimaryKeyStatementId());
-        setDeleteByPrimaryKeyStatementId(sb.toString());
-
-        sb.setLength(0);
-        sb.append(MergeConstants.NEW_XML_ELEMENT_PREFIX);
-        sb.append(getInsertStatementId());
-        setInsertStatementId(sb.toString());
-
-        sb.setLength(0);
-        sb.append(MergeConstants.NEW_XML_ELEMENT_PREFIX);
-        sb.append(getInsertSelectiveStatementId());
-        setInsertSelectiveStatementId(sb.toString());
-
-        sb.setLength(0);
-        sb.append(MergeConstants.NEW_XML_ELEMENT_PREFIX);
-        sb.append(getSelectByExampleStatementId());
-        setSelectByExampleStatementId(sb.toString());
-
-        sb.setLength(0);
-        sb.append(MergeConstants.NEW_XML_ELEMENT_PREFIX);
-        sb.append(getSelectByExampleWithBLOBsStatementId());
-        setSelectByExampleWithBLOBsStatementId(sb.toString());
-
-        sb.setLength(0);
-        sb.append(MergeConstants.NEW_XML_ELEMENT_PREFIX);
-        sb.append(getSelectByPrimaryKeyStatementId());
-        setSelectByPrimaryKeyStatementId(sb.toString());
-
-        sb.setLength(0);
-        sb.append(MergeConstants.NEW_XML_ELEMENT_PREFIX);
-        sb.append(getUpdateByExampleStatementId());
-        setUpdateByExampleStatementId(sb.toString());
-
-        sb.setLength(0);
-        sb.append(MergeConstants.NEW_XML_ELEMENT_PREFIX);
-        sb.append(getUpdateByExampleSelectiveStatementId());
-        setUpdateByExampleSelectiveStatementId(sb.toString());
-
-        sb.setLength(0);
-        sb.append(MergeConstants.NEW_XML_ELEMENT_PREFIX);
-        sb.append(getUpdateByExampleWithBLOBsStatementId());
-        setUpdateByExampleWithBLOBsStatementId(sb.toString());
-
-        sb.setLength(0);
-        sb.append(MergeConstants.NEW_XML_ELEMENT_PREFIX);
-        sb.append(getUpdateByPrimaryKeyStatementId());
-        setUpdateByPrimaryKeyStatementId(sb.toString());
-
-        sb.setLength(0);
-        sb.append(MergeConstants.NEW_XML_ELEMENT_PREFIX);
-        sb.append(getUpdateByPrimaryKeySelectiveStatementId());
-        setUpdateByPrimaryKeySelectiveStatementId(sb.toString());
-
-        sb.setLength(0);
-        sb.append(MergeConstants.NEW_XML_ELEMENT_PREFIX);
-        sb.append(getUpdateByPrimaryKeyWithBLOBsStatementId());
-        setUpdateByPrimaryKeyWithBLOBsStatementId(sb.toString());
-
-        sb.setLength(0);
-        sb.append(MergeConstants.NEW_XML_ELEMENT_PREFIX);
-        sb.append(getBaseResultMapId());
-        setBaseResultMapId(sb.toString());
-
-        sb.setLength(0);
-        sb.append(MergeConstants.NEW_XML_ELEMENT_PREFIX);
-        sb.append(getResultMapWithBLOBsId());
-        setResultMapWithBLOBsId(sb.toString());
-
-        sb.setLength(0);
-        sb.append(MergeConstants.NEW_XML_ELEMENT_PREFIX);
-        sb.append(getExampleWhereClauseId());
-        setExampleWhereClauseId(sb.toString());
-
-        sb.setLength(0);
-        sb.append(MergeConstants.NEW_XML_ELEMENT_PREFIX);
-        sb.append(getBaseColumnListId());
-        setBaseColumnListId(sb.toString());
-
-        sb.setLength(0);
-        sb.append(MergeConstants.NEW_XML_ELEMENT_PREFIX);
-        sb.append(getBlobColumnListId());
-        setBlobColumnListId(sb.toString());
     }
 
     public void setBlobColumnListId(String s) {
@@ -811,9 +700,9 @@ public abstract class IntrospectedTable {
                 .get(InternalAttribute.ATTR_COUNT_BY_EXAMPLE_STATEMENT_ID);
     }
 
-    protected String calculateDAOImplementationPackage() {
-        DAOGeneratorConfiguration config = context
-                .getDaoGeneratorConfiguration();
+    protected String calculateJavaClientImplementationPackage() {
+        JavaClientGeneratorConfiguration config = context
+                .getJavaClientGeneratorConfiguration();
         if (config == null) {
             return null;
         }
@@ -832,9 +721,9 @@ public abstract class IntrospectedTable {
         return sb.toString();
     }
 
-    protected String calculateDAOInterfacePackage() {
-        DAOGeneratorConfiguration config = context
-                .getDaoGeneratorConfiguration();
+    protected String calculateJavaClientInterfacePackage() {
+        JavaClientGeneratorConfiguration config = context
+                .getJavaClientGeneratorConfiguration();
         if (config == null) {
             return null;
         }
@@ -849,27 +738,27 @@ public abstract class IntrospectedTable {
         return sb.toString();
     }
 
-    protected void calculateDAOAttributes() {
-        if (context.getDaoGeneratorConfiguration() == null) {
+    protected void calculateJavaClientAttributes() {
+        if (context.getJavaClientGeneratorConfiguration() == null) {
             return;
         }
 
         StringBuilder sb = new StringBuilder();
-        sb.append(calculateDAOImplementationPackage());
+        sb.append(calculateJavaClientImplementationPackage());
         sb.append('.');
         sb.append(fullyQualifiedTable.getDomainObjectName());
         sb.append("DAOImpl"); //$NON-NLS-1$
         setDAOImplementationType(sb.toString());
 
         sb.setLength(0);
-        sb.append(calculateDAOInterfacePackage());
+        sb.append(calculateJavaClientInterfacePackage());
         sb.append('.');
         sb.append(fullyQualifiedTable.getDomainObjectName());
         sb.append("DAO"); //$NON-NLS-1$
         setDAOInterfaceType(sb.toString());
 
         sb.setLength(0);
-        sb.append(calculateDAOInterfacePackage());
+        sb.append(calculateJavaClientInterfacePackage());
         sb.append('.');
         sb.append(fullyQualifiedTable.getDomainObjectName());
         sb.append("Mapper"); //$NON-NLS-1$

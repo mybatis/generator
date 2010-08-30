@@ -22,9 +22,9 @@
       <property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
 
-    <daoGenerator type="MAPPER" targetPackage="ibatortest.generated.flat.java5.dao"  targetProject="target/generated-sources/ibator/ibatis3">
+    <javaClientGenerator type="XMLMAPPER" targetPackage="ibatortest.generated.flat.java5.mapper"  targetProject="target/generated-sources/ibator/ibatis3">
       <property name="enableSubPackages" value="true" />
-    </daoGenerator>
+    </javaClientGenerator>
 
     <table tableName="FieldsOnly" />
     <table tableName="PKOnly" />
@@ -61,9 +61,9 @@
       <property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
 
-    <daoGenerator type="MAPPER" targetPackage="ibatortest.generated.hierarchical.java5.dao"  targetProject="target/generated-sources/ibator/ibatis3">
+    <javaClientGenerator type="XMLMAPPER" targetPackage="ibatortest.generated.hierarchical.java5.mapper"  targetProject="target/generated-sources/ibator/ibatis3">
       <property name="enableSubPackages" value="true" />
-    </daoGenerator>
+    </javaClientGenerator>
 
     <table tableName="FieldsOnly" />
     <table tableName="PKOnly" />
@@ -99,9 +99,9 @@
       <property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
 
-    <daoGenerator type="MAPPER" targetPackage="ibatortest.generated.conditional.java5.dao"  targetProject="target/generated-sources/ibator/ibatis3">
+    <javaClientGenerator type="XMLMAPPER" targetPackage="ibatortest.generated.conditional.java5.mapper"  targetProject="target/generated-sources/ibator/ibatis3">
       <property name="enableSubPackages" value="true" />
-    </daoGenerator>
+    </javaClientGenerator>
 
     <table tableName="FieldsOnly" />
     <table tableName="PKOnly" />
@@ -144,10 +144,10 @@
     <sqlMapGenerator targetPackage="ibatortest.generated.miscellaneous.xml"  targetProject="target/generated-sources/ibator/ibatis3">
     </sqlMapGenerator>
 
-    <daoGenerator type="MAPPER" targetPackage="ibatortest.generated.miscellaneous.dao"  targetProject="target/generated-sources/ibator/ibatis3">
+    <javaClientGenerator type="XMLMAPPER" targetPackage="ibatortest.generated.miscellaneous.mapper"  targetProject="target/generated-sources/ibator/ibatis3">
       <property name="rootInterface" value="ibatortest.execute.miscellaneous.BaseInterface" />
       <property name="methodNameCalculator" value="EXTENDED"/>
-    </daoGenerator>
+    </javaClientGenerator>
 
     <table tableName="BlobsOnly" /> <!-- should generate a warning -->
     <table tableName="NonExistantTable" /> <!-- should generate a warning -->
@@ -167,7 +167,7 @@
     </table>
   </context>
   
-  <context id="miscellaneousTests_NoDAO" targetRuntime="MyBatis3">
+  <context id="miscellaneousTests_NoClient" targetRuntime="MyBatis3">
     <property name="autoDelimitKeywords" value="true" />
     
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"

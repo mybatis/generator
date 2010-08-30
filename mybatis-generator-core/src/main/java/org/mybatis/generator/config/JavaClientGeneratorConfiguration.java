@@ -25,15 +25,15 @@ import org.mybatis.generator.internal.util.messages.Messages;
 /**
  * @author Jeff Butler
  */
-public class DAOGeneratorConfiguration extends TypedPropertyHolder {
+public class JavaClientGeneratorConfiguration extends TypedPropertyHolder {
     private String targetPackage;
     private String implementationPackage;
     private String targetProject;
 
     /**
-	 *  
-	 */
-    public DAOGeneratorConfiguration() {
+     *  
+     */
+    public JavaClientGeneratorConfiguration() {
         super();
     }
 
@@ -54,7 +54,7 @@ public class DAOGeneratorConfiguration extends TypedPropertyHolder {
     }
 
     public XmlElement toXmlElement() {
-        XmlElement answer = new XmlElement("daoGenerator"); //$NON-NLS-1$
+        XmlElement answer = new XmlElement("javaClientGenerator"); //$NON-NLS-1$
         if (getConfigurationType() != null) {
             answer.addAttribute(new Attribute("type", getConfigurationType())); //$NON-NLS-1$
         }
@@ -92,7 +92,7 @@ public class DAOGeneratorConfiguration extends TypedPropertyHolder {
 
         if (!StringUtility.stringHasValue(targetPackage)) {
             errors.add(Messages.getString("ValidationError.12", //$NON-NLS-1$
-                    "DAOGenerator", contextId)); //$NON-NLS-1$
+                    "javaClientGenerator", contextId)); //$NON-NLS-1$
         }
 
         if (!StringUtility.stringHasValue(getConfigurationType())) {

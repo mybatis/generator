@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package mbg.test.ib2j5.j5.flat;
+package mbg.test.ib2j5.hierarchical;
 
 import static mbg.test.common.util.TestUtilities.blobsAreEqual;
 import static mbg.test.common.util.TestUtilities.generateRandomBlob;
@@ -23,38 +23,41 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.sql.SQLException;
 import java.util.List;
 
-import mbg.test.ib2j5.generated.flat.dao.AwfulTableDAO;
-import mbg.test.ib2j5.generated.flat.dao.FieldsblobsDAO;
-import mbg.test.ib2j5.generated.flat.dao.FieldsonlyDAO;
-import mbg.test.ib2j5.generated.flat.dao.PkblobsDAO;
-import mbg.test.ib2j5.generated.flat.dao.PkfieldsDAO;
-import mbg.test.ib2j5.generated.flat.dao.PkfieldsblobsDAO;
-import mbg.test.ib2j5.generated.flat.dao.PkonlyDAO;
-import mbg.test.ib2j5.generated.flat.model.AwfulTable;
-import mbg.test.ib2j5.generated.flat.model.AwfulTableExample;
-import mbg.test.ib2j5.generated.flat.model.Fieldsblobs;
-import mbg.test.ib2j5.generated.flat.model.FieldsblobsExample;
-import mbg.test.ib2j5.generated.flat.model.Fieldsonly;
-import mbg.test.ib2j5.generated.flat.model.FieldsonlyExample;
-import mbg.test.ib2j5.generated.flat.model.Pkblobs;
-import mbg.test.ib2j5.generated.flat.model.PkblobsExample;
-import mbg.test.ib2j5.generated.flat.model.Pkfields;
-import mbg.test.ib2j5.generated.flat.model.PkfieldsExample;
-import mbg.test.ib2j5.generated.flat.model.Pkfieldsblobs;
-import mbg.test.ib2j5.generated.flat.model.PkfieldsblobsExample;
-import mbg.test.ib2j5.generated.flat.model.Pkonly;
-import mbg.test.ib2j5.generated.flat.model.PkonlyExample;
+import mbg.test.ib2j5.generated.hierarchical.dao.AwfulTableDAO;
+import mbg.test.ib2j5.generated.hierarchical.dao.FieldsblobsDAO;
+import mbg.test.ib2j5.generated.hierarchical.dao.FieldsonlyDAO;
+import mbg.test.ib2j5.generated.hierarchical.dao.PkblobsDAO;
+import mbg.test.ib2j5.generated.hierarchical.dao.PkfieldsDAO;
+import mbg.test.ib2j5.generated.hierarchical.dao.PkfieldsblobsDAO;
+import mbg.test.ib2j5.generated.hierarchical.dao.PkonlyDAO;
+import mbg.test.ib2j5.generated.hierarchical.model.AwfulTable;
+import mbg.test.ib2j5.generated.hierarchical.model.AwfulTableExample;
+import mbg.test.ib2j5.generated.hierarchical.model.Fieldsblobs;
+import mbg.test.ib2j5.generated.hierarchical.model.FieldsblobsExample;
+import mbg.test.ib2j5.generated.hierarchical.model.FieldsblobsWithBLOBs;
+import mbg.test.ib2j5.generated.hierarchical.model.Fieldsonly;
+import mbg.test.ib2j5.generated.hierarchical.model.FieldsonlyExample;
+import mbg.test.ib2j5.generated.hierarchical.model.PkblobsExample;
+import mbg.test.ib2j5.generated.hierarchical.model.PkblobsKey;
+import mbg.test.ib2j5.generated.hierarchical.model.PkblobsWithBLOBs;
+import mbg.test.ib2j5.generated.hierarchical.model.Pkfields;
+import mbg.test.ib2j5.generated.hierarchical.model.PkfieldsExample;
+import mbg.test.ib2j5.generated.hierarchical.model.Pkfieldsblobs;
+import mbg.test.ib2j5.generated.hierarchical.model.PkfieldsblobsExample;
+import mbg.test.ib2j5.generated.hierarchical.model.PkfieldsblobsWithBLOBs;
+import mbg.test.ib2j5.generated.hierarchical.model.PkonlyExample;
+import mbg.test.ib2j5.generated.hierarchical.model.PkonlyKey;
 
 import org.junit.Test;
+
 /**
  * 
  * @author Jeff Butler
  *
  */
-public class UpdateByExampleTest extends AbstractFlatJava5Test {
+public class UpdateByExampleTest extends AbstractHierarchicalJava5Test {
 
     @Test
     public void testFieldsOnlyUpdateByExampleSelective() {
@@ -113,7 +116,7 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
             assertEquals(record.getDoublefield(), 99, 0.001);
             assertEquals(record.getFloatfield(), 100.111, 0.001);
             assertEquals(record.getIntegerfield().intValue(), 9);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             fail(e.getMessage());
         }
     }
@@ -157,7 +160,7 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
             assertNull(record.getDoublefield());
             assertNull(record.getFloatfield());
             assertEquals(record.getIntegerfield().intValue(), 22);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             fail(e.getMessage());
         }
     }
@@ -167,24 +170,24 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
         PkonlyDAO dao = getPkonlyDAO();
 
         try {
-            Pkonly key = new Pkonly();
+            PkonlyKey key = new PkonlyKey();
             key.setId(1);
             key.setSeqNum(3);
             dao.insert(key);
 
-            key = new Pkonly();
+            key = new PkonlyKey();
             key.setId(5);
             key.setSeqNum(6);
             dao.insert(key);
 
-            key = new Pkonly();
+            key = new PkonlyKey();
             key.setId(7);
             key.setSeqNum(8);
             dao.insert(key);
 
             PkonlyExample example = new PkonlyExample();
             example.createCriteria().andIdGreaterThan(4);
-            key = new Pkonly();
+            key = new PkonlyKey();
             key.setSeqNum(3);
             int rows = dao.updateByExampleSelective(key, example);
             assertEquals(2, rows);
@@ -204,7 +207,7 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
             
             rows = dao.countByExample(example);
             assertEquals(1, rows);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             fail(e.getMessage());
         }
     }
@@ -214,17 +217,17 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
         PkonlyDAO dao = getPkonlyDAO();
 
         try {
-            Pkonly key = new Pkonly();
+            PkonlyKey key = new PkonlyKey();
             key.setId(1);
             key.setSeqNum(3);
             dao.insert(key);
 
-            key = new Pkonly();
+            key = new PkonlyKey();
             key.setId(5);
             key.setSeqNum(6);
             dao.insert(key);
 
-            key = new Pkonly();
+            key = new PkonlyKey();
             key.setId(7);
             key.setSeqNum(8);
             dao.insert(key);
@@ -232,7 +235,7 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
             PkonlyExample example = new PkonlyExample();
             example.createCriteria()
                 .andIdEqualTo(7);
-            key = new Pkonly();
+            key = new PkonlyKey();
             key.setSeqNum(3);
             key.setId(22);
             int rows = dao.updateByExample(key, example);
@@ -245,7 +248,7 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
             
             rows = dao.countByExample(example);
             assertEquals(1, rows);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             fail(e.getMessage());
         }
     }
@@ -286,7 +289,7 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
     
             rows = dao.countByExample(example);
             assertEquals(1, rows);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             fail(e.getMessage());
         }
     }
@@ -332,7 +335,7 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
     
             rows = dao.countByExample(example);
             assertEquals(1, rows);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             fail(e.getMessage());
         }
     }
@@ -342,19 +345,19 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
         PkblobsDAO dao = getPkblobsDAO();
     
         try {
-            Pkblobs record = new Pkblobs();
+            PkblobsWithBLOBs record = new PkblobsWithBLOBs();
             record.setId(3);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             dao.insert(record);
     
-            record = new Pkblobs();
+            record = new PkblobsWithBLOBs();
             record.setId(6);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             dao.insert(record);
     
-            Pkblobs newRecord = new Pkblobs();
+            PkblobsWithBLOBs newRecord = new PkblobsWithBLOBs();
             newRecord.setBlob1(generateRandomBlob());
             
             PkblobsExample example = new PkblobsExample();
@@ -362,15 +365,15 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
             int rows = dao.updateByExampleSelective(newRecord, example);
             assertEquals(1, rows);
             
-            List<Pkblobs> answer = dao.selectByExampleWithBLOBs(example);
+            List<PkblobsWithBLOBs> answer = dao.selectByExampleWithBLOBs(example);
             assertEquals(1, answer.size());
             
-            Pkblobs returnedRecord = answer.get(0);
+            PkblobsWithBLOBs returnedRecord = answer.get(0);
             
             assertEquals(6, returnedRecord.getId().intValue());
             assertTrue(blobsAreEqual(newRecord.getBlob1(), returnedRecord.getBlob1()));
             assertTrue(blobsAreEqual(record.getBlob2(), returnedRecord.getBlob2()));
-        } catch (SQLException e) {
+        } catch (Exception e) {
             fail(e.getMessage());
         }
     }
@@ -380,35 +383,35 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
         PkblobsDAO dao = getPkblobsDAO();
     
         try {
-            Pkblobs record = new Pkblobs();
+            PkblobsWithBLOBs record = new PkblobsWithBLOBs();
             record.setId(3);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             dao.insert(record);
     
-            record = new Pkblobs();
+            record = new PkblobsWithBLOBs();
             record.setId(6);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             dao.insert(record);
     
-            Pkblobs newRecord = new Pkblobs();
+            PkblobsKey newRecord = new PkblobsKey();
             newRecord.setId(8);
             
             PkblobsExample example = new PkblobsExample();
             example.createCriteria().andIdGreaterThan(4);
-            int rows = dao.updateByExampleWithoutBLOBs(newRecord, example);
+            int rows = dao.updateByExample(newRecord, example);
             assertEquals(1, rows);
             
-            List<Pkblobs> answer = dao.selectByExampleWithBLOBs(example);
+            List<PkblobsWithBLOBs> answer = dao.selectByExampleWithBLOBs(example);
             assertEquals(1, answer.size());
             
-            Pkblobs returnedRecord = answer.get(0);
+            PkblobsWithBLOBs returnedRecord = answer.get(0);
             
             assertEquals(8, returnedRecord.getId().intValue());
             assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord.getBlob1()));
             assertTrue(blobsAreEqual(record.getBlob2(), returnedRecord.getBlob2()));
-        } catch (SQLException e) {
+        } catch (Exception e) {
             fail(e.getMessage());
         }
     }
@@ -418,35 +421,35 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
         PkblobsDAO dao = getPkblobsDAO();
     
         try {
-            Pkblobs record = new Pkblobs();
+            PkblobsWithBLOBs record = new PkblobsWithBLOBs();
             record.setId(3);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             dao.insert(record);
     
-            record = new Pkblobs();
+            record = new PkblobsWithBLOBs();
             record.setId(6);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             dao.insert(record);
     
-            Pkblobs newRecord = new Pkblobs();
+            PkblobsWithBLOBs newRecord = new PkblobsWithBLOBs();
             newRecord.setId(8);
             
             PkblobsExample example = new PkblobsExample();
             example.createCriteria().andIdGreaterThan(4);
-            int rows = dao.updateByExampleWithBLOBs(newRecord, example);
+            int rows = dao.updateByExample(newRecord, example);
             assertEquals(1, rows);
             
-            List<Pkblobs> answer = dao.selectByExampleWithBLOBs(example);
+            List<PkblobsWithBLOBs> answer = dao.selectByExampleWithBLOBs(example);
             assertEquals(1, answer.size());
             
-            Pkblobs returnedRecord = answer.get(0);
+            PkblobsWithBLOBs returnedRecord = answer.get(0);
             
             assertEquals(8, returnedRecord.getId().intValue());
             assertNull(returnedRecord.getBlob1());
             assertNull(returnedRecord.getBlob2());
-        } catch (SQLException e) {
+        } catch (Exception e) {
             fail(e.getMessage());
         }
     }
@@ -456,7 +459,7 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
         PkfieldsblobsDAO dao = getPkfieldsblobsDAO();
     
         try {
-            Pkfieldsblobs record = new Pkfieldsblobs();
+            PkfieldsblobsWithBLOBs record = new PkfieldsblobsWithBLOBs();
             record.setId1(3);
             record.setId2(4);
             record.setFirstname("Jeff");
@@ -464,7 +467,7 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
             record.setBlob1(generateRandomBlob());
             dao.insert(record);
     
-            record = new Pkfieldsblobs();
+            record = new PkfieldsblobsWithBLOBs();
             record.setId1(5);
             record.setId2(6);
             record.setFirstname("Scott");
@@ -472,17 +475,17 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
             record.setBlob1(generateRandomBlob());
             dao.insert(record);
 
-            Pkfieldsblobs newRecord = new Pkfieldsblobs();
+            PkfieldsblobsWithBLOBs newRecord = new PkfieldsblobsWithBLOBs();
             newRecord.setFirstname("Fred");
             PkfieldsblobsExample example = new PkfieldsblobsExample();
             example.createCriteria().andId1NotEqualTo(3);
             int rows = dao.updateByExampleSelective(newRecord, example);
             assertEquals(1, rows);
     
-            List<Pkfieldsblobs> answer = dao.selectByExampleWithBLOBs(example);
+            List<PkfieldsblobsWithBLOBs> answer = dao.selectByExampleWithBLOBs(example);
             assertEquals(1, answer.size());
             
-            Pkfieldsblobs returnedRecord = answer.get(0);
+            PkfieldsblobsWithBLOBs returnedRecord = answer.get(0);
             
             assertEquals(record.getId1(), returnedRecord.getId1());
             assertEquals(record.getId2(), returnedRecord.getId2());
@@ -490,7 +493,7 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
             assertEquals(record.getLastname(), returnedRecord.getLastname());
             assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord.getBlob1()));
             
-        } catch (SQLException e) {
+        } catch (Exception e) {
             fail(e.getMessage());
         }
     }
@@ -500,7 +503,7 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
         PkfieldsblobsDAO dao = getPkfieldsblobsDAO();
     
         try {
-            Pkfieldsblobs record = new Pkfieldsblobs();
+            PkfieldsblobsWithBLOBs record = new PkfieldsblobsWithBLOBs();
             record.setId1(3);
             record.setId2(4);
             record.setFirstname("Jeff");
@@ -508,7 +511,7 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
             record.setBlob1(generateRandomBlob());
             dao.insert(record);
     
-            record = new Pkfieldsblobs();
+            record = new PkfieldsblobsWithBLOBs();
             record.setId1(5);
             record.setId2(6);
             record.setFirstname("Scott");
@@ -522,13 +525,13 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
             newRecord.setFirstname("Fred");
             PkfieldsblobsExample example = new PkfieldsblobsExample();
             example.createCriteria().andId1EqualTo(5);
-            int rows = dao.updateByExampleWithoutBLOBs(newRecord, example);
+            int rows = dao.updateByExample(newRecord, example);
             assertEquals(1, rows);
     
-            List<Pkfieldsblobs> answer = dao.selectByExampleWithBLOBs(example);
+            List<PkfieldsblobsWithBLOBs> answer = dao.selectByExampleWithBLOBs(example);
             assertEquals(1, answer.size());
             
-            Pkfieldsblobs returnedRecord = answer.get(0);
+            PkfieldsblobsWithBLOBs returnedRecord = answer.get(0);
             
             assertEquals(newRecord.getId1(), returnedRecord.getId1());
             assertEquals(newRecord.getId2(), returnedRecord.getId2());
@@ -536,7 +539,7 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
             assertNull(returnedRecord.getLastname());
             assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord.getBlob1()));
             
-        } catch (SQLException e) {
+        } catch (Exception e) {
             fail(e.getMessage());
         }
     }
@@ -546,7 +549,7 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
         PkfieldsblobsDAO dao = getPkfieldsblobsDAO();
     
         try {
-            Pkfieldsblobs record = new Pkfieldsblobs();
+            PkfieldsblobsWithBLOBs record = new PkfieldsblobsWithBLOBs();
             record.setId1(3);
             record.setId2(4);
             record.setFirstname("Jeff");
@@ -554,7 +557,7 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
             record.setBlob1(generateRandomBlob());
             dao.insert(record);
     
-            record = new Pkfieldsblobs();
+            record = new PkfieldsblobsWithBLOBs();
             record.setId1(5);
             record.setId2(6);
             record.setFirstname("Scott");
@@ -562,19 +565,19 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
             record.setBlob1(generateRandomBlob());
             dao.insert(record);
 
-            Pkfieldsblobs newRecord = new Pkfieldsblobs();
+            PkfieldsblobsWithBLOBs newRecord = new PkfieldsblobsWithBLOBs();
             newRecord.setId1(3);
             newRecord.setId2(8);
             newRecord.setFirstname("Fred");
             PkfieldsblobsExample example = new PkfieldsblobsExample();
             example.createCriteria().andId1EqualTo(3);
-            int rows = dao.updateByExampleWithBLOBs(newRecord, example);
+            int rows = dao.updateByExample(newRecord, example);
             assertEquals(1, rows);
     
-            List<Pkfieldsblobs> answer = dao.selectByExampleWithBLOBs(example);
+            List<PkfieldsblobsWithBLOBs> answer = dao.selectByExampleWithBLOBs(example);
             assertEquals(1, answer.size());
             
-            Pkfieldsblobs returnedRecord = answer.get(0);
+            PkfieldsblobsWithBLOBs returnedRecord = answer.get(0);
             
             assertEquals(newRecord.getId1(), returnedRecord.getId1());
             assertEquals(newRecord.getId2(), returnedRecord.getId2());
@@ -582,7 +585,7 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
             assertNull(returnedRecord.getLastname());
             assertNull(returnedRecord.getBlob1());
             
-        } catch (SQLException e) {
+        } catch (Exception e) {
             fail(e.getMessage());
         }
     }
@@ -592,37 +595,37 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
         FieldsblobsDAO dao = getFieldsblobsDAO();
     
         try {
-            Fieldsblobs record = new Fieldsblobs();
+            FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs();
             record.setFirstname("Jeff");
             record.setLastname("Smith");
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             dao.insert(record);
     
-            record = new Fieldsblobs();
+            record = new FieldsblobsWithBLOBs();
             record.setFirstname("Scott");
             record.setLastname("Jones");
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             dao.insert(record);
 
-            Fieldsblobs newRecord = new Fieldsblobs();
+            FieldsblobsWithBLOBs newRecord = new FieldsblobsWithBLOBs();
             newRecord.setLastname("Doe");
             FieldsblobsExample example = new FieldsblobsExample();
             example.createCriteria().andFirstnameLike("S%");
             int rows = dao.updateByExampleSelective(newRecord, example);
             assertEquals(1, rows);
             
-            List<Fieldsblobs> answer = dao.selectByExampleWithBLOBs(example);
+            List<FieldsblobsWithBLOBs> answer = dao.selectByExampleWithBLOBs(example);
             assertEquals(1, answer.size());
             
-            Fieldsblobs returnedRecord = answer.get(0);
+            FieldsblobsWithBLOBs returnedRecord = answer.get(0);
             
             assertEquals(record.getFirstname(), returnedRecord.getFirstname());
             assertEquals(newRecord.getLastname(), returnedRecord.getLastname());
             assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord.getBlob1()));
             assertTrue(blobsAreEqual(record.getBlob2(), returnedRecord.getBlob2()));
-        } catch (SQLException e) {
+        } catch (Exception e) {
             fail(e.getMessage());
         }
     }
@@ -632,14 +635,14 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
         FieldsblobsDAO dao = getFieldsblobsDAO();
     
         try {
-            Fieldsblobs record = new Fieldsblobs();
+            FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs();
             record.setFirstname("Jeff");
             record.setLastname("Smith");
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             dao.insert(record);
     
-            record = new Fieldsblobs();
+            record = new FieldsblobsWithBLOBs();
             record.setFirstname("Scott");
             record.setLastname("Jones");
             record.setBlob1(generateRandomBlob());
@@ -651,19 +654,19 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
             newRecord.setLastname("Doe");
             FieldsblobsExample example = new FieldsblobsExample();
             example.createCriteria().andFirstnameLike("S%");
-            int rows = dao.updateByExampleWithoutBLOBs(newRecord, example);
+            int rows = dao.updateByExample(newRecord, example);
             assertEquals(1, rows);
             
-            List<Fieldsblobs> answer = dao.selectByExampleWithBLOBs(example);
+            List<FieldsblobsWithBLOBs> answer = dao.selectByExampleWithBLOBs(example);
             assertEquals(1, answer.size());
             
-            Fieldsblobs returnedRecord = answer.get(0);
+            FieldsblobsWithBLOBs returnedRecord = answer.get(0);
             
             assertEquals(newRecord.getFirstname(), returnedRecord.getFirstname());
             assertEquals(newRecord.getLastname(), returnedRecord.getLastname());
             assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord.getBlob1()));
             assertTrue(blobsAreEqual(record.getBlob2(), returnedRecord.getBlob2()));
-        } catch (SQLException e) {
+        } catch (Exception e) {
             fail(e.getMessage());
         }
     }
@@ -673,38 +676,38 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
         FieldsblobsDAO dao = getFieldsblobsDAO();
     
         try {
-            Fieldsblobs record = new Fieldsblobs();
+            FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs();
             record.setFirstname("Jeff");
             record.setLastname("Smith");
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             dao.insert(record);
     
-            record = new Fieldsblobs();
+            record = new FieldsblobsWithBLOBs();
             record.setFirstname("Scott");
             record.setLastname("Jones");
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             dao.insert(record);
 
-            Fieldsblobs newRecord = new Fieldsblobs();
+            FieldsblobsWithBLOBs newRecord = new FieldsblobsWithBLOBs();
             newRecord.setFirstname("Scott");
             newRecord.setLastname("Doe");
             FieldsblobsExample example = new FieldsblobsExample();
             example.createCriteria().andFirstnameLike("S%");
-            int rows = dao.updateByExampleWithBLOBs(newRecord, example);
+            int rows = dao.updateByExample(newRecord, example);
             assertEquals(1, rows);
             
-            List<Fieldsblobs> answer = dao.selectByExampleWithBLOBs(example);
+            List<FieldsblobsWithBLOBs> answer = dao.selectByExampleWithBLOBs(example);
             assertEquals(1, answer.size());
             
-            Fieldsblobs returnedRecord = answer.get(0);
+            FieldsblobsWithBLOBs returnedRecord = answer.get(0);
             
             assertEquals(newRecord.getFirstname(), returnedRecord.getFirstname());
             assertEquals(newRecord.getLastname(), returnedRecord.getLastname());
             assertNull(returnedRecord.getBlob1());
             assertNull(returnedRecord.getBlob2());
-        } catch (SQLException e) {
+        } catch (Exception e) {
             fail(e.getMessage());
         }
     }
@@ -775,7 +778,7 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
             assertEquals(record.getSecondFirstName(), returnedRecord.getSecondFirstName());
             assertEquals(record.getThirdFirstName(), returnedRecord.getThirdFirstName());
             
-        } catch (SQLException e) {
+        } catch (Exception e) {
             fail(e.getMessage());
         }
     }
@@ -853,7 +856,7 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
             assertNull(returnedRecord.getSecondCustomerId());
             assertNull(returnedRecord.getSecondFirstName());
             assertNull(returnedRecord.getThirdFirstName());
-        } catch (SQLException e) {
+        } catch (Exception e) {
             fail(e.getMessage());
         }
     }

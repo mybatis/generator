@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package mbg.test.ib2j5.j5.conditional;
+package mbg.test.ib2j5.flat;
 
 import static mbg.test.common.util.TestUtilities.blobsAreEqual;
 import static mbg.test.common.util.TestUtilities.datesAreEqual;
@@ -33,30 +33,27 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import mbg.test.ib2j5.generated.conditional.dao.AwfulTableDAO;
-import mbg.test.ib2j5.generated.conditional.dao.FieldsblobsDAO;
-import mbg.test.ib2j5.generated.conditional.dao.FieldsonlyDAO;
-import mbg.test.ib2j5.generated.conditional.dao.PkblobsDAO;
-import mbg.test.ib2j5.generated.conditional.dao.PkfieldsDAO;
-import mbg.test.ib2j5.generated.conditional.dao.PkfieldsblobsDAO;
-import mbg.test.ib2j5.generated.conditional.dao.PkonlyDAO;
-import mbg.test.ib2j5.generated.conditional.model.AwfulTable;
-import mbg.test.ib2j5.generated.conditional.model.AwfulTableExample;
-import mbg.test.ib2j5.generated.conditional.model.Fieldsblobs;
-import mbg.test.ib2j5.generated.conditional.model.FieldsblobsExample;
-import mbg.test.ib2j5.generated.conditional.model.FieldsblobsWithBLOBs;
-import mbg.test.ib2j5.generated.conditional.model.Fieldsonly;
-import mbg.test.ib2j5.generated.conditional.model.FieldsonlyExample;
-import mbg.test.ib2j5.generated.conditional.model.Pkblobs;
-import mbg.test.ib2j5.generated.conditional.model.PkblobsExample;
-import mbg.test.ib2j5.generated.conditional.model.Pkfields;
-import mbg.test.ib2j5.generated.conditional.model.PkfieldsExample;
-import mbg.test.ib2j5.generated.conditional.model.PkfieldsKey;
-import mbg.test.ib2j5.generated.conditional.model.Pkfieldsblobs;
-import mbg.test.ib2j5.generated.conditional.model.PkfieldsblobsExample;
-import mbg.test.ib2j5.generated.conditional.model.PkfieldsblobsKey;
-import mbg.test.ib2j5.generated.conditional.model.PkonlyExample;
-import mbg.test.ib2j5.generated.conditional.model.PkonlyKey;
+import mbg.test.ib2j5.generated.flat.dao.AwfulTableDAO;
+import mbg.test.ib2j5.generated.flat.dao.FieldsblobsDAO;
+import mbg.test.ib2j5.generated.flat.dao.FieldsonlyDAO;
+import mbg.test.ib2j5.generated.flat.dao.PkblobsDAO;
+import mbg.test.ib2j5.generated.flat.dao.PkfieldsDAO;
+import mbg.test.ib2j5.generated.flat.dao.PkfieldsblobsDAO;
+import mbg.test.ib2j5.generated.flat.dao.PkonlyDAO;
+import mbg.test.ib2j5.generated.flat.model.AwfulTable;
+import mbg.test.ib2j5.generated.flat.model.AwfulTableExample;
+import mbg.test.ib2j5.generated.flat.model.Fieldsblobs;
+import mbg.test.ib2j5.generated.flat.model.FieldsblobsExample;
+import mbg.test.ib2j5.generated.flat.model.Fieldsonly;
+import mbg.test.ib2j5.generated.flat.model.FieldsonlyExample;
+import mbg.test.ib2j5.generated.flat.model.Pkblobs;
+import mbg.test.ib2j5.generated.flat.model.PkblobsExample;
+import mbg.test.ib2j5.generated.flat.model.Pkfields;
+import mbg.test.ib2j5.generated.flat.model.PkfieldsExample;
+import mbg.test.ib2j5.generated.flat.model.Pkfieldsblobs;
+import mbg.test.ib2j5.generated.flat.model.PkfieldsblobsExample;
+import mbg.test.ib2j5.generated.flat.model.Pkonly;
+import mbg.test.ib2j5.generated.flat.model.PkonlyExample;
 
 import org.junit.Test;
 
@@ -64,7 +61,7 @@ import org.junit.Test;
  * @author Jeff Butler
  * 
  */
-public class ConditionalJava5Test extends AbstractConditionalJava5Test {
+public class FlatJava5Test extends AbstractFlatJava5Test {
 
     @Test
     public void testFieldsOnlyInsert() {
@@ -132,6 +129,46 @@ public class ConditionalJava5Test extends AbstractConditionalJava5Test {
     }
 
     @Test
+    public void testFieldsOnlySelectByExampleDistinct() {
+        FieldsonlyDAO dao = getFieldsonlyDAO();
+
+        try {
+            Fieldsonly record = new Fieldsonly();
+            record.setDoublefield(11.22);
+            record.setFloatfield(33.44);
+            record.setIntegerfield(5);
+            dao.insert(record);
+            dao.insert(record);
+            dao.insert(record);
+
+            record = new Fieldsonly();
+            record.setDoublefield(44.55);
+            record.setFloatfield(66.77);
+            record.setIntegerfield(8);
+            dao.insert(record);
+
+            record = new Fieldsonly();
+            record.setDoublefield(88.99);
+            record.setFloatfield(100.111);
+            record.setIntegerfield(9);
+            dao.insert(record);
+
+            FieldsonlyExample example = new FieldsonlyExample();
+            example.createCriteria().andIntegerfieldEqualTo(5);
+            example.setDistinct(true);
+
+            List<Fieldsonly> answer = dao.selectByExample(example);
+            assertEquals(1, answer.size());
+
+            example.clear();
+            answer = dao.selectByExample(example);
+            assertEquals(5, answer.size());
+        } catch (SQLException e) {
+            fail(e.getMessage());
+        }
+    }
+    
+    @Test
     public void testFieldsOnlySelectByExampleNoCriteria() {
         FieldsonlyDAO dao = getFieldsonlyDAO();
 
@@ -158,6 +195,9 @@ public class ConditionalJava5Test extends AbstractConditionalJava5Test {
             example.createCriteria();
 
             List<Fieldsonly> answer = dao.selectByExample(example);
+            assertEquals(3, answer.size());
+
+            answer = dao.selectByExample(null);
             assertEquals(3, answer.size());
         } catch (SQLException e) {
             fail(e.getMessage());
@@ -242,16 +282,16 @@ public class ConditionalJava5Test extends AbstractConditionalJava5Test {
         PkonlyDAO dao = getPkonlyDAO();
 
         try {
-            PkonlyKey key = new PkonlyKey();
+            Pkonly key = new Pkonly();
             key.setId(1);
             key.setSeqNum(3);
             dao.insert(key);
 
             PkonlyExample example = new PkonlyExample();
-            List<PkonlyKey> answer = dao.selectByExample(example);
+            List<Pkonly> answer = dao.selectByExample(example);
             assertEquals(1, answer.size());
 
-            PkonlyKey returnedRecord = answer.get(0);
+            Pkonly returnedRecord = answer.get(0);
             assertEquals(key.getId(), returnedRecord.getId());
             assertEquals(key.getSeqNum(), returnedRecord.getSeqNum());
         } catch (SQLException e) {
@@ -264,24 +304,21 @@ public class ConditionalJava5Test extends AbstractConditionalJava5Test {
         PkonlyDAO dao = getPkonlyDAO();
 
         try {
-            PkonlyKey key = new PkonlyKey();
+            Pkonly key = new Pkonly();
             key.setId(1);
             key.setSeqNum(3);
             dao.insert(key);
 
-            key = new PkonlyKey();
+            key = new Pkonly();
             key.setId(5);
             key.setSeqNum(6);
             dao.insert(key);
 
             PkonlyExample example = new PkonlyExample();
-            List<PkonlyKey> answer = dao.selectByExample(example);
+            List<Pkonly> answer = dao.selectByExample(example);
             assertEquals(2, answer.size());
 
-            key = new PkonlyKey();
-            key.setId(5);
-            key.setSeqNum(6);
-            int rows = dao.deleteByPrimaryKey(key);
+            int rows = dao.deleteByPrimaryKey(5, 6);
             assertEquals(1, rows);
 
             answer = dao.selectByExample(example);
@@ -296,17 +333,17 @@ public class ConditionalJava5Test extends AbstractConditionalJava5Test {
         PkonlyDAO dao = getPkonlyDAO();
 
         try {
-            PkonlyKey key = new PkonlyKey();
+            Pkonly key = new Pkonly();
             key.setId(1);
             key.setSeqNum(3);
             dao.insert(key);
 
-            key = new PkonlyKey();
+            key = new Pkonly();
             key.setId(5);
             key.setSeqNum(6);
             dao.insert(key);
 
-            key = new PkonlyKey();
+            key = new Pkonly();
             key.setId(7);
             key.setSeqNum(8);
             dao.insert(key);
@@ -317,7 +354,7 @@ public class ConditionalJava5Test extends AbstractConditionalJava5Test {
             assertEquals(2, rows);
 
             example = new PkonlyExample();
-            List<PkonlyKey> answer = dao.selectByExample(example);
+            List<Pkonly> answer = dao.selectByExample(example);
             assertEquals(1, answer.size());
         } catch (SQLException e) {
             fail(e.getMessage());
@@ -329,24 +366,24 @@ public class ConditionalJava5Test extends AbstractConditionalJava5Test {
         PkonlyDAO dao = getPkonlyDAO();
 
         try {
-            PkonlyKey key = new PkonlyKey();
+            Pkonly key = new Pkonly();
             key.setId(1);
             key.setSeqNum(3);
             dao.insert(key);
 
-            key = new PkonlyKey();
+            key = new Pkonly();
             key.setId(5);
             key.setSeqNum(6);
             dao.insert(key);
 
-            key = new PkonlyKey();
+            key = new Pkonly();
             key.setId(7);
             key.setSeqNum(8);
             dao.insert(key);
 
             PkonlyExample example = new PkonlyExample();
             example.createCriteria().andIdGreaterThan(4);
-            List<PkonlyKey> answer = dao.selectByExample(example);
+            List<Pkonly> answer = dao.selectByExample(example);
             assertEquals(2, answer.size());
         } catch (SQLException e) {
             fail(e.getMessage());
@@ -358,24 +395,24 @@ public class ConditionalJava5Test extends AbstractConditionalJava5Test {
         PkonlyDAO dao = getPkonlyDAO();
 
         try {
-            PkonlyKey key = new PkonlyKey();
+            Pkonly key = new Pkonly();
             key.setId(1);
             key.setSeqNum(3);
             dao.insert(key);
 
-            key = new PkonlyKey();
+            key = new Pkonly();
             key.setId(5);
             key.setSeqNum(6);
             dao.insert(key);
 
-            key = new PkonlyKey();
+            key = new Pkonly();
             key.setId(7);
             key.setSeqNum(8);
             dao.insert(key);
 
             PkonlyExample example = new PkonlyExample();
             example.createCriteria();
-            List<PkonlyKey> answer = dao.selectByExample(example);
+            List<Pkonly> answer = dao.selectByExample(example);
             assertEquals(3, answer.size());
         } catch (SQLException e) {
             fail(e.getMessage());
@@ -387,17 +424,17 @@ public class ConditionalJava5Test extends AbstractConditionalJava5Test {
         PkonlyDAO dao = getPkonlyDAO();
 
         try {
-            PkonlyKey key = new PkonlyKey();
+            Pkonly key = new Pkonly();
             key.setId(1);
             key.setSeqNum(3);
             dao.insert(key);
 
-            key = new PkonlyKey();
+            key = new Pkonly();
             key.setId(5);
             key.setSeqNum(6);
             dao.insert(key);
 
-            key = new PkonlyKey();
+            key = new Pkonly();
             key.setId(7);
             key.setSeqNum(8);
             dao.insert(key);
@@ -435,11 +472,7 @@ public class ConditionalJava5Test extends AbstractConditionalJava5Test {
 
             dao.insert(record);
 
-            PkfieldsKey key = new PkfieldsKey();
-            key.setId1(1);
-            key.setId2(2);
-
-            Pkfields returnedRecord = dao.selectByPrimaryKey(key);
+            Pkfields returnedRecord = dao.selectByPrimaryKey(1, 2);
             assertNotNull(returnedRecord);
 
             assertTrue(datesAreEqual(record.getDatefield(), returnedRecord
@@ -484,11 +517,7 @@ public class ConditionalJava5Test extends AbstractConditionalJava5Test {
             int rows = dao.updateByPrimaryKey(record);
             assertEquals(1, rows);
 
-            PkfieldsKey key = new PkfieldsKey();
-            key.setId1(1);
-            key.setId2(2);
-
-            Pkfields record2 = dao.selectByPrimaryKey(key);
+            Pkfields record2 = dao.selectByPrimaryKey(1, 2);
 
             assertEquals(record.getFirstname(), record2.getFirstname());
             assertEquals(record.getLastname(), record2.getLastname());
@@ -522,11 +551,7 @@ public class ConditionalJava5Test extends AbstractConditionalJava5Test {
             int rows = dao.updateByPrimaryKeySelective(newRecord);
             assertEquals(1, rows);
 
-            PkfieldsKey key = new PkfieldsKey();
-            key.setId1(1);
-            key.setId2(2);
-
-            Pkfields returnedRecord = dao.selectByPrimaryKey(key);
+            Pkfields returnedRecord = dao.selectByPrimaryKey(1, 2);
 
             assertTrue(datesAreEqual(record.getDatefield(), returnedRecord
                     .getDatefield()));
@@ -565,11 +590,7 @@ public class ConditionalJava5Test extends AbstractConditionalJava5Test {
 
             dao.insert(record);
 
-            PkfieldsKey key = new PkfieldsKey();
-            key.setId1(1);
-            key.setId2(2);
-
-            int rows = dao.deleteByPrimaryKey(key);
+            int rows = dao.deleteByPrimaryKey(1, 2);
             assertEquals(1, rows);
 
             PkfieldsExample example = new PkfieldsExample();
@@ -636,10 +657,7 @@ public class ConditionalJava5Test extends AbstractConditionalJava5Test {
             record.setId2(4);
             dao.insert(record);
 
-            PkfieldsKey key = new PkfieldsKey();
-            key.setId1(3);
-            key.setId2(4);
-            Pkfields newRecord = dao.selectByPrimaryKey(key);
+            Pkfields newRecord = dao.selectByPrimaryKey(3, 4);
 
             assertNotNull(newRecord);
             assertEquals(record.getFirstname(), newRecord.getFirstname());
@@ -1482,10 +1500,7 @@ public class ConditionalJava5Test extends AbstractConditionalJava5Test {
             int rows = dao.updateByPrimaryKeyWithBLOBs(updateRecord);
             assertEquals(1, rows);
 
-            PkfieldsblobsKey key = new PkfieldsblobsKey();
-            key.setId1(3);
-            key.setId2(4);
-            Pkfieldsblobs newRecord = dao.selectByPrimaryKey(key);
+            Pkfieldsblobs newRecord = dao.selectByPrimaryKey(3, 4);
             assertEquals(updateRecord.getFirstname(), newRecord.getFirstname());
             assertEquals(updateRecord.getLastname(), newRecord.getLastname());
             assertEquals(record.getId1(), newRecord.getId1());
@@ -1519,10 +1534,7 @@ public class ConditionalJava5Test extends AbstractConditionalJava5Test {
             int rows = dao.updateByPrimaryKeyWithoutBLOBs(updateRecord);
             assertEquals(1, rows);
 
-            PkfieldsblobsKey key = new PkfieldsblobsKey();
-            key.setId1(3);
-            key.setId2(4);
-            Pkfieldsblobs newRecord = dao.selectByPrimaryKey(key);
+            Pkfieldsblobs newRecord = dao.selectByPrimaryKey(3, 4);
             assertEquals(updateRecord.getFirstname(), newRecord.getFirstname());
             assertEquals(updateRecord.getLastname(), newRecord.getLastname());
             assertEquals(record.getId1(), newRecord.getId1());
@@ -1554,10 +1566,7 @@ public class ConditionalJava5Test extends AbstractConditionalJava5Test {
             int rows = dao.updateByPrimaryKeySelective(updateRecord);
             assertEquals(1, rows);
 
-            PkfieldsblobsKey key = new PkfieldsblobsKey();
-            key.setId1(3);
-            key.setId2(4);
-            Pkfieldsblobs returnedRecord = dao.selectByPrimaryKey(key);
+            Pkfieldsblobs returnedRecord = dao.selectByPrimaryKey(3, 4);
             assertEquals(record.getFirstname(), returnedRecord.getFirstname());
             assertEquals(updateRecord.getLastname(), returnedRecord
                     .getLastname());
@@ -1596,10 +1605,7 @@ public class ConditionalJava5Test extends AbstractConditionalJava5Test {
                     .selectByExampleWithoutBLOBs(example);
             assertEquals(2, answer.size());
 
-            PkfieldsblobsKey key = new PkfieldsblobsKey();
-            key.setId1(5);
-            key.setId2(6);
-            int rows = dao.deleteByPrimaryKey(key);
+            int rows = dao.deleteByPrimaryKey(5, 6);
             assertEquals(1, rows);
 
             example = new PkfieldsblobsExample();
@@ -1675,10 +1681,7 @@ public class ConditionalJava5Test extends AbstractConditionalJava5Test {
                     .selectByExampleWithoutBLOBs(example);
             assertEquals(2, answer.size());
 
-            PkfieldsblobsKey key = new PkfieldsblobsKey();
-            key.setId1(5);
-            key.setId2(6);
-            Pkfieldsblobs newRecord = dao.selectByPrimaryKey(key);
+            Pkfieldsblobs newRecord = dao.selectByPrimaryKey(5, 6);
             assertEquals(record.getId1(), newRecord.getId1());
             assertEquals(record.getId2(), newRecord.getId2());
             assertEquals(record.getFirstname(), newRecord.getFirstname());
@@ -1795,45 +1798,11 @@ public class ConditionalJava5Test extends AbstractConditionalJava5Test {
     }
 
     @Test
-    public void testPKFieldsBlobsCountByExample() {
-        PkfieldsblobsDAO dao = getPkfieldsblobsDAO();
-
-        try {
-            Pkfieldsblobs record = new Pkfieldsblobs();
-            record.setId1(3);
-            record.setId2(4);
-            record.setFirstname("Jeff");
-            record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
-            dao.insert(record);
-
-            record = new Pkfieldsblobs();
-            record.setId1(5);
-            record.setId2(6);
-            record.setFirstname("Scott");
-            record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
-            dao.insert(record);
-
-            PkfieldsblobsExample example = new PkfieldsblobsExample();
-            example.createCriteria().andId1NotEqualTo(3);
-            int rows = dao.countByExample(example);
-            assertEquals(1, rows);
-
-            example.clear();
-            rows = dao.countByExample(example);
-            assertEquals(2, rows);
-        } catch (SQLException e) {
-            fail(e.getMessage());
-        }
-    }
-
-    @Test
     public void testFieldsBlobsInsert() {
         FieldsblobsDAO dao = getFieldsblobsDAO();
 
         try {
-            FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs();
+            Fieldsblobs record = new Fieldsblobs();
             record.setFirstname("Jeff");
             record.setLastname("Smith");
             record.setBlob1(generateRandomBlob());
@@ -1841,11 +1810,10 @@ public class ConditionalJava5Test extends AbstractConditionalJava5Test {
             dao.insert(record);
 
             FieldsblobsExample example = new FieldsblobsExample();
-            List<FieldsblobsWithBLOBs> answer = dao
-                    .selectByExampleWithBLOBs(example);
+            List<Fieldsblobs> answer = dao.selectByExampleWithBLOBs(example);
             assertEquals(1, answer.size());
 
-            FieldsblobsWithBLOBs returnedRecord = answer.get(0);
+            Fieldsblobs returnedRecord = answer.get(0);
             assertEquals(record.getFirstname(), returnedRecord.getFirstname());
             assertEquals(record.getLastname(), returnedRecord.getLastname());
             assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord
@@ -1862,14 +1830,14 @@ public class ConditionalJava5Test extends AbstractConditionalJava5Test {
         FieldsblobsDAO dao = getFieldsblobsDAO();
 
         try {
-            FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs();
+            Fieldsblobs record = new Fieldsblobs();
             record.setFirstname("Jeff");
             record.setLastname("Smith");
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             dao.insert(record);
 
-            record = new FieldsblobsWithBLOBs();
+            record = new Fieldsblobs();
             record.setFirstname("Scott");
             record.setLastname("Jones");
             record.setBlob1(generateRandomBlob());
@@ -1898,14 +1866,14 @@ public class ConditionalJava5Test extends AbstractConditionalJava5Test {
         FieldsblobsDAO dao = getFieldsblobsDAO();
 
         try {
-            FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs();
+            Fieldsblobs record = new Fieldsblobs();
             record.setFirstname("Jeff");
             record.setLastname("Smith");
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             dao.insert(record);
 
-            record = new FieldsblobsWithBLOBs();
+            record = new Fieldsblobs();
             record.setFirstname("Scott");
             record.setLastname("Jones");
             record.setBlob1(generateRandomBlob());
@@ -1918,9 +1886,10 @@ public class ConditionalJava5Test extends AbstractConditionalJava5Test {
             assertEquals(1, answer.size());
 
             Fieldsblobs newRecord = answer.get(0);
-            assertFalse(newRecord instanceof FieldsblobsWithBLOBs);
             assertEquals(record.getFirstname(), newRecord.getFirstname());
             assertEquals(record.getLastname(), newRecord.getLastname());
+            assertNull(newRecord.getBlob1());
+            assertNull(newRecord.getBlob2());
         } catch (SQLException e) {
             fail(e.getMessage());
         }
@@ -1931,14 +1900,14 @@ public class ConditionalJava5Test extends AbstractConditionalJava5Test {
         FieldsblobsDAO dao = getFieldsblobsDAO();
 
         try {
-            FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs();
+            Fieldsblobs record = new Fieldsblobs();
             record.setFirstname("Jeff");
             record.setLastname("Smith");
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             dao.insert(record);
 
-            record = new FieldsblobsWithBLOBs();
+            record = new Fieldsblobs();
             record.setFirstname("Scott");
             record.setLastname("Jones");
             record.setBlob1(generateRandomBlob());
@@ -1947,11 +1916,10 @@ public class ConditionalJava5Test extends AbstractConditionalJava5Test {
 
             FieldsblobsExample example = new FieldsblobsExample();
             example.createCriteria().andFirstnameLike("S%");
-            List<FieldsblobsWithBLOBs> answer = dao
-                    .selectByExampleWithBLOBs(example);
+            List<Fieldsblobs> answer = dao.selectByExampleWithBLOBs(example);
             assertEquals(1, answer.size());
 
-            FieldsblobsWithBLOBs newRecord = answer.get(0);
+            Fieldsblobs newRecord = answer.get(0);
             assertEquals(record.getFirstname(), newRecord.getFirstname());
             assertEquals(record.getLastname(), newRecord.getLastname());
             assertTrue(blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
@@ -1966,14 +1934,14 @@ public class ConditionalJava5Test extends AbstractConditionalJava5Test {
         FieldsblobsDAO dao = getFieldsblobsDAO();
 
         try {
-            FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs();
+            Fieldsblobs record = new Fieldsblobs();
             record.setFirstname("Jeff");
             record.setLastname("Smith");
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             dao.insert(record);
 
-            record = new FieldsblobsWithBLOBs();
+            record = new Fieldsblobs();
             record.setFirstname("Scott");
             record.setLastname("Jones");
             record.setBlob1(generateRandomBlob());
@@ -1982,7 +1950,7 @@ public class ConditionalJava5Test extends AbstractConditionalJava5Test {
 
             FieldsblobsExample example = new FieldsblobsExample();
             example.createCriteria();
-            List<FieldsblobsWithBLOBs> answer = dao.selectByExampleWithBLOBs(example);
+            List<Fieldsblobs> answer = dao.selectByExampleWithBLOBs(example);
             assertEquals(2, answer.size());
         } catch (SQLException e) {
             fail(e.getMessage());
@@ -1990,26 +1958,28 @@ public class ConditionalJava5Test extends AbstractConditionalJava5Test {
     }
 
     @Test
-    public void testFieldsBlobsCountByExample() {
-        FieldsblobsDAO dao = getFieldsblobsDAO();
+    public void testPKFieldsBlobsCountByExample() {
+        PkfieldsblobsDAO dao = getPkfieldsblobsDAO();
 
         try {
-            FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs();
+            Pkfieldsblobs record = new Pkfieldsblobs();
+            record.setId1(3);
+            record.setId2(4);
             record.setFirstname("Jeff");
             record.setLastname("Smith");
             record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
             dao.insert(record);
 
-            record = new FieldsblobsWithBLOBs();
+            record = new Pkfieldsblobs();
+            record.setId1(5);
+            record.setId2(6);
             record.setFirstname("Scott");
             record.setLastname("Jones");
             record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
             dao.insert(record);
 
-            FieldsblobsExample example = new FieldsblobsExample();
-            example.createCriteria().andFirstnameLike("S%");
+            PkfieldsblobsExample example = new PkfieldsblobsExample();
+            example.createCriteria().andId1NotEqualTo(3);
             int rows = dao.countByExample(example);
             assertEquals(1, rows);
 
@@ -2733,8 +2703,8 @@ public class ConditionalJava5Test extends AbstractConditionalJava5Test {
             dao.insert(record);
 
             AwfulTableExample example = new AwfulTableExample();
-            example.or().andFirstFirstNameLike("b%").andId2EqualTo(222222);
-            example.or().andFirstFirstNameLike("wi%");
+            example.createCriteria().andFirstFirstNameLike("b%").andId2EqualTo(222222);
+            example.or(example.createCriteria().andFirstFirstNameLike("wi%"));
             example.setOrderByClause("\"A_CuStOmEr iD\"");
             List<AwfulTable> answer = dao.selectByExample(example);
             assertEquals(2, answer.size());
@@ -3155,5 +3125,143 @@ public class ConditionalJava5Test extends AbstractConditionalJava5Test {
         } catch (SQLException e) {
             fail(e.getMessage());
         }
+    }
+    
+    @Test
+    public void testEquals1() {
+        Pkfields pkfields1 = new Pkfields();
+        assertFalse(pkfields1.equals(null));
+    }
+    
+    @Test
+    public void testEquals2() {
+        Pkfields pkfields1 = new Pkfields();
+        Pkfields pkfields2 = new Pkfields();
+        assertTrue(pkfields1.equals(pkfields2));
+    }
+    
+    @Test
+    public void testEquals3() {
+        Pkfields pkfields1 = new Pkfields();
+        pkfields1.setId1(2);
+        
+        Pkfields pkfields2 = new Pkfields();
+        pkfields2.setId1(2);
+        
+        assertTrue(pkfields1.equals(pkfields2));
+    }
+    
+    @Test
+    public void testEquals4() {
+        Pkfields pkfields1 = new Pkfields();
+        pkfields1.setId1(2);
+        
+        Pkfields pkfields2 = new Pkfields();
+        pkfields2.setId1(3);
+        
+        assertFalse(pkfields1.equals(pkfields2));
+    }
+
+    @Test
+    public void testEquals5() {
+        AwfulTable awfulTable1 = new AwfulTable();
+        awfulTable1.setActive(false);
+        awfulTable1.setCustomerId(3);
+        awfulTable1.seteMail("fred@fred.com");
+        awfulTable1.setEmailaddress("fred@fred.com");
+        awfulTable1.setFirstFirstName("Fred");
+        awfulTable1.setFourthFirstName("Betty");
+        awfulTable1.setFrom("from");
+        awfulTable1.setId1(22);
+        awfulTable1.setId2(33);
+        awfulTable1.setId5(55);
+        awfulTable1.setId6(66);
+        awfulTable1.setId7(77);
+        awfulTable1.setLastName("Rubble");
+        awfulTable1.setSecondCustomerId(532);
+        awfulTable1.setSecondFirstName("Bamm Bamm");
+        awfulTable1.setThirdFirstName("Pebbles");
+
+        AwfulTable awfulTable2 = new AwfulTable();
+        awfulTable2.setActive(false);
+        awfulTable2.setCustomerId(3);
+        awfulTable2.seteMail("fred@fred.com");
+        awfulTable2.setEmailaddress("fred@fred.com");
+        awfulTable2.setFirstFirstName("Fred");
+        awfulTable2.setFourthFirstName("Betty");
+        awfulTable2.setFrom("from");
+        awfulTable2.setId1(22);
+        awfulTable2.setId2(33);
+        awfulTable2.setId5(55);
+        awfulTable2.setId6(66);
+        awfulTable2.setId7(77);
+        awfulTable2.setLastName("Rubble");
+        awfulTable2.setSecondCustomerId(532);
+        awfulTable2.setSecondFirstName("Bamm Bamm");
+        awfulTable2.setThirdFirstName("Pebbles");
+        
+        assertTrue(awfulTable1.equals(awfulTable2));
+        
+        awfulTable2.setActive(true);
+        assertFalse(awfulTable1.equals(awfulTable2));
+    }
+
+    @Test
+    public void testHashCode1() {
+        Pkfields pkfields1 = new Pkfields();
+        Pkfields pkfields2 = new Pkfields();
+        assertTrue(pkfields1.hashCode() == pkfields2.hashCode());
+    }
+    
+    @Test
+    public void testHashCode2() {
+        Pkfields pkfields1 = new Pkfields();
+        pkfields1.setId1(2);
+        
+        Pkfields pkfields2 = new Pkfields();
+        pkfields2.setId1(2);
+        
+        assertTrue(pkfields1.hashCode() == pkfields2.hashCode());
+    }
+
+    @Test
+    public void testHashCode3() {
+        AwfulTable awfulTable1 = new AwfulTable();
+        awfulTable1.setActive(false);
+        awfulTable1.setCustomerId(3);
+        awfulTable1.seteMail("fred@fred.com");
+        awfulTable1.setEmailaddress("fred@fred.com");
+        awfulTable1.setFirstFirstName("Fred");
+        awfulTable1.setFourthFirstName("Betty");
+        awfulTable1.setFrom("from");
+        awfulTable1.setId1(22);
+        awfulTable1.setId2(33);
+        awfulTable1.setId5(55);
+        awfulTable1.setId6(66);
+        awfulTable1.setId7(77);
+        awfulTable1.setLastName("Rubble");
+        awfulTable1.setSecondCustomerId(532);
+        awfulTable1.setSecondFirstName("Bamm Bamm");
+        awfulTable1.setThirdFirstName("Pebbles");
+
+        AwfulTable awfulTable2 = new AwfulTable();
+        awfulTable2.setActive(false);
+        awfulTable2.setCustomerId(3);
+        awfulTable2.seteMail("fred@fred.com");
+        awfulTable2.setEmailaddress("fred@fred.com");
+        awfulTable2.setFirstFirstName("Fred");
+        awfulTable2.setFourthFirstName("Betty");
+        awfulTable2.setFrom("from");
+        awfulTable2.setId1(22);
+        awfulTable2.setId2(33);
+        awfulTable2.setId5(55);
+        awfulTable2.setId6(66);
+        awfulTable2.setId7(77);
+        awfulTable2.setLastName("Rubble");
+        awfulTable2.setSecondCustomerId(532);
+        awfulTable2.setSecondFirstName("Bamm Bamm");
+        awfulTable2.setThirdFirstName("Pebbles");
+        
+        assertTrue(awfulTable1.hashCode() == awfulTable2.hashCode());
     }
 }

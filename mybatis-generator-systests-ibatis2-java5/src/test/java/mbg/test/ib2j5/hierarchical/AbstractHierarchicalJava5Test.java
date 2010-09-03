@@ -1,4 +1,4 @@
-package mbg.test.ib2j5.j5.hierarchical;
+package mbg.test.ib2j5.hierarchical;
 
 
 import mbg.test.ib2j5.AbstractTest;
@@ -21,7 +21,7 @@ public abstract class AbstractHierarchicalJava5Test extends AbstractTest {
 
     public void setUp() throws Exception {
     	super.setUp();
-        Resource res = new ClassPathResource("/mbg/test/ib2j5/j5/hierarchical/SpringBeans.xml");
+        Resource res = new ClassPathResource("/mbg/test/ib2j5/hierarchical/SpringBeans.xml");
         factory = new XmlBeanFactory(res);
     }
 

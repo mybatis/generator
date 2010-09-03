@@ -1,4 +1,4 @@
-package mbg.test.ib2j5.j5.flat;
+package mbg.test.ib2j5.flat;
 
 import mbg.test.ib2j5.AbstractTest;
 import mbg.test.ib2j5.generated.flat.dao.AwfulTableDAO;
@@ -20,7 +20,7 @@ public abstract class AbstractFlatJava5Test extends AbstractTest {
 
     public void setUp() throws Exception {
         super.setUp();
-        initSqlMapClient("mbg/test/ib2j5/j5/flat/SqlMapConfig.xml", null);
+        initSqlMapClient("mbg/test/ib2j5/flat/SqlMapConfig.xml", null);
     }
 
     protected FieldsonlyDAO getFieldsonlyDAO() {

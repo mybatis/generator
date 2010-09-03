@@ -5,8 +5,6 @@
 
 <ibatorConfiguration>
   <ibatorContext id="FlatJava5" targetRuntime="Ibatis2Java5" defaultModelType="flat">
-    <property name="suppressTypeWarnings" value="true" /> <!-- should be ignored -->
-    
     <ibatorPlugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
     <ibatorPlugin type="org.mybatis.generator.plugins.SqlMapConfigPlugin" >
       <property name="targetPackage" value="ibatortest.generated.flat" />
@@ -27,48 +25,6 @@
     </sqlMapGenerator>
 
     <daoGenerator type="GENERIC-CI" targetPackage="ibatortest.generated.flat.java5.dao"  targetProject="target/generated-sources/ibator/ibatis2/java5">
-      <property name="enableSubPackages" value="true" />
-    </daoGenerator>
-
-    <table tableName="FieldsOnly" />
-    <table tableName="PKOnly" />
-    <table tableName="PKFields" alias="B" />
-    <table tableName="PKBlobs" />
-    <table tableName="PKFieldsBlobs" />
-    <table tableName="FieldsBlobs" />
-    <table tableName="awful table" alias="A">
-      <property name="useColumnIndexes" value="true"/>
-      <generatedKey column="CuStOmEr iD" sqlStatement="HSQLDB" identity="true" />
-      <columnOverride column="customer id" property="secondCustomerId" />
-      <columnOverride column="first name" property="firstFirstName" />
-      <columnOverride column="First Name" property="secondFirstName" />
-      <ignoreColumn column="first Name" />
-      <columnOverride column="first_name" property="thirdFirstName" />
-      <columnOverride column="firstName" property="fourthFirstName" />
-      <columnOverride column="from" delimitedColumnName="true" />
-      <columnOverride column="active" javaType="boolean" />
-    </table>
-  </ibatorContext>
-
-  <ibatorContext id="FlatJava2" targetRuntime="Ibatis2Java2" defaultModelType="flat">
-    <property name="suppressTypeWarnings" value="true" />
-    
-    <ibatorPlugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
-
-    <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
-        connectionURL="jdbc:hsqldb:mem:aname"
-        userId="sa" />
-
-    <javaModelGenerator targetPackage="ibatortest.generated.flat.java2.model" targetProject="target/generated-sources/ibator/ibatis2/java5">
-      <property name="enableSubPackages" value="true" />
-      <property name="trimStrings" value="true" />
-    </javaModelGenerator>
-
-    <sqlMapGenerator targetPackage="ibatortest.generated.flat.java2.xml"  targetProject="target/generated-sources/ibator/ibatis2/java5">
-      <property name="enableSubPackages" value="true" />
-    </sqlMapGenerator>
-
-    <daoGenerator type="GENERIC-SI" targetPackage="ibatortest.generated.flat.java2.dao"  targetProject="target/generated-sources/ibator/ibatis2/java5">
       <property name="enableSubPackages" value="true" />
     </daoGenerator>
 
@@ -132,48 +88,6 @@
     </table>
   </ibatorContext>
 
-  <ibatorContext id="HierarchicalJava2" targetRuntime="Ibatis2Java2" defaultModelType="hierarchical">
-    <property name="suppressTypeWarnings" value="true" />
-    
-    <ibatorPlugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
-
-    <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
-        connectionURL="jdbc:hsqldb:mem:aname"
-        userId="sa" />
-
-    <javaModelGenerator targetPackage="ibatortest.generated.hierarchical.java2.model" targetProject="target/generated-sources/ibator/ibatis2/java5">
-      <property name="enableSubPackages" value="true" />
-      <property name="trimStrings" value="true" />
-    </javaModelGenerator>
-
-    <sqlMapGenerator targetPackage="ibatortest.generated.hierarchical.java2.xml"  targetProject="target/generated-sources/ibator/ibatis2/java5">
-      <property name="enableSubPackages" value="true" />
-    </sqlMapGenerator>
-
-    <daoGenerator type="GENERIC-CI" targetPackage="ibatortest.generated.hierarchical.java2.dao"  targetProject="target/generated-sources/ibator/ibatis2/java5">
-      <property name="enableSubPackages" value="true" />
-    </daoGenerator>
-
-    <table tableName="FieldsOnly" />
-    <table tableName="PKOnly" />
-    <table tableName="PKFields" alias="B" />
-    <table tableName="PKBlobs" />
-    <table tableName="PKFieldsBlobs" />
-    <table tableName="FieldsBlobs" />
-    <table tableName="awful table" alias="A">
-      <property name="useColumnIndexes" value="true"/>
-      <generatedKey column="CuStOmEr iD" sqlStatement="HSQLDB" identity="true" />
-      <columnOverride column="customer id" property="secondCustomerId" />
-      <columnOverride column="first name" property="firstFirstName" />
-      <columnOverride column="First Name" property="secondFirstName" />
-      <ignoreColumn column="first Name" />
-      <columnOverride column="first_name" property="thirdFirstName" />
-      <columnOverride column="firstName" property="fourthFirstName" />
-      <columnOverride column="from" delimitedColumnName="true" />
-      <columnOverride column="active" javaType="boolean" />
-    </table>
-  </ibatorContext>
-
   <ibatorContext id="ConditionalJava5" targetRuntime="Ibatis2Java5" defaultModelType="conditional">
     <ibatorPlugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
     <ibatorPlugin type="org.mybatis.generator.plugins.SerializablePlugin" />
@@ -192,48 +106,6 @@
     </sqlMapGenerator>
 
     <daoGenerator type="GENERIC-SI" targetPackage="ibatortest.generated.conditional.java5.dao"  targetProject="target/generated-sources/ibator/ibatis2/java5">
-      <property name="enableSubPackages" value="true" />
-    </daoGenerator>
-
-    <table tableName="FieldsOnly" />
-    <table tableName="PKOnly" />
-    <table tableName="PKFields" alias="B" />
-    <table tableName="PKBlobs" />
-    <table tableName="PKFieldsBlobs" />
-    <table tableName="FieldsBlobs" />
-    <table tableName="awful table" alias="A">
-      <property name="useColumnIndexes" value="true"/>
-      <generatedKey column="CuStOmEr iD" sqlStatement="HSQLDB" identity="true" />
-      <columnOverride column="customer id" property="secondCustomerId" />
-      <columnOverride column="first name" property="firstFirstName" />
-      <columnOverride column="First Name" property="secondFirstName" />
-      <ignoreColumn column="first Name" />
-      <columnOverride column="first_name" property="thirdFirstName" />
-      <columnOverride column="firstName" property="fourthFirstName" />
-      <columnOverride column="from" delimitedColumnName="true" />
-      <columnOverride column="active" javaType="boolean" />
-    </table>
-  </ibatorContext>
-
-  <ibatorContext id="ConditionalJava2" targetRuntime="Ibatis2Java2" defaultModelType="conditional">
-    <property name="suppressTypeWarnings" value="true" />
-    
-    <ibatorPlugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
-
-    <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
-        connectionURL="jdbc:hsqldb:mem:aname"
-        userId="sa" />
-
-    <javaModelGenerator targetPackage="ibatortest.generated.conditional.java2.model" targetProject="target/generated-sources/ibator/ibatis2/java5">
-      <property name="enableSubPackages" value="true" />
-      <property name="trimStrings" value="true" />
-    </javaModelGenerator>
-
-    <sqlMapGenerator targetPackage="ibatortest.generated.conditional.java2.xml"  targetProject="target/generated-sources/ibator/ibatis2/java5">
-      <property name="enableSubPackages" value="true" />
-    </sqlMapGenerator>
-
-    <daoGenerator type="SPRING" targetPackage="ibatortest.generated.conditional.java2.dao"  targetProject="target/generated-sources/ibator/ibatis2/java5">
       <property name="enableSubPackages" value="true" />
     </daoGenerator>
 

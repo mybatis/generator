@@ -33,6 +33,12 @@
           element must be changed to <b>XMLMAPPER</b></li>
     </ol>
   </li>
+  <li>Removed support for <code>suppressTypeWarnings</code> property in the
+     <code>&lt;context&gt;</code> element.  This confusing property has become
+     unmanagable due to confusion between @SuppressWarnings("unchecked") and
+     @SuppressWarnings("rawtypes") in the different compilers.  This was only used
+     in the corner case where code generated with Ibatis2Java2 targetRuntime was to be compiled
+     with a JSE 5.0 compiler.</li>
 </ol>
 
 <h2>Version 1.2.2 (Never Released)</h2>

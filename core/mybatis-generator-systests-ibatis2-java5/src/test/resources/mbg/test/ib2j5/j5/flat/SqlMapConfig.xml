@@ -17,12 +17,12 @@
     </dataSource>
   </transactionManager>
 
-  <sqlMap resource="mbg/test/ib2j5/j5/generated/flat/xml/FIELDSBLOBS_SqlMap.xml" />
-  <sqlMap resource="mbg/test/ib2j5/j5/generated/flat/xml/FIELDSONLY_SqlMap.xml" />
-  <sqlMap resource="mbg/test/ib2j5/j5/generated/flat/xml/PKBLOBS_SqlMap.xml" />
-  <sqlMap resource="mbg/test/ib2j5/j5/generated/flat/xml/PKFIELDS_SqlMap.xml" />
-  <sqlMap resource="mbg/test/ib2j5/j5/generated/flat/xml/PKFIELDSBLOBS_SqlMap.xml" />
-  <sqlMap resource="mbg/test/ib2j5/j5/generated/flat/xml/PKONLY_SqlMap.xml" />
-  <sqlMap resource="mbg/test/ib2j5/j5/generated/flat/xml/awful table_SqlMap.xml" />
+  <sqlMap resource="mbg/test/ib2j5/generated/flat/xml/FIELDSBLOBS_SqlMap.xml" />
+  <sqlMap resource="mbg/test/ib2j5/generated/flat/xml/FIELDSONLY_SqlMap.xml" />
+  <sqlMap resource="mbg/test/ib2j5/generated/flat/xml/PKBLOBS_SqlMap.xml" />
+  <sqlMap resource="mbg/test/ib2j5/generated/flat/xml/PKFIELDS_SqlMap.xml" />
+  <sqlMap resource="mbg/test/ib2j5/generated/flat/xml/PKFIELDSBLOBS_SqlMap.xml" />
+  <sqlMap resource="mbg/test/ib2j5/generated/flat/xml/PKONLY_SqlMap.xml" />
+  <sqlMap resource="mbg/test/ib2j5/generated/flat/xml/awful table_SqlMap.xml" />
 
 </sqlMapConfig>

@@ -74,9 +74,6 @@ public class ExampleGenerator extends AbstractJavaGenerator {
             method.addBodyLine("oredCriteria = new ArrayList<Criteria>();"); //$NON-NLS-1$
         } else {
             method.addBodyLine("oredCriteria = new ArrayList();"); //$NON-NLS-1$
-            if (context.getSuppressTypeWarnings(introspectedTable)) {
-                method.addSuppressTypeWarningsAnnotation();
-            }
         }
 
         commentGenerator.addGeneralMethodComment(method, introspectedTable);
@@ -164,9 +161,6 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         }
 
         field.setType(fqjt);
-        if (context.getSuppressTypeWarnings(introspectedTable)) {
-            field.addSuppressTypeWarningsAnnotation();
-        }
         field.setName("oredCriteria"); //$NON-NLS-1$
         commentGenerator.addFieldComment(field, introspectedTable);
         topLevelClass.addField(field);
@@ -174,9 +168,6 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         method = new Method();
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(fqjt);
-        if (context.getSuppressTypeWarnings(introspectedTable)) {
-            method.addSuppressTypeWarningsAnnotation();
-        }
         method.setName("getOredCriteria"); //$NON-NLS-1$
         method.addBodyLine("return oredCriteria;"); //$NON-NLS-1$
         commentGenerator.addGeneralMethodComment(method, introspectedTable);
@@ -184,9 +175,6 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 
         method = new Method();
         method.setVisibility(JavaVisibility.PUBLIC);
-        if (context.getSuppressTypeWarnings(introspectedTable)) {
-            method.addSuppressTypeWarningsAnnotation();
-        }
         method.setName("or"); //$NON-NLS-1$
         method.addParameter(new Parameter(FullyQualifiedJavaType
                 .getCriteriaInstance(), "criteria")); //$NON-NLS-1$
@@ -196,9 +184,6 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 
         method = new Method();
         method.setVisibility(JavaVisibility.PUBLIC);
-        if (context.getSuppressTypeWarnings(introspectedTable)) {
-            method.addSuppressTypeWarningsAnnotation();
-        }
         method.setName("or"); //$NON-NLS-1$
         method.setReturnType(FullyQualifiedJavaType.getCriteriaInstance());
         method.addBodyLine("Criteria criteria = createCriteriaInternal();"); //$NON-NLS-1$
@@ -209,9 +194,6 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 
         method = new Method();
         method.setVisibility(JavaVisibility.PUBLIC);
-        if (context.getSuppressTypeWarnings(introspectedTable)) {
-            method.addSuppressTypeWarningsAnnotation();
-        }
         method.setName("createCriteria"); //$NON-NLS-1$
         method.setReturnType(FullyQualifiedJavaType.getCriteriaInstance());
         method.addBodyLine("Criteria criteria = createCriteriaInternal();"); //$NON-NLS-1$
@@ -286,9 +268,6 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         InnerClass answer = new InnerClass(FullyQualifiedJavaType
                 .getGeneratedCriteriaInstance());
 
-        if (context.getSuppressTypeWarnings(introspectedTable)) {
-            answer.addSuppressTypeWarningsAnnotation();
-        }
         answer.setVisibility(JavaVisibility.PROTECTED);
         answer.setStatic(true);
         answer.setAbstract(true);

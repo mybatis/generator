@@ -21,31 +21,31 @@
     <property name="dataSource" ref="dataSource"/>
   </bean>
 
-  <bean id="FieldsonlyDAO" class="mbg.test.ib2j5.j5.generated.hierarchical.dao.FieldsonlyDAOImpl">
+  <bean id="FieldsonlyDAO" class="mbg.test.ib2j5.generated.hierarchical.dao.FieldsonlyDAOImpl">
     <property name="sqlMapClient" ref="sqlMapClient" />
   </bean>
   
-  <bean id="PkonlyDAO" class="mbg.test.ib2j5.j5.generated.hierarchical.dao.PkonlyDAOImpl">
+  <bean id="PkonlyDAO" class="mbg.test.ib2j5.generated.hierarchical.dao.PkonlyDAOImpl">
     <property name="sqlMapClient" ref="sqlMapClient" />
   </bean>
   
-  <bean id="PkfieldsDAO" class="mbg.test.ib2j5.j5.generated.hierarchical.dao.PkfieldsDAOImpl">
+  <bean id="PkfieldsDAO" class="mbg.test.ib2j5.generated.hierarchical.dao.PkfieldsDAOImpl">
     <property name="sqlMapClient" ref="sqlMapClient" />
   </bean>
   
-  <bean id="PkblobsDAO" class="mbg.test.ib2j5.j5.generated.hierarchical.dao.PkblobsDAOImpl">
+  <bean id="PkblobsDAO" class="mbg.test.ib2j5.generated.hierarchical.dao.PkblobsDAOImpl">
     <property name="sqlMapClient" ref="sqlMapClient" />
   </bean>
   
-  <bean id="PkfieldsblobsDAO" class="mbg.test.ib2j5.j5.generated.hierarchical.dao.PkfieldsblobsDAOImpl">
+  <bean id="PkfieldsblobsDAO" class="mbg.test.ib2j5.generated.hierarchical.dao.PkfieldsblobsDAOImpl">
     <property name="sqlMapClient" ref="sqlMapClient" />
   </bean>
   
-  <bean id="FieldsblobsDAO" class="mbg.test.ib2j5.j5.generated.hierarchical.dao.FieldsblobsDAOImpl">
+  <bean id="FieldsblobsDAO" class="mbg.test.ib2j5.generated.hierarchical.dao.FieldsblobsDAOImpl">
     <property name="sqlMapClient" ref="sqlMapClient" />
   </bean>
   
-  <bean id="AwfulTableDAO" class="mbg.test.ib2j5.j5.generated.hierarchical.dao.AwfulTableDAOImpl">
+  <bean id="AwfulTableDAO" class="mbg.test.ib2j5.generated.hierarchical.dao.AwfulTableDAOImpl">
     <property name="sqlMapClient" ref="sqlMapClient" />
   </bean>
   

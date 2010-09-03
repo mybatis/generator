@@ -61,8 +61,6 @@ public class Context extends PropertyHolder {
 
     private String endingDelimiter = "\""; //$NON-NLS-1$
 
-    private boolean suppressTypeWarnings;
-
     private CommentGeneratorConfiguration commentGeneratorConfiguration;
 
     private CommentGenerator commentGenerator;
@@ -285,9 +283,7 @@ public class Context extends PropertyHolder {
     public void addProperty(String name, String value) {
         super.addProperty(name, value);
 
-        if (PropertyRegistry.CONTEXT_SUPPRESS_TYPE_WARNINGS.equals(name)) {
-            suppressTypeWarnings = StringUtility.isTrue(value);
-        } else if (PropertyRegistry.CONTEXT_BEGINNING_DELIMITER.equals(name)) {
+        if (PropertyRegistry.CONTEXT_BEGINNING_DELIMITER.equals(name)) {
             beginningDelimiter = value;
         } else if (PropertyRegistry.CONTEXT_ENDING_DELIMITER.equals(name)) {
             endingDelimiter = value;
@@ -333,10 +329,6 @@ public class Context extends PropertyHolder {
 
     public void setIntrospectedColumnImpl(String introspectedColumnImpl) {
         this.introspectedColumnImpl = introspectedColumnImpl;
-    }
-
-    public boolean getSuppressTypeWarnings(IntrospectedTable introspectedTable) {
-        return suppressTypeWarnings && !introspectedTable.isJava5Targeted();
     }
 
     // methods related to code generation.

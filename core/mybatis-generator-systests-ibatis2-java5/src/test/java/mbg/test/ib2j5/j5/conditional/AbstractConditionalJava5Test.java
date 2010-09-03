@@ -1,20 +1,20 @@
 package mbg.test.ib2j5.j5.conditional;
 
 import mbg.test.ib2j5.AbstractTest;
-import mbg.test.ib2j5.j5.generated.conditional.dao.AwfulTableDAO;
-import mbg.test.ib2j5.j5.generated.conditional.dao.AwfulTableDAOImpl;
-import mbg.test.ib2j5.j5.generated.conditional.dao.FieldsblobsDAO;
-import mbg.test.ib2j5.j5.generated.conditional.dao.FieldsblobsDAOImpl;
-import mbg.test.ib2j5.j5.generated.conditional.dao.FieldsonlyDAO;
-import mbg.test.ib2j5.j5.generated.conditional.dao.FieldsonlyDAOImpl;
-import mbg.test.ib2j5.j5.generated.conditional.dao.PkblobsDAO;
-import mbg.test.ib2j5.j5.generated.conditional.dao.PkblobsDAOImpl;
-import mbg.test.ib2j5.j5.generated.conditional.dao.PkfieldsDAO;
-import mbg.test.ib2j5.j5.generated.conditional.dao.PkfieldsDAOImpl;
-import mbg.test.ib2j5.j5.generated.conditional.dao.PkfieldsblobsDAO;
-import mbg.test.ib2j5.j5.generated.conditional.dao.PkfieldsblobsDAOImpl;
-import mbg.test.ib2j5.j5.generated.conditional.dao.PkonlyDAO;
-import mbg.test.ib2j5.j5.generated.conditional.dao.PkonlyDAOImpl;
+import mbg.test.ib2j5.generated.conditional.dao.AwfulTableDAO;
+import mbg.test.ib2j5.generated.conditional.dao.AwfulTableDAOImpl;
+import mbg.test.ib2j5.generated.conditional.dao.FieldsblobsDAO;
+import mbg.test.ib2j5.generated.conditional.dao.FieldsblobsDAOImpl;
+import mbg.test.ib2j5.generated.conditional.dao.FieldsonlyDAO;
+import mbg.test.ib2j5.generated.conditional.dao.FieldsonlyDAOImpl;
+import mbg.test.ib2j5.generated.conditional.dao.PkblobsDAO;
+import mbg.test.ib2j5.generated.conditional.dao.PkblobsDAOImpl;
+import mbg.test.ib2j5.generated.conditional.dao.PkfieldsDAO;
+import mbg.test.ib2j5.generated.conditional.dao.PkfieldsDAOImpl;
+import mbg.test.ib2j5.generated.conditional.dao.PkfieldsblobsDAO;
+import mbg.test.ib2j5.generated.conditional.dao.PkfieldsblobsDAOImpl;
+import mbg.test.ib2j5.generated.conditional.dao.PkonlyDAO;
+import mbg.test.ib2j5.generated.conditional.dao.PkonlyDAOImpl;
 
 public abstract class AbstractConditionalJava5Test extends AbstractTest {
 

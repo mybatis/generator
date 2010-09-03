@@ -82,9 +82,20 @@ databases, or with different generation parameters, in the same run of MyBatis G
       The property supports these special values:
       <table>
         <tr>
-          <th valign="top">Ibatis2Java2</th>
+          <th valign="top">MyBatis3</th>
           <td><i>This is the default value</i>
-            <br/>With this value, MBG will generate objects that are compatible
+            <br/>With the value, MBG will generate objects that are compatible
+            with MyBatis versions 3.0 and higher, and JSE 5.0 and higher (e.g. the
+            Java model and mapper interfaces will use generic types).
+            The "by example" methods in these generated objects support virtually
+            unlimited dynamic where clauses.  Additionally, the Java objects
+            generated with these generators support many JSE 5.0 features including
+            parameterized types and annotations.</td>
+        </tr>
+        <tr>
+          <th valign="top">Ibatis2Java2</th>
+          <td>
+            With this value, MBG will generate objects that are compatible
             with iBATIS versions 2.2.0 and higher (but not iBATIS 3), and all levels of Java 2.
             The "by example" methods in these generated objects support virtually
             unlimited dynamic where clauses.  The objects generated with
@@ -104,16 +115,6 @@ databases, or with different generation parameters, in the same run of MyBatis G
             this set of generators are not 100% compatible with the
             objects generated with the original version of Abator, or one
             of the other sets of code generators.</td>
-        </tr>
-        <tr>
-          <th valign="top">MyBatis3</th>
-          <td>With the value, MBG will generate objects that are compatible
-            with MyBatis versions 3.0 and higher, and JSE 5.0 and higher (e.g. the
-            Java model and mapper interfaces will use generic types).
-            The "by example" methods in these generated objects support virtually
-            unlimited dynamic where clauses.  Additionally, the Java objects
-            generated with these generators support many JSE 5.0 features including
-            parameterized types and annotations.</td>
         </tr>
       </table>
       <p>If you want to create a different code generator in entirety,

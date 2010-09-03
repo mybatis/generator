@@ -4,7 +4,7 @@
  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
-  <context id="FlatJava5" targetRuntime="MyBatis3" defaultModelType="flat">
+  <context id="FlatJava5" defaultModelType="flat">
     <property name="suppressTypeWarnings" value="true" /> <!-- should be ignored -->
     
     <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />

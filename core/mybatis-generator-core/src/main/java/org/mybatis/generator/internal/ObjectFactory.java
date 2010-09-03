@@ -205,7 +205,7 @@ public class ObjectFactory {
 
         String type = context.getTargetRuntime();
         if (!StringUtility.stringHasValue(type)) {
-            type = IntrospectedTableIbatis2Java2Impl.class.getName();
+            type = IntrospectedTableMyBatis3Impl.class.getName();
         } else if ("Ibatis2Java2".equalsIgnoreCase(type)) { //$NON-NLS-1$
             type = IntrospectedTableIbatis2Java2Impl.class.getName();
         } else if ("Ibatis2Java5".equalsIgnoreCase(type)) { //$NON-NLS-1$

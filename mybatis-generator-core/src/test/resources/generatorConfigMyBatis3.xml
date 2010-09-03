@@ -5,8 +5,6 @@
 
 <generatorConfiguration>
   <context id="FlatJava5" targetRuntime="MyBatis3" defaultModelType="flat">
-    <property name="suppressTypeWarnings" value="true" /> <!-- should be ignored -->
-    
     <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
 
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"

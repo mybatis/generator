@@ -5,11 +5,9 @@
 
 <ibatorConfiguration>
   <ibatorContext id="FlatJava5" targetRuntime="Ibatis2Java5" defaultModelType="flat">
-    <property name="suppressTypeWarnings" value="true" /> <!-- should be ignored -->
-    
     <ibatorPlugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
     <ibatorPlugin type="org.mybatis.generator.plugins.SqlMapConfigPlugin" >
-      <property name="targetPackage" value="mbg.test.ib2j5.j5.generated.flat" />
+      <property name="targetPackage" value="mbg.test.ib2j5.generated.flat" />
       <property name="targetProject" value="MAVEN" />
     </ibatorPlugin>
 
@@ -17,58 +15,16 @@
         connectionURL="jdbc:hsqldb:mem:aname"
         userId="sa" />
 
-    <javaModelGenerator targetPackage="mbg.test.ib2j5.j5.generated.flat.model" targetProject="MAVEN">
+    <javaModelGenerator targetPackage="mbg.test.ib2j5.generated.flat.model" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
-    <sqlMapGenerator targetPackage="mbg.test.ib2j5.j5.generated.flat.xml"  targetProject="MAVEN">
+    <sqlMapGenerator targetPackage="mbg.test.ib2j5.generated.flat.xml"  targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
 
-    <daoGenerator type="GENERIC-CI" targetPackage="mbg.test.ib2j5.j5.generated.flat.dao"  targetProject="MAVEN">
-      <property name="enableSubPackages" value="true" />
-    </daoGenerator>
-
-    <table tableName="FieldsOnly" />
-    <table tableName="PKOnly" />
-    <table tableName="PKFields" alias="B" />
-    <table tableName="PKBlobs" />
-    <table tableName="PKFieldsBlobs" />
-    <table tableName="FieldsBlobs" />
-    <table tableName="awful table" alias="A">
-      <property name="useColumnIndexes" value="true"/>
-      <generatedKey column="CuStOmEr iD" sqlStatement="HSQLDB" identity="true" />
-      <columnOverride column="customer id" property="secondCustomerId" />
-      <columnOverride column="first name" property="firstFirstName" />
-      <columnOverride column="First Name" property="secondFirstName" />
-      <ignoreColumn column="first Name" />
-      <columnOverride column="first_name" property="thirdFirstName" />
-      <columnOverride column="firstName" property="fourthFirstName" />
-      <columnOverride column="from" delimitedColumnName="true" />
-      <columnOverride column="active" javaType="boolean" />
-    </table>
-  </ibatorContext>
-
-  <ibatorContext id="FlatJava2" targetRuntime="Ibatis2Java2" defaultModelType="flat">
-    <property name="suppressTypeWarnings" value="true" />
-    
-    <ibatorPlugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
-
-    <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
-        connectionURL="jdbc:hsqldb:mem:aname"
-        userId="sa" />
-
-    <javaModelGenerator targetPackage="mbg.test.ib2j5.j2.generated.flat.model" targetProject="MAVEN">
-      <property name="enableSubPackages" value="true" />
-      <property name="trimStrings" value="true" />
-    </javaModelGenerator>
-
-    <sqlMapGenerator targetPackage="mbg.test.ib2j5.j2.generated.flat.xml"  targetProject="MAVEN">
-      <property name="enableSubPackages" value="true" />
-    </sqlMapGenerator>
-
-    <daoGenerator type="GENERIC-SI" targetPackage="mbg.test.ib2j5.j2.generated.flat.dao"  targetProject="MAVEN">
+    <daoGenerator type="GENERIC-CI" targetPackage="mbg.test.ib2j5.generated.flat.dao"  targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </daoGenerator>
 
@@ -99,58 +55,16 @@
         connectionURL="jdbc:hsqldb:mem:aname"
         userId="sa" />
 
-    <javaModelGenerator targetPackage="mbg.test.ib2j5.j5.generated.hierarchical.model" targetProject="MAVEN">
+    <javaModelGenerator targetPackage="mbg.test.ib2j5.generated.hierarchical.model" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
-    <sqlMapGenerator targetPackage="mbg.test.ib2j5.j5.generated.hierarchical.xml"  targetProject="MAVEN">
+    <sqlMapGenerator targetPackage="mbg.test.ib2j5.generated.hierarchical.xml"  targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
 
-    <daoGenerator type="SPRING" targetPackage="mbg.test.ib2j5.j5.generated.hierarchical.dao"  targetProject="MAVEN">
-      <property name="enableSubPackages" value="true" />
-    </daoGenerator>
-
-    <table tableName="FieldsOnly" />
-    <table tableName="PKOnly" />
-    <table tableName="PKFields" alias="B" />
-    <table tableName="PKBlobs" />
-    <table tableName="PKFieldsBlobs" />
-    <table tableName="FieldsBlobs" />
-    <table tableName="awful table" alias="A">
-      <property name="useColumnIndexes" value="true"/>
-      <generatedKey column="CuStOmEr iD" sqlStatement="HSQLDB" identity="true" />
-      <columnOverride column="customer id" property="secondCustomerId" />
-      <columnOverride column="first name" property="firstFirstName" />
-      <columnOverride column="First Name" property="secondFirstName" />
-      <ignoreColumn column="first Name" />
-      <columnOverride column="first_name" property="thirdFirstName" />
-      <columnOverride column="firstName" property="fourthFirstName" />
-      <columnOverride column="from" delimitedColumnName="true" />
-      <columnOverride column="active" javaType="boolean" />
-    </table>
-  </ibatorContext>
-
-  <ibatorContext id="HierarchicalJava2" targetRuntime="Ibatis2Java2" defaultModelType="hierarchical">
-    <property name="suppressTypeWarnings" value="true" />
-    
-    <ibatorPlugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
-
-    <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
-        connectionURL="jdbc:hsqldb:mem:aname"
-        userId="sa" />
-
-    <javaModelGenerator targetPackage="mbg.test.ib2j5.j2.generated.hierarchical.model" targetProject="MAVEN">
-      <property name="enableSubPackages" value="true" />
-      <property name="trimStrings" value="true" />
-    </javaModelGenerator>
-
-    <sqlMapGenerator targetPackage="mbg.test.ib2j5.j2.generated.hierarchical.xml"  targetProject="MAVEN">
-      <property name="enableSubPackages" value="true" />
-    </sqlMapGenerator>
-
-    <daoGenerator type="GENERIC-CI" targetPackage="mbg.test.ib2j5.j2.generated.hierarchical.dao"  targetProject="MAVEN">
+    <daoGenerator type="SPRING" targetPackage="mbg.test.ib2j5.generated.hierarchical.dao"  targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </daoGenerator>
 
@@ -182,58 +96,16 @@
         connectionURL="jdbc:hsqldb:mem:aname"
         userId="sa" />
 
-    <javaModelGenerator targetPackage="mbg.test.ib2j5.j5.generated.conditional.model" targetProject="MAVEN">
+    <javaModelGenerator targetPackage="mbg.test.ib2j5.generated.conditional.model" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
-    <sqlMapGenerator targetPackage="mbg.test.ib2j5.j5.generated.conditional.xml"  targetProject="MAVEN">
+    <sqlMapGenerator targetPackage="mbg.test.ib2j5.generated.conditional.xml"  targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
 
-    <daoGenerator type="GENERIC-SI" targetPackage="mbg.test.ib2j5.j5.generated.conditional.dao"  targetProject="MAVEN">
-      <property name="enableSubPackages" value="true" />
-    </daoGenerator>
-
-    <table tableName="FieldsOnly" />
-    <table tableName="PKOnly" />
-    <table tableName="PKFields" alias="B" />
-    <table tableName="PKBlobs" />
-    <table tableName="PKFieldsBlobs" />
-    <table tableName="FieldsBlobs" />
-    <table tableName="awful table" alias="A">
-      <property name="useColumnIndexes" value="true"/>
-      <generatedKey column="CuStOmEr iD" sqlStatement="HSQLDB" identity="true" />
-      <columnOverride column="customer id" property="secondCustomerId" />
-      <columnOverride column="first name" property="firstFirstName" />
-      <columnOverride column="First Name" property="secondFirstName" />
-      <ignoreColumn column="first Name" />
-      <columnOverride column="first_name" property="thirdFirstName" />
-      <columnOverride column="firstName" property="fourthFirstName" />
-      <columnOverride column="from" delimitedColumnName="true" />
-      <columnOverride column="active" javaType="boolean" />
-    </table>
-  </ibatorContext>
-
-  <ibatorContext id="ConditionalJava2" targetRuntime="Ibatis2Java2" defaultModelType="conditional">
-    <property name="suppressTypeWarnings" value="true" />
-    
-    <ibatorPlugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
-
-    <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
-        connectionURL="jdbc:hsqldb:mem:aname"
-        userId="sa" />
-
-    <javaModelGenerator targetPackage="mbg.test.ib2j5.j2.generated.conditional.model" targetProject="MAVEN">
-      <property name="enableSubPackages" value="true" />
-      <property name="trimStrings" value="true" />
-    </javaModelGenerator>
-
-    <sqlMapGenerator targetPackage="mbg.test.ib2j5.j2.generated.conditional.xml"  targetProject="MAVEN">
-      <property name="enableSubPackages" value="true" />
-    </sqlMapGenerator>
-
-    <daoGenerator type="SPRING" targetPackage="mbg.test.ib2j5.j2.generated.conditional.dao"  targetProject="MAVEN">
+    <daoGenerator type="GENERIC-SI" targetPackage="mbg.test.ib2j5.generated.conditional.dao"  targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </daoGenerator>
 

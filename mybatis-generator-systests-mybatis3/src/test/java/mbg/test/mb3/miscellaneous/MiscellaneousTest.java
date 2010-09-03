@@ -201,7 +201,6 @@ public class MiscellaneousTest extends AbstractTest {
         }
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void testMyObjectDeleteByPrimaryKey() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -226,14 +225,13 @@ public class MiscellaneousTest extends AbstractTest {
             assertEquals(1, rows);
 
             MyObjectCriteria example = new MyObjectCriteria();
-            List answer = mapper.selectByExample(example);
+            List<MyObject> answer = mapper.selectByExample(example);
             assertEquals(0, answer.size());
         } finally {
             sqlSession.close();
         }
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void testMyObjectDeleteByExample() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -260,7 +258,7 @@ public class MiscellaneousTest extends AbstractTest {
             mapper.insert(record);
 
             MyObjectCriteria example = new MyObjectCriteria();
-            List answer = mapper.selectByExample(example);
+            List<MyObject> answer = mapper.selectByExample(example);
             assertEquals(2, answer.size());
 
             example = new MyObjectCriteria();
@@ -315,7 +313,6 @@ public class MiscellaneousTest extends AbstractTest {
         }
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void testMyObjectSelectByExampleLike() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -381,15 +378,15 @@ public class MiscellaneousTest extends AbstractTest {
             fn.setValue("B%");
             example.createCriteria().andFirstnameLike(fn);
             example.setOrderByClause("ID1, ID2");
-            List answer = mapper.selectByExample(example);
+            List<MyObject> answer = mapper.selectByExample(example);
             assertEquals(3, answer.size());
-            MyObject returnedRecord = (MyObject) answer.get(0);
+            MyObject returnedRecord = answer.get(0);
             assertEquals(2, returnedRecord.getId1().intValue());
             assertEquals(1, returnedRecord.getId2().intValue());
-            returnedRecord = (MyObject) answer.get(1);
+            returnedRecord = answer.get(1);
             assertEquals(2, returnedRecord.getId1().intValue());
             assertEquals(2, returnedRecord.getId2().intValue());
-            returnedRecord = (MyObject) answer.get(2);
+            returnedRecord = answer.get(2);
             assertEquals(2, returnedRecord.getId1().intValue());
             assertEquals(3, returnedRecord.getId2().intValue());
         } finally {
@@ -397,7 +394,6 @@ public class MiscellaneousTest extends AbstractTest {
         }
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void testMyObjectSelectByExampleNotLike() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -463,15 +459,15 @@ public class MiscellaneousTest extends AbstractTest {
             fn.setValue("B%");
             example.createCriteria().andFirstnameNotLike(fn);
             example.setOrderByClause("ID1, ID2");
-            List answer = mapper.selectByExample(example);
+            List<MyObject> answer = mapper.selectByExample(example);
             assertEquals(3, answer.size());
-            MyObject returnedRecord = (MyObject) answer.get(0);
+            MyObject returnedRecord = answer.get(0);
             assertEquals(1, returnedRecord.getId1().intValue());
             assertEquals(1, returnedRecord.getId2().intValue());
-            returnedRecord = (MyObject) answer.get(1);
+            returnedRecord = answer.get(1);
             assertEquals(1, returnedRecord.getId1().intValue());
             assertEquals(2, returnedRecord.getId2().intValue());
-            returnedRecord = (MyObject) answer.get(2);
+            returnedRecord = answer.get(2);
             assertEquals(1, returnedRecord.getId1().intValue());
             assertEquals(3, returnedRecord.getId2().intValue());
         } finally {
@@ -479,7 +475,6 @@ public class MiscellaneousTest extends AbstractTest {
         }
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void testMyObjectSelectByExampleComplexLike() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -549,12 +544,12 @@ public class MiscellaneousTest extends AbstractTest {
             example.or(example.createCriteria().andFirstnameLike(fn));
 
             example.setOrderByClause("ID1, ID2");
-            List answer = mapper.selectByExample(example);
+            List<MyObject> answer = mapper.selectByExample(example);
             assertEquals(2, answer.size());
-            MyObject returnedRecord = (MyObject) answer.get(0);
+            MyObject returnedRecord = answer.get(0);
             assertEquals(1, returnedRecord.getId1().intValue());
             assertEquals(2, returnedRecord.getId2().intValue());
-            returnedRecord = (MyObject) answer.get(1);
+            returnedRecord = answer.get(1);
             assertEquals(2, returnedRecord.getId1().intValue());
             assertEquals(3, returnedRecord.getId2().intValue());
         } finally {

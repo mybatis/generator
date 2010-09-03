@@ -172,17 +172,6 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
       <p><i>The default value is false.</i></p></td>
   </tr>
   <tr>
-    <td valign="top">suppressTypeWarnings</td>
-    <td>If true, then MBG will add an annotation to any method
-      that uses a non-parameterized type to suppress compiler type warnings.
-      This is useful if you are using the Ibatis2Java2 targetRuntime, but are
-      compiling the generated objects with a JSE 5.0 compiler.  In that situation,
-      the generated code would generate many compiler warnings if the
-      annotation is not allowed.  This property is not needed and will have
-      no effect when using the Ibatis2Java5 targetRuntime.<p/>
-      <p><i>The default value is false.</i></p></td>
-  </tr>
-  <tr>
     <td valign="top">beginningDelimiter</td>
     <td>The value to use as the beginning identifier delimiter for SQL identifiers that
         require delimiters.  MBG will automatically delimit SQL identifiers if the

@@ -105,7 +105,7 @@ public class UpdateByExampleTest extends AbstractTest {
             example.createCriteria().andIntegerfieldEqualTo(8);
             answer = mapper.selectByExample(example);
             assertEquals(1, answer.size());
-            record = (Fieldsonly) answer.get(0);
+            record = answer.get(0);
             assertEquals(record.getDoublefield(), 99d, 0.0);
             assertEquals(record.getFloatfield(), 66.77, 0.0);
             assertEquals(record.getIntegerfield().intValue(), 8);
@@ -114,7 +114,7 @@ public class UpdateByExampleTest extends AbstractTest {
             example.createCriteria().andIntegerfieldEqualTo(9);
             answer = mapper.selectByExample(example);
             assertEquals(1, answer.size());
-            record = (Fieldsonly) answer.get(0);
+            record = answer.get(0);
             assertEquals(record.getDoublefield(), 99d, 0.0);
             assertEquals(record.getFloatfield(), 100.111, 0.0);
             assertEquals(record.getIntegerfield().intValue(), 9);

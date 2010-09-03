@@ -108,10 +108,6 @@ public class SelectByExampleWithBLOBsMethodGenerator extends
         }
         method.setReturnType(returnType);
 
-        if (context.getSuppressTypeWarnings(introspectedTable)) {
-            method.addSuppressTypeWarningsAnnotation();
-        }
-
         method.setName(getDAOMethodNameCalculator()
                 .getSelectByExampleWithBLOBsMethodName(introspectedTable));
         method.addParameter(new Parameter(type, "example")); //$NON-NLS-1$

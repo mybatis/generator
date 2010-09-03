@@ -62,11 +62,6 @@ public class SelectByExampleWithBLOBsMethodGenerator extends
         importedTypes.add(listType);
         returnType.addTypeArgument(listType);
         method.setReturnType(returnType);
-
-        if (context.getSuppressTypeWarnings(introspectedTable)) {
-            method.addSuppressTypeWarningsAnnotation();
-        }
-
         method.setName(introspectedTable
                 .getSelectByExampleWithBLOBsStatementId());
         method.addParameter(new Parameter(type, "example")); //$NON-NLS-1$

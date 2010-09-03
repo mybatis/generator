@@ -197,7 +197,6 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         }
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void testMyObjectDeleteByPrimaryKey() {
         MyObjectDAO dao = getMyObjectDAO();
@@ -221,14 +220,13 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
             assertEquals(1, rows);
 
             MyObjectCriteria example = new MyObjectCriteria();
-            List answer = dao.selectMyObjectByExample(example);
+            List<MyObject> answer = dao.selectMyObjectByExample(example);
             assertEquals(0, answer.size());
         } catch (SQLException e) {
             fail(e.getMessage());
         }
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void testMyObjectDeleteByExample() {
         MyObjectDAO dao = getMyObjectDAO();
@@ -254,7 +252,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
             dao.insertMyObject(record);
 
             MyObjectCriteria example = new MyObjectCriteria();
-            List answer = dao.selectMyObjectByExample(example);
+            List<MyObject> answer = dao.selectMyObjectByExample(example);
             assertEquals(2, answer.size());
 
             example = new MyObjectCriteria();
@@ -308,7 +306,6 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         }
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void testMyObjectSelectByExampleLike() {
         MyObjectDAO dao = getMyObjectDAO();
@@ -373,15 +370,15 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
             fn.setValue("B%");
             example.createCriteria().andFirstnameLike(fn);
             example.setOrderByClause("ID1, ID2");
-            List answer = dao.selectMyObjectByExample(example);
+            List<MyObject> answer = dao.selectMyObjectByExample(example);
             assertEquals(3, answer.size());
-            MyObject returnedRecord = (MyObject) answer.get(0);
+            MyObject returnedRecord = answer.get(0);
             assertEquals(2, returnedRecord.getId1().intValue());
             assertEquals(1, returnedRecord.getId2().intValue());
-            returnedRecord = (MyObject) answer.get(1);
+            returnedRecord = answer.get(1);
             assertEquals(2, returnedRecord.getId1().intValue());
             assertEquals(2, returnedRecord.getId2().intValue());
-            returnedRecord = (MyObject) answer.get(2);
+            returnedRecord = answer.get(2);
             assertEquals(2, returnedRecord.getId1().intValue());
             assertEquals(3, returnedRecord.getId2().intValue());
         } catch (SQLException e) {
@@ -389,7 +386,6 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         }
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void testMyObjectSelectByExampleNotLike() {
         MyObjectDAO dao = getMyObjectDAO();
@@ -454,15 +450,15 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
             fn.setValue("B%");
             example.createCriteria().andFirstnameNotLike(fn);
             example.setOrderByClause("ID1, ID2");
-            List answer = dao.selectMyObjectByExample(example);
+            List<MyObject> answer = dao.selectMyObjectByExample(example);
             assertEquals(3, answer.size());
-            MyObject returnedRecord = (MyObject) answer.get(0);
+            MyObject returnedRecord = answer.get(0);
             assertEquals(1, returnedRecord.getId1().intValue());
             assertEquals(1, returnedRecord.getId2().intValue());
-            returnedRecord = (MyObject) answer.get(1);
+            returnedRecord = answer.get(1);
             assertEquals(1, returnedRecord.getId1().intValue());
             assertEquals(2, returnedRecord.getId2().intValue());
-            returnedRecord = (MyObject) answer.get(2);
+            returnedRecord = answer.get(2);
             assertEquals(1, returnedRecord.getId1().intValue());
             assertEquals(3, returnedRecord.getId2().intValue());
         } catch (SQLException e) {
@@ -470,7 +466,6 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         }
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void testMyObjectSelectByExampleComplexLike() {
         MyObjectDAO dao = getMyObjectDAO();
@@ -539,12 +534,12 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
             example.or(example.createCriteria().andFirstnameLike(fn));
 
             example.setOrderByClause("ID1, ID2");
-            List answer = dao.selectMyObjectByExample(example);
+            List<MyObject> answer = dao.selectMyObjectByExample(example);
             assertEquals(2, answer.size());
-            MyObject returnedRecord = (MyObject) answer.get(0);
+            MyObject returnedRecord = answer.get(0);
             assertEquals(1, returnedRecord.getId1().intValue());
             assertEquals(2, returnedRecord.getId2().intValue());
-            returnedRecord = (MyObject) answer.get(1);
+            returnedRecord = answer.get(1);
             assertEquals(2, returnedRecord.getId1().intValue());
             assertEquals(3, returnedRecord.getId2().intValue());
         } catch (SQLException e) {
@@ -645,7 +640,6 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         }
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void testMyObjectSelectByExampleBetween() {
         MyObjectDAO dao = getMyObjectDAO();
@@ -709,7 +703,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
             example.createCriteria().andId2Between(1, 3);
 
             example.setOrderByClause("ID1, ID2");
-            List answer = dao.selectMyObjectByExample(example);
+            List<MyObject> answer = dao.selectMyObjectByExample(example);
             assertEquals(6, answer.size());
         } catch (SQLException e) {
             fail(e.getMessage());
@@ -951,7 +945,6 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         }
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void testMyObjectSelectByExampleLikeInsensitive() {
         MyObjectDAO dao = getMyObjectDAO();
@@ -1014,7 +1007,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
             MyObjectCriteria example = new MyObjectCriteria();
             example.createCriteria().andLastnameLike("RU%");
             example.setOrderByClause("ID1, ID2");
-            List answer = dao.selectMyObjectByExample(example);
+            List<MyObject> answer = dao.selectMyObjectByExample(example);
             assertEquals(0, answer.size());
             
             example.clear();
@@ -1022,13 +1015,13 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
             answer = dao.selectMyObjectByExample(example);
             assertEquals(3, answer.size());
             
-            MyObject returnedRecord = (MyObject) answer.get(0);
+            MyObject returnedRecord = answer.get(0);
             assertEquals(2, returnedRecord.getId1().intValue());
             assertEquals(1, returnedRecord.getId2().intValue());
-            returnedRecord = (MyObject) answer.get(1);
+            returnedRecord = answer.get(1);
             assertEquals(2, returnedRecord.getId1().intValue());
             assertEquals(2, returnedRecord.getId2().intValue());
-            returnedRecord = (MyObject) answer.get(2);
+            returnedRecord = answer.get(2);
             assertEquals(2, returnedRecord.getId1().intValue());
             assertEquals(3, returnedRecord.getId2().intValue());
         } catch (SQLException e) {

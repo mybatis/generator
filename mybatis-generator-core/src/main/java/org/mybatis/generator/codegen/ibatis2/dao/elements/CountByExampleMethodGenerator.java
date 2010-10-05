@@ -59,7 +59,7 @@ public class CountByExampleMethodGenerator extends AbstractDAOElementGenerator {
             method.addBodyLine("return count.intValue();"); //$NON-NLS-1$
         }
 
-        if (context.getPlugins().daoCountByExampleMethodGenerated(method,
+        if (context.getPlugins().clientCountByExampleMethodGenerated(method,
                 topLevelClass, introspectedTable)) {
             topLevelClass.addImportedTypes(importedTypes);
             topLevelClass.addMethod(method);
@@ -72,7 +72,7 @@ public class CountByExampleMethodGenerator extends AbstractDAOElementGenerator {
             Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
             Method method = getMethodShell(importedTypes);
 
-            if (context.getPlugins().daoCountByExampleMethodGenerated(
+            if (context.getPlugins().clientCountByExampleMethodGenerated(
                     method, interfaze, introspectedTable)) {
                 interfaze.addImportedTypes(importedTypes);
                 interfaze.addMethod(method);

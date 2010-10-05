@@ -79,143 +79,143 @@ public abstract class PluginAdapter implements Plugin {
         return null;
     }
 
-    public boolean daoCountByExampleMethodGenerated(Method method,
+    public boolean clientCountByExampleMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable) {
         return true;
     }
 
-    public boolean daoCountByExampleMethodGenerated(Method method,
+    public boolean clientCountByExampleMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         return true;
     }
 
-    public boolean daoDeleteByExampleMethodGenerated(Method method,
+    public boolean clientDeleteByExampleMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable) {
         return true;
     }
 
-    public boolean daoDeleteByExampleMethodGenerated(Method method,
+    public boolean clientDeleteByExampleMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         return true;
     }
 
-    public boolean daoDeleteByPrimaryKeyMethodGenerated(Method method,
+    public boolean clientDeleteByPrimaryKeyMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable) {
         return true;
     }
 
-    public boolean daoDeleteByPrimaryKeyMethodGenerated(Method method,
+    public boolean clientDeleteByPrimaryKeyMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         return true;
     }
 
-    public boolean daoImplementationGenerated(TopLevelClass topLevelClass,
+    public boolean clientImplementationGenerated(TopLevelClass topLevelClass,
             IntrospectedTable introspectedTable) {
         return true;
     }
 
-    public boolean daoInsertMethodGenerated(Method method, Interface interfaze,
+    public boolean clientInsertMethodGenerated(Method method, Interface interfaze,
             IntrospectedTable introspectedTable) {
         return true;
     }
 
-    public boolean daoInsertMethodGenerated(Method method,
+    public boolean clientInsertMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         return true;
     }
 
-    public boolean daoInterfaceGenerated(Interface interfaze,
+    public boolean clientInterfaceGenerated(Interface interfaze,
             IntrospectedTable introspectedTable) {
         return true;
     }
 
-    public boolean daoSelectByExampleWithBLOBsMethodGenerated(Method method,
+    public boolean clientSelectByExampleWithBLOBsMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable) {
         return true;
     }
 
-    public boolean daoSelectByExampleWithBLOBsMethodGenerated(Method method,
+    public boolean clientSelectByExampleWithBLOBsMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         return true;
     }
 
-    public boolean daoSelectByExampleWithoutBLOBsMethodGenerated(Method method,
+    public boolean clientSelectByExampleWithoutBLOBsMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable) {
         return true;
     }
 
-    public boolean daoSelectByExampleWithoutBLOBsMethodGenerated(Method method,
+    public boolean clientSelectByExampleWithoutBLOBsMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         return true;
     }
 
-    public boolean daoSelectByPrimaryKeyMethodGenerated(Method method,
+    public boolean clientSelectByPrimaryKeyMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable) {
         return true;
     }
 
-    public boolean daoSelectByPrimaryKeyMethodGenerated(Method method,
+    public boolean clientSelectByPrimaryKeyMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         return true;
     }
 
-    public boolean daoUpdateByExampleSelectiveMethodGenerated(Method method,
+    public boolean clientUpdateByExampleSelectiveMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable) {
         return true;
     }
 
-    public boolean daoUpdateByExampleSelectiveMethodGenerated(Method method,
+    public boolean clientUpdateByExampleSelectiveMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         return true;
     }
 
-    public boolean daoUpdateByExampleWithBLOBsMethodGenerated(Method method,
+    public boolean clientUpdateByExampleWithBLOBsMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable) {
         return true;
     }
 
-    public boolean daoUpdateByExampleWithBLOBsMethodGenerated(Method method,
+    public boolean clientUpdateByExampleWithBLOBsMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         return true;
     }
 
-    public boolean daoUpdateByExampleWithoutBLOBsMethodGenerated(Method method,
+    public boolean clientUpdateByExampleWithoutBLOBsMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable) {
         return true;
     }
 
-    public boolean daoUpdateByExampleWithoutBLOBsMethodGenerated(Method method,
+    public boolean clientUpdateByExampleWithoutBLOBsMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         return true;
     }
 
-    public boolean daoUpdateByPrimaryKeySelectiveMethodGenerated(Method method,
+    public boolean clientUpdateByPrimaryKeySelectiveMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable) {
         return true;
     }
 
-    public boolean daoUpdateByPrimaryKeySelectiveMethodGenerated(Method method,
+    public boolean clientUpdateByPrimaryKeySelectiveMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         return true;
     }
 
-    public boolean daoUpdateByPrimaryKeyWithBLOBsMethodGenerated(Method method,
+    public boolean clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable) {
         return true;
     }
 
-    public boolean daoUpdateByPrimaryKeyWithBLOBsMethodGenerated(Method method,
+    public boolean clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         return true;
     }
 
-    public boolean daoUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(
+    public boolean clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(
             Method method, Interface interfaze,
             IntrospectedTable introspectedTable) {
         return true;
     }
 
-    public boolean daoUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(
+    public boolean clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(
             Method method, TopLevelClass topLevelClass,
             IntrospectedTable introspectedTable) {
         return true;
@@ -357,12 +357,12 @@ public abstract class PluginAdapter implements Plugin {
         return true;
     }
 
-    public boolean daoInsertSelectiveMethodGenerated(Method method,
+    public boolean clientInsertSelectiveMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable) {
         return true;
     }
 
-    public boolean daoInsertSelectiveMethodGenerated(Method method,
+    public boolean clientInsertSelectiveMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         return true;
     }

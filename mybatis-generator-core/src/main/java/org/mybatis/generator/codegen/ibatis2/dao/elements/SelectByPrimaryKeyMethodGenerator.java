@@ -87,7 +87,7 @@ public class SelectByPrimaryKeyMethodGenerator extends
         method.addBodyLine(sb.toString());
         method.addBodyLine("return record;"); //$NON-NLS-1$
 
-        if (context.getPlugins().daoSelectByPrimaryKeyMethodGenerated(
+        if (context.getPlugins().clientSelectByPrimaryKeyMethodGenerated(
                 method, topLevelClass, introspectedTable)) {
             topLevelClass.addImportedTypes(importedTypes);
             topLevelClass.addMethod(method);
@@ -99,7 +99,7 @@ public class SelectByPrimaryKeyMethodGenerator extends
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
         Method method = getMethodShell(importedTypes);
 
-        if (context.getPlugins().daoSelectByPrimaryKeyMethodGenerated(
+        if (context.getPlugins().clientSelectByPrimaryKeyMethodGenerated(
                 method, interfaze, introspectedTable)) {
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);

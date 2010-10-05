@@ -81,7 +81,7 @@ public class InsertSelectiveMethodGenerator extends AbstractDAOElementGenerator 
             }
         }
 
-        if (context.getPlugins().daoInsertSelectiveMethodGenerated(
+        if (context.getPlugins().clientInsertSelectiveMethodGenerated(
                 method, topLevelClass, introspectedTable)) {
             topLevelClass.addImportedTypes(importedTypes);
             topLevelClass.addMethod(method);
@@ -93,7 +93,7 @@ public class InsertSelectiveMethodGenerator extends AbstractDAOElementGenerator 
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
         Method method = getMethodShell(importedTypes);
 
-        if (context.getPlugins().daoInsertSelectiveMethodGenerated(
+        if (context.getPlugins().clientInsertSelectiveMethodGenerated(
                 method, interfaze, introspectedTable)) {
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);

@@ -54,7 +54,7 @@ public class InsertSelectiveMethodGenerator extends
         context.getCommentGenerator().addGeneralMethodComment(method,
                 introspectedTable);
 
-        if (context.getPlugins().daoInsertSelectiveMethodGenerated(
+        if (context.getPlugins().clientInsertSelectiveMethodGenerated(
                 method, interfaze, introspectedTable)) {
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);

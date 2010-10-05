@@ -55,7 +55,7 @@ public class UpdateByExampleWithoutBLOBsMethodGenerator extends
         method.addBodyLine("return rows;"); //$NON-NLS-1$
 
         if (context.getPlugins()
-                .daoUpdateByExampleWithoutBLOBsMethodGenerated(method,
+                .clientUpdateByExampleWithoutBLOBsMethodGenerated(method,
                         topLevelClass, introspectedTable)) {
             topLevelClass.addImportedTypes(importedTypes);
             topLevelClass.addMethod(method);
@@ -69,7 +69,7 @@ public class UpdateByExampleWithoutBLOBsMethodGenerator extends
             Method method = getMethodShell(importedTypes);
 
             if (context.getPlugins()
-                    .daoUpdateByExampleWithoutBLOBsMethodGenerated(method,
+                    .clientUpdateByExampleWithoutBLOBsMethodGenerated(method,
                             interfaze, introspectedTable)) {
                 interfaze.addImportedTypes(importedTypes);
                 interfaze.addMethod(method);

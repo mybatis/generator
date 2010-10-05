@@ -52,7 +52,7 @@ public class UpdateByPrimaryKeyWithoutBLOBsMethodGenerator extends
         method.addBodyLine("return rows;"); //$NON-NLS-1$
 
         if (context.getPlugins()
-                .daoUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(method,
+                .clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(method,
                         topLevelClass, introspectedTable)) {
             topLevelClass.addImportedTypes(importedTypes);
             topLevelClass.addMethod(method);
@@ -65,7 +65,7 @@ public class UpdateByPrimaryKeyWithoutBLOBsMethodGenerator extends
         Method method = getMethodShell(importedTypes);
 
         if (context.getPlugins()
-                .daoUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(method,
+                .clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(method,
                         interfaze, introspectedTable)) {
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);

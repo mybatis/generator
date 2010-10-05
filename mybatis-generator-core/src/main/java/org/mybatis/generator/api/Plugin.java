@@ -38,7 +38,7 @@ import org.mybatis.generator.config.Context;
  * <li>The setXXX methods are called one time</li>
  * <li>The validate method is called one time</li>
  * <li>The initialized method is called for each introspected table</li>
- * <li>The daoXXX methods are called for each introspected table</li>
+ * <li>The clientXXX methods are called for each introspected table</li>
  * <li>The modelXXX methods are called for each introspected table</li>
  * <li>The sqlMapXXX methods are called for each introspected table</li>
  * <li>The contextGenerateAdditionalJavaFiles(IntrospectedTable) method is
@@ -56,7 +56,7 @@ import org.mybatis.generator.config.Context;
  * Plugins are called, and initialized, in the same order they are specified in
  * the configuration.
  * <p>
- * The daoXXX, modelXXX, and sqlMapXXX methods are called by the code
+ * The clientXXX, modelXXX, and sqlMapXXX methods are called by the code
  * generators. If you replace the default code generators with other
  * implementations, these methods may not be called.
  * 
@@ -169,9 +169,9 @@ public interface Plugin {
             IntrospectedTable introspectedTable);
 
     /**
-     * This method is called when the entire DAO interface has been generated.
+     * This method is called when the entire client interface has been generated.
      * Implement this method to add additional methods or fields to a generated
-     * DAO interface.
+     * client interface.
      * 
      * @param interfaze
      *            the generated interface
@@ -183,13 +183,13 @@ public interface Plugin {
      *         first plugin returning false will disable the calling of further
      *         plugins.
      */
-    boolean daoInterfaceGenerated(Interface interfaze,
+    boolean clientInterfaceGenerated(Interface interfaze,
             IntrospectedTable introspectedTable);
 
     /**
-     * This method is called when the entire DAO implementation has been
+     * This method is called when the entire client implementation has been
      * generated. Implement this method to add additional methods or fields to a
-     * generated DAO implementation.
+     * generated client implementation.
      * 
      * @param topLevelClass
      *            the generated implementation class
@@ -201,17 +201,17 @@ public interface Plugin {
      *         of multiple plugins, the first plugin returning false will
      *         disable the calling of further plugins.
      */
-    boolean daoImplementationGenerated(TopLevelClass topLevelClass,
+    boolean clientImplementationGenerated(TopLevelClass topLevelClass,
             IntrospectedTable introspectedTable);
 
     /**
      * This method is called when the countByExample method has been generated
-     * in the DAO implementation class.
+     * in the client implementation class.
      * 
      * @param method
      *            the generated countByExample method
      * @param topLevelClass
-     *            the partially implemented DAO implementation class. You can
+     *            the partially implemented client implementation class. You can
      *            add additional imported classes to the implementation class if
      *            necessary.
      * @param introspectedTable
@@ -222,17 +222,17 @@ public interface Plugin {
      *         first plugin returning false will disable the calling of further
      *         plugins.
      */
-    boolean daoCountByExampleMethodGenerated(Method method,
+    boolean clientCountByExampleMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
 
     /**
      * This method is called when the deleteByExample method has been generated
-     * in the DAO implementation class.
+     * in the client implementation class.
      * 
      * @param method
      *            the generated deleteByExample method
      * @param topLevelClass
-     *            the partially implemented DAO implementation class. You can
+     *            the partially implemented client implementation class. You can
      *            add additional imported classes to the implementation class if
      *            necessary.
      * @param introspectedTable
@@ -243,17 +243,17 @@ public interface Plugin {
      *         first plugin returning false will disable the calling of further
      *         plugins.
      */
-    boolean daoDeleteByExampleMethodGenerated(Method method,
+    boolean clientDeleteByExampleMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
 
     /**
      * This method is called when the deleteByPrimaryKey method has been
-     * generated in the DAO implementation class.
+     * generated in the client implementation class.
      * 
      * @param method
      *            the generated deleteByPrimaryKey method
      * @param topLevelClass
-     *            the partially implemented DAO implementation class. You can
+     *            the partially implemented client implementation class. You can
      *            add additional imported classes to the implementation class if
      *            necessary.
      * @param introspectedTable
@@ -264,17 +264,17 @@ public interface Plugin {
      *         first plugin returning false will disable the calling of further
      *         plugins.
      */
-    boolean daoDeleteByPrimaryKeyMethodGenerated(Method method,
+    boolean clientDeleteByPrimaryKeyMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
 
     /**
      * This method is called when the insert method has been generated in the
-     * DAO implementation class.
+     * client implementation class.
      * 
      * @param method
      *            the generated insert method
      * @param topLevelClass
-     *            the partially implemented DAO implementation class. You can
+     *            the partially implemented client implementation class. You can
      *            add additional imported classes to the implementation class if
      *            necessary.
      * @param introspectedTable
@@ -285,17 +285,17 @@ public interface Plugin {
      *         first plugin returning false will disable the calling of further
      *         plugins.
      */
-    boolean daoInsertMethodGenerated(Method method,
+    boolean clientInsertMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
 
     /**
      * This method is called when the insert selective method has been generated
-     * in the DAO implementation class.
+     * in the client implementation class.
      * 
      * @param method
      *            the generated insert method
      * @param topLevelClass
-     *            the partially implemented DAO implementation class. You can
+     *            the partially implemented client implementation class. You can
      *            add additional imported classes to the implementation class if
      *            necessary.
      * @param introspectedTable
@@ -306,17 +306,17 @@ public interface Plugin {
      *         first plugin returning false will disable the calling of further
      *         plugins.
      */
-    boolean daoInsertSelectiveMethodGenerated(Method method,
+    boolean clientInsertSelectiveMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
 
     /**
      * This method is called when the selectByExampleWithBLOBs method has been
-     * generated in the DAO implementation class.
+     * generated in the client implementation class.
      * 
      * @param method
      *            the generated selectByExampleWithBLOBs method
      * @param topLevelClass
-     *            the partially implemented DAO implementation class. You can
+     *            the partially implemented client implementation class. You can
      *            add additional imported classes to the implementation class if
      *            necessary.
      * @param introspectedTable
@@ -327,17 +327,17 @@ public interface Plugin {
      *         first plugin returning false will disable the calling of further
      *         plugins.
      */
-    boolean daoSelectByExampleWithBLOBsMethodGenerated(Method method,
+    boolean clientSelectByExampleWithBLOBsMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
 
     /**
      * This method is called when the selectByExampleWithoutBLOBs method has
-     * been generated in the DAO implementation class.
+     * been generated in the client implementation class.
      * 
      * @param method
      *            the generated selectByExampleWithoutBLOBs method
      * @param topLevelClass
-     *            the partially implemented DAO implementation class. You can
+     *            the partially implemented client implementation class. You can
      *            add additional imported classes to the implementation class if
      *            necessary.
      * @param introspectedTable
@@ -348,17 +348,17 @@ public interface Plugin {
      *         first plugin returning false will disable the calling of further
      *         plugins.
      */
-    boolean daoSelectByExampleWithoutBLOBsMethodGenerated(Method method,
+    boolean clientSelectByExampleWithoutBLOBsMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
 
     /**
      * This method is called when the selectByPrimaryKey method has been
-     * generated in the DAO implementation class.
+     * generated in the client implementation class.
      * 
      * @param method
      *            the generated selectByPrimaryKey method
      * @param topLevelClass
-     *            the partially implemented DAO implementation class. You can
+     *            the partially implemented client implementation class. You can
      *            add additional imported classes to the implementation class if
      *            necessary.
      * @param introspectedTable
@@ -369,17 +369,17 @@ public interface Plugin {
      *         first plugin returning false will disable the calling of further
      *         plugins.
      */
-    boolean daoSelectByPrimaryKeyMethodGenerated(Method method,
+    boolean clientSelectByPrimaryKeyMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
 
     /**
      * This method is called when the updateByExampleSelective method has been
-     * generated in the DAO implementation class.
+     * generated in the client implementation class.
      * 
      * @param method
      *            the generated updateByExampleSelective method
      * @param topLevelClass
-     *            the partially implemented DAO implementation class. You can
+     *            the partially implemented client implementation class. You can
      *            add additional imported classes to the implementation class if
      *            necessary.
      * @param introspectedTable
@@ -390,17 +390,17 @@ public interface Plugin {
      *         first plugin returning false will disable the calling of further
      *         plugins.
      */
-    boolean daoUpdateByExampleSelectiveMethodGenerated(Method method,
+    boolean clientUpdateByExampleSelectiveMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
 
     /**
      * This method is called when the updateByExampleWithBLOBs method has been
-     * generated in the DAO implementation class.
+     * generated in the client implementation class.
      * 
      * @param method
      *            the generated updateByExampleWithBLOBs method
      * @param topLevelClass
-     *            the partially implemented DAO implementation class. You can
+     *            the partially implemented client implementation class. You can
      *            add additional imported classes to the implementation class if
      *            necessary.
      * @param introspectedTable
@@ -411,17 +411,17 @@ public interface Plugin {
      *         first plugin returning false will disable the calling of further
      *         plugins.
      */
-    boolean daoUpdateByExampleWithBLOBsMethodGenerated(Method method,
+    boolean clientUpdateByExampleWithBLOBsMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
 
     /**
      * This method is called when the updateByExampleWithoutBLOBs method has
-     * been generated in the DAO implementation class.
+     * been generated in the client implementation class.
      * 
      * @param method
      *            the generated updateByExampleWithoutBLOBs method
      * @param topLevelClass
-     *            the partially implemented DAO implementation class. You can
+     *            the partially implemented client implementation class. You can
      *            add additional imported classes to the implementation class if
      *            necessary.
      * @param introspectedTable
@@ -432,17 +432,17 @@ public interface Plugin {
      *         first plugin returning false will disable the calling of further
      *         plugins.
      */
-    boolean daoUpdateByExampleWithoutBLOBsMethodGenerated(Method method,
+    boolean clientUpdateByExampleWithoutBLOBsMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
 
     /**
      * This method is called when the updateByPrimaryKeySelective method has
-     * been generated in the DAO implementation class.
+     * been generated in the client implementation class.
      * 
      * @param method
      *            the generated updateByPrimaryKeySelective method
      * @param topLevelClass
-     *            the partially implemented DAO implementation class. You can
+     *            the partially implemented client implementation class. You can
      *            add additional imported classes to the implementation class if
      *            necessary.
      * @param introspectedTable
@@ -453,17 +453,17 @@ public interface Plugin {
      *         first plugin returning false will disable the calling of further
      *         plugins.
      */
-    boolean daoUpdateByPrimaryKeySelectiveMethodGenerated(Method method,
+    boolean clientUpdateByPrimaryKeySelectiveMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
 
     /**
      * This method is called when the updateByPrimaryKeyWithBLOBs method has
-     * been generated in the DAO implementation class.
+     * been generated in the client implementation class.
      * 
      * @param method
      *            the generated updateByPrimaryKeyWithBLOBs method
      * @param topLevelClass
-     *            the partially implemented DAO implementation class. You can
+     *            the partially implemented client implementation class. You can
      *            add additional imported classes to the implementation class if
      *            necessary.
      * @param introspectedTable
@@ -474,17 +474,17 @@ public interface Plugin {
      *         first plugin returning false will disable the calling of further
      *         plugins.
      */
-    boolean daoUpdateByPrimaryKeyWithBLOBsMethodGenerated(Method method,
+    boolean clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
 
     /**
      * This method is called when the updateByPrimaryKeyWithoutBLOBs method has
-     * been generated in the DAO implementation class.
+     * been generated in the client implementation class.
      * 
      * @param method
      *            the generated updateByPrimaryKeyWithBLOBs method
      * @param topLevelClass
-     *            the partially implemented DAO implementation class. You can
+     *            the partially implemented client implementation class. You can
      *            add additional imported classes to the implementation class if
      *            necessary.
      * @param introspectedTable
@@ -495,18 +495,18 @@ public interface Plugin {
      *         first plugin returning false will disable the calling of further
      *         plugins.
      */
-    boolean daoUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(Method method,
+    boolean clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
 
     /**
      * This method is called when the countByExample method has been generated
-     * in the DAO interface class.
+     * in the client interface.
      * 
      * @param method
      *            the generated countByExample method
      * @param interfaze
-     *            the partially implemented DAO interface class. You can add
-     *            additional imported classes to the interface class if
+     *            the partially implemented client interface. You can add
+     *            additional imported classes to the interface if
      *            necessary.
      * @param introspectedTable
      *            The class containing information about the table as
@@ -516,18 +516,18 @@ public interface Plugin {
      *         first plugin returning false will disable the calling of further
      *         plugins.
      */
-    boolean daoCountByExampleMethodGenerated(Method method,
+    boolean clientCountByExampleMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable);
 
     /**
      * This method is called when the deleteByExample method has been generated
-     * in the DAO interface class.
+     * in the client interface.
      * 
      * @param method
      *            the generated deleteByExample method
      * @param interfaze
-     *            the partially implemented DAO interface class. You can add
-     *            additional imported classes to the interface class if
+     *            the partially implemented client interface. You can add
+     *            additional imported classes to the interface if
      *            necessary.
      * @param introspectedTable
      *            The class containing information about the table as
@@ -537,18 +537,18 @@ public interface Plugin {
      *         first plugin returning false will disable the calling of further
      *         plugins.
      */
-    boolean daoDeleteByExampleMethodGenerated(Method method,
+    boolean clientDeleteByExampleMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable);
 
     /**
      * This method is called when the deleteByPrimaryKey method has been
-     * generated in the DAO interface class.
+     * generated in the client interface.
      * 
      * @param method
      *            the generated deleteByPrimaryKey method
      * @param interfaze
-     *            the partially implemented DAO interface class. You can add
-     *            additional imported classes to the interface class if
+     *            the partially implemented client interface. You can add
+     *            additional imported classes to the interface if
      *            necessary.
      * @param introspectedTable
      *            The class containing information about the table as
@@ -558,18 +558,18 @@ public interface Plugin {
      *         first plugin returning false will disable the calling of further
      *         plugins.
      */
-    boolean daoDeleteByPrimaryKeyMethodGenerated(Method method,
+    boolean clientDeleteByPrimaryKeyMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable);
 
     /**
      * This method is called when the insert method has been generated in the
-     * DAO interface class.
+     * client interface.
      * 
      * @param method
      *            the generated insert method
      * @param interfaze
-     *            the partially implemented DAO interface class. You can add
-     *            additional imported classes to the interface class if
+     *            the partially implemented client interface. You can add
+     *            additional imported classes to the interface if
      *            necessary.
      * @param introspectedTable
      *            The class containing information about the table as
@@ -579,18 +579,18 @@ public interface Plugin {
      *         first plugin returning false will disable the calling of further
      *         plugins.
      */
-    boolean daoInsertMethodGenerated(Method method, Interface interfaze,
+    boolean clientInsertMethodGenerated(Method method, Interface interfaze,
             IntrospectedTable introspectedTable);
 
     /**
      * This method is called when the insert selective method has been generated
-     * in the DAO interface class.
+     * in the client interface.
      * 
      * @param method
      *            the generated insert method
      * @param interfaze
-     *            the partially implemented DAO interface class. You can add
-     *            additional imported classes to the interface class if
+     *            the partially implemented client interface. You can add
+     *            additional imported classes to the interface if
      *            necessary.
      * @param introspectedTable
      *            The class containing information about the table as
@@ -600,18 +600,18 @@ public interface Plugin {
      *         first plugin returning false will disable the calling of further
      *         plugins.
      */
-    boolean daoInsertSelectiveMethodGenerated(Method method,
+    boolean clientInsertSelectiveMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable);
 
     /**
      * This method is called when the selectByExampleWithBLOBs method has been
-     * generated in the DAO interface class.
+     * generated in the client interface.
      * 
      * @param method
      *            the generated selectByExampleWithBLOBs method
      * @param interfaze
-     *            the partially implemented DAO interface class. You can add
-     *            additional imported classes to the interface class if
+     *            the partially implemented client interface. You can add
+     *            additional imported classes to the interface if
      *            necessary.
      * @param introspectedTable
      *            The class containing information about the table as
@@ -621,18 +621,18 @@ public interface Plugin {
      *         first plugin returning false will disable the calling of further
      *         plugins.
      */
-    boolean daoSelectByExampleWithBLOBsMethodGenerated(Method method,
+    boolean clientSelectByExampleWithBLOBsMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable);
 
     /**
      * This method is called when the selectByExampleWithoutBLOBs method has
-     * been generated in the DAO interface class.
+     * been generated in the client interface.
      * 
      * @param method
      *            the generated selectByExampleWithoutBLOBs method
      * @param interfaze
-     *            the partially implemented DAO interface class. You can add
-     *            additional imported classes to the interface class if
+     *            the partially implemented client interface. You can add
+     *            additional imported classes to the interface if
      *            necessary.
      * @param introspectedTable
      *            The class containing information about the table as
@@ -642,18 +642,18 @@ public interface Plugin {
      *         first plugin returning false will disable the calling of further
      *         plugins.
      */
-    boolean daoSelectByExampleWithoutBLOBsMethodGenerated(Method method,
+    boolean clientSelectByExampleWithoutBLOBsMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable);
 
     /**
      * This method is called when the selectByPrimaryKey method has been
-     * generated in the DAO interface class.
+     * generated in the client interface.
      * 
      * @param method
      *            the generated selectByPrimaryKey method
      * @param interfaze
-     *            the partially implemented DAO interface class. You can add
-     *            additional imported classes to the interface class if
+     *            the partially implemented client interface. You can add
+     *            additional imported classes to the interface if
      *            necessary.
      * @param introspectedTable
      *            The class containing information about the table as
@@ -663,18 +663,18 @@ public interface Plugin {
      *         first plugin returning false will disable the calling of further
      *         plugins.
      */
-    boolean daoSelectByPrimaryKeyMethodGenerated(Method method,
+    boolean clientSelectByPrimaryKeyMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable);
 
     /**
      * This method is called when the updateByExampleSelective method has been
-     * generated in the DAO interface class.
+     * generated in the client interface.
      * 
      * @param method
      *            the generated updateByExampleSelective method
      * @param interfaze
-     *            the partially implemented DAO interface class. You can add
-     *            additional imported classes to the interface class if
+     *            the partially implemented client interface. You can add
+     *            additional imported classes to the interface if
      *            necessary.
      * @param introspectedTable
      *            The class containing information about the table as
@@ -684,18 +684,18 @@ public interface Plugin {
      *         first plugin returning false will disable the calling of further
      *         plugins.
      */
-    boolean daoUpdateByExampleSelectiveMethodGenerated(Method method,
+    boolean clientUpdateByExampleSelectiveMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable);
 
     /**
      * This method is called when the updateByExampleWithBLOBs method has been
-     * generated in the DAO interface class.
+     * generated in the client interface.
      * 
      * @param method
      *            the generated updateByExampleWithBLOBs method
      * @param interfaze
-     *            the partially implemented DAO interface class. You can add
-     *            additional imported classes to the interface class if
+     *            the partially implemented client interface. You can add
+     *            additional imported classes to the interface if
      *            necessary.
      * @param introspectedTable
      *            The class containing information about the table as
@@ -705,18 +705,18 @@ public interface Plugin {
      *         first plugin returning false will disable the calling of further
      *         plugins.
      */
-    boolean daoUpdateByExampleWithBLOBsMethodGenerated(Method method,
+    boolean clientUpdateByExampleWithBLOBsMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable);
 
     /**
      * This method is called when the updateByExampleWithoutBLOBs method has
-     * been generated in the DAO interface class.
+     * been generated in the client interface.
      * 
      * @param method
      *            the generated updateByExampleWithoutBLOBs method
      * @param interfaze
-     *            the partially implemented DAO interface class. You can add
-     *            additional imported classes to the interface class if
+     *            the partially implemented client interface. You can add
+     *            additional imported classes to the interface if
      *            necessary.
      * @param introspectedTable
      *            The class containing information about the table as
@@ -726,18 +726,18 @@ public interface Plugin {
      *         first plugin returning false will disable the calling of further
      *         plugins.
      */
-    boolean daoUpdateByExampleWithoutBLOBsMethodGenerated(Method method,
+    boolean clientUpdateByExampleWithoutBLOBsMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable);
 
     /**
      * This method is called when the updateByPrimaryKeySelective method has
-     * been generated in the DAO interface class.
+     * been generated in the client interface.
      * 
      * @param method
      *            the generated updateByPrimaryKeySelective method
      * @param interfaze
-     *            the partially implemented DAO interface class. You can add
-     *            additional imported classes to the interface class if
+     *            the partially implemented client interface. You can add
+     *            additional imported classes to the interface if
      *            necessary.
      * @param introspectedTable
      *            The class containing information about the table as
@@ -747,18 +747,18 @@ public interface Plugin {
      *         first plugin returning false will disable the calling of further
      *         plugins.
      */
-    boolean daoUpdateByPrimaryKeySelectiveMethodGenerated(Method method,
+    boolean clientUpdateByPrimaryKeySelectiveMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable);
 
     /**
      * This method is called when the updateByPrimaryKeyWithBLOBs method has
-     * been generated in the DAO interface class.
+     * been generated in the client interface.
      * 
      * @param method
      *            the generated updateByPrimaryKeyWithBLOBs method
      * @param interfaze
-     *            the partially implemented DAO interface class. You can add
-     *            additional imported classes to the interface class if
+     *            the partially implemented client interface. You can add
+     *            additional imported classes to the interface if
      *            necessary.
      * @param introspectedTable
      *            The class containing information about the table as
@@ -768,18 +768,18 @@ public interface Plugin {
      *         first plugin returning false will disable the calling of further
      *         plugins.
      */
-    boolean daoUpdateByPrimaryKeyWithBLOBsMethodGenerated(Method method,
+    boolean clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable);
 
     /**
      * This method is called when the updateByPrimaryKeyWithoutBLOBs method has
-     * been generated in the DAO interface class.
+     * been generated in the client interface.
      * 
      * @param method
      *            the generated updateByPrimaryKeyWithoutBLOBs method
      * @param interfaze
-     *            the partially implemented DAO interface class. You can add
-     *            additional imported classes to the interface class if
+     *            the partially implemented client interface. You can add
+     *            additional imported classes to the interface if
      *            necessary.
      * @param introspectedTable
      *            The class containing information about the table as
@@ -789,7 +789,7 @@ public interface Plugin {
      *         first plugin returning false will disable the calling of further
      *         plugins.
      */
-    boolean daoUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(Method method,
+    boolean clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable);
 
     /**

@@ -62,7 +62,7 @@ public class UpdateByPrimaryKeySelectiveMethodGenerator extends
                 introspectedTable);
 
         if (context.getPlugins()
-                .daoUpdateByPrimaryKeySelectiveMethodGenerated(method,
+                .clientUpdateByPrimaryKeySelectiveMethodGenerated(method,
                         interfaze, introspectedTable)) {
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);

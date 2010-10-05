@@ -52,7 +52,7 @@ public class UpdateByPrimaryKeySelectiveMethodGenerator extends
         method.addBodyLine("return rows;"); //$NON-NLS-1$
 
         if (context.getPlugins()
-                .daoUpdateByPrimaryKeySelectiveMethodGenerated(method,
+                .clientUpdateByPrimaryKeySelectiveMethodGenerated(method,
                         topLevelClass, introspectedTable)) {
             topLevelClass.addImportedTypes(importedTypes);
             topLevelClass.addMethod(method);
@@ -65,7 +65,7 @@ public class UpdateByPrimaryKeySelectiveMethodGenerator extends
         Method method = getMethodShell(importedTypes);
 
         if (context.getPlugins()
-                .daoUpdateByPrimaryKeySelectiveMethodGenerated(method,
+                .clientUpdateByPrimaryKeySelectiveMethodGenerated(method,
                         interfaze, introspectedTable)) {
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);

@@ -62,7 +62,7 @@ public class UpdateByPrimaryKeyWithBLOBsMethodGenerator extends
                 introspectedTable);
 
         if (context.getPlugins()
-                .daoUpdateByPrimaryKeyWithBLOBsMethodGenerated(method,
+                .clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(method,
                         interfaze, introspectedTable)) {
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);

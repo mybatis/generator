@@ -70,7 +70,7 @@ public class SelectByExampleWithBLOBsMethodGenerator extends
                 introspectedTable);
 
         if (context.getPlugins()
-                .daoSelectByExampleWithBLOBsMethodGenerated(method, interfaze,
+                .clientSelectByExampleWithBLOBsMethodGenerated(method, interfaze,
                         introspectedTable)) {
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);

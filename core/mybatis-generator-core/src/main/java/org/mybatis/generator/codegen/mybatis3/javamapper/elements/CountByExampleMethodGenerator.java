@@ -52,7 +52,7 @@ public class CountByExampleMethodGenerator extends
         context.getCommentGenerator().addGeneralMethodComment(method,
                 introspectedTable);
 
-        if (context.getPlugins().daoCountByExampleMethodGenerated(method,
+        if (context.getPlugins().clientCountByExampleMethodGenerated(method,
                 interfaze, introspectedTable)) {
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);

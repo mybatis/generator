@@ -52,7 +52,7 @@ public class DeleteByExampleMethodGenerator extends
         context.getCommentGenerator().addGeneralMethodComment(method,
                 introspectedTable);
 
-        if (context.getPlugins().daoDeleteByExampleMethodGenerated(
+        if (context.getPlugins().clientDeleteByExampleMethodGenerated(
                 method, interfaze, introspectedTable)) {
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);

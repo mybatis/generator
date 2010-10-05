@@ -92,12 +92,12 @@ public class DAOGenerator extends AbstractJavaGenerator {
         addUpdateByPrimaryKeyWithoutBLOBsMethod(topLevelClass, interfaze);
 
         List<CompilationUnit> answer = new ArrayList<CompilationUnit>();
-        if (context.getPlugins().daoImplementationGenerated(
+        if (context.getPlugins().clientImplementationGenerated(
                 topLevelClass, introspectedTable)) {
             answer.add(topLevelClass);
         }
 
-        if (context.getPlugins().daoInterfaceGenerated(interfaze,
+        if (context.getPlugins().clientInterfaceGenerated(interfaze,
                 introspectedTable)) {
             answer.add(interfaze);
         }

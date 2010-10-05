@@ -83,7 +83,7 @@ public class InsertMethodGenerator extends AbstractDAOElementGenerator {
             }
         }
 
-        if (context.getPlugins().daoInsertMethodGenerated(method,
+        if (context.getPlugins().clientInsertMethodGenerated(method,
                 topLevelClass, introspectedTable)) {
             topLevelClass.addImportedTypes(importedTypes);
             topLevelClass.addMethod(method);
@@ -95,7 +95,7 @@ public class InsertMethodGenerator extends AbstractDAOElementGenerator {
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
         Method method = getMethodShell(importedTypes);
 
-        if (context.getPlugins().daoInsertMethodGenerated(method,
+        if (context.getPlugins().clientInsertMethodGenerated(method,
                 interfaze, introspectedTable)) {
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);

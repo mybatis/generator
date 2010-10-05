@@ -60,7 +60,7 @@ public class SelectByExampleWithoutBLOBsMethodGenerator extends
         method.addBodyLine("return list;"); //$NON-NLS-1$
 
         if (context.getPlugins()
-                .daoSelectByExampleWithoutBLOBsMethodGenerated(method,
+                .clientSelectByExampleWithoutBLOBsMethodGenerated(method,
                         topLevelClass, introspectedTable)) {
             topLevelClass.addImportedTypes(importedTypes);
             topLevelClass.addMethod(method);
@@ -74,7 +74,7 @@ public class SelectByExampleWithoutBLOBsMethodGenerator extends
             Method method = getMethodShell(importedTypes);
 
             if (context.getPlugins()
-                    .daoSelectByExampleWithoutBLOBsMethodGenerated(method,
+                    .clientSelectByExampleWithoutBLOBsMethodGenerated(method,
                             interfaze, introspectedTable)) {
                 interfaze.addImportedTypes(importedTypes);
                 interfaze.addMethod(method);

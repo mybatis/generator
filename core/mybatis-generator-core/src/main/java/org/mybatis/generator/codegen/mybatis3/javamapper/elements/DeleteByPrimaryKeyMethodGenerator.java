@@ -84,7 +84,7 @@ public class DeleteByPrimaryKeyMethodGenerator extends
         context.getCommentGenerator().addGeneralMethodComment(method,
                 introspectedTable);
 
-        if (context.getPlugins().daoDeleteByPrimaryKeyMethodGenerated(
+        if (context.getPlugins().clientDeleteByPrimaryKeyMethodGenerated(
                 method, interfaze, introspectedTable)) {
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);

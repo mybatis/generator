@@ -402,12 +402,12 @@ public final class PluginAggregator implements Plugin {
         return rc;
     }
 
-    public boolean daoCountByExampleMethodGenerated(Method method,
+    public boolean clientCountByExampleMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable) {
         boolean rc = true;
 
         for (Plugin plugin : plugins) {
-            if (!plugin.daoCountByExampleMethodGenerated(method, interfaze,
+            if (!plugin.clientCountByExampleMethodGenerated(method, interfaze,
                     introspectedTable)) {
                 rc = false;
                 break;
@@ -417,12 +417,12 @@ public final class PluginAggregator implements Plugin {
         return rc;
     }
 
-    public boolean daoCountByExampleMethodGenerated(Method method,
+    public boolean clientCountByExampleMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         boolean rc = true;
 
         for (Plugin plugin : plugins) {
-            if (!plugin.daoCountByExampleMethodGenerated(method, topLevelClass,
+            if (!plugin.clientCountByExampleMethodGenerated(method, topLevelClass,
                     introspectedTable)) {
                 rc = false;
                 break;
@@ -432,12 +432,12 @@ public final class PluginAggregator implements Plugin {
         return rc;
     }
 
-    public boolean daoDeleteByExampleMethodGenerated(Method method,
+    public boolean clientDeleteByExampleMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable) {
         boolean rc = true;
 
         for (Plugin plugin : plugins) {
-            if (!plugin.daoDeleteByExampleMethodGenerated(method, interfaze,
+            if (!plugin.clientDeleteByExampleMethodGenerated(method, interfaze,
                     introspectedTable)) {
                 rc = false;
                 break;
@@ -447,12 +447,12 @@ public final class PluginAggregator implements Plugin {
         return rc;
     }
 
-    public boolean daoDeleteByExampleMethodGenerated(Method method,
+    public boolean clientDeleteByExampleMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         boolean rc = true;
 
         for (Plugin plugin : plugins) {
-            if (!plugin.daoDeleteByExampleMethodGenerated(method,
+            if (!plugin.clientDeleteByExampleMethodGenerated(method,
                     topLevelClass, introspectedTable)) {
                 rc = false;
                 break;
@@ -462,12 +462,12 @@ public final class PluginAggregator implements Plugin {
         return rc;
     }
 
-    public boolean daoDeleteByPrimaryKeyMethodGenerated(Method method,
+    public boolean clientDeleteByPrimaryKeyMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable) {
         boolean rc = true;
 
         for (Plugin plugin : plugins) {
-            if (!plugin.daoDeleteByPrimaryKeyMethodGenerated(method, interfaze,
+            if (!plugin.clientDeleteByPrimaryKeyMethodGenerated(method, interfaze,
                     introspectedTable)) {
                 rc = false;
                 break;
@@ -477,12 +477,12 @@ public final class PluginAggregator implements Plugin {
         return rc;
     }
 
-    public boolean daoDeleteByPrimaryKeyMethodGenerated(Method method,
+    public boolean clientDeleteByPrimaryKeyMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         boolean rc = true;
 
         for (Plugin plugin : plugins) {
-            if (!plugin.daoDeleteByPrimaryKeyMethodGenerated(method,
+            if (!plugin.clientDeleteByPrimaryKeyMethodGenerated(method,
                     topLevelClass, introspectedTable)) {
                 rc = false;
                 break;
@@ -492,12 +492,12 @@ public final class PluginAggregator implements Plugin {
         return rc;
     }
 
-    public boolean daoImplementationGenerated(TopLevelClass topLevelClass,
+    public boolean clientImplementationGenerated(TopLevelClass topLevelClass,
             IntrospectedTable introspectedTable) {
         boolean rc = true;
 
         for (Plugin plugin : plugins) {
-            if (!plugin.daoImplementationGenerated(topLevelClass,
+            if (!plugin.clientImplementationGenerated(topLevelClass,
                     introspectedTable)) {
                 rc = false;
                 break;
@@ -507,12 +507,12 @@ public final class PluginAggregator implements Plugin {
         return rc;
     }
 
-    public boolean daoInsertMethodGenerated(Method method, Interface interfaze,
+    public boolean clientInsertMethodGenerated(Method method, Interface interfaze,
             IntrospectedTable introspectedTable) {
         boolean rc = true;
 
         for (Plugin plugin : plugins) {
-            if (!plugin.daoInsertMethodGenerated(method, interfaze,
+            if (!plugin.clientInsertMethodGenerated(method, interfaze,
                     introspectedTable)) {
                 rc = false;
                 break;
@@ -522,12 +522,12 @@ public final class PluginAggregator implements Plugin {
         return rc;
     }
 
-    public boolean daoInsertMethodGenerated(Method method,
+    public boolean clientInsertMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         boolean rc = true;
 
         for (Plugin plugin : plugins) {
-            if (!plugin.daoInsertMethodGenerated(method, topLevelClass,
+            if (!plugin.clientInsertMethodGenerated(method, topLevelClass,
                     introspectedTable)) {
                 rc = false;
                 break;
@@ -537,12 +537,12 @@ public final class PluginAggregator implements Plugin {
         return rc;
     }
 
-    public boolean daoInterfaceGenerated(Interface interfaze,
+    public boolean clientInterfaceGenerated(Interface interfaze,
             IntrospectedTable introspectedTable) {
         boolean rc = true;
 
         for (Plugin plugin : plugins) {
-            if (!plugin.daoInterfaceGenerated(interfaze, introspectedTable)) {
+            if (!plugin.clientInterfaceGenerated(interfaze, introspectedTable)) {
                 rc = false;
                 break;
             }
@@ -551,12 +551,12 @@ public final class PluginAggregator implements Plugin {
         return rc;
     }
 
-    public boolean daoSelectByExampleWithBLOBsMethodGenerated(Method method,
+    public boolean clientSelectByExampleWithBLOBsMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable) {
         boolean rc = true;
 
         for (Plugin plugin : plugins) {
-            if (!plugin.daoSelectByExampleWithBLOBsMethodGenerated(method,
+            if (!plugin.clientSelectByExampleWithBLOBsMethodGenerated(method,
                     interfaze, introspectedTable)) {
                 rc = false;
                 break;
@@ -566,12 +566,12 @@ public final class PluginAggregator implements Plugin {
         return rc;
     }
 
-    public boolean daoSelectByExampleWithBLOBsMethodGenerated(Method method,
+    public boolean clientSelectByExampleWithBLOBsMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         boolean rc = true;
 
         for (Plugin plugin : plugins) {
-            if (!plugin.daoSelectByExampleWithBLOBsMethodGenerated(method,
+            if (!plugin.clientSelectByExampleWithBLOBsMethodGenerated(method,
                     topLevelClass, introspectedTable)) {
                 rc = false;
                 break;
@@ -581,12 +581,12 @@ public final class PluginAggregator implements Plugin {
         return rc;
     }
 
-    public boolean daoSelectByExampleWithoutBLOBsMethodGenerated(Method method,
+    public boolean clientSelectByExampleWithoutBLOBsMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable) {
         boolean rc = true;
 
         for (Plugin plugin : plugins) {
-            if (!plugin.daoSelectByExampleWithoutBLOBsMethodGenerated(method,
+            if (!plugin.clientSelectByExampleWithoutBLOBsMethodGenerated(method,
                     interfaze, introspectedTable)) {
                 rc = false;
                 break;
@@ -596,12 +596,12 @@ public final class PluginAggregator implements Plugin {
         return rc;
     }
 
-    public boolean daoSelectByExampleWithoutBLOBsMethodGenerated(Method method,
+    public boolean clientSelectByExampleWithoutBLOBsMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         boolean rc = true;
 
         for (Plugin plugin : plugins) {
-            if (!plugin.daoSelectByExampleWithoutBLOBsMethodGenerated(method,
+            if (!plugin.clientSelectByExampleWithoutBLOBsMethodGenerated(method,
                     topLevelClass, introspectedTable)) {
                 rc = false;
                 break;
@@ -611,12 +611,12 @@ public final class PluginAggregator implements Plugin {
         return rc;
     }
 
-    public boolean daoSelectByPrimaryKeyMethodGenerated(Method method,
+    public boolean clientSelectByPrimaryKeyMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable) {
         boolean rc = true;
 
         for (Plugin plugin : plugins) {
-            if (!plugin.daoSelectByPrimaryKeyMethodGenerated(method, interfaze,
+            if (!plugin.clientSelectByPrimaryKeyMethodGenerated(method, interfaze,
                     introspectedTable)) {
                 rc = false;
                 break;
@@ -626,12 +626,12 @@ public final class PluginAggregator implements Plugin {
         return rc;
     }
 
-    public boolean daoSelectByPrimaryKeyMethodGenerated(Method method,
+    public boolean clientSelectByPrimaryKeyMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         boolean rc = true;
 
         for (Plugin plugin : plugins) {
-            if (!plugin.daoSelectByPrimaryKeyMethodGenerated(method,
+            if (!plugin.clientSelectByPrimaryKeyMethodGenerated(method,
                     topLevelClass, introspectedTable)) {
                 rc = false;
                 break;
@@ -641,12 +641,12 @@ public final class PluginAggregator implements Plugin {
         return rc;
     }
 
-    public boolean daoUpdateByExampleSelectiveMethodGenerated(Method method,
+    public boolean clientUpdateByExampleSelectiveMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable) {
         boolean rc = true;
 
         for (Plugin plugin : plugins) {
-            if (!plugin.daoUpdateByExampleSelectiveMethodGenerated(method,
+            if (!plugin.clientUpdateByExampleSelectiveMethodGenerated(method,
                     interfaze, introspectedTable)) {
                 rc = false;
                 break;
@@ -656,12 +656,12 @@ public final class PluginAggregator implements Plugin {
         return rc;
     }
 
-    public boolean daoUpdateByExampleSelectiveMethodGenerated(Method method,
+    public boolean clientUpdateByExampleSelectiveMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         boolean rc = true;
 
         for (Plugin plugin : plugins) {
-            if (!plugin.daoUpdateByExampleSelectiveMethodGenerated(method,
+            if (!plugin.clientUpdateByExampleSelectiveMethodGenerated(method,
                     topLevelClass, introspectedTable)) {
                 rc = false;
                 break;
@@ -671,12 +671,12 @@ public final class PluginAggregator implements Plugin {
         return rc;
     }
 
-    public boolean daoUpdateByExampleWithBLOBsMethodGenerated(Method method,
+    public boolean clientUpdateByExampleWithBLOBsMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable) {
         boolean rc = true;
 
         for (Plugin plugin : plugins) {
-            if (!plugin.daoUpdateByExampleWithBLOBsMethodGenerated(method,
+            if (!plugin.clientUpdateByExampleWithBLOBsMethodGenerated(method,
                     interfaze, introspectedTable)) {
                 rc = false;
                 break;
@@ -686,12 +686,12 @@ public final class PluginAggregator implements Plugin {
         return rc;
     }
 
-    public boolean daoUpdateByExampleWithBLOBsMethodGenerated(Method method,
+    public boolean clientUpdateByExampleWithBLOBsMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         boolean rc = true;
 
         for (Plugin plugin : plugins) {
-            if (!plugin.daoUpdateByExampleWithBLOBsMethodGenerated(method,
+            if (!plugin.clientUpdateByExampleWithBLOBsMethodGenerated(method,
                     topLevelClass, introspectedTable)) {
                 rc = false;
                 break;
@@ -701,12 +701,12 @@ public final class PluginAggregator implements Plugin {
         return rc;
     }
 
-    public boolean daoUpdateByExampleWithoutBLOBsMethodGenerated(Method method,
+    public boolean clientUpdateByExampleWithoutBLOBsMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable) {
         boolean rc = true;
 
         for (Plugin plugin : plugins) {
-            if (!plugin.daoUpdateByExampleWithoutBLOBsMethodGenerated(method,
+            if (!plugin.clientUpdateByExampleWithoutBLOBsMethodGenerated(method,
                     interfaze, introspectedTable)) {
                 rc = false;
                 break;
@@ -716,12 +716,12 @@ public final class PluginAggregator implements Plugin {
         return rc;
     }
 
-    public boolean daoUpdateByExampleWithoutBLOBsMethodGenerated(Method method,
+    public boolean clientUpdateByExampleWithoutBLOBsMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         boolean rc = true;
 
         for (Plugin plugin : plugins) {
-            if (!plugin.daoUpdateByExampleWithoutBLOBsMethodGenerated(method,
+            if (!plugin.clientUpdateByExampleWithoutBLOBsMethodGenerated(method,
                     topLevelClass, introspectedTable)) {
                 rc = false;
                 break;
@@ -731,12 +731,12 @@ public final class PluginAggregator implements Plugin {
         return rc;
     }
 
-    public boolean daoUpdateByPrimaryKeySelectiveMethodGenerated(Method method,
+    public boolean clientUpdateByPrimaryKeySelectiveMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable) {
         boolean rc = true;
 
         for (Plugin plugin : plugins) {
-            if (!plugin.daoUpdateByPrimaryKeySelectiveMethodGenerated(method,
+            if (!plugin.clientUpdateByPrimaryKeySelectiveMethodGenerated(method,
                     interfaze, introspectedTable)) {
                 rc = false;
                 break;
@@ -746,12 +746,12 @@ public final class PluginAggregator implements Plugin {
         return rc;
     }
 
-    public boolean daoUpdateByPrimaryKeySelectiveMethodGenerated(Method method,
+    public boolean clientUpdateByPrimaryKeySelectiveMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         boolean rc = true;
 
         for (Plugin plugin : plugins) {
-            if (!plugin.daoUpdateByPrimaryKeySelectiveMethodGenerated(method,
+            if (!plugin.clientUpdateByPrimaryKeySelectiveMethodGenerated(method,
                     topLevelClass, introspectedTable)) {
                 rc = false;
                 break;
@@ -761,12 +761,12 @@ public final class PluginAggregator implements Plugin {
         return rc;
     }
 
-    public boolean daoUpdateByPrimaryKeyWithBLOBsMethodGenerated(Method method,
+    public boolean clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable) {
         boolean rc = true;
 
         for (Plugin plugin : plugins) {
-            if (!plugin.daoUpdateByPrimaryKeyWithBLOBsMethodGenerated(method,
+            if (!plugin.clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(method,
                     interfaze, introspectedTable)) {
                 rc = false;
                 break;
@@ -776,12 +776,12 @@ public final class PluginAggregator implements Plugin {
         return rc;
     }
 
-    public boolean daoUpdateByPrimaryKeyWithBLOBsMethodGenerated(Method method,
+    public boolean clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         boolean rc = true;
 
         for (Plugin plugin : plugins) {
-            if (!plugin.daoUpdateByPrimaryKeyWithBLOBsMethodGenerated(method,
+            if (!plugin.clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(method,
                     topLevelClass, introspectedTable)) {
                 rc = false;
                 break;
@@ -791,13 +791,13 @@ public final class PluginAggregator implements Plugin {
         return rc;
     }
 
-    public boolean daoUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(
+    public boolean clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(
             Method method, Interface interfaze,
             IntrospectedTable introspectedTable) {
         boolean rc = true;
 
         for (Plugin plugin : plugins) {
-            if (!plugin.daoUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(
+            if (!plugin.clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(
                     method, interfaze, introspectedTable)) {
                 rc = false;
                 break;
@@ -807,13 +807,13 @@ public final class PluginAggregator implements Plugin {
         return rc;
     }
 
-    public boolean daoUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(
+    public boolean clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(
             Method method, TopLevelClass topLevelClass,
             IntrospectedTable introspectedTable) {
         boolean rc = true;
 
         for (Plugin plugin : plugins) {
-            if (!plugin.daoUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(
+            if (!plugin.clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(
                     method, topLevelClass, introspectedTable)) {
                 rc = false;
                 break;
@@ -927,12 +927,12 @@ public final class PluginAggregator implements Plugin {
         return rc;
     }
 
-    public boolean daoInsertSelectiveMethodGenerated(Method method,
+    public boolean clientInsertSelectiveMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable) {
         boolean rc = true;
 
         for (Plugin plugin : plugins) {
-            if (!plugin.daoInsertSelectiveMethodGenerated(method, interfaze,
+            if (!plugin.clientInsertSelectiveMethodGenerated(method, interfaze,
                     introspectedTable)) {
                 rc = false;
                 break;
@@ -942,12 +942,12 @@ public final class PluginAggregator implements Plugin {
         return rc;
     }
 
-    public boolean daoInsertSelectiveMethodGenerated(Method method,
+    public boolean clientInsertSelectiveMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         boolean rc = true;
 
         for (Plugin plugin : plugins) {
-            if (!plugin.daoInsertSelectiveMethodGenerated(method,
+            if (!plugin.clientInsertSelectiveMethodGenerated(method,
                     topLevelClass, introspectedTable)) {
                 rc = false;
                 break;

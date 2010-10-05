@@ -89,7 +89,7 @@ public class SelectByPrimaryKeyMethodGenerator extends
         context.getCommentGenerator().addGeneralMethodComment(method,
                 introspectedTable);
 
-        if (context.getPlugins().daoSelectByPrimaryKeyMethodGenerated(
+        if (context.getPlugins().clientSelectByPrimaryKeyMethodGenerated(
                 method, interfaze, introspectedTable)) {
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);

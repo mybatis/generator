@@ -69,7 +69,7 @@ public class UpdateByExampleWithoutBLOBsMethodGenerator extends
                 introspectedTable);
 
         if (context.getPlugins()
-                .daoUpdateByExampleWithoutBLOBsMethodGenerated(method,
+                .clientUpdateByExampleWithoutBLOBsMethodGenerated(method,
                         interfaze, introspectedTable)) {
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);

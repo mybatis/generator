@@ -69,7 +69,7 @@ public class UpdateByExampleSelectiveMethodGenerator extends
                 introspectedTable);
 
         if (context.getPlugins()
-                .daoUpdateByExampleSelectiveMethodGenerated(method, interfaze,
+                .clientUpdateByExampleSelectiveMethodGenerated(method, interfaze,
                         introspectedTable)) {
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);

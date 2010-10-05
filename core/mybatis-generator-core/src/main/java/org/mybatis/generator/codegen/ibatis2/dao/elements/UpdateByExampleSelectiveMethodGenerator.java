@@ -53,7 +53,7 @@ public class UpdateByExampleSelectiveMethodGenerator extends
         method.addBodyLine("return rows;"); //$NON-NLS-1$
 
         if (context.getPlugins()
-                .daoUpdateByExampleSelectiveMethodGenerated(method,
+                .clientUpdateByExampleSelectiveMethodGenerated(method,
                         topLevelClass, introspectedTable)) {
             topLevelClass.addImportedTypes(importedTypes);
             topLevelClass.addMethod(method);
@@ -67,7 +67,7 @@ public class UpdateByExampleSelectiveMethodGenerator extends
             Method method = getMethodShell(importedTypes);
 
             if (context.getPlugins()
-                    .daoUpdateByExampleSelectiveMethodGenerated(method,
+                    .clientUpdateByExampleSelectiveMethodGenerated(method,
                             interfaze, introspectedTable)) {
                 interfaze.addImportedTypes(importedTypes);
                 interfaze.addMethod(method);

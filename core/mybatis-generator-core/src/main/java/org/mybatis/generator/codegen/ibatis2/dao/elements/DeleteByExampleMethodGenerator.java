@@ -49,7 +49,7 @@ public class DeleteByExampleMethodGenerator extends AbstractDAOElementGenerator 
         method.addBodyLine(sb.toString());
         method.addBodyLine("return rows;"); //$NON-NLS-1$
 
-        if (context.getPlugins().daoDeleteByExampleMethodGenerated(
+        if (context.getPlugins().clientDeleteByExampleMethodGenerated(
                 method, topLevelClass, introspectedTable)) {
             topLevelClass.addImportedTypes(importedTypes);
             topLevelClass.addMethod(method);
@@ -62,7 +62,7 @@ public class DeleteByExampleMethodGenerator extends AbstractDAOElementGenerator 
             Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
             Method method = getMethodShell(importedTypes);
 
-            if (context.getPlugins().daoDeleteByExampleMethodGenerated(
+            if (context.getPlugins().clientDeleteByExampleMethodGenerated(
                     method, interfaze, introspectedTable)) {
                 interfaze.addImportedTypes(importedTypes);
                 interfaze.addMethod(method);

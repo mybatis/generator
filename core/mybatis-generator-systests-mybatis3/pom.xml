@@ -95,4 +95,10 @@
     	<scope>test</scope>
     </dependency>
   </dependencies>
+
+  <scm>
+    <url>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/generator/trunk/core/mybatis-generator-systests-mybatis3</url>
+    <connection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/generator/trunk/core/mybatis-generator-systests-mybatis3</connection>
+    <developerConnection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/generator/trunk/core/mybatis-generator-systests-mybatis3</developerConnection>
+  </scm>
 </project>

@@ -11,6 +11,18 @@
   <packaging>maven-plugin</packaging>
   <name>MyBatis Generator Maven Plugin</name>
 
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <configuration>
+          <arguments>-Psonatype-oss-release</arguments>
+        </configuration>
+      </plugin>      
+    </plugins>
+  </build>
+  
   <dependencies>
     <dependency>
       <groupId>org.apache.maven</groupId>

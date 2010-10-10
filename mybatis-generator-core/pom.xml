@@ -39,6 +39,13 @@
           </descriptors>
         </configuration>        
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <configuration>
+          <arguments>-Psonatype-oss-release,bundle,gupload</arguments>
+        </configuration>
+      </plugin>      
     </plugins>
   </build>
 

@@ -9,6 +9,7 @@
   <artifactId>mybatis-generator-systests-ibatis3</artifactId>
   <packaging>jar</packaging>
   <name>MyBatis Generator Tests (MyBatis3)</name>
+
   <build>
     <plugins>
       <plugin>
@@ -50,8 +51,16 @@
           <skip>true</skip>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <configuration>
+          <arguments>-Psonatype-oss-release,bundle</arguments>
+        </configuration>
+      </plugin>      
     </plugins>
   </build>
+
   <dependencies>
     <dependency>
       <groupId>org.mybatis.generator</groupId>

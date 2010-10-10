@@ -26,25 +26,6 @@
     <findbugs.onlyAnalyze>org.mybatis.generator.*</findbugs.onlyAnalyze>
   </properties>
   
-<!--
-  <licenses>
-    <license>
-      <name>Apache 2</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
-
-  <organization>
-    <name>MyBatis</name>
-    <url>http://www.mybatis.org</url>
-  </organization>
-
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
-
--->
   <reporting>
     <plugins>
       <plugin>
@@ -60,7 +41,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
-        <version>1.0-beta-1</version>
         <executions>
           <execution>
             <id>enforce-java</id>
@@ -70,27 +50,27 @@
             </goals>
             <configuration>
               <rules>
-                <requireJavaVersion>
-                  <version>[1.5,)</version>
-                </requireJavaVersion>
-                <requireMavenVersion>
-                  <version>[2.2.0,)</version>
-                </requireMavenVersion>
                 <requirePluginVersions>
-                  <message>Best Practice is to always define plugin versions!</message>
-                  <banLatest>true</banLatest>
-                  <banRelease>true</banRelease>
                   <banSnapshots>false</banSnapshots>
-                  <phases>clean,deploy,site</phases>
                 </requirePluginVersions>
-                <requireProperty>
-                  <property>findbugs.onlyAnalyze</property>
-                  <message>You must set the property 'findbugs.onlyAnalyze' in your project pom!</message>
-                </requireProperty>
               </rules>
             </configuration>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <forkMode>always</forkMode>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <compilerArgument>-Xlint:unchecked</compilerArgument>
+        </configuration>
       </plugin>
     </plugins>
   </build>

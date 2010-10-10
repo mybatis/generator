@@ -11,57 +11,12 @@
   <artifactId>mybatis-generator-core</artifactId>
   <packaging>jar</packaging>
   <name>MyBatis Generator Core</name>
-  <url>http://www.mybatis.org/</url>
 
   <build>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.0.2</version>
-        <configuration>
-          <source>1.5</source>
-          <target>1.5</target>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-        <version>2.1.2</version>
-        <executions>
-          <execution>
-            <id>attach-sources</id>
-            <goals>
-              <goal>jar-no-fork</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.7</version>
-        <executions>
-          <execution>
-            <id>attach-javadocs</id>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.4.3</version>
-        <configuration>
-          <forkMode>once</forkMode>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
-        <version>2.2</version>
         <configuration>
           <archive>
             <manifest>
@@ -78,7 +33,6 @@
       <plugin>
       	<groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
-        <version>2.2-beta-5</version>
         <configuration>
           <descriptors>
             <descriptor>src/main/assembly/src.xml</descriptor>
@@ -88,20 +42,6 @@
     </plugins>
   </build>
 
-  <reporting>    
-    <plugins>  
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-      </plugin>      
-      <plugin>
-      	<groupId>org.codehaus.mojo</groupId>
-      	<artifactId>emma-maven-plugin</artifactId>
-      	<version>1.0-alpha-1</version>
-      </plugin>      
-    </plugins>      
-  </reporting>  
-  
   <dependencies>
     <dependency>
       <groupId>log4j</groupId>

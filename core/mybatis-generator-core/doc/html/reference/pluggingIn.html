@@ -46,14 +46,14 @@ list shows the basic lifecycle of a plugin:</p>
   <li>For each table in the configuration:
     <ol type="a">
       <li><code>initialized</code> method called</li>
-      <li>DAO Methods:<sup>1,2</sup>
+      <li>Java Client Methods:<sup>1,2</sup>
         <ol type="i">
-          <li><code>daoXXXMethodGenerated(Method, TopLevelClass, IntrospectedTable)</code> - these methods
-              are called as each method of the DAO implementation is generated.</li>
-          <li><code>daoImplementationGenerated(TopLevelClass, IntrospectedTable)</code> method called</li>
-          <li><code>daoXXXMethodGenerated(Method, Interface, IntrospectedTable)</code> - these methods
-              are called as each method of the DAO interface is generated.</li>
-          <li><code>daoImplementationGenerated(Interface, IntrospectedTable)</code> method called</li>
+          <li><code>clientXXXMethodGenerated(Method, TopLevelClass, IntrospectedTable)</code> - these methods
+              are called as each method of a Java client implementation class is generated.</li>
+          <li><code>clientImplementationGenerated(TopLevelClass, IntrospectedTable)</code> method called</li>
+          <li><code>clientXXXMethodGenerated(Method, Interface, IntrospectedTable)</code> - these methods
+              are called as each method of the Java client interface is generated.</li>
+          <li><code>clientImplementationGenerated(Interface, IntrospectedTable)</code> method called</li>
         </ol>
       </li>
       <li>Model Methods:<sup>1</sup>
@@ -86,7 +86,7 @@ list shows the basic lifecycle of a plugin:</p>
 <sup>1</sup> - These methods will be called by the packaged code generators.  If you supply
  a custom code generator, then these methods will only be called if the custom code generator
  calls them.<br/>
-<sup>2</sup> - The DAO methods will only be called is a Java client generator is configured.
+<sup>2</sup> - The Java client methods will only be called is a Java client generator is configured.
 </p>
 
 <h2>Coding Plugins</h2>

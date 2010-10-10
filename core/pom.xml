@@ -72,9 +72,15 @@
           <compilerArgument>-Xlint:unchecked</compilerArgument>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <configuration>
+          <arguments>-Psonatype-oss-release,bundle,gupload</arguments>
+        </configuration>
+      </plugin>      
     </plugins>
   </build>
-  
 
   <scm>
     <url>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/generator/trunk/core</url>

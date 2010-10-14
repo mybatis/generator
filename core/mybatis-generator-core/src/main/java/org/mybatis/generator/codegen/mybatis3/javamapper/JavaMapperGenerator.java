@@ -83,7 +83,7 @@ public class JavaMapperGenerator extends AbstractJavaGenerator {
         addUpdateByPrimaryKeyWithoutBLOBsMethod(interfaze);
 
         List<CompilationUnit> answer = new ArrayList<CompilationUnit>();
-        if (context.getPlugins().clientInterfaceGenerated(interfaze,
+        if (context.getPlugins().clientGenerated(interfaze, null,
                 introspectedTable)) {
             answer.add(interfaze);
         }

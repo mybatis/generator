@@ -492,21 +492,6 @@ public final class PluginAggregator implements Plugin {
         return rc;
     }
 
-    public boolean clientImplementationGenerated(TopLevelClass topLevelClass,
-            IntrospectedTable introspectedTable) {
-        boolean rc = true;
-
-        for (Plugin plugin : plugins) {
-            if (!plugin.clientImplementationGenerated(topLevelClass,
-                    introspectedTable)) {
-                rc = false;
-                break;
-            }
-        }
-
-        return rc;
-    }
-
     public boolean clientInsertMethodGenerated(Method method, Interface interfaze,
             IntrospectedTable introspectedTable) {
         boolean rc = true;
@@ -537,12 +522,13 @@ public final class PluginAggregator implements Plugin {
         return rc;
     }
 
-    public boolean clientInterfaceGenerated(Interface interfaze,
+    public boolean clientGenerated(Interface interfaze,
+            TopLevelClass topLevelClass,
             IntrospectedTable introspectedTable) {
         boolean rc = true;
 
         for (Plugin plugin : plugins) {
-            if (!plugin.clientInterfaceGenerated(interfaze, introspectedTable)) {
+            if (!plugin.clientGenerated(interfaze, topLevelClass, introspectedTable)) {
                 rc = false;
                 break;
             }

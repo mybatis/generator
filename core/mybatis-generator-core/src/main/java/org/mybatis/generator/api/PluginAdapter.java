@@ -109,11 +109,6 @@ public abstract class PluginAdapter implements Plugin {
         return true;
     }
 
-    public boolean clientImplementationGenerated(TopLevelClass topLevelClass,
-            IntrospectedTable introspectedTable) {
-        return true;
-    }
-
     public boolean clientInsertMethodGenerated(Method method, Interface interfaze,
             IntrospectedTable introspectedTable) {
         return true;
@@ -124,7 +119,8 @@ public abstract class PluginAdapter implements Plugin {
         return true;
     }
 
-    public boolean clientInterfaceGenerated(Interface interfaze,
+    public boolean clientGenerated(Interface interfaze,
+            TopLevelClass topLevelClass,
             IntrospectedTable introspectedTable) {
         return true;
     }

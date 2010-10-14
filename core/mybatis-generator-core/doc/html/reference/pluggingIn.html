@@ -50,10 +50,9 @@ list shows the basic lifecycle of a plugin:</p>
         <ol type="i">
           <li><code>clientXXXMethodGenerated(Method, TopLevelClass, IntrospectedTable)</code> - these methods
               are called as each method of a Java client implementation class is generated.</li>
-          <li><code>clientImplementationGenerated(TopLevelClass, IntrospectedTable)</code> method called</li>
           <li><code>clientXXXMethodGenerated(Method, Interface, IntrospectedTable)</code> - these methods
               are called as each method of the Java client interface is generated.</li>
-          <li><code>clientImplementationGenerated(Interface, IntrospectedTable)</code> method called</li>
+          <li><code>clientGenerated(Interface, TopLevelClass, IntrospectedTable)</code> method called</li>
         </ol>
       </li>
       <li>Model Methods:<sup>1</sup>

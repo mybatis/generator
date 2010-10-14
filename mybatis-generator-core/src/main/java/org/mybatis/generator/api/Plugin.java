@@ -169,12 +169,14 @@ public interface Plugin {
             IntrospectedTable introspectedTable);
 
     /**
-     * This method is called when the entire client interface has been generated.
+     * This method is called when the entire client has been generated.
      * Implement this method to add additional methods or fields to a generated
-     * client interface.
+     * client interface or implementation.
      * 
      * @param interfaze
-     *            the generated interface
+     *            the generated interface if any, may be null
+     * @param topLevelClass
+     *            the generated implementation class if any, may be null
      * @param introspectedTable
      *            The class containing information about the table as
      *            introspected from the database
@@ -183,25 +185,7 @@ public interface Plugin {
      *         first plugin returning false will disable the calling of further
      *         plugins.
      */
-    boolean clientInterfaceGenerated(Interface interfaze,
-            IntrospectedTable introspectedTable);
-
-    /**
-     * This method is called when the entire client implementation has been
-     * generated. Implement this method to add additional methods or fields to a
-     * generated client implementation.
-     * 
-     * @param topLevelClass
-     *            the generated implementation class
-     * @param introspectedTable
-     *            The class containing information about the table as
-     *            introspected from the database
-     * @return true if the implementation class should be generated, false if
-     *         the generated implementation class should be ignored. In the case
-     *         of multiple plugins, the first plugin returning false will
-     *         disable the calling of further plugins.
-     */
-    boolean clientImplementationGenerated(TopLevelClass topLevelClass,
+    boolean clientGenerated(Interface interfaze, TopLevelClass topLevelClass,
             IntrospectedTable introspectedTable);
 
     /**

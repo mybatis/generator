@@ -1,7 +1,5 @@
 package mbg.test.common.util;
 
-import java.io.File;
-import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -71,9 +69,9 @@ public class TestUtilities {
 
     }
 
-    public static void createDatabase(URL sqlScript) throws Exception {
+    public static void createDatabase() throws Exception {
         SqlScriptRunner runner = new SqlScriptRunner(
-                new File(sqlScript.toURI()),
+                "classpath:mbg/test/common/scripts/CreateDB.sql",
                 "org.hsqldb.jdbcDriver",
                 "jdbc:hsqldb:mem:aname",
                 "sa",

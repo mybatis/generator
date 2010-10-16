@@ -718,14 +718,12 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
             record.seteMail("fred@fred.com");
             record.setEmailaddress("alsofred@fred.com");
             record.setFirstFirstName("fred1");
-            record.setFourthFirstName("fred4");
             record.setFrom("from field");
             record.setId1(1);
             record.setId2(2);
             record.setId5(5);
             record.setId6(6);
             record.setId7(7);
-            record.setSecondCustomerId(567);
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
     
@@ -735,14 +733,12 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
             record.seteMail("fred2@fred.com");
             record.setEmailaddress("alsofred2@fred.com");
             record.setFirstFirstName("fred11");
-            record.setFourthFirstName("fred44");
             record.setFrom("from from field");
             record.setId1(11);
             record.setId2(22);
             record.setId5(55);
             record.setId6(66);
             record.setId7(77);
-            record.setSecondCustomerId(567567);
             record.setSecondFirstName("fred22");
             record.setThirdFirstName("fred33");
     
@@ -764,14 +760,12 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
             assertEquals(record.geteMail(), returnedRecord.geteMail());
             assertEquals(record.getEmailaddress(), returnedRecord.getEmailaddress());
             assertEquals(newRecord.getFirstFirstName(), returnedRecord.getFirstFirstName());
-            assertEquals(record.getFourthFirstName(), returnedRecord.getFourthFirstName());
             assertEquals(record.getFrom(), returnedRecord.getFrom());
             assertEquals(record.getId1(), returnedRecord.getId1());
             assertEquals(record.getId2(), returnedRecord.getId2());
             assertEquals(record.getId5(), returnedRecord.getId5());
             assertEquals(record.getId6(), returnedRecord.getId6());
             assertEquals(record.getId7(), returnedRecord.getId7());
-            assertEquals(record.getSecondCustomerId(), returnedRecord.getSecondCustomerId());
             assertEquals(record.getSecondFirstName(), returnedRecord.getSecondFirstName());
             assertEquals(record.getThirdFirstName(), returnedRecord.getThirdFirstName());
             
@@ -789,14 +783,12 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
             record.seteMail("fred@fred.com");
             record.setEmailaddress("alsofred@fred.com");
             record.setFirstFirstName("fred1");
-            record.setFourthFirstName("fred4");
             record.setFrom("from field");
             record.setId1(1);
             record.setId2(2);
             record.setId5(5);
             record.setId6(6);
             record.setId7(7);
-            record.setSecondCustomerId(567);
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
     
@@ -806,14 +798,12 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
             record.seteMail("fred2@fred.com");
             record.setEmailaddress("alsofred2@fred.com");
             record.setFirstFirstName("fred11");
-            record.setFourthFirstName("fred44");
             record.setFrom("from from field");
             record.setId1(11);
             record.setId2(22);
             record.setId5(55);
             record.setId6(66);
             record.setId7(77);
-            record.setSecondCustomerId(567567);
             record.setSecondFirstName("fred22");
             record.setThirdFirstName("fred33");
     
@@ -843,14 +833,12 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
             assertNull(returnedRecord.geteMail());
             assertNull(returnedRecord.getEmailaddress());
             assertEquals(newRecord.getFirstFirstName(), returnedRecord.getFirstFirstName());
-            assertNull(returnedRecord.getFourthFirstName());
             assertNull(returnedRecord.getFrom());
             assertEquals(newRecord.getId1(), returnedRecord.getId1());
             assertEquals(newRecord.getId2(), returnedRecord.getId2());
             assertEquals(newRecord.getId5(), returnedRecord.getId5());
             assertEquals(newRecord.getId6(), returnedRecord.getId6());
             assertEquals(newRecord.getId7(), returnedRecord.getId7());
-            assertNull(returnedRecord.getSecondCustomerId());
             assertNull(returnedRecord.getSecondFirstName());
             assertNull(returnedRecord.getThirdFirstName());
         } catch (SQLException e) {

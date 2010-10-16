@@ -19,7 +19,6 @@ package mbg.test.ib2j5;
 import static mbg.test.common.util.TestUtilities.createDatabase;
 
 import java.io.Reader;
-import java.net.URL;
 import java.util.Properties;
 
 import org.junit.Before;
@@ -44,9 +43,7 @@ public abstract class AbstractTest {
 
     @Before
     public void setUp() throws Exception {
-        URL url = AbstractTest.class.getClassLoader().getResource("CreateDB.sql");
-        
-        createDatabase(url);
+        createDatabase();
     }
 
     protected SqlMapClient getSqlMapClient() {

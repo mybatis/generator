@@ -91,7 +91,7 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
      * 
      * @parameter expression="${mybatis.generator.sqlScript}"
      */
-    private File sqlScript;
+    private String sqlScript;
     
     /**
      * JDBC Driver to use if a sql.script.file is specified

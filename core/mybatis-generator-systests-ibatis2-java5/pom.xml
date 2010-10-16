@@ -26,7 +26,7 @@
       	</executions>
         <configuration>
           <configurationFile>src/main/resources/ibatorConfig.xml</configurationFile>
-      	  <sqlScript>src/main/resources/CreateDB.sql</sqlScript>
+      	  <sqlScript>classpath:mbg/test/common/scripts/CreateDB.sql</sqlScript>
       	  <jdbcDriver>org.hsqldb.jdbcDriver</jdbcDriver>
        	  <jdbcURL>jdbc:hsqldb:mem:aname</jdbcURL>
           <jdbcUserId>sa</jdbcUserId>

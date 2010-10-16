@@ -19,7 +19,6 @@ package mbg.test.mb3;
 import static mbg.test.common.util.TestUtilities.createDatabase;
 
 import java.io.Reader;
-import java.net.URL;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -36,9 +35,7 @@ public abstract class AbstractTest {
 
     @Before
     public void setUp() throws Exception {
-        URL url = AbstractTest.class.getClassLoader().getResource("CreateDB.sql");
-        
-        createDatabase(url);
+        createDatabase();
 
         Reader reader = Resources
                     .getResourceAsReader("mbg/test/mb3/MapperConfig.xml");

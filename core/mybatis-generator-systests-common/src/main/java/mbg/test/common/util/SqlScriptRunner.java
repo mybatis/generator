@@ -19,6 +19,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -37,13 +39,13 @@ public class SqlScriptRunner {
     private String url;
     private String userid;
     private String password;
-    private File sourceFile;
+    private String sourceFile;
 
-    public SqlScriptRunner(File sourceFile, String driver, String url,
+    public SqlScriptRunner(String sourceFile, String driver, String url,
             String userId, String password) throws Exception {
         
-        if (!sourceFile.exists()) {
-            throw new Exception("SQL script file does not exist");
+        if (sourceFile == null || sourceFile.length() == 0) {
+            throw new Exception("SQL script file is required");
         }
         
         if (driver == null || driver.length() == 0) {
@@ -71,7 +73,7 @@ public class SqlScriptRunner {
 
             Statement statement = connection.createStatement();
 
-            BufferedReader br = new BufferedReader(new FileReader(sourceFile));
+            BufferedReader br = getScriptReader();
 
             String sql;
 
@@ -151,5 +153,27 @@ public class SqlScriptRunner {
         String s = sb.toString().trim();
 
         return s.length() > 0 ? s : null;
+    }
+    
+    private BufferedReader getScriptReader() throws Exception {
+        BufferedReader answer;
+        
+        if (sourceFile.startsWith("classpath:")) {
+            String resource = sourceFile.substring("classpath:".length());
+            InputStream is = 
+                Thread.currentThread().getContextClassLoader().getResourceAsStream(resource);
+            if (is == null) {
+                throw new Exception("SQL script file does not exist: " + resource);
+            }
+            answer = new BufferedReader(new InputStreamReader(is));
+        } else {
+            File file = new File(sourceFile);
+            if (!file.exists()) {
+                throw new Exception("SQL script file does not exist");
+            }
+            answer = new BufferedReader(new FileReader(file));
+        }
+        
+        return answer;
     }
 }

@@ -2001,14 +2001,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("fred@fred.com");
             record.setEmailaddress("alsofred@fred.com");
             record.setFirstFirstName("fred1");
-            record.setFourthFirstName("fred4");
             record.setFrom("from field");
             record.setId1(1);
             record.setId2(2);
             record.setId5(5);
             record.setId6(6);
             record.setId7(7);
-            record.setSecondCustomerId(567);
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
 
@@ -2024,16 +2022,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
                     .getEmailaddress());
             assertEquals(record.getFirstFirstName(), returnedRecord
                     .getFirstFirstName());
-            assertEquals(record.getFourthFirstName(), returnedRecord
-                    .getFourthFirstName());
             assertEquals(record.getFrom(), returnedRecord.getFrom());
             assertEquals(record.getId1(), returnedRecord.getId1());
             assertEquals(record.getId2(), returnedRecord.getId2());
             assertEquals(record.getId5(), returnedRecord.getId5());
             assertEquals(record.getId6(), returnedRecord.getId6());
             assertEquals(record.getId7(), returnedRecord.getId7());
-            assertEquals(record.getSecondCustomerId(), returnedRecord
-                    .getSecondCustomerId());
             assertEquals(record.getSecondFirstName(), returnedRecord
                     .getSecondFirstName());
             assertEquals(record.getThirdFirstName(), returnedRecord
@@ -2052,14 +2046,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
 
             record.seteMail("fred@fred.com");
             record.setEmailaddress("alsofred@fred.com");
-            record.setFourthFirstName("fred4");
             record.setFrom("from field");
             record.setId1(1);
             record.setId2(2);
             record.setId5(5);
             record.setId6(6);
             record.setId7(7);
-            record.setSecondCustomerId(567);
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
 
@@ -2074,16 +2066,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             assertEquals(record.getEmailaddress(), returnedRecord
                     .getEmailaddress());
             assertEquals("Mabel", returnedRecord.getFirstFirstName());
-            assertEquals(record.getFourthFirstName(), returnedRecord
-                    .getFourthFirstName());
             assertEquals(record.getFrom(), returnedRecord.getFrom());
             assertEquals(record.getId1(), returnedRecord.getId1());
             assertEquals(record.getId2(), returnedRecord.getId2());
             assertEquals(record.getId5(), returnedRecord.getId5());
             assertEquals(record.getId6(), returnedRecord.getId6());
             assertEquals(record.getId7(), returnedRecord.getId7());
-            assertEquals(record.getSecondCustomerId(), returnedRecord
-                    .getSecondCustomerId());
             assertEquals(record.getSecondFirstName(), returnedRecord
                     .getSecondFirstName());
             assertEquals(record.getThirdFirstName(), returnedRecord
@@ -2102,14 +2090,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("fred@fred.com");
             record.setEmailaddress("alsofred@fred.com");
             record.setFirstFirstName("fred1");
-            record.setFourthFirstName("fred4");
             record.setFrom("from field");
             record.setId1(1);
             record.setId2(2);
             record.setId5(5);
             record.setId6(6);
             record.setId7(7);
-            record.setSecondCustomerId(567);
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
 
@@ -2129,16 +2115,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
                     .getEmailaddress());
             assertEquals(record.getFirstFirstName(), returnedRecord
                     .getFirstFirstName());
-            assertEquals(record.getFourthFirstName(), returnedRecord
-                    .getFourthFirstName());
             assertEquals(record.getFrom(), returnedRecord.getFrom());
             assertEquals(record.getId1(), returnedRecord.getId1());
             assertEquals(record.getId2(), returnedRecord.getId2());
             assertEquals(record.getId5(), returnedRecord.getId5());
             assertEquals(record.getId6(), returnedRecord.getId6());
             assertEquals(record.getId7(), returnedRecord.getId7());
-            assertEquals(record.getSecondCustomerId(), returnedRecord
-                    .getSecondCustomerId());
             assertEquals(record.getSecondFirstName(), returnedRecord
                     .getSecondFirstName());
             assertEquals(record.getThirdFirstName(), returnedRecord
@@ -2157,14 +2139,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("fred@fred.com");
             record.setEmailaddress("alsofred@fred.com");
             record.setFirstFirstName("fred1");
-            record.setFourthFirstName("fred4");
             record.setFrom("from field");
             record.setId1(1);
             record.setId2(2);
             record.setId5(5);
             record.setId6(6);
             record.setId7(7);
-            record.setSecondCustomerId(567);
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
 
@@ -2186,16 +2166,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
                     .getEmailaddress());
             assertEquals(record.getFirstFirstName(), returnedRecord
                     .getFirstFirstName());
-            assertEquals(record.getFourthFirstName(), returnedRecord
-                    .getFourthFirstName());
             assertEquals(record.getFrom(), returnedRecord.getFrom());
             assertEquals(newRecord.getId1(), returnedRecord.getId1());
             assertEquals(newRecord.getId2(), returnedRecord.getId2());
             assertEquals(record.getId5(), returnedRecord.getId5());
             assertEquals(record.getId6(), returnedRecord.getId6());
             assertEquals(record.getId7(), returnedRecord.getId7());
-            assertEquals(record.getSecondCustomerId(), returnedRecord
-                    .getSecondCustomerId());
             assertEquals(record.getSecondFirstName(), returnedRecord
                     .getSecondFirstName());
             assertEquals(record.getThirdFirstName(), returnedRecord
@@ -2214,14 +2190,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("fred@fred.com");
             record.setEmailaddress("alsofred@fred.com");
             record.setFirstFirstName("fred1");
-            record.setFourthFirstName("fred4");
             record.setFrom("from field");
             record.setId1(1);
             record.setId2(2);
             record.setId5(5);
             record.setId6(6);
             record.setId7(7);
-            record.setSecondCustomerId(567);
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
 
@@ -2247,14 +2221,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("fred@fred.com");
             record.setEmailaddress("alsofred@fred.com");
             record.setFirstFirstName("fred1");
-            record.setFourthFirstName("fred4");
             record.setFrom("from field");
             record.setId1(1);
             record.setId2(2);
             record.setId5(5);
             record.setId6(6);
             record.setId7(7);
-            record.setSecondCustomerId(567);
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
 
@@ -2264,14 +2236,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("fred2@fred.com");
             record.setEmailaddress("alsofred2@fred.com");
             record.setFirstFirstName("fred11");
-            record.setFourthFirstName("fred44");
             record.setFrom("from from field");
             record.setId1(11);
             record.setId2(22);
             record.setId5(55);
             record.setId6(66);
             record.setId7(77);
-            record.setSecondCustomerId(567567);
             record.setSecondFirstName("fred22");
             record.setThirdFirstName("fred33");
 
@@ -2303,14 +2273,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("fred@fred.com");
             record.setEmailaddress("alsofred@fred.com");
             record.setFirstFirstName("fred1");
-            record.setFourthFirstName("fred4");
             record.setFrom("from field");
             record.setId1(1);
             record.setId2(2);
             record.setId5(5);
             record.setId6(6);
             record.setId7(7);
-            record.setSecondCustomerId(567);
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
 
@@ -2320,14 +2288,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("fred2@fred.com");
             record.setEmailaddress("alsofred2@fred.com");
             record.setFirstFirstName("fred11");
-            record.setFourthFirstName("fred44");
             record.setFrom("from from field");
             record.setId1(11);
             record.setId2(22);
             record.setId5(55);
             record.setId6(66);
             record.setId7(77);
-            record.setSecondCustomerId(567567);
             record.setSecondFirstName("fred22");
             record.setThirdFirstName("fred33");
 
@@ -2342,16 +2308,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
                     .getEmailaddress());
             assertEquals(record.getFirstFirstName(), returnedRecord
                     .getFirstFirstName());
-            assertEquals(record.getFourthFirstName(), returnedRecord
-                    .getFourthFirstName());
             assertEquals(record.getFrom(), returnedRecord.getFrom());
             assertEquals(record.getId1(), returnedRecord.getId1());
             assertEquals(record.getId2(), returnedRecord.getId2());
             assertEquals(record.getId5(), returnedRecord.getId5());
             assertEquals(record.getId6(), returnedRecord.getId6());
             assertEquals(record.getId7(), returnedRecord.getId7());
-            assertEquals(record.getSecondCustomerId(), returnedRecord
-                    .getSecondCustomerId());
             assertEquals(record.getSecondFirstName(), returnedRecord
                     .getSecondFirstName());
             assertEquals(record.getThirdFirstName(), returnedRecord
@@ -2370,14 +2332,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("fred@fred.com");
             record.setEmailaddress("alsofred@fred.com");
             record.setFirstFirstName("fred1");
-            record.setFourthFirstName("fred4");
             record.setFrom("from field");
             record.setId1(1);
             record.setId2(2);
             record.setId5(5);
             record.setId6(6);
             record.setId7(7);
-            record.setSecondCustomerId(567);
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
             dao.insert(record);
@@ -2386,14 +2346,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("wilma@wilma.com");
             record.setEmailaddress("alsoWilma@wilma.com");
             record.setFirstFirstName("wilma1");
-            record.setFourthFirstName("wilma4");
             record.setFrom("from field");
             record.setId1(11);
             record.setId2(22);
             record.setId5(55);
             record.setId6(66);
             record.setId7(77);
-            record.setSecondCustomerId(567567);
             record.setSecondFirstName("wilma2");
             record.setThirdFirstName("wilma3");
             dao.insert(record);
@@ -2402,14 +2360,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("pebbles@pebbles.com");
             record.setEmailaddress("alsoPebbles@pebbles.com");
             record.setFirstFirstName("pebbles1");
-            record.setFourthFirstName("pebbles4");
             record.setFrom("from field");
             record.setId1(111);
             record.setId2(222);
             record.setId5(555);
             record.setId6(666);
             record.setId7(777);
-            record.setSecondCustomerId(567567);
             record.setSecondFirstName("pebbles2");
             record.setThirdFirstName("pebbles3");
             dao.insert(record);
@@ -2418,14 +2374,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("barney@barney.com");
             record.setEmailaddress("alsoBarney@barney.com");
             record.setFirstFirstName("barney1");
-            record.setFourthFirstName("barney4");
             record.setFrom("from field");
             record.setId1(1111);
             record.setId2(2222);
             record.setId5(5555);
             record.setId6(6666);
             record.setId7(7777);
-            record.setSecondCustomerId(567567);
             record.setSecondFirstName("barney2");
             record.setThirdFirstName("barney3");
             dao.insert(record);
@@ -2434,14 +2388,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("betty@betty.com");
             record.setEmailaddress("alsoBetty@betty.com");
             record.setFirstFirstName("betty1");
-            record.setFourthFirstName("betty4");
             record.setFrom("from field");
             record.setId1(11111);
             record.setId2(22222);
             record.setId5(55555);
             record.setId6(66666);
             record.setId7(77777);
-            record.setSecondCustomerId(567567);
             record.setSecondFirstName("betty2");
             record.setThirdFirstName("betty3");
             dao.insert(record);
@@ -2450,14 +2402,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("bammbamm@bammbamm.com");
             record.setEmailaddress("alsoBammbamm@bammbamm.com");
             record.setFirstFirstName("bammbamm1");
-            record.setFourthFirstName("bammbamm4");
             record.setFrom("from field");
             record.setId1(111111);
             record.setId2(222222);
             record.setId5(555555);
             record.setId6(666666);
             record.setId7(777777);
-            record.setSecondCustomerId(567567);
             record.setSecondFirstName("bammbamm2");
             record.setThirdFirstName("bammbamm3");
             dao.insert(record);
@@ -2490,14 +2440,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("fred@fred.com");
             record.setEmailaddress("alsofred@fred.com");
             record.setFirstFirstName("fred1");
-            record.setFourthFirstName("fred4");
             record.setFrom("from field");
             record.setId1(1);
             record.setId2(2);
             record.setId5(5);
             record.setId6(6);
             record.setId7(7);
-            record.setSecondCustomerId(567);
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
             dao.insert(record);
@@ -2506,14 +2454,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("wilma@wilma.com");
             record.setEmailaddress("alsoWilma@wilma.com");
             record.setFirstFirstName("wilma1");
-            record.setFourthFirstName("wilma4");
             record.setFrom("from field");
             record.setId1(11);
             record.setId2(22);
             record.setId5(55);
             record.setId6(66);
             record.setId7(77);
-            record.setSecondCustomerId(567567);
             record.setSecondFirstName("wilma2");
             record.setThirdFirstName("wilma3");
             dao.insert(record);
@@ -2522,14 +2468,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("pebbles@pebbles.com");
             record.setEmailaddress("alsoPebbles@pebbles.com");
             record.setFirstFirstName("pebbles1");
-            record.setFourthFirstName("pebbles4");
             record.setFrom("from field");
             record.setId1(111);
             record.setId2(222);
             record.setId5(555);
             record.setId6(666);
             record.setId7(777);
-            record.setSecondCustomerId(567567);
             record.setSecondFirstName("pebbles2");
             record.setThirdFirstName("pebbles3");
             dao.insert(record);
@@ -2538,14 +2482,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("barney@barney.com");
             record.setEmailaddress("alsoBarney@barney.com");
             record.setFirstFirstName("barney1");
-            record.setFourthFirstName("barney4");
             record.setFrom("from field");
             record.setId1(1111);
             record.setId2(2222);
             record.setId5(5555);
             record.setId6(6666);
             record.setId7(7777);
-            record.setSecondCustomerId(567567);
             record.setSecondFirstName("barney2");
             record.setThirdFirstName("barney3");
             dao.insert(record);
@@ -2554,14 +2496,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("betty@betty.com");
             record.setEmailaddress("alsoBetty@betty.com");
             record.setFirstFirstName("betty1");
-            record.setFourthFirstName("betty4");
             record.setFrom("from field");
             record.setId1(11111);
             record.setId2(22222);
             record.setId5(55555);
             record.setId6(66666);
             record.setId7(77777);
-            record.setSecondCustomerId(567567);
             record.setSecondFirstName("betty2");
             record.setThirdFirstName("betty3");
             dao.insert(record);
@@ -2570,14 +2510,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("bammbamm@bammbamm.com");
             record.setEmailaddress("alsoBammbamm@bammbamm.com");
             record.setFirstFirstName("bammbamm1");
-            record.setFourthFirstName("bammbamm4");
             record.setFrom("from field");
             record.setId1(111111);
             record.setId2(222222);
             record.setId5(555555);
             record.setId6(666666);
             record.setId7(777777);
-            record.setSecondCustomerId(567567);
             record.setSecondFirstName("bammbamm2");
             record.setThirdFirstName("bammbamm3");
             dao.insert(record);
@@ -2610,14 +2548,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("fred@fred.com");
             record.setEmailaddress("alsofred@fred.com");
             record.setFirstFirstName("fred1");
-            record.setFourthFirstName("fred4");
             record.setFrom("from field");
             record.setId1(1);
             record.setId2(2);
             record.setId5(5);
             record.setId6(6);
             record.setId7(7);
-            record.setSecondCustomerId(567);
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
             dao.insert(record);
@@ -2626,14 +2562,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("wilma@wilma.com");
             record.setEmailaddress("alsoWilma@wilma.com");
             record.setFirstFirstName("wilma1");
-            record.setFourthFirstName("wilma4");
             record.setFrom("from field");
             record.setId1(11);
             record.setId2(22);
             record.setId5(55);
             record.setId6(66);
             record.setId7(77);
-            record.setSecondCustomerId(567567);
             record.setSecondFirstName("wilma2");
             record.setThirdFirstName("wilma3");
             dao.insert(record);
@@ -2642,14 +2576,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("pebbles@pebbles.com");
             record.setEmailaddress("alsoPebbles@pebbles.com");
             record.setFirstFirstName("pebbles1");
-            record.setFourthFirstName("pebbles4");
             record.setFrom("from field");
             record.setId1(111);
             record.setId2(222);
             record.setId5(555);
             record.setId6(666);
             record.setId7(777);
-            record.setSecondCustomerId(567567);
             record.setSecondFirstName("pebbles2");
             record.setThirdFirstName("pebbles3");
             dao.insert(record);
@@ -2658,14 +2590,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("barney@barney.com");
             record.setEmailaddress("alsoBarney@barney.com");
             record.setFirstFirstName("barney1");
-            record.setFourthFirstName("barney4");
             record.setFrom("from field");
             record.setId1(1111);
             record.setId2(2222);
             record.setId5(5555);
             record.setId6(6666);
             record.setId7(7777);
-            record.setSecondCustomerId(567567);
             record.setSecondFirstName("barney2");
             record.setThirdFirstName("barney3");
             dao.insert(record);
@@ -2674,14 +2604,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("betty@betty.com");
             record.setEmailaddress("alsoBetty@betty.com");
             record.setFirstFirstName("betty1");
-            record.setFourthFirstName("betty4");
             record.setFrom("from field");
             record.setId1(11111);
             record.setId2(22222);
             record.setId5(55555);
             record.setId6(66666);
             record.setId7(77777);
-            record.setSecondCustomerId(567567);
             record.setSecondFirstName("betty2");
             record.setThirdFirstName("betty3");
             dao.insert(record);
@@ -2690,14 +2618,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("bammbamm@bammbamm.com");
             record.setEmailaddress("alsoBammbamm@bammbamm.com");
             record.setFirstFirstName("bammbamm1");
-            record.setFourthFirstName("bammbamm4");
             record.setFrom("from field");
             record.setId1(111111);
             record.setId2(222222);
             record.setId5(555555);
             record.setId6(666666);
             record.setId7(777777);
-            record.setSecondCustomerId(567567);
             record.setSecondFirstName("bammbamm2");
             record.setThirdFirstName("bammbamm3");
             dao.insert(record);
@@ -2728,14 +2654,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("fred@fred.com");
             record.setEmailaddress("alsofred@fred.com");
             record.setFirstFirstName("fred1");
-            record.setFourthFirstName("fred4");
             record.setFrom("from field");
             record.setId1(1);
             record.setId2(2);
             record.setId5(5);
             record.setId6(6);
             record.setId7(7);
-            record.setSecondCustomerId(567);
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
             dao.insert(record);
@@ -2744,14 +2668,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("wilma@wilma.com");
             record.setEmailaddress("alsoWilma@wilma.com");
             record.setFirstFirstName("wilma1");
-            record.setFourthFirstName("wilma4");
             record.setFrom("from field");
             record.setId1(11);
             record.setId2(22);
             record.setId5(55);
             record.setId6(66);
             record.setId7(77);
-            record.setSecondCustomerId(567567);
             record.setSecondFirstName("wilma2");
             record.setThirdFirstName("wilma3");
             dao.insert(record);
@@ -2760,14 +2682,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("pebbles@pebbles.com");
             record.setEmailaddress("alsoPebbles@pebbles.com");
             record.setFirstFirstName("pebbles1");
-            record.setFourthFirstName("pebbles4");
             record.setFrom("from field");
             record.setId1(111);
             record.setId2(222);
             record.setId5(555);
             record.setId6(666);
             record.setId7(777);
-            record.setSecondCustomerId(567567);
             record.setSecondFirstName("pebbles2");
             record.setThirdFirstName("pebbles3");
             dao.insert(record);
@@ -2776,14 +2696,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("barney@barney.com");
             record.setEmailaddress("alsoBarney@barney.com");
             record.setFirstFirstName("barney1");
-            record.setFourthFirstName("barney4");
             record.setFrom("from field");
             record.setId1(1111);
             record.setId2(2222);
             record.setId5(5555);
             record.setId6(6666);
             record.setId7(7777);
-            record.setSecondCustomerId(567567);
             record.setSecondFirstName("barney2");
             record.setThirdFirstName("barney3");
             dao.insert(record);
@@ -2792,14 +2710,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("betty@betty.com");
             record.setEmailaddress("alsoBetty@betty.com");
             record.setFirstFirstName("betty1");
-            record.setFourthFirstName("betty4");
             record.setFrom("from field");
             record.setId1(11111);
             record.setId2(22222);
             record.setId5(55555);
             record.setId6(66666);
             record.setId7(77777);
-            record.setSecondCustomerId(567567);
             record.setSecondFirstName("betty2");
             record.setThirdFirstName("betty3");
             dao.insert(record);
@@ -2808,14 +2724,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("bammbamm@bammbamm.com");
             record.setEmailaddress("alsoBammbamm@bammbamm.com");
             record.setFirstFirstName("bammbamm1");
-            record.setFourthFirstName("bammbamm4");
             record.setFrom("from field");
             record.setId1(111111);
             record.setId2(222222);
             record.setId5(555555);
             record.setId6(666666);
             record.setId7(777777);
-            record.setSecondCustomerId(567567);
             record.setSecondFirstName("bammbamm2");
             record.setThirdFirstName("bammbamm3");
             dao.insert(record);
@@ -2850,14 +2764,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("fred@fred.com");
             record.setEmailaddress("alsofred@fred.com");
             record.setFirstFirstName("fred1");
-            record.setFourthFirstName("fred4");
             record.setFrom("from field");
             record.setId1(1);
             record.setId2(2);
             record.setId5(5);
             record.setId6(6);
             record.setId7(7);
-            record.setSecondCustomerId(567);
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
             dao.insert(record);
@@ -2866,14 +2778,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("wilma@wilma.com");
             record.setEmailaddress("alsoWilma@wilma.com");
             record.setFirstFirstName("wilma1");
-            record.setFourthFirstName("wilma4");
             record.setFrom("from field");
             record.setId1(11);
             record.setId2(22);
             record.setId5(55);
             record.setId6(66);
             record.setId7(77);
-            record.setSecondCustomerId(567567);
             record.setSecondFirstName("wilma2");
             record.setThirdFirstName("wilma3");
             dao.insert(record);
@@ -2882,14 +2792,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("pebbles@pebbles.com");
             record.setEmailaddress("alsoPebbles@pebbles.com");
             record.setFirstFirstName("pebbles1");
-            record.setFourthFirstName("pebbles4");
             record.setFrom("from field");
             record.setId1(111);
             record.setId2(222);
             record.setId5(555);
             record.setId6(666);
             record.setId7(777);
-            record.setSecondCustomerId(567567);
             record.setSecondFirstName("pebbles2");
             record.setThirdFirstName("pebbles3");
             dao.insert(record);
@@ -2898,14 +2806,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("barney@barney.com");
             record.setEmailaddress("alsoBarney@barney.com");
             record.setFirstFirstName("barney1");
-            record.setFourthFirstName("barney4");
             record.setFrom("from field");
             record.setId1(1111);
             record.setId2(2222);
             record.setId5(5555);
             record.setId6(6666);
             record.setId7(7777);
-            record.setSecondCustomerId(567567);
             record.setSecondFirstName("barney2");
             record.setThirdFirstName("barney3");
             dao.insert(record);
@@ -2914,14 +2820,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("betty@betty.com");
             record.setEmailaddress("alsoBetty@betty.com");
             record.setFirstFirstName("betty1");
-            record.setFourthFirstName("betty4");
             record.setFrom("from field");
             record.setId1(11111);
             record.setId2(22222);
             record.setId5(55555);
             record.setId6(66666);
             record.setId7(77777);
-            record.setSecondCustomerId(567567);
             record.setSecondFirstName("betty2");
             record.setThirdFirstName("betty3");
             dao.insert(record);
@@ -2930,14 +2834,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("bammbamm@bammbamm.com");
             record.setEmailaddress("alsoBammbamm@bammbamm.com");
             record.setFirstFirstName("bammbamm1");
-            record.setFourthFirstName("bammbamm4");
             record.setFrom("from field");
             record.setId1(111111);
             record.setId2(222222);
             record.setId5(555555);
             record.setId6(666666);
             record.setId7(777777);
-            record.setSecondCustomerId(567567);
             record.setSecondFirstName("bammbamm2");
             record.setThirdFirstName("bammbamm3");
             dao.insert(record);
@@ -2960,14 +2862,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("fred@fred.com");
             record.setEmailaddress("alsofred@fred.com");
             record.setFirstFirstName("fred1");
-            record.setFourthFirstName("fred4");
             record.setFrom("from field");
             record.setId1(1);
             record.setId2(2);
             record.setId5(5);
             record.setId6(6);
             record.setId7(7);
-            record.setSecondCustomerId(567);
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
             dao.insert(record);
@@ -2976,14 +2876,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("wilma@wilma.com");
             record.setEmailaddress("alsoWilma@wilma.com");
             record.setFirstFirstName("wilma1");
-            record.setFourthFirstName("wilma4");
             record.setFrom("from field");
             record.setId1(11);
             record.setId2(22);
             record.setId5(55);
             record.setId6(66);
             record.setId7(77);
-            record.setSecondCustomerId(567567);
             record.setSecondFirstName("wilma2");
             record.setThirdFirstName("wilma3");
             dao.insert(record);
@@ -2992,14 +2890,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("pebbles@pebbles.com");
             record.setEmailaddress("alsoPebbles@pebbles.com");
             record.setFirstFirstName("pebbles1");
-            record.setFourthFirstName("pebbles4");
             record.setFrom("from field");
             record.setId1(111);
             record.setId2(222);
             record.setId5(555);
             record.setId6(666);
             record.setId7(777);
-            record.setSecondCustomerId(567567);
             record.setSecondFirstName("pebbles2");
             record.setThirdFirstName("pebbles3");
             dao.insert(record);
@@ -3008,14 +2904,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("barney@barney.com");
             record.setEmailaddress("alsoBarney@barney.com");
             record.setFirstFirstName("barney1");
-            record.setFourthFirstName("barney4");
             record.setFrom("from field");
             record.setId1(1111);
             record.setId2(2222);
             record.setId5(5555);
             record.setId6(6666);
             record.setId7(7777);
-            record.setSecondCustomerId(567567);
             record.setSecondFirstName("barney2");
             record.setThirdFirstName("barney3");
             dao.insert(record);
@@ -3024,14 +2918,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("betty@betty.com");
             record.setEmailaddress("alsoBetty@betty.com");
             record.setFirstFirstName("betty1");
-            record.setFourthFirstName("betty4");
             record.setFrom("from field");
             record.setId1(11111);
             record.setId2(22222);
             record.setId5(55555);
             record.setId6(66666);
             record.setId7(77777);
-            record.setSecondCustomerId(567567);
             record.setSecondFirstName("betty2");
             record.setThirdFirstName("betty3");
             dao.insert(record);
@@ -3040,14 +2932,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("bammbamm@bammbamm.com");
             record.setEmailaddress("alsoBammbamm@bammbamm.com");
             record.setFirstFirstName("bammbamm1");
-            record.setFourthFirstName("bammbamm4");
             record.setFrom("from field");
             record.setId1(111111);
             record.setId2(222222);
             record.setId5(555555);
             record.setId6(666666);
             record.setId7(777777);
-            record.setSecondCustomerId(567567);
             record.setSecondFirstName("bammbamm2");
             record.setThirdFirstName("bammbamm3");
             dao.insert(record);
@@ -3084,14 +2974,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("fred@fred.com");
             record.setEmailaddress("alsofred@fred.com");
             record.setFirstFirstName("fred1");
-            record.setFourthFirstName("fred4");
             record.setFrom("from field");
             record.setId1(1);
             record.setId2(2);
             record.setId5(5);
             record.setId6(6);
             record.setId7(7);
-            record.setSecondCustomerId(567);
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
 
@@ -3101,14 +2989,12 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.seteMail("fred2@fred.com");
             record.setEmailaddress("alsofred2@fred.com");
             record.setFirstFirstName("fred11");
-            record.setFourthFirstName("fred44");
             record.setFrom("from from field");
             record.setId1(11);
             record.setId2(22);
             record.setId5(55);
             record.setId6(66);
             record.setId7(77);
-            record.setSecondCustomerId(567567);
             record.setSecondFirstName("fred22");
             record.setThirdFirstName("fred33");
 
@@ -3170,7 +3056,6 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         awfulTable1.seteMail("fred@fred.com");
         awfulTable1.setEmailaddress("fred@fred.com");
         awfulTable1.setFirstFirstName("Fred");
-        awfulTable1.setFourthFirstName("Betty");
         awfulTable1.setFrom("from");
         awfulTable1.setId1(22);
         awfulTable1.setId2(33);
@@ -3178,7 +3063,6 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         awfulTable1.setId6(66);
         awfulTable1.setId7(77);
         awfulTable1.setLastName("Rubble");
-        awfulTable1.setSecondCustomerId(532);
         awfulTable1.setSecondFirstName("Bamm Bamm");
         awfulTable1.setThirdFirstName("Pebbles");
 
@@ -3188,7 +3072,6 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         awfulTable2.seteMail("fred@fred.com");
         awfulTable2.setEmailaddress("fred@fred.com");
         awfulTable2.setFirstFirstName("Fred");
-        awfulTable2.setFourthFirstName("Betty");
         awfulTable2.setFrom("from");
         awfulTable2.setId1(22);
         awfulTable2.setId2(33);
@@ -3196,7 +3079,6 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         awfulTable2.setId6(66);
         awfulTable2.setId7(77);
         awfulTable2.setLastName("Rubble");
-        awfulTable2.setSecondCustomerId(532);
         awfulTable2.setSecondFirstName("Bamm Bamm");
         awfulTable2.setThirdFirstName("Pebbles");
         
@@ -3232,7 +3114,6 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         awfulTable1.seteMail("fred@fred.com");
         awfulTable1.setEmailaddress("fred@fred.com");
         awfulTable1.setFirstFirstName("Fred");
-        awfulTable1.setFourthFirstName("Betty");
         awfulTable1.setFrom("from");
         awfulTable1.setId1(22);
         awfulTable1.setId2(33);
@@ -3240,7 +3121,6 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         awfulTable1.setId6(66);
         awfulTable1.setId7(77);
         awfulTable1.setLastName("Rubble");
-        awfulTable1.setSecondCustomerId(532);
         awfulTable1.setSecondFirstName("Bamm Bamm");
         awfulTable1.setThirdFirstName("Pebbles");
 
@@ -3250,7 +3130,6 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         awfulTable2.seteMail("fred@fred.com");
         awfulTable2.setEmailaddress("fred@fred.com");
         awfulTable2.setFirstFirstName("Fred");
-        awfulTable2.setFourthFirstName("Betty");
         awfulTable2.setFrom("from");
         awfulTable2.setId1(22);
         awfulTable2.setId2(33);
@@ -3258,7 +3137,6 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
         awfulTable2.setId6(66);
         awfulTable2.setId7(77);
         awfulTable2.setLastName("Rubble");
-        awfulTable2.setSecondCustomerId(532);
         awfulTable2.setSecondFirstName("Bamm Bamm");
         awfulTable2.setThirdFirstName("Pebbles");
         

@@ -226,14 +226,12 @@ public class CountByExampleTest extends AbstractConditionalJava2Test {
             record.seteMail("fred@fred.com");
             record.setEmailaddress("alsofred@fred.com");
             record.setFirstFirstName("fred1");
-            record.setFourthFirstName("fred4");
             record.setFrom("from field");
             record.setId1(new Integer(1));
             record.setId2(new Integer(2));
             record.setId5(new Integer(5));
             record.setId6(new Integer(6));
             record.setId7(new Integer(7));
-            record.setSecondCustomerId(new Integer(567));
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
     
@@ -243,14 +241,12 @@ public class CountByExampleTest extends AbstractConditionalJava2Test {
             record.seteMail("fred2@fred.com");
             record.setEmailaddress("alsofred2@fred.com");
             record.setFirstFirstName("fred11");
-            record.setFourthFirstName("fred44");
             record.setFrom("from from field");
             record.setId1(new Integer(11));
             record.setId2(new Integer(22));
             record.setId5(new Integer(55));
             record.setId6(new Integer(66));
             record.setId7(new Integer(77));
-            record.setSecondCustomerId(new Integer(567567));
             record.setSecondFirstName("fred22");
             record.setThirdFirstName("fred33");
     

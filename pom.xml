@@ -12,7 +12,7 @@
     <artifactId>mybatis-parent</artifactId>
     <version>1.0.1</version>
   </parent>
-  
+    
   <modules>
     <module>mybatis-generator-core</module>
     <module>mybatis-generator-maven-plugin</module>
@@ -62,7 +62,7 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
-          <forkMode>always</forkMode>
+          <forkMode>pertest</forkMode>
         </configuration>
       </plugin>
       <plugin>

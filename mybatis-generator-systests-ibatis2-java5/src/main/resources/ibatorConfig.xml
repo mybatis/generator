@@ -37,12 +37,9 @@
     <table tableName="awful table" alias="A">
       <property name="useColumnIndexes" value="true"/>
       <generatedKey column="CuStOmEr iD" sqlStatement="HSQLDB" identity="true" />
-      <columnOverride column="customer id" property="secondCustomerId" />
       <columnOverride column="first name" property="firstFirstName" />
-      <columnOverride column="First Name" property="secondFirstName" />
-      <ignoreColumn column="first Name" />
-      <columnOverride column="first_name" property="thirdFirstName" />
-      <columnOverride column="firstName" property="fourthFirstName" />
+      <columnOverride column="first_name" property="secondFirstName" />
+      <columnOverride column="firstName" property="thirdFirstName" />
       <columnOverride column="from" delimitedColumnName="true" />
       <columnOverride column="active" javaType="boolean" />
     </table>
@@ -77,12 +74,9 @@
     <table tableName="awful table" alias="A">
       <property name="useColumnIndexes" value="true"/>
       <generatedKey column="CuStOmEr iD" sqlStatement="HSQLDB" identity="true" />
-      <columnOverride column="customer id" property="secondCustomerId" />
       <columnOverride column="first name" property="firstFirstName" />
-      <columnOverride column="First Name" property="secondFirstName" />
-      <ignoreColumn column="first Name" />
-      <columnOverride column="first_name" property="thirdFirstName" />
-      <columnOverride column="firstName" property="fourthFirstName" />
+      <columnOverride column="first_name" property="secondFirstName" />
+      <columnOverride column="firstName" property="thirdFirstName" />
       <columnOverride column="from" delimitedColumnName="true" />
       <columnOverride column="active" javaType="boolean" />
     </table>
@@ -118,12 +112,9 @@
     <table tableName="awful table" alias="A">
       <property name="useColumnIndexes" value="true"/>
       <generatedKey column="CuStOmEr iD" sqlStatement="HSQLDB" identity="true" />
-      <columnOverride column="customer id" property="secondCustomerId" />
       <columnOverride column="first name" property="firstFirstName" />
-      <columnOverride column="First Name" property="secondFirstName" />
-      <ignoreColumn column="first Name" />
-      <columnOverride column="first_name" property="thirdFirstName" />
-      <columnOverride column="firstName" property="fourthFirstName" />
+      <columnOverride column="first_name" property="secondFirstName" />
+      <columnOverride column="firstName" property="thirdFirstName" />
       <columnOverride column="from" delimitedColumnName="true" />
       <columnOverride column="active" javaType="boolean" />
     </table>

@@ -215,14 +215,12 @@ public class InsertTest extends AbstractConditionalJava2Test {
             record.seteMail("fred@fred.com");
             record.setEmailaddress("alsofred@fred.com");
             record.setFirstFirstName("fred1");
-            record.setFourthFirstName("fred4");
             record.setFrom("from field");
             record.setId1(new Integer(1));
             record.setId2(new Integer(2));
             record.setId5(new Integer(5));
             record.setId6(new Integer(6));
             record.setId7(new Integer(7));
-            record.setSecondCustomerId(new Integer(567));
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
             record.setActive(true);
@@ -239,16 +237,12 @@ public class InsertTest extends AbstractConditionalJava2Test {
                     .getEmailaddress());
             assertEquals(record.getFirstFirstName(), returnedRecord
                     .getFirstFirstName());
-            assertEquals(record.getFourthFirstName(), returnedRecord
-                    .getFourthFirstName());
             assertEquals(record.getFrom(), returnedRecord.getFrom());
             assertEquals(record.getId1(), returnedRecord.getId1());
             assertEquals(record.getId2(), returnedRecord.getId2());
             assertEquals(record.getId5(), returnedRecord.getId5());
             assertEquals(record.getId6(), returnedRecord.getId6());
             assertEquals(record.getId7(), returnedRecord.getId7());
-            assertEquals(record.getSecondCustomerId(), returnedRecord
-                    .getSecondCustomerId());
             assertEquals(record.getSecondFirstName(), returnedRecord
                     .getSecondFirstName());
             assertEquals(record.getThirdFirstName(), returnedRecord
@@ -268,14 +262,12 @@ public class InsertTest extends AbstractConditionalJava2Test {
 
             record.seteMail("fred@fred.com");
             record.setEmailaddress("alsofred@fred.com");
-            record.setFourthFirstName("fred4");
             record.setFrom("from field");
             record.setId1(new Integer(1));
             record.setId2(new Integer(2));
             record.setId5(new Integer(5));
             record.setId6(new Integer(6));
             record.setId7(new Integer(7));
-            record.setSecondCustomerId(new Integer(567));
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
 
@@ -290,16 +282,12 @@ public class InsertTest extends AbstractConditionalJava2Test {
             assertEquals(record.getEmailaddress(), returnedRecord
                     .getEmailaddress());
             assertEquals("Mabel", returnedRecord.getFirstFirstName());
-            assertEquals(record.getFourthFirstName(), returnedRecord
-                    .getFourthFirstName());
             assertEquals(record.getFrom(), returnedRecord.getFrom());
             assertEquals(record.getId1(), returnedRecord.getId1());
             assertEquals(record.getId2(), returnedRecord.getId2());
             assertEquals(record.getId5(), returnedRecord.getId5());
             assertEquals(record.getId6(), returnedRecord.getId6());
             assertEquals(record.getId7(), returnedRecord.getId7());
-            assertEquals(record.getSecondCustomerId(), returnedRecord
-                    .getSecondCustomerId());
             assertEquals(record.getSecondFirstName(), returnedRecord
                     .getSecondFirstName());
             assertEquals(record.getThirdFirstName(), returnedRecord

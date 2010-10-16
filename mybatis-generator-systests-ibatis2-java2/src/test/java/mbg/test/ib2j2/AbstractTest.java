@@ -17,7 +17,6 @@
 package mbg.test.ib2j2;
 
 import java.io.Reader;
-import java.net.URL;
 import java.util.Properties;
 
 import junit.framework.TestCase;
@@ -42,9 +41,7 @@ public abstract class AbstractTest extends TestCase {
     }
 
     protected void setUp() throws Exception {
-        URL url = AbstractTest.class.getClassLoader().getResource("CreateDB.sql");
-
-        TestUtilities.createDatabase(url);
+        TestUtilities.createDatabase();
     }
 
     protected SqlMapClient getSqlMapClient() {

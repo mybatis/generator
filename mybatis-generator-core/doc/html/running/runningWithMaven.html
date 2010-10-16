@@ -226,12 +226,14 @@ syntax <code>${dao.target.dir}</code>.
   <tr>
     <td valign="top">sqlScript</td>
     <td valign="top">${mybatis.generator.sqlScript}</td>
-    <td valign="top">java.io.File</td>
+    <td valign="top">java.lang.String</td>
     <td valign="top">Location of a SQL script file to run before generating code.
      If null, then no script will be run.  If not null, then <code>jdbcDriver</code>,
      <code>jdbcURL</code> must be supplied also.  In addition,
      <code>jdbcUserId<code> and <code>jdbcPassword</code> may be supplied if
      the database requires authentication.
+     <p>Value can be specified as a location in the file system or, if prefixed with "classpath:"
+        a location on the build classpath.</p>
     </td>
   </tr>
   <tr>

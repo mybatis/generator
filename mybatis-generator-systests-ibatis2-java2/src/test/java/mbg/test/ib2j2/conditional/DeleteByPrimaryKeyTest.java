@@ -152,14 +152,12 @@ public class DeleteByPrimaryKeyTest extends AbstractConditionalJava2Test {
             record.seteMail("fred@fred.com");
             record.setEmailaddress("alsofred@fred.com");
             record.setFirstFirstName("fred1");
-            record.setFourthFirstName("fred4");
             record.setFrom("from field");
             record.setId1(new Integer(1));
             record.setId2(new Integer(2));
             record.setId5(new Integer(5));
             record.setId6(new Integer(6));
             record.setId7(new Integer(7));
-            record.setSecondCustomerId(new Integer(567));
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
     

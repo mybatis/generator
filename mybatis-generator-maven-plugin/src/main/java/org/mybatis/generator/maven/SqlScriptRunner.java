@@ -17,8 +17,11 @@ package org.mybatis.generator.maven;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -42,14 +45,14 @@ public class SqlScriptRunner {
     private String url;
     private String userid;
     private String password;
-    private File sourceFile;
+    private String sourceFile;
     private Log log;
 
-    public SqlScriptRunner(File sourceFile, String driver, String url,
+    public SqlScriptRunner(String sourceFile, String driver, String url,
             String userId, String password) throws MojoExecutionException {
         
-        if (!sourceFile.exists()) {
-            throw new MojoExecutionException("SQL script file does not exist");
+        if (!StringUtility.stringHasValue(sourceFile)) {
+            throw new MojoExecutionException("SQL script file is required");
         }
         
         if (!StringUtility.stringHasValue(driver)) {
@@ -77,7 +80,7 @@ public class SqlScriptRunner {
 
             Statement statement = connection.createStatement();
 
-            BufferedReader br = new BufferedReader(new FileReader(sourceFile));
+            BufferedReader br = getScriptReader();
 
             String sql;
 
@@ -90,8 +93,12 @@ public class SqlScriptRunner {
             br.close();
         } catch (ClassNotFoundException e) {
             throw new MojoExecutionException("Class not found: " + e.getMessage());
-        } catch (Exception e) {
-            throw new MojoExecutionException(e.getMessage());
+        } catch (FileNotFoundException e) {
+            throw new MojoExecutionException("File note found: " + sourceFile);
+        } catch (SQLException e) {
+            throw new MojoExecutionException("SqlException: " + e.getMessage(), e);
+        } catch (IOException e) {
+            throw new MojoExecutionException("IOException: " + e.getMessage(), e);
         } finally {
             closeConnection(connection);
         }
@@ -169,5 +176,27 @@ public class SqlScriptRunner {
 
     public void setLog(Log log) {
         this.log = log;
+    }
+    
+    private BufferedReader getScriptReader() throws MojoExecutionException, FileNotFoundException {
+        BufferedReader answer;
+        
+        if (sourceFile.startsWith("classpath:")) {
+            String resource = sourceFile.substring("classpath:".length());
+            InputStream is = 
+                Thread.currentThread().getContextClassLoader().getResourceAsStream(resource);
+            if (is == null) {
+                throw new MojoExecutionException("SQL script file does not exist: " + resource);
+            }
+            answer = new BufferedReader(new InputStreamReader(is));
+        } else {
+            File file = new File(sourceFile);
+            if (!file.exists()) {
+                throw new MojoExecutionException("SQL script file does not exist");
+            }
+            answer = new BufferedReader(new FileReader(file));
+        }
+        
+        return answer;
     }
 }

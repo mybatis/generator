@@ -98,7 +98,7 @@ public class MapperConfigPlugin extends PluginAdapter {
                 .addElement(new TextElement(
                         "  This file is the shell of a Mapper Config file - in many cases you will need to add")); //$NON-NLS-1$
         root.addElement(new TextElement(
-                "    to this file before it is usable by iBATIS.")); //$NON-NLS-1$
+                "    to this file before it is usable by MyBatis.")); //$NON-NLS-1$
 
         StringBuilder sb = new StringBuilder();
         sb.append("  This file was generated on "); //$NON-NLS-1$

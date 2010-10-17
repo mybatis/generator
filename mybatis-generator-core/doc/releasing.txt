@@ -1,25 +1,49 @@
-Releasing Ibator
-================
+Releasing MyBatis Generator
+===========================
 
 Core Release Process
 ====================
 
-This process is similar to what is show at http://maven.apache.org/developers/release/apache-release.html
-except that Ibator is not using the nexus repository manager, so the deployment
-steps are different (and we are not publishing snapshot versions).
+Setup encrypted server passwords for Maven as shown here:
 
-1. mvn release:prepare -DdryRun=true
+   http://code.google.com/p/mybatis/wiki/ProcessRelease
+   
+Also, make sure that SVN and GPG are in your path, and that your gpg key
+has been published properly.
+
+1. (optional) mvn release:prepare -DdryRun=true
 
    Make sure the new POMs look OK (pom.xml.next and pom.xml.tag)
    
-2. mvn release:clean
+2. (if you did #1) mvn release:clean
 
-3. mvn release:prepare -Dusername=xxx -Dpassword=xxx
+3. mvn release:prepare [-Dusername=xxx -Dpassword=xxx]
 
-4. mvn deploy -DaltDeploymentRepository=local::default::file:/temp/IbatorDeploy
+The username and password properties are only required if you have not saved
+your SVN authentication information.
 
-5. scp the new artifacts to /www/people.apache.org/repo/m2-ibiblio-rsync-repository/org/apache/ibatis/ibator/etc.
+This build might fail if the the newly versioned artifacts don't get installed
+in the local repository properly.  If so, then run "mvn install" for the individual
+projects: core, maven-plugin, systests-common (in that order).  Then, resume the
+release with
 
+  mvn release:prepare -Dresume=true [-Dusername=xxx -Dpassword=xxx]
+
+4. mvn release:perform
+
+This step should upload to sonatype, as well as uploading the core bundle to google code.  If
+the google upload fails, you will need to upload the bundle manually.
+
+5. On google code, set the prior version of the generator to deprecated
+
+6. Log in to sonatype at http://oss.sonatype.org
+
+Go to "staging repositories" - you should see the uploaded artifacts.
+Close, and then release the staging repository.
+
+7. Update the DTD on the site if required
+
+8. Send out the announcement notice
 
 Eclipse Release Process
 =======================

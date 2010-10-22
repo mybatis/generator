@@ -1,0 +1,20 @@
+<project name="org.mybatis.generator.publish" default="publish" basedir=".">
+	
+	<!--
+	   IMPORTANT NOTE: the following properties may need to
+	   be changed in your local build environment 
+	 -->
+	<property name="buildDirectory" value="/temp/mybatis.generator.build"/>
+
+	<target name="publish">
+		<makeurl file="${basedir}/category.xml" property="category.xml.file"/>
+		<makeurl file="/MyBatis/generator/eclipse/MyBatisGeneratorUpdateSite" property="target.repo"/>
+		
+		<eclipse.publish.featuresAndBundles
+			repository="${target.repo}"
+			category="${category.xml.file}">
+			<bundles dir="${buildDirectory}/buildRepo/plugins" includes="*.jar"/>
+			<features dir="${buildDirectory}/buildRepo/features" includes="*.jar"/>
+		</eclipse.publish.featuresAndBundles>
+	</target>
+</project>

@@ -1,0 +1,3 @@
+#Thu Oct 21 20:56:54 CDT 2010
+eclipse.preferences.version=1
+selfhosting.binExcludes=/org.mybatis.generator.eclipse.ui/antbin

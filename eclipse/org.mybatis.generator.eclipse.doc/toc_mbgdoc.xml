@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+<toc label="MyBatis Generator Core Documentation" link_to="toc.xml#mbgdoc">
+   <topic href="html/mbgdoc/intro.html" label="Introduction"/>
+   <topic href="html/mbgdoc/whatsNew.html" label="What&apos;s New"/>
+   <topic href="html/mbgdoc/quickstart.html" label="Quick Start Guide"/>
+   <topic href="html/mbgdoc/running/running.html" label="Running MyBatis Generator">
+      <topic href="html/mbgdoc/running/runningFromCmdLine.html" label="From the Command Line">
+      </topic>
+      <topic href="html/mbgdoc/running/runningWithAnt.html" label="With Ant">
+      </topic>
+      <topic href="html/mbgdoc/running/runningWithMaven.html" label="With Maven">
+      </topic>
+      <topic href="html/mbgdoc/running/runningWithJava.html" label="With Java">
+      </topic>
+   </topic>
+   <topic href="html/mbgdoc/afterRunning.html" label="Tasks After Running MyBatis Generator"/>
+   <topic href="html/mbgdoc/migratingFromIbator.html" label="Migrating From Ibator"/>
+   <topic href="html/mbgdoc/migratingFromAbator.html" label="Migrating From Abator"/>
+   <topic href="html/mbgdoc/configreference/xmlconfig.html" label="XML Configuration File Reference">
+      <topic href="html/mbgdoc/configreference/classPathEntry.html" label="&lt;classPathEntry&gt;"/>
+      <topic href="html/mbgdoc/configreference/columnOverride.html" label="&lt;columnOverride&gt;"/>
+      <topic href="html/mbgdoc/configreference/columnRenamingRule.html" label="&lt;columnRenamingRule&gt;"/>
+      <topic href="html/mbgdoc/configreference/commentGenerator.html" label="&lt;commentGenerator&gt;"/>
+      <topic href="html/mbgdoc/configreference/context.html" label="&lt;context&gt;"/>
+      <topic href="html/mbgdoc/configreference/generatedKey.html" label="&lt;generatedKey&gt;"/>
+      <topic href="html/mbgdoc/configreference/generatorConfiguration.html" label="&lt;generatorConfiguration&gt;"/>
+      <topic href="html/mbgdoc/configreference/ignoreColumn.html" label="&lt;ignoreColumn&gt;"/>
+      <topic href="html/mbgdoc/configreference/javaClientGenerator.html" label="&lt;javaClientGenerator&gt;"/>
+      <topic href="html/mbgdoc/configreference/javaModelGenerator.html" label="&lt;javaModelGenerator&gt;"/>
+      <topic href="html/mbgdoc/configreference/javaTypeResolver.html" label="&lt;javaTypeResolver&gt;"/>
+      <topic href="html/mbgdoc/configreference/jdbcConnection.html" label="&lt;jdbcConnection&gt;"/>
+      <topic href="html/mbgdoc/configreference/plugin.html" label="&lt;plugin&gt;"/>
+      <topic href="html/mbgdoc/configreference/properties.html" label="&lt;properties&gt;"/>
+      <topic href="html/mbgdoc/configreference/property.html" label="&lt;property&gt;"/>
+      <topic href="html/mbgdoc/configreference/sqlMapGenerator.html" label="&lt;sqlMapGenerator&gt;"/>
+      <topic href="html/mbgdoc/configreference/table.html" label="&lt;table&gt;"/>
+   </topic>
+   <topic href="html/mbgdoc/generatedobjects/results.html" label="Using the Generated Objects">
+      <topic href="html/mbgdoc/generatedobjects/javamodel.html" label="Java Model Objects"/>
+      <topic href="html/mbgdoc/generatedobjects/sqlmap.html" label="SQL Map Files"/>
+      <topic href="html/mbgdoc/generatedobjects/javaclient.html" label="Java Client Objects"/>
+      <topic href="html/mbgdoc/generatedobjects/exampleClassUsage.html" label="Example Class Usage Notes"/>
+      <topic href="html/mbgdoc/generatedobjects/extendingExampleClass.html" label="Extending the Example Classes"/>
+   </topic>
+   <topic href="html/mbgdoc/usage/intro.html" label="Database Specific Information">
+      <topic href="html/mbgdoc/usage/db2.html" label="DB2"/>
+      <topic href="html/mbgdoc/usage/mysql.html" label="MySql"/>
+      <topic href="html/mbgdoc/usage/oracle.html" label="Oracle"/>
+      <topic href="html/mbgdoc/usage/postgresql.html" label="PostgreSQL"/>
+   </topic>
+   <topic href="html/mbgdoc/reference/intro.html" label="Other Reference Information">
+      <topic href="html/mbgdoc/reference/building.html" label="Building From Source"/>
+      <topic href="html/mbgdoc/reference/extending.html" label="Extending MyBatis Generator"/>
+      <topic href="html/mbgdoc/reference/pluggingIn.html" label="Implementing Plugins"/>
+      <topic href="html/mbgdoc/reference/logging.html" label="Logging Information"/>
+   </topic>
+   <topic href="html/mbgdoc/philosophy.html" label="Design Philisophy"/>
+   <topic href="html/mbgdoc/license.html" label="Licensing Information"/>
+</toc>

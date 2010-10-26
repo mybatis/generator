@@ -1,4 +1,10 @@
 -------------------------------------------------------------------------------
+Version 1.3.1
+
+Release notes are no longer maintained in this file.  See the "What's New"
+page in MyBatis Generator documentation for change details.
+
+-------------------------------------------------------------------------------
 Version 1.3.0
 
 Announcements:
@@ -6,6 +12,7 @@ Announcements:
 1. Moved to mybatis.org, renamed MyBatis Generator
 
 
+-------------------------------------------------------------------------------
 Version 1.2.2 (Never Released):
 
 Announcements:

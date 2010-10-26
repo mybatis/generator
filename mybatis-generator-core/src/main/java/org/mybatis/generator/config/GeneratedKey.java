@@ -78,7 +78,7 @@ public class GeneratedKey {
 
     public boolean isBeforeInsert() {
         boolean rc;
-        if (StringUtility.stringHasValue(type)) {
+        if ("pre".equalsIgnoreCase(type)) { //$NON-NLS-1$
             rc = true;
         } else {
             if (isIdentity) {
@@ -96,7 +96,9 @@ public class GeneratedKey {
         xmlElement.addAttribute(new Attribute("column", column)); //$NON-NLS-1$
         xmlElement.addAttribute(new Attribute(
                 "sqlStatement", configuredSqlStatement)); //$NON-NLS-1$
-        xmlElement.addAttribute(new Attribute("type", type)); //$NON-NLS-1$
+        if (StringUtility.stringHasValue(type)) {
+            xmlElement.addAttribute(new Attribute("type", type)); //$NON-NLS-1$
+        }
         xmlElement.addAttribute(new Attribute("identity", //$NON-NLS-1$
                 isIdentity ? "true" : "false")); //$NON-NLS-1$ //$NON-NLS-2$
 
@@ -114,6 +116,16 @@ public class GeneratedKey {
                 errors.add(Messages.getString("ValidationError.15", //$NON-NLS-1$
                         tableName));
             }
+        }
+        
+        if ("pre".equals(type) && isIdentity) { //$NON-NLS-1$
+            errors.add(Messages.getString("ValidationError.23", //$NON-NLS-1$
+                    tableName));
+        }
+        
+        if ("post".equals(type) && !isIdentity) { //$NON-NLS-1$
+            errors.add(Messages.getString("ValidationError.24", //$NON-NLS-1$
+                    tableName));
         }
     }
 }

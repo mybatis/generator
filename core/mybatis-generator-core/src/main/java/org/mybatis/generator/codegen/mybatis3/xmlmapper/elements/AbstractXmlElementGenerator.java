@@ -21,7 +21,6 @@ import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.AbstractGenerator;
 import org.mybatis.generator.config.GeneratedKey;
-import org.mybatis.generator.internal.util.StringUtility;
 
 /**
  * 
@@ -54,16 +53,12 @@ public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
         answer.addAttribute(new Attribute("resultType", identityColumnType)); //$NON-NLS-1$
         answer.addAttribute(new Attribute(
                 "keyProperty", introspectedColumn.getJavaProperty())); //$NON-NLS-1$
-        if (StringUtility.stringHasValue(generatedKey.getType())) {
-            if ("pre".equalsIgnoreCase(generatedKey.getType())) { //$NON-NLS-1$
-                answer.addAttribute(new Attribute("order", "BEFORE")); //$NON-NLS-1$ //$NON-NLS-2$  
-            } else if ("post".equalsIgnoreCase(generatedKey.getType())) { //$NON-NLS-1$
-                answer.addAttribute(new Attribute("order", "AFTER")); //$NON-NLS-1$ //$NON-NLS-2$  
-            } else {
-                answer.addAttribute(new Attribute(
-                        "order", generatedKey.getType())); //$NON-NLS-1$  
-            }
+        if (generatedKey.isBeforeInsert()) {
+            answer.addAttribute(new Attribute("order", "BEFORE")); //$NON-NLS-1$ //$NON-NLS-2$  
+        } else {
+            answer.addAttribute(new Attribute("order", "AFTER")); //$NON-NLS-1$ //$NON-NLS-2$  
         }
+        
         answer
                 .addElement(new TextElement(generatedKey
                         .getRuntimeSqlStatement()));

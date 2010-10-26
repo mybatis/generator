@@ -162,7 +162,7 @@
          typeHandler="mbg.test.mb3.common.MyTimeTypeHandler"/>
     </table>
     <table tableName="RegexRename">
-      <generatedKey column="CUST_ID" sqlStatement="call next value for TestSequence" type="pre" />
+      <generatedKey column="CUST_ID" sqlStatement="call next value for TestSequence" />
       <columnRenamingRule searchString="^CUST" />
     </table>
     <table tableName="EnumTest">

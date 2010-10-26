@@ -11,6 +11,10 @@ Core:
     5. Add a way to override default types in the JavaTypeResolver
     6. <tableSet> - to allow specification of common attributes for a set of
        tables
+    7. Use MyBatis generated key support instead of <selectkey> (optional)
+    8. ANNOTATEDMAPPER
+    9. MIXEDMAPPER
+    
 
 
 Eclipse:

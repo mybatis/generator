@@ -45,6 +45,12 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
     protected boolean forceBigDecimals;
 
     protected Map<Integer, JdbcTypeInformation> typeMap;
+    
+    // these are added manually until we move to JDK 6
+    // TODO - remove after JDK 6 and use the java.sql.Types constants instead
+    static final int NVARCHAR = -9;
+    static final int NCHAR = -15;
+    static final int NCLOB = 2011;
 
     public JavaTypeResolverDefaultImpl() {
         super();
@@ -86,6 +92,12 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
                 new FullyQualifiedJavaType("byte[]"))); //$NON-NLS-1$
         typeMap.put(Types.LONGVARCHAR, new JdbcTypeInformation("LONGVARCHAR", //$NON-NLS-1$
                 new FullyQualifiedJavaType(String.class.getName())));
+        typeMap.put(NCHAR, new JdbcTypeInformation("NCHAR", //$NON-NLS-1$
+                new FullyQualifiedJavaType(String.class.getName())));
+        typeMap.put(NCLOB, new JdbcTypeInformation("NCLOB", //$NON-NLS-1$
+                new FullyQualifiedJavaType(String.class.getName())));
+        typeMap.put(NVARCHAR, new JdbcTypeInformation("NVARCHAR", //$NON-NLS-1$
+                new FullyQualifiedJavaType(String.class.getName())));
         typeMap.put(Types.NULL, new JdbcTypeInformation("NULL", //$NON-NLS-1$
                 new FullyQualifiedJavaType(Object.class.getName())));
         typeMap.put(Types.OTHER, new JdbcTypeInformation("OTHER", //$NON-NLS-1$
@@ -108,6 +120,7 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
                 new FullyQualifiedJavaType("byte[]"))); //$NON-NLS-1$
         typeMap.put(Types.VARCHAR, new JdbcTypeInformation("VARCHAR", //$NON-NLS-1$
                 new FullyQualifiedJavaType(String.class.getName())));
+        
     }
 
     public void addConfigurationProperties(Properties properties) {

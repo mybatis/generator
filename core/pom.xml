@@ -10,7 +10,7 @@
   <parent>
     <groupId>org.mybatis</groupId>
     <artifactId>mybatis-parent</artifactId>
-    <version>4</version>
+    <version>5</version>
   </parent>
     
   <modules>

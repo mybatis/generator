@@ -308,8 +308,9 @@ public class DatabaseIntrospector {
                         introspectedColumn.setJdbcTypeName("OTHER"); //$NON-NLS-1$
 
                         String warning = Messages.getString("Warning.14", //$NON-NLS-1$
-                                entry.getKey().toString(), introspectedColumn
-                                        .getActualColumnName());
+                                Integer.toString(introspectedColumn.getJdbcType()),
+                                entry.getKey().toString(),
+                                introspectedColumn.getActualColumnName());
 
                         warnings.add(warning);
                     }

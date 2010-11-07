@@ -12,36 +12,36 @@
   <build>
     <plugins>
       <plugin>
-      	<groupId>org.mybatis.generator</groupId>
-      	<artifactId>mybatis-generator-maven-plugin</artifactId>
+        <groupId>org.mybatis.generator</groupId>
+        <artifactId>mybatis-generator-maven-plugin</artifactId>
         <version>${project.version}</version>
-      	<executions>
-      	  <execution>
-      	    <id>Generate MyBatis Artifacts</id>
-      	    <goals>
-      	      <goal>generate</goal>
-      	    </goals>
-      	  </execution>
-      	</executions>
+        <executions>
+          <execution>
+            <id>Generate MyBatis Artifacts</id>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+        </executions>
         <configuration>
-      	  <sqlScript>classpath:mbg/test/common/scripts/CreateDB.sql</sqlScript>
-      	  <jdbcDriver>org.hsqldb.jdbcDriver</jdbcDriver>
-       	  <jdbcURL>jdbc:hsqldb:mem:aname</jdbcURL>
+          <sqlScript>classpath:mbg/test/common/scripts/CreateDB.sql</sqlScript>
+          <jdbcDriver>org.hsqldb.jdbcDriver</jdbcDriver>
+           <jdbcURL>jdbc:hsqldb:mem:aname</jdbcURL>
           <jdbcUserId>sa</jdbcUserId>
           <overwrite>true</overwrite>
         </configuration>
-      	<dependencies>
+        <dependencies>
           <dependency>
-    	    <groupId>org.hsqldb</groupId>
-    	    <artifactId>hsqldb</artifactId>
-    	    <version>1.8.0.10</version>
+          <groupId>org.hsqldb</groupId>
+          <artifactId>hsqldb</artifactId>
+          <version>1.8.0.10</version>
           </dependency>
           <dependency>
             <groupId>org.mybatis.generator</groupId>
             <artifactId>mybatis-generator-systests-common</artifactId>
             <version>${project.version}</version>
           </dependency>
-      	</dependencies>
+        </dependencies>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -56,7 +56,7 @@
         <configuration>
           <arguments>-Prelease,bundle</arguments>
         </configuration>
-      </plugin>      
+      </plugin>
     </plugins>
   </build>
 
@@ -73,15 +73,15 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-    	<groupId>org.mybatis</groupId>
-    	<artifactId>mybatis</artifactId>
-    	<version>3.0.2</version>
+      <groupId>org.mybatis</groupId>
+      <artifactId>mybatis</artifactId>
+      <version>3.0.2</version>
     </dependency>
     <dependency>
-    	<groupId>org.hsqldb</groupId>
-    	<artifactId>hsqldb</artifactId>
-    	<version>1.8.0.10</version>
-    	<scope>test</scope>
+      <groupId>org.hsqldb</groupId>
+      <artifactId>hsqldb</artifactId>
+      <version>1.8.0.10</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 

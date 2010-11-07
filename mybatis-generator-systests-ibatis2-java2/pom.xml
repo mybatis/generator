@@ -8,7 +8,7 @@
   <artifactId>mybator-generator-systests-ibatis2-java2</artifactId>
   <packaging>jar</packaging>
   <name>MyBatis Generator Tests (iBATIS2, Java2)</name>
-  
+
   <build>
     <plugins>
       <plugin>
@@ -20,37 +20,37 @@
         </configuration>
       </plugin>
       <plugin>
-      	<groupId>org.mybatis.generator</groupId>
-      	<artifactId>mybatis-generator-maven-plugin</artifactId>
-      	<version>${project.version}</version>
-      	<executions>
-      	  <execution>
-      	    <id>Generate iBATIS Artifacts</id>
-      	    <goals>
-      	      <goal>generate</goal>
-      	    </goals>
-      	  </execution>
-      	</executions>
+        <groupId>org.mybatis.generator</groupId>
+        <artifactId>mybatis-generator-maven-plugin</artifactId>
+        <version>${project.version}</version>
+        <executions>
+          <execution>
+            <id>Generate iBATIS Artifacts</id>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+        </executions>
         <configuration>
           <configurationFile>src/main/resources/ibatorConfig.xml</configurationFile>
-      	  <sqlScript>classpath:mbg/test/common/scripts/CreateDB.sql</sqlScript>
-      	  <jdbcDriver>org.hsqldb.jdbcDriver</jdbcDriver>
-       	  <jdbcURL>jdbc:hsqldb:mem:aname</jdbcURL>
+          <sqlScript>classpath:mbg/test/common/scripts/CreateDB.sql</sqlScript>
+          <jdbcDriver>org.hsqldb.jdbcDriver</jdbcDriver>
+           <jdbcURL>jdbc:hsqldb:mem:aname</jdbcURL>
           <jdbcUserId>sa</jdbcUserId>
           <overwrite>true</overwrite>
         </configuration>
-      	<dependencies>
+        <dependencies>
           <dependency>
-    	    <groupId>org.hsqldb</groupId>
-    	    <artifactId>hsqldb</artifactId>
-    	    <version>1.8.0.10</version>
+          <groupId>org.hsqldb</groupId>
+          <artifactId>hsqldb</artifactId>
+          <version>1.8.0.10</version>
           </dependency>
           <dependency>
             <groupId>org.mybatis.generator</groupId>
             <artifactId>mybatis-generator-systests-common</artifactId>
             <version>${project.version}</version>
           </dependency>
-      	</dependencies>
+        </dependencies>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -65,10 +65,10 @@
         <configuration>
           <arguments>-Prelease,bundle</arguments>
         </configuration>
-      </plugin>      
+      </plugin>
     </plugins>
   </build>
-  
+
   <dependencies>
     <dependency>
       <groupId>org.mybatis.generator</groupId>
@@ -82,25 +82,25 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-    	<groupId>org.apache.ibatis</groupId>
-    	<artifactId>ibatis-sqlmap</artifactId>
-    	<version>2.3.4.726</version>
+      <groupId>org.apache.ibatis</groupId>
+      <artifactId>ibatis-sqlmap</artifactId>
+      <version>2.3.4.726</version>
     </dependency>
     <dependency>
-    	<groupId>org.springframework</groupId>
-    	<artifactId>spring-orm</artifactId>
-    	<version>2.5.6</version>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-orm</artifactId>
+      <version>2.5.6</version>
     </dependency>
     <dependency>
-    	<groupId>org.springframework</groupId>
-    	<artifactId>spring-jdbc</artifactId>
-    	<version>2.5.6</version>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-jdbc</artifactId>
+      <version>2.5.6</version>
     </dependency>
     <dependency>
-    	<groupId>org.hsqldb</groupId>
-    	<artifactId>hsqldb</artifactId>
-    	<version>1.8.0.10</version>
-    	<scope>test</scope>
+      <groupId>org.hsqldb</groupId>
+      <artifactId>hsqldb</artifactId>
+      <version>1.8.0.10</version>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>log4j</groupId>

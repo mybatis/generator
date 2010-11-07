@@ -18,10 +18,10 @@
         <configuration>
           <arguments>-Prelease</arguments>
         </configuration>
-      </plugin>      
+      </plugin>
     </plugins>
   </build>
-  
+
   <dependencies>
     <dependency>
       <groupId>org.apache.maven</groupId>
@@ -35,14 +35,14 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-    	<groupId>org.mybatis.generator</groupId>
-    	<artifactId>mybatis-generator-core</artifactId>
-    	<version>${project.version}</version>
+        <groupId>org.mybatis.generator</groupId>
+        <artifactId>mybatis-generator-core</artifactId>
+        <version>${project.version}</version>
     </dependency>
     <dependency>
-    	<groupId>org.apache.maven</groupId>
-    	<artifactId>maven-project</artifactId>
-    	<version>2.1.0</version>
+        <groupId>org.apache.maven</groupId>
+        <artifactId>maven-project</artifactId>
+        <version>2.1.0</version>
     </dependency>
   </dependencies>
 

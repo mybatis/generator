@@ -32,9 +32,9 @@
         </configuration>
         <dependencies>
           <dependency>
-          <groupId>org.hsqldb</groupId>
-          <artifactId>hsqldb</artifactId>
-          <version>1.8.0.10</version>
+    	    <groupId>org.hsqldb</groupId>
+    	    <artifactId>hsqldb</artifactId>
+            <version>${hsqldb.version}</version>
           </dependency>
           <dependency>
             <groupId>org.mybatis.generator</groupId>
@@ -69,18 +69,15 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.6</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.mybatis</groupId>
       <artifactId>mybatis</artifactId>
-      <version>3.0.2</version>
     </dependency>
     <dependency>
       <groupId>org.hsqldb</groupId>
       <artifactId>hsqldb</artifactId>
-      <version>1.8.0.10</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

@@ -26,7 +26,9 @@
 
     <table tableName="FieldsOnly" />
     <table tableName="PKOnly" />
-    <table tableName="PKFields" alias="B" />
+    <table tableName="PKFields" alias="B" >
+      <columnOverride column="wierd$Field" delimitedColumnName="true"/>
+    </table>
     <table tableName="PKBlobs" />
     <table tableName="PKFieldsBlobs" />
     <table tableName="FieldsBlobs" />
@@ -39,6 +41,11 @@
         <property name="fredswife" value="wilma"/>
       </columnOverride>
       <columnOverride column="active" javaType="boolean" />
+      <columnOverride column="_id1" delimitedColumnName="true" />
+      <columnOverride column="$id2" delimitedColumnName="true" />
+      <columnOverride column="id5_" delimitedColumnName="true" />
+      <columnOverride column="id6$" delimitedColumnName="true" />
+      <columnOverride column="id7$$" delimitedColumnName="true" />
     </table>
   </context>
 
@@ -64,7 +71,9 @@
 
     <table tableName="FieldsOnly" />
     <table tableName="PKOnly" />
-    <table tableName="PKFields" alias="B" />
+    <table tableName="PKFields" alias="B" >
+      <columnOverride column="wierd$Field" delimitedColumnName="true"/>
+    </table>
     <table tableName="PKBlobs" />
     <table tableName="PKFieldsBlobs" />
     <table tableName="FieldsBlobs" />
@@ -77,6 +86,11 @@
         <property name="fredswife" value="wilma"/>
       </columnOverride>
       <columnOverride column="active" javaType="boolean" />
+      <columnOverride column="_id1" delimitedColumnName="true" />
+      <columnOverride column="$id2" delimitedColumnName="true" />
+      <columnOverride column="id5_" delimitedColumnName="true" />
+      <columnOverride column="id6$" delimitedColumnName="true" />
+      <columnOverride column="id7$$" delimitedColumnName="true" />
     </table>
   </context>
 
@@ -103,7 +117,9 @@
 
     <table tableName="FieldsOnly" />
     <table tableName="PKOnly" />
-    <table tableName="PKFields" alias="B" />
+    <table tableName="PKFields" alias="B" >
+      <columnOverride column="wierd$Field" delimitedColumnName="true"/>
+    </table>
     <table tableName="PKBlobs" />
     <table tableName="PKFieldsBlobs" />
     <table tableName="FieldsBlobs" />
@@ -116,6 +132,11 @@
         <property name="fredswife" value="wilma"/>
       </columnOverride>
       <columnOverride column="active" javaType="boolean" />
+      <columnOverride column="_id1" delimitedColumnName="true" />
+      <columnOverride column="$id2" delimitedColumnName="true" />
+      <columnOverride column="id5_" delimitedColumnName="true" />
+      <columnOverride column="id6$" delimitedColumnName="true" />
+      <columnOverride column="id7$$" delimitedColumnName="true" />
     </table>
   </context>
 
@@ -160,6 +181,7 @@
          typeHandler="mbg.test.mb3.common.FirstNameTypeHandler"/>
       <columnOverride column="timeField" javaType="mbg.test.common.MyTime"
          typeHandler="mbg.test.mb3.common.MyTimeTypeHandler"/>
+      <columnOverride column="wierd$Field" delimitedColumnName="true"/>
     </table>
     <table tableName="RegexRename">
       <generatedKey column="CUST_ID" sqlStatement="call next value for TestSequence" />

@@ -6,8 +6,13 @@ drop table PKFieldsBlobs if exists;
 drop table FieldsBlobs if exists;
 drop table "awful table" if exists;
 drop table BlobsOnly if exists;
+drop view NameView if exists;
 drop table RegexRename if exists;
 drop table AnotherAwfulTable if exists;
+drop table EnumTest if exists;
+drop sequence TestSequence if exists;
+
+create sequence TestSequence as integer start with 1;
 
 create table FieldsOnly (
   IntegerField int,
@@ -33,7 +38,8 @@ create table PKFields (
   decimal60Field decimal(6, 0),
   decimal100Field decimal(10, 0),
   decimal155Field decimal(15, 5),
-  wierd$Field int,
+  "wierd$Field" int,
+  "birth date" date,
   primary key (id1, id2)
 );
 
@@ -68,14 +74,14 @@ create table "awful table" (
   firstName varchar(20),
   "last name" varchar(20),
   E_MAIL varchar(20),
-  _id1 int not null,
-  $id2 int not null,
-  id5_ int not null,
-  id6$ int not null,
-  id7$$ int not null,
+  "_id1" int not null,
+  "$id2" int not null,
+  "id5_" int not null,
+  "id6$" int not null,
+  "id7$$" int not null,
   EmailAddress varchar(30),
   "from" varchar(30),
-  active bit not null,
+  active boolean not null,
   primary key("CuStOmEr iD")
 );
 
@@ -86,12 +92,15 @@ create table BlobsOnly (
 );
 
 create table RegexRename (
-  CUST_ID integer,
+  CUST_ID integer not null,
   CUST_NAME varchar(30),
   CUST_ADDRESS varchar(30),
   ZIP_CODE char(5),
   primary key(CUST_ID)
 );
+
+create view NameView (id, name) as
+  select CUST_ID, CUST_NAME from RegexRename;
 
 create table AnotherAwfulTable (
   id int not null,
@@ -99,5 +108,11 @@ create table AnotherAwfulTable (
   "insert" varchar(30),
   "update" varchar(30),
   "delete" varchar(30),
+  primary key(id)
+);
+
+create table EnumTest (
+  id int not null,
+  name varchar(20) not null,
   primary key(id)
 );

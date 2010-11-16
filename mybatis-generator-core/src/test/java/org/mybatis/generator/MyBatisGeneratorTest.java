@@ -15,7 +15,7 @@ public class MyBatisGeneratorTest {
     @Test
     public void testGenerateIbatis2Java2() throws Exception {
         SqlScriptRunner scriptRunner = new SqlScriptRunner(
-                this.getClass().getClassLoader().getResourceAsStream("CreateDbIbatis2Java2.sql"),
+                this.getClass().getClassLoader().getResourceAsStream("CreateDB.sql"),
                 "org.hsqldb.jdbcDriver",
                 "jdbc:hsqldb:mem:aname",
                 "sa",
@@ -40,7 +40,7 @@ public class MyBatisGeneratorTest {
     @Test
     public void testGenerateIbatis2Java5() throws Exception {
         SqlScriptRunner scriptRunner = new SqlScriptRunner(
-                this.getClass().getClassLoader().getResourceAsStream("CreateDbIbatis2Java5.sql"),
+                this.getClass().getClassLoader().getResourceAsStream("CreateDB.sql"),
                 "org.hsqldb.jdbcDriver",
                 "jdbc:hsqldb:mem:aname",
                 "sa",
@@ -65,7 +65,7 @@ public class MyBatisGeneratorTest {
     @Test
     public void testGenerateMyBatis3() throws Exception {
         SqlScriptRunner scriptRunner = new SqlScriptRunner(
-                this.getClass().getClassLoader().getResourceAsStream("CreateDBMyBatis3.sql"),
+                this.getClass().getClassLoader().getResourceAsStream("CreateDB.sql"),
                 "org.hsqldb.jdbcDriver",
                 "jdbc:hsqldb:mem:aname",
                 "sa",

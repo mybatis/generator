@@ -33,9 +33,9 @@
         </configuration>
         <dependencies>
           <dependency>
-          <groupId>org.hsqldb</groupId>
-          <artifactId>hsqldb</artifactId>
-          <version>1.8.0.10</version>
+    	    <groupId>org.hsqldb</groupId>
+    	    <artifactId>hsqldb</artifactId>
+            <version>${hsqldb.version}</version>
           </dependency>
           <dependency>
             <groupId>org.mybatis.generator</groupId>
@@ -70,34 +70,28 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.6</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.ibatis</groupId>
       <artifactId>ibatis-sqlmap</artifactId>
-      <version>2.3.4.726</version>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-orm</artifactId>
-      <version>2.5.6</version>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-jdbc</artifactId>
-      <version>2.5.6</version>
     </dependency>
     <dependency>
       <groupId>org.hsqldb</groupId>
       <artifactId>hsqldb</artifactId>
-      <version>1.8.0.10</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
-      <version>1.2.13</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

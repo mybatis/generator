@@ -31,7 +31,9 @@
 
     <table tableName="FieldsOnly" />
     <table tableName="PKOnly" />
-    <table tableName="PKFields" alias="B" />
+    <table tableName="PKFields" alias="B" >
+      <columnOverride column="wierd$Field" delimitedColumnName="true"/>
+    </table>
     <table tableName="PKBlobs" />
     <table tableName="PKFieldsBlobs" />
     <table tableName="FieldsBlobs" />
@@ -43,6 +45,11 @@
       <columnOverride column="firstName" property="thirdFirstName" />
       <columnOverride column="from" delimitedColumnName="true" />
       <columnOverride column="active" javaType="boolean" />
+      <columnOverride column="_id1" delimitedColumnName="true" />
+      <columnOverride column="$id2" delimitedColumnName="true" />
+      <columnOverride column="id5_" delimitedColumnName="true" />
+      <columnOverride column="id6$" delimitedColumnName="true" />
+      <columnOverride column="id7$$" delimitedColumnName="true" />
     </table>
   </ibatorContext>
 
@@ -68,7 +75,9 @@
 
     <table tableName="FieldsOnly" />
     <table tableName="PKOnly" />
-    <table tableName="PKFields" alias="B" />
+    <table tableName="PKFields" alias="B" >
+      <columnOverride column="wierd$Field" delimitedColumnName="true"/>
+    </table>
     <table tableName="PKBlobs" />
     <table tableName="PKFieldsBlobs" />
     <table tableName="FieldsBlobs" />
@@ -80,6 +89,11 @@
       <columnOverride column="firstName" property="thirdFirstName" />
       <columnOverride column="from" delimitedColumnName="true" />
       <columnOverride column="active" javaType="boolean" />
+      <columnOverride column="_id1" delimitedColumnName="true" />
+      <columnOverride column="$id2" delimitedColumnName="true" />
+      <columnOverride column="id5_" delimitedColumnName="true" />
+      <columnOverride column="id6$" delimitedColumnName="true" />
+      <columnOverride column="id7$$" delimitedColumnName="true" />
     </table>
   </ibatorContext>
 
@@ -105,7 +119,9 @@
 
     <table tableName="FieldsOnly" />
     <table tableName="PKOnly" />
-    <table tableName="PKFields" alias="B" />
+    <table tableName="PKFields" alias="B" >
+      <columnOverride column="wierd$Field" delimitedColumnName="true"/>
+    </table>
     <table tableName="PKBlobs" />
     <table tableName="PKFieldsBlobs" />
     <table tableName="FieldsBlobs" />
@@ -117,6 +133,11 @@
       <columnOverride column="firstName" property="thirdFirstName" />
       <columnOverride column="from" delimitedColumnName="true" />
       <columnOverride column="active" javaType="boolean" />
+      <columnOverride column="_id1" delimitedColumnName="true" />
+      <columnOverride column="$id2" delimitedColumnName="true" />
+      <columnOverride column="id5_" delimitedColumnName="true" />
+      <columnOverride column="id6$" delimitedColumnName="true" />
+      <columnOverride column="id7$$" delimitedColumnName="true" />
     </table>
   </ibatorContext>
 
@@ -152,6 +173,7 @@
          typeHandler="mbg.test.ib2j2.common.FirstNameTypeHandler"/>
       <columnOverride column="timeField" javaType="mbg.test.common.MyTime"
          typeHandler="mbg.test.ib2j2.common.MyTimeTypeHandler"/>
+      <columnOverride column="wierd$Field" delimitedColumnName="true"/>
     </table>
     <table tableName="RegexRename">
       <generatedKey column="CUST_ID" sqlStatement="call next value for TestSequence" type="pre" />

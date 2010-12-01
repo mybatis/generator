@@ -76,21 +76,29 @@ public class GeneratedKey {
         return type;
     }
 
-    public boolean isBeforeInsert() {
+    /**
+     * This method is used by the iBATIS2 generators to know
+     * if the XML <selectKey> element should be placed
+     * before the insert SQL statement.
+     * 
+     * @return
+     */
+    public boolean isPlacedBeforeInsertInIbatis2() {
         boolean rc;
-        if ("pre".equalsIgnoreCase(type)) { //$NON-NLS-1$
+        
+        if (StringUtility.stringHasValue(type)) {
             rc = true;
         } else {
-            if (isIdentity) {
-                rc = false;
-            } else {
-                rc = true;
-            }
+            rc = !isIdentity;
         }
-
+        
         return rc;
     }
-
+    
+    public String getMyBatis3Order() {
+        return isIdentity ? "AFTER" : "BEFORE"; //$NON-NLS-1$ //$NON-NLS-2$
+    }
+    
     public XmlElement toXmlElement() {
         XmlElement xmlElement = new XmlElement("generatedKey"); //$NON-NLS-1$
         xmlElement.addAttribute(new Attribute("column", column)); //$NON-NLS-1$

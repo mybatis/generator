@@ -77,8 +77,18 @@ element of the <a href="table.html">&lt;table&gt;</a> element.</p>
               <th>SYBASE</th>
               <td>This will translate to: <code>SELECT @@IDENTITY</code></td>
             </tr>
+            <tr>
+              <th valign="top">JDBC</th>
+              <td>This will configure MBG to generate code for MyBatis3 suport of JDBC
+                  standard generated keys.  This is a database independent method of obtaining
+                  the value from identity columns.
+                  <p><b>Important:</b> This value will only produce valid code
+                  when the target runtime is MyBatis3.  If used with iBATIS2 target runtimes
+                  it will produce code with runtime errors.</p>
+              </td>
+            </tr>
           </table>
-        </td>
+    </td>
   </tr>
 </table>
 

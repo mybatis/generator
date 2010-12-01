@@ -56,7 +56,7 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
 
         GeneratedKey gk = introspectedTable.getGeneratedKey();
 
-        if (gk != null && gk.isBeforeInsert()) {
+        if (gk != null && gk.isPlacedBeforeInsertInIbatis2()) {
             IntrospectedColumn introspectedColumn = introspectedTable
                     .getColumn(gk.getColumn());
             // if the column is null, then it's a configuration error. The
@@ -117,7 +117,7 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
             answer.addElement(new TextElement(clause));
         }
 
-        if (gk != null && !gk.isBeforeInsert()) {
+        if (gk != null && !gk.isPlacedBeforeInsertInIbatis2()) {
             IntrospectedColumn introspectedColumn = introspectedTable
                     .getColumn(gk.getColumn());
             // if the column is null, then it's a configuration error. The

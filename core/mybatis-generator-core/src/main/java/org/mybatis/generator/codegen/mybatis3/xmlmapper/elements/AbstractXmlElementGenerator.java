@@ -53,11 +53,7 @@ public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
         answer.addAttribute(new Attribute("resultType", identityColumnType)); //$NON-NLS-1$
         answer.addAttribute(new Attribute(
                 "keyProperty", introspectedColumn.getJavaProperty())); //$NON-NLS-1$
-        if (generatedKey.isBeforeInsert()) {
-            answer.addAttribute(new Attribute("order", "BEFORE")); //$NON-NLS-1$ //$NON-NLS-2$  
-        } else {
-            answer.addAttribute(new Attribute("order", "AFTER")); //$NON-NLS-1$ //$NON-NLS-2$  
-        }
+        answer.addAttribute(new Attribute("order", generatedKey.getMyBatis3Order())); //$NON-NLS-1  
         
         answer
                 .addElement(new TextElement(generatedKey

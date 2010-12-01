@@ -51,17 +51,18 @@ public class InsertSelectiveElementGenerator extends
         context.getCommentGenerator().addComment(answer);
 
         GeneratedKey gk = introspectedTable.getGeneratedKey();
-
-        String sequenceColumn = null;
-        if (gk != null && gk.isBeforeInsert()) {
+        if (gk != null) {
             IntrospectedColumn introspectedColumn = introspectedTable
-                    .getColumn(gk.getColumn());
+                .getColumn(gk.getColumn());
             // if the column is null, then it's a configuration error. The
             // warning has already been reported
             if (introspectedColumn != null) {
-                // pre-generated key
-                answer.addElement(getSelectKey(introspectedColumn, gk));
-                sequenceColumn = gk.getColumn();
+                if ("JDBC".equals(gk.getRuntimeSqlStatement())) {
+                    answer.addAttribute(new Attribute("useGeneratedKeys", "true"));
+                    answer.addAttribute(new Attribute("keyProperty", introspectedColumn.getJavaProperty()));
+                } else {
+                    answer.addElement(getSelectKey(introspectedColumn, gk));
+                }
             }
         }
 
@@ -90,23 +91,29 @@ public class InsertSelectiveElementGenerator extends
                 continue;
             }
 
-            boolean isSequenceColumn = sequenceColumn == null ? false
-                    : sequenceColumn.equals(introspectedColumn
-                            .getActualColumnName());
-            if (isSequenceColumn) {
-                sb.setLength(0);
-                sb.append(MyBatis3FormattingUtilities
-                        .getEscapedColumnName(introspectedColumn));
-                sb.append(',');
-                insertTrimElement.addElement(new TextElement(sb.toString()));
+            if (gk != null && gk.getColumn().equals(introspectedColumn.getActualColumnName())) {
+                // is this a generated key field (JDBC identity support)
+                if ("JDBC".equals(gk.getRuntimeSqlStatement())) {
+                    continue;
+                }
+                
+                // if it is a sequence column, it is not optional
+                // check to see if if is a "BEFORE" key
+                if ("BEFORE".equals(gk.getMyBatis3Order())) {
+                    sb.setLength(0);
+                    sb.append(MyBatis3FormattingUtilities
+                            .getEscapedColumnName(introspectedColumn));
+                    sb.append(',');
+                    insertTrimElement.addElement(new TextElement(sb.toString()));
 
-                sb.setLength(0);
-                sb.append(MyBatis3FormattingUtilities
-                        .getParameterClause(introspectedColumn));
-                sb.append(',');
-                valuesTrimElement.addElement(new TextElement(sb.toString()));
+                    sb.setLength(0);
+                    sb.append(MyBatis3FormattingUtilities
+                            .getParameterClause(introspectedColumn));
+                    sb.append(',');
+                    valuesTrimElement.addElement(new TextElement(sb.toString()));
 
-                continue;
+                    continue;
+                }
             }
 
             XmlElement insertNotNullElement = new XmlElement("if"); //$NON-NLS-1$
@@ -136,17 +143,6 @@ public class InsertSelectiveElementGenerator extends
             sb.append(',');
             valuesNotNullElement.addElement(new TextElement(sb.toString()));
             valuesTrimElement.addElement(valuesNotNullElement);
-        }
-
-        if (gk != null && !gk.isBeforeInsert()) {
-            IntrospectedColumn introspectedColumn = introspectedTable
-                    .getColumn(gk.getColumn());
-            // if the column is null, then it's a configuration error. The
-            // warning has already been reported
-            if (introspectedColumn != null) {
-                // pre-generated key
-                answer.addElement(getSelectKey(introspectedColumn, gk));
-            }
         }
 
         if (context.getPlugins().sqlMapInsertSelectiveElementGenerated(

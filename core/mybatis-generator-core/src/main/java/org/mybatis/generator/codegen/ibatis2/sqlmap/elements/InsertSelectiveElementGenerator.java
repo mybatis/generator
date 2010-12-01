@@ -52,7 +52,7 @@ public class InsertSelectiveElementGenerator extends
 
         GeneratedKey gk = introspectedTable.getGeneratedKey();
 
-        if (gk != null && gk.isBeforeInsert()) {
+        if (gk != null && gk.isPlacedBeforeInsertInIbatis2()) {
             IntrospectedColumn introspectedColumn = introspectedTable
                     .getColumn(gk.getColumn());
             // if the column is null, then it's a configuration error. The
@@ -108,7 +108,7 @@ public class InsertSelectiveElementGenerator extends
         insertElement.addElement(new TextElement(")")); //$NON-NLS-1$
         valuesElement.addElement(new TextElement(")")); //$NON-NLS-1$
 
-        if (gk != null && !gk.isBeforeInsert()) {
+        if (gk != null && !gk.isPlacedBeforeInsertInIbatis2()) {
             IntrospectedColumn introspectedColumn = introspectedTable
                     .getColumn(gk.getColumn());
             // if the column is null, then it's a configuration error. The

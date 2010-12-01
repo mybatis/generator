@@ -33,7 +33,7 @@
     <table tableName="PKFieldsBlobs" />
     <table tableName="FieldsBlobs" />
     <table tableName="awful table" alias="A">
-      <generatedKey column="CuStOmEr iD" sqlStatement="HSQLDB" identity="true" />
+      <generatedKey column="CuStOmEr iD" sqlStatement="JDBC" />
       <columnOverride column="first name" property="firstFirstName" />
       <columnOverride column="first_name" property="secondFirstName" />
       <columnOverride column="firstName" property="thirdFirstName" />

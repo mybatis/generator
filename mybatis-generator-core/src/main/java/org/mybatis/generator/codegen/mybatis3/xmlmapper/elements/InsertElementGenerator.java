@@ -55,18 +55,21 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
         context.getCommentGenerator().addComment(answer);
 
         GeneratedKey gk = introspectedTable.getGeneratedKey();
-
-        if (gk != null && gk.isBeforeInsert()) {
+        if (gk != null) {
             IntrospectedColumn introspectedColumn = introspectedTable
-                    .getColumn(gk.getColumn());
+                .getColumn(gk.getColumn());
             // if the column is null, then it's a configuration error. The
             // warning has already been reported
             if (introspectedColumn != null) {
-                // pre-generated key
-                answer.addElement(getSelectKey(introspectedColumn, gk));
+                if ("JDBC".equals(gk.getRuntimeSqlStatement())) {
+                    answer.addAttribute(new Attribute("useGeneratedKeys", "true"));
+                    answer.addAttribute(new Attribute("keyProperty", introspectedColumn.getJavaProperty()));
+                } else {
+                    answer.addElement(getSelectKey(introspectedColumn, gk));
+                }
             }
         }
-
+        
         StringBuilder insertClause = new StringBuilder();
         StringBuilder valuesClause = new StringBuilder();
 
@@ -87,6 +90,13 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
                 continue;
             }
 
+            if (gk != null
+                    && gk.getColumn().equals(introspectedColumn.getActualColumnName())
+                    && "JDBC".equals(gk.getRuntimeSqlStatement())) {
+                // is this a generated key field (JDBC identity support)
+                continue;
+            }
+            
             insertClause.append(MyBatis3FormattingUtilities
                     .getEscapedColumnName(introspectedColumn));
             valuesClause.append(MyBatis3FormattingUtilities
@@ -115,17 +125,6 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
 
         for (String clause : valuesClauses) {
             answer.addElement(new TextElement(clause));
-        }
-
-        if (gk != null && !gk.isBeforeInsert()) {
-            IntrospectedColumn introspectedColumn = introspectedTable
-                    .getColumn(gk.getColumn());
-            // if the column is null, then it's a configuration error. The
-            // warning has already been reported
-            if (introspectedColumn != null) {
-                // pre-generated key
-                answer.addElement(getSelectKey(introspectedColumn, gk));
-            }
         }
 
         if (context.getPlugins().sqlMapInsertElementGenerated(answer,

@@ -16,7 +16,7 @@
 
 package org.mybatis.generator.internal.db;
 
-import org.mybatis.generator.internal.util.StringUtility;
+import static org.mybatis.generator.internal.util.StringUtility.composeFullyQualifiedTableName;
 
 /**
  * This class holds the actual catalog, schema, and table name returned from the
@@ -36,7 +36,7 @@ public class ActualTableName {
         this.catalog = catalog;
         this.schema = schema;
         this.tableName = tableName;
-        fullName = StringUtility.composeFullyQualifiedTableName(catalog,
+        fullName = composeFullyQualifiedTableName(catalog,
                 schema, tableName, '.');
     }
 

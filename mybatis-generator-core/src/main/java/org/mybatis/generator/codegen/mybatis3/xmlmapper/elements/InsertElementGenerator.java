@@ -61,9 +61,9 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
             // if the column is null, then it's a configuration error. The
             // warning has already been reported
             if (introspectedColumn != null) {
-                if ("JDBC".equals(gk.getRuntimeSqlStatement())) {
-                    answer.addAttribute(new Attribute("useGeneratedKeys", "true"));
-                    answer.addAttribute(new Attribute("keyProperty", introspectedColumn.getJavaProperty()));
+                if ("JDBC".equals(gk.getRuntimeSqlStatement())) { //$NON-NLS-1$
+                    answer.addAttribute(new Attribute("useGeneratedKeys", "true")); //$NON-NLS-1$ //$NON-NLS-2$
+                    answer.addAttribute(new Attribute("keyProperty", introspectedColumn.getJavaProperty())); //$NON-NLS-1$
                 } else {
                     answer.addElement(getSelectKey(introspectedColumn, gk));
                 }
@@ -92,7 +92,7 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
 
             if (gk != null
                     && gk.getColumn().equals(introspectedColumn.getActualColumnName())
-                    && "JDBC".equals(gk.getRuntimeSqlStatement())) {
+                    && "JDBC".equals(gk.getRuntimeSqlStatement())) { //$NON-NLS-1$
                 // is this a generated key field (JDBC identity support)
                 continue;
             }

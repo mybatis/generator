@@ -15,12 +15,13 @@
  */
 package org.mybatis.generator.config;
 
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 import java.util.List;
 
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.XmlElement;
-import org.mybatis.generator.internal.util.StringUtility;
-import org.mybatis.generator.internal.util.messages.Messages;
 
 /**
  * 
@@ -43,8 +44,8 @@ public class PluginConfiguration extends TypedPropertyHolder {
     }
 
     public void validate(List<String> errors, String contextId) {
-        if (!StringUtility.stringHasValue(getConfigurationType())) {
-            errors.add(Messages.getString("ValidationError.17", //$NON-NLS-1$
+        if (!stringHasValue(getConfigurationType())) {
+            errors.add(getString("ValidationError.17", //$NON-NLS-1$
                     contextId));
         }
     }

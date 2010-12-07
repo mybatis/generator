@@ -15,6 +15,8 @@
  */
 package org.mybatis.generator.codegen.ibatis2.dao.elements;
 
+import static org.mybatis.generator.internal.util.JavaBeansUtil.getSetterMethodName;
+
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -25,7 +27,6 @@ import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
-import org.mybatis.generator.internal.util.JavaBeansUtil;
 
 /**
  * 
@@ -64,7 +65,7 @@ public class DeleteByPrimaryKeyMethodGenerator extends
                     .getPrimaryKeyColumns()) {
                 sb.setLength(0);
                 sb.append("_key."); //$NON-NLS-1$
-                sb.append(JavaBeansUtil.getSetterMethodName(introspectedColumn
+                sb.append(getSetterMethodName(introspectedColumn
                         .getJavaProperty()));
                 sb.append('(');
                 sb.append(introspectedColumn.getJavaProperty());

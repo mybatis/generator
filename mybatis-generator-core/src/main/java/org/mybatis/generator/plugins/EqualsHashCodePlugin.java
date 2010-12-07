@@ -15,6 +15,8 @@
  */
 package org.mybatis.generator.plugins;
 
+import static org.mybatis.generator.internal.util.JavaBeansUtil.getGetterMethodName;
+
 import java.util.Iterator;
 import java.util.List;
 
@@ -27,7 +29,6 @@ import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
-import org.mybatis.generator.internal.util.JavaBeansUtil;
 
 /**
  * This plugin adds equals() and hashCode() methods to the generated model
@@ -162,7 +163,7 @@ public class EqualsHashCodePlugin extends PluginAdapter {
                 sb.append("&& ("); //$NON-NLS-1$
             }
 
-            String getterMethod = JavaBeansUtil.getGetterMethodName(
+            String getterMethod = getGetterMethodName(
                     introspectedColumn.getJavaProperty(), introspectedColumn
                             .getFullyQualifiedJavaType());
 
@@ -235,7 +236,7 @@ public class EqualsHashCodePlugin extends PluginAdapter {
             FullyQualifiedJavaType fqjt = introspectedColumn
                     .getFullyQualifiedJavaType();
 
-            String getterMethod = JavaBeansUtil.getGetterMethodName(
+            String getterMethod = getGetterMethodName(
                     introspectedColumn.getJavaProperty(), fqjt);
 
             sb.setLength(0);

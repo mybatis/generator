@@ -15,6 +15,9 @@
  */
 package org.mybatis.generator.config;
 
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,8 +26,6 @@ import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.XmlConstants;
 import org.mybatis.generator.exception.InvalidConfigurationException;
-import org.mybatis.generator.internal.util.StringUtility;
-import org.mybatis.generator.internal.util.messages.Messages;
 
 /**
  * 
@@ -63,15 +64,15 @@ public class Configuration {
         List<String> errors = new ArrayList<String>();
 
         for (String classPathEntry : classPathEntries) {
-            if (!StringUtility.stringHasValue(classPathEntry)) {
-                errors.add(Messages.getString("ValidationError.19")); //$NON-NLS-1$
+            if (!stringHasValue(classPathEntry)) {
+                errors.add(getString("ValidationError.19")); //$NON-NLS-1$
                 // only need to state this error once
                 break;
             }
         }
 
         if (contexts.size() == 0) {
-            errors.add(Messages.getString("ValidationError.11")); //$NON-NLS-1$
+            errors.add(getString("ValidationError.11")); //$NON-NLS-1$
         } else {
             for (Context context : contexts) {
                 context.validate(errors);

@@ -15,6 +15,9 @@
  */
 package org.mybatis.generator.codegen.ibatis2.dao.elements;
 
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 import org.mybatis.generator.api.DAOMethodNameCalculator;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
@@ -25,8 +28,6 @@ import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.internal.DefaultDAOMethodNameCalculator;
 import org.mybatis.generator.internal.ExtendedDAOMethodNameCalculator;
 import org.mybatis.generator.internal.ObjectFactory;
-import org.mybatis.generator.internal.util.StringUtility;
-import org.mybatis.generator.internal.util.messages.Messages;
 
 /**
  * 
@@ -53,7 +54,7 @@ public abstract class AbstractDAOElementGenerator extends AbstractGenerator {
         if (dAOMethodNameCalculator == null) {
             String type = context.getJavaClientGeneratorConfiguration()
                     .getProperty(PropertyRegistry.DAO_METHOD_NAME_CALCULATOR);
-            if (StringUtility.stringHasValue(type)) {
+            if (stringHasValue(type)) {
                 if ("extended".equalsIgnoreCase(type)) { //$NON-NLS-1$
                     type = ExtendedDAOMethodNameCalculator.class.getName();
                 } else if ("default".equalsIgnoreCase(type)) { //$NON-NLS-1$
@@ -68,7 +69,7 @@ public abstract class AbstractDAOElementGenerator extends AbstractGenerator {
                         .createInternalObject(type);
             } catch (Exception e) {
                 dAOMethodNameCalculator = new DefaultDAOMethodNameCalculator();
-                warnings.add(Messages.getString(
+                warnings.add(getString(
                         "Warning.17", type, e.getMessage())); //$NON-NLS-1$
             }
         }
@@ -81,7 +82,7 @@ public abstract class AbstractDAOElementGenerator extends AbstractGenerator {
             String type = context
                     .getJavaClientGeneratorConfiguration()
                     .getProperty(PropertyRegistry.DAO_EXAMPLE_METHOD_VISIBILITY);
-            if (StringUtility.stringHasValue(type)) {
+            if (stringHasValue(type)) {
                 if ("public".equalsIgnoreCase(type)) { //$NON-NLS-1$
                     exampleMethodVisibility = JavaVisibility.PUBLIC;
                 } else if ("private".equalsIgnoreCase(type)) { //$NON-NLS-1$
@@ -92,7 +93,7 @@ public abstract class AbstractDAOElementGenerator extends AbstractGenerator {
                     exampleMethodVisibility = JavaVisibility.DEFAULT;
                 } else {
                     exampleMethodVisibility = JavaVisibility.PUBLIC;
-                    warnings.add(Messages.getString("Warning.16", type)); //$NON-NLS-1$
+                    warnings.add(getString("Warning.16", type)); //$NON-NLS-1$
                 }
             } else {
                 exampleMethodVisibility = JavaVisibility.PUBLIC;

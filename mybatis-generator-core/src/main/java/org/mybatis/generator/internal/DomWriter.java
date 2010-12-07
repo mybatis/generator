@@ -16,12 +16,13 @@
 
 package org.mybatis.generator.internal;
 
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
 
 import org.mybatis.generator.exception.ShellException;
-import org.mybatis.generator.internal.util.messages.Messages;
 import org.w3c.dom.Attr;
 import org.w3c.dom.CDATASection;
 import org.w3c.dom.Comment;
@@ -222,7 +223,7 @@ public class DomWriter {
             break;
 
         default:
-            throw new ShellException(Messages.getString(
+            throw new ShellException(getString(
                     "RuntimeError.18", Short.toString(type))); //$NON-NLS-1$
         }
     }

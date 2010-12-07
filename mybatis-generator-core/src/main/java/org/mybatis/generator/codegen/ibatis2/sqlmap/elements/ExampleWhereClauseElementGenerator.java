@@ -15,11 +15,12 @@
  */
 package org.mybatis.generator.codegen.ibatis2.sqlmap.elements;
 
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
-import org.mybatis.generator.internal.util.StringUtility;
 
 /**
  * 
@@ -115,7 +116,7 @@ public class ExampleWhereClauseElementGenerator extends
         // handler
         for (IntrospectedColumn introspectedColumn : introspectedTable
                 .getNonBLOBColumns()) {
-            if (StringUtility.stringHasValue(introspectedColumn
+            if (stringHasValue(introspectedColumn
                     .getTypeHandler())) {
                 // name the property based on the column name, then
                 // add the type handler to the parameter declaration

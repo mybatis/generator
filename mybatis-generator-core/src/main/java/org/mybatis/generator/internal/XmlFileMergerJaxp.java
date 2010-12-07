@@ -15,6 +15,8 @@
  */
 package org.mybatis.generator.internal;
 
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
@@ -27,7 +29,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.mybatis.generator.api.GeneratedXmlFile;
 import org.mybatis.generator.config.MergeConstants;
 import org.mybatis.generator.exception.ShellException;
-import org.mybatis.generator.internal.util.messages.Messages;
 import org.w3c.dom.Comment;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
@@ -86,7 +87,7 @@ public class XmlFileMergerJaxp {
             DocumentType existingDocType = existingDocument.getDoctype();
 
             if (!newDocType.getName().equals(existingDocType.getName())) {
-                throw new ShellException(Messages.getString("Warning.12", //$NON-NLS-1$
+                throw new ShellException(getString("Warning.12", //$NON-NLS-1$
                         existingFile.getName()));
             }
 
@@ -157,7 +158,7 @@ public class XmlFileMergerJaxp {
             // pretty print the result
             return prettyPrint(existingDocument);
         } catch (Exception e) {
-            throw new ShellException(Messages.getString("Warning.13", //$NON-NLS-1$
+            throw new ShellException(getString("Warning.13", //$NON-NLS-1$
                     existingFile.getName()), e);
         }
     }

@@ -15,12 +15,13 @@
  */
 package org.mybatis.generator.config;
 
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 import java.util.List;
 
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.XmlElement;
-import org.mybatis.generator.internal.util.StringUtility;
-import org.mybatis.generator.internal.util.messages.Messages;
 
 /**
  * @author Jeff Butler
@@ -70,12 +71,12 @@ public class SqlMapGeneratorConfiguration extends PropertyHolder {
     }
 
     public void validate(List<String> errors, String contextId) {
-        if (!StringUtility.stringHasValue(targetProject)) {
-            errors.add(Messages.getString("ValidationError.1", contextId)); //$NON-NLS-1$
+        if (!stringHasValue(targetProject)) {
+            errors.add(getString("ValidationError.1", contextId)); //$NON-NLS-1$
         }
 
-        if (!StringUtility.stringHasValue(targetPackage)) {
-            errors.add(Messages.getString("ValidationError.12", //$NON-NLS-1$
+        if (!stringHasValue(targetPackage)) {
+            errors.add(getString("ValidationError.12", //$NON-NLS-1$
                     "SQLMapGenerator", contextId)); //$NON-NLS-1$
         }
     }

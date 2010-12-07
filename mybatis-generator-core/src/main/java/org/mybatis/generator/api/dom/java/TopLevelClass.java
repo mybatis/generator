@@ -15,6 +15,8 @@
  */
 package org.mybatis.generator.api.dom.java;
 
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -22,7 +24,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.mybatis.generator.api.dom.OutputUtilities;
-import org.mybatis.generator.internal.util.StringUtility;
 
 /**
  * @author Jeff Butler
@@ -69,7 +70,7 @@ public class TopLevelClass extends InnerClass implements CompilationUnit {
             OutputUtilities.newLine(sb);
         }
 
-        if (StringUtility.stringHasValue(getType().getPackageName())) {
+        if (stringHasValue(getType().getPackageName())) {
             sb.append("package "); //$NON-NLS-1$
             sb.append(getType().getPackageName());
             sb.append(';');

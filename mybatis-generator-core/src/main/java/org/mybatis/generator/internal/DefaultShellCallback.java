@@ -15,12 +15,13 @@
  */
 package org.mybatis.generator.internal;
 
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 import java.io.File;
 import java.util.StringTokenizer;
 
 import org.mybatis.generator.api.ShellCallback;
 import org.mybatis.generator.exception.ShellException;
-import org.mybatis.generator.internal.util.messages.Messages;
 
 /**
  * @author Jeff Butler
@@ -47,7 +48,7 @@ public class DefaultShellCallback implements ShellCallback {
 
         File project = new File(targetProject);
         if (!project.isDirectory()) {
-            throw new ShellException(Messages.getString("Warning.9", //$NON-NLS-1$
+            throw new ShellException(getString("Warning.9", //$NON-NLS-1$
                     targetProject));
         }
 
@@ -62,7 +63,7 @@ public class DefaultShellCallback implements ShellCallback {
         if (!directory.isDirectory()) {
             boolean rc = directory.mkdirs();
             if (!rc) {
-                throw new ShellException(Messages.getString("Warning.10", //$NON-NLS-1$
+                throw new ShellException(getString("Warning.10", //$NON-NLS-1$
                         directory.getAbsolutePath()));
             }
         }

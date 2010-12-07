@@ -15,6 +15,8 @@
  */
 package org.mybatis.generator.codegen.ibatis2.model;
 
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +31,6 @@ import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.codegen.RootClassInfo;
-import org.mybatis.generator.internal.util.messages.Messages;
 
 /**
  * 
@@ -45,7 +46,7 @@ public class RecordWithBLOBsGenerator extends AbstractJavaGenerator {
     @Override
     public List<CompilationUnit> getCompilationUnits() {
         FullyQualifiedTable table = introspectedTable.getFullyQualifiedTable();
-        progressCallback.startTask(Messages.getString(
+        progressCallback.startTask(getString(
                 "Progress.9", table.toString())); //$NON-NLS-1$
         Plugin plugins = context.getPlugins();
         CommentGenerator commentGenerator = context.getCommentGenerator();

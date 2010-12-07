@@ -15,6 +15,10 @@
  */
 package org.mybatis.generator.codegen;
 
+import static org.mybatis.generator.internal.util.JavaBeansUtil.getGetterMethodName;
+import static org.mybatis.generator.internal.util.JavaBeansUtil.getSetterMethodName;
+import static org.mybatis.generator.internal.util.StringUtility.isTrue;
+
 import java.util.List;
 import java.util.Properties;
 
@@ -27,8 +31,6 @@ import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.config.PropertyRegistry;
-import org.mybatis.generator.internal.util.JavaBeansUtil;
-import org.mybatis.generator.internal.util.StringUtility;
 
 /**
  * 
@@ -40,7 +42,7 @@ public abstract class AbstractJavaGenerator extends AbstractGenerator {
 
     public static Method getGetter(Field field) {
         Method method = new Method();
-        method.setName(JavaBeansUtil.getGetterMethodName(field.getName(), field
+        method.setName(getGetterMethodName(field.getName(), field
                 .getType()));
         method.setReturnType(field.getType());
         method.setVisibility(JavaVisibility.PUBLIC);
@@ -60,7 +62,7 @@ public abstract class AbstractJavaGenerator extends AbstractGenerator {
         Method method = new Method();
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(fqjt);
-        method.setName(JavaBeansUtil.getGetterMethodName(property, fqjt));
+        method.setName(getGetterMethodName(property, fqjt));
         context.getCommentGenerator().addGetterComment(method,
                 introspectedTable, introspectedColumn);
 
@@ -95,7 +97,7 @@ public abstract class AbstractJavaGenerator extends AbstractGenerator {
 
         Method method = new Method();
         method.setVisibility(JavaVisibility.PUBLIC);
-        method.setName(JavaBeansUtil.getSetterMethodName(property));
+        method.setName(getSetterMethodName(property));
         method.addParameter(new Parameter(fqjt, property));
         context.getCommentGenerator().addSetterComment(method,
                 introspectedTable, introspectedColumn);
@@ -125,7 +127,7 @@ public abstract class AbstractJavaGenerator extends AbstractGenerator {
     public boolean isTrimStringsEnabled() {
         Properties properties = context
                 .getJavaModelGeneratorConfiguration().getProperties();
-        boolean rc = StringUtility.isTrue(properties
+        boolean rc = isTrue(properties
                 .getProperty(PropertyRegistry.MODEL_GENERATOR_TRIM_STRINGS));
         return rc;
     }

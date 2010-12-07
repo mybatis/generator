@@ -53,10 +53,10 @@ public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
         answer.addAttribute(new Attribute("resultType", identityColumnType)); //$NON-NLS-1$
         answer.addAttribute(new Attribute(
                 "keyProperty", introspectedColumn.getJavaProperty())); //$NON-NLS-1$
-        answer.addAttribute(new Attribute("order", generatedKey.getMyBatis3Order())); //$NON-NLS-1  
+        answer.addAttribute(new Attribute("order", //$NON-NLS-1$
+                generatedKey.getMyBatis3Order())); 
         
-        answer
-                .addElement(new TextElement(generatedKey
+        answer.addElement(new TextElement(generatedKey
                         .getRuntimeSqlStatement()));
 
         return answer;
@@ -65,14 +65,14 @@ public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
     protected XmlElement getBaseColumnListElement() {
         XmlElement answer = new XmlElement("include"); //$NON-NLS-1$
         answer.addAttribute(new Attribute("refid", //$NON-NLS-1$
-                introspectedTable.getBaseColumnListId())); //$NON-NLS-1$
+                introspectedTable.getBaseColumnListId()));
         return answer;
     }
 
     protected XmlElement getBlobColumnListElement() {
         XmlElement answer = new XmlElement("include"); //$NON-NLS-1$
         answer.addAttribute(new Attribute("refid", //$NON-NLS-1$
-                introspectedTable.getBlobColumnListId())); //$NON-NLS-1$
+                introspectedTable.getBlobColumnListId()));
         return answer;
     }
 
@@ -82,7 +82,7 @@ public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
 
         XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
         includeElement.addAttribute(new Attribute("refid", //$NON-NLS-1$
-                introspectedTable.getExampleWhereClauseId())); //$NON-NLS-1$
+                introspectedTable.getExampleWhereClauseId()));
         ifElement.addElement(includeElement);
 
         return ifElement;
@@ -94,7 +94,7 @@ public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
 
         XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
         includeElement.addAttribute(new Attribute("refid", //$NON-NLS-1$
-                introspectedTable.getMyBatis3UpdateByExampleWhereClauseId())); //$NON-NLS-1$
+                introspectedTable.getMyBatis3UpdateByExampleWhereClauseId()));
         ifElement.addElement(includeElement);
 
         return ifElement;

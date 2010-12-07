@@ -15,13 +15,14 @@
  */
 package org.mybatis.generator.config;
 
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 import java.util.List;
 
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.internal.db.DatabaseDialects;
-import org.mybatis.generator.internal.util.StringUtility;
-import org.mybatis.generator.internal.util.messages.Messages;
 
 /**
  * This class specifies that a key is auto-generated, either as an identity
@@ -86,7 +87,7 @@ public class GeneratedKey {
     public boolean isPlacedBeforeInsertInIbatis2() {
         boolean rc;
         
-        if (StringUtility.stringHasValue(type)) {
+        if (stringHasValue(type)) {
             rc = true;
         } else {
             rc = !isIdentity;
@@ -104,7 +105,7 @@ public class GeneratedKey {
         xmlElement.addAttribute(new Attribute("column", column)); //$NON-NLS-1$
         xmlElement.addAttribute(new Attribute(
                 "sqlStatement", configuredSqlStatement)); //$NON-NLS-1$
-        if (StringUtility.stringHasValue(type)) {
+        if (stringHasValue(type)) {
             xmlElement.addAttribute(new Attribute("type", type)); //$NON-NLS-1$
         }
         xmlElement.addAttribute(new Attribute("identity", //$NON-NLS-1$
@@ -114,25 +115,25 @@ public class GeneratedKey {
     }
 
     public void validate(List<String> errors, String tableName) {
-        if (!StringUtility.stringHasValue(runtimeSqlStatement)) {
-            errors.add(Messages.getString("ValidationError.7", //$NON-NLS-1$
+        if (!stringHasValue(runtimeSqlStatement)) {
+            errors.add(getString("ValidationError.7", //$NON-NLS-1$
                     tableName));
         }
 
-        if (StringUtility.stringHasValue(type)) {
+        if (stringHasValue(type)) {
             if (!"pre".equals(type) && !"post".equals(type)) { //$NON-NLS-1$ //$NON-NLS-2$
-                errors.add(Messages.getString("ValidationError.15", //$NON-NLS-1$
+                errors.add(getString("ValidationError.15", //$NON-NLS-1$
                         tableName));
             }
         }
         
         if ("pre".equals(type) && isIdentity) { //$NON-NLS-1$
-            errors.add(Messages.getString("ValidationError.23", //$NON-NLS-1$
+            errors.add(getString("ValidationError.23", //$NON-NLS-1$
                     tableName));
         }
         
         if ("post".equals(type) && !isIdentity) { //$NON-NLS-1$
-            errors.add(Messages.getString("ValidationError.24", //$NON-NLS-1$
+            errors.add(getString("ValidationError.24", //$NON-NLS-1$
                     tableName));
         }
     }

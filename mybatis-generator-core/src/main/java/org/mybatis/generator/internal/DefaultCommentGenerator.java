@@ -16,6 +16,8 @@
 
 package org.mybatis.generator.internal;
 
+import static org.mybatis.generator.internal.util.StringUtility.isTrue;
+
 import java.util.Date;
 import java.util.Properties;
 
@@ -33,7 +35,6 @@ import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.config.MergeConstants;
 import org.mybatis.generator.config.PropertyRegistry;
-import org.mybatis.generator.internal.util.StringUtility;
 
 /**
  * @author Jeff Butler
@@ -90,7 +91,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
     public void addConfigurationProperties(Properties properties) {
         this.properties.putAll(properties);
 
-        suppressDate = StringUtility.isTrue(properties
+        suppressDate = isTrue(properties
                 .getProperty(PropertyRegistry.COMMENT_GENERATOR_SUPPRESS_DATE));
     }
 

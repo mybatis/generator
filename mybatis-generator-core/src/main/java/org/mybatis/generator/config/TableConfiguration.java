@@ -15,6 +15,14 @@
  */
 package org.mybatis.generator.config;
 
+import static org.mybatis.generator.internal.util.EqualsUtil.areEqual;
+import static org.mybatis.generator.internal.util.HashCodeUtil.hash;
+import static org.mybatis.generator.internal.util.HashCodeUtil.SEED;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+import static org.mybatis.generator.internal.util.StringUtility.composeFullyQualifiedTableName;
+import static org.mybatis.generator.internal.util.StringUtility.isTrue;
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,10 +30,6 @@ import java.util.Map;
 
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.XmlElement;
-import org.mybatis.generator.internal.util.EqualsUtil;
-import org.mybatis.generator.internal.util.HashCodeUtil;
-import org.mybatis.generator.internal.util.StringUtility;
-import org.mybatis.generator.internal.util.messages.Messages;
 
 /**
  * 
@@ -164,17 +168,17 @@ public class TableConfiguration extends PropertyHolder {
 
         TableConfiguration other = (TableConfiguration) obj;
 
-        return EqualsUtil.areEqual(this.catalog, other.catalog)
-                && EqualsUtil.areEqual(this.schema, other.schema)
-                && EqualsUtil.areEqual(this.tableName, other.tableName);
+        return areEqual(this.catalog, other.catalog)
+                && areEqual(this.schema, other.schema)
+                && areEqual(this.tableName, other.tableName);
     }
 
     @Override
     public int hashCode() {
-        int result = HashCodeUtil.SEED;
-        result = HashCodeUtil.hash(result, catalog);
-        result = HashCodeUtil.hash(result, schema);
-        result = HashCodeUtil.hash(result, tableName);
+        int result = SEED;
+        result = hash(result, catalog);
+        result = hash(result, schema);
+        result = hash(result, tableName);
 
         return result;
     }
@@ -339,19 +343,19 @@ public class TableConfiguration extends PropertyHolder {
         XmlElement xmlElement = new XmlElement("table"); //$NON-NLS-1$
         xmlElement.addAttribute(new Attribute("tableName", tableName)); //$NON-NLS-1$
 
-        if (StringUtility.stringHasValue(catalog)) {
+        if (stringHasValue(catalog)) {
             xmlElement.addAttribute(new Attribute("catalog", catalog)); //$NON-NLS-1$
         }
 
-        if (StringUtility.stringHasValue(schema)) {
+        if (stringHasValue(schema)) {
             xmlElement.addAttribute(new Attribute("schema", schema)); //$NON-NLS-1$
         }
 
-        if (StringUtility.stringHasValue(alias)) {
+        if (stringHasValue(alias)) {
             xmlElement.addAttribute(new Attribute("alias", alias)); //$NON-NLS-1$
         }
 
-        if (StringUtility.stringHasValue(domainObjectName)) {
+        if (stringHasValue(domainObjectName)) {
             xmlElement.addAttribute(new Attribute(
                     "domainObjectName", domainObjectName)); //$NON-NLS-1$
         }
@@ -395,12 +399,12 @@ public class TableConfiguration extends PropertyHolder {
                     "enableUpdateByExample", "false")); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
-        if (StringUtility.stringHasValue(selectByPrimaryKeyQueryId)) {
+        if (stringHasValue(selectByPrimaryKeyQueryId)) {
             xmlElement.addAttribute(new Attribute(
                     "selectByPrimaryKeyQueryId", selectByPrimaryKeyQueryId)); //$NON-NLS-1$
         }
 
-        if (StringUtility.stringHasValue(selectByExampleQueryId)) {
+        if (stringHasValue(selectByExampleQueryId)) {
             xmlElement.addAttribute(new Attribute(
                     "selectByExampleQueryId", selectByExampleQueryId)); //$NON-NLS-1$
         }
@@ -450,7 +454,7 @@ public class TableConfiguration extends PropertyHolder {
 
     @Override
     public String toString() {
-        return StringUtility.composeFullyQualifiedTableName(catalog, schema,
+        return composeFullyQualifiedTableName(catalog, schema,
                 tableName, '.');
     }
 
@@ -481,31 +485,28 @@ public class TableConfiguration extends PropertyHolder {
     }
 
     public void validate(List<String> errors, int listPosition) {
-        if (!StringUtility.stringHasValue(tableName)) {
-            errors.add(Messages.getString(
+        if (!stringHasValue(tableName)) {
+            errors.add(getString(
                     "ValidationError.6", Integer.toString(listPosition))); //$NON-NLS-1$
         }
 
-        String fqTableName = StringUtility.composeFullyQualifiedTableName(
+        String fqTableName = composeFullyQualifiedTableName(
                 catalog, schema, tableName, '.');
 
         if (generatedKey != null) {
             generatedKey.validate(errors, fqTableName);
         }
 
-        if (StringUtility
-                .isTrue(getProperty(PropertyRegistry.TABLE_USE_COLUMN_INDEXES))) {
+        if (isTrue(getProperty(PropertyRegistry.TABLE_USE_COLUMN_INDEXES))) {
             // when using column indexes, either both or neither query ids
             // should be set
             if (selectByExampleStatementEnabled
                     && selectByPrimaryKeyStatementEnabled) {
-                boolean queryId1Set = StringUtility
-                        .stringHasValue(selectByExampleQueryId);
-                boolean queryId2Set = StringUtility
-                        .stringHasValue(selectByPrimaryKeyQueryId);
+                boolean queryId1Set = stringHasValue(selectByExampleQueryId);
+                boolean queryId2Set = stringHasValue(selectByPrimaryKeyQueryId);
 
                 if (queryId1Set != queryId2Set) {
-                    errors.add(Messages.getString("ValidationError.13", //$NON-NLS-1$
+                    errors.add(getString("ValidationError.13", //$NON-NLS-1$
                             fqTableName));
                 }
             }

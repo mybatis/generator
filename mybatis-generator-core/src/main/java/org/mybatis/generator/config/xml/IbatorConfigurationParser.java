@@ -15,6 +15,10 @@
  */
 package org.mybatis.generator.config.xml;
 
+import static org.mybatis.generator.internal.util.StringUtility.isTrue;
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -37,8 +41,6 @@ import org.mybatis.generator.config.PropertyHolder;
 import org.mybatis.generator.config.SqlMapGeneratorConfiguration;
 import org.mybatis.generator.config.TableConfiguration;
 import org.mybatis.generator.exception.XMLParserException;
-import org.mybatis.generator.internal.util.StringUtility;
-import org.mybatis.generator.internal.util.messages.Messages;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -93,24 +95,24 @@ public class IbatorConfigurationParser {
         String resource = attributes.getProperty("resource"); //$NON-NLS-1$
         String url = attributes.getProperty("url"); //$NON-NLS-1$
 
-        if (!StringUtility.stringHasValue(resource)
-                && !StringUtility.stringHasValue(url)) {
-            throw new XMLParserException(Messages.getString("RuntimeError.14")); //$NON-NLS-1$
+        if (!stringHasValue(resource)
+                && !stringHasValue(url)) {
+            throw new XMLParserException(getString("RuntimeError.14")); //$NON-NLS-1$
         }
 
-        if (StringUtility.stringHasValue(resource)
-                && StringUtility.stringHasValue(url)) {
-            throw new XMLParserException(Messages.getString("RuntimeError.14")); //$NON-NLS-1$
+        if (stringHasValue(resource)
+                && stringHasValue(url)) {
+            throw new XMLParserException(getString("RuntimeError.14")); //$NON-NLS-1$
         }
 
         URL resourceUrl;
 
         try {
-            if (StringUtility.stringHasValue(resource)) {
+            if (stringHasValue(resource)) {
                 resourceUrl = Thread.currentThread().getContextClassLoader()
                         .getResource(resource);
                 if (resourceUrl == null) {
-                    throw new XMLParserException(Messages.getString(
+                    throw new XMLParserException(getString(
                             "RuntimeError.15", resource)); //$NON-NLS-1$
                 }
             } else {
@@ -123,11 +125,11 @@ public class IbatorConfigurationParser {
             properties.load(inputStream);
             inputStream.close();
         } catch (IOException e) {
-            if (StringUtility.stringHasValue(resource)) {
-                throw new XMLParserException(Messages.getString(
+            if (stringHasValue(resource)) {
+                throw new XMLParserException(getString(
                         "RuntimeError.16", resource)); //$NON-NLS-1$
             } else {
-                throw new XMLParserException(Messages.getString(
+                throw new XMLParserException(getString(
                         "RuntimeError.17", url)); //$NON-NLS-1$
             }
         }
@@ -147,10 +149,10 @@ public class IbatorConfigurationParser {
 
         Context context = new Context(mt);
         context.setId(id);
-        if (StringUtility.stringHasValue(introspectedColumnImpl)) {
+        if (stringHasValue(introspectedColumnImpl)) {
             context.setIntrospectedColumnImpl(introspectedColumnImpl);
         }
-        if (StringUtility.stringHasValue(targetRuntime)) {
+        if (stringHasValue(targetRuntime)) {
             context.setTargetRuntime(targetRuntime);
         }
 
@@ -247,90 +249,80 @@ public class IbatorConfigurationParser {
                 .getProperty("delimitIdentifiers"); //$NON-NLS-1$
         String delimitAllColumns = attributes.getProperty("delimitAllColumns"); //$NON-NLS-1$
 
-        if (StringUtility.stringHasValue(catalog)) {
+        if (stringHasValue(catalog)) {
             tc.setCatalog(catalog);
         }
 
-        if (StringUtility.stringHasValue(schema)) {
+        if (stringHasValue(schema)) {
             tc.setSchema(schema);
         }
 
-        if (StringUtility.stringHasValue(tableName)) {
+        if (stringHasValue(tableName)) {
             tc.setTableName(tableName);
         }
 
-        if (StringUtility.stringHasValue(domainObjectName)) {
+        if (stringHasValue(domainObjectName)) {
             tc.setDomainObjectName(domainObjectName);
         }
 
-        if (StringUtility.stringHasValue(alias)) {
+        if (stringHasValue(alias)) {
             tc.setAlias(alias);
         }
 
-        if (StringUtility.stringHasValue(enableInsert)) {
-            tc.setInsertStatementEnabled(StringUtility.isTrue(enableInsert));
+        if (stringHasValue(enableInsert)) {
+            tc.setInsertStatementEnabled(isTrue(enableInsert));
         }
 
-        if (StringUtility.stringHasValue(enableSelectByPrimaryKey)) {
-            tc.setSelectByPrimaryKeyStatementEnabled(StringUtility
-                    .isTrue(enableSelectByPrimaryKey));
+        if (stringHasValue(enableSelectByPrimaryKey)) {
+            tc.setSelectByPrimaryKeyStatementEnabled(isTrue(enableSelectByPrimaryKey));
         }
 
-        if (StringUtility.stringHasValue(enableSelectByExample)) {
-            tc.setSelectByExampleStatementEnabled(StringUtility
-                    .isTrue(enableSelectByExample));
+        if (stringHasValue(enableSelectByExample)) {
+            tc.setSelectByExampleStatementEnabled(isTrue(enableSelectByExample));
         }
 
-        if (StringUtility.stringHasValue(enableUpdateByPrimaryKey)) {
-            tc.setUpdateByPrimaryKeyStatementEnabled(StringUtility
-                    .isTrue(enableUpdateByPrimaryKey));
+        if (stringHasValue(enableUpdateByPrimaryKey)) {
+            tc.setUpdateByPrimaryKeyStatementEnabled(isTrue(enableUpdateByPrimaryKey));
         }
 
-        if (StringUtility.stringHasValue(enableDeleteByPrimaryKey)) {
-            tc.setDeleteByPrimaryKeyStatementEnabled(StringUtility
-                    .isTrue(enableDeleteByPrimaryKey));
+        if (stringHasValue(enableDeleteByPrimaryKey)) {
+            tc.setDeleteByPrimaryKeyStatementEnabled(isTrue(enableDeleteByPrimaryKey));
         }
 
-        if (StringUtility.stringHasValue(enableDeleteByExample)) {
-            tc.setDeleteByExampleStatementEnabled(StringUtility
-                    .isTrue(enableDeleteByExample));
+        if (stringHasValue(enableDeleteByExample)) {
+            tc.setDeleteByExampleStatementEnabled(isTrue(enableDeleteByExample));
         }
 
-        if (StringUtility.stringHasValue(enableCountByExample)) {
-            tc.setCountByExampleStatementEnabled(StringUtility
-                    .isTrue(enableCountByExample));
+        if (stringHasValue(enableCountByExample)) {
+            tc.setCountByExampleStatementEnabled(isTrue(enableCountByExample));
         }
 
-        if (StringUtility.stringHasValue(enableUpdateByExample)) {
-            tc.setUpdateByExampleStatementEnabled(StringUtility
-                    .isTrue(enableUpdateByExample));
+        if (stringHasValue(enableUpdateByExample)) {
+            tc.setUpdateByExampleStatementEnabled(isTrue(enableUpdateByExample));
         }
 
-        if (StringUtility.stringHasValue(selectByPrimaryKeyQueryId)) {
+        if (stringHasValue(selectByPrimaryKeyQueryId)) {
             tc.setSelectByPrimaryKeyQueryId(selectByPrimaryKeyQueryId);
         }
 
-        if (StringUtility.stringHasValue(selectByExampleQueryId)) {
+        if (stringHasValue(selectByExampleQueryId)) {
             tc.setSelectByExampleQueryId(selectByExampleQueryId);
         }
 
-        if (StringUtility.stringHasValue(modelType)) {
+        if (stringHasValue(modelType)) {
             tc.setConfiguredModelType(modelType);
         }
 
-        if (StringUtility.stringHasValue(escapeWildcards)) {
-            tc
-                    .setWildcardEscapingEnabled(StringUtility
-                            .isTrue(escapeWildcards));
+        if (stringHasValue(escapeWildcards)) {
+            tc.setWildcardEscapingEnabled(isTrue(escapeWildcards));
         }
 
-        if (StringUtility.stringHasValue(delimitIdentifiers)) {
-            tc.setDelimitIdentifiers(StringUtility.isTrue(delimitIdentifiers));
+        if (stringHasValue(delimitIdentifiers)) {
+            tc.setDelimitIdentifiers(isTrue(delimitIdentifiers));
         }
 
-        if (StringUtility.stringHasValue(delimitAllColumns)) {
-            tc.setAllColumnDelimitingEnabled(StringUtility
-                    .isTrue(delimitAllColumns));
+        if (stringHasValue(delimitAllColumns)) {
+            tc.setAllColumnDelimitingEnabled(isTrue(delimitAllColumns));
         }
 
         NodeList nodeList = node.getChildNodes();
@@ -367,26 +359,24 @@ public class IbatorConfigurationParser {
 
         ColumnOverride co = new ColumnOverride(column);
 
-        if (StringUtility.stringHasValue(property)) {
+        if (stringHasValue(property)) {
             co.setJavaProperty(property);
         }
 
-        if (StringUtility.stringHasValue(javaType)) {
+        if (stringHasValue(javaType)) {
             co.setJavaType(javaType);
         }
 
-        if (StringUtility.stringHasValue(jdbcType)) {
+        if (stringHasValue(jdbcType)) {
             co.setJdbcType(jdbcType);
         }
 
-        if (StringUtility.stringHasValue(typeHandler)) {
+        if (stringHasValue(typeHandler)) {
             co.setTypeHandler(typeHandler);
         }
 
-        if (StringUtility.stringHasValue(delimitedColumnName)) {
-            co
-                    .setColumnNameDelimited(StringUtility
-                            .isTrue(delimitedColumnName));
+        if (stringHasValue(delimitedColumnName)) {
+            co.setColumnNameDelimited(isTrue(delimitedColumnName));
         }
 
         NodeList nodeList = node.getChildNodes();
@@ -409,7 +399,7 @@ public class IbatorConfigurationParser {
         Properties attributes = parseAttributes(node);
 
         String column = attributes.getProperty("column"); //$NON-NLS-1$
-        boolean identity = StringUtility.isTrue(attributes
+        boolean identity = isTrue(attributes
                 .getProperty("identity")); //$NON-NLS-1$
         String sqlStatement = attributes.getProperty("sqlStatement"); //$NON-NLS-1$
         String type = attributes.getProperty("type"); //$NON-NLS-1$
@@ -427,10 +417,8 @@ public class IbatorConfigurationParser {
 
         IgnoredColumn ic = new IgnoredColumn(column);
 
-        if (StringUtility.stringHasValue(delimitedColumnName)) {
-            ic
-                    .setColumnNameDelimited(StringUtility
-                            .isTrue(delimitedColumnName));
+        if (stringHasValue(delimitedColumnName)) {
+            ic.setColumnNameDelimited(isTrue(delimitedColumnName));
         }
 
         tc.addIgnoredColumn(ic);
@@ -445,7 +433,7 @@ public class IbatorConfigurationParser {
 
         crr.setSearchString(searchString);
 
-        if (StringUtility.stringHasValue(replaceString)) {
+        if (stringHasValue(replaceString)) {
             crr.setReplaceString(replaceString);
         }
 
@@ -460,7 +448,7 @@ public class IbatorConfigurationParser {
         Properties attributes = parseAttributes(node);
         String type = attributes.getProperty("type"); //$NON-NLS-1$
 
-        if (StringUtility.stringHasValue(type)) {
+        if (stringHasValue(type)) {
             javaTypeResolverConfiguration.setConfigurationType(type);
         }
 
@@ -575,11 +563,11 @@ public class IbatorConfigurationParser {
         jdbcConnectionConfiguration.setDriverClass(driverClass);
         jdbcConnectionConfiguration.setConnectionURL(connectionURL);
 
-        if (StringUtility.stringHasValue(userId)) {
+        if (stringHasValue(userId)) {
             jdbcConnectionConfiguration.setUserId(userId);
         }
 
-        if (StringUtility.stringHasValue(password)) {
+        if (stringHasValue(password)) {
             jdbcConnectionConfiguration.setPassword(password);
         }
 
@@ -659,7 +647,7 @@ public class IbatorConfigurationParser {
         Properties attributes = parseAttributes(node);
         String type = attributes.getProperty("type"); //$NON-NLS-1$
 
-        if (StringUtility.stringHasValue(type)) {
+        if (stringHasValue(type)) {
             commentGeneratorConfiguration.setConfigurationType(type);
         }
 

@@ -15,6 +15,9 @@
  */
 package org.mybatis.generator.api;
 
+import static org.mybatis.generator.internal.util.ClassloaderUtility.getCustomClassloader;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -34,8 +37,6 @@ import org.mybatis.generator.internal.DefaultShellCallback;
 import org.mybatis.generator.internal.ObjectFactory;
 import org.mybatis.generator.internal.NullProgressCallback;
 import org.mybatis.generator.internal.XmlFileMergerJaxp;
-import org.mybatis.generator.internal.util.ClassloaderUtility;
-import org.mybatis.generator.internal.util.messages.Messages;
 
 /**
  * This class is the main interface to MyBatis generator. A typical execution of
@@ -89,8 +90,7 @@ public class MyBatisGenerator {
             List<String> warnings) throws InvalidConfigurationException {
         super();
         if (configuration == null) {
-            throw new IllegalArgumentException(Messages
-                    .getString("RuntimeError.2")); //$NON-NLS-1$
+            throw new IllegalArgumentException(getString("RuntimeError.2")); //$NON-NLS-1$
         } else {
             this.configuration = configuration;
         }
@@ -206,8 +206,7 @@ public class MyBatisGenerator {
 
         // setup custom classloader if required
         if (configuration.getClassPathEntries().size() > 0) {
-            ClassLoader classLoader = ClassloaderUtility
-                    .getCustomClassloader(configuration.getClassPathEntries());
+            ClassLoader classLoader = getCustomClassloader(configuration.getClassPathEntries());
             ObjectFactory.setExternalClassLoader(classLoader);
         }
 
@@ -254,13 +253,13 @@ public class MyBatisGenerator {
                                 targetFile);
                     } else if (shellCallback.isOverwriteEnabled()) {
                         source = gxf.getFormattedContent();
-                        warnings.add(Messages.getString("Warning.11", //$NON-NLS-1$
+                        warnings.add(getString("Warning.11", //$NON-NLS-1$
                                 targetFile.getAbsolutePath()));
                     } else {
                         source = gxf.getFormattedContent();
                         targetFile = getUniqueFileName(directory, gxf
                                 .getFileName());
-                        warnings.add(Messages.getString(
+                        warnings.add(getString(
                                 "Warning.2", targetFile.getAbsolutePath())); //$NON-NLS-1$
                     }
                 } else {
@@ -272,7 +271,7 @@ public class MyBatisGenerator {
             }
 
             callback.checkCancel();
-            callback.startTask(Messages.getString(
+            callback.startTask(getString(
                     "Progress.15", targetFile.getName())); //$NON-NLS-1$
             writeFile(targetFile, source);
         }
@@ -294,13 +293,13 @@ public class MyBatisGenerator {
                                 MergeConstants.OLD_ELEMENT_TAGS);
                     } else if (shellCallback.isOverwriteEnabled()) {
                         source = gjf.getFormattedContent();
-                        warnings.add(Messages.getString("Warning.11", //$NON-NLS-1$
+                        warnings.add(getString("Warning.11", //$NON-NLS-1$
                                 targetFile.getAbsolutePath()));
                     } else {
                         source = gjf.getFormattedContent();
                         targetFile = getUniqueFileName(directory, gjf
                                 .getFileName());
-                        warnings.add(Messages.getString(
+                        warnings.add(getString(
                                 "Warning.2", targetFile.getAbsolutePath())); //$NON-NLS-1$
                     }
                 } else {
@@ -308,7 +307,7 @@ public class MyBatisGenerator {
                 }
 
                 callback.checkCancel();
-                callback.startTask(Messages.getString(
+                callback.startTask(getString(
                         "Progress.15", targetFile.getName())); //$NON-NLS-1$
                 writeFile(targetFile, source);
             } catch (ShellException e) {
@@ -354,7 +353,7 @@ public class MyBatisGenerator {
         }
 
         if (answer == null) {
-            throw new RuntimeException(Messages.getString(
+            throw new RuntimeException(getString(
                     "RuntimeError.3", directory.getAbsolutePath())); //$NON-NLS-1$
         }
 

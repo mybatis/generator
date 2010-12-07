@@ -15,12 +15,12 @@
  */
 package org.mybatis.generator.api.dom.java;
 
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
-
-import org.mybatis.generator.internal.util.StringUtility;
-import org.mybatis.generator.internal.util.messages.Messages;
 
 /**
  * @author Jeff Butler
@@ -420,7 +420,7 @@ public class FullyQualifiedJavaType implements
     private void genericParse(String genericSpecification) {
         int lastIndex = genericSpecification.lastIndexOf('>');
         if (lastIndex == -1) {
-            throw new RuntimeException(Messages.getString(
+            throw new RuntimeException(getString(
                     "RuntimeError.22", genericSpecification)); //$NON-NLS-1$
         }
         String argumentString = genericSpecification.substring(1, lastIndex);
@@ -450,12 +450,12 @@ public class FullyQualifiedJavaType implements
         }
 
         if (openCount != 0) {
-            throw new RuntimeException(Messages.getString(
+            throw new RuntimeException(getString(
                     "RuntimeError.22", genericSpecification)); //$NON-NLS-1$
         }
 
         String finalType = sb.toString();
-        if (StringUtility.stringHasValue(finalType)) {
+        if (stringHasValue(finalType)) {
             typeArguments.add(new FullyQualifiedJavaType(finalType));
         }
     }

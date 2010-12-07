@@ -16,8 +16,10 @@
 
 package org.mybatis.generator.codegen.mybatis3;
 
+import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+
 import org.mybatis.generator.api.IntrospectedColumn;
-import org.mybatis.generator.internal.util.StringUtility;
 
 /**
  * @author Jeff Butler
@@ -45,7 +47,7 @@ public class MyBatis3FormattingUtilities {
         sb.append(",jdbcType="); //$NON-NLS-1$
         sb.append(introspectedColumn.getJdbcTypeName());
 
-        if (StringUtility.stringHasValue(introspectedColumn.getTypeHandler())) {
+        if (stringHasValue(introspectedColumn.getTypeHandler())) {
             sb.append(",typeHandler="); //$NON-NLS-1$
             sb.append(introspectedColumn.getTypeHandler());
         }
@@ -63,7 +65,7 @@ public class MyBatis3FormattingUtilities {
      */
     public static String getSelectListPhrase(
             IntrospectedColumn introspectedColumn) {
-        if (StringUtility.stringHasValue(introspectedColumn.getTableAlias())) {
+        if (stringHasValue(introspectedColumn.getTableAlias())) {
             StringBuilder sb = new StringBuilder();
 
             sb.append(getAliasedEscapedColumnName(introspectedColumn));
@@ -107,7 +109,7 @@ public class MyBatis3FormattingUtilities {
      */
     public static String getAliasedEscapedColumnName(
             IntrospectedColumn introspectedColumn) {
-        if (StringUtility.stringHasValue(introspectedColumn.getTableAlias())) {
+        if (stringHasValue(introspectedColumn.getTableAlias())) {
             StringBuilder sb = new StringBuilder();
 
             sb.append(introspectedColumn.getTableAlias());
@@ -134,20 +136,20 @@ public class MyBatis3FormattingUtilities {
     public static String getAliasedActualColumnName(
             IntrospectedColumn introspectedColumn) {
         StringBuilder sb = new StringBuilder();
-        if (StringUtility.stringHasValue(introspectedColumn.getTableAlias())) {
+        if (stringHasValue(introspectedColumn.getTableAlias())) {
             sb.append(introspectedColumn.getTableAlias());
             sb.append('.');
         }
 
         if (introspectedColumn.isColumnNameDelimited()) {
-            sb.append(StringUtility.escapeStringForJava(introspectedColumn
+            sb.append(escapeStringForJava(introspectedColumn
                     .getContext().getBeginningDelimiter()));
         }
 
         sb.append(introspectedColumn.getActualColumnName());
 
         if (introspectedColumn.isColumnNameDelimited()) {
-            sb.append(StringUtility.escapeStringForJava(introspectedColumn
+            sb.append(escapeStringForJava(introspectedColumn
                     .getContext().getEndingDelimiter()));
         }
 
@@ -163,7 +165,7 @@ public class MyBatis3FormattingUtilities {
      */
     public static String getRenamedColumnNameForResultMap(
             IntrospectedColumn introspectedColumn) {
-        if (StringUtility.stringHasValue(introspectedColumn.getTableAlias())) {
+        if (stringHasValue(introspectedColumn.getTableAlias())) {
             StringBuilder sb = new StringBuilder();
 
             sb.append(introspectedColumn.getTableAlias());

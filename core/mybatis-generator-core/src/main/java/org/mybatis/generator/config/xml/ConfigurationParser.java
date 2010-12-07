@@ -13,6 +13,8 @@
  */
 package org.mybatis.generator.config.xml;
 
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -29,7 +31,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.mybatis.generator.codegen.XmlConstants;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.exception.XMLParserException;
-import org.mybatis.generator.internal.util.messages.Messages;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
 import org.w3c.dom.Element;
@@ -132,8 +133,7 @@ public class ConfigurationParser {
                             XmlConstants.MYBATIS_GENERATOR_CONFIG_PUBLIC_ID)) {
                 config = parseMyBatisGeneratorConfiguration(rootNode);
             } else {
-                throw new XMLParserException(Messages
-                        .getString("RuntimeError.5")); //$NON-NLS-1$
+                throw new XMLParserException(getString("RuntimeError.5")); //$NON-NLS-1$
             }
 
             if (parseErrors.size() > 0) {

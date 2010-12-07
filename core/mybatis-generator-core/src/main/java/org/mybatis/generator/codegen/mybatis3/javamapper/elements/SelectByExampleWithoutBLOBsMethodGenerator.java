@@ -15,6 +15,8 @@
  */
 package org.mybatis.generator.codegen.mybatis3.javamapper.elements;
 
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -23,7 +25,6 @@ import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
-import org.mybatis.generator.internal.util.messages.Messages;
 
 /**
  * 
@@ -58,7 +59,7 @@ public class SelectByExampleWithoutBLOBsMethodGenerator extends
             listType = new FullyQualifiedJavaType(introspectedTable
                     .getPrimaryKeyType());
         } else {
-            throw new RuntimeException(Messages.getString("RuntimeError.12")); //$NON-NLS-1$
+            throw new RuntimeException(getString("RuntimeError.12")); //$NON-NLS-1$
         }
 
         importedTypes.add(listType);

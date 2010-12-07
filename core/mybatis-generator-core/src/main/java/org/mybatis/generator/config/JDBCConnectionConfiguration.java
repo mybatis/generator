@@ -15,12 +15,13 @@
  */
 package org.mybatis.generator.config;
 
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 import java.util.List;
 
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.XmlElement;
-import org.mybatis.generator.internal.util.StringUtility;
-import org.mybatis.generator.internal.util.messages.Messages;
 
 /**
  * 
@@ -77,11 +78,11 @@ public class JDBCConnectionConfiguration extends PropertyHolder {
         xmlElement.addAttribute(new Attribute("driverClass", driverClass)); //$NON-NLS-1$
         xmlElement.addAttribute(new Attribute("connectionURL", connectionURL)); //$NON-NLS-1$
 
-        if (StringUtility.stringHasValue(userId)) {
+        if (stringHasValue(userId)) {
             xmlElement.addAttribute(new Attribute("userId", userId)); //$NON-NLS-1$
         }
 
-        if (StringUtility.stringHasValue(password)) {
+        if (stringHasValue(password)) {
             xmlElement.addAttribute(new Attribute("password", password)); //$NON-NLS-1$
         }
 
@@ -91,12 +92,12 @@ public class JDBCConnectionConfiguration extends PropertyHolder {
     }
 
     public void validate(List<String> errors) {
-        if (!StringUtility.stringHasValue(driverClass)) {
-            errors.add(Messages.getString("ValidationError.4")); //$NON-NLS-1$
+        if (!stringHasValue(driverClass)) {
+            errors.add(getString("ValidationError.4")); //$NON-NLS-1$
         }
 
-        if (!StringUtility.stringHasValue(connectionURL)) {
-            errors.add(Messages.getString("ValidationError.5")); //$NON-NLS-1$
+        if (!stringHasValue(connectionURL)) {
+            errors.add(getString("ValidationError.5")); //$NON-NLS-1$
         }
     }
 }

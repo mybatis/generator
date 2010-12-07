@@ -15,6 +15,9 @@
  */
 package org.mybatis.generator.codegen.ibatis2.dao;
 
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,8 +50,6 @@ import org.mybatis.generator.codegen.ibatis2.dao.elements.UpdateByPrimaryKeyWith
 import org.mybatis.generator.codegen.ibatis2.dao.templates.AbstractDAOTemplate;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.internal.rules.Rules;
-import org.mybatis.generator.internal.util.StringUtility;
-import org.mybatis.generator.internal.util.messages.Messages;
 
 /**
  * 
@@ -70,7 +71,7 @@ public class DAOGenerator extends AbstractJavaGenerator {
     @Override
     public List<CompilationUnit> getCompilationUnits() {
         FullyQualifiedTable table = introspectedTable.getFullyQualifiedTable();
-        progressCallback.startTask(Messages.getString(
+        progressCallback.startTask(getString(
                 "Progress.14", table.toString())); //$NON-NLS-1$
         TopLevelClass topLevelClass = getTopLevelClassShell();
         Interface interfaze = getInterfaceShell();
@@ -154,7 +155,7 @@ public class DAOGenerator extends AbstractJavaGenerator {
                     .getProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
         }
 
-        if (StringUtility.stringHasValue(rootInterface)) {
+        if (stringHasValue(rootInterface)) {
             FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(
                     rootInterface);
             answer.addSuperInterface(fqjt);

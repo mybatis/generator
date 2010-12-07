@@ -16,14 +16,14 @@
 
 package org.mybatis.generator.internal.util;
 
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.mybatis.generator.internal.util.messages.Messages;
 
 /**
  * This class holds methods useful for constructing custom classloaders.
@@ -47,7 +47,7 @@ public class ClassloaderUtility {
             for (String classPathEntry : entries) {
                 file = new File(classPathEntry);
                 if (!file.exists()) {
-                    throw new RuntimeException(Messages.getString(
+                    throw new RuntimeException(getString(
                             "RuntimeError.9", classPathEntry)); //$NON-NLS-1$
                 }
 
@@ -55,7 +55,7 @@ public class ClassloaderUtility {
                     urls.add(file.toURI().toURL());
                 } catch (MalformedURLException e) {
                     // this shouldn't happen, but just in case...
-                    throw new RuntimeException(Messages.getString(
+                    throw new RuntimeException(getString(
                             "RuntimeError.9", classPathEntry)); //$NON-NLS-1$
                 }
             }

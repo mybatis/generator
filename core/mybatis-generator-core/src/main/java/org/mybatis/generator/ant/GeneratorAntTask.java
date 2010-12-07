@@ -15,6 +15,9 @@
  */
 package org.mybatis.generator.ant;
 
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -35,8 +38,6 @@ import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.exception.XMLParserException;
 import org.mybatis.generator.internal.DefaultShellCallback;
-import org.mybatis.generator.internal.util.StringUtility;
-import org.mybatis.generator.internal.util.messages.Messages;
 
 /**
  * This is an Ant task that will run the generator. The following is a sample
@@ -99,20 +100,20 @@ public class GeneratorAntTask extends Task {
      */
     @Override
     public void execute() throws BuildException {
-        if (!StringUtility.stringHasValue(configfile)) {
-            throw new BuildException(Messages.getString("RuntimeError.0")); //$NON-NLS-1$
+        if (!stringHasValue(configfile)) {
+            throw new BuildException(getString("RuntimeError.0")); //$NON-NLS-1$
         }
 
         List<String> warnings = new ArrayList<String>();
 
         File configurationFile = new File(configfile);
         if (!configurationFile.exists()) {
-            throw new BuildException(Messages.getString(
+            throw new BuildException(getString(
                     "RuntimeError.1", configfile)); //$NON-NLS-1$
         }
 
         Set<String> fullyqualifiedTables = new HashSet<String>();
-        if (StringUtility.stringHasValue(fullyQualifiedTableNames)) {
+        if (stringHasValue(fullyQualifiedTableNames)) {
             StringTokenizer st = new StringTokenizer(fullyQualifiedTableNames,
                     ","); //$NON-NLS-1$
             while (st.hasMoreTokens()) {
@@ -124,7 +125,7 @@ public class GeneratorAntTask extends Task {
         }
 
         Set<String> contexts = new HashSet<String>();
-        if (StringUtility.stringHasValue(contextIds)) {
+        if (stringHasValue(contextIds)) {
             StringTokenizer st = new StringTokenizer(contextIds, ","); //$NON-NLS-1$
             while (st.hasMoreTokens()) {
                 String s = st.nextToken().trim();

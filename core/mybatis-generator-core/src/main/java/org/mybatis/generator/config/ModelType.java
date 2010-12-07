@@ -16,7 +16,7 @@
 
 package org.mybatis.generator.config;
 
-import org.mybatis.generator.internal.util.messages.Messages;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 /**
  * Typesafe enum of different model types
@@ -49,7 +49,7 @@ public enum ModelType {
         } else if (CONDITIONAL.getModelType().equalsIgnoreCase(type)) {
             return CONDITIONAL;
         } else {
-            throw new RuntimeException(Messages.getString(
+            throw new RuntimeException(getString(
                     "RuntimeError.13", type)); //$NON-NLS-1$
         }
     }

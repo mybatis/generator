@@ -15,8 +15,9 @@
  */
 package org.mybatis.generator.logging;
 
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 import org.mybatis.generator.internal.ObjectFactory;
-import org.mybatis.generator.internal.util.messages.Messages;
 
 /**
  * Factory for creating loggers. Uses runtime introspection to determine the
@@ -41,7 +42,7 @@ public class LogFactory {
         try {
             return logFactory.getLog(clazz);
         } catch (Throwable t) {
-            throw new RuntimeException(Messages.getString("RuntimeError.21", //$NON-NLS-1$
+            throw new RuntimeException(getString("RuntimeError.21", //$NON-NLS-1$
                     clazz.getName(), t.getMessage()), t);
         }
     }

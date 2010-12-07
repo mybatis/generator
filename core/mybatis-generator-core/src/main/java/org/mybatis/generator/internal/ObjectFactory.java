@@ -15,6 +15,9 @@
  */
 package org.mybatis.generator.internal;
 
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 import java.util.List;
 
 import org.mybatis.generator.api.CommentGenerator;
@@ -32,8 +35,6 @@ import org.mybatis.generator.config.PluginConfiguration;
 import org.mybatis.generator.config.JavaTypeResolverConfiguration;
 import org.mybatis.generator.config.TableConfiguration;
 import org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl;
-import org.mybatis.generator.internal.util.StringUtility;
-import org.mybatis.generator.internal.util.messages.Messages;
 
 /**
  * This class creates the different object needed by the generator
@@ -100,7 +101,7 @@ public class ObjectFactory {
 
             answer = clazz.newInstance();
         } catch (Exception e) {
-            throw new RuntimeException(Messages.getString(
+            throw new RuntimeException(getString(
                     "RuntimeError.6", type), e); //$NON-NLS-1$
         }
 
@@ -133,7 +134,7 @@ public class ObjectFactory {
 
             answer = clazz.newInstance();
         } catch (Exception e) {
-            throw new RuntimeException(Messages.getString(
+            throw new RuntimeException(getString(
                     "RuntimeError.6", type), e); //$NON-NLS-1$
 
         }
@@ -204,7 +205,7 @@ public class ObjectFactory {
             Context context) {
 
         String type = context.getTargetRuntime();
-        if (!StringUtility.stringHasValue(type)) {
+        if (!stringHasValue(type)) {
             type = IntrospectedTableMyBatis3Impl.class.getName();
         } else if ("Ibatis2Java2".equalsIgnoreCase(type)) { //$NON-NLS-1$
             type = IntrospectedTableIbatis2Java2Impl.class.getName();
@@ -226,7 +227,7 @@ public class ObjectFactory {
 
     public static IntrospectedColumn createIntrospectedColumn(Context context) {
         String type = context.getIntrospectedColumnImpl();
-        if (!StringUtility.stringHasValue(type)) {
+        if (!stringHasValue(type)) {
             type = IntrospectedColumn.class.getName();
         }
 

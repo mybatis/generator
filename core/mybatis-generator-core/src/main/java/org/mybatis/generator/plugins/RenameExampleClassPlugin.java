@@ -16,14 +16,15 @@
 
 package org.mybatis.generator.plugins;
 
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.IntrospectedTable;
-import org.mybatis.generator.internal.util.StringUtility;
-import org.mybatis.generator.internal.util.messages.Messages;
 
 /**
  * This plugin demonstrates overriding the initialized() method to rename the
@@ -67,19 +68,19 @@ public class RenameExampleClassPlugin extends PluginAdapter {
         searchString = properties.getProperty("searchString"); //$NON-NLS-1$
         replaceString = properties.getProperty("replaceString"); //$NON-NLS-1$
 
-        boolean valid = StringUtility.stringHasValue(searchString)
-                && StringUtility.stringHasValue(replaceString);
+        boolean valid = stringHasValue(searchString)
+                && stringHasValue(replaceString);
 
         if (valid) {
             pattern = Pattern.compile(searchString);
         } else {
-            if (!StringUtility.stringHasValue(searchString)) {
-                warnings.add(Messages.getString("ValidationError.18", //$NON-NLS-1$
+            if (!stringHasValue(searchString)) {
+                warnings.add(getString("ValidationError.18", //$NON-NLS-1$
                         "RenameExampleClassPlugin", //$NON-NLS-1$
                         "searchString")); //$NON-NLS-1$
             }
-            if (!StringUtility.stringHasValue(replaceString)) {
-                warnings.add(Messages.getString("ValidationError.18", //$NON-NLS-1$
+            if (!stringHasValue(replaceString)) {
+                warnings.add(getString("ValidationError.18", //$NON-NLS-1$
                         "RenameExampleClassPlugin", //$NON-NLS-1$
                         "replaceString")); //$NON-NLS-1$
             }

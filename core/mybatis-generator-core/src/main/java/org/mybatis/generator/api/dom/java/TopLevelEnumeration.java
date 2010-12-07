@@ -16,6 +16,8 @@
 
 package org.mybatis.generator.api.dom.java;
 
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -23,7 +25,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.mybatis.generator.api.dom.OutputUtilities;
-import org.mybatis.generator.internal.util.messages.Messages;
 
 /**
  * @author Jeff Butler
@@ -81,8 +82,7 @@ public class TopLevelEnumeration extends InnerEnum implements CompilationUnit {
     }
 
     public FullyQualifiedJavaType getSuperClass() {
-        throw new UnsupportedOperationException(Messages
-                .getString("RuntimeError.11")); //$NON-NLS-1$
+        throw new UnsupportedOperationException(getString("RuntimeError.11")); //$NON-NLS-1$
     }
 
     public boolean isJavaInterface() {

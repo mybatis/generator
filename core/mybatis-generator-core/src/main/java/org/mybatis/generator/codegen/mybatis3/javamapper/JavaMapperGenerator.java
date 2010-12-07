@@ -16,6 +16,8 @@
 
 package org.mybatis.generator.codegen.mybatis3.javamapper;
 
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +42,6 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.UpdateByExampl
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.UpdateByPrimaryKeySelectiveMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.UpdateByPrimaryKeyWithBLOBsMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.UpdateByPrimaryKeyWithoutBLOBsMethodGenerator;
-import org.mybatis.generator.internal.util.messages.Messages;
 
 /**
  * @author Jeff Butler
@@ -57,7 +58,7 @@ public class JavaMapperGenerator extends AbstractJavaGenerator {
 
     @Override
     public List<CompilationUnit> getCompilationUnits() {
-        progressCallback.startTask(Messages.getString("Progress.17", //$NON-NLS-1$
+        progressCallback.startTask(getString("Progress.17", //$NON-NLS-1$
                 introspectedTable.getFullyQualifiedTable().toString()));
         CommentGenerator commentGenerator = context.getCommentGenerator();
 

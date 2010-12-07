@@ -15,6 +15,11 @@
  */
 package org.mybatis.generator.config;
 
+import static org.mybatis.generator.internal.util.StringUtility.composeFullyQualifiedTableName;
+import static org.mybatis.generator.internal.util.StringUtility.isTrue;
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -34,8 +39,6 @@ import org.mybatis.generator.internal.ObjectFactory;
 import org.mybatis.generator.internal.PluginAggregator;
 import org.mybatis.generator.internal.db.ConnectionFactory;
 import org.mybatis.generator.internal.db.DatabaseIntrospector;
-import org.mybatis.generator.internal.util.StringUtility;
-import org.mybatis.generator.internal.util.messages.Messages;
 
 /**
  * @author Jeff Butler
@@ -130,24 +133,24 @@ public class Context extends PropertyHolder {
      * columns exist
      */
     public void validate(List<String> errors) {
-        if (!StringUtility.stringHasValue(id)) {
-            errors.add(Messages.getString("ValidationError.16")); //$NON-NLS-1$
+        if (!stringHasValue(id)) {
+            errors.add(getString("ValidationError.16")); //$NON-NLS-1$
         }
 
         if (jdbcConnectionConfiguration == null) {
-            errors.add(Messages.getString("ValidationError.10", id)); //$NON-NLS-1$
+            errors.add(getString("ValidationError.10", id)); //$NON-NLS-1$
         } else {
             jdbcConnectionConfiguration.validate(errors);
         }
 
         if (javaModelGeneratorConfiguration == null) {
-            errors.add(Messages.getString("ValidationError.8", id)); //$NON-NLS-1$
+            errors.add(getString("ValidationError.8", id)); //$NON-NLS-1$
         } else {
             javaModelGeneratorConfiguration.validate(errors, id);
         }
 
         if (sqlMapGeneratorConfiguration == null) {
-            errors.add(Messages.getString("ValidationError.9", id)); //$NON-NLS-1$
+            errors.add(getString("ValidationError.9", id)); //$NON-NLS-1$
         } else {
             sqlMapGeneratorConfiguration.validate(errors, id);
         }
@@ -157,7 +160,7 @@ public class Context extends PropertyHolder {
         }
 
         if (tableConfigurations.size() == 0) {
-            errors.add(Messages.getString("ValidationError.3", id)); //$NON-NLS-1$
+            errors.add(getString("ValidationError.3", id)); //$NON-NLS-1$
         } else {
             for (int i = 0; i < tableConfigurations.size(); i++) {
                 TableConfiguration tc = tableConfigurations.get(i);
@@ -223,12 +226,12 @@ public class Context extends PropertyHolder {
                     "defaultModelType", defaultModelType.getModelType())); //$NON-NLS-1$
         }
 
-        if (StringUtility.stringHasValue(introspectedColumnImpl)) {
+        if (stringHasValue(introspectedColumnImpl)) {
             xmlElement.addAttribute(new Attribute(
                     "introspectedColumnImpl", introspectedColumnImpl)); //$NON-NLS-1$
         }
 
-        if (StringUtility.stringHasValue(targetRuntime)) {
+        if (stringHasValue(targetRuntime)) {
             xmlElement.addAttribute(new Attribute(
                     "targetRuntime", targetRuntime)); //$NON-NLS-1$
         }
@@ -288,8 +291,8 @@ public class Context extends PropertyHolder {
         } else if (PropertyRegistry.CONTEXT_ENDING_DELIMITER.equals(name)) {
             endingDelimiter = value;
         } else if (PropertyRegistry.CONTEXT_AUTO_DELIMIT_KEYWORDS.equals(name)) {
-            if (StringUtility.stringHasValue(value)) {
-                autoDelimitKeywords = new Boolean(StringUtility.isTrue(value));
+            if (stringHasValue(value)) {
+                autoDelimitKeywords = new Boolean(isTrue(value));
             }
         }
     }
@@ -392,15 +395,14 @@ public class Context extends PropertyHolder {
         Connection connection = null;
 
         try {
-            callback.startTask(Messages.getString("Progress.0")); //$NON-NLS-1$
+            callback.startTask(getString("Progress.0")); //$NON-NLS-1$
             connection = getConnection();
 
             DatabaseIntrospector databaseIntrospector = new DatabaseIntrospector(
                     this, connection.getMetaData(), javaTypeResolver, warnings);
 
             for (TableConfiguration tc : tableConfigurations) {
-                String tableName = StringUtility
-                        .composeFullyQualifiedTableName(tc.getCatalog(), tc
+                String tableName = composeFullyQualifiedTableName(tc.getCatalog(), tc
                                 .getSchema(), tc.getTableName(), '.');
 
                 if (fullyQualifiedTableNames != null
@@ -411,11 +413,11 @@ public class Context extends PropertyHolder {
                 }
 
                 if (!tc.areAnyStatementsEnabled()) {
-                    warnings.add(Messages.getString("Warning.0", tableName)); //$NON-NLS-1$
+                    warnings.add(getString("Warning.0", tableName)); //$NON-NLS-1$
                     continue;
                 }
 
-                callback.startTask(Messages.getString("Progress.1", tableName)); //$NON-NLS-1$
+                callback.startTask(getString("Progress.1", tableName)); //$NON-NLS-1$
                 List<IntrospectedTable> tables = databaseIntrospector
                         .introspectTables(tc);
 
@@ -454,7 +456,7 @@ public class Context extends PropertyHolder {
             if (plugin.validate(warnings)) {
                 pluginAggregator.addPlugin(plugin);
             } else {
-                warnings.add(Messages.getString("Warning.24", //$NON-NLS-1$
+                warnings.add(getString("Warning.24", //$NON-NLS-1$
                         pluginConfiguration.getConfigurationType(), id));
             }
         }

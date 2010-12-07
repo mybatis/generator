@@ -15,9 +15,10 @@
  */
 package org.mybatis.generator.config.xml;
 
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 import java.util.List;
 
-import org.mybatis.generator.internal.util.messages.Messages;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -45,7 +46,7 @@ public class ParserErrorHandler implements ErrorHandler {
      * @see org.xml.sax.ErrorHandler#warning(org.xml.sax.SAXParseException)
      */
     public void warning(SAXParseException exception) throws SAXException {
-        warnings.add(Messages.getString("Warning.7", //$NON-NLS-1$
+        warnings.add(getString("Warning.7", //$NON-NLS-1$
                 Integer.toString(exception.getLineNumber()), exception
                         .getMessage()));
     }
@@ -56,7 +57,7 @@ public class ParserErrorHandler implements ErrorHandler {
      * @see org.xml.sax.ErrorHandler#error(org.xml.sax.SAXParseException)
      */
     public void error(SAXParseException exception) throws SAXException {
-        errors.add(Messages.getString("RuntimeError.4", //$NON-NLS-1$
+        errors.add(getString("RuntimeError.4", //$NON-NLS-1$
                 Integer.toString(exception.getLineNumber()), exception
                         .getMessage()));
     }
@@ -67,7 +68,7 @@ public class ParserErrorHandler implements ErrorHandler {
      * @see org.xml.sax.ErrorHandler#fatalError(org.xml.sax.SAXParseException)
      */
     public void fatalError(SAXParseException exception) throws SAXException {
-        errors.add(Messages.getString("RuntimeError.4", //$NON-NLS-1$
+        errors.add(getString("RuntimeError.4", //$NON-NLS-1$
                 Integer.toString(exception.getLineNumber()), exception
                         .getMessage()));
     }

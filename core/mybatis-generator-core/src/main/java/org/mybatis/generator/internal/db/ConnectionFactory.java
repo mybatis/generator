@@ -15,6 +15,9 @@
  */
 package org.mybatis.generator.internal.db;
 
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.SQLException;
@@ -22,8 +25,6 @@ import java.util.Properties;
 
 import org.mybatis.generator.config.JDBCConnectionConfiguration;
 import org.mybatis.generator.internal.ObjectFactory;
-import org.mybatis.generator.internal.util.StringUtility;
-import org.mybatis.generator.internal.util.messages.Messages;
 
 /**
  * This class assumes that classes are cached elsewhere for performance reasons,
@@ -54,11 +55,11 @@ public class ConnectionFactory {
 
         Properties props = new Properties();
 
-        if (StringUtility.stringHasValue(config.getUserId())) {
+        if (stringHasValue(config.getUserId())) {
             props.setProperty("user", config.getUserId()); //$NON-NLS-1$
         }
 
-        if (StringUtility.stringHasValue(config.getPassword())) {
+        if (stringHasValue(config.getPassword())) {
             props.setProperty("password", config.getPassword()); //$NON-NLS-1$
         }
 
@@ -67,7 +68,7 @@ public class ConnectionFactory {
         Connection conn = driver.connect(config.getConnectionURL(), props);
 
         if (conn == null) {
-            throw new SQLException(Messages.getString("RuntimeError.7")); //$NON-NLS-1$
+            throw new SQLException(getString("RuntimeError.7")); //$NON-NLS-1$
         }
 
         return conn;
@@ -81,7 +82,7 @@ public class ConnectionFactory {
             Class<?> clazz = ObjectFactory.externalClassForName(driverClass);
             driver = (Driver) clazz.newInstance();
         } catch (Exception e) {
-            throw new RuntimeException(Messages.getString("RuntimeError.8"), e); //$NON-NLS-1$
+            throw new RuntimeException(getString("RuntimeError.8"), e); //$NON-NLS-1$
         }
 
         return driver;

@@ -15,6 +15,10 @@
  */
 package org.mybatis.generator.codegen.ibatis2.model;
 
+import static org.mybatis.generator.internal.util.JavaBeansUtil.getGetterMethodName;
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -34,9 +38,6 @@ import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.codegen.ibatis2.Ibatis2FormattingUtilities;
 import org.mybatis.generator.internal.rules.Rules;
-import org.mybatis.generator.internal.util.JavaBeansUtil;
-import org.mybatis.generator.internal.util.StringUtility;
-import org.mybatis.generator.internal.util.messages.Messages;
 
 /**
  * 
@@ -55,7 +56,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
     @Override
     public List<CompilationUnit> getCompilationUnits() {
         FullyQualifiedTable table = introspectedTable.getFullyQualifiedTable();
-        progressCallback.startTask(Messages.getString(
+        progressCallback.startTask(getString(
                 "Progress.6", table.toString())); //$NON-NLS-1$
         CommentGenerator commentGenerator = context.getCommentGenerator();
 
@@ -305,7 +306,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 
         for (IntrospectedColumn introspectedColumn : introspectedTable
                 .getNonBLOBColumns()) {
-            if (StringUtility.stringHasValue(introspectedColumn
+            if (stringHasValue(introspectedColumn
                     .getTypeHandler())) {
                 criteriaLists.addAll(addtypeHandledObjectsAndMethods(
                         introspectedColumn, method, answer));
@@ -364,7 +365,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         method = new Method();
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(field.getType());
-        method.setName(JavaBeansUtil.getGetterMethodName(field.getName(), field
+        method.setName(getGetterMethodName(field.getName(), field
                 .getType()));
         method.addBodyLine("return criteriaWithoutValue;"); //$NON-NLS-1$
         answer.addMethod(method);
@@ -386,7 +387,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         method = new Method();
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(field.getType());
-        method.setName(JavaBeansUtil.getGetterMethodName(field.getName(), field
+        method.setName(getGetterMethodName(field.getName(), field
                 .getType()));
         method.addBodyLine("return criteriaWithSingleValue;"); //$NON-NLS-1$
         answer.addMethod(method);
@@ -400,7 +401,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         method = new Method();
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(field.getType());
-        method.setName(JavaBeansUtil.getGetterMethodName(field.getName(), field
+        method.setName(getGetterMethodName(field.getName(), field
                 .getType()));
         method.addBodyLine("return criteriaWithListValue;"); //$NON-NLS-1$
         answer.addMethod(method);
@@ -414,7 +415,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         method = new Method();
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(field.getType());
-        method.setName(JavaBeansUtil.getGetterMethodName(field.getName(), field
+        method.setName(getGetterMethodName(field.getName(), field
                 .getType()));
         method.addBodyLine("return criteriaWithBetweenValue;"); //$NON-NLS-1$
         answer.addMethod(method);
@@ -749,7 +750,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         Method method = new Method();
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(field.getType());
-        method.setName(JavaBeansUtil.getGetterMethodName(field.getName(), field
+        method.setName(getGetterMethodName(field.getName(), field
                 .getType()));
         sb.insert(0, "return "); //$NON-NLS-1$
         sb.append(';');
@@ -770,7 +771,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         method = new Method();
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(field.getType());
-        method.setName(JavaBeansUtil.getGetterMethodName(field.getName(), field
+        method.setName(getGetterMethodName(field.getName(), field
                 .getType()));
         sb.insert(0, "return "); //$NON-NLS-1$
         sb.append(';');
@@ -791,7 +792,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         method = new Method();
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(field.getType());
-        method.setName(JavaBeansUtil.getGetterMethodName(field.getName(), field
+        method.setName(getGetterMethodName(field.getName(), field
                 .getType()));
         sb.insert(0, "return "); //$NON-NLS-1$
         sb.append(';');
@@ -1021,7 +1022,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
             sb.append("addCriterionForJDBCDate(\""); //$NON-NLS-1$
         } else if (introspectedColumn.isJDBCTimeColumn()) {
             sb.append("addCriterionForJDBCTime(\""); //$NON-NLS-1$
-        } else if (StringUtility.stringHasValue(introspectedColumn
+        } else if (stringHasValue(introspectedColumn
                 .getTypeHandler())) {
             sb.append("add"); //$NON-NLS-1$
             sb.append(introspectedColumn.getJavaProperty());
@@ -1088,7 +1089,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
             sb.append("addCriterionForJDBCDate(\""); //$NON-NLS-1$
         } else if (introspectedColumn.isJDBCTimeColumn()) {
             sb.append("addCriterionForJDBCTime(\""); //$NON-NLS-1$
-        } else if (StringUtility.stringHasValue(introspectedColumn
+        } else if (stringHasValue(introspectedColumn
                 .getTypeHandler())) {
             sb.append("add"); //$NON-NLS-1$
             sb.append(introspectedColumn.getJavaProperty());
@@ -1170,7 +1171,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
             sb.append("addCriterionForJDBCDate(\""); //$NON-NLS-1$
         } else if (introspectedColumn.isJDBCTimeColumn()) {
             sb.append("addCriterionForJDBCTime(\""); //$NON-NLS-1$
-        } else if (StringUtility.stringHasValue(introspectedColumn
+        } else if (stringHasValue(introspectedColumn
                 .getTypeHandler())) {
             sb.append("add"); //$NON-NLS-1$
             sb.append(introspectedColumn.getJavaProperty());

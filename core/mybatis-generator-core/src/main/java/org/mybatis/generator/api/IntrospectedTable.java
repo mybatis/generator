@@ -16,6 +16,9 @@
 
 package org.mybatis.generator.api;
 
+import static org.mybatis.generator.internal.util.StringUtility.isTrue;
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -35,7 +38,6 @@ import org.mybatis.generator.internal.rules.ConditionalModelRules;
 import org.mybatis.generator.internal.rules.FlatModelRules;
 import org.mybatis.generator.internal.rules.HierarchicalModelRules;
 import org.mybatis.generator.internal.rules.Rules;
-import org.mybatis.generator.internal.util.StringUtility;
 
 /**
  * Base class for all code generator implementations. This class provides many
@@ -699,12 +701,12 @@ public abstract class IntrospectedTable {
         }
 
         StringBuilder sb = new StringBuilder();
-        if (StringUtility.stringHasValue(config.getImplementationPackage())) {
+        if (stringHasValue(config.getImplementationPackage())) {
             sb.append(config.getImplementationPackage());
         } else {
             sb.append(config.getTargetPackage());
         }
-        if (StringUtility.isTrue(config
+        if (isTrue(config
                 .getProperty(PropertyRegistry.ANY_ENABLE_SUB_PACKAGES))) {
             sb.append(fullyQualifiedTable.getSubPackage());
         }
@@ -721,7 +723,7 @@ public abstract class IntrospectedTable {
 
         StringBuilder sb = new StringBuilder();
         sb.append(config.getTargetPackage());
-        if (StringUtility.isTrue(config
+        if (isTrue(config
                 .getProperty(PropertyRegistry.ANY_ENABLE_SUB_PACKAGES))) {
             sb.append(fullyQualifiedTable.getSubPackage());
         }
@@ -762,7 +764,7 @@ public abstract class IntrospectedTable {
 
         StringBuilder sb = new StringBuilder();
         sb.append(config.getTargetPackage());
-        if (StringUtility.isTrue(config
+        if (isTrue(config
                 .getProperty(PropertyRegistry.ANY_ENABLE_SUB_PACKAGES))) {
             sb.append(fullyQualifiedTable.getSubPackage());
         }
@@ -806,7 +808,7 @@ public abstract class IntrospectedTable {
                 .getSqlMapGeneratorConfiguration();
 
         StringBuilder sb = new StringBuilder(config.getTargetPackage());
-        if (StringUtility.isTrue(config
+        if (isTrue(config
                 .getProperty(PropertyRegistry.ANY_ENABLE_SUB_PACKAGES))) {
             sb.append(fullyQualifiedTable.getSubPackage());
         }
@@ -1018,8 +1020,7 @@ public abstract class IntrospectedTable {
             properties = context.getJavaModelGeneratorConfiguration().getProperties();
         }
         
-        return "true".equalsIgnoreCase( //$NON-NLS-1$
-                properties.getProperty(PropertyRegistry.ANY_IMMUTABLE));
+        return isTrue(properties.getProperty(PropertyRegistry.ANY_IMMUTABLE));
     }
     
     public boolean isConstructorBased() {
@@ -1035,8 +1036,6 @@ public abstract class IntrospectedTable {
             properties = context.getJavaModelGeneratorConfiguration().getProperties();
         }
         
-        return "true".equalsIgnoreCase( //$NON-NLS-1$
-                properties.getProperty(PropertyRegistry.ANY_CONSTRUCTOR_BASED));
-        
+        return isTrue(properties.getProperty(PropertyRegistry.ANY_CONSTRUCTOR_BASED));
     }
 }

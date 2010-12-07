@@ -15,12 +15,14 @@
  */
 package org.mybatis.generator.codegen.ibatis2.sqlmap.elements;
 
+import static org.mybatis.generator.internal.util.StringUtility.isTrue;
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.ibatis2.Ibatis2FormattingUtilities;
 import org.mybatis.generator.config.PropertyRegistry;
-import org.mybatis.generator.internal.util.StringUtility;
 
 /**
  * 
@@ -36,8 +38,7 @@ public class ResultMapWithoutBLOBsElementGenerator extends
 
     @Override
     public void addElements(XmlElement parentElement) {
-        boolean useColumnIndex = StringUtility
-                .isTrue(introspectedTable
+        boolean useColumnIndex = isTrue(introspectedTable
                         .getTableConfigurationProperty(PropertyRegistry.TABLE_USE_COLUMN_INDEXES));
         XmlElement answer = new XmlElement("resultMap"); //$NON-NLS-1$
         answer.addAttribute(new Attribute("id", //$NON-NLS-1$
@@ -56,9 +57,9 @@ public class ResultMapWithoutBLOBsElementGenerator extends
         context.getCommentGenerator().addComment(answer);
 
         int i = 1;
-        if (StringUtility.stringHasValue(introspectedTable
+        if (stringHasValue(introspectedTable
                 .getSelectByPrimaryKeyQueryId())
-                || StringUtility.stringHasValue(introspectedTable
+                || stringHasValue(introspectedTable
                         .getSelectByExampleQueryId())) {
             i++;
         }
@@ -81,7 +82,7 @@ public class ResultMapWithoutBLOBsElementGenerator extends
             resultElement.addAttribute(new Attribute("jdbcType", //$NON-NLS-1$
                     introspectedColumn.getJdbcTypeName()));
 
-            if (StringUtility.stringHasValue(introspectedColumn
+            if (stringHasValue(introspectedColumn
                     .getTypeHandler())) {
                 resultElement.addAttribute(new Attribute(
                         "typeHandler", introspectedColumn.getTypeHandler())); //$NON-NLS-1$

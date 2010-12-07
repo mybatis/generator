@@ -15,6 +15,8 @@
  */
 package org.mybatis.generator.codegen.mybatis3.xmlmapper;
 
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 import org.mybatis.generator.api.FullyQualifiedTable;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.Document;
@@ -41,7 +43,6 @@ import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.UpdateByExample
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.UpdateByPrimaryKeySelectiveElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.UpdateByPrimaryKeyWithBLOBsElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.UpdateByPrimaryKeyWithoutBLOBsElementGenerator;
-import org.mybatis.generator.internal.util.messages.Messages;
 
 /**
  * 
@@ -56,7 +57,7 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
 
     protected XmlElement getSqlMapElement() {
         FullyQualifiedTable table = introspectedTable.getFullyQualifiedTable();
-        progressCallback.startTask(Messages.getString(
+        progressCallback.startTask(getString(
                 "Progress.12", table.toString())); //$NON-NLS-1$
         XmlElement answer = new XmlElement("mapper"); //$NON-NLS-1$
         String namespace = introspectedTable.getMyBatis3JavaMapperType();

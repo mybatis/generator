@@ -16,12 +16,14 @@
 
 package org.mybatis.generator.config;
 
+import static org.mybatis.generator.internal.util.StringUtility.stringContainsSpace;
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 import java.util.List;
 
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.XmlElement;
-import org.mybatis.generator.internal.util.StringUtility;
-import org.mybatis.generator.internal.util.messages.Messages;
 
 /**
  * @author Jeff Butler
@@ -41,7 +43,7 @@ public class IgnoredColumn {
     public IgnoredColumn(String columnName) {
         super();
         this.columnName = columnName;
-        isColumnNameDelimited = StringUtility.stringContainsSpace(columnName);
+        isColumnNameDelimited = stringContainsSpace(columnName);
     }
 
     public String getColumnName() {
@@ -73,7 +75,7 @@ public class IgnoredColumn {
         XmlElement xmlElement = new XmlElement("ignoreColumn"); //$NON-NLS-1$
         xmlElement.addAttribute(new Attribute("column", columnName)); //$NON-NLS-1$
 
-        if (StringUtility.stringHasValue(configuredDelimitedColumnName)) {
+        if (stringHasValue(configuredDelimitedColumnName)) {
             xmlElement.addAttribute(new Attribute(
                     "delimitedColumnName", configuredDelimitedColumnName)); //$NON-NLS-1$
         }
@@ -82,8 +84,8 @@ public class IgnoredColumn {
     }
 
     public void validate(List<String> errors, String tableName) {
-        if (!StringUtility.stringHasValue(columnName)) {
-            errors.add(Messages.getString("ValidationError.21", //$NON-NLS-1$
+        if (!stringHasValue(columnName)) {
+            errors.add(getString("ValidationError.21", //$NON-NLS-1$
                     tableName));
         }
     }

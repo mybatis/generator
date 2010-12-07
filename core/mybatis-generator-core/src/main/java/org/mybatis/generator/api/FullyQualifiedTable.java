@@ -15,11 +15,14 @@
  */
 package org.mybatis.generator.api;
 
+import static org.mybatis.generator.internal.util.EqualsUtil.areEqual;
+import static org.mybatis.generator.internal.util.HashCodeUtil.SEED;
+import static org.mybatis.generator.internal.util.HashCodeUtil.hash;
+import static org.mybatis.generator.internal.util.JavaBeansUtil.getCamelCaseString;
+import static org.mybatis.generator.internal.util.StringUtility.composeFullyQualifiedTableName;
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+
 import org.mybatis.generator.config.Context;
-import org.mybatis.generator.internal.util.EqualsUtil;
-import org.mybatis.generator.internal.util.HashCodeUtil;
-import org.mybatis.generator.internal.util.JavaBeansUtil;
-import org.mybatis.generator.internal.util.StringUtility;
 
 /**
  * @author Jeff Butler
@@ -153,9 +156,9 @@ public class FullyQualifiedTable {
     public String getFullyQualifiedTableNameAtRuntime() {
         StringBuilder localCatalog = new StringBuilder();
         if (!ignoreQualifiersAtRuntime) {
-            if (StringUtility.stringHasValue(runtimeCatalog)) {
+            if (stringHasValue(runtimeCatalog)) {
                 localCatalog.append(runtimeCatalog);
-            } else if (StringUtility.stringHasValue(introspectedCatalog)) {
+            } else if (stringHasValue(introspectedCatalog)) {
                 localCatalog.append(introspectedCatalog);
             }
         }
@@ -165,9 +168,9 @@ public class FullyQualifiedTable {
 
         StringBuilder localSchema = new StringBuilder();
         if (!ignoreQualifiersAtRuntime) {
-            if (StringUtility.stringHasValue(runtimeSchema)) {
+            if (stringHasValue(runtimeSchema)) {
                 localSchema.append(runtimeSchema);
-            } else if (StringUtility.stringHasValue(introspectedSchema)) {
+            } else if (stringHasValue(introspectedSchema)) {
                 localSchema.append(introspectedSchema);
             }
         }
@@ -176,14 +179,14 @@ public class FullyQualifiedTable {
         }
 
         StringBuilder localTableName = new StringBuilder();
-        if (StringUtility.stringHasValue(runtimeTableName)) {
+        if (stringHasValue(runtimeTableName)) {
             localTableName.append(runtimeTableName);
         } else {
             localTableName.append(introspectedTableName);
         }
         addDelimiters(localTableName);
 
-        return StringUtility.composeFullyQualifiedTableName(localCatalog
+        return composeFullyQualifiedTableName(localCatalog
                 .toString(), localSchema.toString(), localTableName.toString(),
                 '.');
     }
@@ -196,7 +199,7 @@ public class FullyQualifiedTable {
 
         sb.append(getFullyQualifiedTableNameAtRuntime());
 
-        if (StringUtility.stringHasValue(alias)) {
+        if (stringHasValue(alias)) {
             sb.append(' ');
             sb.append(alias);
         }
@@ -211,28 +214,26 @@ public class FullyQualifiedTable {
      * @return the namespace
      */
     public String getIbatis2SqlMapNamespace() {
-        String localCatalog = StringUtility.stringHasValue(runtimeCatalog) ? runtimeCatalog
+        String localCatalog = stringHasValue(runtimeCatalog) ? runtimeCatalog
                 : introspectedCatalog;
-        String localSchema = StringUtility.stringHasValue(runtimeSchema) ? runtimeSchema
+        String localSchema = stringHasValue(runtimeSchema) ? runtimeSchema
                 : introspectedSchema;
-        String localTable = StringUtility.stringHasValue(runtimeTableName) ? runtimeTableName
+        String localTable = stringHasValue(runtimeTableName) ? runtimeTableName
                 : introspectedTableName;
 
-        return StringUtility
-                .composeFullyQualifiedTableName(
+        return composeFullyQualifiedTableName(
                         ignoreQualifiersAtRuntime ? null : localCatalog,
                         ignoreQualifiersAtRuntime ? null : localSchema,
                         localTable, '_');
     }
 
     public String getDomainObjectName() {
-        if (StringUtility.stringHasValue(domainObjectName)) {
+        if (stringHasValue(domainObjectName)) {
             return domainObjectName;
-        } else if (StringUtility.stringHasValue(runtimeTableName)) {
-            return JavaBeansUtil.getCamelCaseString(runtimeTableName, true);
+        } else if (stringHasValue(runtimeTableName)) {
+            return getCamelCaseString(runtimeTableName, true);
         } else {
-            return JavaBeansUtil
-                    .getCamelCaseString(introspectedTableName, true);
+            return getCamelCaseString(introspectedTableName, true);
         }
     }
 
@@ -248,27 +249,27 @@ public class FullyQualifiedTable {
 
         FullyQualifiedTable other = (FullyQualifiedTable) obj;
 
-        return EqualsUtil.areEqual(this.introspectedTableName,
+        return areEqual(this.introspectedTableName,
                 other.introspectedTableName)
-                && EqualsUtil.areEqual(this.introspectedCatalog,
+                && areEqual(this.introspectedCatalog,
                         other.introspectedCatalog)
-                && EqualsUtil.areEqual(this.introspectedSchema,
+                && areEqual(this.introspectedSchema,
                         other.introspectedSchema);
     }
 
     @Override
     public int hashCode() {
-        int result = HashCodeUtil.SEED;
-        result = HashCodeUtil.hash(result, introspectedTableName);
-        result = HashCodeUtil.hash(result, introspectedCatalog);
-        result = HashCodeUtil.hash(result, introspectedSchema);
+        int result = SEED;
+        result = hash(result, introspectedTableName);
+        result = hash(result, introspectedCatalog);
+        result = hash(result, introspectedSchema);
 
         return result;
     }
 
     @Override
     public String toString() {
-        return StringUtility.composeFullyQualifiedTableName(
+        return composeFullyQualifiedTableName(
                 introspectedCatalog, introspectedSchema, introspectedTableName,
                 '.');
     }
@@ -286,18 +287,18 @@ public class FullyQualifiedTable {
     public String getSubPackage() {
         StringBuilder sb = new StringBuilder();
         if (!ignoreQualifiersAtRuntime) {
-            if (StringUtility.stringHasValue(runtimeCatalog)) {
+            if (stringHasValue(runtimeCatalog)) {
                 sb.append('.');
                 sb.append(runtimeCatalog.toLowerCase());
-            } else if (StringUtility.stringHasValue(introspectedCatalog)) {
+            } else if (stringHasValue(introspectedCatalog)) {
                 sb.append('.');
                 sb.append(introspectedCatalog.toLowerCase());
             }
 
-            if (StringUtility.stringHasValue(runtimeSchema)) {
+            if (stringHasValue(runtimeSchema)) {
                 sb.append('.');
                 sb.append(runtimeSchema.toLowerCase());
-            } else if (StringUtility.stringHasValue(introspectedSchema)) {
+            } else if (stringHasValue(introspectedSchema)) {
                 sb.append('.');
                 sb.append(introspectedSchema.toLowerCase());
             }
@@ -308,11 +309,11 @@ public class FullyQualifiedTable {
     }
 
     private void addDelimiters(StringBuilder sb) {
-        if (StringUtility.stringHasValue(beginningDelimiter)) {
+        if (stringHasValue(beginningDelimiter)) {
             sb.insert(0, beginningDelimiter);
         }
 
-        if (StringUtility.stringHasValue(endingDelimiter)) {
+        if (stringHasValue(endingDelimiter)) {
             sb.append(endingDelimiter);
         }
     }

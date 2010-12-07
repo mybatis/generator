@@ -15,6 +15,8 @@
  */
 package org.mybatis.generator;
 
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,8 +25,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import org.mybatis.generator.internal.util.StringUtility;
 
 /**
  * This class is used to execute an SQL script before a code generation
@@ -42,11 +42,11 @@ public class SqlScriptRunner {
     public SqlScriptRunner(InputStream sourceFile, String driver, String url,
             String userId, String password) throws Exception {
         
-        if (!StringUtility.stringHasValue(driver)) {
+        if (!stringHasValue(driver)) {
             throw new Exception("JDBC Driver is required");
         }
         
-        if (!StringUtility.stringHasValue(url)) {
+        if (!stringHasValue(url)) {
             throw new Exception("JDBC URL is required");
         }
         
@@ -131,7 +131,7 @@ public class SqlScriptRunner {
                 continue;
             }
 
-            if (!StringUtility.stringHasValue(line)) {
+            if (!stringHasValue(line)) {
                 continue;
             }
 

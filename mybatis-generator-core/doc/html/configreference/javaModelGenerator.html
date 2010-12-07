@@ -68,6 +68,20 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
     <th>Property Values</th>
   </tr>
   <tr>
+    <td valign="top">constructorBased</td>
+    <td>
+      This property is used to select whether MyBatis Generator will generate a constructor
+      for the class that accepts a value for each field in the class.  Also, the SQL result map
+      will be built to use the constructor rather than the "setter" for each field.
+      <p>This property is only applicable for MyBatis3 and will be ignored for
+         iBATIS2.</p>
+      <p>This property is ignored (and forced "true") if the "immutable" property
+         is set "true".</p>
+      <p>This property can be overridden by the corresponding property in a
+      <a href="table.html">&lt;table&gt;</a> element.</p>
+      <p><i>The default value is false.</i></p></td>
+  </tr>
+  <tr>
     <td valign="top">enableSubPackages</td>
     <td>This property is used to select whether MyBatis Generator will generate different
         Java packages for the objects based on the catalog and schema of the
@@ -78,6 +92,20 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
         the package "com.mycompany.myschema".  If the property is false, the generated
         objects will be placed in the "com.mycompany" schema.</p>
         <p><i>The default value is false.</i></p></td>
+  </tr>
+  <tr>
+    <td valign="top">immutable</td>
+    <td>
+      This property is used to select whether MyBatis Generator will generate immutable
+      model classes - this means that the classes will not have "setter" methods and
+      the constructor will accept values for each field in the class.
+      <p>If true, this forces the model classes to be built with paramterized constructors
+         regardless of the value of the "constructorBased" property.</p>
+      <p>This property is only applicable for MyBatis3 and will be ignored for
+         iBATIS2.</p>
+      <p>This property can be overridden by the corresponding property in a
+      <a href="table.html">&lt;table&gt;</a> element.</p>
+      <p><i>The default value is false.</i></p></td>
   </tr>
   <tr>
     <td valign="top">rootClass</td>

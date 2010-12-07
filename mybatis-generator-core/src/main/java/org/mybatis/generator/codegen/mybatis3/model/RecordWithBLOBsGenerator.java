@@ -26,6 +26,7 @@ import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.codegen.RootClassInfo;
@@ -62,6 +63,14 @@ public class RecordWithBLOBsGenerator extends AbstractJavaGenerator {
             topLevelClass.setSuperClass(introspectedTable.getPrimaryKeyType());
         }
 
+        if (introspectedTable.isConstructorBased()) {
+            addParameterizedConstructor(topLevelClass);
+            
+            if (!introspectedTable.isImmutable()) {
+                addDefaultConstructor(topLevelClass);
+            }
+        }
+        
         for (IntrospectedColumn introspectedColumn : introspectedTable
                 .getBLOBColumns()) {
             if (RootClassInfo.getInstance(rootClass, warnings)
@@ -84,11 +93,13 @@ public class RecordWithBLOBsGenerator extends AbstractJavaGenerator {
                 topLevelClass.addMethod(method);
             }
 
-            method = getJavaBeansSetter(introspectedColumn);
-            if (plugins.modelSetterMethodGenerated(method, topLevelClass,
-                    introspectedColumn, introspectedTable,
-                    Plugin.ModelClassType.RECORD_WITH_BLOBS)) {
-                topLevelClass.addMethod(method);
+            if (!introspectedTable.isImmutable()) {
+                method = getJavaBeansSetter(introspectedColumn);
+                if (plugins.modelSetterMethodGenerated(method, topLevelClass,
+                        introspectedColumn, introspectedTable,
+                        Plugin.ModelClassType.RECORD_WITH_BLOBS)) {
+                    topLevelClass.addMethod(method);
+                }
             }
         }
 
@@ -98,5 +109,46 @@ public class RecordWithBLOBsGenerator extends AbstractJavaGenerator {
             answer.add(topLevelClass);
         }
         return answer;
+    }
+    
+    private void addParameterizedConstructor(TopLevelClass topLevelClass) {
+        Method method = new Method();
+        method.setVisibility(JavaVisibility.PUBLIC);
+        method.setConstructor(true);
+        method.setName(topLevelClass.getType().getShortName());
+        
+        for (IntrospectedColumn introspectedColumn : introspectedTable
+                .getAllColumns()) {
+            method.addParameter(new Parameter(introspectedColumn.getFullyQualifiedJavaType(),
+                    introspectedColumn.getJavaProperty()));
+        }
+        
+        boolean comma = false;
+        StringBuilder sb = new StringBuilder();
+        sb.append("super("); //$NON-NLS-1$
+        for (IntrospectedColumn introspectedColumn : introspectedTable
+                .getNonBLOBColumns()) {
+            if (comma) {
+                sb.append(", "); //$NON-NLS-1$
+            } else {
+                comma = true;
+            }
+            sb.append(introspectedColumn.getJavaProperty());
+        }
+        sb.append(");"); //$NON-NLS-1$
+        method.addBodyLine(sb.toString());
+        
+        for (IntrospectedColumn introspectedColumn : introspectedTable
+                .getBLOBColumns()) {
+            sb.setLength(0);
+            sb.append("this."); //$NON-NLS-1$
+            sb.append(introspectedColumn.getJavaProperty());
+            sb.append(" = "); //$NON-NLS-1$
+            sb.append(introspectedColumn.getJavaProperty());
+            sb.append(';');
+            method.addBodyLine(sb.toString());
+        }
+
+        topLevelClass.addMethod(method);
     }
 }

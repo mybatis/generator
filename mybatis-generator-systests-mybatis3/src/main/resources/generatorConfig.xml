@@ -209,4 +209,32 @@
     <table tableName="AnotherAwfulTable" />
     <table tableName="NameView" />
   </context>
+
+  <context id="miscellaneousTests_immutable" targetRuntime="MyBatis3" defaultModelType="hierarchical">
+    <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
+        connectionURL="jdbc:hsqldb:mem:aname"
+        userId="sa" />
+
+    <javaModelGenerator targetPackage="mbg.test.mb3.generated.hierarchical.immutable.model" targetProject="MAVEN">
+      <property name="trimStrings" value="true" />
+      <property name="immutable" value="true"/>
+    </javaModelGenerator>
+
+    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.hierarchical.immutable.xml"  targetProject="MAVEN">
+    </sqlMapGenerator>
+
+    <javaClientGenerator type="XMLMAPPER" targetPackage="mbg.test.mb3.generated.hierarchical.immutable.mapper"  targetProject="MAVEN">
+    </javaClientGenerator>
+
+    <table tableName="FieldsOnly" />
+    <table tableName="FieldsBlobs" />
+    <table tableName="PKOnly" />
+    <table tableName="PKBlobs" />
+    <table tableName="PKFields" alias="B" >
+      <property name="immutable" value="false"/>
+      <property name="constructorBased" value="true"/>
+      <columnOverride column="wierd$Field" delimitedColumnName="true"/>
+    </table>
+    <table tableName="PKFieldsBlobs" alias="A" />
+  </context>
 </generatorConfiguration>

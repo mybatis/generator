@@ -47,6 +47,7 @@ create table PKBlobs (
   id int not null,
   blob1 longvarbinary,
   blob2 longvarbinary,
+  characterlob clob(5k),
   primary key (id)
 );
 

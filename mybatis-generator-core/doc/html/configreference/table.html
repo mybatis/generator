@@ -20,7 +20,7 @@
 introspection.  Selected tables will cause the following objects to be generated
 for each table:</p>
 <ul>
-  <li>An iBATIS formatted SQL Map file</li>
+  <li>A MyBatis/iBATIS formatted SQL Map file</li>
   <li>A set of classes that form the "model" of the table including:
     <ul>
       <li>A class to match the primary key of the table (if the table
@@ -270,32 +270,16 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
     <th>Property Values</th>
   </tr>
   <tr>
-    <td valign="top">useActualColumnNames</td>
-    <td>If true, then
-        MBG will use column names as returned from the database metadata as the properties
-        of the generated domain objects.  If false (default), MBG will attempt to camel
-        case the returned names.  In either event, the name can be specified explicitly by the
-        &lt;columnOverride&gt; element in which case this property will be ignored for the
-        specified column.
-        <p>For example, suppose a table contains a column START_DATE.  If the value of
-        this property is "true", then MBG will generate the property name
-        as <code>START_DATE</code> - meaning that the getters and setters for the value will be
-        <code>getSTART_DATE()</code> and <code>setSTART_DATE()</code>.
-        If the value of this property is false, then MBG will
-        generate the property name as <code>startDate</code> - meaning that the
-        getters and setters for the value will be <code>getStartDate()</code> and
-        <code>setStartDate()</code>.</p>
-        <p><i>The default value is false.</i></p></td>
-  </tr>
-  <tr>
-    <td valign="top">useCompoundPropertyNames</td>
-    <td>If true, then
-        MBG will use generate property names by contatenating the column name with the
-        column reparks.  This can be usefull in databases created by 4th generation languages
-        where the column names are generated (e.g. FLD2237), but the remarks contain useful
-        information (e.g. "customer id").  In this case, MBG will generate a property
-        name of FLD2237_CustomerId.
-        <p><i>The default value is false.</i></p></td>
+    <td valign="top">constructorBased</td>
+    <td>
+      This property is used to select whether MyBatis Generator will generate a constructor
+      for the class that accepts a value for each field in the class.  Also, the SQL result map
+      will be built to use the constructor rather than the "setter" for each field.
+      <p>This property is only applicable for MyBatis3 and will be ignored for
+         iBATIS2.</p>
+      <p>This property is ignored (and forced "true") if the "immutable" property
+         is set "true".</p>
+      <p><i>The default value is false.</i></p></td>
   </tr>
   <tr>
     <td valign="top">ignoreQualifiersAtRuntime</td>
@@ -305,6 +289,18 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
         you can use MBG to generate objects based on the table in one schema,
         but not include the schema for runtime.<p/>
         <p><i>The default value is false.</i></p></td>
+  </tr>
+  <tr>
+    <td valign="top">immutable</td>
+    <td>
+      This property is used to select whether MyBatis Generator will generate immutable
+      model classes - this means that the classes will not have "setter" methods and
+      the constructor will accept values for each field in the class.
+      <p>If true, this forces the model classes to be built with paramterized constructors
+         regardless of the value of the "constructorBased" property.</p>
+      <p>This property is only applicable for MyBatis3 and will be ignored for
+         iBATIS2.</p>
+      <p><i>The default value is false.</i></p></td>
   </tr>
   <tr>
     <td valign="top">rootClass</td>
@@ -366,6 +362,24 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
         property in most cases with public synonyms.</td>
   </tr>
   <tr>
+    <td valign="top">useActualColumnNames</td>
+    <td>If true, then
+        MBG will use column names as returned from the database metadata as the properties
+        of the generated domain objects.  If false (default), MBG will attempt to camel
+        case the returned names.  In either event, the name can be specified explicitly by the
+        &lt;columnOverride&gt; element in which case this property will be ignored for the
+        specified column.
+        <p>For example, suppose a table contains a column START_DATE.  If the value of
+        this property is "true", then MBG will generate the property name
+        as <code>START_DATE</code> - meaning that the getters and setters for the value will be
+        <code>getSTART_DATE()</code> and <code>setSTART_DATE()</code>.
+        If the value of this property is false, then MBG will
+        generate the property name as <code>startDate</code> - meaning that the
+        getters and setters for the value will be <code>getStartDate()</code> and
+        <code>setStartDate()</code>.</p>
+        <p><i>The default value is false.</i></p></td>
+  </tr>
+  <tr>
     <td valign="top">useColumnIndexes</td>
     <td>If true, then MBG will generate resultMaps that use column index rather than
         column name in the result mappings.  This is useful when a table has column names
@@ -374,6 +388,16 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
         <p><i>The default value is false.</i></p>
         <p><b>Important Note:</b> This property is not supported if the target runtime is
             for MyBatis version 3.</p></td>
+  </tr>
+  <tr>
+    <td valign="top">useCompoundPropertyNames</td>
+    <td>If true, then
+        MBG will use generate property names by contatenating the column name with the
+        column reparks.  This can be usefull in databases created by 4th generation languages
+        where the column names are generated (e.g. FLD2237), but the remarks contain useful
+        information (e.g. "customer id").  In this case, MBG will generate a property
+        name of FLD2237_CustomerId.
+        <p><i>The default value is false.</i></p></td>
   </tr>
 </table>
 

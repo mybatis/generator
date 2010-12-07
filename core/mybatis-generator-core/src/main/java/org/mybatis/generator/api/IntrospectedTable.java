@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.GeneratedKey;
@@ -1006,5 +1007,36 @@ public abstract class IntrospectedTable {
 
     public TargetRuntime getTargetRuntime() {
         return targetRuntime;
+    }
+    
+    public boolean isImmutable() {
+        Properties properties;
+        
+        if (tableConfiguration.getProperties().containsKey(PropertyRegistry.ANY_IMMUTABLE)) {
+            properties = tableConfiguration.getProperties();
+        } else {
+            properties = context.getJavaModelGeneratorConfiguration().getProperties();
+        }
+        
+        return "true".equalsIgnoreCase( //$NON-NLS-1$
+                properties.getProperty(PropertyRegistry.ANY_IMMUTABLE));
+    }
+    
+    public boolean isConstructorBased() {
+        if (isImmutable()) {
+            return true;
+        }
+        
+        Properties properties;
+        
+        if (tableConfiguration.getProperties().containsKey(PropertyRegistry.ANY_CONSTRUCTOR_BASED)) {
+            properties = tableConfiguration.getProperties();
+        } else {
+            properties = context.getJavaModelGeneratorConfiguration().getProperties();
+        }
+        
+        return "true".equalsIgnoreCase( //$NON-NLS-1$
+                properties.getProperty(PropertyRegistry.ANY_CONSTRUCTOR_BASED));
+        
     }
 }

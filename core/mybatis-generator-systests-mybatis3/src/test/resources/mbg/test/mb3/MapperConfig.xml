@@ -49,6 +49,12 @@
     <mapper resource="mbg/test/mb3/generated/hierarchical/xml/PkfieldsMapper.xml" />
     <mapper resource="mbg/test/mb3/generated/hierarchical/xml/PkfieldsblobsMapper.xml" />
     <mapper resource="mbg/test/mb3/generated/hierarchical/xml/PkonlyMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/hierarchical/immutable/xml/FieldsblobsMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/hierarchical/immutable/xml/FieldsonlyMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/hierarchical/immutable/xml/PkblobsMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/hierarchical/immutable/xml/PkfieldsMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/hierarchical/immutable/xml/PkfieldsblobsMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/hierarchical/immutable/xml/PkonlyMapper.xml" />
     <mapper resource="mbg/test/mb3/generated/miscellaneous/xml/AnotherawfultableMapper.xml" />
     <mapper resource="mbg/test/mb3/generated/miscellaneous/xml/MyObjectMapper.xml" />
     <mapper resource="mbg/test/mb3/generated/miscellaneous/xml/RegexrenameMapper.xml" />

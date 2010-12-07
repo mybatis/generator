@@ -25,6 +25,7 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
 import org.mybatis.generator.internal.util.StringUtility;
@@ -139,5 +140,14 @@ public abstract class AbstractJavaGenerator extends AbstractGenerator {
         }
 
         return rootClass;
+    }
+
+    protected void addDefaultConstructor(TopLevelClass topLevelClass) {
+        Method method = new Method();
+        method.setVisibility(JavaVisibility.PUBLIC);
+        method.setConstructor(true);
+        method.setName(topLevelClass.getType().getShortName());
+        method.addBodyLine("super();"); //$NON-NLS-1$
+        topLevelClass.addMethod(method);
     }
 }

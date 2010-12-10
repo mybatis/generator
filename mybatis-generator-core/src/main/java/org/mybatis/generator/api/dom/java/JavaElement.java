@@ -26,7 +26,7 @@ import org.mybatis.generator.api.dom.OutputUtilities;
 public abstract class JavaElement {
     private List<String> javaDocLines;
 
-    private JavaVisibility visibility;
+    private JavaVisibility visibility = JavaVisibility.DEFAULT;
 
     private boolean isStatic;
 

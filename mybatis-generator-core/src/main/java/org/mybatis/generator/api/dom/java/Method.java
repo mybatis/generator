@@ -43,10 +43,16 @@ public class Method extends JavaElement {
      *  
      */
     public Method() {
+        // use a default name to avoid malformed code
+        this("bar"); //$NON-NLS-1$
+    }
+    
+    public Method(String name) {
         super();
         bodyLines = new ArrayList<String>();
         parameters = new ArrayList<Parameter>();
         exceptions = new ArrayList<FullyQualifiedJavaType>();
+        this.name = name;
     }
 
     /**

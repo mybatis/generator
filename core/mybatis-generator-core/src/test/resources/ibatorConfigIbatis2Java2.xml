@@ -29,7 +29,7 @@
       <property name="enableSubPackages" value="true" />
     </daoGenerator>
 
-    <table tableName="FieldsOnly" />
+    <table tableName="FieldsOnly" domainObjectName="fred" />
     <table tableName="PKOnly" />
     <table tableName="PKFields" alias="B" />
     <table tableName="PKBlobs" />

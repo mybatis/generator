@@ -461,7 +461,7 @@ public class FullyQualifiedJavaType implements
     }
 
     /**
-     * Returns the pack name of a fully qualified type.
+     * Returns the package name of a fully qualified type.
      * 
      * This method relies on convention - we assume that package names are all
      * lower case. Not totally fool proof, but correct in most instances.
@@ -481,6 +481,20 @@ public class FullyQualifiedJavaType implements
                     sb.append('.');
                 }
                 sb.append(s);
+            }
+        }
+        
+        if (baseQualifiedName.equals(sb.toString())) {
+            // no upper case elements found in the name.  So,
+            // do an alternative parse where we assume that the
+            // last element is the class name
+            int i = baseQualifiedName.lastIndexOf('.');
+            
+            if (i == -1) {
+                // no package
+                return ""; //$NON-NLS-1$
+            } else {
+                return baseQualifiedName.substring(0, i);
             }
         }
 

@@ -16,6 +16,7 @@
 
 package org.mybatis.generator.codegen.mybatis3.javamapper;
 
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.ArrayList;
@@ -42,6 +43,7 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.UpdateByExampl
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.UpdateByPrimaryKeySelectiveMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.UpdateByPrimaryKeyWithBLOBsMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.UpdateByPrimaryKeyWithoutBLOBsMethodGenerator;
+import org.mybatis.generator.config.PropertyRegistry;
 
 /**
  * @author Jeff Butler
@@ -68,6 +70,20 @@ public class JavaMapperGenerator extends AbstractJavaGenerator {
         interfaze.setVisibility(JavaVisibility.PUBLIC);
         commentGenerator.addJavaFileComment(interfaze);
 
+        String rootInterface = introspectedTable
+            .getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
+        if (!stringHasValue(rootInterface)) {
+            rootInterface = context.getJavaClientGeneratorConfiguration()
+                .getProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
+        }
+
+        if (stringHasValue(rootInterface)) {
+            FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(
+                    rootInterface);
+            interfaze.addSuperInterface(fqjt);
+            interfaze.addImportedType(fqjt);
+        }
+        
         addCountByExampleMethod(interfaze);
         addDeleteByExampleMethod(interfaze);
         addDeleteByPrimaryKeyMethod(interfaze);

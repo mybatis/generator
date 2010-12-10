@@ -35,7 +35,7 @@ public class PropertyRegistry {
     public static final String ANY_CONSTRUCTOR_BASED = "constructorBased"; //$NON-NLS-1$
 
     /**
-     * recognized by table and dao generator
+     * recognized by table and java client generator
      */
     public static final String ANY_ROOT_INTERFACE = "rootInterface"; //$NON-NLS-1$
 

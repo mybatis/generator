@@ -45,6 +45,8 @@ public class InnerClass extends JavaElement {
     private List<Method> methods;
 
     private boolean isAbstract;
+    
+    private List<InitializationBlock> initializationBlocks;
 
     /**
      *  
@@ -57,6 +59,7 @@ public class InnerClass extends JavaElement {
         innerEnums = new ArrayList<InnerEnum>();
         superInterfaceTypes = new HashSet<FullyQualifiedJavaType>();
         methods = new ArrayList<Method>();
+        initializationBlocks = new ArrayList<InitializationBlock>();
     }
 
     public InnerClass(String typeName) {
@@ -112,6 +115,14 @@ public class InnerClass extends JavaElement {
         innerEnums.add(innerEnum);
     }
 
+    public List<InitializationBlock> getInitializationBlocks() {
+        return initializationBlocks;
+    }
+
+    public void addInitializationBlock(InitializationBlock initializationBlock) {
+        initializationBlocks.add(initializationBlock);
+    }
+
     public String getFormattedContent(int indentLevel) {
         StringBuilder sb = new StringBuilder();
 
@@ -158,13 +169,27 @@ public class InnerClass extends JavaElement {
 
         sb.append(" {"); //$NON-NLS-1$
         indentLevel++;
-
+        
         Iterator<Field> fldIter = fields.iterator();
         while (fldIter.hasNext()) {
             OutputUtilities.newLine(sb);
             Field field = fldIter.next();
             sb.append(field.getFormattedContent(indentLevel));
             if (fldIter.hasNext()) {
+                OutputUtilities.newLine(sb);
+            }
+        }
+
+        if (initializationBlocks.size() > 0) {
+            OutputUtilities.newLine(sb);
+        }
+
+        Iterator<InitializationBlock> blkIter = initializationBlocks.iterator();
+        while (blkIter.hasNext()) {
+            OutputUtilities.newLine(sb);
+            InitializationBlock initializationBlock = blkIter.next();
+            sb.append(initializationBlock.getFormattedContent(indentLevel));
+            if (blkIter.hasNext()) {
                 OutputUtilities.newLine(sb);
             }
         }

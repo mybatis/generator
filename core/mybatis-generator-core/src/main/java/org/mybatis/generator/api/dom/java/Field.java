@@ -22,7 +22,6 @@ import org.mybatis.generator.api.dom.OutputUtilities;
  */
 public class Field extends JavaElement {
     private FullyQualifiedJavaType type;
-
     private String name;
     private String initializationString;
 
@@ -30,7 +29,14 @@ public class Field extends JavaElement {
      *  
      */
     public Field() {
+        // use a default name to avoid NPE
+        this("foo", FullyQualifiedJavaType.getIntInstance()); //$NON-NLS-1$
+    }
+    
+    public Field(String name, FullyQualifiedJavaType type) {
         super();
+        this.name = name;
+        this.type = type;
     }
 
     /**

@@ -53,6 +53,29 @@ public class FullyQualifiedJavaTypeTest {
     }
 
     @Test
+    public void testSimpleType2() {
+        FullyQualifiedJavaType fqjt =
+            new FullyQualifiedJavaType("com.foo.bar"); //$NON-NLS-1$
+        assertTrue(fqjt.isExplicitlyImported());
+        assertEquals("bar", fqjt.getShortName()); //$NON-NLS-1$
+        assertEquals("com.foo.bar", fqjt.getFullyQualifiedName()); //$NON-NLS-1$
+        assertEquals("com.foo", fqjt.getPackageName()); //$NON-NLS-1$
+        assertEquals(1, fqjt.getImportList().size());
+        assertEquals("com.foo.bar", fqjt.getImportList().get(0));
+    }
+    
+    @Test
+    public void testSimpleType3() {
+        FullyQualifiedJavaType fqjt =
+            new FullyQualifiedJavaType("int"); //$NON-NLS-1$
+        assertFalse(fqjt.isExplicitlyImported());
+        assertEquals("int", fqjt.getShortName()); //$NON-NLS-1$
+        assertEquals("int", fqjt.getFullyQualifiedName()); //$NON-NLS-1$
+        assertEquals("", fqjt.getPackageName()); //$NON-NLS-1$
+        assertEquals(0, fqjt.getImportList().size());
+    }
+    
+    @Test
     public void testGenericType1() {
         FullyQualifiedJavaType fqjt =
             new FullyQualifiedJavaType("java.util.List<java.lang.String>"); //$NON-NLS-1$

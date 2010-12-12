@@ -485,16 +485,14 @@ public class FullyQualifiedJavaType implements
         }
         
         if (baseQualifiedName.equals(sb.toString())) {
+            sb.setLength(0);
             // no upper case elements found in the name.  So,
             // do an alternative parse where we assume that the
             // last element is the class name
             int i = baseQualifiedName.lastIndexOf('.');
             
-            if (i == -1) {
-                // no package
-                return ""; //$NON-NLS-1$
-            } else {
-                return baseQualifiedName.substring(0, i);
+            if (i != -1) {
+                sb.append(baseQualifiedName.substring(0, i));
             }
         }
 

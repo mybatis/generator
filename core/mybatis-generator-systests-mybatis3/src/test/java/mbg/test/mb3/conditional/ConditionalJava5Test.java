@@ -1884,6 +1884,7 @@ public class ConditionalJava5Test extends AbstractTest {
 
             PkfieldsblobsExample example = new PkfieldsblobsExample();
             example.createCriteria().andId2EqualTo(6);
+            example.setOrderByClause("ID1");  // test for Issue 174
             List<Pkfieldsblobs> answer = mapper.selectByExampleWithBLOBs(example);
             assertEquals(1, answer.size());
 

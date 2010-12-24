@@ -57,7 +57,7 @@ public class InsertSelectiveElementGenerator extends
             // if the column is null, then it's a configuration error. The
             // warning has already been reported
             if (introspectedColumn != null) {
-                if ("JDBC".equals(gk.getRuntimeSqlStatement())) { //$NON-NLS-1$
+                if (gk.isJdbcStandard()) {
                     answer.addAttribute(new Attribute("useGeneratedKeys", "true")); //$NON-NLS-1$ //$NON-NLS-2$
                     answer.addAttribute(new Attribute("keyProperty", introspectedColumn.getJavaProperty())); //$NON-NLS-1$
                 } else {
@@ -91,31 +91,28 @@ public class InsertSelectiveElementGenerator extends
                 continue;
             }
 
-            if (gk != null && gk.getColumn().equals(introspectedColumn.getActualColumnName())) {
-                // is this a generated key field (JDBC identity support)
-                if ("JDBC".equals(gk.getRuntimeSqlStatement())) { //$NON-NLS-1$
-                    continue;
-                }
-                
+            if (introspectedColumn.isSequenceColumn()
+                    || introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {
                 // if it is a sequence column, it is not optional
-                // check to see if if is a "BEFORE" key
-                if ("BEFORE".equals(gk.getMyBatis3Order())) { //$NON-NLS-1$
-                    sb.setLength(0);
-                    sb.append(MyBatis3FormattingUtilities
-                            .getEscapedColumnName(introspectedColumn));
-                    sb.append(',');
-                    insertTrimElement.addElement(new TextElement(sb.toString()));
+                // This is required for MyBatis3 because MyBatis3 parses
+                // and calculates the SQL before executing the selectKey
+                
+                // if it is primitive, we cannot do a null check
+                sb.setLength(0);
+                sb.append(MyBatis3FormattingUtilities
+                    .getEscapedColumnName(introspectedColumn));
+                sb.append(',');
+                insertTrimElement.addElement(new TextElement(sb.toString()));
 
-                    sb.setLength(0);
-                    sb.append(MyBatis3FormattingUtilities
-                            .getParameterClause(introspectedColumn));
-                    sb.append(',');
-                    valuesTrimElement.addElement(new TextElement(sb.toString()));
+                sb.setLength(0);
+                sb.append(MyBatis3FormattingUtilities
+                    .getParameterClause(introspectedColumn));
+                sb.append(',');
+                valuesTrimElement.addElement(new TextElement(sb.toString()));
 
-                    continue;
-                }
-            }
-
+                continue;
+            }            
+            
             XmlElement insertNotNullElement = new XmlElement("if"); //$NON-NLS-1$
             sb.setLength(0);
             sb.append(introspectedColumn.getJavaProperty());

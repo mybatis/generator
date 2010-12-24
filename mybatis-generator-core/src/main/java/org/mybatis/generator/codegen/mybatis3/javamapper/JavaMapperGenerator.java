@@ -27,7 +27,7 @@ import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
-import org.mybatis.generator.codegen.AbstractJavaGenerator;
+import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.AbstractJavaMapperMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.CountByExampleMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.DeleteByExampleMethodGenerator;
@@ -49,7 +49,7 @@ import org.mybatis.generator.config.PropertyRegistry;
  * @author Jeff Butler
  * 
  */
-public class JavaMapperGenerator extends AbstractJavaGenerator {
+public class JavaMapperGenerator extends AbstractJavaClientGenerator {
 
     /**
      * 
@@ -103,6 +103,11 @@ public class JavaMapperGenerator extends AbstractJavaGenerator {
         if (context.getPlugins().clientGenerated(interfaze, null,
                 introspectedTable)) {
             answer.add(interfaze);
+        }
+        
+        List<CompilationUnit> extraCompilationUnits = getExtraCompilationUnits();
+        if (extraCompilationUnits != null) {
+            answer.addAll(extraCompilationUnits);
         }
 
         return answer;
@@ -215,5 +220,14 @@ public class JavaMapperGenerator extends AbstractJavaGenerator {
         methodGenerator.setProgressCallback(progressCallback);
         methodGenerator.setWarnings(warnings);
         methodGenerator.addInterfaceElements(interfaze);
+    }
+
+    @Override
+    public boolean requiresMatchedXMLGenerator() {
+        return true;
+    }
+    
+    public List<CompilationUnit> getExtraCompilationUnits() {
+        return null;
     }
 }

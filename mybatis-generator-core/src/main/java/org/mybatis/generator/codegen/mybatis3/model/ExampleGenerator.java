@@ -267,6 +267,13 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         answer.addField(field);
         answer.addMethod(getGetter(field));
 
+        field = new Field();
+        field.setName("typeHandler"); //$NON-NLS-1$
+        field.setType(FullyQualifiedJavaType.getStringInstance());
+        field.setVisibility(JavaVisibility.PRIVATE);
+        answer.addField(field);
+        answer.addMethod(getGetter(field));
+
         method = new Method();
         method.setVisibility(JavaVisibility.PROTECTED);
         method.setName("Criterion"); //$NON-NLS-1$
@@ -275,6 +282,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
                 .getStringInstance(), "condition")); //$NON-NLS-1$
         method.addBodyLine("super();"); //$NON-NLS-1$
         method.addBodyLine("this.condition = condition;"); //$NON-NLS-1$
+        method.addBodyLine("this.typeHandler = null;"); //$NON-NLS-1$
         method.addBodyLine("this.noValue = true;"); //$NON-NLS-1$
         answer.addMethod(method);
 
@@ -286,9 +294,12 @@ public class ExampleGenerator extends AbstractJavaGenerator {
                 .getStringInstance(), "condition")); //$NON-NLS-1$
         method.addParameter(new Parameter(FullyQualifiedJavaType
                 .getObjectInstance(), "value")); //$NON-NLS-1$
+        method.addParameter(new Parameter(FullyQualifiedJavaType
+                .getStringInstance(), "typeHandler")); //$NON-NLS-1$
         method.addBodyLine("super();"); //$NON-NLS-1$
         method.addBodyLine("this.condition = condition;"); //$NON-NLS-1$
         method.addBodyLine("this.value = value;"); //$NON-NLS-1$
+        method.addBodyLine("this.typeHandler = typeHandler;"); //$NON-NLS-1$
         method.addBodyLine("if (value instanceof List<?>) {"); //$NON-NLS-1$
         method.addBodyLine("this.listValue = true;"); //$NON-NLS-1$
         method.addBodyLine("} else {"); //$NON-NLS-1$
@@ -304,13 +315,40 @@ public class ExampleGenerator extends AbstractJavaGenerator {
                 .getStringInstance(), "condition")); //$NON-NLS-1$
         method.addParameter(new Parameter(FullyQualifiedJavaType
                 .getObjectInstance(), "value")); //$NON-NLS-1$
+        method.addBodyLine("this(condition, value, null);"); //$NON-NLS-1$
+        answer.addMethod(method);
+
+        method = new Method();
+        method.setVisibility(JavaVisibility.PROTECTED);
+        method.setName("Criterion"); //$NON-NLS-1$
+        method.setConstructor(true);
+        method.addParameter(new Parameter(FullyQualifiedJavaType
+                .getStringInstance(), "condition")); //$NON-NLS-1$
+        method.addParameter(new Parameter(FullyQualifiedJavaType
+                .getObjectInstance(), "value")); //$NON-NLS-1$
         method.addParameter(new Parameter(FullyQualifiedJavaType
                 .getObjectInstance(), "secondValue")); //$NON-NLS-1$
+        method.addParameter(new Parameter(FullyQualifiedJavaType
+                .getStringInstance(), "typeHandler")); //$NON-NLS-1$
         method.addBodyLine("super();"); //$NON-NLS-1$
         method.addBodyLine("this.condition = condition;"); //$NON-NLS-1$
         method.addBodyLine("this.value = value;"); //$NON-NLS-1$
         method.addBodyLine("this.secondValue = secondValue;"); //$NON-NLS-1$
+        method.addBodyLine("this.typeHandler = typeHandler;"); //$NON-NLS-1$
         method.addBodyLine("this.betweenValue = true;"); //$NON-NLS-1$
+        answer.addMethod(method);
+
+        method = new Method();
+        method.setVisibility(JavaVisibility.PROTECTED);
+        method.setName("Criterion"); //$NON-NLS-1$
+        method.setConstructor(true);
+        method.addParameter(new Parameter(FullyQualifiedJavaType
+                .getStringInstance(), "condition")); //$NON-NLS-1$
+        method.addParameter(new Parameter(FullyQualifiedJavaType
+                .getObjectInstance(), "value")); //$NON-NLS-1$
+        method.addParameter(new Parameter(FullyQualifiedJavaType
+                .getObjectInstance(), "secondValue")); //$NON-NLS-1$
+        method.addBodyLine("this(condition, value, secondValue, null);"); //$NON-NLS-1$
         answer.addMethod(method);
 
         return answer;
@@ -403,6 +441,35 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         }
         answer.addMethod(method);
 
+        // now generate the getAllCriteria method
+        if (criteriaLists.size() > 1) {
+            field = new Field();
+            field.setName("allCriteria"); //$NON-NLS-1$
+            field.setType(new FullyQualifiedJavaType("List<Criterion>")); //$NON-NLS-1$
+            field.setVisibility(JavaVisibility.PROTECTED);
+            answer.addField(field);
+        }
+        
+        method = new Method();
+        method.setVisibility(JavaVisibility.PUBLIC);
+        method.setName("getAllCriteria"); //$NON-NLS-1$
+        method.setReturnType(new FullyQualifiedJavaType("List<Criterion>")); //$NON-NLS-1$
+        if (criteriaLists.size() < 2) {
+            method.addBodyLine("return criteria;"); //$NON-NLS-1$
+        } else {
+            method.addBodyLine("if (allCriteria == null) {"); //$NON-NLS-1$
+            method.addBodyLine("allCriteria = new ArrayList<Criterion>();"); //$NON-NLS-1$
+            
+            strIter = criteriaLists.iterator();
+            while (strIter.hasNext()) {
+                method.addBodyLine(String.format("allCriteria.addAll(%s);", strIter.next())); //$NON-NLS-1$
+            }
+
+            method.addBodyLine("}"); //$NON-NLS-1$
+            method.addBodyLine("return allCriteria;"); //$NON-NLS-1$
+        }
+        answer.addMethod(method);
+        
         // now we need to generate the methods that will be used in the SqlMap
         // to generate the dynamic where clause
         topLevelClass.addImportedType(FullyQualifiedJavaType
@@ -437,6 +504,9 @@ public class ExampleGenerator extends AbstractJavaGenerator {
                 .addBodyLine("throw new RuntimeException(\"Value for condition cannot be null\");"); //$NON-NLS-1$
         method.addBodyLine("}"); //$NON-NLS-1$
         method.addBodyLine("criteria.add(new Criterion(condition));"); //$NON-NLS-1$
+        if (criteriaLists.size() > 1) {
+            method.addBodyLine("allCriteria = null;"); //$NON-NLS-1$
+        }
         answer.addMethod(method);
 
         method = new Method();
@@ -453,6 +523,9 @@ public class ExampleGenerator extends AbstractJavaGenerator {
                 .addBodyLine("throw new RuntimeException(\"Value for \" + property + \" cannot be null\");"); //$NON-NLS-1$
         method.addBodyLine("}"); //$NON-NLS-1$
         method.addBodyLine("criteria.add(new Criterion(condition, value));"); //$NON-NLS-1$
+        if (criteriaLists.size() > 1) {
+            method.addBodyLine("allCriteria = null;"); //$NON-NLS-1$
+        }
         answer.addMethod(method);
 
         method = new Method();
@@ -472,6 +545,9 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         method.addBodyLine("}"); //$NON-NLS-1$
         method
                 .addBodyLine("criteria.add(new Criterion(condition, value1, value2));"); //$NON-NLS-1$
+        if (criteriaLists.size() > 1) {
+            method.addBodyLine("allCriteria = null;"); //$NON-NLS-1$
+        }
         answer.addMethod(method);
 
         FullyQualifiedJavaType listOfDates = new FullyQualifiedJavaType(
@@ -963,10 +1039,10 @@ public class ExampleGenerator extends AbstractJavaGenerator {
                 .addBodyLine("throw new RuntimeException(\"Value for \" + property + \" cannot be null\");"); //$NON-NLS-1$
         method.addBodyLine("}"); //$NON-NLS-1$
 
-        sb.setLength(0);
-        sb.append(field.getName());
-        sb.append(".add(new Criterion(condition, value));"); //$NON-NLS-1$
-        method.addBodyLine(sb.toString());
+        method.addBodyLine(
+                String.format("%s.add(new Criterion(condition, value, \"%s\"));",
+                        field.getName(), introspectedColumn.getTypeHandler()));
+        method.addBodyLine("allCriteria = null;"); //$NON-NLS-1$
         innerClass.addMethod(method);
 
         sb.setLength(0);
@@ -991,10 +1067,11 @@ public class ExampleGenerator extends AbstractJavaGenerator {
                 .addBodyLine("throw new RuntimeException(\"Between values for \" + property + \" cannot be null\");"); //$NON-NLS-1$
         method.addBodyLine("}"); //$NON-NLS-1$
 
-        sb.setLength(0);
-        sb.append(field.getName());
-        sb.append(".add(new Criterion(condition, value1, value2));"); //$NON-NLS-1$
-        method.addBodyLine(sb.toString());
+        method.addBodyLine(
+                String.format("%s.add(new Criterion(condition, value1, value2, \"%s\"));",
+                        field.getName(), introspectedColumn.getTypeHandler()));
+        
+        method.addBodyLine("allCriteria = null;"); //$NON-NLS-1$
         innerClass.addMethod(method);
 
         return answer;

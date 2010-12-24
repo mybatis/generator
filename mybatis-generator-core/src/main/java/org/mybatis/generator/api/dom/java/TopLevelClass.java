@@ -15,6 +15,8 @@
  */
 package org.mybatis.generator.api.dom.java;
 
+import static org.mybatis.generator.api.dom.OutputUtilities.calculateImports;
+import static org.mybatis.generator.api.dom.OutputUtilities.newLine;
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
 import java.util.ArrayList;
@@ -23,14 +25,14 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.mybatis.generator.api.dom.OutputUtilities;
-
 /**
  * @author Jeff Butler
  */
 public class TopLevelClass extends InnerClass implements CompilationUnit {
     private Set<FullyQualifiedJavaType> importedTypes;
 
+    private Set<String> staticImports;
+    
     private List<String> fileCommentLines;
 
     /**
@@ -40,6 +42,7 @@ public class TopLevelClass extends InnerClass implements CompilationUnit {
         super(type);
         importedTypes = new TreeSet<FullyQualifiedJavaType>();
         fileCommentLines = new ArrayList<String>();
+        staticImports = new TreeSet<String>();
     }
 
     public TopLevelClass(String typeName) {
@@ -53,6 +56,10 @@ public class TopLevelClass extends InnerClass implements CompilationUnit {
         return Collections.unmodifiableSet(importedTypes);
     }
 
+    public void addImportedType(String importedType) {
+        addImportedType(new FullyQualifiedJavaType(importedType));
+    }
+    
     public void addImportedType(FullyQualifiedJavaType importedType) {
         if (importedType != null
                 && importedType.isExplicitlyImported()
@@ -67,26 +74,36 @@ public class TopLevelClass extends InnerClass implements CompilationUnit {
 
         for (String fileCommentLine : fileCommentLines) {
             sb.append(fileCommentLine);
-            OutputUtilities.newLine(sb);
+            newLine(sb);
         }
 
         if (stringHasValue(getType().getPackageName())) {
             sb.append("package "); //$NON-NLS-1$
             sb.append(getType().getPackageName());
             sb.append(';');
-            OutputUtilities.newLine(sb);
-            OutputUtilities.newLine(sb);
+            newLine(sb);
+            newLine(sb);
         }
 
-        Set<String> importStrings = OutputUtilities
-                .calculateImports(importedTypes);
+        for (String staticImport : staticImports) {
+            sb.append("import static "); //$NON-NLS-1$
+            sb.append(staticImport);
+            sb.append(';');
+            newLine(sb);
+        }
+        
+        if (staticImports.size() > 0) {
+            newLine(sb);
+        }
+        
+        Set<String> importStrings = calculateImports(importedTypes);
         for (String importString : importStrings) {
             sb.append(importString);
-            OutputUtilities.newLine(sb);
+            newLine(sb);
         }
 
         if (importStrings.size() > 0) {
-            OutputUtilities.newLine(sb);
+            newLine(sb);
         }
 
         sb.append(super.getFormattedContent(0));
@@ -112,5 +129,17 @@ public class TopLevelClass extends InnerClass implements CompilationUnit {
 
     public void addImportedTypes(Set<FullyQualifiedJavaType> importedTypes) {
         this.importedTypes.addAll(importedTypes);
+    }
+
+    public Set<String> getStaticImports() {
+        return staticImports;
+    }
+
+    public void addStaticImport(String staticImport) {
+        staticImports.add(staticImport);
+    }
+
+    public void addStaticImports(Set<String> staticImports) {
+        staticImports.addAll(staticImports);
     }
 }

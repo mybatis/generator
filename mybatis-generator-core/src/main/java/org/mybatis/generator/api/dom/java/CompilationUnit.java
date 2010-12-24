@@ -28,6 +28,8 @@ public interface CompilationUnit {
     String getFormattedContent();
 
     Set<FullyQualifiedJavaType> getImportedTypes();
+    
+    Set<String> getStaticImports();
 
     FullyQualifiedJavaType getSuperClass();
 
@@ -42,6 +44,10 @@ public interface CompilationUnit {
     void addImportedType(FullyQualifiedJavaType importedType);
 
     void addImportedTypes(Set<FullyQualifiedJavaType> importedTypes);
+    
+    void addStaticImport(String staticImport);
+    
+    void addStaticImports(Set<String> staticImports);
 
     /**
      * Comments will be written at the top of the file as is, we do not append

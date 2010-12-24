@@ -53,10 +53,16 @@ public class InsertMethodGenerator extends AbstractJavaMapperMethodGenerator {
         context.getCommentGenerator().addGeneralMethodComment(method,
                 introspectedTable);
 
+        addMapperAnnotations(interfaze, method);
+        
         if (context.getPlugins().clientInsertMethodGenerated(method,
                 interfaze, introspectedTable)) {
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);
         }
+    }
+
+    public void addMapperAnnotations(Interface interfaze, Method method) {
+        return;
     }
 }

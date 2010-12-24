@@ -30,7 +30,7 @@ import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
-import org.mybatis.generator.codegen.AbstractJavaGenerator;
+import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
 import org.mybatis.generator.codegen.ibatis2.dao.elements.AbstractDAOElementGenerator;
 import org.mybatis.generator.codegen.ibatis2.dao.elements.CountByExampleMethodGenerator;
 import org.mybatis.generator.codegen.ibatis2.dao.elements.DeleteByExampleMethodGenerator;
@@ -56,7 +56,7 @@ import org.mybatis.generator.internal.rules.Rules;
  * @author Jeff Butler
  * 
  */
-public class DAOGenerator extends AbstractJavaGenerator {
+public class DAOGenerator extends AbstractJavaClientGenerator {
 
     private AbstractDAOTemplate daoTemplate;
     private boolean generateForJava5;
@@ -323,5 +323,10 @@ public class DAOGenerator extends AbstractJavaGenerator {
         methodGenerator.setWarnings(warnings);
         methodGenerator.addImplementationElements(topLevelClass);
         methodGenerator.addInterfaceElements(interfaze);
+    }
+
+    @Override
+    public boolean requiresMatchedXMLGenerator() {
+        return true;
     }
 }

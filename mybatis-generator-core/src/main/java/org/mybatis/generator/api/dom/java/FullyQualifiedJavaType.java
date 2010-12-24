@@ -373,6 +373,11 @@ public class FullyQualifiedJavaType implements
             packageName = getPackage(baseQualifiedName);
             baseShortName = baseQualifiedName
                     .substring(packageName.length() + 1);
+            int index = baseShortName.lastIndexOf('.');
+            if (index != -1) {
+                baseShortName = baseShortName.substring(index + 1);
+            }
+            
             if ("java.lang".equals(packageName)) { //$NON-NLS-1$
                 explicitlyImported = false;
             } else {

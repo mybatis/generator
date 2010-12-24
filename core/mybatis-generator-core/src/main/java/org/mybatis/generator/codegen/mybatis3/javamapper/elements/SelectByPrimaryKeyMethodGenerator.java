@@ -85,6 +85,8 @@ public class SelectByPrimaryKeyMethodGenerator extends
                 method.addParameter(parameter);
             }
         }
+        
+        addMapperAnnotations(interfaze, method);
 
         context.getCommentGenerator().addGeneralMethodComment(method,
                 introspectedTable);
@@ -94,5 +96,9 @@ public class SelectByPrimaryKeyMethodGenerator extends
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);
         }
+    }
+
+    public void addMapperAnnotations(Interface interfaze, Method method) {
+        return;
     }
 }

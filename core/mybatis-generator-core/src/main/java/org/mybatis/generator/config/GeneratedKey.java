@@ -137,4 +137,8 @@ public class GeneratedKey {
                     tableName));
         }
     }
+    
+    public boolean isJdbcStandard() {
+        return "JDBC".equals(runtimeSqlStatement); //$NON-NLS-1$
+    }
 }

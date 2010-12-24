@@ -375,4 +375,9 @@ public abstract class PluginAdapter implements Plugin {
             IntrospectedTable introspectedTable) {
         return true;
     }
+
+    public boolean providerGenerated(TopLevelClass topLevelClass,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
 }

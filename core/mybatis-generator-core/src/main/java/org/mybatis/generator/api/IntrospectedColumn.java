@@ -42,6 +42,8 @@ public class IntrospectedColumn {
     protected int scale;
 
     protected boolean identity;
+    
+    protected boolean isSequenceColumn;
 
     protected String javaProperty;
 
@@ -287,5 +289,13 @@ public class IntrospectedColumn {
 
     public void setDefaultValue(String defaultValue) {
         this.defaultValue = defaultValue;
+    }
+
+    public boolean isSequenceColumn() {
+        return isSequenceColumn;
+    }
+
+    public void setSequenceColumn(boolean isSequenceColumn) {
+        this.isSequenceColumn = isSequenceColumn;
     }
 }

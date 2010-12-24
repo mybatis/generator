@@ -978,4 +978,18 @@ public final class PluginAggregator implements Plugin {
 
         return rc;
     }
+
+    public boolean providerGenerated(TopLevelClass topLevelClass,
+            IntrospectedTable introspectedTable) {
+        boolean rc = true;
+
+        for (Plugin plugin : plugins) {
+            if (!plugin.providerGenerated(topLevelClass, introspectedTable)) {
+                rc = false;
+                break;
+            }
+        }
+
+        return rc;
+    }
 }

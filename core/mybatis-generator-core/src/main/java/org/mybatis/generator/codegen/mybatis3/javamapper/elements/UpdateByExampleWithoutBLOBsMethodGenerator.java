@@ -68,11 +68,17 @@ public class UpdateByExampleWithoutBLOBsMethodGenerator extends
         context.getCommentGenerator().addGeneralMethodComment(method,
                 introspectedTable);
 
+        addMapperAnnotations(interfaze, method);
+        
         if (context.getPlugins()
                 .clientUpdateByExampleWithoutBLOBsMethodGenerated(method,
                         interfaze, introspectedTable)) {
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);
         }
+    }
+
+    public void addMapperAnnotations(Interface interfaze, Method method) {
+        return;
     }
 }

@@ -41,17 +41,8 @@ public class UpdateByExampleSelectiveMethodGenerator extends
         method.setName(introspectedTable
                 .getUpdateByExampleSelectiveStatementId());
 
-        FullyQualifiedJavaType parameterType;
-        if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {
-            parameterType = new FullyQualifiedJavaType(introspectedTable
-                    .getRecordWithBLOBsType());
-        } else if (introspectedTable.getRules().generateBaseRecordClass()) {
-            parameterType = new FullyQualifiedJavaType(introspectedTable
-                    .getBaseRecordType());
-        } else {
-            parameterType = new FullyQualifiedJavaType(introspectedTable
-                    .getPrimaryKeyType());
-        }
+        FullyQualifiedJavaType parameterType =
+            introspectedTable.getRules().calculateAllFieldsClass();
         method.addParameter(new Parameter(parameterType,
                 "record", "@Param(\"record\")")); //$NON-NLS-1$ //$NON-NLS-2$
         importedTypes.add(parameterType);
@@ -68,11 +59,17 @@ public class UpdateByExampleSelectiveMethodGenerator extends
         context.getCommentGenerator().addGeneralMethodComment(method,
                 introspectedTable);
 
+        addMapperAnnotations(interfaze, method);
+        
         if (context.getPlugins()
                 .clientUpdateByExampleSelectiveMethodGenerated(method, interfaze,
                         introspectedTable)) {
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);
         }
+    }
+
+    public void addMapperAnnotations(Interface interfaze, Method method) {
+        return;
     }
 }

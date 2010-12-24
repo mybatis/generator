@@ -53,9 +53,42 @@ public abstract class IntrospectedTable {
     }
 
     protected enum InternalAttribute {
-        ATTR_DAO_IMPLEMENTATION_TYPE, ATTR_DAO_INTERFACE_TYPE, ATTR_PRIMARY_KEY_TYPE, ATTR_BASE_RECORD_TYPE, ATTR_RECORD_WITH_BLOBS_TYPE, ATTR_EXAMPLE_TYPE, ATTR_IBATIS2_SQL_MAP_PACKAGE, ATTR_IBATIS2_SQL_MAP_FILE_NAME, ATTR_IBATIS2_SQL_MAP_NAMESPACE, ATTR_MYBATIS3_XML_MAPPER_PACKAGE, ATTR_MYBATIS3_XML_MAPPER_FILE_NAME,
+        ATTR_DAO_IMPLEMENTATION_TYPE,
+        ATTR_DAO_INTERFACE_TYPE,
+        ATTR_PRIMARY_KEY_TYPE,
+        ATTR_BASE_RECORD_TYPE,
+        ATTR_RECORD_WITH_BLOBS_TYPE,
+        ATTR_EXAMPLE_TYPE,
+        ATTR_IBATIS2_SQL_MAP_PACKAGE,
+        ATTR_IBATIS2_SQL_MAP_FILE_NAME,
+        ATTR_IBATIS2_SQL_MAP_NAMESPACE,
+        ATTR_MYBATIS3_XML_MAPPER_PACKAGE,
+        ATTR_MYBATIS3_XML_MAPPER_FILE_NAME,
         /** also used as XML Mapper namespace if a DAO mapper is generated */
-        ATTR_MYBATIS3_JAVA_MAPPER_TYPE, ATTR_FULLY_QUALIFIED_TABLE_NAME_AT_RUNTIME, ATTR_ALIASED_FULLY_QUALIFIED_TABLE_NAME_AT_RUNTIME, ATTR_COUNT_BY_EXAMPLE_STATEMENT_ID, ATTR_DELETE_BY_EXAMPLE_STATEMENT_ID, ATTR_DELETE_BY_PRIMARY_KEY_STATEMENT_ID, ATTR_INSERT_STATEMENT_ID, ATTR_INSERT_SELECTIVE_STATEMENT_ID, ATTR_SELECT_BY_EXAMPLE_STATEMENT_ID, ATTR_SELECT_BY_EXAMPLE_WITH_BLOBS_STATEMENT_ID, ATTR_SELECT_BY_PRIMARY_KEY_STATEMENT_ID, ATTR_UPDATE_BY_EXAMPLE_STATEMENT_ID, ATTR_UPDATE_BY_EXAMPLE_SELECTIVE_STATEMENT_ID, ATTR_UPDATE_BY_EXAMPLE_WITH_BLOBS_STATEMENT_ID, ATTR_UPDATE_BY_PRIMARY_KEY_STATEMENT_ID, ATTR_UPDATE_BY_PRIMARY_KEY_SELECTIVE_STATEMENT_ID, ATTR_UPDATE_BY_PRIMARY_KEY_WITH_BLOBS_STATEMENT_ID, ATTR_BASE_RESULT_MAP_ID, ATTR_RESULT_MAP_WITH_BLOBS_ID, ATTR_EXAMPLE_WHERE_CLAUSE_ID, ATTR_BASE_COLUMN_LIST_ID, ATTR_BLOB_COLUMN_LIST_ID, ATTR_MYBATIS3_UPDATE_BY_EXAMPLE_WHERE_CLAUSE_ID
+        ATTR_MYBATIS3_JAVA_MAPPER_TYPE,
+        ATTR_FULLY_QUALIFIED_TABLE_NAME_AT_RUNTIME,
+        ATTR_ALIASED_FULLY_QUALIFIED_TABLE_NAME_AT_RUNTIME,
+        ATTR_COUNT_BY_EXAMPLE_STATEMENT_ID,
+        ATTR_DELETE_BY_EXAMPLE_STATEMENT_ID,
+        ATTR_DELETE_BY_PRIMARY_KEY_STATEMENT_ID,
+        ATTR_INSERT_STATEMENT_ID,
+        ATTR_INSERT_SELECTIVE_STATEMENT_ID,
+        ATTR_SELECT_BY_EXAMPLE_STATEMENT_ID,
+        ATTR_SELECT_BY_EXAMPLE_WITH_BLOBS_STATEMENT_ID,
+        ATTR_SELECT_BY_PRIMARY_KEY_STATEMENT_ID,
+        ATTR_UPDATE_BY_EXAMPLE_STATEMENT_ID,
+        ATTR_UPDATE_BY_EXAMPLE_SELECTIVE_STATEMENT_ID,
+        ATTR_UPDATE_BY_EXAMPLE_WITH_BLOBS_STATEMENT_ID,
+        ATTR_UPDATE_BY_PRIMARY_KEY_STATEMENT_ID,
+        ATTR_UPDATE_BY_PRIMARY_KEY_SELECTIVE_STATEMENT_ID,
+        ATTR_UPDATE_BY_PRIMARY_KEY_WITH_BLOBS_STATEMENT_ID,
+        ATTR_BASE_RESULT_MAP_ID,
+        ATTR_RESULT_MAP_WITH_BLOBS_ID,
+        ATTR_EXAMPLE_WHERE_CLAUSE_ID,
+        ATTR_BASE_COLUMN_LIST_ID,
+        ATTR_BLOB_COLUMN_LIST_ID,
+        ATTR_MYBATIS3_UPDATE_BY_EXAMPLE_WHERE_CLAUSE_ID,
+        ATTR_MYBATIS3_SQL_PROVIDER_TYPE
     }
 
     protected TableConfiguration tableConfiguration;
@@ -756,6 +789,13 @@ public abstract class IntrospectedTable {
         sb.append(fullyQualifiedTable.getDomainObjectName());
         sb.append("Mapper"); //$NON-NLS-1$
         setMyBatis3JavaMapperType(sb.toString());
+
+        sb.setLength(0);
+        sb.append(calculateJavaClientInterfacePackage());
+        sb.append('.');
+        sb.append(fullyQualifiedTable.getDomainObjectName());
+        sb.append("SqlProvider"); //$NON-NLS-1$
+        setMyBatis3SqlProviderType(sb.toString());
     }
 
     protected String calculateJavaModelPackage() {
@@ -804,14 +844,19 @@ public abstract class IntrospectedTable {
     }
 
     protected String calculateIbatis2SqlMapPackage() {
+        StringBuilder sb = new StringBuilder();
         SqlMapGeneratorConfiguration config = context
                 .getSqlMapGeneratorConfiguration();
-
-        StringBuilder sb = new StringBuilder(config.getTargetPackage());
-        if (isTrue(config
-                .getProperty(PropertyRegistry.ANY_ENABLE_SUB_PACKAGES))) {
-            sb.append(fullyQualifiedTable.getSubPackage());
+        
+        // config can be null if the Java client does not require XML
+        if (config != null) {
+            sb.append(config.getTargetPackage());
+            if (isTrue(config
+                    .getProperty(PropertyRegistry.ANY_ENABLE_SUB_PACKAGES))) {
+                sb.append(fullyQualifiedTable.getSubPackage());
+            }
         }
+
         return sb.toString();
     }
 
@@ -1007,6 +1052,17 @@ public abstract class IntrospectedTable {
                 mybatis3JavaMapperType);
     }
 
+    public String getMyBatis3SqlProviderType() {
+        return internalAttributes
+                .get(InternalAttribute.ATTR_MYBATIS3_SQL_PROVIDER_TYPE);
+    }
+
+    public void setMyBatis3SqlProviderType(String mybatis3SqlProviderType) {
+        internalAttributes.put(
+                InternalAttribute.ATTR_MYBATIS3_SQL_PROVIDER_TYPE,
+                mybatis3SqlProviderType);
+    }
+    
     public TargetRuntime getTargetRuntime() {
         return targetRuntime;
     }

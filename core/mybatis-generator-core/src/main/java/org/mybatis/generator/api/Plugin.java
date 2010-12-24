@@ -1292,4 +1292,22 @@ public interface Plugin {
      */
     boolean sqlMapUpdateByPrimaryKeyWithoutBLOBsElementGenerated(
             XmlElement element, IntrospectedTable introspectedTable);
+
+    /**
+     * This method is called when the SQL provider has been generated.
+     * Implement this method to add additional methods or fields to a generated
+     * SQL provider.
+     * 
+     * @param topLevelClass
+     *            the generated provider
+     * @param introspectedTable
+     *            The class containing information about the table as
+     *            introspected from the database
+     * @return true if the provider should be generated, false if the generated
+     *         provider should be ignored. In the case of multiple plugins, the
+     *         first plugin returning false will disable the calling of further
+     *         plugins.
+     */
+    boolean providerGenerated(TopLevelClass topLevelClass,
+            IntrospectedTable introspectedTable);
 }

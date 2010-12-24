@@ -84,6 +84,8 @@ public class DeleteByPrimaryKeyMethodGenerator extends
         context.getCommentGenerator().addGeneralMethodComment(method,
                 introspectedTable);
 
+        addMapperAnnotations(interfaze, method);
+        
         if (context.getPlugins().clientDeleteByPrimaryKeyMethodGenerated(
                 method, interfaze, introspectedTable)) {
             interfaze.addImportedTypes(importedTypes);
@@ -91,4 +93,7 @@ public class DeleteByPrimaryKeyMethodGenerator extends
         }
     }
 
+    public void addMapperAnnotations(Interface interfaze, Method method) {
+        return;
+    }
 }

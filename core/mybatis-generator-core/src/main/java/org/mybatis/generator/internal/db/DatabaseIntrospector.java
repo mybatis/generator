@@ -333,27 +333,33 @@ public class DatabaseIntrospector {
 
     private void calculateIdentityColumns(TableConfiguration tc,
             Map<ActualTableName, List<IntrospectedColumn>> columns) {
+        GeneratedKey gk = tc.getGeneratedKey();
+        if (gk == null) {
+            // no generated key, then no identity or sequence columns
+            return;
+        }
+        
         for (Map.Entry<ActualTableName, List<IntrospectedColumn>> entry : columns
                 .entrySet()) {
             for (IntrospectedColumn introspectedColumn : entry.getValue()) {
-                if (tc.getGeneratedKey() != null
-                        && tc.getGeneratedKey().isIdentity()) {
-                    if (introspectedColumn.isColumnNameDelimited()) {
-                        if (introspectedColumn.getActualColumnName().equals(
-                                tc.getGeneratedKey().getColumn())) {
-                            introspectedColumn.setIdentity(true);
-                        }
+                if (isMatchedColumn(introspectedColumn, gk)) {
+                    if (gk.isIdentity() || gk.isJdbcStandard()) {
+                        introspectedColumn.setIdentity(true);
+                        introspectedColumn.setSequenceColumn(false);
                     } else {
-                        if (introspectedColumn.getActualColumnName()
-                                .equalsIgnoreCase(
-                                        tc.getGeneratedKey().getColumn())) {
-                            introspectedColumn.setIdentity(true);
-                        }
+                        introspectedColumn.setIdentity(false);
+                        introspectedColumn.setSequenceColumn(true);
                     }
-                } else {
-                    introspectedColumn.setIdentity(false);
                 }
             }
+        }
+    }
+    
+    private boolean isMatchedColumn(IntrospectedColumn introspectedColumn, GeneratedKey gk) {
+        if (introspectedColumn.isColumnNameDelimited()) {
+            return introspectedColumn.getActualColumnName().equals(gk.getColumn());
+        } else {
+            return introspectedColumn.getActualColumnName().equalsIgnoreCase(gk.getColumn());
         }
     }
 

@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import mbg.test.mb3.AbstractTest;
 import mbg.test.mb3.generated.hierarchical.mapper.AwfulTableMapper;
 import mbg.test.mb3.generated.hierarchical.mapper.FieldsblobsMapper;
 import mbg.test.mb3.generated.hierarchical.mapper.FieldsonlyMapper;
@@ -66,7 +65,7 @@ import org.junit.Test;
  * @author Jeff Butler
  * 
  */
-public class HierarchicalJava5Test extends AbstractTest {
+public class HierarchicalJava5Test extends AbstractHierarchicalTest {
 
     @Test
     public void testFieldsOnlyInsert() {

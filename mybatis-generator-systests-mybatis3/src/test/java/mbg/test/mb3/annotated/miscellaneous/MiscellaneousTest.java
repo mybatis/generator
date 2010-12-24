@@ -1,5 +1,5 @@
 /*
- *  Copyright 2009 The Apache Software Foundation
+ *  Copyright 2010 The MyBatis Team
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package mbg.test.mb3.miscellaneous;
+package mbg.test.mb3.annotated.miscellaneous;
 
 import static mbg.test.common.util.TestUtilities.datesAreEqual;
 import static org.junit.Assert.assertEquals;
@@ -29,15 +29,14 @@ import java.util.List;
 import mbg.test.common.FirstName;
 import mbg.test.common.MyTime;
 import mbg.test.mb3.common.TestEnum;
-import mbg.test.mb3.generated.miscellaneous.mapper.EnumtestMapper;
-import mbg.test.mb3.generated.miscellaneous.mapper.MyObjectMapper;
-import mbg.test.mb3.generated.miscellaneous.mapper.RegexrenameMapper;
-import mbg.test.mb3.generated.miscellaneous.model.Anotherawfultable;
-import mbg.test.mb3.generated.miscellaneous.model.Enumtest;
-import mbg.test.mb3.generated.miscellaneous.model.MyObject;
-import mbg.test.mb3.generated.miscellaneous.model.MyObjectCriteria;
-import mbg.test.mb3.generated.miscellaneous.model.MyObjectKey;
-import mbg.test.mb3.generated.miscellaneous.model.Regexrename;
+import mbg.test.mb3.generated.annotated.miscellaneous.mapper.EnumtestMapper;
+import mbg.test.mb3.generated.annotated.miscellaneous.mapper.MyObjectMapper;
+import mbg.test.mb3.generated.annotated.miscellaneous.mapper.RegexrenameMapper;
+import mbg.test.mb3.generated.annotated.miscellaneous.model.Enumtest;
+import mbg.test.mb3.generated.annotated.miscellaneous.model.MyObject;
+import mbg.test.mb3.generated.annotated.miscellaneous.model.MyObjectCriteria;
+import mbg.test.mb3.generated.annotated.miscellaneous.model.MyObjectKey;
+import mbg.test.mb3.generated.annotated.miscellaneous.model.Regexrename;
 
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
@@ -46,7 +45,7 @@ import org.junit.Test;
  * @author Jeff Butler
  * 
  */
-public class MiscellaneousTest extends AbstractMiscellaneousTest {
+public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
 
     @Test
     public void testMyObjectinsertMyObject() {
@@ -932,35 +931,6 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         }
     }
     
-    @Test
-    public void testAnotherAwfulTableInsert() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-        
-        try {
-            Anotherawfultable record = new Anotherawfultable();
-            record.setId(5);
-            record.setSelect("select");
-            record.setInsert("insert");
-            
-            sqlSession.insert("ANOTHERAWFULTABLE.insert", record);
-            
-            Anotherawfultable key = new Anotherawfultable();
-            key.setId(5);
-            
-            Anotherawfultable returnedRecord = (Anotherawfultable)
-                sqlSession.selectOne("ANOTHERAWFULTABLE.selectByPrimaryKey",
-                        key);
-            
-            assertEquals(record.getId(), returnedRecord.getId());
-            assertEquals(record.getSelect(), returnedRecord.getSelect());
-            assertEquals(record.getInsert(), returnedRecord.getInsert());
-            assertEquals(record.getUpdate(), returnedRecord.getUpdate());
-            assertEquals(record.getDelete(), returnedRecord.getDelete());
-        } finally {
-            sqlSession.close();
-        }
-    }
-
     @Test
     public void testMyObjectSelectByExampleLikeInsensitive() {
         SqlSession sqlSession = sqlSessionFactory.openSession();

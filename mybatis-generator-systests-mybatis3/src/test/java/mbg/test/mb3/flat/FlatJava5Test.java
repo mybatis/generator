@@ -31,7 +31,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import mbg.test.mb3.AbstractTest;
 import mbg.test.mb3.generated.flat.mapper.AwfulTableMapper;
 import mbg.test.mb3.generated.flat.mapper.FieldsblobsMapper;
 import mbg.test.mb3.generated.flat.mapper.FieldsonlyMapper;
@@ -61,7 +60,7 @@ import org.junit.Test;
  * @author Jeff Butler
  * 
  */
-public class FlatJava5Test extends AbstractTest {
+public class FlatJava5Test extends AbstractFlatTest {
 
     @Test
     public void testFieldsOnlyInsert() {

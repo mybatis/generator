@@ -38,9 +38,10 @@ public abstract class AbstractTest {
         createDatabase();
 
         Reader reader = Resources
-                    .getResourceAsReader("mbg/test/mb3/MapperConfig.xml");
+                    .getResourceAsReader(getMyBatisConfigFile());
         sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         reader.close();
-        reader.close();
     }
+    
+    public abstract String getMyBatisConfigFile();
 }

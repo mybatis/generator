@@ -1,5 +1,5 @@
 /*
- *  Copyright 2009 The Apache Software Foundation
+ *  Copyright 2010 The MyBatis Team
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,8 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
-package mbg.test.mb3.conditional;
+package mbg.test.mb3.annotated.flat;
 
 import static mbg.test.common.util.TestUtilities.blobsAreEqual;
 import static mbg.test.common.util.TestUtilities.datesAreEqual;
@@ -28,34 +27,30 @@ import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import mbg.test.mb3.generated.conditional.mapper.AwfulTableMapper;
-import mbg.test.mb3.generated.conditional.mapper.FieldsblobsMapper;
-import mbg.test.mb3.generated.conditional.mapper.FieldsonlyMapper;
-import mbg.test.mb3.generated.conditional.mapper.PkblobsMapper;
-import mbg.test.mb3.generated.conditional.mapper.PkfieldsMapper;
-import mbg.test.mb3.generated.conditional.mapper.PkfieldsblobsMapper;
-import mbg.test.mb3.generated.conditional.mapper.PkonlyMapper;
-import mbg.test.mb3.generated.conditional.model.AwfulTable;
-import mbg.test.mb3.generated.conditional.model.AwfulTableExample;
-import mbg.test.mb3.generated.conditional.model.Fieldsblobs;
-import mbg.test.mb3.generated.conditional.model.FieldsblobsExample;
-import mbg.test.mb3.generated.conditional.model.FieldsblobsWithBLOBs;
-import mbg.test.mb3.generated.conditional.model.Fieldsonly;
-import mbg.test.mb3.generated.conditional.model.FieldsonlyExample;
-import mbg.test.mb3.generated.conditional.model.Pkblobs;
-import mbg.test.mb3.generated.conditional.model.PkblobsExample;
-import mbg.test.mb3.generated.conditional.model.Pkfields;
-import mbg.test.mb3.generated.conditional.model.PkfieldsExample;
-import mbg.test.mb3.generated.conditional.model.PkfieldsKey;
-import mbg.test.mb3.generated.conditional.model.Pkfieldsblobs;
-import mbg.test.mb3.generated.conditional.model.PkfieldsblobsExample;
-import mbg.test.mb3.generated.conditional.model.PkfieldsblobsKey;
-import mbg.test.mb3.generated.conditional.model.PkonlyExample;
-import mbg.test.mb3.generated.conditional.model.PkonlyKey;
+import mbg.test.mb3.generated.annotated.flat.mapper.AwfulTableMapper;
+import mbg.test.mb3.generated.annotated.flat.mapper.FieldsblobsMapper;
+import mbg.test.mb3.generated.annotated.flat.mapper.FieldsonlyMapper;
+import mbg.test.mb3.generated.annotated.flat.mapper.PkblobsMapper;
+import mbg.test.mb3.generated.annotated.flat.mapper.PkfieldsMapper;
+import mbg.test.mb3.generated.annotated.flat.mapper.PkfieldsblobsMapper;
+import mbg.test.mb3.generated.annotated.flat.mapper.PkonlyMapper;
+import mbg.test.mb3.generated.annotated.flat.model.AwfulTable;
+import mbg.test.mb3.generated.annotated.flat.model.AwfulTableExample;
+import mbg.test.mb3.generated.annotated.flat.model.Fieldsblobs;
+import mbg.test.mb3.generated.annotated.flat.model.FieldsblobsExample;
+import mbg.test.mb3.generated.annotated.flat.model.Fieldsonly;
+import mbg.test.mb3.generated.annotated.flat.model.FieldsonlyExample;
+import mbg.test.mb3.generated.annotated.flat.model.Pkblobs;
+import mbg.test.mb3.generated.annotated.flat.model.PkblobsExample;
+import mbg.test.mb3.generated.annotated.flat.model.Pkfields;
+import mbg.test.mb3.generated.annotated.flat.model.PkfieldsExample;
+import mbg.test.mb3.generated.annotated.flat.model.Pkfieldsblobs;
+import mbg.test.mb3.generated.annotated.flat.model.PkfieldsblobsExample;
+import mbg.test.mb3.generated.annotated.flat.model.Pkonly;
+import mbg.test.mb3.generated.annotated.flat.model.PkonlyExample;
 
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
@@ -64,12 +59,12 @@ import org.junit.Test;
  * @author Jeff Butler
  * 
  */
-public class ConditionalJava5Test extends AbstractConditionalTest {
+public class FlatJava5Test extends AbstractAnnotatedFlatTest {
 
     @Test
     public void testFieldsOnlyInsert() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
-        
+
         try {
             FieldsonlyMapper mapper = sqlSession.getMapper(FieldsonlyMapper.class);
             Fieldsonly record = new Fieldsonly();
@@ -134,6 +129,47 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
     }
 
     @Test
+    public void testFieldsOnlySelectByExampleDistinct() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        try {
+            FieldsonlyMapper mapper = sqlSession.getMapper(FieldsonlyMapper.class);
+            Fieldsonly record = new Fieldsonly();
+            record.setDoublefield(11.22);
+            record.setFloatfield(33.44);
+            record.setIntegerfield(5);
+            mapper.insert(record);
+            mapper.insert(record);
+            mapper.insert(record);
+
+            record = new Fieldsonly();
+            record.setDoublefield(44.55);
+            record.setFloatfield(66.77);
+            record.setIntegerfield(8);
+            mapper.insert(record);
+
+            record = new Fieldsonly();
+            record.setDoublefield(88.99);
+            record.setFloatfield(100.111);
+            record.setIntegerfield(9);
+            mapper.insert(record);
+
+            FieldsonlyExample example = new FieldsonlyExample();
+            example.createCriteria().andIntegerfieldEqualTo(5);
+            example.setDistinct(true);
+
+            List<Fieldsonly> answer = mapper.selectByExample(example);
+            assertEquals(1, answer.size());
+
+            example.clear();
+            answer = mapper.selectByExample(example);
+            assertEquals(5, answer.size());
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+    @Test
     public void testFieldsOnlySelectByExampleNoCriteria() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
@@ -161,6 +197,9 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             example.createCriteria();
 
             List<Fieldsonly> answer = mapper.selectByExample(example);
+            assertEquals(3, answer.size());
+
+            answer = mapper.selectByExample(null);
             assertEquals(3, answer.size());
         } finally {
             sqlSession.close();
@@ -248,16 +287,16 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
         try {
             PkonlyMapper mapper = sqlSession.getMapper(PkonlyMapper.class);
-            PkonlyKey key = new PkonlyKey();
+            Pkonly key = new Pkonly();
             key.setId(1);
             key.setSeqNum(3);
             mapper.insert(key);
 
             PkonlyExample example = new PkonlyExample();
-            List<PkonlyKey> answer = mapper.selectByExample(example);
+            List<Pkonly> answer = mapper.selectByExample(example);
             assertEquals(1, answer.size());
 
-            PkonlyKey returnedRecord = answer.get(0);
+            Pkonly returnedRecord = answer.get(0);
             assertEquals(key.getId(), returnedRecord.getId());
             assertEquals(key.getSeqNum(), returnedRecord.getSeqNum());
         } finally {
@@ -271,24 +310,21 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
         try {
             PkonlyMapper mapper = sqlSession.getMapper(PkonlyMapper.class);
-            PkonlyKey key = new PkonlyKey();
+            Pkonly key = new Pkonly();
             key.setId(1);
             key.setSeqNum(3);
-            mapper.insert(key);
+            int rows = mapper.insert(key);
 
-            key = new PkonlyKey();
+            key = new Pkonly();
             key.setId(5);
             key.setSeqNum(6);
-            mapper.insert(key);
+            rows = mapper.insert(key);
 
             PkonlyExample example = new PkonlyExample();
-            List<PkonlyKey> answer = mapper.selectByExample(example);
+            List<Pkonly> answer = mapper.selectByExample(example);
             assertEquals(2, answer.size());
 
-            key = new PkonlyKey();
-            key.setId(5);
-            key.setSeqNum(6);
-            int rows = mapper.deleteByPrimaryKey(key);
+            rows = mapper.deleteByPrimaryKey(5, 6);
             assertEquals(1, rows);
 
             answer = mapper.selectByExample(example);
@@ -304,17 +340,17 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
         try {
             PkonlyMapper mapper = sqlSession.getMapper(PkonlyMapper.class);
-            PkonlyKey key = new PkonlyKey();
+            Pkonly key = new Pkonly();
             key.setId(1);
             key.setSeqNum(3);
             mapper.insert(key);
 
-            key = new PkonlyKey();
+            key = new Pkonly();
             key.setId(5);
             key.setSeqNum(6);
             mapper.insert(key);
 
-            key = new PkonlyKey();
+            key = new Pkonly();
             key.setId(7);
             key.setSeqNum(8);
             mapper.insert(key);
@@ -325,7 +361,7 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             assertEquals(2, rows);
 
             example = new PkonlyExample();
-            List<PkonlyKey> answer = mapper.selectByExample(example);
+            List<Pkonly> answer = mapper.selectByExample(example);
             assertEquals(1, answer.size());
         } finally {
             sqlSession.close();
@@ -338,24 +374,24 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
         try {
             PkonlyMapper mapper = sqlSession.getMapper(PkonlyMapper.class);
-            PkonlyKey key = new PkonlyKey();
+            Pkonly key = new Pkonly();
             key.setId(1);
             key.setSeqNum(3);
             mapper.insert(key);
 
-            key = new PkonlyKey();
+            key = new Pkonly();
             key.setId(5);
             key.setSeqNum(6);
             mapper.insert(key);
 
-            key = new PkonlyKey();
+            key = new Pkonly();
             key.setId(7);
             key.setSeqNum(8);
             mapper.insert(key);
 
             PkonlyExample example = new PkonlyExample();
             example.createCriteria().andIdGreaterThan(4);
-            List<PkonlyKey> answer = mapper.selectByExample(example);
+            List<Pkonly> answer = mapper.selectByExample(example);
             assertEquals(2, answer.size());
         } finally {
             sqlSession.close();
@@ -368,24 +404,24 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
         try {
             PkonlyMapper mapper = sqlSession.getMapper(PkonlyMapper.class);
-            PkonlyKey key = new PkonlyKey();
+            Pkonly key = new Pkonly();
             key.setId(1);
             key.setSeqNum(3);
             mapper.insert(key);
 
-            key = new PkonlyKey();
+            key = new Pkonly();
             key.setId(5);
             key.setSeqNum(6);
             mapper.insert(key);
 
-            key = new PkonlyKey();
+            key = new Pkonly();
             key.setId(7);
             key.setSeqNum(8);
             mapper.insert(key);
 
             PkonlyExample example = new PkonlyExample();
             example.createCriteria();
-            List<PkonlyKey> answer = mapper.selectByExample(example);
+            List<Pkonly> answer = mapper.selectByExample(example);
             assertEquals(3, answer.size());
         } finally {
             sqlSession.close();
@@ -398,17 +434,17 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
         try {
             PkonlyMapper mapper = sqlSession.getMapper(PkonlyMapper.class);
-            PkonlyKey key = new PkonlyKey();
+            Pkonly key = new Pkonly();
             key.setId(1);
             key.setSeqNum(3);
             mapper.insert(key);
 
-            key = new PkonlyKey();
+            key = new Pkonly();
             key.setId(5);
             key.setSeqNum(6);
             mapper.insert(key);
 
-            key = new PkonlyKey();
+            key = new Pkonly();
             key.setId(7);
             key.setSeqNum(8);
             mapper.insert(key);
@@ -447,11 +483,7 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
             mapper.insert(record);
 
-            PkfieldsKey key = new PkfieldsKey();
-            key.setId1(1);
-            key.setId2(2);
-
-            Pkfields returnedRecord = mapper.selectByPrimaryKey(key);
+            Pkfields returnedRecord = mapper.selectByPrimaryKey(1, 2);
             assertNotNull(returnedRecord);
 
             assertTrue(datesAreEqual(record.getDatefield(), returnedRecord
@@ -497,11 +529,7 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             int rows = mapper.updateByPrimaryKey(record);
             assertEquals(1, rows);
 
-            PkfieldsKey key = new PkfieldsKey();
-            key.setId1(1);
-            key.setId2(2);
-
-            Pkfields record2 = mapper.selectByPrimaryKey(key);
+            Pkfields record2 = mapper.selectByPrimaryKey(1, 2);
 
             assertEquals(record.getFirstname(), record2.getFirstname());
             assertEquals(record.getLastname(), record2.getLastname());
@@ -536,11 +564,7 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             int rows = mapper.updateByPrimaryKeySelective(newRecord);
             assertEquals(1, rows);
 
-            PkfieldsKey key = new PkfieldsKey();
-            key.setId1(1);
-            key.setId2(2);
-
-            Pkfields returnedRecord = mapper.selectByPrimaryKey(key);
+            Pkfields returnedRecord = mapper.selectByPrimaryKey(1, 2);
 
             assertTrue(datesAreEqual(record.getDatefield(), returnedRecord
                     .getDatefield()));
@@ -580,11 +604,7 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
             mapper.insert(record);
 
-            PkfieldsKey key = new PkfieldsKey();
-            key.setId1(1);
-            key.setId2(2);
-
-            int rows = mapper.deleteByPrimaryKey(key);
+            int rows = mapper.deleteByPrimaryKey(1, 2);
             assertEquals(1, rows);
 
             PkfieldsExample example = new PkfieldsExample();
@@ -653,10 +673,7 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             record.setId2(4);
             mapper.insert(record);
 
-            PkfieldsKey key = new PkfieldsKey();
-            key.setId1(3);
-            key.setId2(4);
-            Pkfields newRecord = mapper.selectByPrimaryKey(key);
+            Pkfields newRecord = mapper.selectByPrimaryKey(3, 4);
 
             assertNotNull(newRecord);
             assertEquals(record.getFirstname(), newRecord.getFirstname());
@@ -1132,99 +1149,6 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
     }
 
     @Test
-    public void testPKFieldsSelectByExampleDateTimeFields() {
-        // TODO - move this method to the other test classes too
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, 2009);
-        calendar.set(Calendar.MONTH, Calendar.JUNE);
-        calendar.set(Calendar.DAY_OF_MONTH, 15);
-        calendar.set(Calendar.HOUR, 10);
-        calendar.set(Calendar.MINUTE, 10);
-        calendar.set(Calendar.SECOND, 10);
-
-        try {
-            PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
-            Pkfields record = new Pkfields();
-            record.setId1(1);
-            record.setId2(1);
-            record.setDatefield(calendar.getTime());
-            record.setTimefield(calendar.getTime());
-            mapper.insert(record);
-
-            record = new Pkfields();
-            record.setId1(1);
-            record.setId2(2);
-            calendar.set(Calendar.DAY_OF_MONTH, 16);
-            calendar.set(Calendar.MINUTE, 11);
-            record.setDatefield(calendar.getTime());
-            record.setTimefield(calendar.getTime());
-            mapper.insert(record);
-
-            record = new Pkfields();
-            record.setId1(1);
-            record.setId2(3);
-            calendar.set(Calendar.DAY_OF_MONTH, 17);
-            calendar.set(Calendar.MINUTE, 12);
-            record.setDatefield(calendar.getTime());
-            record.setTimefield(calendar.getTime());
-            mapper.insert(record);
-
-            record = new Pkfields();
-            record.setId1(2);
-            record.setId2(1);
-            calendar.set(Calendar.DAY_OF_MONTH, 18);
-            calendar.set(Calendar.MINUTE, 13);
-            record.setDatefield(calendar.getTime());
-            record.setTimefield(calendar.getTime());
-            mapper.insert(record);
-
-            record = new Pkfields();
-            record.setId1(2);
-            record.setId2(2);
-            calendar.set(Calendar.DAY_OF_MONTH, 19);
-            calendar.set(Calendar.MINUTE, 14);
-            record.setDatefield(calendar.getTime());
-            record.setTimefield(calendar.getTime());
-            mapper.insert(record);
-
-            record = new Pkfields();
-            record.setId1(2);
-            record.setId2(3);
-            calendar.set(Calendar.DAY_OF_MONTH, 20);
-            calendar.set(Calendar.MINUTE, 15);
-            record.setDatefield(calendar.getTime());
-            record.setTimefield(calendar.getTime());
-            mapper.insert(record);
-
-            PkfieldsExample example = new PkfieldsExample();
-            example.createCriteria().andDatefieldEqualTo(calendar.getTime());
-
-            example.setOrderByClause("ID1, ID2");
-            List<Pkfields> answer = mapper.selectByExample(example);
-            assertEquals(1, answer.size());
-            
-            example.clear();
-            example.createCriteria().andDatefieldLessThan(calendar.getTime());
-            answer = mapper.selectByExample(example);
-            assertEquals(5, answer.size());
-            
-            calendar.set(Calendar.MINUTE, 12);
-            example.clear();
-            example.createCriteria().andTimefieldEqualTo(calendar.getTime());
-            answer = mapper.selectByExample(example);
-            assertEquals(1, answer.size());
-
-            example.clear();
-            example.createCriteria().andTimefieldGreaterThan(calendar.getTime());
-            answer = mapper.selectByExample(example);
-            assertEquals(3, answer.size());
-        } finally {
-            sqlSession.close();
-        }
-    }
-    
-    @Test
     public void testPKFieldsCountByExample() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
@@ -1612,10 +1536,7 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             int rows = mapper.updateByPrimaryKeyWithBLOBs(updateRecord);
             assertEquals(1, rows);
 
-            PkfieldsblobsKey key = new PkfieldsblobsKey();
-            key.setId1(3);
-            key.setId2(4);
-            Pkfieldsblobs newRecord = mapper.selectByPrimaryKey(key);
+            Pkfieldsblobs newRecord = mapper.selectByPrimaryKey(3, 4);
             assertEquals(updateRecord.getFirstname(), newRecord.getFirstname());
             assertEquals(updateRecord.getLastname(), newRecord.getLastname());
             assertEquals(record.getId1(), newRecord.getId1());
@@ -1650,10 +1571,7 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             int rows = mapper.updateByPrimaryKey(updateRecord);
             assertEquals(1, rows);
 
-            PkfieldsblobsKey key = new PkfieldsblobsKey();
-            key.setId1(3);
-            key.setId2(4);
-            Pkfieldsblobs newRecord = mapper.selectByPrimaryKey(key);
+            Pkfieldsblobs newRecord = mapper.selectByPrimaryKey(3, 4);
             assertEquals(updateRecord.getFirstname(), newRecord.getFirstname());
             assertEquals(updateRecord.getLastname(), newRecord.getLastname());
             assertEquals(record.getId1(), newRecord.getId1());
@@ -1686,10 +1604,7 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             int rows = mapper.updateByPrimaryKeySelective(updateRecord);
             assertEquals(1, rows);
 
-            PkfieldsblobsKey key = new PkfieldsblobsKey();
-            key.setId1(3);
-            key.setId2(4);
-            Pkfieldsblobs returnedRecord = mapper.selectByPrimaryKey(key);
+            Pkfieldsblobs returnedRecord = mapper.selectByPrimaryKey(3, 4);
             assertEquals(record.getFirstname(), returnedRecord.getFirstname());
             assertEquals(updateRecord.getLastname(), returnedRecord
                     .getLastname());
@@ -1725,13 +1640,11 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             mapper.insert(record);
 
             PkfieldsblobsExample example = new PkfieldsblobsExample();
-            List<Pkfieldsblobs> answer = mapper.selectByExample(example);
+            List<Pkfieldsblobs> answer = mapper
+                    .selectByExample(example);
             assertEquals(2, answer.size());
 
-            PkfieldsblobsKey key = new PkfieldsblobsKey();
-            key.setId1(5);
-            key.setId2(6);
-            int rows = mapper.deleteByPrimaryKey(key);
+            int rows = mapper.deleteByPrimaryKey(5, 6);
             assertEquals(1, rows);
 
             example = new PkfieldsblobsExample();
@@ -1765,7 +1678,8 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             mapper.insert(record);
 
             PkfieldsblobsExample example = new PkfieldsblobsExample();
-            List<Pkfieldsblobs> answer = mapper.selectByExample(example);
+            List<Pkfieldsblobs> answer = mapper
+                    .selectByExample(example);
             assertEquals(2, answer.size());
 
             example = new PkfieldsblobsExample();
@@ -1804,13 +1718,11 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             mapper.insert(record);
 
             PkfieldsblobsExample example = new PkfieldsblobsExample();
-            List<Pkfieldsblobs> answer = mapper.selectByExample(example);
+            List<Pkfieldsblobs> answer = mapper
+                    .selectByExample(example);
             assertEquals(2, answer.size());
 
-            PkfieldsblobsKey key = new PkfieldsblobsKey();
-            key.setId1(5);
-            key.setId2(6);
-            Pkfieldsblobs newRecord = mapper.selectByPrimaryKey(key);
+            Pkfieldsblobs newRecord = mapper.selectByPrimaryKey(5, 6);
             assertEquals(record.getId1(), newRecord.getId1());
             assertEquals(record.getId2(), newRecord.getId2());
             assertEquals(record.getFirstname(), newRecord.getFirstname());
@@ -1845,7 +1757,8 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
             PkfieldsblobsExample example = new PkfieldsblobsExample();
             example.createCriteria().andId2EqualTo(6);
-            List<Pkfieldsblobs> answer = mapper.selectByExample(example);
+            List<Pkfieldsblobs> answer = mapper
+                    .selectByExample(example);
             assertEquals(1, answer.size());
 
             Pkfieldsblobs newRecord = answer.get(0);
@@ -1883,7 +1796,6 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
             PkfieldsblobsExample example = new PkfieldsblobsExample();
             example.createCriteria().andId2EqualTo(6);
-            example.setOrderByClause("ID1");  // test for Issue 174
             List<Pkfieldsblobs> answer = mapper.selectByExampleWithBLOBs(example);
             assertEquals(1, answer.size());
 
@@ -1930,6 +1842,171 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
     }
 
     @Test
+    public void testFieldsBlobsInsert() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        try {
+            FieldsblobsMapper mapper = sqlSession.getMapper(FieldsblobsMapper.class);
+            Fieldsblobs record = new Fieldsblobs();
+            record.setFirstname("Jeff");
+            record.setLastname("Smith");
+            record.setBlob1(generateRandomBlob());
+            record.setBlob2(generateRandomBlob());
+            mapper.insert(record);
+
+            FieldsblobsExample example = new FieldsblobsExample();
+            List<Fieldsblobs> answer = mapper.selectByExampleWithBLOBs(example);
+            assertEquals(1, answer.size());
+
+            Fieldsblobs returnedRecord = answer.get(0);
+            assertEquals(record.getFirstname(), returnedRecord.getFirstname());
+            assertEquals(record.getLastname(), returnedRecord.getLastname());
+            assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord
+                    .getBlob1()));
+            assertTrue(blobsAreEqual(record.getBlob2(), returnedRecord
+                    .getBlob2()));
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+    @Test
+    public void testFieldsBlobsDeleteByExample() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        try {
+            FieldsblobsMapper mapper = sqlSession.getMapper(FieldsblobsMapper.class);
+            Fieldsblobs record = new Fieldsblobs();
+            record.setFirstname("Jeff");
+            record.setLastname("Smith");
+            record.setBlob1(generateRandomBlob());
+            record.setBlob2(generateRandomBlob());
+            mapper.insert(record);
+
+            record = new Fieldsblobs();
+            record.setFirstname("Scott");
+            record.setLastname("Jones");
+            record.setBlob1(generateRandomBlob());
+            record.setBlob2(generateRandomBlob());
+            mapper.insert(record);
+
+            FieldsblobsExample example = new FieldsblobsExample();
+            List<Fieldsblobs> answer = mapper.selectByExample(example);
+            assertEquals(2, answer.size());
+
+            example = new FieldsblobsExample();
+            example.createCriteria().andFirstnameLike("S%");
+            int rows = mapper.deleteByExample(example);
+            assertEquals(1, rows);
+
+            example = new FieldsblobsExample();
+            answer = mapper.selectByExample(example);
+            assertEquals(1, answer.size());
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+    @Test
+    public void testFieldsBlobsSelectByExampleWithoutBlobs() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        try {
+            FieldsblobsMapper mapper = sqlSession.getMapper(FieldsblobsMapper.class);
+            Fieldsblobs record = new Fieldsblobs();
+            record.setFirstname("Jeff");
+            record.setLastname("Smith");
+            record.setBlob1(generateRandomBlob());
+            record.setBlob2(generateRandomBlob());
+            mapper.insert(record);
+
+            record = new Fieldsblobs();
+            record.setFirstname("Scott");
+            record.setLastname("Jones");
+            record.setBlob1(generateRandomBlob());
+            record.setBlob2(generateRandomBlob());
+            mapper.insert(record);
+
+            FieldsblobsExample example = new FieldsblobsExample();
+            example.createCriteria().andFirstnameLike("S%");
+            List<Fieldsblobs> answer = mapper.selectByExample(example);
+            assertEquals(1, answer.size());
+
+            Fieldsblobs newRecord = answer.get(0);
+            assertEquals(record.getFirstname(), newRecord.getFirstname());
+            assertEquals(record.getLastname(), newRecord.getLastname());
+            assertNull(newRecord.getBlob1());
+            assertNull(newRecord.getBlob2());
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+    @Test
+    public void testFieldsBlobsSelectByExampleWithBlobs() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        try {
+            FieldsblobsMapper mapper = sqlSession.getMapper(FieldsblobsMapper.class);
+            Fieldsblobs record = new Fieldsblobs();
+            record.setFirstname("Jeff");
+            record.setLastname("Smith");
+            record.setBlob1(generateRandomBlob());
+            record.setBlob2(generateRandomBlob());
+            mapper.insert(record);
+
+            record = new Fieldsblobs();
+            record.setFirstname("Scott");
+            record.setLastname("Jones");
+            record.setBlob1(generateRandomBlob());
+            record.setBlob2(generateRandomBlob());
+            mapper.insert(record);
+
+            FieldsblobsExample example = new FieldsblobsExample();
+            example.createCriteria().andFirstnameLike("S%");
+            List<Fieldsblobs> answer = mapper.selectByExampleWithBLOBs(example);
+            assertEquals(1, answer.size());
+
+            Fieldsblobs newRecord = answer.get(0);
+            assertEquals(record.getFirstname(), newRecord.getFirstname());
+            assertEquals(record.getLastname(), newRecord.getLastname());
+            assertTrue(blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
+            assertTrue(blobsAreEqual(record.getBlob2(), newRecord.getBlob2()));
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+    @Test
+    public void testFieldsBlobsSelectByExampleWithBlobsNoCriteria() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        try {
+            FieldsblobsMapper mapper = sqlSession.getMapper(FieldsblobsMapper.class);
+            Fieldsblobs record = new Fieldsblobs();
+            record.setFirstname("Jeff");
+            record.setLastname("Smith");
+            record.setBlob1(generateRandomBlob());
+            record.setBlob2(generateRandomBlob());
+            mapper.insert(record);
+
+            record = new Fieldsblobs();
+            record.setFirstname("Scott");
+            record.setLastname("Jones");
+            record.setBlob1(generateRandomBlob());
+            record.setBlob2(generateRandomBlob());
+            mapper.insert(record);
+
+            FieldsblobsExample example = new FieldsblobsExample();
+            example.createCriteria();
+            List<Fieldsblobs> answer = mapper.selectByExampleWithBLOBs(example);
+            assertEquals(2, answer.size());
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+    @Test
     public void testPKFieldsBlobsCountByExample() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
@@ -1965,218 +2042,12 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
     }
 
     @Test
-    public void testFieldsBlobsInsert() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-
-        try {
-            FieldsblobsMapper mapper = sqlSession.getMapper(FieldsblobsMapper.class);
-            FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs();
-            record.setFirstname("Jeff");
-            record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
-            mapper.insert(record);
-
-            record = new FieldsblobsWithBLOBs();
-            record.setFirstname("Bob");
-            record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
-            mapper.insert(record);
-            
-            FieldsblobsExample example = new FieldsblobsExample();
-            example.createCriteria().andFirstnameEqualTo("Bob");
-            List<FieldsblobsWithBLOBs> answer = mapper.selectByExampleWithBLOBs(example);
-            assertEquals(1, answer.size());
-
-            FieldsblobsWithBLOBs returnedRecord = answer.get(0);
-            assertEquals(record.getFirstname(), returnedRecord.getFirstname());
-            assertEquals(record.getLastname(), returnedRecord.getLastname());
-            assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord
-                    .getBlob1()));
-            assertTrue(blobsAreEqual(record.getBlob2(), returnedRecord
-                    .getBlob2()));
-        } finally {
-            sqlSession.close();
-        }
-    }
-
-    @Test
-    public void testFieldsBlobsDeleteByExample() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-
-        try {
-            FieldsblobsMapper mapper = sqlSession.getMapper(FieldsblobsMapper.class);
-            FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs();
-            record.setFirstname("Jeff");
-            record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
-            mapper.insert(record);
-
-            record = new FieldsblobsWithBLOBs();
-            record.setFirstname("Scott");
-            record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
-            mapper.insert(record);
-
-            FieldsblobsExample example = new FieldsblobsExample();
-            List<Fieldsblobs> answer = mapper.selectByExample(example);
-            assertEquals(2, answer.size());
-
-            example = new FieldsblobsExample();
-            example.createCriteria().andFirstnameLike("S%");
-            int rows = mapper.deleteByExample(example);
-            assertEquals(1, rows);
-
-            example = new FieldsblobsExample();
-            answer = mapper.selectByExample(example);
-            assertEquals(1, answer.size());
-        } finally {
-            sqlSession.close();
-        }
-    }
-
-    @Test
-    public void testFieldsBlobsSelectByExampleWithoutBlobs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-
-        try {
-            FieldsblobsMapper mapper = sqlSession.getMapper(FieldsblobsMapper.class);
-            FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs();
-            record.setFirstname("Jeff");
-            record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
-            mapper.insert(record);
-
-            record = new FieldsblobsWithBLOBs();
-            record.setFirstname("Scott");
-            record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
-            mapper.insert(record);
-
-            FieldsblobsExample example = new FieldsblobsExample();
-            example.createCriteria().andFirstnameLike("S%");
-            List<Fieldsblobs> answer = mapper.selectByExample(example);
-            assertEquals(1, answer.size());
-
-            Fieldsblobs newRecord = answer.get(0);
-            assertFalse(newRecord instanceof FieldsblobsWithBLOBs);
-            assertEquals(record.getFirstname(), newRecord.getFirstname());
-            assertEquals(record.getLastname(), newRecord.getLastname());
-        } finally {
-            sqlSession.close();
-        }
-    }
-
-    @Test
-    public void testFieldsBlobsSelectByExampleWithBlobs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-
-        try {
-            FieldsblobsMapper mapper = sqlSession.getMapper(FieldsblobsMapper.class);
-            FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs();
-            record.setFirstname("Jeff");
-            record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
-            mapper.insert(record);
-
-            record = new FieldsblobsWithBLOBs();
-            record.setFirstname("Scott");
-            record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
-            mapper.insert(record);
-
-            FieldsblobsExample example = new FieldsblobsExample();
-            example.createCriteria().andFirstnameLike("S%");
-            List<FieldsblobsWithBLOBs> answer = mapper.selectByExampleWithBLOBs(example);
-            assertEquals(1, answer.size());
-
-            FieldsblobsWithBLOBs newRecord = answer.get(0);
-            assertEquals(record.getFirstname(), newRecord.getFirstname());
-            assertEquals(record.getLastname(), newRecord.getLastname());
-            assertTrue(blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
-            assertTrue(blobsAreEqual(record.getBlob2(), newRecord.getBlob2()));
-        } finally {
-            sqlSession.close();
-        }
-    }
-
-    @Test
-    public void testFieldsBlobsSelectByExampleWithBlobsNoCriteria() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-
-        try {
-            FieldsblobsMapper mapper = sqlSession.getMapper(FieldsblobsMapper.class);
-            FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs();
-            record.setFirstname("Jeff");
-            record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
-            mapper.insert(record);
-
-            record = new FieldsblobsWithBLOBs();
-            record.setFirstname("Scott");
-            record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
-            mapper.insert(record);
-
-            FieldsblobsExample example = new FieldsblobsExample();
-            example.createCriteria();
-            List<FieldsblobsWithBLOBs> answer = mapper.selectByExampleWithBLOBs(example);
-            assertEquals(2, answer.size());
-        } finally {
-            sqlSession.close();
-        }
-    }
-
-    @Test
-    public void testFieldsBlobsCountByExample() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-
-        try {
-            FieldsblobsMapper mapper = sqlSession.getMapper(FieldsblobsMapper.class);
-            FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs();
-            record.setFirstname("Jeff");
-            record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
-            mapper.insert(record);
-
-            record = new FieldsblobsWithBLOBs();
-            record.setFirstname("Scott");
-            record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
-            mapper.insert(record);
-
-            FieldsblobsExample example = new FieldsblobsExample();
-            example.createCriteria().andFirstnameLike("S%");
-            int rows = mapper.countByExample(example);
-            assertEquals(1, rows);
-
-            example.clear();
-            rows = mapper.countByExample(example);
-            assertEquals(2, rows);
-        } finally {
-            sqlSession.close();
-        }
-    }
-
-    @Test
     public void testAwfulTableInsert() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
         try {
             AwfulTableMapper mapper = sqlSession.getMapper(AwfulTableMapper.class);
             AwfulTable record = new AwfulTable();
-
             record.seteMail("fred@fred.com");
             record.setEmailaddress("alsofred@fred.com");
             record.setFirstFirstName("fred1");
@@ -2189,8 +2060,7 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
 
-            int rows = mapper.insert(record);
-            assertEquals(1, rows);
+            mapper.insert(record);
             Integer generatedCustomerId = record.getCustomerId();
             assertEquals(57, generatedCustomerId.intValue());
 
@@ -2237,8 +2107,7 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
 
-            int rows = mapper.insertSelective(record);
-            assertEquals(1, rows);
+            mapper.insertSelective(record);
             Integer generatedCustomerId = record.getCustomerId();
             assertEquals(57, generatedCustomerId.intValue());
 
@@ -2284,15 +2153,13 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
 
-            int rows = mapper.insert(record);
-            assertEquals(1, rows);
+            mapper.insert(record);
             Integer generatedCustomerId = record.getCustomerId();
-            assertEquals(57, generatedCustomerId.intValue());
 
             record.setId1(11);
             record.setId2(22);
 
-            rows = mapper.updateByPrimaryKey(record);
+            int rows = mapper.updateByPrimaryKey(record);
             assertEquals(1, rows);
 
             AwfulTable returnedRecord = mapper.selectByPrimaryKey(generatedCustomerId);
@@ -2337,17 +2204,15 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
 
-            int rows = mapper.insert(record);
-            assertEquals(1, rows);
+            mapper.insert(record);
             Integer generatedCustomerId = record.getCustomerId();
-            assertEquals(57, generatedCustomerId.intValue());
 
             AwfulTable newRecord = new AwfulTable();
             newRecord.setCustomerId(generatedCustomerId);
             newRecord.setId1(11);
             newRecord.setId2(22);
 
-            rows = mapper.updateByPrimaryKeySelective(newRecord);
+            int rows = mapper.updateByPrimaryKeySelective(newRecord);
             assertEquals(1, rows);
 
             AwfulTable returnedRecord = mapper.selectByPrimaryKey(generatedCustomerId);
@@ -2392,12 +2257,10 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
 
-            int rows = mapper.insert(record);
-            assertEquals(1, rows);
+            mapper.insert(record);
             Integer generatedCustomerId = record.getCustomerId();
-            assertEquals(57, generatedCustomerId.intValue());
 
-            rows = mapper.deleteByPrimaryKey(generatedCustomerId);
+            int rows = mapper.deleteByPrimaryKey(generatedCustomerId);
             assertEquals(1, rows);
 
             AwfulTableExample example = new AwfulTableExample();
@@ -2495,10 +2358,8 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             record.setSecondFirstName("fred22");
             record.setThirdFirstName("fred33");
 
-            int rows = mapper.insert(record);
-            assertEquals(1, rows);
+            mapper.insert(record);
             Integer generatedKey = record.getCustomerId();
-            assertEquals(58, generatedKey.intValue());
 
             AwfulTable returnedRecord = mapper.selectByPrimaryKey(generatedKey);
 
@@ -2833,8 +2694,8 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             mapper.insert(record);
 
             AwfulTableExample example = new AwfulTableExample();
-            example.or().andFirstFirstNameLike("b%").andId2EqualTo(222222);
-            example.or().andFirstFirstNameLike("wi%");
+            example.createCriteria().andFirstFirstNameLike("b%").andId2EqualTo(222222);
+            example.or(example.createCriteria().andFirstFirstNameLike("wi%"));
             example.setOrderByClause("\"A_CuStOmEr iD\"");
             List<AwfulTable> answer = mapper.selectByExample(example);
             assertEquals(2, answer.size());
@@ -3219,5 +3080,135 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
         } finally {
             sqlSession.close();
         }
+    }
+    
+    @Test
+    public void testEquals1() {
+        Pkfields pkfields1 = new Pkfields();
+        assertFalse(pkfields1.equals(null));
+    }
+    
+    @Test
+    public void testEquals2() {
+        Pkfields pkfields1 = new Pkfields();
+        Pkfields pkfields2 = new Pkfields();
+        assertTrue(pkfields1.equals(pkfields2));
+    }
+    
+    @Test
+    public void testEquals3() {
+        Pkfields pkfields1 = new Pkfields();
+        pkfields1.setId1(2);
+        
+        Pkfields pkfields2 = new Pkfields();
+        pkfields2.setId1(2);
+        
+        assertTrue(pkfields1.equals(pkfields2));
+    }
+    
+    @Test
+    public void testEquals4() {
+        Pkfields pkfields1 = new Pkfields();
+        pkfields1.setId1(2);
+        
+        Pkfields pkfields2 = new Pkfields();
+        pkfields2.setId1(3);
+        
+        assertFalse(pkfields1.equals(pkfields2));
+    }
+
+    @Test
+    public void testEquals5() {
+        AwfulTable awfulTable1 = new AwfulTable();
+        awfulTable1.setActive(false);
+        awfulTable1.setCustomerId(3);
+        awfulTable1.seteMail("fred@fred.com");
+        awfulTable1.setEmailaddress("fred@fred.com");
+        awfulTable1.setFirstFirstName("Fred");
+        awfulTable1.setFrom("from");
+        awfulTable1.setId1(22);
+        awfulTable1.setId2(33);
+        awfulTable1.setId5(55);
+        awfulTable1.setId6(66);
+        awfulTable1.setId7(77);
+        awfulTable1.setLastName("Rubble");
+        awfulTable1.setSecondFirstName("Bamm Bamm");
+        awfulTable1.setThirdFirstName("Pebbles");
+
+        AwfulTable awfulTable2 = new AwfulTable();
+        awfulTable2.setActive(false);
+        awfulTable2.setCustomerId(3);
+        awfulTable2.seteMail("fred@fred.com");
+        awfulTable2.setEmailaddress("fred@fred.com");
+        awfulTable2.setFirstFirstName("Fred");
+        awfulTable2.setFrom("from");
+        awfulTable2.setId1(22);
+        awfulTable2.setId2(33);
+        awfulTable2.setId5(55);
+        awfulTable2.setId6(66);
+        awfulTable2.setId7(77);
+        awfulTable2.setLastName("Rubble");
+        awfulTable2.setSecondFirstName("Bamm Bamm");
+        awfulTable2.setThirdFirstName("Pebbles");
+        
+        assertTrue(awfulTable1.equals(awfulTable2));
+        
+        awfulTable2.setActive(true);
+        assertFalse(awfulTable1.equals(awfulTable2));
+    }
+
+    @Test
+    public void testHashCode1() {
+        Pkfields pkfields1 = new Pkfields();
+        Pkfields pkfields2 = new Pkfields();
+        assertTrue(pkfields1.hashCode() == pkfields2.hashCode());
+    }
+    
+    @Test
+    public void testHashCode2() {
+        Pkfields pkfields1 = new Pkfields();
+        pkfields1.setId1(2);
+        
+        Pkfields pkfields2 = new Pkfields();
+        pkfields2.setId1(2);
+        
+        assertTrue(pkfields1.hashCode() == pkfields2.hashCode());
+    }
+
+    @Test
+    public void testHashCode3() {
+        AwfulTable awfulTable1 = new AwfulTable();
+        awfulTable1.setActive(false);
+        awfulTable1.setCustomerId(3);
+        awfulTable1.seteMail("fred@fred.com");
+        awfulTable1.setEmailaddress("fred@fred.com");
+        awfulTable1.setFirstFirstName("Fred");
+        awfulTable1.setFrom("from");
+        awfulTable1.setId1(22);
+        awfulTable1.setId2(33);
+        awfulTable1.setId5(55);
+        awfulTable1.setId6(66);
+        awfulTable1.setId7(77);
+        awfulTable1.setLastName("Rubble");
+        awfulTable1.setSecondFirstName("Bamm Bamm");
+        awfulTable1.setThirdFirstName("Pebbles");
+
+        AwfulTable awfulTable2 = new AwfulTable();
+        awfulTable2.setActive(false);
+        awfulTable2.setCustomerId(3);
+        awfulTable2.seteMail("fred@fred.com");
+        awfulTable2.setEmailaddress("fred@fred.com");
+        awfulTable2.setFirstFirstName("Fred");
+        awfulTable2.setFrom("from");
+        awfulTable2.setId1(22);
+        awfulTable2.setId2(33);
+        awfulTable2.setId5(55);
+        awfulTable2.setId6(66);
+        awfulTable2.setId7(77);
+        awfulTable2.setLastName("Rubble");
+        awfulTable2.setSecondFirstName("Bamm Bamm");
+        awfulTable2.setThirdFirstName("Pebbles");
+        
+        assertTrue(awfulTable1.hashCode() == awfulTable2.hashCode());
     }
 }

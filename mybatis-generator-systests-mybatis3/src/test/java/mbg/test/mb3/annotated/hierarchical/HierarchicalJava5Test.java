@@ -1,5 +1,5 @@
 /*
- *  Copyright 2009 The Apache Software Foundation
+ *  Copyright 2010 The MyBatis Team
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,8 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
-package mbg.test.mb3.conditional;
+package mbg.test.mb3.annotated.hierarchical;
 
 import static mbg.test.common.util.TestUtilities.blobsAreEqual;
 import static mbg.test.common.util.TestUtilities.datesAreEqual;
@@ -23,39 +22,40 @@ import static mbg.test.common.util.TestUtilities.timesAreEqual;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import mbg.test.mb3.generated.conditional.mapper.AwfulTableMapper;
-import mbg.test.mb3.generated.conditional.mapper.FieldsblobsMapper;
-import mbg.test.mb3.generated.conditional.mapper.FieldsonlyMapper;
-import mbg.test.mb3.generated.conditional.mapper.PkblobsMapper;
-import mbg.test.mb3.generated.conditional.mapper.PkfieldsMapper;
-import mbg.test.mb3.generated.conditional.mapper.PkfieldsblobsMapper;
-import mbg.test.mb3.generated.conditional.mapper.PkonlyMapper;
-import mbg.test.mb3.generated.conditional.model.AwfulTable;
-import mbg.test.mb3.generated.conditional.model.AwfulTableExample;
-import mbg.test.mb3.generated.conditional.model.Fieldsblobs;
-import mbg.test.mb3.generated.conditional.model.FieldsblobsExample;
-import mbg.test.mb3.generated.conditional.model.FieldsblobsWithBLOBs;
-import mbg.test.mb3.generated.conditional.model.Fieldsonly;
-import mbg.test.mb3.generated.conditional.model.FieldsonlyExample;
-import mbg.test.mb3.generated.conditional.model.Pkblobs;
-import mbg.test.mb3.generated.conditional.model.PkblobsExample;
-import mbg.test.mb3.generated.conditional.model.Pkfields;
-import mbg.test.mb3.generated.conditional.model.PkfieldsExample;
-import mbg.test.mb3.generated.conditional.model.PkfieldsKey;
-import mbg.test.mb3.generated.conditional.model.Pkfieldsblobs;
-import mbg.test.mb3.generated.conditional.model.PkfieldsblobsExample;
-import mbg.test.mb3.generated.conditional.model.PkfieldsblobsKey;
-import mbg.test.mb3.generated.conditional.model.PkonlyExample;
-import mbg.test.mb3.generated.conditional.model.PkonlyKey;
+import mbg.test.mb3.generated.annotated.hierarchical.mapper.AwfulTableMapper;
+import mbg.test.mb3.generated.annotated.hierarchical.mapper.FieldsblobsMapper;
+import mbg.test.mb3.generated.annotated.hierarchical.mapper.FieldsonlyMapper;
+import mbg.test.mb3.generated.annotated.hierarchical.mapper.PkblobsMapper;
+import mbg.test.mb3.generated.annotated.hierarchical.mapper.PkfieldsMapper;
+import mbg.test.mb3.generated.annotated.hierarchical.mapper.PkfieldsblobsMapper;
+import mbg.test.mb3.generated.annotated.hierarchical.mapper.PkonlyMapper;
+import mbg.test.mb3.generated.annotated.hierarchical.model.AwfulTable;
+import mbg.test.mb3.generated.annotated.hierarchical.model.AwfulTableExample;
+import mbg.test.mb3.generated.annotated.hierarchical.model.AwfulTableKey;
+import mbg.test.mb3.generated.annotated.hierarchical.model.Fieldsblobs;
+import mbg.test.mb3.generated.annotated.hierarchical.model.FieldsblobsExample;
+import mbg.test.mb3.generated.annotated.hierarchical.model.FieldsblobsWithBLOBs;
+import mbg.test.mb3.generated.annotated.hierarchical.model.Fieldsonly;
+import mbg.test.mb3.generated.annotated.hierarchical.model.FieldsonlyExample;
+import mbg.test.mb3.generated.annotated.hierarchical.model.PkblobsExample;
+import mbg.test.mb3.generated.annotated.hierarchical.model.PkblobsKey;
+import mbg.test.mb3.generated.annotated.hierarchical.model.PkblobsWithBLOBs;
+import mbg.test.mb3.generated.annotated.hierarchical.model.Pkfields;
+import mbg.test.mb3.generated.annotated.hierarchical.model.PkfieldsExample;
+import mbg.test.mb3.generated.annotated.hierarchical.model.PkfieldsKey;
+import mbg.test.mb3.generated.annotated.hierarchical.model.Pkfieldsblobs;
+import mbg.test.mb3.generated.annotated.hierarchical.model.PkfieldsblobsExample;
+import mbg.test.mb3.generated.annotated.hierarchical.model.PkfieldsblobsKey;
+import mbg.test.mb3.generated.annotated.hierarchical.model.PkfieldsblobsWithBLOBs;
+import mbg.test.mb3.generated.annotated.hierarchical.model.PkonlyExample;
+import mbg.test.mb3.generated.annotated.hierarchical.model.PkonlyKey;
 
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
@@ -64,12 +64,12 @@ import org.junit.Test;
  * @author Jeff Butler
  * 
  */
-public class ConditionalJava5Test extends AbstractConditionalTest {
+public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
     @Test
     public void testFieldsOnlyInsert() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
-        
+
         try {
             FieldsonlyMapper mapper = sqlSession.getMapper(FieldsonlyMapper.class);
             Fieldsonly record = new Fieldsonly();
@@ -419,7 +419,7 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             assertEquals(2, rows);
 
             example.clear();
-            rows = mapper.countByExample(example);
+            rows  = mapper.countByExample(example);
             assertEquals(3, rows);
         } finally {
             sqlSession.close();
@@ -1132,99 +1132,6 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
     }
 
     @Test
-    public void testPKFieldsSelectByExampleDateTimeFields() {
-        // TODO - move this method to the other test classes too
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, 2009);
-        calendar.set(Calendar.MONTH, Calendar.JUNE);
-        calendar.set(Calendar.DAY_OF_MONTH, 15);
-        calendar.set(Calendar.HOUR, 10);
-        calendar.set(Calendar.MINUTE, 10);
-        calendar.set(Calendar.SECOND, 10);
-
-        try {
-            PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
-            Pkfields record = new Pkfields();
-            record.setId1(1);
-            record.setId2(1);
-            record.setDatefield(calendar.getTime());
-            record.setTimefield(calendar.getTime());
-            mapper.insert(record);
-
-            record = new Pkfields();
-            record.setId1(1);
-            record.setId2(2);
-            calendar.set(Calendar.DAY_OF_MONTH, 16);
-            calendar.set(Calendar.MINUTE, 11);
-            record.setDatefield(calendar.getTime());
-            record.setTimefield(calendar.getTime());
-            mapper.insert(record);
-
-            record = new Pkfields();
-            record.setId1(1);
-            record.setId2(3);
-            calendar.set(Calendar.DAY_OF_MONTH, 17);
-            calendar.set(Calendar.MINUTE, 12);
-            record.setDatefield(calendar.getTime());
-            record.setTimefield(calendar.getTime());
-            mapper.insert(record);
-
-            record = new Pkfields();
-            record.setId1(2);
-            record.setId2(1);
-            calendar.set(Calendar.DAY_OF_MONTH, 18);
-            calendar.set(Calendar.MINUTE, 13);
-            record.setDatefield(calendar.getTime());
-            record.setTimefield(calendar.getTime());
-            mapper.insert(record);
-
-            record = new Pkfields();
-            record.setId1(2);
-            record.setId2(2);
-            calendar.set(Calendar.DAY_OF_MONTH, 19);
-            calendar.set(Calendar.MINUTE, 14);
-            record.setDatefield(calendar.getTime());
-            record.setTimefield(calendar.getTime());
-            mapper.insert(record);
-
-            record = new Pkfields();
-            record.setId1(2);
-            record.setId2(3);
-            calendar.set(Calendar.DAY_OF_MONTH, 20);
-            calendar.set(Calendar.MINUTE, 15);
-            record.setDatefield(calendar.getTime());
-            record.setTimefield(calendar.getTime());
-            mapper.insert(record);
-
-            PkfieldsExample example = new PkfieldsExample();
-            example.createCriteria().andDatefieldEqualTo(calendar.getTime());
-
-            example.setOrderByClause("ID1, ID2");
-            List<Pkfields> answer = mapper.selectByExample(example);
-            assertEquals(1, answer.size());
-            
-            example.clear();
-            example.createCriteria().andDatefieldLessThan(calendar.getTime());
-            answer = mapper.selectByExample(example);
-            assertEquals(5, answer.size());
-            
-            calendar.set(Calendar.MINUTE, 12);
-            example.clear();
-            example.createCriteria().andTimefieldEqualTo(calendar.getTime());
-            answer = mapper.selectByExample(example);
-            assertEquals(1, answer.size());
-
-            example.clear();
-            example.createCriteria().andTimefieldGreaterThan(calendar.getTime());
-            answer = mapper.selectByExample(example);
-            assertEquals(3, answer.size());
-        } finally {
-            sqlSession.close();
-        }
-    }
-    
-    @Test
     public void testPKFieldsCountByExample() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
@@ -1242,6 +1149,7 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             record.setLastname("Jones");
             record.setId1(3);
             record.setId2(4);
+
             mapper.insert(record);
 
             PkfieldsExample example = new PkfieldsExample();
@@ -1263,17 +1171,18 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
         try {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
-            Pkblobs record = new Pkblobs();
+            PkblobsWithBLOBs record = new PkblobsWithBLOBs();
             record.setId(3);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             mapper.insert(record);
 
             PkblobsExample example = new PkblobsExample();
-            List<Pkblobs> answer = mapper.selectByExampleWithBLOBs(example);
+            List<PkblobsWithBLOBs> answer = mapper
+                    .selectByExampleWithBLOBs(example);
             assertEquals(1, answer.size());
 
-            Pkblobs returnedRecord = answer.get(0);
+            PkblobsWithBLOBs returnedRecord = answer.get(0);
             assertEquals(record.getId(), returnedRecord.getId());
             assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord
                     .getBlob1()));
@@ -1290,20 +1199,23 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
         try {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
-            Pkblobs record = new Pkblobs();
+            PkblobsWithBLOBs record = new PkblobsWithBLOBs();
             record.setId(3);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             mapper.insert(record);
 
-            record = new Pkblobs();
+            record = new PkblobsWithBLOBs();
             record.setId(3);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             int rows = mapper.updateByPrimaryKeyWithBLOBs(record);
             assertEquals(1, rows);
 
-            Pkblobs newRecord = mapper.selectByPrimaryKey(3);
+            PkblobsKey key = new PkblobsKey();
+            key.setId(3);
+
+            PkblobsWithBLOBs newRecord = mapper.selectByPrimaryKey(key);
 
             assertNotNull(newRecord);
             assertEquals(record.getId(), newRecord.getId());
@@ -1320,18 +1232,21 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
         try {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
-            Pkblobs record = new Pkblobs();
+            PkblobsWithBLOBs record = new PkblobsWithBLOBs();
             record.setId(3);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             mapper.insert(record);
 
-            Pkblobs newRecord = new Pkblobs();
+            PkblobsWithBLOBs newRecord = new PkblobsWithBLOBs();
             newRecord.setId(3);
             newRecord.setBlob2(generateRandomBlob());
             mapper.updateByPrimaryKeySelective(newRecord);
 
-            Pkblobs returnedRecord = mapper.selectByPrimaryKey(3);
+            PkblobsKey key = new PkblobsKey();
+            key.setId(3);
+
+            PkblobsWithBLOBs returnedRecord = mapper.selectByPrimaryKey(key);
             assertNotNull(returnedRecord);
             assertEquals(record.getId(), returnedRecord.getId());
             assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord
@@ -1349,17 +1264,19 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
         try {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
-            Pkblobs record = new Pkblobs();
+            PkblobsWithBLOBs record = new PkblobsWithBLOBs();
             record.setId(3);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             mapper.insert(record);
 
             PkblobsExample example = new PkblobsExample();
-            List<Pkblobs> answer = mapper.selectByExample(example);
+            List<PkblobsKey> answer = mapper.selectByExample(example);
             assertEquals(1, answer.size());
 
-            int rows = mapper.deleteByPrimaryKey(3);
+            PkblobsKey key = new PkblobsKey();
+            key.setId(3);
+            int rows = mapper.deleteByPrimaryKey(key);
             assertEquals(1, rows);
 
             example = new PkblobsExample();
@@ -1376,20 +1293,20 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
         try {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
-            Pkblobs record = new Pkblobs();
+            PkblobsWithBLOBs record = new PkblobsWithBLOBs();
             record.setId(3);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             mapper.insert(record);
 
-            record = new Pkblobs();
+            record = new PkblobsWithBLOBs();
             record.setId(6);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             mapper.insert(record);
 
             PkblobsExample example = new PkblobsExample();
-            List<Pkblobs> answer = mapper.selectByExample(example);
+            List<PkblobsKey> answer = mapper.selectByExample(example);
             assertEquals(2, answer.size());
 
             example = new PkblobsExample();
@@ -1411,19 +1328,21 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
         try {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
-            Pkblobs record = new Pkblobs();
+            PkblobsWithBLOBs record = new PkblobsWithBLOBs();
             record.setId(3);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             mapper.insert(record);
 
-            record = new Pkblobs();
+            record = new PkblobsWithBLOBs();
             record.setId(6);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             mapper.insert(record);
 
-            Pkblobs newRecord = mapper.selectByPrimaryKey(6);
+            PkblobsKey key = new PkblobsKey();
+            key.setId(6);
+            PkblobsWithBLOBs newRecord = mapper.selectByPrimaryKey(key);
             assertNotNull(newRecord);
             assertEquals(record.getId(), newRecord.getId());
             assertTrue(blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
@@ -1439,13 +1358,13 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
         try {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
-            Pkblobs record = new Pkblobs();
+            PkblobsWithBLOBs record = new PkblobsWithBLOBs();
             record.setId(3);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             mapper.insert(record);
 
-            record = new Pkblobs();
+            record = new PkblobsWithBLOBs();
             record.setId(6);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
@@ -1453,14 +1372,13 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
             PkblobsExample example = new PkblobsExample();
             example.createCriteria().andIdGreaterThan(4);
-            List<Pkblobs> answer = mapper.selectByExample(example);
+            List<PkblobsKey> answer = mapper.selectByExample(example);
 
             assertEquals(1, answer.size());
 
-            Pkblobs key = answer.get(0);
+            PkblobsKey key = answer.get(0);
+            assertFalse(key instanceof PkblobsWithBLOBs);
             assertEquals(6, key.getId().intValue());
-            assertNull(key.getBlob1());
-            assertNull(key.getBlob2());
         } finally {
             sqlSession.close();
         }
@@ -1472,13 +1390,13 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
         try {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
-            Pkblobs record = new Pkblobs();
+            PkblobsWithBLOBs record = new PkblobsWithBLOBs();
             record.setId(3);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             mapper.insert(record);
 
-            record = new Pkblobs();
+            record = new PkblobsWithBLOBs();
             record.setId(6);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
@@ -1486,7 +1404,7 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
             PkblobsExample example = new PkblobsExample();
             example.createCriteria();
-            List<Pkblobs> answer = mapper.selectByExample(example);
+            List<PkblobsKey> answer = mapper.selectByExample(example);
 
             assertEquals(2, answer.size());
         } finally {
@@ -1500,13 +1418,13 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
         try {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
-            Pkblobs record = new Pkblobs();
+            PkblobsWithBLOBs record = new PkblobsWithBLOBs();
             record.setId(3);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             mapper.insert(record);
 
-            record = new Pkblobs();
+            record = new PkblobsWithBLOBs();
             record.setId(6);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
@@ -1514,11 +1432,12 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
             PkblobsExample example = new PkblobsExample();
             example.createCriteria().andIdGreaterThan(4);
-            List<Pkblobs> answer = mapper.selectByExampleWithBLOBs(example);
+            List<PkblobsWithBLOBs> answer = mapper
+                    .selectByExampleWithBLOBs(example);
 
             assertEquals(1, answer.size());
 
-            Pkblobs newRecord = answer.get(0);
+            PkblobsWithBLOBs newRecord = answer.get(0);
             assertEquals(record.getId(), newRecord.getId());
             assertTrue(blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
             assertTrue(blobsAreEqual(record.getBlob2(), newRecord.getBlob2()));
@@ -1533,13 +1452,13 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
         try {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
-            Pkblobs record = new Pkblobs();
+            PkblobsWithBLOBs record = new PkblobsWithBLOBs();
             record.setId(3);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             mapper.insert(record);
 
-            record = new Pkblobs();
+            record = new PkblobsWithBLOBs();
             record.setId(6);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
@@ -1564,7 +1483,7 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
         try {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
-            Pkfieldsblobs record = new Pkfieldsblobs();
+            PkfieldsblobsWithBLOBs record = new PkfieldsblobsWithBLOBs();
             record.setId1(3);
             record.setId2(4);
             record.setFirstname("Jeff");
@@ -1573,10 +1492,11 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             mapper.insert(record);
 
             PkfieldsblobsExample example = new PkfieldsblobsExample();
-            List<Pkfieldsblobs> answer = mapper.selectByExampleWithBLOBs(example);
+            List<PkfieldsblobsWithBLOBs> answer = mapper
+                    .selectByExampleWithBLOBs(example);
             assertEquals(1, answer.size());
 
-            Pkfieldsblobs returnedRecord = answer.get(0);
+            PkfieldsblobsWithBLOBs returnedRecord = answer.get(0);
             assertEquals(record.getId1(), returnedRecord.getId1());
             assertEquals(record.getId2(), returnedRecord.getId2());
             assertEquals(record.getFirstname(), returnedRecord.getFirstname());
@@ -1594,7 +1514,7 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
         try {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
-            Pkfieldsblobs record = new Pkfieldsblobs();
+            PkfieldsblobsWithBLOBs record = new PkfieldsblobsWithBLOBs();
             record.setId1(3);
             record.setId2(4);
             record.setFirstname("Jeff");
@@ -1602,20 +1522,20 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             record.setBlob1(generateRandomBlob());
             mapper.insert(record);
 
-            Pkfieldsblobs updateRecord = new Pkfieldsblobs();
+            PkfieldsblobsWithBLOBs updateRecord = new PkfieldsblobsWithBLOBs();
             updateRecord.setId1(3);
             updateRecord.setId2(4);
             updateRecord.setFirstname("Scott");
             updateRecord.setLastname("Jones");
             updateRecord.setBlob1(generateRandomBlob());
 
-            int rows = mapper.updateByPrimaryKeyWithBLOBs(updateRecord);
+            int rows = mapper.updateByPrimaryKey(updateRecord);
             assertEquals(1, rows);
 
             PkfieldsblobsKey key = new PkfieldsblobsKey();
             key.setId1(3);
             key.setId2(4);
-            Pkfieldsblobs newRecord = mapper.selectByPrimaryKey(key);
+            PkfieldsblobsWithBLOBs newRecord = mapper.selectByPrimaryKey(key);
             assertEquals(updateRecord.getFirstname(), newRecord.getFirstname());
             assertEquals(updateRecord.getLastname(), newRecord.getLastname());
             assertEquals(record.getId1(), newRecord.getId1());
@@ -1633,7 +1553,7 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
         try {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
-            Pkfieldsblobs record = new Pkfieldsblobs();
+            PkfieldsblobsWithBLOBs record = new PkfieldsblobsWithBLOBs();
             record.setId1(3);
             record.setId2(4);
             record.setFirstname("Jeff");
@@ -1653,7 +1573,7 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             PkfieldsblobsKey key = new PkfieldsblobsKey();
             key.setId1(3);
             key.setId2(4);
-            Pkfieldsblobs newRecord = mapper.selectByPrimaryKey(key);
+            PkfieldsblobsWithBLOBs newRecord = mapper.selectByPrimaryKey(key);
             assertEquals(updateRecord.getFirstname(), newRecord.getFirstname());
             assertEquals(updateRecord.getLastname(), newRecord.getLastname());
             assertEquals(record.getId1(), newRecord.getId1());
@@ -1670,7 +1590,7 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
         try {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
-            Pkfieldsblobs record = new Pkfieldsblobs();
+            PkfieldsblobsWithBLOBs record = new PkfieldsblobsWithBLOBs();
             record.setId1(3);
             record.setId2(4);
             record.setFirstname("Jeff");
@@ -1678,7 +1598,7 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             record.setBlob1(generateRandomBlob());
             mapper.insert(record);
 
-            Pkfieldsblobs updateRecord = new Pkfieldsblobs();
+            PkfieldsblobsWithBLOBs updateRecord = new PkfieldsblobsWithBLOBs();
             updateRecord.setId1(3);
             updateRecord.setId2(4);
             updateRecord.setLastname("Jones");
@@ -1689,7 +1609,7 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             PkfieldsblobsKey key = new PkfieldsblobsKey();
             key.setId1(3);
             key.setId2(4);
-            Pkfieldsblobs returnedRecord = mapper.selectByPrimaryKey(key);
+            PkfieldsblobsWithBLOBs returnedRecord = mapper.selectByPrimaryKey(key);
             assertEquals(record.getFirstname(), returnedRecord.getFirstname());
             assertEquals(updateRecord.getLastname(), returnedRecord
                     .getLastname());
@@ -1708,7 +1628,7 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
         try {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
-            Pkfieldsblobs record = new Pkfieldsblobs();
+            PkfieldsblobsWithBLOBs record = new PkfieldsblobsWithBLOBs();
             record.setId1(3);
             record.setId2(4);
             record.setFirstname("Jeff");
@@ -1716,7 +1636,7 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             record.setBlob1(generateRandomBlob());
             mapper.insert(record);
 
-            record = new Pkfieldsblobs();
+            record = new PkfieldsblobsWithBLOBs();
             record.setId1(5);
             record.setId2(6);
             record.setFirstname("Scott");
@@ -1725,7 +1645,8 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             mapper.insert(record);
 
             PkfieldsblobsExample example = new PkfieldsblobsExample();
-            List<Pkfieldsblobs> answer = mapper.selectByExample(example);
+            List<Pkfieldsblobs> answer = mapper
+                    .selectByExample(example);
             assertEquals(2, answer.size());
 
             PkfieldsblobsKey key = new PkfieldsblobsKey();
@@ -1748,7 +1669,7 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
         try {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
-            Pkfieldsblobs record = new Pkfieldsblobs();
+            PkfieldsblobsWithBLOBs record = new PkfieldsblobsWithBLOBs();
             record.setId1(3);
             record.setId2(4);
             record.setFirstname("Jeff");
@@ -1756,7 +1677,7 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             record.setBlob1(generateRandomBlob());
             mapper.insert(record);
 
-            record = new Pkfieldsblobs();
+            record = new PkfieldsblobsWithBLOBs();
             record.setId1(5);
             record.setId2(6);
             record.setFirstname("Scott");
@@ -1765,7 +1686,8 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             mapper.insert(record);
 
             PkfieldsblobsExample example = new PkfieldsblobsExample();
-            List<Pkfieldsblobs> answer = mapper.selectByExample(example);
+            List<Pkfieldsblobs> answer = mapper
+                    .selectByExample(example);
             assertEquals(2, answer.size());
 
             example = new PkfieldsblobsExample();
@@ -1787,7 +1709,7 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
         try {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
-            Pkfieldsblobs record = new Pkfieldsblobs();
+            PkfieldsblobsWithBLOBs record = new PkfieldsblobsWithBLOBs();
             record.setId1(3);
             record.setId2(4);
             record.setFirstname("Jeff");
@@ -1795,7 +1717,7 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             record.setBlob1(generateRandomBlob());
             mapper.insert(record);
 
-            record = new Pkfieldsblobs();
+            record = new PkfieldsblobsWithBLOBs();
             record.setId1(5);
             record.setId2(6);
             record.setFirstname("Scott");
@@ -1804,13 +1726,14 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             mapper.insert(record);
 
             PkfieldsblobsExample example = new PkfieldsblobsExample();
-            List<Pkfieldsblobs> answer = mapper.selectByExample(example);
+            List<Pkfieldsblobs> answer = mapper
+                    .selectByExample(example);
             assertEquals(2, answer.size());
 
             PkfieldsblobsKey key = new PkfieldsblobsKey();
             key.setId1(5);
             key.setId2(6);
-            Pkfieldsblobs newRecord = mapper.selectByPrimaryKey(key);
+            PkfieldsblobsWithBLOBs newRecord = mapper.selectByPrimaryKey(key);
             assertEquals(record.getId1(), newRecord.getId1());
             assertEquals(record.getId2(), newRecord.getId2());
             assertEquals(record.getFirstname(), newRecord.getFirstname());
@@ -1827,7 +1750,7 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
         try {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
-            Pkfieldsblobs record = new Pkfieldsblobs();
+            PkfieldsblobsWithBLOBs record = new PkfieldsblobsWithBLOBs();
             record.setId1(3);
             record.setId2(4);
             record.setFirstname("Jeff");
@@ -1835,7 +1758,7 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             record.setBlob1(generateRandomBlob());
             mapper.insert(record);
 
-            record = new Pkfieldsblobs();
+            record = new PkfieldsblobsWithBLOBs();
             record.setId1(5);
             record.setId2(6);
             record.setFirstname("Scott");
@@ -1845,15 +1768,16 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
             PkfieldsblobsExample example = new PkfieldsblobsExample();
             example.createCriteria().andId2EqualTo(6);
-            List<Pkfieldsblobs> answer = mapper.selectByExample(example);
+            List<Pkfieldsblobs> answer = mapper
+                    .selectByExample(example);
             assertEquals(1, answer.size());
 
             Pkfieldsblobs newRecord = answer.get(0);
+            assertFalse(newRecord instanceof PkfieldsblobsWithBLOBs);
             assertEquals(record.getId1(), newRecord.getId1());
             assertEquals(record.getId2(), newRecord.getId2());
             assertEquals(record.getFirstname(), newRecord.getFirstname());
             assertEquals(record.getLastname(), newRecord.getLastname());
-            assertNull(newRecord.getBlob1());
         } finally {
             sqlSession.close();
         }
@@ -1865,7 +1789,7 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
         try {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
-            Pkfieldsblobs record = new Pkfieldsblobs();
+            PkfieldsblobsWithBLOBs record = new PkfieldsblobsWithBLOBs();
             record.setId1(3);
             record.setId2(4);
             record.setFirstname("Jeff");
@@ -1873,7 +1797,7 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             record.setBlob1(generateRandomBlob());
             mapper.insert(record);
 
-            record = new Pkfieldsblobs();
+            record = new PkfieldsblobsWithBLOBs();
             record.setId1(5);
             record.setId2(6);
             record.setFirstname("Scott");
@@ -1883,11 +1807,11 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
             PkfieldsblobsExample example = new PkfieldsblobsExample();
             example.createCriteria().andId2EqualTo(6);
-            example.setOrderByClause("ID1");  // test for Issue 174
-            List<Pkfieldsblobs> answer = mapper.selectByExampleWithBLOBs(example);
+            List<PkfieldsblobsWithBLOBs> answer = mapper
+                    .selectByExampleWithBLOBs(example);
             assertEquals(1, answer.size());
 
-            Pkfieldsblobs newRecord = answer.get(0);
+            PkfieldsblobsWithBLOBs newRecord = answer.get(0);
             assertEquals(record.getId1(), newRecord.getId1());
             assertEquals(record.getId2(), newRecord.getId2());
             assertEquals(record.getFirstname(), newRecord.getFirstname());
@@ -1904,7 +1828,7 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
         try {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
-            Pkfieldsblobs record = new Pkfieldsblobs();
+            PkfieldsblobsWithBLOBs record = new PkfieldsblobsWithBLOBs();
             record.setId1(3);
             record.setId2(4);
             record.setFirstname("Jeff");
@@ -1912,7 +1836,7 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             record.setBlob1(generateRandomBlob());
             mapper.insert(record);
 
-            record = new Pkfieldsblobs();
+            record = new PkfieldsblobsWithBLOBs();
             record.setId1(5);
             record.setId2(6);
             record.setFirstname("Scott");
@@ -1922,7 +1846,7 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
             PkfieldsblobsExample example = new PkfieldsblobsExample();
             example.createCriteria();
-            List<Pkfieldsblobs> answer = mapper.selectByExampleWithBLOBs(example);
+            List<PkfieldsblobsWithBLOBs> answer = mapper.selectByExampleWithBLOBs(example);
             assertEquals(2, answer.size());
         } finally {
             sqlSession.close();
@@ -1935,7 +1859,7 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
         try {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
-            Pkfieldsblobs record = new Pkfieldsblobs();
+            PkfieldsblobsWithBLOBs record = new PkfieldsblobsWithBLOBs();
             record.setId1(3);
             record.setId2(4);
             record.setFirstname("Jeff");
@@ -1943,7 +1867,7 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             record.setBlob1(generateRandomBlob());
             mapper.insert(record);
 
-            record = new Pkfieldsblobs();
+            record = new PkfieldsblobsWithBLOBs();
             record.setId1(5);
             record.setId2(6);
             record.setFirstname("Scott");
@@ -1977,16 +1901,9 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             record.setBlob2(generateRandomBlob());
             mapper.insert(record);
 
-            record = new FieldsblobsWithBLOBs();
-            record.setFirstname("Bob");
-            record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
-            mapper.insert(record);
-            
             FieldsblobsExample example = new FieldsblobsExample();
-            example.createCriteria().andFirstnameEqualTo("Bob");
-            List<FieldsblobsWithBLOBs> answer = mapper.selectByExampleWithBLOBs(example);
+            List<FieldsblobsWithBLOBs> answer = mapper
+                    .selectByExampleWithBLOBs(example);
             assertEquals(1, answer.size());
 
             FieldsblobsWithBLOBs returnedRecord = answer.get(0);
@@ -2094,7 +2011,8 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
 
             FieldsblobsExample example = new FieldsblobsExample();
             example.createCriteria().andFirstnameLike("S%");
-            List<FieldsblobsWithBLOBs> answer = mapper.selectByExampleWithBLOBs(example);
+            List<FieldsblobsWithBLOBs> answer = mapper
+                    .selectByExampleWithBLOBs(example);
             assertEquals(1, answer.size());
 
             FieldsblobsWithBLOBs newRecord = answer.get(0);
@@ -2189,13 +2107,15 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
 
-            int rows = mapper.insert(record);
-            assertEquals(1, rows);
+            int count = mapper.insert(record);
+            assertEquals(1, count);
+            
             Integer generatedCustomerId = record.getCustomerId();
             assertEquals(57, generatedCustomerId.intValue());
 
-            AwfulTable returnedRecord = mapper
-                    .selectByPrimaryKey(generatedCustomerId);
+            AwfulTableKey key = new AwfulTableKey();
+            key.setCustomerId(generatedCustomerId);
+            AwfulTable returnedRecord = mapper.selectByPrimaryKey(key);
 
             assertEquals(generatedCustomerId, returnedRecord.getCustomerId());
             assertEquals(record.geteMail(), returnedRecord.geteMail());
@@ -2237,13 +2157,15 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
 
-            int rows = mapper.insertSelective(record);
-            assertEquals(1, rows);
+            int count = mapper.insertSelective(record);
+            assertEquals(1, count);
+            
             Integer generatedCustomerId = record.getCustomerId();
             assertEquals(57, generatedCustomerId.intValue());
-
-            AwfulTable returnedRecord = mapper
-                    .selectByPrimaryKey(generatedCustomerId);
+            
+            AwfulTableKey key = new AwfulTableKey();
+            key.setCustomerId(generatedCustomerId);
+            AwfulTable returnedRecord = mapper.selectByPrimaryKey(key);
 
             assertEquals(generatedCustomerId, returnedRecord.getCustomerId());
             assertEquals(record.geteMail(), returnedRecord.geteMail());
@@ -2284,18 +2206,18 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
 
-            int rows = mapper.insert(record);
-            assertEquals(1, rows);
+            mapper.insert(record);
             Integer generatedCustomerId = record.getCustomerId();
-            assertEquals(57, generatedCustomerId.intValue());
 
             record.setId1(11);
             record.setId2(22);
 
-            rows = mapper.updateByPrimaryKey(record);
+            int rows = mapper.updateByPrimaryKey(record);
             assertEquals(1, rows);
 
-            AwfulTable returnedRecord = mapper.selectByPrimaryKey(generatedCustomerId);
+            AwfulTableKey key = new AwfulTableKey();
+            key.setCustomerId(generatedCustomerId);
+            AwfulTable returnedRecord = mapper.selectByPrimaryKey(key);
 
             assertEquals(generatedCustomerId, returnedRecord.getCustomerId());
             assertEquals(record.geteMail(), returnedRecord.geteMail());
@@ -2337,20 +2259,20 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
 
-            int rows = mapper.insert(record);
-            assertEquals(1, rows);
+            mapper.insert(record);
             Integer generatedCustomerId = record.getCustomerId();
-            assertEquals(57, generatedCustomerId.intValue());
 
             AwfulTable newRecord = new AwfulTable();
             newRecord.setCustomerId(generatedCustomerId);
             newRecord.setId1(11);
             newRecord.setId2(22);
 
-            rows = mapper.updateByPrimaryKeySelective(newRecord);
+            int rows = mapper.updateByPrimaryKeySelective(newRecord);
             assertEquals(1, rows);
 
-            AwfulTable returnedRecord = mapper.selectByPrimaryKey(generatedCustomerId);
+            AwfulTableKey key = new AwfulTableKey();
+            key.setCustomerId(generatedCustomerId);
+            AwfulTable returnedRecord = mapper.selectByPrimaryKey(key);
 
             assertEquals(generatedCustomerId, returnedRecord.getCustomerId());
             assertEquals(record.geteMail(), returnedRecord.geteMail());
@@ -2392,12 +2314,12 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
 
-            int rows = mapper.insert(record);
-            assertEquals(1, rows);
+            mapper.insert(record);
             Integer generatedCustomerId = record.getCustomerId();
-            assertEquals(57, generatedCustomerId.intValue());
 
-            rows = mapper.deleteByPrimaryKey(generatedCustomerId);
+            AwfulTableKey key = new AwfulTableKey();
+            key.setCustomerId(generatedCustomerId);
+            int rows = mapper.deleteByPrimaryKey(key);
             assertEquals(1, rows);
 
             AwfulTableExample example = new AwfulTableExample();
@@ -2495,12 +2417,12 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             record.setSecondFirstName("fred22");
             record.setThirdFirstName("fred33");
 
-            int rows = mapper.insert(record);
-            assertEquals(1, rows);
+            mapper.insert(record);
             Integer generatedKey = record.getCustomerId();
-            assertEquals(58, generatedKey.intValue());
 
-            AwfulTable returnedRecord = mapper.selectByPrimaryKey(generatedKey);
+            AwfulTableKey key = new AwfulTableKey();
+            key.setCustomerId(generatedKey);
+            AwfulTable returnedRecord = mapper.selectByPrimaryKey(key);
 
             assertNotNull(returnedRecord);
             assertEquals(record.getCustomerId(), returnedRecord.getCustomerId());
@@ -2833,8 +2755,8 @@ public class ConditionalJava5Test extends AbstractConditionalTest {
             mapper.insert(record);
 
             AwfulTableExample example = new AwfulTableExample();
-            example.or().andFirstFirstNameLike("b%").andId2EqualTo(222222);
-            example.or().andFirstFirstNameLike("wi%");
+            example.createCriteria().andFirstFirstNameLike("b%").andId2EqualTo(222222);
+            example.or(example.createCriteria().andFirstFirstNameLike("wi%"));
             example.setOrderByClause("\"A_CuStOmEr iD\"");
             List<AwfulTable> answer = mapper.selectByExample(example);
             assertEquals(2, answer.size());

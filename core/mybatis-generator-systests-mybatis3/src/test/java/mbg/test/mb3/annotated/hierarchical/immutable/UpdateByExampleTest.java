@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package mbg.test.mb3.hierarchical.immutable;
+package mbg.test.mb3.annotated.hierarchical.immutable;
 
 import static mbg.test.common.util.TestUtilities.blobsAreEqual;
 import static mbg.test.common.util.TestUtilities.generateRandomBlob;
@@ -24,27 +24,27 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import mbg.test.mb3.generated.hierarchical.immutable.mapper.FieldsblobsMapper;
-import mbg.test.mb3.generated.hierarchical.immutable.mapper.FieldsonlyMapper;
-import mbg.test.mb3.generated.hierarchical.immutable.mapper.PkblobsMapper;
-import mbg.test.mb3.generated.hierarchical.immutable.mapper.PkfieldsMapper;
-import mbg.test.mb3.generated.hierarchical.immutable.mapper.PkfieldsblobsMapper;
-import mbg.test.mb3.generated.hierarchical.immutable.mapper.PkonlyMapper;
-import mbg.test.mb3.generated.hierarchical.immutable.model.Fieldsblobs;
-import mbg.test.mb3.generated.hierarchical.immutable.model.FieldsblobsExample;
-import mbg.test.mb3.generated.hierarchical.immutable.model.FieldsblobsWithBLOBs;
-import mbg.test.mb3.generated.hierarchical.immutable.model.Fieldsonly;
-import mbg.test.mb3.generated.hierarchical.immutable.model.FieldsonlyExample;
-import mbg.test.mb3.generated.hierarchical.immutable.model.PkblobsExample;
-import mbg.test.mb3.generated.hierarchical.immutable.model.PkblobsKey;
-import mbg.test.mb3.generated.hierarchical.immutable.model.PkblobsWithBLOBs;
-import mbg.test.mb3.generated.hierarchical.immutable.model.Pkfields;
-import mbg.test.mb3.generated.hierarchical.immutable.model.PkfieldsExample;
-import mbg.test.mb3.generated.hierarchical.immutable.model.Pkfieldsblobs;
-import mbg.test.mb3.generated.hierarchical.immutable.model.PkfieldsblobsExample;
-import mbg.test.mb3.generated.hierarchical.immutable.model.PkfieldsblobsWithBLOBs;
-import mbg.test.mb3.generated.hierarchical.immutable.model.PkonlyExample;
-import mbg.test.mb3.generated.hierarchical.immutable.model.PkonlyKey;
+import mbg.test.mb3.generated.annotated.hierarchical.immutable.mapper.FieldsblobsMapper;
+import mbg.test.mb3.generated.annotated.hierarchical.immutable.mapper.FieldsonlyMapper;
+import mbg.test.mb3.generated.annotated.hierarchical.immutable.mapper.PkblobsMapper;
+import mbg.test.mb3.generated.annotated.hierarchical.immutable.mapper.PkfieldsMapper;
+import mbg.test.mb3.generated.annotated.hierarchical.immutable.mapper.PkfieldsblobsMapper;
+import mbg.test.mb3.generated.annotated.hierarchical.immutable.mapper.PkonlyMapper;
+import mbg.test.mb3.generated.annotated.hierarchical.immutable.model.Fieldsblobs;
+import mbg.test.mb3.generated.annotated.hierarchical.immutable.model.FieldsblobsExample;
+import mbg.test.mb3.generated.annotated.hierarchical.immutable.model.FieldsblobsWithBLOBs;
+import mbg.test.mb3.generated.annotated.hierarchical.immutable.model.Fieldsonly;
+import mbg.test.mb3.generated.annotated.hierarchical.immutable.model.FieldsonlyExample;
+import mbg.test.mb3.generated.annotated.hierarchical.immutable.model.PkblobsExample;
+import mbg.test.mb3.generated.annotated.hierarchical.immutable.model.PkblobsKey;
+import mbg.test.mb3.generated.annotated.hierarchical.immutable.model.PkblobsWithBLOBs;
+import mbg.test.mb3.generated.annotated.hierarchical.immutable.model.Pkfields;
+import mbg.test.mb3.generated.annotated.hierarchical.immutable.model.PkfieldsExample;
+import mbg.test.mb3.generated.annotated.hierarchical.immutable.model.Pkfieldsblobs;
+import mbg.test.mb3.generated.annotated.hierarchical.immutable.model.PkfieldsblobsExample;
+import mbg.test.mb3.generated.annotated.hierarchical.immutable.model.PkfieldsblobsWithBLOBs;
+import mbg.test.mb3.generated.annotated.hierarchical.immutable.model.PkonlyExample;
+import mbg.test.mb3.generated.annotated.hierarchical.immutable.model.PkonlyKey;
 
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
@@ -54,7 +54,7 @@ import org.junit.Test;
  * @author Jeff Butler
  * 
  */
-public class UpdateByExampleTest extends AbstractHierarchicalImmutableTest {
+public class UpdateByExampleTest extends AbstractAnnotatedHierarchicalImmutableTest {
 
     @Test
     public void testFieldsOnlyUpdateByExampleSelective() {

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2009 The Apache Software Foundation
+ *  Copyright 2010 The MyBatis Team
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,8 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
-package mbg.test.mb3.conditional;
+package mbg.test.mb3.annotated.conditional;
 
 import static mbg.test.common.util.TestUtilities.blobsAreEqual;
 import static mbg.test.common.util.TestUtilities.datesAreEqual;
@@ -32,30 +31,30 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import mbg.test.mb3.generated.conditional.mapper.AwfulTableMapper;
-import mbg.test.mb3.generated.conditional.mapper.FieldsblobsMapper;
-import mbg.test.mb3.generated.conditional.mapper.FieldsonlyMapper;
-import mbg.test.mb3.generated.conditional.mapper.PkblobsMapper;
-import mbg.test.mb3.generated.conditional.mapper.PkfieldsMapper;
-import mbg.test.mb3.generated.conditional.mapper.PkfieldsblobsMapper;
-import mbg.test.mb3.generated.conditional.mapper.PkonlyMapper;
-import mbg.test.mb3.generated.conditional.model.AwfulTable;
-import mbg.test.mb3.generated.conditional.model.AwfulTableExample;
-import mbg.test.mb3.generated.conditional.model.Fieldsblobs;
-import mbg.test.mb3.generated.conditional.model.FieldsblobsExample;
-import mbg.test.mb3.generated.conditional.model.FieldsblobsWithBLOBs;
-import mbg.test.mb3.generated.conditional.model.Fieldsonly;
-import mbg.test.mb3.generated.conditional.model.FieldsonlyExample;
-import mbg.test.mb3.generated.conditional.model.Pkblobs;
-import mbg.test.mb3.generated.conditional.model.PkblobsExample;
-import mbg.test.mb3.generated.conditional.model.Pkfields;
-import mbg.test.mb3.generated.conditional.model.PkfieldsExample;
-import mbg.test.mb3.generated.conditional.model.PkfieldsKey;
-import mbg.test.mb3.generated.conditional.model.Pkfieldsblobs;
-import mbg.test.mb3.generated.conditional.model.PkfieldsblobsExample;
-import mbg.test.mb3.generated.conditional.model.PkfieldsblobsKey;
-import mbg.test.mb3.generated.conditional.model.PkonlyExample;
-import mbg.test.mb3.generated.conditional.model.PkonlyKey;
+import mbg.test.mb3.generated.annotated.conditional.mapper.AwfulTableMapper;
+import mbg.test.mb3.generated.annotated.conditional.mapper.FieldsblobsMapper;
+import mbg.test.mb3.generated.annotated.conditional.mapper.FieldsonlyMapper;
+import mbg.test.mb3.generated.annotated.conditional.mapper.PkblobsMapper;
+import mbg.test.mb3.generated.annotated.conditional.mapper.PkfieldsMapper;
+import mbg.test.mb3.generated.annotated.conditional.mapper.PkfieldsblobsMapper;
+import mbg.test.mb3.generated.annotated.conditional.mapper.PkonlyMapper;
+import mbg.test.mb3.generated.annotated.conditional.model.AwfulTable;
+import mbg.test.mb3.generated.annotated.conditional.model.AwfulTableExample;
+import mbg.test.mb3.generated.annotated.conditional.model.Fieldsblobs;
+import mbg.test.mb3.generated.annotated.conditional.model.FieldsblobsExample;
+import mbg.test.mb3.generated.annotated.conditional.model.FieldsblobsWithBLOBs;
+import mbg.test.mb3.generated.annotated.conditional.model.Fieldsonly;
+import mbg.test.mb3.generated.annotated.conditional.model.FieldsonlyExample;
+import mbg.test.mb3.generated.annotated.conditional.model.Pkblobs;
+import mbg.test.mb3.generated.annotated.conditional.model.PkblobsExample;
+import mbg.test.mb3.generated.annotated.conditional.model.Pkfields;
+import mbg.test.mb3.generated.annotated.conditional.model.PkfieldsExample;
+import mbg.test.mb3.generated.annotated.conditional.model.PkfieldsKey;
+import mbg.test.mb3.generated.annotated.conditional.model.Pkfieldsblobs;
+import mbg.test.mb3.generated.annotated.conditional.model.PkfieldsblobsExample;
+import mbg.test.mb3.generated.annotated.conditional.model.PkfieldsblobsKey;
+import mbg.test.mb3.generated.annotated.conditional.model.PkonlyExample;
+import mbg.test.mb3.generated.annotated.conditional.model.PkonlyKey;
 
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
@@ -64,7 +63,7 @@ import org.junit.Test;
  * @author Jeff Butler
  * 
  */
-public class ConditionalJava5Test extends AbstractConditionalTest {
+public class ConditionalJava5Test extends AbstractAnnotatedConditionalTest {
 
     @Test
     public void testFieldsOnlyInsert() {

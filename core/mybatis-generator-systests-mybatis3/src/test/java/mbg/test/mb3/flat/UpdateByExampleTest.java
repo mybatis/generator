@@ -24,7 +24,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import mbg.test.mb3.AbstractTest;
 import mbg.test.mb3.generated.flat.mapper.AwfulTableMapper;
 import mbg.test.mb3.generated.flat.mapper.FieldsblobsMapper;
 import mbg.test.mb3.generated.flat.mapper.FieldsonlyMapper;
@@ -55,7 +54,7 @@ import org.junit.Test;
  * @author Jeff Butler
  *
  */
-public class UpdateByExampleTest extends AbstractTest {
+public class UpdateByExampleTest extends AbstractFlatTest {
 
     @Test
     public void testFieldsOnlyUpdateByExampleSelective() {

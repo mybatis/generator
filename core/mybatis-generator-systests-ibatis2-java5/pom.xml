@@ -7,7 +7,7 @@
   </parent>
   <artifactId>mybatis-generator-systests-ibatis2-java5</artifactId>
   <packaging>jar</packaging>
-  <name>MyBatis Generator Tests (iBATIS2, Java5)</name>
+  <name>MyBatis Generator Tests (iBATIS2 - Java5)</name>
 
   <build>
     <plugins>

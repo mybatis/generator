@@ -39,6 +39,7 @@ import org.mybatis.generator.config.Context;
  * <li>The validate method is called one time</li>
  * <li>The initialized method is called for each introspected table</li>
  * <li>The clientXXX methods are called for each introspected table</li>
+ * <li>The providerXXX methods are called for each introspected table</li>
  * <li>The modelXXX methods are called for each introspected table</li>
  * <li>The sqlMapXXX methods are called for each introspected table</li>
  * <li>The contextGenerateAdditionalJavaFiles(IntrospectedTable) method is
@@ -1310,4 +1311,214 @@ public interface Plugin {
      */
     boolean providerGenerated(TopLevelClass topLevelClass,
             IntrospectedTable introspectedTable);
+
+    /**
+     * This method is called when the applyWhere method has
+     * been generated in the SQL provider.
+     * 
+     * @param method
+     *            the generated applyWhere method
+     * @param topLevelClass
+     *            the partially generated provider class
+     *            You can add additional imported classes to the class
+     *            if necessary.
+     * @param introspectedTable
+     *            The class containing information about the table as
+     *            introspected from the database
+     * @return true if the method should be generated, false if the generated
+     *         method should be ignored. In the case of multiple plugins, the
+     *         first plugin returning false will disable the calling of further
+     *         plugins.
+     */
+    boolean providerApplyWhereMethodGenerated(Method method,
+            TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
+
+    /**
+     * This method is called when the countByExample method has
+     * been generated in the SQL provider.
+     * 
+     * @param method
+     *            the generated countByExample method
+     * @param topLevelClass
+     *            the partially generated provider class
+     *            You can add additional imported classes to the class
+     *            if necessary.
+     * @param introspectedTable
+     *            The class containing information about the table as
+     *            introspected from the database
+     * @return true if the method should be generated, false if the generated
+     *         method should be ignored. In the case of multiple plugins, the
+     *         first plugin returning false will disable the calling of further
+     *         plugins.
+     */
+    boolean providerCountByExampleMethodGenerated(Method method,
+            TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
+
+    /**
+     * This method is called when the deleteByExample method has
+     * been generated in the SQL provider.
+     * 
+     * @param method
+     *            the generated deleteByExample method
+     * @param topLevelClass
+     *            the partially generated provider class
+     *            You can add additional imported classes to the class
+     *            if necessary.
+     * @param introspectedTable
+     *            The class containing information about the table as
+     *            introspected from the database
+     * @return true if the method should be generated, false if the generated
+     *         method should be ignored. In the case of multiple plugins, the
+     *         first plugin returning false will disable the calling of further
+     *         plugins.
+     */
+    boolean providerDeleteByExampleMethodGenerated(Method method,
+            TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
+
+    /**
+     * This method is called when the insertSelective method has
+     * been generated in the SQL provider.
+     * 
+     * @param method
+     *            the generated insertSelective method
+     * @param topLevelClass
+     *            the partially generated provider class
+     *            You can add additional imported classes to the class
+     *            if necessary.
+     * @param introspectedTable
+     *            The class containing information about the table as
+     *            introspected from the database
+     * @return true if the method should be generated, false if the generated
+     *         method should be ignored. In the case of multiple plugins, the
+     *         first plugin returning false will disable the calling of further
+     *         plugins.
+     */
+    boolean providerInsertSelectiveMethodGenerated(Method method,
+            TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
+
+    /**
+     * This method is called when the selectByExampleWithBLOBs method has
+     * been generated in the SQL provider.
+     * 
+     * @param method
+     *            the generated selectByExampleWithBLOBs method
+     * @param topLevelClass
+     *            the partially generated provider class
+     *            You can add additional imported classes to the class
+     *            if necessary.
+     * @param introspectedTable
+     *            The class containing information about the table as
+     *            introspected from the database
+     * @return true if the method should be generated, false if the generated
+     *         method should be ignored. In the case of multiple plugins, the
+     *         first plugin returning false will disable the calling of further
+     *         plugins.
+     */
+    boolean providerSelectByExampleWithBLOBsMethodGenerated(Method method,
+            TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
+
+    /**
+     * This method is called when the selectByExampleWithoutBLOBs method has
+     * been generated in the SQL provider.
+     * 
+     * @param method
+     *            the generated selectByExampleWithoutBLOBs method
+     * @param topLevelClass
+     *            the partially generated provider class
+     *            You can add additional imported classes to the class
+     *            if necessary.
+     * @param introspectedTable
+     *            The class containing information about the table as
+     *            introspected from the database
+     * @return true if the method should be generated, false if the generated
+     *         method should be ignored. In the case of multiple plugins, the
+     *         first plugin returning false will disable the calling of further
+     *         plugins.
+     */
+    boolean providerSelectByExampleWithoutBLOBsMethodGenerated(Method method,
+            TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
+
+    /**
+     * This method is called when the updateByExampleSelective method has
+     * been generated in the SQL provider.
+     * 
+     * @param method
+     *            the generated updateByExampleSelective method
+     * @param topLevelClass
+     *            the partially generated provider class
+     *            You can add additional imported classes to the class
+     *            if necessary.
+     * @param introspectedTable
+     *            The class containing information about the table as
+     *            introspected from the database
+     * @return true if the method should be generated, false if the generated
+     *         method should be ignored. In the case of multiple plugins, the
+     *         first plugin returning false will disable the calling of further
+     *         plugins.
+     */
+    boolean providerUpdateByExampleSelectiveMethodGenerated(Method method,
+            TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
+
+    /**
+     * This method is called when the updateByExampleWithBLOBs method has
+     * been generated in the SQL provider.
+     * 
+     * @param method
+     *            the generated updateByExampleWithBLOBs method
+     * @param topLevelClass
+     *            the partially generated provider class
+     *            You can add additional imported classes to the class
+     *            if necessary.
+     * @param introspectedTable
+     *            The class containing information about the table as
+     *            introspected from the database
+     * @return true if the method should be generated, false if the generated
+     *         method should be ignored. In the case of multiple plugins, the
+     *         first plugin returning false will disable the calling of further
+     *         plugins.
+     */
+    boolean providerUpdateByExampleWithBLOBsMethodGenerated(Method method,
+            TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
+
+    /**
+     * This method is called when the updateByExampleWithoutBLOBs method has
+     * been generated in the SQL provider.
+     * 
+     * @param method
+     *            the generated updateByExampleWithoutBLOBs method
+     * @param topLevelClass
+     *            the partially generated provider class
+     *            You can add additional imported classes to the class
+     *            if necessary.
+     * @param introspectedTable
+     *            The class containing information about the table as
+     *            introspected from the database
+     * @return true if the method should be generated, false if the generated
+     *         method should be ignored. In the case of multiple plugins, the
+     *         first plugin returning false will disable the calling of further
+     *         plugins.
+     */
+    boolean providerUpdateByExampleWithoutBLOBsMethodGenerated(Method method,
+            TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
+
+    /**
+     * This method is called when the updateByPrimaryKeySelective method has
+     * been generated in the SQL provider.
+     * 
+     * @param method
+     *            the generated updateByPrimaryKeySelective method
+     * @param topLevelClass
+     *            the partially generated provider class
+     *            You can add additional imported classes to the class
+     *            if necessary.
+     * @param introspectedTable
+     *            The class containing information about the table as
+     *            introspected from the database
+     * @return true if the method should be generated, false if the generated
+     *         method should be ignored. In the case of multiple plugins, the
+     *         first plugin returning false will disable the calling of further
+     *         plugins.
+     */
+    boolean providerUpdateByPrimaryKeySelectiveMethodGenerated(Method method,
+            TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
 }

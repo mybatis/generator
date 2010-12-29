@@ -135,6 +135,6 @@ public class TopLevelEnumeration extends InnerEnum implements CompilationUnit {
     }
 
     public void addStaticImports(Set<String> staticImports) {
-        staticImports.addAll(staticImports);
+        this.staticImports.addAll(staticImports);
     }
 }

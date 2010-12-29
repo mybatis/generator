@@ -140,6 +140,6 @@ public class TopLevelClass extends InnerClass implements CompilationUnit {
     }
 
     public void addStaticImports(Set<String> staticImports) {
-        staticImports.addAll(staticImports);
+        this.staticImports.addAll(staticImports);
     }
 }

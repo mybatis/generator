@@ -15,6 +15,9 @@
  */
 package org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider;
 
+import java.util.Set;
+import java.util.TreeSet;
+
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
@@ -123,14 +126,19 @@ public class ProviderApplyWhereMethodGenerator extends
 
     @Override
     public void addClassElements(TopLevelClass topLevelClass) {
+        Set<String> staticImports = new TreeSet<String>();
+        Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
 
-        topLevelClass.addStaticImport("org.apache.ibatis.jdbc.SqlBuilder.WHERE"); //$NON-NLS-1$
-        topLevelClass.addImportedType("java.util.List"); //$NON-NLS-1$
+        staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.WHERE"); //$NON-NLS-1$
+        importedTypes.add(new FullyQualifiedJavaType(
+                "java.util.List")); //$NON-NLS-1$
         
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getExampleType());
-        topLevelClass.addImportedType(fqjt);
-        topLevelClass.addImportedType(String.format("%s.Criteria", fqjt.getFullyQualifiedName())); //$NON-NLS-1$
-        topLevelClass.addImportedType(String.format("%s.Criterion", fqjt.getFullyQualifiedName())); //$NON-NLS-1$
+        importedTypes.add(fqjt);
+        importedTypes.add(new FullyQualifiedJavaType(
+                String.format("%s.Criteria", fqjt.getFullyQualifiedName()))); //$NON-NLS-1$
+        importedTypes.add(new FullyQualifiedJavaType(
+                String.format("%s.Criterion", fqjt.getFullyQualifiedName()))); //$NON-NLS-1$
 
         Method method = new Method("applyWhere"); //$NON-NLS-1$
         method.setVisibility(JavaVisibility.PROTECTED);
@@ -144,6 +152,11 @@ public class ProviderApplyWhereMethodGenerator extends
             method.addBodyLine(methodLine);
         }
         
-        topLevelClass.addMethod(method);
+        if (context.getPlugins().providerApplyWhereMethodGenerated(method, topLevelClass,
+                introspectedTable)) {
+            topLevelClass.addStaticImports(staticImports);
+            topLevelClass.addImportedTypes(importedTypes);
+            topLevelClass.addMethod(method);
+        }
     }
 }

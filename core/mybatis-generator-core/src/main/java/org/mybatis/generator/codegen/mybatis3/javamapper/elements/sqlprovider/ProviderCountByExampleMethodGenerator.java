@@ -17,6 +17,9 @@ package org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider;
 
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 
+import java.util.Set;
+import java.util.TreeSet;
+
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
@@ -37,13 +40,16 @@ public class ProviderCountByExampleMethodGenerator extends
 
     @Override
     public void addClassElements(TopLevelClass topLevelClass) {
-        topLevelClass.addStaticImport("org.apache.ibatis.jdbc.SqlBuilder.BEGIN"); //$NON-NLS-1$
-        topLevelClass.addStaticImport("org.apache.ibatis.jdbc.SqlBuilder.FROM"); //$NON-NLS-1$
-        topLevelClass.addStaticImport("org.apache.ibatis.jdbc.SqlBuilder.SELECT"); //$NON-NLS-1$
-        topLevelClass.addStaticImport("org.apache.ibatis.jdbc.SqlBuilder.SQL"); //$NON-NLS-1$
+        Set<String> staticImports = new TreeSet<String>();
+        Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
+        
+        staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.BEGIN"); //$NON-NLS-1$
+        staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.FROM"); //$NON-NLS-1$
+        staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.SELECT"); //$NON-NLS-1$
+        staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.SQL"); //$NON-NLS-1$
         
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getExampleType());
-        topLevelClass.addImportedType(fqjt);
+        importedTypes.add(fqjt);
 
         Method method = new Method(
                 introspectedTable.getCountByExampleStatementId());
@@ -61,6 +67,11 @@ public class ProviderCountByExampleMethodGenerator extends
         method.addBodyLine("applyWhere(example, false);"); //$NON-NLS-1$
         method.addBodyLine("return SQL();"); //$NON-NLS-1$
         
-        topLevelClass.addMethod(method);
+        if (context.getPlugins().providerCountByExampleMethodGenerated(method, topLevelClass,
+                introspectedTable)) {
+            topLevelClass.addStaticImports(staticImports);
+            topLevelClass.addImportedTypes(importedTypes);
+            topLevelClass.addMethod(method);
+        }
     }
 }

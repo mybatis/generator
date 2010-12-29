@@ -223,6 +223,6 @@ public class Interface extends JavaElement implements CompilationUnit {
     }
 
     public void addStaticImports(Set<String> staticImports) {
-        staticImports.addAll(staticImports);
+        this.staticImports.addAll(staticImports);
     }
 }

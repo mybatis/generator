@@ -44,11 +44,13 @@ public class DefaultCommentGenerator implements CommentGenerator {
 
     private Properties properties;
     private boolean suppressDate;
+    private boolean suppressAllComments;
 
     public DefaultCommentGenerator() {
         super();
         properties = new Properties();
         suppressDate = false;
+        suppressAllComments = false;
     }
 
     public void addJavaFileComment(CompilationUnit compilationUnit) {
@@ -61,6 +63,10 @@ public class DefaultCommentGenerator implements CommentGenerator {
      * when it was generated.
      */
     public void addComment(XmlElement xmlElement) {
+        if (suppressAllComments) {
+            return;
+        }
+
         xmlElement.addElement(new TextElement("<!--")); //$NON-NLS-1$
 
         StringBuilder sb = new StringBuilder();
@@ -93,6 +99,9 @@ public class DefaultCommentGenerator implements CommentGenerator {
 
         suppressDate = isTrue(properties
                 .getProperty(PropertyRegistry.COMMENT_GENERATOR_SUPPRESS_DATE));
+        
+        suppressAllComments = isTrue(properties
+                .getProperty(PropertyRegistry.COMMENT_GENERATOR_SUPPRESS_ALL_COMMENTS));
     }
 
     /**
@@ -138,6 +147,10 @@ public class DefaultCommentGenerator implements CommentGenerator {
 
     public void addClassComment(InnerClass innerClass,
             IntrospectedTable introspectedTable) {
+        if (suppressAllComments) {
+            return;
+        }
+        
         StringBuilder sb = new StringBuilder();
 
         innerClass.addJavaDocLine("/**"); //$NON-NLS-1$
@@ -155,6 +168,10 @@ public class DefaultCommentGenerator implements CommentGenerator {
 
     public void addEnumComment(InnerEnum innerEnum,
             IntrospectedTable introspectedTable) {
+        if (suppressAllComments) {
+            return;
+        }
+
         StringBuilder sb = new StringBuilder();
 
         innerEnum.addJavaDocLine("/**"); //$NON-NLS-1$
@@ -173,6 +190,10 @@ public class DefaultCommentGenerator implements CommentGenerator {
     public void addFieldComment(Field field,
             IntrospectedTable introspectedTable,
             IntrospectedColumn introspectedColumn) {
+        if (suppressAllComments) {
+            return;
+        }
+
         StringBuilder sb = new StringBuilder();
 
         field.addJavaDocLine("/**"); //$NON-NLS-1$
@@ -191,6 +212,10 @@ public class DefaultCommentGenerator implements CommentGenerator {
     }
 
     public void addFieldComment(Field field, IntrospectedTable introspectedTable) {
+        if (suppressAllComments) {
+            return;
+        }
+
         StringBuilder sb = new StringBuilder();
 
         field.addJavaDocLine("/**"); //$NON-NLS-1$
@@ -208,6 +233,10 @@ public class DefaultCommentGenerator implements CommentGenerator {
 
     public void addGeneralMethodComment(Method method,
             IntrospectedTable introspectedTable) {
+        if (suppressAllComments) {
+            return;
+        }
+
         StringBuilder sb = new StringBuilder();
 
         method.addJavaDocLine("/**"); //$NON-NLS-1$
@@ -226,6 +255,10 @@ public class DefaultCommentGenerator implements CommentGenerator {
     public void addGetterComment(Method method,
             IntrospectedTable introspectedTable,
             IntrospectedColumn introspectedColumn) {
+        if (suppressAllComments) {
+            return;
+        }
+
         StringBuilder sb = new StringBuilder();
 
         method.addJavaDocLine("/**"); //$NON-NLS-1$
@@ -255,6 +288,10 @@ public class DefaultCommentGenerator implements CommentGenerator {
     public void addSetterComment(Method method,
             IntrospectedTable introspectedTable,
             IntrospectedColumn introspectedColumn) {
+        if (suppressAllComments) {
+            return;
+        }
+
         StringBuilder sb = new StringBuilder();
 
         method.addJavaDocLine("/**"); //$NON-NLS-1$
@@ -286,6 +323,10 @@ public class DefaultCommentGenerator implements CommentGenerator {
 
     public void addClassComment(InnerClass innerClass,
             IntrospectedTable introspectedTable, boolean markAsDoNotDelete) {
+        if (suppressAllComments) {
+            return;
+        }
+
         StringBuilder sb = new StringBuilder();
 
         innerClass.addJavaDocLine("/**"); //$NON-NLS-1$

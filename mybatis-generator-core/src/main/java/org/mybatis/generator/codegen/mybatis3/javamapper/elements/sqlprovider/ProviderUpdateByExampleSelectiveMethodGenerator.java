@@ -20,6 +20,9 @@ import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJ
 import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getAliasedEscapedColumnName;
 import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getParameterClause;
 
+import java.util.Set;
+import java.util.TreeSet;
+
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
@@ -37,12 +40,15 @@ public class ProviderUpdateByExampleSelectiveMethodGenerator extends
 
     @Override
     public void addClassElements(TopLevelClass topLevelClass) {
-        topLevelClass.addStaticImport("org.apache.ibatis.jdbc.SqlBuilder.BEGIN"); //$NON-NLS-1$
-        topLevelClass.addStaticImport("org.apache.ibatis.jdbc.SqlBuilder.UPDATE"); //$NON-NLS-1$
-        topLevelClass.addStaticImport("org.apache.ibatis.jdbc.SqlBuilder.SET"); //$NON-NLS-1$
-        topLevelClass.addStaticImport("org.apache.ibatis.jdbc.SqlBuilder.SQL"); //$NON-NLS-1$
+        Set<String> staticImports = new TreeSet<String>();
+        Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
 
-        topLevelClass.addImportedType(new FullyQualifiedJavaType("java.util.Map")); //$NON-NLS-1$
+        staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.BEGIN"); //$NON-NLS-1$
+        staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.UPDATE"); //$NON-NLS-1$
+        staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.SET"); //$NON-NLS-1$
+        staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.SQL"); //$NON-NLS-1$
+
+        importedTypes.add(new FullyQualifiedJavaType("java.util.Map")); //$NON-NLS-1$
         
         Method method = new Method(introspectedTable.getUpdateByExampleSelectiveStatementId());
         method.setReturnType(FullyQualifiedJavaType.getStringInstance());
@@ -52,13 +58,13 @@ public class ProviderUpdateByExampleSelectiveMethodGenerator extends
         
         FullyQualifiedJavaType record =
             introspectedTable.getRules().calculateAllFieldsClass();
-        topLevelClass.addImportedType(record);
+        importedTypes.add(record);
         method.addBodyLine(String.format("%s record = (%s) parameter.get(\"record\");", //$NON-NLS-1$
                 record.getShortName(), record.getShortName()));
 
         FullyQualifiedJavaType example =
             new FullyQualifiedJavaType(introspectedTable.getExampleType());
-        topLevelClass.addImportedType(example);
+        importedTypes.add(example);
         method.addBodyLine(String.format("%s example = (%s) parameter.get(\"example\");", //$NON-NLS-1$
                 example.getShortName(), example.getShortName()));
 
@@ -97,6 +103,11 @@ public class ProviderUpdateByExampleSelectiveMethodGenerator extends
         method.addBodyLine("applyWhere(example, true);"); //$NON-NLS-1$
         method.addBodyLine("return SQL();"); //$NON-NLS-1$
         
-        topLevelClass.addMethod(method);
+        if (context.getPlugins().providerUpdateByExampleSelectiveMethodGenerated(method, topLevelClass,
+                introspectedTable)) {
+            topLevelClass.addStaticImports(staticImports);
+            topLevelClass.addImportedTypes(importedTypes);
+            topLevelClass.addMethod(method);
+        }
     }
 }

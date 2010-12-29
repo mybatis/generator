@@ -20,6 +20,8 @@ import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
@@ -42,12 +44,15 @@ public class ProviderUpdateByExampleWithoutBLOBsMethodGenerator extends
 
     @Override
     public void addClassElements(TopLevelClass topLevelClass) {
-        topLevelClass.addStaticImport("org.apache.ibatis.jdbc.SqlBuilder.BEGIN"); //$NON-NLS-1$
-        topLevelClass.addStaticImport("org.apache.ibatis.jdbc.SqlBuilder.UPDATE"); //$NON-NLS-1$
-        topLevelClass.addStaticImport("org.apache.ibatis.jdbc.SqlBuilder.SET"); //$NON-NLS-1$
-        topLevelClass.addStaticImport("org.apache.ibatis.jdbc.SqlBuilder.SQL"); //$NON-NLS-1$
+        Set<String> staticImports = new TreeSet<String>();
+        Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
 
-        topLevelClass.addImportedType(new FullyQualifiedJavaType("java.util.Map")); //$NON-NLS-1$
+        staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.BEGIN"); //$NON-NLS-1$
+        staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.UPDATE"); //$NON-NLS-1$
+        staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.SET"); //$NON-NLS-1$
+        staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.SQL"); //$NON-NLS-1$
+
+        importedTypes.add(new FullyQualifiedJavaType("java.util.Map")); //$NON-NLS-1$
         
         Method method = new Method(getMethodName());
         method.setReturnType(FullyQualifiedJavaType.getStringInstance());
@@ -78,14 +83,18 @@ public class ProviderUpdateByExampleWithoutBLOBsMethodGenerator extends
         
         FullyQualifiedJavaType example =
             new FullyQualifiedJavaType(introspectedTable.getExampleType());
-        topLevelClass.addImportedType(example);
+        importedTypes.add(example);
         method.addBodyLine(String.format("%s example = (%s) parameter.get(\"example\");", //$NON-NLS-1$
                 example.getShortName(), example.getShortName()));
         
         method.addBodyLine("applyWhere(example, true);"); //$NON-NLS-1$
         method.addBodyLine("return SQL();"); //$NON-NLS-1$
         
-        topLevelClass.addMethod(method);
+        if (callPlugins(method, topLevelClass)) {
+            topLevelClass.addStaticImports(staticImports);
+            topLevelClass.addImportedTypes(importedTypes);
+            topLevelClass.addMethod(method);
+        }
     }
     
     public String getMethodName() {
@@ -94,5 +103,10 @@ public class ProviderUpdateByExampleWithoutBLOBsMethodGenerator extends
     
     public List<IntrospectedColumn> getColumns() {
         return introspectedTable.getNonBLOBColumns();
+    }
+    
+    public boolean callPlugins(Method method, TopLevelClass topLevelClass) {
+        return context.getPlugins().providerUpdateByExampleWithoutBLOBsMethodGenerated(method, topLevelClass,
+                introspectedTable);
     }
 }

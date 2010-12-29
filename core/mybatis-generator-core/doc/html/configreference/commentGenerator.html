@@ -63,6 +63,31 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
     <th>Property Values</th>
   </tr>
   <tr>
+    <td valign="top">suppressAllComments</td>
+    <td>
+      This property is used to specify whether MBG will include any coments in the
+      generated code.
+      The property supports these values:
+      <table>
+        <tr>
+          <th valign="top">false</th>
+          <td><i>This is the default value</i>
+            <br/>When the property is false or unspecified, all generated elelments
+            will include comments indicationg that the element is a generated element.
+          </td>
+        </tr>
+        <tr>
+          <th valign="top">true</th>
+          <td>When the property is true, no comments will be added to any
+              generated element.
+              <p><b>Warning: </b> if you set this value to true, then
+               all code merging will be disabled.</p?
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
     <td valign="top">suppressDate</td>
     <td>
       This property is used to specify whether MBG will include the generation

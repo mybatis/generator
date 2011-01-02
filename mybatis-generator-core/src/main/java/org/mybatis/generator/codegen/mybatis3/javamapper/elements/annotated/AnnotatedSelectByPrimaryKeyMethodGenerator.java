@@ -35,24 +35,18 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.SelectByPrimar
  */
 public class AnnotatedSelectByPrimaryKeyMethodGenerator extends
     SelectByPrimaryKeyMethodGenerator {
+    
+    private boolean useResultMapIfAvailable;
 
-    public AnnotatedSelectByPrimaryKeyMethodGenerator() {
+    public AnnotatedSelectByPrimaryKeyMethodGenerator(boolean useResultMapIfAvailable) {
         super();
+        this.useResultMapIfAvailable = useResultMapIfAvailable;
     }
 
     @Override
     public void addMapperAnnotations(Interface interfaze, Method method) {
         interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Select")); //$NON-NLS-1$
-        interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.type.JdbcType")); //$NON-NLS-1$
 
-        if (introspectedTable.isConstructorBased()) {
-            interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Arg")); //$NON-NLS-1$
-            interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.ConstructorArgs")); //$NON-NLS-1$
-        } else {
-            interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Result")); //$NON-NLS-1$
-            interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Results")); //$NON-NLS-1$
-        }
-        
         StringBuilder sb = new StringBuilder();
         method.addAnnotation("@Select({"); //$NON-NLS-1$
         javaIndent(sb, 1);
@@ -122,12 +116,42 @@ public class AnnotatedSelectByPrimaryKeyMethodGenerator extends
         }
 
         method.addAnnotation("})"); //$NON-NLS-1$
+
+        if (useResultMapIfAvailable) {
+            if (introspectedTable.getRules().generateBaseResultMap()
+                    || introspectedTable.getRules().generateResultMapWithBLOBs()) {
+                addResultMapAnnotation(interfaze, method);
+            } else {
+                addAnnotatedResults(interfaze, method);
+            }
+        } else {
+            addAnnotatedResults(interfaze, method);
+        }
+    }
+    
+    private void addResultMapAnnotation(Interface interfaze, Method method) {
+        interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.ResultMap")); //$NON-NLS-1$
+        
+        String annotation = String.format("@ResultMap(\"%s\")",
+                introspectedTable.getRules().generateResultMapWithBLOBs() ?
+                        introspectedTable.getResultMapWithBLOBsId() : introspectedTable.getBaseResultMapId());
+        method.addAnnotation(annotation);
+    }
+    
+    private void addAnnotatedResults(Interface interfaze, Method method) {
+        interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.type.JdbcType")); //$NON-NLS-1$
         
         if (introspectedTable.isConstructorBased()) {
+            interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Arg")); //$NON-NLS-1$
+            interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.ConstructorArgs")); //$NON-NLS-1$
             method.addAnnotation("@ConstructorArgs({"); //$NON-NLS-1$
         } else {
+            interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Result")); //$NON-NLS-1$
+            interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Results")); //$NON-NLS-1$
             method.addAnnotation("@Results({"); //$NON-NLS-1$
         }
+        
+        StringBuilder sb = new StringBuilder();
         
         Iterator<IntrospectedColumn> iterPk = introspectedTable.getPrimaryKeyColumns().iterator();
         Iterator<IntrospectedColumn> iterNonPk = introspectedTable.getNonPrimaryKeyColumns().iterator();

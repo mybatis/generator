@@ -1,5 +1,5 @@
 /*
- *  Copyright 2010 The MyBatis Team
+ *  Copyright 2011 The MyBatis Team
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package mbg.test.mb3.annotated.hierarchical.immutable;
+package mbg.test.mb3.mixed.hierarchical.immutable;
 
 import static mbg.test.common.util.TestUtilities.blobsAreEqual;
 import static mbg.test.common.util.TestUtilities.datesAreEqual;
@@ -30,29 +30,29 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import mbg.test.mb3.generated.annotated.hierarchical.immutable.mapper.FieldsblobsMapper;
-import mbg.test.mb3.generated.annotated.hierarchical.immutable.mapper.FieldsonlyMapper;
-import mbg.test.mb3.generated.annotated.hierarchical.immutable.mapper.PkblobsMapper;
-import mbg.test.mb3.generated.annotated.hierarchical.immutable.mapper.PkfieldsMapper;
-import mbg.test.mb3.generated.annotated.hierarchical.immutable.mapper.PkfieldsblobsMapper;
-import mbg.test.mb3.generated.annotated.hierarchical.immutable.mapper.PkonlyMapper;
-import mbg.test.mb3.generated.annotated.hierarchical.immutable.model.Fieldsblobs;
-import mbg.test.mb3.generated.annotated.hierarchical.immutable.model.FieldsblobsExample;
-import mbg.test.mb3.generated.annotated.hierarchical.immutable.model.FieldsblobsWithBLOBs;
-import mbg.test.mb3.generated.annotated.hierarchical.immutable.model.Fieldsonly;
-import mbg.test.mb3.generated.annotated.hierarchical.immutable.model.FieldsonlyExample;
-import mbg.test.mb3.generated.annotated.hierarchical.immutable.model.PkblobsExample;
-import mbg.test.mb3.generated.annotated.hierarchical.immutable.model.PkblobsKey;
-import mbg.test.mb3.generated.annotated.hierarchical.immutable.model.PkblobsWithBLOBs;
-import mbg.test.mb3.generated.annotated.hierarchical.immutable.model.Pkfields;
-import mbg.test.mb3.generated.annotated.hierarchical.immutable.model.PkfieldsExample;
-import mbg.test.mb3.generated.annotated.hierarchical.immutable.model.PkfieldsKey;
-import mbg.test.mb3.generated.annotated.hierarchical.immutable.model.Pkfieldsblobs;
-import mbg.test.mb3.generated.annotated.hierarchical.immutable.model.PkfieldsblobsExample;
-import mbg.test.mb3.generated.annotated.hierarchical.immutable.model.PkfieldsblobsKey;
-import mbg.test.mb3.generated.annotated.hierarchical.immutable.model.PkfieldsblobsWithBLOBs;
-import mbg.test.mb3.generated.annotated.hierarchical.immutable.model.PkonlyExample;
-import mbg.test.mb3.generated.annotated.hierarchical.immutable.model.PkonlyKey;
+import mbg.test.mb3.generated.mixed.hierarchical.immutable.mapper.FieldsblobsMapper;
+import mbg.test.mb3.generated.mixed.hierarchical.immutable.mapper.FieldsonlyMapper;
+import mbg.test.mb3.generated.mixed.hierarchical.immutable.mapper.PkblobsMapper;
+import mbg.test.mb3.generated.mixed.hierarchical.immutable.mapper.PkfieldsMapper;
+import mbg.test.mb3.generated.mixed.hierarchical.immutable.mapper.PkfieldsblobsMapper;
+import mbg.test.mb3.generated.mixed.hierarchical.immutable.mapper.PkonlyMapper;
+import mbg.test.mb3.generated.mixed.hierarchical.immutable.model.Fieldsblobs;
+import mbg.test.mb3.generated.mixed.hierarchical.immutable.model.FieldsblobsExample;
+import mbg.test.mb3.generated.mixed.hierarchical.immutable.model.FieldsblobsWithBLOBs;
+import mbg.test.mb3.generated.mixed.hierarchical.immutable.model.Fieldsonly;
+import mbg.test.mb3.generated.mixed.hierarchical.immutable.model.FieldsonlyExample;
+import mbg.test.mb3.generated.mixed.hierarchical.immutable.model.PkblobsExample;
+import mbg.test.mb3.generated.mixed.hierarchical.immutable.model.PkblobsKey;
+import mbg.test.mb3.generated.mixed.hierarchical.immutable.model.PkblobsWithBLOBs;
+import mbg.test.mb3.generated.mixed.hierarchical.immutable.model.Pkfields;
+import mbg.test.mb3.generated.mixed.hierarchical.immutable.model.PkfieldsExample;
+import mbg.test.mb3.generated.mixed.hierarchical.immutable.model.PkfieldsKey;
+import mbg.test.mb3.generated.mixed.hierarchical.immutable.model.Pkfieldsblobs;
+import mbg.test.mb3.generated.mixed.hierarchical.immutable.model.PkfieldsblobsExample;
+import mbg.test.mb3.generated.mixed.hierarchical.immutable.model.PkfieldsblobsKey;
+import mbg.test.mb3.generated.mixed.hierarchical.immutable.model.PkfieldsblobsWithBLOBs;
+import mbg.test.mb3.generated.mixed.hierarchical.immutable.model.PkonlyExample;
+import mbg.test.mb3.generated.mixed.hierarchical.immutable.model.PkonlyKey;
 
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
@@ -61,7 +61,7 @@ import org.junit.Test;
  * @author Jeff Butler
  * 
  */
-public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalImmutableTest {
+public class HierarchicalJava5Test extends AbstractMixedHierarchicalImmutableTest {
 
     @Test
     public void testFieldsOnlyInsert() {

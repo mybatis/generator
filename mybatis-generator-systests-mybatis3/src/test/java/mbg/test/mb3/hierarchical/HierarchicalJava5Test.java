@@ -1530,7 +1530,7 @@ public class HierarchicalJava5Test extends AbstractHierarchicalTest {
             updateRecord.setLastname("Jones");
             updateRecord.setBlob1(generateRandomBlob());
 
-            int rows = mapper.updateByPrimaryKey(updateRecord);
+            int rows = mapper.updateByPrimaryKeyWithBLOBs(updateRecord);
             assertEquals(1, rows);
 
             PkfieldsblobsKey key = new PkfieldsblobsKey();

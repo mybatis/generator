@@ -75,4 +75,80 @@
       <columnOverride column="active" javaType="boolean" />
     </table>
   </context>
+
+  <!-- This should cause an error because sqlMapGenerator is required
+       for the MIXEDMAPPER client -->
+  <context id="MyBatis3MixedMapper" targetRuntime="MyBatis3" defaultModelType="flat">
+    <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
+
+    <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
+        connectionURL="jdbc:hsqldb:mem:aname"
+        userId="sa" />
+
+    <javaModelGenerator targetPackage="ibatortest.generated.flat.java5.model"
+        targetProject="target/generated-sources/mybatis-generator/mybatis3">
+      <property name="enableSubPackages" value="true" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+    
+    <javaClientGenerator type="MIXEDMAPPER" targetPackage="ibatortest.generated.flat.java5.client"
+     	targetProject="target/generated-sources/mybatis-generator/mybatis3">
+    </javaClientGenerator>
+
+    <table tableName="FieldsOnly" />
+    <table tableName="PKOnly" />
+    <table tableName="PKFields" alias="B" />
+    <table tableName="PKBlobs" />
+    <table tableName="PKFieldsBlobs" />
+    <table tableName="FieldsBlobs" />
+    <table tableName="awful table" alias="A">
+      <property name="useColumnIndexes" value="true"/>
+      <generatedKey column="CuStOmEr iD" sqlStatement="JDBC" />
+      <columnOverride column="first name" property="firstFirstName" />
+      <columnOverride column="first_name" property="secondFirstName" />
+      <columnOverride column="firstName" property="thirdFirstName" />
+      <columnOverride column="from" delimitedColumnName="true" >
+        <property name="fredswife" value="wilma"/>
+      </columnOverride>
+      <columnOverride column="active" javaType="boolean" />
+    </table>
+  </context>
+
+  <!-- This should not cause an error because sqlMapGenerator is not required
+       for the ANNOTATEDMAPPER client -->
+  <context id="MyBatis3AnnotatedMapper" targetRuntime="MyBatis3" defaultModelType="flat">
+    <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
+
+    <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
+        connectionURL="jdbc:hsqldb:mem:aname"
+        userId="sa" />
+
+    <javaModelGenerator targetPackage="ibatortest.generated.flat.java5.model"
+        targetProject="target/generated-sources/mybatis-generator/mybatis3">
+      <property name="enableSubPackages" value="true" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+    
+    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="ibatortest.generated.flat.java5.client"
+     	targetProject="target/generated-sources/mybatis-generator/mybatis3">
+    </javaClientGenerator>
+
+    <table tableName="FieldsOnly" />
+    <table tableName="PKOnly" />
+    <table tableName="PKFields" alias="B" />
+    <table tableName="PKBlobs" />
+    <table tableName="PKFieldsBlobs" />
+    <table tableName="FieldsBlobs" />
+    <table tableName="awful table" alias="A">
+      <property name="useColumnIndexes" value="true"/>
+      <generatedKey column="CuStOmEr iD" sqlStatement="JDBC" />
+      <columnOverride column="first name" property="firstFirstName" />
+      <columnOverride column="first_name" property="secondFirstName" />
+      <columnOverride column="firstName" property="thirdFirstName" />
+      <columnOverride column="from" delimitedColumnName="true" >
+        <property name="fredswife" value="wilma"/>
+      </columnOverride>
+      <columnOverride column="active" javaType="boolean" />
+    </table>
+  </context>
 </generatorConfiguration>

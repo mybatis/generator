@@ -77,9 +77,9 @@ public class ProviderUpdateByExampleWithoutBLOBsMethodGenerator extends
             method.addBodyLine(String.format("SET(\"%s = %s\");", //$NON-NLS-1$
                     escapeStringForJava(getAliasedEscapedColumnName(introspectedColumn)),
                     sb.toString()));
-                
-            method.addBodyLine(""); //$NON-NLS-1$
         }
+        
+        method.addBodyLine(""); //$NON-NLS-1$
         
         FullyQualifiedJavaType example =
             new FullyQualifiedJavaType(introspectedTable.getExampleType());

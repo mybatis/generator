@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.Interface;
+import org.mybatis.generator.codegen.AbstractXmlGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.AbstractJavaMapperMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated.AnnotatedCountByExampleMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated.AnnotatedDeleteByExampleMethodGenerator;
@@ -85,7 +86,7 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
     @Override
     protected void addSelectByPrimaryKeyMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateSelectByPrimaryKey()) {
-            AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedSelectByPrimaryKeyMethodGenerator();
+            AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedSelectByPrimaryKeyMethodGenerator(false);
             initializeAndExecuteGenerator(methodGenerator, interfaze);
         }
     }
@@ -147,5 +148,11 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
         sqlProviderGenerator.setProgressCallback(progressCallback);
         sqlProviderGenerator.setWarnings(warnings);
         return sqlProviderGenerator.getCompilationUnits();
+    }
+
+    @Override
+    public AbstractXmlGenerator getMatchedXMLGenerator() {
+        // No XML required by the annotated client
+        return null;
     }
 }

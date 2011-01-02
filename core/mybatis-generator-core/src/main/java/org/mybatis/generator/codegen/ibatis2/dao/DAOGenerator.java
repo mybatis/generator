@@ -63,7 +63,7 @@ public class DAOGenerator extends AbstractJavaClientGenerator {
 
     public DAOGenerator(AbstractDAOTemplate daoTemplate,
             boolean generateForJava5) {
-        super();
+        super(true);
         this.daoTemplate = daoTemplate;
         this.generateForJava5 = generateForJava5;
     }
@@ -323,10 +323,5 @@ public class DAOGenerator extends AbstractJavaClientGenerator {
         methodGenerator.setWarnings(warnings);
         methodGenerator.addImplementationElements(topLevelClass);
         methodGenerator.addInterfaceElements(interfaze);
-    }
-
-    @Override
-    public boolean requiresMatchedXMLGenerator() {
-        return true;
     }
 }

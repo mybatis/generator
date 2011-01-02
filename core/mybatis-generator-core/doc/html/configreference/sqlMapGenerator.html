@@ -18,8 +18,12 @@
 <h1>The &lt;sqlMapGenerator&gt; Element</h1>
 <p>The &lt;sqlMapGenerator&gt; element is used to define properties of the SQL map
 generator.  The SQL Map Generator builds a MyBatis/iBATIS formatted SQL map XML file
-for each introspected table. This element is a required child element
+for each introspected table.</p>
+<p>If iBATIS2 is targeted, then this element is a required child element
 of the <a href="context.html">&lt;context&gt;</a> element.</p>
+<p>If MyBatis3 is targeted, then this element is a required child element
+of the <a href="context.html">&lt;context&gt;</a> element only if your chosen
+JavaClientGenerator requires XML, or if you do not specify a JavaClientGenerator.</p>
 <h2>Required Attributes</h2>
 <table border="1" cellspacing="0" cellpadding="5">
   <tr>

@@ -55,9 +55,13 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
      * 
      */
     public JavaMapperGenerator() {
-        super();
+        super(true);
     }
 
+    public JavaMapperGenerator(boolean requiresMatchedXMLGenerator) {
+        super(requiresMatchedXMLGenerator);
+    }
+    
     @Override
     public List<CompilationUnit> getCompilationUnits() {
         progressCallback.startTask(getString("Progress.17", //$NON-NLS-1$
@@ -222,11 +226,6 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
         methodGenerator.addInterfaceElements(interfaze);
     }
 
-    @Override
-    public boolean requiresMatchedXMLGenerator() {
-        return true;
-    }
-    
     public List<CompilationUnit> getExtraCompilationUnits() {
         return null;
     }

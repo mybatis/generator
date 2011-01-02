@@ -4,25 +4,20 @@
  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
-  <context id="FlatJava5" targetRuntime="MyBatis3" defaultModelType="flat">
+  <!-- This should cause an error because sqlMapGenerator is required
+       if there is no javaClientGenerator -->
+  <context id="MyBatis3NoClient" targetRuntime="MyBatis3" defaultModelType="flat">
     <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
 
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
         connectionURL="jdbc:hsqldb:mem:aname"
         userId="sa" />
 
-    <javaModelGenerator targetPackage="ibatortest.generated.flat.java5.model" targetProject="target/generated-sources/ibator/ibatis3">
+    <javaModelGenerator targetPackage="ibatortest.generated.flat.java5.model"
+        targetProject="target/generated-sources/mybatis-generator/mybatis3">
       <property name="enableSubPackages" value="true" />
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
-
-    <sqlMapGenerator targetPackage="ibatortest.generated.flat.java5.xml"  targetProject="target/generated-sources/ibator/ibatis3">
-      <property name="enableSubPackages" value="true" />
-    </sqlMapGenerator>
-
-    <javaClientGenerator type="XMLMAPPER" targetPackage="ibatortest.generated.flat.java5.mapper"  targetProject="target/generated-sources/ibator/ibatis3">
-      <property name="enableSubPackages" value="true" />
-    </javaClientGenerator>
 
     <table tableName="FieldsOnly" />
     <table tableName="PKOnly" />
@@ -43,24 +38,23 @@
     </table>
   </context>
 
-  <context id="HierarchicalJava5" targetRuntime="MyBatis3" defaultModelType="hierarchical">
+  <!-- This should cause an error because sqlMapGenerator is required
+       for the XMLMAPPER client -->
+  <context id="MyBatis3XMLMapper" targetRuntime="MyBatis3" defaultModelType="flat">
     <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
 
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
         connectionURL="jdbc:hsqldb:mem:aname"
         userId="sa" />
 
-    <javaModelGenerator targetPackage="ibatortest.generated.hierarchical.java5.model" targetProject="target/generated-sources/ibator/ibatis3">
+    <javaModelGenerator targetPackage="ibatortest.generated.flat.java5.model"
+        targetProject="target/generated-sources/mybatis-generator/mybatis3">
       <property name="enableSubPackages" value="true" />
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
-
-    <sqlMapGenerator targetPackage="ibatortest.generated.hierarchical.java5.xml"  targetProject="target/generated-sources/ibator/ibatis3">
-      <property name="enableSubPackages" value="true" />
-    </sqlMapGenerator>
-
-    <javaClientGenerator type="XMLMAPPER" targetPackage="ibatortest.generated.hierarchical.java5.mapper"  targetProject="target/generated-sources/ibator/ibatis3">
-      <property name="enableSubPackages" value="true" />
+    
+    <javaClientGenerator type="XMLMAPPER" targetPackage="ibatortest.generated.flat.java5.client"
+     	targetProject="target/generated-sources/mybatis-generator/mybatis3">
     </javaClientGenerator>
 
     <table tableName="FieldsOnly" />
@@ -71,114 +65,14 @@
     <table tableName="FieldsBlobs" />
     <table tableName="awful table" alias="A">
       <property name="useColumnIndexes" value="true"/>
-      <generatedKey column="CuStOmEr iD" sqlStatement="HSQLDB" identity="true" />
+      <generatedKey column="CuStOmEr iD" sqlStatement="JDBC" />
       <columnOverride column="first name" property="firstFirstName" />
       <columnOverride column="first_name" property="secondFirstName" />
       <columnOverride column="firstName" property="thirdFirstName" />
-      <columnOverride column="from" delimitedColumnName="true" />
+      <columnOverride column="from" delimitedColumnName="true" >
+        <property name="fredswife" value="wilma"/>
+      </columnOverride>
       <columnOverride column="active" javaType="boolean" />
     </table>
-  </context>
-
-  <context id="ConditionalJava5" targetRuntime="MyBatis3" defaultModelType="conditional">
-    <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
-    <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
-
-    <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
-        connectionURL="jdbc:hsqldb:mem:aname"
-        userId="sa" />
-
-    <javaModelGenerator targetPackage="ibatortest.generated.conditional.java5.model" targetProject="target/generated-sources/ibator/ibatis3">
-      <property name="enableSubPackages" value="true" />
-      <property name="trimStrings" value="true" />
-    </javaModelGenerator>
-
-    <sqlMapGenerator targetPackage="ibatortest.generated.conditional.java5.xml"  targetProject="target/generated-sources/ibator/ibatis3">
-      <property name="enableSubPackages" value="true" />
-    </sqlMapGenerator>
-
-    <javaClientGenerator type="XMLMAPPER" targetPackage="ibatortest.generated.conditional.java5.mapper"  targetProject="target/generated-sources/ibator/ibatis3">
-      <property name="enableSubPackages" value="true" />
-    </javaClientGenerator>
-
-    <table tableName="FieldsOnly" />
-    <table tableName="PKOnly" />
-    <table tableName="PKFields" alias="B" />
-    <table tableName="PKBlobs" />
-    <table tableName="PKFieldsBlobs" />
-    <table tableName="FieldsBlobs" />
-    <table tableName="awful table" alias="A">
-      <property name="useColumnIndexes" value="true"/>
-      <generatedKey column="CuStOmEr iD" sqlStatement="HSQLDB" identity="true" />
-      <columnOverride column="first name" property="firstFirstName" />
-      <columnOverride column="first_name" property="secondFirstName" />
-      <columnOverride column="firstName" property="thirdFirstName" />
-      <columnOverride column="from" delimitedColumnName="true" />
-      <columnOverride column="active" javaType="boolean" />
-    </table>
-  </context>
-
-  <context id="miscellaneousTests" targetRuntime="MyBatis3">
-    <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
-    <plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin" />
-    <plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin" >
-      <property name="searchString" value="Example$"/>
-      <property name="replaceString" value="Criteria"/>
-    </plugin>
-
-    <commentGenerator>
-      <property name="suppressDate" value="true"/>
-    </commentGenerator>
-    
-    <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
-        connectionURL="jdbc:hsqldb:mem:aname"
-        userId="sa" />
-
-    <javaModelGenerator targetPackage="ibatortest.generated.miscellaneous.model" targetProject="target/generated-sources/ibator/ibatis3">
-      <property name="trimStrings" value="true" />
-      <property name="rootClass" value="ibatortest.execute.miscellaneous.BaseClass" />
-    </javaModelGenerator>
-
-    <sqlMapGenerator targetPackage="ibatortest.generated.miscellaneous.xml"  targetProject="target/generated-sources/ibator/ibatis3">
-    </sqlMapGenerator>
-
-    <javaClientGenerator type="XMLMAPPER" targetPackage="ibatortest.generated.miscellaneous.mapper"  targetProject="target/generated-sources/ibator/ibatis3">
-      <property name="rootInterface" value="ibatortest.execute.miscellaneous.BaseInterface" />
-      <property name="methodNameCalculator" value="EXTENDED"/>
-    </javaClientGenerator>
-
-    <table tableName="BlobsOnly" /> <!-- should generate a warning -->
-    <table tableName="NonExistantTable" /> <!-- should generate a warning -->
-    <table tableName="PKFields" domainObjectName="MyObject" alias="A" >
-      <ignoreColumn column="fred" /> <!-- should generate a warning -->
-      <ignoreColumn column="decimal30Field" />
-      <columnOverride column="datefield" property="startDate"/>
-      <columnOverride column="decimal155Field" javaType="java.lang.Double" />
-      <columnOverride column="decimal60Field" javaType="int" />
-      <columnOverride column="firstName" javaType="ibatortest.execute.miscellaneous.FirstName"
-         typeHandler="ibatortest.execute.miscellaneous.FirstNameTypeHandler"/>
-      <columnOverride column="timeField" javaType="ibatortest.execute.miscellaneous.MyTime"
-         typeHandler="ibatortest.execute.miscellaneous.MyTimeTypeHandler"/>
-    </table>
-    <table tableName="RegexRename">
-      <columnRenamingRule searchString="^CUST" />
-    </table>
-  </context>
-  
-  <context id="miscellaneousTests_NoClient" targetRuntime="MyBatis3">
-    <property name="autoDelimitKeywords" value="true" />
-    
-    <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
-        connectionURL="jdbc:hsqldb:mem:aname"
-        userId="sa" />
-
-    <javaModelGenerator targetPackage="ibatortest.generated.miscellaneous.model" targetProject="target/generated-sources/ibator/ibatis3">
-      <property name="trimStrings" value="true" />
-    </javaModelGenerator>
-
-    <sqlMapGenerator targetPackage="ibatortest.generated.miscellaneous.xml"
-                     targetProject="target/generated-sources/ibator/ibatis3"/>
-
-    <table tableName="AnotherAwfulTable" />
   </context>
 </generatorConfiguration>

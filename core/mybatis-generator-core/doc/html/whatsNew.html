@@ -28,6 +28,17 @@
 </ul>
 <h3>Enhancements</h3>
 <ul>
+  <li>Added a new MyBatis 3 generator that generates code based solely on annotations
+      with no generated XML.  Configuration settings for this new generator are as follows:
+    <ul>
+      <li>The <code>targetRuntime</code> attribute of
+          <a href="configreference/context.html">&lt;context&gt;</a>
+          element is <b>MyBatis3</b></li>
+      <li>The <code>type</code> attribute of
+          <a href="configreference/javaClientGenerator.html">&lt;javaClientGenerator&gt;</a>
+          element is <b>ANNOTATEDMAPPER</b></li>
+    </ul>
+  </li>
   <li>Add support for JDBC types NCHAR, NCLOB, NVARCHAR to match MyBatis3.</li>
   <li>Added support for "useGeneratedKeys" in MyBatis3.  See
       <a href="configreference/generatedKey.html">&lt;generatedKey&gt;</a>

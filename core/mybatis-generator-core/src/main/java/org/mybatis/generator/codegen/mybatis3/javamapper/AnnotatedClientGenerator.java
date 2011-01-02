@@ -22,6 +22,10 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated.Anno
 
 public class AnnotatedClientGenerator extends JavaMapperGenerator {
 
+    public AnnotatedClientGenerator() {
+        super(false);
+    }
+
     @Override
     protected void addCountByExampleMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateCountByExample()) {
@@ -133,11 +137,6 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
             AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator();
             initializeAndExecuteGenerator(methodGenerator, interfaze);
         }
-    }
-
-    @Override
-    public boolean requiresMatchedXMLGenerator() {
-        return false;
     }
 
     @Override

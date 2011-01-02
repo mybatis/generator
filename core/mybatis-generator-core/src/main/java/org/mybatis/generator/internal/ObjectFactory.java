@@ -204,6 +204,22 @@ public class ObjectFactory {
             TableConfiguration tableConfiguration, FullyQualifiedTable table,
             Context context) {
 
+        IntrospectedTable answer = createIntrospectedTableForValidation(context);
+        answer.setFullyQualifiedTable(table);
+        answer.setTableConfiguration(tableConfiguration);
+
+        return answer;
+    }
+
+    /**
+     * This method creates an introspected table implementation that is
+     * only usable for validation (i.e. for a context to determine
+     * if the target is ibatis2 or mybatis3).
+     *  
+     * @param context
+     * @return
+     */
+    public static IntrospectedTable createIntrospectedTableForValidation(Context context) {
         String type = context.getTargetRuntime();
         if (!stringHasValue(type)) {
             type = IntrospectedTableMyBatis3Impl.class.getName();
@@ -218,13 +234,11 @@ public class ObjectFactory {
         }
 
         IntrospectedTable answer = (IntrospectedTable) createInternalObject(type);
-        answer.setFullyQualifiedTable(table);
         answer.setContext(context);
-        answer.setTableConfiguration(tableConfiguration);
 
         return answer;
     }
-
+    
     public static IntrospectedColumn createIntrospectedColumn(Context context) {
         String type = context.getIntrospectedColumnImpl();
         if (!stringHasValue(type)) {

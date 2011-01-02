@@ -197,4 +197,9 @@ public class IntrospectedTableIbatis2Java2Impl extends IntrospectedTable {
                                                                       // the
                                                                       // sqlMapGenerator
     }
+
+    @Override
+    public boolean requiresXMLGenerator() {
+        return true;
+    }
 }

@@ -153,11 +153,18 @@ public class Context extends PropertyHolder {
             javaClientGeneratorConfiguration.validate(errors, id);
         }
 
-        if (sqlMapGeneratorConfiguration != null) {
-            sqlMapGeneratorConfiguration.validate(errors, id);
-        } else {
-            if (javaClientGeneratorConfiguration == null) {
+        IntrospectedTable it = null;
+        try {
+            it = ObjectFactory.createIntrospectedTableForValidation(this);
+        } catch (Exception e) {
+            errors.add(getString("ValidationError.25", id)); //$NON-NLS-1$
+        }
+        
+        if (it != null && it.requiresXMLGenerator()) {
+            if (sqlMapGeneratorConfiguration == null) {
                 errors.add(getString("ValidationError.9", id)); //$NON-NLS-1$
+            } else {
+                sqlMapGeneratorConfiguration.validate(errors, id);
             }
         }
 

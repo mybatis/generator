@@ -1094,4 +1094,14 @@ public abstract class IntrospectedTable {
         
         return isTrue(properties.getProperty(PropertyRegistry.ANY_CONSTRUCTOR_BASED));
     }
+
+    /**
+     * Should return true if an XML generator is required for this table.
+     * This method will be called during validation of the configuration,
+     * so it should not rely on database introspection.  This method
+     * simply tells the validator if an XML configuration is normally
+     * required for this implementation.
+     * @return
+     */
+    public abstract boolean requiresXMLGenerator();
 }

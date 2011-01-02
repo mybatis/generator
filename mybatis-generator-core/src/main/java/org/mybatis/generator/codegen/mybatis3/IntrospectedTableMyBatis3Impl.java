@@ -77,8 +77,20 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
      */
     protected boolean calculateClientGenerators(List<String> warnings,
             ProgressCallback progressCallback) {
-        if (context.getJavaClientGeneratorConfiguration() == null) {
+        AbstractJavaClientGenerator javaGenerator = createJavaClientGenerator();
+        if (javaGenerator == null) {
             return true;
+        }
+
+        initializeAbstractGenerator(javaGenerator, warnings, progressCallback);
+        clientGenerators.add(javaGenerator);
+        
+        return javaGenerator.requiresXMLGenerator();
+    }
+    
+    private AbstractJavaClientGenerator createJavaClientGenerator() {
+        if (context.getJavaClientGeneratorConfiguration() == null) {
+            return null;
         }
 
         String type = context.getJavaClientGeneratorConfiguration()
@@ -95,11 +107,8 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
             javaGenerator = (AbstractJavaClientGenerator) ObjectFactory
                     .createInternalObject(type);
         }
-
-        initializeAbstractGenerator(javaGenerator, warnings, progressCallback);
-        clientGenerators.add(javaGenerator);
         
-        return javaGenerator.requiresMatchedXMLGenerator();
+        return javaGenerator;
     }
 
     protected void calculateJavaModelGenerators(List<String> warnings,
@@ -198,5 +207,17 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
     @Override
     public boolean isJava5Targeted() {
         return true;
+    }
+
+    @Override
+    public boolean requiresXMLGenerator() {
+        AbstractJavaClientGenerator javaClientGenerator =
+            createJavaClientGenerator();
+        
+        if (javaClientGenerator == null) {
+            return true;
+        } else {
+            return javaClientGenerator.requiresXMLGenerator();
+        }
     }
 }

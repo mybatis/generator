@@ -1,5 +1,5 @@
 /*
- *  Copyright 2010 The MyBatis Team
+ *  Copyright 2011 The MyBatis Team
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,7 +13,8 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package mbg.test.mb3.annotated.hierarchical;
+
+package mbg.test.mb3.mixed.flat;
 
 import static mbg.test.common.util.TestUtilities.blobsAreEqual;
 import static mbg.test.common.util.TestUtilities.datesAreEqual;
@@ -22,6 +23,7 @@ import static mbg.test.common.util.TestUtilities.timesAreEqual;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
@@ -29,33 +31,27 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import mbg.test.mb3.generated.annotated.hierarchical.mapper.AwfulTableMapper;
-import mbg.test.mb3.generated.annotated.hierarchical.mapper.FieldsblobsMapper;
-import mbg.test.mb3.generated.annotated.hierarchical.mapper.FieldsonlyMapper;
-import mbg.test.mb3.generated.annotated.hierarchical.mapper.PkblobsMapper;
-import mbg.test.mb3.generated.annotated.hierarchical.mapper.PkfieldsMapper;
-import mbg.test.mb3.generated.annotated.hierarchical.mapper.PkfieldsblobsMapper;
-import mbg.test.mb3.generated.annotated.hierarchical.mapper.PkonlyMapper;
-import mbg.test.mb3.generated.annotated.hierarchical.model.AwfulTable;
-import mbg.test.mb3.generated.annotated.hierarchical.model.AwfulTableExample;
-import mbg.test.mb3.generated.annotated.hierarchical.model.AwfulTableKey;
-import mbg.test.mb3.generated.annotated.hierarchical.model.Fieldsblobs;
-import mbg.test.mb3.generated.annotated.hierarchical.model.FieldsblobsExample;
-import mbg.test.mb3.generated.annotated.hierarchical.model.FieldsblobsWithBLOBs;
-import mbg.test.mb3.generated.annotated.hierarchical.model.Fieldsonly;
-import mbg.test.mb3.generated.annotated.hierarchical.model.FieldsonlyExample;
-import mbg.test.mb3.generated.annotated.hierarchical.model.PkblobsExample;
-import mbg.test.mb3.generated.annotated.hierarchical.model.PkblobsKey;
-import mbg.test.mb3.generated.annotated.hierarchical.model.PkblobsWithBLOBs;
-import mbg.test.mb3.generated.annotated.hierarchical.model.Pkfields;
-import mbg.test.mb3.generated.annotated.hierarchical.model.PkfieldsExample;
-import mbg.test.mb3.generated.annotated.hierarchical.model.PkfieldsKey;
-import mbg.test.mb3.generated.annotated.hierarchical.model.Pkfieldsblobs;
-import mbg.test.mb3.generated.annotated.hierarchical.model.PkfieldsblobsExample;
-import mbg.test.mb3.generated.annotated.hierarchical.model.PkfieldsblobsKey;
-import mbg.test.mb3.generated.annotated.hierarchical.model.PkfieldsblobsWithBLOBs;
-import mbg.test.mb3.generated.annotated.hierarchical.model.PkonlyExample;
-import mbg.test.mb3.generated.annotated.hierarchical.model.PkonlyKey;
+import mbg.test.mb3.generated.mixed.flat.mapper.AwfulTableMapper;
+import mbg.test.mb3.generated.mixed.flat.mapper.FieldsblobsMapper;
+import mbg.test.mb3.generated.mixed.flat.mapper.FieldsonlyMapper;
+import mbg.test.mb3.generated.mixed.flat.mapper.PkblobsMapper;
+import mbg.test.mb3.generated.mixed.flat.mapper.PkfieldsMapper;
+import mbg.test.mb3.generated.mixed.flat.mapper.PkfieldsblobsMapper;
+import mbg.test.mb3.generated.mixed.flat.mapper.PkonlyMapper;
+import mbg.test.mb3.generated.mixed.flat.model.AwfulTable;
+import mbg.test.mb3.generated.mixed.flat.model.AwfulTableExample;
+import mbg.test.mb3.generated.mixed.flat.model.Fieldsblobs;
+import mbg.test.mb3.generated.mixed.flat.model.FieldsblobsExample;
+import mbg.test.mb3.generated.mixed.flat.model.Fieldsonly;
+import mbg.test.mb3.generated.mixed.flat.model.FieldsonlyExample;
+import mbg.test.mb3.generated.mixed.flat.model.Pkblobs;
+import mbg.test.mb3.generated.mixed.flat.model.PkblobsExample;
+import mbg.test.mb3.generated.mixed.flat.model.Pkfields;
+import mbg.test.mb3.generated.mixed.flat.model.PkfieldsExample;
+import mbg.test.mb3.generated.mixed.flat.model.Pkfieldsblobs;
+import mbg.test.mb3.generated.mixed.flat.model.PkfieldsblobsExample;
+import mbg.test.mb3.generated.mixed.flat.model.Pkonly;
+import mbg.test.mb3.generated.mixed.flat.model.PkonlyExample;
 
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
@@ -64,7 +60,7 @@ import org.junit.Test;
  * @author Jeff Butler
  * 
  */
-public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
+public class FlatJava5Test extends AbstractMixedFlatTest {
 
     @Test
     public void testFieldsOnlyInsert() {
@@ -134,6 +130,47 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
     }
 
     @Test
+    public void testFieldsOnlySelectByExampleDistinct() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        try {
+            FieldsonlyMapper mapper = sqlSession.getMapper(FieldsonlyMapper.class);
+            Fieldsonly record = new Fieldsonly();
+            record.setDoublefield(11.22);
+            record.setFloatfield(33.44);
+            record.setIntegerfield(5);
+            mapper.insert(record);
+            mapper.insert(record);
+            mapper.insert(record);
+
+            record = new Fieldsonly();
+            record.setDoublefield(44.55);
+            record.setFloatfield(66.77);
+            record.setIntegerfield(8);
+            mapper.insert(record);
+
+            record = new Fieldsonly();
+            record.setDoublefield(88.99);
+            record.setFloatfield(100.111);
+            record.setIntegerfield(9);
+            mapper.insert(record);
+
+            FieldsonlyExample example = new FieldsonlyExample();
+            example.createCriteria().andIntegerfieldEqualTo(5);
+            example.setDistinct(true);
+
+            List<Fieldsonly> answer = mapper.selectByExample(example);
+            assertEquals(1, answer.size());
+
+            example.clear();
+            answer = mapper.selectByExample(example);
+            assertEquals(5, answer.size());
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+    @Test
     public void testFieldsOnlySelectByExampleNoCriteria() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
@@ -161,6 +198,9 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
             example.createCriteria();
 
             List<Fieldsonly> answer = mapper.selectByExample(example);
+            assertEquals(3, answer.size());
+
+            answer = mapper.selectByExample(null);
             assertEquals(3, answer.size());
         } finally {
             sqlSession.close();
@@ -248,16 +288,16 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
         try {
             PkonlyMapper mapper = sqlSession.getMapper(PkonlyMapper.class);
-            PkonlyKey key = new PkonlyKey();
+            Pkonly key = new Pkonly();
             key.setId(1);
             key.setSeqNum(3);
             mapper.insert(key);
 
             PkonlyExample example = new PkonlyExample();
-            List<PkonlyKey> answer = mapper.selectByExample(example);
+            List<Pkonly> answer = mapper.selectByExample(example);
             assertEquals(1, answer.size());
 
-            PkonlyKey returnedRecord = answer.get(0);
+            Pkonly returnedRecord = answer.get(0);
             assertEquals(key.getId(), returnedRecord.getId());
             assertEquals(key.getSeqNum(), returnedRecord.getSeqNum());
         } finally {
@@ -271,24 +311,21 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
         try {
             PkonlyMapper mapper = sqlSession.getMapper(PkonlyMapper.class);
-            PkonlyKey key = new PkonlyKey();
+            Pkonly key = new Pkonly();
             key.setId(1);
             key.setSeqNum(3);
-            mapper.insert(key);
+            int rows = mapper.insert(key);
 
-            key = new PkonlyKey();
+            key = new Pkonly();
             key.setId(5);
             key.setSeqNum(6);
-            mapper.insert(key);
+            rows = mapper.insert(key);
 
             PkonlyExample example = new PkonlyExample();
-            List<PkonlyKey> answer = mapper.selectByExample(example);
+            List<Pkonly> answer = mapper.selectByExample(example);
             assertEquals(2, answer.size());
 
-            key = new PkonlyKey();
-            key.setId(5);
-            key.setSeqNum(6);
-            int rows = mapper.deleteByPrimaryKey(key);
+            rows = mapper.deleteByPrimaryKey(5, 6);
             assertEquals(1, rows);
 
             answer = mapper.selectByExample(example);
@@ -304,17 +341,17 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
         try {
             PkonlyMapper mapper = sqlSession.getMapper(PkonlyMapper.class);
-            PkonlyKey key = new PkonlyKey();
+            Pkonly key = new Pkonly();
             key.setId(1);
             key.setSeqNum(3);
             mapper.insert(key);
 
-            key = new PkonlyKey();
+            key = new Pkonly();
             key.setId(5);
             key.setSeqNum(6);
             mapper.insert(key);
 
-            key = new PkonlyKey();
+            key = new Pkonly();
             key.setId(7);
             key.setSeqNum(8);
             mapper.insert(key);
@@ -325,7 +362,7 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
             assertEquals(2, rows);
 
             example = new PkonlyExample();
-            List<PkonlyKey> answer = mapper.selectByExample(example);
+            List<Pkonly> answer = mapper.selectByExample(example);
             assertEquals(1, answer.size());
         } finally {
             sqlSession.close();
@@ -338,24 +375,24 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
         try {
             PkonlyMapper mapper = sqlSession.getMapper(PkonlyMapper.class);
-            PkonlyKey key = new PkonlyKey();
+            Pkonly key = new Pkonly();
             key.setId(1);
             key.setSeqNum(3);
             mapper.insert(key);
 
-            key = new PkonlyKey();
+            key = new Pkonly();
             key.setId(5);
             key.setSeqNum(6);
             mapper.insert(key);
 
-            key = new PkonlyKey();
+            key = new Pkonly();
             key.setId(7);
             key.setSeqNum(8);
             mapper.insert(key);
 
             PkonlyExample example = new PkonlyExample();
             example.createCriteria().andIdGreaterThan(4);
-            List<PkonlyKey> answer = mapper.selectByExample(example);
+            List<Pkonly> answer = mapper.selectByExample(example);
             assertEquals(2, answer.size());
         } finally {
             sqlSession.close();
@@ -368,24 +405,24 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
         try {
             PkonlyMapper mapper = sqlSession.getMapper(PkonlyMapper.class);
-            PkonlyKey key = new PkonlyKey();
+            Pkonly key = new Pkonly();
             key.setId(1);
             key.setSeqNum(3);
             mapper.insert(key);
 
-            key = new PkonlyKey();
+            key = new Pkonly();
             key.setId(5);
             key.setSeqNum(6);
             mapper.insert(key);
 
-            key = new PkonlyKey();
+            key = new Pkonly();
             key.setId(7);
             key.setSeqNum(8);
             mapper.insert(key);
 
             PkonlyExample example = new PkonlyExample();
             example.createCriteria();
-            List<PkonlyKey> answer = mapper.selectByExample(example);
+            List<Pkonly> answer = mapper.selectByExample(example);
             assertEquals(3, answer.size());
         } finally {
             sqlSession.close();
@@ -398,17 +435,17 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
         try {
             PkonlyMapper mapper = sqlSession.getMapper(PkonlyMapper.class);
-            PkonlyKey key = new PkonlyKey();
+            Pkonly key = new Pkonly();
             key.setId(1);
             key.setSeqNum(3);
             mapper.insert(key);
 
-            key = new PkonlyKey();
+            key = new Pkonly();
             key.setId(5);
             key.setSeqNum(6);
             mapper.insert(key);
 
-            key = new PkonlyKey();
+            key = new Pkonly();
             key.setId(7);
             key.setSeqNum(8);
             mapper.insert(key);
@@ -419,7 +456,7 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
             assertEquals(2, rows);
 
             example.clear();
-            rows  = mapper.countByExample(example);
+            rows = mapper.countByExample(example);
             assertEquals(3, rows);
         } finally {
             sqlSession.close();
@@ -447,11 +484,7 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
             mapper.insert(record);
 
-            PkfieldsKey key = new PkfieldsKey();
-            key.setId1(1);
-            key.setId2(2);
-
-            Pkfields returnedRecord = mapper.selectByPrimaryKey(key);
+            Pkfields returnedRecord = mapper.selectByPrimaryKey(1, 2);
             assertNotNull(returnedRecord);
 
             assertTrue(datesAreEqual(record.getDatefield(), returnedRecord
@@ -497,11 +530,7 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
             int rows = mapper.updateByPrimaryKey(record);
             assertEquals(1, rows);
 
-            PkfieldsKey key = new PkfieldsKey();
-            key.setId1(1);
-            key.setId2(2);
-
-            Pkfields record2 = mapper.selectByPrimaryKey(key);
+            Pkfields record2 = mapper.selectByPrimaryKey(1, 2);
 
             assertEquals(record.getFirstname(), record2.getFirstname());
             assertEquals(record.getLastname(), record2.getLastname());
@@ -536,11 +565,7 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
             int rows = mapper.updateByPrimaryKeySelective(newRecord);
             assertEquals(1, rows);
 
-            PkfieldsKey key = new PkfieldsKey();
-            key.setId1(1);
-            key.setId2(2);
-
-            Pkfields returnedRecord = mapper.selectByPrimaryKey(key);
+            Pkfields returnedRecord = mapper.selectByPrimaryKey(1, 2);
 
             assertTrue(datesAreEqual(record.getDatefield(), returnedRecord
                     .getDatefield()));
@@ -580,11 +605,7 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
             mapper.insert(record);
 
-            PkfieldsKey key = new PkfieldsKey();
-            key.setId1(1);
-            key.setId2(2);
-
-            int rows = mapper.deleteByPrimaryKey(key);
+            int rows = mapper.deleteByPrimaryKey(1, 2);
             assertEquals(1, rows);
 
             PkfieldsExample example = new PkfieldsExample();
@@ -653,10 +674,7 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
             record.setId2(4);
             mapper.insert(record);
 
-            PkfieldsKey key = new PkfieldsKey();
-            key.setId1(3);
-            key.setId2(4);
-            Pkfields newRecord = mapper.selectByPrimaryKey(key);
+            Pkfields newRecord = mapper.selectByPrimaryKey(3, 4);
 
             assertNotNull(newRecord);
             assertEquals(record.getFirstname(), newRecord.getFirstname());
@@ -1149,7 +1167,6 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
             record.setLastname("Jones");
             record.setId1(3);
             record.setId2(4);
-
             mapper.insert(record);
 
             PkfieldsExample example = new PkfieldsExample();
@@ -1171,18 +1188,17 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
         try {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
-            PkblobsWithBLOBs record = new PkblobsWithBLOBs();
+            Pkblobs record = new Pkblobs();
             record.setId(3);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             mapper.insert(record);
 
             PkblobsExample example = new PkblobsExample();
-            List<PkblobsWithBLOBs> answer = mapper
-                    .selectByExampleWithBLOBs(example);
+            List<Pkblobs> answer = mapper.selectByExampleWithBLOBs(example);
             assertEquals(1, answer.size());
 
-            PkblobsWithBLOBs returnedRecord = answer.get(0);
+            Pkblobs returnedRecord = answer.get(0);
             assertEquals(record.getId(), returnedRecord.getId());
             assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord
                     .getBlob1()));
@@ -1199,23 +1215,20 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
         try {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
-            PkblobsWithBLOBs record = new PkblobsWithBLOBs();
+            Pkblobs record = new Pkblobs();
             record.setId(3);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             mapper.insert(record);
 
-            record = new PkblobsWithBLOBs();
+            record = new Pkblobs();
             record.setId(3);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             int rows = mapper.updateByPrimaryKeyWithBLOBs(record);
             assertEquals(1, rows);
 
-            PkblobsKey key = new PkblobsKey();
-            key.setId(3);
-
-            PkblobsWithBLOBs newRecord = mapper.selectByPrimaryKey(key);
+            Pkblobs newRecord = mapper.selectByPrimaryKey(3);
 
             assertNotNull(newRecord);
             assertEquals(record.getId(), newRecord.getId());
@@ -1232,21 +1245,18 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
         try {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
-            PkblobsWithBLOBs record = new PkblobsWithBLOBs();
+            Pkblobs record = new Pkblobs();
             record.setId(3);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             mapper.insert(record);
 
-            PkblobsWithBLOBs newRecord = new PkblobsWithBLOBs();
+            Pkblobs newRecord = new Pkblobs();
             newRecord.setId(3);
             newRecord.setBlob2(generateRandomBlob());
             mapper.updateByPrimaryKeySelective(newRecord);
 
-            PkblobsKey key = new PkblobsKey();
-            key.setId(3);
-
-            PkblobsWithBLOBs returnedRecord = mapper.selectByPrimaryKey(key);
+            Pkblobs returnedRecord = mapper.selectByPrimaryKey(3);
             assertNotNull(returnedRecord);
             assertEquals(record.getId(), returnedRecord.getId());
             assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord
@@ -1264,19 +1274,17 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
         try {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
-            PkblobsWithBLOBs record = new PkblobsWithBLOBs();
+            Pkblobs record = new Pkblobs();
             record.setId(3);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             mapper.insert(record);
 
             PkblobsExample example = new PkblobsExample();
-            List<PkblobsKey> answer = mapper.selectByExample(example);
+            List<Pkblobs> answer = mapper.selectByExample(example);
             assertEquals(1, answer.size());
 
-            PkblobsKey key = new PkblobsKey();
-            key.setId(3);
-            int rows = mapper.deleteByPrimaryKey(key);
+            int rows = mapper.deleteByPrimaryKey(3);
             assertEquals(1, rows);
 
             example = new PkblobsExample();
@@ -1293,20 +1301,20 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
         try {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
-            PkblobsWithBLOBs record = new PkblobsWithBLOBs();
+            Pkblobs record = new Pkblobs();
             record.setId(3);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             mapper.insert(record);
 
-            record = new PkblobsWithBLOBs();
+            record = new Pkblobs();
             record.setId(6);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             mapper.insert(record);
 
             PkblobsExample example = new PkblobsExample();
-            List<PkblobsKey> answer = mapper.selectByExample(example);
+            List<Pkblobs> answer = mapper.selectByExample(example);
             assertEquals(2, answer.size());
 
             example = new PkblobsExample();
@@ -1328,21 +1336,19 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
         try {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
-            PkblobsWithBLOBs record = new PkblobsWithBLOBs();
+            Pkblobs record = new Pkblobs();
             record.setId(3);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             mapper.insert(record);
 
-            record = new PkblobsWithBLOBs();
+            record = new Pkblobs();
             record.setId(6);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             mapper.insert(record);
 
-            PkblobsKey key = new PkblobsKey();
-            key.setId(6);
-            PkblobsWithBLOBs newRecord = mapper.selectByPrimaryKey(key);
+            Pkblobs newRecord = mapper.selectByPrimaryKey(6);
             assertNotNull(newRecord);
             assertEquals(record.getId(), newRecord.getId());
             assertTrue(blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
@@ -1358,13 +1364,13 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
         try {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
-            PkblobsWithBLOBs record = new PkblobsWithBLOBs();
+            Pkblobs record = new Pkblobs();
             record.setId(3);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             mapper.insert(record);
 
-            record = new PkblobsWithBLOBs();
+            record = new Pkblobs();
             record.setId(6);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
@@ -1372,13 +1378,14 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
             PkblobsExample example = new PkblobsExample();
             example.createCriteria().andIdGreaterThan(4);
-            List<PkblobsKey> answer = mapper.selectByExample(example);
+            List<Pkblobs> answer = mapper.selectByExample(example);
 
             assertEquals(1, answer.size());
 
-            PkblobsKey key = answer.get(0);
-            assertFalse(key instanceof PkblobsWithBLOBs);
+            Pkblobs key = answer.get(0);
             assertEquals(6, key.getId().intValue());
+            assertNull(key.getBlob1());
+            assertNull(key.getBlob2());
         } finally {
             sqlSession.close();
         }
@@ -1390,13 +1397,13 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
         try {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
-            PkblobsWithBLOBs record = new PkblobsWithBLOBs();
+            Pkblobs record = new Pkblobs();
             record.setId(3);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             mapper.insert(record);
 
-            record = new PkblobsWithBLOBs();
+            record = new Pkblobs();
             record.setId(6);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
@@ -1404,7 +1411,7 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
             PkblobsExample example = new PkblobsExample();
             example.createCriteria();
-            List<PkblobsKey> answer = mapper.selectByExample(example);
+            List<Pkblobs> answer = mapper.selectByExample(example);
 
             assertEquals(2, answer.size());
         } finally {
@@ -1418,13 +1425,13 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
         try {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
-            PkblobsWithBLOBs record = new PkblobsWithBLOBs();
+            Pkblobs record = new Pkblobs();
             record.setId(3);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             mapper.insert(record);
 
-            record = new PkblobsWithBLOBs();
+            record = new Pkblobs();
             record.setId(6);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
@@ -1432,12 +1439,11 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
             PkblobsExample example = new PkblobsExample();
             example.createCriteria().andIdGreaterThan(4);
-            List<PkblobsWithBLOBs> answer = mapper
-                    .selectByExampleWithBLOBs(example);
+            List<Pkblobs> answer = mapper.selectByExampleWithBLOBs(example);
 
             assertEquals(1, answer.size());
 
-            PkblobsWithBLOBs newRecord = answer.get(0);
+            Pkblobs newRecord = answer.get(0);
             assertEquals(record.getId(), newRecord.getId());
             assertTrue(blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
             assertTrue(blobsAreEqual(record.getBlob2(), newRecord.getBlob2()));
@@ -1452,13 +1458,13 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
         try {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
-            PkblobsWithBLOBs record = new PkblobsWithBLOBs();
+            Pkblobs record = new Pkblobs();
             record.setId(3);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             mapper.insert(record);
 
-            record = new PkblobsWithBLOBs();
+            record = new Pkblobs();
             record.setId(6);
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
@@ -1483,7 +1489,7 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
         try {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
-            PkfieldsblobsWithBLOBs record = new PkfieldsblobsWithBLOBs();
+            Pkfieldsblobs record = new Pkfieldsblobs();
             record.setId1(3);
             record.setId2(4);
             record.setFirstname("Jeff");
@@ -1492,11 +1498,10 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
             mapper.insert(record);
 
             PkfieldsblobsExample example = new PkfieldsblobsExample();
-            List<PkfieldsblobsWithBLOBs> answer = mapper
-                    .selectByExampleWithBLOBs(example);
+            List<Pkfieldsblobs> answer = mapper.selectByExampleWithBLOBs(example);
             assertEquals(1, answer.size());
 
-            PkfieldsblobsWithBLOBs returnedRecord = answer.get(0);
+            Pkfieldsblobs returnedRecord = answer.get(0);
             assertEquals(record.getId1(), returnedRecord.getId1());
             assertEquals(record.getId2(), returnedRecord.getId2());
             assertEquals(record.getFirstname(), returnedRecord.getFirstname());
@@ -1514,7 +1519,7 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
         try {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
-            PkfieldsblobsWithBLOBs record = new PkfieldsblobsWithBLOBs();
+            Pkfieldsblobs record = new Pkfieldsblobs();
             record.setId1(3);
             record.setId2(4);
             record.setFirstname("Jeff");
@@ -1522,7 +1527,7 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
             record.setBlob1(generateRandomBlob());
             mapper.insert(record);
 
-            PkfieldsblobsWithBLOBs updateRecord = new PkfieldsblobsWithBLOBs();
+            Pkfieldsblobs updateRecord = new Pkfieldsblobs();
             updateRecord.setId1(3);
             updateRecord.setId2(4);
             updateRecord.setFirstname("Scott");
@@ -1532,10 +1537,7 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
             int rows = mapper.updateByPrimaryKeyWithBLOBs(updateRecord);
             assertEquals(1, rows);
 
-            PkfieldsblobsKey key = new PkfieldsblobsKey();
-            key.setId1(3);
-            key.setId2(4);
-            PkfieldsblobsWithBLOBs newRecord = mapper.selectByPrimaryKey(key);
+            Pkfieldsblobs newRecord = mapper.selectByPrimaryKey(3, 4);
             assertEquals(updateRecord.getFirstname(), newRecord.getFirstname());
             assertEquals(updateRecord.getLastname(), newRecord.getLastname());
             assertEquals(record.getId1(), newRecord.getId1());
@@ -1553,7 +1555,7 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
         try {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
-            PkfieldsblobsWithBLOBs record = new PkfieldsblobsWithBLOBs();
+            Pkfieldsblobs record = new Pkfieldsblobs();
             record.setId1(3);
             record.setId2(4);
             record.setFirstname("Jeff");
@@ -1570,10 +1572,7 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
             int rows = mapper.updateByPrimaryKey(updateRecord);
             assertEquals(1, rows);
 
-            PkfieldsblobsKey key = new PkfieldsblobsKey();
-            key.setId1(3);
-            key.setId2(4);
-            PkfieldsblobsWithBLOBs newRecord = mapper.selectByPrimaryKey(key);
+            Pkfieldsblobs newRecord = mapper.selectByPrimaryKey(3, 4);
             assertEquals(updateRecord.getFirstname(), newRecord.getFirstname());
             assertEquals(updateRecord.getLastname(), newRecord.getLastname());
             assertEquals(record.getId1(), newRecord.getId1());
@@ -1590,7 +1589,7 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
         try {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
-            PkfieldsblobsWithBLOBs record = new PkfieldsblobsWithBLOBs();
+            Pkfieldsblobs record = new Pkfieldsblobs();
             record.setId1(3);
             record.setId2(4);
             record.setFirstname("Jeff");
@@ -1598,7 +1597,7 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
             record.setBlob1(generateRandomBlob());
             mapper.insert(record);
 
-            PkfieldsblobsWithBLOBs updateRecord = new PkfieldsblobsWithBLOBs();
+            Pkfieldsblobs updateRecord = new Pkfieldsblobs();
             updateRecord.setId1(3);
             updateRecord.setId2(4);
             updateRecord.setLastname("Jones");
@@ -1606,10 +1605,7 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
             int rows = mapper.updateByPrimaryKeySelective(updateRecord);
             assertEquals(1, rows);
 
-            PkfieldsblobsKey key = new PkfieldsblobsKey();
-            key.setId1(3);
-            key.setId2(4);
-            PkfieldsblobsWithBLOBs returnedRecord = mapper.selectByPrimaryKey(key);
+            Pkfieldsblobs returnedRecord = mapper.selectByPrimaryKey(3, 4);
             assertEquals(record.getFirstname(), returnedRecord.getFirstname());
             assertEquals(updateRecord.getLastname(), returnedRecord
                     .getLastname());
@@ -1628,7 +1624,7 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
         try {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
-            PkfieldsblobsWithBLOBs record = new PkfieldsblobsWithBLOBs();
+            Pkfieldsblobs record = new Pkfieldsblobs();
             record.setId1(3);
             record.setId2(4);
             record.setFirstname("Jeff");
@@ -1636,7 +1632,7 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
             record.setBlob1(generateRandomBlob());
             mapper.insert(record);
 
-            record = new PkfieldsblobsWithBLOBs();
+            record = new Pkfieldsblobs();
             record.setId1(5);
             record.setId2(6);
             record.setFirstname("Scott");
@@ -1649,10 +1645,7 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
                     .selectByExample(example);
             assertEquals(2, answer.size());
 
-            PkfieldsblobsKey key = new PkfieldsblobsKey();
-            key.setId1(5);
-            key.setId2(6);
-            int rows = mapper.deleteByPrimaryKey(key);
+            int rows = mapper.deleteByPrimaryKey(5, 6);
             assertEquals(1, rows);
 
             example = new PkfieldsblobsExample();
@@ -1669,7 +1662,7 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
         try {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
-            PkfieldsblobsWithBLOBs record = new PkfieldsblobsWithBLOBs();
+            Pkfieldsblobs record = new Pkfieldsblobs();
             record.setId1(3);
             record.setId2(4);
             record.setFirstname("Jeff");
@@ -1677,7 +1670,7 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
             record.setBlob1(generateRandomBlob());
             mapper.insert(record);
 
-            record = new PkfieldsblobsWithBLOBs();
+            record = new Pkfieldsblobs();
             record.setId1(5);
             record.setId2(6);
             record.setFirstname("Scott");
@@ -1709,7 +1702,7 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
         try {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
-            PkfieldsblobsWithBLOBs record = new PkfieldsblobsWithBLOBs();
+            Pkfieldsblobs record = new Pkfieldsblobs();
             record.setId1(3);
             record.setId2(4);
             record.setFirstname("Jeff");
@@ -1717,7 +1710,7 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
             record.setBlob1(generateRandomBlob());
             mapper.insert(record);
 
-            record = new PkfieldsblobsWithBLOBs();
+            record = new Pkfieldsblobs();
             record.setId1(5);
             record.setId2(6);
             record.setFirstname("Scott");
@@ -1730,10 +1723,7 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
                     .selectByExample(example);
             assertEquals(2, answer.size());
 
-            PkfieldsblobsKey key = new PkfieldsblobsKey();
-            key.setId1(5);
-            key.setId2(6);
-            PkfieldsblobsWithBLOBs newRecord = mapper.selectByPrimaryKey(key);
+            Pkfieldsblobs newRecord = mapper.selectByPrimaryKey(5, 6);
             assertEquals(record.getId1(), newRecord.getId1());
             assertEquals(record.getId2(), newRecord.getId2());
             assertEquals(record.getFirstname(), newRecord.getFirstname());
@@ -1750,7 +1740,7 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
         try {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
-            PkfieldsblobsWithBLOBs record = new PkfieldsblobsWithBLOBs();
+            Pkfieldsblobs record = new Pkfieldsblobs();
             record.setId1(3);
             record.setId2(4);
             record.setFirstname("Jeff");
@@ -1758,7 +1748,7 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
             record.setBlob1(generateRandomBlob());
             mapper.insert(record);
 
-            record = new PkfieldsblobsWithBLOBs();
+            record = new Pkfieldsblobs();
             record.setId1(5);
             record.setId2(6);
             record.setFirstname("Scott");
@@ -1773,11 +1763,11 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
             assertEquals(1, answer.size());
 
             Pkfieldsblobs newRecord = answer.get(0);
-            assertFalse(newRecord instanceof PkfieldsblobsWithBLOBs);
             assertEquals(record.getId1(), newRecord.getId1());
             assertEquals(record.getId2(), newRecord.getId2());
             assertEquals(record.getFirstname(), newRecord.getFirstname());
             assertEquals(record.getLastname(), newRecord.getLastname());
+            assertNull(newRecord.getBlob1());
         } finally {
             sqlSession.close();
         }
@@ -1789,7 +1779,7 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
         try {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
-            PkfieldsblobsWithBLOBs record = new PkfieldsblobsWithBLOBs();
+            Pkfieldsblobs record = new Pkfieldsblobs();
             record.setId1(3);
             record.setId2(4);
             record.setFirstname("Jeff");
@@ -1797,7 +1787,7 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
             record.setBlob1(generateRandomBlob());
             mapper.insert(record);
 
-            record = new PkfieldsblobsWithBLOBs();
+            record = new Pkfieldsblobs();
             record.setId1(5);
             record.setId2(6);
             record.setFirstname("Scott");
@@ -1807,11 +1797,10 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
             PkfieldsblobsExample example = new PkfieldsblobsExample();
             example.createCriteria().andId2EqualTo(6);
-            List<PkfieldsblobsWithBLOBs> answer = mapper
-                    .selectByExampleWithBLOBs(example);
+            List<Pkfieldsblobs> answer = mapper.selectByExampleWithBLOBs(example);
             assertEquals(1, answer.size());
 
-            PkfieldsblobsWithBLOBs newRecord = answer.get(0);
+            Pkfieldsblobs newRecord = answer.get(0);
             assertEquals(record.getId1(), newRecord.getId1());
             assertEquals(record.getId2(), newRecord.getId2());
             assertEquals(record.getFirstname(), newRecord.getFirstname());
@@ -1828,7 +1817,7 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
         try {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
-            PkfieldsblobsWithBLOBs record = new PkfieldsblobsWithBLOBs();
+            Pkfieldsblobs record = new Pkfieldsblobs();
             record.setId1(3);
             record.setId2(4);
             record.setFirstname("Jeff");
@@ -1836,7 +1825,7 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
             record.setBlob1(generateRandomBlob());
             mapper.insert(record);
 
-            record = new PkfieldsblobsWithBLOBs();
+            record = new Pkfieldsblobs();
             record.setId1(5);
             record.setId2(6);
             record.setFirstname("Scott");
@@ -1846,43 +1835,8 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
             PkfieldsblobsExample example = new PkfieldsblobsExample();
             example.createCriteria();
-            List<PkfieldsblobsWithBLOBs> answer = mapper.selectByExampleWithBLOBs(example);
+            List<Pkfieldsblobs> answer = mapper.selectByExampleWithBLOBs(example);
             assertEquals(2, answer.size());
-        } finally {
-            sqlSession.close();
-        }
-    }
-
-    @Test
-    public void testPKFieldsBlobsCountByExample() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-
-        try {
-            PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
-            PkfieldsblobsWithBLOBs record = new PkfieldsblobsWithBLOBs();
-            record.setId1(3);
-            record.setId2(4);
-            record.setFirstname("Jeff");
-            record.setLastname("Smith");
-            record.setBlob1(generateRandomBlob());
-            mapper.insert(record);
-
-            record = new PkfieldsblobsWithBLOBs();
-            record.setId1(5);
-            record.setId2(6);
-            record.setFirstname("Scott");
-            record.setLastname("Jones");
-            record.setBlob1(generateRandomBlob());
-            mapper.insert(record);
-
-            PkfieldsblobsExample example = new PkfieldsblobsExample();
-            example.createCriteria().andId1NotEqualTo(3);
-            int rows = mapper.countByExample(example);
-            assertEquals(1, rows);
-
-            example.clear();
-            rows = mapper.countByExample(example);
-            assertEquals(2, rows);
         } finally {
             sqlSession.close();
         }
@@ -1894,7 +1848,7 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
         try {
             FieldsblobsMapper mapper = sqlSession.getMapper(FieldsblobsMapper.class);
-            FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs();
+            Fieldsblobs record = new Fieldsblobs();
             record.setFirstname("Jeff");
             record.setLastname("Smith");
             record.setBlob1(generateRandomBlob());
@@ -1902,11 +1856,10 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
             mapper.insert(record);
 
             FieldsblobsExample example = new FieldsblobsExample();
-            List<FieldsblobsWithBLOBs> answer = mapper
-                    .selectByExampleWithBLOBs(example);
+            List<Fieldsblobs> answer = mapper.selectByExampleWithBLOBs(example);
             assertEquals(1, answer.size());
 
-            FieldsblobsWithBLOBs returnedRecord = answer.get(0);
+            Fieldsblobs returnedRecord = answer.get(0);
             assertEquals(record.getFirstname(), returnedRecord.getFirstname());
             assertEquals(record.getLastname(), returnedRecord.getLastname());
             assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord
@@ -1924,14 +1877,14 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
         try {
             FieldsblobsMapper mapper = sqlSession.getMapper(FieldsblobsMapper.class);
-            FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs();
+            Fieldsblobs record = new Fieldsblobs();
             record.setFirstname("Jeff");
             record.setLastname("Smith");
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             mapper.insert(record);
 
-            record = new FieldsblobsWithBLOBs();
+            record = new Fieldsblobs();
             record.setFirstname("Scott");
             record.setLastname("Jones");
             record.setBlob1(generateRandomBlob());
@@ -1961,14 +1914,14 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
         try {
             FieldsblobsMapper mapper = sqlSession.getMapper(FieldsblobsMapper.class);
-            FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs();
+            Fieldsblobs record = new Fieldsblobs();
             record.setFirstname("Jeff");
             record.setLastname("Smith");
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             mapper.insert(record);
 
-            record = new FieldsblobsWithBLOBs();
+            record = new Fieldsblobs();
             record.setFirstname("Scott");
             record.setLastname("Jones");
             record.setBlob1(generateRandomBlob());
@@ -1981,9 +1934,10 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
             assertEquals(1, answer.size());
 
             Fieldsblobs newRecord = answer.get(0);
-            assertFalse(newRecord instanceof FieldsblobsWithBLOBs);
             assertEquals(record.getFirstname(), newRecord.getFirstname());
             assertEquals(record.getLastname(), newRecord.getLastname());
+            assertNull(newRecord.getBlob1());
+            assertNull(newRecord.getBlob2());
         } finally {
             sqlSession.close();
         }
@@ -1995,14 +1949,14 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
         try {
             FieldsblobsMapper mapper = sqlSession.getMapper(FieldsblobsMapper.class);
-            FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs();
+            Fieldsblobs record = new Fieldsblobs();
             record.setFirstname("Jeff");
             record.setLastname("Smith");
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             mapper.insert(record);
 
-            record = new FieldsblobsWithBLOBs();
+            record = new Fieldsblobs();
             record.setFirstname("Scott");
             record.setLastname("Jones");
             record.setBlob1(generateRandomBlob());
@@ -2011,11 +1965,10 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
             FieldsblobsExample example = new FieldsblobsExample();
             example.createCriteria().andFirstnameLike("S%");
-            List<FieldsblobsWithBLOBs> answer = mapper
-                    .selectByExampleWithBLOBs(example);
+            List<Fieldsblobs> answer = mapper.selectByExampleWithBLOBs(example);
             assertEquals(1, answer.size());
 
-            FieldsblobsWithBLOBs newRecord = answer.get(0);
+            Fieldsblobs newRecord = answer.get(0);
             assertEquals(record.getFirstname(), newRecord.getFirstname());
             assertEquals(record.getLastname(), newRecord.getLastname());
             assertTrue(blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
@@ -2031,14 +1984,14 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
         try {
             FieldsblobsMapper mapper = sqlSession.getMapper(FieldsblobsMapper.class);
-            FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs();
+            Fieldsblobs record = new Fieldsblobs();
             record.setFirstname("Jeff");
             record.setLastname("Smith");
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             mapper.insert(record);
 
-            record = new FieldsblobsWithBLOBs();
+            record = new Fieldsblobs();
             record.setFirstname("Scott");
             record.setLastname("Jones");
             record.setBlob1(generateRandomBlob());
@@ -2047,7 +2000,7 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 
             FieldsblobsExample example = new FieldsblobsExample();
             example.createCriteria();
-            List<FieldsblobsWithBLOBs> answer = mapper.selectByExampleWithBLOBs(example);
+            List<Fieldsblobs> answer = mapper.selectByExampleWithBLOBs(example);
             assertEquals(2, answer.size());
         } finally {
             sqlSession.close();
@@ -2055,27 +2008,29 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
     }
 
     @Test
-    public void testFieldsBlobsCountByExample() {
+    public void testPKFieldsBlobsCountByExample() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
         try {
-            FieldsblobsMapper mapper = sqlSession.getMapper(FieldsblobsMapper.class);
-            FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs();
+            PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
+            Pkfieldsblobs record = new Pkfieldsblobs();
+            record.setId1(3);
+            record.setId2(4);
             record.setFirstname("Jeff");
             record.setLastname("Smith");
             record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
             mapper.insert(record);
 
-            record = new FieldsblobsWithBLOBs();
+            record = new Pkfieldsblobs();
+            record.setId1(5);
+            record.setId2(6);
             record.setFirstname("Scott");
             record.setLastname("Jones");
             record.setBlob1(generateRandomBlob());
-            record.setBlob2(generateRandomBlob());
             mapper.insert(record);
 
-            FieldsblobsExample example = new FieldsblobsExample();
-            example.createCriteria().andFirstnameLike("S%");
+            PkfieldsblobsExample example = new PkfieldsblobsExample();
+            example.createCriteria().andId1NotEqualTo(3);
             int rows = mapper.countByExample(example);
             assertEquals(1, rows);
 
@@ -2094,7 +2049,6 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
         try {
             AwfulTableMapper mapper = sqlSession.getMapper(AwfulTableMapper.class);
             AwfulTable record = new AwfulTable();
-
             record.seteMail("fred@fred.com");
             record.setEmailaddress("alsofred@fred.com");
             record.setFirstFirstName("fred1");
@@ -2107,15 +2061,12 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
 
-            int count = mapper.insert(record);
-            assertEquals(1, count);
-            
+            mapper.insert(record);
             Integer generatedCustomerId = record.getCustomerId();
             assertEquals(57, generatedCustomerId.intValue());
 
-            AwfulTableKey key = new AwfulTableKey();
-            key.setCustomerId(generatedCustomerId);
-            AwfulTable returnedRecord = mapper.selectByPrimaryKey(key);
+            AwfulTable returnedRecord = mapper
+                    .selectByPrimaryKey(generatedCustomerId);
 
             assertEquals(generatedCustomerId, returnedRecord.getCustomerId());
             assertEquals(record.geteMail(), returnedRecord.geteMail());
@@ -2157,15 +2108,12 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
 
-            int count = mapper.insertSelective(record);
-            assertEquals(1, count);
-            
+            mapper.insertSelective(record);
             Integer generatedCustomerId = record.getCustomerId();
             assertEquals(57, generatedCustomerId.intValue());
-            
-            AwfulTableKey key = new AwfulTableKey();
-            key.setCustomerId(generatedCustomerId);
-            AwfulTable returnedRecord = mapper.selectByPrimaryKey(key);
+
+            AwfulTable returnedRecord = mapper
+                    .selectByPrimaryKey(generatedCustomerId);
 
             assertEquals(generatedCustomerId, returnedRecord.getCustomerId());
             assertEquals(record.geteMail(), returnedRecord.geteMail());
@@ -2215,9 +2163,7 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
             int rows = mapper.updateByPrimaryKey(record);
             assertEquals(1, rows);
 
-            AwfulTableKey key = new AwfulTableKey();
-            key.setCustomerId(generatedCustomerId);
-            AwfulTable returnedRecord = mapper.selectByPrimaryKey(key);
+            AwfulTable returnedRecord = mapper.selectByPrimaryKey(generatedCustomerId);
 
             assertEquals(generatedCustomerId, returnedRecord.getCustomerId());
             assertEquals(record.geteMail(), returnedRecord.geteMail());
@@ -2270,9 +2216,7 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
             int rows = mapper.updateByPrimaryKeySelective(newRecord);
             assertEquals(1, rows);
 
-            AwfulTableKey key = new AwfulTableKey();
-            key.setCustomerId(generatedCustomerId);
-            AwfulTable returnedRecord = mapper.selectByPrimaryKey(key);
+            AwfulTable returnedRecord = mapper.selectByPrimaryKey(generatedCustomerId);
 
             assertEquals(generatedCustomerId, returnedRecord.getCustomerId());
             assertEquals(record.geteMail(), returnedRecord.geteMail());
@@ -2317,9 +2261,7 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
             mapper.insert(record);
             Integer generatedCustomerId = record.getCustomerId();
 
-            AwfulTableKey key = new AwfulTableKey();
-            key.setCustomerId(generatedCustomerId);
-            int rows = mapper.deleteByPrimaryKey(key);
+            int rows = mapper.deleteByPrimaryKey(generatedCustomerId);
             assertEquals(1, rows);
 
             AwfulTableExample example = new AwfulTableExample();
@@ -2420,9 +2362,7 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
             mapper.insert(record);
             Integer generatedKey = record.getCustomerId();
 
-            AwfulTableKey key = new AwfulTableKey();
-            key.setCustomerId(generatedKey);
-            AwfulTable returnedRecord = mapper.selectByPrimaryKey(key);
+            AwfulTable returnedRecord = mapper.selectByPrimaryKey(generatedKey);
 
             assertNotNull(returnedRecord);
             assertEquals(record.getCustomerId(), returnedRecord.getCustomerId());
@@ -3141,5 +3081,135 @@ public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
         } finally {
             sqlSession.close();
         }
+    }
+    
+    @Test
+    public void testEquals1() {
+        Pkfields pkfields1 = new Pkfields();
+        assertFalse(pkfields1.equals(null));
+    }
+    
+    @Test
+    public void testEquals2() {
+        Pkfields pkfields1 = new Pkfields();
+        Pkfields pkfields2 = new Pkfields();
+        assertTrue(pkfields1.equals(pkfields2));
+    }
+    
+    @Test
+    public void testEquals3() {
+        Pkfields pkfields1 = new Pkfields();
+        pkfields1.setId1(2);
+        
+        Pkfields pkfields2 = new Pkfields();
+        pkfields2.setId1(2);
+        
+        assertTrue(pkfields1.equals(pkfields2));
+    }
+    
+    @Test
+    public void testEquals4() {
+        Pkfields pkfields1 = new Pkfields();
+        pkfields1.setId1(2);
+        
+        Pkfields pkfields2 = new Pkfields();
+        pkfields2.setId1(3);
+        
+        assertFalse(pkfields1.equals(pkfields2));
+    }
+
+    @Test
+    public void testEquals5() {
+        AwfulTable awfulTable1 = new AwfulTable();
+        awfulTable1.setActive(false);
+        awfulTable1.setCustomerId(3);
+        awfulTable1.seteMail("fred@fred.com");
+        awfulTable1.setEmailaddress("fred@fred.com");
+        awfulTable1.setFirstFirstName("Fred");
+        awfulTable1.setFrom("from");
+        awfulTable1.setId1(22);
+        awfulTable1.setId2(33);
+        awfulTable1.setId5(55);
+        awfulTable1.setId6(66);
+        awfulTable1.setId7(77);
+        awfulTable1.setLastName("Rubble");
+        awfulTable1.setSecondFirstName("Bamm Bamm");
+        awfulTable1.setThirdFirstName("Pebbles");
+
+        AwfulTable awfulTable2 = new AwfulTable();
+        awfulTable2.setActive(false);
+        awfulTable2.setCustomerId(3);
+        awfulTable2.seteMail("fred@fred.com");
+        awfulTable2.setEmailaddress("fred@fred.com");
+        awfulTable2.setFirstFirstName("Fred");
+        awfulTable2.setFrom("from");
+        awfulTable2.setId1(22);
+        awfulTable2.setId2(33);
+        awfulTable2.setId5(55);
+        awfulTable2.setId6(66);
+        awfulTable2.setId7(77);
+        awfulTable2.setLastName("Rubble");
+        awfulTable2.setSecondFirstName("Bamm Bamm");
+        awfulTable2.setThirdFirstName("Pebbles");
+        
+        assertTrue(awfulTable1.equals(awfulTable2));
+        
+        awfulTable2.setActive(true);
+        assertFalse(awfulTable1.equals(awfulTable2));
+    }
+
+    @Test
+    public void testHashCode1() {
+        Pkfields pkfields1 = new Pkfields();
+        Pkfields pkfields2 = new Pkfields();
+        assertTrue(pkfields1.hashCode() == pkfields2.hashCode());
+    }
+    
+    @Test
+    public void testHashCode2() {
+        Pkfields pkfields1 = new Pkfields();
+        pkfields1.setId1(2);
+        
+        Pkfields pkfields2 = new Pkfields();
+        pkfields2.setId1(2);
+        
+        assertTrue(pkfields1.hashCode() == pkfields2.hashCode());
+    }
+
+    @Test
+    public void testHashCode3() {
+        AwfulTable awfulTable1 = new AwfulTable();
+        awfulTable1.setActive(false);
+        awfulTable1.setCustomerId(3);
+        awfulTable1.seteMail("fred@fred.com");
+        awfulTable1.setEmailaddress("fred@fred.com");
+        awfulTable1.setFirstFirstName("Fred");
+        awfulTable1.setFrom("from");
+        awfulTable1.setId1(22);
+        awfulTable1.setId2(33);
+        awfulTable1.setId5(55);
+        awfulTable1.setId6(66);
+        awfulTable1.setId7(77);
+        awfulTable1.setLastName("Rubble");
+        awfulTable1.setSecondFirstName("Bamm Bamm");
+        awfulTable1.setThirdFirstName("Pebbles");
+
+        AwfulTable awfulTable2 = new AwfulTable();
+        awfulTable2.setActive(false);
+        awfulTable2.setCustomerId(3);
+        awfulTable2.seteMail("fred@fred.com");
+        awfulTable2.setEmailaddress("fred@fred.com");
+        awfulTable2.setFirstFirstName("Fred");
+        awfulTable2.setFrom("from");
+        awfulTable2.setId1(22);
+        awfulTable2.setId2(33);
+        awfulTable2.setId5(55);
+        awfulTable2.setId6(66);
+        awfulTable2.setId7(77);
+        awfulTable2.setLastName("Rubble");
+        awfulTable2.setSecondFirstName("Bamm Bamm");
+        awfulTable2.setThirdFirstName("Pebbles");
+        
+        assertTrue(awfulTable1.hashCode() == awfulTable2.hashCode());
     }
 }

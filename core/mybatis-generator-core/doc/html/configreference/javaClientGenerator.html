@@ -47,7 +47,19 @@ specify this element, then MyBatis Generator (MBG) will not generate Java client
             <th nowrap="nowrap" valign="top">ANNOTATEDMAPPER</th>
             <td>The generated objects will be Java interfaces for the MyBatis 3.x mapper
             infrastructure.  The interfaces will be based on annotations and MyBatis 3.x SqlProviders.
-            No XML mapper files will be generated.</td>
+            No XML mapper files will be generated.
+            <p>The ANNOTATEDMAPPER requires MyBatis version 3.0.4 or higher.</p>
+            </td>
+          </tr>
+          <tr>
+            <th nowrap="nowrap" valign="top">MIXEDMAPPER</th>
+            <td>The generated objects will be Java interfaces for the MyBatis 3.x mapper
+            infrastructure.  The interfaces will be based on a mix of annotations and XML.
+            An annotation will be used where a simple annotation will work.  This client
+            will not generate and Sql Provider, so all complex dynamic SQL will be generated
+            in XML.
+            <p>The MIXEDMAPPER requires MyBatis version 3.0.4 or higher.</p>
+            </td>
           </tr>
           <tr>
             <th nowrap="nowrap" valign="top">XMLMAPPER</th>

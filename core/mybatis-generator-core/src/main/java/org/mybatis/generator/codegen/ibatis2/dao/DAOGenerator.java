@@ -31,6 +31,7 @@ import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
+import org.mybatis.generator.codegen.AbstractXmlGenerator;
 import org.mybatis.generator.codegen.ibatis2.dao.elements.AbstractDAOElementGenerator;
 import org.mybatis.generator.codegen.ibatis2.dao.elements.CountByExampleMethodGenerator;
 import org.mybatis.generator.codegen.ibatis2.dao.elements.DeleteByExampleMethodGenerator;
@@ -323,5 +324,11 @@ public class DAOGenerator extends AbstractJavaClientGenerator {
         methodGenerator.setWarnings(warnings);
         methodGenerator.addImplementationElements(topLevelClass);
         methodGenerator.addInterfaceElements(interfaze);
+    }
+
+    @Override
+    public AbstractXmlGenerator getMatchedXMLGenerator() {
+        // this method is not called for iBATIS2
+        return null;
     }
 }

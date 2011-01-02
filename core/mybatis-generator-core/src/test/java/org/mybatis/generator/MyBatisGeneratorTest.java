@@ -28,7 +28,7 @@ public class MyBatisGeneratorTest {
             MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, shellCallback, warnings);
             myBatisGenerator.generate(null);
         } catch (InvalidConfigurationException e) {
-            assertEquals(2, e.getErrors().size());
+            assertEquals(3, e.getErrors().size());
             gotException = true;
         }
 

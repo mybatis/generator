@@ -88,7 +88,6 @@ public class ProviderUpdateByPrimaryKeySelectiveMethodGenerator extends
             method.addBodyLine(""); //$NON-NLS-1$
         }
 
-        method.addBodyLine(""); //$NON-NLS-1$
         for (IntrospectedColumn introspectedColumn : introspectedTable.getPrimaryKeyColumns()) {
             method.addBodyLine(String.format("WHERE(\"%s = %s\");", //$NON-NLS-1$
                     escapeStringForJava(getEscapedColumnName(introspectedColumn)),

@@ -1406,7 +1406,7 @@ public class HierarchicalJava5Test extends AbstractHierarchicalImmutableTest {
 
             PkfieldsblobsWithBLOBs updateRecord = new PkfieldsblobsWithBLOBs(3, 4, "Scott", "Jones", generateRandomBlob());
 
-            int rows = mapper.updateByPrimaryKey(updateRecord);
+            int rows = mapper.updateByPrimaryKeyWithBLOBs(updateRecord);
             assertEquals(1, rows);
 
             PkfieldsblobsKey key = new PkfieldsblobsKey(3, 4);

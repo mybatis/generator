@@ -11,7 +11,7 @@ public class TestUtilities {
     private static DateFormat timeOnlyFormat = SimpleDateFormat.getTimeInstance();
     
     public static byte[] generateRandomBlob() {
-        Random random = new Random(System.currentTimeMillis());
+        Random random = new Random();
 
         byte[] answer = new byte[256];
 

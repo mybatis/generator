@@ -30,6 +30,7 @@ import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.codegen.AbstractXmlGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.AnnotatedClientGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.JavaMapperGenerator;
+import org.mybatis.generator.codegen.mybatis3.javamapper.MixedClientGenerator;
 import org.mybatis.generator.codegen.mybatis3.model.BaseRecordGenerator;
 import org.mybatis.generator.codegen.mybatis3.model.ExampleGenerator;
 import org.mybatis.generator.codegen.mybatis3.model.PrimaryKeyGenerator;
@@ -57,14 +58,22 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
     public void calculateGenerators(List<String> warnings,
             ProgressCallback progressCallback) {
         calculateJavaModelGenerators(warnings, progressCallback);
-        if (calculateClientGenerators(warnings, progressCallback)) {
-            calculateXmlMapperGenerator(warnings, progressCallback);
-        }
+        
+        AbstractJavaClientGenerator javaClientGenerator =
+            calculateClientGenerators(warnings, progressCallback);
+            
+        calculateXmlMapperGenerator(javaClientGenerator, warnings, progressCallback);
     }
 
-    protected void calculateXmlMapperGenerator(List<String> warnings,
+    protected void calculateXmlMapperGenerator(AbstractJavaClientGenerator javaClientGenerator, 
+            List<String> warnings,
             ProgressCallback progressCallback) {
-        xmlMapperGenerator = new XMLMapperGenerator();
+        if (javaClientGenerator == null) {
+            xmlMapperGenerator = new XMLMapperGenerator();
+        } else {
+            xmlMapperGenerator = javaClientGenerator.getMatchedXMLGenerator();
+        }
+        
         initializeAbstractGenerator(xmlMapperGenerator, warnings,
                 progressCallback);
     }
@@ -75,17 +84,17 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
      * @param progressCallback
      * @return true if an XML generator is required
      */
-    protected boolean calculateClientGenerators(List<String> warnings,
+    protected AbstractJavaClientGenerator calculateClientGenerators(List<String> warnings,
             ProgressCallback progressCallback) {
         AbstractJavaClientGenerator javaGenerator = createJavaClientGenerator();
         if (javaGenerator == null) {
-            return true;
+            return null;
         }
 
         initializeAbstractGenerator(javaGenerator, warnings, progressCallback);
         clientGenerators.add(javaGenerator);
         
-        return javaGenerator.requiresXMLGenerator();
+        return javaGenerator;
     }
     
     private AbstractJavaClientGenerator createJavaClientGenerator() {
@@ -99,6 +108,8 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
         AbstractJavaClientGenerator javaGenerator;
         if ("XMLMAPPER".equalsIgnoreCase(type)) { //$NON-NLS-1$
             javaGenerator = new JavaMapperGenerator();
+        } else if ("MIXEDMAPPER".equalsIgnoreCase(type)) { //$NON-NLS-1$
+            javaGenerator = new MixedClientGenerator();
         } else if ("ANNOTATEDMAPPER".equalsIgnoreCase(type)) { //$NON-NLS-1$
             javaGenerator = new AnnotatedClientGenerator();
         } else if ("MAPPER".equalsIgnoreCase(type)) { //$NON-NLS-1$
@@ -145,6 +156,10 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
     protected void initializeAbstractGenerator(
             AbstractGenerator abstractGenerator, List<String> warnings,
             ProgressCallback progressCallback) {
+        if (abstractGenerator == null) {
+            return;
+        }
+        
         abstractGenerator.setContext(context);
         abstractGenerator.setIntrospectedTable(this);
         abstractGenerator.setProgressCallback(progressCallback);

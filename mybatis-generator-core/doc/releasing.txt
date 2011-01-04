@@ -51,35 +51,20 @@ Eclipse Release Process
 1. Build the new version of the Eclipse feature:
   - Increment the version number of the feature
   - Increment the version number of any plugin that has changed
+  - Increment the version numbers in category.xml in the build project
   - Run the build.xml script in the build project (creates a new feature version
-    at \temp\ibator.build\etc.)
-  - Add the new feature and plugin jars to the IbatorUpdateSite project
-  - Add the new version of the feature to site.xml in the IbatorUpdateSite
-    project (manually)
-
-2. Run through the manual test scripts for the Eclipse feature
-
-3. Zip the contents of the update site (remove project metadata)
+    at \temp\mybatis.generator.build\etc.)
   
-4. Commit everything
+2. Install a fresh version of Eclipse, and install the new version of the feature
+   from \temp\mybatis.generator.build\buildRepo.  Run through the manual test
+   scripts for the Eclipse feature
 
-5. Make an SVN label
+3. If everything is OK, run the publish.xml script in the build project.
+   This will merge the new plugin into the update site.
+  
+4. Commit the update site
 
-6. Run mvn assembly:assembly on the ibator-core project to create the base zip file.  Put the
-   new base Ibator zip file in /www/people.apache.org/builds/ibatis/alpha
+5. Update the wiki with new version information
 
-7. Put the new zipped eclipse site in /www/people.apache.org/builds/ibatis/alpha
-
-9. Copy the new versions of ibator-core and ibator-maven-plugin from the local maven repo
-   to the Apache repo at ???
-
-10. Update /www/ibatis.apache.org/doc/tools/ibator from SVN (this updates the documentation)
-
-11. Update /www/ibatis.apache.org/tools/ibator from SVN (this updates the Eclipse site)
-
-12. Update the DTD (if required)
-
-13. Update the iBATIS web site
-
-14. Send out the announcement to dev@ and user@
+6. Send out the announcement notice
 

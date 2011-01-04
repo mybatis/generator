@@ -123,12 +123,12 @@ public class GeneratorAntTask extends Task {
             subMonitor.worked(50);
             monitor.subTask("Generating Files from Database Tables");
             
-            MyBatisGenerator ibator = new MyBatisGenerator(config, new EclipseShellCallback(),
+            MyBatisGenerator generator = new MyBatisGenerator(config, new EclipseShellCallback(),
                     warnings);
 
             EclipseProgressCallback progressCallback = new EclipseProgressCallback(subMonitor.newChild(950));
 
-            ibator.generate(progressCallback, contexts, fullyqualifiedTables);
+            generator.generate(progressCallback, contexts, fullyqualifiedTables);
 
         } catch (XMLParserException e) {
             for (String error : e.getErrors()) {

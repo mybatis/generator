@@ -56,7 +56,7 @@ public class EclipseShellCallback implements ShellCallback {
 
     /*
      * (non-Javadoc)
-     * @see org.apache.ibatis.ibator.api.ShellCallback#getDirectory(java.lang.String, java.lang.String)
+     * @see org.mybatis.generator.api.ShellCallback#getDirectory(java.lang.String, java.lang.String)
      */
     public File getDirectory(String targetProject, String targetPackage) throws ShellException {
         if (targetProject.startsWith("/") || targetProject.startsWith("\\")) {
@@ -75,8 +75,7 @@ public class EclipseShellCallback implements ShellCallback {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see org.apache.ibatis.ibator.core.api.ShellCallback#refreshProject(java.lang.String)
+     * @see org.mybatis.generator.api.ShellCallback#refreshProject(java.lang.String)
      */
     public void refreshProject(String project) {
         try {
@@ -232,8 +231,7 @@ public class EclipseShellCallback implements ShellCallback {
 
     /*
      * (non-Javadoc)
-     * 
-     * @see org.apache.ibatis.ibator.api.ShellCallback#mergeSupported()
+     * @see org.mybatis.generator.api.ShellCallback#isMergeSupported()
      */
     public boolean isMergeSupported() {
         return true;

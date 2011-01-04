@@ -40,8 +40,9 @@ public class EclipseProgressCallback implements ProgressCallback {
                 INTROSPECTION_FACTOR + GENERATION_FACTOR + SAVE_FACTOR);
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.ibatis.ibator.core.api.ProgressCallback#checkCancel()
+    /*
+     * (non-Javadoc)
+     * @see org.mybatis.generator.api.ProgressCallback#checkCancel()
      */
     public void checkCancel() throws InterruptedException {
         if (currentChildProgress.isCanceled()) {

@@ -18,7 +18,7 @@ package org.mybatis.generator.eclipse.ui.content;
 import org.eclipse.core.resources.IFile;
 
 /**
- * This is the adapter class for files that are Ibator configuration files.
+ * This is the adapter class for files that are generator configuration files.
  * 
  * @author Jeff Butler
  */

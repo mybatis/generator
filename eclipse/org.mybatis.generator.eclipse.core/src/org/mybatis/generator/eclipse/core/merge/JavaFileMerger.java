@@ -78,7 +78,7 @@ public class JavaFileMerger {
         String existingFile = getExistingFileContents();
         IDocument document = new Document(existingFile);
 
-        // delete Ibator generated stuff, and collect imports
+        // delete generated stuff, and collect imports
         ExistingJavaFileVisitor visitor = new ExistingJavaFileVisitor(javaDocTags);
 
         astParser.setSource(existingFile.toCharArray());
@@ -106,7 +106,7 @@ public class JavaFileMerger {
                 SimpleType newSt = ast.newSimpleType(name);
                 typeDeclaration.superInterfaceTypes().add(newSt);
             } else {
-                // this shouldn't happen - Ibator only generates simple names
+                // this shouldn't happen - MyBatis Generator only generates simple names
                 throw new ShellException("The Java file merger only supports simple types as super interfaces");
             }
         }
@@ -119,7 +119,7 @@ public class JavaFileMerger {
                 SimpleType newSt = ast.newSimpleType(name);
                 typeDeclaration.setSuperclassType(newSt);
             } else {
-                // this shouldn't happen - Ibator only generates simple names
+                // this shouldn't happen - MyBatis Generator only generates simple names
                 throw new ShellException("The Java file merger only supports simple types as super classes");
             }
         } else {
@@ -279,7 +279,7 @@ public class JavaFileMerger {
         File file = new File(existingFilePath);
         
         if (!file.exists()) {
-            // this should not happen because Ibator only returns the path
+            // this should not happen because MyBatis Generator only returns the path
             // calculated by the eclipse callback
             StringBuilder sb = new StringBuilder();
             sb.append("The file ");

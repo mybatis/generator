@@ -47,11 +47,11 @@ public class ExistingJavaFileVisitor extends ASTVisitor {
     }
 
     /**
-     * Find the Ibator generated fields and delete them
+     * Find the generated fields and delete them
      */
     @Override
     public boolean visit(FieldDeclaration node) {
-        if (isIbatorGenerated(node)) {
+        if (isGenerated(node)) {
             node.delete();
         }
         
@@ -59,11 +59,11 @@ public class ExistingJavaFileVisitor extends ASTVisitor {
     }
 
     /**
-     * Find the Ibator generated methods and delete them
+     * Find the generated methods and delete them
      */
     @Override
     public boolean visit(MethodDeclaration node) {
-        if (isIbatorGenerated(node)) {
+        if (isGenerated(node)) {
             node.delete();
         }
 
@@ -71,7 +71,7 @@ public class ExistingJavaFileVisitor extends ASTVisitor {
     }
 
     /**
-     * Find any Ibator generated inner types and delete them
+     * Find any generated inner types and delete them
      */
     @Override
     public boolean visit(TypeDeclaration node) {
@@ -80,8 +80,8 @@ public class ExistingJavaFileVisitor extends ASTVisitor {
             typeDeclaration = node;
             return true;
         } else {
-            // is this an Ibator generated inner class? If so, then delete
-            if (isIbatorGenerated(node)) {
+            // is this a generated inner class? If so, then delete
+            if (isGenerated(node)) {
                 node.delete();
             }
 
@@ -94,7 +94,7 @@ public class ExistingJavaFileVisitor extends ASTVisitor {
     }
 
     @SuppressWarnings("unchecked")
-    private boolean isIbatorGenerated(BodyDeclaration node) {
+    private boolean isGenerated(BodyDeclaration node) {
         boolean rc = false;
         Javadoc jd = node.getJavadoc();
         if (jd != null) {

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2006 The Apache Software Foundation
+ *  Copyright 2011 The MyBatis Team
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,10 +21,6 @@ import java.io.InputStream;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdapterFactory;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.jdt.core.IClasspathEntry;
-import org.eclipse.jdt.core.IJavaProject;
-import org.mybatis.generator.eclipse.ui.MyBatisGeneratorClasspathVariableInitializer;
 
 /**
  * This class provides a factory for different adapters used in the plugin.
@@ -47,12 +43,6 @@ public class AdapterFactory implements IAdapterFactory {
                 return new ConfigurationFileAdapter(
                         (IFile) adaptableObject);
             }
-        } else if (adaptableObject instanceof IJavaProject) {
-            if (adapterType == JavaProjectAdapter.class) {
-                if (!isGeneratorProject((IJavaProject) adaptableObject)) {
-                    return new JavaProjectAdapter((IJavaProject) adaptableObject);
-                }
-            }
         }
 
         return null;
@@ -60,8 +50,7 @@ public class AdapterFactory implements IAdapterFactory {
 
     @SuppressWarnings("rawtypes")
     public Class[] getAdapterList() {
-        return new Class[] { ConfigurationFileAdapter.class,
-                JavaProjectAdapter.class};
+        return new Class[] { ConfigurationFileAdapter.class };
     }
 
     private boolean isConfigurationFile(IFile file) {
@@ -89,36 +78,6 @@ public class AdapterFactory implements IAdapterFactory {
         try {
             is.close();
         } catch (IOException e) {
-            // ignore
-            ;
-        }
-        
-        return rc;
-    }
-
-    /**
-     * returns true if the project has Ibator on it's classpath
-     * 
-     * @param project
-     * @return
-     */
-    private boolean isGeneratorProject(IJavaProject project) {
-        boolean rc = false;
-        
-        try {
-            IClasspathEntry[] classpath = project.getRawClasspath();
-            for (IClasspathEntry iClasspathEntry : classpath) {
-                if (iClasspathEntry.getEntryKind() != IClasspathEntry.CPE_VARIABLE) {
-                    continue;
-                }
-                
-                IPath path = iClasspathEntry.getPath();
-                if (path.segment(0).equals(MyBatisGeneratorClasspathVariableInitializer.MBG_HOME)) {
-                    rc = true;
-                    break;
-                }
-            }
-        } catch (Exception e) {
             // ignore
             ;
         }

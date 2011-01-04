@@ -10,13 +10,6 @@
                type="org.mybatis.generator.eclipse.ui.content.ConfigurationFileAdapter">
          </adapter>
       </factory>
-      <factory
-            adaptableType="org.eclipse.jdt.core.IJavaProject"
-            class="org.mybatis.generator.eclipse.ui.content.AdapterFactory">
-         <adapter
-               type="org.mybatis.generator.eclipse.ui.content.JavaProjectAdapter">
-         </adapter>
-      </factory>
    </extension>
    <extension
          point="org.eclipse.ui.popupMenus">
@@ -55,18 +48,5 @@
             id="org.mybatis.generator.eclipse.ui.NewConfigFileWizard"
             name="MyBatis Generator Configuration File">
       </wizard>
-   </extension>
-   <extension
-         point="org.eclipse.jdt.core.classpathVariableInitializer">
-      <classpathVariableInitializer
-            class="org.mybatis.generator.eclipse.ui.MyBatisGeneratorClasspathVariableInitializer"
-            readOnly="true"
-            variable="MBG_HOME">
-      </classpathVariableInitializer>
-      <classpathVariableInitializer
-            class="org.mybatis.generator.eclipse.ui.MyBatisGeneratorClasspathVariableInitializer"
-            readOnly="true"
-            variable="MBG_SRC_HOME">
-      </classpathVariableInitializer>
    </extension>
 </plugin>

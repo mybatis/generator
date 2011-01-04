@@ -78,7 +78,7 @@ tests build on items created in previous tests.</p>
   <li>Create a new JavaProject called "MBGTest".  Make sure there is a separate source folder
       called <code>src</code></li>
   <li>Add an additional source folder called <code>generatedsrc</code></li>
-  <li>Configure the build path to add the MyBatis JAR file (typically an external JAR
+  <li>Configure the build path to add the iBATIS 2 JAR file (typically an external JAR
      in the local maven repo)</li>
   <li>Create a new package in the <code>src</code> folder called <code>config</code></li>
   <li>Make a new configuration file:
@@ -119,14 +119,14 @@ tests build on items created in previous tests.</p>
     &lt;table tableName="a" /&gt;
   &lt;/context&gt;
 
-  &lt;context id="context2" targetRuntime="MyBatis3" &gt;
+  &lt;context id="context2" targetRuntime="Ibatis2Java5" &gt;
     &lt;jdbcConnection driverClass="com.mysql.jdbc.Driver"
       connectionURL="jdbc:mysql://localhost/mbgtest"
       userId="root" password="root" &gt;
     &lt;/jdbcConnection&gt;
     &lt;javaModelGenerator targetPackage="gen.src.model" targetProject="MBGTest/generatedsrc" /&gt;
     &lt;sqlMapGenerator targetPackage="gen.src.sql" targetProject="MBGTest/generatedsrc" /&gt;
-    &lt;javaClientGenerator targetPackage="gen.src.dao" targetProject="MBGTest/generatedsrc" type="MAPPER" /&gt;
+    &lt;javaClientGenerator targetPackage="gen.src.dao" targetProject="MBGTest/generatedsrc" type="GENERIC-CI" /&gt;
     &lt;table schema="mbgtest" tableName="%" /&gt;
   &lt;/context&gt;
 &lt;/generatorConfiguration&gt;
@@ -214,64 +214,6 @@ tests build on items created in previous tests.</p>
   <li>Press the "Run" button</li>
   <li>After MyBatis Generator runs, you should see a "BUILD SUCCESSFUL" message.</li>
   <li>Verify that the workspace errors are gone.</li>
-</ol>
-
-<h3>Classpath Variables</h3>
-<ol>
-  <li>Create a new Java project called "IbatorPlugin".  Make sure that there are
-      separate folders for source and class files.</li>
-  <li>Right click on the "IbatorPlugin" project, then take the menu option to
-      "Add Ibator to Build Path".</li>
-  <li>Verify that the IBATOR_JAR classpath variable has been added to the project's
-      build path.</li>
-  <li>Expand the Ibator JAR file, select any class and double click on the class.
-      Verify that the source code is attached and that you see the source code for
-      the class.</li>
-  <li>Make a new Java package called <code>plugin</code>.</li>
-  <li>Make a new Java class called <code>plugin.TestPlugin</code> that extends
-      <code>IbatorPluginAdapter</code>.</li>
-  <li>Change the generated <code>validate</code> method so that it returns
-      <code>true</code>.</li>
-  <li>Override the <code>modelBaseRecordClassGenerated</code> method and make
-      the method match the following:
-      <pre>
-
-@Override
-public boolean modelBaseRecordClassGenerated(TopLevelClass topLevelClass,
-        IntrospectedTable introspectedTable) {
-
-    FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType("java.io.Serializable");
-
-    topLevelClass.addImportedType(fqjt);
-    topLevelClass.addSuperInterface(fqjt);
-
-    return true;
-}
-      </pre></li>
-  <li>Save and close the Java file.</li>
-  <li>Export <code>plugin.TestPlugin</code> as a JAR file to "/Temp/TestPlugin.jar".
-      We need to export as a JAR file because Eclipse can't add class folders to an
-      Ant launch :(</li>
-  <li>Open the <code>ibatorConfig.xml</code> file from the previous tests.</li>
-  <li>Add the plugin to the configuration.  Add it after the first &lt;ibatorContext&gt;
-      element like this:
-      <pre>
-
-&lt;ibatorContext id="context1" targetRuntime="Ibatis2Java5" &gt;
-  &lt;ibatorPlugin type="plugin.TestPlugin"/&gt;
-  ...
-      </pre></li>
-  <li>Save and close the configuration file.</li>
-  <li>Right click on the <code>build.xml</code> file from the previous tests, then select the
-      menu option "Run As&gt;Ant Build...".  You should see the Ant launch configuration
-      dialog open.</li>
-  <li>Select the "Classpath" tab, then add "/Temp/TestPlugin.jar" file to the classpath as an
-     external JAR</li>
-  <li>Press the "Run" button</li>
-  <li>After Ibator runs, you should see a "BUILD SUCCESSFUL" message.</li>
-  <li>Verify that <code>gen.model.A.java</code> now implements <code>java.io.Serializable</code>.
-      Note that Eclipse may show a warning related to the missing <code>serialVersionUID</code>
-      field.  This is expected and can be ignored.</li>
 </ol>
 
 </body>

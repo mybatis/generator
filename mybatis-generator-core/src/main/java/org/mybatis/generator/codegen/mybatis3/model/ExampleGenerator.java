@@ -1040,7 +1040,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         method.addBodyLine("}"); //$NON-NLS-1$
 
         method.addBodyLine(
-                String.format("%s.add(new Criterion(condition, value, \"%s\"));",
+                String.format("%s.add(new Criterion(condition, value, \"%s\"));", //$NON-NLS-1$
                         field.getName(), introspectedColumn.getTypeHandler()));
         method.addBodyLine("allCriteria = null;"); //$NON-NLS-1$
         innerClass.addMethod(method);
@@ -1068,7 +1068,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         method.addBodyLine("}"); //$NON-NLS-1$
 
         method.addBodyLine(
-                String.format("%s.add(new Criterion(condition, value1, value2, \"%s\"));",
+                String.format("%s.add(new Criterion(condition, value1, value2, \"%s\"));", //$NON-NLS-1$
                         field.getName(), introspectedColumn.getTypeHandler()));
         
         method.addBodyLine("allCriteria = null;"); //$NON-NLS-1$

@@ -42,6 +42,32 @@
         </executions>
       </plugin>
       <plugin>
+        <groupId>com.googlecode.maven-gcu-plugin</groupId>
+        <artifactId>maven-gcu-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>deploy</phase>
+            <goals>
+              <goal>upload</goal>
+            </goals>
+            <configuration>
+              <uploads>
+                <upload>
+                  <file>${project.build.directory}/${project.artifactId}-${project.version}-bundle.zip</file>
+                  <summary>MyBatis Generator ${project.version}</summary>
+                  <labels>
+                    <label>Featured</label>
+                    <label>Type-Archive</label>
+                    <label>Product-Generator</label>
+                    <label>Version-${project.version}</label>
+                  </labels>
+                </upload>
+              </uploads>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-release-plugin</artifactId>
         <configuration>

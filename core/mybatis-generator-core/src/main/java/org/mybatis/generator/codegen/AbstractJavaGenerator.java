@@ -150,6 +150,7 @@ public abstract class AbstractJavaGenerator extends AbstractGenerator {
         method.setConstructor(true);
         method.setName(topLevelClass.getType().getShortName());
         method.addBodyLine("super();"); //$NON-NLS-1$
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
         topLevelClass.addMethod(method);
     }
 }

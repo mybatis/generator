@@ -117,6 +117,7 @@ public class RecordWithBLOBsGenerator extends AbstractJavaGenerator {
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setConstructor(true);
         method.setName(topLevelClass.getType().getShortName());
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
         
         for (IntrospectedColumn introspectedColumn : introspectedTable
                 .getAllColumns()) {

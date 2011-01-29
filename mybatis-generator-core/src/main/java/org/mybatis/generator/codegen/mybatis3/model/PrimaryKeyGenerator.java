@@ -117,6 +117,7 @@ public class PrimaryKeyGenerator extends AbstractJavaGenerator {
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setConstructor(true);
         method.setName(topLevelClass.getType().getShortName());
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
         
         StringBuilder sb = new StringBuilder();
         for (IntrospectedColumn introspectedColumn : introspectedTable

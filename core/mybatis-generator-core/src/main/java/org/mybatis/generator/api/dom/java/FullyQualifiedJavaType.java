@@ -27,6 +27,7 @@ import java.util.StringTokenizer;
  */
 public class FullyQualifiedJavaType implements
         Comparable<FullyQualifiedJavaType> {
+    private static final String JAVA_LANG = "java.lang"; //$NON-NLS-1$
     private static FullyQualifiedJavaType intInstance = null;
     private static FullyQualifiedJavaType stringInstance = null;
     private static FullyQualifiedJavaType booleanPrimitiveInstance = null;
@@ -378,7 +379,7 @@ public class FullyQualifiedJavaType implements
                 baseShortName = baseShortName.substring(index + 1);
             }
             
-            if ("java.lang".equals(packageName)) { //$NON-NLS-1$
+            if (JAVA_LANG.equals(packageName)) { //$NON-NLS-1$
                 explicitlyImported = false;
             } else {
                 explicitlyImported = true;
@@ -468,39 +469,16 @@ public class FullyQualifiedJavaType implements
     /**
      * Returns the package name of a fully qualified type.
      * 
-     * This method relies on convention - we assume that package names are all
-     * lower case. Not totally fool proof, but correct in most instances.
+     * This method calculates the package as the part of the fully
+     * qualified name up to, but not including, the last element.  Therefore,
+     * it does not support fully qualified inner classes.
+     * Not totally fool proof, but correct in most instances.
      * 
      * @param baseQualifiedName
      * @return
      */
     private static String getPackage(String baseQualifiedName) {
-        StringBuilder sb = new StringBuilder();
-        StringTokenizer st = new StringTokenizer(baseQualifiedName, "."); //$NON-NLS-1$
-        while (st.hasMoreTokens()) {
-            String s = st.nextToken();
-            if (Character.isUpperCase(s.charAt(0))) {
-                break;
-            } else {
-                if (sb.length() > 0) {
-                    sb.append('.');
-                }
-                sb.append(s);
-            }
-        }
-        
-        if (baseQualifiedName.equals(sb.toString())) {
-            sb.setLength(0);
-            // no upper case elements found in the name.  So,
-            // do an alternative parse where we assume that the
-            // last element is the class name
-            int i = baseQualifiedName.lastIndexOf('.');
-            
-            if (i != -1) {
-                sb.append(baseQualifiedName.substring(0, i));
-            }
-        }
-
-        return sb.toString();
+        int index = baseQualifiedName.lastIndexOf('.');
+        return baseQualifiedName.substring(0, index);
     }
 }

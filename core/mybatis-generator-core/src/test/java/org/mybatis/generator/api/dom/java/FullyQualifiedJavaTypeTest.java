@@ -190,29 +190,29 @@ public class FullyQualifiedJavaTypeTest {
     }
 
     @Test
-    public void testNestedClass1() {
+    public void testUppercasePackage1() {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType("org.foo.Bar.Inner");
         assertTrue(fqjt.isExplicitlyImported());
         assertEquals("Inner", fqjt.getShortName()); //$NON-NLS-1$
         assertEquals("org.foo.Bar.Inner", fqjt.getFullyQualifiedName()); //$NON-NLS-1$
-        assertEquals("org.foo", fqjt.getPackageName()); //$NON-NLS-1$
+        assertEquals("org.foo.Bar", fqjt.getPackageName()); //$NON-NLS-1$
         assertEquals(1, fqjt.getImportList().size());
         assertEquals("org.foo.Bar.Inner", fqjt.getImportList().get(0));
     }
 
     @Test
-    public void testNestedClass2() {
+    public void testUppercasePackage2() {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType("org.foo.Bar.Inner.Inner");
         assertTrue(fqjt.isExplicitlyImported());
         assertEquals("Inner", fqjt.getShortName()); //$NON-NLS-1$
         assertEquals("org.foo.Bar.Inner.Inner", fqjt.getFullyQualifiedName()); //$NON-NLS-1$
-        assertEquals("org.foo", fqjt.getPackageName()); //$NON-NLS-1$
+        assertEquals("org.foo.Bar.Inner", fqjt.getPackageName()); //$NON-NLS-1$
         assertEquals(1, fqjt.getImportList().size());
         assertEquals("org.foo.Bar.Inner.Inner", fqjt.getImportList().get(0));
     }
 
     @Test
-    public void testNestedClass3() {
+    public void testUppercasePackage3() {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType("java.util.List<org.foo.Bar.Inner>");
         assertTrue(fqjt.isExplicitlyImported());
         assertEquals("List<Inner>", fqjt.getShortName()); //$NON-NLS-1$

@@ -2,12 +2,12 @@ package mbg.test.mb3.annotated.hierarchical.immutable;
 
 import mbg.test.mb3.AbstractTest;
 
-import mbg.test.mb3.generated.annotated.hierarchical.immutable.mapper.FieldsblobsMapper;
-import mbg.test.mb3.generated.annotated.hierarchical.immutable.mapper.FieldsonlyMapper;
-import mbg.test.mb3.generated.annotated.hierarchical.immutable.mapper.PkblobsMapper;
-import mbg.test.mb3.generated.annotated.hierarchical.immutable.mapper.PkfieldsMapper;
-import mbg.test.mb3.generated.annotated.hierarchical.immutable.mapper.PkfieldsblobsMapper;
-import mbg.test.mb3.generated.annotated.hierarchical.immutable.mapper.PkonlyMapper;
+import mbg.test.mb3.generated.annotated.hierarchical.Immutable.Mapper.FieldsblobsMapper;
+import mbg.test.mb3.generated.annotated.hierarchical.Immutable.Mapper.FieldsonlyMapper;
+import mbg.test.mb3.generated.annotated.hierarchical.Immutable.Mapper.PkblobsMapper;
+import mbg.test.mb3.generated.annotated.hierarchical.Immutable.Mapper.PkfieldsMapper;
+import mbg.test.mb3.generated.annotated.hierarchical.Immutable.Mapper.PkfieldsblobsMapper;
+import mbg.test.mb3.generated.annotated.hierarchical.Immutable.Mapper.PkonlyMapper;
 
 public abstract class AbstractAnnotatedHierarchicalImmutableTest extends AbstractTest {
 

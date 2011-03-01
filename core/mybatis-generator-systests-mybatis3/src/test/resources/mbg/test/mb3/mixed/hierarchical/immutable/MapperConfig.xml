@@ -28,12 +28,12 @@
   </environments>
 
   <mappers>
-    <mapper resource="mbg/test/mb3/generated/mixed/hierarchical/immutable/xml/FieldsblobsMapper.xml" />
-    <mapper resource="mbg/test/mb3/generated/mixed/hierarchical/immutable/xml/FieldsonlyMapper.xml" />
-    <mapper resource="mbg/test/mb3/generated/mixed/hierarchical/immutable/xml/PkblobsMapper.xml" />
-    <mapper resource="mbg/test/mb3/generated/mixed/hierarchical/immutable/xml/PkfieldsMapper.xml" />
-    <mapper resource="mbg/test/mb3/generated/mixed/hierarchical/immutable/xml/PkfieldsblobsMapper.xml" />
-    <mapper resource="mbg/test/mb3/generated/mixed/hierarchical/immutable/xml/PkonlyMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/mixed/hierarchical/Immutable/XML/FieldsblobsMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/mixed/hierarchical/Immutable/XML/FieldsonlyMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/mixed/hierarchical/Immutable/XML/PkblobsMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/mixed/hierarchical/Immutable/XML/PkfieldsMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/mixed/hierarchical/Immutable/XML/PkfieldsblobsMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/mixed/hierarchical/Immutable/XML/PkonlyMapper.xml" />
   </mappers>
 
 </configuration>

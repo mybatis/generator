@@ -416,12 +416,12 @@
         connectionURL="jdbc:hsqldb:mem:aname"
         userId="sa" />
 
-    <javaModelGenerator targetPackage="mbg.test.mb3.generated.annotated.hierarchical.immutable.model" targetProject="MAVEN">
+    <javaModelGenerator targetPackage="mbg.test.mb3.generated.annotated.hierarchical.Immutable.Model" targetProject="MAVEN">
       <property name="trimStrings" value="true" />
       <property name="immutable" value="true"/>
     </javaModelGenerator>
 
-    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.annotated.hierarchical.immutable.mapper"  targetProject="MAVEN">
+    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.annotated.hierarchical.Immutable.Mapper"  targetProject="MAVEN">
     </javaClientGenerator>
 
     <table tableName="FieldsOnly" />
@@ -630,16 +630,16 @@
         connectionURL="jdbc:hsqldb:mem:aname"
         userId="sa" />
 
-    <javaModelGenerator targetPackage="mbg.test.mb3.generated.mixed.hierarchical.immutable.model" targetProject="MAVEN">
+    <javaModelGenerator targetPackage="mbg.test.mb3.generated.mixed.hierarchical.Immutable.Model" targetProject="MAVEN">
       <property name="trimStrings" value="true" />
       <property name="immutable" value="true"/>
     </javaModelGenerator>
 
-    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.mixed.hierarchical.immutable.xml"  targetProject="MAVEN">
+    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.mixed.hierarchical.Immutable.XML"  targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
     
-    <javaClientGenerator type="MIXEDMAPPER" targetPackage="mbg.test.mb3.generated.mixed.hierarchical.immutable.mapper"  targetProject="MAVEN">
+    <javaClientGenerator type="MIXEDMAPPER" targetPackage="mbg.test.mb3.generated.mixed.hierarchical.Immutable.Mapper"  targetProject="MAVEN">
     </javaClientGenerator>
 
     <table tableName="FieldsOnly" />

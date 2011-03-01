@@ -18,6 +18,7 @@ package org.mybatis.generator.internal;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.mybatis.generator.api.GeneratedXmlFile;
 import org.mybatis.generator.config.MergeConstants;
@@ -71,96 +73,110 @@ public class XmlFileMergerJaxp {
 
     public static String getMergedSource(GeneratedXmlFile generatedXmlFile,
             File existingFile) throws ShellException {
+
         try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory
-                    .newInstance();
-            factory.setExpandEntityReferences(false);
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            builder.setEntityResolver(new NullEntityResolver());
-
-            Document existingDocument = builder.parse(existingFile);
-            StringReader sr = new StringReader(generatedXmlFile
-                    .getFormattedContent());
-            Document newDocument = builder.parse(new InputSource(sr));
-
-            DocumentType newDocType = newDocument.getDoctype();
-            DocumentType existingDocType = existingDocument.getDoctype();
-
-            if (!newDocType.getName().equals(existingDocType.getName())) {
-                throw new ShellException(getString("Warning.12", //$NON-NLS-1$
-                        existingFile.getName()));
-            }
-
-            Element existingRootElement = existingDocument.getDocumentElement();
-            Element newRootElement = newDocument.getDocumentElement();
-
-            // reconcile the root element attributes -
-            // take all attributes from the new element and add to the existing
-            // element
-
-            // remove all attributes from the existing root element
-            NamedNodeMap attributes = existingRootElement.getAttributes();
-            int attributeCount = attributes.getLength();
-            for (int i = attributeCount - 1; i >= 0; i--) {
-                Node node = attributes.item(i);
-                existingRootElement.removeAttribute(node.getNodeName());
-            }
-
-            // add attributes from the new root node to the old root node
-            attributes = newRootElement.getAttributes();
-            attributeCount = attributes.getLength();
-            for (int i = 0; i < attributeCount; i++) {
-                Node node = attributes.item(i);
-                existingRootElement.setAttribute(node.getNodeName(), node
-                        .getNodeValue());
-            }
-
-            // remove the old generated elements and any
-            // white space before the old nodes
-            List<Node> nodesToDelete = new ArrayList<Node>();
-            NodeList children = existingRootElement.getChildNodes();
-            int length = children.getLength();
-            for (int i = 0; i < length; i++) {
-                Node node = children.item(i);
-                if (isGeneratedNode(node)) {
-                    nodesToDelete.add(node);
-                } else if (isWhiteSpace(node)
-                        && isGeneratedNode(children.item(i + 1))) {
-                    nodesToDelete.add(node);
-                }
-            }
-
-            for (Node node : nodesToDelete) {
-                existingRootElement.removeChild(node);
-            }
-
-            // add the new generated elements
-            children = newRootElement.getChildNodes();
-            length = children.getLength();
-            Node firstChild = existingRootElement.getFirstChild();
-            for (int i = 0; i < length; i++) {
-                Node node = children.item(i);
-                // don't add the last node if it is only white space
-                if (i == length - 1) {
-                    if (isWhiteSpace(node)) {
-                        break;
-                    }
-                }
-
-                Node newNode = existingDocument.importNode(node, true);
-                if (firstChild == null) {
-                    existingRootElement.appendChild(newNode);
-                } else {
-                    existingRootElement.insertBefore(newNode, firstChild);
-                }
-            }
-
-            // pretty print the result
-            return prettyPrint(existingDocument);
-        } catch (Exception e) {
+            return getMergedSource(new InputSource(new StringReader(generatedXmlFile.getFormattedContent())),
+                new InputSource(new FileReader(existingFile)),
+                existingFile.getName());
+        } catch (IOException e) {
+            throw new ShellException(getString("Warning.13", //$NON-NLS-1$
+                    existingFile.getName()), e);
+        } catch (SAXException e) {
+            throw new ShellException(getString("Warning.13", //$NON-NLS-1$
+                    existingFile.getName()), e);
+        } catch (ParserConfigurationException e) {
             throw new ShellException(getString("Warning.13", //$NON-NLS-1$
                     existingFile.getName()), e);
         }
+    }
+    
+    public static String getMergedSource(InputSource newFile,
+            InputSource existingFile, String existingFileName) throws IOException, SAXException,
+            ParserConfigurationException, ShellException {
+
+        DocumentBuilderFactory factory = DocumentBuilderFactory
+                .newInstance();
+        factory.setExpandEntityReferences(false);
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        builder.setEntityResolver(new NullEntityResolver());
+
+        Document existingDocument = builder.parse(existingFile);
+        Document newDocument = builder.parse(newFile);
+
+        DocumentType newDocType = newDocument.getDoctype();
+        DocumentType existingDocType = existingDocument.getDoctype();
+
+        if (!newDocType.getName().equals(existingDocType.getName())) {
+            throw new ShellException(getString("Warning.12", //$NON-NLS-1$
+                    existingFileName));
+        }
+
+        Element existingRootElement = existingDocument.getDocumentElement();
+        Element newRootElement = newDocument.getDocumentElement();
+
+        // reconcile the root element attributes -
+        // take all attributes from the new element and add to the existing
+        // element
+
+        // remove all attributes from the existing root element
+        NamedNodeMap attributes = existingRootElement.getAttributes();
+        int attributeCount = attributes.getLength();
+        for (int i = attributeCount - 1; i >= 0; i--) {
+            Node node = attributes.item(i);
+            existingRootElement.removeAttribute(node.getNodeName());
+        }
+
+        // add attributes from the new root node to the old root node
+        attributes = newRootElement.getAttributes();
+        attributeCount = attributes.getLength();
+        for (int i = 0; i < attributeCount; i++) {
+            Node node = attributes.item(i);
+            existingRootElement.setAttribute(node.getNodeName(), node
+                    .getNodeValue());
+        }
+
+        // remove the old generated elements and any
+        // white space before the old nodes
+        List<Node> nodesToDelete = new ArrayList<Node>();
+        NodeList children = existingRootElement.getChildNodes();
+        int length = children.getLength();
+        for (int i = 0; i < length; i++) {
+            Node node = children.item(i);
+            if (isGeneratedNode(node)) {
+                nodesToDelete.add(node);
+            } else if (isWhiteSpace(node)
+                    && isGeneratedNode(children.item(i + 1))) {
+                nodesToDelete.add(node);
+            }
+        }
+
+        for (Node node : nodesToDelete) {
+            existingRootElement.removeChild(node);
+        }
+
+        // add the new generated elements
+        children = newRootElement.getChildNodes();
+        length = children.getLength();
+        Node firstChild = existingRootElement.getFirstChild();
+        for (int i = 0; i < length; i++) {
+            Node node = children.item(i);
+            // don't add the last node if it is only white space
+            if (i == length - 1) {
+                if (isWhiteSpace(node)) {
+                    break;
+                }
+            }
+
+            Node newNode = existingDocument.importNode(node, true);
+            if (firstChild == null) {
+                existingRootElement.appendChild(newNode);
+            } else {
+                existingRootElement.insertBefore(newNode, firstChild);
+            }
+        }
+
+        // pretty print the result
+        return prettyPrint(existingDocument);
     }
 
     private static String prettyPrint(Document document) throws ShellException {

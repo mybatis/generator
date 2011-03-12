@@ -201,12 +201,13 @@
 
     <javaModelGenerator targetPackage="mbg.test.mb3.generated.miscellaneous.model" targetProject="MAVEN">
       <property name="trimStrings" value="true" />
+      <property name="enableSubPackages" value="true"/>
     </javaModelGenerator>
 
     <sqlMapGenerator targetPackage="mbg.test.mb3.generated.miscellaneous.xml"
                      targetProject="MAVEN"/>
 
-    <table tableName="AnotherAwfulTable" />
+    <table schema="mbgtest" tableName="AnotherAwfulTable" />
     <table tableName="NameView" />
   </context>
 

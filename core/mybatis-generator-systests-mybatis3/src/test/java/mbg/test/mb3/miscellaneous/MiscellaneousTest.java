@@ -32,12 +32,12 @@ import mbg.test.mb3.common.TestEnum;
 import mbg.test.mb3.generated.miscellaneous.mapper.EnumtestMapper;
 import mbg.test.mb3.generated.miscellaneous.mapper.MyObjectMapper;
 import mbg.test.mb3.generated.miscellaneous.mapper.RegexrenameMapper;
-import mbg.test.mb3.generated.miscellaneous.model.Anotherawfultable;
 import mbg.test.mb3.generated.miscellaneous.model.Enumtest;
 import mbg.test.mb3.generated.miscellaneous.model.MyObject;
 import mbg.test.mb3.generated.miscellaneous.model.MyObjectCriteria;
 import mbg.test.mb3.generated.miscellaneous.model.MyObjectKey;
 import mbg.test.mb3.generated.miscellaneous.model.Regexrename;
+import mbg.test.mb3.generated.miscellaneous.model.mbgtest.Anotherawfultable;
 
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
@@ -942,13 +942,13 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
             record.setSelect("select");
             record.setInsert("insert");
             
-            sqlSession.insert("ANOTHERAWFULTABLE.insert", record);
+            sqlSession.insert("MBGTEST_ANOTHERAWFULTABLE.insert", record);
             
             Anotherawfultable key = new Anotherawfultable();
             key.setId(5);
             
             Anotherawfultable returnedRecord = (Anotherawfultable)
-                sqlSession.selectOne("ANOTHERAWFULTABLE.selectByPrimaryKey",
+                sqlSession.selectOne("MBGTEST_ANOTHERAWFULTABLE.selectByPrimaryKey",
                         key);
             
             assertEquals(record.getId(), returnedRecord.getId());

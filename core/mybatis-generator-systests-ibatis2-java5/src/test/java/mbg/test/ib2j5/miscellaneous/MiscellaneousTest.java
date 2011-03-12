@@ -926,13 +926,13 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
             record.setSelect("select");
             record.setInsert("insert");
             
-            sqlMap.insert("ANOTHERAWFULTABLE.insert", record);
+            sqlMap.insert("MBGTEST_ANOTHERAWFULTABLE.insert", record);
             
             Anotherawfultable key = new Anotherawfultable();
             key.setId(5);
             
             Anotherawfultable returnedRecord = (Anotherawfultable)
-                sqlMap.queryForObject("ANOTHERAWFULTABLE.selectByPrimaryKey",
+                sqlMap.queryForObject("MBGTEST_ANOTHERAWFULTABLE.selectByPrimaryKey",
                         key);
             
             assertEquals(record.getId(), returnedRecord.getId());

@@ -8,7 +8,8 @@ drop table "awful table" if exists;
 drop table BlobsOnly if exists;
 drop view NameView if exists;
 drop table RegexRename if exists;
-drop table AnotherAwfulTable if exists;
+drop table mbgtest.AnotherAwfulTable if exists;
+drop schema mbgtest if exists;
 drop table EnumTest if exists;
 drop sequence TestSequence if exists;
 
@@ -103,7 +104,9 @@ create table RegexRename (
 create view NameView (id, name) as
   select CUST_ID, CUST_NAME from RegexRename;
 
-create table AnotherAwfulTable (
+create schema mbgtest;
+
+create table mbgtest.AnotherAwfulTable (
   id int not null,
   "select" varchar(30),
   "insert" varchar(30),

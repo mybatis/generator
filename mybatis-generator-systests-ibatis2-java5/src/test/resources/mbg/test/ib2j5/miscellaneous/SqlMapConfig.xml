@@ -19,6 +19,6 @@
 
   <sqlMap resource="mbg/test/ib2j5/generated/miscellaneous/xml/PKFIELDS_SqlMap.xml" />
   <sqlMap resource="mbg/test/ib2j5/generated/miscellaneous/xml/REGEXRENAME_SqlMap.xml" />
-  <sqlMap resource="mbg/test/ib2j5/generated/miscellaneous/xml/ANOTHERAWFULTABLE_SqlMap.xml" />
+  <sqlMap resource="mbg/test/ib2j5/generated/miscellaneous/xml/MBGTEST_ANOTHERAWFULTABLE_SqlMap.xml" />
 
 </sqlMapConfig>

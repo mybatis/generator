@@ -205,6 +205,6 @@
     <sqlMapGenerator targetPackage="mbg.test.ib2j5.generated.miscellaneous.xml"
                      targetProject="MAVEN"/>
 
-    <table tableName="AnotherAwfulTable" />
+    <table tableName="AnotherAwfulTable" schema="mbgtest" />
   </ibatorContext>
 </ibatorConfiguration>

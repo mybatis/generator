@@ -61,7 +61,7 @@ public class ProviderCountByExampleMethodGenerator extends
                 introspectedTable);
 
         method.addBodyLine("BEGIN();"); //$NON-NLS-1$
-        method.addBodyLine("SELECT(\"count (*)\");"); //$NON-NLS-1$
+        method.addBodyLine("SELECT(\"count(*)\");"); //$NON-NLS-1$
         method.addBodyLine(String.format("FROM(\"%s\");", //$NON-NLS-1$
                 escapeStringForJava(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime())));
         method.addBodyLine("applyWhere(example, false);"); //$NON-NLS-1$

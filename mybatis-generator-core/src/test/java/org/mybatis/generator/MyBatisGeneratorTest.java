@@ -1,7 +1,6 @@
 package org.mybatis.generator;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +14,7 @@ import org.mybatis.generator.internal.DefaultShellCallback;
 
 public class MyBatisGeneratorTest {
 
-    @Test
+    @Test(expected=InvalidConfigurationException.class)
     public void testGenerateMyBatis3() throws Exception {
         List<String> warnings = new ArrayList<String>();
         ConfigurationParser cp = new ConfigurationParser(warnings);
@@ -23,21 +22,16 @@ public class MyBatisGeneratorTest {
             
         DefaultShellCallback shellCallback = new DefaultShellCallback(true);
         
-        boolean gotException = false;
         try {
             MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, shellCallback, warnings);
             myBatisGenerator.generate(null);
         } catch (InvalidConfigurationException e) {
             assertEquals(3, e.getErrors().size());
-            gotException = true;
-        }
-
-        if (!gotException) {
-            fail("Should throw InvalidConfigurationException");
+            throw e;
         }
     }
 
-    @Test
+    @Test(expected=InvalidConfigurationException.class)
     public void testGenerateIbatis2() throws Exception {
         List<String> warnings = new ArrayList<String>();
         ConfigurationParser cp = new ConfigurationParser(warnings);
@@ -45,17 +39,12 @@ public class MyBatisGeneratorTest {
             
         DefaultShellCallback shellCallback = new DefaultShellCallback(true);
         
-        boolean gotException = false;
         try {
             MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, shellCallback, warnings);
             myBatisGenerator.generate(null);
         } catch (InvalidConfigurationException e) {
             assertEquals(1, e.getErrors().size());
-            gotException = true;
-        }
-
-        if (!gotException) {
-            fail("Should throw InvalidConfigurationException");
+            throw e;
         }
     }
 }

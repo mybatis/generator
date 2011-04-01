@@ -416,53 +416,49 @@ public class ConditionalJava5Test extends AbstractConditionalJava5Test {
     }
 
     @Test
-    public void testPKFieldsInsert() {
+    public void testPKFieldsInsert() throws SQLException {
         PkfieldsDAO dao = getPkfieldsDAO();
 
-        try {
-            Pkfields record = new Pkfields();
-            record.setDatefield(new Date());
-            record.setDecimal100field(10L);
-            record.setDecimal155field(new BigDecimal("15.12345"));
-            record.setDecimal30field((short) 3);
-            record.setDecimal60field(6);
-            record.setFirstname("Jeff");
-            record.setId1(1);
-            record.setId2(2);
-            record.setLastname("Butler");
-            record.setTimefield(new Date());
-            record.setTimestampfield(new Date());
+        Pkfields record = new Pkfields();
+        record.setDatefield(new Date());
+        record.setDecimal100field(10L);
+        record.setDecimal155field(new BigDecimal("15.12345"));
+        record.setDecimal30field((short) 3);
+        record.setDecimal60field(6);
+        record.setFirstname("Jeff");
+        record.setId1(1);
+        record.setId2(2);
+        record.setLastname("Butler");
+        record.setTimefield(new Date());
+        record.setTimestampfield(new Date());
 
-            dao.insert(record);
+        dao.insert(record);
 
-            PkfieldsKey key = new PkfieldsKey();
-            key.setId1(1);
-            key.setId2(2);
+        PkfieldsKey key = new PkfieldsKey();
+        key.setId1(1);
+        key.setId2(2);
 
-            Pkfields returnedRecord = dao.selectByPrimaryKey(key);
-            assertNotNull(returnedRecord);
+        Pkfields returnedRecord = dao.selectByPrimaryKey(key);
+        assertNotNull(returnedRecord);
 
-            assertTrue(datesAreEqual(record.getDatefield(), returnedRecord
-                    .getDatefield()));
-            assertEquals(record.getDecimal100field(), returnedRecord
-                    .getDecimal100field());
-            assertEquals(record.getDecimal155field(), returnedRecord
-                    .getDecimal155field());
-            assertEquals(record.getDecimal30field(), returnedRecord
-                    .getDecimal30field());
-            assertEquals(record.getDecimal60field(), returnedRecord
-                    .getDecimal60field());
-            assertEquals(record.getFirstname(), returnedRecord.getFirstname());
-            assertEquals(record.getId1(), returnedRecord.getId1());
-            assertEquals(record.getId2(), returnedRecord.getId2());
-            assertEquals(record.getLastname(), returnedRecord.getLastname());
-            assertTrue(timesAreEqual(record.getTimefield(), returnedRecord
-                    .getTimefield()));
-            assertEquals(record.getTimestampfield(), returnedRecord
-                    .getTimestampfield());
-        } catch (SQLException e) {
-            fail(e.getMessage());
-        }
+        assertTrue(datesAreEqual(record.getDatefield(), returnedRecord
+                .getDatefield()));
+        assertEquals(record.getDecimal100field(), returnedRecord
+                .getDecimal100field());
+        assertEquals(record.getDecimal155field(), returnedRecord
+                .getDecimal155field());
+        assertEquals(record.getDecimal30field(), returnedRecord
+                .getDecimal30field());
+        assertEquals(record.getDecimal60field(), returnedRecord
+                .getDecimal60field());
+        assertEquals(record.getFirstname(), returnedRecord.getFirstname());
+        assertEquals(record.getId1(), returnedRecord.getId1());
+        assertEquals(record.getId2(), returnedRecord.getId2());
+        assertEquals(record.getLastname(), returnedRecord.getLastname());
+        assertTrue(timesAreEqual(record.getTimefield(), returnedRecord
+                .getTimefield()));
+        assertEquals(record.getTimestampfield(), returnedRecord
+                .getTimestampfield());
     }
 
     @Test

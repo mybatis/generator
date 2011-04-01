@@ -20,7 +20,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -774,14 +773,9 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         }
     }
 
-    @Test
-    public void testFieldIgnored() {
-        try {
-            MyObject.class.getDeclaredField("decimal30field");
-            fail("decimal30field should be ignored");
-        } catch (NoSuchFieldException e) {
-            // ignore (normal case)
-        }
+    @Test(expected=NoSuchFieldException.class)
+    public void testFieldIgnored() throws NoSuchFieldException {
+        MyObject.class.getDeclaredField("decimal30field");
     }
 
     @Test

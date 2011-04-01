@@ -762,14 +762,9 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         }
     }
 
-    @Test
-    public void testFieldIgnored() {
-        try {
-            MyObject.class.getDeclaredField("decimal30field");
-            fail("decimal30field should be ignored");
-        } catch (NoSuchFieldException e) {
-            // ignore (normal case)
-        }
+    @Test(expected=NoSuchFieldException.class)
+    public void testFieldIgnored() throws NoSuchFieldException {
+        MyObject.class.getDeclaredField("decimal30field");
     }
 
     @Test

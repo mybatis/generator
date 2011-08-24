@@ -26,7 +26,7 @@
         <configuration>
           <sqlScript>classpath:mbg/test/common/scripts/CreateDB.sql</sqlScript>
           <jdbcDriver>org.hsqldb.jdbcDriver</jdbcDriver>
-           <jdbcURL>jdbc:hsqldb:mem:aname</jdbcURL>
+          <jdbcURL>jdbc:hsqldb:mem:aname</jdbcURL>
           <jdbcUserId>sa</jdbcUserId>
           <overwrite>true</overwrite>
         </configuration>

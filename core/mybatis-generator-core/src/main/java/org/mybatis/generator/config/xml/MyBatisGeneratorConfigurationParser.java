@@ -39,6 +39,7 @@ import org.mybatis.generator.config.PropertyHolder;
 import org.mybatis.generator.config.SqlMapGeneratorConfiguration;
 import org.mybatis.generator.config.TableConfiguration;
 import org.mybatis.generator.exception.XMLParserException;
+import org.mybatis.generator.internal.ObjectFactory;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -106,8 +107,7 @@ public class MyBatisGeneratorConfigurationParser {
 
         try {
             if (stringHasValue(resource)) {
-                resourceUrl = Thread.currentThread().getContextClassLoader()
-                        .getResource(resource);
+                resourceUrl = ObjectFactory.getResource(resource);
                 if (resourceUrl == null) {
                     throw new XMLParserException(getString(
                             "RuntimeError.15", resource)); //$NON-NLS-1$

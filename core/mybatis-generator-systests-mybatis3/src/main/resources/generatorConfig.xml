@@ -4,11 +4,13 @@
  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
+  <properties resource="database.properties"/>
+  
   <context id="FlatJava5" defaultModelType="flat">
     <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
 
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
-        connectionURL="jdbc:hsqldb:mem:aname"
+        connectionURL="${database.url}"
         userId="sa" />
 
     <javaModelGenerator targetPackage="mbg.test.mb3.generated.flat.model" targetProject="MAVEN">

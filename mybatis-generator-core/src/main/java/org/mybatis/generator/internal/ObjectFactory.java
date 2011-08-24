@@ -18,6 +18,8 @@ package org.mybatis.generator.internal;
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.mybatis.generator.api.CommentGenerator;
@@ -37,12 +39,18 @@ import org.mybatis.generator.config.TableConfiguration;
 import org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl;
 
 /**
- * This class creates the different object needed by the generator
+ * This class creates the different objects needed by the generator
  * 
  * @author Jeff Butler
  */
 public class ObjectFactory {
-    private static ClassLoader externalClassLoader;
+    private static List<ClassLoader> externalClassLoaders;
+    private static List<ClassLoader> resourceClassLoaders;
+    
+    static {
+    	externalClassLoaders = new ArrayList<ClassLoader>();
+        resourceClassLoaders = new ArrayList<ClassLoader>();
+    }
 
     /**
      * Utility class. No instances allowed
@@ -51,19 +59,33 @@ public class ObjectFactory {
         super();
     }
 
-    private static ClassLoader getClassLoader() {
-        if (externalClassLoader != null) {
-            return externalClassLoader;
-        } else {
-            return Thread.currentThread().getContextClassLoader();
-        }
-    }
-
-    public static synchronized void setExternalClassLoader(
+    /**
+     * Adds a custom classloader to the collection of classloaders
+     * searched for resources.  Currently, this is only used
+     * when searching for properties files that may be
+     * referenced in the configuration file. 
+     * 
+     * @param classLoader
+     */
+    public static synchronized void addResourceClassLoader(
             ClassLoader classLoader) {
-        ObjectFactory.externalClassLoader = classLoader;
+        ObjectFactory.resourceClassLoaders.add(classLoader);
     }
 
+    /**
+     * Adds a custom classloader to the collection of classloaders
+     * searched for "external" classes.  These are classes that
+     * do not depend on any of the generator's classes or
+     * interfaces.  Examples are JDBC drivers, root classes, root
+     * interfaces, etc.
+     * 
+     * @param classLoader
+     */
+    public static synchronized void addExternalClassLoader(
+            ClassLoader classLoader) {
+        ObjectFactory.externalClassLoaders.add(classLoader);
+    }
+    
     /**
      * This method returns a class loaded from the context classloader, or the
      * classloader supplied by a client. This is appropriate for JDBC drivers,
@@ -79,18 +101,17 @@ public class ObjectFactory {
 
         Class<?> clazz;
 
-        try {
-            clazz = getClassLoader().loadClass(type);
-        } catch (Throwable e) {
-            // ignore - fail safe below
-            clazz = null;
+        for (ClassLoader classLoader : externalClassLoaders) {
+            try {
+                clazz = Class.forName(type, true, classLoader);
+                return clazz;
+            } catch (Throwable e) {
+                // ignore - fail safe below
+                ;
+            }
         }
-
-        if (clazz == null) {
-            clazz = Class.forName(type);
-        }
-
-        return clazz;
+        
+        return internalClassForName(type);
     }
 
     public static Object createExternalObject(String type) {
@@ -98,7 +119,6 @@ public class ObjectFactory {
 
         try {
             Class<?> clazz = externalClassForName(type);
-
             answer = clazz.newInstance();
         } catch (Exception e) {
             throw new RuntimeException(getString(
@@ -114,16 +134,36 @@ public class ObjectFactory {
 
         try {
             ClassLoader cl = Thread.currentThread().getContextClassLoader();
-            clazz = cl.loadClass(type);
+            clazz = Class.forName(type, true, cl);
         } catch (Exception e) {
             // ignore - failsafe below
         }
 
         if (clazz == null) {
-            clazz = Class.forName(type);
+            clazz = Class.forName(type, true, ObjectFactory.class.getClassLoader());
         }
 
         return clazz;
+    }
+
+    public static URL getResource(String resource) {
+        URL url;
+
+        for (ClassLoader classLoader : resourceClassLoaders) {
+            url = classLoader.getResource(resource);
+            if (url != null) {
+              return url;
+            }
+        }
+        
+        ClassLoader cl = Thread.currentThread().getContextClassLoader();
+        url = cl.getResource(resource);
+
+        if (url == null) {
+            url = ObjectFactory.class.getClassLoader().getResource(resource);
+        }
+
+        return url;
     }
 
     public static Object createInternalObject(String type) {

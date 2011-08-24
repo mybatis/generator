@@ -207,7 +207,7 @@ public class MyBatisGenerator {
         // setup custom classloader if required
         if (configuration.getClassPathEntries().size() > 0) {
             ClassLoader classLoader = getCustomClassloader(configuration.getClassPathEntries());
-            ObjectFactory.setExternalClassLoader(classLoader);
+            ObjectFactory.addExternalClassLoader(classLoader);
         }
 
         // now run the introspections...

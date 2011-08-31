@@ -44,4 +44,13 @@ public class XMLParserException extends Exception {
     public List<String> getErrors() {
         return errors;
     }
+
+    @Override
+    public String getMessage() {
+        if (errors != null && errors.size() > 0) {
+            return errors.get(0);
+        }
+
+        return super.getMessage();
+    }
 }

@@ -48,9 +48,9 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
     
     // these are added manually until we move to JDK 6
     // TODO - remove after JDK 6 and use the java.sql.Types constants instead
-    private static final int NVARCHAR = -9;
-    private static final int NCHAR = -15;
-    private static final int NCLOB = 2011;
+    static final int NVARCHAR = -9;
+    static final int NCHAR = -15;
+    static final int NCLOB = 2011;
 
     public JavaTypeResolverDefaultImpl() {
         super();

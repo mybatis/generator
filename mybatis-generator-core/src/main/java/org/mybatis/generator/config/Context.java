@@ -229,7 +229,9 @@ public class Context extends PropertyHolder {
      */
     public XmlElement toXmlElement() {
         XmlElement xmlElement = new XmlElement("context"); //$NON-NLS-1$
-
+        
+        xmlElement.addAttribute(new Attribute("id", id)); //$NON-NLS-1$
+        
         if (defaultModelType != ModelType.CONDITIONAL) {
             xmlElement.addAttribute(new Attribute(
                     "defaultModelType", defaultModelType.getModelType())); //$NON-NLS-1$
@@ -246,6 +248,10 @@ public class Context extends PropertyHolder {
         }
 
         addPropertyXmlElements(xmlElement);
+        
+        for (PluginConfiguration pluginConfiguration : pluginConfigurations) {
+            xmlElement.addElement(pluginConfiguration.toXmlElement());
+        }
 
         if (commentGeneratorConfiguration != null) {
             xmlElement.addElement(commentGeneratorConfiguration.toXmlElement());

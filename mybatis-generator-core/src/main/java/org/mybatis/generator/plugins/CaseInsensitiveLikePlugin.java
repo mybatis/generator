@@ -60,7 +60,7 @@ public class CaseInsensitiveLikePlugin extends PluginAdapter {
         InnerClass criteria = null;
         // first, find the Criteria inner class
         for (InnerClass innerClass : topLevelClass.getInnerClasses()) {
-            if ("Criteria".equals(innerClass.getType().getShortName())) { //$NON-NLS-1$
+            if ("GeneratedCriteria".equals(innerClass.getType().getShortName())) { //$NON-NLS-1$
                 criteria = innerClass;
                 break;
             }
@@ -99,7 +99,7 @@ public class CaseInsensitiveLikePlugin extends PluginAdapter {
             sb.append(introspectedColumn.getJavaProperty());
             sb.append("\");"); //$NON-NLS-1$
             method.addBodyLine(sb.toString());
-            method.addBodyLine("return this;"); //$NON-NLS-1$
+            method.addBodyLine("return (Criteria) this;"); //$NON-NLS-1$
 
             criteria.addMethod(method);
         }

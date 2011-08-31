@@ -222,9 +222,6 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
         } catch (InterruptedException e) {
             // ignore (will never happen with the DefaultShellCallback)
             ;
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new MojoExecutionException(e.getMessage());
         }
 
         for (String error : warnings) {

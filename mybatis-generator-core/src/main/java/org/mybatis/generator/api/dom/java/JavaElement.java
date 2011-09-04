@@ -42,6 +42,20 @@ public abstract class JavaElement {
         javaDocLines = new ArrayList<String>();
         annotations = new ArrayList<String>();
     }
+    
+    /**
+     * Copy Constructor.
+     * 
+     * @param original
+     */
+    public JavaElement(JavaElement original) {
+        this();
+        this.annotations.addAll(original.annotations);
+        this.isFinal = original.isFinal;
+        this.isStatic = original.isFinal;
+        this.javaDocLines.addAll(original.javaDocLines);
+        this.visibility = original.visibility;
+    }
 
     /**
      * @return Returns the javaDocLines.

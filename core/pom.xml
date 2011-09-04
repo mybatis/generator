@@ -10,7 +10,7 @@
   <parent>
     <groupId>org.mybatis</groupId>
     <artifactId>mybatis-parent</artifactId>
-    <version>10</version>
+    <version>11</version>
   </parent>
 
   <modules>
@@ -83,13 +83,6 @@
         </configuration>
       </plugin>
       <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>buildnumber-maven-plugin</artifactId>
-        <configuration>
-          <revisionOnScmFailure>local-dev</revisionOnScmFailure>
-        </configuration>
-      </plugin>
-      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
@@ -158,7 +151,7 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-  
+
   <scm>
     <url>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/generator/trunk/core</url>
     <connection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/generator/trunk/core</connection>

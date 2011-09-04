@@ -54,6 +54,25 @@ public class Method extends JavaElement {
         exceptions = new ArrayList<FullyQualifiedJavaType>();
         this.name = name;
     }
+    
+    /**
+     * Copy constructor.  Not a truly deep copy, but close enough
+     * for most purposes.
+     * 
+     * @param original
+     */
+    public Method(Method original) {
+        super(original);
+        bodyLines = new ArrayList<String>();
+        parameters = new ArrayList<Parameter>();
+        exceptions = new ArrayList<FullyQualifiedJavaType>();
+        this.bodyLines.addAll(original.bodyLines);
+        this.constructor = original.constructor;
+        this.exceptions.addAll(original.exceptions);
+        this.name = original.name;
+        this.parameters.addAll(original.parameters);
+        this.returnType = original.returnType;
+    }
 
     /**
      * @return Returns the bodyLines.

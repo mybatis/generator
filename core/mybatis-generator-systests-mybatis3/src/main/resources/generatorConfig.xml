@@ -8,6 +8,7 @@
   
   <context id="FlatJava5" defaultModelType="flat">
     <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
+    <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin" />
 
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
         connectionURL="${database.url}"
@@ -212,6 +213,24 @@
     <table schema="mbgtest" tableName="AnotherAwfulTable" />
     <table tableName="NameView" />
   </context>
+
+<!--
+  <context id="miscellaneousTests_ModelOnly" targetRuntime="MyBatis3">
+    <property name="autoDelimitKeywords" value="true" />
+    
+    <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
+        connectionURL="jdbc:hsqldb:mem:aname"
+        userId="sa" />
+
+    <javaModelGenerator targetPackage="mbg.test.mb3.generated.miscellaneous.modelonly.model" targetProject="MAVEN">
+      <property name="trimStrings" value="true" />
+      <property name="enableSubPackages" value="true"/>
+    </javaModelGenerator>
+
+    <table schema="mbgtest" tableName="AnotherAwfulTable" />
+    <table tableName="NameView" />
+  </context>
+-->
 
   <context id="miscellaneousTests_immutable" targetRuntime="MyBatis3" defaultModelType="hierarchical">
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"

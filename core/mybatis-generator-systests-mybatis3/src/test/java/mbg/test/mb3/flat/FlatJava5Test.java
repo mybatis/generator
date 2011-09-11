@@ -53,6 +53,7 @@ import mbg.test.mb3.generated.flat.model.PkfieldsblobsExample;
 import mbg.test.mb3.generated.flat.model.Pkonly;
 import mbg.test.mb3.generated.flat.model.PkonlyExample;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 
@@ -1015,6 +1016,69 @@ public class FlatJava5Test extends AbstractFlatTest {
             example.setOrderByClause("ID1, ID2");
             List<Pkfields> answer = mapper.selectByExample(example);
             assertEquals(6, answer.size());
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+    @Test
+    public void testPKFieldsSelectByExampleBetweenWithRowbounds() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        try {
+            PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
+            Pkfields record = new Pkfields();
+            record.setFirstname("Fred");
+            record.setLastname("Flintstone");
+            record.setId1(1);
+            record.setId2(1);
+            mapper.insert(record);
+
+            record = new Pkfields();
+            record.setFirstname("Wilma");
+            record.setLastname("Flintstone");
+            record.setId1(1);
+            record.setId2(2);
+            mapper.insert(record);
+
+            record = new Pkfields();
+            record.setFirstname("Pebbles");
+            record.setLastname("Flintstone");
+            record.setId1(1);
+            record.setId2(3);
+            mapper.insert(record);
+
+            record = new Pkfields();
+            record.setFirstname("Barney");
+            record.setLastname("Rubble");
+            record.setId1(2);
+            record.setId2(1);
+            mapper.insert(record);
+
+            record = new Pkfields();
+            record.setFirstname("Betty");
+            record.setLastname("Rubble");
+            record.setId1(2);
+            record.setId2(2);
+            mapper.insert(record);
+
+            record = new Pkfields();
+            record.setFirstname("Bamm Bamm");
+            record.setLastname("Rubble");
+            record.setId1(2);
+            record.setId2(3);
+            mapper.insert(record);
+
+            PkfieldsExample example = new PkfieldsExample();
+            example.createCriteria().andId2Between(1, 3);
+
+            example.setOrderByClause("ID1, ID2");
+            RowBounds rb = new RowBounds(2, 3);
+            List<Pkfields> answer = mapper.selectByExample(example, rb);
+            assertEquals(3, answer.size());
+            assertEquals("Pebbles", answer.get(0).getFirstname());
+            assertEquals("Barney", answer.get(1).getFirstname());
+            assertEquals("Betty", answer.get(2).getFirstname());
         } finally {
             sqlSession.close();
         }

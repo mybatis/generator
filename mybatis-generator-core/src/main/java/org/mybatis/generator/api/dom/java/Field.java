@@ -38,6 +38,13 @@ public class Field extends JavaElement {
         this.name = name;
         this.type = type;
     }
+    
+    public Field(Field field) {
+        super(field);
+        this.type = field.type;
+        this.name = field.name;
+        this.initializationString = field.initializationString;
+    }
 
     /**
      * @return Returns the name.

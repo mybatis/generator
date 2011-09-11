@@ -36,6 +36,7 @@
             <configuration>
               <descriptors>
                 <descriptor>${basedir}/src/main/assembly/src.xml</descriptor>
+                <descriptor>${basedir}/src/main/assembly/src-doconly.xml</descriptor>
               </descriptors>
             </configuration>
           </execution>
@@ -58,6 +59,16 @@
                   <labels>
                     <label>Featured</label>
                     <label>Type-Archive</label>
+                    <label>Product-Generator</label>
+                    <label>Version-${project.version}</label>
+                  </labels>
+                </upload>
+                <upload>
+                  <file>${project.build.directory}/${project.artifactId}-${project.version}-doc.zip</file>
+                  <summary>MyBatis Generator ${project.version} Documentation</summary>
+                  <labels>
+                    <label>Featured</label>
+                    <label>Type-Docs</label>
                     <label>Product-Generator</label>
                     <label>Version-${project.version}</label>
                   </labels>

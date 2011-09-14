@@ -30,7 +30,7 @@ import org.apache.ibatis.type.TypeHandler;
  * @author Jeff Butler
  *
  */
-public class FirstNameTypeHandler implements TypeHandler {
+public class FirstNameTypeHandler implements TypeHandler<FirstName> {
 
     /**
      * 
@@ -39,7 +39,7 @@ public class FirstNameTypeHandler implements TypeHandler {
         super();
     }
 
-    public Object getResult(CallableStatement cs, int columnIndex)
+    public FirstName getResult(CallableStatement cs, int columnIndex)
             throws SQLException {
         FirstName answer = null;
         String string = cs.getString(columnIndex);
@@ -51,7 +51,7 @@ public class FirstNameTypeHandler implements TypeHandler {
         return answer;
     }
 
-    public Object getResult(ResultSet rs, String columnName)
+    public FirstName getResult(ResultSet rs, String columnName)
             throws SQLException {
         FirstName answer = null;
         String string = rs.getString(columnName);
@@ -63,13 +63,12 @@ public class FirstNameTypeHandler implements TypeHandler {
         return answer;
     }
 
-    public void setParameter(PreparedStatement ps, int i, Object parameter,
+    public void setParameter(PreparedStatement ps, int i, FirstName parameter,
             JdbcType jdbcType) throws SQLException {
         if (parameter == null) {
             ps.setNull(i, jdbcType.TYPE_CODE);
         } else {
-            FirstName firstName = (FirstName) parameter;
-            ps.setString(i, firstName.getValue());
+            ps.setString(i, parameter.getValue());
         }
     }
 }

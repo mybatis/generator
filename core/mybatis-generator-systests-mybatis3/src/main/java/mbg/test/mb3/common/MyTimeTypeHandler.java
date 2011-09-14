@@ -32,7 +32,7 @@ import org.apache.ibatis.type.TypeHandler;
  * @author Jeff Butler
  * 
  */
-public class MyTimeTypeHandler implements TypeHandler {
+public class MyTimeTypeHandler implements TypeHandler<MyTime> {
 
     /**
      * 
@@ -41,7 +41,7 @@ public class MyTimeTypeHandler implements TypeHandler {
         super();
     }
 
-    public Object getResult(CallableStatement cs, int columnIndex)
+    public MyTime getResult(CallableStatement cs, int columnIndex)
             throws SQLException {
         MyTime answer = null;
         Time time = cs.getTime(columnIndex);
@@ -59,7 +59,7 @@ public class MyTimeTypeHandler implements TypeHandler {
         return answer;
     }
 
-    public Object getResult(ResultSet rs, String columnName)
+    public MyTime getResult(ResultSet rs, String columnName)
             throws SQLException {
         MyTime answer = null;
         Time time = rs.getTime(columnName);
@@ -77,16 +77,15 @@ public class MyTimeTypeHandler implements TypeHandler {
         return answer;
     }
 
-    public void setParameter(PreparedStatement ps, int i, Object parameter,
+    public void setParameter(PreparedStatement ps, int i, MyTime parameter,
             JdbcType jdbcType) throws SQLException {
         if (parameter == null) {
             ps.setNull(i, jdbcType.TYPE_CODE);
         } else {
-            MyTime myTime = (MyTime) parameter;
             Calendar c = Calendar.getInstance();
-            c.set(Calendar.HOUR_OF_DAY, myTime.getHours());
-            c.set(Calendar.MINUTE, myTime.getMinutes());
-            c.set(Calendar.SECOND, myTime.getSeconds());
+            c.set(Calendar.HOUR_OF_DAY, parameter.getHours());
+            c.set(Calendar.MINUTE, parameter.getMinutes());
+            c.set(Calendar.SECOND, parameter.getSeconds());
 
             Time time = new Time(c.getTime().getTime());
 

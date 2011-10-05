@@ -20,7 +20,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -1062,5 +1064,103 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         } finally {
             sqlSession.close();
         }
+    }
+    
+    @Test
+    public void testModelOnly1Nameview() {
+        if (classExists("mbg.test.mb3.generated.miscellaneous.modelonly1.model.NameviewExample")) {
+            fail("NameviewExample class should not be generated in model only configuration");
+        }
+
+        if (!classExists("mbg.test.mb3.generated.miscellaneous.modelonly1.model.Nameview")) {
+            fail("Nameview class should be generated in model only configuration");
+        }
+    }
+
+    @Test
+    public void testModelOnly1Anotherawfultable() {
+        if (classExists("mbg.test.mb3.generated.miscellaneous.modelonly1.model.AnotherawfultableExample")) {
+            fail("NameviewExample class should not be generated in model only configuration");
+        }
+
+        if (!classExists("mbg.test.mb3.generated.miscellaneous.modelonly1.model.Anotherawfultable")) {
+            fail("Nameview class should be generated in model only configuration");
+        }
+    }
+    
+    @Test
+    public void testModelOnly2Pkblobs() {
+        if (classExists("mbg.test.mb3.generated.miscellaneous.modelonly2.mapper.PkblobsMapper")) {
+            fail("PkblobsMapper class should not be generated in model only configuration");
+        }
+
+        if (classExists("mbg.test.mb3.generated.miscellaneous.modelonly2.model.PkblobsExample")) {
+            fail("PkblobsExample class should not be generated in model only configuration");
+        }
+
+        if (!classExists("mbg.test.mb3.generated.miscellaneous.modelonly2.model.Pkblobs")) {
+            fail("Pkblobs class should be generated in model only configuration");
+        }
+        
+        if (!resourceExists("mbg/test/mb3/generated/miscellaneous/modelonly2/xml/PkblobsMapper.xml")) {
+            fail("PkblobsMapper.xml file should be generated in model only configuration");
+        }
+    }
+    
+    @Test
+    public void testModelOnly2Pkfields() {
+        if (classExists("mbg.test.mb3.generated.miscellaneous.modelonly2.mapper.PkfieldsMapper")) {
+            fail("PkfieldsMapper class should not be generated in model only configuration");
+        }
+
+        if (classExists("mbg.test.mb3.generated.miscellaneous.modelonly2.model.PkfieldsExample")) {
+            fail("PkfieldsExample class should not be generated in model only configuration");
+        }
+
+        if (!classExists("mbg.test.mb3.generated.miscellaneous.modelonly2.model.Pkfields")) {
+            fail("Pkfields class should be generated in model only configuration");
+        }
+        
+        if (!classExists("mbg.test.mb3.generated.miscellaneous.modelonly2.model.PkfieldsKey")) {
+            fail("PkfieldsKey class should be generated in model only configuration");
+        }
+        
+        if (!resourceExists("mbg/test/mb3/generated/miscellaneous/modelonly2/xml/PkfieldsMapper.xml")) {
+            fail("PkfieldsMapper.xml file should be generated in model only configuration");
+        }
+    }
+    
+    @Test
+    public void testModelOnly2Fieldsonly() {
+        if (!classExists("mbg.test.mb3.generated.miscellaneous.modelonly2.mapper.FieldsonlyMapper")) {
+            fail("FieldsonlyMapper class should be generated in model only configuration");
+        }
+
+        if (!classExists("mbg.test.mb3.generated.miscellaneous.modelonly2.model.FieldsonlyExample")) {
+            fail("FieldsonlyExample class should be generated in model only configuration");
+        }
+
+        if (!classExists("mbg.test.mb3.generated.miscellaneous.modelonly2.model.Fieldsonly")) {
+            fail("Fieldsonly class should be generated in model only configuration");
+        }
+        
+        if (!resourceExists("mbg/test/mb3/generated/miscellaneous/modelonly2/xml/FieldsonlyMapper.xml")) {
+            fail("FieldsonlyMapper.xml file should be generated in model only configuration");
+        }
+    }
+
+    private boolean classExists(String className) {
+        try {
+            Class.forName(className);
+            return true;
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
+    }
+    
+    private boolean resourceExists(String resourceName) {
+        URL url = getClass().getClassLoader().getResource(resourceName);
+        
+        return url != null;
     }
 }

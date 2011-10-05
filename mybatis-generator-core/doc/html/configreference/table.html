@@ -293,7 +293,7 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
   <tr>
     <td valign="top">immutable</td>
     <td>
-      This property is used to select whether MyBatis Generator will generate immutable
+      This property is used to select whether MBG will generate immutable
       model classes - this means that the classes will not have "setter" methods and
       the constructor will accept values for each field in the class.
       <p>If true, this forces the model classes to be built with paramterized constructors
@@ -301,6 +301,19 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
       <p>This property is only applicable for MyBatis3 and will be ignored for
          iBATIS2.</p>
       <p><i>The default value is false.</i></p></td>
+  </tr>
+  <tr>
+    <td valign="top">modelOnly</td>
+    <td>
+      This property is used to select whether MBG will only generate
+      model classes for a table.
+      <p>If true, then a Java client will not be generated.
+      If an &lt;sqlMapGenerator&gt; is configured and this property is set true then
+      MBG will only generate result map elements in the SQL Mapper XML file for this table.</p>
+      <p>If true, then this value overrides any of the "enable*" attributes on the &lt;table&gt;
+      element - no CRUD methods will be generated.</p>
+      <p><i>The default value is false.</i></p></td>
+    </td>
   </tr>
   <tr>
     <td valign="top">rootClass</td>

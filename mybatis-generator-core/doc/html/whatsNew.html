@@ -31,11 +31,16 @@
 </ul>
 <h3>Enhancements</h3>
 <ul>
-  <li>Issues #328 - Added a new plugin - RowBounds plugin - that will generate an additional
+  <li>Issue #328 - Added a new plugin - RowBounds plugin - that will generate an additional
       override of <code>selectByExample</code> that supports the MyBatis RowBounds
       function.</li>
   <li>Created a new reference page for supplied plugins:
       <a href="reference/plugins.html">Supplied Plugins</a></li>
+  <li>Issue #368 - Allowed for generation of Java Model only.  If no SQLMapGenerator
+      or JavaClientGenerator is specified in a context, then only a Java Model is generated.
+      Also, if property "modelOnly" is set to "true" on a &lt;table&gt; element, then
+      only model object and, possibly XML result maps, will be generated.
+  </li>
 </ul>
 
 <h2>Version 1.3.1</h2>

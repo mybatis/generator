@@ -1104,4 +1104,8 @@ public abstract class IntrospectedTable {
      * @return
      */
     public abstract boolean requiresXMLGenerator();
+
+    public Context getContext() {
+        return context;
+    }
 }

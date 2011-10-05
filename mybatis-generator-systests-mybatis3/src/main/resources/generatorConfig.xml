@@ -214,23 +214,45 @@
     <table tableName="NameView" />
   </context>
 
-<!--
-  <context id="miscellaneousTests_ModelOnly" targetRuntime="MyBatis3">
+  <context id="miscellaneousTests_ModelOnly1">
     <property name="autoDelimitKeywords" value="true" />
     
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
         connectionURL="jdbc:hsqldb:mem:aname"
         userId="sa" />
 
-    <javaModelGenerator targetPackage="mbg.test.mb3.generated.miscellaneous.modelonly.model" targetProject="MAVEN">
-      <property name="trimStrings" value="true" />
-      <property name="enableSubPackages" value="true"/>
+    <javaModelGenerator targetPackage="mbg.test.mb3.generated.miscellaneous.modelonly1.model" targetProject="MAVEN">
     </javaModelGenerator>
 
     <table schema="mbgtest" tableName="AnotherAwfulTable" />
     <table tableName="NameView" />
   </context>
--->
+
+  <context id="miscellaneousTests_ModelOnly2">
+    <property name="autoDelimitKeywords" value="true" />
+    
+    <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
+        connectionURL="jdbc:hsqldb:mem:aname"
+        userId="sa" />
+
+    <javaModelGenerator targetPackage="mbg.test.mb3.generated.miscellaneous.modelonly2.model" targetProject="MAVEN">
+    </javaModelGenerator>
+
+    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.miscellaneous.modelonly2.xml" targetProject="MAVEN">
+    </sqlMapGenerator>
+    
+    <!-- this shold, effectively, be ignored as this is model only -->
+    <javaClientGenerator type="XMLMAPPER" targetPackage="mbg.test.mb3.generated.miscellaneous.modelonly2.mapper" targetProject="MAVEN">
+    </javaClientGenerator>
+    
+    <table tableName="FieldsOnly" />
+    <table tableName="PKFields" >
+      <property name="modelOnly" value="true" />
+    </table>
+    <table tableName="PKBlobs" >
+      <property name="modelOnly" value="true" />
+    </table>
+  </context>
 
   <context id="miscellaneousTests_immutable" targetRuntime="MyBatis3" defaultModelType="hierarchical">
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"

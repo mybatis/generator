@@ -18,7 +18,9 @@ package org.mybatis.generator.internal.rules;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.IntrospectedTable.TargetRuntime;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.config.TableConfiguration;
+import org.mybatis.generator.internal.util.StringUtility;
 
 /**
  * This class centralizes all the rules related to code generation - including
@@ -31,6 +33,7 @@ public abstract class BaseRules implements Rules {
 
     protected TableConfiguration tableConfiguration;
     protected IntrospectedTable introspectedTable;
+    protected final boolean isModelOnly;
 
     /**
      * 
@@ -39,6 +42,8 @@ public abstract class BaseRules implements Rules {
         super();
         this.introspectedTable = introspectedTable;
         this.tableConfiguration = introspectedTable.getTableConfiguration();
+        String modelOnly = tableConfiguration.getProperty(PropertyRegistry.TABLE_MODEL_ONLY);
+        isModelOnly = StringUtility.isTrue(modelOnly);
     }
 
     /**
@@ -49,6 +54,10 @@ public abstract class BaseRules implements Rules {
      * @return true if the element and method should be generated
      */
     public boolean generateInsert() {
+        if (isModelOnly) {
+            return false;
+        }
+        
         return tableConfiguration.isInsertStatementEnabled();
     }
 
@@ -60,6 +69,10 @@ public abstract class BaseRules implements Rules {
      * @return true if the element and method should be generated
      */
     public boolean generateInsertSelective() {
+        if (isModelOnly) {
+            return false;
+        }
+        
         return tableConfiguration.isInsertStatementEnabled();
     }
 
@@ -95,6 +108,10 @@ public abstract class BaseRules implements Rules {
      * @return true if the element and method should be generated
      */
     public boolean generateUpdateByPrimaryKeyWithoutBLOBs() {
+        if (isModelOnly) {
+            return false;
+        }
+        
         boolean rc = tableConfiguration.isUpdateByPrimaryKeyStatementEnabled()
                 && introspectedTable.hasPrimaryKeyColumns()
                 && introspectedTable.hasBaseColumns();
@@ -111,6 +128,10 @@ public abstract class BaseRules implements Rules {
      * @return true if the element and method should be generated
      */
     public boolean generateUpdateByPrimaryKeyWithBLOBs() {
+        if (isModelOnly) {
+            return false;
+        }
+        
         boolean rc = tableConfiguration.isUpdateByPrimaryKeyStatementEnabled()
                 && introspectedTable.hasPrimaryKeyColumns()
                 && introspectedTable.hasBLOBColumns();
@@ -127,6 +148,10 @@ public abstract class BaseRules implements Rules {
      * @return true if the element and method should be generated
      */
     public boolean generateUpdateByPrimaryKeySelective() {
+        if (isModelOnly) {
+            return false;
+        }
+        
         boolean rc = tableConfiguration.isUpdateByPrimaryKeyStatementEnabled()
                 && introspectedTable.hasPrimaryKeyColumns()
                 && (introspectedTable.hasBLOBColumns() || introspectedTable
@@ -144,6 +169,10 @@ public abstract class BaseRules implements Rules {
      * @return true if the element and method should be generated
      */
     public boolean generateDeleteByPrimaryKey() {
+        if (isModelOnly) {
+            return false;
+        }
+        
         boolean rc = tableConfiguration.isDeleteByPrimaryKeyStatementEnabled()
                 && introspectedTable.hasPrimaryKeyColumns();
 
@@ -158,6 +187,10 @@ public abstract class BaseRules implements Rules {
      * @return true if the element and method should be generated
      */
     public boolean generateDeleteByExample() {
+        if (isModelOnly) {
+            return false;
+        }
+        
         boolean rc = tableConfiguration.isDeleteByExampleStatementEnabled();
 
         return rc;
@@ -170,6 +203,10 @@ public abstract class BaseRules implements Rules {
      * @return true if the result map should be generated
      */
     public boolean generateBaseResultMap() {
+        if (isModelOnly) {
+            return true;
+        }
+        
         boolean rc = tableConfiguration.isSelectByExampleStatementEnabled()
                 || tableConfiguration.isSelectByPrimaryKeyStatementEnabled();
 
@@ -184,10 +221,19 @@ public abstract class BaseRules implements Rules {
      * @return true if the result map should be generated
      */
     public boolean generateResultMapWithBLOBs() {
-        boolean rc = (tableConfiguration.isSelectByExampleStatementEnabled() || tableConfiguration
-                .isSelectByPrimaryKeyStatementEnabled())
-                && introspectedTable.hasBLOBColumns();
-
+        boolean rc;
+        
+        if (introspectedTable.hasBLOBColumns()) {
+            if (isModelOnly) {
+                rc = true;
+            } else {
+                rc = tableConfiguration.isSelectByExampleStatementEnabled() 
+                        || tableConfiguration.isSelectByPrimaryKeyStatementEnabled();
+            }
+        } else {
+            rc = false;
+        }
+        
         return rc;
     }
 
@@ -203,6 +249,10 @@ public abstract class BaseRules implements Rules {
      * @return true if the SQL where clause element should be generated
      */
     public boolean generateSQLExampleWhereClause() {
+        if (isModelOnly) {
+            return false;
+        }
+        
         boolean rc = tableConfiguration.isSelectByExampleStatementEnabled()
                 || tableConfiguration.isDeleteByExampleStatementEnabled()
                 || tableConfiguration.isCountByExampleStatementEnabled();
@@ -226,6 +276,10 @@ public abstract class BaseRules implements Rules {
      * @return true if the SQL where clause element should be generated
      */
     public boolean generateMyBatis3UpdateByExampleWhereClause() {
+        if (isModelOnly) {
+            return false;
+        }
+        
         return introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3
                 && tableConfiguration.isUpdateByExampleStatementEnabled();
     }
@@ -239,6 +293,10 @@ public abstract class BaseRules implements Rules {
      * @return true if the element and method should be generated
      */
     public boolean generateSelectByPrimaryKey() {
+        if (isModelOnly) {
+            return false;
+        }
+        
         boolean rc = tableConfiguration.isSelectByPrimaryKeyStatementEnabled()
                 && introspectedTable.hasPrimaryKeyColumns()
                 && (introspectedTable.hasBaseColumns() || introspectedTable
@@ -255,6 +313,10 @@ public abstract class BaseRules implements Rules {
      * @return true if the element and method should be generated
      */
     public boolean generateSelectByExampleWithoutBLOBs() {
+        if (isModelOnly) {
+            return false;
+        }
+        
         return tableConfiguration.isSelectByExampleStatementEnabled();
     }
 
@@ -267,6 +329,10 @@ public abstract class BaseRules implements Rules {
      * @return true if the element and method should be generated
      */
     public boolean generateSelectByExampleWithBLOBs() {
+        if (isModelOnly) {
+            return false;
+        }
+        
         boolean rc = tableConfiguration.isSelectByExampleStatementEnabled()
                 && introspectedTable.hasBLOBColumns();
 
@@ -281,6 +347,16 @@ public abstract class BaseRules implements Rules {
      * @return true if the example class should be generated
      */
     public boolean generateExampleClass() {
+        if (introspectedTable.getContext().getSqlMapGeneratorConfiguration() == null
+                && introspectedTable.getContext().getJavaClientGeneratorConfiguration() == null) {
+            // this is a model only context - don't generate the example class
+            return false;
+        }
+        
+        if (isModelOnly) {
+            return false;
+        }
+        
         boolean rc = tableConfiguration.isSelectByExampleStatementEnabled()
                 || tableConfiguration.isDeleteByExampleStatementEnabled()
                 || tableConfiguration.isCountByExampleStatementEnabled()
@@ -290,18 +366,30 @@ public abstract class BaseRules implements Rules {
     }
 
     public boolean generateCountByExample() {
+        if (isModelOnly) {
+            return false;
+        }
+        
         boolean rc = tableConfiguration.isCountByExampleStatementEnabled();
 
         return rc;
     }
 
     public boolean generateUpdateByExampleSelective() {
+        if (isModelOnly) {
+            return false;
+        }
+        
         boolean rc = tableConfiguration.isUpdateByExampleStatementEnabled();
 
         return rc;
     }
 
     public boolean generateUpdateByExampleWithoutBLOBs() {
+        if (isModelOnly) {
+            return false;
+        }
+        
         boolean rc = tableConfiguration.isUpdateByExampleStatementEnabled()
                 && (introspectedTable.hasPrimaryKeyColumns() || introspectedTable
                         .hasBaseColumns());
@@ -310,6 +398,10 @@ public abstract class BaseRules implements Rules {
     }
 
     public boolean generateUpdateByExampleWithBLOBs() {
+        if (isModelOnly) {
+            return false;
+        }
+        
         boolean rc = tableConfiguration.isUpdateByExampleStatementEnabled()
                 && introspectedTable.hasBLOBColumns();
 
@@ -321,13 +413,25 @@ public abstract class BaseRules implements Rules {
     }
 
     public boolean generateBaseColumnList() {
+        if (isModelOnly) {
+            return false;
+        }
+        
         return generateSelectByPrimaryKey()
                 || generateSelectByExampleWithoutBLOBs();
     }
 
     public boolean generateBlobColumnList() {
+        if (isModelOnly) {
+            return false;
+        }
+        
         return introspectedTable.hasBLOBColumns()
                 && (tableConfiguration.isSelectByExampleStatementEnabled() || tableConfiguration
                         .isSelectByPrimaryKeyStatementEnabled());
+    }
+
+    public boolean generateJavaClient() {
+        return !isModelOnly;
     }
 }

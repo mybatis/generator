@@ -23,7 +23,15 @@ for each introspected table.</p>
 of the <a href="context.html">&lt;context&gt;</a> element.</p>
 <p>If MyBatis3 is targeted, then this element is a required child element
 of the <a href="context.html">&lt;context&gt;</a> element only if your chosen
-JavaClientGenerator requires XML, or if you do not specify a JavaClientGenerator.</p>
+javaClientGenerator requires XML.</p>
+<p>If you do not specify a javaClientGenerator, then
+the following rules apply:</p>
+<ul>
+  <li>If you specify an sqlMapGenerator, then MBG will generate SQL map XML
+      files and model classess only.</li>
+  <li>If you do not specify an sqlMapGenerator, then MBG will generate
+      model classes only.</li>
+</ul>
 <h2>Required Attributes</h2>
 <table border="1" cellspacing="0" cellpadding="5">
   <tr>

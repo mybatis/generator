@@ -235,6 +235,16 @@ public interface Rules {
      * @return true if the record with BLOBs class should be generated
      */
     boolean generateRecordWithBLOBsClass();
+    
+    /**
+     * Implements the rule for generating a Java client.  This rule is
+     * only active when a javaClientGenerator configuration has been
+     * specified, but the table is designated as "modelOnly".  Do not
+     * generate the client if the table is designated as modelOnly.
+     * 
+     * @return true if the Java client should be generated
+     */
+    boolean generateJavaClient();
 
     IntrospectedTable getIntrospectedTable();
 }

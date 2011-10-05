@@ -168,4 +168,8 @@ public class RulesDelegate implements Rules {
     public boolean generateBlobColumnList() {
         return rules.generateBlobColumnList();
     }
+
+    public boolean generateJavaClient() {
+        return rules.generateJavaClient();
+    }
 }

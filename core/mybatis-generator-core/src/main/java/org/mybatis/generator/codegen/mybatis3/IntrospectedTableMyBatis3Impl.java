@@ -69,7 +69,9 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
             List<String> warnings,
             ProgressCallback progressCallback) {
         if (javaClientGenerator == null) {
-            xmlMapperGenerator = new XMLMapperGenerator();
+            if (context.getSqlMapGeneratorConfiguration() != null) {
+                xmlMapperGenerator = new XMLMapperGenerator();
+            }
         } else {
             xmlMapperGenerator = javaClientGenerator.getMatchedXMLGenerator();
         }
@@ -86,6 +88,10 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
      */
     protected AbstractJavaClientGenerator calculateClientGenerators(List<String> warnings,
             ProgressCallback progressCallback) {
+        if (!rules.generateJavaClient()) {
+            return null;
+        }
+        
         AbstractJavaClientGenerator javaGenerator = createJavaClientGenerator();
         if (javaGenerator == null) {
             return null;
@@ -101,7 +107,7 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
         if (context.getJavaClientGeneratorConfiguration() == null) {
             return null;
         }
-
+        
         String type = context.getJavaClientGeneratorConfiguration()
                 .getConfigurationType();
 
@@ -230,7 +236,7 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
             createJavaClientGenerator();
         
         if (javaClientGenerator == null) {
-            return true;
+            return false;
         } else {
             return javaClientGenerator.requiresXMLGenerator();
         }

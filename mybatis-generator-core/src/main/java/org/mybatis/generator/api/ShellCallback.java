@@ -91,6 +91,9 @@ public interface ShellCallback {
      *            the JavaDoc tags that denotes which methods and fields in the
      *            old file to delete (if the Java element has any of these tags,
      *            the element is eligible for merge)
+     * @param fileEncoding
+     *            the file encoding for reading existing Java files.  Can be null,
+     *            in which case the platform default encoding will be used.
      * @return the merged source, properly formatted. The source will be saved
      *         exactly as returned from this method.
      * @throws ShellException
@@ -100,7 +103,7 @@ public interface ShellCallback {
      *             exception message to the list of warnings automatically.
      */
     String mergeJavaFile(String newFileSource, String existingFileFullPath,
-            String[] javadocTags) throws ShellException;
+            String[] javadocTags, String fileEncoding) throws ShellException;
 
     /**
      * After all files are saved to the file system, this method is called

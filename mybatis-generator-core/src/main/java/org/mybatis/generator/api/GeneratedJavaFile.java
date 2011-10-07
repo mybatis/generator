@@ -22,14 +22,16 @@ import org.mybatis.generator.api.dom.java.CompilationUnit;
  */
 public class GeneratedJavaFile extends GeneratedFile {
     private CompilationUnit compilationUnit;
+    private String fileEncoding;
 
     /**
      * Default constructor
      */
     public GeneratedJavaFile(CompilationUnit compilationUnit,
-            String targetProject) {
+            String targetProject, String fileEncoding) {
         super(targetProject);
         this.compilationUnit = compilationUnit;
+        this.fileEncoding = fileEncoding;
     }
 
     @Override
@@ -66,5 +68,9 @@ public class GeneratedJavaFile extends GeneratedFile {
     @Override
     public boolean isMergeable() {
         return true;
+    }
+
+    public String getFileEncoding() {
+        return fileEncoding;
     }
 }

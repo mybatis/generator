@@ -1132,7 +1132,6 @@ public class ConditionalJava5Test extends AbstractAnnotatedConditionalTest {
 
     @Test
     public void testPKFieldsSelectByExampleDateTimeFields() {
-        // TODO - move this method to the other test classes too
         SqlSession sqlSession = sqlSessionFactory.openSession();
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, 2009);

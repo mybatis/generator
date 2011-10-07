@@ -938,13 +938,13 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
             record.setSelect("select");
             record.setInsert("insert");
             
-            sqlSession.insert("MBGTEST_ANOTHERAWFULTABLE.insert", record);
+            sqlSession.insert("mbg.test.mb3.generated.miscellaneous.xml.AnotherawfultableMapper.insert", record);
             
             Anotherawfultable key = new Anotherawfultable();
             key.setId(5);
             
             Anotherawfultable returnedRecord = (Anotherawfultable)
-                sqlSession.selectOne("MBGTEST_ANOTHERAWFULTABLE.selectByPrimaryKey",
+                sqlSession.selectOne("mbg.test.mb3.generated.miscellaneous.xml.AnotherawfultableMapper.selectByPrimaryKey",
                         key);
             
             assertEquals(record.getId(), returnedRecord.getId());

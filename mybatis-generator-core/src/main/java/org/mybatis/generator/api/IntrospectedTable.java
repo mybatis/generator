@@ -64,8 +64,10 @@ public abstract class IntrospectedTable {
         ATTR_IBATIS2_SQL_MAP_NAMESPACE,
         ATTR_MYBATIS3_XML_MAPPER_PACKAGE,
         ATTR_MYBATIS3_XML_MAPPER_FILE_NAME,
-        /** also used as XML Mapper namespace if a DAO mapper is generated */
+        /** also used as XML Mapper namespace if a Java mapper is generated */
         ATTR_MYBATIS3_JAVA_MAPPER_TYPE,
+        /** used as XML Mapper namespace if no client is generated */
+        ATTR_MYBATIS3_FALLBACK_SQL_MAP_NAMESPACE,
         ATTR_FULLY_QUALIFIED_TABLE_NAME_AT_RUNTIME,
         ATTR_ALIASED_FULLY_QUALIFIED_TABLE_NAME_AT_RUNTIME,
         ATTR_COUNT_BY_EXAMPLE_STATEMENT_ID,
@@ -378,6 +380,20 @@ public abstract class IntrospectedTable {
                 .get(InternalAttribute.ATTR_IBATIS2_SQL_MAP_NAMESPACE);
     }
 
+    public String getMyBatis3SqlMapNamespace() {
+        String namespace = getMyBatis3JavaMapperType();
+        if (namespace == null) {
+            namespace = getMyBatis3FallbackSqlMapNamespace();
+        }
+        
+        return namespace;
+    }
+    
+    public String getMyBatis3FallbackSqlMapNamespace() {
+        return internalAttributes
+                .get(InternalAttribute.ATTR_MYBATIS3_FALLBACK_SQL_MAP_NAMESPACE);
+    }
+    
     /**
      * Calculates the package for the current table.
      * 
@@ -486,13 +502,14 @@ public abstract class IntrospectedTable {
      * 
      */
     protected void calculateXmlAttributes() {
-        setIbatis2SqlMapPackage(calculateIbatis2SqlMapPackage());
+        setIbatis2SqlMapPackage(calculateSqlMapPackage());
         setIbatis2SqlMapFileName(calculateIbatis2SqlMapFileName());
         setMyBatis3XmlMapperFileName(calculateMyBatis3XmlMapperFileName());
-        setMyBatis3XmlMapperPackage(getIbatis2SqlMapPackage()); // TODO? works
-        // for now
+        setMyBatis3XmlMapperPackage(calculateSqlMapPackage());
 
         setIbatis2SqlMapNamespace(calculateIbatis2SqlMapNamespace());
+        setMyBatis3FallbackSqlMapNamespace(calculateMyBatis3FallbackSqlMapNamespace());
+        
         setSqlMapFullyQualifiedRuntimeTableName(calculateSqlMapFullyQualifiedRuntimeTableName());
         setSqlMapAliasedFullyQualifiedRuntimeTableName(calculateSqlMapAliasedFullyQualifiedRuntimeTableName());
 
@@ -843,7 +860,7 @@ public abstract class IntrospectedTable {
         setExampleType(sb.toString());
     }
 
-    protected String calculateIbatis2SqlMapPackage() {
+    protected String calculateSqlMapPackage() {
         StringBuilder sb = new StringBuilder();
         SqlMapGeneratorConfiguration config = context
                 .getSqlMapGeneratorConfiguration();
@@ -876,6 +893,15 @@ public abstract class IntrospectedTable {
 
     protected String calculateIbatis2SqlMapNamespace() {
         return fullyQualifiedTable.getIbatis2SqlMapNamespace();
+    }
+    
+    protected String calculateMyBatis3FallbackSqlMapNamespace() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(calculateSqlMapPackage());
+        sb.append('.');
+        sb.append(fullyQualifiedTable.getDomainObjectName());
+        sb.append("Mapper"); //$NON-NLS-1$
+        return sb.toString();
     }
 
     protected String calculateSqlMapFullyQualifiedRuntimeTableName() {
@@ -1001,6 +1027,12 @@ public abstract class IntrospectedTable {
     public void setIbatis2SqlMapNamespace(String sqlMapNamespace) {
         internalAttributes.put(
                 InternalAttribute.ATTR_IBATIS2_SQL_MAP_NAMESPACE,
+                sqlMapNamespace);
+    }
+    
+    public void setMyBatis3FallbackSqlMapNamespace(String sqlMapNamespace) {
+        internalAttributes.put(
+                InternalAttribute.ATTR_MYBATIS3_FALLBACK_SQL_MAP_NAMESPACE,
                 sqlMapNamespace);
     }
 

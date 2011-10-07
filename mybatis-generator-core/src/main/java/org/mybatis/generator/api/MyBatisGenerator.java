@@ -20,8 +20,9 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -273,7 +274,7 @@ public class MyBatisGenerator {
             callback.checkCancel();
             callback.startTask(getString(
                     "Progress.15", targetFile.getName())); //$NON-NLS-1$
-            writeFile(targetFile, source);
+            writeFile(targetFile, source, "UTF-8"); //$NON-NLS-1$
         }
 
         for (GeneratedJavaFile gjf : generatedJavaFiles) {
@@ -290,7 +291,8 @@ public class MyBatisGenerator {
                         source = shellCallback.mergeJavaFile(gjf
                                 .getFormattedContent(), targetFile
                                 .getAbsolutePath(),
-                                MergeConstants.OLD_ELEMENT_TAGS);
+                                MergeConstants.OLD_ELEMENT_TAGS,
+                                gjf.getFileEncoding());
                     } else if (shellCallback.isOverwriteEnabled()) {
                         source = gjf.getFormattedContent();
                         warnings.add(getString("Warning.11", //$NON-NLS-1$
@@ -309,7 +311,7 @@ public class MyBatisGenerator {
                 callback.checkCancel();
                 callback.startTask(getString(
                         "Progress.15", targetFile.getName())); //$NON-NLS-1$
-                writeFile(targetFile, source);
+                writeFile(targetFile, source, gjf.getFileEncoding());
             } catch (ShellException e) {
                 warnings.add(e.getMessage());
             }
@@ -328,8 +330,16 @@ public class MyBatisGenerator {
      * @param file
      * @param content
      */
-    private void writeFile(File file, String content) throws IOException {
-        BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
+    private void writeFile(File file, String content, String fileEncoding) throws IOException {
+        FileOutputStream fos = new FileOutputStream(file, false);
+        OutputStreamWriter osw;
+        if (fileEncoding == null) {
+            osw = new OutputStreamWriter(fos);
+        } else {
+            osw = new OutputStreamWriter(fos, fileEncoding);
+        }
+        
+        BufferedWriter bw = new BufferedWriter(osw);
         bw.write(content);
         bw.close();
     }

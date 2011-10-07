@@ -37,5 +37,4 @@ public class MyBatisContainerPage extends WizardPage
         // TODO Auto-generated method stub
 
     }
-
 }

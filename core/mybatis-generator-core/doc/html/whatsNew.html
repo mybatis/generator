@@ -41,6 +41,11 @@
       Also, if property "modelOnly" is set to "true" on a &lt;table&gt; element, then
       only model object and, possibly XML result maps, will be generated.
   </li>
+  <li>Issue #374 - Allow for specification of a file encoding for reading/writing
+      Java files on the file system. There is a new property "javaFileEncoding" on the
+      &lt;context&gt; element that can be used to specify a Java file encoding. (XML files
+      are always read/written in UTF-8 per the spec).
+  </li>
 </ul>
 
 <h2>Version 1.3.1</h2>

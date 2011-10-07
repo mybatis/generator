@@ -269,9 +269,9 @@ public class EclipseShellCallback implements ShellCallback {
     }
 
     public String mergeJavaFile(String newFileSource,
-            String existingFileFullPath, String[] javadocTags)
+            String existingFileFullPath, String[] javadocTags, String fileEncoding)
             throws ShellException {
-        JavaFileMerger merger = new JavaFileMerger(newFileSource, existingFileFullPath, javadocTags);
+        JavaFileMerger merger = new JavaFileMerger(newFileSource, existingFileFullPath, javadocTags, fileEncoding);
         return merger.getMergedSource();
     }
 }

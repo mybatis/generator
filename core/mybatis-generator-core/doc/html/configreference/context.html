@@ -187,6 +187,16 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
         specifically requested in a &lt;table&gt; or  &lt;columnOverride&gt; configuration.<p/>
       <p><i>The default value is double quotes (&quot;).</i></p></td>
   </tr>
+  <tr>
+    <td valign="top">javaFileEncoding</td>
+    <td>Use this property to specify an encoding to use when working with Java files.
+        Newly generated Java files will be written to the file system in this encoding,
+        and existing Java files will be read with this encoding when performing a merge.
+        If not specified, then the platform default encoding will be used.
+        <p/>
+        <p>See <code>java.nio.charset.Charset</code> for information on valid encodings.</p>
+    </td>
+  </tr>
 </table>
 
 </body>

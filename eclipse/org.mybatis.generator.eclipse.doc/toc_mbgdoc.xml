@@ -54,7 +54,8 @@
       <topic href="html/mbgdoc/reference/extending.html" label="Extending MyBatis Generator"/>
       <topic href="html/mbgdoc/reference/pluggingIn.html" label="Implementing Plugins"/>
       <topic href="html/mbgdoc/reference/logging.html" label="Logging Information"/>
+      <topic href="html/mbgdoc/reference/plugins.html" label="Supplied Plugins"/>
    </topic>
-   <topic href="html/mbgdoc/philosophy.html" label="Design Philisophy"/>
+   <topic href="html/mbgdoc/philosophy.html" label="Design Philosophy"/>
    <topic href="html/mbgdoc/license.html" label="Licensing Information"/>
 </toc>

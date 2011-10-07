@@ -36,6 +36,7 @@ import org.mybatis.generator.codegen.mybatis3.model.ExampleGenerator;
 import org.mybatis.generator.codegen.mybatis3.model.PrimaryKeyGenerator;
 import org.mybatis.generator.codegen.mybatis3.model.RecordWithBLOBsGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.XMLMapperGenerator;
+import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.internal.ObjectFactory;
 
 /**
@@ -182,7 +183,8 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
             for (CompilationUnit compilationUnit : compilationUnits) {
                 GeneratedJavaFile gjf = new GeneratedJavaFile(compilationUnit,
                         context.getJavaModelGeneratorConfiguration()
-                                .getTargetProject());
+                                .getTargetProject(),
+                        context.getProperty(PropertyRegistry.CONTEXT_JAVA_FILE_ENCODING));
                 answer.add(gjf);
             }
         }
@@ -193,7 +195,8 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
             for (CompilationUnit compilationUnit : compilationUnits) {
                 GeneratedJavaFile gjf = new GeneratedJavaFile(compilationUnit,
                         context.getJavaClientGeneratorConfiguration()
-                                .getTargetProject());
+                                .getTargetProject(),
+                        context.getProperty(PropertyRegistry.CONTEXT_JAVA_FILE_ENCODING));
                 answer.add(gjf);
             }
         }

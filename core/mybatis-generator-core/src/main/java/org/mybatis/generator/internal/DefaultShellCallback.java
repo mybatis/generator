@@ -84,7 +84,7 @@ public class DefaultShellCallback implements ShellCallback {
     }
 
     public String mergeJavaFile(String newFileSource,
-            String existingFileFullPath, String[] javadocTags)
+            String existingFileFullPath, String[] javadocTags, String fileEncoding)
             throws ShellException {
         throw new UnsupportedOperationException();
     }

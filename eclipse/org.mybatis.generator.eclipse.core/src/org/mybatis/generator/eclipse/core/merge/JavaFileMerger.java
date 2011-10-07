@@ -17,8 +17,9 @@ package org.mybatis.generator.eclipse.core.merge;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -60,14 +61,16 @@ public class JavaFileMerger {
     
     private String newJavaSource;
     private String existingFilePath;
-    private String[] javaDocTags; 
+    private String[] javaDocTags;
+    private String fileEncoding;
 
     public JavaFileMerger(String newJavaSource, String existingFilePath,
-            String[] javaDocTags) {
+            String[] javaDocTags, String fileEncoding) {
         super();
         this.newJavaSource = newJavaSource;
         this.existingFilePath = existingFilePath;
         this.javaDocTags = javaDocTags;
+        this.fileEncoding = fileEncoding;
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -290,7 +293,14 @@ public class JavaFileMerger {
 
         try {
             StringBuilder sb = new StringBuilder();
-            BufferedReader br = new BufferedReader(new FileReader(file));
+            FileInputStream fis = new FileInputStream(file);
+            InputStreamReader isr;
+            if (fileEncoding == null) {
+                isr = new InputStreamReader(fis);
+            } else {
+                isr = new InputStreamReader(fis, fileEncoding);
+            }
+            BufferedReader br = new BufferedReader(isr);
             char[] buffer = new char[1024];
             int returnedBytes = br.read(buffer);
             while (returnedBytes != -1) {

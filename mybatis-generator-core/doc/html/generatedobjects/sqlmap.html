@@ -111,10 +111,28 @@ then <b>all</b> rows in the table will be selected.</p>
 <p>This element is an insert statement that includes all fields in the table (including BLOBs),
 unless the field is specifically ignored with the <code>&lt;ignoreColumn&gt;</code> configuration
 element.</p>
-<p>If the table has an auto generated key (an identity column or from a sequence), and the
+<p>If the table has an auto generated key (an identity column or value from a sequence), and the
 <code>&lt;generatedKey&gt;</code> configuration element is specified, then MBG will generate
-an appropriate <code>&lt;selectKey&gt;</code> element and will return the value of the
-generated key.</p>
+an appropriate <code>&lt;selectKey&gt;</code> element.</p>
+<p><b>Important Note:</b> the insert method works differently in iBATIS2 and MyBatis3.  The following table
+summarizes the differences:</p>
+<table border="1" cellpadding="5" cellspacing="0">
+  <tr>
+    <th>Runtime</th>
+    <th>Behavior</th>
+  </tr>
+  <tr>
+    <td>iBATIS2</td>
+    <td>If a &lt;generatedKey&gt; element is specified, the method will return the
+        newly generated key.  If no &lt;generatedKey&gt; element is specified, the
+        method will be <code>void</code>.</td>
+  </tr>
+  <tr>
+    <td>MyBatis3</td>
+    <td>The method will return the number of rows inserted (typically either 0 or 1).
+        If a &lt;generatedKey&gt; element is specified, the value of the newly generated
+        key will be set in the corresponding property of the parameter object.</td>
+</table>
 <p>This element will be generated if the insert statement is enabled.</p>
 
 <h2>Insert Selective</h2>
@@ -125,10 +143,29 @@ parameter object.  This allows you to use database defaults for columns, if they
 This element will not allow the insert of <code>null</code> into any field - for that
 you must use the regular insert statement.  <b>Important:</b> any field mapped to a Java primitive
 is always inserted by this method.</p>
-<p>If the table has an auto generated key (an identity column or from a sequence), and the
+<p>If the table has an auto generated key (an identity column or value from a sequence), and the
 <code>&lt;generatedKey&gt;</code> configuration element is specified, then MBG will generate
-an appropriate <code>&lt;selectKey&gt;</code> element and will return the value of the
-generated key.</p>
+an appropriate <code>&lt;selectKey&gt;</code> element.</p>
+<p><b>Important Note:</b> the insertSelective method works differently in iBATIS2 and MyBatis3.  The following table
+summarizes the differences:</p>
+<table border="1" cellpadding="5" cellspacing="0">
+  <tr>
+    <th>Runtime</th>
+    <th>Behavior</th>
+  </tr>
+  <tr>
+    <td>iBATIS2</td>
+    <td>If a &lt;generatedKey&gt; element is specified, the method will return the
+        newly generated key.  If no &lt;generatedKey&gt; element is specified, the
+        method will be <code>void</code>.</td>
+  </tr>
+  <tr>
+    <td>MyBatis3</td>
+    <td>The method will return the number of rows inserted (typically either 0 or 1).
+        If a &lt;generatedKey&gt; element is specified, the value of the newly generated
+        key will be set in the corresponding property of the parameter object.</td>
+</table>
+
 <p>This element will be generated if the insert statement is enabled.</p>
 
 <h2>Update By Primary Key</h2>

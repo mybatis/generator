@@ -24,10 +24,14 @@ import java.util.List;
 
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.FullyQualifiedTable;
+import org.mybatis.generator.api.JavaFormatter;
 import org.mybatis.generator.api.Plugin;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.JavaTypeResolver;
+import org.mybatis.generator.api.XmlFormatter;
+import org.mybatis.generator.api.dom.DefaultJavaFormatter;
+import org.mybatis.generator.api.dom.DefaultXmlFormatter;
 import org.mybatis.generator.codegen.ibatis2.IntrospectedTableIbatis2Java2Impl;
 import org.mybatis.generator.codegen.ibatis2.IntrospectedTableIbatis2Java5Impl;
 import org.mybatis.generator.codegen.mybatis3.IntrospectedTableMyBatis3Impl;
@@ -35,8 +39,10 @@ import org.mybatis.generator.config.CommentGeneratorConfiguration;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.PluginConfiguration;
 import org.mybatis.generator.config.JavaTypeResolverConfiguration;
+import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.config.TableConfiguration;
 import org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl;
+import org.mybatis.generator.internal.util.StringUtility;
 
 /**
  * This class creates the different objects needed by the generator
@@ -240,6 +246,32 @@ public class ObjectFactory {
         return answer;
     }
 
+    public static JavaFormatter createJavaFormatter(Context context) {
+        String type = context.getProperty(PropertyRegistry.CONTEXT_JAVA_FORMATTER);
+        if (!StringUtility.stringHasValue(type)) {
+            type = DefaultJavaFormatter.class.getName();
+        }
+
+        JavaFormatter answer = (JavaFormatter) createInternalObject(type);
+
+        answer.setContext(context);
+
+        return answer;
+    }
+    
+    public static XmlFormatter createXmlFormatter(Context context) {
+        String type = context.getProperty(PropertyRegistry.CONTEXT_XML_FORMATTER);
+        if (!StringUtility.stringHasValue(type)) {
+            type = DefaultXmlFormatter.class.getName();
+        }
+
+        XmlFormatter answer = (XmlFormatter) createInternalObject(type);
+
+        answer.setContext(context);
+
+        return answer;
+    }
+    
     public static IntrospectedTable createIntrospectedTable(
             TableConfiguration tableConfiguration, FullyQualifiedTable table,
             Context context) {

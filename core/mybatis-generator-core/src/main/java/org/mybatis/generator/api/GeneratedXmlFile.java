@@ -16,6 +16,7 @@
 package org.mybatis.generator.api;
 
 import org.mybatis.generator.api.dom.xml.Document;
+import org.mybatis.generator.config.Context;
 
 /**
  * @author Jeff Butler
@@ -40,8 +41,9 @@ public class GeneratedXmlFile extends GeneratedFile {
      *            merger.
      */
     public GeneratedXmlFile(Document document, String fileName,
-            String targetPackage, String targetProject, boolean isMergeable) {
-        super(targetProject);
+            String targetPackage, String targetProject, boolean isMergeable,
+            Context context) {
+        super(targetProject, context);
         this.document = document;
         this.fileName = fileName;
         this.targetPackage = targetPackage;
@@ -50,7 +52,7 @@ public class GeneratedXmlFile extends GeneratedFile {
 
     @Override
     public String getFormattedContent() {
-        return document.getFormattedContent();
+        return context.getXmlFormatter().getFormattedContent(document);
     }
 
     /**

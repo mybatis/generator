@@ -124,7 +124,7 @@ public class SqlMapConfigPlugin extends PluginAdapter {
                 .getProperty("fileName", "SqlMapConfig.xml"), //$NON-NLS-1$ //$NON-NLS-2$
                 properties.getProperty("targetPackage"), //$NON-NLS-1$
                 properties.getProperty("targetProject"), //$NON-NLS-1$
-                false);
+                false, context);
 
         List<GeneratedXmlFile> answer = new ArrayList<GeneratedXmlFile>(1);
         answer.add(gxf);

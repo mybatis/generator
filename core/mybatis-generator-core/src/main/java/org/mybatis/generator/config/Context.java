@@ -29,10 +29,12 @@ import java.util.Set;
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.GeneratedJavaFile;
 import org.mybatis.generator.api.GeneratedXmlFile;
+import org.mybatis.generator.api.JavaFormatter;
 import org.mybatis.generator.api.Plugin;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.JavaTypeResolver;
 import org.mybatis.generator.api.ProgressCallback;
+import org.mybatis.generator.api.XmlFormatter;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.internal.ObjectFactory;
@@ -77,6 +79,10 @@ public class Context extends PropertyHolder {
     private String introspectedColumnImpl;
 
     private Boolean autoDelimitKeywords;
+    
+    private JavaFormatter javaFormatter;
+    
+    private XmlFormatter xmlFormatter;
 
     /**
      * Constructs a Context object.
@@ -320,6 +326,22 @@ public class Context extends PropertyHolder {
         return commentGenerator;
     }
 
+    public JavaFormatter getJavaFormatter() {
+        if (javaFormatter == null) {
+            javaFormatter = ObjectFactory.createJavaFormatter(this);
+        }
+
+        return javaFormatter;
+    }
+    
+    public XmlFormatter getXmlFormatter() {
+        if (xmlFormatter == null) {
+            xmlFormatter = ObjectFactory.createXmlFormatter(this);
+        }
+
+        return xmlFormatter;
+    }
+    
     public CommentGeneratorConfiguration getCommentGeneratorConfiguration() {
         return commentGeneratorConfiguration;
     }

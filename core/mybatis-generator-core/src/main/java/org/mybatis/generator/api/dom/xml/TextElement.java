@@ -38,4 +38,8 @@ public class TextElement extends Element {
         sb.append(content);
         return sb.toString();
     }
+
+    public String getContent() {
+        return content;
+    }
 }

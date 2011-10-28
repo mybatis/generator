@@ -16,6 +16,8 @@
 package org.mybatis.generator.api;
 
 import org.mybatis.generator.api.dom.java.CompilationUnit;
+import org.mybatis.generator.config.Context;
+import org.mybatis.generator.config.PropertyRegistry;
 
 /**
  * @author Jeff Butler
@@ -28,15 +30,16 @@ public class GeneratedJavaFile extends GeneratedFile {
      * Default constructor
      */
     public GeneratedJavaFile(CompilationUnit compilationUnit,
-            String targetProject, String fileEncoding) {
-        super(targetProject);
+            String targetProject,
+            Context context) {
+        super(targetProject, context);
         this.compilationUnit = compilationUnit;
-        this.fileEncoding = fileEncoding;
+        this.fileEncoding = context.getProperty(PropertyRegistry.CONTEXT_JAVA_FILE_ENCODING);
     }
 
     @Override
     public String getFormattedContent() {
-        return compilationUnit.getFormattedContent();
+        return context.getJavaFormatter().getFormattedContent(compilationUnit);
     }
 
     @Override

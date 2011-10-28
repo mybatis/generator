@@ -197,6 +197,26 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
         <p>See <code>java.nio.charset.Charset</code> for information on valid encodings.</p>
     </td>
   </tr>
+  <tr>
+    <td valign="top">javaFormatter</td>
+    <td>Use this property to specify the full class name of a user provided formater for generated
+        Java files.  The class must implement <code>org.mybatis.generator.api.JavaFormatter</code>
+        and must have a default (no argument) constructor.  Each context holds a single instance
+        of the Java formatter.  The default Java formatter is
+        <code>org.mybatis.generator.api.dom.DefaultJavaFormatter</code>.  The default formatter
+        uses the formatting built into the Java DOM classes.
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">xmlFormatter</td>
+    <td>Use this property to specify the full class name of a user provided formater for generated
+        XML files.  The class must implement <code>org.mybatis.generator.api.XmlFormatter</code>
+        and must have a default (no argument) constructor.  Each context holds a single instance
+        of the XML formatter.  The default XML formatter is
+        <code>org.mybatis.generator.api.dom.DefaultXmlFormatter</code>.  The default formatter
+        uses the formatting built into the XML DOM classes.
+    </td>
+  </tr>
 </table>
 
 </body>

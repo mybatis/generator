@@ -15,7 +15,6 @@
  */
 package org.mybatis.generator.api;
 
-import org.mybatis.generator.config.Context;
 
 /**
  * Abstract class that holds information common to all generated files.
@@ -24,15 +23,13 @@ import org.mybatis.generator.config.Context;
  */
 public abstract class GeneratedFile {
     protected String targetProject;
-    protected Context context;
 
     /**
 	 *  
 	 */
-    public GeneratedFile(String targetProject, Context context) {
+    public GeneratedFile(String targetProject) {
         super();
         this.targetProject = targetProject;
-        this.context = context;
     }
 
     /**
@@ -78,8 +75,4 @@ public abstract class GeneratedFile {
     }
 
     public abstract boolean isMergeable();
-
-    public Context getContext() {
-        return context;
-    }
 }

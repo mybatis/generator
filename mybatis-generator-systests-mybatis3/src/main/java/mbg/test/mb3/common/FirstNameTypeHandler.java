@@ -63,6 +63,18 @@ public class FirstNameTypeHandler implements TypeHandler<FirstName> {
         return answer;
     }
 
+    public FirstName getResult(ResultSet rs, int columnIndex)
+            throws SQLException {
+        FirstName answer = null;
+        String string = rs.getString(columnIndex);
+        if (string != null) {
+            answer = new FirstName();
+            answer.setValue(string);
+        }
+        
+        return answer;
+    }
+
     public void setParameter(PreparedStatement ps, int i, FirstName parameter,
             JdbcType jdbcType) throws SQLException {
         if (parameter == null) {

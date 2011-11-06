@@ -77,6 +77,24 @@ public class MyTimeTypeHandler implements TypeHandler<MyTime> {
         return answer;
     }
 
+    public MyTime getResult(ResultSet rs, int columnIndex)
+            throws SQLException {
+        MyTime answer = null;
+        Time time = rs.getTime(columnIndex);
+        if (time != null) {
+            answer = new MyTime();
+
+            Calendar c = Calendar.getInstance();
+            c.setTime(time);
+
+            answer.setHours(c.get(Calendar.HOUR_OF_DAY));
+            answer.setMinutes(c.get(Calendar.MINUTE));
+            answer.setSeconds(c.get(Calendar.SECOND));
+        }
+        
+        return answer;
+    }
+
     public void setParameter(PreparedStatement ps, int i, MyTime parameter,
             JdbcType jdbcType) throws SQLException {
         if (parameter == null) {

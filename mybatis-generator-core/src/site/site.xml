@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2010-2011 The myBatis Team
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!--
+  version: $Id$
+-->
+<project xmlns="http://maven.apache.org/DECORATION/1.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/DECORATION/1.1.0 http://maven.apache.org/xsd/decoration-1.1.0.xsd"
+  name="MyBatis Generator">
+
+  <body>
+    <menu name="MyBatis Generator">
+      <item href="intro.html" name="Introduction" />
+      <item href="changes.html" name="What's New?" />
+      <item href="quickstart.html" name="Quick Start Guide" />
+      <item href="running/running.html" name="Running MyBatis Generator">
+        <item href="running/runningFromCmdLine.html" name="From the Command Line" />
+        <item href="running/runningWithAnt.html" name="With Ant" />
+        <item href="running/runningWithMaven.html" name="With Maven" />
+        <item href="running/runningWithJava.html" name="With Java" />
+      </item>
+      <item href="afterRunning.html" name="Tasks After Running MyBatis Generator" />
+      <item href="migratingFromIbator.html" name="Migrating from Ibator" />
+      <item href="migratingFromAbator.html" name="Migrating from Abator" />
+    </menu>
+
+    <menu name="XML Configuration File">
+      <item href="configreference/xmlconfig.html" name="Introduction" />
+      <item href="configreference/classPathEntry.html" name="&amp;lt;classPathEntry&amp;gt;" />
+      <item href="configreference/columnOverride.html" name="&amp;lt;columnOverride&amp;gt;" />
+      <item href="configreference/columnRenamingRule.html" name="&amp;lt;columnRenamingRule&amp;gt;" />
+      <item href="configreference/commentGenerator.html" name="&amp;lt;commentGenerator&amp;gt;" />
+      <item href="configreference/context.html" name="&amp;lt;context&amp;gt;" />
+      <item href="configreference/generatedKey.html" name="&amp;lt;generatedKey&amp;gt;" />
+      <item href="configreference/generatorConfiguration.html" name="&amp;lt;generatorConfiguration&amp;gt;" />
+      <item href="configreference/ignoreColumn.html" name="&amp;lt;ignoreColumn&amp;gt;" />
+      <item href="configreference/javaClientGenerator.html" name="&amp;lt;javaClientGenerator&amp;gt;" />
+      <item href="configreference/javaModelGenerator.html" name="&amp;lt;javaModelGenerator&amp;gt;" />
+      <item href="configreference/javaTypeResolver.html" name="&amp;lt;javaTypeResolver&amp;gt;" />
+      <item href="configreference/jdbcConnection.html" name="&amp;lt;jdbcConnection&amp;gt;" />
+      <item href="configreference/plugin.html" name="&amp;lt;plugin&amp;gt;" />
+      <item href="configreference/properties.html" name="&amp;lt;properties&amp;gt;" />
+      <item href="configreference/property.html" name="&amp;lt;property&amp;gt;" />
+      <item href="configreference/sqlMapGenerator.html" name="&amp;lt;sqlMapGenerator&amp;gt;" />
+      <item href="configreference/table.html" name="&amp;lt;table&amp;gt;" />
+    </menu>
+
+    <menu name="Using the Generated Objects">
+      <item href="generatedobjects/results.html" name="Introduction" />
+      <item href="generatedobjects/javamodel.html" name="Java Model Objects" />
+      <item href="generatedobjects/sqlmap.html" name="SQL Map Files" />
+      <item href="generatedobjects/javaclient.html" name="Java Client Objects" />
+      <item href="generatedobjects/exampleClassUsage.html" name="Example Class Usage Notes" />
+      <item href="generatedobjects/extendingExampleClass.html" name="Extending the Example Classes" />
+    </menu>
+
+    <menu name="Database Specific Information">
+      <item href="usage/intro.html" name="Introduction" />
+      <item href="usage/db2.html" name="DB2" />
+      <item href="usage/mysql.html" name="MySql" />
+      <item href="usage/oracle.html" name="Oracle" />
+      <item href="usage/postgresql.html" name="PostgreSQL" />
+    </menu>
+
+    <menu name="Other Reference Information">
+      <item href="reference/intro.html" name="Introduction" />
+      <item href="reference/building.html" name="Building from Source" />
+      <item href="reference/extending.html" name="Extending MyBatis Generator" />
+      <item href="reference/pluggingIn.html" name="Implementing Plugins" />
+      <item href="reference/logging.html" name="Logging Information" />
+      <item href="reference/plugins.html" name="Supplied Plugins" />
+      <item href="philosophy.html" name="Design Philosophy" />
+    </menu>
+
+    <menu ref="reports"/>
+  </body>
+</project>

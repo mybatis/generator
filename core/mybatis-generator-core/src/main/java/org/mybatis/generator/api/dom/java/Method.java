@@ -38,6 +38,10 @@ public class Method extends JavaElement {
     private List<Parameter> parameters;
 
     private List<FullyQualifiedJavaType> exceptions;
+    
+    private boolean isSynchronized;
+    
+    private boolean isNative;
 
     /**
      *  
@@ -72,6 +76,8 @@ public class Method extends JavaElement {
         this.name = original.name;
         this.parameters.addAll(original.parameters);
         this.returnType = original.returnType;
+        this.isNative = original.isNative;
+        this.isSynchronized = original.isSynchronized;
     }
 
     /**
@@ -115,8 +121,14 @@ public class Method extends JavaElement {
             if (isFinal()) {
                 sb.append("final "); //$NON-NLS-1$
             }
-
-            if (bodyLines.size() == 0) {
+            
+            if (isSynchronized()) {
+                sb.append("synchronized "); //$NON-NLS-1$
+            }
+            
+            if (isNative()) {
+                sb.append("native "); //$NON-NLS-1$
+            } else if (bodyLines.size() == 0) {
                 sb.append("abstract "); //$NON-NLS-1$
             }
         }
@@ -161,7 +173,7 @@ public class Method extends JavaElement {
         }
 
         // if no body lines, then this is an abstract method
-        if (bodyLines.size() == 0) {
+        if (bodyLines.size() == 0 || isNative()) {
             sb.append(';');
         } else {
             sb.append(" {"); //$NON-NLS-1$
@@ -273,5 +285,21 @@ public class Method extends JavaElement {
 
     public void addException(FullyQualifiedJavaType exception) {
         exceptions.add(exception);
+    }
+
+    public boolean isSynchronized() {
+        return isSynchronized;
+    }
+
+    public void setSynchronized(boolean isSynchronized) {
+        this.isSynchronized = isSynchronized;
+    }
+
+    public boolean isNative() {
+        return isNative;
+    }
+
+    public void setNative(boolean isNative) {
+        this.isNative = isNative;
     }
 }

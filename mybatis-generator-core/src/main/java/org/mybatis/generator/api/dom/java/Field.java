@@ -24,6 +24,8 @@ public class Field extends JavaElement {
     private FullyQualifiedJavaType type;
     private String name;
     private String initializationString;
+    private boolean isTransient;
+    private boolean isVolatile;
 
     /**
      *  
@@ -108,6 +110,14 @@ public class Field extends JavaElement {
             sb.append("final "); //$NON-NLS-1$
         }
 
+        if (isTransient()) {
+            sb.append("transient "); //$NON-NLS-1$
+        }
+        
+        if (isVolatile()) {
+            sb.append("volatile "); //$NON-NLS-1$
+        }
+        
         sb.append(type.getShortName());
 
         sb.append(' ');
@@ -121,5 +131,21 @@ public class Field extends JavaElement {
         sb.append(';');
 
         return sb.toString();
+    }
+
+    public boolean isTransient() {
+        return isTransient;
+    }
+
+    public void setTransient(boolean isTransient) {
+        this.isTransient = isTransient;
+    }
+
+    public boolean isVolatile() {
+        return isVolatile;
+    }
+
+    public void setVolatile(boolean isVolatile) {
+        this.isVolatile = isVolatile;
     }
 }

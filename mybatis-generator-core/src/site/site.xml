@@ -27,7 +27,7 @@
       <item href="intro.html" name="Introduction" />
       <item href="changes.html" name="What's New?" />
       <item href="quickstart.html" name="Quick Start Guide" />
-      <item href="running/running.html" name="Running MyBatis Generator">
+      <item href="running/running.html" name="Running MyBatis Generator" collapse="true">
         <item href="running/runningFromCmdLine.html" name="From the Command Line" />
         <item href="running/runningWithAnt.html" name="With Ant" />
         <item href="running/runningWithMaven.html" name="With Maven" />
@@ -85,7 +85,5 @@
       <item href="reference/plugins.html" name="Supplied Plugins" />
       <item href="philosophy.html" name="Design Philosophy" />
     </menu>
-
-    <menu ref="reports"/>
   </body>
 </project>

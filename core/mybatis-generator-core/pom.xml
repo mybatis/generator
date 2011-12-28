@@ -47,18 +47,18 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <descriptorRefs>
+            <descriptorRef>bin</descriptorRef>
+          </descriptorRefs>
+        </configuration>
         <executions>
           <execution>
+            <id>make-assembly</id>
             <goals>
               <goal>single</goal>
             </goals>
             <phase>package</phase>
-            <configuration>
-              <descriptors>
-                <descriptor>${basedir}/src/main/assembly/src.xml</descriptor>
-                <descriptor>${basedir}/src/main/assembly/src-doconly.xml</descriptor>
-              </descriptors>
-            </configuration>
           </execution>
         </executions>
       </plugin>
@@ -74,21 +74,11 @@
             <configuration>
               <uploads>
                 <upload>
-                  <file>${project.build.directory}/${project.artifactId}-${project.version}-bundle.zip</file>
+                  <file>${project.build.directory}/${project.artifactId}-${project.version}-bin.zip</file>
                   <summary>MyBatis Generator ${project.version}</summary>
                   <labels>
                     <label>Featured</label>
                     <label>Type-Archive</label>
-                    <label>Product-Generator</label>
-                    <label>Version-${project.version}</label>
-                  </labels>
-                </upload>
-                <upload>
-                  <file>${project.build.directory}/${project.artifactId}-${project.version}-doc.zip</file>
-                  <summary>MyBatis Generator ${project.version} Documentation</summary>
-                  <labels>
-                    <label>Featured</label>
-                    <label>Type-Docs</label>
                     <label>Product-Generator</label>
                     <label>Version-${project.version}</label>
                   </labels>
@@ -142,7 +132,7 @@
   </dependencies>
 
   <scm>
-    <url>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/generator/trunk/core/mybatis-generator-core</url>
+    <url>https://mybatis.googlecode.com/svn/sub-projects/generator/trunk/core/mybatis-generator-core</url>
     <connection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/generator/trunk/core/mybatis-generator-core</connection>
     <developerConnection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/generator/trunk/core/mybatis-generator-core</developerConnection>
   </scm>

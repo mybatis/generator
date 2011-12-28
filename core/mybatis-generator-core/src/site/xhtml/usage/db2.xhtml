@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>DB2 Usage Notes</title>
+</head>
+<body>
+<h1>DB2 Usage Notes</h1>
+<h2>LONG VARCHAR Fields</h2>
+<p>By default MyBatis Generator will map LONG VARCHAR fields to the <code>java.lang.String</code> data type,
+and will mark these fields as <code>jdbcType="LONGVARCHAR"</code>.  This
+mapping will cause errors when retrieving data from DB2.  DB2 LONG VARCHAR fields should be mapped
+to the <code>java.lang.String</code> data type with <code>jdbcType="VARCHAR"</code>.  To overcome
+this problem, use a <code>&lt;columnOverride&gt;</code> as follows:</p>
+<pre>
+  &lt;table schema="DB2ADMIN" tableName="ALLTYPES" &gt;
+    &lt;columnOverride column="LONG_VARCHAR_FIELD" javaType="java.lang.String" jdbcType="VARCHAR" /&gt;
+  &lt;/table&gt;
+</pre>
+</body>
+</html>

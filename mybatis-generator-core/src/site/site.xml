@@ -23,9 +23,9 @@
   name="MyBatis Generator">
 
   <body>
-    <menu name="MyBatis Generator">
-      <item href="intro.html" name="Introduction" />
-      <item href="changes.html" name="What's New?" />
+    <menu name="User's Guide">
+      <item href="index.html" name="Introduction" />
+      <item href="whatsNew.html" name="What's New?" />
       <item href="quickstart.html" name="Quick Start Guide" />
       <item href="running/running.html" name="Running MyBatis Generator" collapse="true">
         <item href="running/runningFromCmdLine.html" name="From the Command Line" />
@@ -36,54 +36,46 @@
       <item href="afterRunning.html" name="Tasks After Running MyBatis Generator" />
       <item href="migratingFromIbator.html" name="Migrating from Ibator" />
       <item href="migratingFromAbator.html" name="Migrating from Abator" />
-    </menu>
-
-    <menu name="XML Configuration File">
-      <item href="configreference/xmlconfig.html" name="Introduction" />
-      <item href="configreference/classPathEntry.html" name="&amp;lt;classPathEntry&amp;gt;" />
-      <item href="configreference/columnOverride.html" name="&amp;lt;columnOverride&amp;gt;" />
-      <item href="configreference/columnRenamingRule.html" name="&amp;lt;columnRenamingRule&amp;gt;" />
-      <item href="configreference/commentGenerator.html" name="&amp;lt;commentGenerator&amp;gt;" />
-      <item href="configreference/context.html" name="&amp;lt;context&amp;gt;" />
-      <item href="configreference/generatedKey.html" name="&amp;lt;generatedKey&amp;gt;" />
-      <item href="configreference/generatorConfiguration.html" name="&amp;lt;generatorConfiguration&amp;gt;" />
-      <item href="configreference/ignoreColumn.html" name="&amp;lt;ignoreColumn&amp;gt;" />
-      <item href="configreference/javaClientGenerator.html" name="&amp;lt;javaClientGenerator&amp;gt;" />
-      <item href="configreference/javaModelGenerator.html" name="&amp;lt;javaModelGenerator&amp;gt;" />
-      <item href="configreference/javaTypeResolver.html" name="&amp;lt;javaTypeResolver&amp;gt;" />
-      <item href="configreference/jdbcConnection.html" name="&amp;lt;jdbcConnection&amp;gt;" />
-      <item href="configreference/plugin.html" name="&amp;lt;plugin&amp;gt;" />
-      <item href="configreference/properties.html" name="&amp;lt;properties&amp;gt;" />
-      <item href="configreference/property.html" name="&amp;lt;property&amp;gt;" />
-      <item href="configreference/sqlMapGenerator.html" name="&amp;lt;sqlMapGenerator&amp;gt;" />
-      <item href="configreference/table.html" name="&amp;lt;table&amp;gt;" />
-    </menu>
-
-    <menu name="Using the Generated Objects">
-      <item href="generatedobjects/results.html" name="Introduction" />
-      <item href="generatedobjects/javamodel.html" name="Java Model Objects" />
-      <item href="generatedobjects/sqlmap.html" name="SQL Map Files" />
-      <item href="generatedobjects/javaclient.html" name="Java Client Objects" />
-      <item href="generatedobjects/exampleClassUsage.html" name="Example Class Usage Notes" />
-      <item href="generatedobjects/extendingExampleClass.html" name="Extending the Example Classes" />
-    </menu>
-
-    <menu name="Database Specific Information">
-      <item href="usage/intro.html" name="Introduction" />
-      <item href="usage/db2.html" name="DB2" />
-      <item href="usage/mysql.html" name="MySql" />
-      <item href="usage/oracle.html" name="Oracle" />
-      <item href="usage/postgresql.html" name="PostgreSQL" />
-    </menu>
-
-    <menu name="Other Reference Information">
-      <item href="reference/intro.html" name="Introduction" />
-      <item href="reference/building.html" name="Building from Source" />
-      <item href="reference/extending.html" name="Extending MyBatis Generator" />
-      <item href="reference/pluggingIn.html" name="Implementing Plugins" />
-      <item href="reference/logging.html" name="Logging Information" />
-      <item href="reference/plugins.html" name="Supplied Plugins" />
-      <item href="philosophy.html" name="Design Philosophy" />
+      <item href="configreference/xmlconfig.html" name="XML Configuration File" collapse="true" >
+        <item href="configreference/classPathEntry.html" name="&amp;lt;classPathEntry&amp;gt;" />
+        <item href="configreference/columnOverride.html" name="&amp;lt;columnOverride&amp;gt;" />
+        <item href="configreference/columnRenamingRule.html" name="&amp;lt;columnRenamingRule&amp;gt;" />
+        <item href="configreference/commentGenerator.html" name="&amp;lt;commentGenerator&amp;gt;" />
+        <item href="configreference/context.html" name="&amp;lt;context&amp;gt;" />
+        <item href="configreference/generatedKey.html" name="&amp;lt;generatedKey&amp;gt;" />
+        <item href="configreference/generatorConfiguration.html" name="&amp;lt;generatorConfiguration&amp;gt;" />
+        <item href="configreference/ignoreColumn.html" name="&amp;lt;ignoreColumn&amp;gt;" />
+        <item href="configreference/javaClientGenerator.html" name="&amp;lt;javaClientGenerator&amp;gt;" />
+        <item href="configreference/javaModelGenerator.html" name="&amp;lt;javaModelGenerator&amp;gt;" />
+        <item href="configreference/javaTypeResolver.html" name="&amp;lt;javaTypeResolver&amp;gt;" />
+        <item href="configreference/jdbcConnection.html" name="&amp;lt;jdbcConnection&amp;gt;" />
+        <item href="configreference/plugin.html" name="&amp;lt;plugin&amp;gt;" />
+        <item href="configreference/properties.html" name="&amp;lt;properties&amp;gt;" />
+        <item href="configreference/property.html" name="&amp;lt;property&amp;gt;" />
+        <item href="configreference/sqlMapGenerator.html" name="&amp;lt;sqlMapGenerator&amp;gt;" />
+        <item href="configreference/table.html" name="&amp;lt;table&amp;gt;" />
+      </item>
+      <item href="generatedobjects/results.html" name="Using the Generated Objects" collapse="true" >
+        <item href="generatedobjects/javamodel.html" name="Java Model Objects" />
+        <item href="generatedobjects/sqlmap.html" name="SQL Map Files" />
+        <item href="generatedobjects/javaclient.html" name="Java Client Objects" />
+        <item href="generatedobjects/exampleClassUsage.html" name="Example Class Usage Notes" />
+        <item href="generatedobjects/extendingExampleClass.html" name="Extending the Example Classes" />
+      </item>
+      <item href="usage/intro.html" name="Database Specific Information" collapse="true" >
+        <item href="usage/db2.html" name="DB2" />
+        <item href="usage/mysql.html" name="MySql" />
+        <item href="usage/oracle.html" name="Oracle" />
+        <item href="usage/postgresql.html" name="PostgreSQL" />
+      </item>
+      <item href="reference/intro.html" name="Other Reference Information" collapse="true" >
+        <item href="reference/building.html" name="Building from Source" />
+        <item href="reference/extending.html" name="Extending MyBatis Generator" />
+        <item href="reference/pluggingIn.html" name="Implementing Plugins" />
+        <item href="reference/logging.html" name="Logging Information" />
+        <item href="reference/plugins.html" name="Supplied Plugins" />
+        <item href="philosophy.html" name="Design Philosophy" />
+      </item>
     </menu>
   </body>
 </project>

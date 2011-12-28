@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 <toc label="MyBatis Generator Core Documentation" link_to="toc.xml#mbgdoc">
-   <topic href="html/mbgdoc/intro.html" label="Introduction"/>
+   <topic href="html/mbgdoc/index.html" label="Introduction"/>
    <topic href="html/mbgdoc/whatsNew.html" label="What&apos;s New"/>
    <topic href="html/mbgdoc/quickstart.html" label="Quick Start Guide"/>
    <topic href="html/mbgdoc/running/running.html" label="Running MyBatis Generator">

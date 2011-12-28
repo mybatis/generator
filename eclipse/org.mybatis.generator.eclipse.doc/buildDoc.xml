@@ -30,14 +30,18 @@
     </javadoc>
   	
   	<copy todir="html/mbgdoc">
-  	  <fileset dir="../../core/mybatis-generator-core/doc/html">
-  	    <exclude name="style.css"/>
+  	  <fileset dir="../../core/mybatis-generator-core/src/site/xhtml">
+  	    <include name="**/*.xhtml"/>
   	  </fileset>
-   	  <fileset dir="html-src/mbgdoc">
-   	    <include name="style.css"/>
-   	  </fileset>
+      <mapper type="glob" from="*.xhtml" to="*.html" />
   	</copy>
 
+  	<copy todir="html/mbgdoc">
+   	  <fileset dir="html-src/mbgdoc">
+   	    <include name="mbgstyle.css"/>
+   	  </fileset>
+  	</copy>
+  	
   	<copy todir="html/eclipseui">
   	  <fileset dir="html-src/eclipseui" />
   	</copy>

@@ -84,5 +84,7 @@
         <item href="philosophy.html" name="Design Philosophy" />
       </item>
     </menu>
+    
+    <menu ref="reports"/>
   </body>
 </project>

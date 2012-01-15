@@ -32,7 +32,24 @@
   <name>MyBatis Generator Core</name>
 
   <build>
+    <!-- this build creates and installs an instrumented JAR file
+         for use by the systests projects - so we can gather
+         consolidated coverage information
+    -->
     <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>cobertura-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>cobertura-instrument</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>instrument</goal>
+            </goals>
+          </execution>
+        </executions>      
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
@@ -43,6 +60,35 @@
             </manifest>
           </archive>
         </configuration>
+        <executions>
+          <execution>
+            <id>cobertura-jar</id>
+            <phase>integration-test</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+            <configuration>
+              <classifier>cobertura</classifier>
+              <classesDirectory>${basedir}/target/generated-classes/cobertura</classesDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-install-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>cobertura-install</id>
+            <phase>integration-test</phase>
+            <goals>
+              <goal>install</goal>
+            </goals>
+            <configuration>
+              <classifier>cobertura</classifier>
+            </configuration>
+          </execution>
+        </executions>      
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -104,6 +150,10 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>jdepend-maven-plugin</artifactId>
         <version>2.0-beta-2</version>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>cobertura-maven-plugin</artifactId>
       </plugin>
     </plugins>
   </reporting>

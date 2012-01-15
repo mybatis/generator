@@ -66,7 +66,7 @@
   </build>
 
   <scm>
-    <url>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/generator/trunk/core/mybatis-generator-systests-common</url>
+    <url>https://mybatis.googlecode.com/svn/sub-projects/generator/trunk/core/mybatis-generator-systests-common</url>
     <connection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/generator/trunk/core/mybatis-generator-systests-common</connection>
     <developerConnection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/generator/trunk/core/mybatis-generator-systests-common</developerConnection>
   </scm>

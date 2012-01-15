@@ -64,7 +64,7 @@
   </dependencies>
 
   <scm>
-    <url>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/generator/trunk/core/mybatis-generator-maven-plugin</url>
+    <url>https://mybatis.googlecode.com/svn/sub-projects/generator/trunk/core/mybatis-generator-maven-plugin</url>
     <connection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/generator/trunk/core/mybatis-generator-maven-plugin</connection>
     <developerConnection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/generator/trunk/core/mybatis-generator-maven-plugin</developerConnection>
   </scm>

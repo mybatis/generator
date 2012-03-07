@@ -1066,7 +1066,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         sb.append(operator);
         sb.append("\", "); //$NON-NLS-1$
 
-        if (introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {
+        if (introspectedColumn.getFullyQualifiedJavaType().isPrimitive() && !introspectedTable.isJava5Targeted()) {
             sb.append("new "); //$NON-NLS-1$
             sb.append(introspectedColumn.getFullyQualifiedJavaType()
                     .getPrimitiveTypeWrapper().getShortName());
@@ -1135,7 +1135,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
             sb.append(" not between"); //$NON-NLS-1$
         }
         sb.append("\", "); //$NON-NLS-1$
-        if (introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {
+        if (introspectedColumn.getFullyQualifiedJavaType().isPrimitive() && !introspectedTable.isJava5Targeted()) {
             sb.append("new "); //$NON-NLS-1$
             sb.append(introspectedColumn.getFullyQualifiedJavaType()
                     .getPrimitiveTypeWrapper().getShortName());

@@ -1062,10 +1062,12 @@ public class ExampleGenerator extends AbstractJavaGenerator {
                 .getFullyQualifiedJavaType(), "value2")); //$NON-NLS-1$
         method.addParameter(new Parameter(FullyQualifiedJavaType
                 .getStringInstance(), "property")); //$NON-NLS-1$
-        method.addBodyLine("if (value1 == null || value2 == null) {"); //$NON-NLS-1$
-        method
+        if (!introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {
+            method.addBodyLine("if (value1 == null || value2 == null) {"); //$NON-NLS-1$
+            method
                 .addBodyLine("throw new RuntimeException(\"Between values for \" + property + \" cannot be null\");"); //$NON-NLS-1$
-        method.addBodyLine("}"); //$NON-NLS-1$
+            method.addBodyLine("}"); //$NON-NLS-1$
+        }
 
         method.addBodyLine(
                 String.format("%s.add(new Criterion(condition, value1, value2, \"%s\"));", //$NON-NLS-1$

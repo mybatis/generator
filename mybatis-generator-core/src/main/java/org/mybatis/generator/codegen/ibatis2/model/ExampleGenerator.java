@@ -842,14 +842,22 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         method.setName(sb.toString());
         method.addParameter(new Parameter(FullyQualifiedJavaType
                 .getStringInstance(), "condition")); //$NON-NLS-1$
-        method.addParameter(new Parameter(introspectedColumn
+        if (introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {
+            method.addParameter(new Parameter(introspectedColumn
+                    .getFullyQualifiedJavaType().getPrimitiveTypeWrapper(),
+                    "value")); //$NON-NLS-1$
+        } else {
+            method.addParameter(new Parameter(introspectedColumn
                 .getFullyQualifiedJavaType(), "value")); //$NON-NLS-1$
+        }
         method.addParameter(new Parameter(FullyQualifiedJavaType
                 .getStringInstance(), "property")); //$NON-NLS-1$
-        method.addBodyLine("if (value == null) {"); //$NON-NLS-1$
-        method
+        if (!introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {
+            method.addBodyLine("if (value == null) {"); //$NON-NLS-1$
+            method
                 .addBodyLine("throw new RuntimeException(\"Value for \" + property + \" cannot be null\");"); //$NON-NLS-1$
-        method.addBodyLine("}"); //$NON-NLS-1$
+            method.addBodyLine("}"); //$NON-NLS-1$
+        }
         if (generateForJava5) {
             method
                     .addBodyLine("Map<String, Object> map = new HashMap<String, Object>();"); //$NON-NLS-1$
@@ -868,8 +876,13 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         FullyQualifiedJavaType listOfObjects = FullyQualifiedJavaType
                 .getNewListInstance();
         if (generateForJava5) {
-            listOfObjects.addTypeArgument(introspectedColumn
+            if (introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {
+                listOfObjects.addTypeArgument(introspectedColumn
+                        .getFullyQualifiedJavaType().getPrimitiveTypeWrapper());
+            } else {
+                listOfObjects.addTypeArgument(introspectedColumn
                     .getFullyQualifiedJavaType());
+            }
         }
 
         sb.setLength(0);
@@ -888,7 +901,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
                 .getStringInstance(), "property")); //$NON-NLS-1$
         method.addBodyLine("if (values == null || values.size() == 0) {"); //$NON-NLS-1$
         method
-                .addBodyLine("throw new RuntimeException(\"Value list for \" + property + \" cannot be null or empty\");"); //$NON-NLS-1$
+            .addBodyLine("throw new RuntimeException(\"Value list for \" + property + \" cannot be null or empty\");"); //$NON-NLS-1$
         method.addBodyLine("}"); //$NON-NLS-1$
         if (generateForJava5) {
             method
@@ -916,10 +929,19 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         method.setName(sb.toString());
         method.addParameter(new Parameter(FullyQualifiedJavaType
                 .getStringInstance(), "condition")); //$NON-NLS-1$
-        method.addParameter(new Parameter(introspectedColumn
+        if (introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {
+            method.addParameter(new Parameter(introspectedColumn
+                    .getFullyQualifiedJavaType().getPrimitiveTypeWrapper(),
+                    "value1")); //$NON-NLS-1$
+                method.addParameter(new Parameter(introspectedColumn
+                    .getFullyQualifiedJavaType().getPrimitiveTypeWrapper(),
+                    "value2")); //$NON-NLS-1$
+        } else {
+            method.addParameter(new Parameter(introspectedColumn
                 .getFullyQualifiedJavaType(), "value1")); //$NON-NLS-1$
-        method.addParameter(new Parameter(introspectedColumn
+            method.addParameter(new Parameter(introspectedColumn
                 .getFullyQualifiedJavaType(), "value2")); //$NON-NLS-1$
+        }
         method.addParameter(new Parameter(FullyQualifiedJavaType
                 .getStringInstance(), "property")); //$NON-NLS-1$
         method.addBodyLine("if (value1 == null || value2 == null) {"); //$NON-NLS-1$
@@ -927,13 +949,19 @@ public class ExampleGenerator extends AbstractJavaGenerator {
                 .addBodyLine("throw new RuntimeException(\"Between values for \" + property + \" cannot be null\");"); //$NON-NLS-1$
         method.addBodyLine("}"); //$NON-NLS-1$
         if (generateForJava5) {
+            String shortName;
+            if (introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {
+                shortName = introspectedColumn.getFullyQualifiedJavaType()
+                        .getPrimitiveTypeWrapper().getShortName();
+            } else {
+                shortName = introspectedColumn.getFullyQualifiedJavaType()
+                        .getShortName();
+            }
             sb.setLength(0);
             sb.append("List<"); //$NON-NLS-1$
-            sb.append(introspectedColumn.getFullyQualifiedJavaType()
-                    .getShortName());
+            sb.append(shortName);
             sb.append("> list = new ArrayList<"); //$NON-NLS-1$
-            sb.append(introspectedColumn.getFullyQualifiedJavaType()
-                    .getShortName());
+            sb.append(shortName);
             sb.append(">();"); //$NON-NLS-1$
             method.addBodyLine(sb.toString());
         } else {

@@ -480,6 +480,7 @@ public class FlatJava5Test extends AbstractAnnotatedFlatTest {
             record.setLastname("Butler");
             record.setTimefield(new Date());
             record.setTimestampfield(new Date());
+            record.setStringboolean(true);
 
             mapper.insert(record);
 
@@ -504,6 +505,7 @@ public class FlatJava5Test extends AbstractAnnotatedFlatTest {
                     .getTimefield()));
             assertEquals(record.getTimestampfield(), returnedRecord
                     .getTimestampfield());
+            assertEquals(record.isStringboolean(), returnedRecord.isStringboolean());
         } finally {
             sqlSession.close();
         }

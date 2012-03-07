@@ -41,6 +41,7 @@ create table PKFields (
   decimal155Field decimal(15, 5),
   "wierd$Field" int,
   "birth date" date,
+  stringBoolean char(1),
   primary key (id1, id2)
 );
 

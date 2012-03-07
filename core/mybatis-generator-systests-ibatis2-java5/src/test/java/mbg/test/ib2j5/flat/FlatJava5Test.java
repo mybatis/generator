@@ -469,6 +469,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.setLastname("Butler");
             record.setTimefield(new Date());
             record.setTimestampfield(new Date());
+            record.setStringboolean(true);
 
             dao.insert(record);
 
@@ -493,6 +494,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
                     .getTimefield()));
             assertEquals(record.getTimestampfield(), returnedRecord
                     .getTimestampfield());
+            assertEquals(record.isStringboolean(), returnedRecord.isStringboolean());
         } catch (SQLException e) {
             fail(e.getMessage());
         }
@@ -876,6 +878,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.setLastname("Flintstone");
             record.setId1(1);
             record.setId2(1);
+            record.setStringboolean(true);
             dao.insert(record);
 
             record = new Pkfields();
@@ -890,6 +893,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.setLastname("Flintstone");
             record.setId1(1);
             record.setId2(3);
+            record.setStringboolean(true);
             dao.insert(record);
 
             record = new Pkfields();
@@ -897,6 +901,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.setLastname("Rubble");
             record.setId1(2);
             record.setId2(1);
+            record.setStringboolean(true);
             dao.insert(record);
 
             record = new Pkfields();
@@ -911,14 +916,18 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.setLastname("Rubble");
             record.setId1(2);
             record.setId2(3);
+            record.setStringboolean(true);
             dao.insert(record);
 
             List<Integer> ids = new ArrayList<Integer>();
             ids.add(1);
             ids.add(3);
+            
+            List<Boolean> bools = new ArrayList<Boolean>();
+            bools.add(Boolean.TRUE);
 
             PkfieldsExample example = new PkfieldsExample();
-            example.createCriteria().andId2In(ids);
+            example.createCriteria().andId2In(ids).andStringbooleanIn(bools);
 
             example.setOrderByClause("ID1, ID2");
             List<Pkfields> answer = dao.selectByExample(example);

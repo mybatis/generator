@@ -33,6 +33,7 @@
     <table tableName="PKOnly" />
     <table tableName="PKFields" alias="B" >
       <columnOverride column="wierd$Field" delimitedColumnName="true"/>
+      <columnOverride column="stringBoolean" javaType="boolean" typeHandler="mbg.test.ib2j2.common.StringBooleanTypeHandler"/>
     </table>
     <table tableName="PKBlobs" />
     <table tableName="PKFieldsBlobs" />

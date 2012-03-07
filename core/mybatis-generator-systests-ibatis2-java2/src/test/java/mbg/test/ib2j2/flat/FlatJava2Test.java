@@ -445,6 +445,7 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             record.setLastname("Butler");
             record.setTimefield(new Date());
             record.setTimestampfield(new Date());
+            record.setStringboolean(true);
 
             dao.insert(record);
 
@@ -470,6 +471,7 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
                     .getTimefield()));
             assertEquals(record.getTimestampfield(), returnedRecord
                     .getTimestampfield());
+            assertEquals(record.isStringboolean(), returnedRecord.isStringboolean());
         } catch (SQLException e) {
             fail(e.getMessage());
         }
@@ -848,6 +850,7 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             record.setLastname("Flintstone");
             record.setId1(new Integer(1));
             record.setId2(new Integer(1));
+            record.setStringboolean(true);
             dao.insert(record);
 
             record = new Pkfields();
@@ -862,6 +865,7 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             record.setLastname("Flintstone");
             record.setId1(new Integer(1));
             record.setId2(new Integer(3));
+            record.setStringboolean(true);
             dao.insert(record);
 
             record = new Pkfields();
@@ -869,6 +873,7 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             record.setLastname("Rubble");
             record.setId1(new Integer(2));
             record.setId2(new Integer(1));
+            record.setStringboolean(true);
             dao.insert(record);
 
             record = new Pkfields();
@@ -883,14 +888,18 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             record.setLastname("Rubble");
             record.setId1(new Integer(2));
             record.setId2(new Integer(3));
+            record.setStringboolean(true);
             dao.insert(record);
 
             List ids = new ArrayList();
             ids.add(new Integer(1));
             ids.add(new Integer(3));
+            
+            List bools = new ArrayList();
+            bools.add(Boolean.FALSE);
 
             PkfieldsExample example = new PkfieldsExample();
-            example.createCriteria().andId2In(ids);
+            example.createCriteria().andId2In(ids).andStringbooleanNotIn(bools);
 
             example.setOrderByClause("ID1, ID2");
             List answer = dao.selectByExample(example);

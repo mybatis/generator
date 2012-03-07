@@ -484,7 +484,7 @@ public class FlatJava5Test extends AbstractMixedFlatTest {
 
             mapper.insert(record);
 
-            Pkfields returnedRecord = mapper.selectByPrimaryKey(1, 2);
+            Pkfields returnedRecord = mapper.selectByPrimaryKey(2, 1);
             assertNotNull(returnedRecord);
 
             assertTrue(datesAreEqual(record.getDatefield(), returnedRecord
@@ -530,7 +530,7 @@ public class FlatJava5Test extends AbstractMixedFlatTest {
             int rows = mapper.updateByPrimaryKey(record);
             assertEquals(1, rows);
 
-            Pkfields record2 = mapper.selectByPrimaryKey(1, 2);
+            Pkfields record2 = mapper.selectByPrimaryKey(2, 1);
 
             assertEquals(record.getFirstname(), record2.getFirstname());
             assertEquals(record.getLastname(), record2.getLastname());
@@ -565,7 +565,7 @@ public class FlatJava5Test extends AbstractMixedFlatTest {
             int rows = mapper.updateByPrimaryKeySelective(newRecord);
             assertEquals(1, rows);
 
-            Pkfields returnedRecord = mapper.selectByPrimaryKey(1, 2);
+            Pkfields returnedRecord = mapper.selectByPrimaryKey(2, 1);
 
             assertTrue(datesAreEqual(record.getDatefield(), returnedRecord
                     .getDatefield()));
@@ -605,7 +605,7 @@ public class FlatJava5Test extends AbstractMixedFlatTest {
 
             mapper.insert(record);
 
-            int rows = mapper.deleteByPrimaryKey(1, 2);
+            int rows = mapper.deleteByPrimaryKey(2, 1);
             assertEquals(1, rows);
 
             PkfieldsExample example = new PkfieldsExample();
@@ -674,7 +674,7 @@ public class FlatJava5Test extends AbstractMixedFlatTest {
             record.setId2(4);
             mapper.insert(record);
 
-            Pkfields newRecord = mapper.selectByPrimaryKey(3, 4);
+            Pkfields newRecord = mapper.selectByPrimaryKey(4, 3);
 
             assertNotNull(newRecord);
             assertEquals(record.getFirstname(), newRecord.getFirstname());

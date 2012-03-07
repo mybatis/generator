@@ -473,7 +473,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
 
             dao.insert(record);
 
-            Pkfields returnedRecord = dao.selectByPrimaryKey(1, 2);
+            Pkfields returnedRecord = dao.selectByPrimaryKey(2, 1);
             assertNotNull(returnedRecord);
 
             assertTrue(datesAreEqual(record.getDatefield(), returnedRecord
@@ -519,7 +519,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             int rows = dao.updateByPrimaryKey(record);
             assertEquals(1, rows);
 
-            Pkfields record2 = dao.selectByPrimaryKey(1, 2);
+            Pkfields record2 = dao.selectByPrimaryKey(2, 1);
 
             assertEquals(record.getFirstname(), record2.getFirstname());
             assertEquals(record.getLastname(), record2.getLastname());
@@ -553,7 +553,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             int rows = dao.updateByPrimaryKeySelective(newRecord);
             assertEquals(1, rows);
 
-            Pkfields returnedRecord = dao.selectByPrimaryKey(1, 2);
+            Pkfields returnedRecord = dao.selectByPrimaryKey(2, 1);
 
             assertTrue(datesAreEqual(record.getDatefield(), returnedRecord
                     .getDatefield()));
@@ -592,7 +592,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
 
             dao.insert(record);
 
-            int rows = dao.deleteByPrimaryKey(1, 2);
+            int rows = dao.deleteByPrimaryKey(2, 1);
             assertEquals(1, rows);
 
             PkfieldsExample example = new PkfieldsExample();
@@ -659,7 +659,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
             record.setId2(4);
             dao.insert(record);
 
-            Pkfields newRecord = dao.selectByPrimaryKey(3, 4);
+            Pkfields newRecord = dao.selectByPrimaryKey(4, 3);
 
             assertNotNull(newRecord);
             assertEquals(record.getFirstname(), newRecord.getFirstname());

@@ -449,8 +449,8 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
 
             dao.insert(record);
 
-            Pkfields returnedRecord = dao.selectByPrimaryKey(new Integer(1),
-                    new Integer(2));
+            Pkfields returnedRecord = dao.selectByPrimaryKey(new Integer(2),
+                    new Integer(1));
             assertNotNull(returnedRecord);
 
             assertTrue(TestUtilities.datesAreEqual(record.getDatefield(), returnedRecord
@@ -495,8 +495,8 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             int rows = dao.updateByPrimaryKey(record);
             assertEquals(1, rows);
 
-            Pkfields record2 = dao.selectByPrimaryKey(new Integer(1),
-                    new Integer(2));
+            Pkfields record2 = dao.selectByPrimaryKey(new Integer(2),
+                    new Integer(1));
 
             assertEquals(record.getFirstname(), record2.getFirstname());
             assertEquals(record.getLastname(), record2.getLastname());
@@ -529,8 +529,8 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             int rows = dao.updateByPrimaryKeySelective(newRecord);
             assertEquals(1, rows);
 
-            Pkfields returnedRecord = dao.selectByPrimaryKey(new Integer(1),
-                    new Integer(2));
+            Pkfields returnedRecord = dao.selectByPrimaryKey(new Integer(2),
+                    new Integer(1));
 
             assertTrue(TestUtilities.datesAreEqual(record.getDatefield(), returnedRecord
                     .getDatefield()));
@@ -568,7 +568,7 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
 
             dao.insert(record);
 
-            int rows = dao.deleteByPrimaryKey(new Integer(1), new Integer(2));
+            int rows = dao.deleteByPrimaryKey(new Integer(2), new Integer(1));
             assertEquals(1, rows);
 
             PkfieldsExample example = new PkfieldsExample();
@@ -633,8 +633,8 @@ public class FlatJava2Test extends AbstractFlatJava2Test {
             record.setId2(new Integer(4));
             dao.insert(record);
 
-            Pkfields newRecord = dao.selectByPrimaryKey(new Integer(3),
-                    new Integer(4));
+            Pkfields newRecord = dao.selectByPrimaryKey(new Integer(4),
+                    new Integer(3));
 
             assertNotNull(newRecord);
             assertEquals(record.getFirstname(), newRecord.getFirstname());

@@ -792,16 +792,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         sb.append(' ');
         sb.append(operator);
         sb.append("\", "); //$NON-NLS-1$
-
-        if (introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {
-            sb.append("new "); //$NON-NLS-1$
-            sb.append(introspectedColumn.getFullyQualifiedJavaType()
-                    .getPrimitiveTypeWrapper().getShortName());
-            sb.append("(value)"); //$NON-NLS-1$
-        } else {
-            sb.append("value"); //$NON-NLS-1$
-        }
-
+        sb.append("value"); //$NON-NLS-1$
         sb.append(", \""); //$NON-NLS-1$
         sb.append(introspectedColumn.getJavaProperty());
         sb.append("\");"); //$NON-NLS-1$
@@ -862,19 +853,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
             sb.append(" not between"); //$NON-NLS-1$
         }
         sb.append("\", "); //$NON-NLS-1$
-        if (introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {
-            sb.append("new "); //$NON-NLS-1$
-            sb.append(introspectedColumn.getFullyQualifiedJavaType()
-                    .getPrimitiveTypeWrapper().getShortName());
-            sb.append("(value1), "); //$NON-NLS-1$
-            sb.append("new "); //$NON-NLS-1$
-            sb.append(introspectedColumn.getFullyQualifiedJavaType()
-                    .getPrimitiveTypeWrapper().getShortName());
-            sb.append("(value2)"); //$NON-NLS-1$
-        } else {
-            sb.append("value1, value2"); //$NON-NLS-1$
-        }
-
+        sb.append("value1, value2"); //$NON-NLS-1$
         sb.append(", \""); //$NON-NLS-1$
         sb.append(introspectedColumn.getJavaProperty());
         sb.append("\");"); //$NON-NLS-1$

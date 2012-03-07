@@ -33,6 +33,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -89,9 +90,15 @@ public class DatabaseIntrospector {
         }
 
         try {
+            // keep primary columns in key sequence order
+            Map<Short, String> keyColumns = new TreeMap<Short, String>();
             while (rs.next()) {
                 String columnName = rs.getString("COLUMN_NAME"); //$NON-NLS-1$
-
+                short keySeq = rs.getShort("KEY_SEQ"); //$NON-NLS-1$
+                keyColumns.put(keySeq, columnName);
+            }
+            
+            for (String columnName : keyColumns.values()) {
                 introspectedTable.addPrimaryKeyColumn(columnName);
             }
         } catch (SQLException e) {

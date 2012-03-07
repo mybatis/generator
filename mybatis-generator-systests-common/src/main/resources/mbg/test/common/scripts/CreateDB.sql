@@ -42,7 +42,7 @@ create table PKFields (
   "wierd$Field" int,
   "birth date" date,
   stringBoolean char(1),
-  primary key (id1, id2)
+  primary key (id2, id1)
 );
 
 create table PKBlobs (

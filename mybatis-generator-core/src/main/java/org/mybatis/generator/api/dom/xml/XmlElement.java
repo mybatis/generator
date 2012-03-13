@@ -39,6 +39,21 @@ public class XmlElement extends Element {
         elements = new ArrayList<Element>();
         this.name = name;
     }
+    
+    /**
+     * Copy constructor.  Not a truly deep copy, but close enough
+     * for most purposes.
+     * 
+     * @param original
+     */
+    public XmlElement(XmlElement original) {
+        super();
+        attributes = new ArrayList<Attribute>();
+        attributes.addAll(original.attributes);
+        elements = new ArrayList<Element>();
+        elements.addAll(original.elements);
+        this.name = original.name;
+    }
 
     /**
      * @return Returns the attributes.

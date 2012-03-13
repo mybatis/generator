@@ -286,6 +286,7 @@
 
   <context id="FlatJava5_Annotated" defaultModelType="flat">
     <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
+    <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"/>
 
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
         connectionURL="jdbc:hsqldb:mem:aname"
@@ -485,6 +486,7 @@
 
   <context id="FlatJava5_Mixed" defaultModelType="flat">
     <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
+    <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"/>
 
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
         connectionURL="jdbc:hsqldb:mem:aname"

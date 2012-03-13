@@ -16,6 +16,7 @@
 package org.mybatis.generator.plugins;
 
 import java.util.List;
+import java.util.Properties;
 
 import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.IntrospectedTable;
@@ -40,11 +41,14 @@ import org.mybatis.generator.api.dom.java.TopLevelClass;
 public class SerializablePlugin extends PluginAdapter {
 
     private FullyQualifiedJavaType serializable;
+    private FullyQualifiedJavaType gwtSerializable;
+    private boolean addGWTInterface;
+    private boolean suppressJavaInterface;
 
     public SerializablePlugin() {
         super();
         serializable = new FullyQualifiedJavaType("java.io.Serializable"); //$NON-NLS-1$
-
+        gwtSerializable = new FullyQualifiedJavaType("com.google.gwt.user.client.rpc.IsSerializable"); //$NON-NLS-1$
     }
 
     public boolean validate(List<String> warnings) {
@@ -52,6 +56,13 @@ public class SerializablePlugin extends PluginAdapter {
         return true;
     }
 
+    @Override
+    public void setProperties(Properties properties) {
+        super.setProperties(properties);
+        addGWTInterface = Boolean.valueOf(properties.getProperty("addGWTInterface"));
+        suppressJavaInterface = Boolean.valueOf(properties.getProperty("suppressJavaInterface"));
+    }
+    
     @Override
     public boolean modelBaseRecordClassGenerated(TopLevelClass topLevelClass,
             IntrospectedTable introspectedTable) {
@@ -75,18 +86,25 @@ public class SerializablePlugin extends PluginAdapter {
 
     protected void makeSerializable(TopLevelClass topLevelClass,
             IntrospectedTable introspectedTable) {
-        topLevelClass.addImportedType(serializable);
-        topLevelClass.addSuperInterface(serializable);
+        if (addGWTInterface) {
+            topLevelClass.addImportedType(gwtSerializable);
+            topLevelClass.addSuperInterface(gwtSerializable);
+        }
+        
+        if (!suppressJavaInterface) {
+            topLevelClass.addImportedType(serializable);
+            topLevelClass.addSuperInterface(serializable);
 
-        Field field = new Field();
-        field.setFinal(true);
-        field.setInitializationString("1L"); //$NON-NLS-1$
-        field.setName("serialVersionUID"); //$NON-NLS-1$
-        field.setStatic(true);
-        field.setType(new FullyQualifiedJavaType("long")); //$NON-NLS-1$
-        field.setVisibility(JavaVisibility.PRIVATE);
-        context.getCommentGenerator().addFieldComment(field, introspectedTable);
+            Field field = new Field();
+            field.setFinal(true);
+            field.setInitializationString("1L"); //$NON-NLS-1$
+            field.setName("serialVersionUID"); //$NON-NLS-1$
+            field.setStatic(true);
+            field.setType(new FullyQualifiedJavaType("long")); //$NON-NLS-1$
+            field.setVisibility(JavaVisibility.PRIVATE);
+            context.getCommentGenerator().addFieldComment(field, introspectedTable);
 
-        topLevelClass.addField(field);
+            topLevelClass.addField(field);
+        }
     }
 }

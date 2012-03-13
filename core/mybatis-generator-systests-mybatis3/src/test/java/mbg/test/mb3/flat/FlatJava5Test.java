@@ -1076,7 +1076,7 @@ public class FlatJava5Test extends AbstractFlatTest {
 
             example.setOrderByClause("ID1, ID2");
             RowBounds rb = new RowBounds(2, 3);
-            List<Pkfields> answer = mapper.selectByExample(example, rb);
+            List<Pkfields> answer = mapper.selectByExampleWithRowbounds(example, rb);
             assertEquals(3, answer.size());
             assertEquals("Pebbles", answer.get(0).getFirstname());
             assertEquals("Barney", answer.get(1).getFirstname());

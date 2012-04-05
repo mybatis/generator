@@ -30,7 +30,7 @@
   <mappers>
     <mapper resource="mbg/test/mb3/generated/hierarchical/xml/AwfulTableMapper.xml" />
     <mapper resource="mbg/test/mb3/generated/hierarchical/xml/FieldsblobsMapper.xml" />
-    <mapper resource="mbg/test/mb3/generated/hierarchical/xml/FieldsonlyMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/hierarchical/xml/subpackage/FieldsonlyMapper.xml" />
     <mapper resource="mbg/test/mb3/generated/hierarchical/xml/PkblobsMapper.xml" />
     <mapper resource="mbg/test/mb3/generated/hierarchical/xml/PkfieldsMapper.xml" />
     <mapper resource="mbg/test/mb3/generated/hierarchical/xml/PkfieldsblobsMapper.xml" />

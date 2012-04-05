@@ -21,7 +21,7 @@
     <property name="dataSource" ref="dataSource"/>
   </bean>
 
-  <bean id="FieldsonlyDAO" class="mbg.test.ib2j5.generated.hierarchical.dao.FieldsonlyDAOImpl">
+  <bean id="FieldsonlyDAO" class="mbg.test.ib2j5.generated.hierarchical.dao.subpackage.FieldsonlyDAOImpl">
     <property name="sqlMapClient" ref="sqlMapClient" />
   </bean>
   

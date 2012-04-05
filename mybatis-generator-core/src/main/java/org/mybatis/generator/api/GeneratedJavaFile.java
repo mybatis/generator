@@ -38,6 +38,12 @@ public class GeneratedJavaFile extends GeneratedFile {
         this.javaFormatter = javaFormatter;
     }
 
+    public GeneratedJavaFile(CompilationUnit compilationUnit,
+            String targetProject,
+            JavaFormatter javaFormatter) {
+        this(compilationUnit, targetProject, null, javaFormatter);
+    }
+    
     @Override
     public String getFormattedContent() {
         return javaFormatter.getFormattedContent(compilationUnit);

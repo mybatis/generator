@@ -33,19 +33,17 @@ import java.util.List;
 
 import mbg.test.ib2j5.generated.hierarchical.dao.AwfulTableDAO;
 import mbg.test.ib2j5.generated.hierarchical.dao.FieldsblobsDAO;
-import mbg.test.ib2j5.generated.hierarchical.dao.FieldsonlyDAO;
 import mbg.test.ib2j5.generated.hierarchical.dao.PkblobsDAO;
 import mbg.test.ib2j5.generated.hierarchical.dao.PkfieldsDAO;
 import mbg.test.ib2j5.generated.hierarchical.dao.PkfieldsblobsDAO;
 import mbg.test.ib2j5.generated.hierarchical.dao.PkonlyDAO;
+import mbg.test.ib2j5.generated.hierarchical.dao.subpackage.FieldsonlyDAO;
 import mbg.test.ib2j5.generated.hierarchical.model.AwfulTable;
 import mbg.test.ib2j5.generated.hierarchical.model.AwfulTableExample;
 import mbg.test.ib2j5.generated.hierarchical.model.AwfulTableKey;
 import mbg.test.ib2j5.generated.hierarchical.model.Fieldsblobs;
 import mbg.test.ib2j5.generated.hierarchical.model.FieldsblobsExample;
 import mbg.test.ib2j5.generated.hierarchical.model.FieldsblobsWithBLOBs;
-import mbg.test.ib2j5.generated.hierarchical.model.Fieldsonly;
-import mbg.test.ib2j5.generated.hierarchical.model.FieldsonlyExample;
 import mbg.test.ib2j5.generated.hierarchical.model.PkblobsExample;
 import mbg.test.ib2j5.generated.hierarchical.model.PkblobsKey;
 import mbg.test.ib2j5.generated.hierarchical.model.PkblobsWithBLOBs;
@@ -58,6 +56,8 @@ import mbg.test.ib2j5.generated.hierarchical.model.PkfieldsblobsKey;
 import mbg.test.ib2j5.generated.hierarchical.model.PkfieldsblobsWithBLOBs;
 import mbg.test.ib2j5.generated.hierarchical.model.PkonlyExample;
 import mbg.test.ib2j5.generated.hierarchical.model.PkonlyKey;
+import mbg.test.ib2j5.generated.hierarchical.model.subpackage.Fieldsonly;
+import mbg.test.ib2j5.generated.hierarchical.model.subpackage.FieldsonlyExample;
 
 import org.junit.Test;
 

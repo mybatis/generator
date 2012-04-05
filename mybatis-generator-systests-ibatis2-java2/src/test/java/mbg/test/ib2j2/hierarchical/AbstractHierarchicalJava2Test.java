@@ -5,8 +5,6 @@ import mbg.test.ib2j2.generated.hierarchical.dao.AwfulTableDAO;
 import mbg.test.ib2j2.generated.hierarchical.dao.AwfulTableDAOImpl;
 import mbg.test.ib2j2.generated.hierarchical.dao.FieldsblobsDAO;
 import mbg.test.ib2j2.generated.hierarchical.dao.FieldsblobsDAOImpl;
-import mbg.test.ib2j2.generated.hierarchical.dao.FieldsonlyDAO;
-import mbg.test.ib2j2.generated.hierarchical.dao.FieldsonlyDAOImpl;
 import mbg.test.ib2j2.generated.hierarchical.dao.PkblobsDAO;
 import mbg.test.ib2j2.generated.hierarchical.dao.PkblobsDAOImpl;
 import mbg.test.ib2j2.generated.hierarchical.dao.PkfieldsDAO;
@@ -15,6 +13,8 @@ import mbg.test.ib2j2.generated.hierarchical.dao.PkfieldsblobsDAO;
 import mbg.test.ib2j2.generated.hierarchical.dao.PkfieldsblobsDAOImpl;
 import mbg.test.ib2j2.generated.hierarchical.dao.PkonlyDAO;
 import mbg.test.ib2j2.generated.hierarchical.dao.PkonlyDAOImpl;
+import mbg.test.ib2j2.generated.hierarchical.dao.subpackage.FieldsonlyDAO;
+import mbg.test.ib2j2.generated.hierarchical.dao.subpackage.FieldsonlyDAOImpl;
 
 public abstract class AbstractHierarchicalJava2Test extends AbstractTest {
 

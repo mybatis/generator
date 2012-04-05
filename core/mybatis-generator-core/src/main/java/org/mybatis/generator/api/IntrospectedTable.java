@@ -31,6 +31,7 @@ import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.config.JavaClientGeneratorConfiguration;
 import org.mybatis.generator.config.JavaModelGeneratorConfiguration;
 import org.mybatis.generator.config.ModelType;
+import org.mybatis.generator.config.PropertyHolder;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.config.SqlMapGeneratorConfiguration;
 import org.mybatis.generator.config.TableConfiguration;
@@ -756,12 +757,14 @@ public abstract class IntrospectedTable {
         } else {
             sb.append(config.getTargetPackage());
         }
-        if (isTrue(config
-                .getProperty(PropertyRegistry.ANY_ENABLE_SUB_PACKAGES))) {
-            sb.append(fullyQualifiedTable.getSubPackage());
-        }
+
+        sb.append(fullyQualifiedTable.getSubPackage(isSubPackagesEnabled(config)));
 
         return sb.toString();
+    }
+    
+    private boolean isSubPackagesEnabled(PropertyHolder propertyHolder) {
+        return isTrue(propertyHolder.getProperty(PropertyRegistry.ANY_ENABLE_SUB_PACKAGES));
     }
 
     protected String calculateJavaClientInterfacePackage() {
@@ -773,10 +776,8 @@ public abstract class IntrospectedTable {
 
         StringBuilder sb = new StringBuilder();
         sb.append(config.getTargetPackage());
-        if (isTrue(config
-                .getProperty(PropertyRegistry.ANY_ENABLE_SUB_PACKAGES))) {
-            sb.append(fullyQualifiedTable.getSubPackage());
-        }
+
+        sb.append(fullyQualifiedTable.getSubPackage(isSubPackagesEnabled(config)));
 
         return sb.toString();
     }
@@ -821,10 +822,7 @@ public abstract class IntrospectedTable {
 
         StringBuilder sb = new StringBuilder();
         sb.append(config.getTargetPackage());
-        if (isTrue(config
-                .getProperty(PropertyRegistry.ANY_ENABLE_SUB_PACKAGES))) {
-            sb.append(fullyQualifiedTable.getSubPackage());
-        }
+        sb.append(fullyQualifiedTable.getSubPackage(isSubPackagesEnabled(config)));
 
         return sb.toString();
     }
@@ -868,10 +866,7 @@ public abstract class IntrospectedTable {
         // config can be null if the Java client does not require XML
         if (config != null) {
             sb.append(config.getTargetPackage());
-            if (isTrue(config
-                    .getProperty(PropertyRegistry.ANY_ENABLE_SUB_PACKAGES))) {
-                sb.append(fullyQualifiedTable.getSubPackage());
-            }
+            sb.append(fullyQualifiedTable.getSubPackage(isSubPackagesEnabled(config)));
         }
 
         return sb.toString();

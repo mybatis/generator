@@ -8,7 +8,7 @@
   <settings useStatementNamespaces="true" />
 
   <sqlMap resource="mbg/test/ib2j5/generated/hierarchical/xml/FIELDSBLOBS_SqlMap.xml" />
-  <sqlMap resource="mbg/test/ib2j5/generated/hierarchical/xml/FIELDSONLY_SqlMap.xml" />
+  <sqlMap resource="mbg/test/ib2j5/generated/hierarchical/xml/subpackage/FIELDSONLY_SqlMap.xml" />
   <sqlMap resource="mbg/test/ib2j5/generated/hierarchical/xml/PKBLOBS_SqlMap.xml" />
   <sqlMap resource="mbg/test/ib2j5/generated/hierarchical/xml/PKFIELDS_SqlMap.xml" />
   <sqlMap resource="mbg/test/ib2j5/generated/hierarchical/xml/PKFIELDSBLOBS_SqlMap.xml" />

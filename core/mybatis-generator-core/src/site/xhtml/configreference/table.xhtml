@@ -106,7 +106,12 @@ identifiers in upper case.  In this instance, you should specify the attribute
         If not specified, MBG will generate a name automatically based on
         the tableName.  The name (either specified here, or generated
         automatically) will be used to compute generated domain class names
-        and DAO class names.</td>
+        and DAO class names.
+        <p>You can specify a package fragment in the domain object name.  For example,
+           if you specify <code>foo.Bar</code> then the domain object will be
+           <code>Bar</code> and package <code>foo</code> will be appended
+           to the target package specified in the generator configurations.</p>
+    </td>
   </tr>
   <tr>
     <td valign="top">enableInsert</td>

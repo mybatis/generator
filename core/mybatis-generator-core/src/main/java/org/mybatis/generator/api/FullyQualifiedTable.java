@@ -42,6 +42,8 @@ public class FullyQualifiedTable {
     private String runtimeTableName;
 
     private String domainObjectName;
+    
+    private String domainObjectSubPackage;
 
     private String alias;
 
@@ -120,11 +122,20 @@ public class FullyQualifiedTable {
         this.introspectedCatalog = introspectedCatalog;
         this.introspectedSchema = introspectedSchema;
         this.introspectedTableName = introspectedTableName;
-        this.domainObjectName = domainObjectName;
         this.ignoreQualifiersAtRuntime = ignoreQualifiersAtRuntime;
         this.runtimeCatalog = runtimeCatalog;
         this.runtimeSchema = runtimeSchema;
         this.runtimeTableName = runtimeTableName;
+        
+        if (stringHasValue(domainObjectName)) {
+            int index = domainObjectName.lastIndexOf('.');
+            if (index == -1) {
+                this.domainObjectName = domainObjectName;
+            } else {
+                this.domainObjectName = domainObjectName.substring(index + 1);
+                this.domainObjectSubPackage = domainObjectName.substring(0, index);
+            }
+        }
 
         if (alias == null) {
             this.alias = null;
@@ -284,9 +295,9 @@ public class FullyQualifiedTable {
      * 
      * @return the subpackage for this table
      */
-    public String getSubPackage() {
+    public String getSubPackage(boolean isSubPackagesEnabled) {
         StringBuilder sb = new StringBuilder();
-        if (!ignoreQualifiersAtRuntime) {
+        if (!ignoreQualifiersAtRuntime && isSubPackagesEnabled) {
             if (stringHasValue(runtimeCatalog)) {
                 sb.append('.');
                 sb.append(runtimeCatalog.toLowerCase());
@@ -302,6 +313,11 @@ public class FullyQualifiedTable {
                 sb.append('.');
                 sb.append(introspectedSchema.toLowerCase());
             }
+        }
+        
+        if (stringHasValue(domainObjectSubPackage)) {
+            sb.append('.');
+            sb.append(domainObjectSubPackage);
         }
 
         // TODO - strip characters that are not valid in package names

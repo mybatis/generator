@@ -43,7 +43,7 @@
       <item href="afterRunning.html" name="Tasks After Running MyBatis Generator" />
       <item href="migratingFromIbator.html" name="Migrating from Ibator" />
       <item href="migratingFromAbator.html" name="Migrating from Abator" />
-      <item href="configreference/xmlconfig.html" name="XML Configuration File" collapse="true" >
+      <item href="configreference/xmlconfig.html" name="XML Configuration Reference" collapse="true" >
         <item href="configreference/classPathEntry.html" name="&amp;lt;classPathEntry&amp;gt;" />
         <item href="configreference/columnOverride.html" name="&amp;lt;columnOverride&amp;gt;" />
         <item href="configreference/columnRenamingRule.html" name="&amp;lt;columnRenamingRule&amp;gt;" />

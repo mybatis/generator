@@ -111,5 +111,23 @@ values on the sqlMapGenerator configuration element.</p>
 <h2>org.mybatis.generator.plugins.ToStringPlugin</h2>
 <p>This plugin adds <code>toString()</code> methods to the generated
 model classes.</p>
+
+<h2>org.mybatis.generator.plugins.VirtualPrimaryKeyPlugin</h2>
+<p>This plugin can be used to specify columns that act as primary
+keys, even if they are not defined as primary key in the database.
+This is useful in the case where the database table does not have a
+primary defined.  Normally, MBG will generate a very limited
+set of methods if there is no primary key.  This plugin can be
+used to enable generation of the full compliment of MBG methods.</p>
+<p>To use the plugin, add the property "virtualKeyColumns" to your
+&lt;table&gt; configuration and set the value to a comma or space
+delimited list of column names that should be treated as primary
+keys.  The column names must exactly match the column names
+returned from the database (typically all UPPERCASE).  For example:</p>
+<pre>
+  &lt;table tableName="foo"&gt;
+    &lt;property name="virtualKeyColumns" value="ID1, ID2" /&gt;
+  &lt;/table&gt;
+</pre>
 </body>
 </html>

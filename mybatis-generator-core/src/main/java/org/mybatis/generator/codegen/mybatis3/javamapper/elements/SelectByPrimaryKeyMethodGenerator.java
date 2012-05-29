@@ -34,8 +34,11 @@ import org.mybatis.generator.api.dom.java.Parameter;
 public class SelectByPrimaryKeyMethodGenerator extends
         AbstractJavaMapperMethodGenerator {
 
-    public SelectByPrimaryKeyMethodGenerator() {
+    private boolean isSimple;
+    
+    public SelectByPrimaryKeyMethodGenerator(boolean isSimple) {
         super();
+        this.isSimple = isSimple;
     }
 
     @Override
@@ -51,7 +54,7 @@ public class SelectByPrimaryKeyMethodGenerator extends
 
         method.setName(introspectedTable.getSelectByPrimaryKeyStatementId());
 
-        if (introspectedTable.getRules().generatePrimaryKeyClass()) {
+        if (!isSimple && introspectedTable.getRules().generatePrimaryKeyClass()) {
             FullyQualifiedJavaType type = new FullyQualifiedJavaType(
                     introspectedTable.getPrimaryKeyType());
             importedTypes.add(type);

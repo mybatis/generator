@@ -31,8 +31,11 @@ import org.mybatis.generator.api.dom.java.Parameter;
  */
 public class InsertMethodGenerator extends AbstractJavaMapperMethodGenerator {
 
-    public InsertMethodGenerator() {
+    boolean isSimple;
+
+    public InsertMethodGenerator(boolean isSimple) {
         super();
+        this.isSimple = isSimple;
     }
 
     @Override
@@ -44,8 +47,14 @@ public class InsertMethodGenerator extends AbstractJavaMapperMethodGenerator {
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setName(introspectedTable.getInsertStatementId());
 
-        FullyQualifiedJavaType parameterType = introspectedTable.getRules()
-                .calculateAllFieldsClass();
+        FullyQualifiedJavaType parameterType;
+        if (isSimple) {
+            parameterType = new FullyQualifiedJavaType(
+                    introspectedTable.getBaseRecordType());
+        } else {
+            parameterType = introspectedTable.getRules()
+                    .calculateAllFieldsClass();
+        }
 
         importedTypes.add(parameterType);
         method.addParameter(new Parameter(parameterType, "record")); //$NON-NLS-1$
@@ -54,9 +63,9 @@ public class InsertMethodGenerator extends AbstractJavaMapperMethodGenerator {
                 introspectedTable);
 
         addMapperAnnotations(interfaze, method);
-        
-        if (context.getPlugins().clientInsertMethodGenerated(method,
-                interfaze, introspectedTable)) {
+
+        if (context.getPlugins().clientInsertMethodGenerated(method, interfaze,
+                introspectedTable)) {
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);
         }

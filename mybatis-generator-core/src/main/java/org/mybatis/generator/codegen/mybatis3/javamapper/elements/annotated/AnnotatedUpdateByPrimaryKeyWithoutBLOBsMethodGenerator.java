@@ -35,8 +35,11 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.UpdateByPrimar
 public class AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator extends
     UpdateByPrimaryKeyWithoutBLOBsMethodGenerator {
 
-    public AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator() {
+    private boolean isSimple;
+    
+    public AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator(boolean isSimple) {
         super();
+        this.isSimple = isSimple;
     }
 
     @Override
@@ -57,8 +60,12 @@ public class AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator extends
         javaIndent(sb, 1);
         sb.append("\"set "); //$NON-NLS-1$
 
-        Iterator<IntrospectedColumn> iter = introspectedTable
-                .getBaseColumns().iterator();
+        Iterator<IntrospectedColumn> iter;
+        if (isSimple) {
+            iter = introspectedTable.getNonPrimaryKeyColumns().iterator();
+        } else {
+            iter = introspectedTable.getBaseColumns().iterator();
+        }
         while (iter.hasNext()) {
             IntrospectedColumn introspectedColumn = iter.next();
 

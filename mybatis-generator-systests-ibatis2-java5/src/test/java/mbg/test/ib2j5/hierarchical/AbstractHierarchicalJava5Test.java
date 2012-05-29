@@ -17,7 +17,7 @@ import org.springframework.core.io.Resource;
 
 public abstract class AbstractHierarchicalJava5Test extends AbstractTest {
     
-	private BeanFactory factory;
+    private BeanFactory factory;
 
     public void setUp() throws Exception {
     	super.setUp();

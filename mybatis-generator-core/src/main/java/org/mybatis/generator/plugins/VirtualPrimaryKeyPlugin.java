@@ -22,19 +22,18 @@ import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.PluginAdapter;
 
 /**
- * This plugin can be used to specify columns that act as a primary key, even
- * if they are not strictly defined as primary keys in the database.
+ * This plugin can be used to specify columns that act as a primary key, even if
+ * they are not strictly defined as primary keys in the database.
  * 
- * To use the plugin, add a property to the table configuration
- * specifying a comma delimited list of column names to use as a primary
- * key:
+ * To use the plugin, add a property to the table configuration specifying a
+ * comma delimited list of column names to use as a primary key:
  * 
  * <table...>
  *   <property name="virtualKeyColumns" value="ID1,ID2"/>
  * </table>
  * 
  * @author Jeff Butler
- *
+ * 
  */
 public class VirtualPrimaryKeyPlugin extends PluginAdapter {
 
@@ -44,9 +43,9 @@ public class VirtualPrimaryKeyPlugin extends PluginAdapter {
 
     @Override
     public void initialized(IntrospectedTable introspectedTable) {
-        String virtualKey =
-        introspectedTable.getTableConfiguration().getProperty("virtualKeyColumns");
-        
+        String virtualKey = introspectedTable.getTableConfiguration()
+                .getProperty("virtualKeyColumns");
+
         if (virtualKey != null) {
             StringTokenizer st = new StringTokenizer(virtualKey, ", ", false);
             while (st.hasMoreTokens()) {

@@ -76,6 +76,7 @@ public abstract class IntrospectedTable {
         ATTR_DELETE_BY_PRIMARY_KEY_STATEMENT_ID,
         ATTR_INSERT_STATEMENT_ID,
         ATTR_INSERT_SELECTIVE_STATEMENT_ID,
+        ATTR_SELECT_ALL_STATEMENT_ID,
         ATTR_SELECT_BY_EXAMPLE_STATEMENT_ID,
         ATTR_SELECT_BY_EXAMPLE_WITH_BLOBS_STATEMENT_ID,
         ATTR_SELECT_BY_PRIMARY_KEY_STATEMENT_ID,
@@ -519,6 +520,7 @@ public abstract class IntrospectedTable {
         setDeleteByPrimaryKeyStatementId("deleteByPrimaryKey"); //$NON-NLS-1$
         setInsertStatementId("insert"); //$NON-NLS-1$
         setInsertSelectiveStatementId("insertSelective"); //$NON-NLS-1$
+        setSelectAllStatementId("selectAll"); //$NON-NLS-1$
         setSelectByExampleStatementId("selectByExample"); //$NON-NLS-1$
         setSelectByExampleWithBLOBsStatementId("selectByExampleWithBLOBs"); //$NON-NLS-1$
         setSelectByPrimaryKeyStatementId("selectByPrimaryKey"); //$NON-NLS-1$
@@ -613,6 +615,11 @@ public abstract class IntrospectedTable {
                 .put(
                         InternalAttribute.ATTR_SELECT_BY_EXAMPLE_WITH_BLOBS_STATEMENT_ID,
                         s);
+    }
+
+    public void setSelectAllStatementId(String s) {
+        internalAttributes.put(
+                InternalAttribute.ATTR_SELECT_ALL_STATEMENT_ID, s);
     }
 
     public void setSelectByExampleStatementId(String s) {
@@ -712,6 +719,11 @@ public abstract class IntrospectedTable {
     public String getSelectByExampleWithBLOBsStatementId() {
         return internalAttributes
                 .get(InternalAttribute.ATTR_SELECT_BY_EXAMPLE_WITH_BLOBS_STATEMENT_ID);
+    }
+
+    public String getSelectAllStatementId() {
+        return internalAttributes
+                .get(InternalAttribute.ATTR_SELECT_ALL_STATEMENT_ID);
     }
 
     public String getSelectByExampleStatementId() {

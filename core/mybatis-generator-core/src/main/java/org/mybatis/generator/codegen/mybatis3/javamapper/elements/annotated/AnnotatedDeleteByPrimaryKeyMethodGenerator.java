@@ -35,8 +35,8 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.DeleteByPrimar
 public class AnnotatedDeleteByPrimaryKeyMethodGenerator extends
         DeleteByPrimaryKeyMethodGenerator {
 
-    public AnnotatedDeleteByPrimaryKeyMethodGenerator() {
-        super();
+    public AnnotatedDeleteByPrimaryKeyMethodGenerator(boolean isSimple) {
+        super(isSimple);
     }
 
     @Override

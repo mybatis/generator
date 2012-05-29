@@ -75,11 +75,17 @@ public class FlatJava5Test extends AbstractFlatTest {
             record.setIntegerfield(5);
             mapper.insert(record);
 
+            record = new Fieldsonly();
+            record.setDoublefield(11.22);
+            record.setFloatfield(33.44);
+            record.setIntegerfield(5);
+            mapper.insert(record);
+
             FieldsonlyExample example = new FieldsonlyExample();
             example.createCriteria().andIntegerfieldEqualTo(5);
 
             List<Fieldsonly> answer = mapper.selectByExample(example);
-            assertEquals(1, answer.size());
+            assertEquals(2, answer.size());
 
             Fieldsonly returnedRecord = answer.get(0);
             assertEquals(record.getIntegerfield(), returnedRecord

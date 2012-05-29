@@ -1,5 +1,5 @@
 /*
- *  Copyright 2009 The Apache Software Foundation
+ *  Copyright 2012 The MyBatis Team
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@ package org.mybatis.generator.codegen.mybatis3.xmlmapper.elements;
 import java.util.Iterator;
 
 import org.mybatis.generator.api.IntrospectedColumn;
-import org.mybatis.generator.api.dom.OutputUtilities;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
@@ -29,63 +28,64 @@ import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
  * @author Jeff Butler
  * 
  */
-public class UpdateByPrimaryKeyWithoutBLOBsElementGenerator extends
+public class SimpleSelectAllElementGenerator extends
         AbstractXmlElementGenerator {
 
-    private boolean isSimple;
-    
-    public UpdateByPrimaryKeyWithoutBLOBsElementGenerator(boolean isSimple) {
+    public SimpleSelectAllElementGenerator() {
         super();
-        this.isSimple = isSimple;
     }
 
     @Override
     public void addElements(XmlElement parentElement) {
-        XmlElement answer = new XmlElement("update"); //$NON-NLS-1$
+        XmlElement answer = new XmlElement("select"); //$NON-NLS-1$
 
         answer.addAttribute(new Attribute(
-                "id", introspectedTable.getUpdateByPrimaryKeyStatementId())); //$NON-NLS-1$
+                "id", introspectedTable.getSelectAllStatementId())); //$NON-NLS-1$
+        answer.addAttribute(new Attribute("resultMap", //$NON-NLS-1$
+                introspectedTable.getBaseResultMapId()));
+
+        String parameterType;
+        // PK fields are in the base class. If more than on PK
+        // field, then they are coming in a map.
+        if (introspectedTable.getPrimaryKeyColumns().size() > 1) {
+            parameterType = "map"; //$NON-NLS-1$
+        } else {
+            parameterType = introspectedTable.getPrimaryKeyColumns().get(0)
+                    .getFullyQualifiedJavaType().toString();
+        }
+
         answer.addAttribute(new Attribute("parameterType", //$NON-NLS-1$
-                introspectedTable.getBaseRecordType()));
+                parameterType));
 
         context.getCommentGenerator().addComment(answer);
 
         StringBuilder sb = new StringBuilder();
-        sb.append("update "); //$NON-NLS-1$
-        sb.append(introspectedTable.getFullyQualifiedTableNameAtRuntime());
-        answer.addElement(new TextElement(sb.toString()));
-
-        // set up for first column
-        sb.setLength(0);
-        sb.append("set "); //$NON-NLS-1$
-
-        Iterator<IntrospectedColumn> iter;
-        if (isSimple) {
-            iter = introspectedTable.getNonPrimaryKeyColumns().iterator();
-        } else {
-            iter = introspectedTable.getBaseColumns().iterator();
-        }
+        sb.append("select "); //$NON-NLS-1$
+        Iterator<IntrospectedColumn> iter = introspectedTable.getAllColumns()
+                .iterator();
         while (iter.hasNext()) {
-            IntrospectedColumn introspectedColumn = iter.next();
-
-            sb.append(MyBatis3FormattingUtilities
-                    .getEscapedColumnName(introspectedColumn));
-            sb.append(" = "); //$NON-NLS-1$
-            sb.append(MyBatis3FormattingUtilities
-                    .getParameterClause(introspectedColumn));
+            sb.append(MyBatis3FormattingUtilities.getSelectListPhrase(iter
+                    .next()));
 
             if (iter.hasNext()) {
-                sb.append(',');
+                sb.append(", "); //$NON-NLS-1$
             }
 
-            answer.addElement(new TextElement(sb.toString()));
-
-            // set up for the next column
-            if (iter.hasNext()) {
+            if (sb.length() > 80) {
+                answer.addElement(new TextElement(sb.toString()));
                 sb.setLength(0);
-                OutputUtilities.xmlIndent(sb, 1);
             }
         }
+
+        if (sb.length() > 0) {
+            answer.addElement((new TextElement(sb.toString())));
+        }
+
+        sb.setLength(0);
+        sb.append("from "); //$NON-NLS-1$
+        sb.append(introspectedTable
+                .getAliasedFullyQualifiedTableNameAtRuntime());
+        answer.addElement(new TextElement(sb.toString()));
 
         boolean and = false;
         for (IntrospectedColumn introspectedColumn : introspectedTable
@@ -99,16 +99,15 @@ public class UpdateByPrimaryKeyWithoutBLOBsElementGenerator extends
             }
 
             sb.append(MyBatis3FormattingUtilities
-                    .getEscapedColumnName(introspectedColumn));
+                    .getAliasedEscapedColumnName(introspectedColumn));
             sb.append(" = "); //$NON-NLS-1$
             sb.append(MyBatis3FormattingUtilities
                     .getParameterClause(introspectedColumn));
             answer.addElement(new TextElement(sb.toString()));
         }
 
-        if (context.getPlugins()
-                .sqlMapUpdateByPrimaryKeyWithoutBLOBsElementGenerated(answer,
-                        introspectedTable)) {
+        if (context.getPlugins().sqlMapSelectByPrimaryKeyElementGenerated(
+                answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

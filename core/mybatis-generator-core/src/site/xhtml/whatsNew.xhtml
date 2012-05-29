@@ -29,6 +29,12 @@
 </ul>
 <h3>Enhancements</h3>
 <ul>
+  <li>Added a new target runtime - MyBatis3Simple - that can be used to generate
+      very simple CRUD operations on tables.  This runtime produces far simpler
+      MyBatis code than the normal MyBatis3 runtime.  The produced code also has
+      lower functionality that the normal MyBatis3 runtime.  If you do not
+      regularly use the "by example" methods, then the code produced by the
+      MyBatis3Siple runtime may be more suitable to your project.</li>
   <li>Added a new plugin - VirtualPrimaryKey plugin - that can be used to specify
       columns that act as a primary key, even if they are not defined as
       primary keys in the database.</li>

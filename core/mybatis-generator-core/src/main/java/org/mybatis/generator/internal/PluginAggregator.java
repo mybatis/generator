@@ -537,6 +537,36 @@ public final class PluginAggregator implements Plugin {
         return rc;
     }
 
+    public boolean clientSelectAllMethodGenerated(Method method,
+            TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+        boolean rc = true;
+
+        for (Plugin plugin : plugins) {
+            if (!plugin.clientSelectAllMethodGenerated(method,
+                    topLevelClass, introspectedTable)) {
+                rc = false;
+                break;
+            }
+        }
+
+        return rc;
+    }
+
+    public boolean clientSelectAllMethodGenerated(Method method,
+            Interface interfaze, IntrospectedTable introspectedTable) {
+        boolean rc = true;
+
+        for (Plugin plugin : plugins) {
+            if (!plugin.clientSelectAllMethodGenerated(method,
+                    interfaze, introspectedTable)) {
+                rc = false;
+                break;
+            }
+        }
+
+        return rc;
+    }
+
     public boolean clientSelectByExampleWithBLOBsMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable) {
         boolean rc = true;

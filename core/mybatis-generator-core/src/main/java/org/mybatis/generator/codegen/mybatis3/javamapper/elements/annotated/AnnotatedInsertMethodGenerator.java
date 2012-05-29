@@ -38,8 +38,8 @@ import org.mybatis.generator.config.GeneratedKey;
 public class AnnotatedInsertMethodGenerator extends
     InsertMethodGenerator {
 
-    public AnnotatedInsertMethodGenerator() {
-        super();
+    public AnnotatedInsertMethodGenerator(boolean isSimple) {
+        super(isSimple);
     }
 
     @Override

@@ -77,7 +77,7 @@ public class XmlFileMergerJaxp {
 
         try {
             return getMergedSource(new InputSource(new StringReader(generatedXmlFile.getFormattedContent())),
-                new InputSource(new InputStreamReader(new FileInputStream(existingFile), "UTF-8")),
+                new InputSource(new InputStreamReader(new FileInputStream(existingFile), "UTF-8")), //$NON-NLS-1$
                 existingFile.getName());
         } catch (IOException e) {
             throw new ShellException(getString("Warning.13", //$NON-NLS-1$

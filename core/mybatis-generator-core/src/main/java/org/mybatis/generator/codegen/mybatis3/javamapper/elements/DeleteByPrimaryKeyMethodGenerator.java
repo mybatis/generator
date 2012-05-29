@@ -34,8 +34,11 @@ import org.mybatis.generator.api.dom.java.Parameter;
 public class DeleteByPrimaryKeyMethodGenerator extends
         AbstractJavaMapperMethodGenerator {
 
-    public DeleteByPrimaryKeyMethodGenerator() {
+    private boolean isSimple;
+    
+    public DeleteByPrimaryKeyMethodGenerator(boolean isSimple) {
         super();
+        this.isSimple = isSimple;
     }
 
     @Override
@@ -46,7 +49,7 @@ public class DeleteByPrimaryKeyMethodGenerator extends
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
         method.setName(introspectedTable.getDeleteByPrimaryKeyStatementId());
 
-        if (introspectedTable.getRules().generatePrimaryKeyClass()) {
+        if (!isSimple && introspectedTable.getRules().generatePrimaryKeyClass()) {
             FullyQualifiedJavaType type = new FullyQualifiedJavaType(
                     introspectedTable.getPrimaryKeyType());
             importedTypes.add(type);

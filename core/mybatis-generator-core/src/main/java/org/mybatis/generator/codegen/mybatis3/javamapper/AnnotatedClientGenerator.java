@@ -46,7 +46,7 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
     @Override
     protected void addDeleteByPrimaryKeyMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateDeleteByPrimaryKey()) {
-            AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedDeleteByPrimaryKeyMethodGenerator();
+            AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedDeleteByPrimaryKeyMethodGenerator(false);
             initializeAndExecuteGenerator(methodGenerator, interfaze);
         }
     }
@@ -54,7 +54,7 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
     @Override
     protected void addInsertMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateInsert()) {
-            AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedInsertMethodGenerator();
+            AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedInsertMethodGenerator(false);
             initializeAndExecuteGenerator(methodGenerator, interfaze);
         }
     }
@@ -86,7 +86,7 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
     @Override
     protected void addSelectByPrimaryKeyMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateSelectByPrimaryKey()) {
-            AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedSelectByPrimaryKeyMethodGenerator(false);
+            AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedSelectByPrimaryKeyMethodGenerator(false, false);
             initializeAndExecuteGenerator(methodGenerator, interfaze);
         }
     }
@@ -135,7 +135,7 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
     protected void addUpdateByPrimaryKeyWithoutBLOBsMethod(Interface interfaze) {
         if (introspectedTable.getRules()
                 .generateUpdateByPrimaryKeyWithoutBLOBs()) {
-            AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator();
+            AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator(false);
             initializeAndExecuteGenerator(methodGenerator, interfaze);
         }
     }

@@ -85,6 +85,18 @@ databases, or with different generation parameters, in the same run of MyBatis G
             parameterized types and annotations.</td>
         </tr>
         <tr>
+          <th valign="top">MyBatis3Simple</th>
+          <td><i>This is the default value</i>
+            <br/>With the value, MBG will generate objects that are compatible
+            with MyBatis versions 3.0 and higher, and JSE 5.0 and higher (e.g. the
+            Java model and mapper interfaces will use generic types).
+            The mappers generated with this target runtime are very basic
+            CRUD operations only with no "by example" methods and very little
+            dynamic SQL.  The Java objects
+            generated with these generators support many JSE 5.0 features including
+            parameterized types and annotations.</td>
+        </tr>
+        <tr>
           <th valign="top">Ibatis2Java2</th>
           <td>
             With this value, MBG will generate objects that are compatible

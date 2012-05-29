@@ -16,8 +16,6 @@
 package org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated;
 
 import static org.mybatis.generator.api.dom.OutputUtilities.javaIndent;
-import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getAliasedEscapedColumnName;
-import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getParameterClause;
 import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getSelectListPhrase;
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 
@@ -27,20 +25,17 @@ import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
-import org.mybatis.generator.codegen.mybatis3.javamapper.elements.SelectByPrimaryKeyMethodGenerator;
+import org.mybatis.generator.codegen.mybatis3.javamapper.elements.SelectAllMethodGenerator;
 
 /**
  * 
  * @author Jeff Butler
  */
-public class AnnotatedSelectByPrimaryKeyMethodGenerator extends
-    SelectByPrimaryKeyMethodGenerator {
+public class AnnotatedSelectAllMethodGenerator extends
+    SelectAllMethodGenerator {
     
-    private boolean useResultMapIfAvailable;
-
-    public AnnotatedSelectByPrimaryKeyMethodGenerator(boolean useResultMapIfAvailable, boolean isSimple) {
-        super(isSimple);
-        this.useResultMapIfAvailable = useResultMapIfAvailable;
+    public AnnotatedSelectAllMethodGenerator() {
+        super();
     }
 
     @Override
@@ -88,54 +83,12 @@ public class AnnotatedSelectByPrimaryKeyMethodGenerator extends
         sb.append("\"from "); //$NON-NLS-1$
         sb.append(escapeStringForJava(introspectedTable
                 .getAliasedFullyQualifiedTableNameAtRuntime()));
-        sb.append("\","); //$NON-NLS-1$
+        sb.append("\""); //$NON-NLS-1$
         method.addAnnotation(sb.toString());
         
-        boolean and = false;
-        iter = introspectedTable.getPrimaryKeyColumns().iterator();
-        while (iter.hasNext()) {
-            IntrospectedColumn introspectedColumn = iter.next();
-        
-            sb.setLength(0);
-            javaIndent(sb, 1);
-            if (and) {
-                sb.append("  \"and "); //$NON-NLS-1$
-            } else {
-                sb.append("\"where "); //$NON-NLS-1$
-                and = true;
-            }
-
-            sb.append(escapeStringForJava(getAliasedEscapedColumnName(introspectedColumn)));
-            sb.append(" = "); //$NON-NLS-1$
-            sb.append(getParameterClause(introspectedColumn));
-            sb.append('\"');
-            if (iter.hasNext()) {
-                sb.append(',');
-            }
-            method.addAnnotation(sb.toString());
-        }
-
         method.addAnnotation("})"); //$NON-NLS-1$
 
-        if (useResultMapIfAvailable) {
-            if (introspectedTable.getRules().generateBaseResultMap()
-                    || introspectedTable.getRules().generateResultMapWithBLOBs()) {
-                addResultMapAnnotation(interfaze, method);
-            } else {
-                addAnnotatedResults(interfaze, method);
-            }
-        } else {
-            addAnnotatedResults(interfaze, method);
-        }
-    }
-    
-    private void addResultMapAnnotation(Interface interfaze, Method method) {
-        interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.ResultMap")); //$NON-NLS-1$
-        
-        String annotation = String.format("@ResultMap(\"%s\")", //$NON-NLS-1$
-                introspectedTable.getRules().generateResultMapWithBLOBs() ?
-                        introspectedTable.getResultMapWithBLOBsId() : introspectedTable.getBaseResultMapId());
-        method.addAnnotation(annotation);
+        addAnnotatedResults(interfaze, method);
     }
     
     private void addAnnotatedResults(Interface interfaze, Method method) {

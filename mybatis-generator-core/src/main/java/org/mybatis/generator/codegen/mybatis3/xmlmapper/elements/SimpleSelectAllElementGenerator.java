@@ -44,19 +44,6 @@ public class SimpleSelectAllElementGenerator extends
         answer.addAttribute(new Attribute("resultMap", //$NON-NLS-1$
                 introspectedTable.getBaseResultMapId()));
 
-        String parameterType;
-        // PK fields are in the base class. If more than on PK
-        // field, then they are coming in a map.
-        if (introspectedTable.getPrimaryKeyColumns().size() > 1) {
-            parameterType = "map"; //$NON-NLS-1$
-        } else {
-            parameterType = introspectedTable.getPrimaryKeyColumns().get(0)
-                    .getFullyQualifiedJavaType().toString();
-        }
-
-        answer.addAttribute(new Attribute("parameterType", //$NON-NLS-1$
-                parameterType));
-
         context.getCommentGenerator().addComment(answer);
 
         StringBuilder sb = new StringBuilder();
@@ -87,26 +74,7 @@ public class SimpleSelectAllElementGenerator extends
                 .getAliasedFullyQualifiedTableNameAtRuntime());
         answer.addElement(new TextElement(sb.toString()));
 
-        boolean and = false;
-        for (IntrospectedColumn introspectedColumn : introspectedTable
-                .getPrimaryKeyColumns()) {
-            sb.setLength(0);
-            if (and) {
-                sb.append("  and "); //$NON-NLS-1$
-            } else {
-                sb.append("where "); //$NON-NLS-1$
-                and = true;
-            }
-
-            sb.append(MyBatis3FormattingUtilities
-                    .getAliasedEscapedColumnName(introspectedColumn));
-            sb.append(" = "); //$NON-NLS-1$
-            sb.append(MyBatis3FormattingUtilities
-                    .getParameterClause(introspectedColumn));
-            answer.addElement(new TextElement(sb.toString()));
-        }
-
-        if (context.getPlugins().sqlMapSelectByPrimaryKeyElementGenerated(
+        if (context.getPlugins().sqlMapSelectAllElementGenerated(
                 answer, introspectedTable)) {
             parentElement.addElement(answer);
         }

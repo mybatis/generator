@@ -446,4 +446,9 @@ public abstract class PluginAdapter implements Plugin {
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         return true;
     }
+
+    public boolean sqlMapSelectAllElementGenerated(XmlElement element,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
 }

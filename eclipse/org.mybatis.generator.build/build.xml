@@ -5,7 +5,7 @@
 	   be changed in your local build environment 
 	 -->
 	<property name="baseLocation" value="/JavaTools/eclipse_indigo"/>
-	<property name="pdeBuildPluginVersion" value="3.7.0.v20110512-1320"/>
+	<property name="pdeBuildPluginVersion" value="3.7.0.v20111116-2009"/>
 	<property name="equinoxLauncherPluginVersion" value="1.2.0.v20110502"/>
 	<property name="buildDirectory" value="/temp/mybatis.generator.build"/>
 	<property file="build.properties" />

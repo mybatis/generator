@@ -32,7 +32,6 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.ImportDeclaration;
 import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.Name;
-import org.eclipse.jdt.core.dom.SimpleType;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
@@ -50,15 +49,15 @@ import org.mybatis.generator.exception.ShellException;
  * existing files, including:
  * 
  * <ul>
- *   <li>The imports of both files are fully qualified (no wildcard imports)</li>
- *   <li>The super interfaces of both files are NOT fully qualified</li>
- *   <li>The super classes of both files are NOT fully qualified</li>
+ * <li>The imports of both files are fully qualified (no wildcard imports)</li>
+ * <li>The super interfaces of both files are NOT fully qualified</li>
+ * <li>The super classes of both files are NOT fully qualified</li>
  * </ul>
  * 
  * @author Jeff Butler
  */
 public class JavaFileMerger {
-    
+
     private String newJavaSource;
     private String existingFilePath;
     private String[] javaDocTags;
@@ -82,7 +81,8 @@ public class JavaFileMerger {
         IDocument document = new Document(existingFile);
 
         // delete generated stuff, and collect imports
-        ExistingJavaFileVisitor visitor = new ExistingJavaFileVisitor(javaDocTags);
+        ExistingJavaFileVisitor visitor = new ExistingJavaFileVisitor(
+                javaDocTags);
 
         astParser.setSource(existingFile.toCharArray());
         CompilationUnit cu = (CompilationUnit) astParser.createAST(null);
@@ -100,31 +100,17 @@ public class JavaFileMerger {
         }
 
         // reconcile the superinterfaces
-        List<Type> newSuperInterfaces = getNewSuperInterfaces(typeDeclaration
-                .superInterfaceTypes(), newJavaFileVisitor);
+        List<Type> newSuperInterfaces = getNewSuperInterfaces(
+                typeDeclaration.superInterfaceTypes(), newJavaFileVisitor);
         for (Type newSuperInterface : newSuperInterfaces) {
-            if (newSuperInterface.isSimpleType()) {
-                SimpleType st = (SimpleType) newSuperInterface;
-                Name name = ast.newName(st.getName().getFullyQualifiedName());
-                SimpleType newSt = ast.newSimpleType(name);
-                typeDeclaration.superInterfaceTypes().add(newSt);
-            } else {
-                // this shouldn't happen - MyBatis Generator only generates simple names
-                throw new ShellException("The Java file merger only supports simple types as super interfaces");
-            }
+            typeDeclaration.superInterfaceTypes().add(
+                    ASTNode.copySubtree(ast, newSuperInterface));
         }
 
         // set the superclass
         if (newJavaFileVisitor.getSuperclass() != null) {
-            if (newJavaFileVisitor.getSuperclass().isSimpleType()) {
-                SimpleType st = (SimpleType) newJavaFileVisitor.getSuperclass();
-                Name name = ast.newName(st.getName().getFullyQualifiedName());
-                SimpleType newSt = ast.newSimpleType(name);
-                typeDeclaration.setSuperclassType(newSt);
-            } else {
-                // this shouldn't happen - MyBatis Generator only generates simple names
-                throw new ShellException("The Java file merger only supports simple types as super classes");
-            }
+            typeDeclaration.setSuperclassType((Type) ASTNode.copySubtree(ast,
+                    newJavaFileVisitor.getSuperclass()));
         } else {
             typeDeclaration.setSuperclassType(null);
         }
@@ -137,9 +123,11 @@ public class JavaFileMerger {
         }
 
         // reconcile the imports
-        List<ImportDeclaration> newImports = getNewImports(cu.imports(), newJavaFileVisitor);
+        List<ImportDeclaration> newImports = getNewImports(cu.imports(),
+                newJavaFileVisitor);
         for (ImportDeclaration newImport : newImports) {
-            Name name = ast.newName(newImport.getName().getFullyQualifiedName());
+            Name name = ast
+                    .newName(newImport.getName().getFullyQualifiedName());
             ImportDeclaration newId = ast.newImportDeclaration();
             newId.setName(name);
             cu.imports().add(newId);
@@ -155,7 +143,8 @@ public class JavaFileMerger {
 
         // regenerate the CompilationUnit to reflect all the deletes and changes
         astParser.setSource(document.get().toCharArray());
-        CompilationUnit strippedCu = (CompilationUnit) astParser.createAST(null);
+        CompilationUnit strippedCu = (CompilationUnit) astParser
+                .createAST(null);
 
         // find the top level public type declaration
         TypeDeclaration topLevelType = null;
@@ -179,14 +168,15 @@ public class JavaFileMerger {
         int i = 0;
         while (astIter.hasNext()) {
             ASTNode node = astIter.next();
-            
+
             if (node.getNodeType() == ASTNode.TYPE_DECLARATION) {
-                String name = ((TypeDeclaration) node).getName().getFullyQualifiedName();
+                String name = ((TypeDeclaration) node).getName()
+                        .getFullyQualifiedName();
                 if (visitor.containsInnerClass(name)) {
                     continue;
                 }
             }
-            
+
             listRewrite.insertAt(node, i++, null);
         }
 
@@ -202,69 +192,57 @@ public class JavaFileMerger {
         return newSource;
     }
 
-    private List<Type> getNewSuperInterfaces(List<Type> existingSuperInterfaces, 
+    private List<Type> getNewSuperInterfaces(
+            List<Type> existingSuperInterfaces,
             NewJavaFileVisitor newJavaFileVisitor) {
 
         List<Type> answer = new ArrayList<Type>();
 
-        for (Type newSuperInterface : newJavaFileVisitor.getSuperInterfaceTypes()) {
-            if (newSuperInterface.isSimpleType()) {
-                SimpleType newSimpleType = (SimpleType) newSuperInterface;
-                String newName = newSimpleType.getName().getFullyQualifiedName();
-                
-                boolean found = false;
-                for (Type existingSuperInterface : existingSuperInterfaces) {
-                    if (existingSuperInterface.isSimpleType()) {
-                        SimpleType existingSimpleType = (SimpleType) existingSuperInterface;
-
-                        String existingName = existingSimpleType.getName().getFullyQualifiedName();
-
-                        if (newName.equals(existingName)) {
-                            found = true;
-                            break;
-                        }
-                    }
-                }
-                
-                if (!found) {
-                    answer.add(newSuperInterface);
-                }
-            }
-        }
-
-        return answer;
-    }
-
-    private List<ImportDeclaration> getNewImports(List<ImportDeclaration> existingImports,
-            NewJavaFileVisitor newJavaFileVisitor) {
-        List<ImportDeclaration> answer = new ArrayList<ImportDeclaration>();
-
-        for (ImportDeclaration newImport : newJavaFileVisitor.getImports()) {
-            String newName = newImport.getName().getFullyQualifiedName();
+        for (Type newSuperInterface : newJavaFileVisitor
+                .getSuperInterfaceTypes()) {
             boolean found = false;
-            for (ImportDeclaration existingImport : existingImports) {
-                String existingName = existingImport.getName().getFullyQualifiedName();
-                
-                if (newName.equals(existingName)) {
-                    found = true;
+            for (Type existingSuperInterface : existingSuperInterfaces) {
+                found = EclipseDomUtils.typesMatch(newSuperInterface, existingSuperInterface);
+                if (found) {
                     break;
                 }
             }
             
             if (!found) {
+                answer.add(newSuperInterface);
+            }
+        }
+
+        return answer;
+    }
+
+    private List<ImportDeclaration> getNewImports(
+            List<ImportDeclaration> existingImports,
+            NewJavaFileVisitor newJavaFileVisitor) {
+        List<ImportDeclaration> answer = new ArrayList<ImportDeclaration>();
+
+        for (ImportDeclaration newImport : newJavaFileVisitor.getImports()) {
+            boolean found = false;
+            for (ImportDeclaration existingImport : existingImports) {
+                found = EclipseDomUtils.importDeclarationsMatch(newImport, existingImport);
+                if (found) {
+                    break;
+                }
+            }
+
+            if (!found) {
                 answer.add(newImport);
             }
         }
-        
+
         return answer;
     }
 
     /**
-     * This method parses the new Java file and returns a
-     * filled out NewJavaFileVisitor.  The returned visitor can
-     * be used to determine characteristics of the new file, and
-     * a lost of new nodes that need to be incorporated into the
-     * existing file.
+     * This method parses the new Java file and returns a filled out
+     * NewJavaFileVisitor. The returned visitor can be used to determine
+     * characteristics of the new file, and a lost of new nodes that need to be
+     * incorporated into the existing file.
      * 
      * @param astParser
      * @return
@@ -274,15 +252,16 @@ public class JavaFileMerger {
         CompilationUnit cu = (CompilationUnit) astParser.createAST(null);
         NewJavaFileVisitor newVisitor = new NewJavaFileVisitor();
         cu.accept(newVisitor);
-        
+
         return newVisitor;
     }
-    
+
     private String getExistingFileContents() throws ShellException {
         File file = new File(existingFilePath);
-        
+
         if (!file.exists()) {
-            // this should not happen because MyBatis Generator only returns the path
+            // this should not happen because MyBatis Generator only returns the
+            // path
             // calculated by the eclipse callback
             StringBuilder sb = new StringBuilder();
             sb.append("The file ");
@@ -307,7 +286,7 @@ public class JavaFileMerger {
                 sb.append(buffer, 0, returnedBytes);
                 returnedBytes = br.read(buffer);
             }
-        
+
             br.close();
             return sb.toString();
         } catch (IOException e) {
@@ -317,4 +296,5 @@ public class JavaFileMerger {
             throw new ShellException(sb.toString(), e);
         }
     }
+
 }

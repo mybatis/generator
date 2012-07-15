@@ -107,26 +107,26 @@ tests build on items created in previous tests.</p>
   PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
   "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" &gt;
 &lt;generatorConfiguration&gt;
-  &lt;classPathEntry location="/JavaTools/mysql-connector-java-5.1.12/mysql-connector-java-5.1.12-bin.jar" /&gt;
-  &lt;context id="context1" targetRuntime="Ibatis2Java5" &gt;
+  &lt;classPathEntry location="/JavaTools/mysql-connector-java-5.1.17/mysql-connector-java-5.1.17-bin.jar" /&gt;
+  &lt;context id="context1" targetRuntime="MyBatis3" &gt;
     &lt;jdbcConnection driverClass="com.mysql.jdbc.Driver"
       connectionURL="jdbc:mysql://localhost/mbgtest"
       userId="root" password="root" &gt;
     &lt;/jdbcConnection&gt;
     &lt;javaModelGenerator targetPackage="gen.model" targetProject="MBGTest" /&gt;
-    &lt;sqlMapGenerator targetPackage="gen.sql" targetProject="MBGTest" /&gt;
-    &lt;javaClientGenerator targetPackage="gen.dao" targetProject="MBGTest" type="GENERIC-CI" /&gt;
+    &lt;sqlMapGenerator targetPackage="gen.mapper" targetProject="MBGTest" /&gt;
+    &lt;javaClientGenerator targetPackage="gen.mapper" targetProject="MBGTest" type="XMLMAPPER" /&gt;
     &lt;table tableName="a" /&gt;
   &lt;/context&gt;
 
-  &lt;context id="context2" targetRuntime="Ibatis2Java5" &gt;
+  &lt;context id="context2" targetRuntime="MyBatis3" &gt;
     &lt;jdbcConnection driverClass="com.mysql.jdbc.Driver"
       connectionURL="jdbc:mysql://localhost/mbgtest"
       userId="root" password="root" &gt;
     &lt;/jdbcConnection&gt;
     &lt;javaModelGenerator targetPackage="gen.src.model" targetProject="MBGTest/generatedsrc" /&gt;
-    &lt;sqlMapGenerator targetPackage="gen.src.sql" targetProject="MBGTest/generatedsrc" /&gt;
-    &lt;javaClientGenerator targetPackage="gen.src.dao" targetProject="MBGTest/generatedsrc" type="GENERIC-CI" /&gt;
+    &lt;sqlMapGenerator targetPackage="gen.src.mapper" targetProject="MBGTest/generatedsrc" /&gt;
+    &lt;javaClientGenerator targetPackage="gen.src.mapper" targetProject="MBGTest/generatedsrc" type="XMLMAPPER" /&gt;
     &lt;table schema="mbgtest" tableName="%" /&gt;
   &lt;/context&gt;
 &lt;/generatorConfiguration&gt;
@@ -142,7 +142,7 @@ tests build on items created in previous tests.</p>
 
 <h3>Java File Merger</h3>
 <ol>
-  <li>Open the Java file <code>gen.dao.ADAOImpl.java</code> in the "src" folder</li>
+  <li>Open the Java file <code>gen.model.A.java</code> in the "src" folder</li>
   <li>Note the time of generation of the file from one of the <code>@mbggenerated</code> comments</li>
   <li>Add a private field of any type called <code>mergetest</code> and generate a getter and setter
       for the field.</li>
@@ -150,7 +150,7 @@ tests build on items created in previous tests.</p>
   <li>Right click on the configuration file from the last test, and then
       take the option "Generate MyBatis/iBATIS Artifacts"</li>
   <li>Verify that the progress bar is reasonably accurate</li>
-  <li>Open the Java file <code>gen.dao.ADAOImpl.java</code> in the "src" folder</li>
+  <li>Open the Java file <code>gen.model.A.java</code> in the "src" folder</li>
   <li>Verify that the time of generation is later than the time noted above</li>
   <li>Verify that the field <code>mergetest</code>, and its getter and setter remain
     in the file (they will have been moved to the bottom of the file)</li>

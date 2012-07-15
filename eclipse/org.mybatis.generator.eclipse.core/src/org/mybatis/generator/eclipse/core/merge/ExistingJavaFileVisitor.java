@@ -22,6 +22,7 @@ import java.util.List;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.BodyDeclaration;
+import org.eclipse.jdt.core.dom.EnumDeclaration;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.Javadoc;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
@@ -87,6 +88,15 @@ public class ExistingJavaFileVisitor extends ASTVisitor {
 
             return false;
         }
+    }
+    
+    @Override
+    public boolean visit(EnumDeclaration node) {
+        if (isGenerated(node)) {
+            node.delete();
+        }
+        
+        return false;
     }
 
     public TypeDeclaration getTypeDeclaration() {

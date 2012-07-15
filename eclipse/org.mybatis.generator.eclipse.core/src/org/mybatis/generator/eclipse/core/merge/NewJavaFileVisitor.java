@@ -22,6 +22,7 @@ import java.util.List;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.EnumDeclaration;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.ImportDeclaration;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
@@ -48,6 +49,12 @@ public class NewJavaFileVisitor extends ASTVisitor {
     }
 
     public boolean visit(FieldDeclaration node) {
+        newNodes.add(node);
+
+        return false;
+    }
+
+    public boolean visit(EnumDeclaration node) {
         newNodes.add(node);
 
         return false;

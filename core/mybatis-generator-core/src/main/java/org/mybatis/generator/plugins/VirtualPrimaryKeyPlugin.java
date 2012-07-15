@@ -44,10 +44,10 @@ public class VirtualPrimaryKeyPlugin extends PluginAdapter {
     @Override
     public void initialized(IntrospectedTable introspectedTable) {
         String virtualKey = introspectedTable.getTableConfiguration()
-                .getProperty("virtualKeyColumns");
+                .getProperty("virtualKeyColumns"); //$NON-NLS-1$
 
         if (virtualKey != null) {
-            StringTokenizer st = new StringTokenizer(virtualKey, ", ", false);
+            StringTokenizer st = new StringTokenizer(virtualKey, ", ", false); //$NON-NLS-1$
             while (st.hasMoreTokens()) {
                 String column = st.nextToken();
                 introspectedTable.addPrimaryKeyColumn(column);

@@ -15,12 +15,16 @@
  */
 package org.mybatis.generator.eclipse.core.merge;
 
+import java.util.List;
+
 import org.eclipse.jdt.core.dom.ArrayType;
 import org.eclipse.jdt.core.dom.ImportDeclaration;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.ParameterizedType;
 import org.eclipse.jdt.core.dom.PrimitiveType;
 import org.eclipse.jdt.core.dom.QualifiedType;
 import org.eclipse.jdt.core.dom.SimpleType;
+import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.UnionType;
 import org.eclipse.jdt.core.dom.WildcardType;
@@ -42,11 +46,35 @@ public class EclipseDomUtils {
         boolean rc = import1.isStatic() == import2.isStatic();
 
         if (rc) {
-            rc = import1.getName().getFullyQualifiedName()
-                    .equals(import2.getName().getFullyQualifiedName());
+            if (import1.isOnDemand() && import2.isOnDemand()) {
+                rc = import1.getName().getFullyQualifiedName()
+                        .equals(import2.getName().getFullyQualifiedName());
+            } else if (!import1.isOnDemand() && !import2.isOnDemand()) {
+                rc = import1.getName().getFullyQualifiedName()
+                        .equals(import2.getName().getFullyQualifiedName());
+            } else if (import1.isOnDemand()) {
+                rc = checkOndemandImport(import1, import2);
+            } else {
+                // import2 is on demand
+                rc = checkOndemandImport(import2, import1);
+            }
         }
 
         return rc;
+    }
+
+    private static boolean checkOndemandImport(
+            ImportDeclaration onDemandImport, ImportDeclaration singleImport) {
+
+        String fullName = singleImport.getName().getFullyQualifiedName();
+        int index = fullName.lastIndexOf('.');
+        if (index == -1) {
+            // fullName does not have a package
+            return onDemandImport.getName().getFullyQualifiedName().length() == 0;
+        }
+
+        return onDemandImport.getName().getFullyQualifiedName()
+                .equals(fullName.substring(0, index));
     }
 
     public static boolean typesMatch(Type type1, Type type2) {
@@ -164,5 +192,138 @@ public class EclipseDomUtils {
         }
 
         return rc;
+    }
+
+    /**
+     * This method is used to generate a unique string that fully expresses the
+     * type name.
+     * 
+     * @param type
+     * @return
+     */
+    public static String getTypeName(Type type) {
+        if (type == null) {
+            return "";
+        }
+
+        if (type.isSimpleType()) {
+            return getSimpleTypeName((SimpleType) type);
+        } else if (type.isParameterizedType()) {
+            return getParameterizedTypeName((ParameterizedType) type);
+        } else if (type.isPrimitiveType()) {
+            return getPrimitiveTypeName((PrimitiveType) type);
+        } else if (type.isArrayType()) {
+            return getArrayTypeName((ArrayType) type);
+        } else if (type.isUnionType()) {
+            return getUnionTypeName((UnionType) type);
+        } else if (type.isQualifiedType()) {
+            return getQualifiedTypeName((QualifiedType) type);
+        } else if (type.isWildcardType()) {
+            return getWildcardTypeName((WildcardType) type);
+        } else {
+            return "";
+        }
+    }
+
+    public static String getWildcardTypeName(WildcardType type) {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append('?');
+        if (type.getBound() != null) {
+            if (type.isUpperBound()) {
+                sb.append(" extends ");
+            } else {
+                sb.append(" super ");
+            }
+            sb.append(getTypeName(type.getBound()));
+        }
+
+        return sb.toString();
+    }
+
+    public static String getQualifiedTypeName(QualifiedType type) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getTypeName(type.getQualifier()));
+        sb.append('.');
+        sb.append(type.getName().getFullyQualifiedName());
+
+        return sb.toString();
+    }
+
+    @SuppressWarnings("unchecked")
+    public static String getUnionTypeName(UnionType type) {
+        StringBuilder sb = new StringBuilder();
+
+        boolean or = false;
+        for (Type type2 : (List<Type>) type.types()) {
+            if (or) {
+                sb.append('|');
+            } else {
+                or = true;
+            }
+
+            sb.append(getTypeName(type2));
+        }
+
+        return sb.toString();
+    }
+
+    public static String getArrayTypeName(ArrayType type) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getTypeName(type.getComponentType()));
+        for (int i = 0; i < type.getDimensions(); i++) {
+            sb.append("[]");
+        }
+        return sb.toString();
+    }
+
+    public static String getPrimitiveTypeName(PrimitiveType type) {
+        return type.getPrimitiveTypeCode().toString();
+    }
+
+    @SuppressWarnings("unchecked")
+    public static String getParameterizedTypeName(ParameterizedType type) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getTypeName(type.getType()));
+        sb.append('<');
+
+        boolean comma = false;
+        for (Type typeArgument : (List<Type>) type.typeArguments()) {
+            if (comma) {
+                sb.append(',');
+            } else {
+                comma = true;
+            }
+
+            sb.append(getTypeName(typeArgument));
+        }
+        sb.append('>');
+
+        return sb.toString();
+    }
+
+    public static String getSimpleTypeName(SimpleType type) {
+        return type.getName().getFullyQualifiedName();
+    }
+
+    @SuppressWarnings("unchecked")
+    public static String getMethodSignature(MethodDeclaration node) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(node.getName().getIdentifier());
+        sb.append('(');
+        boolean comma = false;
+        for (SingleVariableDeclaration parameter : (List<SingleVariableDeclaration>) node
+                .parameters()) {
+            if (comma) {
+                sb.append(',');
+            } else {
+                comma = true;
+            }
+            
+            sb.append(getTypeName(parameter.getType()));
+        }
+        sb.append(')');
+        
+        return sb.toString();
     }
 }

@@ -1,5 +1,6 @@
 /*
  *  Copyright 2005, 2006, 2008 The Apache Software Foundation
+ *  Copyright 2012 The MyBatis.org Team
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,15 +22,21 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTParser;
+import org.eclipse.jdt.core.dom.Annotation;
+import org.eclipse.jdt.core.dom.BodyDeclaration;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.ImportDeclaration;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.Name;
 import org.eclipse.jdt.core.dom.Type;
@@ -55,6 +62,7 @@ import org.mybatis.generator.exception.ShellException;
  * </ul>
  * 
  * @author Jeff Butler
+ * @author Tomas Neuberg
  */
 public class JavaFileMerger {
 
@@ -175,6 +183,12 @@ public class JavaFileMerger {
                 if (visitor.containsInnerClass(name)) {
                     continue;
                 }
+            } else if (node instanceof FieldDeclaration) {
+                addExistsAnnotations((BodyDeclaration) node,
+                        visitor.getFieldAnnotations((FieldDeclaration) node));
+            } else if (node instanceof MethodDeclaration) {
+                addExistsAnnotations((BodyDeclaration) node,
+                        visitor.getMethodAnnotations((MethodDeclaration) node));
             }
 
             listRewrite.insertAt(node, i++, null);
@@ -202,12 +216,13 @@ public class JavaFileMerger {
                 .getSuperInterfaceTypes()) {
             boolean found = false;
             for (Type existingSuperInterface : existingSuperInterfaces) {
-                found = EclipseDomUtils.typesMatch(newSuperInterface, existingSuperInterface);
+                found = EclipseDomUtils.typesMatch(newSuperInterface,
+                        existingSuperInterface);
                 if (found) {
                     break;
                 }
             }
-            
+
             if (!found) {
                 answer.add(newSuperInterface);
             }
@@ -224,7 +239,8 @@ public class JavaFileMerger {
         for (ImportDeclaration newImport : newJavaFileVisitor.getImports()) {
             boolean found = false;
             for (ImportDeclaration existingImport : existingImports) {
-                found = EclipseDomUtils.importDeclarationsMatch(newImport, existingImport);
+                found = EclipseDomUtils.importDeclarationsMatch(newImport,
+                        existingImport);
                 if (found) {
                     break;
                 }
@@ -297,4 +313,32 @@ public class JavaFileMerger {
         }
     }
 
+    @SuppressWarnings("unchecked")
+    private void addExistsAnnotations(BodyDeclaration node,
+            List<Annotation> oldAnnotations) {
+        Set<String> newAnnotationTypes = new HashSet<String>();
+        int lastAnnotationIndex = 0;
+        int idx = 0;
+        for (Object modifier : node.modifiers()) {
+            if (modifier instanceof Annotation) {
+                Annotation newAnnotation = (Annotation) modifier;
+                newAnnotationTypes.add(newAnnotation.getTypeName()
+                        .getFullyQualifiedName());
+                lastAnnotationIndex = idx;
+            }
+            idx++;
+        }
+        
+        if (oldAnnotations != null) {
+            for (Annotation oldAnnotation : oldAnnotations) {
+                if (newAnnotationTypes.contains(oldAnnotation.getTypeName()
+                        .getFullyQualifiedName()))
+                    continue;
+
+                AST nodeAst = node.getAST();
+                node.modifiers().add(lastAnnotationIndex++,
+                        ASTNode.copySubtree(nodeAst, oldAnnotation));
+            }
+        }
+    }
 }

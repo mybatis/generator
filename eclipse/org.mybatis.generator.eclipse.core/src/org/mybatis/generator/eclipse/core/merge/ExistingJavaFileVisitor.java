@@ -17,10 +17,13 @@
 package org.mybatis.generator.eclipse.core.merge;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.Annotation;
 import org.eclipse.jdt.core.dom.BodyDeclaration;
 import org.eclipse.jdt.core.dom.EnumDeclaration;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
@@ -28,15 +31,18 @@ import org.eclipse.jdt.core.dom.Javadoc;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.TagElement;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 
 /**
  * @author Jeff Butler
- *
+ * 
  */
 public class ExistingJavaFileVisitor extends ASTVisitor {
     private TypeDeclaration typeDeclaration;
     private String[] javadocTags;
     private List<String> generatedInnerClassesToKeep;
+    private Map<String, List<Annotation>> fieldAnnotations;
+    private Map<String, List<Annotation>> methodAnnotations;
 
     /**
      * 
@@ -45,6 +51,8 @@ public class ExistingJavaFileVisitor extends ASTVisitor {
         super();
         this.javadocTags = javadocTags;
         generatedInnerClassesToKeep = new ArrayList<String>();
+        fieldAnnotations = new HashMap<String, List<Annotation>>();
+        methodAnnotations = new HashMap<String, List<Annotation>>();
     }
 
     /**
@@ -53,9 +61,16 @@ public class ExistingJavaFileVisitor extends ASTVisitor {
     @Override
     public boolean visit(FieldDeclaration node) {
         if (isGenerated(node)) {
+            List<Annotation> annotations = retrieveAnnotations(node);
+            if (!annotations.isEmpty()) {
+                VariableDeclarationFragment variable = (VariableDeclarationFragment) node
+                        .fragments().get(0);
+                fieldAnnotations.put(variable.getName().getIdentifier(),
+                        annotations);
+            }
             node.delete();
         }
-        
+
         return false;
     }
 
@@ -65,6 +80,12 @@ public class ExistingJavaFileVisitor extends ASTVisitor {
     @Override
     public boolean visit(MethodDeclaration node) {
         if (isGenerated(node)) {
+            List<Annotation> annotations = retrieveAnnotations(node);
+            if (!annotations.isEmpty()) {
+                String methodSignature = EclipseDomUtils
+                        .getMethodSignature(node);
+                methodAnnotations.put(methodSignature, annotations);
+            }
             node.delete();
         }
 
@@ -89,13 +110,13 @@ public class ExistingJavaFileVisitor extends ASTVisitor {
             return false;
         }
     }
-    
+
     @Override
     public boolean visit(EnumDeclaration node) {
         if (isGenerated(node)) {
             node.delete();
         }
-        
+
         return false;
     }
 
@@ -119,7 +140,8 @@ public class ExistingJavaFileVisitor extends ASTVisitor {
                         String string = tag.toString();
                         if (string.contains("do_not_delete_during_merge")) {
                             if (node.getNodeType() == ASTNode.TYPE_DECLARATION) {
-                                String name = ((TypeDeclaration) node).getName().getFullyQualifiedName();
+                                String name = ((TypeDeclaration) node)
+                                        .getName().getFullyQualifiedName();
                                 generatedInnerClassesToKeep.add(name);
                             }
                         } else {
@@ -130,11 +152,34 @@ public class ExistingJavaFileVisitor extends ASTVisitor {
                 }
             }
         }
-        
+
         return rc;
     }
-    
+
     public boolean containsInnerClass(String name) {
         return generatedInnerClassesToKeep.contains(name);
+    }
+
+    private List<Annotation> retrieveAnnotations(BodyDeclaration node) {
+        List<?> modifiers = node.modifiers();
+        List<Annotation> annotations = new ArrayList<Annotation>();
+        for (Object modifier : modifiers) {
+            if (modifier instanceof Annotation) {
+                annotations.add((Annotation) modifier);
+            }
+        }
+        return annotations;
+    }
+
+    public List<Annotation> getFieldAnnotations(
+            FieldDeclaration fieldDeclaration) {
+        VariableDeclarationFragment variable = (VariableDeclarationFragment) fieldDeclaration
+                .fragments().get(0);
+        return fieldAnnotations.get(variable.getName().getIdentifier());
+    }
+
+    public List<Annotation> getMethodAnnotations(
+            MethodDeclaration methodDeclaration) {
+        return methodAnnotations.get(EclipseDomUtils.getMethodSignature(methodDeclaration));
     }
 }

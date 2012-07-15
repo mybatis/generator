@@ -49,9 +49,10 @@ public class JdbcTypeNameTranslator {
         typeToName.put(Types.JAVA_OBJECT, "JAVA_OBJECT"); //$NON-NLS-1$
         typeToName.put(Types.LONGVARBINARY, "LONGVARBINARY"); //$NON-NLS-1$
         typeToName.put(Types.LONGVARCHAR, "LONGVARCHAR"); //$NON-NLS-1$
-        typeToName.put(JavaTypeResolverDefaultImpl.NCHAR, "NCHAR"); //$NON-NLS-1$
-        typeToName.put(JavaTypeResolverDefaultImpl.NCLOB, "NCLOB"); //$NON-NLS-1$
-        typeToName.put(JavaTypeResolverDefaultImpl.NVARCHAR, "NVARCHAR"); //$NON-NLS-1$
+        typeToName.put(Jdbc4Types.NCHAR, "NCHAR"); //$NON-NLS-1$
+        typeToName.put(Jdbc4Types.NCLOB, "NCLOB"); //$NON-NLS-1$
+        typeToName.put(Jdbc4Types.NVARCHAR, "NVARCHAR"); //$NON-NLS-1$
+        typeToName.put(Jdbc4Types.LONGNVARCHAR, "LONGNVARCHAR"); //$NON-NLS-1$
         typeToName.put(Types.NULL, "NULL"); //$NON-NLS-1$
         typeToName.put(Types.NUMERIC, "NUMERIC"); //$NON-NLS-1$
         typeToName.put(Types.OTHER, "OTHER"); //$NON-NLS-1$
@@ -84,9 +85,10 @@ public class JdbcTypeNameTranslator {
         nameToType.put("JAVA_OBJECT", Types.JAVA_OBJECT); //$NON-NLS-1$
         nameToType.put("LONGVARBINARY", Types.LONGVARBINARY); //$NON-NLS-1$
         nameToType.put("LONGVARCHAR", Types.LONGVARCHAR); //$NON-NLS-1$
-        nameToType.put("NCHAR", JavaTypeResolverDefaultImpl.NCHAR); //$NON-NLS-1$
-        nameToType.put("NCLOB", JavaTypeResolverDefaultImpl.NCLOB); //$NON-NLS-1$
-        nameToType.put("NVARCHAR", JavaTypeResolverDefaultImpl.NVARCHAR); //$NON-NLS-1$
+        nameToType.put("NCHAR", Jdbc4Types.NCHAR); //$NON-NLS-1$
+        nameToType.put("NCLOB", Jdbc4Types.NCLOB); //$NON-NLS-1$
+        nameToType.put("NVARCHAR", Jdbc4Types.NVARCHAR); //$NON-NLS-1$
+        nameToType.put("LONGNVARCHAR", Jdbc4Types.LONGNVARCHAR); //$NON-NLS-1$
         nameToType.put("NULL", Types.NULL); //$NON-NLS-1$
         nameToType.put("NUMERIC", Types.NUMERIC); //$NON-NLS-1$
         nameToType.put("OTHER", Types.OTHER); //$NON-NLS-1$

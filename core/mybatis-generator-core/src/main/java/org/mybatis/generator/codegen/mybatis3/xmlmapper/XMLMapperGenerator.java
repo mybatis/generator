@@ -167,14 +167,14 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
 
     protected void addDeleteByPrimaryKeyElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateDeleteByPrimaryKey()) {
-            AbstractXmlElementGenerator elementGenerator = new DeleteByPrimaryKeyElementGenerator();
+            AbstractXmlElementGenerator elementGenerator = new DeleteByPrimaryKeyElementGenerator(false);
             initializeAndExecuteGenerator(elementGenerator, parentElement);
         }
     }
 
     protected void addInsertElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateInsert()) {
-            AbstractXmlElementGenerator elementGenerator = new InsertElementGenerator();
+            AbstractXmlElementGenerator elementGenerator = new InsertElementGenerator(false);
             initializeAndExecuteGenerator(elementGenerator, parentElement);
         }
     }

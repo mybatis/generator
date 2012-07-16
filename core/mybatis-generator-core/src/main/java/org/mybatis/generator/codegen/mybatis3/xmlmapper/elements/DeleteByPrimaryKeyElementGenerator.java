@@ -29,8 +29,11 @@ import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 public class DeleteByPrimaryKeyElementGenerator extends
         AbstractXmlElementGenerator {
 
-    public DeleteByPrimaryKeyElementGenerator() {
+    private boolean isSimple;
+    
+    public DeleteByPrimaryKeyElementGenerator(boolean isSimple) {
         super();
+        this.isSimple = isSimple;
     }
 
     @Override
@@ -40,7 +43,7 @@ public class DeleteByPrimaryKeyElementGenerator extends
         answer.addAttribute(new Attribute(
                 "id", introspectedTable.getDeleteByPrimaryKeyStatementId())); //$NON-NLS-1$
         String parameterClass;
-        if (introspectedTable.getRules().generatePrimaryKeyClass()) {
+        if (!isSimple && introspectedTable.getRules().generatePrimaryKeyClass()) {
             parameterClass = introspectedTable.getPrimaryKeyType();
         } else {
             // PK fields are in the base class. If more than on PK

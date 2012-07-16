@@ -2,13 +2,13 @@
 Overview
 --------
 MyBatis Generator (MBG) is a code generator for the MyBatis (and iBATIS) SQL
-mapping framefork.  MBG will introspect database tables (through JDBC
+mapping framework.  MBG will introspect database tables (through JDBC
 DatabaseMetaData) and generate SQL Map XML files, Java model object (POJOs)
 that match the table, and (optionally) Java client classes that use the other
 generated objects.
 
 For full documentation, please refer to the user's manual at
-doc/html/index.html in this distribution.
+docs/index.html in this distribution.
 
 Dependencies
 ------------

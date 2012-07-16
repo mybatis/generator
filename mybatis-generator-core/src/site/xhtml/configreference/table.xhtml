@@ -372,6 +372,15 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
         property in most cases with public synonyms.</td>
   </tr>
   <tr>
+    <td valign="top">selectAllOrderByClause</td>
+    <td>This property can be used to specify an order by clause that will be added to
+        the <code>selectAll</code> method.  This is only applicable if you are using the
+        <code>MyBatis3Simple</code> target runtime.  MBG will prepend <code>order by</code>
+        to anything you specify in this property, so the property should contain
+        a column list only (e.g <code>ID1, ID2</code> or <code>ID1 desc, ID2 asc</code>)
+        </td>
+  </tr>
+  <tr>
     <td valign="top">useActualColumnNames</td>
     <td>If true, then
         MBG will use column names as returned from the database metadata as the properties

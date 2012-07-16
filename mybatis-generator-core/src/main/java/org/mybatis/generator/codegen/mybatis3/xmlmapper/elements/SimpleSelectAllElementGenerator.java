@@ -22,6 +22,8 @@ import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
+import org.mybatis.generator.config.PropertyRegistry;
+import org.mybatis.generator.internal.util.StringUtility;
 
 /**
  * 
@@ -73,6 +75,15 @@ public class SimpleSelectAllElementGenerator extends
         sb.append(introspectedTable
                 .getAliasedFullyQualifiedTableNameAtRuntime());
         answer.addElement(new TextElement(sb.toString()));
+        
+        String orderByClause = introspectedTable.getTableConfigurationProperty(PropertyRegistry.TABLE_SELECT_ALL_ORDER_BY_CLAUSE);
+        boolean hasOrderBy = StringUtility.stringHasValue(orderByClause);
+        if (hasOrderBy) {
+            sb.setLength(0);
+            sb.append("order by "); //$NON-NLS-1$
+            sb.append(orderByClause);
+            answer.addElement(new TextElement(sb.toString()));
+        }
 
         if (context.getPlugins().sqlMapSelectAllElementGenerated(
                 answer, introspectedTable)) {

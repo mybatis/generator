@@ -26,6 +26,8 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.SelectAllMethodGenerator;
+import org.mybatis.generator.config.PropertyRegistry;
+import org.mybatis.generator.internal.util.StringUtility;
 
 /**
  * 
@@ -78,13 +80,28 @@ public class AnnotatedSelectAllMethodGenerator extends
             method.addAnnotation(sb.toString());
         }
         
+        String orderByClause = introspectedTable.getTableConfigurationProperty(PropertyRegistry.TABLE_SELECT_ALL_ORDER_BY_CLAUSE);
+        boolean hasOrderBy = StringUtility.stringHasValue(orderByClause);
+        
         sb.setLength(0);
         javaIndent(sb, 1);
         sb.append("\"from "); //$NON-NLS-1$
         sb.append(escapeStringForJava(introspectedTable
                 .getAliasedFullyQualifiedTableNameAtRuntime()));
-        sb.append("\""); //$NON-NLS-1$
+        sb.append('\"');
+        if (hasOrderBy) {
+            sb.append(',');
+        }
         method.addAnnotation(sb.toString());
+        
+        if (hasOrderBy) {
+            sb.setLength(0);
+            javaIndent(sb, 1);
+            sb.append("\"order by "); //$NON-NLS-1$
+            sb.append(orderByClause);
+            sb.append('\"');
+            method.addAnnotation(sb.toString());
+        }
         
         method.addAnnotation("})"); //$NON-NLS-1$
 

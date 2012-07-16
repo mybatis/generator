@@ -1,4 +1,4 @@
-package mbg.test.mb3.simpleannotated;
+package mbg.test.mb3.simple;
 
 import static mbg.test.common.util.TestUtilities.datesAreEqual;
 import static mbg.test.common.util.TestUtilities.timesAreEqual;
@@ -11,25 +11,25 @@ import java.util.Date;
 import java.util.List;
 
 import mbg.test.common.util.TestUtilities;
-import mbg.test.mb3.generated.simpleannotated.mapper.AwfulTableMapper;
-import mbg.test.mb3.generated.simpleannotated.mapper.FieldsblobsMapper;
-import mbg.test.mb3.generated.simpleannotated.mapper.FieldsonlyMapper;
-import mbg.test.mb3.generated.simpleannotated.mapper.PkblobsMapper;
-import mbg.test.mb3.generated.simpleannotated.mapper.PkfieldsMapper;
-import mbg.test.mb3.generated.simpleannotated.mapper.PkfieldsblobsMapper;
-import mbg.test.mb3.generated.simpleannotated.mapper.PkonlyMapper;
-import mbg.test.mb3.generated.simpleannotated.model.AwfulTable;
-import mbg.test.mb3.generated.simpleannotated.model.Fieldsblobs;
-import mbg.test.mb3.generated.simpleannotated.model.Fieldsonly;
-import mbg.test.mb3.generated.simpleannotated.model.Pkblobs;
-import mbg.test.mb3.generated.simpleannotated.model.Pkfields;
-import mbg.test.mb3.generated.simpleannotated.model.Pkfieldsblobs;
-import mbg.test.mb3.generated.simpleannotated.model.Pkonly;
+import mbg.test.mb3.generated.simple.mapper.AwfulTableMapper;
+import mbg.test.mb3.generated.simple.mapper.FieldsblobsMapper;
+import mbg.test.mb3.generated.simple.mapper.FieldsonlyMapper;
+import mbg.test.mb3.generated.simple.mapper.PkblobsMapper;
+import mbg.test.mb3.generated.simple.mapper.PkfieldsMapper;
+import mbg.test.mb3.generated.simple.mapper.PkfieldsblobsMapper;
+import mbg.test.mb3.generated.simple.mapper.PkonlyMapper;
+import mbg.test.mb3.generated.simple.model.AwfulTable;
+import mbg.test.mb3.generated.simple.model.Fieldsblobs;
+import mbg.test.mb3.generated.simple.model.Fieldsonly;
+import mbg.test.mb3.generated.simple.model.Pkblobs;
+import mbg.test.mb3.generated.simple.model.Pkfields;
+import mbg.test.mb3.generated.simple.model.Pkfieldsblobs;
+import mbg.test.mb3.generated.simple.model.Pkonly;
 
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 
-public class SimpleAnnotatedTest extends AbstractSimpleAnnotatedTest {
+public class SimpleTest extends AbstractSimpleTest {
 
     @Test
     public void testAwfulTable() {

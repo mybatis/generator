@@ -77,14 +77,14 @@ create table "awful table" (
   firstName varchar(30),
   "last name" varchar(30),
   E_MAIL varchar(30),
-  "_id1" int not null,
-  "$id2" int not null,
-  "id5_" int not null,
-  "id6$" int not null,
-  "id7$$" int not null,
+  "_id1" int,
+  "$id2" int,
+  "id5_" int,
+  "id6$" int,
+  "id7$$" int,
   EmailAddress varchar(30),
   "from" varchar(30),
-  active bit not null,
+  active bit,
   primary key("CuStOmEr iD")
 );
 

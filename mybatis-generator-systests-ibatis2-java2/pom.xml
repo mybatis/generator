@@ -23,7 +23,7 @@
   <parent>
     <groupId>org.mybatis.generator</groupId>
     <artifactId>mybatis-generator</artifactId>
-    <version>1.3.2-SNAPSHOT</version>
+    <version>1.3.2</version>
   </parent>
   <artifactId>mybatis-generator-systests-ibatis2-java2</artifactId>
   <packaging>jar</packaging>
@@ -149,8 +149,8 @@
   </dependencies>
 
   <scm>
-    <url>https://mybatis.googlecode.com/svn/sub-projects/generator/trunk/core/mybatis-generator-systests-ibatis2-java2</url>
-    <connection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/generator/trunk/core/mybatis-generator-systests-ibatis2-java2</connection>
-    <developerConnection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/generator/trunk/core/mybatis-generator-systests-ibatis2-java2</developerConnection>
+    <url>https://mybatis.googlecode.com/svn/sub-projects/generator/tags/mybatis-generator-1.3.2/mybatis-generator-systests-ibatis2-java2</url>
+    <connection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/generator/tags/mybatis-generator-1.3.2/mybatis-generator-systests-ibatis2-java2</connection>
+    <developerConnection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/generator/tags/mybatis-generator-1.3.2/mybatis-generator-systests-ibatis2-java2</developerConnection>
   </scm>
 </project>

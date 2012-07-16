@@ -24,7 +24,7 @@
   <parent>
     <groupId>org.mybatis.generator</groupId>
     <artifactId>mybatis-generator</artifactId>
-    <version>1.3.2-SNAPSHOT</version>
+    <version>1.3.2</version>
   </parent>
 
   <artifactId>mybatis-generator-systests-common</artifactId>
@@ -66,8 +66,8 @@
   </build>
 
   <scm>
-    <url>https://mybatis.googlecode.com/svn/sub-projects/generator/trunk/core/mybatis-generator-systests-common</url>
-    <connection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/generator/trunk/core/mybatis-generator-systests-common</connection>
-    <developerConnection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/generator/trunk/core/mybatis-generator-systests-common</developerConnection>
+    <url>https://mybatis.googlecode.com/svn/sub-projects/generator/tags/mybatis-generator-1.3.2/mybatis-generator-systests-common</url>
+    <connection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/generator/tags/mybatis-generator-1.3.2/mybatis-generator-systests-common</connection>
+    <developerConnection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/generator/tags/mybatis-generator-1.3.2/mybatis-generator-systests-common</developerConnection>
   </scm>
 </project>

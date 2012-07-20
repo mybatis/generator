@@ -20,7 +20,7 @@
          <action
                class="org.mybatis.generator.eclipse.ui.actions.RunGeneratorAction"
                enablesFor="1"
-               icon="icons/mybatis.ico"
+               icon="icons/ninja-joe-logo.ico"
                id="org.mybatis.generator.eclipse.ui.RunGeneratorAction"
                label="Generate MyBatis/iBATIS Artifacts"
                menubarPath="additions">
@@ -44,7 +44,7 @@
       <wizard
             category="org.mybatis.generator.eclipse.ui.category"
             class="org.mybatis.generator.eclipse.ui.wizards.NewConfigFileWizard"
-            icon="icons/mybatis.ico"
+            icon="icons/ninja-joe-logo.ico"
             id="org.mybatis.generator.eclipse.ui.NewConfigFileWizard"
             name="MyBatis Generator Configuration File">
       </wizard>

@@ -199,11 +199,13 @@
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
       <scope>provided</scope>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.apache.ant</groupId>
       <artifactId>ant</artifactId>
       <scope>provided</scope>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>junit</groupId>

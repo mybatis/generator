@@ -29,7 +29,7 @@
   <parent>
     <groupId>org.mybatis</groupId>
     <artifactId>mybatis-parent</artifactId>
-    <version>15</version>
+    <version>16</version>
   </parent>
 
   <modules>
@@ -54,7 +54,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-plugin-plugin</artifactId>
-        <version>2.7</version>
+        <version>3.1</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -125,6 +125,12 @@
             </tag>
           </tags>
         </configuration>
+      </plugin>
+      <!-- Parent version of maven-jar-plugin (2.4) breaks eclipse m2e -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.3.2</version>
       </plugin>
     </plugins>
     
@@ -213,12 +219,12 @@
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-orm</artifactId>
-        <version>3.1.1.RELEASE</version>
+        <version>3.1.2.RELEASE</version>
       </dependency>
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-jdbc</artifactId>
-        <version>3.1.1.RELEASE</version>
+        <version>3.1.2.RELEASE</version>
       </dependency>
       <dependency>
         <groupId>org.mybatis</groupId>

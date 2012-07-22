@@ -51,7 +51,7 @@ Eclipse Release Process
 1. Build the new version of the Eclipse feature:
   - Increment the version number of the feature
   - Increment the version number of any plugin that has changed
-  - Increment the version numbers in category.xml in the build project
+  - Add the new version to the category.xml in the build project
   - Run the build.xml script in the build project (creates a new feature version
     at \temp\mybatis.generator.build\etc.)
   

@@ -156,6 +156,7 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
         for (IntrospectedColumn introspectedColumn : constructorColumns) {
             method.addParameter(new Parameter(introspectedColumn.getFullyQualifiedJavaType(),
                     introspectedColumn.getJavaProperty()));
+            topLevelClass.addImportedType(introspectedColumn.getFullyQualifiedJavaType());
         }
         
         StringBuilder sb = new StringBuilder();

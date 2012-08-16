@@ -243,7 +243,7 @@
     <sqlMapGenerator targetPackage="mbg.test.mb3.generated.miscellaneous.modelonly2.xml" targetProject="MAVEN">
     </sqlMapGenerator>
     
-    <!-- this shold, effectively, be ignored as this is model only -->
+    <!-- this should, effectively, be ignored as this is model only -->
     <javaClientGenerator type="XMLMAPPER" targetPackage="mbg.test.mb3.generated.miscellaneous.modelonly2.mapper" targetProject="MAVEN">
     </javaClientGenerator>
     
@@ -282,6 +282,9 @@
       <columnOverride column="wierd$Field" delimitedColumnName="true"/>
     </table>
     <table tableName="PKFieldsBlobs" alias="A" />
+    <table tableName="CompoundKey">
+      <property name="constructorBased" value="true"/>
+    </table>
   </context>
 
   <context id="FlatJava5_Annotated" defaultModelType="flat">

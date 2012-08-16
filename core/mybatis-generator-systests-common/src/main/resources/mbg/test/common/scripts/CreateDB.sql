@@ -9,6 +9,7 @@ drop table BlobsOnly if exists;
 drop view NameView if exists;
 drop table RegexRename if exists;
 drop table mbgtest.AnotherAwfulTable if exists;
+drop table CompoundKey if exists;
 drop schema mbgtest if exists;
 drop table EnumTest if exists;
 drop sequence TestSequence if exists;
@@ -114,6 +115,13 @@ create table mbgtest.AnotherAwfulTable (
   "update" varchar(30),
   "delete" varchar(30),
   primary key(id)
+);
+
+create table CompoundKey (
+  id int not null,
+  updateDate date not null,
+  description varchar(30),
+  primary key(id, updateDate)
 );
 
 create table EnumTest (

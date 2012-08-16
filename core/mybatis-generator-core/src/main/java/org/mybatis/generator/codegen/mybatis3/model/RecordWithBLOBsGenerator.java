@@ -123,6 +123,7 @@ public class RecordWithBLOBsGenerator extends AbstractJavaGenerator {
                 .getAllColumns()) {
             method.addParameter(new Parameter(introspectedColumn.getFullyQualifiedJavaType(),
                     introspectedColumn.getJavaProperty()));
+            topLevelClass.addImportedType(introspectedColumn.getFullyQualifiedJavaType());
         }
         
         boolean comma = false;

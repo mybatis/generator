@@ -16,7 +16,6 @@
 package org.mybatis.generator.codegen.mybatis3.xmlmapper.elements;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.mybatis.generator.api.IntrospectedColumn;
@@ -92,10 +91,9 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
         valuesClause.append("values ("); //$NON-NLS-1$
 
         List<String> valuesClauses = new ArrayList<String>();
-        Iterator<IntrospectedColumn> iter = introspectedTable.getAllColumns()
-                .iterator();
-        while (iter.hasNext()) {
-            IntrospectedColumn introspectedColumn = iter.next();
+        List<IntrospectedColumn> columns = introspectedTable.getAllColumns();
+        for (int i = 0; i < columns.size(); i++) {
+            IntrospectedColumn introspectedColumn = columns.get(i);
             if (introspectedColumn.isIdentity()) {
                 // cannot set values on identity fields
                 continue;
@@ -105,9 +103,11 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
                     .getEscapedColumnName(introspectedColumn));
             valuesClause.append(MyBatis3FormattingUtilities
                     .getParameterClause(introspectedColumn));
-            if (iter.hasNext()) {
-                insertClause.append(", "); //$NON-NLS-1$
-                valuesClause.append(", "); //$NON-NLS-1$
+            if (i + 1 < columns.size()) {
+                if (!columns.get(i + 1).isIdentity()) {
+                    insertClause.append(", "); //$NON-NLS-1$
+                    valuesClause.append(", "); //$NON-NLS-1$
+                }
             }
 
             if (valuesClause.length() > 80) {

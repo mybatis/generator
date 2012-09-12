@@ -251,6 +251,13 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
       <p>If specified, the value of this property should be a fully qualified
        interface name (like com.mycompany.MyRootInterface).</p></td>
   </tr>
+  <tr>
+    <td valign="top">useLegacyBuilder</td>
+    <td>If true, then annotated clients will use the SqlBuilder from MyBatis to generate
+        dynamic SQL.  With MyBatis 3.2 and later, that builder was deprecated in favor of
+        the new SQL class.  If false, MBG will generate clients that use the new SQL builder.
+        <p><i>The default value is false.</i></p></td>
+  </tr>
 </table>
 
 <h2>Example</h2>

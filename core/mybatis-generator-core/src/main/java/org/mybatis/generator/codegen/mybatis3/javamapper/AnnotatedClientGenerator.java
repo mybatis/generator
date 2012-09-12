@@ -20,6 +20,8 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated.Anno
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated.AnnotatedUpdateByPrimaryKeySelectiveMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated.AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated.AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator;
+import org.mybatis.generator.config.PropertyRegistry;
+import org.mybatis.generator.internal.util.StringUtility;
 
 public class AnnotatedClientGenerator extends JavaMapperGenerator {
 
@@ -142,7 +144,13 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
 
     @Override
     public List<CompilationUnit> getExtraCompilationUnits() {
-        SqlProviderGenerator sqlProviderGenerator = new SqlProviderGenerator();
+    	boolean useLegacyBuilder = false;
+    	
+    	String prop = context.getJavaClientGeneratorConfiguration().getProperty(PropertyRegistry.CLIENT_USE_LEGACY_BUILDER);
+    	if (StringUtility.stringHasValue(prop)) {
+    		useLegacyBuilder = Boolean.valueOf(prop);
+    	}
+        SqlProviderGenerator sqlProviderGenerator = new SqlProviderGenerator(useLegacyBuilder);
         sqlProviderGenerator.setContext(context);
         sqlProviderGenerator.setIntrospectedTable(introspectedTable);
         sqlProviderGenerator.setProgressCallback(progressCallback);

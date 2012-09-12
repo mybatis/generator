@@ -32,21 +32,14 @@
     <version>16</version>
   </parent>
 
-  <modules>
-    <module>mybatis-generator-core</module>
-    <module>mybatis-generator-maven-plugin</module>
-    <module>mybatis-generator-systests-common</module>
-    <module>mybatis-generator-systests-mybatis3</module>
-    <module>mybatis-generator-systests-ibatis2-java2</module>
-    <module>mybatis-generator-systests-ibatis2-java5</module>
-  </modules>
-
   <properties>
     <findbugs.onlyAnalyze>org.mybatis.generator.*</findbugs.onlyAnalyze>
     <clirr.comparisonVersion>1.3.0</clirr.comparisonVersion>
     <gcu.product>Generator</gcu.product>
     <hsqldb.version>2.2.8</hsqldb.version>
     <cobertura.version>1.9.4.1</cobertura.version>
+    <javac.src.version>1.6</javac.src.version>
+    <javac.target.version>1.6</javac.target.version>
   </properties>
 
   <reporting>
@@ -229,7 +222,7 @@
       <dependency>
         <groupId>org.mybatis</groupId>
         <artifactId>mybatis</artifactId>
-        <version>3.1.1</version>
+        <version>3.2.0-SNAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>net.sourceforge.cobertura</groupId>
@@ -239,6 +232,35 @@
     </dependencies>
   </dependencyManagement>
 
+  <profiles>
+    <profile>
+      <id>MyBatisOnly</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <modules>
+        <module>mybatis-generator-core</module>
+        <module>mybatis-generator-maven-plugin</module>
+        <module>mybatis-generator-systests-common</module>
+        <module>mybatis-generator-systests-mybatis3</module>
+      </modules>
+    </profile>
+    <profile>
+      <id>complete</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <modules>
+        <module>mybatis-generator-core</module>
+        <module>mybatis-generator-maven-plugin</module>
+        <module>mybatis-generator-systests-common</module>
+        <module>mybatis-generator-systests-mybatis3</module>
+        <module>mybatis-generator-systests-ibatis2-java2</module>
+        <module>mybatis-generator-systests-ibatis2-java5</module>
+      </modules>
+    </profile>
+  </profiles>
+  
   <scm>
     <url>https://mybatis.googlecode.com/svn/sub-projects/generator/trunk/core</url>
     <connection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/generator/trunk/core</connection>

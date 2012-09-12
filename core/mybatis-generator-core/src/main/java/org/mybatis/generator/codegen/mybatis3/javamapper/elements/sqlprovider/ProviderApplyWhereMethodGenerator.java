@@ -27,7 +27,7 @@ import org.mybatis.generator.api.dom.java.TopLevelClass;
 public class ProviderApplyWhereMethodGenerator extends
         AbstractJavaProviderMethodGenerator {
 
-    private static final String[] methodLines = {
+    private static final String[] BEGINNING_METHOD_LINES = {
         "if (example == null) {", //$NON-NLS-1$
         "return;", //$NON-NLS-1$
         "}", //$NON-NLS-1$
@@ -114,14 +114,23 @@ public class ProviderApplyWhereMethodGenerator extends
         "sb.append(')');", //$NON-NLS-1$
         "}", //$NON-NLS-1$
         "}", //$NON-NLS-1$
-        "", //$NON-NLS-1$
+        "" //$NON-NLS-1$
+    };
+    
+    private static final String[] LEGACY_ENDING_METHOD_LINES = {
         "if (sb.length() > 0) {", //$NON-NLS-1$
         "WHERE(sb.toString());", //$NON-NLS-1$
         "}" //$NON-NLS-1$
     };
     
-    public ProviderApplyWhereMethodGenerator() {
-        super();
+    private static final String[] ENDING_METHOD_LINES = {
+        "if (sb.length() > 0) {", //$NON-NLS-1$
+        "sql.WHERE(sb.toString());", //$NON-NLS-1$
+        "}" //$NON-NLS-1$
+    };
+    
+    public ProviderApplyWhereMethodGenerator(boolean useLegacyBuilder) {
+        super(useLegacyBuilder);
     }
 
     @Override
@@ -129,7 +138,12 @@ public class ProviderApplyWhereMethodGenerator extends
         Set<String> staticImports = new TreeSet<String>();
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
 
-        staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.WHERE"); //$NON-NLS-1$
+        if (useLegacyBuilder) {
+        	staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.WHERE"); //$NON-NLS-1$
+        } else {
+        	importedTypes.add(NEW_BUILDER_IMPORT);
+        }
+        
         importedTypes.add(new FullyQualifiedJavaType(
                 "java.util.List")); //$NON-NLS-1$
         
@@ -142,14 +156,27 @@ public class ProviderApplyWhereMethodGenerator extends
 
         Method method = new Method("applyWhere"); //$NON-NLS-1$
         method.setVisibility(JavaVisibility.PROTECTED);
+        if (!useLegacyBuilder) {
+            method.addParameter(new Parameter(NEW_BUILDER_IMPORT, "sql")); //$NON-NLS-1$
+        }
         method.addParameter(new Parameter(fqjt, "example")); //$NON-NLS-1$
         method.addParameter(new Parameter(FullyQualifiedJavaType.getBooleanPrimitiveInstance(), "includeExamplePhrase")); //$NON-NLS-1$
         
         context.getCommentGenerator().addGeneralMethodComment(method,
                 introspectedTable);
         
-        for (String methodLine : methodLines) {
+        for (String methodLine : BEGINNING_METHOD_LINES) {
             method.addBodyLine(methodLine);
+        }
+        
+        if (useLegacyBuilder) {
+        	for (String methodLine : LEGACY_ENDING_METHOD_LINES) {
+        		method.addBodyLine(methodLine);
+        	}
+        } else {
+        	for (String methodLine : ENDING_METHOD_LINES) {
+        		method.addBodyLine(methodLine);
+        	}
         }
         
         if (context.getPlugins().providerApplyWhereMethodGenerated(method, topLevelClass,

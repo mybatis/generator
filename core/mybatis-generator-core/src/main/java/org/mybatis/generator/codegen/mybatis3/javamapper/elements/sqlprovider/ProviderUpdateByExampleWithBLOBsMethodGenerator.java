@@ -29,8 +29,8 @@ import org.mybatis.generator.api.dom.java.TopLevelClass;
 public class ProviderUpdateByExampleWithBLOBsMethodGenerator extends
         ProviderUpdateByExampleWithoutBLOBsMethodGenerator {
 
-    public ProviderUpdateByExampleWithBLOBsMethodGenerator() {
-        super();
+    public ProviderUpdateByExampleWithBLOBsMethodGenerator(boolean useLegacyBuilder) {
+        super(useLegacyBuilder);
     }
 
     @Override

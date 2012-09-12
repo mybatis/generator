@@ -45,8 +45,11 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider.Pr
  */
 public class SqlProviderGenerator extends AbstractJavaGenerator {
 
-    public SqlProviderGenerator() {
+	private boolean useLegacyBuilder;
+	
+    public SqlProviderGenerator(boolean useLegacyBuilder) {
         super();
+        this.useLegacyBuilder = useLegacyBuilder;
     }
 
     @Override
@@ -91,7 +94,7 @@ public class SqlProviderGenerator extends AbstractJavaGenerator {
     protected boolean addCountByExampleMethod(TopLevelClass topLevelClass) {
         boolean rc = false;
         if (introspectedTable.getRules().generateCountByExample()) {
-            AbstractJavaProviderMethodGenerator methodGenerator = new ProviderCountByExampleMethodGenerator();
+            AbstractJavaProviderMethodGenerator methodGenerator = new ProviderCountByExampleMethodGenerator(useLegacyBuilder);
             initializeAndExecuteGenerator(methodGenerator, topLevelClass);
             rc = true;
         }
@@ -102,7 +105,7 @@ public class SqlProviderGenerator extends AbstractJavaGenerator {
     protected boolean addDeleteByExampleMethod(TopLevelClass topLevelClass) {
         boolean rc = false;
         if (introspectedTable.getRules().generateDeleteByExample()) {
-            AbstractJavaProviderMethodGenerator methodGenerator = new ProviderDeleteByExampleMethodGenerator();
+            AbstractJavaProviderMethodGenerator methodGenerator = new ProviderDeleteByExampleMethodGenerator(useLegacyBuilder);
             initializeAndExecuteGenerator(methodGenerator, topLevelClass);
             rc = true;
         }
@@ -112,7 +115,7 @@ public class SqlProviderGenerator extends AbstractJavaGenerator {
 
     protected void addInsertSelectiveMethod(TopLevelClass topLevelClass) {
         if (introspectedTable.getRules().generateInsertSelective()) {
-            AbstractJavaProviderMethodGenerator methodGenerator = new ProviderInsertSelectiveMethodGenerator();
+            AbstractJavaProviderMethodGenerator methodGenerator = new ProviderInsertSelectiveMethodGenerator(useLegacyBuilder);
             initializeAndExecuteGenerator(methodGenerator, topLevelClass);
         }
     }
@@ -121,7 +124,7 @@ public class SqlProviderGenerator extends AbstractJavaGenerator {
             TopLevelClass topLevelClass) {
         boolean rc = false;
         if (introspectedTable.getRules().generateSelectByExampleWithBLOBs()) {
-            AbstractJavaProviderMethodGenerator methodGenerator = new ProviderSelectByExampleWithBLOBsMethodGenerator();
+            AbstractJavaProviderMethodGenerator methodGenerator = new ProviderSelectByExampleWithBLOBsMethodGenerator(useLegacyBuilder);
             initializeAndExecuteGenerator(methodGenerator, topLevelClass);
             rc = true;
         }
@@ -133,7 +136,7 @@ public class SqlProviderGenerator extends AbstractJavaGenerator {
             TopLevelClass topLevelClass) {
         boolean rc = false;
         if (introspectedTable.getRules().generateSelectByExampleWithoutBLOBs()) {
-            AbstractJavaProviderMethodGenerator methodGenerator = new ProviderSelectByExampleWithoutBLOBsMethodGenerator();
+            AbstractJavaProviderMethodGenerator methodGenerator = new ProviderSelectByExampleWithoutBLOBsMethodGenerator(useLegacyBuilder);
             initializeAndExecuteGenerator(methodGenerator, topLevelClass);
             rc = true;
         }
@@ -145,7 +148,7 @@ public class SqlProviderGenerator extends AbstractJavaGenerator {
             TopLevelClass topLevelClass) {
         boolean rc = false;
         if (introspectedTable.getRules().generateUpdateByExampleSelective()) {
-            AbstractJavaProviderMethodGenerator methodGenerator = new ProviderUpdateByExampleSelectiveMethodGenerator();
+            AbstractJavaProviderMethodGenerator methodGenerator = new ProviderUpdateByExampleSelectiveMethodGenerator(useLegacyBuilder);
             initializeAndExecuteGenerator(methodGenerator, topLevelClass);
             rc = true;
         }
@@ -157,7 +160,7 @@ public class SqlProviderGenerator extends AbstractJavaGenerator {
             TopLevelClass topLevelClass) {
         boolean rc = false;
         if (introspectedTable.getRules().generateUpdateByExampleWithBLOBs()) {
-            AbstractJavaProviderMethodGenerator methodGenerator = new ProviderUpdateByExampleWithBLOBsMethodGenerator();
+            AbstractJavaProviderMethodGenerator methodGenerator = new ProviderUpdateByExampleWithBLOBsMethodGenerator(useLegacyBuilder);
             initializeAndExecuteGenerator(methodGenerator, topLevelClass);
             rc = true;
         }
@@ -169,7 +172,7 @@ public class SqlProviderGenerator extends AbstractJavaGenerator {
             TopLevelClass topLevelClass) {
         boolean rc = false;
         if (introspectedTable.getRules().generateUpdateByExampleWithoutBLOBs()) {
-            AbstractJavaProviderMethodGenerator methodGenerator = new ProviderUpdateByExampleWithoutBLOBsMethodGenerator();
+            AbstractJavaProviderMethodGenerator methodGenerator = new ProviderUpdateByExampleWithoutBLOBsMethodGenerator(useLegacyBuilder);
             initializeAndExecuteGenerator(methodGenerator, topLevelClass);
             rc = true;
         }
@@ -180,13 +183,13 @@ public class SqlProviderGenerator extends AbstractJavaGenerator {
     protected void addUpdateByPrimaryKeySelectiveMethod(
             TopLevelClass topLevelClass) {
         if (introspectedTable.getRules().generateUpdateByPrimaryKeySelective()) {
-            AbstractJavaProviderMethodGenerator methodGenerator = new ProviderUpdateByPrimaryKeySelectiveMethodGenerator();
+            AbstractJavaProviderMethodGenerator methodGenerator = new ProviderUpdateByPrimaryKeySelectiveMethodGenerator(useLegacyBuilder);
             initializeAndExecuteGenerator(methodGenerator, topLevelClass);
         }
     }
 
     protected void addApplyWhereMethod(TopLevelClass topLevelClass) {
-        AbstractJavaProviderMethodGenerator methodGenerator = new ProviderApplyWhereMethodGenerator();
+        AbstractJavaProviderMethodGenerator methodGenerator = new ProviderApplyWhereMethodGenerator(useLegacyBuilder);
         initializeAndExecuteGenerator(methodGenerator, topLevelClass);
     }
 

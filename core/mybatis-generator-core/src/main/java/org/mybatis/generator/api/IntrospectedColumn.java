@@ -20,7 +20,6 @@ import java.util.Properties;
 
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.config.Context;
-import org.mybatis.generator.internal.types.Jdbc4Types;
 import org.mybatis.generator.internal.util.StringUtility;
 
 /**
@@ -169,8 +168,8 @@ public class IntrospectedColumn {
     public boolean isJdbcCharacterColumn() {
         return jdbcType == Types.CHAR || jdbcType == Types.CLOB
                 || jdbcType == Types.LONGVARCHAR || jdbcType == Types.VARCHAR
-                || jdbcType == Jdbc4Types.LONGNVARCHAR || jdbcType == Jdbc4Types.NCHAR
-                || jdbcType == Jdbc4Types.NCLOB || jdbcType == Jdbc4Types.NVARCHAR;
+                || jdbcType == Types.LONGNVARCHAR || jdbcType == Types.NCHAR
+                || jdbcType == Types.NCLOB || jdbcType == Types.NVARCHAR;
     }
 
     public String getJavaProperty() {

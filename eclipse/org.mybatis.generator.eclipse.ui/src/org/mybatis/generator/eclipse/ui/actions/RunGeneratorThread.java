@@ -151,7 +151,7 @@ public class RunGeneratorThread implements IWorkspaceRunnable {
                 IResource iResource = root.findMember(path);
                 path = iResource.getLocation();
                 path = path.addTrailingSeparator();
-                entries.add(path.toFile().toURL());
+                entries.add(path.toFile().toURI().toURL());
                 
                 IClasspathEntry[] cpEntries = javaProject.getRawClasspath();
                 for (IClasspathEntry cpEntry : cpEntries) {
@@ -162,7 +162,7 @@ public class RunGeneratorThread implements IWorkspaceRunnable {
                             iResource = root.findMember(path);
                             path = iResource.getLocation();
                             path = path.addTrailingSeparator();
-                            entries.add(path.toFile().toURL());
+                            entries.add(path.toFile().toURI().toURL());
                         }
                         break;
                     
@@ -174,7 +174,7 @@ public class RunGeneratorThread implements IWorkspaceRunnable {
                         } else {
                             path = iResource.getLocation();
                         }
-                        entries.add(path.toFile().toURL());
+                        entries.add(path.toFile().toURI().toURL());
                         break;
                     }
                 }

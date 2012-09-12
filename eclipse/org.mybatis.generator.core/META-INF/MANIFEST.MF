@@ -2,9 +2,9 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: MyBatis Generator Core
 Bundle-SymbolicName: org.mybatis.generator.core
-Bundle-Version: 1.3.2.qualifier
+Bundle-Version: 1.3.3.qualifier
 Bundle-Vendor: mybatis.org
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.apache.ant;bundle-version="1.7.1";resolution:=optional,
  org.apache.log4j;bundle-version="1.2.15";resolution:=optional
 Export-Package: org.mybatis.generator.ant,

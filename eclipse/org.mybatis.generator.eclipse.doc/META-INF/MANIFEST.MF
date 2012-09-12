@@ -2,5 +2,5 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: MyBatis Generator Documentation
 Bundle-SymbolicName: org.mybatis.generator.eclipse.doc;singleton:=true
-Bundle-Version: 1.3.2.qualifier
+Bundle-Version: 1.3.3.qualifier
 Bundle-Vendor: mybatis.org

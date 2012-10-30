@@ -29,7 +29,7 @@
   <parent>
     <groupId>org.mybatis</groupId>
     <artifactId>mybatis-parent</artifactId>
-    <version>16</version>
+    <version>17-SNAPSHOT</version>
   </parent>
 
   <properties>
@@ -38,8 +38,6 @@
     <gcu.product>Generator</gcu.product>
     <hsqldb.version>2.2.8</hsqldb.version>
     <cobertura.version>1.9.4.1</cobertura.version>
-    <javac.src.version>1.6</javac.src.version>
-    <javac.target.version>1.6</javac.target.version>
   </properties>
 
   <reporting>

@@ -15,9 +15,20 @@
  */
 package org.mybatis.generator.internal.util;
 
-import java.util.Locale;
+import static org.mybatis.generator.internal.util.StringUtility.isTrue;
 
+import java.util.Locale;
+import java.util.Properties;
+
+import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.JavaVisibility;
+import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.config.Context;
+import org.mybatis.generator.config.PropertyRegistry;
 
 /**
  * @author Jeff Butler
@@ -163,4 +174,89 @@ public class JavaBeansUtil {
 
         return answer;
     }
+
+    public static Method getJavaBeansGetter(IntrospectedColumn introspectedColumn,
+            Context context,
+            IntrospectedTable introspectedTable) {
+        FullyQualifiedJavaType fqjt = introspectedColumn
+                .getFullyQualifiedJavaType();
+        String property = introspectedColumn.getJavaProperty();
+
+        Method method = new Method();
+        method.setVisibility(JavaVisibility.PUBLIC);
+        method.setReturnType(fqjt);
+        method.setName(getGetterMethodName(property, fqjt));
+        context.getCommentGenerator().addGetterComment(method,
+                introspectedTable, introspectedColumn);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("return "); //$NON-NLS-1$
+        sb.append(property);
+        sb.append(';');
+        method.addBodyLine(sb.toString());
+
+        return method;
+    }
+
+    public static Field getJavaBeansField(IntrospectedColumn introspectedColumn,
+            Context context,
+            IntrospectedTable introspectedTable) {
+        FullyQualifiedJavaType fqjt = introspectedColumn
+                .getFullyQualifiedJavaType();
+        String property = introspectedColumn.getJavaProperty();
+
+        Field field = new Field();
+        field.setVisibility(JavaVisibility.PRIVATE);
+        field.setType(fqjt);
+        field.setName(property);
+        context.getCommentGenerator().addFieldComment(field,
+                introspectedTable, introspectedColumn);
+
+        return field;
+    }
+
+    public static Method getJavaBeansSetter(IntrospectedColumn introspectedColumn,
+            Context context,
+            IntrospectedTable introspectedTable) {
+        FullyQualifiedJavaType fqjt = introspectedColumn
+                .getFullyQualifiedJavaType();
+        String property = introspectedColumn.getJavaProperty();
+
+        Method method = new Method();
+        method.setVisibility(JavaVisibility.PUBLIC);
+        method.setName(getSetterMethodName(property));
+        method.addParameter(new Parameter(fqjt, property));
+        context.getCommentGenerator().addSetterComment(method,
+                introspectedTable, introspectedColumn);
+
+        StringBuilder sb = new StringBuilder();
+        if (isTrimStringsEnabled(context) && introspectedColumn.isStringColumn()) {
+            sb.append("this."); //$NON-NLS-1$
+            sb.append(property);
+            sb.append(" = "); //$NON-NLS-1$
+            sb.append(property);
+            sb.append(" == null ? null : "); //$NON-NLS-1$
+            sb.append(property);
+            sb.append(".trim();"); //$NON-NLS-1$
+            method.addBodyLine(sb.toString());
+        } else {
+            sb.append("this."); //$NON-NLS-1$
+            sb.append(property);
+            sb.append(" = "); //$NON-NLS-1$
+            sb.append(property);
+            sb.append(';');
+            method.addBodyLine(sb.toString());
+        }
+
+        return method;
+    }
+
+    private static boolean isTrimStringsEnabled(Context context) {
+        Properties properties = context
+                .getJavaModelGeneratorConfiguration().getProperties();
+        boolean rc = isTrue(properties
+                .getProperty(PropertyRegistry.MODEL_GENERATOR_TRIM_STRINGS));
+        return rc;
+    }
+
 }

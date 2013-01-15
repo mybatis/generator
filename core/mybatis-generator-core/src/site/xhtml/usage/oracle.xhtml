@@ -21,5 +21,10 @@ based on HR.EMPLOYEES, but the runtime SQL will only refer to FRED:</p>
     &lt;property name="runtimeTableName" value="FRED" /&gt;
   &lt;/table&gt;
 </pre>
+<h2>Oracle LONG Datatype</h2>
+<p>The Oracle JDBC driver will report that a LONG column is JDBC type LONGVARCHAR.
+MyBatis will map LONGVARCHAR to CLOB which is unsupported by the Oracle driver.
+So, when using LONG datatype, you should do a column override in the generator
+to map it to VARCHAR JDBC type.</p>
 </body>
 </html>

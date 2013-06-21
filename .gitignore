@@ -1,35 +1,4 @@
-# /core/
-/core/.project
-/core/.settings
-/core/build.log
-/core/target
-
-# /core/mybatis-generator-core/
-/core/mybatis-generator-core/.classpath
-/core/mybatis-generator-core/.project
-/core/mybatis-generator-core/.settings
-/core/mybatis-generator-core/target
-
-# /core/mybatis-generator-maven-plugin/
-/core/mybatis-generator-maven-plugin/.classpath
-/core/mybatis-generator-maven-plugin/.project
-/core/mybatis-generator-maven-plugin/.settings
-/core/mybatis-generator-maven-plugin/target
-
-# /core/mybatis-generator-systests-common/
-/core/mybatis-generator-systests-common/.classpath
-/core/mybatis-generator-systests-common/.project
-/core/mybatis-generator-systests-common/.settings
-/core/mybatis-generator-systests-common/target
-
-# /core/mybatis-generator-systests-ibatis2-java2/
-/core/mybatis-generator-systests-ibatis2-java2/.classpath
-/core/mybatis-generator-systests-ibatis2-java2/.project
-/core/mybatis-generator-systests-ibatis2-java2/.settings
-/core/mybatis-generator-systests-ibatis2-java2/target
-
-# /core/mybatis-generator-systests-ibatis2-java5/
-/core/mybatis-generator-systests-ibatis2-java5/.classpath
-/core/mybatis-generator-systests-ibatis2-java5/.project
-/core/mybatis-generator-systests-ibatis2-java5/.settings
-/core/mybatis-generator-systests-ibatis2-java5/target
+.classpath
+.project
+.settings
+target

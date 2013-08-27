@@ -139,7 +139,18 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
      */
     private String contexts;
 
+    /**
+     * Skip generator
+     * 
+     * @parameter expression="${mybatis.generator.skip}" default-value=false
+     */
+    private boolean skip;
+
     public void execute() throws MojoExecutionException {
+        if (skip) {
+            getLog().info( "MyBatis generator is skipped." );
+            return;
+        }
 
         // add resource directories to the classpath.  This is required to support
         // use of a properties file in the build.  Typically, the properties file

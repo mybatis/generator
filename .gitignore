@@ -22,6 +22,12 @@
 /core/mybatis-generator-systests-common/.settings
 /core/mybatis-generator-systests-common/target
 
+# /core/mybatis-generator-systests-mybatis3/
+/core/mybatis-generator-systests-mybatis3/.classpath
+/core/mybatis-generator-systests-mybatis3/.project
+/core/mybatis-generator-systests-mybatis3/.settings
+/core/mybatis-generator-systests-mybatis3/target
+
 # /core/mybatis-generator-systests-ibatis2-java2/
 /core/mybatis-generator-systests-ibatis2-java2/.classpath
 /core/mybatis-generator-systests-ibatis2-java2/.project

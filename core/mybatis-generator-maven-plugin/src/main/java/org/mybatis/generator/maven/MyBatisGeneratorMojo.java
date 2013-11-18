@@ -38,10 +38,11 @@ import org.mybatis.generator.internal.ObjectFactory;
 import org.mybatis.generator.internal.util.ClassloaderUtility;
 import org.mybatis.generator.internal.util.StringUtility;
 import org.mybatis.generator.internal.util.messages.Messages;
+import org.mybatis.generator.logging.LogFactory;
 
 /**
  * Goal which generates MyBatis/iBATIS artifacts.
- * 
+ *
  * @goal generate
  * @phase generate-sources
  */
@@ -51,7 +52,7 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
      * @parameter expression="${project}"
      * @required
      * @readonly
-     * 
+     *
      */
     private MavenProject project;
 
@@ -65,7 +66,7 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
 
     /**
      * Location of the configuration file.
-     * 
+     *
      * @parameter expression="${mybatis.generator.configurationFile}"
      *            default-value
      *            ="${basedir}/src/main/resources/generatorConfig.xml"
@@ -75,14 +76,14 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
 
     /**
      * Specifies whether the mojo writes progress messages to the log
-     * 
+     *
      * @parameter expression="${mybatis.generator.verbose}" default-value=false
      */
     private boolean verbose;
 
     /**
      * Specifies whether the mojo overwrites existing files. Default is false.
-     * 
+     *
      * @parameter expression="${mybatis.generator.overwrite}"
      *            default-value=false
      */
@@ -92,58 +93,60 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
      * Location of a SQL script file to run before generating code. If null,
      * then no script will be run. If not null, then jdbcDriver, jdbcURL must be
      * supplied also, and jdbcUserId and jdbcPassword may be supplied.
-     * 
+     *
      * @parameter expression="${mybatis.generator.sqlScript}"
      */
     private String sqlScript;
 
     /**
      * JDBC Driver to use if a sql.script.file is specified
-     * 
+     *
      * @parameter expression="${mybatis.generator.jdbcDriver}"
      */
     private String jdbcDriver;
 
     /**
      * JDBC URL to use if a sql.script.file is specified
-     * 
+     *
      * @parameter expression="${mybatis.generator.jdbcURL}"
      */
     private String jdbcURL;
 
     /**
      * JDBC user ID to use if a sql.script.file is specified
-     * 
+     *
      * @parameter expression="${mybatis.generator.jdbcUserId}"
      */
     private String jdbcUserId;
 
     /**
      * JDBC password to use if a sql.script.file is specified
-     * 
+     *
      * @parameter expression="${mybatis.generator.jdbcPassword}"
      */
     private String jdbcPassword;
 
     /**
      * Comma delimited list of table names to generate
-     * 
+     *
      * @parameter expression="${mybatis.generator.tableNames}"
      */
     private String tableNames;
 
     /**
      * Comma delimited list of contexts to generate
-     * 
+     *
      * @parameter expression="${mybatis.generator.contexts}"
      */
     private String contexts;
 
     public void execute() throws MojoExecutionException {
 
-        // add resource directories to the classpath.  This is required to support
+    	LogFactory.setLogFactory(new MavenLogFactory(this));
+
+    	// add resource directories to the classpath.  This is required to support
         // use of a properties file in the build.  Typically, the properties file
-        // is in the project's source tree, but the plugin classpath does not 
+        // is in the project's source tree, but the plugin classpath does not
         // include the project classpath.
         @SuppressWarnings("unchecked")
         List<Resource> resources = project.getResources();

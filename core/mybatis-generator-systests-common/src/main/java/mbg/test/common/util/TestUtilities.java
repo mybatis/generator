@@ -2,6 +2,7 @@ package mbg.test.common.util;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Random;
 
@@ -21,26 +22,7 @@ public class TestUtilities {
     }
 
     public static boolean blobsAreEqual(byte[] blob1, byte[] blob2) {
-        if (blob1 == null) {
-            return blob2 == null;
-        }
-
-        if (blob2 == null) {
-            return blob1 == null;
-        }
-
-        boolean rc = blob1.length == blob2.length;
-
-        if (rc) {
-            for (int i = 0; i < blob1.length; i++) {
-                if (blob1[i] != blob2[i]) {
-                    rc = false;
-                    break;
-                }
-            }
-        }
-
-        return rc;
+        return Arrays.equals(blob1, blob2);
     }
     
     public static boolean datesAreEqual(Date date1, Date date2) {
@@ -53,7 +35,6 @@ public class TestUtilities {
         }
 
         return dateOnlyFormat.format(date1).equals(dateOnlyFormat.format(date2));
-
     }
     
     public static boolean timesAreEqual(Date date1, Date date2) {
@@ -66,7 +47,6 @@ public class TestUtilities {
         }
 
         return timeOnlyFormat.format(date1).equals(timeOnlyFormat.format(date2));
-
     }
 
     public static void createDatabase() throws Exception {

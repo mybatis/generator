@@ -235,4 +235,32 @@ public class FullyQualifiedJavaTypeTest {
         Set<String> imports = OutputUtilities.calculateImports(types);
         assertEquals(3, imports.size());
     }
+    
+    @Test
+    public void testByteArray1() {
+        FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType("byte[]");
+        assertFalse(fqjt.isPrimitive());
+        assertTrue(fqjt.isArray());
+    }
+
+    @Test
+    public void testByteArray2() {
+        FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType("byte[ ]");
+        assertFalse(fqjt.isPrimitive());
+        assertTrue(fqjt.isArray());
+    }
+
+    @Test
+    public void testStringArray() {
+        FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType("java.lang.String[]");
+        assertFalse(fqjt.isPrimitive());
+        assertTrue(fqjt.isArray());
+    }
+
+    @Test
+    public void testComplexArray() {
+        FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType("java.util.List<String>[]");
+        assertFalse(fqjt.isPrimitive());
+        assertTrue(fqjt.isArray());
+    }
 }

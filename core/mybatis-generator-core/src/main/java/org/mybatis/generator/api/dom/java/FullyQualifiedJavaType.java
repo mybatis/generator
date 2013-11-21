@@ -49,6 +49,7 @@ public class FullyQualifiedJavaType implements
     private boolean explicitlyImported;
     private String packageName;
     private boolean primitive;
+    private boolean isArray;
     private PrimitiveTypeWrapper primitiveTypeWrapper;
     private List<FullyQualifiedJavaType> typeArguments;
 
@@ -348,11 +349,11 @@ public class FullyQualifiedJavaType implements
             if (spec.startsWith("extends ")) { //$NON-NLS-1$
                 boundedWildcard = true;
                 extendsBoundedWildcard = true;
-                spec = spec.substring(8);
+                spec = spec.substring(8);  // "extends ".length()
             } else if (spec.startsWith("super ")) { //$NON-NLS-1$
                 boundedWildcard = true;
                 extendsBoundedWildcard = false;
-                spec = spec.substring(6);
+                spec = spec.substring(6);  // "super ".length()
             } else {
                 boundedWildcard = false;
             }
@@ -363,8 +364,19 @@ public class FullyQualifiedJavaType implements
                 simpleParse(fullTypeSpecification);
             } else {
                 simpleParse(fullTypeSpecification.substring(0, index));
-                genericParse(fullTypeSpecification.substring(index));
+                int endIndex = fullTypeSpecification.lastIndexOf('>');
+                if (endIndex == -1) {
+                    throw new RuntimeException(getString(
+                            "RuntimeError.22", fullTypeSpecification)); //$NON-NLS-1$
+                }
+                genericParse(fullTypeSpecification.substring(index, endIndex + 1));
             }
+            
+            // this is far from a perfect test for detecting arrays, but is close
+            // enough for most cases.  It will not detect an improperly specified
+            // array type like byte], but it will detect byte[] and byte[   ]
+            // which are both valid
+            isArray = fullTypeSpecification.endsWith("]");
         }
     }
 
@@ -426,6 +438,7 @@ public class FullyQualifiedJavaType implements
     private void genericParse(String genericSpecification) {
         int lastIndex = genericSpecification.lastIndexOf('>');
         if (lastIndex == -1) {
+            // shouldn't happen - should be caught already, but just in case...
             throw new RuntimeException(getString(
                     "RuntimeError.22", genericSpecification)); //$NON-NLS-1$
         }
@@ -480,5 +493,9 @@ public class FullyQualifiedJavaType implements
     private static String getPackage(String baseQualifiedName) {
         int index = baseQualifiedName.lastIndexOf('.');
         return baseQualifiedName.substring(0, index);
+    }
+
+    public boolean isArray() {
+        return isArray;
     }
 }

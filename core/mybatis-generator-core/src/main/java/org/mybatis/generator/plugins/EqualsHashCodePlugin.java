@@ -174,6 +174,14 @@ public class EqualsHashCodePlugin extends PluginAdapter {
                 sb.append("other."); //$NON-NLS-1$
                 sb.append(getterMethod);
                 sb.append("())"); //$NON-NLS-1$
+            } else if (introspectedColumn.getFullyQualifiedJavaType().isArray()) {
+                topLevelClass.addImportedType("java.util.Arrays"); //$NON-NLS-1$
+                sb.append("Arrays.equals(this."); //$NON-NLS-1$
+                sb.append(getterMethod);
+                sb.append("(), "); //$NON-NLS-1$
+                sb.append("other."); //$NON-NLS-1$
+                sb.append(getterMethod);
+                sb.append("()))"); //$NON-NLS-1$
             } else {
                 sb.append("this."); //$NON-NLS-1$
                 sb.append(getterMethod);
@@ -294,6 +302,13 @@ public class EqualsHashCodePlugin extends PluginAdapter {
                     // should never happen
                     continue;
                 }
+            } else if (fqjt.isArray()) {
+                // Arrays is already imported by the generateEquals method, we don't need
+                // to do it again
+                sb.append("result = prime * result + (Arrays.hashCode("); //$NON-NLS-1$
+                sb.append(getterMethod);
+                sb.append("()));"); //$NON-NLS-1$
+                method.addBodyLine(sb.toString());
             } else {
                 sb.append("result = prime * result + (("); //$NON-NLS-1$
                 sb.append(getterMethod);

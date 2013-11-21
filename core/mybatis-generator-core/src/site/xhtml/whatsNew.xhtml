@@ -19,11 +19,14 @@
       If you must run on an older version of MyBatis, set the property "useLegacyBuilder"
       to "true" on your &lt;JavaClientGenerator&gt; configuration.
   </li>
-  <li>The maven plugin now logs to the maven log (thanks to Paul Krause)</li>
+  <li>Issue #11 - The maven plugin now logs to the maven log (thanks to Paul Krause)</li>
 </ul>
 <h3>Bugs Fixed</h3>
 <ul>
   <li>Fixed issue #648 - Missing imports when using constructor based models</li>
+  <li>Issues #10 - EqualsHashCodePlugin now uses the java.util.Arrays methods
+      for array attributes.
+  </li>
 </ul>
 <h2>Version 1.3.2</h2>
 <h3>Bugs Fixed</h3>

@@ -51,6 +51,7 @@
       <columnOverride column="id5_" delimitedColumnName="true" />
       <columnOverride column="id6$" delimitedColumnName="true" />
       <columnOverride column="id7$$" delimitedColumnName="true" />
+      <columnOverride column="class" property="dbClass" />
     </table>
   </context>
 
@@ -96,6 +97,7 @@
       <columnOverride column="id5_" delimitedColumnName="true" />
       <columnOverride column="id6$" delimitedColumnName="true" />
       <columnOverride column="id7$$" delimitedColumnName="true" />
+      <columnOverride column="class" property="dbClass" />
     </table>
   </context>
 
@@ -142,6 +144,7 @@
       <columnOverride column="id5_" delimitedColumnName="true" />
       <columnOverride column="id6$" delimitedColumnName="true" />
       <columnOverride column="id7$$" delimitedColumnName="true" />
+      <columnOverride column="class" property="dbClass" />
     </table>
   </context>
 
@@ -327,6 +330,7 @@
       <columnOverride column="id5_" delimitedColumnName="true" />
       <columnOverride column="id6$" delimitedColumnName="true" />
       <columnOverride column="id7$$" delimitedColumnName="true" />
+      <columnOverride column="class" property="dbClass" />
     </table>
   </context>
 
@@ -368,6 +372,7 @@
       <columnOverride column="id5_" delimitedColumnName="true" />
       <columnOverride column="id6$" delimitedColumnName="true" />
       <columnOverride column="id7$$" delimitedColumnName="true" />
+      <columnOverride column="class" property="dbClass" />
     </table>
   </context>
 
@@ -410,6 +415,7 @@
       <columnOverride column="id5_" delimitedColumnName="true" />
       <columnOverride column="id6$" delimitedColumnName="true" />
       <columnOverride column="id7$$" delimitedColumnName="true" />
+      <columnOverride column="class" property="dbClass" />
     </table>
   </context>
 
@@ -530,6 +536,7 @@
       <columnOverride column="id5_" delimitedColumnName="true" />
       <columnOverride column="id6$" delimitedColumnName="true" />
       <columnOverride column="id7$$" delimitedColumnName="true" />
+      <columnOverride column="class" property="dbClass" />
     </table>
   </context>
 
@@ -575,6 +582,7 @@
       <columnOverride column="id5_" delimitedColumnName="true" />
       <columnOverride column="id6$" delimitedColumnName="true" />
       <columnOverride column="id7$$" delimitedColumnName="true" />
+      <columnOverride column="class" property="dbClass" />
     </table>
   </context>
 
@@ -621,6 +629,7 @@
       <columnOverride column="id5_" delimitedColumnName="true" />
       <columnOverride column="id6$" delimitedColumnName="true" />
       <columnOverride column="id7$$" delimitedColumnName="true" />
+      <columnOverride column="class" property="dbClass" />
     </table>
   </context>
 
@@ -752,6 +761,7 @@
       <columnOverride column="id5_" delimitedColumnName="true" />
       <columnOverride column="id6$" delimitedColumnName="true" />
       <columnOverride column="id7$$" delimitedColumnName="true" />
+      <columnOverride column="class" property="dbClass" />
     </table>
   </context>
 
@@ -797,6 +807,7 @@
       <columnOverride column="id5_" delimitedColumnName="true" />
       <columnOverride column="id6$" delimitedColumnName="true" />
       <columnOverride column="id7$$" delimitedColumnName="true" />
+      <columnOverride column="class" property="dbClass" />
     </table>
   </context>
 </generatorConfiguration>

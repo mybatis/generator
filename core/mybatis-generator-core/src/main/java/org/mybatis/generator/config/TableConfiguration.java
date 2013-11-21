@@ -302,11 +302,11 @@ public class TableConfiguration extends PropertyHolder {
     }
 
     /**
-     * This method returns an iterator of Strings. The values are the columns
+     * This method returns a List of Strings. The values are the columns
      * that were specified to be ignored in the table, but do not exist in the
      * table.
      * 
-     * @return an List of Strings - the columns that were improperly configured
+     * @return a List of Strings - the columns that were improperly configured
      *         as ignored columns
      */
     public List<String> getIgnoredColumnsInError() {

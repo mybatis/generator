@@ -42,6 +42,7 @@ import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.JavaTypeResolver;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.JavaReservedWords;
 import org.mybatis.generator.config.ColumnOverride;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.GeneratedKey;
@@ -148,6 +149,13 @@ public class DatabaseIntrospector {
             } else {
                 warnings.add(getString("Warning.6", //$NON-NLS-1$
                         generatedKey.getColumn(), table.toString()));
+            }
+        }
+        
+        for (IntrospectedColumn ic : introspectedTable.getAllColumns()) {
+            if (JavaReservedWords.containsWord(ic.getJavaProperty())) {
+                warnings.add(getString("Warning.26", //$NON-NLS-1$
+                        ic.getActualColumnName(), table.toString()));
             }
         }
     }

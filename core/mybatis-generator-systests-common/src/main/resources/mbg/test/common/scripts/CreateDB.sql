@@ -86,6 +86,7 @@ create table "awful table" (
   EmailAddress varchar(30),
   "from" varchar(30),
   active bit,
+  class varchar(5),
   primary key("CuStOmEr iD")
 );
 

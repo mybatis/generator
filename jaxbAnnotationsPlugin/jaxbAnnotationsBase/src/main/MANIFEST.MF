@@ -1,5 +1,0 @@
-Created-By: Mahiar Mody
-Package-Title: Jaxb Annotations Plugin for MyBatis Generator Tool
-Package-Version: 1.0.0
-Package-Vendor: Mahiar Mody
-

@@ -38,10 +38,10 @@ import java.util.Enumeration;
 
 
 /**
-JaxbAnnotations is the abstract base class for plugins that add JAXB Annotation
-support for XML marshalling and unmarshalling of the generated model classes.
-This class defines most of the methods that subclasses will call for the actual
-insertion of the JAXB annotations into the generated model classes.
+AbstractJaxbAnnotations is the abstract base class for plugins that add JAXB
+Annotation support for XML marshalling and unmarshalling of the generated model
+classes. This class defines most of the methods that subclasses will call for
+the actual insertion of the JAXB annotations into the generated model classes.
 
 <p/>The only abstract method in this class is:
 <code>public abstract String getXmlAccessTypeConstant</code>, which returns

@@ -35,6 +35,36 @@
     <mapper resource="mbg/test/mb3/generated/flat/xml/PkfieldsMapper.xml" />
     <mapper resource="mbg/test/mb3/generated/flat/xml/PkfieldsblobsMapper.xml" />
     <mapper resource="mbg/test/mb3/generated/flat/xml/PkonlyMapper.xml" />
+
+    <!-- Jaxb Annotations plugin specific mappers - For Flat Model-->
+
+    <mapper resource="mbg/test/mb3/generated/flat/plugins/jaxbAnnotations/fieldType/noLobs/sqlXmlMappings/UserBlogMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/flat/plugins/jaxbAnnotations/fieldType/noLobs/sqlXmlMappings/UserPhotosMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/flat/plugins/jaxbAnnotations/fieldType/noLobs/sqlXmlMappings/UserSkillsMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/flat/plugins/jaxbAnnotations/fieldType/noLobs/sqlXmlMappings/UsersMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/flat/plugins/jaxbAnnotations/fieldType/noLobs/sqlXmlMappings/UsersToSkillsMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/flat/plugins/jaxbAnnotations/fieldType/noLobs/sqlXmlMappings/UserTutorialMapper.xml" />
+
+    <mapper resource="mbg/test/mb3/generated/flat/plugins/jaxbAnnotations/fieldType/withLobs/sqlXmlMappings/UserBlogMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/flat/plugins/jaxbAnnotations/fieldType/withLobs/sqlXmlMappings/UserPhotosMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/flat/plugins/jaxbAnnotations/fieldType/withLobs/sqlXmlMappings/UserSkillsMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/flat/plugins/jaxbAnnotations/fieldType/withLobs/sqlXmlMappings/UsersMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/flat/plugins/jaxbAnnotations/fieldType/withLobs/sqlXmlMappings/UsersToSkillsMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/flat/plugins/jaxbAnnotations/fieldType/withLobs/sqlXmlMappings/UserTutorialMapper.xml" />
+
+    <mapper resource="mbg/test/mb3/generated/flat/plugins/jaxbAnnotations/propertyType/noLobs/sqlXmlMappings/UserBlogMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/flat/plugins/jaxbAnnotations/propertyType/noLobs/sqlXmlMappings/UserPhotosMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/flat/plugins/jaxbAnnotations/propertyType/noLobs/sqlXmlMappings/UserSkillsMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/flat/plugins/jaxbAnnotations/propertyType/noLobs/sqlXmlMappings/UsersMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/flat/plugins/jaxbAnnotations/propertyType/noLobs/sqlXmlMappings/UsersToSkillsMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/flat/plugins/jaxbAnnotations/propertyType/noLobs/sqlXmlMappings/UserTutorialMapper.xml" />
+
+    <mapper resource="mbg/test/mb3/generated/flat/plugins/jaxbAnnotations/propertyType/withLobs/sqlXmlMappings/UserBlogMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/flat/plugins/jaxbAnnotations/propertyType/withLobs/sqlXmlMappings/UserPhotosMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/flat/plugins/jaxbAnnotations/propertyType/withLobs/sqlXmlMappings/UserSkillsMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/flat/plugins/jaxbAnnotations/propertyType/withLobs/sqlXmlMappings/UsersMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/flat/plugins/jaxbAnnotations/propertyType/withLobs/sqlXmlMappings/UsersToSkillsMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/flat/plugins/jaxbAnnotations/propertyType/withLobs/sqlXmlMappings/UserTutorialMapper.xml" />
   </mappers>
 
 </configuration>

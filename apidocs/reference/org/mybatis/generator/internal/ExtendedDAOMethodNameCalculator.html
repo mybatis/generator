@@ -1,0 +1,1849 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="shortcut icon" type="image/x-icon" href="../../../../favicon.ico" />
+<title>
+
+  ExtendedDAOMethodNameCalculator
+
+
+| MyBatis Generator Core
+
+</title>
+<link href="../../../../../assets/android-developer-docs.css" rel="stylesheet" type="text/css" />
+<link href="../../../../../assets/customizations.css" rel="stylesheet" type="text/css" />
+<script src="../../../../../assets/search_autocomplete.js" type="text/javascript"></script>
+<script src="../../../../../assets/jquery-resizable.min.js" type="text/javascript"></script>
+<script src="../../../../../assets/android-developer-docs.js" type="text/javascript"></script>
+<script src="../../../../../assets/prettify.js" type="text/javascript"></script>
+<script type="text/javascript">
+  setToRoot("../../../../", "../../../../../assets/");
+</script>
+<script src="../../../../../assets/android-developer-reference.js" type="text/javascript"></script>
+<script src="../../../../../assets/navtree_data.js" type="text/javascript"></script>
+<script src="../../../../../assets/customizations.js" type="text/javascript"></script>
+<noscript>
+  <style type="text/css">
+    html,body{overflow:auto;}
+    #body-content{position:relative; top:0;}
+    #doc-content{overflow:visible;border-left:3px solid #666;}
+    #side-nav{padding:0;}
+    #side-nav .toggle-list ul {display:block;}
+    #resize-packages-nav{border-bottom:3px solid #666;}
+  </style>
+</noscript>
+</head>
+
+<body class="">
+
+<div id="header">
+    <div id="headerLeft">
+    
+      <span id="masthead-title">MyBatis Generator Core</span>
+    
+    </div>
+    <div id="headerRight">
+      
+  <div id="search" >
+      <div id="searchForm">
+          <form accept-charset="utf-8" class="gsc-search-box" 
+                onsubmit="return submit_search()">
+            <table class="gsc-search-box" cellpadding="0" cellspacing="0"><tbody>
+                <tr>
+                  <td class="gsc-input">
+                    <input id="search_autocomplete" class="gsc-input" type="text" size="33" autocomplete="off"
+                      title="search developer docs" name="q"
+                      value="search developer docs"
+                      onFocus="search_focus_changed(this, true)"
+                      onBlur="search_focus_changed(this, false)"
+                      onkeydown="return search_changed(event, true, '../../../../')"
+                      onkeyup="return search_changed(event, false, '../../../../')" />
+                  <div id="search_filtered_div" class="no-display">
+                      <table id="search_filtered" cellspacing=0>
+                      </table>
+                  </div>
+                  </td>
+                  <td class="gsc-search-button">
+                    <input type="submit" value="Search" title="search" id="search-button" class="gsc-search-button" />
+                  </td>
+                  <td class="gsc-clear-button">
+                    <div title="clear results" class="gsc-clear-button">&nbsp;</div>
+                  </td>
+                </tr></tbody>
+              </table>
+          </form>
+      </div><!-- searchForm -->
+  </div><!-- search -->
+      
+    </div>
+</div><!-- header -->
+
+
+  <div class="g-section g-tpl-240" id="body-content">
+    <div class="g-unit g-first side-nav-resizable" id="side-nav">
+      <div id="swapper">
+        <div id="nav-panels">
+          <div id="resize-packages-nav">
+            <div id="packages-nav">
+              <div id="index-links"><nobr>
+                <a href="../../../../packages.html"  >Package Index</a> | 
+                <a href="../../../../classes.html" >Class Index</a></nobr>
+              </div>
+              <ul>
+                
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/ant/package-summary.html">org.mybatis.generator.ant</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/api/package-summary.html">org.mybatis.generator.api</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/api/dom/package-summary.html">org.mybatis.generator.api.dom</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/api/dom/java/package-summary.html">org.mybatis.generator.api.dom.java</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/api/dom/xml/package-summary.html">org.mybatis.generator.api.dom.xml</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/codegen/package-summary.html">org.mybatis.generator.codegen</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/codegen/ibatis2/package-summary.html">org.mybatis.generator.codegen.ibatis2</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/codegen/ibatis2/dao/package-summary.html">org.mybatis.generator.codegen.ibatis2.dao</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/codegen/ibatis2/dao/elements/package-summary.html">org.mybatis.generator.codegen.ibatis2.dao.elements</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/codegen/ibatis2/dao/templates/package-summary.html">org.mybatis.generator.codegen.ibatis2.dao.templates</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/codegen/ibatis2/model/package-summary.html">org.mybatis.generator.codegen.ibatis2.model</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/codegen/ibatis2/sqlmap/package-summary.html">org.mybatis.generator.codegen.ibatis2.sqlmap</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/codegen/ibatis2/sqlmap/elements/package-summary.html">org.mybatis.generator.codegen.ibatis2.sqlmap.elements</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/codegen/mybatis3/package-summary.html">org.mybatis.generator.codegen.mybatis3</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/codegen/mybatis3/javamapper/package-summary.html">org.mybatis.generator.codegen.mybatis3.javamapper</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/codegen/mybatis3/javamapper/elements/package-summary.html">org.mybatis.generator.codegen.mybatis3.javamapper.elements</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/codegen/mybatis3/javamapper/elements/annotated/package-summary.html">org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/codegen/mybatis3/javamapper/elements/sqlprovider/package-summary.html">org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/codegen/mybatis3/model/package-summary.html">org.mybatis.generator.codegen.mybatis3.model</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/codegen/mybatis3/xmlmapper/package-summary.html">org.mybatis.generator.codegen.mybatis3.xmlmapper</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/codegen/mybatis3/xmlmapper/elements/package-summary.html">org.mybatis.generator.codegen.mybatis3.xmlmapper.elements</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/config/package-summary.html">org.mybatis.generator.config</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/config/xml/package-summary.html">org.mybatis.generator.config.xml</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/exception/package-summary.html">org.mybatis.generator.exception</a></li>
+    <li class="selected api apilevel-">
+  <a href="../../../../org/mybatis/generator/internal/package-summary.html">org.mybatis.generator.internal</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/internal/db/package-summary.html">org.mybatis.generator.internal.db</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/internal/rules/package-summary.html">org.mybatis.generator.internal.rules</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/internal/types/package-summary.html">org.mybatis.generator.internal.types</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/internal/util/package-summary.html">org.mybatis.generator.internal.util</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/internal/util/messages/package-summary.html">org.mybatis.generator.internal.util.messages</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/logging/package-summary.html">org.mybatis.generator.logging</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/plugins/package-summary.html">org.mybatis.generator.plugins</a></li>
+              </ul><br/>
+            </div> <!-- end packages -->
+          </div> <!-- end resize-packages -->
+          <div id="classes-nav">
+            <ul>
+              
+              
+    <li><h2>Classes</h2>
+      <ul>
+          <li class="api apilevel-"><a href="../../../../org/mybatis/generator/internal/DefaultCommentGenerator.html">DefaultCommentGenerator</a></li>
+          <li class="api apilevel-"><a href="../../../../org/mybatis/generator/internal/DefaultDAOMethodNameCalculator.html">DefaultDAOMethodNameCalculator</a></li>
+          <li class="api apilevel-"><a href="../../../../org/mybatis/generator/internal/DefaultShellCallback.html">DefaultShellCallback</a></li>
+          <li class="api apilevel-"><a href="../../../../org/mybatis/generator/internal/DomWriter.html">DomWriter</a></li>
+          <li class="selected api apilevel-"><a href="../../../../org/mybatis/generator/internal/ExtendedDAOMethodNameCalculator.html">ExtendedDAOMethodNameCalculator</a></li>
+          <li class="api apilevel-"><a href="../../../../org/mybatis/generator/internal/NullProgressCallback.html">NullProgressCallback</a></li>
+          <li class="api apilevel-"><a href="../../../../org/mybatis/generator/internal/ObjectFactory.html">ObjectFactory</a></li>
+          <li class="api apilevel-"><a href="../../../../org/mybatis/generator/internal/PluginAggregator.html">PluginAggregator</a></li>
+          <li class="api apilevel-"><a href="../../../../org/mybatis/generator/internal/XmlFileMergerJaxp.html">XmlFileMergerJaxp</a></li>
+      </ul>
+    </li>
+              
+              
+              
+              
+            </ul><br/>
+          </div><!-- end classes -->
+        </div><!-- end nav-panels -->
+        <div id="nav-tree" style="display:none">
+          <div id="index-links"><nobr>
+            <a href="../../../../packages.html"  >Package Index</a> | 
+            <a href="../../../../classes.html" >Class Index</a></nobr>
+          </div>
+        </div><!-- end nav-tree -->
+      </div><!-- end swapper -->
+    </div> <!-- end side-nav -->
+    <script>
+      if (!isMobile) {
+        $("<a href='#' id='nav-swap' onclick='swapNav();return false;' style='font-size:10px;line-height:9px;margin-left:1em;text-decoration:none;'><span id='tree-link'>Use Tree Navigation</span><span id='panel-link' style='display:none'>Use Panel Navigation</span></a>").appendTo("#side-nav");
+        chooseDefaultNav();
+        if ($("#nav-tree").is(':visible')) {
+          init_default_navtree("../../../../");
+        } else {
+          addLoadEvent(function() {
+            scrollIntoView("packages-nav");
+            scrollIntoView("classes-nav");
+          });
+        }
+        $("#swapper").css({borderBottom:"2px solid #aaa"});
+      } else {
+        swapNav(); // tree view should be used on mobile
+      }
+    </script>
+
+
+
+<div class="g-unit" id="doc-content">
+
+<div id="api-info-block">
+
+
+
+  
+   
+  
+  
+  
+  
+
+  
+   
+  
+  
+  
+  
+
+
+<div class="sum-details-links">
+
+Summary:
+
+
+
+
+
+
+
+
+
+  <a href="#pubctors">Ctors</a>
+  
+
+
+
+  &#124; <a href="#pubmethods">Methods</a>
+  
+
+
+
+  &#124; <a href="#inhmethods">Inherited Methods</a>
+
+&#124; <a href="#" onclick="return toggleAllClassInherited()" id="toggleAllClassInherited">[Expand All]</a>
+
+</div><!-- end sum-details-links -->
+<div class="api-level">
+  
+
+
+  
+  
+
+</div>
+</div><!-- end api-info-block -->
+
+
+<!-- ======== START OF CLASS DATA ======== -->
+
+<div id="jd-header">
+    public
+     
+     
+    
+    class
+<h1>ExtendedDAOMethodNameCalculator</h1>
+
+
+
+  
+    extends Object<br/>
+  
+  
+  
+
+  
+  
+      implements 
+      
+        <a href="../../../../org/mybatis/generator/api/DAOMethodNameCalculator.html">DAOMethodNameCalculator</a> 
+      
+  
+  
+
+
+</div><!-- end header -->
+
+<div id="naMessage"></div>
+
+<div id="jd-content" class="api apilevel-">
+<table class="jd-inheritance-table">
+
+
+    <tr>
+         	
+        <td colspan="2" class="jd-inheritance-class-cell">java.lang.Object</td>
+    </tr>
+    
+
+    <tr>
+        
+            <td class="jd-inheritance-space">&nbsp;&nbsp;&nbsp;&#x21b3;</td>
+         	
+        <td colspan="1" class="jd-inheritance-class-cell">org.mybatis.generator.internal.ExtendedDAOMethodNameCalculator</td>
+    </tr>
+    
+
+</table>
+
+
+
+
+
+
+
+<div class="jd-descr">
+
+
+
+
+
+
+</div><!-- jd-descr -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="jd-descr">
+
+
+<h2>Summary</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<table id="pubctors" class="jd-sumtable"><tr><th colspan="12">Public Constructors</th></tr>
+
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            </nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/internal/ExtendedDAOMethodNameCalculator.html#ExtendedDAOMethodNameCalculator()">ExtendedDAOMethodNameCalculator</a></span>()</nobr>
+        
+  </td></tr>
+
+
+
+</table>
+
+
+
+
+
+
+<!-- ========== METHOD SUMMARY =========== -->
+<table id="pubmethods" class="jd-sumtable"><tr><th colspan="12">Public Methods</th></tr>
+
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/internal/ExtendedDAOMethodNameCalculator.html#getCountByExampleMethodName(org.mybatis.generator.api.IntrospectedTable)">getCountByExampleMethodName</a></span>(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</nobr>
+        
+        <div class="jd-descrdiv">Calculates and returns a name for the count by example method.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/internal/ExtendedDAOMethodNameCalculator.html#getDeleteByExampleMethodName(org.mybatis.generator.api.IntrospectedTable)">getDeleteByExampleMethodName</a></span>(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</nobr>
+        
+        <div class="jd-descrdiv">Calculates and returns a name for the delete by example method.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/internal/ExtendedDAOMethodNameCalculator.html#getDeleteByPrimaryKeyMethodName(org.mybatis.generator.api.IntrospectedTable)">getDeleteByPrimaryKeyMethodName</a></span>(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</nobr>
+        
+        <div class="jd-descrdiv">Calculates and returns a name for the delete by primary key method.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/internal/ExtendedDAOMethodNameCalculator.html#getInsertMethodName(org.mybatis.generator.api.IntrospectedTable)">getInsertMethodName</a></span>(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</nobr>
+        
+        <div class="jd-descrdiv">Calculates and returns a name for the insert method.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/internal/ExtendedDAOMethodNameCalculator.html#getInsertSelectiveMethodName(org.mybatis.generator.api.IntrospectedTable)">getInsertSelectiveMethodName</a></span>(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</nobr>
+        
+        <div class="jd-descrdiv">Calculates and returns a name for the insert selective method.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/internal/ExtendedDAOMethodNameCalculator.html#getSelectByExampleWithBLOBsMethodName(org.mybatis.generator.api.IntrospectedTable)">getSelectByExampleWithBLOBsMethodName</a></span>(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</nobr>
+        
+        <div class="jd-descrdiv">1.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/internal/ExtendedDAOMethodNameCalculator.html#getSelectByExampleWithoutBLOBsMethodName(org.mybatis.generator.api.IntrospectedTable)">getSelectByExampleWithoutBLOBsMethodName</a></span>(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</nobr>
+        
+        <div class="jd-descrdiv">1.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/internal/ExtendedDAOMethodNameCalculator.html#getSelectByPrimaryKeyMethodName(org.mybatis.generator.api.IntrospectedTable)">getSelectByPrimaryKeyMethodName</a></span>(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</nobr>
+        
+        <div class="jd-descrdiv">Calculates and returns a name for the select by primary key method.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/internal/ExtendedDAOMethodNameCalculator.html#getUpdateByExampleSelectiveMethodName(org.mybatis.generator.api.IntrospectedTable)">getUpdateByExampleSelectiveMethodName</a></span>(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</nobr>
+        
+        <div class="jd-descrdiv">Calculates and returns a name for the update by example selective method.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/internal/ExtendedDAOMethodNameCalculator.html#getUpdateByExampleWithBLOBsMethodName(org.mybatis.generator.api.IntrospectedTable)">getUpdateByExampleWithBLOBsMethodName</a></span>(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</nobr>
+        
+        <div class="jd-descrdiv">Calculates and returns a name for the update by example with BLOBs
+ method.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/internal/ExtendedDAOMethodNameCalculator.html#getUpdateByExampleWithoutBLOBsMethodName(org.mybatis.generator.api.IntrospectedTable)">getUpdateByExampleWithoutBLOBsMethodName</a></span>(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</nobr>
+        
+        <div class="jd-descrdiv">Calculates and returns a name for the update by example without BLOBs
+ method.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/internal/ExtendedDAOMethodNameCalculator.html#getUpdateByPrimaryKeySelectiveMethodName(org.mybatis.generator.api.IntrospectedTable)">getUpdateByPrimaryKeySelectiveMethodName</a></span>(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</nobr>
+        
+        <div class="jd-descrdiv">Calculates and returns a name for the update by primary key selective
+ method.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/internal/ExtendedDAOMethodNameCalculator.html#getUpdateByPrimaryKeyWithBLOBsMethodName(org.mybatis.generator.api.IntrospectedTable)">getUpdateByPrimaryKeyWithBLOBsMethodName</a></span>(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</nobr>
+        
+        <div class="jd-descrdiv">1.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/internal/ExtendedDAOMethodNameCalculator.html#getUpdateByPrimaryKeyWithoutBLOBsMethodName(org.mybatis.generator.api.IntrospectedTable)">getUpdateByPrimaryKeyWithoutBLOBsMethodName</a></span>(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</nobr>
+        
+        <div class="jd-descrdiv">1.</div>
+  
+  </td></tr>
+
+
+
+</table>
+
+
+
+
+
+
+
+<!-- ========== METHOD SUMMARY =========== -->
+<table id="inhmethods" class="jd-sumtable"><tr><th>
+  <a href="#" class="toggle-all" onclick="return toggleAllInherited(this, null)">[Expand]</a>
+  <div style="clear:left;">Inherited Methods</div></th></tr>
+
+
+<tr class="api apilevel-" >
+<td colspan="12">
+  <a href="#" onclick="return toggleInherited(this, null)" id="inherited-methods-java.lang.Object" class="jd-expando-trigger closed"
+          ><img id="inherited-methods-java.lang.Object-trigger"
+          src="../../../../../assets/images/triangle-closed.png"
+          class="jd-expando-trigger-img" /></a>
+From class
+
+  java.lang.Object
+
+<div id="inherited-methods-java.lang.Object">
+  <div id="inherited-methods-java.lang.Object-list"
+        class="jd-inheritedlinks">
+  </div>
+  <div id="inherited-methods-java.lang.Object-summary" style="display: none;">
+    <table class="jd-sumtable-expando">
+    
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            Object</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad">clone</span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            boolean</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad">equals</span>(Object arg0)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad">finalize</span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            final
+            
+            
+            Class&lt;?&gt;</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad">getClass</span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            int</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad">hashCode</span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            final
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad">notify</span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            final
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad">notifyAll</span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad">toString</span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            final
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad">wait</span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            final
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad">wait</span>(long arg0)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            final
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad">wait</span>(long arg0, int arg1)</nobr>
+        
+  </td></tr>
+
+
+</table>
+  </div>
+</div>
+</td></tr>
+
+
+
+<tr class="api apilevel-" >
+<td colspan="12">
+  <a href="#" onclick="return toggleInherited(this, null)" id="inherited-methods-org.mybatis.generator.api.DAOMethodNameCalculator" class="jd-expando-trigger closed"
+          ><img id="inherited-methods-org.mybatis.generator.api.DAOMethodNameCalculator-trigger"
+          src="../../../../../assets/images/triangle-closed.png"
+          class="jd-expando-trigger-img" /></a>
+From interface
+
+  <a href="../../../../org/mybatis/generator/api/DAOMethodNameCalculator.html">org.mybatis.generator.api.DAOMethodNameCalculator</a>
+
+<div id="inherited-methods-org.mybatis.generator.api.DAOMethodNameCalculator">
+  <div id="inherited-methods-org.mybatis.generator.api.DAOMethodNameCalculator-list"
+        class="jd-inheritedlinks">
+  </div>
+  <div id="inherited-methods-org.mybatis.generator.api.DAOMethodNameCalculator-summary" style="display: none;">
+    <table class="jd-sumtable-expando">
+    
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/api/DAOMethodNameCalculator.html#getCountByExampleMethodName(org.mybatis.generator.api.IntrospectedTable)">getCountByExampleMethodName</a></span>(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</nobr>
+        
+        <div class="jd-descrdiv">Calculates and returns a name for the count by example method.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/api/DAOMethodNameCalculator.html#getDeleteByExampleMethodName(org.mybatis.generator.api.IntrospectedTable)">getDeleteByExampleMethodName</a></span>(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</nobr>
+        
+        <div class="jd-descrdiv">Calculates and returns a name for the delete by example method.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/api/DAOMethodNameCalculator.html#getDeleteByPrimaryKeyMethodName(org.mybatis.generator.api.IntrospectedTable)">getDeleteByPrimaryKeyMethodName</a></span>(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</nobr>
+        
+        <div class="jd-descrdiv">Calculates and returns a name for the delete by primary key method.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/api/DAOMethodNameCalculator.html#getInsertMethodName(org.mybatis.generator.api.IntrospectedTable)">getInsertMethodName</a></span>(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</nobr>
+        
+        <div class="jd-descrdiv">Calculates and returns a name for the insert method.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/api/DAOMethodNameCalculator.html#getInsertSelectiveMethodName(org.mybatis.generator.api.IntrospectedTable)">getInsertSelectiveMethodName</a></span>(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</nobr>
+        
+        <div class="jd-descrdiv">Calculates and returns a name for the insert selective method.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/api/DAOMethodNameCalculator.html#getSelectByExampleWithBLOBsMethodName(org.mybatis.generator.api.IntrospectedTable)">getSelectByExampleWithBLOBsMethodName</a></span>(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</nobr>
+        
+        <div class="jd-descrdiv">Calculates and returns a name for the select by example with BLOBs
+ method.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/api/DAOMethodNameCalculator.html#getSelectByExampleWithoutBLOBsMethodName(org.mybatis.generator.api.IntrospectedTable)">getSelectByExampleWithoutBLOBsMethodName</a></span>(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</nobr>
+        
+        <div class="jd-descrdiv">Calculates and returns a name for the select by example method.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/api/DAOMethodNameCalculator.html#getSelectByPrimaryKeyMethodName(org.mybatis.generator.api.IntrospectedTable)">getSelectByPrimaryKeyMethodName</a></span>(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</nobr>
+        
+        <div class="jd-descrdiv">Calculates and returns a name for the select by primary key method.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/api/DAOMethodNameCalculator.html#getUpdateByExampleSelectiveMethodName(org.mybatis.generator.api.IntrospectedTable)">getUpdateByExampleSelectiveMethodName</a></span>(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</nobr>
+        
+        <div class="jd-descrdiv">Calculates and returns a name for the update by example selective method.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/api/DAOMethodNameCalculator.html#getUpdateByExampleWithBLOBsMethodName(org.mybatis.generator.api.IntrospectedTable)">getUpdateByExampleWithBLOBsMethodName</a></span>(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</nobr>
+        
+        <div class="jd-descrdiv">Calculates and returns a name for the update by example with BLOBs
+ method.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/api/DAOMethodNameCalculator.html#getUpdateByExampleWithoutBLOBsMethodName(org.mybatis.generator.api.IntrospectedTable)">getUpdateByExampleWithoutBLOBsMethodName</a></span>(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</nobr>
+        
+        <div class="jd-descrdiv">Calculates and returns a name for the update by example without BLOBs
+ method.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/api/DAOMethodNameCalculator.html#getUpdateByPrimaryKeySelectiveMethodName(org.mybatis.generator.api.IntrospectedTable)">getUpdateByPrimaryKeySelectiveMethodName</a></span>(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</nobr>
+        
+        <div class="jd-descrdiv">Calculates and returns a name for the update by primary key selective
+ method.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/api/DAOMethodNameCalculator.html#getUpdateByPrimaryKeyWithBLOBsMethodName(org.mybatis.generator.api.IntrospectedTable)">getUpdateByPrimaryKeyWithBLOBsMethodName</a></span>(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</nobr>
+        
+        <div class="jd-descrdiv">Calculates and returns a name for the update by primary key with BLOBs
+ method.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            abstract
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/api/DAOMethodNameCalculator.html#getUpdateByPrimaryKeyWithoutBLOBsMethodName(org.mybatis.generator.api.IntrospectedTable)">getUpdateByPrimaryKeyWithoutBLOBsMethodName</a></span>(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</nobr>
+        
+        <div class="jd-descrdiv">Calculates and returns a name for the update by primary key without BLOBs
+ method.</div>
+  
+  </td></tr>
+
+
+</table>
+  </div>
+</div>
+</td></tr>
+
+
+</table>
+
+
+</div><!-- jd-descr (summary) -->
+
+<!-- Details -->
+
+
+
+
+
+
+
+
+<!-- XML Attributes -->
+
+
+<!-- Enum Values -->
+
+
+<!-- Constants -->
+
+
+<!-- Fields -->
+
+
+<!-- Public ctors -->
+
+
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+<h2>Public Constructors</h2>
+
+
+
+<A NAME="ExtendedDAOMethodNameCalculator()"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        
+      </span>
+      <span class="sympad">ExtendedDAOMethodNameCalculator</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+
+
+
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+<!-- Protected ctors -->
+
+
+
+<!-- ========= METHOD DETAIL ======== -->
+<!-- Public methdos -->
+
+<h2>Public Methods</h2>
+
+
+
+<A NAME="getCountByExampleMethodName(org.mybatis.generator.api.IntrospectedTable)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        String
+      </span>
+      <span class="sympad">getCountByExampleMethodName</span>
+      <span class="normal">(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Calculates and returns a name for the count by example method.</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>the calculated name
+</li></ul>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="getDeleteByExampleMethodName(org.mybatis.generator.api.IntrospectedTable)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        String
+      </span>
+      <span class="sympad">getDeleteByExampleMethodName</span>
+      <span class="normal">(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Calculates and returns a name for the delete by example method.</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>the calculated name
+</li></ul>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="getDeleteByPrimaryKeyMethodName(org.mybatis.generator.api.IntrospectedTable)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        String
+      </span>
+      <span class="sympad">getDeleteByPrimaryKeyMethodName</span>
+      <span class="normal">(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Calculates and returns a name for the delete by primary key method.</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>the calculated name
+</li></ul>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="getInsertMethodName(org.mybatis.generator.api.IntrospectedTable)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        String
+      </span>
+      <span class="sympad">getInsertMethodName</span>
+      <span class="normal">(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Calculates and returns a name for the insert method.</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>the calculated name
+</li></ul>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="getInsertSelectiveMethodName(org.mybatis.generator.api.IntrospectedTable)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        String
+      </span>
+      <span class="sympad">getInsertSelectiveMethodName</span>
+      <span class="normal">(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Calculates and returns a name for the insert selective method.</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>the calculated name
+</li></ul>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="getSelectByExampleWithBLOBsMethodName(org.mybatis.generator.api.IntrospectedTable)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        String
+      </span>
+      <span class="sympad">getSelectByExampleWithBLOBsMethodName</span>
+      <span class="normal">(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>1. if this will be the only selectByExample, then the result should be
+ selectByExample. 2. Else the method name should be
+ selectByExampleWithBLOBs
+</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>the calculated name
+</li></ul>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="getSelectByExampleWithoutBLOBsMethodName(org.mybatis.generator.api.IntrospectedTable)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        String
+      </span>
+      <span class="sympad">getSelectByExampleWithoutBLOBsMethodName</span>
+      <span class="normal">(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>1. if this will be the only selectByExample, then the result should be
+ selectByExample. 2. Else the method name should be
+ selectByExampleWithoutBLOBs
+</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>the calculated name
+</li></ul>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="getSelectByPrimaryKeyMethodName(org.mybatis.generator.api.IntrospectedTable)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        String
+      </span>
+      <span class="sympad">getSelectByPrimaryKeyMethodName</span>
+      <span class="normal">(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Calculates and returns a name for the select by primary key method.</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>the calculated name
+</li></ul>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="getUpdateByExampleSelectiveMethodName(org.mybatis.generator.api.IntrospectedTable)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        String
+      </span>
+      <span class="sympad">getUpdateByExampleSelectiveMethodName</span>
+      <span class="normal">(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Calculates and returns a name for the update by example selective method.</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>the calculated name
+</li></ul>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="getUpdateByExampleWithBLOBsMethodName(org.mybatis.generator.api.IntrospectedTable)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        String
+      </span>
+      <span class="sympad">getUpdateByExampleWithBLOBsMethodName</span>
+      <span class="normal">(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Calculates and returns a name for the update by example with BLOBs
+ method.</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>the calculated name
+</li></ul>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="getUpdateByExampleWithoutBLOBsMethodName(org.mybatis.generator.api.IntrospectedTable)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        String
+      </span>
+      <span class="sympad">getUpdateByExampleWithoutBLOBsMethodName</span>
+      <span class="normal">(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Calculates and returns a name for the update by example without BLOBs
+ method.</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>the calculated name
+</li></ul>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="getUpdateByPrimaryKeySelectiveMethodName(org.mybatis.generator.api.IntrospectedTable)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        String
+      </span>
+      <span class="sympad">getUpdateByPrimaryKeySelectiveMethodName</span>
+      <span class="normal">(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Calculates and returns a name for the update by primary key selective
+ method.</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>the calculated name
+</li></ul>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="getUpdateByPrimaryKeyWithBLOBsMethodName(org.mybatis.generator.api.IntrospectedTable)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        String
+      </span>
+      <span class="sympad">getUpdateByPrimaryKeyWithBLOBsMethodName</span>
+      <span class="normal">(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>1. if this will be the only updateByPrimaryKey, then the result should be
+ updateByPrimaryKey. 2. If the other method is enabled, but there are
+ seperate base and blob classes, then the method name should be
+ updateByPrimaryKey 3. Else the method name should be
+ updateByPrimaryKeyWithBLOBs
+</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>the calculated name
+</li></ul>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="getUpdateByPrimaryKeyWithoutBLOBsMethodName(org.mybatis.generator.api.IntrospectedTable)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        String
+      </span>
+      <span class="sympad">getUpdateByPrimaryKeyWithoutBLOBsMethodName</span>
+      <span class="normal">(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>1. if this will be the only updateByPrimaryKey, then the result should be
+ updateByPrimaryKey. 2. If the other method is enabled, but there are
+ seperate base and blob classes, then the method name should be
+ updateByPrimaryKey 3. Else the method name should be
+ updateByPrimaryKeyWithoutBLOBs
+</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>the calculated name
+</li></ul>
+  </div>
+
+    </div>
+</div>
+
+
+
+
+
+<!-- ========= METHOD DETAIL ======== -->
+
+
+
+<!-- ========= END OF CLASS DATA ========= -->
+<A NAME="navbar_top"></A>
+
+<div id="footer">
+Generated by <a href="http://code.google.com/p/doclava/">Doclava</a>.
+</div> <!-- end footer -->
+
+</div> <!-- jd-content -->
+
+</div><!-- end doc-content -->
+
+</div> <!-- end body-content --> 
+
+<script type="text/javascript">
+init(); /* initialize android-developer-docs.js */
+</script>
+
+</body>
+</html>

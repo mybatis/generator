@@ -1,0 +1,2672 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="shortcut icon" type="image/x-icon" href="../../../../favicon.ico" />
+<title>
+
+  Context
+
+
+| MyBatis Generator Core
+
+</title>
+<link href="../../../../../assets/android-developer-docs.css" rel="stylesheet" type="text/css" />
+<link href="../../../../../assets/customizations.css" rel="stylesheet" type="text/css" />
+<script src="../../../../../assets/search_autocomplete.js" type="text/javascript"></script>
+<script src="../../../../../assets/jquery-resizable.min.js" type="text/javascript"></script>
+<script src="../../../../../assets/android-developer-docs.js" type="text/javascript"></script>
+<script src="../../../../../assets/prettify.js" type="text/javascript"></script>
+<script type="text/javascript">
+  setToRoot("../../../../", "../../../../../assets/");
+</script>
+<script src="../../../../../assets/android-developer-reference.js" type="text/javascript"></script>
+<script src="../../../../../assets/navtree_data.js" type="text/javascript"></script>
+<script src="../../../../../assets/customizations.js" type="text/javascript"></script>
+<noscript>
+  <style type="text/css">
+    html,body{overflow:auto;}
+    #body-content{position:relative; top:0;}
+    #doc-content{overflow:visible;border-left:3px solid #666;}
+    #side-nav{padding:0;}
+    #side-nav .toggle-list ul {display:block;}
+    #resize-packages-nav{border-bottom:3px solid #666;}
+  </style>
+</noscript>
+</head>
+
+<body class="">
+
+<div id="header">
+    <div id="headerLeft">
+    
+      <span id="masthead-title">MyBatis Generator Core</span>
+    
+    </div>
+    <div id="headerRight">
+      
+  <div id="search" >
+      <div id="searchForm">
+          <form accept-charset="utf-8" class="gsc-search-box" 
+                onsubmit="return submit_search()">
+            <table class="gsc-search-box" cellpadding="0" cellspacing="0"><tbody>
+                <tr>
+                  <td class="gsc-input">
+                    <input id="search_autocomplete" class="gsc-input" type="text" size="33" autocomplete="off"
+                      title="search developer docs" name="q"
+                      value="search developer docs"
+                      onFocus="search_focus_changed(this, true)"
+                      onBlur="search_focus_changed(this, false)"
+                      onkeydown="return search_changed(event, true, '../../../../')"
+                      onkeyup="return search_changed(event, false, '../../../../')" />
+                  <div id="search_filtered_div" class="no-display">
+                      <table id="search_filtered" cellspacing=0>
+                      </table>
+                  </div>
+                  </td>
+                  <td class="gsc-search-button">
+                    <input type="submit" value="Search" title="search" id="search-button" class="gsc-search-button" />
+                  </td>
+                  <td class="gsc-clear-button">
+                    <div title="clear results" class="gsc-clear-button">&nbsp;</div>
+                  </td>
+                </tr></tbody>
+              </table>
+          </form>
+      </div><!-- searchForm -->
+  </div><!-- search -->
+      
+    </div>
+</div><!-- header -->
+
+
+  <div class="g-section g-tpl-240" id="body-content">
+    <div class="g-unit g-first side-nav-resizable" id="side-nav">
+      <div id="swapper">
+        <div id="nav-panels">
+          <div id="resize-packages-nav">
+            <div id="packages-nav">
+              <div id="index-links"><nobr>
+                <a href="../../../../packages.html"  >Package Index</a> | 
+                <a href="../../../../classes.html" >Class Index</a></nobr>
+              </div>
+              <ul>
+                
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/ant/package-summary.html">org.mybatis.generator.ant</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/api/package-summary.html">org.mybatis.generator.api</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/api/dom/package-summary.html">org.mybatis.generator.api.dom</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/api/dom/java/package-summary.html">org.mybatis.generator.api.dom.java</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/api/dom/xml/package-summary.html">org.mybatis.generator.api.dom.xml</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/codegen/package-summary.html">org.mybatis.generator.codegen</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/codegen/ibatis2/package-summary.html">org.mybatis.generator.codegen.ibatis2</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/codegen/ibatis2/dao/package-summary.html">org.mybatis.generator.codegen.ibatis2.dao</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/codegen/ibatis2/dao/elements/package-summary.html">org.mybatis.generator.codegen.ibatis2.dao.elements</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/codegen/ibatis2/dao/templates/package-summary.html">org.mybatis.generator.codegen.ibatis2.dao.templates</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/codegen/ibatis2/model/package-summary.html">org.mybatis.generator.codegen.ibatis2.model</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/codegen/ibatis2/sqlmap/package-summary.html">org.mybatis.generator.codegen.ibatis2.sqlmap</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/codegen/ibatis2/sqlmap/elements/package-summary.html">org.mybatis.generator.codegen.ibatis2.sqlmap.elements</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/codegen/mybatis3/package-summary.html">org.mybatis.generator.codegen.mybatis3</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/codegen/mybatis3/javamapper/package-summary.html">org.mybatis.generator.codegen.mybatis3.javamapper</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/codegen/mybatis3/javamapper/elements/package-summary.html">org.mybatis.generator.codegen.mybatis3.javamapper.elements</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/codegen/mybatis3/javamapper/elements/annotated/package-summary.html">org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/codegen/mybatis3/javamapper/elements/sqlprovider/package-summary.html">org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/codegen/mybatis3/model/package-summary.html">org.mybatis.generator.codegen.mybatis3.model</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/codegen/mybatis3/xmlmapper/package-summary.html">org.mybatis.generator.codegen.mybatis3.xmlmapper</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/codegen/mybatis3/xmlmapper/elements/package-summary.html">org.mybatis.generator.codegen.mybatis3.xmlmapper.elements</a></li>
+    <li class="selected api apilevel-">
+  <a href="../../../../org/mybatis/generator/config/package-summary.html">org.mybatis.generator.config</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/config/xml/package-summary.html">org.mybatis.generator.config.xml</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/exception/package-summary.html">org.mybatis.generator.exception</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/internal/package-summary.html">org.mybatis.generator.internal</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/internal/db/package-summary.html">org.mybatis.generator.internal.db</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/internal/rules/package-summary.html">org.mybatis.generator.internal.rules</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/internal/types/package-summary.html">org.mybatis.generator.internal.types</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/internal/util/package-summary.html">org.mybatis.generator.internal.util</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/internal/util/messages/package-summary.html">org.mybatis.generator.internal.util.messages</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/logging/package-summary.html">org.mybatis.generator.logging</a></li>
+    <li class="api apilevel-">
+  <a href="../../../../org/mybatis/generator/plugins/package-summary.html">org.mybatis.generator.plugins</a></li>
+              </ul><br/>
+            </div> <!-- end packages -->
+          </div> <!-- end resize-packages -->
+          <div id="classes-nav">
+            <ul>
+              
+              
+    <li><h2>Classes</h2>
+      <ul>
+          <li class="api apilevel-"><a href="../../../../org/mybatis/generator/config/ColumnOverride.html">ColumnOverride</a></li>
+          <li class="api apilevel-"><a href="../../../../org/mybatis/generator/config/ColumnRenamingRule.html">ColumnRenamingRule</a></li>
+          <li class="api apilevel-"><a href="../../../../org/mybatis/generator/config/CommentGeneratorConfiguration.html">CommentGeneratorConfiguration</a></li>
+          <li class="api apilevel-"><a href="../../../../org/mybatis/generator/config/Configuration.html">Configuration</a></li>
+          <li class="selected api apilevel-"><a href="../../../../org/mybatis/generator/config/Context.html">Context</a></li>
+          <li class="api apilevel-"><a href="../../../../org/mybatis/generator/config/GeneratedKey.html">GeneratedKey</a></li>
+          <li class="api apilevel-"><a href="../../../../org/mybatis/generator/config/IgnoredColumn.html">IgnoredColumn</a></li>
+          <li class="api apilevel-"><a href="../../../../org/mybatis/generator/config/JDBCConnectionConfiguration.html">JDBCConnectionConfiguration</a></li>
+          <li class="api apilevel-"><a href="../../../../org/mybatis/generator/config/JavaClientGeneratorConfiguration.html">JavaClientGeneratorConfiguration</a></li>
+          <li class="api apilevel-"><a href="../../../../org/mybatis/generator/config/JavaModelGeneratorConfiguration.html">JavaModelGeneratorConfiguration</a></li>
+          <li class="api apilevel-"><a href="../../../../org/mybatis/generator/config/JavaTypeResolverConfiguration.html">JavaTypeResolverConfiguration</a></li>
+          <li class="api apilevel-"><a href="../../../../org/mybatis/generator/config/MergeConstants.html">MergeConstants</a></li>
+          <li class="api apilevel-"><a href="../../../../org/mybatis/generator/config/PluginConfiguration.html">PluginConfiguration</a></li>
+          <li class="api apilevel-"><a href="../../../../org/mybatis/generator/config/PropertyHolder.html">PropertyHolder</a></li>
+          <li class="api apilevel-"><a href="../../../../org/mybatis/generator/config/PropertyRegistry.html">PropertyRegistry</a></li>
+          <li class="api apilevel-"><a href="../../../../org/mybatis/generator/config/SqlMapGeneratorConfiguration.html">SqlMapGeneratorConfiguration</a></li>
+          <li class="api apilevel-"><a href="../../../../org/mybatis/generator/config/TableConfiguration.html">TableConfiguration</a></li>
+          <li class="api apilevel-"><a href="../../../../org/mybatis/generator/config/TypedPropertyHolder.html">TypedPropertyHolder</a></li>
+      </ul>
+    </li>
+              
+              
+    <li><h2>Enums</h2>
+      <ul>
+          <li class="api apilevel-"><a href="../../../../org/mybatis/generator/config/ModelType.html">ModelType</a></li>
+      </ul>
+    </li>
+              
+              
+            </ul><br/>
+          </div><!-- end classes -->
+        </div><!-- end nav-panels -->
+        <div id="nav-tree" style="display:none">
+          <div id="index-links"><nobr>
+            <a href="../../../../packages.html"  >Package Index</a> | 
+            <a href="../../../../classes.html" >Class Index</a></nobr>
+          </div>
+        </div><!-- end nav-tree -->
+      </div><!-- end swapper -->
+    </div> <!-- end side-nav -->
+    <script>
+      if (!isMobile) {
+        $("<a href='#' id='nav-swap' onclick='swapNav();return false;' style='font-size:10px;line-height:9px;margin-left:1em;text-decoration:none;'><span id='tree-link'>Use Tree Navigation</span><span id='panel-link' style='display:none'>Use Panel Navigation</span></a>").appendTo("#side-nav");
+        chooseDefaultNav();
+        if ($("#nav-tree").is(':visible')) {
+          init_default_navtree("../../../../");
+        } else {
+          addLoadEvent(function() {
+            scrollIntoView("packages-nav");
+            scrollIntoView("classes-nav");
+          });
+        }
+        $("#swapper").css({borderBottom:"2px solid #aaa"});
+      } else {
+        swapNav(); // tree view should be used on mobile
+      }
+    </script>
+
+
+
+<div class="g-unit" id="doc-content">
+
+<div id="api-info-block">
+
+
+
+  
+   
+  
+  
+  
+  
+
+  
+   
+  
+  
+  
+  
+
+
+<div class="sum-details-links">
+
+Summary:
+
+
+
+
+
+
+
+
+
+  <a href="#pubctors">Ctors</a>
+  
+
+
+
+  &#124; <a href="#pubmethods">Methods</a>
+  
+
+
+
+  &#124; <a href="#inhmethods">Inherited Methods</a>
+
+&#124; <a href="#" onclick="return toggleAllClassInherited()" id="toggleAllClassInherited">[Expand All]</a>
+
+</div><!-- end sum-details-links -->
+<div class="api-level">
+  
+
+
+  
+  
+
+</div>
+</div><!-- end api-info-block -->
+
+
+<!-- ======== START OF CLASS DATA ======== -->
+
+<div id="jd-header">
+    public
+     
+     
+    
+    class
+<h1>Context</h1>
+
+
+
+  
+  
+  
+
+  
+    extends <a href="../../../../org/mybatis/generator/config/PropertyHolder.html">PropertyHolder</a><br/>
+  
+  
+  
+
+  
+  
+  
+
+
+</div><!-- end header -->
+
+<div id="naMessage"></div>
+
+<div id="jd-content" class="api apilevel-">
+<table class="jd-inheritance-table">
+
+
+    <tr>
+         	
+        <td colspan="3" class="jd-inheritance-class-cell">java.lang.Object</td>
+    </tr>
+    
+
+    <tr>
+        
+            <td class="jd-inheritance-space">&nbsp;&nbsp;&nbsp;&#x21b3;</td>
+         	
+        <td colspan="2" class="jd-inheritance-class-cell"><a href="../../../../org/mybatis/generator/config/PropertyHolder.html">org.mybatis.generator.config.PropertyHolder</a></td>
+    </tr>
+    
+
+    <tr>
+        
+            <td class="jd-inheritance-space">&nbsp;</td>
+        
+            <td class="jd-inheritance-space">&nbsp;&nbsp;&nbsp;&#x21b3;</td>
+         	
+        <td colspan="1" class="jd-inheritance-class-cell">org.mybatis.generator.config.Context</td>
+    </tr>
+    
+
+</table>
+
+
+
+
+
+
+
+<div class="jd-descr">
+
+
+
+
+
+
+</div><!-- jd-descr -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="jd-descr">
+
+
+<h2>Summary</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<table id="pubctors" class="jd-sumtable"><tr><th colspan="12">Public Constructors</th></tr>
+
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            </nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/Context.html#Context(org.mybatis.generator.config.ModelType)">Context</a></span>(<a href="../../../../org/mybatis/generator/config/ModelType.html">ModelType</a> defaultModelType)</nobr>
+        
+        <div class="jd-descrdiv">Constructs a Context object.</div>
+  
+  </td></tr>
+
+
+
+</table>
+
+
+
+
+
+
+<!-- ========== METHOD SUMMARY =========== -->
+<table id="pubmethods" class="jd-sumtable"><tr><th colspan="12">Public Methods</th></tr>
+
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/Context.html#addPluginConfiguration(org.mybatis.generator.config.PluginConfiguration)">addPluginConfiguration</a></span>(<a href="../../../../org/mybatis/generator/config/PluginConfiguration.html">PluginConfiguration</a> pluginConfiguration)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/Context.html#addProperty(java.lang.String, java.lang.String)">addProperty</a></span>(String name, String value)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/Context.html#addTableConfiguration(org.mybatis.generator.config.TableConfiguration)">addTableConfiguration</a></span>(<a href="../../../../org/mybatis/generator/config/TableConfiguration.html">TableConfiguration</a> tc)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            boolean</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/Context.html#autoDelimitKeywords()">autoDelimitKeywords</a></span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/Context.html#generateFiles(org.mybatis.generator.api.ProgressCallback, java.util.List<org.mybatis.generator.api.GeneratedJavaFile>, java.util.List<org.mybatis.generator.api.GeneratedXmlFile>, java.util.List<java.lang.String>)">generateFiles</a></span>(<a href="../../../../org/mybatis/generator/api/ProgressCallback.html">ProgressCallback</a> callback, List&lt;<a href="../../../../org/mybatis/generator/api/GeneratedJavaFile.html">GeneratedJavaFile</a>&gt; generatedJavaFiles, List&lt;<a href="../../../../org/mybatis/generator/api/GeneratedXmlFile.html">GeneratedXmlFile</a>&gt; generatedXmlFiles, List&lt;String&gt; warnings)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/Context.html#getBeginningDelimiter()">getBeginningDelimiter</a></span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            <a href="../../../../org/mybatis/generator/api/CommentGenerator.html">CommentGenerator</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/Context.html#getCommentGenerator()">getCommentGenerator</a></span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            <a href="../../../../org/mybatis/generator/config/CommentGeneratorConfiguration.html">CommentGeneratorConfiguration</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/Context.html#getCommentGeneratorConfiguration()">getCommentGeneratorConfiguration</a></span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            <a href="../../../../org/mybatis/generator/config/ModelType.html">ModelType</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/Context.html#getDefaultModelType()">getDefaultModelType</a></span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/Context.html#getEndingDelimiter()">getEndingDelimiter</a></span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            int</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/Context.html#getGenerationSteps()">getGenerationSteps</a></span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/Context.html#getId()">getId</a></span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/Context.html#getIntrospectedColumnImpl()">getIntrospectedColumnImpl</a></span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            int</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/Context.html#getIntrospectionSteps()">getIntrospectionSteps</a></span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            <a href="../../../../org/mybatis/generator/config/JavaClientGeneratorConfiguration.html">JavaClientGeneratorConfiguration</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/Context.html#getJavaClientGeneratorConfiguration()">getJavaClientGeneratorConfiguration</a></span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            <a href="../../../../org/mybatis/generator/api/JavaFormatter.html">JavaFormatter</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/Context.html#getJavaFormatter()">getJavaFormatter</a></span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            <a href="../../../../org/mybatis/generator/config/JavaModelGeneratorConfiguration.html">JavaModelGeneratorConfiguration</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/Context.html#getJavaModelGeneratorConfiguration()">getJavaModelGeneratorConfiguration</a></span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            <a href="../../../../org/mybatis/generator/config/JavaTypeResolverConfiguration.html">JavaTypeResolverConfiguration</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/Context.html#getJavaTypeResolverConfiguration()">getJavaTypeResolverConfiguration</a></span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            <a href="../../../../org/mybatis/generator/config/JDBCConnectionConfiguration.html">JDBCConnectionConfiguration</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/Context.html#getJdbcConnectionConfiguration()">getJdbcConnectionConfiguration</a></span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            <a href="../../../../org/mybatis/generator/api/Plugin.html">Plugin</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/Context.html#getPlugins()">getPlugins</a></span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            <a href="../../../../org/mybatis/generator/config/SqlMapGeneratorConfiguration.html">SqlMapGeneratorConfiguration</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/Context.html#getSqlMapGeneratorConfiguration()">getSqlMapGeneratorConfiguration</a></span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            List&lt;<a href="../../../../org/mybatis/generator/config/TableConfiguration.html">TableConfiguration</a>&gt;</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/Context.html#getTableConfigurations()">getTableConfigurations</a></span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/Context.html#getTargetRuntime()">getTargetRuntime</a></span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            <a href="../../../../org/mybatis/generator/api/XmlFormatter.html">XmlFormatter</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/Context.html#getXmlFormatter()">getXmlFormatter</a></span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/Context.html#introspectTables(org.mybatis.generator.api.ProgressCallback, java.util.List<java.lang.String>, java.util.Set<java.lang.String>)">introspectTables</a></span>(<a href="../../../../org/mybatis/generator/api/ProgressCallback.html">ProgressCallback</a> callback, List&lt;String&gt; warnings, Set&lt;String&gt; fullyQualifiedTableNames)</nobr>
+        
+        <div class="jd-descrdiv">Introspect tables based on the configuration specified in the
+ constructor.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/Context.html#setCommentGeneratorConfiguration(org.mybatis.generator.config.CommentGeneratorConfiguration)">setCommentGeneratorConfiguration</a></span>(<a href="../../../../org/mybatis/generator/config/CommentGeneratorConfiguration.html">CommentGeneratorConfiguration</a> commentGeneratorConfiguration)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/Context.html#setId(java.lang.String)">setId</a></span>(String id)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/Context.html#setIntrospectedColumnImpl(java.lang.String)">setIntrospectedColumnImpl</a></span>(String introspectedColumnImpl)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/Context.html#setJavaClientGeneratorConfiguration(org.mybatis.generator.config.JavaClientGeneratorConfiguration)">setJavaClientGeneratorConfiguration</a></span>(<a href="../../../../org/mybatis/generator/config/JavaClientGeneratorConfiguration.html">JavaClientGeneratorConfiguration</a> javaClientGeneratorConfiguration)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/Context.html#setJavaModelGeneratorConfiguration(org.mybatis.generator.config.JavaModelGeneratorConfiguration)">setJavaModelGeneratorConfiguration</a></span>(<a href="../../../../org/mybatis/generator/config/JavaModelGeneratorConfiguration.html">JavaModelGeneratorConfiguration</a> javaModelGeneratorConfiguration)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/Context.html#setJavaTypeResolverConfiguration(org.mybatis.generator.config.JavaTypeResolverConfiguration)">setJavaTypeResolverConfiguration</a></span>(<a href="../../../../org/mybatis/generator/config/JavaTypeResolverConfiguration.html">JavaTypeResolverConfiguration</a> javaTypeResolverConfiguration)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/Context.html#setJdbcConnectionConfiguration(org.mybatis.generator.config.JDBCConnectionConfiguration)">setJdbcConnectionConfiguration</a></span>(<a href="../../../../org/mybatis/generator/config/JDBCConnectionConfiguration.html">JDBCConnectionConfiguration</a> jdbcConnectionConfiguration)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/Context.html#setSqlMapGeneratorConfiguration(org.mybatis.generator.config.SqlMapGeneratorConfiguration)">setSqlMapGeneratorConfiguration</a></span>(<a href="../../../../org/mybatis/generator/config/SqlMapGeneratorConfiguration.html">SqlMapGeneratorConfiguration</a> sqlMapGeneratorConfiguration)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/Context.html#setTargetRuntime(java.lang.String)">setTargetRuntime</a></span>(String targetRuntime)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            <a href="../../../../org/mybatis/generator/api/dom/xml/XmlElement.html">XmlElement</a></nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/Context.html#toXmlElement()">toXmlElement</a></span>()</nobr>
+        
+        <div class="jd-descrdiv">Builds an XmlElement representation of this context.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/Context.html#validate(java.util.List<java.lang.String>)">validate</a></span>(List&lt;String&gt; errors)</nobr>
+        
+        <div class="jd-descrdiv">This method does a simple validate, it makes sure that all required
+ fields have been filled in.</div>
+  
+  </td></tr>
+
+
+
+</table>
+
+
+
+
+
+
+
+<!-- ========== METHOD SUMMARY =========== -->
+<table id="inhmethods" class="jd-sumtable"><tr><th>
+  <a href="#" class="toggle-all" onclick="return toggleAllInherited(this, null)">[Expand]</a>
+  <div style="clear:left;">Inherited Methods</div></th></tr>
+
+
+<tr class="api apilevel-" >
+<td colspan="12">
+  <a href="#" onclick="return toggleInherited(this, null)" id="inherited-methods-org.mybatis.generator.config.PropertyHolder" class="jd-expando-trigger closed"
+          ><img id="inherited-methods-org.mybatis.generator.config.PropertyHolder-trigger"
+          src="../../../../../assets/images/triangle-closed.png"
+          class="jd-expando-trigger-img" /></a>
+From class
+
+  <a href="../../../../org/mybatis/generator/config/PropertyHolder.html">org.mybatis.generator.config.PropertyHolder</a>
+
+<div id="inherited-methods-org.mybatis.generator.config.PropertyHolder">
+  <div id="inherited-methods-org.mybatis.generator.config.PropertyHolder-list"
+        class="jd-inheritedlinks">
+  </div>
+  <div id="inherited-methods-org.mybatis.generator.config.PropertyHolder-summary" style="display: none;">
+    <table class="jd-sumtable-expando">
+    
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/PropertyHolder.html#addProperty(java.lang.String, java.lang.String)">addProperty</a></span>(String name, String value)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/PropertyHolder.html#addPropertyXmlElements(org.mybatis.generator.api.dom.xml.XmlElement)">addPropertyXmlElements</a></span>(<a href="../../../../org/mybatis/generator/api/dom/xml/XmlElement.html">XmlElement</a> xmlElement)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            Properties</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/PropertyHolder.html#getProperties()">getProperties</a></span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad"><a href="../../../../org/mybatis/generator/config/PropertyHolder.html#getProperty(java.lang.String)">getProperty</a></span>(String name)</nobr>
+        
+  </td></tr>
+
+
+</table>
+  </div>
+</div>
+</td></tr>
+
+
+
+<tr class="api apilevel-" >
+<td colspan="12">
+  <a href="#" onclick="return toggleInherited(this, null)" id="inherited-methods-java.lang.Object" class="jd-expando-trigger closed"
+          ><img id="inherited-methods-java.lang.Object-trigger"
+          src="../../../../../assets/images/triangle-closed.png"
+          class="jd-expando-trigger-img" /></a>
+From class
+
+  java.lang.Object
+
+<div id="inherited-methods-java.lang.Object">
+  <div id="inherited-methods-java.lang.Object-list"
+        class="jd-inheritedlinks">
+  </div>
+  <div id="inherited-methods-java.lang.Object-summary" style="display: none;">
+    <table class="jd-sumtable-expando">
+    
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            Object</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad">clone</span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            boolean</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad">equals</span>(Object arg0)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad">finalize</span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            final
+            
+            
+            Class&lt;?&gt;</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad">getClass</span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            int</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad">hashCode</span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            final
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad">notify</span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            final
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad">notifyAll</span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            
+            
+            
+            String</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad">toString</span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            final
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad">wait</span>()</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            final
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad">wait</span>(long arg0)</nobr>
+        
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol"><nobr>
+            
+            
+            final
+            
+            
+            void</nobr>
+        </td>
+        <td class="jd-linkcol" width="100%"><nobr>
+        <span class="sympad">wait</span>(long arg0, int arg1)</nobr>
+        
+  </td></tr>
+
+
+</table>
+  </div>
+</div>
+</td></tr>
+
+
+</table>
+
+
+</div><!-- jd-descr (summary) -->
+
+<!-- Details -->
+
+
+
+
+
+
+
+
+<!-- XML Attributes -->
+
+
+<!-- Enum Values -->
+
+
+<!-- Constants -->
+
+
+<!-- Fields -->
+
+
+<!-- Public ctors -->
+
+
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+<h2>Public Constructors</h2>
+
+
+
+<A NAME="Context(org.mybatis.generator.config.ModelType)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        
+      </span>
+      <span class="sympad">Context</span>
+      <span class="normal">(<a href="../../../../org/mybatis/generator/config/ModelType.html">ModelType</a> defaultModelType)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Constructs a Context object.</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>defaultModelType</td>
+          <td>- may be null
+</td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+
+
+
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+<!-- Protected ctors -->
+
+
+
+<!-- ========= METHOD DETAIL ======== -->
+<!-- Public methdos -->
+
+<h2>Public Methods</h2>
+
+
+
+<A NAME="addPluginConfiguration(org.mybatis.generator.config.PluginConfiguration)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        void
+      </span>
+      <span class="sympad">addPluginConfiguration</span>
+      <span class="normal">(<a href="../../../../org/mybatis/generator/config/PluginConfiguration.html">PluginConfiguration</a> pluginConfiguration)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="addProperty(java.lang.String, java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        void
+      </span>
+      <span class="sympad">addProperty</span>
+      <span class="normal">(String name, String value)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="addTableConfiguration(org.mybatis.generator.config.TableConfiguration)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        void
+      </span>
+      <span class="sympad">addTableConfiguration</span>
+      <span class="normal">(<a href="../../../../org/mybatis/generator/config/TableConfiguration.html">TableConfiguration</a> tc)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="autoDelimitKeywords()"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        boolean
+      </span>
+      <span class="sympad">autoDelimitKeywords</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="generateFiles(org.mybatis.generator.api.ProgressCallback, java.util.List<org.mybatis.generator.api.GeneratedJavaFile>, java.util.List<org.mybatis.generator.api.GeneratedXmlFile>, java.util.List<java.lang.String>)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        void
+      </span>
+      <span class="sympad">generateFiles</span>
+      <span class="normal">(<a href="../../../../org/mybatis/generator/api/ProgressCallback.html">ProgressCallback</a> callback, List&lt;<a href="../../../../org/mybatis/generator/api/GeneratedJavaFile.html">GeneratedJavaFile</a>&gt; generatedJavaFiles, List&lt;<a href="../../../../org/mybatis/generator/api/GeneratedXmlFile.html">GeneratedXmlFile</a>&gt; generatedXmlFiles, List&lt;String&gt; warnings)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Throws</h5>
+      <table class="jd-tagtable">  
+        <tr>
+            <th>InterruptedException</td>
+            <td></td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="getBeginningDelimiter()"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        String
+      </span>
+      <span class="sympad">getBeginningDelimiter</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="getCommentGenerator()"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="../../../../org/mybatis/generator/api/CommentGenerator.html">CommentGenerator</a>
+      </span>
+      <span class="sympad">getCommentGenerator</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="getCommentGeneratorConfiguration()"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="../../../../org/mybatis/generator/config/CommentGeneratorConfiguration.html">CommentGeneratorConfiguration</a>
+      </span>
+      <span class="sympad">getCommentGeneratorConfiguration</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="getDefaultModelType()"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="../../../../org/mybatis/generator/config/ModelType.html">ModelType</a>
+      </span>
+      <span class="sympad">getDefaultModelType</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="getEndingDelimiter()"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        String
+      </span>
+      <span class="sympad">getEndingDelimiter</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="getGenerationSteps()"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        int
+      </span>
+      <span class="sympad">getGenerationSteps</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="getId()"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        String
+      </span>
+      <span class="sympad">getId</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="getIntrospectedColumnImpl()"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        String
+      </span>
+      <span class="sympad">getIntrospectedColumnImpl</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="getIntrospectionSteps()"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        int
+      </span>
+      <span class="sympad">getIntrospectionSteps</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="getJavaClientGeneratorConfiguration()"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="../../../../org/mybatis/generator/config/JavaClientGeneratorConfiguration.html">JavaClientGeneratorConfiguration</a>
+      </span>
+      <span class="sympad">getJavaClientGeneratorConfiguration</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="getJavaFormatter()"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="../../../../org/mybatis/generator/api/JavaFormatter.html">JavaFormatter</a>
+      </span>
+      <span class="sympad">getJavaFormatter</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="getJavaModelGeneratorConfiguration()"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="../../../../org/mybatis/generator/config/JavaModelGeneratorConfiguration.html">JavaModelGeneratorConfiguration</a>
+      </span>
+      <span class="sympad">getJavaModelGeneratorConfiguration</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="getJavaTypeResolverConfiguration()"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="../../../../org/mybatis/generator/config/JavaTypeResolverConfiguration.html">JavaTypeResolverConfiguration</a>
+      </span>
+      <span class="sympad">getJavaTypeResolverConfiguration</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="getJdbcConnectionConfiguration()"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="../../../../org/mybatis/generator/config/JDBCConnectionConfiguration.html">JDBCConnectionConfiguration</a>
+      </span>
+      <span class="sympad">getJdbcConnectionConfiguration</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="getPlugins()"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="../../../../org/mybatis/generator/api/Plugin.html">Plugin</a>
+      </span>
+      <span class="sympad">getPlugins</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="getSqlMapGeneratorConfiguration()"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="../../../../org/mybatis/generator/config/SqlMapGeneratorConfiguration.html">SqlMapGeneratorConfiguration</a>
+      </span>
+      <span class="sympad">getSqlMapGeneratorConfiguration</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="getTableConfigurations()"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        List&lt;<a href="../../../../org/mybatis/generator/config/TableConfiguration.html">TableConfiguration</a>&gt;
+      </span>
+      <span class="sympad">getTableConfigurations</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="getTargetRuntime()"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        String
+      </span>
+      <span class="sympad">getTargetRuntime</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="getXmlFormatter()"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="../../../../org/mybatis/generator/api/XmlFormatter.html">XmlFormatter</a>
+      </span>
+      <span class="sympad">getXmlFormatter</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="introspectTables(org.mybatis.generator.api.ProgressCallback, java.util.List<java.lang.String>, java.util.Set<java.lang.String>)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        void
+      </span>
+      <span class="sympad">introspectTables</span>
+      <span class="normal">(<a href="../../../../org/mybatis/generator/api/ProgressCallback.html">ProgressCallback</a> callback, List&lt;String&gt; warnings, Set&lt;String&gt; fullyQualifiedTableNames)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Introspect tables based on the configuration specified in the
+ constructor. This method is long running.</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>callback</td>
+          <td>a progress callback if progress information is desired, or
+            <code>null</code></td>
+        </tr>
+        <tr>
+          <th>warnings</td>
+          <td>any warning generated from this method will be added to the
+            List. Warnings are always Strings.</td>
+        </tr>
+        <tr>
+          <th>fullyQualifiedTableNames</td>
+          <td>a set of table names to generate. The elements of the set must
+            be Strings that exactly match what's specified in the
+            configuration. For example, if table name = "foo" and schema =
+            "bar", then the fully qualified table name is "foo.bar". If
+            the Set is null or empty, then all tables in the configuration
+            will be used for code generation.</td>
+        </tr>
+      </table>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Throws</h5>
+      <table class="jd-tagtable">  
+        <tr>
+            <th>SQLException</td>
+            <td>if some error arises while introspecting the specified
+             database tables.</td>
+        </tr>  
+        <tr>
+            <th>InterruptedException</td>
+            <td>if the progress callback reports a cancel
+</td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="setCommentGeneratorConfiguration(org.mybatis.generator.config.CommentGeneratorConfiguration)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        void
+      </span>
+      <span class="sympad">setCommentGeneratorConfiguration</span>
+      <span class="normal">(<a href="../../../../org/mybatis/generator/config/CommentGeneratorConfiguration.html">CommentGeneratorConfiguration</a> commentGeneratorConfiguration)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="setId(java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        void
+      </span>
+      <span class="sympad">setId</span>
+      <span class="normal">(String id)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="setIntrospectedColumnImpl(java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        void
+      </span>
+      <span class="sympad">setIntrospectedColumnImpl</span>
+      <span class="normal">(String introspectedColumnImpl)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="setJavaClientGeneratorConfiguration(org.mybatis.generator.config.JavaClientGeneratorConfiguration)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        void
+      </span>
+      <span class="sympad">setJavaClientGeneratorConfiguration</span>
+      <span class="normal">(<a href="../../../../org/mybatis/generator/config/JavaClientGeneratorConfiguration.html">JavaClientGeneratorConfiguration</a> javaClientGeneratorConfiguration)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="setJavaModelGeneratorConfiguration(org.mybatis.generator.config.JavaModelGeneratorConfiguration)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        void
+      </span>
+      <span class="sympad">setJavaModelGeneratorConfiguration</span>
+      <span class="normal">(<a href="../../../../org/mybatis/generator/config/JavaModelGeneratorConfiguration.html">JavaModelGeneratorConfiguration</a> javaModelGeneratorConfiguration)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="setJavaTypeResolverConfiguration(org.mybatis.generator.config.JavaTypeResolverConfiguration)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        void
+      </span>
+      <span class="sympad">setJavaTypeResolverConfiguration</span>
+      <span class="normal">(<a href="../../../../org/mybatis/generator/config/JavaTypeResolverConfiguration.html">JavaTypeResolverConfiguration</a> javaTypeResolverConfiguration)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="setJdbcConnectionConfiguration(org.mybatis.generator.config.JDBCConnectionConfiguration)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        void
+      </span>
+      <span class="sympad">setJdbcConnectionConfiguration</span>
+      <span class="normal">(<a href="../../../../org/mybatis/generator/config/JDBCConnectionConfiguration.html">JDBCConnectionConfiguration</a> jdbcConnectionConfiguration)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="setSqlMapGeneratorConfiguration(org.mybatis.generator.config.SqlMapGeneratorConfiguration)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        void
+      </span>
+      <span class="sympad">setSqlMapGeneratorConfiguration</span>
+      <span class="normal">(<a href="../../../../org/mybatis/generator/config/SqlMapGeneratorConfiguration.html">SqlMapGeneratorConfiguration</a> sqlMapGeneratorConfiguration)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="setTargetRuntime(java.lang.String)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        void
+      </span>
+      <span class="sympad">setTargetRuntime</span>
+      <span class="normal">(String targetRuntime)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
+
+    </div>
+</div>
+
+
+<A NAME="toXmlElement()"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        <a href="../../../../org/mybatis/generator/api/dom/xml/XmlElement.html">XmlElement</a>
+      </span>
+      <span class="sympad">toXmlElement</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Builds an XmlElement representation of this context. Note that the XML
+ may not necessarily validate if the context is invalid. Call the
+ <code>validate</code> method to check validity of this context.</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>the XML representation of this context
+</li></ul>
+  </div>
+
+    </div>
+</div>
+
+
+<A NAME="validate(java.util.List<java.lang.String>)"></A>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        void
+      </span>
+      <span class="sympad">validate</span>
+      <span class="normal">(List&lt;String&gt; errors)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>This method does a simple validate, it makes sure that all required
+ fields have been filled in. It does not do any more complex operations
+ such as validating that database tables exist or validating that named
+ columns exist
+</p></div>
+
+    </div>
+</div>
+
+
+
+
+
+<!-- ========= METHOD DETAIL ======== -->
+
+
+
+<!-- ========= END OF CLASS DATA ========= -->
+<A NAME="navbar_top"></A>
+
+<div id="footer">
+Generated by <a href="http://code.google.com/p/doclava/">Doclava</a>.
+</div> <!-- end footer -->
+
+</div> <!-- jd-content -->
+
+</div><!-- end doc-content -->
+
+</div> <!-- end body-content --> 
+
+<script type="text/javascript">
+init(); /* initialize android-developer-docs.js */
+</script>
+
+</body>
+</html>

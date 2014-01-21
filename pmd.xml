@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd version="4.3" timestamp="2014-01-21T16:51:52.162">
+<file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/ant/GeneratorAntTask.java">
+<violation beginline="170" endline="170" begincolumn="13" endcolumn="13" rule="EmptyStatementNotInLoop" ruleset="Basic Rules" package="org.mybatis.generator.ant" class="GeneratorAntTask" method="execute" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyStatementNotInLoop" priority="3">
+An empty statement (semicolon) not part of a loop
+</violation>
+</file>
+<file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/api/FullyQualifiedTable.java">
+<violation beginline="16" endline="336" begincolumn="1" endcolumn="3" rule="TooManyStaticImports" ruleset="Import Statement Rules" package="org.mybatis.generator.api" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#TooManyStaticImports" priority="3">
+Too many static imports may lead to messy code
+</violation>
+</file>
+<file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/api/ShellRunner.java">
+<violation beginline="141" endline="141" begincolumn="13" endcolumn="13" rule="EmptyStatementNotInLoop" ruleset="Basic Rules" package="org.mybatis.generator.api" class="ShellRunner" method="main" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyStatementNotInLoop" priority="3">
+An empty statement (semicolon) not part of a loop
+</violation>
+</file>
+<file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/codegen/ibatis2/dao/elements/SelectByExampleWithoutBLOBsMethodGenerator.java">
+<violation beginline="97" endline="97" begincolumn="9" endcolumn="9" rule="EmptyStatementNotInLoop" ruleset="Basic Rules" package="org.mybatis.generator.codegen.ibatis2.dao.elements" class="SelectByExampleWithoutBLOBsMethodGenerator" method="getMethodShell" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyStatementNotInLoop" priority="3">
+An empty statement (semicolon) not part of a loop
+</violation>
+</file>
+<file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/codegen/ibatis2/dao/elements/UpdateByExampleParmsInnerclassGenerator.java">
+<violation beginline="83" endline="83" begincolumn="9" endcolumn="9" rule="EmptyStatementNotInLoop" ruleset="Basic Rules" package="org.mybatis.generator.codegen.ibatis2.dao.elements" class="UpdateByExampleParmsInnerclassGenerator" method="addInterfaceElements" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyStatementNotInLoop" priority="3">
+An empty statement (semicolon) not part of a loop
+</violation>
+</file>
+<file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/codegen/ibatis2/model/ExampleGenerator.java">
+<violation beginline="240" endline="262" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="org.mybatis.generator.codegen.ibatis2.model" class="ExampleGenerator" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
+Avoid unused method parameters such as 'topLevelClass'.
+</violation>
+</file>
+<file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/codegen/mybatis3/javamapper/SqlProviderGenerator.java">
+<violation beginline="85" endline="88" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.mybatis.generator.codegen.mybatis3.javamapper" class="SqlProviderGenerator" method="getCompilationUnits" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+These nested if statements could be combined
+</violation>
+</file>
+<file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/codegen/mybatis3/javamapper/elements/CountByExampleMethodGenerator.java">
+<violation beginline="65" endline="65" begincolumn="9" endcolumn="15" rule="UnnecessaryReturn" ruleset="Basic Rules" package="org.mybatis.generator.codegen.mybatis3.javamapper.elements" class="CountByExampleMethodGenerator" method="addMapperAnnotations" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UnnecessaryReturn" priority="3">
+Avoid unnecessary return statements
+</violation>
+</file>
+<file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/codegen/mybatis3/javamapper/elements/DeleteByExampleMethodGenerator.java">
+<violation beginline="65" endline="65" begincolumn="9" endcolumn="15" rule="UnnecessaryReturn" ruleset="Basic Rules" package="org.mybatis.generator.codegen.mybatis3.javamapper.elements" class="DeleteByExampleMethodGenerator" method="addMapperAnnotations" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UnnecessaryReturn" priority="3">
+Avoid unnecessary return statements
+</violation>
+</file>
+<file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/codegen/mybatis3/javamapper/elements/DeleteByPrimaryKeyMethodGenerator.java">
+<violation beginline="100" endline="100" begincolumn="9" endcolumn="15" rule="UnnecessaryReturn" ruleset="Basic Rules" package="org.mybatis.generator.codegen.mybatis3.javamapper.elements" class="DeleteByPrimaryKeyMethodGenerator" method="addMapperAnnotations" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UnnecessaryReturn" priority="3">
+Avoid unnecessary return statements
+</violation>
+</file>
+<file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/codegen/mybatis3/javamapper/elements/InsertMethodGenerator.java">
+<violation beginline="75" endline="75" begincolumn="9" endcolumn="15" rule="UnnecessaryReturn" ruleset="Basic Rules" package="org.mybatis.generator.codegen.mybatis3.javamapper.elements" class="InsertMethodGenerator" method="addMapperAnnotations" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UnnecessaryReturn" priority="3">
+Avoid unnecessary return statements
+</violation>
+</file>
+<file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/codegen/mybatis3/javamapper/elements/InsertSelectiveMethodGenerator.java">
+<violation beginline="67" endline="67" begincolumn="9" endcolumn="15" rule="UnnecessaryReturn" ruleset="Basic Rules" package="org.mybatis.generator.codegen.mybatis3.javamapper.elements" class="InsertSelectiveMethodGenerator" method="addMapperAnnotations" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UnnecessaryReturn" priority="3">
+Avoid unnecessary return statements
+</violation>
+</file>
+<file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/codegen/mybatis3/javamapper/elements/SelectAllMethodGenerator.java">
+<violation beginline="70" endline="70" begincolumn="9" endcolumn="15" rule="UnnecessaryReturn" ruleset="Basic Rules" package="org.mybatis.generator.codegen.mybatis3.javamapper.elements" class="SelectAllMethodGenerator" method="addMapperAnnotations" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UnnecessaryReturn" priority="3">
+Avoid unnecessary return statements
+</violation>
+</file>
+<file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/codegen/mybatis3/javamapper/elements/SelectByExampleWithBLOBsMethodGenerator.java">
+<violation beginline="83" endline="83" begincolumn="9" endcolumn="15" rule="UnnecessaryReturn" ruleset="Basic Rules" package="org.mybatis.generator.codegen.mybatis3.javamapper.elements" class="SelectByExampleWithBLOBsMethodGenerator" method="addMapperAnnotations" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UnnecessaryReturn" priority="3">
+Avoid unnecessary return statements
+</violation>
+</file>
+<file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/codegen/mybatis3/javamapper/elements/SelectByExampleWithoutBLOBsMethodGenerator.java">
+<violation beginline="86" endline="86" begincolumn="9" endcolumn="15" rule="UnnecessaryReturn" ruleset="Basic Rules" package="org.mybatis.generator.codegen.mybatis3.javamapper.elements" class="SelectByExampleWithoutBLOBsMethodGenerator" method="addMapperAnnotations" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UnnecessaryReturn" priority="3">
+Avoid unnecessary return statements
+</violation>
+</file>
+<file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/codegen/mybatis3/javamapper/elements/SelectByPrimaryKeyMethodGenerator.java">
+<violation beginline="105" endline="105" begincolumn="9" endcolumn="15" rule="UnnecessaryReturn" ruleset="Basic Rules" package="org.mybatis.generator.codegen.mybatis3.javamapper.elements" class="SelectByPrimaryKeyMethodGenerator" method="addMapperAnnotations" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UnnecessaryReturn" priority="3">
+Avoid unnecessary return statements
+</violation>
+</file>
+<file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/codegen/mybatis3/javamapper/elements/UpdateByExampleSelectiveMethodGenerator.java">
+<violation beginline="73" endline="73" begincolumn="9" endcolumn="15" rule="UnnecessaryReturn" ruleset="Basic Rules" package="org.mybatis.generator.codegen.mybatis3.javamapper.elements" class="UpdateByExampleSelectiveMethodGenerator" method="addMapperAnnotations" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UnnecessaryReturn" priority="3">
+Avoid unnecessary return statements
+</violation>
+</file>
+<file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/codegen/mybatis3/javamapper/elements/UpdateByExampleWithBLOBsMethodGenerator.java">
+<violation beginline="83" endline="83" begincolumn="9" endcolumn="15" rule="UnnecessaryReturn" ruleset="Basic Rules" package="org.mybatis.generator.codegen.mybatis3.javamapper.elements" class="UpdateByExampleWithBLOBsMethodGenerator" method="addMapperAnnotations" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UnnecessaryReturn" priority="3">
+Avoid unnecessary return statements
+</violation>
+</file>
+<file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/codegen/mybatis3/javamapper/elements/UpdateByExampleWithoutBLOBsMethodGenerator.java">
+<violation beginline="82" endline="82" begincolumn="9" endcolumn="15" rule="UnnecessaryReturn" ruleset="Basic Rules" package="org.mybatis.generator.codegen.mybatis3.javamapper.elements" class="UpdateByExampleWithoutBLOBsMethodGenerator" method="addMapperAnnotations" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UnnecessaryReturn" priority="3">
+Avoid unnecessary return statements
+</violation>
+</file>
+<file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/codegen/mybatis3/javamapper/elements/UpdateByPrimaryKeySelectiveMethodGenerator.java">
+<violation beginline="75" endline="75" begincolumn="9" endcolumn="15" rule="UnnecessaryReturn" ruleset="Basic Rules" package="org.mybatis.generator.codegen.mybatis3.javamapper.elements" class="UpdateByPrimaryKeySelectiveMethodGenerator" method="addMapperAnnotations" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UnnecessaryReturn" priority="3">
+Avoid unnecessary return statements
+</violation>
+</file>
+<file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/codegen/mybatis3/javamapper/elements/UpdateByPrimaryKeyWithBLOBsMethodGenerator.java">
+<violation beginline="76" endline="76" begincolumn="9" endcolumn="15" rule="UnnecessaryReturn" ruleset="Basic Rules" package="org.mybatis.generator.codegen.mybatis3.javamapper.elements" class="UpdateByPrimaryKeyWithBLOBsMethodGenerator" method="addMapperAnnotations" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UnnecessaryReturn" priority="3">
+Avoid unnecessary return statements
+</violation>
+</file>
+<file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/codegen/mybatis3/javamapper/elements/UpdateByPrimaryKeyWithoutBLOBsMethodGenerator.java">
+<violation beginline="66" endline="66" begincolumn="9" endcolumn="15" rule="UnnecessaryReturn" ruleset="Basic Rules" package="org.mybatis.generator.codegen.mybatis3.javamapper.elements" class="UpdateByPrimaryKeyWithoutBLOBsMethodGenerator" method="addMapperAnnotations" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UnnecessaryReturn" priority="3">
+Avoid unnecessary return statements
+</violation>
+</file>
+<file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/codegen/mybatis3/javamapper/elements/annotated/AnnotatedSelectByPrimaryKeyMethodGenerator.java">
+<violation beginline="16" endline="188" begincolumn="1" endcolumn="3" rule="TooManyStaticImports" ruleset="Import Statement Rules" package="org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#TooManyStaticImports" priority="3">
+Too many static imports may lead to messy code
+</violation>
+</file>
+<file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/codegen/mybatis3/model/ExampleGenerator.java">
+<violation beginline="210" endline="355" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="org.mybatis.generator.codegen.mybatis3.model" class="ExampleGenerator" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
+Avoid unused method parameters such as 'topLevelClass'.
+</violation>
+<violation beginline="357" endline="379" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="org.mybatis.generator.codegen.mybatis3.model" class="ExampleGenerator" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
+Avoid unused method parameters such as 'topLevelClass'.
+</violation>
+</file>
+<file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/codegen/mybatis3/xmlmapper/MixedMapperGenerator.java">
+<violation beginline="29" endline="29" begincolumn="9" endcolumn="15" rule="UnnecessaryReturn" ruleset="Basic Rules" package="org.mybatis.generator.codegen.mybatis3.xmlmapper" class="MixedMapperGenerator" method="addSelectByPrimaryKeyElement" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UnnecessaryReturn" priority="3">
+Avoid unnecessary return statements
+</violation>
+<violation beginline="34" endline="34" begincolumn="9" endcolumn="15" rule="UnnecessaryReturn" ruleset="Basic Rules" package="org.mybatis.generator.codegen.mybatis3.xmlmapper" class="MixedMapperGenerator" method="addDeleteByPrimaryKeyElement" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UnnecessaryReturn" priority="3">
+Avoid unnecessary return statements
+</violation>
+<violation beginline="39" endline="39" begincolumn="9" endcolumn="15" rule="UnnecessaryReturn" ruleset="Basic Rules" package="org.mybatis.generator.codegen.mybatis3.xmlmapper" class="MixedMapperGenerator" method="addInsertElement" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UnnecessaryReturn" priority="3">
+Avoid unnecessary return statements
+</violation>
+<violation beginline="45" endline="45" begincolumn="9" endcolumn="15" rule="UnnecessaryReturn" ruleset="Basic Rules" package="org.mybatis.generator.codegen.mybatis3.xmlmapper" class="MixedMapperGenerator" method="addUpdateByPrimaryKeyWithBLOBsElement" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UnnecessaryReturn" priority="3">
+Avoid unnecessary return statements
+</violation>
+<violation beginline="51" endline="51" begincolumn="9" endcolumn="15" rule="UnnecessaryReturn" ruleset="Basic Rules" package="org.mybatis.generator.codegen.mybatis3.xmlmapper" class="MixedMapperGenerator" method="addUpdateByPrimaryKeyWithoutBLOBsElement" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UnnecessaryReturn" priority="3">
+Avoid unnecessary return statements
+</violation>
+</file>
+<file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/codegen/mybatis3/xmlmapper/elements/InsertElementGenerator.java">
+<violation beginline="107" endline="110" begincolumn="17" endcolumn="17" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.mybatis.generator.codegen.mybatis3.xmlmapper.elements" class="InsertElementGenerator" method="addElements" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+These nested if statements could be combined
+</violation>
+</file>
+<file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/config/Context.java">
+<violation beginline="315" endline="317" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.mybatis.generator.config" class="Context" method="addProperty" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+These nested if statements could be combined
+</violation>
+<violation beginline="316" endline="316" begincolumn="39" endcolumn="64" rule="BooleanInstantiation" ruleset="Basic Rules" package="org.mybatis.generator.config" class="Context" method="addProperty" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#BooleanInstantiation" priority="2">
+Avoid instantiating Boolean objects; reference Boolean.TRUE or Boolean.FALSE or call Boolean.valueOf() instead.
+</violation>
+<violation beginline="447" endline="449" begincolumn="21" endcolumn="21" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.mybatis.generator.config" class="Context" method="introspectTables" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+These nested if statements could be combined
+</violation>
+<violation beginline="538" endline="538" begincolumn="17" endcolumn="17" rule="EmptyStatementNotInLoop" ruleset="Basic Rules" package="org.mybatis.generator.config" class="Context" method="closeConnection" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyStatementNotInLoop" priority="3">
+An empty statement (semicolon) not part of a loop
+</violation>
+</file>
+<file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/config/GeneratedKey.java">
+<violation beginline="124" endline="127" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.mybatis.generator.config" class="GeneratedKey" method="validate" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+These nested if statements could be combined
+</violation>
+</file>
+<file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/config/TableConfiguration.java">
+<violation beginline="16" endline="544" begincolumn="1" endcolumn="3" rule="TooManyStaticImports" ruleset="Import Statement Rules" package="org.mybatis.generator.config" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#TooManyStaticImports" priority="3">
+Too many static imports may lead to messy code
+</violation>
+<violation beginline="503" endline="512" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.mybatis.generator.config" class="TableConfiguration" method="validate" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+These nested if statements could be combined
+</violation>
+</file>
+<file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/config/xml/IbatorConfigurationParser.java">
+<violation beginline="93" endline="136" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="org.mybatis.generator.config.xml" class="IbatorConfigurationParser" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
+Avoid unused method parameters such as 'configuration'.
+</violation>
+</file>
+<file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/config/xml/MyBatisGeneratorConfigurationParser.java">
+<violation beginline="90" endline="133" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="org.mybatis.generator.config.xml" class="MyBatisGeneratorConfigurationParser" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
+Avoid unused method parameters such as 'configuration'.
+</violation>
+</file>
+<file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/internal/DefaultCommentGenerator.java">
+<violation beginline="58" endline="58" begincolumn="9" endcolumn="15" rule="UnnecessaryReturn" ruleset="Basic Rules" package="org.mybatis.generator.internal" class="DefaultCommentGenerator" method="addJavaFileComment" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UnnecessaryReturn" priority="3">
+Avoid unnecessary return statements
+</violation>
+<violation beginline="94" endline="94" begincolumn="9" endcolumn="15" rule="UnnecessaryReturn" ruleset="Basic Rules" package="org.mybatis.generator.internal" class="DefaultCommentGenerator" method="addRootComment" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UnnecessaryReturn" priority="3">
+Avoid unnecessary return statements
+</violation>
+</file>
+<file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/internal/DomWriter.java">
+<violation beginline="178" endline="181" begincolumn="11" endcolumn="9" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.mybatis.generator.internal" class="DomWriter" method="getVersion" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+</file>
+<file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/internal/ObjectFactory.java">
+<violation beginline="117" endline="117" begincolumn="17" endcolumn="17" rule="EmptyStatementNotInLoop" ruleset="Basic Rules" package="org.mybatis.generator.internal" class="ObjectFactory" method="externalClassForName" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyStatementNotInLoop" priority="3">
+An empty statement (semicolon) not part of a loop
+</violation>
+<violation beginline="145" endline="147" begincolumn="11" endcolumn="9" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.mybatis.generator.internal" class="ObjectFactory" method="internalClassForName" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+</file>
+<file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/internal/XmlFileMergerJaxp.java">
+<violation beginline="166" endline="168" begincolumn="17" endcolumn="17" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.mybatis.generator.internal" class="XmlFileMergerJaxp" method="getMergedSource" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+These nested if statements could be combined
+</violation>
+</file>
+<file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/internal/db/DatabaseIntrospector.java">
+<violation beginline="16" endline="631" begincolumn="1" endcolumn="3" rule="TooManyStaticImports" ruleset="Import Statement Rules" package="org.mybatis.generator.internal.db" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#TooManyStaticImports" priority="3">
+Too many static imports may lead to messy code
+</violation>
+<violation beginline="105" endline="107" begincolumn="11" endcolumn="9" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.mybatis.generator.internal.db" class="DatabaseIntrospector" method="calculatePrimaryKey" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+<violation beginline="118" endline="118" begincolumn="17" endcolumn="17" rule="EmptyStatementNotInLoop" ruleset="Basic Rules" package="org.mybatis.generator.internal.db" class="DatabaseIntrospector" method="closeResultSet" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyStatementNotInLoop" priority="3">
+An empty statement (semicolon) not part of a loop
+</violation>
+<violation beginline="313" endline="316" begincolumn="25" endcolumn="25" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.mybatis.generator.internal.db" class="DatabaseIntrospector" method="calculateExtraColumnInformation" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+These nested if statements could be combined
+</violation>
+<violation beginline="336" endline="339" begincolumn="21" endcolumn="21" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.mybatis.generator.internal.db" class="DatabaseIntrospector" method="calculateExtraColumnInformation" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+These nested if statements could be combined
+</violation>
+</file>
+<file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/internal/util/JavaBeansUtil.java">
+<violation beginline="62" endline="64" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.mybatis.generator.internal.util" class="JavaBeansUtil" method="getGetterMethodName" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+These nested if statements could be combined
+</violation>
+<violation beginline="93" endline="95" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="org.mybatis.generator.internal.util" class="JavaBeansUtil" method="getSetterMethodName" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+These nested if statements could be combined
+</violation>
+</file>
+</pmd>

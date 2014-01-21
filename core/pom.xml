@@ -29,7 +29,7 @@
   <parent>
     <groupId>org.mybatis</groupId>
     <artifactId>mybatis-parent</artifactId>
-    <version>19-SNAPSHOT</version>
+    <version>20</version>
   </parent>
 
   <properties>
@@ -264,10 +264,4 @@
     </profile>
   </profiles>
   
-  <scm>
-    <url>https://mybatis.googlecode.com/svn/sub-projects/generator/trunk/core</url>
-    <connection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/generator/trunk/core</connection>
-    <developerConnection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/generator/trunk/core</developerConnection>
-  </scm>
-
 </project>

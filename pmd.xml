@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd version="4.3" timestamp="2014-01-21T16:51:52.162">
+<pmd version="4.3" timestamp="2014-01-21T18:45:42.863">
 <file name="/home/eduardo/git/generator/core/mybatis-generator-core/src/main/java/org/mybatis/generator/ant/GeneratorAntTask.java">
 <violation beginline="170" endline="170" begincolumn="13" endcolumn="13" rule="EmptyStatementNotInLoop" ruleset="Basic Rules" package="org.mybatis.generator.ant" class="GeneratorAntTask" method="execute" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyStatementNotInLoop" priority="3">
 An empty statement (semicolon) not part of a loop

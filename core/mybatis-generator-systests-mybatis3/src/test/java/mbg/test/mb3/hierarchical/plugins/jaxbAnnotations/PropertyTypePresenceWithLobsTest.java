@@ -1,0 +1,181 @@
+/*
+ *    Copyright 2013-2014 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
+
+package mbg.test.mb3.hierarchical.plugins.jaxbAnnotations;
+
+
+import mbg.test.mb3.generated.hierarchical.plugins.jaxbAnnotations.propertyType.withLobs.modelDto.*; //these are our mbg generated compiled model classes that we want to test.
+
+import mbg.test.mb3.JaxbAnnotationsTestUtils;
+
+import java.lang.annotation.Annotation;
+
+import java.lang.reflect.Method;
+
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+import org.junit.Assert;
+import org.junit.Test;
+
+import org.junit.runner.RunWith;
+
+import org.junit.runners.JUnit4;
+
+
+/**
+This class is used to test the MyBatis Generator generated model classes for
+the presence of Jaxb annotations when the Xml access type specified is PROPERTY
+and LOBs fields are marshaled.
+
+@author Mahiar Mody
+*/
+@RunWith(JUnit4.class)
+public class PropertyTypePresenceWithLobsTest {
+
+    @Test
+    public void testXmlRootElementPresence() {
+
+        JaxbAnnotationsTestUtils.checkXmlRootElementAnnotation(UsersKey.class, "usERs", null);
+        JaxbAnnotationsTestUtils.checkXmlRootElementAnnotation(Users.class, "usERs", null);
+
+        JaxbAnnotationsTestUtils.checkXmlRootElementAnnotation(UserSkillsKey.class, "userSkillsKey", null);
+        JaxbAnnotationsTestUtils.checkXmlRootElementAnnotation(UserSkills.class, "userSkills", null);
+
+        JaxbAnnotationsTestUtils.checkXmlRootElementAnnotation(UsersToSkillsKey.class, "usersToSkillsKey", null);
+
+        JaxbAnnotationsTestUtils.checkXmlRootElementAnnotation(UserPhotos.class, "Photos", "http://mybatis.generator.org/plugins/jaxb/test");
+        JaxbAnnotationsTestUtils.checkXmlRootElementAnnotation(UserPhotosWithBLOBs.class, "Photos", "http://mybatis.generator.org/plugins/jaxb/test");
+
+        JaxbAnnotationsTestUtils.checkXmlRootElementAnnotation(UserBlog.class, "userBlog", null);
+        JaxbAnnotationsTestUtils.checkXmlRootElementAnnotation(UserBlogWithBLOBs.class, "userBlogWithBLOBs", null);
+
+        JaxbAnnotationsTestUtils.checkXmlRootElementAnnotation(UserTutorialKey.class, "Tutorial", null);
+        JaxbAnnotationsTestUtils.checkXmlRootElementAnnotation(UserTutorial.class, "Tutorial", null);
+        JaxbAnnotationsTestUtils.checkXmlRootElementAnnotation(UserTutorialWithBLOBs.class, "Tutorial", null);
+
+
+        JaxbAnnotationsTestUtils.checkAccessTypePropertyClassAnnotation(UsersKey.class);
+        JaxbAnnotationsTestUtils.checkAccessTypePropertyClassAnnotation(Users.class);
+        JaxbAnnotationsTestUtils.checkAccessTypePropertyClassAnnotation(UserSkillsKey.class);
+        JaxbAnnotationsTestUtils.checkAccessTypePropertyClassAnnotation(UserSkills.class);
+        JaxbAnnotationsTestUtils.checkAccessTypePropertyClassAnnotation(UsersToSkillsKey.class);
+        JaxbAnnotationsTestUtils.checkAccessTypePropertyClassAnnotation(UserPhotos.class);
+        JaxbAnnotationsTestUtils.checkAccessTypePropertyClassAnnotation(UserPhotosWithBLOBs.class);
+        JaxbAnnotationsTestUtils.checkAccessTypePropertyClassAnnotation(UserBlog.class);
+        JaxbAnnotationsTestUtils.checkAccessTypePropertyClassAnnotation(UserBlogWithBLOBs.class);
+        JaxbAnnotationsTestUtils.checkAccessTypePropertyClassAnnotation(UserTutorialKey.class);
+        JaxbAnnotationsTestUtils.checkAccessTypePropertyClassAnnotation(UserTutorial.class);
+        JaxbAnnotationsTestUtils.checkAccessTypePropertyClassAnnotation(UserTutorialWithBLOBs.class);
+    }
+
+
+
+
+    @Test
+    public void testMethodLevelExplicitXmlAttributeAnnotations() {
+
+        Method mtdGetUserId = null, mtdGetFirstName=null;
+
+        try {
+
+            mtdGetUserId = UsersKey.class.getDeclaredMethod("getUserId", (Class<?>[]) null);
+            mtdGetFirstName = Users.class.getDeclaredMethod("getFirstName", new Class<?>[0]);
+        }
+        catch(NoSuchMethodException e) {
+
+            Assert.fail("NoSuchMethodException thrown. Check MyBatisGeneratorConfig.xml: " + e.getMessage());
+        }
+
+        //mtdGetUserId.setAccessible(true);
+        //mtdGetFirstName.setAccessible(true);
+
+        Annotation annt = mtdGetUserId.getAnnotation(XmlAttribute.class);
+        Assert.assertNotNull("@XmlAttribute annotation missing from UsersKey.getUserId() method", annt);
+
+
+        annt = mtdGetFirstName.getAnnotation(XmlAttribute.class);
+        Assert.assertNotNull("@XmlAttribute annotation missing from Users.getFirstName() method", annt);
+
+        String name = ((XmlAttribute) annt).name();
+        boolean required = ((XmlAttribute) annt).required();
+
+        Assert.assertEquals("name attribute of the @XmlAttribute annotation is wrong or missing in Users.getFirstName() method",
+            "first_name", name);
+
+        Assert.assertTrue("required attribute of @XmlAttribute annotation is wrong or missing in Users.getFirstName() method",
+            required);
+    }
+
+
+
+    @Test
+    public void testMethodLevelImplicitXmlTransientAnnotationsNotPresent() {
+
+        Method mtdGetPhoto = null, mtdGetBlogTxt=null;
+
+        try {
+
+            mtdGetPhoto = UserPhotosWithBLOBs.class.getDeclaredMethod("getPhoto");
+            mtdGetBlogTxt = UserBlogWithBLOBs.class.getDeclaredMethod("getBlogText");
+        }
+        catch(NoSuchMethodException e) {
+
+            Assert.fail("NoSuchMethodException thrown. Check SetupDbTestScripts.sql file: " + e.getMessage());
+        }
+
+        //mtdGetPhoto.setAccessible(true);
+        //mtdGetBlogTxt.setAccessible(true);
+
+        Annotation annt = mtdGetPhoto.getAnnotation(XmlTransient.class);
+        Assert.assertNull("@XmlTransient annotation should not be present on UserPhotosWithBLOBs.getPhoto() method", annt);
+
+
+        annt = mtdGetBlogTxt.getAnnotation(XmlTransient.class);
+        Assert.assertNull("@XmlTransient annotation should not be present on UserBlogWithBLOBs.getBlogText() method", annt);
+    }
+
+
+    @Test
+    public void testMethodGetNarrativeForAnnotationsPresence() {
+
+        Method mtdGetNarrative = null;
+
+        try {
+
+            mtdGetNarrative = UserTutorialWithBLOBs.class.getDeclaredMethod("getNarrative");
+        }
+        catch(NoSuchMethodException e) {
+
+            Assert.fail("NoSuchMethodException thrown. Check SetupDbTestScripts.sql file: " + e.getMessage());
+        }
+
+        Annotation annt = mtdGetNarrative.getAnnotation(XmlElement.class);
+        Assert.assertNotNull("@XmlElement annotation should be present on UserTutorialWithBLOBs.getNarrative() method", annt);
+
+
+        String name = ((XmlElement) annt).name();
+        boolean required = ((XmlElement) annt).required();
+
+        Assert.assertEquals("The name attribute of @XmlElement of method UserTutorialWithBLOBs.getNarrative() is wrong.",
+            "TheFullContent", name);
+
+        Assert.assertFalse("The required attribute of @XmlElement of method UserTutorialWithBLOBs.getNarrative() should be false.", required);
+    }
+}

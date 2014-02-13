@@ -106,5 +106,14 @@ public class BuilderPlugin extends PluginAdapter {
         builderClass.addMethod(buildMethod);
         // add builder class
         topLevelClass.addInnerClass(builderClass);
+        // add builder() method
+        Method staticBuilderMethod = new Method(BUILDER_CLASS_NAME.toLowerCase());
+        staticBuilderMethod.setStatic(true);
+        staticBuilderMethod.setReturnType(builderClass.getType());
+        StringBuilder staticBuilderBody = new StringBuilder("return new ")
+                .append(BUILDER_CLASS_NAME)
+                .append("();");
+        staticBuilderMethod.addBodyLine(staticBuilderBody.toString());
+        topLevelClass.addMethod(staticBuilderMethod);
     }
 }

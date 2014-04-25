@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.joda.time.DateTime;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.JavaTypeResolver;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
@@ -44,13 +45,31 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
 
     protected boolean forceBigDecimals;
 
+    protected String dateTypeName;
+
     protected Map<Integer, JdbcTypeInformation> typeMap;
     
     public JavaTypeResolverDefaultImpl() {
         super();
         properties = new Properties();
         typeMap = new HashMap<Integer, JdbcTypeInformation>();
+    }
 
+    public void addConfigurationProperties(Properties properties) {
+        this.properties.putAll(properties);
+        forceBigDecimals = StringUtility
+                .isTrue(properties
+                        .getProperty(PropertyRegistry.TYPE_RESOLVER_FORCE_BIG_DECIMALS));
+        if(StringUtility
+                .isTrue(properties
+                        .getProperty(PropertyRegistry.TYPE_RESOLVER_USE_JODA_TIME))) {
+            dateTypeName = DateTime.class.getName();
+        } else {
+            dateTypeName = Date.class.getName();
+        }
+    }
+
+    public void populateTypeMap() {
         typeMap.put(Types.ARRAY, new JdbcTypeInformation("ARRAY", //$NON-NLS-1$
                 new FullyQualifiedJavaType(Object.class.getName())));
         typeMap.put(Types.BIGINT, new JdbcTypeInformation("BIGINT", //$NON-NLS-1$
@@ -70,7 +89,7 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
         typeMap.put(Types.DATALINK, new JdbcTypeInformation("DATALINK", //$NON-NLS-1$
                 new FullyQualifiedJavaType(Object.class.getName())));
         typeMap.put(Types.DATE, new JdbcTypeInformation("DATE", //$NON-NLS-1$
-                new FullyQualifiedJavaType(Date.class.getName())));
+                new FullyQualifiedJavaType(dateTypeName)));
         typeMap.put(Types.DISTINCT, new JdbcTypeInformation("DISTINCT", //$NON-NLS-1$
                 new FullyQualifiedJavaType(Object.class.getName())));
         typeMap.put(Types.DOUBLE, new JdbcTypeInformation("DOUBLE", //$NON-NLS-1$
@@ -107,23 +126,15 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
         typeMap.put(Types.STRUCT, new JdbcTypeInformation("STRUCT", //$NON-NLS-1$
                 new FullyQualifiedJavaType(Object.class.getName())));
         typeMap.put(Types.TIME, new JdbcTypeInformation("TIME", //$NON-NLS-1$
-                new FullyQualifiedJavaType(Date.class.getName())));
+                new FullyQualifiedJavaType(dateTypeName)));
         typeMap.put(Types.TIMESTAMP, new JdbcTypeInformation("TIMESTAMP", //$NON-NLS-1$
-                new FullyQualifiedJavaType(Date.class.getName())));
+                new FullyQualifiedJavaType(dateTypeName)));
         typeMap.put(Types.TINYINT, new JdbcTypeInformation("TINYINT", //$NON-NLS-1$
                 new FullyQualifiedJavaType(Byte.class.getName())));
         typeMap.put(Types.VARBINARY, new JdbcTypeInformation("VARBINARY", //$NON-NLS-1$
                 new FullyQualifiedJavaType("byte[]"))); //$NON-NLS-1$
         typeMap.put(Types.VARCHAR, new JdbcTypeInformation("VARCHAR", //$NON-NLS-1$
                 new FullyQualifiedJavaType(String.class.getName())));
-        
-    }
-
-    public void addConfigurationProperties(Properties properties) {
-        this.properties.putAll(properties);
-        forceBigDecimals = StringUtility
-                .isTrue(properties
-                        .getProperty(PropertyRegistry.TYPE_RESOLVER_FORCE_BIG_DECIMALS));
     }
 
     public FullyQualifiedJavaType calculateJavaType(

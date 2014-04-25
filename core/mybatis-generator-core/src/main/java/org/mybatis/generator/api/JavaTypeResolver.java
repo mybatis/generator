@@ -84,4 +84,9 @@ public interface JavaTypeResolver {
      *         warning unless the column is ignored or otherwise overridden
      */
     String calculateJdbcTypeName(IntrospectedColumn introspectedColumn);
+
+    /**
+     * Populates the type map, this depends on configuration properties so it can't be done in the constructor.
+     */
+    public void populateTypeMap();
 }

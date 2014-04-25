@@ -209,6 +209,7 @@ public class ObjectFactory {
 
         if (config != null) {
             answer.addConfigurationProperties(config.getProperties());
+            answer.populateTypeMap();
         }
 
         answer.setContext(context);

@@ -50,6 +50,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.10.1</version>
         <configuration>
           <tags>
             <tag>
@@ -108,6 +109,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.10.1</version>
         <configuration>
           <tags>
             <tag>
@@ -118,7 +120,7 @@
         </configuration>
       </plugin>
     </plugins>
-    
+
     <resources>
       <resource>
         <directory>${project.basedir}/src/main/resources</directory>
@@ -132,7 +134,7 @@
         </includes>
       </resource>
     </resources>
-    
+
     <pluginManagement>
       <plugins>
         <plugin>
@@ -195,6 +197,12 @@
         <groupId>org.apache.maven</groupId>
         <artifactId>maven-plugin-api</artifactId>
         <version>3.2.3</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.maven.plugin-tools</groupId>
+        <artifactId>maven-plugin-annotations</artifactId>
+        <version>3.3</version>
+        <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>org.apache.maven</groupId>

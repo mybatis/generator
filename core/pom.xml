@@ -85,6 +85,7 @@
           </execution>
         </executions>
       </plugin>
+      <!-- With this, it is too memory entensive and fails at mybatis3 build, without gets through that then fails on next.  Look at more.
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -92,6 +93,7 @@
           <forkMode>pertest</forkMode>
         </configuration>
       </plugin>
+      -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -137,11 +139,6 @@
 
     <pluginManagement>
       <plugins>
-        <plugin>
-          <groupId>com.googlecode.maven-gcu-plugin</groupId>
-          <artifactId>maven-gcu-plugin</artifactId>
-          <version>1.1</version>
-        </plugin>
         <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
         <plugin>
           <groupId>org.eclipse.m2e</groupId>
@@ -213,6 +210,11 @@
         <groupId>org.apache.ibatis</groupId>
         <artifactId>ibatis-sqlmap</artifactId>
         <version>2.3.4.726</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>3.2.11.RELEASE</version>
       </dependency>
       <dependency>
         <groupId>org.springframework</groupId>

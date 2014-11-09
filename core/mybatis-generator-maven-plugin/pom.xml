@@ -75,12 +75,8 @@
                         <pluginExecutions>
                             <pluginExecution>
                                 <pluginExecutionFilter>
-                                    <groupId>
-                                        org.apache.maven.plugins
-                                    </groupId>
-                                    <artifactId>
-                                        maven-plugin-plugin
-                                    </artifactId>
+                                    <groupId>org.apache.maven.plugins</groupId>
+                                    <artifactId>maven-plugin-plugin</artifactId>
                                     <versionRange>[3.3,)</versionRange>
                                     <goals>
                                         <goal>helpmojo</goal>

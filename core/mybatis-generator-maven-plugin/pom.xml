@@ -42,7 +42,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-plugin-plugin</artifactId>
-        <version>3.3</version>
+        <version>3.4</version>
         <configuration>
           <!-- see http://jira.codehaus.org/browse/MNG-5346 -->
           <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
@@ -77,9 +77,10 @@
                                 <pluginExecutionFilter>
                                     <groupId>org.apache.maven.plugins</groupId>
                                     <artifactId>maven-plugin-plugin</artifactId>
-                                    <versionRange>[3.3,)</versionRange>
+                                    <versionRange>[3.4,)</versionRange>
                                     <goals>
                                         <goal>helpmojo</goal>
+                                        <goal>descriptor</goal>
                                     </goals>
                                 </pluginExecutionFilter>
                                 <action>

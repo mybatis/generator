@@ -104,7 +104,7 @@ public class Configuration {
 
     /**
      * Builds an XML representation of this configuration. This can be used to
-     * persist a programtically generated configuration.
+     * persist a programmatically generated configuration.
      * 
      * @return the XML representation of this configuration
      */

@@ -53,17 +53,39 @@ import org.mybatis.generator.logging.Log;
 import org.mybatis.generator.logging.LogFactory;
 
 /**
- * 
+ * The Class DatabaseIntrospector.
+ *
  * @author Jeff Butler
  */
 public class DatabaseIntrospector {
 
+    /** The database meta data. */
     private DatabaseMetaData databaseMetaData;
+    
+    /** The java type resolver. */
     private JavaTypeResolver javaTypeResolver;
+    
+    /** The warnings. */
     private List<String> warnings;
+    
+    /** The context. */
     private Context context;
+    
+    /** The logger. */
     private Log logger;
 
+    /**
+     * Instantiates a new database introspector.
+     *
+     * @param context
+     *            the context
+     * @param databaseMetaData
+     *            the database meta data
+     * @param javaTypeResolver
+     *            the java type resolver
+     * @param warnings
+     *            the warnings
+     */
     public DatabaseIntrospector(Context context,
             DatabaseMetaData databaseMetaData,
             JavaTypeResolver javaTypeResolver, List<String> warnings) {
@@ -75,6 +97,14 @@ public class DatabaseIntrospector {
         logger = LogFactory.getLog(getClass());
     }
 
+    /**
+     * Calculate primary key.
+     *
+     * @param table
+     *            the table
+     * @param introspectedTable
+     *            the introspected table
+     */
     private void calculatePrimaryKey(FullyQualifiedTable table,
             IntrospectedTable introspectedTable) {
         ResultSet rs = null;
@@ -109,6 +139,12 @@ public class DatabaseIntrospector {
         }
     }
 
+    /**
+     * Close result set.
+     *
+     * @param rs
+     *            the rs
+     */
     private void closeResultSet(ResultSet rs) {
         if (rs != null) {
             try {
@@ -120,6 +156,16 @@ public class DatabaseIntrospector {
         }
     }
 
+    /**
+     * Report introspection warnings.
+     *
+     * @param introspectedTable
+     *            the introspected table
+     * @param tableConfiguration
+     *            the table configuration
+     * @param table
+     *            the table
+     */
     private void reportIntrospectionWarnings(
             IntrospectedTable introspectedTable,
             TableConfiguration tableConfiguration, FullyQualifiedTable table) {
@@ -161,12 +207,13 @@ public class DatabaseIntrospector {
     }
 
     /**
-     * Returns a List<IntrospectedTable> that matches the specified table
-     * configuration.
-     * 
+     * Returns a List<IntrospectedTable> that matches the specified table configuration.
+     *
      * @param tc
+     *            the tc
      * @return a list of introspected tables
      * @throws SQLException
+     *             the SQL exception
      */
     public List<IntrospectedTable> introspectTables(TableConfiguration tc)
             throws SQLException {
@@ -223,8 +270,12 @@ public class DatabaseIntrospector {
     }
 
     /**
+     * Removes the ignored columns.
+     *
      * @param tc
+     *            the tc
      * @param columns
+     *            the columns
      */
     private void removeIgnoredColumns(TableConfiguration tc,
             Map<ActualTableName, List<IntrospectedColumn>> columns) {
@@ -248,6 +299,14 @@ public class DatabaseIntrospector {
         }
     }
 
+    /**
+     * Calculate extra column information.
+     *
+     * @param tc
+     *            the tc
+     * @param columns
+     *            the columns
+     */
     private void calculateExtraColumnInformation(TableConfiguration tc,
             Map<ActualTableName, List<IntrospectedColumn>> columns) {
         StringBuilder sb = new StringBuilder();
@@ -346,6 +405,14 @@ public class DatabaseIntrospector {
         }
     }
 
+    /**
+     * Calculate identity columns.
+     *
+     * @param tc
+     *            the tc
+     * @param columns
+     *            the columns
+     */
     private void calculateIdentityColumns(TableConfiguration tc,
             Map<ActualTableName, List<IntrospectedColumn>> columns) {
         GeneratedKey gk = tc.getGeneratedKey();
@@ -370,6 +437,15 @@ public class DatabaseIntrospector {
         }
     }
     
+    /**
+     * Checks if is matched column.
+     *
+     * @param introspectedColumn
+     *            the introspected column
+     * @param gk
+     *            the gk
+     * @return true, if is matched column
+     */
     private boolean isMatchedColumn(IntrospectedColumn introspectedColumn, GeneratedKey gk) {
         if (introspectedColumn.isColumnNameDelimited()) {
             return introspectedColumn.getActualColumnName().equals(gk.getColumn());
@@ -378,6 +454,14 @@ public class DatabaseIntrospector {
         }
     }
 
+    /**
+     * Apply column overrides.
+     *
+     * @param tc
+     *            the tc
+     * @param columns
+     *            the columns
+     */
     private void applyColumnOverrides(TableConfiguration tc,
             Map<ActualTableName, List<IntrospectedColumn>> columns) {
         for (Map.Entry<ActualTableName, List<IntrospectedColumn>> entry : columns
@@ -431,12 +515,14 @@ public class DatabaseIntrospector {
     }
 
     /**
-     * This method returns a Map<ActualTableName, List<ColumnDefinitions>> of
-     * columns returned from the database introspection.
-     * 
+     * This method returns a Map<ActualTableName, List<ColumnDefinitions>> of columns returned from the database
+     * introspection.
+     *
      * @param tc
+     *            the tc
      * @return introspected columns
      * @throws SQLException
+     *             the SQL exception
      */
     private Map<ActualTableName, List<IntrospectedColumn>> getColumns(
             TableConfiguration tc) throws SQLException {
@@ -579,6 +665,15 @@ public class DatabaseIntrospector {
         return answer;
     }
 
+    /**
+     * Calculate introspected tables.
+     *
+     * @param tc
+     *            the tc
+     * @param columns
+     *            the columns
+     * @return the list
+     */
     private List<IntrospectedTable> calculateIntrospectedTables(
             TableConfiguration tc,
             Map<ActualTableName, List<IntrospectedColumn>> columns) {

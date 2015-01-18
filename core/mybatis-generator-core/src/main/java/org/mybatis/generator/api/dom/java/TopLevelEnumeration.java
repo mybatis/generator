@@ -27,18 +27,26 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
+ * The Class TopLevelEnumeration.
+ *
  * @author Jeff Butler
- * 
  */
 public class TopLevelEnumeration extends InnerEnum implements CompilationUnit {
+    
+    /** The imported types. */
     private Set<FullyQualifiedJavaType> importedTypes;
 
+    /** The static imports. */
     private Set<String> staticImports;
 
+    /** The file comment lines. */
     private List<String> fileCommentLines;
 
     /**
+     * Instantiates a new top level enumeration.
+     *
      * @param type
+     *            the type
      */
     public TopLevelEnumeration(FullyQualifiedJavaType type) {
         super(type);
@@ -47,6 +55,9 @@ public class TopLevelEnumeration extends InnerEnum implements CompilationUnit {
         staticImports = new TreeSet<String>();
     }
 
+    /* (non-Javadoc)
+     * @see org.mybatis.generator.api.dom.java.CompilationUnit#getFormattedContent()
+     */
     public String getFormattedContent() {
         StringBuilder sb = new StringBuilder();
 
@@ -90,22 +101,37 @@ public class TopLevelEnumeration extends InnerEnum implements CompilationUnit {
         return sb.toString();
     }
 
+    /* (non-Javadoc)
+     * @see org.mybatis.generator.api.dom.java.CompilationUnit#getImportedTypes()
+     */
     public Set<FullyQualifiedJavaType> getImportedTypes() {
         return Collections.unmodifiableSet(importedTypes);
     }
 
+    /* (non-Javadoc)
+     * @see org.mybatis.generator.api.dom.java.CompilationUnit#getSuperClass()
+     */
     public FullyQualifiedJavaType getSuperClass() {
         throw new UnsupportedOperationException(getString("RuntimeError.11")); //$NON-NLS-1$
     }
 
+    /* (non-Javadoc)
+     * @see org.mybatis.generator.api.dom.java.CompilationUnit#isJavaInterface()
+     */
     public boolean isJavaInterface() {
         return false;
     }
 
+    /* (non-Javadoc)
+     * @see org.mybatis.generator.api.dom.java.CompilationUnit#isJavaEnumeration()
+     */
     public boolean isJavaEnumeration() {
         return true;
     }
 
+    /* (non-Javadoc)
+     * @see org.mybatis.generator.api.dom.java.CompilationUnit#addImportedType(org.mybatis.generator.api.dom.java.FullyQualifiedJavaType)
+     */
     public void addImportedType(FullyQualifiedJavaType importedType) {
         if (importedType.isExplicitlyImported()
                 && !importedType.getPackageName().equals(
@@ -114,26 +140,44 @@ public class TopLevelEnumeration extends InnerEnum implements CompilationUnit {
         }
     }
 
+    /* (non-Javadoc)
+     * @see org.mybatis.generator.api.dom.java.CompilationUnit#addFileCommentLine(java.lang.String)
+     */
     public void addFileCommentLine(String commentLine) {
         fileCommentLines.add(commentLine);
     }
 
+    /* (non-Javadoc)
+     * @see org.mybatis.generator.api.dom.java.CompilationUnit#getFileCommentLines()
+     */
     public List<String> getFileCommentLines() {
         return fileCommentLines;
     }
 
+    /* (non-Javadoc)
+     * @see org.mybatis.generator.api.dom.java.CompilationUnit#addImportedTypes(java.util.Set)
+     */
     public void addImportedTypes(Set<FullyQualifiedJavaType> importedTypes) {
         this.importedTypes.addAll(importedTypes);
     }
 
+    /* (non-Javadoc)
+     * @see org.mybatis.generator.api.dom.java.CompilationUnit#getStaticImports()
+     */
     public Set<String> getStaticImports() {
         return staticImports;
     }
 
+    /* (non-Javadoc)
+     * @see org.mybatis.generator.api.dom.java.CompilationUnit#addStaticImport(java.lang.String)
+     */
     public void addStaticImport(String staticImport) {
         staticImports.add(staticImport);
     }
 
+    /* (non-Javadoc)
+     * @see org.mybatis.generator.api.dom.java.CompilationUnit#addStaticImports(java.util.Set)
+     */
     public void addStaticImports(Set<String> staticImports) {
         this.staticImports.addAll(staticImports);
     }

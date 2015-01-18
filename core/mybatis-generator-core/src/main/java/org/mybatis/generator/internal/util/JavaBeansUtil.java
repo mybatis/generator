@@ -31,13 +31,15 @@ import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.PropertyRegistry;
 
 /**
+ * The Class JavaBeansUtil.
+ *
  * @author Jeff Butler
  */
 public class JavaBeansUtil {
 
     /**
-	 *  
-	 */
+     * Instantiates a new java beans util.
+     */
     private JavaBeansUtil() {
         super();
     }
@@ -45,12 +47,14 @@ public class JavaBeansUtil {
     /**
      * JavaBeans rules:
      * 
-     * eMail > geteMail() firstName > getFirstName() URL > getURL() XAxis >
-     * getXAxis() a > getA() B > invalid - this method assumes that this is not
-     * the case. Call getValidPropertyName first. Yaxis > invalid - this method
-     * assumes that this is not the case. Call getValidPropertyName first.
-     * 
+     * eMail &gt; geteMail() firstName &gt; getFirstName() URL $gt; getURL() XAxis &gt; getXAxis() a &gt; getA() B &gt;
+     * invalid - this method assumes that this is not the case. Call getValidPropertyName first. Yaxis &gt; invalid -
+     * this method assumes that this is not the case. Call getValidPropertyName first.
+     *
      * @param property
+     *            the property
+     * @param fullyQualifiedJavaType
+     *            the fully qualified java type
      * @return the getter method name
      */
     public static String getGetterMethodName(String property,
@@ -77,12 +81,12 @@ public class JavaBeansUtil {
     /**
      * JavaBeans rules:
      * 
-     * eMail > seteMail() firstName > setFirstName() URL > setURL() XAxis >
-     * setXAxis() a > setA() B > invalid - this method assumes that this is not
-     * the case. Call getValidPropertyName first. Yaxis > invalid - this method
-     * assumes that this is not the case. Call getValidPropertyName first.
-     * 
+     * eMail &gt; seteMail() firstName &gt; setFirstName() URL &gt; setURL() XAxis &gt; setXAxis() a &gt; setA() B &gt;
+     * invalid - this method assumes that this is not the case. Call getValidPropertyName first. Yaxis &gt; invalid -
+     * this method assumes that this is not the case. Call getValidPropertyName first.
+     *
      * @param property
+     *            the property
      * @return the setter method name
      */
     public static String getSetterMethodName(String property) {
@@ -100,6 +104,15 @@ public class JavaBeansUtil {
         return sb.toString();
     }
 
+    /**
+     * Gets the camel case string.
+     *
+     * @param inputString
+     *            the input string
+     * @param firstCharacterUppercase
+     *            the first character uppercase
+     * @return the camel case string
+     */
     public static String getCamelCaseString(String inputString,
             boolean firstCharacterUppercase) {
         StringBuilder sb = new StringBuilder();
@@ -141,18 +154,16 @@ public class JavaBeansUtil {
     }
 
     /**
-     * This method ensures that the specified input string is a valid Java
-     * property name. The rules are as follows:
+     * This method ensures that the specified input string is a valid Java property name. The rules are as follows:
      * 
-     * 1. If the first character is lower case, then OK 2. If the first two
-     * characters are upper case, then OK 3. If the first character is upper
-     * case, and the second character is lower case, then the first character
-     * should be made lower case
+     * 1. If the first character is lower case, then OK 2. If the first two characters are upper case, then OK 3. If the
+     * first character is upper case, and the second character is lower case, then the first character should be made
+     * lower case
      * 
-     * eMail > eMail firstName > firstName URL > URL XAxis > XAxis a > a B > b
-     * Yaxis > yaxis
-     * 
+     * eMail &gt; eMail firstName &gt; firstName URL &gt; URL XAxis &gt; XAxis a &gt; a B &gt; b Yaxis &gt; yaxis
+     *
      * @param inputString
+     *            the input string
      * @return the valid property name
      */
     public static String getValidPropertyName(String inputString) {
@@ -175,6 +186,17 @@ public class JavaBeansUtil {
         return answer;
     }
 
+    /**
+     * Gets the java beans getter.
+     *
+     * @param introspectedColumn
+     *            the introspected column
+     * @param context
+     *            the context
+     * @param introspectedTable
+     *            the introspected table
+     * @return the java beans getter
+     */
     public static Method getJavaBeansGetter(IntrospectedColumn introspectedColumn,
             Context context,
             IntrospectedTable introspectedTable) {
@@ -198,6 +220,17 @@ public class JavaBeansUtil {
         return method;
     }
 
+    /**
+     * Gets the java beans field.
+     *
+     * @param introspectedColumn
+     *            the introspected column
+     * @param context
+     *            the context
+     * @param introspectedTable
+     *            the introspected table
+     * @return the java beans field
+     */
     public static Field getJavaBeansField(IntrospectedColumn introspectedColumn,
             Context context,
             IntrospectedTable introspectedTable) {
@@ -215,6 +248,17 @@ public class JavaBeansUtil {
         return field;
     }
 
+    /**
+     * Gets the java beans setter.
+     *
+     * @param introspectedColumn
+     *            the introspected column
+     * @param context
+     *            the context
+     * @param introspectedTable
+     *            the introspected table
+     * @return the java beans setter
+     */
     public static Method getJavaBeansSetter(IntrospectedColumn introspectedColumn,
             Context context,
             IntrospectedTable introspectedTable) {
@@ -251,6 +295,13 @@ public class JavaBeansUtil {
         return method;
     }
 
+    /**
+     * Checks if is trim strings enabled.
+     *
+     * @param context
+     *            the context
+     * @return true, if is trim strings enabled
+     */
     private static boolean isTrimStringsEnabled(Context context) {
         Properties properties = context
                 .getJavaModelGeneratorConfiguration().getProperties();

@@ -113,7 +113,7 @@ public class GeneratedKey {
     }
 
     /**
-     * This method is used by the iBATIS2 generators to know if the XML <selectKey> element should be placed before the
+     * This method is used by the iBATIS2 generators to know if the XML &lt;selectKey&gt; element should be placed before the
      * insert SQL statement.
      *
      * @return true, if is placed before insert in ibatis2

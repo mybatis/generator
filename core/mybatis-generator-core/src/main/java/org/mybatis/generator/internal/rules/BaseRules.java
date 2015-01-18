@@ -31,12 +31,20 @@ import org.mybatis.generator.internal.util.StringUtility;
  */
 public abstract class BaseRules implements Rules {
 
+    /** The table configuration. */
     protected TableConfiguration tableConfiguration;
+    
+    /** The introspected table. */
     protected IntrospectedTable introspectedTable;
+    
+    /** The is model only. */
     protected final boolean isModelOnly;
 
     /**
-     * 
+     * Instantiates a new base rules.
+     *
+     * @param introspectedTable
+     *            the introspected table
      */
     public BaseRules(IntrospectedTable introspectedTable) {
         super();
@@ -365,6 +373,9 @@ public abstract class BaseRules implements Rules {
         return rc;
     }
 
+    /* (non-Javadoc)
+     * @see org.mybatis.generator.internal.rules.Rules#generateCountByExample()
+     */
     public boolean generateCountByExample() {
         if (isModelOnly) {
             return false;
@@ -375,6 +386,9 @@ public abstract class BaseRules implements Rules {
         return rc;
     }
 
+    /* (non-Javadoc)
+     * @see org.mybatis.generator.internal.rules.Rules#generateUpdateByExampleSelective()
+     */
     public boolean generateUpdateByExampleSelective() {
         if (isModelOnly) {
             return false;
@@ -385,6 +399,9 @@ public abstract class BaseRules implements Rules {
         return rc;
     }
 
+    /* (non-Javadoc)
+     * @see org.mybatis.generator.internal.rules.Rules#generateUpdateByExampleWithoutBLOBs()
+     */
     public boolean generateUpdateByExampleWithoutBLOBs() {
         if (isModelOnly) {
             return false;
@@ -397,6 +414,9 @@ public abstract class BaseRules implements Rules {
         return rc;
     }
 
+    /* (non-Javadoc)
+     * @see org.mybatis.generator.internal.rules.Rules#generateUpdateByExampleWithBLOBs()
+     */
     public boolean generateUpdateByExampleWithBLOBs() {
         if (isModelOnly) {
             return false;
@@ -408,10 +428,16 @@ public abstract class BaseRules implements Rules {
         return rc;
     }
 
+    /* (non-Javadoc)
+     * @see org.mybatis.generator.internal.rules.Rules#getIntrospectedTable()
+     */
     public IntrospectedTable getIntrospectedTable() {
         return introspectedTable;
     }
 
+    /* (non-Javadoc)
+     * @see org.mybatis.generator.internal.rules.Rules#generateBaseColumnList()
+     */
     public boolean generateBaseColumnList() {
         if (isModelOnly) {
             return false;
@@ -421,6 +447,9 @@ public abstract class BaseRules implements Rules {
                 || generateSelectByExampleWithoutBLOBs();
     }
 
+    /* (non-Javadoc)
+     * @see org.mybatis.generator.internal.rules.Rules#generateBlobColumnList()
+     */
     public boolean generateBlobColumnList() {
         if (isModelOnly) {
             return false;
@@ -431,6 +460,9 @@ public abstract class BaseRules implements Rules {
                         .isSelectByPrimaryKeyStatementEnabled());
     }
 
+    /* (non-Javadoc)
+     * @see org.mybatis.generator.internal.rules.Rules#generateJavaClient()
+     */
     public boolean generateJavaClient() {
         return !isModelOnly;
     }

@@ -207,7 +207,7 @@ public class DatabaseIntrospector {
     }
 
     /**
-     * Returns a List<IntrospectedTable> that matches the specified table configuration.
+     * Returns a List of IntrospectedTable elements that matches the specified table configuration.
      *
      * @param tc
      *            the tc

@@ -248,33 +248,16 @@
     </dependencies>
   </dependencyManagement>
 
+  <modules>
+    <module>mybatis-generator-core</module>
+    <module>mybatis-generator-maven-plugin</module>
+    <module>mybatis-generator-systests-common</module>
+    <module>mybatis-generator-systests-mybatis3</module>
+    <module>mybatis-generator-systests-ibatis2-java2</module>
+    <module>mybatis-generator-systests-ibatis2-java5</module>
+  </modules>
+
   <profiles>
-    <profile>
-      <id>MyBatisOnly</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
-      <modules>
-        <module>mybatis-generator-core</module>
-        <module>mybatis-generator-maven-plugin</module>
-        <module>mybatis-generator-systests-common</module>
-        <module>mybatis-generator-systests-mybatis3</module>
-      </modules>
-    </profile>
-    <profile>
-      <id>complete</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <modules>
-        <module>mybatis-generator-core</module>
-        <module>mybatis-generator-maven-plugin</module>
-        <module>mybatis-generator-systests-common</module>
-        <module>mybatis-generator-systests-mybatis3</module>
-        <module>mybatis-generator-systests-ibatis2-java2</module>
-        <module>mybatis-generator-systests-ibatis2-java5</module>
-      </modules>
-    </profile>
     <profile>
       <id>jdk16</id>
       <activation>

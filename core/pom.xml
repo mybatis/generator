@@ -293,22 +293,7 @@
     <profile>
       <id>jdk17</id>
       <activation>
-        <jdk>1.7</jdk>
-      </activation>
-      <reporting>
-        <plugins>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>findbugs-maven-plugin</artifactId>
-            <version>3.0.0</version>
-          </plugin>
-        </plugins>
-      </reporting>
-    </profile>
-    <profile>
-      <id>jdk18</id>
-      <activation>
-        <jdk>1.8</jdk>
+        <jdk>[1.7,1.8)</jdk>
       </activation>
       <reporting>
         <plugins>
@@ -321,5 +306,5 @@
       </reporting>
     </profile>
   </profiles>
-  
+
 </project>

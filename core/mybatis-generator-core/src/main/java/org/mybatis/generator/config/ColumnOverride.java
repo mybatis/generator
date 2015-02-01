@@ -25,27 +25,39 @@ import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
 /**
+ * The Class ColumnOverride.
+ *
  * @author Jeff Butler
  */
 public class ColumnOverride extends PropertyHolder {
 
+    /** The column name. */
     private String columnName;
 
+    /** The java property. */
     private String javaProperty;
 
+    /** The jdbc type. */
     private String jdbcType;
 
+    /** The java type. */
     private String javaType;
 
+    /** The type handler. */
     private String typeHandler;
 
+    /** The is column name delimited. */
     private boolean isColumnNameDelimited;
 
+    /** The configured delimited column name. */
     private String configuredDelimitedColumnName;
 
     /**
-	 *  
-	 */
+     * Instantiates a new column override.
+     *
+     * @param columnName
+     *            the column name
+     */
     public ColumnOverride(String columnName) {
         super();
 
@@ -53,42 +65,96 @@ public class ColumnOverride extends PropertyHolder {
         isColumnNameDelimited = stringContainsSpace(columnName);
     }
 
+    /**
+     * Gets the column name.
+     *
+     * @return the column name
+     */
     public String getColumnName() {
         return columnName;
     }
 
+    /**
+     * Gets the java property.
+     *
+     * @return the java property
+     */
     public String getJavaProperty() {
         return javaProperty;
     }
 
+    /**
+     * Sets the java property.
+     *
+     * @param javaProperty
+     *            the new java property
+     */
     public void setJavaProperty(String javaProperty) {
         this.javaProperty = javaProperty;
     }
 
+    /**
+     * Gets the java type.
+     *
+     * @return the java type
+     */
     public String getJavaType() {
         return javaType;
     }
 
+    /**
+     * Sets the java type.
+     *
+     * @param javaType
+     *            the new java type
+     */
     public void setJavaType(String javaType) {
         this.javaType = javaType;
     }
 
+    /**
+     * Gets the jdbc type.
+     *
+     * @return the jdbc type
+     */
     public String getJdbcType() {
         return jdbcType;
     }
 
+    /**
+     * Sets the jdbc type.
+     *
+     * @param jdbcType
+     *            the new jdbc type
+     */
     public void setJdbcType(String jdbcType) {
         this.jdbcType = jdbcType;
     }
 
+    /**
+     * Gets the type handler.
+     *
+     * @return the type handler
+     */
     public String getTypeHandler() {
         return typeHandler;
     }
 
+    /**
+     * Sets the type handler.
+     *
+     * @param typeHandler
+     *            the new type handler
+     */
     public void setTypeHandler(String typeHandler) {
         this.typeHandler = typeHandler;
     }
 
+    /**
+     * To xml element.
+     *
+     * @return the xml element
+     */
     public XmlElement toXmlElement() {
         XmlElement xmlElement = new XmlElement("columnOverride"); //$NON-NLS-1$
         xmlElement.addAttribute(new Attribute("column", columnName)); //$NON-NLS-1$
@@ -119,16 +185,35 @@ public class ColumnOverride extends PropertyHolder {
         return xmlElement;
     }
 
+    /**
+     * Checks if is column name delimited.
+     *
+     * @return true, if is column name delimited
+     */
     public boolean isColumnNameDelimited() {
         return isColumnNameDelimited;
     }
 
+    /**
+     * Sets the column name delimited.
+     *
+     * @param isColumnNameDelimited
+     *            the new column name delimited
+     */
     public void setColumnNameDelimited(boolean isColumnNameDelimited) {
         this.isColumnNameDelimited = isColumnNameDelimited;
 
         configuredDelimitedColumnName = isColumnNameDelimited ? "true" : "false"; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
+    /**
+     * Validate.
+     *
+     * @param errors
+     *            the errors
+     * @param tableName
+     *            the table name
+     */
     public void validate(List<String> errors, String tableName) {
         if (!stringHasValue(columnName)) {
             errors.add(getString("ValidationError.22", //$NON-NLS-1$

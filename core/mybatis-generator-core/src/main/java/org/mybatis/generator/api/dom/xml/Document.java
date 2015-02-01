@@ -18,17 +18,28 @@ package org.mybatis.generator.api.dom.xml;
 import org.mybatis.generator.api.dom.OutputUtilities;
 
 /**
+ * The Class Document.
+ *
  * @author Jeff Butler
  */
 public class Document {
+    
+    /** The public id. */
     private String publicId;
 
+    /** The system id. */
     private String systemId;
 
+    /** The root element. */
     private XmlElement rootElement;
 
     /**
-     *  
+     * Instantiates a new document.
+     *
+     * @param publicId
+     *            the public id
+     * @param systemId
+     *            the system id
      */
     public Document(String publicId, String systemId) {
         super();
@@ -36,11 +47,16 @@ public class Document {
         this.systemId = systemId;
     }
 
+    /**
+     * Instantiates a new document.
+     */
     public Document() {
         super();
     }
 
     /**
+     * Gets the root element.
+     *
      * @return Returns the rootElement.
      */
     public XmlElement getRootElement() {
@@ -48,6 +64,8 @@ public class Document {
     }
 
     /**
+     * Sets the root element.
+     *
      * @param rootElement
      *            The rootElement to set.
      */
@@ -56,6 +74,8 @@ public class Document {
     }
 
     /**
+     * Gets the public id.
+     *
      * @return Returns the publicId.
      */
     public String getPublicId() {
@@ -63,12 +83,19 @@ public class Document {
     }
 
     /**
+     * Gets the system id.
+     *
      * @return Returns the systemId.
      */
     public String getSystemId() {
         return systemId;
     }
 
+    /**
+     * Gets the formatted content.
+     *
+     * @return the formatted content
+     */
     public String getFormattedContent() {
         StringBuilder sb = new StringBuilder();
 

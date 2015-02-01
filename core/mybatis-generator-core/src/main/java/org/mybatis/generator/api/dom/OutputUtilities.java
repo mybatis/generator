@@ -21,9 +21,13 @@ import java.util.TreeSet;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 
 /**
+ * The Class OutputUtilities.
+ *
  * @author Jeff Butler
  */
 public class OutputUtilities {
+    
+    /** The Constant lineSeparator. */
     private static final String lineSeparator;
 
     static {
@@ -35,7 +39,7 @@ public class OutputUtilities {
     }
 
     /**
-     * Utility class - no instances allowed
+     * Utility class - no instances allowed.
      */
     private OutputUtilities() {
         super();
@@ -82,10 +86,11 @@ public class OutputUtilities {
     }
 
     /**
-     * returns a unique set of "import xxx;" Strings for the set of types
-     * 
+     * returns a unique set of "import xxx;" Strings for the set of types.
+     *
      * @param importedTypes
-     * @return
+     *            the imported types
+     * @return the sets the
      */
     public static Set<String> calculateImports(
             Set<FullyQualifiedJavaType> importedTypes) {

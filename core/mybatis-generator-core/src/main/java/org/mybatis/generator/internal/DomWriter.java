@@ -44,14 +44,29 @@ import org.w3c.dom.Text;
  * @author Jeff Butler (derivation)
  */
 public class DomWriter {
+    
+    /** The print writer. */
     protected PrintWriter printWriter;
 
+    /** The is xm l11. */
     protected boolean isXML11;
 
+    /**
+     * Instantiates a new dom writer.
+     */
     public DomWriter() {
         super();
     }
 
+    /**
+     * To string.
+     *
+     * @param document
+     *            the document
+     * @return the string
+     * @throws ShellException
+     *             the shell exception
+     */
     public synchronized String toString(Document document)
             throws ShellException {
         StringWriter sw = new StringWriter();
@@ -61,7 +76,13 @@ public class DomWriter {
         return s;
     }
 
-    /** Returns a sorted list of attributes. */
+    /**
+     * Returns a sorted list of attributes.
+     *
+     * @param attrs
+     *            the attrs
+     * @return the attr[]
+     */
     protected Attr[] sortAttributes(NamedNodeMap attrs) {
 
         int len = (attrs != null) ? attrs.getLength() : 0;
@@ -90,7 +111,14 @@ public class DomWriter {
 
     }
 
-    /** Normalizes and prints the given string. */
+    /**
+     * Normalizes and prints the given string.
+     *
+     * @param s
+     *            the s
+     * @param isAttValue
+     *            the is att value
+     */
     protected void normalizeAndPrint(String s, boolean isAttValue) {
 
         int len = (s != null) ? s.length() : 0;
@@ -101,7 +129,14 @@ public class DomWriter {
 
     }
 
-    /** Normalizes and print the given character. */
+    /**
+     * Normalizes and print the given character.
+     *
+     * @param c
+     *            the c
+     * @param isAttValue
+     *            the is att value
+     */
     protected void normalizeAndPrint(char c, boolean isAttValue) {
 
         switch (c) {
@@ -160,7 +195,13 @@ public class DomWriter {
         }
     }
 
-    /** Extracts the XML version from the Document. */
+    /**
+     * Extracts the XML version from the Document.
+     *
+     * @param document
+     *            the document
+     * @return the version
+     */
     protected String getVersion(Document document) {
         if (document == null) {
             return null;
@@ -182,6 +223,14 @@ public class DomWriter {
         return version;
     }
 
+    /**
+     * Write any node.
+     *
+     * @param node
+     *            the node
+     * @throws ShellException
+     *             the shell exception
+     */
     protected void writeAnyNode(Node node) throws ShellException {
         // is there anything to do?
         if (node == null) {
@@ -228,6 +277,14 @@ public class DomWriter {
         }
     }
 
+    /**
+     * Write.
+     *
+     * @param node
+     *            the node
+     * @throws ShellException
+     *             the shell exception
+     */
     protected void write(Document node) throws ShellException {
         isXML11 = "1.1".equals(getVersion(node)); //$NON-NLS-1$
         if (isXML11) {
@@ -240,6 +297,14 @@ public class DomWriter {
         write(node.getDocumentElement());
     }
 
+    /**
+     * Write.
+     *
+     * @param node
+     *            the node
+     * @throws ShellException
+     *             the shell exception
+     */
     protected void write(DocumentType node) throws ShellException {
         printWriter.print("<!DOCTYPE "); //$NON-NLS-1$
         printWriter.print(node.getName());
@@ -266,6 +331,14 @@ public class DomWriter {
         printWriter.println('>');
     }
 
+    /**
+     * Write.
+     *
+     * @param node
+     *            the node
+     * @throws ShellException
+     *             the shell exception
+     */
     protected void write(Element node) throws ShellException {
         printWriter.print('<');
         printWriter.print(node.getNodeName());
@@ -298,6 +371,12 @@ public class DomWriter {
         }
     }
 
+    /**
+     * Write.
+     *
+     * @param node
+     *            the node
+     */
     protected void write(EntityReference node) {
         printWriter.print('&');
         printWriter.print(node.getNodeName());
@@ -305,6 +384,12 @@ public class DomWriter {
         printWriter.flush();
     }
 
+    /**
+     * Write.
+     *
+     * @param node
+     *            the node
+     */
     protected void write(CDATASection node) {
         printWriter.print("<![CDATA["); //$NON-NLS-1$
         printWriter.print(node.getNodeValue());
@@ -312,11 +397,23 @@ public class DomWriter {
         printWriter.flush();
     }
 
+    /**
+     * Write.
+     *
+     * @param node
+     *            the node
+     */
     protected void write(Text node) {
         normalizeAndPrint(node.getNodeValue(), false);
         printWriter.flush();
     }
 
+    /**
+     * Write.
+     *
+     * @param node
+     *            the node
+     */
     protected void write(ProcessingInstruction node) {
         printWriter.print("<?"); //$NON-NLS-1$
         printWriter.print(node.getNodeName());
@@ -329,6 +426,12 @@ public class DomWriter {
         printWriter.flush();
     }
 
+    /**
+     * Write.
+     *
+     * @param node
+     *            the node
+     */
     protected void write(Comment node) {
         printWriter.print("<!--"); //$NON-NLS-1$
         String comment = node.getNodeValue();

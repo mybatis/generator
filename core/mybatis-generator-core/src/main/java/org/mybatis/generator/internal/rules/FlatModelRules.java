@@ -28,7 +28,10 @@ import org.mybatis.generator.api.IntrospectedTable;
 public class FlatModelRules extends BaseRules {
 
     /**
-     * 
+     * Instantiates a new flat model rules.
+     *
+     * @param introspectedTable
+     *            the introspected table
      */
     public FlatModelRules(IntrospectedTable introspectedTable) {
         super(introspectedTable);

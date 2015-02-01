@@ -40,32 +40,36 @@ import org.mybatis.generator.internal.NullProgressCallback;
 import org.mybatis.generator.internal.XmlFileMergerJaxp;
 
 /**
- * This class is the main interface to MyBatis generator. A typical execution of
- * the tool involves these steps:
+ * This class is the main interface to MyBatis generator. A typical execution of the tool involves these steps:
  * 
  * <ol>
- * <li>Create a Configuration object. The Configuration can be the result of a
- * parsing the XML configuration file, or it can be created solely in Java.</li>
+ * <li>Create a Configuration object. The Configuration can be the result of a parsing the XML configuration file, or it
+ * can be created solely in Java.</li>
  * <li>Create a MyBatisGenerator object</li>
  * <li>Call one of the generate() methods</li>
  * </ol>
- * 
- * @see org.mybatis.generator.config.xml.ConfigurationParser
- * 
+ *
  * @author Jeff Butler
+ * @see org.mybatis.generator.config.xml.ConfigurationParser
  */
 public class MyBatisGenerator {
 
+    /** The configuration. */
     private Configuration configuration;
 
+    /** The shell callback. */
     private ShellCallback shellCallback;
 
+    /** The generated java files. */
     private List<GeneratedJavaFile> generatedJavaFiles;
 
+    /** The generated xml files. */
     private List<GeneratedXmlFile> generatedXmlFiles;
 
+    /** The warnings. */
     private List<String> warnings;
 
+    /** The projects. */
     private Set<String> projects;
 
     /**
@@ -115,16 +119,17 @@ public class MyBatisGenerator {
     }
 
     /**
-     * This is the main method for generating code. This method is long running,
-     * but progress can be provided and the method can be canceled through the
-     * ProgressCallback interface. This version of the method runs all
-     * configured contexts.
-     * 
+     * This is the main method for generating code. This method is long running, but progress can be provided and the
+     * method can be canceled through the ProgressCallback interface. This version of the method runs all configured
+     * contexts.
+     *
      * @param callback
-     *            an instance of the ProgressCallback interface, or
-     *            <code>null</code> if you do not require progress information
+     *            an instance of the ProgressCallback interface, or <code>null</code> if you do not require progress
+     *            information
      * @throws SQLException
+     *             the SQL exception
      * @throws IOException
+     *             Signals that an I/O exception has occurred.
      * @throws InterruptedException
      *             if the method is canceled through the ProgressCallback
      */
@@ -134,20 +139,19 @@ public class MyBatisGenerator {
     }
 
     /**
-     * This is the main method for generating code. This method is long running,
-     * but progress can be provided and the method can be canceled through the
-     * ProgressCallback interface.
-     * 
+     * This is the main method for generating code. This method is long running, but progress can be provided and the
+     * method can be canceled through the ProgressCallback interface.
+     *
      * @param callback
-     *            an instance of the ProgressCallback interface, or
-     *            <code>null</code> if you do not require progress information
+     *            an instance of the ProgressCallback interface, or <code>null</code> if you do not require progress
+     *            information
      * @param contextIds
-     *            a set of Strings containing context ids to run. Only the
-     *            contexts with an id specified in this list will be run. If the
-     *            list is null or empty, than all contexts are run.
-     * @throws InvalidConfigurationException
+     *            a set of Strings containing context ids to run. Only the contexts with an id specified in this list
+     *            will be run. If the list is null or empty, than all contexts are run.
      * @throws SQLException
+     *             the SQL exception
      * @throws IOException
+     *             Signals that an I/O exception has occurred.
      * @throws InterruptedException
      *             if the method is canceled through the ProgressCallback
      */
@@ -157,27 +161,24 @@ public class MyBatisGenerator {
     }
 
     /**
-     * This is the main method for generating code. This method is long running,
-     * but progress can be provided and the method can be cancelled through the
-     * ProgressCallback interface.
-     * 
+     * This is the main method for generating code. This method is long running, but progress can be provided and the
+     * method can be cancelled through the ProgressCallback interface.
+     *
      * @param callback
-     *            an instance of the ProgressCallback interface, or
-     *            <code>null</code> if you do not require progress information
+     *            an instance of the ProgressCallback interface, or <code>null</code> if you do not require progress
+     *            information
      * @param contextIds
-     *            a set of Strings containing context ids to run. Only the
-     *            contexts with an id specified in this list will be run. If the
-     *            list is null or empty, than all contexts are run.
+     *            a set of Strings containing context ids to run. Only the contexts with an id specified in this list
+     *            will be run. If the list is null or empty, than all contexts are run.
      * @param fullyQualifiedTableNames
-     *            a set of table names to generate. The elements of the set must
-     *            be Strings that exactly match what's specified in the
-     *            configuration. For example, if table name = "foo" and schema =
-     *            "bar", then the fully qualified table name is "foo.bar". If
-     *            the Set is null or empty, then all tables in the configuration
+     *            a set of table names to generate. The elements of the set must be Strings that exactly match what's
+     *            specified in the configuration. For example, if table name = "foo" and schema = "bar", then the fully
+     *            qualified table name is "foo.bar". If the Set is null or empty, then all tables in the configuration
      *            will be used for code generation.
-     * @throws InvalidConfigurationException
      * @throws SQLException
+     *             the SQL exception
      * @throws IOException
+     *             Signals that an I/O exception has occurred.
      * @throws InterruptedException
      *             if the method is canceled through the ProgressCallback
      */
@@ -325,10 +326,16 @@ public class MyBatisGenerator {
     }
 
     /**
-     * Writes, or overwrites, the contents of the specified file
-     * 
+     * Writes, or overwrites, the contents of the specified file.
+     *
      * @param file
+     *            the file
      * @param content
+     *            the content
+     * @param fileEncoding
+     *            the file encoding
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
      */
     private void writeFile(File file, String content, String fileEncoding) throws IOException {
         FileOutputStream fos = new FileOutputStream(file, false);
@@ -344,6 +351,15 @@ public class MyBatisGenerator {
         bw.close();
     }
 
+    /**
+     * Gets the unique file name.
+     *
+     * @param directory
+     *            the directory
+     * @param fileName
+     *            the file name
+     * @return the unique file name
+     */
     private File getUniqueFileName(File directory, String fileName) {
         File answer = null;
 

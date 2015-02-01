@@ -34,34 +34,48 @@ import org.mybatis.generator.api.dom.java.Parameter;
  * @author Jeff Butler
  */
 public abstract class AbstractDAOTemplate {
+    
+    /** The interface imports. */
     private List<FullyQualifiedJavaType> interfaceImports;
 
+    /** The implementation imports. */
     private List<FullyQualifiedJavaType> implementationImports;
 
+    /** The super class. */
     private FullyQualifiedJavaType superClass;
 
+    /** The checked exceptions. */
     private List<FullyQualifiedJavaType> checkedExceptions;
 
+    /** The fields. */
     private List<Field> fields;
 
+    /** The methods. */
     private List<Method> methods;
 
+    /** The constructor template. */
     private Method constructorTemplate;
 
+    /** The delete method template. */
     private String deleteMethodTemplate;
 
+    /** The insert method template. */
     private String insertMethodTemplate;
 
+    /** The update method template. */
     private String updateMethodTemplate;
 
+    /** The query for object method template. */
     private String queryForObjectMethodTemplate;
 
+    /** The query for list method template. */
     private String queryForListMethodTemplate;
 
+    /** The configured. */
     private boolean configured;
 
     /**
-     *  
+     * Instantiates a new abstract dao template.
      */
     public AbstractDAOTemplate() {
         super();
@@ -73,6 +87,17 @@ public abstract class AbstractDAOTemplate {
         configured = false;
     }
 
+    /**
+     * Gets the constructor clone.
+     *
+     * @param commentGenerator
+     *            the comment generator
+     * @param type
+     *            the type
+     * @param introspectedTable
+     *            the introspected table
+     * @return the constructor clone
+     */
     public final Method getConstructorClone(CommentGenerator commentGenerator,
             FullyQualifiedJavaType type, IntrospectedTable introspectedTable) {
         configure();
@@ -97,6 +122,17 @@ public abstract class AbstractDAOTemplate {
         return answer;
     }
 
+    /**
+     * Gets the delete method.
+     *
+     * @param sqlMapNamespace
+     *            the sql map namespace
+     * @param statementId
+     *            the statement id
+     * @param parameter
+     *            the parameter
+     * @return the delete method
+     */
     public final String getDeleteMethod(String sqlMapNamespace,
             String statementId, String parameter) {
         configure();
@@ -106,16 +142,37 @@ public abstract class AbstractDAOTemplate {
         return answer;
     }
 
+    /**
+     * Gets the interface imports.
+     *
+     * @return the interface imports
+     */
     public final List<FullyQualifiedJavaType> getInterfaceImports() {
         configure();
         return interfaceImports;
     }
 
+    /**
+     * Gets the implementation imports.
+     *
+     * @return the implementation imports
+     */
     public final List<FullyQualifiedJavaType> getImplementationImports() {
         configure();
         return implementationImports;
     }
 
+    /**
+     * Gets the insert method.
+     *
+     * @param sqlMapNamespace
+     *            the sql map namespace
+     * @param statementId
+     *            the statement id
+     * @param parameter
+     *            the parameter
+     * @return the insert method
+     */
     public final String getInsertMethod(String sqlMapNamespace,
             String statementId, String parameter) {
         configure();
@@ -125,6 +182,17 @@ public abstract class AbstractDAOTemplate {
         return answer;
     }
 
+    /**
+     * Gets the query for list method.
+     *
+     * @param sqlMapNamespace
+     *            the sql map namespace
+     * @param statementId
+     *            the statement id
+     * @param parameter
+     *            the parameter
+     * @return the query for list method
+     */
     public final String getQueryForListMethod(String sqlMapNamespace,
             String statementId, String parameter) {
         configure();
@@ -134,6 +202,17 @@ public abstract class AbstractDAOTemplate {
         return answer;
     }
 
+    /**
+     * Gets the query for object method.
+     *
+     * @param sqlMapNamespace
+     *            the sql map namespace
+     * @param statementId
+     *            the statement id
+     * @param parameter
+     *            the parameter
+     * @return the query for object method
+     */
     public final String getQueryForObjectMethod(String sqlMapNamespace,
             String statementId, String parameter) {
         configure();
@@ -143,11 +222,27 @@ public abstract class AbstractDAOTemplate {
         return answer;
     }
 
+    /**
+     * Gets the super class.
+     *
+     * @return the super class
+     */
     public final FullyQualifiedJavaType getSuperClass() {
         configure();
         return superClass;
     }
 
+    /**
+     * Gets the update method.
+     *
+     * @param sqlMapNamespace
+     *            the sql map namespace
+     * @param statementId
+     *            the statement id
+     * @param parameter
+     *            the parameter
+     * @return the update method
+     */
     public final String getUpdateMethod(String sqlMapNamespace,
             String statementId, String parameter) {
         configure();
@@ -157,11 +252,25 @@ public abstract class AbstractDAOTemplate {
         return answer;
     }
 
+    /**
+     * Gets the checked exceptions.
+     *
+     * @return the checked exceptions
+     */
     public final List<FullyQualifiedJavaType> getCheckedExceptions() {
         configure();
         return checkedExceptions;
     }
 
+    /**
+     * Gets the field clones.
+     *
+     * @param commentGenerator
+     *            the comment generator
+     * @param introspectedTable
+     *            the introspected table
+     * @return the field clones
+     */
     public final List<Field> getFieldClones(CommentGenerator commentGenerator,
             IntrospectedTable introspectedTable) {
         configure();
@@ -182,6 +291,15 @@ public abstract class AbstractDAOTemplate {
         return answer;
     }
 
+    /**
+     * Gets the method clones.
+     *
+     * @param commentGenerator
+     *            the comment generator
+     * @param introspectedTable
+     *            the introspected table
+     * @return the method clones
+     */
     public final List<Method> getMethodClones(
             CommentGenerator commentGenerator,
             IntrospectedTable introspectedTable) {
@@ -217,52 +335,124 @@ public abstract class AbstractDAOTemplate {
         return answer;
     }
 
+    /**
+     * Sets the constructor template.
+     *
+     * @param constructorTemplate
+     *            the new constructor template
+     */
     protected void setConstructorTemplate(Method constructorTemplate) {
         this.constructorTemplate = constructorTemplate;
     }
 
+    /**
+     * Sets the delete method template.
+     *
+     * @param deleteMethodTemplate
+     *            the new delete method template
+     */
     protected void setDeleteMethodTemplate(String deleteMethodTemplate) {
         this.deleteMethodTemplate = deleteMethodTemplate;
     }
 
+    /**
+     * Adds the field.
+     *
+     * @param field
+     *            the field
+     */
     protected void addField(Field field) {
         fields.add(field);
     }
 
+    /**
+     * Sets the insert method template.
+     *
+     * @param insertMethodTemplate
+     *            the new insert method template
+     */
     protected void setInsertMethodTemplate(String insertMethodTemplate) {
         this.insertMethodTemplate = insertMethodTemplate;
     }
 
+    /**
+     * Adds the method.
+     *
+     * @param method
+     *            the method
+     */
     protected void addMethod(Method method) {
         methods.add(method);
     }
 
+    /**
+     * Sets the query for list method template.
+     *
+     * @param queryForListMethodTemplate
+     *            the new query for list method template
+     */
     protected void setQueryForListMethodTemplate(
             String queryForListMethodTemplate) {
         this.queryForListMethodTemplate = queryForListMethodTemplate;
     }
 
+    /**
+     * Sets the query for object method template.
+     *
+     * @param queryForObjectMethodTemplate
+     *            the new query for object method template
+     */
     protected void setQueryForObjectMethodTemplate(
             String queryForObjectMethodTemplate) {
         this.queryForObjectMethodTemplate = queryForObjectMethodTemplate;
     }
 
+    /**
+     * Sets the super class.
+     *
+     * @param superClass
+     *            the new super class
+     */
     protected void setSuperClass(FullyQualifiedJavaType superClass) {
         this.superClass = superClass;
     }
 
+    /**
+     * Sets the update method template.
+     *
+     * @param updateMethodTemplate
+     *            the new update method template
+     */
     protected void setUpdateMethodTemplate(String updateMethodTemplate) {
         this.updateMethodTemplate = updateMethodTemplate;
     }
 
+    /**
+     * Adds the interface import.
+     *
+     * @param type
+     *            the type
+     */
     protected void addInterfaceImport(FullyQualifiedJavaType type) {
         interfaceImports.add(type);
     }
 
+    /**
+     * Adds the implementation import.
+     *
+     * @param type
+     *            the type
+     */
     protected void addImplementationImport(FullyQualifiedJavaType type) {
         implementationImports.add(type);
     }
 
+    /**
+     * Adds the checked exception.
+     *
+     * @param type
+     *            the type
+     */
     protected void addCheckedException(FullyQualifiedJavaType type) {
         checkedExceptions.add(type);
     }
@@ -370,7 +560,7 @@ public abstract class AbstractDAOTemplate {
      * sqlMapClient.insert(\"{0}.{1}\", {2});
      * 
      * Overriding methods should call the
-     * <code>setInsertMethodTemplate(String)</code method to set the template.
+     * <code>setInsertMethodTemplate(String)</code> method to set the template.
      * 
      */
     protected abstract void configureInsertMethodTemplate();
@@ -391,7 +581,7 @@ public abstract class AbstractDAOTemplate {
      * sqlMapClient.queryForList(\"{0}.{1}\", {2});
      * 
      * Overriding methods should call the
-     * <code>setQueryForListMethodTemplate(String)</code method to set the
+     * <code>setQueryForListMethodTemplate(String)</code> method to set the
      * template.
      */
     protected abstract void configureQueryForListMethodTemplate();
@@ -412,7 +602,7 @@ public abstract class AbstractDAOTemplate {
      * sqlMapClient.queryForObject(\"{0}.{1}\", {2});
      * 
      * Overriding methods should call the
-     * <code>setQueryForObjectMethodTemplate(String)</code method to set the
+     * <code>setQueryForObjectMethodTemplate(String)</code> method to set the
      * template.
      */
     protected abstract void configureQueryForObjectMethodTemplate();
@@ -433,7 +623,7 @@ public abstract class AbstractDAOTemplate {
      * sqlMapClient.update(\"{0}.{1}\", {2});
      * 
      * Overriding methods should call the
-     * <code>setUpdateMethodTemplate(String)</code method to set the template.
+     * <code>setUpdateMethodTemplate(String)</code> method to set the template.
      */
     protected abstract void configureUpdateMethodTemplate();
 
@@ -453,7 +643,7 @@ public abstract class AbstractDAOTemplate {
      * sqlMapClient.delete(\"{0}.{1}\", {2});
      * 
      * Overriding methods should call the
-     * <code>setDeleteMethodTemplate(String)</code method to set the template.
+     * <code>setDeleteMethodTemplate(String)</code> method to set the template.
      */
     protected abstract void configureDeleteMethodTemplate();
 }

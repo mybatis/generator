@@ -16,14 +16,25 @@
 package org.mybatis.generator.api.dom.xml;
 
 /**
+ * The Class Attribute.
+ *
  * @author Jeff Butler
  */
 public class Attribute {
+    
+    /** The name. */
     private String name;
+    
+    /** The value. */
     private String value;
 
     /**
-     * 
+     * Instantiates a new attribute.
+     *
+     * @param name
+     *            the name
+     * @param value
+     *            the value
      */
     public Attribute(String name, String value) {
         super();
@@ -32,6 +43,8 @@ public class Attribute {
     }
 
     /**
+     * Gets the name.
+     *
      * @return Returns the name.
      */
     public String getName() {
@@ -39,12 +52,19 @@ public class Attribute {
     }
 
     /**
+     * Gets the value.
+     *
      * @return Returns the value.
      */
     public String getValue() {
         return value;
     }
 
+    /**
+     * Gets the formatted content.
+     *
+     * @return the formatted content
+     */
     public String getFormattedContent() {
         StringBuilder sb = new StringBuilder();
         sb.append(name);

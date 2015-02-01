@@ -45,7 +45,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-plugin-plugin</artifactId>
-        <version>3.3</version>
+        <version>3.4</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -58,11 +58,6 @@
             </tag>
           </tags>
         </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>findbugs-maven-plugin</artifactId>
-        <version>2.5.5</version>
       </plugin>
     </plugins>
   </reporting>
@@ -197,7 +192,7 @@
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
-        <version>4.11</version>
+        <version>4.12</version>
       </dependency>
       <dependency>
         <groupId>org.hsqldb</groupId>
@@ -207,12 +202,12 @@
       <dependency>
         <groupId>org.apache.maven</groupId>
         <artifactId>maven-plugin-api</artifactId>
-        <version>3.2.3</version>
+        <version>3.2.5</version>
       </dependency>
       <dependency>
         <groupId>org.apache.maven.plugin-tools</groupId>
         <artifactId>maven-plugin-annotations</artifactId>
-        <version>3.3</version>
+        <version>3.4</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
@@ -228,17 +223,17 @@
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-context</artifactId>
-        <version>3.2.11.RELEASE</version>
+        <version>3.2.13.RELEASE</version>
       </dependency>
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-orm</artifactId>
-        <version>3.2.11.RELEASE</version>
+        <version>3.2.13.RELEASE</version>
       </dependency>
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-jdbc</artifactId>
-        <version>3.2.11.RELEASE</version>
+        <version>3.2.13.RELEASE</version>
       </dependency>
       <dependency>
         <groupId>org.mybatis</groupId>
@@ -253,33 +248,46 @@
     </dependencies>
   </dependencyManagement>
 
+  <modules>
+    <module>mybatis-generator-core</module>
+    <module>mybatis-generator-maven-plugin</module>
+    <module>mybatis-generator-systests-common</module>
+    <module>mybatis-generator-systests-mybatis3</module>
+    <module>mybatis-generator-systests-ibatis2-java2</module>
+    <module>mybatis-generator-systests-ibatis2-java5</module>
+  </modules>
+
   <profiles>
     <profile>
-      <id>MyBatisOnly</id>
+      <id>jdk16</id>
       <activation>
-        <activeByDefault>false</activeByDefault>
+        <jdk>1.6</jdk>
       </activation>
-      <modules>
-        <module>mybatis-generator-core</module>
-        <module>mybatis-generator-maven-plugin</module>
-        <module>mybatis-generator-systests-common</module>
-        <module>mybatis-generator-systests-mybatis3</module>
-      </modules>
+      <reporting>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>findbugs-maven-plugin</artifactId>
+            <version>2.5.5</version>
+          </plugin>
+        </plugins>
+      </reporting>
     </profile>
     <profile>
-      <id>complete</id>
+      <id>jdk17</id>
       <activation>
-        <activeByDefault>true</activeByDefault>
+        <jdk>[1.7,1.8)</jdk>
       </activation>
-      <modules>
-        <module>mybatis-generator-core</module>
-        <module>mybatis-generator-maven-plugin</module>
-        <module>mybatis-generator-systests-common</module>
-        <module>mybatis-generator-systests-mybatis3</module>
-        <module>mybatis-generator-systests-ibatis2-java2</module>
-        <module>mybatis-generator-systests-ibatis2-java5</module>
-      </modules>
+      <reporting>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>findbugs-maven-plugin</artifactId>
+            <version>3.0.0</version>
+          </plugin>
+        </plugins>
+      </reporting>
     </profile>
   </profiles>
-  
+
 </project>

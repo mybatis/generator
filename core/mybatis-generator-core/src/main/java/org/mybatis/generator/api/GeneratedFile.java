@@ -22,11 +22,16 @@ package org.mybatis.generator.api;
  * @author Jeff Butler
  */
 public abstract class GeneratedFile {
+    
+    /** The target project. */
     protected String targetProject;
 
     /**
-	 *  
-	 */
+     * Instantiates a new generated file.
+     *
+     * @param targetProject
+     *            the target project
+     */
     public GeneratedFile(String targetProject) {
         super();
         this.targetProject = targetProject;
@@ -69,10 +74,18 @@ public abstract class GeneratedFile {
      */
     public abstract String getTargetPackage();
 
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
     @Override
     public String toString() {
         return getFormattedContent();
     }
 
+    /**
+     * Checks if is mergeable.
+     *
+     * @return true, if is mergeable
+     */
     public abstract boolean isMergeable();
 }

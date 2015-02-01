@@ -163,10 +163,4 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
-  <scm>
-    <url>https://mybatis.googlecode.com/svn/sub-projects/generator/trunk/core/mybatis-generator-systests-ibatis2-java5</url>
-    <connection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/generator/trunk/core/mybatis-generator-systests-ibatis2-java5</connection>
-    <developerConnection>scm:svn:https://mybatis.googlecode.com/svn/sub-projects/generator/trunk/core/mybatis-generator-systests-ibatis2-java5</developerConnection>
-  </scm>
 </project>

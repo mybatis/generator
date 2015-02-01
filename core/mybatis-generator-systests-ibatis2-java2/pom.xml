@@ -67,18 +67,6 @@
             <artifactId>mybatis-generator-systests-common</artifactId>
             <version>${project.version}</version>
           </dependency>
-          <!-- use the instrumented JAR so we can collect coverage data -->
-          <dependency>
-            <groupId>org.mybatis.generator</groupId>
-            <artifactId>mybatis-generator-core</artifactId>
-            <version>${project.version}</version>
-            <classifier>cobertura</classifier>
-          </dependency>
-          <dependency>
-            <groupId>net.sourceforge.cobertura</groupId>
-            <artifactId>cobertura</artifactId>
-            <version>${cobertura.version}</version>
-          </dependency>
         </dependencies>
       </plugin>
       <plugin>

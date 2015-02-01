@@ -30,8 +30,8 @@
   <name>MyBatis Generator Tests (iBATIS2 - Java2)</name>
 
   <properties>
-    <javac.src.version>1.4</javac.src.version>
-    <javac.target.version>1.4</javac.target.version>
+    <maven.compiler.source>1.4</maven.compiler.source>
+    <maven.compiler.target>1.4</maven.compiler.target>
   </properties>
 
   <build>

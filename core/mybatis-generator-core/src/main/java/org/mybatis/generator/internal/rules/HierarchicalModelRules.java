@@ -28,7 +28,10 @@ import org.mybatis.generator.api.IntrospectedTable;
 public class HierarchicalModelRules extends BaseRules {
 
     /**
-     * 
+     * Instantiates a new hierarchical model rules.
+     *
+     * @param introspectedTable
+     *            the introspected table
      */
     public HierarchicalModelRules(IntrospectedTable introspectedTable) {
         super(introspectedTable);

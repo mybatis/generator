@@ -23,46 +23,76 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 /**
+ * The Class FullyQualifiedJavaType.
+ *
  * @author Jeff Butler
  */
 public class FullyQualifiedJavaType implements
         Comparable<FullyQualifiedJavaType> {
+    
+    /** The Constant JAVA_LANG. */
     private static final String JAVA_LANG = "java.lang"; //$NON-NLS-1$
+    
+    /** The int instance. */
     private static FullyQualifiedJavaType intInstance = null;
+    
+    /** The string instance. */
     private static FullyQualifiedJavaType stringInstance = null;
+    
+    /** The boolean primitive instance. */
     private static FullyQualifiedJavaType booleanPrimitiveInstance = null;
+    
+    /** The object instance. */
     private static FullyQualifiedJavaType objectInstance = null;
+    
+    /** The date instance. */
     private static FullyQualifiedJavaType dateInstance = null;
+    
+    /** The criteria instance. */
     private static FullyQualifiedJavaType criteriaInstance = null;
+    
+    /** The generated criteria instance. */
     private static FullyQualifiedJavaType generatedCriteriaInstance = null;
 
-    /**
-     * The short name without any generic arguments
-     */
+    /** The short name without any generic arguments. */
     private String baseShortName;
 
-    /**
-     * The fully qualified name without any generic arguments
-     */
+    /** The fully qualified name without any generic arguments. */
     private String baseQualifiedName;
 
+    /** The explicitly imported. */
     private boolean explicitlyImported;
+    
+    /** The package name. */
     private String packageName;
+    
+    /** The primitive. */
     private boolean primitive;
+    
+    /** The is array. */
     private boolean isArray;
+    
+    /** The primitive type wrapper. */
     private PrimitiveTypeWrapper primitiveTypeWrapper;
+    
+    /** The type arguments. */
     private List<FullyQualifiedJavaType> typeArguments;
 
     // the following three values are used for dealing with wildcard types
+    /** The wildcard type. */
     private boolean wildcardType;
+    
+    /** The bounded wildcard. */
     private boolean boundedWildcard;
+    
+    /** The extends bounded wildcard. */
     private boolean extendsBoundedWildcard;
 
     /**
-     * Use this constructor to construct a generic type with the specified type
-     * parameters
-     * 
+     * Use this constructor to construct a generic type with the specified type parameters.
+     *
      * @param fullTypeSpecification
+     *            the full type specification
      */
     public FullyQualifiedJavaType(String fullTypeSpecification) {
         super();
@@ -71,6 +101,8 @@ public class FullyQualifiedJavaType implements
     }
 
     /**
+     * Checks if is explicitly imported.
+     *
      * @return Returns the explicitlyImported.
      */
     public boolean isExplicitlyImported() {
@@ -78,9 +110,8 @@ public class FullyQualifiedJavaType implements
     }
 
     /**
-     * This method returns the fully qualified name - including any generic type
-     * parameters
-     * 
+     * This method returns the fully qualified name - including any generic type parameters.
+     *
      * @return Returns the fullyQualifiedName.
      */
     public String getFullyQualifiedName() {
@@ -119,8 +150,10 @@ public class FullyQualifiedJavaType implements
     }
 
     /**
-     * Returns a list of Strings that are the fully qualified names of this
-     * type, and any generic type argument associated with this type.
+     * Returns a list of Strings that are the fully qualified names of this type, and any generic type argument
+     * associated with this type.
+     *
+     * @return the import list
      */
     public List<String> getImportList() {
         List<String> answer = new ArrayList<String>();
@@ -147,6 +180,8 @@ public class FullyQualifiedJavaType implements
     }
 
     /**
+     * Gets the package name.
+     *
      * @return Returns the packageName.
      */
     public String getPackageName() {
@@ -154,6 +189,8 @@ public class FullyQualifiedJavaType implements
     }
 
     /**
+     * Gets the short name.
+     *
      * @return Returns the shortName - including any type arguments.
      */
     public String getShortName() {
@@ -232,6 +269,8 @@ public class FullyQualifiedJavaType implements
     }
 
     /**
+     * Checks if is primitive.
+     *
      * @return Returns the primitive.
      */
     public boolean isPrimitive() {
@@ -239,12 +278,19 @@ public class FullyQualifiedJavaType implements
     }
 
     /**
+     * Gets the primitive type wrapper.
+     *
      * @return Returns the wrapperClass.
      */
     public PrimitiveTypeWrapper getPrimitiveTypeWrapper() {
         return primitiveTypeWrapper;
     }
 
+    /**
+     * Gets the int instance.
+     *
+     * @return the int instance
+     */
     public static final FullyQualifiedJavaType getIntInstance() {
         if (intInstance == null) {
             intInstance = new FullyQualifiedJavaType("int"); //$NON-NLS-1$
@@ -253,31 +299,61 @@ public class FullyQualifiedJavaType implements
         return intInstance;
     }
 
+    /**
+     * Gets the new map instance.
+     *
+     * @return the new map instance
+     */
     public static final FullyQualifiedJavaType getNewMapInstance() {
         // always return a new instance because the type may be parameterized
         return new FullyQualifiedJavaType("java.util.Map"); //$NON-NLS-1$
     }
 
+    /**
+     * Gets the new list instance.
+     *
+     * @return the new list instance
+     */
     public static final FullyQualifiedJavaType getNewListInstance() {
         // always return a new instance because the type may be parameterized
         return new FullyQualifiedJavaType("java.util.List"); //$NON-NLS-1$
     }
 
+    /**
+     * Gets the new hash map instance.
+     *
+     * @return the new hash map instance
+     */
     public static final FullyQualifiedJavaType getNewHashMapInstance() {
         // always return a new instance because the type may be parameterized
         return new FullyQualifiedJavaType("java.util.HashMap"); //$NON-NLS-1$
     }
 
+    /**
+     * Gets the new array list instance.
+     *
+     * @return the new array list instance
+     */
     public static final FullyQualifiedJavaType getNewArrayListInstance() {
         // always return a new instance because the type may be parameterized
         return new FullyQualifiedJavaType("java.util.ArrayList"); //$NON-NLS-1$
     }
 
+    /**
+     * Gets the new iterator instance.
+     *
+     * @return the new iterator instance
+     */
     public static final FullyQualifiedJavaType getNewIteratorInstance() {
         // always return a new instance because the type may be parameterized
         return new FullyQualifiedJavaType("java.util.Iterator"); //$NON-NLS-1$
     }
 
+    /**
+     * Gets the string instance.
+     *
+     * @return the string instance
+     */
     public static final FullyQualifiedJavaType getStringInstance() {
         if (stringInstance == null) {
             stringInstance = new FullyQualifiedJavaType("java.lang.String"); //$NON-NLS-1$
@@ -286,6 +362,11 @@ public class FullyQualifiedJavaType implements
         return stringInstance;
     }
 
+    /**
+     * Gets the boolean primitive instance.
+     *
+     * @return the boolean primitive instance
+     */
     public static final FullyQualifiedJavaType getBooleanPrimitiveInstance() {
         if (booleanPrimitiveInstance == null) {
             booleanPrimitiveInstance = new FullyQualifiedJavaType("boolean"); //$NON-NLS-1$
@@ -294,6 +375,11 @@ public class FullyQualifiedJavaType implements
         return booleanPrimitiveInstance;
     }
 
+    /**
+     * Gets the object instance.
+     *
+     * @return the object instance
+     */
     public static final FullyQualifiedJavaType getObjectInstance() {
         if (objectInstance == null) {
             objectInstance = new FullyQualifiedJavaType("java.lang.Object"); //$NON-NLS-1$
@@ -302,6 +388,11 @@ public class FullyQualifiedJavaType implements
         return objectInstance;
     }
 
+    /**
+     * Gets the date instance.
+     *
+     * @return the date instance
+     */
     public static final FullyQualifiedJavaType getDateInstance() {
         if (dateInstance == null) {
             dateInstance = new FullyQualifiedJavaType("java.util.Date"); //$NON-NLS-1$
@@ -310,6 +401,11 @@ public class FullyQualifiedJavaType implements
         return dateInstance;
     }
 
+    /**
+     * Gets the criteria instance.
+     *
+     * @return the criteria instance
+     */
     public static final FullyQualifiedJavaType getCriteriaInstance() {
         if (criteriaInstance == null) {
             criteriaInstance = new FullyQualifiedJavaType("Criteria"); //$NON-NLS-1$
@@ -318,6 +414,11 @@ public class FullyQualifiedJavaType implements
         return criteriaInstance;
     }
 
+    /**
+     * Gets the generated criteria instance.
+     *
+     * @return the generated criteria instance
+     */
     public static final FullyQualifiedJavaType getGeneratedCriteriaInstance() {
         if (generatedCriteriaInstance == null) {
             generatedCriteriaInstance = new FullyQualifiedJavaType(
@@ -336,10 +437,22 @@ public class FullyQualifiedJavaType implements
         return getFullyQualifiedName().compareTo(other.getFullyQualifiedName());
     }
 
+    /**
+     * Adds the type argument.
+     *
+     * @param type
+     *            the type
+     */
     public void addTypeArgument(FullyQualifiedJavaType type) {
         typeArguments.add(type);
     }
 
+    /**
+     * Parses the.
+     *
+     * @param fullTypeSpecification
+     *            the full type specification
+     */
     private void parse(String fullTypeSpecification) {
         String spec = fullTypeSpecification.trim();
 
@@ -380,6 +493,12 @@ public class FullyQualifiedJavaType implements
         }
     }
 
+    /**
+     * Simple parse.
+     *
+     * @param typeSpecification
+     *            the type specification
+     */
     private void simpleParse(String typeSpecification) {
         baseQualifiedName = typeSpecification.trim();
         if (baseQualifiedName.contains(".")) { //$NON-NLS-1$
@@ -435,6 +554,12 @@ public class FullyQualifiedJavaType implements
         }
     }
 
+    /**
+     * Generic parse.
+     *
+     * @param genericSpecification
+     *            the generic specification
+     */
     private void genericParse(String genericSpecification) {
         int lastIndex = genericSpecification.lastIndexOf('>');
         if (lastIndex == -1) {
@@ -482,19 +607,24 @@ public class FullyQualifiedJavaType implements
     /**
      * Returns the package name of a fully qualified type.
      * 
-     * This method calculates the package as the part of the fully
-     * qualified name up to, but not including, the last element.  Therefore,
-     * it does not support fully qualified inner classes.
-     * Not totally fool proof, but correct in most instances.
-     * 
+     * This method calculates the package as the part of the fully qualified name up to, but not including, the last
+     * element. Therefore, it does not support fully qualified inner classes. Not totally fool proof, but correct in
+     * most instances.
+     *
      * @param baseQualifiedName
-     * @return
+     *            the base qualified name
+     * @return the package
      */
     private static String getPackage(String baseQualifiedName) {
         int index = baseQualifiedName.lastIndexOf('.');
         return baseQualifiedName.substring(0, index);
     }
 
+    /**
+     * Checks if is array.
+     *
+     * @return true, if is array
+     */
     public boolean isArray() {
         return isArray;
     }

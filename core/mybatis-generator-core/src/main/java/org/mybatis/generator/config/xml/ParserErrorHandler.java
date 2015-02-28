@@ -24,16 +24,26 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 /**
+ * The Class ParserErrorHandler.
+ *
  * @author Jeff Butler
  */
 public class ParserErrorHandler implements ErrorHandler {
+    
+    /** The warnings. */
     private List<String> warnings;
 
+    /** The errors. */
     private List<String> errors;
 
     /**
-	 *  
-	 */
+     * Instantiates a new parser error handler.
+     *
+     * @param warnings
+     *            the warnings
+     * @param errors
+     *            the errors
+     */
     public ParserErrorHandler(List<String> warnings, List<String> errors) {
         super();
         this.warnings = warnings;

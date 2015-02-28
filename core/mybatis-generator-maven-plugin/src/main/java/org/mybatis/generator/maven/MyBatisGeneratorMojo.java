@@ -27,6 +27,9 @@ import java.util.StringTokenizer;
 import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.api.ShellCallback;
@@ -42,109 +45,89 @@ import org.mybatis.generator.logging.LogFactory;
 
 /**
  * Goal which generates MyBatis/iBATIS artifacts.
- *
- * @goal generate
- * @phase generate-sources
  */
+@Mojo(name = "generate",defaultPhase = LifecyclePhase.GENERATE_SOURCES)
 public class MyBatisGeneratorMojo extends AbstractMojo {
 
     /**
-     * @parameter expression="${project}"
-     * @required
-     * @readonly
+     * Maven Project.
      *
      */
+    @Parameter(property="project",required=true,readonly=true)
     private MavenProject project;
 
     /**
-     * @parameter expression="${mybatis.generator.outputDirectory}"
-     *            default-value=
-     *            "${project.build.directory}/generated-sources/mybatis-generator"
-     * @required
+     * Output Directory.
      */
+    @Parameter(property="mybatis.generator.outputDirectory", defaultValue="${project.build.directory}/generated-sources/mybatis-generator", required=true)
     private File outputDirectory;
 
     /**
      * Location of the configuration file.
-     *
-     * @parameter expression="${mybatis.generator.configurationFile}"
-     *            default-value
-     *            ="${basedir}/src/main/resources/generatorConfig.xml"
-     * @required
      */
+    @Parameter(property="mybatis.generator.configurationFile",defaultValue="${project.basedir}/src/main/resources/generatorConfig.xml", required=true)
     private File configurationFile;
 
     /**
-     * Specifies whether the mojo writes progress messages to the log
-     *
-     * @parameter expression="${mybatis.generator.verbose}" default-value=false
+     * Specifies whether the mojo writes progress messages to the log.
      */
+    @Parameter(property="mybatis.generator.verbose", defaultValue="false")
     private boolean verbose;
 
     /**
      * Specifies whether the mojo overwrites existing files. Default is false.
-     *
-     * @parameter expression="${mybatis.generator.overwrite}"
-     *            default-value=false
      */
+    @Parameter(property="mybatis.generator.overwrite", defaultValue="false")
     private boolean overwrite;
 
     /**
      * Location of a SQL script file to run before generating code. If null,
      * then no script will be run. If not null, then jdbcDriver, jdbcURL must be
      * supplied also, and jdbcUserId and jdbcPassword may be supplied.
-     *
-     * @parameter expression="${mybatis.generator.sqlScript}"
      */
+    @Parameter(property="mybatis.generator.sqlScript")
     private String sqlScript;
 
     /**
-     * JDBC Driver to use if a sql.script.file is specified
-     *
-     * @parameter expression="${mybatis.generator.jdbcDriver}"
+     * JDBC Driver to use if a sql.script.file is specified.
      */
+    @Parameter(property="mybatis.generator.jdbcDriver")
     private String jdbcDriver;
 
     /**
-     * JDBC URL to use if a sql.script.file is specified
-     *
-     * @parameter expression="${mybatis.generator.jdbcURL}"
+     * JDBC URL to use if a sql.script.file is specified.
      */
+    @Parameter(property="mybatis.generator.jdbcURL")
     private String jdbcURL;
 
     /**
-     * JDBC user ID to use if a sql.script.file is specified
-     *
-     * @parameter expression="${mybatis.generator.jdbcUserId}"
+     * JDBC user ID to use if a sql.script.file is specified.
      */
+    @Parameter(property="mybatis.generator.jdbcUserId")
     private String jdbcUserId;
 
     /**
-     * JDBC password to use if a sql.script.file is specified
-     *
-     * @parameter expression="${mybatis.generator.jdbcPassword}"
+     * JDBC password to use if a sql.script.file is specified.
      */
+    @Parameter(property="mybatis.generator.jdbcPassword")
     private String jdbcPassword;
 
     /**
-     * Comma delimited list of table names to generate
-     *
-     * @parameter expression="${mybatis.generator.tableNames}"
+     * Comma delimited list of table names to generate.
      */
+    @Parameter(property="mybatis.generator.tableNames")
     private String tableNames;
 
     /**
-     * Comma delimited list of contexts to generate
-     *
-     * @parameter expression="${mybatis.generator.contexts}"
+     * Comma delimited list of contexts to generate.
      */
+    @Parameter(property="mybatis.generator.contexts")
     private String contexts;
 
     /**
-     * Skip generator
-     * 
-     * @parameter expression="${mybatis.generator.skip}" default-value=false
+     * Skip generator.
      */
+    @Parameter(property="mybatis.generator.skip", defaultValue="false")
     private boolean skip;
 
     public void execute() throws MojoExecutionException {
@@ -235,7 +218,6 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
             throw new MojoExecutionException(e.getMessage());
         } catch (InterruptedException e) {
             // ignore (will never happen with the DefaultShellCallback)
-            ;
         }
 
         for (String error : warnings) {

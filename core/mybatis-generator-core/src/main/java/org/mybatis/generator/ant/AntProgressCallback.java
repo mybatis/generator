@@ -21,18 +21,25 @@ import org.apache.tools.ant.Task;
 import org.mybatis.generator.internal.NullProgressCallback;
 
 /**
- * This callback logs progress messages with the Ant logger
- * 
+ * This callback logs progress messages with the Ant logger.
+ *
  * @author Jeff Butler
- * 
  */
 public class AntProgressCallback extends NullProgressCallback {
 
+    /** The task. */
     private Task task;
+
+    /** The verbose. */
     private boolean verbose;
 
     /**
-     * 
+     * Instantiates a new ant progress callback.
+     *
+     * @param task
+     *            the task
+     * @param verbose
+     *            the verbose
      */
     public AntProgressCallback(Task task, boolean verbose) {
         super();
@@ -40,6 +47,9 @@ public class AntProgressCallback extends NullProgressCallback {
         this.verbose = verbose;
     }
 
+    /* (non-Javadoc)
+     * @see org.mybatis.generator.internal.NullProgressCallback#startTask(java.lang.String)
+     */
     @Override
     public void startTask(String subTaskName) {
         if (verbose) {

@@ -33,11 +33,11 @@ import org.mybatis.generator.exception.ShellException;
  * @author Jeff Butler
  */
 public interface ShellCallback {
+    
     /**
-     * This method is called to ask the shell to resolve a
-     * project/package combination into a directory on the file system.
-     * This method is called repeatedly (once for each generated file), so it
-     * would be wise for an implementing class to cache results.
+     * This method is called to ask the shell to resolve a project/package combination into a directory on the file
+     * system. This method is called repeatedly (once for each generated file), so it would be wise for an implementing
+     * class to cache results.
      * 
      * The returned <code>java.io.File</code> object:
      * <ul>
@@ -45,16 +45,17 @@ public interface ShellCallback {
      * <li>Must exist</li>
      * </ul>
      * 
-     * The default shell callback interprets both values as directories and
-     * simply concatenates the two values to generate the default directory.
-     * 
+     * The default shell callback interprets both values as directories and simply concatenates the two values to
+     * generate the default directory.
+     *
      * @param targetProject
+     *            the target project
      * @param targetPackage
+     *            the target package
      * @return the directory (must exist)
      * @throws ShellException
-     *             if the project/package cannot be resolved into a directory on
-     *             the file system. In this case, the generator will not save the file
-     *             it is currently working on. The generator will add the exception
+     *             if the project/package cannot be resolved into a directory on the file system. In this case, the
+     *             generator will not save the file it is currently working on. The generator will add the exception
      *             message to the list of warnings automatically.
      */
     File getDirectory(String targetProject, String targetPackage)

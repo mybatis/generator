@@ -18,7 +18,7 @@
 <!--
   version: $Id: pom.xml 4114 2011-11-27 19:03:32Z simone.tripodi $
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -38,53 +38,40 @@
     -->
     <plugins>
       <plugin>
-      	<groupId>org.apache.maven.plugins</groupId>
-      	<artifactId>maven-site-plugin</artifactId>
-      	<executions>
-      	  <execution>
-      	    <phase>prepare-package</phase>
-      	    <goals>
-      	      <goal>site</goal>
-      	    </goals>
-      	  </execution>
-      	</executions>
-      </plugin>
-      <plugin>
-      	<groupId>org.apache.maven.plugins</groupId>
-      	<artifactId>maven-source-plugin</artifactId>
-      	<executions>
-      	  <execution>
-      	    <phase>prepare-package</phase>
-      	    <goals>
-      	      <goal>jar-no-fork</goal>
-      	    </goals>
-      	  </execution>
-      	</executions>
-      </plugin>
-      <plugin>
-      	<groupId>org.apache.maven.plugins</groupId>
-      	<artifactId>maven-javadoc-plugin</artifactId>
-      	<executions>
-      	  <execution>
-      	    <phase>prepare-package</phase>
-      	    <goals>
-      	      <goal>jar</goal>
-      	    </goals>
-      	  </execution>
-      	</executions>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>cobertura-maven-plugin</artifactId>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
         <executions>
           <execution>
-            <id>cobertura-instrument</id>
-            <phase>pre-integration-test</phase>
+            <phase>prepare-package</phase>
             <goals>
-              <goal>instrument</goal>
+              <goal>site</goal>
             </goals>
           </execution>
-        </executions>      
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -96,44 +83,15 @@
             </manifest>
           </archive>
         </configuration>
-        <executions>
-          <execution>
-            <id>cobertura-jar</id>
-            <phase>integration-test</phase>
-            <goals>
-              <goal>jar</goal>
-            </goals>
-            <configuration>
-              <classifier>cobertura</classifier>
-              <classesDirectory>${basedir}/target/generated-classes/cobertura</classesDirectory>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-install-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>cobertura-install</id>
-            <phase>integration-test</phase>
-            <goals>
-              <goal>install</goal>
-            </goals>
-            <configuration>
-              <classifier>cobertura</classifier>
-            </configuration>
-          </execution>
-        </executions>      
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
         <configuration>
           <descriptors>
-            <descriptor>${basedir}/src/main/assembly/src.xml</descriptor>
+            <descriptor>${project.basedir}/src/main/assembly/src.xml</descriptor>
           </descriptors>
-        </configuration>            
+        </configuration>
         <executions>
           <execution>
             <id>bundle</id>
@@ -141,32 +99,6 @@
               <goal>single</goal>
             </goals>
             <phase>package</phase>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>com.googlecode.maven-gcu-plugin</groupId>
-        <artifactId>maven-gcu-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>deploy</phase>
-            <goals>
-              <goal>upload</goal>
-            </goals>
-            <configuration>
-              <uploads>
-                <upload>
-                  <file>${project.build.directory}/${project.artifactId}-${project.version}-bundle.zip</file>
-                  <summary>MyBatis Generator ${project.version}</summary>
-                  <labels>
-                    <label>Featured</label>
-                    <label>Type-Archive</label>
-                    <label>Product-Generator</label>
-                    <label>Version-${project.version}</label>
-                  </labels>
-                </upload>
-              </uploads>
-            </configuration>
           </execution>
         </executions>
       </plugin>
@@ -185,11 +117,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>jdepend-maven-plugin</artifactId>
-        <version>2.0-beta-2</version>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>cobertura-maven-plugin</artifactId>
+        <version>2.0</version>
       </plugin>
     </plugins>
   </reporting>

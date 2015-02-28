@@ -29,7 +29,7 @@ public class MavenProgressCallback extends NullProgressCallback {
 
     private Log log;
     private boolean verbose;
-    
+
     /**
      * 
      */

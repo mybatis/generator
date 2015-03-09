@@ -46,6 +46,7 @@
         <configuration>
           <!-- see http://jira.codehaus.org/browse/MNG-5346 -->
           <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
+          <helpPackageName>org.mybatis.generator.maven</helpPackageName>
         </configuration>
         <executions>
           <execution>

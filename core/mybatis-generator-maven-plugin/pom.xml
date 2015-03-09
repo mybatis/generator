@@ -30,6 +30,7 @@
   <packaging>maven-plugin</packaging>
   <name>MyBatis Generator Maven Plugin</name>
 
+
   <build>
     <plugins>
       <plugin>
@@ -39,13 +40,14 @@
           <arguments>-Prelease</arguments>
         </configuration>
       </plugin>
-      <plugin>
+	  <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-plugin-plugin</artifactId>
         <version>3.4</version>
         <configuration>
-          <!-- see http://jira.codehaus.org/browse/MNG-5346 -->
-          <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
+				<!--      see http://jira.codehaus.org/browse/MNG-5346 -->
+		<skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
+		<helpPackageName>mojo.help</helpPackageName>
         </configuration>
         <executions>
           <execution>
@@ -61,7 +63,7 @@
             </goals>
           </execution>
         </executions>
-      </plugin>
+	</plugin>
     </plugins>
     <pluginManagement>
         <plugins>
@@ -117,6 +119,11 @@
     <dependency>
         <groupId>org.apache.maven</groupId>
         <artifactId>maven-project</artifactId>
+    </dependency>
+    <dependency>
+		  <groupId>org.apache.felix</groupId>
+		  <artifactId>maven-bundle-plugin</artifactId>
+		  <version>2.4.0</version>
     </dependency>
   </dependencies>
 </project>

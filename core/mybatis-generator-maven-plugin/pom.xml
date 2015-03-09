@@ -39,13 +39,14 @@
           <arguments>-Prelease</arguments>
         </configuration>
       </plugin>
-      <plugin>
+	  <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-plugin-plugin</artifactId>
         <version>3.4</version>
         <configuration>
-          <!-- see http://jira.codehaus.org/browse/MNG-5346 -->
-          <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
+		  <!--      see http://jira.codehaus.org/browse/MNG-5346 -->
+		  <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
+		  <helpPackageName>mojo.help</helpPackageName>
         </configuration>
         <executions>
           <execution>
@@ -61,7 +62,7 @@
             </goals>
           </execution>
         </executions>
-      </plugin>
+	</plugin>
     </plugins>
     <pluginManagement>
         <plugins>

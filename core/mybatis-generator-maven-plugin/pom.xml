@@ -30,7 +30,6 @@
   <packaging>maven-plugin</packaging>
   <name>MyBatis Generator Maven Plugin</name>
 
-
   <build>
     <plugins>
       <plugin>
@@ -45,9 +44,9 @@
         <artifactId>maven-plugin-plugin</artifactId>
         <version>3.4</version>
         <configuration>
-				<!--      see http://jira.codehaus.org/browse/MNG-5346 -->
-		<skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
-		<helpPackageName>mojo.help</helpPackageName>
+		  <!--      see http://jira.codehaus.org/browse/MNG-5346 -->
+		  <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
+		  <helpPackageName>mojo.help</helpPackageName>
         </configuration>
         <executions>
           <execution>

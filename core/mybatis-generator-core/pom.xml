@@ -150,7 +150,7 @@
   <scm>
     <url>http://github.com/mybatis/generator</url>
     <connection>scm:git:ssh://github.com/mybatis/generator.git</connection>
-    <developerConnection>scm:git:git+ssh://git@github.com/mybatis/generator.git</developerConnection>
+    <developerConnection>scm:git:ssh://git@github.com/mybatis/generator.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
   <issueManagement>

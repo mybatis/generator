@@ -29,6 +29,7 @@ import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.PropertyRegistry;
+import org.mybatis.generator.config.TableConfiguration;
 
 /**
  * The Class JavaBeansUtil.
@@ -274,7 +275,7 @@ public class JavaBeansUtil {
                 introspectedTable, introspectedColumn);
 
         StringBuilder sb = new StringBuilder();
-        if (isTrimStringsEnabled(context) && introspectedColumn.isStringColumn()) {
+        if (introspectedColumn.isStringColumn() && isTrimStringsEnabled(introspectedColumn)) {
             sb.append("this."); //$NON-NLS-1$
             sb.append(property);
             sb.append(" = "); //$NON-NLS-1$
@@ -308,6 +309,37 @@ public class JavaBeansUtil {
         boolean rc = isTrue(properties
                 .getProperty(PropertyRegistry.MODEL_GENERATOR_TRIM_STRINGS));
         return rc;
+    }
+
+    /**
+     * Checks if is trim strings enabled.
+     *
+     * @param table
+     *            the table
+     * @return true, if is trim strings enabled
+     */
+    private static boolean isTrimStringsEnabled(IntrospectedTable table) {
+        TableConfiguration tableConfiguration = table.getTableConfiguration();
+        String trimSpaces = tableConfiguration.getProperties().getProperty(PropertyRegistry.MODEL_GENERATOR_TRIM_STRINGS);
+        if (trimSpaces != null) {
+            return isTrue(trimSpaces);
+        }
+        return isTrimStringsEnabled(table.getContext());
+    }
+
+    /**
+     * Checks if is trim strings enabled.
+     *
+     * @param column
+     *            the column
+     * @return true, if is trim strings enabled
+     */
+    private static boolean isTrimStringsEnabled(IntrospectedColumn column) {
+        String trimSpaces = column.getProperties().getProperty(PropertyRegistry.MODEL_GENERATOR_TRIM_STRINGS);
+        if (trimSpaces != null) {
+            return isTrue(trimSpaces);
+        }
+        return isTrimStringsEnabled(column.getIntrospectedTable());
     }
 
 }

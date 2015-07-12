@@ -29,7 +29,7 @@
   <parent>
     <groupId>org.mybatis</groupId>
     <artifactId>mybatis-parent</artifactId>
-    <version>24-SNAPSHOT</version>
+    <version>25-SNAPSHOT</version>
   </parent>
 
   <properties>
@@ -212,7 +212,7 @@
       <dependency>
         <groupId>org.mybatis</groupId>
         <artifactId>mybatis</artifactId>
-        <version>3.2.8</version>
+        <version>3.3.0</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

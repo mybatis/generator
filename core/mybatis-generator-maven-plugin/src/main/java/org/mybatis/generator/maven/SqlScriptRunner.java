@@ -157,6 +157,7 @@ public class SqlScriptRunner {
             }
 
             if (line.endsWith(";")) { //$NON-NLS-1$
+                sb.append(' ');
                 sb.append(line.substring(0, line.length() - 1));
                 break;
             } else {

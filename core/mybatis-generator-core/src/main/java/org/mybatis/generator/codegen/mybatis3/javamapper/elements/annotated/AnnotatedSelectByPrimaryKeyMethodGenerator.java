@@ -132,7 +132,8 @@ public class AnnotatedSelectByPrimaryKeyMethodGenerator extends
     private void addResultMapAnnotation(Interface interfaze, Method method) {
         interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.ResultMap")); //$NON-NLS-1$
         
-        String annotation = String.format("@ResultMap(\"%s\")", //$NON-NLS-1$
+        String annotation = String.format("@ResultMap(\"%s.%s\")", //$NON-NLS-1$
+        		introspectedTable.getMyBatis3SqlMapNamespace(),
                 introspectedTable.getRules().generateResultMapWithBLOBs() ?
                         introspectedTable.getResultMapWithBLOBsId() : introspectedTable.getBaseResultMapId());
         method.addAnnotation(annotation);

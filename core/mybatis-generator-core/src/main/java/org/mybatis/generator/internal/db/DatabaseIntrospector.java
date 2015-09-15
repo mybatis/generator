@@ -717,10 +717,38 @@ public class DatabaseIntrospector {
             }
 
             calculatePrimaryKey(table, introspectedTable);
+            
+            enhanceIntrospectedTable(introspectedTable);
 
             answer.add(introspectedTable);
         }
 
         return answer;
+    }
+
+    /**
+     * This method calls database metadata to retrieve some extra information about the table
+     * such as remarks associated with the table and the type.
+     * 
+     * If there is any error, we just add a warning and continue.
+     * 
+     * @param introspectedTable
+     */
+    private void enhanceIntrospectedTable(IntrospectedTable introspectedTable) {
+        try {
+            FullyQualifiedTable fqt = introspectedTable.getFullyQualifiedTable();
+
+            ResultSet rs = databaseMetaData.getTables(fqt.getIntrospectedCatalog(), fqt.getIntrospectedSchema(),
+                    fqt.getIntrospectedTableName(), null);
+            if (rs.next()) {
+                String remarks = rs.getString("REMARKS"); //$NON-NLS-1$
+                String tableType = rs.getString("TABLE_TYPE"); //$NON-NLS-1$
+                introspectedTable.setRemarks(remarks);
+                introspectedTable.setTableType(tableType);
+            }
+            closeResultSet(rs);
+        } catch (SQLException e) {
+            warnings.add(getString("Warning.27", e.getMessage())); //$NON-NLS-1$
+        }
     }
 }

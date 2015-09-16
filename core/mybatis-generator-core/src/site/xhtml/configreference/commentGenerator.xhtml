@@ -65,7 +65,7 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
           <th valign="top">false</th>
           <td><i>This is the default value</i>
             <br/>When the property is false or unspecified, all generated elelments
-            will include comments indicationg that the element is a generated element.
+            will include comments indicating that the element is a generated element.
           </td>
         </tr>
         <tr>
@@ -101,7 +101,31 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
       </table>
     </td>
   </tr>
-</table>
+  <tr>
+    <td valign="top">addRemarkComments</td>
+    <td>
+      This property is used to specify whether MBG will include table and column
+      remarks from db table in the generated comments.
+      The property supports these values:
+      <table>
+        <tr>
+          <th valign="top">false</th>
+          <td><i>This is the default value</i>
+            <br/>When the property is false or unspecified, all generated comments
+            will <b>not</b> include table and column remarks from db table
+            when the element was generated.
+          </td>
+        </tr>
+        <tr>
+          <th valign="top">true</th>
+          <td>When the property is true, table and columns remarks from db table
+            will be added to the generated comments.
+          </td>
+        </tr>
+      </table>
+      <p><b>Warning: </b> If suppressAllComments option is true, this option will be ignored.</p>
+    </td>
+  </tr></table>
 
 <h2>Example</h2>
 <p>This element specifies that we do not want the timestamp added to any generated comment:</p>

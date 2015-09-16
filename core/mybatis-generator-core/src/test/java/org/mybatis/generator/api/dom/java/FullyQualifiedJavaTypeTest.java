@@ -89,6 +89,7 @@ public class FullyQualifiedJavaTypeTest {
         assertEquals("java.util", fqjt.getPackageName()); //$NON-NLS-1$
         assertEquals(1, fqjt.getImportList().size());
         assertEquals("java.util.List", fqjt.getImportList().get(0));
+        assertEquals("java.util.List", fqjt.getFullyQualifiedNameWithoutTypeParameters()); //$NON-NLS-1$
     }
 
 
@@ -101,6 +102,7 @@ public class FullyQualifiedJavaTypeTest {
         assertEquals("java.util.Map<java.lang.String, java.util.List<java.lang.String>>", fqjt.getFullyQualifiedName()); //$NON-NLS-1$
         assertEquals("java.util", fqjt.getPackageName()); //$NON-NLS-1$
         assertEquals(2, fqjt.getImportList().size());
+        assertEquals("java.util.Map", fqjt.getFullyQualifiedNameWithoutTypeParameters()); //$NON-NLS-1$
     }
 
 
@@ -119,6 +121,7 @@ public class FullyQualifiedJavaTypeTest {
         assertEquals("java.util.Map<java.lang.String, java.util.List<java.lang.String>>", fqjt.getFullyQualifiedName()); //$NON-NLS-1$
         assertEquals("java.util", fqjt.getPackageName()); //$NON-NLS-1$
         assertEquals(2, fqjt.getImportList().size());
+        assertEquals("java.util.Map", fqjt.getFullyQualifiedNameWithoutTypeParameters()); //$NON-NLS-1$
     }
 
     @Test
@@ -130,6 +133,7 @@ public class FullyQualifiedJavaTypeTest {
         assertEquals("java.util.List<java.util.Map<java.lang.String, java.lang.Object>>", fqjt.getFullyQualifiedName()); //$NON-NLS-1$
         assertEquals("java.util", fqjt.getPackageName()); //$NON-NLS-1$
         assertEquals(2, fqjt.getImportList().size());
+        assertEquals("java.util.List", fqjt.getFullyQualifiedNameWithoutTypeParameters()); //$NON-NLS-1$
     }
 
     @Test
@@ -141,6 +145,7 @@ public class FullyQualifiedJavaTypeTest {
         assertEquals("java.util.Map<java.lang.String, ? extends com.foo.Bar>", fqjt.getFullyQualifiedName()); //$NON-NLS-1$
         assertEquals("java.util", fqjt.getPackageName()); //$NON-NLS-1$
         assertEquals(2, fqjt.getImportList().size());
+        assertEquals("java.util.Map", fqjt.getFullyQualifiedNameWithoutTypeParameters()); //$NON-NLS-1$
     }
 
     @Test
@@ -153,6 +158,7 @@ public class FullyQualifiedJavaTypeTest {
         assertEquals("java.util", fqjt.getPackageName()); //$NON-NLS-1$
         assertEquals(1, fqjt.getImportList().size());
         assertEquals("java.util.Map", fqjt.getImportList().get(0));
+        assertEquals("java.util.Map", fqjt.getFullyQualifiedNameWithoutTypeParameters()); //$NON-NLS-1$
     }
 
     @Test
@@ -164,6 +170,7 @@ public class FullyQualifiedJavaTypeTest {
         assertEquals("java.util.Map<? extends java.util.List<?>, ?>", fqjt.getFullyQualifiedName()); //$NON-NLS-1$
         assertEquals("java.util", fqjt.getPackageName()); //$NON-NLS-1$
         assertEquals(2, fqjt.getImportList().size());
+        assertEquals("java.util.Map", fqjt.getFullyQualifiedNameWithoutTypeParameters()); //$NON-NLS-1$
     }
 
     @Test
@@ -176,6 +183,7 @@ public class FullyQualifiedJavaTypeTest {
         assertEquals("java.util", fqjt.getPackageName()); //$NON-NLS-1$
         assertEquals(1, fqjt.getImportList().size());
         assertEquals("java.util.Map", fqjt.getImportList().get(0));
+        assertEquals("java.util.Map", fqjt.getFullyQualifiedNameWithoutTypeParameters()); //$NON-NLS-1$
     }
 
     @Test
@@ -187,6 +195,7 @@ public class FullyQualifiedJavaTypeTest {
         assertEquals("java.util.List<? extends java.util.Map<? super java.lang.Object, ?>>", fqjt.getFullyQualifiedName()); //$NON-NLS-1$
         assertEquals("java.util", fqjt.getPackageName()); //$NON-NLS-1$
         assertEquals(2, fqjt.getImportList().size());
+        assertEquals("java.util.List", fqjt.getFullyQualifiedNameWithoutTypeParameters()); //$NON-NLS-1$
     }
 
     @Test

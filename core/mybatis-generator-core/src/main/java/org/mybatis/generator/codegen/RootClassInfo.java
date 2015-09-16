@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.internal.ObjectFactory;
 
 /**
@@ -56,6 +57,7 @@ public class RootClassInfo {
     private PropertyDescriptor[] propertyDescriptors;
     private String className;
     private List<String> warnings;
+    private boolean genericMode = false;
 
     private RootClassInfo(String className, List<String> warnings) {
         super();
@@ -65,9 +67,15 @@ public class RootClassInfo {
         if (className == null) {
             return;
         }
+        
+        FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(className);
+        String nameWithoutGenerics = fqjt.getFullyQualifiedNameWithoutTypeParameters();
+        if (!nameWithoutGenerics.equals(className)) {
+            genericMode = true;
+        }
 
         try {
-            Class<?> clazz = ObjectFactory.externalClassForName(className);
+            Class<?> clazz = ObjectFactory.externalClassForName(nameWithoutGenerics);
             BeanInfo bi = Introspector.getBeanInfo(clazz);
             propertyDescriptors = bi.getPropertyDescriptors();
         } catch (Exception e) {
@@ -92,11 +100,15 @@ public class RootClassInfo {
             PropertyDescriptor propertyDescriptor = propertyDescriptors[i];
 
             if (propertyDescriptor.getName().equals(propertyName)) {
-                // property is in the rootClass...
+                // property name is in the rootClass...
 
                 // Is it the proper type?
-                if (!propertyDescriptor.getPropertyType().getName().equals(
-                        propertyType)) {
+                String introspectedPropertyType = propertyDescriptor.getPropertyType().getName();
+                if (genericMode && introspectedPropertyType.equals("java.lang.Object")) { //$NON-NLS-1$
+                    // OK - but add a warning
+                    warnings.add(getString("Warning.28", //$NON-NLS-1$
+                            propertyName, className));
+                } else if (!introspectedPropertyType.equals(propertyType)) {
                     warnings.add(getString("Warning.21", //$NON-NLS-1$
                             propertyName, className, propertyType));
                     break;

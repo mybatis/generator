@@ -149,6 +149,10 @@ public class FullyQualifiedJavaType implements
         return sb.toString();
     }
 
+    public String getFullyQualifiedNameWithoutTypeParameters() {
+        return baseQualifiedName;
+    }
+    
     /**
      * Returns a list of Strings that are the fully qualified names of this type, and any generic type argument
      * associated with this type.

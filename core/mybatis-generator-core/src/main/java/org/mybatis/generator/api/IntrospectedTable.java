@@ -57,8 +57,8 @@ public abstract class IntrospectedTable {
         
         /** The IBATI s2. */
         IBATIS2, 
- /** The MYBATI s3. */
- MYBATIS3
+        /** The MYBATI s3. */
+        MYBATIS3
     }
 
     /**
@@ -210,6 +210,16 @@ public abstract class IntrospectedTable {
 
     /** Internal attributes are used to store commonly accessed items by all code generators. */
     protected Map<IntrospectedTable.InternalAttribute, String> internalAttributes;
+    
+    /**
+     * Table remarks retrieved from database metadata
+     */
+    protected String remarks;
+    
+    /**
+     * Table type retrieved from database metadata
+     */
+    protected String tableType;
 
     /**
      * Instantiates a new introspected table.
@@ -1854,4 +1864,20 @@ public abstract class IntrospectedTable {
     public Context getContext() {
         return context;
     }
+
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+
+	public String getTableType() {
+		return tableType;
+	}
+
+	public void setTableType(String tableType) {
+		this.tableType = tableType;
+	}
 }

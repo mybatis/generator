@@ -489,7 +489,7 @@ public class FullyQualifiedJavaType implements
             // enough for most cases.  It will not detect an improperly specified
             // array type like byte], but it will detect byte[] and byte[   ]
             // which are both valid
-            isArray = fullTypeSpecification.endsWith("]");
+            isArray = fullTypeSpecification.endsWith("]"); //$NON-NLS-1$
         }
     }
 

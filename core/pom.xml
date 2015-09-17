@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Copyright 2009-2011 The MyBatis Team
+  Copyright 2009-2015 The MyBatis Team
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -57,18 +57,6 @@
             </tag>
           </tags>
         </configuration>
-      </plugin>
-      <!-- New cobertura-integration-test does not work, disable it  -->
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>cobertura-maven-plugin</artifactId>
-        <reportSets>
-          <reportSet>
-            <reports>
-              <report>cobertura</report>
-            </reports>
-          </reportSet>
-        </reportSets>
       </plugin>
     </plugins>
   </reporting>
@@ -173,7 +161,7 @@
       <dependency>
         <groupId>org.apache.ant</groupId>
         <artifactId>ant</artifactId>
-        <version>1.9.4</version>
+        <version>1.9.5</version>
       </dependency>
       <dependency>
         <groupId>junit</groupId>
@@ -209,22 +197,22 @@
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-context</artifactId>
-        <version>3.1.4.RELEASE</version>
+        <version>3.2.14.RELEASE</version>
       </dependency>
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-orm</artifactId>
-        <version>3.1.4.RELEASE</version>
+        <version>3.2.14.RELEASE</version>
       </dependency>
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-jdbc</artifactId>
-        <version>3.1.4.RELEASE</version>
+        <version>3.2.14.RELEASE</version>
       </dependency>
       <dependency>
         <groupId>org.mybatis</groupId>
         <artifactId>mybatis</artifactId>
-        <version>3.2.8</version>
+        <version>3.3.0</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

@@ -67,6 +67,8 @@ public class SimpleModelGenerator extends AbstractJavaGenerator {
             topLevelClass.addImportedType(superClass);
         }
 
+        commentGenerator.addModelClassComment(topLevelClass, introspectedTable);
+        
         List<IntrospectedColumn> introspectedColumns = introspectedTable.getAllColumns();
 
         if (introspectedTable.isConstructorBased()) {

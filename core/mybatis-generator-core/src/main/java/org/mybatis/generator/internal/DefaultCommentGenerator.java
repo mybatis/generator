@@ -36,6 +36,7 @@ import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.config.MergeConstants;
 import org.mybatis.generator.config.PropertyRegistry;
+import org.mybatis.generator.internal.util.StringUtility;
 
 /**
  * The Class DefaultCommentGenerator.
@@ -201,7 +202,8 @@ public class DefaultCommentGenerator implements CommentGenerator {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.CommentGenerator#addTopLevelClassComment(org.mybatis.generator.api.dom.java.TopLevelClass, org.mybatis.generator.api.IntrospectedTable)
      */
-    public void addTopLevelClassComment(TopLevelClass topLevelClass,
+    @Override
+    public void addModelClassComment(TopLevelClass topLevelClass,
             IntrospectedTable introspectedTable) {
         if (suppressAllComments) {
             return;
@@ -212,10 +214,11 @@ public class DefaultCommentGenerator implements CommentGenerator {
         topLevelClass.addJavaDocLine("/**"); //$NON-NLS-1$
 
         String remarks = introspectedTable.getRemarks();
-        if (addRemarkComments && remarks != null && !remarks.trim().isEmpty()) {
-            String[] remarkLines = remarks.split(System.getProperty("line.separator"));
+        if (addRemarkComments && StringUtility.stringHasValue(remarks)) {
+            topLevelClass.addJavaDocLine(" * Database Table Remarks:");
+            String[] remarkLines = remarks.split(System.getProperty("line.separator"));  //$NON-NLS-1$
             for (String remarkLine : remarkLines) {
-                topLevelClass.addJavaDocLine(" * " + remarkLine);  //$NON-NLS-1$
+                topLevelClass.addJavaDocLine(" *   " + remarkLine);  //$NON-NLS-1$
             }
         }
         topLevelClass.addJavaDocLine(" *"); //$NON-NLS-1$
@@ -227,7 +230,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
         sb.append(introspectedTable.getFullyQualifiedTable());
         topLevelClass.addJavaDocLine(sb.toString());
 
-        addJavadocTag(topLevelClass, false);
+        addJavadocTag(topLevelClass, true);
 
         topLevelClass.addJavaDocLine(" */"); //$NON-NLS-1$
     }
@@ -269,10 +272,11 @@ public class DefaultCommentGenerator implements CommentGenerator {
         field.addJavaDocLine("/**"); //$NON-NLS-1$
 
         String remarks = introspectedColumn.getRemarks();
-        if (addRemarkComments && remarks != null && !remarks.trim().isEmpty()) {
-            String[] remarkLines = remarks.split(System.getProperty("line.separator"));
+        if (addRemarkComments && StringUtility.stringHasValue(remarks)) {
+            field.addJavaDocLine(" * Database Column Remarks:");
+            String[] remarkLines = remarks.split(System.getProperty("line.separator"));  //$NON-NLS-1$
             for (String remarkLine : remarkLines) {
-                field.addJavaDocLine(" * " + remarkLine);  //$NON-NLS-1$
+                field.addJavaDocLine(" *   " + remarkLine);  //$NON-NLS-1$
             }
         }
 

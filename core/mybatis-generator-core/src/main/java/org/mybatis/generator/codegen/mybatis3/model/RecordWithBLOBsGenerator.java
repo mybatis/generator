@@ -66,7 +66,7 @@ public class RecordWithBLOBsGenerator extends AbstractJavaGenerator {
         } else {
             topLevelClass.setSuperClass(introspectedTable.getPrimaryKeyType());
         }
-        commentGenerator.addTopLevelClassComment(topLevelClass, introspectedTable);
+        commentGenerator.addModelClassComment(topLevelClass, introspectedTable);
 
         if (introspectedTable.isConstructorBased()) {
             addParameterizedConstructor(topLevelClass);

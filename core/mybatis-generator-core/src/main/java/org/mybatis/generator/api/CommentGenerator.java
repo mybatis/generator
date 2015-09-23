@@ -74,14 +74,17 @@ public interface CommentGenerator {
     public void addFieldComment(Field field, IntrospectedTable introspectedTable);
 
     /**
-     * Adds the top level class comment.
+     * Adds a comment for a model class.  The Java code merger should
+     * be notified not to delete the entire class in case any manual
+     * changes have been made.  So this method will always use the 
+     * "do not delete" annotation  
      *
      * @param topLevelClass
      *            the top level class
      * @param introspectedTable
      *            the introspected table
      */
-    public void addTopLevelClassComment(TopLevelClass topLevelClass,
+    public void addModelClassComment(TopLevelClass topLevelClass,
             IntrospectedTable introspectedTable);
 
     /**

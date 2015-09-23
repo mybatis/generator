@@ -75,6 +75,8 @@ public class PrimaryKeyGenerator extends AbstractJavaGenerator {
             }
         }
 
+        commentGenerator.addModelClassComment(topLevelClass, introspectedTable);
+
         for (IntrospectedColumn introspectedColumn : introspectedTable
                 .getPrimaryKeyColumns()) {
             if (RootClassInfo.getInstance(rootClass, warnings)

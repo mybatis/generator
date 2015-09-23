@@ -99,7 +99,7 @@ public class Document {
     public String getFormattedContent() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"); //$NON-NLS-1$
+        sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"); //$NON-NLS-1$
 
         if (publicId != null && systemId != null) {
             OutputUtilities.newLine(sb);
@@ -109,7 +109,7 @@ public class Document {
             sb.append(publicId);
             sb.append("\" \""); //$NON-NLS-1$
             sb.append(systemId);
-            sb.append("\" >"); //$NON-NLS-1$
+            sb.append("\">"); //$NON-NLS-1$
         }
 
         OutputUtilities.newLine(sb);

@@ -20,7 +20,7 @@ package org.mybatis.generator.api.dom.xml;
  *
  * @author Jeff Butler
  */
-public class Attribute {
+public class Attribute implements Comparable<Attribute>{
     
     /** The name. */
     private String name;
@@ -73,5 +73,18 @@ public class Attribute {
         sb.append('\"');
 
         return sb.toString();
+    }
+
+    @Override
+    public int compareTo(Attribute o) {
+        if (this.name == null) {
+            return o.name == null ? 0: -1;
+        } else {
+            if (o.name == null) {
+                return 0;
+            } else {
+                return this.name.compareTo(o.name);
+            }
+        }
     }
 }

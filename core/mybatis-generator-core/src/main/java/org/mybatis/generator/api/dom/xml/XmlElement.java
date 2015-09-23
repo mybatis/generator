@@ -16,6 +16,7 @@
 package org.mybatis.generator.api.dom.xml;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.mybatis.generator.api.dom.OutputUtilities;
@@ -134,13 +135,14 @@ public class XmlElement extends Element {
         sb.append('<');
         sb.append(name);
 
+        Collections.sort(attributes);
         for (Attribute att : attributes) {
             sb.append(' ');
             sb.append(att.getFormattedContent());
         }
 
         if (elements.size() > 0) {
-            sb.append(" >"); //$NON-NLS-1$
+            sb.append(">"); //$NON-NLS-1$
             for (Element element : elements) {
                 OutputUtilities.newLine(sb);
                 sb.append(element.getFormattedContent(indentLevel + 1));

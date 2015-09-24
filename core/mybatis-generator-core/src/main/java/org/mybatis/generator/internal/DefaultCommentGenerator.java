@@ -205,7 +205,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
     @Override
     public void addModelClassComment(TopLevelClass topLevelClass,
             IntrospectedTable introspectedTable) {
-        if (suppressAllComments) {
+        if (suppressAllComments  || !addRemarkComments) {
             return;
         }
 

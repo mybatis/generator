@@ -77,7 +77,11 @@ public interface CommentGenerator {
      * Adds a comment for a model class.  The Java code merger should
      * be notified not to delete the entire class in case any manual
      * changes have been made.  So this method will always use the 
-     * "do not delete" annotation  
+     * "do not delete" annotation.
+     * 
+     * Because of difficulties with the Java file merger, the default implementation
+     * of this method should NOT add comments.  Comments should only be added if
+     * specifically requested by the user (for example, by enabling table remark comments).
      *
      * @param topLevelClass
      *            the top level class

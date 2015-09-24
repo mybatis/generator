@@ -53,10 +53,17 @@
       <columnOverride column="id7$$" delimitedColumnName="true" />
       <columnOverride column="class" property="dbClass" />
     </table>
+    <table tableName="EnumTest">
+      <columnOverride column="name" javaType="mbg.test.mb3.common.TestEnum"/>
+    </table>
   </context>
 
   <context id="HierarchicalJava5" targetRuntime="MyBatis3" defaultModelType="hierarchical">
     <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
+
+    <commentGenerator>
+      <property name="addRemarkComments" value="true"/>
+    </commentGenerator>
 
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
         connectionURL="jdbc:hsqldb:mem:aname"
@@ -98,6 +105,9 @@
       <columnOverride column="id6$" delimitedColumnName="true" />
       <columnOverride column="id7$$" delimitedColumnName="true" />
       <columnOverride column="class" property="dbClass" />
+    </table>
+    <table tableName="EnumTest">
+      <columnOverride column="name" javaType="mbg.test.mb3.common.TestEnum"/>
     </table>
   </context>
 

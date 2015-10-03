@@ -4,9 +4,9 @@
 	   IMPORTANT NOTE: the following four properties may need to
 	   be changed in your local build environment 
 	 -->
-	<property name="baseLocation" value="/JavaTools/eclipse_indigo"/>
-	<property name="pdeBuildPluginVersion" value="3.7.0.v20111116-2009"/>
-	<property name="equinoxLauncherPluginVersion" value="1.2.0.v20110502"/>
+	<property name="baseLocation" value="/JavaTools/eclipse_mars"/>
+	<property name="pdeBuildPluginVersion" value="3.9.100.v20150521-1524"/>
+	<property name="equinoxLauncherPluginVersion" value="1.3.100.v20150511-1540"/>
 	<property name="buildDirectory" value="/temp/mybatis.generator.build"/>
 	<property file="build.properties" />
 

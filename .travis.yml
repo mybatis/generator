@@ -11,7 +11,7 @@ before_install: cd core
 
 after_success:
   - chmod -R 777 ../travis/after_success.sh
-  - ./travis/after_success.sh
+  - ../travis/after_success.sh
 
 env:
   global:

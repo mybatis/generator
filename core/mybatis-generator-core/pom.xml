@@ -153,19 +153,5 @@
     <developerConnection>scm:git:ssh://git@github.com/mybatis/generator.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
-  <issueManagement>
-    <system>GitHub Issue Management</system>
-    <url>https://github.com/mybatis/generator/issues</url>
-  </issueManagement>
-  <ciManagement>
-    <system>Travis CI</system>
-    <url>https://travis-ci.org/mybatis/generator/</url>
-  </ciManagement>
-  <distributionManagement>
-    <site>
-      <id>github</id>
-      <url>gitsite:git@github.com/mybatis/generator.git</url>
-    </site>
-  </distributionManagement>
 
 </project>

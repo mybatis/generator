@@ -130,3 +130,6 @@ create table EnumTest (
   name varchar(20) not null,
   primary key(id)
 );
+
+comment on table EnumTest is 'This is a comment for the EnumTest table';
+comment on column EnumTest.name is 'This is a comment for the EnumTest.name column';

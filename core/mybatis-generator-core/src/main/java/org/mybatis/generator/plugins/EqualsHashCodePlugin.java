@@ -15,10 +15,13 @@
  */
 package org.mybatis.generator.plugins;
 
+import static org.mybatis.generator.internal.util.StringUtility.isTrue;
+
 import static org.mybatis.generator.internal.util.JavaBeansUtil.getGetterMethodName;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 
 import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.IntrospectedColumn;
@@ -47,7 +50,12 @@ import org.mybatis.generator.api.dom.java.TopLevelClass;
  */
 public class EqualsHashCodePlugin extends PluginAdapter {
 
-    public EqualsHashCodePlugin() {
+    private boolean useEqualsHashCodeFromRoot;
+
+    @Override
+    public void setProperties(Properties properties) {
+        super.setProperties(properties);
+        useEqualsHashCodeFromRoot = isTrue(properties.getProperty("useEqualsHashCodeFromRoot"));
     }
 
     /**
@@ -148,6 +156,12 @@ public class EqualsHashCodePlugin extends PluginAdapter {
         sb.append(") that;"); //$NON-NLS-1$
         method.addBodyLine(sb.toString());
 
+        if (useEqualsHashCodeFromRoot && topLevelClass.getSuperClass() != null) {
+            method.addBodyLine("if (!super.equals(other)) {"); //$NON-NLS-1$
+            method.addBodyLine("return false;"); //$NON-NLS-1$
+            method.addBodyLine("}"); //$NON-NLS-1$
+        }
+
         boolean first = true;
         Iterator<IntrospectedColumn> iter = introspectedColumns.iterator();
         while (iter.hasNext()) {
@@ -234,6 +248,10 @@ public class EqualsHashCodePlugin extends PluginAdapter {
 
         method.addBodyLine("final int prime = 31;"); //$NON-NLS-1$
         method.addBodyLine("int result = 1;"); //$NON-NLS-1$
+
+        if (useEqualsHashCodeFromRoot && topLevelClass.getSuperClass() != null) {
+            method.addBodyLine(("result = prime * result + super.hashCode();")); //$NON-NLS-1$
+        }
 
         StringBuilder sb = new StringBuilder();
         boolean hasTemp = false;

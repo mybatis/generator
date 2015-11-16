@@ -24,7 +24,6 @@
     <groupId>org.mybatis</groupId>
     <artifactId>mybatis-parent</artifactId>
     <version>27-SNAPSHOT</version>
-    <relativePath />
   </parent>
 
   <groupId>org.mybatis.generator</groupId>

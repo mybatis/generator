@@ -81,9 +81,9 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-        <groupId>org.mybatis.generator</groupId>
-        <artifactId>mybatis-generator-core</artifactId>
-        <version>${project.version}</version>
+      <groupId>org.mybatis.generator</groupId>
+      <artifactId>mybatis-generator-core</artifactId>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
         <groupId>org.apache.maven</groupId>

@@ -23,7 +23,7 @@
   <parent>
     <groupId>org.mybatis</groupId>
     <artifactId>mybatis-parent</artifactId>
-    <version>26-SNAPSHOT</version>
+    <version>26</version>
     <relativePath />
   </parent>
 
@@ -146,7 +146,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>build-helper-maven-plugin</artifactId>
-          <version>1.9.1</version>
+          <version>1.10</version>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -177,7 +177,7 @@
       <dependency>
         <groupId>org.apache.maven</groupId>
         <artifactId>maven-plugin-api</artifactId>
-        <version>3.2.5</version>
+        <version>3.3.9</version>
       </dependency>
       <dependency>
         <groupId>org.apache.maven.plugin-tools</groupId>
@@ -187,8 +187,9 @@
       </dependency>
       <dependency>
         <groupId>org.apache.maven</groupId>
-        <artifactId>maven-project</artifactId>
-        <version>3.0-alpha-2</version>
+        <artifactId>maven-compat</artifactId>
+        <version>3.3.9</version>
+        <scope>compile</scope>
       </dependency>
       <dependency>
         <groupId>org.apache.ibatis</groupId>
@@ -253,7 +254,7 @@
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>findbugs-maven-plugin</artifactId>
-            <version>3.0.2</version>
+            <version>3.0.3</version>
           </plugin>
         </plugins>
       </reporting>

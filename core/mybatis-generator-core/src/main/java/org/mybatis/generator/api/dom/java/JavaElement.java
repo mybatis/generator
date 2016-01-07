@@ -207,12 +207,7 @@ public abstract class JavaElement {
      * @param fqjt
      * @return
      */
-    static final void addTypeName(StringBuilder sb, CompilationUnit compilationUnit, FullyQualifiedJavaType fqjt) {
-        
-//        if (importedType != null
-//                && importedType.isExplicitlyImported()
-//                && !importedType.getPackageName().equals(
-//                        getType().getPackageName())) {
+    public static final void addTypeName(StringBuilder sb, CompilationUnit compilationUnit, FullyQualifiedJavaType fqjt) {
         if(fqjt != null) {
             if(!fqjt.isExplicitlyImported() 
                     || compilationUnit == null 

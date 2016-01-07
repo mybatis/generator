@@ -193,12 +193,7 @@ public class Method extends JavaElement {
             if (getReturnType() == null) {
                 sb.append("void"); //$NON-NLS-1$
             } else {
-                FullyQualifiedJavaType rType = getReturnType();
-                if(compilationUnit.getImportedTypes().contains(rType)) {
-                    sb.append(rType.getShortName());
-                } else {
-                    sb.append(rType.getFullyQualifiedName());
-                }
+                addTypeName(sb, compilationUnit, getReturnType());
             }
             sb.append(' ');
         }

@@ -74,7 +74,7 @@ public class InitializationBlock {
         javaDocLines.add(javaDocLine);
     }
     
-    public String getFormattedContent(int indentLevel) {
+    public String getFormattedContent(int indentLevel, CompilationUnit compilationUnit) {
         StringBuilder sb = new StringBuilder();
 
         for (String javaDocLine : javaDocLines) {

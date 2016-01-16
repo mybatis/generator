@@ -46,10 +46,6 @@ public class StringUtility {
         if (stringHasValue(schema)) {
             sb.append(schema);
             sb.append(separator);
-        } else {
-            if (sb.length() > 0) {
-                sb.append(separator);
-            }
         }
 
         sb.append(tableName);

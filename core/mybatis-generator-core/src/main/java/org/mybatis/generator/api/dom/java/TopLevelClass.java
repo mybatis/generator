@@ -69,6 +69,7 @@ public class TopLevelClass extends InnerClass implements CompilationUnit {
      *
      * @return Returns the importedTypes.
      */
+    @Override
     public Set<FullyQualifiedJavaType> getImportedTypes() {
         return Collections.unmodifiableSet(importedTypes);
     }
@@ -86,11 +87,13 @@ public class TopLevelClass extends InnerClass implements CompilationUnit {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#addImportedType(org.mybatis.generator.api.dom.java.FullyQualifiedJavaType)
      */
+    @Override
     public void addImportedType(FullyQualifiedJavaType importedType) {
         if (importedType != null
                 && importedType.isExplicitlyImported()
                 && !importedType.getPackageName().equals(
-                        getType().getPackageName())) {
+                        getType().getPackageName())
+                && !importedType.getShortName().equals(getType().getShortName())) {
             importedTypes.add(importedType);
         }
     }
@@ -98,6 +101,7 @@ public class TopLevelClass extends InnerClass implements CompilationUnit {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#getFormattedContent()
      */
+    @Override
     public String getFormattedContent() {
         StringBuilder sb = new StringBuilder();
 
@@ -135,7 +139,7 @@ public class TopLevelClass extends InnerClass implements CompilationUnit {
             newLine(sb);
         }
 
-        sb.append(super.getFormattedContent(0));
+        sb.append(super.getFormattedContent(0, this));
 
         return sb.toString();
     }
@@ -143,6 +147,7 @@ public class TopLevelClass extends InnerClass implements CompilationUnit {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#isJavaInterface()
      */
+    @Override
     public boolean isJavaInterface() {
         return false;
     }
@@ -150,6 +155,7 @@ public class TopLevelClass extends InnerClass implements CompilationUnit {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#isJavaEnumeration()
      */
+    @Override
     public boolean isJavaEnumeration() {
         return false;
     }
@@ -157,6 +163,7 @@ public class TopLevelClass extends InnerClass implements CompilationUnit {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#addFileCommentLine(java.lang.String)
      */
+    @Override
     public void addFileCommentLine(String commentLine) {
         fileCommentLines.add(commentLine);
     }
@@ -164,6 +171,7 @@ public class TopLevelClass extends InnerClass implements CompilationUnit {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#getFileCommentLines()
      */
+    @Override
     public List<String> getFileCommentLines() {
         return fileCommentLines;
     }
@@ -171,6 +179,7 @@ public class TopLevelClass extends InnerClass implements CompilationUnit {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#addImportedTypes(java.util.Set)
      */
+    @Override
     public void addImportedTypes(Set<FullyQualifiedJavaType> importedTypes) {
         this.importedTypes.addAll(importedTypes);
     }
@@ -178,6 +187,7 @@ public class TopLevelClass extends InnerClass implements CompilationUnit {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#getStaticImports()
      */
+    @Override
     public Set<String> getStaticImports() {
         return staticImports;
     }
@@ -185,6 +195,7 @@ public class TopLevelClass extends InnerClass implements CompilationUnit {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#addStaticImport(java.lang.String)
      */
+    @Override
     public void addStaticImport(String staticImport) {
         staticImports.add(staticImport);
     }
@@ -192,6 +203,7 @@ public class TopLevelClass extends InnerClass implements CompilationUnit {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#addStaticImports(java.util.Set)
      */
+    @Override
     public void addStaticImports(Set<String> staticImports) {
         this.staticImports.addAll(staticImports);
     }

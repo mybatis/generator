@@ -91,7 +91,8 @@ public class Interface extends JavaElement implements CompilationUnit {
      */
     public void addImportedType(FullyQualifiedJavaType importedType) {
         if (importedType.isExplicitlyImported()
-                && !importedType.getPackageName().equals(type.getPackageName())) {
+                && !importedType.getPackageName().equals(type.getPackageName())
+                && !importedType.getShortName().equals(getType().getShortName())) {
             importedTypes.add(importedType);
         }
     }
@@ -165,7 +166,7 @@ public class Interface extends JavaElement implements CompilationUnit {
                     comma = true;
                 }
 
-                sb.append(fqjt.getShortName());
+                addTypeName(sb, this, fqjt);
             }
         }
 
@@ -176,7 +177,7 @@ public class Interface extends JavaElement implements CompilationUnit {
         while (mtdIter.hasNext()) {
             newLine(sb);
             Method method = mtdIter.next();
-            sb.append(method.getFormattedContent(indentLevel, true));
+            sb.append(method.getFormattedContent(indentLevel, true, this));
             if (mtdIter.hasNext()) {
                 newLine(sb);
             }

@@ -148,6 +148,11 @@
           <artifactId>build-helper-maven-plugin</artifactId>
           <version>1.10</version>
         </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <version>1.4.0</version>
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>
@@ -221,6 +226,7 @@
 
   <modules>
     <module>mybatis-generator-core</module>
+    <module>mybatis-generator-systests-domtests</module>
     <module>mybatis-generator-maven-plugin</module>
     <module>mybatis-generator-systests-common</module>
     <module>mybatis-generator-systests-mybatis3</module>

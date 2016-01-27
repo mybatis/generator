@@ -11,7 +11,6 @@ import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 
-import mbg.domtest.IgnoreDomTest;
 import mbg.domtest.CompilationUnitGenerator;
 
 /**
@@ -20,13 +19,13 @@ import mbg.domtest.CompilationUnitGenerator;
  * in code generation when the type is not explicitly imported.
  * 
  */
-@IgnoreDomTest("Ignore until changes for issue #63 are committed")
+//@IgnoreDomTest("Ignore until changes for issue #63 are committed")
 public class Test1Generator implements CompilationUnitGenerator {
     
     private static final String BASE_PACKAGE = "mbg.domtest.generators.fieldtype1.output";
 
     public List<CompilationUnit> generate() {
-        FullyQualifiedJavaType cls = new FullyQualifiedJavaType(BASE_PACKAGE + ".TestClass");
+        FullyQualifiedJavaType cls = new FullyQualifiedJavaType(BASE_PACKAGE + ".SomeClass");
         
         List<CompilationUnit> answer = new ArrayList<CompilationUnit>();
         TopLevelClass tlcMain = generateFieldTypeMain();
@@ -153,7 +152,7 @@ public class Test1Generator implements CompilationUnitGenerator {
     }
 
     private TopLevelClass generateTestClassSub1() {
-        FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(BASE_PACKAGE + ".sub1.TestClass");
+        FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(BASE_PACKAGE + ".sub1.SomeClass");
         TopLevelClass tlc = new TopLevelClass(fqjt);
         tlc.setVisibility(JavaVisibility.PUBLIC);
         

@@ -224,7 +224,7 @@ public class InnerClass extends JavaElement {
 
         if (superClass != null) {
             sb.append(" extends "); //$NON-NLS-1$
-            sb.append(superClass.getShortName());
+            addTypeName(sb, compilationUnit, superClass);
         }
 
         if (superInterfaceTypes.size() > 0) {
@@ -238,7 +238,7 @@ public class InnerClass extends JavaElement {
                     comma = true;
                 }
 
-                sb.append(fqjt.getShortName());
+                addTypeName(sb, compilationUnit, fqjt);
             }
         }
 

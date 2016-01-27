@@ -95,7 +95,7 @@ public class TopLevelEnumeration extends InnerEnum implements CompilationUnit {
             newLine(sb);
         }
 
-        sb.append(super.getFormattedContent(0));
+        sb.append(super.getFormattedContent(0, this));
 
         return sb.toString();
     }

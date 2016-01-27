@@ -93,7 +93,7 @@ public class Field extends JavaElement {
         this.initializationString = initializationString;
     }
 
-    public String getFormattedContent(int indentLevel) {
+    public String getFormattedContent(int indentLevel, CompilationUnit compilationUnit) {
         StringBuilder sb = new StringBuilder();
 
         addFormattedJavadoc(sb, indentLevel);
@@ -118,7 +118,7 @@ public class Field extends JavaElement {
             sb.append("volatile "); //$NON-NLS-1$
         }
         
-        sb.append(type.getShortName());
+        addTypeName(sb, compilationUnit, type);
 
         sb.append(' ');
         sb.append(name);

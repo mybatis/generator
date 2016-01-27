@@ -199,4 +199,24 @@ public abstract class JavaElement {
     public void setStatic(boolean isStatic) {
         this.isStatic = isStatic;
     }
+    
+    /**
+     * Helper method to resolve type names.
+     * 
+     * @param sb the string buffer
+     * @param compilationUnit the compilation unit
+     * @param fqjt the type
+     */
+    public static final void addTypeName(StringBuilder sb, CompilationUnit compilationUnit, FullyQualifiedJavaType fqjt) {
+        if(fqjt != null) {
+            if(!fqjt.isExplicitlyImported() 
+                    || compilationUnit == null 
+                    || fqjt.getPackageName().equals(compilationUnit.getType().getPackageName()) 
+                    || compilationUnit.getImportedTypes().contains(fqjt)) {
+                sb.append(fqjt.getShortName());
+            } else {
+                sb.append(fqjt.getFullyQualifiedName());
+            }
+        }
+    }
 }

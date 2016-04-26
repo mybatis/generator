@@ -41,3 +41,9 @@
 /core/mybatis-generator-systests-ibatis2-java5/.project
 /core/mybatis-generator-systests-ibatis2-java5/.settings
 /core/mybatis-generator-systests-ibatis2-java5/target
+
+# /core/mybatis-generator-systests-domtests/
+/core/mybatis-generator-systests-domtests/.classpath
+/core/mybatis-generator-systests-domtests/.project
+/core/mybatis-generator-systests-domtests/.settings
+/core/mybatis-generator-systests-domtests/target

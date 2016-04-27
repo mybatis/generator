@@ -97,5 +97,30 @@ element of the <a href="table.html">&lt;table&gt;</a> element.</p>
     coded to generate or modify something unique to a particular column.</li>
 </ul>
 
+<h2>Supported Properties</h2>
+<p>This table lists the properties of the default SQL Map generators that can be
+specified with the <a href="property.html">&lt;property&gt;</a> child element:</p>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>Property Name</th>
+    <th>Property Values</th>
+  </tr>
+  <tr>
+    <td valign="top">trimStrings</td>
+    <td>
+      This property is used to select whether MyBatis Generator adds code to trim
+      the white space from character fields returned from the database.
+      This can be useful if your database stores data in CHAR fields rather than
+      VARCHAR fields.  When true for a character field/column, MyBatis Generator will 
+      insert code to trim leading and trailing whitespace.
+      This property value overrides the property if specified at the 
+      <a href="table.html">&lt;javaModelGenerator&gt;</a> and/or 
+      <a href="javaModelGenerator.html">&lt;table&gt;</a> level.
+      
+      <p><i>The default value is inherited from the 
+      <a href="table.html">&lt;javaModelGenerator&gt;</a> and/or 
+      <a href="javaModelGenerator.html">&lt;javaModelGenerator&gt;</a>, otherwise false.</i></p></td>
+  </tr>
+</table>
 </body>
 </html>

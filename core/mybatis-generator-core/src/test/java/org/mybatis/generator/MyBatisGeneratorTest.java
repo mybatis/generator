@@ -39,7 +39,7 @@ public class MyBatisGeneratorTest {
         
         try {
             MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, shellCallback, warnings);
-            myBatisGenerator.generate(null);
+            myBatisGenerator.generate(null, null, null, false);
         } catch (InvalidConfigurationException e) {
             assertEquals(2, e.getErrors().size());
             throw e;
@@ -56,7 +56,7 @@ public class MyBatisGeneratorTest {
         
         try {
             MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, shellCallback, warnings);
-            myBatisGenerator.generate(null);
+            myBatisGenerator.generate(null, null, null, false);
         } catch (InvalidConfigurationException e) {
             assertEquals(1, e.getErrors().size());
             throw e;

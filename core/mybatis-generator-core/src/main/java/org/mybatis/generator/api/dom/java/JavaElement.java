@@ -212,7 +212,7 @@ public abstract class JavaElement {
             if(!fqjt.isExplicitlyImported() 
                     || compilationUnit == null 
                     || fqjt.getPackageName().equals(compilationUnit.getType().getPackageName()) 
-                    || compilationUnit.getImportedTypes().contains(fqjt)) {
+                    || compilationUnit.getImportedTypes().contains(new FullyQualifiedJavaType(fqjt.getFullyQualifiedNameWithoutTypeParameters()))) {
                 sb.append(fqjt.getShortName());
             } else {
                 sb.append(fqjt.getFullyQualifiedName());

@@ -165,7 +165,7 @@ public class Interface extends JavaElement implements CompilationUnit {
                     comma = true;
                 }
 
-                addTypeName(sb, this, fqjt);
+                sb.append(JavaDomUtils.calculateTypeName(this, fqjt));
             }
         }
 

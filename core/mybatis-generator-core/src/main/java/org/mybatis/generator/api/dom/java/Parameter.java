@@ -80,7 +80,7 @@ public class Parameter {
             sb.append(' ');
         }
 
-        JavaElement.addTypeName(sb, compilationUnit, type);
+        sb.append(JavaDomUtils.calculateTypeName(compilationUnit, type));
         
         sb.append(' ');
         if (isVarargs) {

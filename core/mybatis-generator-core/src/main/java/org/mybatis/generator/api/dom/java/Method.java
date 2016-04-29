@@ -193,7 +193,7 @@ public class Method extends JavaElement {
             if (getReturnType() == null) {
                 sb.append("void"); //$NON-NLS-1$
             } else {
-                addTypeName(sb, compilationUnit, getReturnType());
+                sb.append(JavaDomUtils.calculateTypeName(compilationUnit, getReturnType()));
             }
             sb.append(' ');
         }
@@ -224,7 +224,7 @@ public class Method extends JavaElement {
                     comma = true;
                 }
 
-                addTypeName(sb, compilationUnit, fqjt);
+                sb.append(JavaDomUtils.calculateTypeName(compilationUnit, fqjt));
             }
         }
 

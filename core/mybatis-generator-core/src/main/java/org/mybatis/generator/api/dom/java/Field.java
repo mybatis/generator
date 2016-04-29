@@ -118,7 +118,7 @@ public class Field extends JavaElement {
             sb.append("volatile "); //$NON-NLS-1$
         }
         
-        addTypeName(sb, compilationUnit, type);
+        sb.append(JavaDomUtils.calculateTypeName(compilationUnit, type));
 
         sb.append(' ');
         sb.append(name);

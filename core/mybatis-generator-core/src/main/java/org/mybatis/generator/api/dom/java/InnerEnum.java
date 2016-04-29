@@ -178,7 +178,7 @@ public class InnerEnum extends JavaElement {
                     comma = true;
                 }
 
-                addTypeName(sb, compilationUnit, fqjt);
+                sb.append(JavaDomUtils.calculateTypeName(compilationUnit, fqjt));
             }
         }
 

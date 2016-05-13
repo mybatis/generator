@@ -116,6 +116,11 @@ public class ExampleWhereClauseElementGenerator extends
             typeHandled = true;
 
             sb.setLength(0);
+
+            // javaType
+            sb.append(",javaType=");
+            sb.append(introspectedColumn.getFullyQualifiedJavaType().getFullyQualifiedName());
+
             sb.append(",typeHandler="); //$NON-NLS-1$
             sb.append(introspectedColumn.getTypeHandler());
             typeHandlerString = sb.toString();

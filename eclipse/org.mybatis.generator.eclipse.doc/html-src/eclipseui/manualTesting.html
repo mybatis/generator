@@ -78,8 +78,6 @@ tests build on items created in previous tests.</p>
   <li>Create a new JavaProject called "MBGTest".  Make sure there is a separate source folder
       called <code>src</code></li>
   <li>Add an additional source folder called <code>generatedsrc</code></li>
-  <li>Configure the build path to add the iBATIS 2 JAR file (typically an external JAR
-     in the local maven repo)</li>
   <li>Create a new package in the <code>src</code> folder called <code>config</code></li>
   <li>Make a new configuration file:
     <ol type="a">
@@ -94,6 +92,10 @@ tests build on items created in previous tests.</p>
     <li>Right click on the new file, then take the option "Generate MyBatis/iBATIS Artifacts"</li>
     <li>Verify that an error dialog is shown with the detail message "Exception getting JDBC Driver"</li>
     <li>Press "OK" to dismiss the dialog</li>
+    <li>Make a new package in the <code>src</code> folder called <code>base</code></li>
+    <li>Add a new class to the <code>base</code> package named <code>BaseModel</code>.  The class
+        doesn't need any attributes or methods.
+    </li>
 </ol>
 
 <h3>Generate MyBatis/iBATIS Artifacts</h3>
@@ -107,19 +109,23 @@ tests build on items created in previous tests.</p>
   PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
   "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" &gt;
 &lt;generatorConfiguration&gt;
-  &lt;classPathEntry location="/JavaTools/mysql-connector-java-5.1.17/mysql-connector-java-5.1.17-bin.jar" /&gt;
-  &lt;context id="context1" targetRuntime="MyBatis3" &gt;
+  &lt;classPathEntry location="/Program Files (x86)/MySQL/Connector.J 5.1/mysql-connector-java-5.1.39-bin.jar" /&gt;
+  &lt;context id="context1" targetRuntime="MyBatis3Simple" &gt;
     &lt;jdbcConnection driverClass="com.mysql.jdbc.Driver"
       connectionURL="jdbc:mysql://localhost/mbgtest"
       userId="root" password="root" &gt;
     &lt;/jdbcConnection&gt;
-    &lt;javaModelGenerator targetPackage="gen.model" targetProject="MBGTest" /&gt;
+    &lt;javaModelGenerator targetPackage="gen.model" targetProject="MBGTest" &gt;
+        &lt;!--
+        &lt;property name="rootClass" value="base.BaseModel" /&gt;
+        --&gt; 
+    &lt;/javaModelGenerator&gt;
     &lt;sqlMapGenerator targetPackage="gen.mapper" targetProject="MBGTest" /&gt;
     &lt;javaClientGenerator targetPackage="gen.mapper" targetProject="MBGTest" type="XMLMAPPER" /&gt;
     &lt;table tableName="a" /&gt;
   &lt;/context&gt;
 
-  &lt;context id="context2" targetRuntime="MyBatis3" &gt;
+  &lt;context id="context2" targetRuntime="MyBatis3Simple" &gt;
     &lt;jdbcConnection driverClass="com.mysql.jdbc.Driver"
       connectionURL="jdbc:mysql://localhost/mbgtest"
       userId="root" password="root" &gt;
@@ -155,21 +161,18 @@ tests build on items created in previous tests.</p>
   <li>Verify that the field <code>mergetest</code>, and its getter and setter remain
     in the file (they will have been moved to the bottom of the file)</li>
   <li>Open the configuration file from the last test.</li>
-  <li>Change the Java client type in <code>context1</code> to <code>SPRING</code></li>
+  <li>Uncomment the "rootClass" property line</li>
   <li>Save and close the file</li>
   <li>Right click on the configuration file, and then
       take the option "Generate MyBatis/iBATIS Artifacts"</li>
-  <li>Verify that <code>src.dao.ADAOImpl</code> now extends <code>SqlMapClientDaoSupport</code>.
-      Note that there will be several errors in the workspace now because of the new dependencies
-      on Spring that were generated.</li>
-
+  <li>Verify that <code>gen.model.A</code> now extends <code>BaseModel</code></li>
   <li>Re open the configuration file.</li>
-  <li>Change the Java client type in <code>context1</code> back to <code>GENERIC-CI</code></li>
+  <li>Re comment the "rootClass" property line</li>
   <li>Save and close the file</li>
   <li>Right click on the configuration file, and then
       take the option "Generate MyBatis/iBATIS Artifacts"</li>
-  <li>Verify that <code>src.dao.ADAOImpl</code> doesn't extend anything.  There will be one
-      error in the file related to the Spring import (the Java merger does not reconcile all
+  <li>Verify that <code>gen.model.A</code> doesn't extend anything.  There will be one
+      warning in the file related to an unused import (the Java merger does not reconcile all
       imports).  Delete the import and verify that there are no other errors in the
       workspace.  Also, verify that the field <code>mergetest</code> and its
       associated getter and setter still exist.</li>
@@ -197,7 +200,7 @@ tests build on items created in previous tests.</p>
     </pre>
   </li>
   <li>Save and close the file.</li>
-  <li>Delete the Java file <code>gen.dao.ADAO.java</code>.  There will now be errors in the
+  <li>Delete the Java class <code>gen.src.model.A</code>.  There will now be errors in the
       workspace.</li>
   <li>Right click on the new <code>build.xml</code> file, then select the
       menu option "Run As&gt;Ant Build...".  You should see the Ant launch configuration

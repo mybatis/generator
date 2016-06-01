@@ -1,0 +1,29 @@
+<project default="refresh" basedir=".">
+
+  <target name="clean">
+  	<delete dir="src/main/java" />
+  	<delete dir="src/main/resources" />
+  </target>
+
+  <target name="copy-source" depends="clean">
+  	<mkdir dir="src/main/java"/>
+  	<mkdir dir="src/main/resources"/>
+  	
+  	<copy todir="src/main/java">
+  	  <fileset dir="../../core/mybatis-generator-core/src/main/java">
+  	    <include name="**/*.java"/>
+  	  </fileset>
+  	</copy>
+
+  	<copy todir="src/main/resources">
+  	  <fileset dir="../../core/mybatis-generator-core/src/main/resources">
+  	    <include name="**/*.*"/>
+  	  </fileset>
+  	</copy>
+  </target>
+	
+  <target name="refresh" depends="copy-source" if="eclipse.running">
+    <echo message="Refreshing the Eclipse Project..."/>
+    <eclipse.refreshLocal resource="org.mybatis.generator.core"/>
+  </target>
+</project>

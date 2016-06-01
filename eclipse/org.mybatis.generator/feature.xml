@@ -21,10 +21,6 @@
       <update label="%updateSiteName" url="http://mybatis.googlecode.com/svn/sub-projects/generator/trunk/eclipse/UpdateSite"/>
    </url>
 
-   <includes
-         id="org.mybatis.generator.source"
-         version="0.0.0"/>
-
    <plugin
          id="org.mybatis.generator.core"
          download-size="0"

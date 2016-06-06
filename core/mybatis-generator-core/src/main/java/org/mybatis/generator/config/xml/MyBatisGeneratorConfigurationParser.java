@@ -66,15 +66,17 @@ import org.w3c.dom.NodeList;
  * @author Jeff Butler
  */
 public class MyBatisGeneratorConfigurationParser {
-    private Properties properties;
+    private Properties extraProperties;
+    private Properties configurationProperties;
 
-    public MyBatisGeneratorConfigurationParser(Properties properties) {
+    public MyBatisGeneratorConfigurationParser(Properties extraProperties) {
         super();
-        if (properties == null) {
-            this.properties = System.getProperties();
+        if (extraProperties == null) {
+            this.extraProperties = new Properties();
         } else {
-            this.properties = properties;
+            this.extraProperties = extraProperties;
         }
+        configurationProperties = new Properties();
     }
 
     public Configuration parseConfiguration(Element rootNode)
@@ -134,7 +136,7 @@ public class MyBatisGeneratorConfigurationParser {
             InputStream inputStream = resourceUrl.openConnection()
                     .getInputStream();
 
-            properties.load(inputStream);
+            configurationProperties.load(inputStream);
             inputStream.close();
         } catch (IOException e) {
             if (stringHasValue(resource)) {
@@ -645,7 +647,7 @@ public class MyBatisGeneratorConfigurationParser {
                 String append = newString.substring(end + CLOSE.length());
                 String propName = newString.substring(start + OPEN.length(),
                         end);
-                String propValue = properties.getProperty(propName);
+                String propValue = resolveProperty(propName);
                 if (propValue != null) {
                     newString = prepend + propValue + append;
                 }
@@ -682,5 +684,33 @@ public class MyBatisGeneratorConfigurationParser {
                 parseProperty(commentGeneratorConfiguration, childNode);
             }
         }
+    }
+    
+    /**
+     * This method resolve a property from one of the three sources: system properties,
+     * properties loaded from the <properties> configuration element, and
+     * "extra" properties that may be supplied by the Maven or Ant envireonments.
+     * 
+     * If there is a name collision, system properties take precedence, followed by
+     * configuration properties, followed by extra properties.
+     * 
+     * @param key
+     * @return the resolved property.  This method will return null if the property is
+     *   undefined in any of the sources.
+     */
+    private String resolveProperty(String key) {
+    	String property = null;
+    	
+    	property = System.getProperty(key);
+    	
+    	if (property == null) {
+    		property = configurationProperties.getProperty(key);
+    	}
+    	
+    	if (property == null) {
+    		property = extraProperties.getProperty(key);
+    	}
+    	
+    	return property;
     }
 }

@@ -31,6 +31,8 @@ configuration will accept a property in the form <code>${property}</code>.
 The specified properties file will be searched for a matching value and the
 matching value will be substituted.  The properties file is of the normal
 format for a Java properties file.</p>
+<p>If there are name collisions between a property specified here and
+a system property, the system property will win.</p>
 
 <p>The &lt;properties&gt; element is a child element of the
 <a href="generatorConfiguration.html">&lt;generatorConfiguration&gt;</a>

@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2015 the original author or authors.
+ *    Copyright 2006-2016 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -142,7 +142,6 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
         // use of a properties file in the build.  Typically, the properties file
         // is in the project's source tree, but the plugin classpath does not
         // include the project classpath.
-        @SuppressWarnings("unchecked")
         List<Resource> resources = project.getResources();
         List<String> resourceDirectories = new ArrayList<String>();
         for (Resource resource: resources) {

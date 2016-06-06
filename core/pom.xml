@@ -153,6 +153,11 @@
           <artifactId>exec-maven-plugin</artifactId>
           <version>1.4.0</version>
         </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-plugin-plugin</artifactId>
+          <version>3.4</version>
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>
@@ -194,9 +199,9 @@
       </dependency>
       <dependency>
         <groupId>org.apache.maven</groupId>
-        <artifactId>maven-compat</artifactId>
+        <artifactId>maven-core</artifactId>
         <version>3.3.9</version>
-        <scope>compile</scope>
+        <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>org.apache.ibatis</groupId>

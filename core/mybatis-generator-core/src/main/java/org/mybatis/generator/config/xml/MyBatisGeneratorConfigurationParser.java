@@ -699,18 +699,18 @@ public class MyBatisGeneratorConfigurationParser {
      *   undefined in any of the sources.
      */
     private String resolveProperty(String key) {
-    	String property = null;
+        String property = null;
     	
-    	property = System.getProperty(key);
+        property = System.getProperty(key);
     	
-    	if (property == null) {
-    		property = configurationProperties.getProperty(key);
-    	}
+        if (property == null) {
+            property = configurationProperties.getProperty(key);
+        }
     	
-    	if (property == null) {
-    		property = extraProperties.getProperty(key);
-    	}
+        if (property == null) {
+            property = extraProperties.getProperty(key);
+        }
     	
-    	return property;
+        return property;
     }
 }

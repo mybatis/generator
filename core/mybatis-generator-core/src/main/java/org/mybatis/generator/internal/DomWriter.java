@@ -125,7 +125,6 @@ public class DomWriter {
             char c = s.charAt(i);
             normalizeAndPrint(c, isAttValue);
         }
-
     }
 
     /**
@@ -163,10 +162,19 @@ public class DomWriter {
         }
         case '\r': {
             // If CR is part of the document's content, it
-            // must not be printed as a literal otherwise
+            // must be printed as a literal otherwise
             // it would be normalized to LF when the document
             // is reparsed.
             printWriter.print("&#xD;"); //$NON-NLS-1$
+            break;
+        }
+        case '\n': {
+            // If LF is part of the document's content, it
+            // should be printed back out with the system default
+            // line separator.  XML parsing forces \n only after a parse,
+            // but we should write it out as it was to avoid whitespace
+            // commits on some version control systems.
+            printWriter.print(System.getProperty("line.separator")); //$NON-NLS-1$
             break;
         }
         default: {
@@ -391,7 +399,19 @@ public class DomWriter {
      */
     protected void write(CDATASection node) {
         printWriter.print("<![CDATA["); //$NON-NLS-1$
-        printWriter.print(node.getNodeValue());
+        String data = node.getNodeValue();
+        // XML parsers normalize line endings to '\n'.  We should write
+        // it out as it was in the original to avoid whitespace commits
+        // on some version control systems
+        int len = (data != null) ? data.length() : 0;
+        for (int i = 0; i < len; i++) {
+            char c = data.charAt(i);
+            if (c == '\n') {
+                printWriter.print(System.getProperty("line.separator")); //$NON-NLS-1$
+            } else {
+                printWriter.print(c);
+            }
+        }
         printWriter.print("]]>"); //$NON-NLS-1$
         printWriter.flush();
     }
@@ -435,7 +455,7 @@ public class DomWriter {
         printWriter.print("<!--"); //$NON-NLS-1$
         String comment = node.getNodeValue();
         if (comment != null && comment.length() > 0) {
-            printWriter.print(comment);
+            normalizeAndPrint(comment,  false);
         }
         printWriter.print("-->"); //$NON-NLS-1$
         printWriter.flush();

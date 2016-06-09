@@ -39,5 +39,11 @@ of how to deal with an unsigned bigint field in MySql:</p>
 </pre>
 <p>You will have to cast the returned value to the appropriate type yourself (in this case,
 <code>java.math.BigInteger</code>).</p>
+<h2>Catalogs and Schema</h2>
+<p>MySql does not properly support SQL catalogs and schema.  If you run the <code>create schema</code>
+command in Mysql, it actually creates a database - and the JDBC driver reports it back as a catalog.
+But MySql syntax does not support the standard <code>catalog..table</code> SQL syntax.</p>
+<p>For this reason, it is best to not specify either catalog or schema in generator configurations.
+Just specify table names and specify the database in the JDBC URL.</p>
 </body>
 </html>

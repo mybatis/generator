@@ -149,20 +149,18 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
         switch (column.getJdbcType()) {
         case Types.DECIMAL:
         case Types.NUMERIC:
-            if (!forceBigDecimals) {
-                answer = calculateBigDecimalReplacement(column);
-            }
+            answer = calculateBigDecimalReplacement(column, defaultType);
+            break;
         }
 
         return answer;
     }
     
-    protected FullyQualifiedJavaType calculateBigDecimalReplacement(IntrospectedColumn column) {
+    protected FullyQualifiedJavaType calculateBigDecimalReplacement(IntrospectedColumn column, FullyQualifiedJavaType defaultType) {
         FullyQualifiedJavaType answer;
         
-        if (column.getScale() > 0 || column.getLength() > 18) {
-            answer = new FullyQualifiedJavaType(BigDecimal.class
-                    .getName());
+        if (column.getScale() > 0 || column.getLength() > 18 || forceBigDecimals) {
+            answer = defaultType;
         } else if (column.getLength() > 9) {
             answer = new FullyQualifiedJavaType(Long.class.getName());
         } else if (column.getLength() > 4) {

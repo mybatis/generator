@@ -102,6 +102,8 @@ create table "awful table" (
   EmailAddress varchar(30),
   "from" varchar(30),
   active bit,
+  active1 boolean,
+  active2 bit(22),
   class varchar(5),
   primary key("CuStOmEr iD")
 );

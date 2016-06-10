@@ -71,6 +71,8 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
                 new FullyQualifiedJavaType(Object.class.getName())));
         typeMap.put(Types.DATE, new JdbcTypeInformation("DATE", //$NON-NLS-1$
                 new FullyQualifiedJavaType(Date.class.getName())));
+        typeMap.put(Types.DECIMAL, new JdbcTypeInformation("DECIMAL", //$NON-NLS-1$
+                new FullyQualifiedJavaType(BigDecimal.class.getName())));
         typeMap.put(Types.DISTINCT, new JdbcTypeInformation("DISTINCT", //$NON-NLS-1$
                 new FullyQualifiedJavaType(Object.class.getName())));
         typeMap.put(Types.DOUBLE, new JdbcTypeInformation("DOUBLE", //$NON-NLS-1$
@@ -96,6 +98,8 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
                 new FullyQualifiedJavaType(String.class.getName())));
         typeMap.put(Types.NULL, new JdbcTypeInformation("NULL", //$NON-NLS-1$
                 new FullyQualifiedJavaType(Object.class.getName())));
+        typeMap.put(Types.NUMERIC, new JdbcTypeInformation("NUMERIC", //$NON-NLS-1$
+                new FullyQualifiedJavaType(BigDecimal.class.getName())));
         typeMap.put(Types.OTHER, new JdbcTypeInformation("OTHER", //$NON-NLS-1$
                 new FullyQualifiedJavaType(Object.class.getName())));
         typeMap.put(Types.REAL, new JdbcTypeInformation("REAL", //$NON-NLS-1$
@@ -116,7 +120,6 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
                 new FullyQualifiedJavaType("byte[]"))); //$NON-NLS-1$
         typeMap.put(Types.VARCHAR, new JdbcTypeInformation("VARCHAR", //$NON-NLS-1$
                 new FullyQualifiedJavaType(String.class.getName())));
-        
     }
 
     public void addConfigurationProperties(Properties properties) {
@@ -128,57 +131,68 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
 
     public FullyQualifiedJavaType calculateJavaType(
             IntrospectedColumn introspectedColumn) {
-        FullyQualifiedJavaType answer;
+        FullyQualifiedJavaType answer = null;
         JdbcTypeInformation jdbcTypeInformation = typeMap
                 .get(introspectedColumn.getJdbcType());
 
-        if (jdbcTypeInformation == null) {
-            switch (introspectedColumn.getJdbcType()) {
-            case Types.DECIMAL:
-            case Types.NUMERIC:
-                if (introspectedColumn.getScale() > 0
-                        || introspectedColumn.getLength() > 18
-                        || forceBigDecimals) {
-                    answer = new FullyQualifiedJavaType(BigDecimal.class
-                            .getName());
-                } else if (introspectedColumn.getLength() > 9) {
-                    answer = new FullyQualifiedJavaType(Long.class.getName());
-                } else if (introspectedColumn.getLength() > 4) {
-                    answer = new FullyQualifiedJavaType(Integer.class.getName());
-                } else {
-                    answer = new FullyQualifiedJavaType(Short.class.getName());
-                }
-                break;
-
-            default:
-                answer = null;
-                break;
-            }
-        } else {
+        if (jdbcTypeInformation != null) {
             answer = jdbcTypeInformation.getFullyQualifiedJavaType();
+            answer = overrideDefaultType(introspectedColumn, answer);
         }
 
         return answer;
     }
+    
+    protected FullyQualifiedJavaType overrideDefaultType(IntrospectedColumn column, FullyQualifiedJavaType defaultType) {
+        FullyQualifiedJavaType answer = defaultType;
+        
+        switch (column.getJdbcType()) {
+        case Types.BIT:
+            answer = calculateBitReplacement(column, defaultType);
+            break;
+        case Types.DECIMAL:
+        case Types.NUMERIC:
+            answer = calculateBigDecimalReplacement(column, defaultType);
+            break;
+        }
+
+        return answer;
+    }
+    
+    protected FullyQualifiedJavaType calculateBitReplacement(IntrospectedColumn column, FullyQualifiedJavaType defaultType) {
+        FullyQualifiedJavaType answer;
+        
+        if (column.getLength() > 1) {
+            answer = new FullyQualifiedJavaType("byte[]"); //$NON-NLS-1$
+        } else {
+            answer = defaultType;
+        }
+        
+        return answer;
+    }
+    
+    protected FullyQualifiedJavaType calculateBigDecimalReplacement(IntrospectedColumn column, FullyQualifiedJavaType defaultType) {
+        FullyQualifiedJavaType answer;
+        
+        if (column.getScale() > 0 || column.getLength() > 18 || forceBigDecimals) {
+            answer = defaultType;
+        } else if (column.getLength() > 9) {
+            answer = new FullyQualifiedJavaType(Long.class.getName());
+        } else if (column.getLength() > 4) {
+            answer = new FullyQualifiedJavaType(Integer.class.getName());
+        } else {
+            answer = new FullyQualifiedJavaType(Short.class.getName());
+        }
+        
+        return answer;
+    }
 
     public String calculateJdbcTypeName(IntrospectedColumn introspectedColumn) {
-        String answer;
+        String answer = null;
         JdbcTypeInformation jdbcTypeInformation = typeMap
                 .get(introspectedColumn.getJdbcType());
 
-        if (jdbcTypeInformation == null) {
-            switch (introspectedColumn.getJdbcType()) {
-            case Types.DECIMAL:
-                answer = "DECIMAL"; //$NON-NLS-1$
-                break;
-            case Types.NUMERIC:
-                answer = "NUMERIC"; //$NON-NLS-1$
-                break;
-            default:
-                answer = null;
-                break;
-            }
-        } else {
+        if (jdbcTypeInformation != null) {
             answer = jdbcTypeInformation.getJdbcTypeName();
         }
 

@@ -147,12 +147,27 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
         FullyQualifiedJavaType answer = defaultType;
         
         switch (column.getJdbcType()) {
+        case Types.BIT:
+            answer = calculateBitReplacement(column, defaultType);
+            break;
         case Types.DECIMAL:
         case Types.NUMERIC:
             answer = calculateBigDecimalReplacement(column, defaultType);
             break;
         }
 
+        return answer;
+    }
+    
+    protected FullyQualifiedJavaType calculateBitReplacement(IntrospectedColumn column, FullyQualifiedJavaType defaultType) {
+        FullyQualifiedJavaType answer;
+        
+        if (column.getLength() > 1) {
+            answer = new FullyQualifiedJavaType("byte[]"); //$NON-NLS-1$
+        } else {
+            answer = defaultType;
+        }
+        
         return answer;
     }
     

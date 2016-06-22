@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!--
+  This ant file is intended to be called from the pom during the P2 publishing phase.
+  It will not function when called independantly.
+  This file exists primarily because there is no Tycho support for updating
+  P2 composite repositories.
+  The following environment properties are expected:
+  
+    project.artifactId (standard Maven property)
+    qualifiedVersion  (standard Tycho property)
+    project.build.directory (standard Maven property - points to the target directory)
+    p2.repo.base.directory (the location of the composite repo.  This might have been initialized
+        by pulling a current copy from bintray)
+    
+-->
+<project name="project" default="updateRepo">
+  <target name="init">
+    <property name="repo.updates.dir" value="${p2.repo.base.directory}/updates"/>
+    <property name="repo.drops.dir" value="${p2.repo.base.directory}/drops"/>
+    <property name="repo.zipped.dir" value="${p2.repo.base.directory}/zipped"/>
+    
+    <!-- Create repository directories if they don't already exist -->
+    <mkdir dir="${repo.drops.dir}"/>
+    <mkdir dir="${repo.updates.dir}"/>
+    <mkdir dir="${repo.zipped.dir}"/>
+  </target>
+
+  <target name="updateRepo" depends="init">
+    <!-- copy zip file -->
+    <copy file="${project.build.directory}/${project.artifactId}-${qualifiedVersion}.zip" todir="${repo.zipped.dir}"/>
+
+    <!-- copy new drop -->
+    <mkdir dir="${repo.drops.dir}/${qualifiedVersion}"/>
+    <copy todir="${repo.drops.dir}/${qualifiedVersion}">
+      <fileset dir="${project.build.directory}/repository"/>
+    </copy>
+    
+    <!-- update composite repo (this task needs to run in the Eclipse runtime) -->
+    <p2.composite.repository>
+      <repository compressed="false" location="${repo.updates.dir}"/>
+      <add>
+        <repository location="../drops/${qualifiedVersion}"/>
+      </add>
+    </p2.composite.repository>
+  </target>
+</project>

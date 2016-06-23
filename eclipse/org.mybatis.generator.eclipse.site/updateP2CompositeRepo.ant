@@ -42,5 +42,32 @@
         <repository location="../drops/${qualifiedVersion}"/>
       </add>
     </p2.composite.repository>
+    
+    <!-- generate the bintray upload script -->
+    <!-- Write curl lines for every file we need to upload -->
+    <apply executable="echo" osfamily="unix" relative="true" output="${p2.repo.base.directory}/bintrayUpload.sh" append="true">
+      <arg value="curl -X PUT -T" />
+      <srcfile />
+      <arg value="-u$USER:$API_KEY"/>
+      <targetfile/>
+      
+      <fileset dir="${p2.repo.base.directory}" >
+        <include name="drops/**/*.*"/>
+        <include name="updates/**/*.*"/>
+        <include name="zipped/${project.artifactId}-${qualifiedVersion}.zip"/>
+      </fileset>
+      <globmapper from="*" to="&quot;https://api.bintray.com/content/jeffgbutler/eclipse/*;bt_package=mybatis-generator;bt_version=${qualifiedVersion};publish=1&quot;" />
+    </apply>
+    
+    <!-- add shebang and environment setup at the beginning of the file -->
+    <exec executable="sed" osfamily="unix">
+      <arg value="-i"/>
+      <arg value="1s/^/#!\/bin\/bash\nUSER=xxxx\nAPI_KEY=xxxx\n/"/>
+      <arg value="${p2.repo.base.directory}/bintrayUpload.sh"/>
+    </exec>
+    
+    <!-- make it executable -->
+    <chmod perm="+x" file="${p2.repo.base.directory}/bintrayUpload.sh"/>
+    
   </target>
 </project>

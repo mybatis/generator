@@ -44,9 +44,30 @@
       </activation>
       <properties>
         <p2.repo.base.directory>${project.build.directory}/p2-composite-repo</p2.repo.base.directory>
+        <bintray.subject>jeffgbutler</bintray.subject>
+        <bintray.repo>mybatis-generator</bintray.repo>
+        <bintray.package>mybatis-generator</bintray.package>
       </properties>
       <build>
         <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>download-composite-metadata</id>
+                <phase>prepare-package</phase>
+                <goals>
+                 <goal>run</goal>
+                </goals>
+                <configuration>
+                  <target>
+                    <ant antfile="downloadMetadataFromBintray.ant" target="download"/>
+                  </target>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
           <plugin>
             <groupId>org.eclipse.tycho.extras</groupId>
             <artifactId>tycho-eclipserun-plugin</artifactId>
@@ -92,6 +113,9 @@
                 <applicationsArg>-DqualifiedVersion=${qualifiedVersion}</applicationsArg>
                 <applicationsArg>-Dproject.build.directory=${project.build.directory}</applicationsArg>
                 <applicationsArg>-Dp2.repo.base.directory=${p2.repo.base.directory}</applicationsArg>
+                <applicationsArg>-Dbintray.subject=${bintray.subject}</applicationsArg>
+                <applicationsArg>-Dbintray.repo=${bintray.repo}</applicationsArg>
+                <applicationsArg>-Dbintray.package=${bintray.package}</applicationsArg>
               </applicationsArgs>
             </configuration>
             <executions>

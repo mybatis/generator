@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!--
+  This ant file is intended to be called from the pom during the preparation phase.
+  It will not function when called independantly.
+  This file will download the existing P2 composite metadata so we can add our new
+  version.
+  The following environment properties are expected:
+  
+    p2.repo.base.directory (the location of the local composite repo)
+    bintray.subject
+    bintray.repo
+    
+-->
+<project name="project" default="download">
+  <target name="init">
+    <!-- Create repository directories if they don't already exist -->
+    <mkdir dir="${p2.repo.base.directory}"/>
+  </target>
+  
+  <target name="download" depends="init">
+    
+    <get dest="${p2.repo.base.directory}/compositeArtifacts.xml" ignoreerrors="true">
+      <url url="https://dl.bintray.com/content/${bintray.subject}/${bintray.repo}/compositeArtifacts.xml"/>
+    </get>
+      
+    <get dest="${p2.repo.base.directory}/compositeContent.xml" ignoreerrors="true">
+      <url url="https://dl.bintray.com/content/${bintray.subject}/${bintray.repo}/compositeContent.xml"/>
+    </get>
+    
+    <replaceregexp byline="true">
+      <regexp pattern="property name='p2.atomic.composite.loading' value='true'" />
+      <substitution expression="property name='p2.atomic.composite.loading' value='false'" />
+      <fileset dir="${p2.repo.base.directory}">
+        <include name="*.xml" />
+      </fileset>
+    </replaceregexp>
+  </target>
+</project>

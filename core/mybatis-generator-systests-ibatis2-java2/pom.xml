@@ -76,13 +76,6 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-release-plugin</artifactId>
-        <configuration>
-          <arguments>-Prelease,bundle</arguments>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
           <skip>true</skip>
@@ -136,4 +129,5 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  <description>Tests for the iBatis code generator in a Java 2 environment (no generics)</description>
 </project>

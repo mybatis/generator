@@ -134,4 +134,5 @@
       <version>0.9.10</version>
     </dependency>
   </dependencies>
+  <description>Tests for the Java DOM classes.  Generates Java classes and fails if the classes won't compile.</description>
 </project>

@@ -106,7 +106,7 @@ eclipse versions as well.</p>
   <li>Start Eclipse and make a new workspace</li>
   <li><b>Important:</b> make sure that a version 8.0 or higher JDK is configured as the default
      JRE in Eclipse (Window&gt;Preferences&gt;Java&gt;Installed JREs).  A JDK is required - a JRE
-     alone will fail because of JavaDoc generation in the build and Tycho require JDK 8.0 or above.</li>
+     alone will fail because of JavaDoc generation in the build and Tycho requires JDK 8.0 or above.</li>
   <li><b>Important:</b> the core MBG project requires log4j to compile.  Some eclipse
     distributions do not include log4j.  You can get it by adding the WTP XSL Developer Tools from
     eclipse (Help>Install New Software, etc.)</li>
@@ -119,7 +119,7 @@ eclipse versions as well.</p>
       <li>Select all seven projects, do not copy the projects into
         your workspace.
         The filled out wizard looks like this: <br />
-        <p><img src="importWizard.gif" alt="Eclipse Project Import Wizard"/></p>
+        <p><img src="importWizard.png" alt="Eclipse Project Import Wizard"/></p>
       </li>
       <li>Press "Finish", wait for the workspace to build.</li>
     </ol>
@@ -196,7 +196,7 @@ This step is included in the Maven build, so if you are using the Maven build yo
 not need to do this.
 </p>
 
-<h2>Building the Feature for Distribution</h2>
+<h2>Building the Feature for Local Distribution</h2>
 <p>If you want to build an updated version of the feature and distribute it locally, then
 follow these steps:</p>
 <ol>
@@ -211,5 +211,7 @@ to install this new version of the feature is to create a new local repository
 that points to this directory (Help&gt;Install New Software...) and install
 the new version with P2.</p>
 
+<p>If you are interested in publishing a new version to Bintray, please see the
+instructions on the <a href="publishing.html">Publishing</a> page.
 </body>
 </html>

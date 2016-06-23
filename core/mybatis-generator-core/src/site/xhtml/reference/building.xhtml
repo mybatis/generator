@@ -41,22 +41,18 @@ at Google then follow these steps:</p>
           http://maven.apache.org/</a></li>
         <li>Unzip the distribution somewhere convenient</li>
         <li>Setup environment variables and the PATH.  Examples:<br/>
-            set JAVA_HOME=C:\JavaTools\jdk1.6.0_17<br/>
-            set M2_HOME=C:\JavaTools\apache-maven-3.0<br/>
+            set JAVA_HOME=C:\Program Files\java\jdk1.8.0_91<br/>
+            set M2_HOME=C:\JavaTools\apache-maven-3.3.9<br/>
             set PATH=%PATH%;%M2_HOME%\bin;
         </li>
       </ol>
   </li>
-  <li>Do a Subversion checkout of the source tree from the location
-    <a target="_blank" href="https://mybatis.googlecode.com/svn/sub-projects/generator/trunk/core/">
-    https://mybatis.googlecode.com/svn/sub-projects/generator/trunk/core/</a>
-    (You may use any Subversion client you prefer.  We recommend
-    <a target="_blank" href="http://tortoisesvn.tigris.org/">TortoiseSVN</a>.)
+  <li>Clone or fork the official Git repo on GitHub
+    <a target="_blank" href="https://github.com/mybatis/generator">
+    https://github.com/mybatis/generator</a>
   </li>
   <li>Open a command window in the directory where you checked out the source and
       run the command <code>mvn clean install</code> - or any of the other Maven lifecycle commands.
-      You can use the <code>mvn site</code> command to generate the code coverage reports, but the
-      MyBatis website is not built with Maven at this time.
   </li>
 </ol>
 

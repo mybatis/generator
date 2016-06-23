@@ -6,5 +6,9 @@
    <feature id="org.mybatis.generator.source" version="0.0.0">
       <category name="org.mybatis.generator.category"/>
    </feature>
-   <category-def name="org.mybatis.generator.category" label="MyBatis Generator"/>
+   <category-def name="org.mybatis.generator.category" label="MyBatis Generator">
+      <description>
+         MyBatis Generator
+      </description>
+   </category-def>
 </site>

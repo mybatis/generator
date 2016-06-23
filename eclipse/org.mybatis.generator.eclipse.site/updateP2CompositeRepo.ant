@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!--
+  This ant file is intended to be called from the pom during the P2 publishing phase.
+  It will not function when called independantly.
+  This file exists primarily because there is no Tycho support for updating
+  P2 composite repositories.
+  The following environment properties are expected:
+  
+    project.artifactId (standard Maven property)
+    qualifiedVersion  (standard Tycho property)
+    project.build.directory (standard Maven property - points to the target directory)
+    p2.repo.base.directory (the location of the composite repo.  This might have been initialized
+        by pulling a current copy from bintray)
+    bintray.subject
+    bintray.repo
+    bintray.package
+    
+-->
+<project name="project" default="updateRepo">
+  <target name="init">
+    <property name="repo.drops.dir" value="${p2.repo.base.directory}/drops"/>
+    <property name="repo.zipped.dir" value="${p2.repo.base.directory}/zipped"/>
+    
+    <!-- Create repository directories if they don't already exist -->
+    <mkdir dir="${p2.repo.base.directory}"/>
+    <mkdir dir="${repo.drops.dir}"/>
+    <mkdir dir="${repo.zipped.dir}"/>
+  </target>
+
+  <target name="updateRepo" depends="init">
+    <!-- copy zip file -->
+    <copy file="${project.build.directory}/${project.artifactId}-${qualifiedVersion}.zip" todir="${repo.zipped.dir}"/>
+
+    <!-- copy new drop -->
+    <mkdir dir="${repo.drops.dir}/${qualifiedVersion}"/>
+    <copy todir="${repo.drops.dir}/${qualifiedVersion}">
+      <fileset dir="${project.build.directory}/repository"/>
+    </copy>
+    
+    <!-- update composite repo (this task needs to run in the Eclipse runtime) -->
+    <p2.composite.repository>
+      <repository compressed="false" location="${p2.repo.base.directory}"/>
+      <add>
+        <repository location="drops/${qualifiedVersion}"/>
+      </add>
+    </p2.composite.repository>
+
+    <!-- turn the composite loading property back on.  We turned it off initally
+         so we could update the metadat without downloading all the old artifacts -->
+    <replaceregexp byline="true">
+      <regexp pattern="property name='p2.atomic.composite.loading' value='false'" />
+      <substitution expression="property name='p2.atomic.composite.loading' value='true'" />
+      <fileset dir="${p2.repo.base.directory}">
+        <include name="*.xml" />
+      </fileset>
+    </replaceregexp>
+
+    <!-- generate the bintray upload script -->
+    <!-- Write curl lines for every file we need to upload -->
+    <apply executable="echo" osfamily="unix" relative="true" output="${p2.repo.base.directory}/bintrayUpload.sh" append="true">
+      <arg value="curl -X PUT -T" />
+      <srcfile />
+      <arg value="-u$USER:$API_KEY"/>
+      <targetfile/>
+      
+      <fileset dir="${p2.repo.base.directory}" >
+        <include name="drops/**/*.*"/>
+        <include name="*.xml"/>
+        <include name="zipped/${project.artifactId}-${qualifiedVersion}.zip"/>
+      </fileset>
+      <globmapper from="*" to="&quot;https://api.bintray.com/content/${bintray.subject}/${bintray.repo}/*;bt_package=${bintray.package};bt_version=${qualifiedVersion};publish=1&quot;" />
+    </apply>
+    
+    <!-- add shebang and environment setup at the beginning of the file -->
+    <exec executable="sed" osfamily="unix">
+      <arg value="-i"/>
+      <arg value="1s/^/#!\/bin\/bash\nUSER=xxxx\nAPI_KEY=xxxx\n/"/>
+      <arg value="${p2.repo.base.directory}/bintrayUpload.sh"/>
+    </exec>
+    
+    <!-- make it executable -->
+    <chmod perm="+x" file="${p2.repo.base.directory}/bintrayUpload.sh"/>
+    
+  </target>
+</project>

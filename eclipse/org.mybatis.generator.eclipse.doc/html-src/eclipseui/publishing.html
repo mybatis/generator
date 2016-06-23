@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html" />
+  <title>Publishing a New Version</title>
+  <link type="text/css" rel="stylesheet" href="../mbgdoc/mbgstyle.css"/>
+</head>
+<body>
+<h1>Publishing a New Version</h1>
+<p>The feature is distributed via a P2 composite repository hosted at Bintray (https://bintray.com/).  The build
+includes scripts that automate much of the work involved with publishing a new version to
+Bintray.  However, the scripts and the build for publishing will only execute
+properly in a Linux environment.  So the first thing to know is that you must do this
+on a Linux machine or VM.</p>
+<p>The publishing build communicates with Bintray during the build - so you must have Internet
+access when running this build.</p>
+<p>Here's how to do it:</p>
+<ul>
+  <li>Follow the instructions in <a href="buildingFromSource.html">Building from Source</a> to
+      checkout the source and setup the projects in Eclipse.  You can use the steps
+      on that page to debug any changes and ensure that the build works properly.</li>
+   <li>Once you are ready to publish, run "<code>mvn -Prelease-composite clean package</code>"
+      on the <code>pom.xml</code> in the
+      <code>org.mybatis.generator.eclipse.parent</code> project. This turns on the "release-composite"
+       profile which adds build steps to retrieve the current P2 metadata from Bintray and prepare
+       the release artifacts for uploading.
+   </li>
+   <li>After the build runs, you should see a new subdirectory "<code>target/p2-composite-repo</code>" in the
+       <code>org.mybatis.generator.eclipse.site</code> project.  That directory will contain all
+       the updated artifacts for uploading to Bintray, and there will also be a script file
+       <code>bintrayUpload.sh</code> that you can use to upload the new version to Bintry.
+   </li>
+   <li>Edit <code>bintrayUpload.sh</code> and set the proper values for your Bintray user and
+       API key.  There are Bash variables defined at the top of the script that you should update
+       for that purpose.</li>
+   <li>Once you have set your values in the script, then you can execute the script from 
+       a terminal session.  You should see progress messages as the files are uploaded.
+       There are typically 17 files uploaded.</li>
+   <li>After the version is published, you should update the version number in the
+       following files:
+       <ul>
+         <li><code>org.mybatis.generator/feature.xml</code></li>
+         <li><code>org.mybatis.generator/pom.xml</code></li>
+         <li><code>org.mybatis.generator.core/META-INF/MANIFEST.MF</code></li>
+         <li><code>org.mybatis.generator.core/pom.xml</code></li>
+         <li><code>org.mybatis.generator.eclipse.core/META-INF/MANIFEST.MF</code></li>
+         <li><code>org.mybatis.generator.eclipse.core/pom.xml</code></li>
+         <li><code>org.mybatis.generator.eclipse.doc/META-INF/MANIFEST.MF</code></li>
+         <li><code>org.mybatis.generator.eclipse.doc/pom.xml</code></li>
+         <li><code>org.mybatis.generator.eclipse.parent/pom.xml</code></li>
+         <li><code>org.mybatis.generator.eclipse.site/pom.xml</code></li>
+         <li><code>org.mybatis.generator.eclipse.ui/META-INF/MANIFEST.MF</code></li>
+         <li><code>org.mybatis.generator.eclipse.ui/pom.xml</code></li>
+       </ul>
+   </li>
+</ul>
+
+</body>
+</html>

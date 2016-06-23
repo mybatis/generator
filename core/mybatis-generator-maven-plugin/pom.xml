@@ -32,13 +32,6 @@
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-release-plugin</artifactId>
-        <configuration>
-          <arguments>-Prelease</arguments>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-plugin-plugin</artifactId>
         <executions>
           <execution>
@@ -118,4 +111,5 @@
       </build>
     </profile>
   </profiles>
+  <description>Maven plugin for MyBatis Generator.</description>
 </project>

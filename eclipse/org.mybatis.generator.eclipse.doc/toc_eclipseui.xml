@@ -14,4 +14,6 @@
       </topic>
       <topic href="html/eclipseui/manualTesting.html" label="Manual Test Scripts">
       </topic>
+      <topic href="html/eclipseui/publishing.html" label="Publishing a New Version">
+      </topic>
 </toc>

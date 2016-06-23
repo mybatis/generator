@@ -78,6 +78,7 @@
               <goal>source-feature</goal>
             </goals>
             <configuration>
+              <labelSuffix> - Source Feature</labelSuffix>
               <excludes>
                 <plugin id="org.mybatis.generator.eclipse.doc"/>
               </excludes>

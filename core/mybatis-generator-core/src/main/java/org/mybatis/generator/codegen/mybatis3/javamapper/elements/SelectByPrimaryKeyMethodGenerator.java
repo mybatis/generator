@@ -102,6 +102,5 @@ public class SelectByPrimaryKeyMethodGenerator extends
     }
 
     public void addMapperAnnotations(Interface interfaze, Method method) {
-        return;
     }
 }

@@ -250,7 +250,7 @@ public class EqualsHashCodePlugin extends PluginAdapter {
         method.addBodyLine("int result = 1;"); //$NON-NLS-1$
 
         if (useEqualsHashCodeFromRoot && topLevelClass.getSuperClass() != null) {
-            method.addBodyLine(("result = prime * result + super.hashCode();")); //$NON-NLS-1$
+            method.addBodyLine("result = prime * result + super.hashCode();"); //$NON-NLS-1$
         }
 
         StringBuilder sb = new StringBuilder();

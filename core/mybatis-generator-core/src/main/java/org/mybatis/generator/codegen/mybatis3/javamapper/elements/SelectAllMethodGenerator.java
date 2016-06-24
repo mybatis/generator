@@ -67,6 +67,5 @@ public class SelectAllMethodGenerator extends AbstractJavaMapperMethodGenerator 
     }
 
     public void addMapperAnnotations(Interface interfaze, Method method) {
-        return;
     }
 }

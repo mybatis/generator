@@ -167,7 +167,6 @@ public class GeneratorAntTask extends Task {
             throw new BuildException(e.getMessage());
         } catch (InterruptedException e) {
             // ignore (will never happen with the DefaultShellCallback)
-            ;
         } catch (Exception e) {
             e.printStackTrace();
             throw new BuildException(e.getMessage());

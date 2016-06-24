@@ -151,7 +151,6 @@ public class DatabaseIntrospector {
                 rs.close();
             } catch (SQLException e) {
                 // ignore
-                ;
             }
         }
     }
@@ -281,7 +280,7 @@ public class DatabaseIntrospector {
             Map<ActualTableName, List<IntrospectedColumn>> columns) {
         for (Map.Entry<ActualTableName, List<IntrospectedColumn>> entry : columns
                 .entrySet()) {
-            Iterator<IntrospectedColumn> tableColumns = (entry.getValue())
+            Iterator<IntrospectedColumn> tableColumns = entry.getValue()
                     .iterator();
             while (tableColumns.hasNext()) {
                 IntrospectedColumn introspectedColumn = tableColumns.next();
@@ -368,11 +367,10 @@ public class DatabaseIntrospector {
 
                     ColumnOverride co = tc.getColumnOverride(introspectedColumn
                             .getActualColumnName());
-                    if (co != null) {
-                        if (stringHasValue(co.getJavaType())
-                                && stringHasValue(co.getJavaType())) {
-                            warn = false;
-                        }
+                    if (co != null
+                            && stringHasValue(co.getJavaType())
+                            && stringHasValue(co.getJavaType())) {
+                        warn = false;
                     }
 
                     // if the type is not supported, then we'll report a warning
@@ -391,11 +389,10 @@ public class DatabaseIntrospector {
                     }
                 }
 
-                if (context.autoDelimitKeywords()) {
-                    if (SqlReservedWords.containsWord(introspectedColumn
+                if (context.autoDelimitKeywords()
+                    && SqlReservedWords.containsWord(introspectedColumn
                             .getActualColumnName())) {
-                        introspectedColumn.setColumnNameDelimited(true);
-                    }
+                    introspectedColumn.setColumnNameDelimited(true);
                 }
 
                 if (tc.isAllColumnDelimitingEnabled()) {

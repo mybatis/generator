@@ -19,7 +19,6 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.lang.reflect.Method;
 
 import org.mybatis.generator.exception.ShellException;
 import org.w3c.dom.Attr;
@@ -213,21 +212,8 @@ public class DomWriter {
         if (document == null) {
             return null;
         }
-        String version = null;
-        Method getXMLVersion = null;
-        try {
-            getXMLVersion = document.getClass().getMethod("getXmlVersion", //$NON-NLS-1$
-                    new Class[] {});
-            // If Document class implements DOM L3, this method will exist.
-            if (getXMLVersion != null) {
-                version = (String) getXMLVersion.invoke(document,
-                        (Object[]) null);
-            }
-        } catch (Exception e) {
-            // Either this locator object doesn't have
-            // this method, or we're on an old JDK.
-        }
-        return version;
+        
+        return document.getXmlVersion();
     }
 
     /**

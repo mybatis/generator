@@ -105,11 +105,10 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
                     .getEscapedColumnName(introspectedColumn));
             valuesClause.append(MyBatis3FormattingUtilities
                     .getParameterClause(introspectedColumn));
-            if (i + 1 < columns.size()) {
-                if (!columns.get(i + 1).isIdentity()) {
-                    insertClause.append(", "); //$NON-NLS-1$
-                    valuesClause.append(", "); //$NON-NLS-1$
-                }
+            if (i + 1 < columns.size() &&
+                    !columns.get(i + 1).isIdentity()) {
+                insertClause.append(", "); //$NON-NLS-1$
+                valuesClause.append(", "); //$NON-NLS-1$
             }
 
             if (valuesClause.length() > 80) {

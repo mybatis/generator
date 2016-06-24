@@ -59,7 +59,7 @@ public interface CommentGenerator {
      * @param introspectedColumn
      *            the introspected column
      */
-    public void addFieldComment(Field field,
+    void addFieldComment(Field field,
             IntrospectedTable introspectedTable,
             IntrospectedColumn introspectedColumn);
 
@@ -71,7 +71,7 @@ public interface CommentGenerator {
      * @param introspectedTable
      *            the introspected table
      */
-    public void addFieldComment(Field field, IntrospectedTable introspectedTable);
+    void addFieldComment(Field field, IntrospectedTable introspectedTable);
 
     /**
      * Adds a comment for a model class.  The Java code merger should
@@ -88,7 +88,7 @@ public interface CommentGenerator {
      * @param introspectedTable
      *            the introspected table
      */
-    public void addModelClassComment(TopLevelClass topLevelClass,
+    void addModelClassComment(TopLevelClass topLevelClass,
             IntrospectedTable introspectedTable);
 
     /**
@@ -99,7 +99,7 @@ public interface CommentGenerator {
      * @param introspectedTable
      *            the introspected table
      */
-    public void addClassComment(InnerClass innerClass,
+    void addClassComment(InnerClass innerClass,
             IntrospectedTable introspectedTable);
 
     /**
@@ -112,7 +112,7 @@ public interface CommentGenerator {
      * @param markAsDoNotDelete
      *            the mark as do not delete
      */
-    public void addClassComment(InnerClass innerClass,
+    void addClassComment(InnerClass innerClass,
             IntrospectedTable introspectedTable, boolean markAsDoNotDelete);
 
     /**
@@ -123,7 +123,7 @@ public interface CommentGenerator {
      * @param introspectedTable
      *            the introspected table
      */
-    public void addEnumComment(InnerEnum innerEnum,
+    void addEnumComment(InnerEnum innerEnum,
             IntrospectedTable introspectedTable);
 
     /**
@@ -136,7 +136,7 @@ public interface CommentGenerator {
      * @param introspectedColumn
      *            the introspected column
      */
-    public void addGetterComment(Method method,
+    void addGetterComment(Method method,
             IntrospectedTable introspectedTable,
             IntrospectedColumn introspectedColumn);
 
@@ -150,7 +150,7 @@ public interface CommentGenerator {
      * @param introspectedColumn
      *            the introspected column
      */
-    public void addSetterComment(Method method,
+    void addSetterComment(Method method,
             IntrospectedTable introspectedTable,
             IntrospectedColumn introspectedColumn);
 
@@ -162,7 +162,7 @@ public interface CommentGenerator {
      * @param introspectedTable
      *            the introspected table
      */
-    public void addGeneralMethodComment(Method method,
+    void addGeneralMethodComment(Method method,
             IntrospectedTable introspectedTable);
 
     /**
@@ -177,7 +177,7 @@ public interface CommentGenerator {
      * @param compilationUnit
      *            the compilation unit
      */
-    public void addJavaFileComment(CompilationUnit compilationUnit);
+    void addJavaFileComment(CompilationUnit compilationUnit);
 
     /**
      * This method should add a suitable comment as a child element of the specified xmlElement to warn users that the
@@ -186,7 +186,7 @@ public interface CommentGenerator {
      * @param xmlElement
      *            the xml element
      */
-    public void addComment(XmlElement xmlElement);
+    void addComment(XmlElement xmlElement);
 
     /**
      * This method is called to add a comment as the first child of the root element. This method could be used to add a
@@ -199,5 +199,5 @@ public interface CommentGenerator {
      * @param rootElement
      *            the root element
      */
-    public void addRootComment(XmlElement rootElement);
+    void addRootComment(XmlElement rootElement);
 }

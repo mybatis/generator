@@ -203,9 +203,9 @@
 <a class="jxr_linenumber" name="L195" href="#L195">195</a>         topLevelClass
 <a class="jxr_linenumber" name="L196" href="#L196">196</a>                 .addInnerClass(getGeneratedCriteriaInnerClass(topLevelClass));
 <a class="jxr_linenumber" name="L197" href="#L197">197</a> 
-<a class="jxr_linenumber" name="L198" href="#L198">198</a>         topLevelClass.addInnerClass(getCriteriaInnerClass(topLevelClass));
+<a class="jxr_linenumber" name="L198" href="#L198">198</a>         topLevelClass.addInnerClass(getCriteriaInnerClass());
 <a class="jxr_linenumber" name="L199" href="#L199">199</a> 
-<a class="jxr_linenumber" name="L200" href="#L200">200</a>         topLevelClass.addInnerClass(getCriterionInnerClass(topLevelClass));
+<a class="jxr_linenumber" name="L200" href="#L200">200</a>         topLevelClass.addInnerClass(getCriterionInnerClass());
 <a class="jxr_linenumber" name="L201" href="#L201">201</a> 
 <a class="jxr_linenumber" name="L202" href="#L202">202</a>         List&lt;CompilationUnit&gt; answer = <strong class="jxr_keyword">new</strong> ArrayList&lt;CompilationUnit&gt;();
 <a class="jxr_linenumber" name="L203" href="#L203">203</a>         <strong class="jxr_keyword">if</strong> (context.getPlugins().modelExampleClassGenerated(
@@ -215,7 +215,7 @@
 <a class="jxr_linenumber" name="L207" href="#L207">207</a>         <strong class="jxr_keyword">return</strong> answer;
 <a class="jxr_linenumber" name="L208" href="#L208">208</a>     }
 <a class="jxr_linenumber" name="L209" href="#L209">209</a> 
-<a class="jxr_linenumber" name="L210" href="#L210">210</a>     <strong class="jxr_keyword">private</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/InnerClass.html">InnerClass</a> getCriterionInnerClass(<a href="../../../../../../org/mybatis/generator/api/dom/java/TopLevelClass.html">TopLevelClass</a> topLevelClass) {
+<a class="jxr_linenumber" name="L210" href="#L210">210</a>     <strong class="jxr_keyword">private</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/InnerClass.html">InnerClass</a> getCriterionInnerClass() {
 <a class="jxr_linenumber" name="L211" href="#L211">211</a>         <a href="../../../../../../org/mybatis/generator/api/dom/java/Field.html">Field</a> field;
 <a class="jxr_linenumber" name="L212" href="#L212">212</a>         <a href="../../../../../../org/mybatis/generator/api/dom/java/Method.html">Method</a> method;
 <a class="jxr_linenumber" name="L213" href="#L213">213</a> 
@@ -362,7 +362,7 @@
 <a class="jxr_linenumber" name="L354" href="#L354">354</a>         <strong class="jxr_keyword">return</strong> answer;
 <a class="jxr_linenumber" name="L355" href="#L355">355</a>     }
 <a class="jxr_linenumber" name="L356" href="#L356">356</a> 
-<a class="jxr_linenumber" name="L357" href="#L357">357</a>     <strong class="jxr_keyword">private</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/InnerClass.html">InnerClass</a> getCriteriaInnerClass(<a href="../../../../../../org/mybatis/generator/api/dom/java/TopLevelClass.html">TopLevelClass</a> topLevelClass) {
+<a class="jxr_linenumber" name="L357" href="#L357">357</a>     <strong class="jxr_keyword">private</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/InnerClass.html">InnerClass</a> getCriteriaInnerClass() {
 <a class="jxr_linenumber" name="L358" href="#L358">358</a>         <a href="../../../../../../org/mybatis/generator/api/dom/java/Method.html">Method</a> method;
 <a class="jxr_linenumber" name="L359" href="#L359">359</a> 
 <a class="jxr_linenumber" name="L360" href="#L360">360</a>         <a href="../../../../../../org/mybatis/generator/api/dom/java/InnerClass.html">InnerClass</a> answer = <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/InnerClass.html">InnerClass</a>(<a href="../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a>

@@ -807,73 +807,72 @@
 <a class="jxr_linenumber" name="L799" href="#L799">799</a>             generatedKey.validate(errors, fqTableName);
 <a class="jxr_linenumber" name="L800" href="#L800">800</a>         }
 <a class="jxr_linenumber" name="L801" href="#L801">801</a> 
-<a class="jxr_linenumber" name="L802" href="#L802">802</a>         <strong class="jxr_keyword">if</strong> (isTrue(getProperty(PropertyRegistry.TABLE_USE_COLUMN_INDEXES))) {
-<a class="jxr_linenumber" name="L803" href="#L803">803</a>             <em class="jxr_comment">// when using column indexes, either both or neither query ids</em>
-<a class="jxr_linenumber" name="L804" href="#L804">804</a>             <em class="jxr_comment">// should be set</em>
-<a class="jxr_linenumber" name="L805" href="#L805">805</a>             <strong class="jxr_keyword">if</strong> (selectByExampleStatementEnabled
-<a class="jxr_linenumber" name="L806" href="#L806">806</a>                     &amp;&amp; selectByPrimaryKeyStatementEnabled) {
-<a class="jxr_linenumber" name="L807" href="#L807">807</a>                 <strong class="jxr_keyword">boolean</strong> queryId1Set = stringHasValue(selectByExampleQueryId);
-<a class="jxr_linenumber" name="L808" href="#L808">808</a>                 <strong class="jxr_keyword">boolean</strong> queryId2Set = stringHasValue(selectByPrimaryKeyQueryId);
+<a class="jxr_linenumber" name="L802" href="#L802">802</a>         <em class="jxr_comment">// when using column indexes, either both or neither query ids</em>
+<a class="jxr_linenumber" name="L803" href="#L803">803</a>         <em class="jxr_comment">// should be set</em>
+<a class="jxr_linenumber" name="L804" href="#L804">804</a>         <strong class="jxr_keyword">if</strong> (isTrue(getProperty(PropertyRegistry.TABLE_USE_COLUMN_INDEXES))
+<a class="jxr_linenumber" name="L805" href="#L805">805</a>                 &amp;&amp; selectByExampleStatementEnabled
+<a class="jxr_linenumber" name="L806" href="#L806">806</a>                 &amp;&amp; selectByPrimaryKeyStatementEnabled) {
+<a class="jxr_linenumber" name="L807" href="#L807">807</a>             <strong class="jxr_keyword">boolean</strong> queryId1Set = stringHasValue(selectByExampleQueryId);
+<a class="jxr_linenumber" name="L808" href="#L808">808</a>             <strong class="jxr_keyword">boolean</strong> queryId2Set = stringHasValue(selectByPrimaryKeyQueryId);
 <a class="jxr_linenumber" name="L809" href="#L809">809</a> 
-<a class="jxr_linenumber" name="L810" href="#L810">810</a>                 <strong class="jxr_keyword">if</strong> (queryId1Set != queryId2Set) {
-<a class="jxr_linenumber" name="L811" href="#L811">811</a>                     errors.add(getString(<span class="jxr_string">"ValidationError.13"</span>, <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L812" href="#L812">812</a>                             fqTableName));
-<a class="jxr_linenumber" name="L813" href="#L813">813</a>                 }
-<a class="jxr_linenumber" name="L814" href="#L814">814</a>             }
-<a class="jxr_linenumber" name="L815" href="#L815">815</a>         }
-<a class="jxr_linenumber" name="L816" href="#L816">816</a> 
-<a class="jxr_linenumber" name="L817" href="#L817">817</a>         <strong class="jxr_keyword">if</strong> (columnRenamingRule != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L818" href="#L818">818</a>             columnRenamingRule.validate(errors, fqTableName);
-<a class="jxr_linenumber" name="L819" href="#L819">819</a>         }
-<a class="jxr_linenumber" name="L820" href="#L820">820</a> 
-<a class="jxr_linenumber" name="L821" href="#L821">821</a>         <strong class="jxr_keyword">for</strong> (ColumnOverride columnOverride : columnOverrides) {
-<a class="jxr_linenumber" name="L822" href="#L822">822</a>             columnOverride.validate(errors, fqTableName);
-<a class="jxr_linenumber" name="L823" href="#L823">823</a>         }
-<a class="jxr_linenumber" name="L824" href="#L824">824</a> 
-<a class="jxr_linenumber" name="L825" href="#L825">825</a>         <strong class="jxr_keyword">for</strong> (IgnoredColumn ignoredColumn : ignoredColumns.keySet()) {
-<a class="jxr_linenumber" name="L826" href="#L826">826</a>             ignoredColumn.validate(errors, fqTableName);
-<a class="jxr_linenumber" name="L827" href="#L827">827</a>         }
-<a class="jxr_linenumber" name="L828" href="#L828">828</a>     }
-<a class="jxr_linenumber" name="L829" href="#L829">829</a> 
-<a class="jxr_linenumber" name="L830" href="#L830">830</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L831" href="#L831">831</a> <em class="jxr_javadoccomment">     * Gets the column renaming rule.</em>
-<a class="jxr_linenumber" name="L832" href="#L832">832</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L833" href="#L833">833</a> <em class="jxr_javadoccomment">     * @return the column renaming rule</em>
-<a class="jxr_linenumber" name="L834" href="#L834">834</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L835" href="#L835">835</a>     <strong class="jxr_keyword">public</strong> <a href="../../../../org/mybatis/generator/config/ColumnRenamingRule.html">ColumnRenamingRule</a> getColumnRenamingRule() {
-<a class="jxr_linenumber" name="L836" href="#L836">836</a>         <strong class="jxr_keyword">return</strong> columnRenamingRule;
-<a class="jxr_linenumber" name="L837" href="#L837">837</a>     }
-<a class="jxr_linenumber" name="L838" href="#L838">838</a> 
-<a class="jxr_linenumber" name="L839" href="#L839">839</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L840" href="#L840">840</a> <em class="jxr_javadoccomment">     * Sets the column renaming rule.</em>
-<a class="jxr_linenumber" name="L841" href="#L841">841</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L842" href="#L842">842</a> <em class="jxr_javadoccomment">     * @param columnRenamingRule</em>
-<a class="jxr_linenumber" name="L843" href="#L843">843</a> <em class="jxr_javadoccomment">     *            the new column renaming rule</em>
-<a class="jxr_linenumber" name="L844" href="#L844">844</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L845" href="#L845">845</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setColumnRenamingRule(<a href="../../../../org/mybatis/generator/config/ColumnRenamingRule.html">ColumnRenamingRule</a> columnRenamingRule) {
-<a class="jxr_linenumber" name="L846" href="#L846">846</a>         <strong class="jxr_keyword">this</strong>.columnRenamingRule = columnRenamingRule;
-<a class="jxr_linenumber" name="L847" href="#L847">847</a>     }
-<a class="jxr_linenumber" name="L848" href="#L848">848</a> 
-<a class="jxr_linenumber" name="L849" href="#L849">849</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L850" href="#L850">850</a> <em class="jxr_javadoccomment">     * Checks if is all column delimiting enabled.</em>
-<a class="jxr_linenumber" name="L851" href="#L851">851</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L852" href="#L852">852</a> <em class="jxr_javadoccomment">     * @return true, if is all column delimiting enabled</em>
-<a class="jxr_linenumber" name="L853" href="#L853">853</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L854" href="#L854">854</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isAllColumnDelimitingEnabled() {
-<a class="jxr_linenumber" name="L855" href="#L855">855</a>         <strong class="jxr_keyword">return</strong> isAllColumnDelimitingEnabled;
-<a class="jxr_linenumber" name="L856" href="#L856">856</a>     }
-<a class="jxr_linenumber" name="L857" href="#L857">857</a> 
-<a class="jxr_linenumber" name="L858" href="#L858">858</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L859" href="#L859">859</a> <em class="jxr_javadoccomment">     * Sets the all column delimiting enabled.</em>
-<a class="jxr_linenumber" name="L860" href="#L860">860</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L861" href="#L861">861</a> <em class="jxr_javadoccomment">     * @param isAllColumnDelimitingEnabled</em>
-<a class="jxr_linenumber" name="L862" href="#L862">862</a> <em class="jxr_javadoccomment">     *            the new all column delimiting enabled</em>
-<a class="jxr_linenumber" name="L863" href="#L863">863</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L864" href="#L864">864</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setAllColumnDelimitingEnabled(
-<a class="jxr_linenumber" name="L865" href="#L865">865</a>             <strong class="jxr_keyword">boolean</strong> isAllColumnDelimitingEnabled) {
-<a class="jxr_linenumber" name="L866" href="#L866">866</a>         <strong class="jxr_keyword">this</strong>.isAllColumnDelimitingEnabled = isAllColumnDelimitingEnabled;
-<a class="jxr_linenumber" name="L867" href="#L867">867</a>     }
-<a class="jxr_linenumber" name="L868" href="#L868">868</a> }
+<a class="jxr_linenumber" name="L810" href="#L810">810</a>             <strong class="jxr_keyword">if</strong> (queryId1Set != queryId2Set) {
+<a class="jxr_linenumber" name="L811" href="#L811">811</a>                 errors.add(getString(<span class="jxr_string">"ValidationError.13"</span>, <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L812" href="#L812">812</a>                         fqTableName));
+<a class="jxr_linenumber" name="L813" href="#L813">813</a>             }
+<a class="jxr_linenumber" name="L814" href="#L814">814</a>         }
+<a class="jxr_linenumber" name="L815" href="#L815">815</a> 
+<a class="jxr_linenumber" name="L816" href="#L816">816</a>         <strong class="jxr_keyword">if</strong> (columnRenamingRule != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L817" href="#L817">817</a>             columnRenamingRule.validate(errors, fqTableName);
+<a class="jxr_linenumber" name="L818" href="#L818">818</a>         }
+<a class="jxr_linenumber" name="L819" href="#L819">819</a> 
+<a class="jxr_linenumber" name="L820" href="#L820">820</a>         <strong class="jxr_keyword">for</strong> (ColumnOverride columnOverride : columnOverrides) {
+<a class="jxr_linenumber" name="L821" href="#L821">821</a>             columnOverride.validate(errors, fqTableName);
+<a class="jxr_linenumber" name="L822" href="#L822">822</a>         }
+<a class="jxr_linenumber" name="L823" href="#L823">823</a> 
+<a class="jxr_linenumber" name="L824" href="#L824">824</a>         <strong class="jxr_keyword">for</strong> (IgnoredColumn ignoredColumn : ignoredColumns.keySet()) {
+<a class="jxr_linenumber" name="L825" href="#L825">825</a>             ignoredColumn.validate(errors, fqTableName);
+<a class="jxr_linenumber" name="L826" href="#L826">826</a>         }
+<a class="jxr_linenumber" name="L827" href="#L827">827</a>     }
+<a class="jxr_linenumber" name="L828" href="#L828">828</a> 
+<a class="jxr_linenumber" name="L829" href="#L829">829</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L830" href="#L830">830</a> <em class="jxr_javadoccomment">     * Gets the column renaming rule.</em>
+<a class="jxr_linenumber" name="L831" href="#L831">831</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L832" href="#L832">832</a> <em class="jxr_javadoccomment">     * @return the column renaming rule</em>
+<a class="jxr_linenumber" name="L833" href="#L833">833</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L834" href="#L834">834</a>     <strong class="jxr_keyword">public</strong> <a href="../../../../org/mybatis/generator/config/ColumnRenamingRule.html">ColumnRenamingRule</a> getColumnRenamingRule() {
+<a class="jxr_linenumber" name="L835" href="#L835">835</a>         <strong class="jxr_keyword">return</strong> columnRenamingRule;
+<a class="jxr_linenumber" name="L836" href="#L836">836</a>     }
+<a class="jxr_linenumber" name="L837" href="#L837">837</a> 
+<a class="jxr_linenumber" name="L838" href="#L838">838</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L839" href="#L839">839</a> <em class="jxr_javadoccomment">     * Sets the column renaming rule.</em>
+<a class="jxr_linenumber" name="L840" href="#L840">840</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L841" href="#L841">841</a> <em class="jxr_javadoccomment">     * @param columnRenamingRule</em>
+<a class="jxr_linenumber" name="L842" href="#L842">842</a> <em class="jxr_javadoccomment">     *            the new column renaming rule</em>
+<a class="jxr_linenumber" name="L843" href="#L843">843</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L844" href="#L844">844</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setColumnRenamingRule(<a href="../../../../org/mybatis/generator/config/ColumnRenamingRule.html">ColumnRenamingRule</a> columnRenamingRule) {
+<a class="jxr_linenumber" name="L845" href="#L845">845</a>         <strong class="jxr_keyword">this</strong>.columnRenamingRule = columnRenamingRule;
+<a class="jxr_linenumber" name="L846" href="#L846">846</a>     }
+<a class="jxr_linenumber" name="L847" href="#L847">847</a> 
+<a class="jxr_linenumber" name="L848" href="#L848">848</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L849" href="#L849">849</a> <em class="jxr_javadoccomment">     * Checks if is all column delimiting enabled.</em>
+<a class="jxr_linenumber" name="L850" href="#L850">850</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L851" href="#L851">851</a> <em class="jxr_javadoccomment">     * @return true, if is all column delimiting enabled</em>
+<a class="jxr_linenumber" name="L852" href="#L852">852</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L853" href="#L853">853</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isAllColumnDelimitingEnabled() {
+<a class="jxr_linenumber" name="L854" href="#L854">854</a>         <strong class="jxr_keyword">return</strong> isAllColumnDelimitingEnabled;
+<a class="jxr_linenumber" name="L855" href="#L855">855</a>     }
+<a class="jxr_linenumber" name="L856" href="#L856">856</a> 
+<a class="jxr_linenumber" name="L857" href="#L857">857</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L858" href="#L858">858</a> <em class="jxr_javadoccomment">     * Sets the all column delimiting enabled.</em>
+<a class="jxr_linenumber" name="L859" href="#L859">859</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L860" href="#L860">860</a> <em class="jxr_javadoccomment">     * @param isAllColumnDelimitingEnabled</em>
+<a class="jxr_linenumber" name="L861" href="#L861">861</a> <em class="jxr_javadoccomment">     *            the new all column delimiting enabled</em>
+<a class="jxr_linenumber" name="L862" href="#L862">862</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L863" href="#L863">863</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setAllColumnDelimitingEnabled(
+<a class="jxr_linenumber" name="L864" href="#L864">864</a>             <strong class="jxr_keyword">boolean</strong> isAllColumnDelimitingEnabled) {
+<a class="jxr_linenumber" name="L865" href="#L865">865</a>         <strong class="jxr_keyword">this</strong>.isAllColumnDelimitingEnabled = isAllColumnDelimitingEnabled;
+<a class="jxr_linenumber" name="L866" href="#L866">866</a>     }
+<a class="jxr_linenumber" name="L867" href="#L867">867</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2006&#x2013;2016 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>

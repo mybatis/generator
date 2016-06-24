@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>XmlFileMergerJaxp.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.internal</a> &gt; <span class="el_source">XmlFileMergerJaxp.java</span></div><h1>XmlFileMergerJaxp.java</h1><pre class="source lang-java linenums">/**
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>XmlFileMergerJaxp.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.internal</a> &gt; <span class="el_source">XmlFileMergerJaxp.java</span></div><h1>XmlFileMergerJaxp.java</h1><pre class="source lang-java linenums">/**
  *    Copyright 2006-2016 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
@@ -162,63 +162,61 @@ public class XmlFileMergerJaxp {
 <span class="pc bpc" id="L162" title="1 of 2 branches missed.">        for (int i = 0; i &lt; length; i++) {</span>
 <span class="fc" id="L163">            Node node = children.item(i);</span>
             // don't add the last node if it is only white space
-<span class="fc bfc" id="L165" title="All 2 branches covered.">            if (i == length - 1) {</span>
-<span class="pc bpc" id="L166" title="1 of 2 branches missed.">                if (isWhiteSpace(node)) {</span>
-<span class="fc" id="L167">                    break;</span>
-                }
+<span class="pc bpc" id="L165" title="1 of 4 branches missed.">            if (i == length - 1 &amp;&amp; isWhiteSpace(node)) {</span>
+<span class="fc" id="L166">                break;</span>
             }
 
-<span class="fc" id="L171">            Node newNode = existingDocument.importNode(node, true);</span>
-<span class="pc bpc" id="L172" title="1 of 2 branches missed.">            if (firstChild == null) {</span>
-<span class="nc" id="L173">                existingRootElement.appendChild(newNode);</span>
+<span class="fc" id="L169">            Node newNode = existingDocument.importNode(node, true);</span>
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">            if (firstChild == null) {</span>
+<span class="nc" id="L171">                existingRootElement.appendChild(newNode);</span>
             } else {
-<span class="fc" id="L175">                existingRootElement.insertBefore(newNode, firstChild);</span>
+<span class="fc" id="L173">                existingRootElement.insertBefore(newNode, firstChild);</span>
             }
         }
 
         // pretty print the result
-<span class="fc" id="L180">        return prettyPrint(existingDocument);</span>
+<span class="fc" id="L178">        return prettyPrint(existingDocument);</span>
     }
 
     private static String prettyPrint(Document document) throws ShellException {
-<span class="fc" id="L184">        DomWriter dw = new DomWriter();</span>
-<span class="fc" id="L185">        String s = dw.toString(document);</span>
-<span class="fc" id="L186">        return s;</span>
+<span class="fc" id="L182">        DomWriter dw = new DomWriter();</span>
+<span class="fc" id="L183">        String s = dw.toString(document);</span>
+<span class="fc" id="L184">        return s;</span>
     }
 
     private static boolean isGeneratedNode(Node node) {
-<span class="fc" id="L190">        boolean rc = false;</span>
+<span class="fc" id="L188">        boolean rc = false;</span>
 
-<span class="fc bfc" id="L192" title="All 4 branches covered.">        if (node != null &amp;&amp; node.getNodeType() == Node.ELEMENT_NODE) {</span>
-<span class="fc" id="L193">            Element element = (Element) node;</span>
-<span class="fc" id="L194">            String id = element.getAttribute(&quot;id&quot;); //$NON-NLS-1$</span>
-<span class="pc bpc" id="L195" title="1 of 2 branches missed.">            if (id != null) {</span>
-<span class="fc bfc" id="L196" title="All 2 branches covered.">                for (String prefix : MergeConstants.OLD_XML_ELEMENT_PREFIXES) {</span>
-<span class="pc bpc" id="L197" title="1 of 2 branches missed.">                    if (id.startsWith(prefix)) {</span>
-<span class="nc" id="L198">                        rc = true;</span>
-<span class="nc" id="L199">                        break;</span>
+<span class="fc bfc" id="L190" title="All 4 branches covered.">        if (node != null &amp;&amp; node.getNodeType() == Node.ELEMENT_NODE) {</span>
+<span class="fc" id="L191">            Element element = (Element) node;</span>
+<span class="fc" id="L192">            String id = element.getAttribute(&quot;id&quot;); //$NON-NLS-1$</span>
+<span class="pc bpc" id="L193" title="1 of 2 branches missed.">            if (id != null) {</span>
+<span class="fc bfc" id="L194" title="All 2 branches covered.">                for (String prefix : MergeConstants.OLD_XML_ELEMENT_PREFIXES) {</span>
+<span class="pc bpc" id="L195" title="1 of 2 branches missed.">                    if (id.startsWith(prefix)) {</span>
+<span class="nc" id="L196">                        rc = true;</span>
+<span class="nc" id="L197">                        break;</span>
                     }
                 }
             }
 
-<span class="pc bpc" id="L204" title="1 of 2 branches missed.">            if (rc == false) {</span>
+<span class="pc bpc" id="L202" title="1 of 2 branches missed.">            if (rc == false) {</span>
                 // check for new node format - if the first non-whitespace node
                 // is an XML comment, and the comment includes
                 // one of the old element tags,
                 // then it is a generated node
-<span class="fc" id="L209">                NodeList children = node.getChildNodes();</span>
-<span class="fc" id="L210">                int length = children.getLength();</span>
-<span class="pc bpc" id="L211" title="1 of 2 branches missed.">                for (int i = 0; i &lt; length; i++) {</span>
-<span class="fc" id="L212">                    Node childNode = children.item(i);</span>
-<span class="fc bfc" id="L213" title="All 2 branches covered.">                    if (isWhiteSpace(childNode)) {</span>
-<span class="fc" id="L214">                        continue;</span>
-<span class="fc bfc" id="L215" title="All 2 branches covered.">                    } else if (childNode.getNodeType() == Node.COMMENT_NODE) {</span>
-<span class="fc" id="L216">                        Comment comment = (Comment) childNode;</span>
-<span class="fc" id="L217">                        String commentData = comment.getData();</span>
-<span class="pc bpc" id="L218" title="1 of 2 branches missed.">                        for (String tag : MergeConstants.OLD_ELEMENT_TAGS) {</span>
-<span class="fc bfc" id="L219" title="All 2 branches covered.">                            if (commentData.contains(tag)) {</span>
-<span class="fc" id="L220">                                rc = true;</span>
-<span class="fc" id="L221">                                break;</span>
+<span class="fc" id="L207">                NodeList children = node.getChildNodes();</span>
+<span class="fc" id="L208">                int length = children.getLength();</span>
+<span class="pc bpc" id="L209" title="1 of 2 branches missed.">                for (int i = 0; i &lt; length; i++) {</span>
+<span class="fc" id="L210">                    Node childNode = children.item(i);</span>
+<span class="fc bfc" id="L211" title="All 2 branches covered.">                    if (isWhiteSpace(childNode)) {</span>
+<span class="fc" id="L212">                        continue;</span>
+<span class="fc bfc" id="L213" title="All 2 branches covered.">                    } else if (childNode.getNodeType() == Node.COMMENT_NODE) {</span>
+<span class="fc" id="L214">                        Comment comment = (Comment) childNode;</span>
+<span class="fc" id="L215">                        String commentData = comment.getData();</span>
+<span class="pc bpc" id="L216" title="1 of 2 branches missed.">                        for (String tag : MergeConstants.OLD_ELEMENT_TAGS) {</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">                            if (commentData.contains(tag)) {</span>
+<span class="fc" id="L218">                                rc = true;</span>
+<span class="fc" id="L219">                                break;</span>
                             }
                         }
                     } else {
@@ -228,20 +226,20 @@ public class XmlFileMergerJaxp {
             }
         }
 
-<span class="fc" id="L231">        return rc;</span>
+<span class="fc" id="L229">        return rc;</span>
     }
 
     private static boolean isWhiteSpace(Node node) {
-<span class="fc" id="L235">        boolean rc = false;</span>
+<span class="fc" id="L233">        boolean rc = false;</span>
 
-<span class="pc bpc" id="L237" title="1 of 4 branches missed.">        if (node != null &amp;&amp; node.getNodeType() == Node.TEXT_NODE) {</span>
-<span class="fc" id="L238">            Text tn = (Text) node;</span>
-<span class="fc bfc" id="L239" title="All 2 branches covered.">            if (tn.getData().trim().length() == 0) {</span>
-<span class="fc" id="L240">                rc = true;</span>
+<span class="pc bpc" id="L235" title="1 of 4 branches missed.">        if (node != null &amp;&amp; node.getNodeType() == Node.TEXT_NODE) {</span>
+<span class="fc" id="L236">            Text tn = (Text) node;</span>
+<span class="fc bfc" id="L237" title="All 2 branches covered.">            if (tn.getData().trim().length() == 0) {</span>
+<span class="fc" id="L238">                rc = true;</span>
             }
         }
 
-<span class="fc" id="L244">        return rc;</span>
+<span class="fc" id="L242">        return rc;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

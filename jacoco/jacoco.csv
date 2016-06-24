@@ -1,5 +1,5 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-MyBatis Generator Core,org.mybatis.generator.codegen.ibatis2.model,ExampleGenerator,164,2883,31,85,41,714,29,48,0,19
+MyBatis Generator Core,org.mybatis.generator.codegen.ibatis2.model,ExampleGenerator,164,2882,31,85,41,714,29,48,0,19
 MyBatis Generator Core,org.mybatis.generator.codegen.ibatis2.model,BaseRecordGenerator,1,228,5,27,1,47,5,16,0,5
 MyBatis Generator Core,org.mybatis.generator.codegen.ibatis2.model,PrimaryKeyGenerator,1,149,5,9,1,30,5,4,0,2
 MyBatis Generator Core,org.mybatis.generator.codegen.ibatis2.model,RecordWithBLOBsGenerator,1,153,5,9,1,30,5,4,0,2
@@ -7,7 +7,7 @@ MyBatis Generator Core,org.mybatis.generator.internal.db,SqlReservedWords,6,3691
 MyBatis Generator Core,org.mybatis.generator.internal.db,ConnectionFactory,20,59,3,3,4,18,3,5,0,5
 MyBatis Generator Core,org.mybatis.generator.internal.db,DatabaseDialects,32,157,8,10,8,26,10,5,2,4
 MyBatis Generator Core,org.mybatis.generator.internal.db,ActualTableName,5,43,2,2,2,12,3,6,1,6
-MyBatis Generator Core,org.mybatis.generator.internal.db,DatabaseIntrospector,406,856,69,115,77,190,49,56,0,13
+MyBatis Generator Core,org.mybatis.generator.internal.db,DatabaseIntrospector,406,856,69,115,76,189,49,56,0,13
 MyBatis Generator Core,org.mybatis.generator.codegen.mybatis3.javamapper.elements,CountByExampleMethodGenerator,0,68,1,1,0,17,1,3,0,3
 MyBatis Generator Core,org.mybatis.generator.codegen.mybatis3.javamapper.elements,SelectByPrimaryKeyMethodGenerator,0,164,1,13,0,39,1,9,0,3
 MyBatis Generator Core,org.mybatis.generator.codegen.mybatis3.javamapper.elements,DeleteByPrimaryKeyMethodGenerator,0,155,1,13,0,37,1,9,0,3
@@ -34,7 +34,7 @@ MyBatis Generator Core,org.mybatis.generator.api.dom.xml,TextElement,3,21,0,0,1,
 MyBatis Generator Core,org.mybatis.generator.api.dom.xml,XmlElement,13,159,0,6,5,40,3,10,3,7
 MyBatis Generator Core,org.mybatis.generator.codegen.ibatis2.sqlmap,SqlMapGenerator,2,398,11,29,1,113,11,32,0,23
 MyBatis Generator Core,org.mybatis.generator.internal.rules,HierarchicalModelRules,0,16,0,0,0,5,0,4,0,4
-MyBatis Generator Core,org.mybatis.generator.internal.rules,ConditionalModelRules,3,57,3,11,0,6,2,9,0,4
+MyBatis Generator Core,org.mybatis.generator.internal.rules,ConditionalModelRules,5,60,4,12,0,7,3,10,0,5
 MyBatis Generator Core,org.mybatis.generator.internal.rules,BaseRules,42,425,33,105,1,97,26,68,1,24
 MyBatis Generator Core,org.mybatis.generator.internal.rules,FlatModelRules,0,10,0,0,0,5,0,4,0,4
 MyBatis Generator Core,org.mybatis.generator.internal.rules,RulesDelegate,114,0,0,0,30,0,28,0,28,0
@@ -61,7 +61,7 @@ MyBatis Generator Core,org.mybatis.generator.codegen.mybatis3.javamapper.element
 MyBatis Generator Core,org.mybatis.generator.api.dom,OutputUtilities,5,90,1,9,3,24,2,9,1,5
 MyBatis Generator Core,org.mybatis.generator.api.dom,DefaultJavaFormatter,3,7,0,0,1,3,1,2,1,2
 MyBatis Generator Core,org.mybatis.generator.api.dom,DefaultXmlFormatter,0,10,0,0,0,4,0,3,0,3
-MyBatis Generator Core,org.mybatis.generator.internal,XmlFileMergerJaxp,71,312,11,41,13,76,13,19,2,4
+MyBatis Generator Core,org.mybatis.generator.internal,XmlFileMergerJaxp,71,312,11,41,13,75,13,19,2,4
 MyBatis Generator Core,org.mybatis.generator.internal,ExtendedDAOMethodNameCalculator,139,250,17,3,35,62,13,12,3,12
 MyBatis Generator Core,org.mybatis.generator.internal,PluginAggregator,259,1647,77,225,153,384,79,153,4,77
 MyBatis Generator Core,org.mybatis.generator.internal,DefaultCommentGenerator,43,625,12,30,19,162,12,25,1,15
@@ -69,7 +69,7 @@ MyBatis Generator Core,org.mybatis.generator.internal,XmlFileMergerJaxp.NullEnti
 MyBatis Generator Core,org.mybatis.generator.internal,DefaultDAOMethodNameCalculator,4,95,2,18,2,40,2,23,0,15
 MyBatis Generator Core,org.mybatis.generator.internal,NullProgressCallback,1,8,0,0,1,7,1,6,1,6
 MyBatis Generator Core,org.mybatis.generator.internal,ObjectFactory,106,237,18,24,31,76,19,19,4,13
-MyBatis Generator Core,org.mybatis.generator.internal,DomWriter,210,426,49,41,56,113,40,26,2,13
+MyBatis Generator Core,org.mybatis.generator.internal,DomWriter,209,406,48,40,55,107,39,26,2,13
 MyBatis Generator Core,org.mybatis.generator.internal,DefaultShellCallback,73,6,8,0,18,3,9,1,5,1
 MyBatis Generator Core,org.mybatis.generator.codegen.ibatis2.dao.elements,UpdateByPrimaryKeyWithoutBLOBsMethodGenerator,0,143,2,4,0,32,2,5,0,4
 MyBatis Generator Core,org.mybatis.generator.codegen.ibatis2.dao.elements,UpdateByExampleSelectiveMethodGenerator,0,189,3,9,0,38,3,7,0,4
@@ -153,7 +153,7 @@ MyBatis Generator Core,org.mybatis.generator.codegen.mybatis3.javamapper,Annotat
 MyBatis Generator Core,org.mybatis.generator.codegen.mybatis3.javamapper,SimpleJavaClientGenerator,15,189,5,11,4,52,5,14,0,11
 MyBatis Generator Core,org.mybatis.generator.codegen.mybatis3.javamapper,SimpleAnnotatedClientGenerator,0,76,1,7,0,22,1,10,0,7
 MyBatis Generator Core,org.mybatis.generator.codegen.mybatis3.javamapper,JavaMapperGenerator,0,362,9,27,0,102,9,29,0,20
-MyBatis Generator Core,org.mybatis.generator.codegen.mybatis3.javamapper,SqlProviderGenerator,0,324,9,15,0,85,9,16,0,13
+MyBatis Generator Core,org.mybatis.generator.codegen.mybatis3.javamapper,SqlProviderGenerator,0,324,9,15,0,84,9,16,0,13
 MyBatis Generator Core,org.mybatis.generator.codegen.ibatis2,IntrospectedTableIbatis2Java5Impl,0,5,0,0,0,2,0,2,0,2
 MyBatis Generator Core,org.mybatis.generator.codegen.ibatis2,IntrospectedTableIbatis2Java2Impl,16,343,4,24,3,70,5,20,1,10
 MyBatis Generator Core,org.mybatis.generator.codegen.ibatis2,Ibatis2FormattingUtilities,8,281,1,25,3,66,2,20,1,8
@@ -161,23 +161,23 @@ MyBatis Generator Core,org.mybatis.generator.codegen.mybatis3.model,SimpleModelG
 MyBatis Generator Core,org.mybatis.generator.codegen.mybatis3.model,PrimaryKeyGenerator,1,253,5,17,1,54,5,9,0,3
 MyBatis Generator Core,org.mybatis.generator.codegen.mybatis3.model,BaseRecordGenerator,5,411,6,44,1,90,6,26,0,7
 MyBatis Generator Core,org.mybatis.generator.codegen.mybatis3.model,RecordWithBLOBsGenerator,4,312,6,22,2,66,6,11,0,3
-MyBatis Generator Core,org.mybatis.generator.codegen.mybatis3.model,ExampleGenerator,0,2640,1,61,0,654,1,50,0,20
+MyBatis Generator Core,org.mybatis.generator.codegen.mybatis3.model,ExampleGenerator,0,2638,1,61,0,654,1,50,0,20
 MyBatis Generator Core,org.mybatis.generator.config,JavaModelGeneratorConfiguration,45,26,6,2,9,11,5,6,1,6
 MyBatis Generator Core,org.mybatis.generator.config,MergeConstants,3,27,0,0,2,2,1,1,1,1
 MyBatis Generator Core,org.mybatis.generator.config,TypedPropertyHolder,0,14,1,1,0,6,1,3,0,3
 MyBatis Generator Core,org.mybatis.generator.config,CommentGeneratorConfiguration,21,3,2,0,5,2,2,1,1,1
 MyBatis Generator Core,org.mybatis.generator.config,Configuration,106,64,12,6,24,17,10,7,3,5
 MyBatis Generator Core,org.mybatis.generator.config,ColumnOverride,89,55,12,2,17,21,9,12,2,12
-MyBatis Generator Core,org.mybatis.generator.config,GeneratedKey,81,93,13,15,11,26,10,14,1,9
+MyBatis Generator Core,org.mybatis.generator.config,GeneratedKey,81,93,13,15,11,25,10,14,1,9
 MyBatis Generator Core,org.mybatis.generator.config,ModelType,16,69,1,5,1,14,3,6,2,4
 MyBatis Generator Core,org.mybatis.generator.config,JDBCConnectionConfiguration,64,36,6,2,13,15,6,9,2,9
 MyBatis Generator Core,org.mybatis.generator.config,SqlMapGeneratorConfiguration,45,26,6,2,9,11,5,6,1,6
 MyBatis Generator Core,org.mybatis.generator.config,JavaClientGeneratorConfiguration,73,37,11,3,14,15,8,8,1,8
 MyBatis Generator Core,org.mybatis.generator.config,PluginConfiguration,27,8,3,1,6,4,3,2,1,2
 MyBatis Generator Core,org.mybatis.generator.config,PropertyHolder,38,23,2,0,9,7,2,4,1,4
-MyBatis Generator Core,org.mybatis.generator.config,TableConfiguration,441,330,80,32,100,92,62,49,19,36
+MyBatis Generator Core,org.mybatis.generator.config,TableConfiguration,441,330,80,32,100,91,62,49,19,36
 MyBatis Generator Core,org.mybatis.generator.config,PropertyRegistry,3,0,0,0,1,0,1,0,1,0
-MyBatis Generator Core,org.mybatis.generator.config,Context,228,483,42,46,49,131,35,48,6,33
+MyBatis Generator Core,org.mybatis.generator.config,Context,228,481,42,46,48,130,35,48,6,33
 MyBatis Generator Core,org.mybatis.generator.config,IgnoredColumn,58,25,9,1,12,9,8,5,3,5
 MyBatis Generator Core,org.mybatis.generator.config,JavaTypeResolverConfiguration,24,0,2,0,7,0,3,0,2,0
 MyBatis Generator Core,org.mybatis.generator.config,ColumnRenamingRule,36,18,3,1,8,7,4,5,2,5
@@ -212,7 +212,7 @@ MyBatis Generator Core,org.mybatis.generator.codegen.mybatis3.xmlmapper.elements
 MyBatis Generator Core,org.mybatis.generator.codegen.mybatis3.xmlmapper.elements,SelectByExampleWithoutBLOBsElementGenerator,21,139,2,2,4,28,2,2,0,2
 MyBatis Generator Core,org.mybatis.generator.codegen.mybatis3.xmlmapper.elements,UpdateByPrimaryKeyWithoutBLOBsElementGenerator,0,185,1,13,0,43,1,8,0,2
 MyBatis Generator Core,org.mybatis.generator.codegen.mybatis3.xmlmapper.elements,SimpleSelectByPrimaryKeyElementGenerator,14,200,3,15,3,42,3,8,0,2
-MyBatis Generator Core,org.mybatis.generator.codegen.mybatis3.xmlmapper.elements,InsertElementGenerator,0,256,3,19,0,54,3,10,0,2
+MyBatis Generator Core,org.mybatis.generator.codegen.mybatis3.xmlmapper.elements,InsertElementGenerator,0,256,3,19,0,53,3,10,0,2
 MyBatis Generator Core,org.mybatis.generator.codegen.mybatis3.xmlmapper.elements,SelectByExampleWithBLOBsElementGenerator,21,149,2,2,4,30,2,2,0,2
 MyBatis Generator Core,org.mybatis.generator.codegen.mybatis3.xmlmapper.elements,UpdateByPrimaryKeyWithBLOBsElementGenerator,0,185,1,13,0,43,1,8,0,2
 MyBatis Generator Core,org.mybatis.generator.codegen.mybatis3.xmlmapper.elements,UpdateByPrimaryKeySelectiveElementGenerator,0,205,1,9,0,44,1,6,0,2

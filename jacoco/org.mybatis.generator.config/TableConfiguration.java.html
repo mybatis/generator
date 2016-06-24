@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>TableConfiguration.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.config</a> &gt; <span class="el_source">TableConfiguration.java</span></div><h1>TableConfiguration.java</h1><pre class="source lang-java linenums">/**
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TableConfiguration.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.config</a> &gt; <span class="el_source">TableConfiguration.java</span></div><h1>TableConfiguration.java</h1><pre class="source lang-java linenums">/**
  *    Copyright 2006-2016 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
@@ -799,33 +799,32 @@ public class TableConfiguration extends PropertyHolder {
 <span class="fc" id="L799">            generatedKey.validate(errors, fqTableName);</span>
         }
 
-<span class="fc bfc" id="L802" title="All 2 branches covered.">        if (isTrue(getProperty(PropertyRegistry.TABLE_USE_COLUMN_INDEXES))) {</span>
-            // when using column indexes, either both or neither query ids
-            // should be set
-<span class="pc bpc" id="L805" title="2 of 4 branches missed.">            if (selectByExampleStatementEnabled</span>
-                    &amp;&amp; selectByPrimaryKeyStatementEnabled) {
-<span class="fc" id="L807">                boolean queryId1Set = stringHasValue(selectByExampleQueryId);</span>
-<span class="fc" id="L808">                boolean queryId2Set = stringHasValue(selectByPrimaryKeyQueryId);</span>
+        // when using column indexes, either both or neither query ids
+        // should be set
+<span class="pc bpc" id="L804" title="2 of 6 branches missed.">        if (isTrue(getProperty(PropertyRegistry.TABLE_USE_COLUMN_INDEXES))</span>
+                &amp;&amp; selectByExampleStatementEnabled
+                &amp;&amp; selectByPrimaryKeyStatementEnabled) {
+<span class="fc" id="L807">            boolean queryId1Set = stringHasValue(selectByExampleQueryId);</span>
+<span class="fc" id="L808">            boolean queryId2Set = stringHasValue(selectByPrimaryKeyQueryId);</span>
 
-<span class="pc bpc" id="L810" title="1 of 2 branches missed.">                if (queryId1Set != queryId2Set) {</span>
-<span class="nc" id="L811">                    errors.add(getString(&quot;ValidationError.13&quot;, //$NON-NLS-1$</span>
-                            fqTableName));
-                }
+<span class="pc bpc" id="L810" title="1 of 2 branches missed.">            if (queryId1Set != queryId2Set) {</span>
+<span class="nc" id="L811">                errors.add(getString(&quot;ValidationError.13&quot;, //$NON-NLS-1$</span>
+                        fqTableName));
             }
         }
 
-<span class="fc bfc" id="L817" title="All 2 branches covered.">        if (columnRenamingRule != null) {</span>
-<span class="fc" id="L818">            columnRenamingRule.validate(errors, fqTableName);</span>
+<span class="fc bfc" id="L816" title="All 2 branches covered.">        if (columnRenamingRule != null) {</span>
+<span class="fc" id="L817">            columnRenamingRule.validate(errors, fqTableName);</span>
         }
 
-<span class="fc bfc" id="L821" title="All 2 branches covered.">        for (ColumnOverride columnOverride : columnOverrides) {</span>
-<span class="fc" id="L822">            columnOverride.validate(errors, fqTableName);</span>
-<span class="fc" id="L823">        }</span>
+<span class="fc bfc" id="L820" title="All 2 branches covered.">        for (ColumnOverride columnOverride : columnOverrides) {</span>
+<span class="fc" id="L821">            columnOverride.validate(errors, fqTableName);</span>
+<span class="fc" id="L822">        }</span>
 
-<span class="fc bfc" id="L825" title="All 2 branches covered.">        for (IgnoredColumn ignoredColumn : ignoredColumns.keySet()) {</span>
-<span class="fc" id="L826">            ignoredColumn.validate(errors, fqTableName);</span>
-<span class="fc" id="L827">        }</span>
-<span class="fc" id="L828">    }</span>
+<span class="fc bfc" id="L824" title="All 2 branches covered.">        for (IgnoredColumn ignoredColumn : ignoredColumns.keySet()) {</span>
+<span class="fc" id="L825">            ignoredColumn.validate(errors, fqTableName);</span>
+<span class="fc" id="L826">        }</span>
+<span class="fc" id="L827">    }</span>
 
     /**
      * Gets the column renaming rule.
@@ -833,7 +832,7 @@ public class TableConfiguration extends PropertyHolder {
      * @return the column renaming rule
      */
     public ColumnRenamingRule getColumnRenamingRule() {
-<span class="fc" id="L836">        return columnRenamingRule;</span>
+<span class="fc" id="L835">        return columnRenamingRule;</span>
     }
 
     /**
@@ -843,8 +842,8 @@ public class TableConfiguration extends PropertyHolder {
      *            the new column renaming rule
      */
     public void setColumnRenamingRule(ColumnRenamingRule columnRenamingRule) {
-<span class="fc" id="L846">        this.columnRenamingRule = columnRenamingRule;</span>
-<span class="fc" id="L847">    }</span>
+<span class="fc" id="L845">        this.columnRenamingRule = columnRenamingRule;</span>
+<span class="fc" id="L846">    }</span>
 
     /**
      * Checks if is all column delimiting enabled.
@@ -852,7 +851,7 @@ public class TableConfiguration extends PropertyHolder {
      * @return true, if is all column delimiting enabled
      */
     public boolean isAllColumnDelimitingEnabled() {
-<span class="fc" id="L855">        return isAllColumnDelimitingEnabled;</span>
+<span class="fc" id="L854">        return isAllColumnDelimitingEnabled;</span>
     }
 
     /**
@@ -863,7 +862,7 @@ public class TableConfiguration extends PropertyHolder {
      */
     public void setAllColumnDelimitingEnabled(
             boolean isAllColumnDelimitingEnabled) {
-<span class="nc" id="L866">        this.isAllColumnDelimitingEnabled = isAllColumnDelimitingEnabled;</span>
-<span class="nc" id="L867">    }</span>
+<span class="nc" id="L865">        this.isAllColumnDelimitingEnabled = isAllColumnDelimitingEnabled;</span>
+<span class="nc" id="L866">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

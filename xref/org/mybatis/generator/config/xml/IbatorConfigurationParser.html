@@ -1,681 +1,190 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <title>IbatorConfigurationParser xref</title>
 <link type="text/css" rel="stylesheet" href="../../../../../stylesheet.css" />
 </head>
 <body>
 <div id="overview"><a href="../../../../../../apidocs/org/mybatis/generator/config/xml/IbatorConfigurationParser.html">View Javadoc</a></div><pre>
-
-<a class="jxr_linenumber" name="1" href="#1">1</a>   <em class="jxr_comment">/*</em>
-<a class="jxr_linenumber" name="2" href="#2">2</a>   <em class="jxr_comment"> *  Copyright 2005, 2006 The Apache Software Foundation</em>
-<a class="jxr_linenumber" name="3" href="#3">3</a>   <em class="jxr_comment"> *</em>
-<a class="jxr_linenumber" name="4" href="#4">4</a>   <em class="jxr_comment"> *  Licensed under the Apache License, Version 2.0 (the "License");</em>
-<a class="jxr_linenumber" name="5" href="#5">5</a>   <em class="jxr_comment"> *  you may not use this file except in compliance with the License.</em>
-<a class="jxr_linenumber" name="6" href="#6">6</a>   <em class="jxr_comment"> *  You may obtain a copy of the License at</em>
-<a class="jxr_linenumber" name="7" href="#7">7</a>   <em class="jxr_comment"> *</em>
-<a class="jxr_linenumber" name="8" href="#8">8</a>   <em class="jxr_comment"> *      <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a></em>
-<a class="jxr_linenumber" name="9" href="#9">9</a>   <em class="jxr_comment"> *</em>
-<a class="jxr_linenumber" name="10" href="#10">10</a>  <em class="jxr_comment"> *  Unless required by applicable law or agreed to in writing, software</em>
-<a class="jxr_linenumber" name="11" href="#11">11</a>  <em class="jxr_comment"> *  distributed under the License is distributed on an "AS IS" BASIS,</em>
-<a class="jxr_linenumber" name="12" href="#12">12</a>  <em class="jxr_comment"> *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</em>
-<a class="jxr_linenumber" name="13" href="#13">13</a>  <em class="jxr_comment"> *  See the License for the specific language governing permissions and</em>
-<a class="jxr_linenumber" name="14" href="#14">14</a>  <em class="jxr_comment"> *  limitations under the License.</em>
-<a class="jxr_linenumber" name="15" href="#15">15</a>  <em class="jxr_comment"> */</em>
-<a class="jxr_linenumber" name="16" href="#16">16</a>  <strong class="jxr_keyword">package</strong> org.mybatis.generator.config.xml;
-<a class="jxr_linenumber" name="17" href="#17">17</a>  
-<a class="jxr_linenumber" name="18" href="#18">18</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.mybatis.generator.internal.util.StringUtility.isTrue;
-<a class="jxr_linenumber" name="19" href="#19">19</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.mybatis.generator.internal.util.StringUtility.stringHasValue;
-<a class="jxr_linenumber" name="20" href="#20">20</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.mybatis.generator.internal.util.messages.Messages.getString;
-<a class="jxr_linenumber" name="21" href="#21">21</a>  
-<a class="jxr_linenumber" name="22" href="#22">22</a>  <strong class="jxr_keyword">import</strong> java.io.IOException;
-<a class="jxr_linenumber" name="23" href="#23">23</a>  <strong class="jxr_keyword">import</strong> java.io.InputStream;
-<a class="jxr_linenumber" name="24" href="#24">24</a>  <strong class="jxr_keyword">import</strong> java.net.URL;
-<a class="jxr_linenumber" name="25" href="#25">25</a>  <strong class="jxr_keyword">import</strong> java.util.Properties;
-<a class="jxr_linenumber" name="26" href="#26">26</a>  
-<a class="jxr_linenumber" name="27" href="#27">27</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.config.ColumnOverride;
-<a class="jxr_linenumber" name="28" href="#28">28</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.config.ColumnRenamingRule;
-<a class="jxr_linenumber" name="29" href="#29">29</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.config.CommentGeneratorConfiguration;
-<a class="jxr_linenumber" name="30" href="#30">30</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.config.GeneratedKey;
-<a class="jxr_linenumber" name="31" href="#31">31</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.config.Configuration;
-<a class="jxr_linenumber" name="32" href="#32">32</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.config.Context;
-<a class="jxr_linenumber" name="33" href="#33">33</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.config.JavaClientGeneratorConfiguration;
-<a class="jxr_linenumber" name="34" href="#34">34</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.config.PluginConfiguration;
-<a class="jxr_linenumber" name="35" href="#35">35</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.config.IgnoredColumn;
-<a class="jxr_linenumber" name="36" href="#36">36</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.config.JDBCConnectionConfiguration;
-<a class="jxr_linenumber" name="37" href="#37">37</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.config.JavaModelGeneratorConfiguration;
-<a class="jxr_linenumber" name="38" href="#38">38</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.config.JavaTypeResolverConfiguration;
-<a class="jxr_linenumber" name="39" href="#39">39</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.config.ModelType;
-<a class="jxr_linenumber" name="40" href="#40">40</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.config.PropertyHolder;
-<a class="jxr_linenumber" name="41" href="#41">41</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.config.SqlMapGeneratorConfiguration;
-<a class="jxr_linenumber" name="42" href="#42">42</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.config.TableConfiguration;
-<a class="jxr_linenumber" name="43" href="#43">43</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.exception.XMLParserException;
-<a class="jxr_linenumber" name="44" href="#44">44</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.internal.ObjectFactory;
-<a class="jxr_linenumber" name="45" href="#45">45</a>  <strong class="jxr_keyword">import</strong> org.w3c.dom.Element;
-<a class="jxr_linenumber" name="46" href="#46">46</a>  <strong class="jxr_keyword">import</strong> org.w3c.dom.NamedNodeMap;
-<a class="jxr_linenumber" name="47" href="#47">47</a>  <strong class="jxr_keyword">import</strong> org.w3c.dom.Node;
-<a class="jxr_linenumber" name="48" href="#48">48</a>  <strong class="jxr_keyword">import</strong> org.w3c.dom.NodeList;
-<a class="jxr_linenumber" name="49" href="#49">49</a>  
-<a class="jxr_linenumber" name="50" href="#50">50</a>  <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="51" href="#51">51</a>  <em class="jxr_javadoccomment"> * This class parses old Ibator configuration files into the new Configuration</em>
-<a class="jxr_linenumber" name="52" href="#52">52</a>  <em class="jxr_javadoccomment"> * API</em>
-<a class="jxr_linenumber" name="53" href="#53">53</a>  <em class="jxr_javadoccomment"> * </em>
-<a class="jxr_linenumber" name="54" href="#54">54</a>  <em class="jxr_javadoccomment"> * @author Jeff Butler</em>
-<a class="jxr_linenumber" name="55" href="#55">55</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="56" href="#56">56</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../org/mybatis/generator/config/xml/IbatorConfigurationParser.html">IbatorConfigurationParser</a> {
-<a class="jxr_linenumber" name="57" href="#57">57</a>      <strong class="jxr_keyword">private</strong> Properties properties;
-<a class="jxr_linenumber" name="58" href="#58">58</a>  
-<a class="jxr_linenumber" name="59" href="#59">59</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../../org/mybatis/generator/config/xml/IbatorConfigurationParser.html">IbatorConfigurationParser</a>(Properties properties) {
-<a class="jxr_linenumber" name="60" href="#60">60</a>          <strong class="jxr_keyword">super</strong>();
-<a class="jxr_linenumber" name="61" href="#61">61</a>          <strong class="jxr_keyword">if</strong> (properties == <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="62" href="#62">62</a>              <strong class="jxr_keyword">this</strong>.properties = System.getProperties();
-<a class="jxr_linenumber" name="63" href="#63">63</a>          } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="64" href="#64">64</a>              <strong class="jxr_keyword">this</strong>.properties = properties;
-<a class="jxr_linenumber" name="65" href="#65">65</a>          }
-<a class="jxr_linenumber" name="66" href="#66">66</a>      }
-<a class="jxr_linenumber" name="67" href="#67">67</a>  
-<a class="jxr_linenumber" name="68" href="#68">68</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../../org/mybatis/generator/config/Configuration.html">Configuration</a> parseIbatorConfiguration(Element rootNode)
-<a class="jxr_linenumber" name="69" href="#69">69</a>              <strong class="jxr_keyword">throws</strong> <a href="../../../../../org/mybatis/generator/exception/XMLParserException.html">XMLParserException</a> {
-<a class="jxr_linenumber" name="70" href="#70">70</a>  
-<a class="jxr_linenumber" name="71" href="#71">71</a>          <a href="../../../../../org/mybatis/generator/config/Configuration.html">Configuration</a> configuration = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/mybatis/generator/config/Configuration.html">Configuration</a>();
-<a class="jxr_linenumber" name="72" href="#72">72</a>  
-<a class="jxr_linenumber" name="73" href="#73">73</a>          NodeList nodeList = rootNode.getChildNodes();
-<a class="jxr_linenumber" name="74" href="#74">74</a>          <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; nodeList.getLength(); i++) {
-<a class="jxr_linenumber" name="75" href="#75">75</a>              Node childNode = nodeList.item(i);
-<a class="jxr_linenumber" name="76" href="#76">76</a>  
-<a class="jxr_linenumber" name="77" href="#77">77</a>              <strong class="jxr_keyword">if</strong> (childNode.getNodeType() != Node.ELEMENT_NODE) {
-<a class="jxr_linenumber" name="78" href="#78">78</a>                  <strong class="jxr_keyword">continue</strong>;
-<a class="jxr_linenumber" name="79" href="#79">79</a>              }
-<a class="jxr_linenumber" name="80" href="#80">80</a>  
-<a class="jxr_linenumber" name="81" href="#81">81</a>              <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"properties"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="82" href="#82">82</a>                  parseProperties(configuration, childNode);
-<a class="jxr_linenumber" name="83" href="#83">83</a>              } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"classPathEntry"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="84" href="#84">84</a>                  parseClassPathEntry(configuration, childNode);
-<a class="jxr_linenumber" name="85" href="#85">85</a>              } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"ibatorContext"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="86" href="#86">86</a>                  parseIbatorContext(configuration, childNode);
-<a class="jxr_linenumber" name="87" href="#87">87</a>              }
-<a class="jxr_linenumber" name="88" href="#88">88</a>          }
-<a class="jxr_linenumber" name="89" href="#89">89</a>  
-<a class="jxr_linenumber" name="90" href="#90">90</a>          <strong class="jxr_keyword">return</strong> configuration;
-<a class="jxr_linenumber" name="91" href="#91">91</a>      }
-<a class="jxr_linenumber" name="92" href="#92">92</a>  
-<a class="jxr_linenumber" name="93" href="#93">93</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> parseProperties(<a href="../../../../../org/mybatis/generator/config/Configuration.html">Configuration</a> configuration, Node node)
-<a class="jxr_linenumber" name="94" href="#94">94</a>              <strong class="jxr_keyword">throws</strong> <a href="../../../../../org/mybatis/generator/exception/XMLParserException.html">XMLParserException</a> {
-<a class="jxr_linenumber" name="95" href="#95">95</a>          Properties attributes = parseAttributes(node);
-<a class="jxr_linenumber" name="96" href="#96">96</a>          String resource = attributes.getProperty(<span class="jxr_string">"resource"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="97" href="#97">97</a>          String url = attributes.getProperty(<span class="jxr_string">"url"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="98" href="#98">98</a>  
-<a class="jxr_linenumber" name="99" href="#99">99</a>          <strong class="jxr_keyword">if</strong> (!stringHasValue(resource)
-<a class="jxr_linenumber" name="100" href="#100">100</a>                 &amp;&amp; !stringHasValue(url)) {
-<a class="jxr_linenumber" name="101" href="#101">101</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../../org/mybatis/generator/exception/XMLParserException.html">XMLParserException</a>(getString(<span class="jxr_string">"RuntimeError.14"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="102" href="#102">102</a>         }
-<a class="jxr_linenumber" name="103" href="#103">103</a> 
-<a class="jxr_linenumber" name="104" href="#104">104</a>         <strong class="jxr_keyword">if</strong> (stringHasValue(resource)
-<a class="jxr_linenumber" name="105" href="#105">105</a>                 &amp;&amp; stringHasValue(url)) {
-<a class="jxr_linenumber" name="106" href="#106">106</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../../org/mybatis/generator/exception/XMLParserException.html">XMLParserException</a>(getString(<span class="jxr_string">"RuntimeError.14"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="107" href="#107">107</a>         }
-<a class="jxr_linenumber" name="108" href="#108">108</a> 
-<a class="jxr_linenumber" name="109" href="#109">109</a>         URL resourceUrl;
-<a class="jxr_linenumber" name="110" href="#110">110</a> 
-<a class="jxr_linenumber" name="111" href="#111">111</a>         <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="112" href="#112">112</a>             <strong class="jxr_keyword">if</strong> (stringHasValue(resource)) {
-<a class="jxr_linenumber" name="113" href="#113">113</a>                 resourceUrl = ObjectFactory.getResource(resource);
-<a class="jxr_linenumber" name="114" href="#114">114</a>                 <strong class="jxr_keyword">if</strong> (resourceUrl == <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="115" href="#115">115</a>                     <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../../org/mybatis/generator/exception/XMLParserException.html">XMLParserException</a>(getString(
-<a class="jxr_linenumber" name="116" href="#116">116</a>                             <span class="jxr_string">"RuntimeError.15"</span>, resource)); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="117" href="#117">117</a>                 }
-<a class="jxr_linenumber" name="118" href="#118">118</a>             } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="119" href="#119">119</a>                 resourceUrl = <strong class="jxr_keyword">new</strong> URL(url);
-<a class="jxr_linenumber" name="120" href="#120">120</a>             }
-<a class="jxr_linenumber" name="121" href="#121">121</a> 
-<a class="jxr_linenumber" name="122" href="#122">122</a>             InputStream inputStream = resourceUrl.openConnection()
-<a class="jxr_linenumber" name="123" href="#123">123</a>                     .getInputStream();
-<a class="jxr_linenumber" name="124" href="#124">124</a> 
-<a class="jxr_linenumber" name="125" href="#125">125</a>             properties.load(inputStream);
-<a class="jxr_linenumber" name="126" href="#126">126</a>             inputStream.close();
-<a class="jxr_linenumber" name="127" href="#127">127</a>         } <strong class="jxr_keyword">catch</strong> (IOException e) {
-<a class="jxr_linenumber" name="128" href="#128">128</a>             <strong class="jxr_keyword">if</strong> (stringHasValue(resource)) {
-<a class="jxr_linenumber" name="129" href="#129">129</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../../org/mybatis/generator/exception/XMLParserException.html">XMLParserException</a>(getString(
-<a class="jxr_linenumber" name="130" href="#130">130</a>                         <span class="jxr_string">"RuntimeError.16"</span>, resource)); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="131" href="#131">131</a>             } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="132" href="#132">132</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../../org/mybatis/generator/exception/XMLParserException.html">XMLParserException</a>(getString(
-<a class="jxr_linenumber" name="133" href="#133">133</a>                         <span class="jxr_string">"RuntimeError.17"</span>, url)); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="134" href="#134">134</a>             }
-<a class="jxr_linenumber" name="135" href="#135">135</a>         }
-<a class="jxr_linenumber" name="136" href="#136">136</a>     }
-<a class="jxr_linenumber" name="137" href="#137">137</a> 
-<a class="jxr_linenumber" name="138" href="#138">138</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> parseIbatorContext(<a href="../../../../../org/mybatis/generator/config/Configuration.html">Configuration</a> configuration, Node node) {
-<a class="jxr_linenumber" name="139" href="#139">139</a> 
-<a class="jxr_linenumber" name="140" href="#140">140</a>         Properties attributes = parseAttributes(node);
-<a class="jxr_linenumber" name="141" href="#141">141</a>         String defaultModelType = attributes.getProperty(<span class="jxr_string">"defaultModelType"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="142" href="#142">142</a>         String targetRuntime = attributes.getProperty(<span class="jxr_string">"targetRuntime"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="143" href="#143">143</a>         String introspectedColumnImpl = attributes
-<a class="jxr_linenumber" name="144" href="#144">144</a>                 .getProperty(<span class="jxr_string">"introspectedColumnImpl"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="145" href="#145">145</a>         String id = attributes.getProperty(<span class="jxr_string">"id"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="146" href="#146">146</a> 
-<a class="jxr_linenumber" name="147" href="#147">147</a>         <a href="../../../../../org/mybatis/generator/config/ModelType.html">ModelType</a> mt = defaultModelType == <strong class="jxr_keyword">null</strong> ? <strong class="jxr_keyword">null</strong> : <a href="../../../../../org/mybatis/generator/config/ModelType.html">ModelType</a>
-<a class="jxr_linenumber" name="148" href="#148">148</a>                 .getModelType(defaultModelType);
-<a class="jxr_linenumber" name="149" href="#149">149</a> 
-<a class="jxr_linenumber" name="150" href="#150">150</a>         <a href="../../../../../org/mybatis/generator/config/Context.html">Context</a> context = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/mybatis/generator/config/Context.html">Context</a>(mt);
-<a class="jxr_linenumber" name="151" href="#151">151</a>         context.setId(id);
-<a class="jxr_linenumber" name="152" href="#152">152</a>         <strong class="jxr_keyword">if</strong> (stringHasValue(introspectedColumnImpl)) {
-<a class="jxr_linenumber" name="153" href="#153">153</a>             context.setIntrospectedColumnImpl(introspectedColumnImpl);
-<a class="jxr_linenumber" name="154" href="#154">154</a>         }
-<a class="jxr_linenumber" name="155" href="#155">155</a>         <strong class="jxr_keyword">if</strong> (stringHasValue(targetRuntime)) {
-<a class="jxr_linenumber" name="156" href="#156">156</a>             context.setTargetRuntime(targetRuntime);
-<a class="jxr_linenumber" name="157" href="#157">157</a>         }
-<a class="jxr_linenumber" name="158" href="#158">158</a> 
-<a class="jxr_linenumber" name="159" href="#159">159</a>         configuration.addContext(context);
-<a class="jxr_linenumber" name="160" href="#160">160</a> 
-<a class="jxr_linenumber" name="161" href="#161">161</a>         NodeList nodeList = node.getChildNodes();
-<a class="jxr_linenumber" name="162" href="#162">162</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; nodeList.getLength(); i++) {
-<a class="jxr_linenumber" name="163" href="#163">163</a>             Node childNode = nodeList.item(i);
-<a class="jxr_linenumber" name="164" href="#164">164</a> 
-<a class="jxr_linenumber" name="165" href="#165">165</a>             <strong class="jxr_keyword">if</strong> (childNode.getNodeType() != Node.ELEMENT_NODE) {
-<a class="jxr_linenumber" name="166" href="#166">166</a>                 <strong class="jxr_keyword">continue</strong>;
-<a class="jxr_linenumber" name="167" href="#167">167</a>             }
-<a class="jxr_linenumber" name="168" href="#168">168</a> 
-<a class="jxr_linenumber" name="169" href="#169">169</a>             <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"property"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="170" href="#170">170</a>                 parseProperty(context, childNode);
-<a class="jxr_linenumber" name="171" href="#171">171</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"ibatorPlugin"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="172" href="#172">172</a>                 parseIbatorPlugin(context, childNode);
-<a class="jxr_linenumber" name="173" href="#173">173</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"commentGenerator"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="174" href="#174">174</a>                 parseCommentGenerator(context, childNode);
-<a class="jxr_linenumber" name="175" href="#175">175</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"jdbcConnection"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="176" href="#176">176</a>                 parseJdbcConnection(context, childNode);
-<a class="jxr_linenumber" name="177" href="#177">177</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"javaModelGenerator"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="178" href="#178">178</a>                 parseJavaModelGenerator(context, childNode);
-<a class="jxr_linenumber" name="179" href="#179">179</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"javaTypeResolver"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="180" href="#180">180</a>                 parseJavaTypeResolver(context, childNode);
-<a class="jxr_linenumber" name="181" href="#181">181</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"sqlMapGenerator"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="182" href="#182">182</a>                 parseSqlMapGenerator(context, childNode);
-<a class="jxr_linenumber" name="183" href="#183">183</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"daoGenerator"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="184" href="#184">184</a>                 parseDaoGenerator(context, childNode);
-<a class="jxr_linenumber" name="185" href="#185">185</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"table"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="186" href="#186">186</a>                 parseTable(context, childNode);
-<a class="jxr_linenumber" name="187" href="#187">187</a>             }
-<a class="jxr_linenumber" name="188" href="#188">188</a>         }
-<a class="jxr_linenumber" name="189" href="#189">189</a>     }
-<a class="jxr_linenumber" name="190" href="#190">190</a> 
-<a class="jxr_linenumber" name="191" href="#191">191</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> parseSqlMapGenerator(<a href="../../../../../org/mybatis/generator/config/Context.html">Context</a> context, Node node) {
-<a class="jxr_linenumber" name="192" href="#192">192</a>         <a href="../../../../../org/mybatis/generator/config/SqlMapGeneratorConfiguration.html">SqlMapGeneratorConfiguration</a> sqlMapGeneratorConfiguration = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/mybatis/generator/config/SqlMapGeneratorConfiguration.html">SqlMapGeneratorConfiguration</a>();
-<a class="jxr_linenumber" name="193" href="#193">193</a> 
-<a class="jxr_linenumber" name="194" href="#194">194</a>         context.setSqlMapGeneratorConfiguration(sqlMapGeneratorConfiguration);
-<a class="jxr_linenumber" name="195" href="#195">195</a> 
-<a class="jxr_linenumber" name="196" href="#196">196</a>         Properties attributes = parseAttributes(node);
-<a class="jxr_linenumber" name="197" href="#197">197</a>         String targetPackage = attributes.getProperty(<span class="jxr_string">"targetPackage"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="198" href="#198">198</a>         String targetProject = attributes.getProperty(<span class="jxr_string">"targetProject"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="199" href="#199">199</a> 
-<a class="jxr_linenumber" name="200" href="#200">200</a>         sqlMapGeneratorConfiguration.setTargetPackage(targetPackage);
-<a class="jxr_linenumber" name="201" href="#201">201</a>         sqlMapGeneratorConfiguration.setTargetProject(targetProject);
-<a class="jxr_linenumber" name="202" href="#202">202</a> 
-<a class="jxr_linenumber" name="203" href="#203">203</a>         NodeList nodeList = node.getChildNodes();
-<a class="jxr_linenumber" name="204" href="#204">204</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; nodeList.getLength(); i++) {
-<a class="jxr_linenumber" name="205" href="#205">205</a>             Node childNode = nodeList.item(i);
-<a class="jxr_linenumber" name="206" href="#206">206</a> 
-<a class="jxr_linenumber" name="207" href="#207">207</a>             <strong class="jxr_keyword">if</strong> (childNode.getNodeType() != Node.ELEMENT_NODE) {
-<a class="jxr_linenumber" name="208" href="#208">208</a>                 <strong class="jxr_keyword">continue</strong>;
-<a class="jxr_linenumber" name="209" href="#209">209</a>             }
-<a class="jxr_linenumber" name="210" href="#210">210</a> 
-<a class="jxr_linenumber" name="211" href="#211">211</a>             <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"property"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="212" href="#212">212</a>                 parseProperty(sqlMapGeneratorConfiguration, childNode);
-<a class="jxr_linenumber" name="213" href="#213">213</a>             }
-<a class="jxr_linenumber" name="214" href="#214">214</a>         }
-<a class="jxr_linenumber" name="215" href="#215">215</a>     }
-<a class="jxr_linenumber" name="216" href="#216">216</a> 
-<a class="jxr_linenumber" name="217" href="#217">217</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> parseTable(<a href="../../../../../org/mybatis/generator/config/Context.html">Context</a> context, Node node) {
-<a class="jxr_linenumber" name="218" href="#218">218</a>         <a href="../../../../../org/mybatis/generator/config/TableConfiguration.html">TableConfiguration</a> tc = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/mybatis/generator/config/TableConfiguration.html">TableConfiguration</a>(context);
-<a class="jxr_linenumber" name="219" href="#219">219</a>         context.addTableConfiguration(tc);
-<a class="jxr_linenumber" name="220" href="#220">220</a> 
-<a class="jxr_linenumber" name="221" href="#221">221</a>         Properties attributes = parseAttributes(node);
-<a class="jxr_linenumber" name="222" href="#222">222</a>         String catalog = attributes.getProperty(<span class="jxr_string">"catalog"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="223" href="#223">223</a>         String schema = attributes.getProperty(<span class="jxr_string">"schema"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="224" href="#224">224</a>         String tableName = attributes.getProperty(<span class="jxr_string">"tableName"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="225" href="#225">225</a>         String domainObjectName = attributes.getProperty(<span class="jxr_string">"domainObjectName"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="226" href="#226">226</a>         String alias = attributes.getProperty(<span class="jxr_string">"alias"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="227" href="#227">227</a>         String enableInsert = attributes.getProperty(<span class="jxr_string">"enableInsert"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="228" href="#228">228</a>         String enableSelectByPrimaryKey = attributes
-<a class="jxr_linenumber" name="229" href="#229">229</a>                 .getProperty(<span class="jxr_string">"enableSelectByPrimaryKey"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="230" href="#230">230</a>         String enableSelectByExample = attributes
-<a class="jxr_linenumber" name="231" href="#231">231</a>                 .getProperty(<span class="jxr_string">"enableSelectByExample"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="232" href="#232">232</a>         String enableUpdateByPrimaryKey = attributes
-<a class="jxr_linenumber" name="233" href="#233">233</a>                 .getProperty(<span class="jxr_string">"enableUpdateByPrimaryKey"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="234" href="#234">234</a>         String enableDeleteByPrimaryKey = attributes
-<a class="jxr_linenumber" name="235" href="#235">235</a>                 .getProperty(<span class="jxr_string">"enableDeleteByPrimaryKey"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="236" href="#236">236</a>         String enableDeleteByExample = attributes
-<a class="jxr_linenumber" name="237" href="#237">237</a>                 .getProperty(<span class="jxr_string">"enableDeleteByExample"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="238" href="#238">238</a>         String enableCountByExample = attributes
-<a class="jxr_linenumber" name="239" href="#239">239</a>                 .getProperty(<span class="jxr_string">"enableCountByExample"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="240" href="#240">240</a>         String enableUpdateByExample = attributes
-<a class="jxr_linenumber" name="241" href="#241">241</a>                 .getProperty(<span class="jxr_string">"enableUpdateByExample"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="242" href="#242">242</a>         String selectByPrimaryKeyQueryId = attributes
-<a class="jxr_linenumber" name="243" href="#243">243</a>                 .getProperty(<span class="jxr_string">"selectByPrimaryKeyQueryId"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="244" href="#244">244</a>         String selectByExampleQueryId = attributes
-<a class="jxr_linenumber" name="245" href="#245">245</a>                 .getProperty(<span class="jxr_string">"selectByExampleQueryId"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="246" href="#246">246</a>         String modelType = attributes.getProperty(<span class="jxr_string">"modelType"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="247" href="#247">247</a>         String escapeWildcards = attributes.getProperty(<span class="jxr_string">"escapeWildcards"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="248" href="#248">248</a>         String delimitIdentifiers = attributes
-<a class="jxr_linenumber" name="249" href="#249">249</a>                 .getProperty(<span class="jxr_string">"delimitIdentifiers"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="250" href="#250">250</a>         String delimitAllColumns = attributes.getProperty(<span class="jxr_string">"delimitAllColumns"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="251" href="#251">251</a> 
-<a class="jxr_linenumber" name="252" href="#252">252</a>         <strong class="jxr_keyword">if</strong> (stringHasValue(catalog)) {
-<a class="jxr_linenumber" name="253" href="#253">253</a>             tc.setCatalog(catalog);
-<a class="jxr_linenumber" name="254" href="#254">254</a>         }
-<a class="jxr_linenumber" name="255" href="#255">255</a> 
-<a class="jxr_linenumber" name="256" href="#256">256</a>         <strong class="jxr_keyword">if</strong> (stringHasValue(schema)) {
-<a class="jxr_linenumber" name="257" href="#257">257</a>             tc.setSchema(schema);
-<a class="jxr_linenumber" name="258" href="#258">258</a>         }
-<a class="jxr_linenumber" name="259" href="#259">259</a> 
-<a class="jxr_linenumber" name="260" href="#260">260</a>         <strong class="jxr_keyword">if</strong> (stringHasValue(tableName)) {
-<a class="jxr_linenumber" name="261" href="#261">261</a>             tc.setTableName(tableName);
-<a class="jxr_linenumber" name="262" href="#262">262</a>         }
-<a class="jxr_linenumber" name="263" href="#263">263</a> 
-<a class="jxr_linenumber" name="264" href="#264">264</a>         <strong class="jxr_keyword">if</strong> (stringHasValue(domainObjectName)) {
-<a class="jxr_linenumber" name="265" href="#265">265</a>             tc.setDomainObjectName(domainObjectName);
-<a class="jxr_linenumber" name="266" href="#266">266</a>         }
-<a class="jxr_linenumber" name="267" href="#267">267</a> 
-<a class="jxr_linenumber" name="268" href="#268">268</a>         <strong class="jxr_keyword">if</strong> (stringHasValue(alias)) {
-<a class="jxr_linenumber" name="269" href="#269">269</a>             tc.setAlias(alias);
-<a class="jxr_linenumber" name="270" href="#270">270</a>         }
-<a class="jxr_linenumber" name="271" href="#271">271</a> 
-<a class="jxr_linenumber" name="272" href="#272">272</a>         <strong class="jxr_keyword">if</strong> (stringHasValue(enableInsert)) {
-<a class="jxr_linenumber" name="273" href="#273">273</a>             tc.setInsertStatementEnabled(isTrue(enableInsert));
-<a class="jxr_linenumber" name="274" href="#274">274</a>         }
-<a class="jxr_linenumber" name="275" href="#275">275</a> 
-<a class="jxr_linenumber" name="276" href="#276">276</a>         <strong class="jxr_keyword">if</strong> (stringHasValue(enableSelectByPrimaryKey)) {
-<a class="jxr_linenumber" name="277" href="#277">277</a>             tc.setSelectByPrimaryKeyStatementEnabled(isTrue(enableSelectByPrimaryKey));
-<a class="jxr_linenumber" name="278" href="#278">278</a>         }
-<a class="jxr_linenumber" name="279" href="#279">279</a> 
-<a class="jxr_linenumber" name="280" href="#280">280</a>         <strong class="jxr_keyword">if</strong> (stringHasValue(enableSelectByExample)) {
-<a class="jxr_linenumber" name="281" href="#281">281</a>             tc.setSelectByExampleStatementEnabled(isTrue(enableSelectByExample));
-<a class="jxr_linenumber" name="282" href="#282">282</a>         }
-<a class="jxr_linenumber" name="283" href="#283">283</a> 
-<a class="jxr_linenumber" name="284" href="#284">284</a>         <strong class="jxr_keyword">if</strong> (stringHasValue(enableUpdateByPrimaryKey)) {
-<a class="jxr_linenumber" name="285" href="#285">285</a>             tc.setUpdateByPrimaryKeyStatementEnabled(isTrue(enableUpdateByPrimaryKey));
-<a class="jxr_linenumber" name="286" href="#286">286</a>         }
-<a class="jxr_linenumber" name="287" href="#287">287</a> 
-<a class="jxr_linenumber" name="288" href="#288">288</a>         <strong class="jxr_keyword">if</strong> (stringHasValue(enableDeleteByPrimaryKey)) {
-<a class="jxr_linenumber" name="289" href="#289">289</a>             tc.setDeleteByPrimaryKeyStatementEnabled(isTrue(enableDeleteByPrimaryKey));
-<a class="jxr_linenumber" name="290" href="#290">290</a>         }
-<a class="jxr_linenumber" name="291" href="#291">291</a> 
-<a class="jxr_linenumber" name="292" href="#292">292</a>         <strong class="jxr_keyword">if</strong> (stringHasValue(enableDeleteByExample)) {
-<a class="jxr_linenumber" name="293" href="#293">293</a>             tc.setDeleteByExampleStatementEnabled(isTrue(enableDeleteByExample));
-<a class="jxr_linenumber" name="294" href="#294">294</a>         }
-<a class="jxr_linenumber" name="295" href="#295">295</a> 
-<a class="jxr_linenumber" name="296" href="#296">296</a>         <strong class="jxr_keyword">if</strong> (stringHasValue(enableCountByExample)) {
-<a class="jxr_linenumber" name="297" href="#297">297</a>             tc.setCountByExampleStatementEnabled(isTrue(enableCountByExample));
-<a class="jxr_linenumber" name="298" href="#298">298</a>         }
-<a class="jxr_linenumber" name="299" href="#299">299</a> 
-<a class="jxr_linenumber" name="300" href="#300">300</a>         <strong class="jxr_keyword">if</strong> (stringHasValue(enableUpdateByExample)) {
-<a class="jxr_linenumber" name="301" href="#301">301</a>             tc.setUpdateByExampleStatementEnabled(isTrue(enableUpdateByExample));
-<a class="jxr_linenumber" name="302" href="#302">302</a>         }
-<a class="jxr_linenumber" name="303" href="#303">303</a> 
-<a class="jxr_linenumber" name="304" href="#304">304</a>         <strong class="jxr_keyword">if</strong> (stringHasValue(selectByPrimaryKeyQueryId)) {
-<a class="jxr_linenumber" name="305" href="#305">305</a>             tc.setSelectByPrimaryKeyQueryId(selectByPrimaryKeyQueryId);
-<a class="jxr_linenumber" name="306" href="#306">306</a>         }
-<a class="jxr_linenumber" name="307" href="#307">307</a> 
-<a class="jxr_linenumber" name="308" href="#308">308</a>         <strong class="jxr_keyword">if</strong> (stringHasValue(selectByExampleQueryId)) {
-<a class="jxr_linenumber" name="309" href="#309">309</a>             tc.setSelectByExampleQueryId(selectByExampleQueryId);
-<a class="jxr_linenumber" name="310" href="#310">310</a>         }
-<a class="jxr_linenumber" name="311" href="#311">311</a> 
-<a class="jxr_linenumber" name="312" href="#312">312</a>         <strong class="jxr_keyword">if</strong> (stringHasValue(modelType)) {
-<a class="jxr_linenumber" name="313" href="#313">313</a>             tc.setConfiguredModelType(modelType);
-<a class="jxr_linenumber" name="314" href="#314">314</a>         }
-<a class="jxr_linenumber" name="315" href="#315">315</a> 
-<a class="jxr_linenumber" name="316" href="#316">316</a>         <strong class="jxr_keyword">if</strong> (stringHasValue(escapeWildcards)) {
-<a class="jxr_linenumber" name="317" href="#317">317</a>             tc.setWildcardEscapingEnabled(isTrue(escapeWildcards));
-<a class="jxr_linenumber" name="318" href="#318">318</a>         }
-<a class="jxr_linenumber" name="319" href="#319">319</a> 
-<a class="jxr_linenumber" name="320" href="#320">320</a>         <strong class="jxr_keyword">if</strong> (stringHasValue(delimitIdentifiers)) {
-<a class="jxr_linenumber" name="321" href="#321">321</a>             tc.setDelimitIdentifiers(isTrue(delimitIdentifiers));
-<a class="jxr_linenumber" name="322" href="#322">322</a>         }
-<a class="jxr_linenumber" name="323" href="#323">323</a> 
-<a class="jxr_linenumber" name="324" href="#324">324</a>         <strong class="jxr_keyword">if</strong> (stringHasValue(delimitAllColumns)) {
-<a class="jxr_linenumber" name="325" href="#325">325</a>             tc.setAllColumnDelimitingEnabled(isTrue(delimitAllColumns));
-<a class="jxr_linenumber" name="326" href="#326">326</a>         }
-<a class="jxr_linenumber" name="327" href="#327">327</a> 
-<a class="jxr_linenumber" name="328" href="#328">328</a>         NodeList nodeList = node.getChildNodes();
-<a class="jxr_linenumber" name="329" href="#329">329</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; nodeList.getLength(); i++) {
-<a class="jxr_linenumber" name="330" href="#330">330</a>             Node childNode = nodeList.item(i);
-<a class="jxr_linenumber" name="331" href="#331">331</a> 
-<a class="jxr_linenumber" name="332" href="#332">332</a>             <strong class="jxr_keyword">if</strong> (childNode.getNodeType() != Node.ELEMENT_NODE) {
-<a class="jxr_linenumber" name="333" href="#333">333</a>                 <strong class="jxr_keyword">continue</strong>;
-<a class="jxr_linenumber" name="334" href="#334">334</a>             }
-<a class="jxr_linenumber" name="335" href="#335">335</a> 
-<a class="jxr_linenumber" name="336" href="#336">336</a>             <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"property"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="337" href="#337">337</a>                 parseProperty(tc, childNode);
-<a class="jxr_linenumber" name="338" href="#338">338</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"columnOverride"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="339" href="#339">339</a>                 parseColumnOverride(tc, childNode);
-<a class="jxr_linenumber" name="340" href="#340">340</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"ignoreColumn"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="341" href="#341">341</a>                 parseIgnoreColumn(tc, childNode);
-<a class="jxr_linenumber" name="342" href="#342">342</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"generatedKey"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="343" href="#343">343</a>                 parseGeneratedKey(tc, childNode);
-<a class="jxr_linenumber" name="344" href="#344">344</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"columnRenamingRule"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="345" href="#345">345</a>                 parseColumnRenamingRule(tc, childNode);
-<a class="jxr_linenumber" name="346" href="#346">346</a>             }
-<a class="jxr_linenumber" name="347" href="#347">347</a>         }
-<a class="jxr_linenumber" name="348" href="#348">348</a>     }
-<a class="jxr_linenumber" name="349" href="#349">349</a> 
-<a class="jxr_linenumber" name="350" href="#350">350</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> parseColumnOverride(<a href="../../../../../org/mybatis/generator/config/TableConfiguration.html">TableConfiguration</a> tc, Node node) {
-<a class="jxr_linenumber" name="351" href="#351">351</a>         Properties attributes = parseAttributes(node);
-<a class="jxr_linenumber" name="352" href="#352">352</a>         String column = attributes.getProperty(<span class="jxr_string">"column"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="353" href="#353">353</a>         String property = attributes.getProperty(<span class="jxr_string">"property"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="354" href="#354">354</a>         String javaType = attributes.getProperty(<span class="jxr_string">"javaType"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="355" href="#355">355</a>         String jdbcType = attributes.getProperty(<span class="jxr_string">"jdbcType"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="356" href="#356">356</a>         String typeHandler = attributes.getProperty(<span class="jxr_string">"typeHandler"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="357" href="#357">357</a>         String delimitedColumnName = attributes
-<a class="jxr_linenumber" name="358" href="#358">358</a>                 .getProperty(<span class="jxr_string">"delimitedColumnName"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="359" href="#359">359</a> 
-<a class="jxr_linenumber" name="360" href="#360">360</a>         <a href="../../../../../org/mybatis/generator/config/ColumnOverride.html">ColumnOverride</a> co = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/mybatis/generator/config/ColumnOverride.html">ColumnOverride</a>(column);
-<a class="jxr_linenumber" name="361" href="#361">361</a> 
-<a class="jxr_linenumber" name="362" href="#362">362</a>         <strong class="jxr_keyword">if</strong> (stringHasValue(property)) {
-<a class="jxr_linenumber" name="363" href="#363">363</a>             co.setJavaProperty(property);
-<a class="jxr_linenumber" name="364" href="#364">364</a>         }
-<a class="jxr_linenumber" name="365" href="#365">365</a> 
-<a class="jxr_linenumber" name="366" href="#366">366</a>         <strong class="jxr_keyword">if</strong> (stringHasValue(javaType)) {
-<a class="jxr_linenumber" name="367" href="#367">367</a>             co.setJavaType(javaType);
-<a class="jxr_linenumber" name="368" href="#368">368</a>         }
-<a class="jxr_linenumber" name="369" href="#369">369</a> 
-<a class="jxr_linenumber" name="370" href="#370">370</a>         <strong class="jxr_keyword">if</strong> (stringHasValue(jdbcType)) {
-<a class="jxr_linenumber" name="371" href="#371">371</a>             co.setJdbcType(jdbcType);
-<a class="jxr_linenumber" name="372" href="#372">372</a>         }
-<a class="jxr_linenumber" name="373" href="#373">373</a> 
-<a class="jxr_linenumber" name="374" href="#374">374</a>         <strong class="jxr_keyword">if</strong> (stringHasValue(typeHandler)) {
-<a class="jxr_linenumber" name="375" href="#375">375</a>             co.setTypeHandler(typeHandler);
-<a class="jxr_linenumber" name="376" href="#376">376</a>         }
-<a class="jxr_linenumber" name="377" href="#377">377</a> 
-<a class="jxr_linenumber" name="378" href="#378">378</a>         <strong class="jxr_keyword">if</strong> (stringHasValue(delimitedColumnName)) {
-<a class="jxr_linenumber" name="379" href="#379">379</a>             co.setColumnNameDelimited(isTrue(delimitedColumnName));
-<a class="jxr_linenumber" name="380" href="#380">380</a>         }
-<a class="jxr_linenumber" name="381" href="#381">381</a> 
-<a class="jxr_linenumber" name="382" href="#382">382</a>         NodeList nodeList = node.getChildNodes();
-<a class="jxr_linenumber" name="383" href="#383">383</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; nodeList.getLength(); i++) {
-<a class="jxr_linenumber" name="384" href="#384">384</a>             Node childNode = nodeList.item(i);
-<a class="jxr_linenumber" name="385" href="#385">385</a> 
-<a class="jxr_linenumber" name="386" href="#386">386</a>             <strong class="jxr_keyword">if</strong> (childNode.getNodeType() != Node.ELEMENT_NODE) {
-<a class="jxr_linenumber" name="387" href="#387">387</a>                 <strong class="jxr_keyword">continue</strong>;
-<a class="jxr_linenumber" name="388" href="#388">388</a>             }
-<a class="jxr_linenumber" name="389" href="#389">389</a> 
-<a class="jxr_linenumber" name="390" href="#390">390</a>             <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"property"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="391" href="#391">391</a>                 parseProperty(co, childNode);
-<a class="jxr_linenumber" name="392" href="#392">392</a>             }
-<a class="jxr_linenumber" name="393" href="#393">393</a>         }
-<a class="jxr_linenumber" name="394" href="#394">394</a> 
-<a class="jxr_linenumber" name="395" href="#395">395</a>         tc.addColumnOverride(co);
-<a class="jxr_linenumber" name="396" href="#396">396</a>     }
-<a class="jxr_linenumber" name="397" href="#397">397</a> 
-<a class="jxr_linenumber" name="398" href="#398">398</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> parseGeneratedKey(<a href="../../../../../org/mybatis/generator/config/TableConfiguration.html">TableConfiguration</a> tc, Node node) {
-<a class="jxr_linenumber" name="399" href="#399">399</a>         Properties attributes = parseAttributes(node);
-<a class="jxr_linenumber" name="400" href="#400">400</a> 
-<a class="jxr_linenumber" name="401" href="#401">401</a>         String column = attributes.getProperty(<span class="jxr_string">"column"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="402" href="#402">402</a>         <strong class="jxr_keyword">boolean</strong> identity = isTrue(attributes
-<a class="jxr_linenumber" name="403" href="#403">403</a>                 .getProperty(<span class="jxr_string">"identity"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="404" href="#404">404</a>         String sqlStatement = attributes.getProperty(<span class="jxr_string">"sqlStatement"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="405" href="#405">405</a>         String type = attributes.getProperty(<span class="jxr_string">"type"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="406" href="#406">406</a> 
-<a class="jxr_linenumber" name="407" href="#407">407</a>         <a href="../../../../../org/mybatis/generator/config/GeneratedKey.html">GeneratedKey</a> gk = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/mybatis/generator/config/GeneratedKey.html">GeneratedKey</a>(column, sqlStatement, identity, type);
-<a class="jxr_linenumber" name="408" href="#408">408</a> 
-<a class="jxr_linenumber" name="409" href="#409">409</a>         tc.setGeneratedKey(gk);
-<a class="jxr_linenumber" name="410" href="#410">410</a>     }
-<a class="jxr_linenumber" name="411" href="#411">411</a> 
-<a class="jxr_linenumber" name="412" href="#412">412</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> parseIgnoreColumn(<a href="../../../../../org/mybatis/generator/config/TableConfiguration.html">TableConfiguration</a> tc, Node node) {
-<a class="jxr_linenumber" name="413" href="#413">413</a>         Properties attributes = parseAttributes(node);
-<a class="jxr_linenumber" name="414" href="#414">414</a>         String column = attributes.getProperty(<span class="jxr_string">"column"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="415" href="#415">415</a>         String delimitedColumnName = attributes
-<a class="jxr_linenumber" name="416" href="#416">416</a>                 .getProperty(<span class="jxr_string">"delimitedColumnName"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="417" href="#417">417</a> 
-<a class="jxr_linenumber" name="418" href="#418">418</a>         <a href="../../../../../org/mybatis/generator/config/IgnoredColumn.html">IgnoredColumn</a> ic = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/mybatis/generator/config/IgnoredColumn.html">IgnoredColumn</a>(column);
-<a class="jxr_linenumber" name="419" href="#419">419</a> 
-<a class="jxr_linenumber" name="420" href="#420">420</a>         <strong class="jxr_keyword">if</strong> (stringHasValue(delimitedColumnName)) {
-<a class="jxr_linenumber" name="421" href="#421">421</a>             ic.setColumnNameDelimited(isTrue(delimitedColumnName));
-<a class="jxr_linenumber" name="422" href="#422">422</a>         }
-<a class="jxr_linenumber" name="423" href="#423">423</a> 
-<a class="jxr_linenumber" name="424" href="#424">424</a>         tc.addIgnoredColumn(ic);
-<a class="jxr_linenumber" name="425" href="#425">425</a>     }
-<a class="jxr_linenumber" name="426" href="#426">426</a> 
-<a class="jxr_linenumber" name="427" href="#427">427</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> parseColumnRenamingRule(<a href="../../../../../org/mybatis/generator/config/TableConfiguration.html">TableConfiguration</a> tc, Node node) {
-<a class="jxr_linenumber" name="428" href="#428">428</a>         Properties attributes = parseAttributes(node);
-<a class="jxr_linenumber" name="429" href="#429">429</a>         String searchString = attributes.getProperty(<span class="jxr_string">"searchString"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="430" href="#430">430</a>         String replaceString = attributes.getProperty(<span class="jxr_string">"replaceString"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="431" href="#431">431</a> 
-<a class="jxr_linenumber" name="432" href="#432">432</a>         <a href="../../../../../org/mybatis/generator/config/ColumnRenamingRule.html">ColumnRenamingRule</a> crr = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/mybatis/generator/config/ColumnRenamingRule.html">ColumnRenamingRule</a>();
-<a class="jxr_linenumber" name="433" href="#433">433</a> 
-<a class="jxr_linenumber" name="434" href="#434">434</a>         crr.setSearchString(searchString);
-<a class="jxr_linenumber" name="435" href="#435">435</a> 
-<a class="jxr_linenumber" name="436" href="#436">436</a>         <strong class="jxr_keyword">if</strong> (stringHasValue(replaceString)) {
-<a class="jxr_linenumber" name="437" href="#437">437</a>             crr.setReplaceString(replaceString);
-<a class="jxr_linenumber" name="438" href="#438">438</a>         }
-<a class="jxr_linenumber" name="439" href="#439">439</a> 
-<a class="jxr_linenumber" name="440" href="#440">440</a>         tc.setColumnRenamingRule(crr);
-<a class="jxr_linenumber" name="441" href="#441">441</a>     }
-<a class="jxr_linenumber" name="442" href="#442">442</a> 
-<a class="jxr_linenumber" name="443" href="#443">443</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> parseJavaTypeResolver(<a href="../../../../../org/mybatis/generator/config/Context.html">Context</a> context, Node node) {
-<a class="jxr_linenumber" name="444" href="#444">444</a>         <a href="../../../../../org/mybatis/generator/config/JavaTypeResolverConfiguration.html">JavaTypeResolverConfiguration</a> javaTypeResolverConfiguration = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/mybatis/generator/config/JavaTypeResolverConfiguration.html">JavaTypeResolverConfiguration</a>();
-<a class="jxr_linenumber" name="445" href="#445">445</a> 
-<a class="jxr_linenumber" name="446" href="#446">446</a>         context.setJavaTypeResolverConfiguration(javaTypeResolverConfiguration);
-<a class="jxr_linenumber" name="447" href="#447">447</a> 
-<a class="jxr_linenumber" name="448" href="#448">448</a>         Properties attributes = parseAttributes(node);
-<a class="jxr_linenumber" name="449" href="#449">449</a>         String type = attributes.getProperty(<span class="jxr_string">"type"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="450" href="#450">450</a> 
-<a class="jxr_linenumber" name="451" href="#451">451</a>         <strong class="jxr_keyword">if</strong> (stringHasValue(type)) {
-<a class="jxr_linenumber" name="452" href="#452">452</a>             javaTypeResolverConfiguration.setConfigurationType(type);
-<a class="jxr_linenumber" name="453" href="#453">453</a>         }
-<a class="jxr_linenumber" name="454" href="#454">454</a> 
-<a class="jxr_linenumber" name="455" href="#455">455</a>         NodeList nodeList = node.getChildNodes();
-<a class="jxr_linenumber" name="456" href="#456">456</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; nodeList.getLength(); i++) {
-<a class="jxr_linenumber" name="457" href="#457">457</a>             Node childNode = nodeList.item(i);
-<a class="jxr_linenumber" name="458" href="#458">458</a> 
-<a class="jxr_linenumber" name="459" href="#459">459</a>             <strong class="jxr_keyword">if</strong> (childNode.getNodeType() != Node.ELEMENT_NODE) {
-<a class="jxr_linenumber" name="460" href="#460">460</a>                 <strong class="jxr_keyword">continue</strong>;
-<a class="jxr_linenumber" name="461" href="#461">461</a>             }
-<a class="jxr_linenumber" name="462" href="#462">462</a> 
-<a class="jxr_linenumber" name="463" href="#463">463</a>             <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"property"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="464" href="#464">464</a>                 parseProperty(javaTypeResolverConfiguration, childNode);
-<a class="jxr_linenumber" name="465" href="#465">465</a>             }
-<a class="jxr_linenumber" name="466" href="#466">466</a>         }
-<a class="jxr_linenumber" name="467" href="#467">467</a>     }
-<a class="jxr_linenumber" name="468" href="#468">468</a> 
-<a class="jxr_linenumber" name="469" href="#469">469</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> parseIbatorPlugin(<a href="../../../../../org/mybatis/generator/config/Context.html">Context</a> context, Node node) {
-<a class="jxr_linenumber" name="470" href="#470">470</a>         <a href="../../../../../org/mybatis/generator/config/PluginConfiguration.html">PluginConfiguration</a> pluginConfiguration = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/mybatis/generator/config/PluginConfiguration.html">PluginConfiguration</a>();
-<a class="jxr_linenumber" name="471" href="#471">471</a> 
-<a class="jxr_linenumber" name="472" href="#472">472</a>         context.addPluginConfiguration(pluginConfiguration);
-<a class="jxr_linenumber" name="473" href="#473">473</a> 
-<a class="jxr_linenumber" name="474" href="#474">474</a>         Properties attributes = parseAttributes(node);
-<a class="jxr_linenumber" name="475" href="#475">475</a>         String type = attributes.getProperty(<span class="jxr_string">"type"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="476" href="#476">476</a> 
-<a class="jxr_linenumber" name="477" href="#477">477</a>         pluginConfiguration.setConfigurationType(type);
-<a class="jxr_linenumber" name="478" href="#478">478</a> 
-<a class="jxr_linenumber" name="479" href="#479">479</a>         NodeList nodeList = node.getChildNodes();
-<a class="jxr_linenumber" name="480" href="#480">480</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; nodeList.getLength(); i++) {
-<a class="jxr_linenumber" name="481" href="#481">481</a>             Node childNode = nodeList.item(i);
-<a class="jxr_linenumber" name="482" href="#482">482</a> 
-<a class="jxr_linenumber" name="483" href="#483">483</a>             <strong class="jxr_keyword">if</strong> (childNode.getNodeType() != Node.ELEMENT_NODE) {
-<a class="jxr_linenumber" name="484" href="#484">484</a>                 <strong class="jxr_keyword">continue</strong>;
-<a class="jxr_linenumber" name="485" href="#485">485</a>             }
-<a class="jxr_linenumber" name="486" href="#486">486</a> 
-<a class="jxr_linenumber" name="487" href="#487">487</a>             <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"property"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="488" href="#488">488</a>                 parseProperty(pluginConfiguration, childNode);
-<a class="jxr_linenumber" name="489" href="#489">489</a>             }
-<a class="jxr_linenumber" name="490" href="#490">490</a>         }
-<a class="jxr_linenumber" name="491" href="#491">491</a>     }
-<a class="jxr_linenumber" name="492" href="#492">492</a> 
-<a class="jxr_linenumber" name="493" href="#493">493</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> parseJavaModelGenerator(<a href="../../../../../org/mybatis/generator/config/Context.html">Context</a> context, Node node) {
-<a class="jxr_linenumber" name="494" href="#494">494</a>         <a href="../../../../../org/mybatis/generator/config/JavaModelGeneratorConfiguration.html">JavaModelGeneratorConfiguration</a> javaModelGeneratorConfiguration = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/mybatis/generator/config/JavaModelGeneratorConfiguration.html">JavaModelGeneratorConfiguration</a>();
-<a class="jxr_linenumber" name="495" href="#495">495</a> 
-<a class="jxr_linenumber" name="496" href="#496">496</a>         context
-<a class="jxr_linenumber" name="497" href="#497">497</a>                 .setJavaModelGeneratorConfiguration(javaModelGeneratorConfiguration);
-<a class="jxr_linenumber" name="498" href="#498">498</a> 
-<a class="jxr_linenumber" name="499" href="#499">499</a>         Properties attributes = parseAttributes(node);
-<a class="jxr_linenumber" name="500" href="#500">500</a>         String targetPackage = attributes.getProperty(<span class="jxr_string">"targetPackage"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="501" href="#501">501</a>         String targetProject = attributes.getProperty(<span class="jxr_string">"targetProject"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="502" href="#502">502</a> 
-<a class="jxr_linenumber" name="503" href="#503">503</a>         javaModelGeneratorConfiguration.setTargetPackage(targetPackage);
-<a class="jxr_linenumber" name="504" href="#504">504</a>         javaModelGeneratorConfiguration.setTargetProject(targetProject);
-<a class="jxr_linenumber" name="505" href="#505">505</a> 
-<a class="jxr_linenumber" name="506" href="#506">506</a>         NodeList nodeList = node.getChildNodes();
-<a class="jxr_linenumber" name="507" href="#507">507</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; nodeList.getLength(); i++) {
-<a class="jxr_linenumber" name="508" href="#508">508</a>             Node childNode = nodeList.item(i);
-<a class="jxr_linenumber" name="509" href="#509">509</a> 
-<a class="jxr_linenumber" name="510" href="#510">510</a>             <strong class="jxr_keyword">if</strong> (childNode.getNodeType() != Node.ELEMENT_NODE) {
-<a class="jxr_linenumber" name="511" href="#511">511</a>                 <strong class="jxr_keyword">continue</strong>;
-<a class="jxr_linenumber" name="512" href="#512">512</a>             }
-<a class="jxr_linenumber" name="513" href="#513">513</a> 
-<a class="jxr_linenumber" name="514" href="#514">514</a>             <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"property"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="515" href="#515">515</a>                 parseProperty(javaModelGeneratorConfiguration, childNode);
-<a class="jxr_linenumber" name="516" href="#516">516</a>             }
-<a class="jxr_linenumber" name="517" href="#517">517</a>         }
-<a class="jxr_linenumber" name="518" href="#518">518</a>     }
-<a class="jxr_linenumber" name="519" href="#519">519</a> 
-<a class="jxr_linenumber" name="520" href="#520">520</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> parseDaoGenerator(<a href="../../../../../org/mybatis/generator/config/Context.html">Context</a> context, Node node) {
-<a class="jxr_linenumber" name="521" href="#521">521</a>         <a href="../../../../../org/mybatis/generator/config/JavaClientGeneratorConfiguration.html">JavaClientGeneratorConfiguration</a> javaClientGeneratorConfiguration = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/mybatis/generator/config/JavaClientGeneratorConfiguration.html">JavaClientGeneratorConfiguration</a>();
-<a class="jxr_linenumber" name="522" href="#522">522</a> 
-<a class="jxr_linenumber" name="523" href="#523">523</a>         context.setJavaClientGeneratorConfiguration(javaClientGeneratorConfiguration);
-<a class="jxr_linenumber" name="524" href="#524">524</a> 
-<a class="jxr_linenumber" name="525" href="#525">525</a>         Properties attributes = parseAttributes(node);
-<a class="jxr_linenumber" name="526" href="#526">526</a>         String type = attributes.getProperty(<span class="jxr_string">"type"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="527" href="#527">527</a>         String targetPackage = attributes.getProperty(<span class="jxr_string">"targetPackage"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="528" href="#528">528</a>         String targetProject = attributes.getProperty(<span class="jxr_string">"targetProject"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="529" href="#529">529</a>         String implementationPackage = attributes
-<a class="jxr_linenumber" name="530" href="#530">530</a>                 .getProperty(<span class="jxr_string">"implementationPackage"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="531" href="#531">531</a> 
-<a class="jxr_linenumber" name="532" href="#532">532</a>         javaClientGeneratorConfiguration.setConfigurationType(type);
-<a class="jxr_linenumber" name="533" href="#533">533</a>         javaClientGeneratorConfiguration.setTargetPackage(targetPackage);
-<a class="jxr_linenumber" name="534" href="#534">534</a>         javaClientGeneratorConfiguration.setTargetProject(targetProject);
-<a class="jxr_linenumber" name="535" href="#535">535</a>         javaClientGeneratorConfiguration
-<a class="jxr_linenumber" name="536" href="#536">536</a>                 .setImplementationPackage(implementationPackage);
-<a class="jxr_linenumber" name="537" href="#537">537</a> 
-<a class="jxr_linenumber" name="538" href="#538">538</a>         NodeList nodeList = node.getChildNodes();
-<a class="jxr_linenumber" name="539" href="#539">539</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; nodeList.getLength(); i++) {
-<a class="jxr_linenumber" name="540" href="#540">540</a>             Node childNode = nodeList.item(i);
-<a class="jxr_linenumber" name="541" href="#541">541</a> 
-<a class="jxr_linenumber" name="542" href="#542">542</a>             <strong class="jxr_keyword">if</strong> (childNode.getNodeType() != Node.ELEMENT_NODE) {
-<a class="jxr_linenumber" name="543" href="#543">543</a>                 <strong class="jxr_keyword">continue</strong>;
-<a class="jxr_linenumber" name="544" href="#544">544</a>             }
-<a class="jxr_linenumber" name="545" href="#545">545</a> 
-<a class="jxr_linenumber" name="546" href="#546">546</a>             <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"property"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="547" href="#547">547</a>                 parseProperty(javaClientGeneratorConfiguration, childNode);
-<a class="jxr_linenumber" name="548" href="#548">548</a>             }
-<a class="jxr_linenumber" name="549" href="#549">549</a>         }
-<a class="jxr_linenumber" name="550" href="#550">550</a>     }
-<a class="jxr_linenumber" name="551" href="#551">551</a> 
-<a class="jxr_linenumber" name="552" href="#552">552</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> parseJdbcConnection(<a href="../../../../../org/mybatis/generator/config/Context.html">Context</a> context, Node node) {
-<a class="jxr_linenumber" name="553" href="#553">553</a>         <a href="../../../../../org/mybatis/generator/config/JDBCConnectionConfiguration.html">JDBCConnectionConfiguration</a> jdbcConnectionConfiguration = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/mybatis/generator/config/JDBCConnectionConfiguration.html">JDBCConnectionConfiguration</a>();
-<a class="jxr_linenumber" name="554" href="#554">554</a> 
-<a class="jxr_linenumber" name="555" href="#555">555</a>         context.setJdbcConnectionConfiguration(jdbcConnectionConfiguration);
-<a class="jxr_linenumber" name="556" href="#556">556</a> 
-<a class="jxr_linenumber" name="557" href="#557">557</a>         Properties attributes = parseAttributes(node);
-<a class="jxr_linenumber" name="558" href="#558">558</a>         String driverClass = attributes.getProperty(<span class="jxr_string">"driverClass"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="559" href="#559">559</a>         String connectionURL = attributes.getProperty(<span class="jxr_string">"connectionURL"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="560" href="#560">560</a>         String userId = attributes.getProperty(<span class="jxr_string">"userId"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="561" href="#561">561</a>         String password = attributes.getProperty(<span class="jxr_string">"password"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="562" href="#562">562</a> 
-<a class="jxr_linenumber" name="563" href="#563">563</a>         jdbcConnectionConfiguration.setDriverClass(driverClass);
-<a class="jxr_linenumber" name="564" href="#564">564</a>         jdbcConnectionConfiguration.setConnectionURL(connectionURL);
-<a class="jxr_linenumber" name="565" href="#565">565</a> 
-<a class="jxr_linenumber" name="566" href="#566">566</a>         <strong class="jxr_keyword">if</strong> (stringHasValue(userId)) {
-<a class="jxr_linenumber" name="567" href="#567">567</a>             jdbcConnectionConfiguration.setUserId(userId);
-<a class="jxr_linenumber" name="568" href="#568">568</a>         }
-<a class="jxr_linenumber" name="569" href="#569">569</a> 
-<a class="jxr_linenumber" name="570" href="#570">570</a>         <strong class="jxr_keyword">if</strong> (stringHasValue(password)) {
-<a class="jxr_linenumber" name="571" href="#571">571</a>             jdbcConnectionConfiguration.setPassword(password);
-<a class="jxr_linenumber" name="572" href="#572">572</a>         }
-<a class="jxr_linenumber" name="573" href="#573">573</a> 
-<a class="jxr_linenumber" name="574" href="#574">574</a>         NodeList nodeList = node.getChildNodes();
-<a class="jxr_linenumber" name="575" href="#575">575</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; nodeList.getLength(); i++) {
-<a class="jxr_linenumber" name="576" href="#576">576</a>             Node childNode = nodeList.item(i);
-<a class="jxr_linenumber" name="577" href="#577">577</a> 
-<a class="jxr_linenumber" name="578" href="#578">578</a>             <strong class="jxr_keyword">if</strong> (childNode.getNodeType() != Node.ELEMENT_NODE) {
-<a class="jxr_linenumber" name="579" href="#579">579</a>                 <strong class="jxr_keyword">continue</strong>;
-<a class="jxr_linenumber" name="580" href="#580">580</a>             }
-<a class="jxr_linenumber" name="581" href="#581">581</a> 
-<a class="jxr_linenumber" name="582" href="#582">582</a>             <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"property"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="583" href="#583">583</a>                 parseProperty(jdbcConnectionConfiguration, childNode);
-<a class="jxr_linenumber" name="584" href="#584">584</a>             }
-<a class="jxr_linenumber" name="585" href="#585">585</a>         }
-<a class="jxr_linenumber" name="586" href="#586">586</a>     }
-<a class="jxr_linenumber" name="587" href="#587">587</a> 
-<a class="jxr_linenumber" name="588" href="#588">588</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> parseClassPathEntry(<a href="../../../../../org/mybatis/generator/config/Configuration.html">Configuration</a> configuration, Node node) {
-<a class="jxr_linenumber" name="589" href="#589">589</a>         Properties attributes = parseAttributes(node);
-<a class="jxr_linenumber" name="590" href="#590">590</a> 
-<a class="jxr_linenumber" name="591" href="#591">591</a>         configuration.addClasspathEntry(attributes.getProperty(<span class="jxr_string">"location"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="592" href="#592">592</a>     }
-<a class="jxr_linenumber" name="593" href="#593">593</a> 
-<a class="jxr_linenumber" name="594" href="#594">594</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> parseProperty(<a href="../../../../../org/mybatis/generator/config/PropertyHolder.html">PropertyHolder</a> propertyHolder, Node node) {
-<a class="jxr_linenumber" name="595" href="#595">595</a>         Properties attributes = parseAttributes(node);
-<a class="jxr_linenumber" name="596" href="#596">596</a> 
-<a class="jxr_linenumber" name="597" href="#597">597</a>         String name = attributes.getProperty(<span class="jxr_string">"name"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="598" href="#598">598</a>         String value = attributes.getProperty(<span class="jxr_string">"value"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="599" href="#599">599</a> 
-<a class="jxr_linenumber" name="600" href="#600">600</a>         propertyHolder.addProperty(name, value);
-<a class="jxr_linenumber" name="601" href="#601">601</a>     }
-<a class="jxr_linenumber" name="602" href="#602">602</a> 
-<a class="jxr_linenumber" name="603" href="#603">603</a>     <strong class="jxr_keyword">private</strong> Properties parseAttributes(Node node) {
-<a class="jxr_linenumber" name="604" href="#604">604</a>         Properties attributes = <strong class="jxr_keyword">new</strong> Properties();
-<a class="jxr_linenumber" name="605" href="#605">605</a>         NamedNodeMap nnm = node.getAttributes();
-<a class="jxr_linenumber" name="606" href="#606">606</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; nnm.getLength(); i++) {
-<a class="jxr_linenumber" name="607" href="#607">607</a>             Node attribute = nnm.item(i);
-<a class="jxr_linenumber" name="608" href="#608">608</a>             String value = parsePropertyTokens(attribute.getNodeValue());
-<a class="jxr_linenumber" name="609" href="#609">609</a>             attributes.put(attribute.getNodeName(), value);
-<a class="jxr_linenumber" name="610" href="#610">610</a>         }
-<a class="jxr_linenumber" name="611" href="#611">611</a> 
-<a class="jxr_linenumber" name="612" href="#612">612</a>         <strong class="jxr_keyword">return</strong> attributes;
-<a class="jxr_linenumber" name="613" href="#613">613</a>     }
-<a class="jxr_linenumber" name="614" href="#614">614</a> 
-<a class="jxr_linenumber" name="615" href="#615">615</a>     <strong class="jxr_keyword">private</strong> String parsePropertyTokens(String string) {
-<a class="jxr_linenumber" name="616" href="#616">616</a>         <strong class="jxr_keyword">final</strong> String OPEN = <span class="jxr_string">"${"</span>; <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="617" href="#617">617</a>         <strong class="jxr_keyword">final</strong> String CLOSE = <span class="jxr_string">"}"</span>; <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="618" href="#618">618</a> 
-<a class="jxr_linenumber" name="619" href="#619">619</a>         String newString = string;
-<a class="jxr_linenumber" name="620" href="#620">620</a>         <strong class="jxr_keyword">if</strong> (newString != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="621" href="#621">621</a>             <strong class="jxr_keyword">int</strong> start = newString.indexOf(OPEN);
-<a class="jxr_linenumber" name="622" href="#622">622</a>             <strong class="jxr_keyword">int</strong> end = newString.indexOf(CLOSE);
-<a class="jxr_linenumber" name="623" href="#623">623</a> 
-<a class="jxr_linenumber" name="624" href="#624">624</a>             <strong class="jxr_keyword">while</strong> (start &gt; -1 &amp;&amp; end &gt; start) {
-<a class="jxr_linenumber" name="625" href="#625">625</a>                 String prepend = newString.substring(0, start);
-<a class="jxr_linenumber" name="626" href="#626">626</a>                 String append = newString.substring(end + CLOSE.length());
-<a class="jxr_linenumber" name="627" href="#627">627</a>                 String propName = newString.substring(start + OPEN.length(),
-<a class="jxr_linenumber" name="628" href="#628">628</a>                         end);
-<a class="jxr_linenumber" name="629" href="#629">629</a>                 String propValue = properties.getProperty(propName);
-<a class="jxr_linenumber" name="630" href="#630">630</a>                 <strong class="jxr_keyword">if</strong> (propValue != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="631" href="#631">631</a>                     newString = prepend + propValue + append;
-<a class="jxr_linenumber" name="632" href="#632">632</a>                 }
-<a class="jxr_linenumber" name="633" href="#633">633</a> 
-<a class="jxr_linenumber" name="634" href="#634">634</a>                 start = newString.indexOf(OPEN, end);
-<a class="jxr_linenumber" name="635" href="#635">635</a>                 end = newString.indexOf(CLOSE, end);
-<a class="jxr_linenumber" name="636" href="#636">636</a>             }
-<a class="jxr_linenumber" name="637" href="#637">637</a>         }
-<a class="jxr_linenumber" name="638" href="#638">638</a> 
-<a class="jxr_linenumber" name="639" href="#639">639</a>         <strong class="jxr_keyword">return</strong> newString;
-<a class="jxr_linenumber" name="640" href="#640">640</a>     }
-<a class="jxr_linenumber" name="641" href="#641">641</a> 
-<a class="jxr_linenumber" name="642" href="#642">642</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> parseCommentGenerator(<a href="../../../../../org/mybatis/generator/config/Context.html">Context</a> context, Node node) {
-<a class="jxr_linenumber" name="643" href="#643">643</a>         <a href="../../../../../org/mybatis/generator/config/CommentGeneratorConfiguration.html">CommentGeneratorConfiguration</a> commentGeneratorConfiguration = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/mybatis/generator/config/CommentGeneratorConfiguration.html">CommentGeneratorConfiguration</a>();
-<a class="jxr_linenumber" name="644" href="#644">644</a> 
-<a class="jxr_linenumber" name="645" href="#645">645</a>         context.setCommentGeneratorConfiguration(commentGeneratorConfiguration);
-<a class="jxr_linenumber" name="646" href="#646">646</a> 
-<a class="jxr_linenumber" name="647" href="#647">647</a>         Properties attributes = parseAttributes(node);
-<a class="jxr_linenumber" name="648" href="#648">648</a>         String type = attributes.getProperty(<span class="jxr_string">"type"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="649" href="#649">649</a> 
-<a class="jxr_linenumber" name="650" href="#650">650</a>         <strong class="jxr_keyword">if</strong> (stringHasValue(type)) {
-<a class="jxr_linenumber" name="651" href="#651">651</a>             commentGeneratorConfiguration.setConfigurationType(type);
-<a class="jxr_linenumber" name="652" href="#652">652</a>         }
-<a class="jxr_linenumber" name="653" href="#653">653</a> 
-<a class="jxr_linenumber" name="654" href="#654">654</a>         NodeList nodeList = node.getChildNodes();
-<a class="jxr_linenumber" name="655" href="#655">655</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; nodeList.getLength(); i++) {
-<a class="jxr_linenumber" name="656" href="#656">656</a>             Node childNode = nodeList.item(i);
-<a class="jxr_linenumber" name="657" href="#657">657</a> 
-<a class="jxr_linenumber" name="658" href="#658">658</a>             <strong class="jxr_keyword">if</strong> (childNode.getNodeType() != Node.ELEMENT_NODE) {
-<a class="jxr_linenumber" name="659" href="#659">659</a>                 <strong class="jxr_keyword">continue</strong>;
-<a class="jxr_linenumber" name="660" href="#660">660</a>             }
-<a class="jxr_linenumber" name="661" href="#661">661</a> 
-<a class="jxr_linenumber" name="662" href="#662">662</a>             <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"property"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="663" href="#663">663</a>                 parseProperty(commentGeneratorConfiguration, childNode);
-<a class="jxr_linenumber" name="664" href="#664">664</a>             }
-<a class="jxr_linenumber" name="665" href="#665">665</a>         }
-<a class="jxr_linenumber" name="666" href="#666">666</a>     }
-<a class="jxr_linenumber" name="667" href="#667">667</a> }
+<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_javadoccomment"> *    Copyright 2006-2016 the original author or authors.</em>
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_javadoccomment"> *    Licensed under the Apache License, Version 2.0 (the "License");</em>
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_javadoccomment"> *    you may not use this file except in compliance with the License.</em>
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <em class="jxr_javadoccomment"> *    You may obtain a copy of the License at</em>
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_javadoccomment"> *       <a href="http://www.apache.org/licenses/LICENSE-2." target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.</a>0</em>
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_javadoccomment"> *    Unless required by applicable law or agreed to in writing, software</em>
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_javadoccomment"> *    distributed under the License is distributed on an "AS IS" BASIS,</em>
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  <em class="jxr_javadoccomment"> *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</em>
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>  <em class="jxr_javadoccomment"> *    See the License for the specific language governing permissions and</em>
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>  <em class="jxr_javadoccomment"> *    limitations under the License.</em>
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>  <em class="jxr_javadoccomment"> */</em>
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>  <strong class="jxr_keyword">package</strong> org.mybatis.generator.config.xml;
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>  
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>  
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>  <strong class="jxr_keyword">import</strong> java.util.Properties;
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.config.Configuration;
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.config.Context;
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.config.JavaClientGeneratorConfiguration;
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.config.ModelType;
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.config.PluginConfiguration;
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.exception.XMLParserException;
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> org.w3c.dom.Element;
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> org.w3c.dom.Node;
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> org.w3c.dom.NodeList;
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>  
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <em class="jxr_javadoccomment"> * This class parses old Ibator configuration files into the new Configuration</em>
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <em class="jxr_javadoccomment"> * API</em>
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <em class="jxr_javadoccomment"> * </em>
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>  <em class="jxr_javadoccomment"> * @author Jeff Butler</em>
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <em class="jxr_javadoccomment"> */</em>
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../org/mybatis/generator/config/xml/IbatorConfigurationParser.html">IbatorConfigurationParser</a> <strong class="jxr_keyword">extends</strong> <a href="../../../../../org/mybatis/generator/config/xml/MyBatisGeneratorConfigurationParser.html">MyBatisGeneratorConfigurationParser</a> {
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>  
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../../org/mybatis/generator/config/xml/IbatorConfigurationParser.html">IbatorConfigurationParser</a>(Properties properties) {
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>          <strong class="jxr_keyword">super</strong>(properties);
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>      }
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>  
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../../org/mybatis/generator/config/Configuration.html">Configuration</a> parseIbatorConfiguration(Element rootNode)
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>              <strong class="jxr_keyword">throws</strong> <a href="../../../../../org/mybatis/generator/exception/XMLParserException.html">XMLParserException</a> {
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>  
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>          <a href="../../../../../org/mybatis/generator/config/Configuration.html">Configuration</a> configuration = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/mybatis/generator/config/Configuration.html">Configuration</a>();
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>  
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>          NodeList nodeList = rootNode.getChildNodes();
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>          <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; nodeList.getLength(); i++) {
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>              Node childNode = nodeList.item(i);
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>  
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>              <strong class="jxr_keyword">if</strong> (childNode.getNodeType() != Node.ELEMENT_NODE) {
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>                  <strong class="jxr_keyword">continue</strong>;
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>              }
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>  
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>              <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"properties"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>                  parseProperties(configuration, childNode);
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>              } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"classPathEntry"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>                  parseClassPathEntry(configuration, childNode);
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>              } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"ibatorContext"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>                  parseIbatorContext(configuration, childNode);
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>              }
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>          }
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>  
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>          <strong class="jxr_keyword">return</strong> configuration;
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>      }
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>  
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> parseIbatorContext(<a href="../../../../../org/mybatis/generator/config/Configuration.html">Configuration</a> configuration, Node node) {
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>  
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>          Properties attributes = parseAttributes(node);
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>          String defaultModelType = attributes.getProperty(<span class="jxr_string">"defaultModelType"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>          String targetRuntime = attributes.getProperty(<span class="jxr_string">"targetRuntime"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>          String introspectedColumnImpl = attributes
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>                  .getProperty(<span class="jxr_string">"introspectedColumnImpl"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>          String id = attributes.getProperty(<span class="jxr_string">"id"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>  
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>          <a href="../../../../../org/mybatis/generator/config/ModelType.html">ModelType</a> mt = defaultModelType == <strong class="jxr_keyword">null</strong> ? <strong class="jxr_keyword">null</strong> : <a href="../../../../../org/mybatis/generator/config/ModelType.html">ModelType</a>
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>                  .getModelType(defaultModelType);
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>  
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>          <a href="../../../../../org/mybatis/generator/config/Context.html">Context</a> context = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/mybatis/generator/config/Context.html">Context</a>(mt);
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>          context.setId(id);
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>          <strong class="jxr_keyword">if</strong> (stringHasValue(introspectedColumnImpl)) {
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>              context.setIntrospectedColumnImpl(introspectedColumnImpl);
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>          }
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>          <strong class="jxr_keyword">if</strong> (stringHasValue(targetRuntime)) {
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>              context.setTargetRuntime(targetRuntime);
+<a class="jxr_linenumber" name="L88" href="#L88">88</a>          }
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>  
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>          configuration.addContext(context);
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>  
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>          NodeList nodeList = node.getChildNodes();
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>          <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; nodeList.getLength(); i++) {
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>              Node childNode = nodeList.item(i);
+<a class="jxr_linenumber" name="L95" href="#L95">95</a>  
+<a class="jxr_linenumber" name="L96" href="#L96">96</a>              <strong class="jxr_keyword">if</strong> (childNode.getNodeType() != Node.ELEMENT_NODE) {
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>                  <strong class="jxr_keyword">continue</strong>;
+<a class="jxr_linenumber" name="L98" href="#L98">98</a>              }
+<a class="jxr_linenumber" name="L99" href="#L99">99</a>  
+<a class="jxr_linenumber" name="L100" href="#L100">100</a>             <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"property"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L101" href="#L101">101</a>                 parseProperty(context, childNode);
+<a class="jxr_linenumber" name="L102" href="#L102">102</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"ibatorPlugin"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L103" href="#L103">103</a>                 parseIbatorPlugin(context, childNode);
+<a class="jxr_linenumber" name="L104" href="#L104">104</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"commentGenerator"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L105" href="#L105">105</a>                 parseCommentGenerator(context, childNode);
+<a class="jxr_linenumber" name="L106" href="#L106">106</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"jdbcConnection"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L107" href="#L107">107</a>                 parseJdbcConnection(context, childNode);
+<a class="jxr_linenumber" name="L108" href="#L108">108</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"javaModelGenerator"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L109" href="#L109">109</a>                 parseJavaModelGenerator(context, childNode);
+<a class="jxr_linenumber" name="L110" href="#L110">110</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"javaTypeResolver"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L111" href="#L111">111</a>                 parseJavaTypeResolver(context, childNode);
+<a class="jxr_linenumber" name="L112" href="#L112">112</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"sqlMapGenerator"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L113" href="#L113">113</a>                 parseSqlMapGenerator(context, childNode);
+<a class="jxr_linenumber" name="L114" href="#L114">114</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"daoGenerator"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L115" href="#L115">115</a>                 parseDaoGenerator(context, childNode);
+<a class="jxr_linenumber" name="L116" href="#L116">116</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"table"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L117" href="#L117">117</a>                 parseTable(context, childNode);
+<a class="jxr_linenumber" name="L118" href="#L118">118</a>             }
+<a class="jxr_linenumber" name="L119" href="#L119">119</a>         }
+<a class="jxr_linenumber" name="L120" href="#L120">120</a>     }
+<a class="jxr_linenumber" name="L121" href="#L121">121</a> 
+<a class="jxr_linenumber" name="L122" href="#L122">122</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> parseIbatorPlugin(<a href="../../../../../org/mybatis/generator/config/Context.html">Context</a> context, Node node) {
+<a class="jxr_linenumber" name="L123" href="#L123">123</a>         <a href="../../../../../org/mybatis/generator/config/PluginConfiguration.html">PluginConfiguration</a> pluginConfiguration = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/mybatis/generator/config/PluginConfiguration.html">PluginConfiguration</a>();
+<a class="jxr_linenumber" name="L124" href="#L124">124</a> 
+<a class="jxr_linenumber" name="L125" href="#L125">125</a>         context.addPluginConfiguration(pluginConfiguration);
+<a class="jxr_linenumber" name="L126" href="#L126">126</a> 
+<a class="jxr_linenumber" name="L127" href="#L127">127</a>         Properties attributes = parseAttributes(node);
+<a class="jxr_linenumber" name="L128" href="#L128">128</a>         String type = attributes.getProperty(<span class="jxr_string">"type"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L129" href="#L129">129</a> 
+<a class="jxr_linenumber" name="L130" href="#L130">130</a>         pluginConfiguration.setConfigurationType(type);
+<a class="jxr_linenumber" name="L131" href="#L131">131</a> 
+<a class="jxr_linenumber" name="L132" href="#L132">132</a>         NodeList nodeList = node.getChildNodes();
+<a class="jxr_linenumber" name="L133" href="#L133">133</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; nodeList.getLength(); i++) {
+<a class="jxr_linenumber" name="L134" href="#L134">134</a>             Node childNode = nodeList.item(i);
+<a class="jxr_linenumber" name="L135" href="#L135">135</a> 
+<a class="jxr_linenumber" name="L136" href="#L136">136</a>             <strong class="jxr_keyword">if</strong> (childNode.getNodeType() != Node.ELEMENT_NODE) {
+<a class="jxr_linenumber" name="L137" href="#L137">137</a>                 <strong class="jxr_keyword">continue</strong>;
+<a class="jxr_linenumber" name="L138" href="#L138">138</a>             }
+<a class="jxr_linenumber" name="L139" href="#L139">139</a> 
+<a class="jxr_linenumber" name="L140" href="#L140">140</a>             <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"property"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L141" href="#L141">141</a>                 parseProperty(pluginConfiguration, childNode);
+<a class="jxr_linenumber" name="L142" href="#L142">142</a>             }
+<a class="jxr_linenumber" name="L143" href="#L143">143</a>         }
+<a class="jxr_linenumber" name="L144" href="#L144">144</a>     }
+<a class="jxr_linenumber" name="L145" href="#L145">145</a> 
+<a class="jxr_linenumber" name="L146" href="#L146">146</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> parseDaoGenerator(<a href="../../../../../org/mybatis/generator/config/Context.html">Context</a> context, Node node) {
+<a class="jxr_linenumber" name="L147" href="#L147">147</a>         <a href="../../../../../org/mybatis/generator/config/JavaClientGeneratorConfiguration.html">JavaClientGeneratorConfiguration</a> javaClientGeneratorConfiguration = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/mybatis/generator/config/JavaClientGeneratorConfiguration.html">JavaClientGeneratorConfiguration</a>();
+<a class="jxr_linenumber" name="L148" href="#L148">148</a> 
+<a class="jxr_linenumber" name="L149" href="#L149">149</a>         context.setJavaClientGeneratorConfiguration(javaClientGeneratorConfiguration);
+<a class="jxr_linenumber" name="L150" href="#L150">150</a> 
+<a class="jxr_linenumber" name="L151" href="#L151">151</a>         Properties attributes = parseAttributes(node);
+<a class="jxr_linenumber" name="L152" href="#L152">152</a>         String type = attributes.getProperty(<span class="jxr_string">"type"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L153" href="#L153">153</a>         String targetPackage = attributes.getProperty(<span class="jxr_string">"targetPackage"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L154" href="#L154">154</a>         String targetProject = attributes.getProperty(<span class="jxr_string">"targetProject"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L155" href="#L155">155</a>         String implementationPackage = attributes
+<a class="jxr_linenumber" name="L156" href="#L156">156</a>                 .getProperty(<span class="jxr_string">"implementationPackage"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L157" href="#L157">157</a> 
+<a class="jxr_linenumber" name="L158" href="#L158">158</a>         javaClientGeneratorConfiguration.setConfigurationType(type);
+<a class="jxr_linenumber" name="L159" href="#L159">159</a>         javaClientGeneratorConfiguration.setTargetPackage(targetPackage);
+<a class="jxr_linenumber" name="L160" href="#L160">160</a>         javaClientGeneratorConfiguration.setTargetProject(targetProject);
+<a class="jxr_linenumber" name="L161" href="#L161">161</a>         javaClientGeneratorConfiguration
+<a class="jxr_linenumber" name="L162" href="#L162">162</a>                 .setImplementationPackage(implementationPackage);
+<a class="jxr_linenumber" name="L163" href="#L163">163</a> 
+<a class="jxr_linenumber" name="L164" href="#L164">164</a>         NodeList nodeList = node.getChildNodes();
+<a class="jxr_linenumber" name="L165" href="#L165">165</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; nodeList.getLength(); i++) {
+<a class="jxr_linenumber" name="L166" href="#L166">166</a>             Node childNode = nodeList.item(i);
+<a class="jxr_linenumber" name="L167" href="#L167">167</a> 
+<a class="jxr_linenumber" name="L168" href="#L168">168</a>             <strong class="jxr_keyword">if</strong> (childNode.getNodeType() != Node.ELEMENT_NODE) {
+<a class="jxr_linenumber" name="L169" href="#L169">169</a>                 <strong class="jxr_keyword">continue</strong>;
+<a class="jxr_linenumber" name="L170" href="#L170">170</a>             }
+<a class="jxr_linenumber" name="L171" href="#L171">171</a> 
+<a class="jxr_linenumber" name="L172" href="#L172">172</a>             <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"property"</span>.equals(childNode.getNodeName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L173" href="#L173">173</a>                 parseProperty(javaClientGeneratorConfiguration, childNode);
+<a class="jxr_linenumber" name="L174" href="#L174">174</a>             }
+<a class="jxr_linenumber" name="L175" href="#L175">175</a>         }
+<a class="jxr_linenumber" name="L176" href="#L176">176</a>     }
+<a class="jxr_linenumber" name="L177" href="#L177">177</a> }
 </pre>
-<hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
+<hr/>
+<div id="footer">Copyright &#169; 2006&#x2013;2016 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
+</body>
 </html>
-

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>AnnotatedSelectByExampleWithoutBLOBsMethodGenerator.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated</a> &gt; <span class="el_source">AnnotatedSelectByExampleWithoutBLOBsMethodGenerator.java</span></div><h1>AnnotatedSelectByExampleWithoutBLOBsMethodGenerator.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2016 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated;
+
+import static org.mybatis.generator.api.dom.OutputUtilities.javaIndent;
+
+import java.util.Iterator;
+
+import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.Interface;
+import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.codegen.mybatis3.javamapper.elements.SelectByExampleWithoutBLOBsMethodGenerator;
+
+/**
+ * 
+ * @author Jeff Butler
+ */
+public class AnnotatedSelectByExampleWithoutBLOBsMethodGenerator extends
+    SelectByExampleWithoutBLOBsMethodGenerator {
+
+    public AnnotatedSelectByExampleWithoutBLOBsMethodGenerator() {
+<span class="fc" id="L36">        super();</span>
+<span class="fc" id="L37">    }</span>
+
+    @Override
+    public void addMapperAnnotations(Interface interfaze, Method method) {
+<span class="fc" id="L41">        FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getMyBatis3SqlProviderType());</span>
+<span class="fc" id="L42">        interfaze.addImportedType(new FullyQualifiedJavaType(&quot;org.apache.ibatis.annotations.SelectProvider&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L43">        interfaze.addImportedType(new FullyQualifiedJavaType(&quot;org.apache.ibatis.type.JdbcType&quot;)); //$NON-NLS-1$</span>
+
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        if (introspectedTable.isConstructorBased()) {</span>
+<span class="fc" id="L46">            interfaze.addImportedType(new FullyQualifiedJavaType(&quot;org.apache.ibatis.annotations.Arg&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L47">            interfaze.addImportedType(new FullyQualifiedJavaType(&quot;org.apache.ibatis.annotations.ConstructorArgs&quot;)); //$NON-NLS-1$</span>
+        } else {
+<span class="fc" id="L49">            interfaze.addImportedType(new FullyQualifiedJavaType(&quot;org.apache.ibatis.annotations.Result&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L50">            interfaze.addImportedType(new FullyQualifiedJavaType(&quot;org.apache.ibatis.annotations.Results&quot;)); //$NON-NLS-1$</span>
+        }
+        
+<span class="fc" id="L53">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L54">        sb.append(&quot;@SelectProvider(type=&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L55">        sb.append(fqjt.getShortName());</span>
+<span class="fc" id="L56">        sb.append(&quot;.class, method=\&quot;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L57">        sb.append(introspectedTable.getSelectByExampleStatementId());</span>
+<span class="fc" id="L58">        sb.append(&quot;\&quot;)&quot;); //$NON-NLS-1$</span>
+        
+<span class="fc" id="L60">        method.addAnnotation(sb.toString());</span>
+        
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        if (introspectedTable.isConstructorBased()) {</span>
+<span class="fc" id="L63">            method.addAnnotation(&quot;@ConstructorArgs({&quot;); //$NON-NLS-1$</span>
+        } else {
+<span class="fc" id="L65">            method.addAnnotation(&quot;@Results({&quot;); //$NON-NLS-1$</span>
+        }
+        
+<span class="fc" id="L68">        Iterator&lt;IntrospectedColumn&gt; iterPk = introspectedTable.getPrimaryKeyColumns().iterator();</span>
+<span class="fc" id="L69">        Iterator&lt;IntrospectedColumn&gt; iterNonPk = introspectedTable.getBaseColumns().iterator();</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        while (iterPk.hasNext()) {</span>
+<span class="fc" id="L71">            IntrospectedColumn introspectedColumn = iterPk.next();</span>
+<span class="fc" id="L72">            sb.setLength(0);</span>
+<span class="fc" id="L73">            javaIndent(sb, 1);</span>
+<span class="fc" id="L74">            sb.append(getResultAnnotation(interfaze, introspectedColumn, true,</span>
+                    introspectedTable.isConstructorBased()));
+            
+<span class="fc bfc" id="L77" title="All 4 branches covered.">            if (iterPk.hasNext() || iterNonPk.hasNext()) {</span>
+<span class="fc" id="L78">                sb.append(',');</span>
+            }
+            
+<span class="fc" id="L81">            method.addAnnotation(sb.toString());</span>
+<span class="fc" id="L82">        }</span>
+
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        while (iterNonPk.hasNext()) {</span>
+<span class="fc" id="L85">            IntrospectedColumn introspectedColumn = iterNonPk.next();</span>
+<span class="fc" id="L86">            sb.setLength(0);</span>
+<span class="fc" id="L87">            javaIndent(sb, 1);</span>
+<span class="fc" id="L88">            sb.append(getResultAnnotation(interfaze, introspectedColumn, false,</span>
+                    introspectedTable.isConstructorBased()));
+            
+<span class="fc bfc" id="L91" title="All 2 branches covered.">            if (iterNonPk.hasNext()) {</span>
+<span class="fc" id="L92">                sb.append(',');</span>
+            }
+            
+<span class="fc" id="L95">            method.addAnnotation(sb.toString());</span>
+<span class="fc" id="L96">        }</span>
+        
+<span class="fc" id="L98">        method.addAnnotation(&quot;})&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L99">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

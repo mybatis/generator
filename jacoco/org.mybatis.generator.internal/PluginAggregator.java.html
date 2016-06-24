@@ -1,0 +1,1196 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>PluginAggregator.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.internal</a> &gt; <span class="el_source">PluginAggregator.java</span></div><h1>PluginAggregator.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2016 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.internal;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+
+import org.mybatis.generator.api.GeneratedJavaFile;
+import org.mybatis.generator.api.GeneratedXmlFile;
+import org.mybatis.generator.api.Plugin;
+import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.dom.java.Field;
+import org.mybatis.generator.api.dom.java.Interface;
+import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.api.dom.xml.Document;
+import org.mybatis.generator.api.dom.xml.XmlElement;
+import org.mybatis.generator.config.Context;
+
+/**
+ * This class is for internal use only. It contains a list of plugins for the
+ * current context and is used to aggregate plugins together. This class
+ * implements the rule that if any plugin returns &quot;false&quot; from a method, then no
+ * other plugin is called.
+ * &lt;p&gt;
+ * This class does not follow the normal plugin lifecycle and should not be
+ * subclassed by clients.
+ * 
+ * @author Jeff Butler
+ * 
+ */
+public final class PluginAggregator implements Plugin {
+    private List&lt;Plugin&gt; plugins;
+
+<span class="fc" id="L50">    public PluginAggregator() {</span>
+<span class="fc" id="L51">        plugins = new ArrayList&lt;Plugin&gt;();</span>
+<span class="fc" id="L52">    }</span>
+
+    public void addPlugin(Plugin plugin) {
+<span class="fc" id="L55">        plugins.add(plugin);</span>
+<span class="fc" id="L56">    }</span>
+
+    public void setContext(Context context) {
+<span class="nc" id="L59">        throw new UnsupportedOperationException();</span>
+    }
+
+    public void setProperties(Properties properties) {
+<span class="nc" id="L63">        throw new UnsupportedOperationException();</span>
+    }
+
+    public boolean validate(List&lt;String&gt; warnings) {
+<span class="nc" id="L67">        throw new UnsupportedOperationException();</span>
+    }
+
+    public boolean modelBaseRecordClassGenerated(TopLevelClass tlc,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L72">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L74" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">            if (!plugin.modelBaseRecordClassGenerated(tlc, introspectedTable)) {</span>
+<span class="nc" id="L76">                rc = false;</span>
+<span class="nc" id="L77">                break;</span>
+            }
+<span class="fc" id="L79">        }</span>
+
+<span class="fc" id="L81">        return rc;</span>
+    }
+
+    public boolean modelRecordWithBLOBsClassGenerated(TopLevelClass tlc,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L86">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L88" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">            if (!plugin.modelRecordWithBLOBsClassGenerated(tlc,</span>
+                    introspectedTable)) {
+<span class="nc" id="L91">                rc = false;</span>
+<span class="nc" id="L92">                break;</span>
+            }
+<span class="fc" id="L94">        }</span>
+
+<span class="fc" id="L96">        return rc;</span>
+    }
+
+    public boolean sqlMapCountByExampleElementGenerated(XmlElement element,
+            IntrospectedTable table) {
+<span class="fc" id="L101">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L103" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">            if (!plugin.sqlMapCountByExampleElementGenerated(element, table)) {</span>
+<span class="nc" id="L105">                rc = false;</span>
+<span class="nc" id="L106">                break;</span>
+            }
+<span class="fc" id="L108">        }</span>
+
+<span class="fc" id="L110">        return rc;</span>
+    }
+
+    public boolean sqlMapDeleteByExampleElementGenerated(XmlElement element,
+            IntrospectedTable table) {
+<span class="fc" id="L115">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L117" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">            if (!plugin.sqlMapDeleteByExampleElementGenerated(element, table)) {</span>
+<span class="nc" id="L119">                rc = false;</span>
+<span class="nc" id="L120">                break;</span>
+            }
+<span class="fc" id="L122">        }</span>
+
+<span class="fc" id="L124">        return rc;</span>
+    }
+
+    public boolean sqlMapDeleteByPrimaryKeyElementGenerated(XmlElement element,
+            IntrospectedTable table) {
+<span class="fc" id="L129">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L131" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">            if (!plugin</span>
+                    .sqlMapDeleteByPrimaryKeyElementGenerated(element, table)) {
+<span class="nc" id="L134">                rc = false;</span>
+<span class="nc" id="L135">                break;</span>
+            }
+<span class="fc" id="L137">        }</span>
+
+<span class="fc" id="L139">        return rc;</span>
+    }
+
+    public boolean modelExampleClassGenerated(TopLevelClass tlc,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L144">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L146" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">            if (!plugin.modelExampleClassGenerated(tlc, introspectedTable)) {</span>
+<span class="nc" id="L148">                rc = false;</span>
+<span class="nc" id="L149">                break;</span>
+            }
+<span class="fc" id="L151">        }</span>
+
+<span class="fc" id="L153">        return rc;</span>
+    }
+
+    public List&lt;GeneratedJavaFile&gt; contextGenerateAdditionalJavaFiles(
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L158">        List&lt;GeneratedJavaFile&gt; answer = new ArrayList&lt;GeneratedJavaFile&gt;();</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="fc" id="L160">            List&lt;GeneratedJavaFile&gt; temp = plugin</span>
+                    .contextGenerateAdditionalJavaFiles(introspectedTable);
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">            if (temp != null) {</span>
+<span class="nc" id="L163">                answer.addAll(temp);</span>
+            }
+<span class="fc" id="L165">        }</span>
+<span class="fc" id="L166">        return answer;</span>
+    }
+
+    public List&lt;GeneratedXmlFile&gt; contextGenerateAdditionalXmlFiles(
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L171">        List&lt;GeneratedXmlFile&gt; answer = new ArrayList&lt;GeneratedXmlFile&gt;();</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="fc" id="L173">            List&lt;GeneratedXmlFile&gt; temp = plugin</span>
+                    .contextGenerateAdditionalXmlFiles(introspectedTable);
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">            if (temp != null) {</span>
+<span class="nc" id="L176">                answer.addAll(temp);</span>
+            }
+<span class="fc" id="L178">        }</span>
+<span class="fc" id="L179">        return answer;</span>
+    }
+
+    public boolean modelPrimaryKeyClassGenerated(TopLevelClass tlc,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L184">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L186" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L187" title="1 of 2 branches missed.">            if (!plugin.modelPrimaryKeyClassGenerated(tlc, introspectedTable)) {</span>
+<span class="nc" id="L188">                rc = false;</span>
+<span class="nc" id="L189">                break;</span>
+            }
+<span class="fc" id="L191">        }</span>
+
+<span class="fc" id="L193">        return rc;</span>
+    }
+
+    public boolean sqlMapResultMapWithoutBLOBsElementGenerated(
+            XmlElement element, IntrospectedTable introspectedTable) {
+<span class="fc" id="L198">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L200" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">            if (!plugin.sqlMapResultMapWithoutBLOBsElementGenerated(element,</span>
+                    introspectedTable)) {
+<span class="nc" id="L203">                rc = false;</span>
+<span class="nc" id="L204">                break;</span>
+            }
+<span class="fc" id="L206">        }</span>
+
+<span class="fc" id="L208">        return rc;</span>
+    }
+
+    public boolean sqlMapExampleWhereClauseElementGenerated(XmlElement element,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L213">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L215" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L216" title="1 of 2 branches missed.">            if (!plugin.sqlMapExampleWhereClauseElementGenerated(element,</span>
+                    introspectedTable)) {
+<span class="nc" id="L218">                rc = false;</span>
+<span class="nc" id="L219">                break;</span>
+            }
+<span class="fc" id="L221">        }</span>
+
+<span class="fc" id="L223">        return rc;</span>
+    }
+
+    public boolean sqlMapInsertElementGenerated(XmlElement element,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L228">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L230" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L231" title="1 of 2 branches missed.">            if (!plugin</span>
+                    .sqlMapInsertElementGenerated(element, introspectedTable)) {
+<span class="nc" id="L233">                rc = false;</span>
+<span class="nc" id="L234">                break;</span>
+            }
+<span class="fc" id="L236">        }</span>
+
+<span class="fc" id="L238">        return rc;</span>
+    }
+
+    public boolean sqlMapResultMapWithBLOBsElementGenerated(XmlElement element,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L243">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L245" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L246" title="1 of 2 branches missed.">            if (!plugin.sqlMapResultMapWithBLOBsElementGenerated(element,</span>
+                    introspectedTable)) {
+<span class="nc" id="L248">                rc = false;</span>
+<span class="nc" id="L249">                break;</span>
+            }
+<span class="fc" id="L251">        }</span>
+
+<span class="fc" id="L253">        return rc;</span>
+    }
+
+    public boolean sqlMapSelectByExampleWithoutBLOBsElementGenerated(
+            XmlElement element, IntrospectedTable introspectedTable) {
+<span class="fc" id="L258">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L260" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L261" title="1 of 2 branches missed.">            if (!plugin.sqlMapSelectByExampleWithoutBLOBsElementGenerated(</span>
+                    element, introspectedTable)) {
+<span class="nc" id="L263">                rc = false;</span>
+<span class="nc" id="L264">                break;</span>
+            }
+<span class="fc" id="L266">        }</span>
+
+<span class="fc" id="L268">        return rc;</span>
+    }
+
+    public boolean sqlMapSelectByExampleWithBLOBsElementGenerated(
+            XmlElement element, IntrospectedTable introspectedTable) {
+<span class="fc" id="L273">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L275" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L276" title="1 of 2 branches missed.">            if (!plugin.sqlMapSelectByExampleWithBLOBsElementGenerated(element,</span>
+                    introspectedTable)) {
+<span class="nc" id="L278">                rc = false;</span>
+<span class="nc" id="L279">                break;</span>
+            }
+<span class="fc" id="L281">        }</span>
+
+<span class="fc" id="L283">        return rc;</span>
+    }
+
+    public boolean sqlMapSelectByPrimaryKeyElementGenerated(XmlElement element,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L288">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L290" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L291" title="1 of 2 branches missed.">            if (!plugin.sqlMapSelectByPrimaryKeyElementGenerated(element,</span>
+                    introspectedTable)) {
+<span class="nc" id="L293">                rc = false;</span>
+<span class="nc" id="L294">                break;</span>
+            }
+<span class="fc" id="L296">        }</span>
+
+<span class="fc" id="L298">        return rc;</span>
+    }
+
+    public boolean sqlMapGenerated(GeneratedXmlFile sqlMap,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L303">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L305" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L306" title="1 of 2 branches missed.">            if (!plugin.sqlMapGenerated(sqlMap, introspectedTable)) {</span>
+<span class="nc" id="L307">                rc = false;</span>
+<span class="nc" id="L308">                break;</span>
+            }
+<span class="fc" id="L310">        }</span>
+
+<span class="fc" id="L312">        return rc;</span>
+    }
+
+    public boolean sqlMapUpdateByExampleSelectiveElementGenerated(
+            XmlElement element, IntrospectedTable introspectedTable) {
+<span class="fc" id="L317">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L319" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L320" title="1 of 2 branches missed.">            if (!plugin.sqlMapUpdateByExampleSelectiveElementGenerated(element,</span>
+                    introspectedTable)) {
+<span class="nc" id="L322">                rc = false;</span>
+<span class="nc" id="L323">                break;</span>
+            }
+<span class="fc" id="L325">        }</span>
+
+<span class="fc" id="L327">        return rc;</span>
+    }
+
+    public boolean sqlMapUpdateByExampleWithBLOBsElementGenerated(
+            XmlElement element, IntrospectedTable introspectedTable) {
+<span class="fc" id="L332">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L334" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L335" title="1 of 2 branches missed.">            if (!plugin.sqlMapUpdateByExampleWithBLOBsElementGenerated(element,</span>
+                    introspectedTable)) {
+<span class="nc" id="L337">                rc = false;</span>
+<span class="nc" id="L338">                break;</span>
+            }
+<span class="fc" id="L340">        }</span>
+
+<span class="fc" id="L342">        return rc;</span>
+    }
+
+    public boolean sqlMapUpdateByExampleWithoutBLOBsElementGenerated(
+            XmlElement element, IntrospectedTable introspectedTable) {
+<span class="fc" id="L347">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L349" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L350" title="1 of 2 branches missed.">            if (!plugin.sqlMapUpdateByExampleWithoutBLOBsElementGenerated(</span>
+                    element, introspectedTable)) {
+<span class="nc" id="L352">                rc = false;</span>
+<span class="nc" id="L353">                break;</span>
+            }
+<span class="fc" id="L355">        }</span>
+
+<span class="fc" id="L357">        return rc;</span>
+    }
+
+    public boolean sqlMapUpdateByPrimaryKeySelectiveElementGenerated(
+            XmlElement element, IntrospectedTable introspectedTable) {
+<span class="fc" id="L362">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L364" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L365" title="1 of 2 branches missed.">            if (!plugin.sqlMapUpdateByPrimaryKeySelectiveElementGenerated(</span>
+                    element, introspectedTable)) {
+<span class="nc" id="L367">                rc = false;</span>
+<span class="nc" id="L368">                break;</span>
+            }
+<span class="fc" id="L370">        }</span>
+
+<span class="fc" id="L372">        return rc;</span>
+    }
+
+    public boolean sqlMapUpdateByPrimaryKeyWithBLOBsElementGenerated(
+            XmlElement element, IntrospectedTable introspectedTable) {
+<span class="fc" id="L377">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L379" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L380" title="1 of 2 branches missed.">            if (!plugin.sqlMapUpdateByPrimaryKeyWithBLOBsElementGenerated(</span>
+                    element, introspectedTable)) {
+<span class="nc" id="L382">                rc = false;</span>
+<span class="nc" id="L383">                break;</span>
+            }
+<span class="fc" id="L385">        }</span>
+
+<span class="fc" id="L387">        return rc;</span>
+    }
+
+    public boolean sqlMapUpdateByPrimaryKeyWithoutBLOBsElementGenerated(
+            XmlElement element, IntrospectedTable introspectedTable) {
+<span class="fc" id="L392">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L394" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L395" title="1 of 2 branches missed.">            if (!plugin.sqlMapUpdateByPrimaryKeyWithoutBLOBsElementGenerated(</span>
+                    element, introspectedTable)) {
+<span class="nc" id="L397">                rc = false;</span>
+<span class="nc" id="L398">                break;</span>
+            }
+<span class="fc" id="L400">        }</span>
+
+<span class="fc" id="L402">        return rc;</span>
+    }
+
+    public boolean clientCountByExampleMethodGenerated(Method method,
+            Interface interfaze, IntrospectedTable introspectedTable) {
+<span class="fc" id="L407">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L409" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L410" title="1 of 2 branches missed.">            if (!plugin.clientCountByExampleMethodGenerated(method, interfaze,</span>
+                    introspectedTable)) {
+<span class="nc" id="L412">                rc = false;</span>
+<span class="nc" id="L413">                break;</span>
+            }
+<span class="fc" id="L415">        }</span>
+
+<span class="fc" id="L417">        return rc;</span>
+    }
+
+    public boolean clientCountByExampleMethodGenerated(Method method,
+            TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+<span class="fc" id="L422">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L424" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L425" title="1 of 2 branches missed.">            if (!plugin.clientCountByExampleMethodGenerated(method, topLevelClass,</span>
+                    introspectedTable)) {
+<span class="nc" id="L427">                rc = false;</span>
+<span class="nc" id="L428">                break;</span>
+            }
+<span class="fc" id="L430">        }</span>
+
+<span class="fc" id="L432">        return rc;</span>
+    }
+
+    public boolean clientDeleteByExampleMethodGenerated(Method method,
+            Interface interfaze, IntrospectedTable introspectedTable) {
+<span class="fc" id="L437">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L439" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L440" title="1 of 2 branches missed.">            if (!plugin.clientDeleteByExampleMethodGenerated(method, interfaze,</span>
+                    introspectedTable)) {
+<span class="nc" id="L442">                rc = false;</span>
+<span class="nc" id="L443">                break;</span>
+            }
+<span class="fc" id="L445">        }</span>
+
+<span class="fc" id="L447">        return rc;</span>
+    }
+
+    public boolean clientDeleteByExampleMethodGenerated(Method method,
+            TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+<span class="fc" id="L452">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L454" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L455" title="1 of 2 branches missed.">            if (!plugin.clientDeleteByExampleMethodGenerated(method,</span>
+                    topLevelClass, introspectedTable)) {
+<span class="nc" id="L457">                rc = false;</span>
+<span class="nc" id="L458">                break;</span>
+            }
+<span class="fc" id="L460">        }</span>
+
+<span class="fc" id="L462">        return rc;</span>
+    }
+
+    public boolean clientDeleteByPrimaryKeyMethodGenerated(Method method,
+            Interface interfaze, IntrospectedTable introspectedTable) {
+<span class="fc" id="L467">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L469" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L470" title="1 of 2 branches missed.">            if (!plugin.clientDeleteByPrimaryKeyMethodGenerated(method, interfaze,</span>
+                    introspectedTable)) {
+<span class="nc" id="L472">                rc = false;</span>
+<span class="nc" id="L473">                break;</span>
+            }
+<span class="fc" id="L475">        }</span>
+
+<span class="fc" id="L477">        return rc;</span>
+    }
+
+    public boolean clientDeleteByPrimaryKeyMethodGenerated(Method method,
+            TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+<span class="fc" id="L482">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L484" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L485" title="1 of 2 branches missed.">            if (!plugin.clientDeleteByPrimaryKeyMethodGenerated(method,</span>
+                    topLevelClass, introspectedTable)) {
+<span class="nc" id="L487">                rc = false;</span>
+<span class="nc" id="L488">                break;</span>
+            }
+<span class="fc" id="L490">        }</span>
+
+<span class="fc" id="L492">        return rc;</span>
+    }
+
+    public boolean clientInsertMethodGenerated(Method method, Interface interfaze,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L497">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L499" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L500" title="1 of 2 branches missed.">            if (!plugin.clientInsertMethodGenerated(method, interfaze,</span>
+                    introspectedTable)) {
+<span class="nc" id="L502">                rc = false;</span>
+<span class="nc" id="L503">                break;</span>
+            }
+<span class="fc" id="L505">        }</span>
+
+<span class="fc" id="L507">        return rc;</span>
+    }
+
+    public boolean clientInsertMethodGenerated(Method method,
+            TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+<span class="fc" id="L512">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L514" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L515" title="1 of 2 branches missed.">            if (!plugin.clientInsertMethodGenerated(method, topLevelClass,</span>
+                    introspectedTable)) {
+<span class="nc" id="L517">                rc = false;</span>
+<span class="nc" id="L518">                break;</span>
+            }
+<span class="fc" id="L520">        }</span>
+
+<span class="fc" id="L522">        return rc;</span>
+    }
+
+    public boolean clientGenerated(Interface interfaze,
+            TopLevelClass topLevelClass,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L528">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L530" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L531" title="1 of 2 branches missed.">            if (!plugin.clientGenerated(interfaze, topLevelClass, introspectedTable)) {</span>
+<span class="nc" id="L532">                rc = false;</span>
+<span class="nc" id="L533">                break;</span>
+            }
+<span class="fc" id="L535">        }</span>
+
+<span class="fc" id="L537">        return rc;</span>
+    }
+
+    public boolean clientSelectAllMethodGenerated(Method method,
+            TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+<span class="nc" id="L542">        boolean rc = true;</span>
+
+<span class="nc bnc" id="L544" title="All 2 branches missed.">        for (Plugin plugin : plugins) {</span>
+<span class="nc bnc" id="L545" title="All 2 branches missed.">            if (!plugin.clientSelectAllMethodGenerated(method,</span>
+                    topLevelClass, introspectedTable)) {
+<span class="nc" id="L547">                rc = false;</span>
+<span class="nc" id="L548">                break;</span>
+            }
+<span class="nc" id="L550">        }</span>
+
+<span class="nc" id="L552">        return rc;</span>
+    }
+
+    public boolean clientSelectAllMethodGenerated(Method method,
+            Interface interfaze, IntrospectedTable introspectedTable) {
+<span class="fc" id="L557">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L559" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L560" title="1 of 2 branches missed.">            if (!plugin.clientSelectAllMethodGenerated(method,</span>
+                    interfaze, introspectedTable)) {
+<span class="nc" id="L562">                rc = false;</span>
+<span class="nc" id="L563">                break;</span>
+            }
+<span class="fc" id="L565">        }</span>
+
+<span class="fc" id="L567">        return rc;</span>
+    }
+
+    public boolean clientSelectByExampleWithBLOBsMethodGenerated(Method method,
+            Interface interfaze, IntrospectedTable introspectedTable) {
+<span class="fc" id="L572">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L574" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L575" title="1 of 2 branches missed.">            if (!plugin.clientSelectByExampleWithBLOBsMethodGenerated(method,</span>
+                    interfaze, introspectedTable)) {
+<span class="nc" id="L577">                rc = false;</span>
+<span class="nc" id="L578">                break;</span>
+            }
+<span class="fc" id="L580">        }</span>
+
+<span class="fc" id="L582">        return rc;</span>
+    }
+
+    public boolean clientSelectByExampleWithBLOBsMethodGenerated(Method method,
+            TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+<span class="fc" id="L587">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L589" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L590" title="1 of 2 branches missed.">            if (!plugin.clientSelectByExampleWithBLOBsMethodGenerated(method,</span>
+                    topLevelClass, introspectedTable)) {
+<span class="nc" id="L592">                rc = false;</span>
+<span class="nc" id="L593">                break;</span>
+            }
+<span class="fc" id="L595">        }</span>
+
+<span class="fc" id="L597">        return rc;</span>
+    }
+
+    public boolean clientSelectByExampleWithoutBLOBsMethodGenerated(Method method,
+            Interface interfaze, IntrospectedTable introspectedTable) {
+<span class="fc" id="L602">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L604" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L605" title="1 of 2 branches missed.">            if (!plugin.clientSelectByExampleWithoutBLOBsMethodGenerated(method,</span>
+                    interfaze, introspectedTable)) {
+<span class="nc" id="L607">                rc = false;</span>
+<span class="nc" id="L608">                break;</span>
+            }
+<span class="fc" id="L610">        }</span>
+
+<span class="fc" id="L612">        return rc;</span>
+    }
+
+    public boolean clientSelectByExampleWithoutBLOBsMethodGenerated(Method method,
+            TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+<span class="fc" id="L617">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L619" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L620" title="1 of 2 branches missed.">            if (!plugin.clientSelectByExampleWithoutBLOBsMethodGenerated(method,</span>
+                    topLevelClass, introspectedTable)) {
+<span class="nc" id="L622">                rc = false;</span>
+<span class="nc" id="L623">                break;</span>
+            }
+<span class="fc" id="L625">        }</span>
+
+<span class="fc" id="L627">        return rc;</span>
+    }
+
+    public boolean clientSelectByPrimaryKeyMethodGenerated(Method method,
+            Interface interfaze, IntrospectedTable introspectedTable) {
+<span class="fc" id="L632">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L634" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L635" title="1 of 2 branches missed.">            if (!plugin.clientSelectByPrimaryKeyMethodGenerated(method, interfaze,</span>
+                    introspectedTable)) {
+<span class="nc" id="L637">                rc = false;</span>
+<span class="nc" id="L638">                break;</span>
+            }
+<span class="fc" id="L640">        }</span>
+
+<span class="fc" id="L642">        return rc;</span>
+    }
+
+    public boolean clientSelectByPrimaryKeyMethodGenerated(Method method,
+            TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+<span class="fc" id="L647">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L649" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L650" title="1 of 2 branches missed.">            if (!plugin.clientSelectByPrimaryKeyMethodGenerated(method,</span>
+                    topLevelClass, introspectedTable)) {
+<span class="nc" id="L652">                rc = false;</span>
+<span class="nc" id="L653">                break;</span>
+            }
+<span class="fc" id="L655">        }</span>
+
+<span class="fc" id="L657">        return rc;</span>
+    }
+
+    public boolean clientUpdateByExampleSelectiveMethodGenerated(Method method,
+            Interface interfaze, IntrospectedTable introspectedTable) {
+<span class="fc" id="L662">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L664" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L665" title="1 of 2 branches missed.">            if (!plugin.clientUpdateByExampleSelectiveMethodGenerated(method,</span>
+                    interfaze, introspectedTable)) {
+<span class="nc" id="L667">                rc = false;</span>
+<span class="nc" id="L668">                break;</span>
+            }
+<span class="fc" id="L670">        }</span>
+
+<span class="fc" id="L672">        return rc;</span>
+    }
+
+    public boolean clientUpdateByExampleSelectiveMethodGenerated(Method method,
+            TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+<span class="fc" id="L677">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L679" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L680" title="1 of 2 branches missed.">            if (!plugin.clientUpdateByExampleSelectiveMethodGenerated(method,</span>
+                    topLevelClass, introspectedTable)) {
+<span class="nc" id="L682">                rc = false;</span>
+<span class="nc" id="L683">                break;</span>
+            }
+<span class="fc" id="L685">        }</span>
+
+<span class="fc" id="L687">        return rc;</span>
+    }
+
+    public boolean clientUpdateByExampleWithBLOBsMethodGenerated(Method method,
+            Interface interfaze, IntrospectedTable introspectedTable) {
+<span class="fc" id="L692">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L694" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L695" title="1 of 2 branches missed.">            if (!plugin.clientUpdateByExampleWithBLOBsMethodGenerated(method,</span>
+                    interfaze, introspectedTable)) {
+<span class="nc" id="L697">                rc = false;</span>
+<span class="nc" id="L698">                break;</span>
+            }
+<span class="fc" id="L700">        }</span>
+
+<span class="fc" id="L702">        return rc;</span>
+    }
+
+    public boolean clientUpdateByExampleWithBLOBsMethodGenerated(Method method,
+            TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+<span class="fc" id="L707">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L709" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L710" title="1 of 2 branches missed.">            if (!plugin.clientUpdateByExampleWithBLOBsMethodGenerated(method,</span>
+                    topLevelClass, introspectedTable)) {
+<span class="nc" id="L712">                rc = false;</span>
+<span class="nc" id="L713">                break;</span>
+            }
+<span class="fc" id="L715">        }</span>
+
+<span class="fc" id="L717">        return rc;</span>
+    }
+
+    public boolean clientUpdateByExampleWithoutBLOBsMethodGenerated(Method method,
+            Interface interfaze, IntrospectedTable introspectedTable) {
+<span class="fc" id="L722">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L724" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L725" title="1 of 2 branches missed.">            if (!plugin.clientUpdateByExampleWithoutBLOBsMethodGenerated(method,</span>
+                    interfaze, introspectedTable)) {
+<span class="nc" id="L727">                rc = false;</span>
+<span class="nc" id="L728">                break;</span>
+            }
+<span class="fc" id="L730">        }</span>
+
+<span class="fc" id="L732">        return rc;</span>
+    }
+
+    public boolean clientUpdateByExampleWithoutBLOBsMethodGenerated(Method method,
+            TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+<span class="fc" id="L737">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L739" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L740" title="1 of 2 branches missed.">            if (!plugin.clientUpdateByExampleWithoutBLOBsMethodGenerated(method,</span>
+                    topLevelClass, introspectedTable)) {
+<span class="nc" id="L742">                rc = false;</span>
+<span class="nc" id="L743">                break;</span>
+            }
+<span class="fc" id="L745">        }</span>
+
+<span class="fc" id="L747">        return rc;</span>
+    }
+
+    public boolean clientUpdateByPrimaryKeySelectiveMethodGenerated(Method method,
+            Interface interfaze, IntrospectedTable introspectedTable) {
+<span class="fc" id="L752">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L754" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L755" title="1 of 2 branches missed.">            if (!plugin.clientUpdateByPrimaryKeySelectiveMethodGenerated(method,</span>
+                    interfaze, introspectedTable)) {
+<span class="nc" id="L757">                rc = false;</span>
+<span class="nc" id="L758">                break;</span>
+            }
+<span class="fc" id="L760">        }</span>
+
+<span class="fc" id="L762">        return rc;</span>
+    }
+
+    public boolean clientUpdateByPrimaryKeySelectiveMethodGenerated(Method method,
+            TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+<span class="fc" id="L767">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L769" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L770" title="1 of 2 branches missed.">            if (!plugin.clientUpdateByPrimaryKeySelectiveMethodGenerated(method,</span>
+                    topLevelClass, introspectedTable)) {
+<span class="nc" id="L772">                rc = false;</span>
+<span class="nc" id="L773">                break;</span>
+            }
+<span class="fc" id="L775">        }</span>
+
+<span class="fc" id="L777">        return rc;</span>
+    }
+
+    public boolean clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(Method method,
+            Interface interfaze, IntrospectedTable introspectedTable) {
+<span class="fc" id="L782">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L784" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L785" title="1 of 2 branches missed.">            if (!plugin.clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(method,</span>
+                    interfaze, introspectedTable)) {
+<span class="nc" id="L787">                rc = false;</span>
+<span class="nc" id="L788">                break;</span>
+            }
+<span class="fc" id="L790">        }</span>
+
+<span class="fc" id="L792">        return rc;</span>
+    }
+
+    public boolean clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(Method method,
+            TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+<span class="fc" id="L797">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L799" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L800" title="1 of 2 branches missed.">            if (!plugin.clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(method,</span>
+                    topLevelClass, introspectedTable)) {
+<span class="nc" id="L802">                rc = false;</span>
+<span class="nc" id="L803">                break;</span>
+            }
+<span class="fc" id="L805">        }</span>
+
+<span class="fc" id="L807">        return rc;</span>
+    }
+
+    public boolean clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(
+            Method method, Interface interfaze,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L813">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L815" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L816" title="1 of 2 branches missed.">            if (!plugin.clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(</span>
+                    method, interfaze, introspectedTable)) {
+<span class="nc" id="L818">                rc = false;</span>
+<span class="nc" id="L819">                break;</span>
+            }
+<span class="fc" id="L821">        }</span>
+
+<span class="fc" id="L823">        return rc;</span>
+    }
+
+    public boolean clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(
+            Method method, TopLevelClass topLevelClass,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L829">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L831" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L832" title="1 of 2 branches missed.">            if (!plugin.clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(</span>
+                    method, topLevelClass, introspectedTable)) {
+<span class="nc" id="L834">                rc = false;</span>
+<span class="nc" id="L835">                break;</span>
+            }
+<span class="fc" id="L837">        }</span>
+
+<span class="fc" id="L839">        return rc;</span>
+    }
+
+    public List&lt;GeneratedJavaFile&gt; contextGenerateAdditionalJavaFiles() {
+<span class="fc" id="L843">        List&lt;GeneratedJavaFile&gt; answer = new ArrayList&lt;GeneratedJavaFile&gt;();</span>
+<span class="fc bfc" id="L844" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="fc" id="L845">            List&lt;GeneratedJavaFile&gt; temp = plugin</span>
+                    .contextGenerateAdditionalJavaFiles();
+<span class="pc bpc" id="L847" title="1 of 2 branches missed.">            if (temp != null) {</span>
+<span class="nc" id="L848">                answer.addAll(temp);</span>
+            }
+<span class="fc" id="L850">        }</span>
+<span class="fc" id="L851">        return answer;</span>
+    }
+
+    public List&lt;GeneratedXmlFile&gt; contextGenerateAdditionalXmlFiles() {
+<span class="fc" id="L855">        List&lt;GeneratedXmlFile&gt; answer = new ArrayList&lt;GeneratedXmlFile&gt;();</span>
+<span class="fc bfc" id="L856" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="fc" id="L857">            List&lt;GeneratedXmlFile&gt; temp = plugin</span>
+                    .contextGenerateAdditionalXmlFiles();
+<span class="fc bfc" id="L859" title="All 2 branches covered.">            if (temp != null) {</span>
+<span class="fc" id="L860">                answer.addAll(temp);</span>
+            }
+<span class="fc" id="L862">        }</span>
+<span class="fc" id="L863">        return answer;</span>
+    }
+
+    public boolean sqlMapDocumentGenerated(Document document,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L868">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L870" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L871" title="1 of 2 branches missed.">            if (!plugin.sqlMapDocumentGenerated(document, introspectedTable)) {</span>
+<span class="nc" id="L872">                rc = false;</span>
+<span class="nc" id="L873">                break;</span>
+            }
+<span class="fc" id="L875">        }</span>
+
+<span class="fc" id="L877">        return rc;</span>
+    }
+
+    public boolean modelFieldGenerated(Field field,
+            TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn,
+            IntrospectedTable introspectedTable,
+            Plugin.ModelClassType modelClassType) {
+<span class="fc" id="L884">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L886" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L887" title="1 of 2 branches missed.">            if (!plugin.modelFieldGenerated(field, topLevelClass,</span>
+                    introspectedColumn, introspectedTable, modelClassType)) {
+<span class="nc" id="L889">                rc = false;</span>
+<span class="nc" id="L890">                break;</span>
+            }
+<span class="fc" id="L892">        }</span>
+
+<span class="fc" id="L894">        return rc;</span>
+    }
+
+    public boolean modelGetterMethodGenerated(Method method,
+            TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn,
+            IntrospectedTable introspectedTable,
+            Plugin.ModelClassType modelClassType) {
+<span class="fc" id="L901">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L903" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L904" title="1 of 2 branches missed.">            if (!plugin.modelGetterMethodGenerated(method, topLevelClass,</span>
+                    introspectedColumn, introspectedTable, modelClassType)) {
+<span class="nc" id="L906">                rc = false;</span>
+<span class="nc" id="L907">                break;</span>
+            }
+<span class="fc" id="L909">        }</span>
+
+<span class="fc" id="L911">        return rc;</span>
+    }
+
+    public boolean modelSetterMethodGenerated(Method method,
+            TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn,
+            IntrospectedTable introspectedTable,
+            Plugin.ModelClassType modelClassType) {
+<span class="fc" id="L918">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L920" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L921" title="1 of 2 branches missed.">            if (!plugin.modelSetterMethodGenerated(method, topLevelClass,</span>
+                    introspectedColumn, introspectedTable, modelClassType)) {
+<span class="nc" id="L923">                rc = false;</span>
+<span class="nc" id="L924">                break;</span>
+            }
+<span class="fc" id="L926">        }</span>
+
+<span class="fc" id="L928">        return rc;</span>
+    }
+
+    public boolean sqlMapInsertSelectiveElementGenerated(XmlElement element,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L933">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L935" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L936" title="1 of 2 branches missed.">            if (!plugin.sqlMapInsertSelectiveElementGenerated(element,</span>
+                    introspectedTable)) {
+<span class="nc" id="L938">                rc = false;</span>
+<span class="nc" id="L939">                break;</span>
+            }
+<span class="fc" id="L941">        }</span>
+
+<span class="fc" id="L943">        return rc;</span>
+    }
+
+    public boolean clientInsertSelectiveMethodGenerated(Method method,
+            Interface interfaze, IntrospectedTable introspectedTable) {
+<span class="fc" id="L948">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L950" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L951" title="1 of 2 branches missed.">            if (!plugin.clientInsertSelectiveMethodGenerated(method, interfaze,</span>
+                    introspectedTable)) {
+<span class="nc" id="L953">                rc = false;</span>
+<span class="nc" id="L954">                break;</span>
+            }
+<span class="fc" id="L956">        }</span>
+
+<span class="fc" id="L958">        return rc;</span>
+    }
+
+    public boolean clientInsertSelectiveMethodGenerated(Method method,
+            TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+<span class="fc" id="L963">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L965" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L966" title="1 of 2 branches missed.">            if (!plugin.clientInsertSelectiveMethodGenerated(method,</span>
+                    topLevelClass, introspectedTable)) {
+<span class="nc" id="L968">                rc = false;</span>
+<span class="nc" id="L969">                break;</span>
+            }
+<span class="fc" id="L971">        }</span>
+
+<span class="fc" id="L973">        return rc;</span>
+    }
+
+    public void initialized(IntrospectedTable introspectedTable) {
+<span class="fc bfc" id="L977" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="fc" id="L978">            plugin.initialized(introspectedTable);</span>
+<span class="fc" id="L979">        }</span>
+<span class="fc" id="L980">    }</span>
+
+    public boolean sqlMapBaseColumnListElementGenerated(XmlElement element,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L984">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L986" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L987" title="1 of 2 branches missed.">            if (!plugin.sqlMapBaseColumnListElementGenerated(element,</span>
+                    introspectedTable)) {
+<span class="nc" id="L989">                rc = false;</span>
+<span class="nc" id="L990">                break;</span>
+            }
+<span class="fc" id="L992">        }</span>
+
+<span class="fc" id="L994">        return rc;</span>
+    }
+
+    public boolean sqlMapBlobColumnListElementGenerated(XmlElement element,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L999">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L1001" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L1002" title="1 of 2 branches missed.">            if (!plugin.sqlMapBlobColumnListElementGenerated(element,</span>
+                    introspectedTable)) {
+<span class="nc" id="L1004">                rc = false;</span>
+<span class="nc" id="L1005">                break;</span>
+            }
+<span class="fc" id="L1007">        }</span>
+
+<span class="fc" id="L1009">        return rc;</span>
+    }
+
+    public boolean providerGenerated(TopLevelClass topLevelClass,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L1014">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L1016" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L1017" title="1 of 2 branches missed.">            if (!plugin.providerGenerated(topLevelClass, introspectedTable)) {</span>
+<span class="nc" id="L1018">                rc = false;</span>
+<span class="nc" id="L1019">                break;</span>
+            }
+<span class="fc" id="L1021">        }</span>
+
+<span class="fc" id="L1023">        return rc;</span>
+    }
+
+    public boolean providerApplyWhereMethodGenerated(Method method,
+            TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+<span class="fc" id="L1028">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L1030" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L1031" title="1 of 2 branches missed.">            if (!plugin.providerApplyWhereMethodGenerated(method,</span>
+                    topLevelClass, introspectedTable)) {
+<span class="nc" id="L1033">                rc = false;</span>
+<span class="nc" id="L1034">                break;</span>
+            }
+<span class="fc" id="L1036">        }</span>
+
+<span class="fc" id="L1038">        return rc;</span>
+    }
+
+    public boolean providerCountByExampleMethodGenerated(Method method,
+            TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+<span class="fc" id="L1043">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L1045" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L1046" title="1 of 2 branches missed.">            if (!plugin.providerCountByExampleMethodGenerated(method,</span>
+                    topLevelClass, introspectedTable)) {
+<span class="nc" id="L1048">                rc = false;</span>
+<span class="nc" id="L1049">                break;</span>
+            }
+<span class="fc" id="L1051">        }</span>
+
+<span class="fc" id="L1053">        return rc;</span>
+    }
+
+    public boolean providerDeleteByExampleMethodGenerated(Method method,
+            TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+<span class="fc" id="L1058">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L1060" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L1061" title="1 of 2 branches missed.">            if (!plugin.providerDeleteByExampleMethodGenerated(method,</span>
+                    topLevelClass, introspectedTable)) {
+<span class="nc" id="L1063">                rc = false;</span>
+<span class="nc" id="L1064">                break;</span>
+            }
+<span class="fc" id="L1066">        }</span>
+
+<span class="fc" id="L1068">        return rc;</span>
+    }
+
+    public boolean providerInsertSelectiveMethodGenerated(Method method,
+            TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+<span class="fc" id="L1073">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L1075" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L1076" title="1 of 2 branches missed.">            if (!plugin.providerInsertSelectiveMethodGenerated(method,</span>
+                    topLevelClass, introspectedTable)) {
+<span class="nc" id="L1078">                rc = false;</span>
+<span class="nc" id="L1079">                break;</span>
+            }
+<span class="fc" id="L1081">        }</span>
+
+<span class="fc" id="L1083">        return rc;</span>
+    }
+
+    public boolean providerSelectByExampleWithBLOBsMethodGenerated(
+            Method method, TopLevelClass topLevelClass,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L1089">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L1091" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L1092" title="1 of 2 branches missed.">            if (!plugin.providerSelectByExampleWithBLOBsMethodGenerated(method,</span>
+                    topLevelClass, introspectedTable)) {
+<span class="nc" id="L1094">                rc = false;</span>
+<span class="nc" id="L1095">                break;</span>
+            }
+<span class="fc" id="L1097">        }</span>
+
+<span class="fc" id="L1099">        return rc;</span>
+    }
+
+    public boolean providerSelectByExampleWithoutBLOBsMethodGenerated(
+            Method method, TopLevelClass topLevelClass,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L1105">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L1107" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L1108" title="1 of 2 branches missed.">            if (!plugin.providerSelectByExampleWithoutBLOBsMethodGenerated(method,</span>
+                    topLevelClass, introspectedTable)) {
+<span class="nc" id="L1110">                rc = false;</span>
+<span class="nc" id="L1111">                break;</span>
+            }
+<span class="fc" id="L1113">        }</span>
+
+<span class="fc" id="L1115">        return rc;</span>
+    }
+
+    public boolean providerUpdateByExampleSelectiveMethodGenerated(
+            Method method, TopLevelClass topLevelClass,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L1121">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L1123" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L1124" title="1 of 2 branches missed.">            if (!plugin.providerUpdateByExampleSelectiveMethodGenerated(method,</span>
+                    topLevelClass, introspectedTable)) {
+<span class="nc" id="L1126">                rc = false;</span>
+<span class="nc" id="L1127">                break;</span>
+            }
+<span class="fc" id="L1129">        }</span>
+
+<span class="fc" id="L1131">        return rc;</span>
+    }
+
+    public boolean providerUpdateByExampleWithBLOBsMethodGenerated(
+            Method method, TopLevelClass topLevelClass,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L1137">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L1139" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L1140" title="1 of 2 branches missed.">            if (!plugin.providerUpdateByExampleWithBLOBsMethodGenerated(method,</span>
+                    topLevelClass, introspectedTable)) {
+<span class="nc" id="L1142">                rc = false;</span>
+<span class="nc" id="L1143">                break;</span>
+            }
+<span class="fc" id="L1145">        }</span>
+
+<span class="fc" id="L1147">        return rc;</span>
+    }
+
+    public boolean providerUpdateByExampleWithoutBLOBsMethodGenerated(
+            Method method, TopLevelClass topLevelClass,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L1153">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L1155" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L1156" title="1 of 2 branches missed.">            if (!plugin.providerUpdateByExampleWithoutBLOBsMethodGenerated(method,</span>
+                    topLevelClass, introspectedTable)) {
+<span class="nc" id="L1158">                rc = false;</span>
+<span class="nc" id="L1159">                break;</span>
+            }
+<span class="fc" id="L1161">        }</span>
+
+<span class="fc" id="L1163">        return rc;</span>
+    }
+
+    public boolean providerUpdateByPrimaryKeySelectiveMethodGenerated(
+            Method method, TopLevelClass topLevelClass,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L1169">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L1171" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L1172" title="1 of 2 branches missed.">            if (!plugin.providerUpdateByPrimaryKeySelectiveMethodGenerated(method,</span>
+                    topLevelClass, introspectedTable)) {
+<span class="nc" id="L1174">                rc = false;</span>
+<span class="nc" id="L1175">                break;</span>
+            }
+<span class="fc" id="L1177">        }</span>
+
+<span class="fc" id="L1179">        return rc;</span>
+    }
+
+    public boolean sqlMapSelectAllElementGenerated(XmlElement element,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L1184">        boolean rc = true;</span>
+
+<span class="fc bfc" id="L1186" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
+<span class="pc bpc" id="L1187" title="1 of 2 branches missed.">            if (!plugin.sqlMapSelectAllElementGenerated(element, introspectedTable)) {</span>
+<span class="nc" id="L1188">                rc = false;</span>
+<span class="nc" id="L1189">                break;</span>
+            }
+<span class="fc" id="L1191">        }</span>
+
+<span class="fc" id="L1193">        return rc;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

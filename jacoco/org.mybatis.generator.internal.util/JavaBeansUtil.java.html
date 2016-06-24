@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>JavaBeansUtil.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.internal.util</a> &gt; <span class="el_source">JavaBeansUtil.java</span></div><h1>JavaBeansUtil.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2016 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.internal.util;
+
+import static org.mybatis.generator.internal.util.StringUtility.isTrue;
+
+import java.util.Locale;
+import java.util.Properties;
+
+import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.dom.java.Field;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.JavaVisibility;
+import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.config.Context;
+import org.mybatis.generator.config.PropertyRegistry;
+import org.mybatis.generator.config.TableConfiguration;
+
+/**
+ * The Class JavaBeansUtil.
+ *
+ * @author Jeff Butler
+ */
+public class JavaBeansUtil {
+
+    /**
+     * Instantiates a new java beans util.
+     */
+    private JavaBeansUtil() {
+<span class="nc" id="L45">        super();</span>
+<span class="nc" id="L46">    }</span>
+
+    /**
+     * JavaBeans rules:
+     * 
+     * eMail &amp;gt; geteMail() firstName &amp;gt; getFirstName() URL $gt; getURL() XAxis &amp;gt; getXAxis() a &amp;gt; getA() B &amp;gt;
+     * invalid - this method assumes that this is not the case. Call getValidPropertyName first. Yaxis &amp;gt; invalid -
+     * this method assumes that this is not the case. Call getValidPropertyName first.
+     *
+     * @param property
+     *            the property
+     * @param fullyQualifiedJavaType
+     *            the fully qualified java type
+     * @return the getter method name
+     */
+    public static String getGetterMethodName(String property,
+            FullyQualifiedJavaType fullyQualifiedJavaType) {
+<span class="fc" id="L63">        StringBuilder sb = new StringBuilder();</span>
+
+<span class="fc" id="L65">        sb.append(property);</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">        if (Character.isLowerCase(sb.charAt(0))) {</span>
+<span class="fc bfc" id="L67" title="All 4 branches covered.">            if (sb.length() == 1 || !Character.isUpperCase(sb.charAt(1))) {</span>
+<span class="fc" id="L68">                sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));</span>
+            }
+        }
+
+<span class="fc bfc" id="L72" title="All 2 branches covered.">        if (fullyQualifiedJavaType.equals(FullyQualifiedJavaType</span>
+                .getBooleanPrimitiveInstance())) {
+<span class="fc" id="L74">            sb.insert(0, &quot;is&quot;); //$NON-NLS-1$</span>
+        } else {
+<span class="fc" id="L76">            sb.insert(0, &quot;get&quot;); //$NON-NLS-1$</span>
+        }
+
+<span class="fc" id="L79">        return sb.toString();</span>
+    }
+
+    /**
+     * JavaBeans rules:
+     * 
+     * eMail &amp;gt; seteMail() firstName &amp;gt; setFirstName() URL &amp;gt; setURL() XAxis &amp;gt; setXAxis() a &amp;gt; setA() B &amp;gt;
+     * invalid - this method assumes that this is not the case. Call getValidPropertyName first. Yaxis &amp;gt; invalid -
+     * this method assumes that this is not the case. Call getValidPropertyName first.
+     *
+     * @param property
+     *            the property
+     * @return the setter method name
+     */
+    public static String getSetterMethodName(String property) {
+<span class="fc" id="L94">        StringBuilder sb = new StringBuilder();</span>
+
+<span class="fc" id="L96">        sb.append(property);</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">        if (Character.isLowerCase(sb.charAt(0))) {</span>
+<span class="fc bfc" id="L98" title="All 4 branches covered.">            if (sb.length() == 1 || !Character.isUpperCase(sb.charAt(1))) {</span>
+<span class="fc" id="L99">                sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));</span>
+            }
+        }
+
+<span class="fc" id="L103">        sb.insert(0, &quot;set&quot;); //$NON-NLS-1$</span>
+
+<span class="fc" id="L105">        return sb.toString();</span>
+    }
+
+    /**
+     * Gets the camel case string.
+     *
+     * @param inputString
+     *            the input string
+     * @param firstCharacterUppercase
+     *            the first character uppercase
+     * @return the camel case string
+     */
+    public static String getCamelCaseString(String inputString,
+            boolean firstCharacterUppercase) {
+<span class="fc" id="L119">        StringBuilder sb = new StringBuilder();</span>
+
+<span class="fc" id="L121">        boolean nextUpperCase = false;</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">        for (int i = 0; i &lt; inputString.length(); i++) {</span>
+<span class="fc" id="L123">            char c = inputString.charAt(i);</span>
+
+<span class="fc bfc" id="L125" title="All 2 branches covered.">            switch (c) {</span>
+            case '_':
+            case '-':
+            case '@':
+            case '$':
+            case '#':
+            case ' ':
+            case '/':
+            case '&amp;':
+<span class="fc bfc" id="L134" title="All 2 branches covered.">                if (sb.length() &gt; 0) {</span>
+<span class="fc" id="L135">                    nextUpperCase = true;</span>
+                }
+                break;
+
+            default:
+<span class="fc bfc" id="L140" title="All 2 branches covered.">                if (nextUpperCase) {</span>
+<span class="fc" id="L141">                    sb.append(Character.toUpperCase(c));</span>
+<span class="fc" id="L142">                    nextUpperCase = false;</span>
+                } else {
+<span class="fc" id="L144">                    sb.append(Character.toLowerCase(c));</span>
+                }
+                break;
+            }
+        }
+
+<span class="fc bfc" id="L150" title="All 2 branches covered.">        if (firstCharacterUppercase) {</span>
+<span class="fc" id="L151">            sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));</span>
+        }
+
+<span class="fc" id="L154">        return sb.toString();</span>
+    }
+
+    /**
+     * This method ensures that the specified input string is a valid Java property name. The rules are as follows:
+     * 
+     * 1. If the first character is lower case, then OK 2. If the first two characters are upper case, then OK 3. If the
+     * first character is upper case, and the second character is lower case, then the first character should be made
+     * lower case
+     * 
+     * eMail &amp;gt; eMail firstName &amp;gt; firstName URL &amp;gt; URL XAxis &amp;gt; XAxis a &amp;gt; a B &amp;gt; b Yaxis &amp;gt; yaxis
+     *
+     * @param inputString
+     *            the input string
+     * @return the valid property name
+     */
+    public static String getValidPropertyName(String inputString) {
+        String answer;
+
+<span class="pc bpc" id="L173" title="1 of 2 branches missed.">        if (inputString == null) {</span>
+<span class="nc" id="L174">            answer = null;</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">        } else if (inputString.length() &lt; 2) {</span>
+<span class="fc" id="L176">            answer = inputString.toLowerCase(Locale.US);</span>
+        } else {
+<span class="fc bfc" id="L178" title="All 4 branches covered.">            if (Character.isUpperCase(inputString.charAt(0))</span>
+                    &amp;&amp; !Character.isUpperCase(inputString.charAt(1))) {
+<span class="fc" id="L180">                answer = inputString.substring(0, 1).toLowerCase(Locale.US)</span>
+                        + inputString.substring(1);
+            } else {
+<span class="fc" id="L183">                answer = inputString;</span>
+            }
+        }
+
+<span class="fc" id="L187">        return answer;</span>
+    }
+
+    /**
+     * Gets the java beans getter.
+     *
+     * @param introspectedColumn
+     *            the introspected column
+     * @param context
+     *            the context
+     * @param introspectedTable
+     *            the introspected table
+     * @return the java beans getter
+     */
+    public static Method getJavaBeansGetter(IntrospectedColumn introspectedColumn,
+            Context context,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L204">        FullyQualifiedJavaType fqjt = introspectedColumn</span>
+                .getFullyQualifiedJavaType();
+<span class="fc" id="L206">        String property = introspectedColumn.getJavaProperty();</span>
+
+<span class="fc" id="L208">        Method method = new Method();</span>
+<span class="fc" id="L209">        method.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L210">        method.setReturnType(fqjt);</span>
+<span class="fc" id="L211">        method.setName(getGetterMethodName(property, fqjt));</span>
+<span class="fc" id="L212">        context.getCommentGenerator().addGetterComment(method,</span>
+                introspectedTable, introspectedColumn);
+
+<span class="fc" id="L215">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L216">        sb.append(&quot;return &quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L217">        sb.append(property);</span>
+<span class="fc" id="L218">        sb.append(';');</span>
+<span class="fc" id="L219">        method.addBodyLine(sb.toString());</span>
+
+<span class="fc" id="L221">        return method;</span>
+    }
+
+    /**
+     * Gets the java beans field.
+     *
+     * @param introspectedColumn
+     *            the introspected column
+     * @param context
+     *            the context
+     * @param introspectedTable
+     *            the introspected table
+     * @return the java beans field
+     */
+    public static Field getJavaBeansField(IntrospectedColumn introspectedColumn,
+            Context context,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L238">        FullyQualifiedJavaType fqjt = introspectedColumn</span>
+                .getFullyQualifiedJavaType();
+<span class="fc" id="L240">        String property = introspectedColumn.getJavaProperty();</span>
+
+<span class="fc" id="L242">        Field field = new Field();</span>
+<span class="fc" id="L243">        field.setVisibility(JavaVisibility.PRIVATE);</span>
+<span class="fc" id="L244">        field.setType(fqjt);</span>
+<span class="fc" id="L245">        field.setName(property);</span>
+<span class="fc" id="L246">        context.getCommentGenerator().addFieldComment(field,</span>
+                introspectedTable, introspectedColumn);
+
+<span class="fc" id="L249">        return field;</span>
+    }
+
+    /**
+     * Gets the java beans setter.
+     *
+     * @param introspectedColumn
+     *            the introspected column
+     * @param context
+     *            the context
+     * @param introspectedTable
+     *            the introspected table
+     * @return the java beans setter
+     */
+    public static Method getJavaBeansSetter(IntrospectedColumn introspectedColumn,
+            Context context,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L266">        FullyQualifiedJavaType fqjt = introspectedColumn</span>
+                .getFullyQualifiedJavaType();
+<span class="fc" id="L268">        String property = introspectedColumn.getJavaProperty();</span>
+
+<span class="fc" id="L270">        Method method = new Method();</span>
+<span class="fc" id="L271">        method.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L272">        method.setName(getSetterMethodName(property));</span>
+<span class="fc" id="L273">        method.addParameter(new Parameter(fqjt, property));</span>
+<span class="fc" id="L274">        context.getCommentGenerator().addSetterComment(method,</span>
+                introspectedTable, introspectedColumn);
+
+<span class="fc" id="L277">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L278" title="All 4 branches covered.">        if (introspectedColumn.isStringColumn() &amp;&amp; isTrimStringsEnabled(introspectedColumn)) {</span>
+<span class="fc" id="L279">            sb.append(&quot;this.&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L280">            sb.append(property);</span>
+<span class="fc" id="L281">            sb.append(&quot; = &quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L282">            sb.append(property);</span>
+<span class="fc" id="L283">            sb.append(&quot; == null ? null : &quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L284">            sb.append(property);</span>
+<span class="fc" id="L285">            sb.append(&quot;.trim();&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L286">            method.addBodyLine(sb.toString());</span>
+        } else {
+<span class="fc" id="L288">            sb.append(&quot;this.&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L289">            sb.append(property);</span>
+<span class="fc" id="L290">            sb.append(&quot; = &quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L291">            sb.append(property);</span>
+<span class="fc" id="L292">            sb.append(';');</span>
+<span class="fc" id="L293">            method.addBodyLine(sb.toString());</span>
+        }
+
+<span class="fc" id="L296">        return method;</span>
+    }
+
+    /**
+     * Checks if is trim strings enabled.
+     *
+     * @param context
+     *            the context
+     * @return true, if is trim strings enabled
+     */
+    private static boolean isTrimStringsEnabled(Context context) {
+<span class="fc" id="L307">        Properties properties = context</span>
+                .getJavaModelGeneratorConfiguration().getProperties();
+<span class="fc" id="L309">        boolean rc = isTrue(properties</span>
+                .getProperty(PropertyRegistry.MODEL_GENERATOR_TRIM_STRINGS));
+<span class="fc" id="L311">        return rc;</span>
+    }
+
+    /**
+     * Checks if is trim strings enabled.
+     *
+     * @param table
+     *            the table
+     * @return true, if is trim strings enabled
+     */
+    private static boolean isTrimStringsEnabled(IntrospectedTable table) {
+<span class="fc" id="L322">        TableConfiguration tableConfiguration = table.getTableConfiguration();</span>
+<span class="fc" id="L323">        String trimSpaces = tableConfiguration.getProperties().getProperty(PropertyRegistry.MODEL_GENERATOR_TRIM_STRINGS);</span>
+<span class="pc bpc" id="L324" title="1 of 2 branches missed.">        if (trimSpaces != null) {</span>
+<span class="nc" id="L325">            return isTrue(trimSpaces);</span>
+        }
+<span class="fc" id="L327">        return isTrimStringsEnabled(table.getContext());</span>
+    }
+
+    /**
+     * Checks if is trim strings enabled.
+     *
+     * @param column
+     *            the column
+     * @return true, if is trim strings enabled
+     */
+    private static boolean isTrimStringsEnabled(IntrospectedColumn column) {
+<span class="fc" id="L338">        String trimSpaces = column.getProperties().getProperty(PropertyRegistry.MODEL_GENERATOR_TRIM_STRINGS);</span>
+<span class="pc bpc" id="L339" title="1 of 2 branches missed.">        if (trimSpaces != null) {</span>
+<span class="nc" id="L340">            return isTrue(trimSpaces);</span>
+        }
+<span class="fc" id="L342">        return isTrimStringsEnabled(column.getIntrospectedTable());</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

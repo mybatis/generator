@@ -1,0 +1,978 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>SqlReservedWords.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.internal.db</a> &gt; <span class="el_source">SqlReservedWords.java</span></div><h1>SqlReservedWords.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2016 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.internal.db;
+
+import java.util.HashSet;
+import java.util.Set;
+
+/**
+ * This class contains a somewhat comprehensive list of SQL reserved words.
+ * Since different databases have different reserved words, this list is
+ * inclusive of many different databases - so it may include words that are not
+ * reserved in some databases.
+ * 
+ * This list is based on the list from Drupal Handbook:
+ * http://drupal.org/node/141051 With additions for DB2
+ * 
+ * @author Jeff Butler
+ * 
+ */
+public class SqlReservedWords {
+
+    private static Set&lt;String&gt; RESERVED_WORDS;
+
+    static {
+<span class="fc" id="L38">        String[] words = { &quot;A&quot;, //$NON-NLS-1$</span>
+                &quot;ABORT&quot;, //$NON-NLS-1$
+                &quot;ABS&quot;, //$NON-NLS-1$
+                &quot;ABSOLUTE&quot;, //$NON-NLS-1$
+                &quot;ACCESS&quot;, //$NON-NLS-1$
+                &quot;ACTION&quot;, //$NON-NLS-1$
+                &quot;ADA&quot;, //$NON-NLS-1$
+                &quot;ADD&quot;, // DB2 //$NON-NLS-1$
+                &quot;ADMIN&quot;, //$NON-NLS-1$
+                &quot;AFTER&quot;, // DB2 //$NON-NLS-1$
+                &quot;AGGREGATE&quot;, //$NON-NLS-1$
+                &quot;ALIAS&quot;, // DB2 //$NON-NLS-1$
+                &quot;ALL&quot;, // DB2 //$NON-NLS-1$
+                &quot;ALLOCATE&quot;, // DB2 //$NON-NLS-1$
+                &quot;ALLOW&quot;, // DB2 //$NON-NLS-1$
+                &quot;ALSO&quot;, //$NON-NLS-1$
+                &quot;ALTER&quot;, // DB2 //$NON-NLS-1$
+                &quot;ALWAYS&quot;, //$NON-NLS-1$
+                &quot;ANALYSE&quot;, //$NON-NLS-1$
+                &quot;ANALYZE&quot;, //$NON-NLS-1$
+                &quot;AND&quot;, // DB2 //$NON-NLS-1$
+                &quot;ANY&quot;, // DB2 //$NON-NLS-1$
+                &quot;APPLICATION&quot;, // DB2 //$NON-NLS-1$
+                &quot;ARE&quot;, //$NON-NLS-1$
+                &quot;ARRAY&quot;, //$NON-NLS-1$
+                &quot;AS&quot;, // DB2 //$NON-NLS-1$
+                &quot;ASC&quot;, //$NON-NLS-1$
+                &quot;ASENSITIVE&quot;, //$NON-NLS-1$
+                &quot;ASSERTION&quot;, //$NON-NLS-1$
+                &quot;ASSIGNMENT&quot;, //$NON-NLS-1$
+                &quot;ASSOCIATE&quot;, // DB2 //$NON-NLS-1$
+                &quot;ASUTIME&quot;, // DB2 //$NON-NLS-1$
+                &quot;ASYMMETRIC&quot;, //$NON-NLS-1$
+                &quot;AT&quot;, //$NON-NLS-1$
+                &quot;ATOMIC&quot;, //$NON-NLS-1$
+                &quot;ATTRIBUTE&quot;, //$NON-NLS-1$
+                &quot;ATTRIBUTES&quot;, //$NON-NLS-1$
+                &quot;AUDIT&quot;, // DB2 //$NON-NLS-1$
+                &quot;AUTHORIZATION&quot;, // DB2 //$NON-NLS-1$
+                &quot;AUTO_INCREMENT&quot;, //$NON-NLS-1$
+                &quot;AUX&quot;, // DB2 //$NON-NLS-1$
+                &quot;AUXILIARY&quot;, // DB2 //$NON-NLS-1$
+                &quot;AVG&quot;, //$NON-NLS-1$
+                &quot;AVG_ROW_LENGTH&quot;, //$NON-NLS-1$
+                &quot;BACKUP&quot;, //$NON-NLS-1$
+                &quot;BACKWARD&quot;, //$NON-NLS-1$
+                &quot;BEFORE&quot;, // DB2 //$NON-NLS-1$
+                &quot;BEGIN&quot;, // DB2 //$NON-NLS-1$
+                &quot;BERNOULLI&quot;, //$NON-NLS-1$
+                &quot;BETWEEN&quot;, // DB2 //$NON-NLS-1$
+                &quot;BIGINT&quot;, //$NON-NLS-1$
+                &quot;BINARY&quot;, // DB2 //$NON-NLS-1$
+                &quot;BIT&quot;, //$NON-NLS-1$
+                &quot;BIT_LENGTH&quot;, //$NON-NLS-1$
+                &quot;BITVAR&quot;, //$NON-NLS-1$
+                &quot;BLOB&quot;, //$NON-NLS-1$
+                &quot;BOOL&quot;, //$NON-NLS-1$
+                &quot;BOOLEAN&quot;, //$NON-NLS-1$
+                &quot;BOTH&quot;, //$NON-NLS-1$
+                &quot;BREADTH&quot;, //$NON-NLS-1$
+                &quot;BREAK&quot;, //$NON-NLS-1$
+                &quot;BROWSE&quot;, //$NON-NLS-1$
+                &quot;BUFFERPOOL&quot;, // DB2 //$NON-NLS-1$
+                &quot;BULK&quot;, //$NON-NLS-1$
+                &quot;BY&quot;, // DB2 //$NON-NLS-1$
+                &quot;C&quot;, //$NON-NLS-1$
+                &quot;CACHE&quot;, // DB2 //$NON-NLS-1$
+                &quot;CALL&quot;, // DB2 //$NON-NLS-1$
+                &quot;CALLED&quot;, // DB2 //$NON-NLS-1$
+                &quot;CAPTURE&quot;, // DB2 //$NON-NLS-1$
+                &quot;CARDINALITY&quot;, // DB2 //$NON-NLS-1$
+                &quot;CASCADE&quot;, //$NON-NLS-1$
+                &quot;CASCADED&quot;, // DB2 //$NON-NLS-1$
+                &quot;CASE&quot;, // DB2 //$NON-NLS-1$
+                &quot;CAST&quot;, // DB2 //$NON-NLS-1$
+                &quot;CATALOG&quot;, //$NON-NLS-1$
+                &quot;CATALOG_NAME&quot;, //$NON-NLS-1$
+                &quot;CCSID&quot;, // DB2 //$NON-NLS-1$
+                &quot;CEIL&quot;, //$NON-NLS-1$
+                &quot;CEILING&quot;, //$NON-NLS-1$
+                &quot;CHAIN&quot;, //$NON-NLS-1$
+                &quot;CHANGE&quot;, //$NON-NLS-1$
+                &quot;CHAR&quot;, // DB2 //$NON-NLS-1$
+                &quot;CHAR_LENGTH&quot;, //$NON-NLS-1$
+                &quot;CHARACTER&quot;, // DB2 //$NON-NLS-1$
+                &quot;CHARACTER_LENGTH&quot;, //$NON-NLS-1$
+                &quot;CHARACTER_SET_CATALOG&quot;, //$NON-NLS-1$
+                &quot;CHARACTER_SET_NAME&quot;, //$NON-NLS-1$
+                &quot;CHARACTER_SET_SCHEMA&quot;, //$NON-NLS-1$
+                &quot;CHARACTERISTICS&quot;, //$NON-NLS-1$
+                &quot;CHARACTERS&quot;, //$NON-NLS-1$
+                &quot;CHECK&quot;, // DB2 //$NON-NLS-1$
+                &quot;CHECKED&quot;, //$NON-NLS-1$
+                &quot;CHECKPOINT&quot;, //$NON-NLS-1$
+                &quot;CHECKSUM&quot;, //$NON-NLS-1$
+                &quot;CLASS&quot;, //$NON-NLS-1$
+                &quot;CLASS_ORIGIN&quot;, //$NON-NLS-1$
+                &quot;CLOB&quot;, //$NON-NLS-1$
+                &quot;CLOSE&quot;, // DB2 //$NON-NLS-1$
+                &quot;CLUSTER&quot;, // DB2 //$NON-NLS-1$
+                &quot;CLUSTERED&quot;, //$NON-NLS-1$
+                &quot;COALESCE&quot;, //$NON-NLS-1$
+                &quot;COBOL&quot;, //$NON-NLS-1$
+                &quot;COLLATE&quot;, //$NON-NLS-1$
+                &quot;COLLATION&quot;, //$NON-NLS-1$
+                &quot;COLLATION_CATALOG&quot;, //$NON-NLS-1$
+                &quot;COLLATION_NAME&quot;, //$NON-NLS-1$
+                &quot;COLLATION_SCHEMA&quot;, //$NON-NLS-1$
+                &quot;COLLECT&quot;, //$NON-NLS-1$
+                &quot;COLLECTION&quot;, // DB2 //$NON-NLS-1$
+                &quot;COLLID&quot;, // DB2 //$NON-NLS-1$
+                &quot;COLUMN&quot;, // DB2 //$NON-NLS-1$
+                &quot;COLUMN_NAME&quot;, //$NON-NLS-1$
+                &quot;COLUMNS&quot;, //$NON-NLS-1$
+                &quot;COMMAND_FUNCTION&quot;, //$NON-NLS-1$
+                &quot;COMMAND_FUNCTION_CODE&quot;, //$NON-NLS-1$
+                &quot;COMMENT&quot;, // DB2 //$NON-NLS-1$
+                &quot;COMMIT&quot;, // DB2 //$NON-NLS-1$
+                &quot;COMMITTED&quot;, //$NON-NLS-1$
+                &quot;COMPLETION&quot;, //$NON-NLS-1$
+                &quot;COMPRESS&quot;, //$NON-NLS-1$
+                &quot;COMPUTE&quot;, //$NON-NLS-1$
+                &quot;CONCAT&quot;, // DB2 //$NON-NLS-1$
+                &quot;CONDITION&quot;, // DB2 //$NON-NLS-1$
+                &quot;CONDITION_NUMBER&quot;, //$NON-NLS-1$
+                &quot;CONNECT&quot;, // DB2 //$NON-NLS-1$
+                &quot;CONNECTION&quot;, // DB2 //$NON-NLS-1$
+                &quot;CONNECTION_NAME&quot;, //$NON-NLS-1$
+                &quot;CONSTRAINT&quot;, // DB2 //$NON-NLS-1$
+                &quot;CONSTRAINT_CATALOG&quot;, //$NON-NLS-1$
+                &quot;CONSTRAINT_NAME&quot;, //$NON-NLS-1$
+                &quot;CONSTRAINT_SCHEMA&quot;, //$NON-NLS-1$
+                &quot;CONSTRAINTS&quot;, //$NON-NLS-1$
+                &quot;CONSTRUCTOR&quot;, //$NON-NLS-1$
+                &quot;CONTAINS&quot;, // DB2 //$NON-NLS-1$
+                &quot;CONTAINSTABLE&quot;, //$NON-NLS-1$
+                &quot;CONTINUE&quot;, // DB2 //$NON-NLS-1$
+                &quot;CONVERSION&quot;, //$NON-NLS-1$
+                &quot;CONVERT&quot;, //$NON-NLS-1$
+                &quot;COPY&quot;, //$NON-NLS-1$
+                &quot;CORR&quot;, //$NON-NLS-1$
+                &quot;CORRESPONDING&quot;, //$NON-NLS-1$
+                &quot;COUNT&quot;, // DB2 //$NON-NLS-1$
+                &quot;COUNT_BIG&quot;, // DB2 //$NON-NLS-1$
+                &quot;COVAR_POP&quot;, //$NON-NLS-1$
+                &quot;COVAR_SAMP&quot;, //$NON-NLS-1$
+                &quot;CREATE&quot;, // DB2 //$NON-NLS-1$
+                &quot;CREATEDB&quot;, //$NON-NLS-1$
+                &quot;CREATEROLE&quot;, //$NON-NLS-1$
+                &quot;CREATEUSER&quot;, //$NON-NLS-1$
+                &quot;CROSS&quot;, // DB2 //$NON-NLS-1$
+                &quot;CSV&quot;, //$NON-NLS-1$
+                &quot;CUBE&quot;, //$NON-NLS-1$
+                &quot;CUME_DIST&quot;, //$NON-NLS-1$
+                &quot;CURRENT&quot;, // DB2 //$NON-NLS-1$
+                &quot;CURRENT_DATE&quot;, // DB2 //$NON-NLS-1$
+                &quot;CURRENT_DEFAULT_TRANSFORM_GROUP&quot;, //$NON-NLS-1$
+                &quot;CURRENT_LC_CTYPE&quot;, // DB2 //$NON-NLS-1$
+                &quot;CURRENT_PATH&quot;, // DB2 //$NON-NLS-1$
+                &quot;CURRENT_ROLE&quot;, //$NON-NLS-1$
+                &quot;CURRENT_SERVER&quot;, // DB2 //$NON-NLS-1$
+                &quot;CURRENT_TIME&quot;, // DB2 //$NON-NLS-1$
+                &quot;CURRENT_TIMESTAMP&quot;, // DB2 //$NON-NLS-1$
+                &quot;CURRENT_TIMEZONE&quot;, // DB2 //$NON-NLS-1$
+                &quot;CURRENT_TRANSFORM_GROUP_FOR_TYPE&quot;, //$NON-NLS-1$
+                &quot;CURRENT_USER&quot;, // DB2 //$NON-NLS-1$
+                &quot;CURSOR&quot;, // DB2 //$NON-NLS-1$
+                &quot;CURSOR_NAME&quot;, //$NON-NLS-1$
+                &quot;CYCLE&quot;, // DB2 //$NON-NLS-1$
+                &quot;DATA&quot;, // DB2 //$NON-NLS-1$
+                &quot;DATABASE&quot;, // DB2 //$NON-NLS-1$
+                &quot;DATABASES&quot;, //$NON-NLS-1$
+                &quot;DATE&quot;, //$NON-NLS-1$
+                &quot;DATETIME&quot;, //$NON-NLS-1$
+                &quot;DATETIME_INTERVAL_CODE&quot;, //$NON-NLS-1$
+                &quot;DATETIME_INTERVAL_PRECISION&quot;, //$NON-NLS-1$
+                &quot;DAY&quot;, // DB2 //$NON-NLS-1$
+                &quot;DAY_HOUR&quot;, //$NON-NLS-1$
+                &quot;DAY_MICROSECOND&quot;, //$NON-NLS-1$
+                &quot;DAY_MINUTE&quot;, //$NON-NLS-1$
+                &quot;DAY_SECOND&quot;, //$NON-NLS-1$
+                &quot;DAYOFMONTH&quot;, //$NON-NLS-1$
+                &quot;DAYOFWEEK&quot;, //$NON-NLS-1$
+                &quot;DAYOFYEAR&quot;, //$NON-NLS-1$
+                &quot;DAYS&quot;, // DB2 //$NON-NLS-1$
+                &quot;DB2GENERAL&quot;, // DB2 //$NON-NLS-1$
+                &quot;DB2GNRL&quot;, // DB2 //$NON-NLS-1$
+                &quot;DB2SQL&quot;, // DB2 //$NON-NLS-1$
+                &quot;DBCC&quot;, //$NON-NLS-1$
+                &quot;DBINFO&quot;, // DB2 //$NON-NLS-1$
+                &quot;DEALLOCATE&quot;, //$NON-NLS-1$
+                &quot;DEC&quot;, //$NON-NLS-1$
+                &quot;DECIMAL&quot;, //$NON-NLS-1$
+                &quot;DECLARE&quot;, // DB2 //$NON-NLS-1$
+                &quot;DEFAULT&quot;, // DB2 //$NON-NLS-1$
+                &quot;DEFAULTS&quot;, // DB2 //$NON-NLS-1$
+                &quot;DEFERRABLE&quot;, //$NON-NLS-1$
+                &quot;DEFERRED&quot;, //$NON-NLS-1$
+                &quot;DEFINED&quot;, //$NON-NLS-1$
+                &quot;DEFINER&quot;, //$NON-NLS-1$
+                &quot;DEFINITION&quot;, // DB2 //$NON-NLS-1$
+                &quot;DEGREE&quot;, //$NON-NLS-1$
+                &quot;DELAY_KEY_WRITE&quot;, //$NON-NLS-1$
+                &quot;DELAYED&quot;, //$NON-NLS-1$
+                &quot;DELETE&quot;, // DB2 //$NON-NLS-1$
+                &quot;DELIMITER&quot;, //$NON-NLS-1$
+                &quot;DELIMITERS&quot;, //$NON-NLS-1$
+                &quot;DENSE_RANK&quot;, //$NON-NLS-1$
+                &quot;DENY&quot;, //$NON-NLS-1$
+                &quot;DEPTH&quot;, //$NON-NLS-1$
+                &quot;DEREF&quot;, //$NON-NLS-1$
+                &quot;DERIVED&quot;, //$NON-NLS-1$
+                &quot;DESC&quot;, //$NON-NLS-1$
+                &quot;DESCRIBE&quot;, //$NON-NLS-1$
+                &quot;DESCRIPTOR&quot;, // DB2 //$NON-NLS-1$
+                &quot;DESTROY&quot;, //$NON-NLS-1$
+                &quot;DESTRUCTOR&quot;, //$NON-NLS-1$
+                &quot;DETERMINISTIC&quot;, // DB2 //$NON-NLS-1$
+                &quot;DIAGNOSTICS&quot;, //$NON-NLS-1$
+                &quot;DICTIONARY&quot;, //$NON-NLS-1$
+                &quot;DISABLE&quot;, //$NON-NLS-1$
+                &quot;DISALLOW&quot;, // DB2 //$NON-NLS-1$
+                &quot;DISCONNECT&quot;, // DB2 //$NON-NLS-1$
+                &quot;DISK&quot;, //$NON-NLS-1$
+                &quot;DISPATCH&quot;, //$NON-NLS-1$
+                &quot;DISTINCT&quot;, // DB2 //$NON-NLS-1$
+                &quot;DISTINCTROW&quot;, //$NON-NLS-1$
+                &quot;DISTRIBUTED&quot;, //$NON-NLS-1$
+                &quot;DIV&quot;, //$NON-NLS-1$
+                &quot;DO&quot;, // DB2 //$NON-NLS-1$
+                &quot;DOMAIN&quot;, //$NON-NLS-1$
+                &quot;DOUBLE&quot;, // DB2 //$NON-NLS-1$
+                &quot;DROP&quot;, // DB2 //$NON-NLS-1$
+                &quot;DSNHATTR&quot;, // DB2 //$NON-NLS-1$
+                &quot;DSSIZE&quot;, // DB2 //$NON-NLS-1$
+                &quot;DUAL&quot;, //$NON-NLS-1$
+                &quot;DUMMY&quot;, //$NON-NLS-1$
+                &quot;DUMP&quot;, //$NON-NLS-1$
+                &quot;DYNAMIC&quot;, // DB2 //$NON-NLS-1$
+                &quot;DYNAMIC_FUNCTION&quot;, //$NON-NLS-1$
+                &quot;DYNAMIC_FUNCTION_CODE&quot;, //$NON-NLS-1$
+                &quot;EACH&quot;, // DB2 //$NON-NLS-1$
+                &quot;EDITPROC&quot;, // DB2 //$NON-NLS-1$
+                &quot;ELEMENT&quot;, //$NON-NLS-1$
+                &quot;ELSE&quot;, // DB2 //$NON-NLS-1$
+                &quot;ELSEIF&quot;, // DB2 //$NON-NLS-1$
+                &quot;ENABLE&quot;, //$NON-NLS-1$
+                &quot;ENCLOSED&quot;, //$NON-NLS-1$
+                &quot;ENCODING&quot;, // DB2 //$NON-NLS-1$
+                &quot;ENCRYPTED&quot;, //$NON-NLS-1$
+                &quot;END&quot;, // DB2 //$NON-NLS-1$
+                &quot;END-EXEC&quot;, // DB2 //$NON-NLS-1$
+                &quot;END-EXEC1&quot;, // DB2 //$NON-NLS-1$
+                &quot;ENUM&quot;, //$NON-NLS-1$
+                &quot;EQUALS&quot;, //$NON-NLS-1$
+                &quot;ERASE&quot;, // DB2 //$NON-NLS-1$
+                &quot;ERRLVL&quot;, //$NON-NLS-1$
+                &quot;ESCAPE&quot;, // DB2 //$NON-NLS-1$
+                &quot;ESCAPED&quot;, //$NON-NLS-1$
+                &quot;EVERY&quot;, //$NON-NLS-1$
+                &quot;EXCEPT&quot;, // DB2 //$NON-NLS-1$
+                &quot;EXCEPTION&quot;, // DB2 //$NON-NLS-1$
+                &quot;EXCLUDE&quot;, //$NON-NLS-1$
+                &quot;EXCLUDING&quot;, // DB2 //$NON-NLS-1$
+                &quot;EXCLUSIVE&quot;, //$NON-NLS-1$
+                &quot;EXEC&quot;, //$NON-NLS-1$
+                &quot;EXECUTE&quot;, // DB2 //$NON-NLS-1$
+                &quot;EXISTING&quot;, //$NON-NLS-1$
+                &quot;EXISTS&quot;, // DB2 //$NON-NLS-1$
+                &quot;EXIT&quot;, // DB2 //$NON-NLS-1$
+                &quot;EXP&quot;, //$NON-NLS-1$
+                &quot;EXPLAIN&quot;, //$NON-NLS-1$
+                &quot;EXTERNAL&quot;, // DB2 //$NON-NLS-1$
+                &quot;EXTRACT&quot;, //$NON-NLS-1$
+                &quot;FALSE&quot;, //$NON-NLS-1$
+                &quot;FENCED&quot;, // DB2 //$NON-NLS-1$
+                &quot;FETCH&quot;, // DB2 //$NON-NLS-1$
+                &quot;FIELDPROC&quot;, // DB2 //$NON-NLS-1$
+                &quot;FIELDS&quot;, //$NON-NLS-1$
+                &quot;FILE&quot;, // DB2 //$NON-NLS-1$
+                &quot;FILLFACTOR&quot;, //$NON-NLS-1$
+                &quot;FILTER&quot;, //$NON-NLS-1$
+                &quot;FINAL&quot;, // DB2 //$NON-NLS-1$
+                &quot;FIRST&quot;, //$NON-NLS-1$
+                &quot;FLOAT&quot;, //$NON-NLS-1$
+                &quot;FLOAT4&quot;, //$NON-NLS-1$
+                &quot;FLOAT8&quot;, //$NON-NLS-1$
+                &quot;FLOOR&quot;, //$NON-NLS-1$
+                &quot;FLUSH&quot;, //$NON-NLS-1$
+                &quot;FOLLOWING&quot;, //$NON-NLS-1$
+                &quot;FOR&quot;, // DB2 //$NON-NLS-1$
+                &quot;FORCE&quot;, //$NON-NLS-1$
+                &quot;FOREIGN&quot;, // DB2 //$NON-NLS-1$
+                &quot;FORTRAN&quot;, //$NON-NLS-1$
+                &quot;FORWARD&quot;, //$NON-NLS-1$
+                &quot;FOUND&quot;, //$NON-NLS-1$
+                &quot;FREE&quot;, // DB2 //$NON-NLS-1$
+                &quot;FREETEXT&quot;, //$NON-NLS-1$
+                &quot;FREETEXTTABLE&quot;, //$NON-NLS-1$
+                &quot;FREEZE&quot;, //$NON-NLS-1$
+                &quot;FROM&quot;, // DB2 //$NON-NLS-1$
+                &quot;FULL&quot;, // DB2 //$NON-NLS-1$
+                &quot;FULLTEXT&quot;, //$NON-NLS-1$
+                &quot;FUNCTION&quot;, // DB2 //$NON-NLS-1$
+                &quot;FUSION&quot;, //$NON-NLS-1$
+                &quot;G&quot;, //$NON-NLS-1$
+                &quot;GENERAL&quot;, // DB2 //$NON-NLS-1$
+                &quot;GENERATED&quot;, // DB2 //$NON-NLS-1$
+                &quot;GET&quot;, // DB2 //$NON-NLS-1$
+                &quot;GLOBAL&quot;, // DB2 //$NON-NLS-1$
+                &quot;GO&quot;, // DB2 //$NON-NLS-1$
+                &quot;GOTO&quot;, // DB2 //$NON-NLS-1$
+                &quot;GRANT&quot;, // DB2 //$NON-NLS-1$
+                &quot;GRANTED&quot;, //$NON-NLS-1$
+                &quot;GRANTS&quot;, //$NON-NLS-1$
+                &quot;GRAPHIC&quot;, // DB2 //$NON-NLS-1$
+                &quot;GREATEST&quot;, //$NON-NLS-1$
+                &quot;GROUP&quot;, // DB2 //$NON-NLS-1$
+                &quot;GROUPING&quot;, //$NON-NLS-1$
+                &quot;HANDLER&quot;, // DB2 //$NON-NLS-1$
+                &quot;HAVING&quot;, // DB2 //$NON-NLS-1$
+                &quot;HEADER&quot;, //$NON-NLS-1$
+                &quot;HEAP&quot;, //$NON-NLS-1$
+                &quot;HIERARCHY&quot;, //$NON-NLS-1$
+                &quot;HIGH_PRIORITY&quot;, //$NON-NLS-1$
+                &quot;HOLD&quot;, // DB2 //$NON-NLS-1$
+                &quot;HOLDLOCK&quot;, //$NON-NLS-1$
+                &quot;HOST&quot;, //$NON-NLS-1$
+                &quot;HOSTS&quot;, //$NON-NLS-1$
+                &quot;HOUR&quot;, // DB2 //$NON-NLS-1$
+                &quot;HOUR_MICROSECOND&quot;, //$NON-NLS-1$
+                &quot;HOUR_MINUTE&quot;, //$NON-NLS-1$
+                &quot;HOUR_SECOND&quot;, //$NON-NLS-1$
+                &quot;HOURS&quot;, // DB2 //$NON-NLS-1$
+                &quot;IDENTIFIED&quot;, //$NON-NLS-1$
+                &quot;IDENTITY&quot;, // DB2 //$NON-NLS-1$
+                &quot;IDENTITY_INSERT&quot;, //$NON-NLS-1$
+                &quot;IDENTITYCOL&quot;, //$NON-NLS-1$
+                &quot;IF&quot;, // DB2 //$NON-NLS-1$
+                &quot;IGNORE&quot;, //$NON-NLS-1$
+                &quot;ILIKE&quot;, //$NON-NLS-1$
+                &quot;IMMEDIATE&quot;, // DB2 //$NON-NLS-1$
+                &quot;IMMUTABLE&quot;, //$NON-NLS-1$
+                &quot;IMPLEMENTATION&quot;, //$NON-NLS-1$
+                &quot;IMPLICIT&quot;, //$NON-NLS-1$
+                &quot;IN&quot;, // DB2 //$NON-NLS-1$
+                &quot;INCLUDE&quot;, //$NON-NLS-1$
+                &quot;INCLUDING&quot;, // DB2 //$NON-NLS-1$
+                &quot;INCREMENT&quot;, // DB2 //$NON-NLS-1$
+                &quot;INDEX&quot;, // DB2 //$NON-NLS-1$
+                &quot;INDICATOR&quot;, // DB2 //$NON-NLS-1$
+                &quot;INFILE&quot;, //$NON-NLS-1$
+                &quot;INFIX&quot;, //$NON-NLS-1$
+                &quot;INHERIT&quot;, // DB2 //$NON-NLS-1$
+                &quot;INHERITS&quot;, //$NON-NLS-1$
+                &quot;INITIAL&quot;, //$NON-NLS-1$
+                &quot;INITIALIZE&quot;, //$NON-NLS-1$
+                &quot;INITIALLY&quot;, //$NON-NLS-1$
+                &quot;INNER&quot;, // DB2 //$NON-NLS-1$
+                &quot;INOUT&quot;, // DB2 //$NON-NLS-1$
+                &quot;INPUT&quot;, //$NON-NLS-1$
+                &quot;INSENSITIVE&quot;, // DB2 //$NON-NLS-1$
+                &quot;INSERT&quot;, // DB2 //$NON-NLS-1$
+                &quot;INSERT_ID&quot;, //$NON-NLS-1$
+                &quot;INSTANCE&quot;, //$NON-NLS-1$
+                &quot;INSTANTIABLE&quot;, //$NON-NLS-1$
+                &quot;INSTEAD&quot;, //$NON-NLS-1$
+                &quot;INT&quot;, //$NON-NLS-1$
+                &quot;INT1&quot;, //$NON-NLS-1$
+                &quot;INT2&quot;, //$NON-NLS-1$
+                &quot;INT3&quot;, //$NON-NLS-1$
+                &quot;INT4&quot;, //$NON-NLS-1$
+                &quot;INT8&quot;, //$NON-NLS-1$
+                &quot;INTEGER&quot;, //$NON-NLS-1$
+                &quot;INTEGRITY&quot;, // DB2 //$NON-NLS-1$
+                &quot;INTERSECT&quot;, //$NON-NLS-1$
+                &quot;INTERSECTION&quot;, //$NON-NLS-1$
+                &quot;INTERVAL&quot;, //$NON-NLS-1$
+                &quot;INTO&quot;, // DB2 //$NON-NLS-1$
+                &quot;INVOKER&quot;, //$NON-NLS-1$
+                &quot;IS&quot;, // DB2 //$NON-NLS-1$
+                &quot;ISAM&quot;, //$NON-NLS-1$
+                &quot;ISNULL&quot;, //$NON-NLS-1$
+                &quot;ISOBID&quot;, // DB2 //$NON-NLS-1$
+                &quot;ISOLATION&quot;, // DB2 //$NON-NLS-1$
+                &quot;ITERATE&quot;, // DB2 //$NON-NLS-1$
+                &quot;JAR&quot;, // DB2 //$NON-NLS-1$
+                &quot;JAVA&quot;, // DB2 //$NON-NLS-1$
+                &quot;JOIN&quot;, // DB2 //$NON-NLS-1$
+                &quot;K&quot;, //$NON-NLS-1$
+                &quot;KEY&quot;, // DB2 //$NON-NLS-1$
+                &quot;KEY_MEMBER&quot;, //$NON-NLS-1$
+                &quot;KEY_TYPE&quot;, //$NON-NLS-1$
+                &quot;KEYS&quot;, //$NON-NLS-1$
+                &quot;KILL&quot;, //$NON-NLS-1$
+                &quot;LABEL&quot;, // DB2 //$NON-NLS-1$
+                &quot;LANCOMPILER&quot;, //$NON-NLS-1$
+                &quot;LANGUAGE&quot;, // DB2 //$NON-NLS-1$
+                &quot;LARGE&quot;, //$NON-NLS-1$
+                &quot;LAST&quot;, //$NON-NLS-1$
+                &quot;LAST_INSERT_ID&quot;, //$NON-NLS-1$
+                &quot;LATERAL&quot;, //$NON-NLS-1$
+                &quot;LC_CTYPE&quot;, // DB2 //$NON-NLS-1$
+                &quot;LEADING&quot;, //$NON-NLS-1$
+                &quot;LEAST&quot;, //$NON-NLS-1$
+                &quot;LEAVE&quot;, // DB2 //$NON-NLS-1$
+                &quot;LEFT&quot;, // DB2 //$NON-NLS-1$
+                &quot;LENGTH&quot;, //$NON-NLS-1$
+                &quot;LESS&quot;, //$NON-NLS-1$
+                &quot;LEVEL&quot;, //$NON-NLS-1$
+                &quot;LIKE&quot;, // DB2 //$NON-NLS-1$
+                &quot;LIMIT&quot;, //$NON-NLS-1$
+                &quot;LINENO&quot;, //$NON-NLS-1$
+                &quot;LINES&quot;, //$NON-NLS-1$
+                &quot;LINKTYPE&quot;, // DB2 //$NON-NLS-1$
+                &quot;LISTEN&quot;, //$NON-NLS-1$
+                &quot;LN&quot;, //$NON-NLS-1$
+                &quot;LOAD&quot;, //$NON-NLS-1$
+                &quot;LOCAL&quot;, // DB2 //$NON-NLS-1$
+                &quot;LOCALE&quot;, // DB2 //$NON-NLS-1$
+                &quot;LOCALTIME&quot;, //$NON-NLS-1$
+                &quot;LOCALTIMESTAMP&quot;, //$NON-NLS-1$
+                &quot;LOCATION&quot;, //$NON-NLS-1$
+                &quot;LOCATOR&quot;, // DB2 //$NON-NLS-1$
+                &quot;LOCATORS&quot;, // DB2 //$NON-NLS-1$
+                &quot;LOCK&quot;, // DB2 //$NON-NLS-1$
+                &quot;LOCKMAX&quot;, // DB2 //$NON-NLS-1$
+                &quot;LOCKSIZE&quot;, // DB2 //$NON-NLS-1$
+                &quot;LOGIN&quot;, //$NON-NLS-1$
+                &quot;LOGS&quot;, //$NON-NLS-1$
+                &quot;LONG&quot;, // DB2 //$NON-NLS-1$
+                &quot;LONGBLOB&quot;, //$NON-NLS-1$
+                &quot;LONGTEXT&quot;, //$NON-NLS-1$
+                &quot;LOOP&quot;, // DB2 //$NON-NLS-1$
+                &quot;LOW_PRIORITY&quot;, //$NON-NLS-1$
+                &quot;LOWER&quot;, //$NON-NLS-1$
+                &quot;M&quot;, //$NON-NLS-1$
+                &quot;MAP&quot;, //$NON-NLS-1$
+                &quot;MATCH&quot;, //$NON-NLS-1$
+                &quot;MATCHED&quot;, //$NON-NLS-1$
+                &quot;MAX&quot;, //$NON-NLS-1$
+                &quot;MAX_ROWS&quot;, //$NON-NLS-1$
+                &quot;MAXEXTENTS&quot;, //$NON-NLS-1$
+                &quot;MAXVALUE&quot;, // DB2 //$NON-NLS-1$
+                &quot;MEDIUMBLOB&quot;, //$NON-NLS-1$
+                &quot;MEDIUMINT&quot;, //$NON-NLS-1$
+                &quot;MEDIUMTEXT&quot;, //$NON-NLS-1$
+                &quot;MEMBER&quot;, //$NON-NLS-1$
+                &quot;MERGE&quot;, //$NON-NLS-1$
+                &quot;MESSAGE_LENGTH&quot;, //$NON-NLS-1$
+                &quot;MESSAGE_OCTET_LENGTH&quot;, //$NON-NLS-1$
+                &quot;MESSAGE_TEXT&quot;, //$NON-NLS-1$
+                &quot;METHOD&quot;, //$NON-NLS-1$
+                &quot;MICROSECOND&quot;, // DB2 //$NON-NLS-1$
+                &quot;MICROSECONDS&quot;, // DB2 //$NON-NLS-1$
+                &quot;MIDDLEINT&quot;, //$NON-NLS-1$
+                &quot;MIN&quot;, //$NON-NLS-1$
+                &quot;MIN_ROWS&quot;, //$NON-NLS-1$
+                &quot;MINUS&quot;, //$NON-NLS-1$
+                &quot;MINUTE&quot;, // DB2 //$NON-NLS-1$
+                &quot;MINUTE_MICROSECOND&quot;, //$NON-NLS-1$
+                &quot;MINUTE_SECOND&quot;, //$NON-NLS-1$
+                &quot;MINUTES&quot;, // DB2 //$NON-NLS-1$
+                &quot;MINVALUE&quot;, // DB2 //$NON-NLS-1$
+                &quot;MLSLABEL&quot;, //$NON-NLS-1$
+                &quot;MOD&quot;, //$NON-NLS-1$
+                &quot;MODE&quot;, // DB2 //$NON-NLS-1$
+                &quot;MODIFIES&quot;, // DB2 //$NON-NLS-1$
+                &quot;MODIFY&quot;, //$NON-NLS-1$
+                &quot;MODULE&quot;, //$NON-NLS-1$
+                &quot;MONTH&quot;, // DB2 //$NON-NLS-1$
+                &quot;MONTHNAME&quot;, //$NON-NLS-1$
+                &quot;MONTHS&quot;, // DB2 //$NON-NLS-1$
+                &quot;MORE&quot;, //$NON-NLS-1$
+                &quot;MOVE&quot;, //$NON-NLS-1$
+                &quot;MULTISET&quot;, //$NON-NLS-1$
+                &quot;MUMPS&quot;, //$NON-NLS-1$
+                &quot;MYISAM&quot;, //$NON-NLS-1$
+                &quot;NAME&quot;, //$NON-NLS-1$
+                &quot;NAMES&quot;, //$NON-NLS-1$
+                &quot;NATIONAL&quot;, //$NON-NLS-1$
+                &quot;NATURAL&quot;, //$NON-NLS-1$
+                &quot;NCHAR&quot;, //$NON-NLS-1$
+                &quot;NCLOB&quot;, //$NON-NLS-1$
+                &quot;NESTING&quot;, //$NON-NLS-1$
+                &quot;NEW&quot;, // DB2 //$NON-NLS-1$
+                &quot;NEW_TABLE&quot;, // DB2 //$NON-NLS-1$
+                &quot;NEXT&quot;, //$NON-NLS-1$
+                &quot;NO&quot;, // DB2 //$NON-NLS-1$
+                &quot;NO_WRITE_TO_BINLOG&quot;, //$NON-NLS-1$
+                &quot;NOAUDIT&quot;, //$NON-NLS-1$
+                &quot;NOCACHE&quot;, // DB2 //$NON-NLS-1$
+                &quot;NOCHECK&quot;, //$NON-NLS-1$
+                &quot;NOCOMPRESS&quot;, //$NON-NLS-1$
+                &quot;NOCREATEDB&quot;, //$NON-NLS-1$
+                &quot;NOCREATEROLE&quot;, //$NON-NLS-1$
+                &quot;NOCREATEUSER&quot;, //$NON-NLS-1$
+                &quot;NOCYCLE&quot;, // DB2 //$NON-NLS-1$
+                &quot;NODENAME&quot;, // DB2 //$NON-NLS-1$
+                &quot;NODENUMBER&quot;, // DB2 //$NON-NLS-1$
+                &quot;NOINHERIT&quot;, //$NON-NLS-1$
+                &quot;NOLOGIN&quot;, //$NON-NLS-1$
+                &quot;NOMAXVALUE&quot;, // DB2 //$NON-NLS-1$
+                &quot;NOMINVALUE&quot;, // DB2 //$NON-NLS-1$
+                &quot;NONCLUSTERED&quot;, //$NON-NLS-1$
+                &quot;NONE&quot;, //$NON-NLS-1$
+                &quot;NOORDER&quot;, // DB2 //$NON-NLS-1$
+                &quot;NORMALIZE&quot;, //$NON-NLS-1$
+                &quot;NORMALIZED&quot;, //$NON-NLS-1$
+                &quot;NOSUPERUSER&quot;, //$NON-NLS-1$
+                &quot;NOT&quot;, // DB2 //$NON-NLS-1$
+                &quot;NOTHING&quot;, //$NON-NLS-1$
+                &quot;NOTIFY&quot;, //$NON-NLS-1$
+                &quot;NOTNULL&quot;, //$NON-NLS-1$
+                &quot;NOWAIT&quot;, //$NON-NLS-1$
+                &quot;NULL&quot;, // DB2 //$NON-NLS-1$
+                &quot;NULLABLE&quot;, //$NON-NLS-1$
+                &quot;NULLIF&quot;, //$NON-NLS-1$
+                &quot;NULLS&quot;, // DB2 //$NON-NLS-1$
+                &quot;NUMBER&quot;, //$NON-NLS-1$
+                &quot;NUMERIC&quot;, //$NON-NLS-1$
+                &quot;NUMPARTS&quot;, // DB2 //$NON-NLS-1$
+                &quot;OBID&quot;, // DB2 //$NON-NLS-1$
+                &quot;OBJECT&quot;, //$NON-NLS-1$
+                &quot;OCTET_LENGTH&quot;, //$NON-NLS-1$
+                &quot;OCTETS&quot;, //$NON-NLS-1$
+                &quot;OF&quot;, // DB2 //$NON-NLS-1$
+                &quot;OFF&quot;, //$NON-NLS-1$
+                &quot;OFFLINE&quot;, //$NON-NLS-1$
+                &quot;OFFSET&quot;, //$NON-NLS-1$
+                &quot;OFFSETS&quot;, //$NON-NLS-1$
+                &quot;OIDS&quot;, //$NON-NLS-1$
+                &quot;OLD&quot;, // DB2 //$NON-NLS-1$
+                &quot;OLD_TABLE&quot;, // DB2 //$NON-NLS-1$
+                &quot;ON&quot;, // DB2 //$NON-NLS-1$
+                &quot;ONLINE&quot;, //$NON-NLS-1$
+                &quot;ONLY&quot;, //$NON-NLS-1$
+                &quot;OPEN&quot;, // DB2 //$NON-NLS-1$
+                &quot;OPENDATASOURCE&quot;, //$NON-NLS-1$
+                &quot;OPENQUERY&quot;, //$NON-NLS-1$
+                &quot;OPENROWSET&quot;, //$NON-NLS-1$
+                &quot;OPENXML&quot;, //$NON-NLS-1$
+                &quot;OPERATION&quot;, //$NON-NLS-1$
+                &quot;OPERATOR&quot;, //$NON-NLS-1$
+                &quot;OPTIMIZATION&quot;, // DB2 //$NON-NLS-1$
+                &quot;OPTIMIZE&quot;, // DB2 //$NON-NLS-1$
+                &quot;OPTION&quot;, // DB2 //$NON-NLS-1$
+                &quot;OPTIONALLY&quot;, //$NON-NLS-1$
+                &quot;OPTIONS&quot;, //$NON-NLS-1$
+                &quot;OR&quot;, // DB2 //$NON-NLS-1$
+                &quot;ORDER&quot;, // DB2 //$NON-NLS-1$
+                &quot;ORDERING&quot;, //$NON-NLS-1$
+                &quot;ORDINALITY&quot;, //$NON-NLS-1$
+                &quot;OTHERS&quot;, //$NON-NLS-1$
+                &quot;OUT&quot;, // DB2 //$NON-NLS-1$
+                &quot;OUTER&quot;, // DB2 //$NON-NLS-1$
+                &quot;OUTFILE&quot;, //$NON-NLS-1$
+                &quot;OUTPUT&quot;, //$NON-NLS-1$
+                &quot;OVER&quot;, //$NON-NLS-1$
+                &quot;OVERLAPS&quot;, //$NON-NLS-1$
+                &quot;OVERLAY&quot;, //$NON-NLS-1$
+                &quot;OVERRIDING&quot;, // DB2 //$NON-NLS-1$
+                &quot;OWNER&quot;, //$NON-NLS-1$
+                &quot;PACK_KEYS&quot;, //$NON-NLS-1$
+                &quot;PACKAGE&quot;, // DB2 //$NON-NLS-1$
+                &quot;PAD&quot;, //$NON-NLS-1$
+                &quot;PARAMETER&quot;, // DB2 //$NON-NLS-1$
+                &quot;PARAMETER_MODE&quot;, //$NON-NLS-1$
+                &quot;PARAMETER_NAME&quot;, //$NON-NLS-1$
+                &quot;PARAMETER_ORDINAL_POSITION&quot;, //$NON-NLS-1$
+                &quot;PARAMETER_SPECIFIC_CATALOG&quot;, //$NON-NLS-1$
+                &quot;PARAMETER_SPECIFIC_NAME&quot;, //$NON-NLS-1$
+                &quot;PARAMETER_SPECIFIC_SCHEMA&quot;, //$NON-NLS-1$
+                &quot;PARAMETERS&quot;, //$NON-NLS-1$
+                &quot;PART&quot;, // DB2 //$NON-NLS-1$
+                &quot;PARTIAL&quot;, //$NON-NLS-1$
+                &quot;PARTITION&quot;, // DB2 //$NON-NLS-1$
+                &quot;PASCAL&quot;, //$NON-NLS-1$
+                &quot;PASSWORD&quot;, //$NON-NLS-1$
+                &quot;PATH&quot;, // DB2 //$NON-NLS-1$
+                &quot;PCTFREE&quot;, //$NON-NLS-1$
+                &quot;PERCENT&quot;, //$NON-NLS-1$
+                &quot;PERCENT_RANK&quot;, //$NON-NLS-1$
+                &quot;PERCENTILE_CONT&quot;, //$NON-NLS-1$
+                &quot;PERCENTILE_DISC&quot;, //$NON-NLS-1$
+                &quot;PIECESIZE&quot;, // DB2 //$NON-NLS-1$
+                &quot;PLACING&quot;, //$NON-NLS-1$
+                &quot;PLAN&quot;, // DB2 //$NON-NLS-1$
+                &quot;PLI&quot;, //$NON-NLS-1$
+                &quot;POSITION&quot;, // DB2 //$NON-NLS-1$
+                &quot;POSTFIX&quot;, //$NON-NLS-1$
+                &quot;POWER&quot;, //$NON-NLS-1$
+                &quot;PRECEDING&quot;, //$NON-NLS-1$
+                &quot;PRECISION&quot;, // DB2 //$NON-NLS-1$
+                &quot;PREFIX&quot;, //$NON-NLS-1$
+                &quot;PREORDER&quot;, //$NON-NLS-1$
+                &quot;PREPARE&quot;, // DB2 //$NON-NLS-1$
+                &quot;PREPARED&quot;, //$NON-NLS-1$
+                &quot;PRESERVE&quot;, //$NON-NLS-1$
+                &quot;PRIMARY&quot;, // DB2 //$NON-NLS-1$
+                &quot;PRINT&quot;, //$NON-NLS-1$
+                &quot;PRIOR&quot;, //$NON-NLS-1$
+                &quot;PRIQTY&quot;, // DB2 //$NON-NLS-1$
+                &quot;PRIVILEGES&quot;, // DB2 //$NON-NLS-1$
+                &quot;PROC&quot;, //$NON-NLS-1$
+                &quot;PROCEDURAL&quot;, //$NON-NLS-1$
+                &quot;PROCEDURE&quot;, // DB2 //$NON-NLS-1$
+                &quot;PROCESS&quot;, //$NON-NLS-1$
+                &quot;PROCESSLIST&quot;, //$NON-NLS-1$
+                &quot;PROGRAM&quot;, // DB2 //$NON-NLS-1$
+                &quot;PSID&quot;, // DB2 //$NON-NLS-1$
+                &quot;PUBLIC&quot;, //$NON-NLS-1$
+                &quot;PURGE&quot;, //$NON-NLS-1$
+                &quot;QUERYNO&quot;, // DB2 //$NON-NLS-1$
+                &quot;QUOTE&quot;, //$NON-NLS-1$
+                &quot;RAID0&quot;, //$NON-NLS-1$
+                &quot;RAISERROR&quot;, //$NON-NLS-1$
+                &quot;RANGE&quot;, //$NON-NLS-1$
+                &quot;RANK&quot;, //$NON-NLS-1$
+                &quot;RAW&quot;, //$NON-NLS-1$
+                &quot;READ&quot;, // DB2 //$NON-NLS-1$
+                &quot;READS&quot;, // DB2 //$NON-NLS-1$
+                &quot;READTEXT&quot;, //$NON-NLS-1$
+                &quot;REAL&quot;, //$NON-NLS-1$
+                &quot;RECHECK&quot;, //$NON-NLS-1$
+                &quot;RECONFIGURE&quot;, //$NON-NLS-1$
+                &quot;RECOVERY&quot;, // DB2 //$NON-NLS-1$
+                &quot;RECURSIVE&quot;, //$NON-NLS-1$
+                &quot;REF&quot;, //$NON-NLS-1$
+                &quot;REFERENCES&quot;, // DB2 //$NON-NLS-1$
+                &quot;REFERENCING&quot;, // DB2 //$NON-NLS-1$
+                &quot;REGEXP&quot;, //$NON-NLS-1$
+                &quot;REGR_AVGX&quot;, //$NON-NLS-1$
+                &quot;REGR_AVGY&quot;, //$NON-NLS-1$
+                &quot;REGR_COUNT&quot;, //$NON-NLS-1$
+                &quot;REGR_INTERCEPT&quot;, //$NON-NLS-1$
+                &quot;REGR_R2&quot;, //$NON-NLS-1$
+                &quot;REGR_SLOPE&quot;, //$NON-NLS-1$
+                &quot;REGR_SXX&quot;, //$NON-NLS-1$
+                &quot;REGR_SXY&quot;, //$NON-NLS-1$
+                &quot;REGR_SYY&quot;, //$NON-NLS-1$
+                &quot;REINDEX&quot;, //$NON-NLS-1$
+                &quot;RELATIVE&quot;, //$NON-NLS-1$
+                &quot;RELEASE&quot;, // DB2 //$NON-NLS-1$
+                &quot;RELOAD&quot;, //$NON-NLS-1$
+                &quot;RENAME&quot;, // DB2 //$NON-NLS-1$
+                &quot;REPEAT&quot;, // DB2 //$NON-NLS-1$
+                &quot;REPEATABLE&quot;, //$NON-NLS-1$
+                &quot;REPLACE&quot;, //$NON-NLS-1$
+                &quot;REPLICATION&quot;, //$NON-NLS-1$
+                &quot;REQUIRE&quot;, //$NON-NLS-1$
+                &quot;RESET&quot;, // DB2 //$NON-NLS-1$
+                &quot;RESIGNAL&quot;, // DB2 //$NON-NLS-1$
+                &quot;RESOURCE&quot;, //$NON-NLS-1$
+                &quot;RESTART&quot;, // DB2 //$NON-NLS-1$
+                &quot;RESTORE&quot;, //$NON-NLS-1$
+                &quot;RESTRICT&quot;, // DB2 //$NON-NLS-1$
+                &quot;RESULT&quot;, // DB2 //$NON-NLS-1$
+                &quot;RESULT_SET_LOCATOR&quot;, // DB2 //$NON-NLS-1$
+                &quot;RETURN&quot;, // DB2 //$NON-NLS-1$
+                &quot;RETURNED_CARDINALITY&quot;, //$NON-NLS-1$
+                &quot;RETURNED_LENGTH&quot;, //$NON-NLS-1$
+                &quot;RETURNED_OCTET_LENGTH&quot;, //$NON-NLS-1$
+                &quot;RETURNED_SQLSTATE&quot;, //$NON-NLS-1$
+                &quot;RETURNS&quot;, // DB2 //$NON-NLS-1$
+                &quot;REVOKE&quot;, // DB2 //$NON-NLS-1$
+                &quot;RIGHT&quot;, // DB2 //$NON-NLS-1$
+                &quot;RLIKE&quot;, //$NON-NLS-1$
+                &quot;ROLE&quot;, //$NON-NLS-1$
+                &quot;ROLLBACK&quot;, // DB2 //$NON-NLS-1$
+                &quot;ROLLUP&quot;, //$NON-NLS-1$
+                &quot;ROUTINE&quot;, // DB2 //$NON-NLS-1$
+                &quot;ROUTINE_CATALOG&quot;, //$NON-NLS-1$
+                &quot;ROUTINE_NAME&quot;, //$NON-NLS-1$
+                &quot;ROUTINE_SCHEMA&quot;, //$NON-NLS-1$
+                &quot;ROW&quot;, // DB2 //$NON-NLS-1$
+                &quot;ROW_COUNT&quot;, //$NON-NLS-1$
+                &quot;ROW_NUMBER&quot;, //$NON-NLS-1$
+                &quot;ROWCOUNT&quot;, //$NON-NLS-1$
+                &quot;ROWGUIDCOL&quot;, //$NON-NLS-1$
+                &quot;ROWID&quot;, //$NON-NLS-1$
+                &quot;ROWNUM&quot;, //$NON-NLS-1$
+                &quot;ROWS&quot;, // DB2 //$NON-NLS-1$
+                &quot;RRN&quot;, // DB2 //$NON-NLS-1$
+                &quot;RULE&quot;, //$NON-NLS-1$
+                &quot;RUN&quot;, // DB2 //$NON-NLS-1$
+                &quot;SAVE&quot;, //$NON-NLS-1$
+                &quot;SAVEPOINT&quot;, // DB2 //$NON-NLS-1$
+                &quot;SCALE&quot;, //$NON-NLS-1$
+                &quot;SCHEMA&quot;, // DB2 //$NON-NLS-1$
+                &quot;SCHEMA_NAME&quot;, //$NON-NLS-1$
+                &quot;SCHEMAS&quot;, //$NON-NLS-1$
+                &quot;SCOPE&quot;, //$NON-NLS-1$
+                &quot;SCOPE_CATALOG&quot;, //$NON-NLS-1$
+                &quot;SCOPE_NAME&quot;, //$NON-NLS-1$
+                &quot;SCOPE_SCHEMA&quot;, //$NON-NLS-1$
+                &quot;SCRATCHPAD&quot;, // DB2 //$NON-NLS-1$
+                &quot;SCROLL&quot;, //$NON-NLS-1$
+                &quot;SEARCH&quot;, //$NON-NLS-1$
+                &quot;SECOND&quot;, // DB2 //$NON-NLS-1$
+                &quot;SECOND_MICROSECOND&quot;, //$NON-NLS-1$
+                &quot;SECONDS&quot;, // DB2 //$NON-NLS-1$
+                &quot;SECQTY&quot;, // DB2 //$NON-NLS-1$
+                &quot;SECTION&quot;, //$NON-NLS-1$
+                &quot;SECURITY&quot;, // DB2 //$NON-NLS-1$
+                &quot;SELECT&quot;, // DB2 //$NON-NLS-1$
+                &quot;SELF&quot;, //$NON-NLS-1$
+                &quot;SENSITIVE&quot;, // DB2 //$NON-NLS-1$
+                &quot;SEPARATOR&quot;, //$NON-NLS-1$
+                &quot;SEQUENCE&quot;, //$NON-NLS-1$
+                &quot;SERIALIZABLE&quot;, //$NON-NLS-1$
+                &quot;SERVER_NAME&quot;, //$NON-NLS-1$
+                &quot;SESSION&quot;, //$NON-NLS-1$
+                &quot;SESSION_USER&quot;, //$NON-NLS-1$
+                &quot;SET&quot;, // DB2 //$NON-NLS-1$
+                &quot;SETOF&quot;, //$NON-NLS-1$
+                &quot;SETS&quot;, //$NON-NLS-1$
+                &quot;SETUSER&quot;, //$NON-NLS-1$
+                &quot;SHARE&quot;, //$NON-NLS-1$
+                &quot;SHOW&quot;, //$NON-NLS-1$
+                &quot;SHUTDOWN&quot;, //$NON-NLS-1$
+                &quot;SIGNAL&quot;, // DB2 //$NON-NLS-1$
+                &quot;SIMILAR&quot;, //$NON-NLS-1$
+                &quot;SIMPLE&quot;, // DB2 //$NON-NLS-1$
+                &quot;SIZE&quot;, //$NON-NLS-1$
+                &quot;SMALLINT&quot;, //$NON-NLS-1$
+                &quot;SOME&quot;, // DB2 //$NON-NLS-1$
+                &quot;SONAME&quot;, //$NON-NLS-1$
+                &quot;SOURCE&quot;, // DB2 //$NON-NLS-1$
+                &quot;SPACE&quot;, //$NON-NLS-1$
+                &quot;SPATIAL&quot;, //$NON-NLS-1$
+                &quot;SPECIFIC&quot;, // DB2 //$NON-NLS-1$
+                &quot;SPECIFIC_NAME&quot;, //$NON-NLS-1$
+                &quot;SPECIFICTYPE&quot;, //$NON-NLS-1$
+                &quot;SQL&quot;, // DB2 //$NON-NLS-1$
+                &quot;SQL_BIG_RESULT&quot;, //$NON-NLS-1$
+                &quot;SQL_BIG_SELECTS&quot;, //$NON-NLS-1$
+                &quot;SQL_BIG_TABLES&quot;, //$NON-NLS-1$
+                &quot;SQL_CALC_FOUND_ROWS&quot;, //$NON-NLS-1$
+                &quot;SQL_LOG_OFF&quot;, //$NON-NLS-1$
+                &quot;SQL_LOG_UPDATE&quot;, //$NON-NLS-1$
+                &quot;SQL_LOW_PRIORITY_UPDATES&quot;, //$NON-NLS-1$
+                &quot;SQL_SELECT_LIMIT&quot;, //$NON-NLS-1$
+                &quot;SQL_SMALL_RESULT&quot;, //$NON-NLS-1$
+                &quot;SQL_WARNINGS&quot;, //$NON-NLS-1$
+                &quot;SQLCA&quot;, //$NON-NLS-1$
+                &quot;SQLCODE&quot;, //$NON-NLS-1$
+                &quot;SQLERROR&quot;, //$NON-NLS-1$
+                &quot;SQLEXCEPTION&quot;, //$NON-NLS-1$
+                &quot;SQLID&quot;, // DB2 //$NON-NLS-1$
+                &quot;SQLSTATE&quot;, //$NON-NLS-1$
+                &quot;SQLWARNING&quot;, //$NON-NLS-1$
+                &quot;SQRT&quot;, //$NON-NLS-1$
+                &quot;SSL&quot;, //$NON-NLS-1$
+                &quot;STABLE&quot;, //$NON-NLS-1$
+                &quot;STANDARD&quot;, // DB2 //$NON-NLS-1$
+                &quot;START&quot;, // DB2 //$NON-NLS-1$
+                &quot;STARTING&quot;, //$NON-NLS-1$
+                &quot;STATE&quot;, //$NON-NLS-1$
+                &quot;STATEMENT&quot;, //$NON-NLS-1$
+                &quot;STATIC&quot;, // DB2 //$NON-NLS-1$
+                &quot;STATISTICS&quot;, //$NON-NLS-1$
+                &quot;STATUS&quot;, //$NON-NLS-1$
+                &quot;STAY&quot;, // DB2 //$NON-NLS-1$
+                &quot;STDDEV_POP&quot;, //$NON-NLS-1$
+                &quot;STDDEV_SAMP&quot;, //$NON-NLS-1$
+                &quot;STDIN&quot;, //$NON-NLS-1$
+                &quot;STDOUT&quot;, //$NON-NLS-1$
+                &quot;STOGROUP&quot;, // DB2 //$NON-NLS-1$
+                &quot;STORAGE&quot;, //$NON-NLS-1$
+                &quot;STORES&quot;, // DB2 //$NON-NLS-1$
+                &quot;STRAIGHT_JOIN&quot;, //$NON-NLS-1$
+                &quot;STRICT&quot;, //$NON-NLS-1$
+                &quot;STRING&quot;, //$NON-NLS-1$
+                &quot;STRUCTURE&quot;, //$NON-NLS-1$
+                &quot;STYLE&quot;, // DB2 //$NON-NLS-1$
+                &quot;SUBCLASS_ORIGIN&quot;, //$NON-NLS-1$
+                &quot;SUBLIST&quot;, //$NON-NLS-1$
+                &quot;SUBMULTISET&quot;, //$NON-NLS-1$
+                &quot;SUBPAGES&quot;, // DB2 //$NON-NLS-1$
+                &quot;SUBSTRING&quot;, // DB2 //$NON-NLS-1$
+                &quot;SUCCESSFUL&quot;, //$NON-NLS-1$
+                &quot;SUM&quot;, //$NON-NLS-1$
+                &quot;SUPERUSER&quot;, //$NON-NLS-1$
+                &quot;SYMMETRIC&quot;, //$NON-NLS-1$
+                &quot;SYNONYM&quot;, // DB2 //$NON-NLS-1$
+                &quot;SYSDATE&quot;, //$NON-NLS-1$
+                &quot;SYSFUN&quot;, // DB2 //$NON-NLS-1$
+                &quot;SYSIBM&quot;, // DB2 //$NON-NLS-1$
+                &quot;SYSID&quot;, //$NON-NLS-1$
+                &quot;SYSPROC&quot;, // DB2 //$NON-NLS-1$
+                &quot;SYSTEM&quot;, // DB2 //$NON-NLS-1$
+                &quot;SYSTEM_USER&quot;, //$NON-NLS-1$
+                &quot;TABLE&quot;, // DB2 //$NON-NLS-1$
+                &quot;TABLE_NAME&quot;, //$NON-NLS-1$
+                &quot;TABLES&quot;, //$NON-NLS-1$
+                &quot;TABLESAMPLE&quot;, //$NON-NLS-1$
+                &quot;TABLESPACE&quot;, // DB2 //$NON-NLS-1$
+                &quot;TEMP&quot;, //$NON-NLS-1$
+                &quot;TEMPLATE&quot;, //$NON-NLS-1$
+                &quot;TEMPORARY&quot;, //$NON-NLS-1$
+                &quot;TERMINATE&quot;, //$NON-NLS-1$
+                &quot;TERMINATED&quot;, //$NON-NLS-1$
+                &quot;TEXT&quot;, //$NON-NLS-1$
+                &quot;TEXTSIZE&quot;, //$NON-NLS-1$
+                &quot;THAN&quot;, //$NON-NLS-1$
+                &quot;THEN&quot;, // DB2 //$NON-NLS-1$
+                &quot;TIES&quot;, //$NON-NLS-1$
+                &quot;TIME&quot;, //$NON-NLS-1$
+                &quot;TIMESTAMP&quot;, //$NON-NLS-1$
+                &quot;TIMEZONE_HOUR&quot;, //$NON-NLS-1$
+                &quot;TIMEZONE_MINUTE&quot;, //$NON-NLS-1$
+                &quot;TINYBLOB&quot;, //$NON-NLS-1$
+                &quot;TINYINT&quot;, //$NON-NLS-1$
+                &quot;TINYTEXT&quot;, //$NON-NLS-1$
+                &quot;TO&quot;, // DB2 //$NON-NLS-1$
+                &quot;TOAST&quot;, //$NON-NLS-1$
+                &quot;TOP&quot;, //$NON-NLS-1$
+                &quot;TOP_LEVEL_COUNT&quot;, //$NON-NLS-1$
+                &quot;TRAILING&quot;, //$NON-NLS-1$
+                &quot;TRAN&quot;, //$NON-NLS-1$
+                &quot;TRANSACTION&quot;, // DB2 //$NON-NLS-1$
+                &quot;TRANSACTION_ACTIVE&quot;, //$NON-NLS-1$
+                &quot;TRANSACTIONS_COMMITTED&quot;, //$NON-NLS-1$
+                &quot;TRANSACTIONS_ROLLED_BACK&quot;, //$NON-NLS-1$
+                &quot;TRANSFORM&quot;, //$NON-NLS-1$
+                &quot;TRANSFORMS&quot;, //$NON-NLS-1$
+                &quot;TRANSLATE&quot;, //$NON-NLS-1$
+                &quot;TRANSLATION&quot;, //$NON-NLS-1$
+                &quot;TREAT&quot;, //$NON-NLS-1$
+                &quot;TRIGGER&quot;, // DB2 //$NON-NLS-1$
+                &quot;TRIGGER_CATALOG&quot;, //$NON-NLS-1$
+                &quot;TRIGGER_NAME&quot;, //$NON-NLS-1$
+                &quot;TRIGGER_SCHEMA&quot;, //$NON-NLS-1$
+                &quot;TRIM&quot;, // DB2 //$NON-NLS-1$
+                &quot;TRUE&quot;, //$NON-NLS-1$
+                &quot;TRUNCATE&quot;, //$NON-NLS-1$
+                &quot;TRUSTED&quot;, //$NON-NLS-1$
+                &quot;TSEQUAL&quot;, //$NON-NLS-1$
+                &quot;TYPE&quot;, // DB2 //$NON-NLS-1$
+                &quot;UESCAPE&quot;, //$NON-NLS-1$
+                &quot;UID&quot;, //$NON-NLS-1$
+                &quot;UNBOUNDED&quot;, //$NON-NLS-1$
+                &quot;UNCOMMITTED&quot;, //$NON-NLS-1$
+                &quot;UNDER&quot;, //$NON-NLS-1$
+                &quot;UNDO&quot;, // DB2 //$NON-NLS-1$
+                &quot;UNENCRYPTED&quot;, //$NON-NLS-1$
+                &quot;UNION&quot;, // DB2 //$NON-NLS-1$
+                &quot;UNIQUE&quot;, // DB2 //$NON-NLS-1$
+                &quot;UNKNOWN&quot;, //$NON-NLS-1$
+                &quot;UNLISTEN&quot;, //$NON-NLS-1$
+                &quot;UNLOCK&quot;, //$NON-NLS-1$
+                &quot;UNNAMED&quot;, //$NON-NLS-1$
+                &quot;UNNEST&quot;, //$NON-NLS-1$
+                &quot;UNSIGNED&quot;, //$NON-NLS-1$
+                &quot;UNTIL&quot;, // DB2 //$NON-NLS-1$
+                &quot;UPDATE&quot;, // DB2 //$NON-NLS-1$
+                &quot;UPDATETEXT&quot;, //$NON-NLS-1$
+                &quot;UPPER&quot;, //$NON-NLS-1$
+                &quot;USAGE&quot;, // DB2 //$NON-NLS-1$
+                &quot;USE&quot;, //$NON-NLS-1$
+                &quot;USER&quot;, // DB2 //$NON-NLS-1$
+                &quot;USER_DEFINED_TYPE_CATALOG&quot;, //$NON-NLS-1$
+                &quot;USER_DEFINED_TYPE_CODE&quot;, //$NON-NLS-1$
+                &quot;USER_DEFINED_TYPE_NAME&quot;, //$NON-NLS-1$
+                &quot;USER_DEFINED_TYPE_SCHEMA&quot;, //$NON-NLS-1$
+                &quot;USING&quot;, // DB2 //$NON-NLS-1$
+                &quot;UTC_DATE&quot;, //$NON-NLS-1$
+                &quot;UTC_TIME&quot;, //$NON-NLS-1$
+                &quot;UTC_TIMESTAMP&quot;, //$NON-NLS-1$
+                &quot;VACUUM&quot;, //$NON-NLS-1$
+                &quot;VALID&quot;, //$NON-NLS-1$
+                &quot;VALIDATE&quot;, //$NON-NLS-1$
+                &quot;VALIDATOR&quot;, //$NON-NLS-1$
+                &quot;VALIDPROC&quot;, // DB2 //$NON-NLS-1$
+                &quot;VALUE&quot;, //$NON-NLS-1$
+                &quot;VALUES&quot;, // DB2 //$NON-NLS-1$
+                &quot;VAR_POP&quot;, //$NON-NLS-1$
+                &quot;VAR_SAMP&quot;, //$NON-NLS-1$
+                &quot;VARBINARY&quot;, //$NON-NLS-1$
+                &quot;VARCHAR&quot;, //$NON-NLS-1$
+                &quot;VARCHAR2&quot;, //$NON-NLS-1$
+                &quot;VARCHARACTER&quot;, //$NON-NLS-1$
+                &quot;VARIABLE&quot;, // DB2 //$NON-NLS-1$
+                &quot;VARIABLES&quot;, //$NON-NLS-1$
+                &quot;VARIANT&quot;, // DB2 //$NON-NLS-1$
+                &quot;VARYING&quot;, //$NON-NLS-1$
+                &quot;VCAT&quot;, // DB2 //$NON-NLS-1$
+                &quot;VERBOSE&quot;, //$NON-NLS-1$
+                &quot;VIEW&quot;, // DB2 //$NON-NLS-1$
+                &quot;VOLATILE&quot;, //$NON-NLS-1$
+                &quot;VOLUMES&quot;, // DB2 //$NON-NLS-1$
+                &quot;WAITFOR&quot;, //$NON-NLS-1$
+                &quot;WHEN&quot;, // DB2 //$NON-NLS-1$
+                &quot;WHENEVER&quot;, //$NON-NLS-1$
+                &quot;WHERE&quot;, // DB2 //$NON-NLS-1$
+                &quot;WHILE&quot;, // DB2 //$NON-NLS-1$
+                &quot;WIDTH_BUCKET&quot;, //$NON-NLS-1$
+                &quot;WINDOW&quot;, //$NON-NLS-1$
+                &quot;WITH&quot;, // DB2 //$NON-NLS-1$
+                &quot;WITHIN&quot;, //$NON-NLS-1$
+                &quot;WITHOUT&quot;, //$NON-NLS-1$
+                &quot;WLM&quot;, // DB2 //$NON-NLS-1$
+                &quot;WORK&quot;, //$NON-NLS-1$
+                &quot;WRITE&quot;, // DB2 //$NON-NLS-1$
+                &quot;WRITETEXT&quot;, //$NON-NLS-1$
+                &quot;X509&quot;, //$NON-NLS-1$
+                &quot;XOR&quot;, //$NON-NLS-1$
+                &quot;YEAR&quot;, // DB2 //$NON-NLS-1$
+                &quot;YEAR_MONTH&quot;, //$NON-NLS-1$
+                &quot;YEARS&quot;, // DB2 //$NON-NLS-1$
+                &quot;ZEROFILL&quot;, //$NON-NLS-1$
+                &quot;ZONE&quot; //$NON-NLS-1$
+        };
+
+<span class="fc" id="L953">        RESERVED_WORDS = new HashSet&lt;String&gt;(words.length);</span>
+
+<span class="fc bfc" id="L955" title="All 2 branches covered.">        for (String word : words) {</span>
+<span class="fc" id="L956">            RESERVED_WORDS.add(word);</span>
+        }
+<span class="fc" id="L958">    }</span>
+
+    public static boolean containsWord(String word) {
+        boolean rc;
+
+<span class="pc bpc" id="L963" title="1 of 2 branches missed.">        if (word == null) {</span>
+<span class="nc" id="L964">            rc = false;</span>
+        } else {
+<span class="fc" id="L966">            rc = RESERVED_WORDS.contains(word.toUpperCase());</span>
+        }
+
+<span class="fc" id="L969">        return rc;</span>
+    }
+
+    /**
+     * Utility class - no instances allowed
+     */
+<span class="nc" id="L975">    private SqlReservedWords() {</span>
+<span class="nc" id="L976">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

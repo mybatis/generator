@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>HashCodeUtil.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.internal.util</a> &gt; <span class="el_source">HashCodeUtil.java</span></div><h1>HashCodeUtil.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2016 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.internal.util;
+
+import java.lang.reflect.Array;
+
+/**
+ * This class is from javapractices.com:
+ * 
+ * http://www.javapractices.com/Topic28.cjp
+ * 
+ * Collected methods which allow easy implementation of &lt;code&gt;hashCode&lt;/code&gt;.
+ * 
+ * Example use case:
+ * 
+ * &lt;pre&gt;
+ * public int hashCode() {
+ *     int result = HashCodeUtil.SEED;
+ *     //collect the contributions of various fields
+ *     result = HashCodeUtil.hash(result, fPrimitive);
+ *     result = HashCodeUtil.hash(result, fObject);
+ *     result = HashCodeUtil.hash(result, fArray);
+ *     return result;
+ * }
+ * &lt;/pre&gt;
+ */
+<span class="nc" id="L40">public final class HashCodeUtil {</span>
+
+    /**
+     * An initial value for a &lt;code&gt;hashCode&lt;/code&gt;, to which is added
+     * contributions from fields. Using a non-zero value decreases collisons of
+     * &lt;code&gt;hashCode&lt;/code&gt; values.
+     */
+    public static final int SEED = 23;
+
+    /**
+     * booleans.
+     *
+     * @param aSeed
+     *            the a seed
+     * @param aBoolean
+     *            the a boolean
+     * @return the int
+     */
+    public static int hash(int aSeed, boolean aBoolean) {
+<span class="nc bnc" id="L59" title="All 2 branches missed.">        return firstTerm(aSeed) + (aBoolean ? 1 : 0);</span>
+    }
+
+    /**
+     * chars.
+     *
+     * @param aSeed
+     *            the a seed
+     * @param aChar
+     *            the a char
+     * @return the int
+     */
+    public static int hash(int aSeed, char aChar) {
+<span class="nc" id="L72">        return firstTerm(aSeed) + aChar;</span>
+    }
+
+    /**
+     * ints.
+     *
+     * @param aSeed
+     *            the a seed
+     * @param aInt
+     *            the a int
+     * @return the int
+     */
+    public static int hash(int aSeed, int aInt) {
+        /*
+         * Implementation Note Note that byte and short are handled by this
+         * method, through implicit conversion.
+         */
+<span class="fc" id="L89">        return firstTerm(aSeed) + aInt;</span>
+    }
+
+    /**
+     * longs.
+     *
+     * @param aSeed
+     *            the a seed
+     * @param aLong
+     *            the a long
+     * @return the int
+     */
+    public static int hash(int aSeed, long aLong) {
+<span class="nc" id="L102">        return firstTerm(aSeed) + (int) (aLong ^ (aLong &gt;&gt;&gt; 32));</span>
+    }
+
+    /**
+     * floats.
+     *
+     * @param aSeed
+     *            the a seed
+     * @param aFloat
+     *            the a float
+     * @return the int
+     */
+    public static int hash(int aSeed, float aFloat) {
+<span class="nc" id="L115">        return hash(aSeed, Float.floatToIntBits(aFloat));</span>
+    }
+
+    /**
+     * doubles.
+     *
+     * @param aSeed
+     *            the a seed
+     * @param aDouble
+     *            the a double
+     * @return the int
+     */
+    public static int hash(int aSeed, double aDouble) {
+<span class="nc" id="L128">        return hash(aSeed, Double.doubleToLongBits(aDouble));</span>
+    }
+
+    /**
+     * &lt;code&gt;aObject&lt;/code&gt; is a possibly-null object field, and possibly an array.
+     * 
+     * If &lt;code&gt;aObject&lt;/code&gt; is an array, then each element may be a primitive or a possibly-null object.
+     *
+     * @param aSeed
+     *            the a seed
+     * @param aObject
+     *            the a object
+     * @return the int
+     */
+    public static int hash(int aSeed, Object aObject) {
+<span class="fc" id="L143">        int result = aSeed;</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">        if (aObject == null) {</span>
+<span class="fc" id="L145">            result = hash(result, 0);</span>
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">        } else if (!isArray(aObject)) {</span>
+<span class="fc" id="L147">            result = hash(result, aObject.hashCode());</span>
+        } else {
+<span class="nc" id="L149">            int length = Array.getLength(aObject);</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">            for (int idx = 0; idx &lt; length; ++idx) {</span>
+<span class="nc" id="L151">                Object item = Array.get(aObject, idx);</span>
+                // recursive call!
+<span class="nc" id="L153">                result = hash(result, item);</span>
+            }
+        }
+<span class="fc" id="L156">        return result;</span>
+    }
+
+    // / PRIVATE ///
+    /** The odd prime number. */
+    private static final int fODD_PRIME_NUMBER = 37;
+
+    /**
+     * First term.
+     *
+     * @param aSeed
+     *            the a seed
+     * @return the int
+     */
+    private static int firstTerm(int aSeed) {
+<span class="fc" id="L171">        return fODD_PRIME_NUMBER * aSeed;</span>
+    }
+
+    /**
+     * Checks if is array.
+     *
+     * @param aObject
+     *            the a object
+     * @return true, if is array
+     */
+    private static boolean isArray(Object aObject) {
+<span class="fc" id="L182">        return aObject.getClass().isArray();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

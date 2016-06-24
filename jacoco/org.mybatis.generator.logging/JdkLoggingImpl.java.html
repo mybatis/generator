@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>JdkLoggingImpl.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.logging</a> &gt; <span class="el_source">JdkLoggingImpl.java</span></div><h1>JdkLoggingImpl.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2016 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.logging;
+
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
+
+/**
+ * 
+ * @author Clinton Begin
+ * @author Jeff Butler
+ * 
+ */
+public class JdkLoggingImpl implements Log {
+
+    private Logger log;
+
+<span class="nc" id="L32">    public JdkLoggingImpl(Class&lt;?&gt; clazz) {</span>
+<span class="nc" id="L33">        log = Logger.getLogger(clazz.getName());</span>
+<span class="nc" id="L34">    }</span>
+
+    public boolean isDebugEnabled() {
+<span class="nc" id="L37">        return log.isLoggable(Level.FINE);</span>
+    }
+
+    public void error(String s, Throwable e) {
+<span class="nc" id="L41">        LogRecord lr = new LogRecord(Level.SEVERE, s);</span>
+<span class="nc" id="L42">        lr.setSourceClassName(log.getName());</span>
+<span class="nc" id="L43">        lr.setThrown(e);</span>
+
+<span class="nc" id="L45">        log.log(lr);</span>
+<span class="nc" id="L46">    }</span>
+
+    public void error(String s) {
+<span class="nc" id="L49">        LogRecord lr = new LogRecord(Level.SEVERE, s);</span>
+<span class="nc" id="L50">        lr.setSourceClassName(log.getName());</span>
+
+<span class="nc" id="L52">        log.log(lr);</span>
+<span class="nc" id="L53">    }</span>
+
+    public void debug(String s) {
+<span class="nc" id="L56">        LogRecord lr = new LogRecord(Level.FINE, s);</span>
+<span class="nc" id="L57">        lr.setSourceClassName(log.getName());</span>
+
+<span class="nc" id="L59">        log.log(lr);</span>
+<span class="nc" id="L60">    }</span>
+
+    public void warn(String s) {
+<span class="nc" id="L63">        LogRecord lr = new LogRecord(Level.WARNING, s);</span>
+<span class="nc" id="L64">        lr.setSourceClassName(log.getName());</span>
+
+<span class="nc" id="L66">        log.log(lr);</span>
+<span class="nc" id="L67">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>InsertSelectiveMethodGenerator.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.codegen.ibatis2.dao.elements</a> &gt; <span class="el_source">InsertSelectiveMethodGenerator.java</span></div><h1>InsertSelectiveMethodGenerator.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2016 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.codegen.ibatis2.dao.elements;
+
+import java.util.Set;
+import java.util.TreeSet;
+
+import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.Interface;
+import org.mybatis.generator.api.dom.java.JavaVisibility;
+import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.api.dom.java.PrimitiveTypeWrapper;
+import org.mybatis.generator.api.dom.java.TopLevelClass;
+
+/**
+ * 
+ * @author Jeff Butler
+ * 
+ */
+public class InsertSelectiveMethodGenerator extends AbstractDAOElementGenerator {
+
+    public InsertSelectiveMethodGenerator() {
+<span class="fc" id="L38">        super();</span>
+<span class="fc" id="L39">    }</span>
+
+    @Override
+    public void addImplementationElements(TopLevelClass topLevelClass) {
+<span class="fc" id="L43">        Set&lt;FullyQualifiedJavaType&gt; importedTypes = new TreeSet&lt;FullyQualifiedJavaType&gt;();</span>
+<span class="fc" id="L44">        Method method = getMethodShell(importedTypes);</span>
+
+<span class="fc" id="L46">        FullyQualifiedJavaType returnType = method.getReturnType();</span>
+<span class="fc" id="L47">        StringBuilder sb = new StringBuilder();</span>
+
+<span class="fc bfc" id="L49" title="All 2 branches covered.">        if (returnType != null) {</span>
+<span class="fc" id="L50">            sb.append(&quot;Object newKey = &quot;); //$NON-NLS-1$</span>
+        }
+
+<span class="fc" id="L53">        sb.append(daoTemplate.getInsertMethod(introspectedTable</span>
+                .getIbatis2SqlMapNamespace(), introspectedTable
+                .getInsertSelectiveStatementId(), &quot;record&quot;)); //$NON-NLS-1$
+<span class="fc" id="L56">        method.addBodyLine(sb.toString());</span>
+
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        if (returnType != null) {</span>
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">            if (&quot;Object&quot;.equals(returnType.getShortName())) { //$NON-NLS-1$</span>
+                // no need to cast if the return type is Object
+<span class="nc" id="L61">                method.addBodyLine(&quot;return newKey;&quot;); //$NON-NLS-1$</span>
+            } else {
+<span class="fc" id="L63">                sb.setLength(0);</span>
+
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">                if (returnType.isPrimitive()) {</span>
+<span class="nc" id="L66">                    PrimitiveTypeWrapper ptw = returnType</span>
+                            .getPrimitiveTypeWrapper();
+<span class="nc" id="L68">                    sb.append(&quot;return ((&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L69">                    sb.append(ptw.getShortName());</span>
+<span class="nc" id="L70">                    sb.append(&quot;) newKey&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L71">                    sb.append(&quot;).&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L72">                    sb.append(ptw.getToPrimitiveMethod());</span>
+<span class="nc" id="L73">                    sb.append(';');</span>
+<span class="nc" id="L74">                } else {</span>
+<span class="fc" id="L75">                    sb.append(&quot;return (&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L76">                    sb.append(returnType.getShortName());</span>
+<span class="fc" id="L77">                    sb.append(&quot;) newKey;&quot;); //$NON-NLS-1$</span>
+                }
+
+<span class="fc" id="L80">                method.addBodyLine(sb.toString());</span>
+            }
+        }
+
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">        if (context.getPlugins().clientInsertSelectiveMethodGenerated(</span>
+                method, topLevelClass, introspectedTable)) {
+<span class="fc" id="L86">            topLevelClass.addImportedTypes(importedTypes);</span>
+<span class="fc" id="L87">            topLevelClass.addMethod(method);</span>
+        }
+<span class="fc" id="L89">    }</span>
+
+    @Override
+    public void addInterfaceElements(Interface interfaze) {
+<span class="fc" id="L93">        Set&lt;FullyQualifiedJavaType&gt; importedTypes = new TreeSet&lt;FullyQualifiedJavaType&gt;();</span>
+<span class="fc" id="L94">        Method method = getMethodShell(importedTypes);</span>
+
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">        if (context.getPlugins().clientInsertSelectiveMethodGenerated(</span>
+                method, interfaze, introspectedTable)) {
+<span class="fc" id="L98">            interfaze.addImportedTypes(importedTypes);</span>
+<span class="fc" id="L99">            interfaze.addMethod(method);</span>
+        }
+<span class="fc" id="L101">    }</span>
+
+    private Method getMethodShell(Set&lt;FullyQualifiedJavaType&gt; importedTypes) {
+<span class="fc" id="L104">        Method method = new Method();</span>
+
+        FullyQualifiedJavaType returnType;
+<span class="fc bfc" id="L107" title="All 2 branches covered.">        if (introspectedTable.getGeneratedKey() != null) {</span>
+<span class="fc" id="L108">            IntrospectedColumn introspectedColumn = introspectedTable</span>
+                    .getColumn(introspectedTable.getGeneratedKey().getColumn());
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">            if (introspectedColumn == null) {</span>
+                // the specified column doesn't exist, so don't do the generated
+                // key
+                // (the warning has already been reported)
+<span class="nc" id="L114">                returnType = null;</span>
+            } else {
+<span class="fc" id="L116">                returnType = introspectedColumn.getFullyQualifiedJavaType();</span>
+<span class="fc" id="L117">                importedTypes.add(returnType);</span>
+            }
+<span class="fc" id="L119">        } else {</span>
+<span class="fc" id="L120">            returnType = null;</span>
+        }
+<span class="fc" id="L122">        method.setReturnType(returnType);</span>
+<span class="fc" id="L123">        method.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L124">        method.setName(getDAOMethodNameCalculator()</span>
+                .getInsertSelectiveMethodName(introspectedTable));
+
+<span class="fc" id="L127">        FullyQualifiedJavaType parameterType = introspectedTable.getRules()</span>
+                .calculateAllFieldsClass();
+
+<span class="fc" id="L130">        importedTypes.add(parameterType);</span>
+<span class="fc" id="L131">        method.addParameter(new Parameter(parameterType, &quot;record&quot;)); //$NON-NLS-1$</span>
+
+<span class="fc bfc" id="L133" title="All 2 branches covered.">        for (FullyQualifiedJavaType fqjt : daoTemplate.getCheckedExceptions()) {</span>
+<span class="fc" id="L134">            method.addException(fqjt);</span>
+<span class="fc" id="L135">            importedTypes.add(fqjt);</span>
+<span class="fc" id="L136">        }</span>
+
+<span class="fc" id="L138">        context.getCommentGenerator().addGeneralMethodComment(method,</span>
+                introspectedTable);
+
+<span class="fc" id="L141">        return method;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

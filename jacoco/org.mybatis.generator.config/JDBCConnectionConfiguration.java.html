@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>JDBCConnectionConfiguration.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.config</a> &gt; <span class="el_source">JDBCConnectionConfiguration.java</span></div><h1>JDBCConnectionConfiguration.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2016 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.config;
+
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
+import java.util.List;
+
+import org.mybatis.generator.api.dom.xml.Attribute;
+import org.mybatis.generator.api.dom.xml.XmlElement;
+
+/**
+ * 
+ * @author Jeff Butler
+ */
+public class JDBCConnectionConfiguration extends PropertyHolder {
+
+    private String driverClass;
+
+    private String connectionURL;
+
+    private String userId;
+
+    private String password;
+
+    public JDBCConnectionConfiguration() {
+<span class="fc" id="L41">        super();</span>
+<span class="fc" id="L42">    }</span>
+
+    public String getConnectionURL() {
+<span class="fc" id="L45">        return connectionURL;</span>
+    }
+
+    public void setConnectionURL(String connectionURL) {
+<span class="fc" id="L49">        this.connectionURL = connectionURL;</span>
+<span class="fc" id="L50">    }</span>
+
+    public String getPassword() {
+<span class="fc" id="L53">        return password;</span>
+    }
+
+    public void setPassword(String password) {
+<span class="nc" id="L57">        this.password = password;</span>
+<span class="nc" id="L58">    }</span>
+
+    public String getUserId() {
+<span class="fc" id="L61">        return userId;</span>
+    }
+
+    public void setUserId(String userId) {
+<span class="fc" id="L65">        this.userId = userId;</span>
+<span class="fc" id="L66">    }</span>
+
+    public String getDriverClass() {
+<span class="fc" id="L69">        return driverClass;</span>
+    }
+
+    public void setDriverClass(String driverClass) {
+<span class="fc" id="L73">        this.driverClass = driverClass;</span>
+<span class="fc" id="L74">    }</span>
+
+    public XmlElement toXmlElement() {
+<span class="nc" id="L77">        XmlElement xmlElement = new XmlElement(&quot;jdbcConnection&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L78">        xmlElement.addAttribute(new Attribute(&quot;driverClass&quot;, driverClass)); //$NON-NLS-1$</span>
+<span class="nc" id="L79">        xmlElement.addAttribute(new Attribute(&quot;connectionURL&quot;, connectionURL)); //$NON-NLS-1$</span>
+
+<span class="nc bnc" id="L81" title="All 2 branches missed.">        if (stringHasValue(userId)) {</span>
+<span class="nc" id="L82">            xmlElement.addAttribute(new Attribute(&quot;userId&quot;, userId)); //$NON-NLS-1$</span>
+        }
+
+<span class="nc bnc" id="L85" title="All 2 branches missed.">        if (stringHasValue(password)) {</span>
+<span class="nc" id="L86">            xmlElement.addAttribute(new Attribute(&quot;password&quot;, password)); //$NON-NLS-1$</span>
+        }
+
+<span class="nc" id="L89">        addPropertyXmlElements(xmlElement);</span>
+
+<span class="nc" id="L91">        return xmlElement;</span>
+    }
+
+    public void validate(List&lt;String&gt; errors) {
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">        if (!stringHasValue(driverClass)) {</span>
+<span class="nc" id="L96">            errors.add(getString(&quot;ValidationError.4&quot;)); //$NON-NLS-1$</span>
+        }
+
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">        if (!stringHasValue(connectionURL)) {</span>
+<span class="nc" id="L100">            errors.add(getString(&quot;ValidationError.5&quot;)); //$NON-NLS-1$</span>
+        }
+<span class="fc" id="L102">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

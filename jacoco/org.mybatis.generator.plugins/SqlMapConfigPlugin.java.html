@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>SqlMapConfigPlugin.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.plugins</a> &gt; <span class="el_source">SqlMapConfigPlugin.java</span></div><h1>SqlMapConfigPlugin.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2016 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.plugins;
+
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.mybatis.generator.api.GeneratedXmlFile;
+import org.mybatis.generator.api.PluginAdapter;
+import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.dom.xml.Attribute;
+import org.mybatis.generator.api.dom.xml.Document;
+import org.mybatis.generator.api.dom.xml.TextElement;
+import org.mybatis.generator.api.dom.xml.XmlElement;
+import org.mybatis.generator.codegen.XmlConstants;
+
+/**
+ * This plugin generates an SqlMapConfig file containing sqlMap entries for 
+ * all generated SQL maps. This demonstrates hooking into the code
+ * generation lifecycle and generating additional XML files.
+ * &lt;p&gt;
+ * This plugin accepts three properties:
+ * &lt;ul&gt;
+ * &lt;li&gt;&lt;tt&gt;fileName&lt;/tt&gt; (optional) the name of the generated file. this
+ * defaults to &quot;SqlMapConfig.xml&quot; if not specified.&lt;/li&gt;
+ * &lt;li&gt;&lt;tt&gt;targetPackage&lt;/tt&gt; (required) the name of the package where the file
+ * should be placed. Specified like &quot;com.mycompany.sql&quot;.&lt;/li&gt;
+ * &lt;li&gt;&lt;tt&gt;targetProject&lt;/tt&gt; (required) the name of the project where the file
+ * should be placed.&lt;/li&gt;
+ * &lt;/ul&gt;
+ * 
+ * Note: targetPackage and targetProject follow the same rules as the
+ * targetPackage and targetProject values on the sqlMapGenerator configuration
+ * element.
+ * 
+ * @author Jeff Butler
+ * 
+ */
+public class SqlMapConfigPlugin extends PluginAdapter {
+
+    private List&lt;String&gt; sqlMapFiles;
+
+<span class="fc" id="L60">    public SqlMapConfigPlugin() {</span>
+<span class="fc" id="L61">        sqlMapFiles = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L62">    }</span>
+
+    public boolean validate(List&lt;String&gt; warnings) {
+<span class="fc" id="L65">        boolean valid = true;</span>
+
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">        if (!stringHasValue(properties</span>
+                .getProperty(&quot;targetProject&quot;))) { //$NON-NLS-1$
+<span class="nc" id="L69">            warnings.add(getString(&quot;ValidationError.18&quot;, //$NON-NLS-1$</span>
+                    &quot;SqlMapConfigPlugin&quot;, //$NON-NLS-1$
+                    &quot;targetProject&quot;)); //$NON-NLS-1$
+<span class="nc" id="L72">            valid = false;</span>
+        }
+
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">        if (!stringHasValue(properties</span>
+                .getProperty(&quot;targetPackage&quot;))) { //$NON-NLS-1$
+<span class="nc" id="L77">            warnings.add(getString(&quot;ValidationError.18&quot;, //$NON-NLS-1$</span>
+                    &quot;SqlMapConfigPlugin&quot;, //$NON-NLS-1$
+                    &quot;targetPackage&quot;)); //$NON-NLS-1$
+<span class="nc" id="L80">            valid = false;</span>
+        }
+
+<span class="fc" id="L83">        return valid;</span>
+    }
+
+    @Override
+    public List&lt;GeneratedXmlFile&gt; contextGenerateAdditionalXmlFiles() {
+<span class="fc" id="L88">        Document document = new Document(</span>
+                XmlConstants.IBATIS2_SQL_MAP_CONFIG_PUBLIC_ID,
+                XmlConstants.IBATIS2_SQL_MAP_CONFIG_SYSTEM_ID);
+
+<span class="fc" id="L92">        XmlElement root = new XmlElement(&quot;sqlMapConfig&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L93">        document.setRootElement(root);</span>
+
+<span class="fc" id="L95">        root.addElement(new TextElement(&quot;&lt;!--&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L96">        root.addElement(new TextElement(</span>
+                &quot;  This file is generated by MyBatis Generator.&quot;)); //$NON-NLS-1$
+<span class="fc" id="L98">        root</span>
+                .addElement(new TextElement(
+                        &quot;  This file is the shell of an SqlMapConfig file - in many cases you will need to add&quot;)); //$NON-NLS-1$
+<span class="fc" id="L101">        root.addElement(new TextElement(</span>
+                &quot;    to this file before it is usable by iBATIS.&quot;)); //$NON-NLS-1$
+
+<span class="fc" id="L104">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L105">        sb.append(&quot;  This file was generated on &quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L106">        sb.append(new Date());</span>
+<span class="fc" id="L107">        sb.append('.');</span>
+<span class="fc" id="L108">        root.addElement(new TextElement(sb.toString()));</span>
+
+<span class="fc" id="L110">        root.addElement(new TextElement(&quot;--&gt;&quot;)); //$NON-NLS-1$</span>
+
+<span class="fc" id="L112">        XmlElement settings = new XmlElement(&quot;settings&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L113">        settings.addAttribute(new Attribute(&quot;useStatementNamespaces&quot;, &quot;true&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L114">        root.addElement(settings);</span>
+
+        XmlElement sqlMap;
+<span class="fc bfc" id="L117" title="All 2 branches covered.">        for (String sqlMapFile : sqlMapFiles) {</span>
+<span class="fc" id="L118">            sqlMap = new XmlElement(&quot;sqlMap&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L119">            sqlMap.addAttribute(new Attribute(&quot;resource&quot;, sqlMapFile)); //$NON-NLS-1$</span>
+<span class="fc" id="L120">            root.addElement(sqlMap);</span>
+<span class="fc" id="L121">        }</span>
+
+<span class="fc" id="L123">        GeneratedXmlFile gxf = new GeneratedXmlFile(document, properties</span>
+                .getProperty(&quot;fileName&quot;, &quot;SqlMapConfig.xml&quot;), //$NON-NLS-1$ //$NON-NLS-2$
+                properties.getProperty(&quot;targetPackage&quot;), //$NON-NLS-1$
+                properties.getProperty(&quot;targetProject&quot;), //$NON-NLS-1$
+                false, context.getXmlFormatter());
+
+<span class="fc" id="L129">        List&lt;GeneratedXmlFile&gt; answer = new ArrayList&lt;GeneratedXmlFile&gt;(1);</span>
+<span class="fc" id="L130">        answer.add(gxf);</span>
+
+<span class="fc" id="L132">        return answer;</span>
+    }
+
+    /*
+     * This method collects the name of every SqlMap file generated in
+     * this context.
+     */
+    @Override
+    public boolean sqlMapGenerated(GeneratedXmlFile sqlMap,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L142">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L143">        sb.append(sqlMap.getTargetPackage());</span>
+<span class="fc" id="L144">        sb.append('.');</span>
+<span class="fc" id="L145">        String temp = sb.toString();</span>
+<span class="fc" id="L146">        sb.setLength(0);</span>
+<span class="fc" id="L147">        sb.append(temp.replace('.', '/'));</span>
+<span class="fc" id="L148">        sb.append(sqlMap.getFileName());</span>
+<span class="fc" id="L149">        sqlMapFiles.add(sb.toString());</span>
+
+<span class="fc" id="L151">        return true;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

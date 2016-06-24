@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ColumnOverride.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.config</a> &gt; <span class="el_source">ColumnOverride.java</span></div><h1>ColumnOverride.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2016 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.config;
+
+import static org.mybatis.generator.internal.util.StringUtility.stringContainsSpace;
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
+import java.util.List;
+
+import org.mybatis.generator.api.dom.xml.Attribute;
+import org.mybatis.generator.api.dom.xml.XmlElement;
+
+/**
+ * The Class ColumnOverride.
+ *
+ * @author Jeff Butler
+ */
+public class ColumnOverride extends PropertyHolder {
+
+    /** The column name. */
+    private String columnName;
+
+    /** The java property. */
+    private String javaProperty;
+
+    /** The jdbc type. */
+    private String jdbcType;
+
+    /** The java type. */
+    private String javaType;
+
+    /** The type handler. */
+    private String typeHandler;
+
+    /** The is column name delimited. */
+    private boolean isColumnNameDelimited;
+
+    /** The configured delimited column name. */
+    private String configuredDelimitedColumnName;
+
+    /**
+     * Instantiates a new column override.
+     *
+     * @param columnName
+     *            the column name
+     */
+    public ColumnOverride(String columnName) {
+<span class="fc" id="L62">        super();</span>
+
+<span class="fc" id="L64">        this.columnName = columnName;</span>
+<span class="fc" id="L65">        isColumnNameDelimited = stringContainsSpace(columnName);</span>
+<span class="fc" id="L66">    }</span>
+
+    /**
+     * Gets the column name.
+     *
+     * @return the column name
+     */
+    public String getColumnName() {
+<span class="fc" id="L74">        return columnName;</span>
+    }
+
+    /**
+     * Gets the java property.
+     *
+     * @return the java property
+     */
+    public String getJavaProperty() {
+<span class="fc" id="L83">        return javaProperty;</span>
+    }
+
+    /**
+     * Sets the java property.
+     *
+     * @param javaProperty
+     *            the new java property
+     */
+    public void setJavaProperty(String javaProperty) {
+<span class="fc" id="L93">        this.javaProperty = javaProperty;</span>
+<span class="fc" id="L94">    }</span>
+
+    /**
+     * Gets the java type.
+     *
+     * @return the java type
+     */
+    public String getJavaType() {
+<span class="fc" id="L102">        return javaType;</span>
+    }
+
+    /**
+     * Sets the java type.
+     *
+     * @param javaType
+     *            the new java type
+     */
+    public void setJavaType(String javaType) {
+<span class="fc" id="L112">        this.javaType = javaType;</span>
+<span class="fc" id="L113">    }</span>
+
+    /**
+     * Gets the jdbc type.
+     *
+     * @return the jdbc type
+     */
+    public String getJdbcType() {
+<span class="fc" id="L121">        return jdbcType;</span>
+    }
+
+    /**
+     * Sets the jdbc type.
+     *
+     * @param jdbcType
+     *            the new jdbc type
+     */
+    public void setJdbcType(String jdbcType) {
+<span class="nc" id="L131">        this.jdbcType = jdbcType;</span>
+<span class="nc" id="L132">    }</span>
+
+    /**
+     * Gets the type handler.
+     *
+     * @return the type handler
+     */
+    public String getTypeHandler() {
+<span class="fc" id="L140">        return typeHandler;</span>
+    }
+
+    /**
+     * Sets the type handler.
+     *
+     * @param typeHandler
+     *            the new type handler
+     */
+    public void setTypeHandler(String typeHandler) {
+<span class="fc" id="L150">        this.typeHandler = typeHandler;</span>
+<span class="fc" id="L151">    }</span>
+
+    /**
+     * To xml element.
+     *
+     * @return the xml element
+     */
+    public XmlElement toXmlElement() {
+<span class="nc" id="L159">        XmlElement xmlElement = new XmlElement(&quot;columnOverride&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L160">        xmlElement.addAttribute(new Attribute(&quot;column&quot;, columnName)); //$NON-NLS-1$</span>
+
+<span class="nc bnc" id="L162" title="All 2 branches missed.">        if (stringHasValue(javaProperty)) {</span>
+<span class="nc" id="L163">            xmlElement.addAttribute(new Attribute(&quot;property&quot;, javaProperty)); //$NON-NLS-1$</span>
+        }
+
+<span class="nc bnc" id="L166" title="All 2 branches missed.">        if (stringHasValue(javaType)) {</span>
+<span class="nc" id="L167">            xmlElement.addAttribute(new Attribute(&quot;javaType&quot;, javaType)); //$NON-NLS-1$</span>
+        }
+
+<span class="nc bnc" id="L170" title="All 2 branches missed.">        if (stringHasValue(jdbcType)) {</span>
+<span class="nc" id="L171">            xmlElement.addAttribute(new Attribute(&quot;jdbcType&quot;, jdbcType)); //$NON-NLS-1$</span>
+        }
+
+<span class="nc bnc" id="L174" title="All 2 branches missed.">        if (stringHasValue(typeHandler)) {</span>
+<span class="nc" id="L175">            xmlElement.addAttribute(new Attribute(&quot;typeHandler&quot;, typeHandler)); //$NON-NLS-1$</span>
+        }
+
+<span class="nc bnc" id="L178" title="All 2 branches missed.">        if (stringHasValue(configuredDelimitedColumnName)) {</span>
+<span class="nc" id="L179">            xmlElement.addAttribute(new Attribute(</span>
+                    &quot;delimitedColumnName&quot;, configuredDelimitedColumnName)); //$NON-NLS-1$
+        }
+
+<span class="nc" id="L183">        addPropertyXmlElements(xmlElement);</span>
+
+<span class="nc" id="L185">        return xmlElement;</span>
+    }
+
+    /**
+     * Checks if is column name delimited.
+     *
+     * @return true, if is column name delimited
+     */
+    public boolean isColumnNameDelimited() {
+<span class="fc" id="L194">        return isColumnNameDelimited;</span>
+    }
+
+    /**
+     * Sets the column name delimited.
+     *
+     * @param isColumnNameDelimited
+     *            the new column name delimited
+     */
+    public void setColumnNameDelimited(boolean isColumnNameDelimited) {
+<span class="fc" id="L204">        this.isColumnNameDelimited = isColumnNameDelimited;</span>
+
+<span class="pc bpc" id="L206" title="1 of 2 branches missed.">        configuredDelimitedColumnName = isColumnNameDelimited ? &quot;true&quot; : &quot;false&quot;; //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L207">    }</span>
+
+    /**
+     * Validate.
+     *
+     * @param errors
+     *            the errors
+     * @param tableName
+     *            the table name
+     */
+    public void validate(List&lt;String&gt; errors, String tableName) {
+<span class="pc bpc" id="L218" title="1 of 2 branches missed.">        if (!stringHasValue(columnName)) {</span>
+<span class="nc" id="L219">            errors.add(getString(&quot;ValidationError.22&quot;, //$NON-NLS-1$</span>
+                    tableName));
+        }
+<span class="fc" id="L222">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

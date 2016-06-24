@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>TopLevelClass.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api.dom.java</a> &gt; <span class="el_source">TopLevelClass.java</span></div><h1>TopLevelClass.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2016 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.api.dom.java;
+
+import static org.mybatis.generator.api.dom.OutputUtilities.calculateImports;
+import static org.mybatis.generator.api.dom.OutputUtilities.newLine;
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+
+/**
+ * The Class TopLevelClass.
+ *
+ * @author Jeff Butler
+ */
+public class TopLevelClass extends InnerClass implements CompilationUnit {
+    
+    /** The imported types. */
+    private Set&lt;FullyQualifiedJavaType&gt; importedTypes;
+
+    /** The static imports. */
+    private Set&lt;String&gt; staticImports;
+    
+    /** The file comment lines. */
+    private List&lt;String&gt; fileCommentLines;
+
+    /**
+     * Instantiates a new top level class.
+     *
+     * @param type
+     *            the type
+     */
+    public TopLevelClass(FullyQualifiedJavaType type) {
+<span class="fc" id="L51">        super(type);</span>
+<span class="fc" id="L52">        importedTypes = new TreeSet&lt;FullyQualifiedJavaType&gt;();</span>
+<span class="fc" id="L53">        fileCommentLines = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L54">        staticImports = new TreeSet&lt;String&gt;();</span>
+<span class="fc" id="L55">    }</span>
+
+    /**
+     * Instantiates a new top level class.
+     *
+     * @param typeName
+     *            the type name
+     */
+    public TopLevelClass(String typeName) {
+<span class="fc" id="L64">        this(new FullyQualifiedJavaType(typeName));</span>
+<span class="fc" id="L65">    }</span>
+
+    /**
+     * Gets the imported types.
+     *
+     * @return Returns the importedTypes.
+     */
+    public Set&lt;FullyQualifiedJavaType&gt; getImportedTypes() {
+<span class="fc" id="L73">        return Collections.unmodifiableSet(importedTypes);</span>
+    }
+
+    /**
+     * Adds the imported type.
+     *
+     * @param importedType
+     *            the imported type
+     */
+    public void addImportedType(String importedType) {
+<span class="fc" id="L83">        addImportedType(new FullyQualifiedJavaType(importedType));</span>
+<span class="fc" id="L84">    }</span>
+    
+    /* (non-Javadoc)
+     * @see org.mybatis.generator.api.dom.java.CompilationUnit#addImportedType(org.mybatis.generator.api.dom.java.FullyQualifiedJavaType)
+     */
+    public void addImportedType(FullyQualifiedJavaType importedType) {
+<span class="pc bpc" id="L90" title="1 of 8 branches missed.">        if (importedType != null</span>
+                &amp;&amp; importedType.isExplicitlyImported()
+                &amp;&amp; !importedType.getPackageName().equals(
+                        getType().getPackageName())
+                &amp;&amp; !importedType.getShortName().equals(getType().getShortName())) {
+<span class="fc" id="L95">            importedTypes.add(importedType);</span>
+        }
+<span class="fc" id="L97">    }</span>
+
+    /* (non-Javadoc)
+     * @see org.mybatis.generator.api.dom.java.CompilationUnit#getFormattedContent()
+     */
+    public String getFormattedContent() {
+<span class="fc" id="L103">        StringBuilder sb = new StringBuilder();</span>
+
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">        for (String fileCommentLine : fileCommentLines) {</span>
+<span class="nc" id="L106">            sb.append(fileCommentLine);</span>
+<span class="nc" id="L107">            newLine(sb);</span>
+<span class="nc" id="L108">        }</span>
+
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">        if (stringHasValue(getType().getPackageName())) {</span>
+<span class="fc" id="L111">            sb.append(&quot;package &quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L112">            sb.append(getType().getPackageName());</span>
+<span class="fc" id="L113">            sb.append(';');</span>
+<span class="fc" id="L114">            newLine(sb);</span>
+<span class="fc" id="L115">            newLine(sb);</span>
+        }
+
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">        for (String staticImport : staticImports) {</span>
+<span class="nc" id="L119">            sb.append(&quot;import static &quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L120">            sb.append(staticImport);</span>
+<span class="nc" id="L121">            sb.append(';');</span>
+<span class="nc" id="L122">            newLine(sb);</span>
+<span class="nc" id="L123">        }</span>
+        
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">        if (staticImports.size() &gt; 0) {</span>
+<span class="nc" id="L126">            newLine(sb);</span>
+        }
+        
+<span class="fc" id="L129">        Set&lt;String&gt; importStrings = calculateImports(importedTypes);</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">        for (String importString : importStrings) {</span>
+<span class="fc" id="L131">            sb.append(importString);</span>
+<span class="fc" id="L132">            newLine(sb);</span>
+<span class="fc" id="L133">        }</span>
+
+<span class="fc bfc" id="L135" title="All 2 branches covered.">        if (importStrings.size() &gt; 0) {</span>
+<span class="fc" id="L136">            newLine(sb);</span>
+        }
+
+<span class="fc" id="L139">        sb.append(super.getFormattedContent(0, this));</span>
+
+<span class="fc" id="L141">        return sb.toString();</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.mybatis.generator.api.dom.java.CompilationUnit#isJavaInterface()
+     */
+    public boolean isJavaInterface() {
+<span class="nc" id="L148">        return false;</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.mybatis.generator.api.dom.java.CompilationUnit#isJavaEnumeration()
+     */
+    public boolean isJavaEnumeration() {
+<span class="nc" id="L155">        return false;</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.mybatis.generator.api.dom.java.CompilationUnit#addFileCommentLine(java.lang.String)
+     */
+    public void addFileCommentLine(String commentLine) {
+<span class="nc" id="L162">        fileCommentLines.add(commentLine);</span>
+<span class="nc" id="L163">    }</span>
+
+    /* (non-Javadoc)
+     * @see org.mybatis.generator.api.dom.java.CompilationUnit#getFileCommentLines()
+     */
+    public List&lt;String&gt; getFileCommentLines() {
+<span class="nc" id="L169">        return fileCommentLines;</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.mybatis.generator.api.dom.java.CompilationUnit#addImportedTypes(java.util.Set)
+     */
+    public void addImportedTypes(Set&lt;FullyQualifiedJavaType&gt; importedTypes) {
+<span class="fc" id="L176">        this.importedTypes.addAll(importedTypes);</span>
+<span class="fc" id="L177">    }</span>
+
+    /* (non-Javadoc)
+     * @see org.mybatis.generator.api.dom.java.CompilationUnit#getStaticImports()
+     */
+    public Set&lt;String&gt; getStaticImports() {
+<span class="nc" id="L183">        return staticImports;</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.mybatis.generator.api.dom.java.CompilationUnit#addStaticImport(java.lang.String)
+     */
+    public void addStaticImport(String staticImport) {
+<span class="nc" id="L190">        staticImports.add(staticImport);</span>
+<span class="nc" id="L191">    }</span>
+
+    /* (non-Javadoc)
+     * @see org.mybatis.generator.api.dom.java.CompilationUnit#addStaticImports(java.util.Set)
+     */
+    public void addStaticImports(Set&lt;String&gt; staticImports) {
+<span class="fc" id="L197">        this.staticImports.addAll(staticImports);</span>
+<span class="fc" id="L198">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

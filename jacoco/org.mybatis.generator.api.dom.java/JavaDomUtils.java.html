@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>JavaDomUtils.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api.dom.java</a> &gt; <span class="el_source">JavaDomUtils.java</span></div><h1>JavaDomUtils.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2016 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.api.dom.java;
+
+<span class="nc" id="L18">public class JavaDomUtils {</span>
+    /**
+     * Calculates type names for writing into generated Java.  We try to
+     * use short names wherever possible.  If the type requires an import,
+     * but has not been imported, then we need to use the fully qualified
+     * type name.
+     * 
+     * @param compilationUnit the compilation unit being written
+     * @param fqjt the type in question
+     */
+    public static String calculateTypeName(CompilationUnit compilationUnit, FullyQualifiedJavaType fqjt) {
+<span class="pc bpc" id="L29" title="2 of 8 branches missed.">        if(compilationUnit == null</span>
+                || typeDoesNotRequireImport(fqjt)
+                || typeIsInSamePackage(compilationUnit, fqjt) 
+                || typeIsAlreadyImported(compilationUnit, fqjt)) {
+<span class="fc" id="L33">            return fqjt.getShortName();</span>
+        } else {
+<span class="nc" id="L35">            return fqjt.getFullyQualifiedName();</span>
+        }
+    }
+    
+    private static boolean typeDoesNotRequireImport(FullyQualifiedJavaType fullyQualifiedJavaType) {
+<span class="fc bfc" id="L40" title="All 4 branches covered.">        return fullyQualifiedJavaType.isPrimitive()</span>
+                || !fullyQualifiedJavaType.isExplicitlyImported();
+    }
+    
+    private static boolean typeIsInSamePackage(CompilationUnit compilationUnit, FullyQualifiedJavaType fullyQualifiedJavaType) {
+<span class="fc" id="L45">        return fullyQualifiedJavaType.getPackageName().equals(compilationUnit.getType().getPackageName());</span>
+    }
+    
+    private static boolean typeIsAlreadyImported(CompilationUnit compilationUnit, FullyQualifiedJavaType fullyQualifiedJavaType) {
+<span class="fc" id="L49">        FullyQualifiedJavaType nonGenericType = new FullyQualifiedJavaType(fullyQualifiedJavaType.getFullyQualifiedNameWithoutTypeParameters());</span>
+<span class="fc" id="L50">        return compilationUnit.getImportedTypes().contains(nonGenericType);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

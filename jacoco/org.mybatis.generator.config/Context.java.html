@@ -1,0 +1,768 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Context.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.config</a> &gt; <span class="el_source">Context.java</span></div><h1>Context.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2016 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.config;
+
+import static org.mybatis.generator.internal.util.StringUtility.composeFullyQualifiedTableName;
+import static org.mybatis.generator.internal.util.StringUtility.isTrue;
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import org.mybatis.generator.api.CommentGenerator;
+import org.mybatis.generator.api.GeneratedJavaFile;
+import org.mybatis.generator.api.GeneratedXmlFile;
+import org.mybatis.generator.api.JavaFormatter;
+import org.mybatis.generator.api.Plugin;
+import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.JavaTypeResolver;
+import org.mybatis.generator.api.ProgressCallback;
+import org.mybatis.generator.api.XmlFormatter;
+import org.mybatis.generator.api.dom.xml.Attribute;
+import org.mybatis.generator.api.dom.xml.XmlElement;
+import org.mybatis.generator.internal.ObjectFactory;
+import org.mybatis.generator.internal.PluginAggregator;
+import org.mybatis.generator.internal.db.ConnectionFactory;
+import org.mybatis.generator.internal.db.DatabaseIntrospector;
+
+/**
+ * The Class Context.
+ *
+ * @author Jeff Butler
+ */
+public class Context extends PropertyHolder {
+    
+    /** The id. */
+    private String id;
+
+    /** The jdbc connection configuration. */
+    private JDBCConnectionConfiguration jdbcConnectionConfiguration;
+
+    /** The sql map generator configuration. */
+    private SqlMapGeneratorConfiguration sqlMapGeneratorConfiguration;
+
+    /** The java type resolver configuration. */
+    private JavaTypeResolverConfiguration javaTypeResolverConfiguration;
+
+    /** The java model generator configuration. */
+    private JavaModelGeneratorConfiguration javaModelGeneratorConfiguration;
+
+    /** The java client generator configuration. */
+    private JavaClientGeneratorConfiguration javaClientGeneratorConfiguration;
+
+    /** The table configurations. */
+    private ArrayList&lt;TableConfiguration&gt; tableConfigurations;
+
+    /** The default model type. */
+    private ModelType defaultModelType;
+
+    /** The beginning delimiter. */
+<span class="fc" id="L77">    private String beginningDelimiter = &quot;\&quot;&quot;; //$NON-NLS-1$</span>
+
+    /** The ending delimiter. */
+<span class="fc" id="L80">    private String endingDelimiter = &quot;\&quot;&quot;; //$NON-NLS-1$</span>
+
+    /** The comment generator configuration. */
+    private CommentGeneratorConfiguration commentGeneratorConfiguration;
+
+    /** The comment generator. */
+    private CommentGenerator commentGenerator;
+
+    /** The plugin aggregator. */
+    private PluginAggregator pluginAggregator;
+
+    /** The plugin configurations. */
+    private List&lt;PluginConfiguration&gt; pluginConfigurations;
+
+    /** The target runtime. */
+    private String targetRuntime;
+
+    /** The introspected column impl. */
+    private String introspectedColumnImpl;
+
+    /** The auto delimit keywords. */
+    private Boolean autoDelimitKeywords;
+    
+    /** The java formatter. */
+    private JavaFormatter javaFormatter;
+    
+    /** The xml formatter. */
+    private XmlFormatter xmlFormatter;
+
+    /**
+     * Constructs a Context object.
+     * 
+     * @param defaultModelType
+     *            - may be null
+     */
+    public Context(ModelType defaultModelType) {
+<span class="fc" id="L116">        super();</span>
+
+<span class="fc bfc" id="L118" title="All 2 branches covered.">        if (defaultModelType == null) {</span>
+<span class="fc" id="L119">            this.defaultModelType = ModelType.CONDITIONAL;</span>
+        } else {
+<span class="fc" id="L121">            this.defaultModelType = defaultModelType;</span>
+        }
+
+<span class="fc" id="L124">        tableConfigurations = new ArrayList&lt;TableConfiguration&gt;();</span>
+<span class="fc" id="L125">        pluginConfigurations = new ArrayList&lt;PluginConfiguration&gt;();</span>
+<span class="fc" id="L126">    }</span>
+
+    /**
+     * Adds the table configuration.
+     *
+     * @param tc
+     *            the tc
+     */
+    public void addTableConfiguration(TableConfiguration tc) {
+<span class="fc" id="L135">        tableConfigurations.add(tc);</span>
+<span class="fc" id="L136">    }</span>
+
+    /**
+     * Gets the jdbc connection configuration.
+     *
+     * @return the jdbc connection configuration
+     */
+    public JDBCConnectionConfiguration getJdbcConnectionConfiguration() {
+<span class="nc" id="L144">        return jdbcConnectionConfiguration;</span>
+    }
+
+    /**
+     * Gets the java client generator configuration.
+     *
+     * @return the java client generator configuration
+     */
+    public JavaClientGeneratorConfiguration getJavaClientGeneratorConfiguration() {
+<span class="fc" id="L153">        return javaClientGeneratorConfiguration;</span>
+    }
+
+    /**
+     * Gets the java model generator configuration.
+     *
+     * @return the java model generator configuration
+     */
+    public JavaModelGeneratorConfiguration getJavaModelGeneratorConfiguration() {
+<span class="fc" id="L162">        return javaModelGeneratorConfiguration;</span>
+    }
+
+    /**
+     * Gets the java type resolver configuration.
+     *
+     * @return the java type resolver configuration
+     */
+    public JavaTypeResolverConfiguration getJavaTypeResolverConfiguration() {
+<span class="fc" id="L171">        return javaTypeResolverConfiguration;</span>
+    }
+
+    /**
+     * Gets the sql map generator configuration.
+     *
+     * @return the sql map generator configuration
+     */
+    public SqlMapGeneratorConfiguration getSqlMapGeneratorConfiguration() {
+<span class="fc" id="L180">        return sqlMapGeneratorConfiguration;</span>
+    }
+
+    /**
+     * Adds the plugin configuration.
+     *
+     * @param pluginConfiguration
+     *            the plugin configuration
+     */
+    public void addPluginConfiguration(
+            PluginConfiguration pluginConfiguration) {
+<span class="fc" id="L191">        pluginConfigurations.add(pluginConfiguration);</span>
+<span class="fc" id="L192">    }</span>
+
+    /**
+     * This method does a simple validate, it makes sure that all required fields have been filled in. It does not do
+     * any more complex operations such as validating that database tables exist or validating that named columns exist
+     *
+     * @param errors
+     *            the errors
+     */
+    public void validate(List&lt;String&gt; errors) {
+<span class="pc bpc" id="L202" title="1 of 2 branches missed.">        if (!stringHasValue(id)) {</span>
+<span class="nc" id="L203">            errors.add(getString(&quot;ValidationError.16&quot;)); //$NON-NLS-1$</span>
+        }
+
+<span class="pc bpc" id="L206" title="1 of 2 branches missed.">        if (jdbcConnectionConfiguration == null) {</span>
+<span class="nc" id="L207">            errors.add(getString(&quot;ValidationError.10&quot;, id)); //$NON-NLS-1$</span>
+        } else {
+<span class="fc" id="L209">            jdbcConnectionConfiguration.validate(errors);</span>
+        }
+
+<span class="pc bpc" id="L212" title="1 of 2 branches missed.">        if (javaModelGeneratorConfiguration == null) {</span>
+<span class="nc" id="L213">            errors.add(getString(&quot;ValidationError.8&quot;, id)); //$NON-NLS-1$</span>
+        } else {
+<span class="fc" id="L215">            javaModelGeneratorConfiguration.validate(errors, id);</span>
+        }
+
+<span class="fc bfc" id="L218" title="All 2 branches covered.">        if (javaClientGeneratorConfiguration != null) {</span>
+<span class="fc" id="L219">            javaClientGeneratorConfiguration.validate(errors, id);</span>
+        }
+
+<span class="fc" id="L222">        IntrospectedTable it = null;</span>
+        try {
+<span class="fc" id="L224">            it = ObjectFactory.createIntrospectedTableForValidation(this);</span>
+<span class="nc" id="L225">        } catch (Exception e) {</span>
+<span class="nc" id="L226">            errors.add(getString(&quot;ValidationError.25&quot;, id)); //$NON-NLS-1$</span>
+<span class="fc" id="L227">        }</span>
+        
+<span class="pc bpc" id="L229" title="1 of 4 branches missed.">        if (it != null &amp;&amp; it.requiresXMLGenerator()) {</span>
+<span class="fc bfc" id="L230" title="All 2 branches covered.">            if (sqlMapGeneratorConfiguration == null) {</span>
+<span class="fc" id="L231">                errors.add(getString(&quot;ValidationError.9&quot;, id)); //$NON-NLS-1$</span>
+            } else {
+<span class="fc" id="L233">                sqlMapGeneratorConfiguration.validate(errors, id);</span>
+            }
+        }
+
+<span class="pc bpc" id="L237" title="1 of 2 branches missed.">        if (tableConfigurations.size() == 0) {</span>
+<span class="nc" id="L238">            errors.add(getString(&quot;ValidationError.3&quot;, id)); //$NON-NLS-1$</span>
+        } else {
+<span class="fc bfc" id="L240" title="All 2 branches covered.">            for (int i = 0; i &lt; tableConfigurations.size(); i++) {</span>
+<span class="fc" id="L241">                TableConfiguration tc = tableConfigurations.get(i);</span>
+
+<span class="fc" id="L243">                tc.validate(errors, i);</span>
+            }
+        }
+
+<span class="fc bfc" id="L247" title="All 2 branches covered.">        for (PluginConfiguration pluginConfiguration : pluginConfigurations) {</span>
+<span class="fc" id="L248">            pluginConfiguration.validate(errors, id);</span>
+<span class="fc" id="L249">        }</span>
+<span class="fc" id="L250">    }</span>
+
+    /**
+     * Gets the id.
+     *
+     * @return the id
+     */
+    public String getId() {
+<span class="nc" id="L258">        return id;</span>
+    }
+
+    /**
+     * Sets the id.
+     *
+     * @param id
+     *            the new id
+     */
+    public void setId(String id) {
+<span class="fc" id="L268">        this.id = id;</span>
+<span class="fc" id="L269">    }</span>
+
+    /**
+     * Sets the java client generator configuration.
+     *
+     * @param javaClientGeneratorConfiguration
+     *            the new java client generator configuration
+     */
+    public void setJavaClientGeneratorConfiguration(
+            JavaClientGeneratorConfiguration javaClientGeneratorConfiguration) {
+<span class="fc" id="L279">        this.javaClientGeneratorConfiguration = javaClientGeneratorConfiguration;</span>
+<span class="fc" id="L280">    }</span>
+
+    /**
+     * Sets the java model generator configuration.
+     *
+     * @param javaModelGeneratorConfiguration
+     *            the new java model generator configuration
+     */
+    public void setJavaModelGeneratorConfiguration(
+            JavaModelGeneratorConfiguration javaModelGeneratorConfiguration) {
+<span class="fc" id="L290">        this.javaModelGeneratorConfiguration = javaModelGeneratorConfiguration;</span>
+<span class="fc" id="L291">    }</span>
+
+    /**
+     * Sets the java type resolver configuration.
+     *
+     * @param javaTypeResolverConfiguration
+     *            the new java type resolver configuration
+     */
+    public void setJavaTypeResolverConfiguration(
+            JavaTypeResolverConfiguration javaTypeResolverConfiguration) {
+<span class="nc" id="L301">        this.javaTypeResolverConfiguration = javaTypeResolverConfiguration;</span>
+<span class="nc" id="L302">    }</span>
+
+    /**
+     * Sets the jdbc connection configuration.
+     *
+     * @param jdbcConnectionConfiguration
+     *            the new jdbc connection configuration
+     */
+    public void setJdbcConnectionConfiguration(
+            JDBCConnectionConfiguration jdbcConnectionConfiguration) {
+<span class="fc" id="L312">        this.jdbcConnectionConfiguration = jdbcConnectionConfiguration;</span>
+<span class="fc" id="L313">    }</span>
+
+    /**
+     * Sets the sql map generator configuration.
+     *
+     * @param sqlMapGeneratorConfiguration
+     *            the new sql map generator configuration
+     */
+    public void setSqlMapGeneratorConfiguration(
+            SqlMapGeneratorConfiguration sqlMapGeneratorConfiguration) {
+<span class="fc" id="L323">        this.sqlMapGeneratorConfiguration = sqlMapGeneratorConfiguration;</span>
+<span class="fc" id="L324">    }</span>
+
+    /**
+     * Gets the default model type.
+     *
+     * @return the default model type
+     */
+    public ModelType getDefaultModelType() {
+<span class="fc" id="L332">        return defaultModelType;</span>
+    }
+
+    /**
+     * Builds an XmlElement representation of this context. Note that the XML
+     * may not necessarily validate if the context is invalid. Call the
+     * &lt;code&gt;validate&lt;/code&gt; method to check validity of this context.
+     * 
+     * @return the XML representation of this context
+     */
+    public XmlElement toXmlElement() {
+<span class="nc" id="L343">        XmlElement xmlElement = new XmlElement(&quot;context&quot;); //$NON-NLS-1$</span>
+        
+<span class="nc" id="L345">        xmlElement.addAttribute(new Attribute(&quot;id&quot;, id)); //$NON-NLS-1$</span>
+        
+<span class="nc bnc" id="L347" title="All 2 branches missed.">        if (defaultModelType != ModelType.CONDITIONAL) {</span>
+<span class="nc" id="L348">            xmlElement.addAttribute(new Attribute(</span>
+                    &quot;defaultModelType&quot;, defaultModelType.getModelType())); //$NON-NLS-1$
+        }
+
+<span class="nc bnc" id="L352" title="All 2 branches missed.">        if (stringHasValue(introspectedColumnImpl)) {</span>
+<span class="nc" id="L353">            xmlElement.addAttribute(new Attribute(</span>
+                    &quot;introspectedColumnImpl&quot;, introspectedColumnImpl)); //$NON-NLS-1$
+        }
+
+<span class="nc bnc" id="L357" title="All 2 branches missed.">        if (stringHasValue(targetRuntime)) {</span>
+<span class="nc" id="L358">            xmlElement.addAttribute(new Attribute(</span>
+                    &quot;targetRuntime&quot;, targetRuntime)); //$NON-NLS-1$
+        }
+
+<span class="nc" id="L362">        addPropertyXmlElements(xmlElement);</span>
+        
+<span class="nc bnc" id="L364" title="All 2 branches missed.">        for (PluginConfiguration pluginConfiguration : pluginConfigurations) {</span>
+<span class="nc" id="L365">            xmlElement.addElement(pluginConfiguration.toXmlElement());</span>
+<span class="nc" id="L366">        }</span>
+
+<span class="nc bnc" id="L368" title="All 2 branches missed.">        if (commentGeneratorConfiguration != null) {</span>
+<span class="nc" id="L369">            xmlElement.addElement(commentGeneratorConfiguration.toXmlElement());</span>
+        }
+
+<span class="nc bnc" id="L372" title="All 2 branches missed.">        if (jdbcConnectionConfiguration != null) {</span>
+<span class="nc" id="L373">            xmlElement.addElement(jdbcConnectionConfiguration.toXmlElement());</span>
+        }
+
+<span class="nc bnc" id="L376" title="All 2 branches missed.">        if (javaTypeResolverConfiguration != null) {</span>
+<span class="nc" id="L377">            xmlElement.addElement(javaTypeResolverConfiguration.toXmlElement());</span>
+        }
+
+<span class="nc bnc" id="L380" title="All 2 branches missed.">        if (javaModelGeneratorConfiguration != null) {</span>
+<span class="nc" id="L381">            xmlElement.addElement(javaModelGeneratorConfiguration</span>
+                    .toXmlElement());
+        }
+
+<span class="nc bnc" id="L385" title="All 2 branches missed.">        if (sqlMapGeneratorConfiguration != null) {</span>
+<span class="nc" id="L386">            xmlElement.addElement(sqlMapGeneratorConfiguration.toXmlElement());</span>
+        }
+
+<span class="nc bnc" id="L389" title="All 2 branches missed.">        if (javaClientGeneratorConfiguration != null) {</span>
+<span class="nc" id="L390">            xmlElement.addElement(javaClientGeneratorConfiguration.toXmlElement());</span>
+        }
+
+<span class="nc bnc" id="L393" title="All 2 branches missed.">        for (TableConfiguration tableConfiguration : tableConfigurations) {</span>
+<span class="nc" id="L394">            xmlElement.addElement(tableConfiguration.toXmlElement());</span>
+<span class="nc" id="L395">        }</span>
+
+<span class="nc" id="L397">        return xmlElement;</span>
+    }
+
+    /**
+     * Gets the table configurations.
+     *
+     * @return the table configurations
+     */
+    public List&lt;TableConfiguration&gt; getTableConfigurations() {
+<span class="nc" id="L406">        return tableConfigurations;</span>
+    }
+
+    /**
+     * Gets the beginning delimiter.
+     *
+     * @return the beginning delimiter
+     */
+    public String getBeginningDelimiter() {
+<span class="fc" id="L415">        return beginningDelimiter;</span>
+    }
+
+    /**
+     * Gets the ending delimiter.
+     *
+     * @return the ending delimiter
+     */
+    public String getEndingDelimiter() {
+<span class="fc" id="L424">        return endingDelimiter;</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.mybatis.generator.config.PropertyHolder#addProperty(java.lang.String, java.lang.String)
+     */
+    @Override
+    public void addProperty(String name, String value) {
+<span class="fc" id="L432">        super.addProperty(name, value);</span>
+
+<span class="pc bpc" id="L434" title="1 of 2 branches missed.">        if (PropertyRegistry.CONTEXT_BEGINNING_DELIMITER.equals(name)) {</span>
+<span class="nc" id="L435">            beginningDelimiter = value;</span>
+<span class="pc bpc" id="L436" title="1 of 2 branches missed.">        } else if (PropertyRegistry.CONTEXT_ENDING_DELIMITER.equals(name)) {</span>
+<span class="nc" id="L437">            endingDelimiter = value;</span>
+<span class="pc bpc" id="L438" title="1 of 2 branches missed.">        } else if (PropertyRegistry.CONTEXT_AUTO_DELIMIT_KEYWORDS.equals(name)) {</span>
+<span class="pc bpc" id="L439" title="1 of 2 branches missed.">            if (stringHasValue(value)) {</span>
+<span class="fc" id="L440">                autoDelimitKeywords = new Boolean(isTrue(value));</span>
+            }
+        }
+<span class="fc" id="L443">    }</span>
+
+    /**
+     * Gets the comment generator.
+     *
+     * @return the comment generator
+     */
+    public CommentGenerator getCommentGenerator() {
+<span class="fc bfc" id="L451" title="All 2 branches covered.">        if (commentGenerator == null) {</span>
+<span class="fc" id="L452">            commentGenerator = ObjectFactory.createCommentGenerator(this);</span>
+        }
+
+<span class="fc" id="L455">        return commentGenerator;</span>
+    }
+
+    /**
+     * Gets the java formatter.
+     *
+     * @return the java formatter
+     */
+    public JavaFormatter getJavaFormatter() {
+<span class="fc bfc" id="L464" title="All 2 branches covered.">        if (javaFormatter == null) {</span>
+<span class="fc" id="L465">            javaFormatter = ObjectFactory.createJavaFormatter(this);</span>
+        }
+
+<span class="fc" id="L468">        return javaFormatter;</span>
+    }
+    
+    /**
+     * Gets the xml formatter.
+     *
+     * @return the xml formatter
+     */
+    public XmlFormatter getXmlFormatter() {
+<span class="fc bfc" id="L477" title="All 2 branches covered.">        if (xmlFormatter == null) {</span>
+<span class="fc" id="L478">            xmlFormatter = ObjectFactory.createXmlFormatter(this);</span>
+        }
+
+<span class="fc" id="L481">        return xmlFormatter;</span>
+    }
+    
+    /**
+     * Gets the comment generator configuration.
+     *
+     * @return the comment generator configuration
+     */
+    public CommentGeneratorConfiguration getCommentGeneratorConfiguration() {
+<span class="fc" id="L490">        return commentGeneratorConfiguration;</span>
+    }
+
+    /**
+     * Sets the comment generator configuration.
+     *
+     * @param commentGeneratorConfiguration
+     *            the new comment generator configuration
+     */
+    public void setCommentGeneratorConfiguration(
+            CommentGeneratorConfiguration commentGeneratorConfiguration) {
+<span class="fc" id="L501">        this.commentGeneratorConfiguration = commentGeneratorConfiguration;</span>
+<span class="fc" id="L502">    }</span>
+
+    /**
+     * Gets the plugins.
+     *
+     * @return the plugins
+     */
+    public Plugin getPlugins() {
+<span class="fc" id="L510">        return pluginAggregator;</span>
+    }
+
+    /**
+     * Gets the target runtime.
+     *
+     * @return the target runtime
+     */
+    public String getTargetRuntime() {
+<span class="fc" id="L519">        return targetRuntime;</span>
+    }
+
+    /**
+     * Sets the target runtime.
+     *
+     * @param targetRuntime
+     *            the new target runtime
+     */
+    public void setTargetRuntime(String targetRuntime) {
+<span class="fc" id="L529">        this.targetRuntime = targetRuntime;</span>
+<span class="fc" id="L530">    }</span>
+
+    /**
+     * Gets the introspected column impl.
+     *
+     * @return the introspected column impl
+     */
+    public String getIntrospectedColumnImpl() {
+<span class="fc" id="L538">        return introspectedColumnImpl;</span>
+    }
+
+    /**
+     * Sets the introspected column impl.
+     *
+     * @param introspectedColumnImpl
+     *            the new introspected column impl
+     */
+    public void setIntrospectedColumnImpl(String introspectedColumnImpl) {
+<span class="nc" id="L548">        this.introspectedColumnImpl = introspectedColumnImpl;</span>
+<span class="nc" id="L549">    }</span>
+
+    // methods related to code generation.
+    //
+    // Methods should be called in this order:
+    //
+    // 1. getIntrospectionSteps()
+    // 2. introspectTables()
+    // 3. getGenerationSteps()
+    // 4. generateFiles()
+    //
+
+    /** The introspected tables. */
+    private List&lt;IntrospectedTable&gt; introspectedTables;
+
+    /**
+     * Gets the introspection steps.
+     *
+     * @return the introspection steps
+     */
+    public int getIntrospectionSteps() {
+<span class="fc" id="L570">        int steps = 0;</span>
+
+<span class="fc" id="L572">        steps++; // connect to database</span>
+
+        // for each table:
+        //
+        // 1. Create introspected table implementation
+
+<span class="fc" id="L578">        steps += tableConfigurations.size() * 1;</span>
+
+<span class="fc" id="L580">        return steps;</span>
+    }
+
+    /**
+     * Introspect tables based on the configuration specified in the
+     * constructor. This method is long running.
+     * 
+     * @param callback
+     *            a progress callback if progress information is desired, or
+     *            &lt;code&gt;null&lt;/code&gt;
+     * @param warnings
+     *            any warning generated from this method will be added to the
+     *            List. Warnings are always Strings.
+     * @param fullyQualifiedTableNames
+     *            a set of table names to generate. The elements of the set must
+     *            be Strings that exactly match what's specified in the
+     *            configuration. For example, if table name = &quot;foo&quot; and schema =
+     *            &quot;bar&quot;, then the fully qualified table name is &quot;foo.bar&quot;. If
+     *            the Set is null or empty, then all tables in the configuration
+     *            will be used for code generation.
+     * 
+     * @throws SQLException
+     *             if some error arises while introspecting the specified
+     *             database tables.
+     * @throws InterruptedException
+     *             if the progress callback reports a cancel
+     */
+    public void introspectTables(ProgressCallback callback,
+            List&lt;String&gt; warnings, Set&lt;String&gt; fullyQualifiedTableNames)
+            throws SQLException, InterruptedException {
+
+<span class="fc" id="L611">        introspectedTables = new ArrayList&lt;IntrospectedTable&gt;();</span>
+<span class="fc" id="L612">        JavaTypeResolver javaTypeResolver = ObjectFactory</span>
+                .createJavaTypeResolver(this, warnings);
+
+<span class="fc" id="L615">        Connection connection = null;</span>
+
+        try {
+<span class="fc" id="L618">            callback.startTask(getString(&quot;Progress.0&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L619">            connection = getConnection();</span>
+
+<span class="fc" id="L621">            DatabaseIntrospector databaseIntrospector = new DatabaseIntrospector(</span>
+                    this, connection.getMetaData(), javaTypeResolver, warnings);
+
+<span class="fc bfc" id="L624" title="All 2 branches covered.">            for (TableConfiguration tc : tableConfigurations) {</span>
+<span class="fc" id="L625">                String tableName = composeFullyQualifiedTableName(tc.getCatalog(), tc</span>
+                                .getSchema(), tc.getTableName(), '.');
+
+<span class="pc bpc" id="L628" title="3 of 4 branches missed.">                if (fullyQualifiedTableNames != null</span>
+                        &amp;&amp; fullyQualifiedTableNames.size() &gt; 0) {
+<span class="nc bnc" id="L630" title="All 2 branches missed.">                    if (!fullyQualifiedTableNames.contains(tableName)) {</span>
+<span class="nc" id="L631">                        continue;</span>
+                    }
+                }
+
+<span class="pc bpc" id="L635" title="1 of 2 branches missed.">                if (!tc.areAnyStatementsEnabled()) {</span>
+<span class="nc" id="L636">                    warnings.add(getString(&quot;Warning.0&quot;, tableName)); //$NON-NLS-1$</span>
+<span class="nc" id="L637">                    continue;</span>
+                }
+
+<span class="fc" id="L640">                callback.startTask(getString(&quot;Progress.1&quot;, tableName)); //$NON-NLS-1$</span>
+<span class="fc" id="L641">                List&lt;IntrospectedTable&gt; tables = databaseIntrospector</span>
+                        .introspectTables(tc);
+
+<span class="fc bfc" id="L644" title="All 2 branches covered.">                if (tables != null) {</span>
+<span class="fc" id="L645">                    introspectedTables.addAll(tables);</span>
+                }
+
+<span class="fc" id="L648">                callback.checkCancel();</span>
+<span class="fc" id="L649">            }</span>
+        } finally {
+<span class="pc" id="L651">            closeConnection(connection);</span>
+<span class="fc" id="L652">        }</span>
+<span class="fc" id="L653">    }</span>
+
+    /**
+     * Gets the generation steps.
+     *
+     * @return the generation steps
+     */
+    public int getGenerationSteps() {
+<span class="fc" id="L661">        int steps = 0;</span>
+
+<span class="pc bpc" id="L663" title="1 of 2 branches missed.">        if (introspectedTables != null) {</span>
+<span class="fc bfc" id="L664" title="All 2 branches covered.">            for (IntrospectedTable introspectedTable : introspectedTables) {</span>
+<span class="fc" id="L665">                steps += introspectedTable.getGenerationSteps();</span>
+<span class="fc" id="L666">            }</span>
+        }
+
+<span class="fc" id="L669">        return steps;</span>
+    }
+
+    /**
+     * Generate files.
+     *
+     * @param callback
+     *            the callback
+     * @param generatedJavaFiles
+     *            the generated java files
+     * @param generatedXmlFiles
+     *            the generated xml files
+     * @param warnings
+     *            the warnings
+     * @throws InterruptedException
+     *             the interrupted exception
+     */
+    public void generateFiles(ProgressCallback callback,
+            List&lt;GeneratedJavaFile&gt; generatedJavaFiles,
+            List&lt;GeneratedXmlFile&gt; generatedXmlFiles, List&lt;String&gt; warnings)
+            throws InterruptedException {
+
+<span class="fc" id="L691">        pluginAggregator = new PluginAggregator();</span>
+<span class="fc bfc" id="L692" title="All 2 branches covered.">        for (PluginConfiguration pluginConfiguration : pluginConfigurations) {</span>
+<span class="fc" id="L693">            Plugin plugin = ObjectFactory.createPlugin(this,</span>
+                    pluginConfiguration);
+<span class="pc bpc" id="L695" title="1 of 2 branches missed.">            if (plugin.validate(warnings)) {</span>
+<span class="fc" id="L696">                pluginAggregator.addPlugin(plugin);</span>
+            } else {
+<span class="nc" id="L698">                warnings.add(getString(&quot;Warning.24&quot;, //$NON-NLS-1$</span>
+                        pluginConfiguration.getConfigurationType(), id));
+            }
+<span class="fc" id="L701">        }</span>
+
+<span class="pc bpc" id="L703" title="1 of 2 branches missed.">        if (introspectedTables != null) {</span>
+<span class="fc bfc" id="L704" title="All 2 branches covered.">            for (IntrospectedTable introspectedTable : introspectedTables) {</span>
+<span class="fc" id="L705">                callback.checkCancel();</span>
+
+<span class="fc" id="L707">                introspectedTable.initialize();</span>
+<span class="fc" id="L708">                introspectedTable.calculateGenerators(warnings, callback);</span>
+<span class="fc" id="L709">                generatedJavaFiles.addAll(introspectedTable</span>
+                        .getGeneratedJavaFiles());
+<span class="fc" id="L711">                generatedXmlFiles.addAll(introspectedTable</span>
+                        .getGeneratedXmlFiles());
+
+<span class="fc" id="L714">                generatedJavaFiles.addAll(pluginAggregator</span>
+                        .contextGenerateAdditionalJavaFiles(introspectedTable));
+<span class="fc" id="L716">                generatedXmlFiles.addAll(pluginAggregator</span>
+                        .contextGenerateAdditionalXmlFiles(introspectedTable));
+<span class="fc" id="L718">            }</span>
+        }
+
+<span class="fc" id="L721">        generatedJavaFiles.addAll(pluginAggregator</span>
+                .contextGenerateAdditionalJavaFiles());
+<span class="fc" id="L723">        generatedXmlFiles.addAll(pluginAggregator</span>
+                .contextGenerateAdditionalXmlFiles());
+<span class="fc" id="L725">    }</span>
+
+    /**
+     * Gets the connection.
+     *
+     * @return the connection
+     * @throws SQLException
+     *             the SQL exception
+     */
+    private Connection getConnection() throws SQLException {
+<span class="fc" id="L735">        Connection connection = ConnectionFactory.getInstance().getConnection(</span>
+                jdbcConnectionConfiguration);
+
+<span class="fc" id="L738">        return connection;</span>
+    }
+
+    /**
+     * Close connection.
+     *
+     * @param connection
+     *            the connection
+     */
+    private void closeConnection(Connection connection) {
+<span class="pc bpc" id="L748" title="1 of 2 branches missed.">        if (connection != null) {</span>
+            try {
+<span class="fc" id="L750">                connection.close();</span>
+<span class="nc" id="L751">            } catch (SQLException e) {</span>
+                // ignore
+                ;
+<span class="fc" id="L754">            }</span>
+        }
+<span class="fc" id="L756">    }</span>
+
+    /**
+     * Auto delimit keywords.
+     *
+     * @return true, if successful
+     */
+    public boolean autoDelimitKeywords() {
+<span class="pc bpc" id="L764" title="1 of 4 branches missed.">        return autoDelimitKeywords != null</span>
+                &amp;&amp; autoDelimitKeywords.booleanValue();
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

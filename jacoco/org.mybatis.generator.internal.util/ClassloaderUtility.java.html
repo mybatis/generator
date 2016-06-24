@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ClassloaderUtility.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.internal.util</a> &gt; <span class="el_source">ClassloaderUtility.java</span></div><h1>ClassloaderUtility.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2016 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.internal.util;
+
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * This class holds methods useful for constructing custom classloaders.
+ * 
+ * @author Jeff Butler
+ * 
+ */
+public class ClassloaderUtility {
+
+    /**
+     * Utility Class - No Instances
+     */
+<span class="nc" id="L38">    private ClassloaderUtility() {</span>
+<span class="nc" id="L39">    }</span>
+
+    public static ClassLoader getCustomClassloader(List&lt;String&gt; entries) {
+<span class="nc" id="L42">        List&lt;URL&gt; urls = new ArrayList&lt;URL&gt;();</span>
+        File file;
+
+<span class="nc bnc" id="L45" title="All 2 branches missed.">        if (entries != null) {</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">            for (String classPathEntry : entries) {</span>
+<span class="nc" id="L47">                file = new File(classPathEntry);</span>
+<span class="nc bnc" id="L48" title="All 2 branches missed.">                if (!file.exists()) {</span>
+<span class="nc" id="L49">                    throw new RuntimeException(getString(</span>
+                            &quot;RuntimeError.9&quot;, classPathEntry)); //$NON-NLS-1$
+                }
+
+                try {
+<span class="nc" id="L54">                    urls.add(file.toURI().toURL());</span>
+<span class="nc" id="L55">                } catch (MalformedURLException e) {</span>
+                    // this shouldn't happen, but just in case...
+<span class="nc" id="L57">                    throw new RuntimeException(getString(</span>
+                            &quot;RuntimeError.9&quot;, classPathEntry)); //$NON-NLS-1$
+<span class="nc" id="L59">                }</span>
+<span class="nc" id="L60">            }</span>
+        }
+
+<span class="nc" id="L63">        ClassLoader parent = Thread.currentThread().getContextClassLoader();</span>
+
+<span class="nc" id="L65">        URLClassLoader ucl = new URLClassLoader(urls.toArray(new URL[urls</span>
+                .size()]), parent);
+
+<span class="nc" id="L68">        return ucl;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

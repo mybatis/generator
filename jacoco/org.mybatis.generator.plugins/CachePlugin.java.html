@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>CachePlugin.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.plugins</a> &gt; <span class="el_source">CachePlugin.java</span></div><h1>CachePlugin.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2016 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.plugins;
+
+import java.util.List;
+
+import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.PluginAdapter;
+import org.mybatis.generator.api.dom.xml.Attribute;
+import org.mybatis.generator.api.dom.xml.Document;
+import org.mybatis.generator.api.dom.xml.XmlElement;
+import org.mybatis.generator.internal.util.StringUtility;
+
+/**
+ * This plugin adds a cache element to generated sqlMaps.  This plugin
+ * is for MyBatis3 targeted runtimes only.  The plugin accepts the
+ * following properties (all are optional):
+ * 
+ * cache_eviction
+ * cache_flushInterval
+ * cache_size
+ * cache_readOnly
+ * cache_type
+ * 
+ * All properties correspond to properties of the MyBatis cache element and
+ * are passed &quot;as is&quot; to the corresponding properties of the generated cache
+ * element.  All properties can be specified at the table level, or on the
+ * plugin element.  The property on the table element will override any
+ * property on the plugin element.
+ * 
+ * @author Jason Bennett
+ * @author Jeff Butler
+ */
+public class CachePlugin extends PluginAdapter {
+<span class="nc" id="L48">    public enum CacheProperty {</span>
+<span class="nc" id="L49">        EVICTION(&quot;cache_eviction&quot;, &quot;eviction&quot;), //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="nc" id="L50">        FLUSH_INTERVAL(&quot;cache_flushInterval&quot;, &quot;flushInterval&quot;), //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="nc" id="L51">        READ_ONLY(&quot;cache_readOnly&quot;, &quot;readOnly&quot;), //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="nc" id="L52">        SIZE(&quot;cache_size&quot;, &quot;size&quot;), //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="nc" id="L53">        TYPE(&quot;cache_type&quot;, &quot;type&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+        
+        private String propertyName;
+        private String attributeName;
+        
+<span class="nc" id="L58">        CacheProperty(String propertyName, String attributeName) {</span>
+<span class="nc" id="L59">            this.propertyName = propertyName;</span>
+<span class="nc" id="L60">            this.attributeName = attributeName;</span>
+<span class="nc" id="L61">        }</span>
+
+        public String getPropertyName() {
+<span class="nc" id="L64">            return propertyName;</span>
+        }
+
+        public String getAttributeName() {
+<span class="nc" id="L68">            return attributeName;</span>
+        }
+    }
+    
+    public CachePlugin() {
+<span class="nc" id="L73">        super();</span>
+<span class="nc" id="L74">    }</span>
+
+    public boolean validate(List&lt;String&gt; warnings) {
+<span class="nc" id="L77">        return true;</span>
+    }
+
+    @Override
+    public boolean sqlMapDocumentGenerated(Document document, IntrospectedTable introspectedTable) {
+
+<span class="nc" id="L83">        XmlElement element = new XmlElement(&quot;cache&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L84">        context.getCommentGenerator().addComment(element);</span>
+
+<span class="nc bnc" id="L86" title="All 2 branches missed.">        for (CacheProperty cacheProperty : CacheProperty.values()) {</span>
+<span class="nc" id="L87">            addAttributeIfExists(element, introspectedTable, cacheProperty);</span>
+        }
+        
+<span class="nc" id="L90">        document.getRootElement().addElement(element);</span>
+
+<span class="nc" id="L92">        return true;</span>
+    }
+    
+    private void addAttributeIfExists(XmlElement element, IntrospectedTable introspectedTable,
+            CacheProperty cacheProperty) {
+<span class="nc" id="L97">        String property = introspectedTable.getTableConfigurationProperty(cacheProperty.getPropertyName());</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">        if (property == null) {</span>
+<span class="nc" id="L99">            property = properties.getProperty(cacheProperty.getPropertyName());</span>
+        }
+        
+<span class="nc bnc" id="L102" title="All 2 branches missed.">        if (StringUtility.stringHasValue(property)) {</span>
+<span class="nc" id="L103">            element.addAttribute(new Attribute(cacheProperty.getAttributeName(), property));</span>
+        }
+<span class="nc" id="L105">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

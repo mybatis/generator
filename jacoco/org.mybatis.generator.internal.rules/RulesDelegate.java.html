@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>RulesDelegate.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.internal.rules</a> &gt; <span class="el_source">RulesDelegate.java</span></div><h1>RulesDelegate.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2016 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.internal.rules;
+
+import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+
+/**
+ * This class can be used by plugins to easily implement a custom rules
+ * implementation. Plugins should respect the rules implementation calculated by
+ * the generator, as well as implementations from other plugins. In general if
+ * something is disabled by the default rules, or is disabled by some other
+ * plugin, it should not be re-enabled. Therefore, the following pattern of use
+ * is recommended:
+ * 
+ * &lt;pre&gt;
+ * public class MyPlugin extends PluginAdapter {
+ *   &amp;#64;Override
+ *   public void initialized(IntrospectedTable introspectedTable) {
+ *     MyRules myRules = new MyRules(introspectedTable.getRules());
+ *     introspectedTable.setRules(myRules);
+ *   }
+ * }
+ * 
+ * public class MyRules extends RulesDelegate (
+ *   public MyRules(Rules rules) {
+ *     super(rules);
+ *   }
+ *   
+ *   &amp;#64;Override
+ *   public boolean generateInsert() {
+ *     boolean rc = super.generateInsert();
+ *     if (rc) {
+ *       // Other plugins, and the default rules, enable generation
+ *       // of the insert method.  We can decide to disable it here
+ *       // if needed.
+ *     }
+ *     
+ *     return rc;
+ *   }
+ * &lt;/pre&gt;
+ * 
+ * 
+ * @author Jeff Butler
+ * 
+ */
+public class RulesDelegate implements Rules {
+    protected Rules rules;
+
+<span class="nc" id="L63">    public RulesDelegate(Rules rules) {</span>
+<span class="nc" id="L64">        this.rules = rules;</span>
+<span class="nc" id="L65">    }</span>
+
+    public FullyQualifiedJavaType calculateAllFieldsClass() {
+<span class="nc" id="L68">        return rules.calculateAllFieldsClass();</span>
+    }
+
+    public boolean generateBaseRecordClass() {
+<span class="nc" id="L72">        return rules.generateBaseRecordClass();</span>
+    }
+
+    public boolean generateBaseResultMap() {
+<span class="nc" id="L76">        return rules.generateBaseResultMap();</span>
+    }
+
+    public boolean generateCountByExample() {
+<span class="nc" id="L80">        return rules.generateCountByExample();</span>
+    }
+
+    public boolean generateDeleteByExample() {
+<span class="nc" id="L84">        return rules.generateDeleteByExample();</span>
+    }
+
+    public boolean generateDeleteByPrimaryKey() {
+<span class="nc" id="L88">        return rules.generateDeleteByPrimaryKey();</span>
+    }
+
+    public boolean generateExampleClass() {
+<span class="nc" id="L92">        return rules.generateExampleClass();</span>
+    }
+
+    public boolean generateInsert() {
+<span class="nc" id="L96">        return rules.generateInsert();</span>
+    }
+
+    public boolean generateInsertSelective() {
+<span class="nc" id="L100">        return rules.generateInsertSelective();</span>
+    }
+
+    public boolean generatePrimaryKeyClass() {
+<span class="nc" id="L104">        return rules.generatePrimaryKeyClass();</span>
+    }
+
+    public boolean generateRecordWithBLOBsClass() {
+<span class="nc" id="L108">        return rules.generateRecordWithBLOBsClass();</span>
+    }
+
+    public boolean generateResultMapWithBLOBs() {
+<span class="nc" id="L112">        return rules.generateResultMapWithBLOBs();</span>
+    }
+
+    public boolean generateSelectByExampleWithBLOBs() {
+<span class="nc" id="L116">        return rules.generateSelectByExampleWithBLOBs();</span>
+    }
+
+    public boolean generateSelectByExampleWithoutBLOBs() {
+<span class="nc" id="L120">        return rules.generateSelectByExampleWithoutBLOBs();</span>
+    }
+
+    public boolean generateSelectByPrimaryKey() {
+<span class="nc" id="L124">        return rules.generateSelectByPrimaryKey();</span>
+    }
+
+    public boolean generateSQLExampleWhereClause() {
+<span class="nc" id="L128">        return rules.generateSQLExampleWhereClause();</span>
+    }
+
+    public boolean generateMyBatis3UpdateByExampleWhereClause() {
+<span class="nc" id="L132">        return rules.generateMyBatis3UpdateByExampleWhereClause();</span>
+    }
+
+    public boolean generateUpdateByExampleSelective() {
+<span class="nc" id="L136">        return rules.generateUpdateByExampleSelective();</span>
+    }
+
+    public boolean generateUpdateByExampleWithBLOBs() {
+<span class="nc" id="L140">        return rules.generateUpdateByExampleWithBLOBs();</span>
+    }
+
+    public boolean generateUpdateByExampleWithoutBLOBs() {
+<span class="nc" id="L144">        return rules.generateUpdateByExampleWithoutBLOBs();</span>
+    }
+
+    public boolean generateUpdateByPrimaryKeySelective() {
+<span class="nc" id="L148">        return rules.generateUpdateByPrimaryKeySelective();</span>
+    }
+
+    public boolean generateUpdateByPrimaryKeyWithBLOBs() {
+<span class="nc" id="L152">        return rules.generateUpdateByPrimaryKeyWithBLOBs();</span>
+    }
+
+    public boolean generateUpdateByPrimaryKeyWithoutBLOBs() {
+<span class="nc" id="L156">        return rules.generateUpdateByPrimaryKeyWithoutBLOBs();</span>
+    }
+
+    public IntrospectedTable getIntrospectedTable() {
+<span class="nc" id="L160">        return rules.getIntrospectedTable();</span>
+    }
+
+    public boolean generateBaseColumnList() {
+<span class="nc" id="L164">        return rules.generateBaseColumnList();</span>
+    }
+
+    public boolean generateBlobColumnList() {
+<span class="nc" id="L168">        return rules.generateBlobColumnList();</span>
+    }
+
+    public boolean generateJavaClient() {
+<span class="nc" id="L172">        return rules.generateJavaClient();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

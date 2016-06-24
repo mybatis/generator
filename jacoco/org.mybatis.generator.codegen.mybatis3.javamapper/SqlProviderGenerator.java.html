@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>SqlProviderGenerator.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.codegen.mybatis3.javamapper</a> &gt; <span class="el_source">SqlProviderGenerator.java</span></div><h1>SqlProviderGenerator.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2016 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.codegen.mybatis3.javamapper;
+
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.mybatis.generator.api.CommentGenerator;
+import org.mybatis.generator.api.dom.java.CompilationUnit;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.JavaVisibility;
+import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.codegen.AbstractJavaGenerator;
+import org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider.AbstractJavaProviderMethodGenerator;
+import org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider.ProviderApplyWhereMethodGenerator;
+import org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider.ProviderCountByExampleMethodGenerator;
+import org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider.ProviderDeleteByExampleMethodGenerator;
+import org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider.ProviderInsertSelectiveMethodGenerator;
+import org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider.ProviderSelectByExampleWithBLOBsMethodGenerator;
+import org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider.ProviderSelectByExampleWithoutBLOBsMethodGenerator;
+import org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider.ProviderUpdateByExampleSelectiveMethodGenerator;
+import org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider.ProviderUpdateByExampleWithBLOBsMethodGenerator;
+import org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider.ProviderUpdateByExampleWithoutBLOBsMethodGenerator;
+import org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider.ProviderUpdateByPrimaryKeySelectiveMethodGenerator;
+
+/**
+ * 
+ * @author Jeff Butler
+ * 
+ */
+public class SqlProviderGenerator extends AbstractJavaGenerator {
+
+	private boolean useLegacyBuilder;
+	
+    public SqlProviderGenerator(boolean useLegacyBuilder) {
+<span class="fc" id="L51">        super();</span>
+<span class="fc" id="L52">        this.useLegacyBuilder = useLegacyBuilder;</span>
+<span class="fc" id="L53">    }</span>
+
+    @Override
+    public List&lt;CompilationUnit&gt; getCompilationUnits() {
+<span class="fc" id="L57">        progressCallback.startTask(getString(&quot;Progress.18&quot;, //$NON-NLS-1$</span>
+                introspectedTable.getFullyQualifiedTable().toString()));
+<span class="fc" id="L59">        CommentGenerator commentGenerator = context.getCommentGenerator();</span>
+
+<span class="fc" id="L61">        FullyQualifiedJavaType type = new FullyQualifiedJavaType(</span>
+                introspectedTable.getMyBatis3SqlProviderType());
+<span class="fc" id="L63">        TopLevelClass topLevelClass = new TopLevelClass(type);</span>
+<span class="fc" id="L64">        topLevelClass.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L65">        commentGenerator.addJavaFileComment(topLevelClass);</span>
+
+<span class="fc" id="L67">        boolean addApplyWhereMethod = false;</span>
+<span class="fc" id="L68">        addApplyWhereMethod |= addCountByExampleMethod(topLevelClass);</span>
+<span class="fc" id="L69">        addApplyWhereMethod |= addDeleteByExampleMethod(topLevelClass);</span>
+<span class="fc" id="L70">        addInsertSelectiveMethod(topLevelClass);</span>
+<span class="fc" id="L71">        addApplyWhereMethod |= addSelectByExampleWithBLOBsMethod(topLevelClass);</span>
+<span class="fc" id="L72">        addApplyWhereMethod |= addSelectByExampleWithoutBLOBsMethod(topLevelClass);</span>
+<span class="fc" id="L73">        addApplyWhereMethod |= addUpdateByExampleSelectiveMethod(topLevelClass);</span>
+<span class="fc" id="L74">        addApplyWhereMethod |= addUpdateByExampleWithBLOBsMethod(topLevelClass);</span>
+<span class="fc" id="L75">        addApplyWhereMethod |= addUpdateByExampleWithoutBLOBsMethod(topLevelClass);</span>
+<span class="fc" id="L76">        addUpdateByPrimaryKeySelectiveMethod(topLevelClass);</span>
+
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">        if (addApplyWhereMethod) {</span>
+<span class="fc" id="L79">            addApplyWhereMethod(topLevelClass);</span>
+        }
+        
+<span class="fc" id="L82">        List&lt;CompilationUnit&gt; answer = new ArrayList&lt;CompilationUnit&gt;();</span>
+        
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">        if (topLevelClass.getMethods().size() &gt; 0) {</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">            if (context.getPlugins().providerGenerated(topLevelClass,</span>
+                introspectedTable)) {
+<span class="fc" id="L87">                answer.add(topLevelClass);</span>
+            }
+        }
+
+<span class="fc" id="L91">        return answer;</span>
+    }
+
+    protected boolean addCountByExampleMethod(TopLevelClass topLevelClass) {
+<span class="fc" id="L95">        boolean rc = false;</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">        if (introspectedTable.getRules().generateCountByExample()) {</span>
+<span class="fc" id="L97">            AbstractJavaProviderMethodGenerator methodGenerator = new ProviderCountByExampleMethodGenerator(useLegacyBuilder);</span>
+<span class="fc" id="L98">            initializeAndExecuteGenerator(methodGenerator, topLevelClass);</span>
+<span class="fc" id="L99">            rc = true;</span>
+        }
+
+<span class="fc" id="L102">        return rc;</span>
+    }
+
+    protected boolean addDeleteByExampleMethod(TopLevelClass topLevelClass) {
+<span class="fc" id="L106">        boolean rc = false;</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">        if (introspectedTable.getRules().generateDeleteByExample()) {</span>
+<span class="fc" id="L108">            AbstractJavaProviderMethodGenerator methodGenerator = new ProviderDeleteByExampleMethodGenerator(useLegacyBuilder);</span>
+<span class="fc" id="L109">            initializeAndExecuteGenerator(methodGenerator, topLevelClass);</span>
+<span class="fc" id="L110">            rc = true;</span>
+        }
+
+<span class="fc" id="L113">        return rc;</span>
+    }
+
+    protected void addInsertSelectiveMethod(TopLevelClass topLevelClass) {
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">        if (introspectedTable.getRules().generateInsertSelective()) {</span>
+<span class="fc" id="L118">            AbstractJavaProviderMethodGenerator methodGenerator = new ProviderInsertSelectiveMethodGenerator(useLegacyBuilder);</span>
+<span class="fc" id="L119">            initializeAndExecuteGenerator(methodGenerator, topLevelClass);</span>
+        }
+<span class="fc" id="L121">    }</span>
+
+    protected boolean addSelectByExampleWithBLOBsMethod(
+            TopLevelClass topLevelClass) {
+<span class="fc" id="L125">        boolean rc = false;</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">        if (introspectedTable.getRules().generateSelectByExampleWithBLOBs()) {</span>
+<span class="fc" id="L127">            AbstractJavaProviderMethodGenerator methodGenerator = new ProviderSelectByExampleWithBLOBsMethodGenerator(useLegacyBuilder);</span>
+<span class="fc" id="L128">            initializeAndExecuteGenerator(methodGenerator, topLevelClass);</span>
+<span class="fc" id="L129">            rc = true;</span>
+        }
+
+<span class="fc" id="L132">        return rc;</span>
+    }
+
+    protected boolean addSelectByExampleWithoutBLOBsMethod(
+            TopLevelClass topLevelClass) {
+<span class="fc" id="L137">        boolean rc = false;</span>
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">        if (introspectedTable.getRules().generateSelectByExampleWithoutBLOBs()) {</span>
+<span class="fc" id="L139">            AbstractJavaProviderMethodGenerator methodGenerator = new ProviderSelectByExampleWithoutBLOBsMethodGenerator(useLegacyBuilder);</span>
+<span class="fc" id="L140">            initializeAndExecuteGenerator(methodGenerator, topLevelClass);</span>
+<span class="fc" id="L141">            rc = true;</span>
+        }
+
+<span class="fc" id="L144">        return rc;</span>
+    }
+
+    protected boolean addUpdateByExampleSelectiveMethod(
+            TopLevelClass topLevelClass) {
+<span class="fc" id="L149">        boolean rc = false;</span>
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">        if (introspectedTable.getRules().generateUpdateByExampleSelective()) {</span>
+<span class="fc" id="L151">            AbstractJavaProviderMethodGenerator methodGenerator = new ProviderUpdateByExampleSelectiveMethodGenerator(useLegacyBuilder);</span>
+<span class="fc" id="L152">            initializeAndExecuteGenerator(methodGenerator, topLevelClass);</span>
+<span class="fc" id="L153">            rc = true;</span>
+        }
+
+<span class="fc" id="L156">        return rc;</span>
+    }
+
+    protected boolean addUpdateByExampleWithBLOBsMethod(
+            TopLevelClass topLevelClass) {
+<span class="fc" id="L161">        boolean rc = false;</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">        if (introspectedTable.getRules().generateUpdateByExampleWithBLOBs()) {</span>
+<span class="fc" id="L163">            AbstractJavaProviderMethodGenerator methodGenerator = new ProviderUpdateByExampleWithBLOBsMethodGenerator(useLegacyBuilder);</span>
+<span class="fc" id="L164">            initializeAndExecuteGenerator(methodGenerator, topLevelClass);</span>
+<span class="fc" id="L165">            rc = true;</span>
+        }
+
+<span class="fc" id="L168">        return rc;</span>
+    }
+
+    protected boolean addUpdateByExampleWithoutBLOBsMethod(
+            TopLevelClass topLevelClass) {
+<span class="fc" id="L173">        boolean rc = false;</span>
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">        if (introspectedTable.getRules().generateUpdateByExampleWithoutBLOBs()) {</span>
+<span class="fc" id="L175">            AbstractJavaProviderMethodGenerator methodGenerator = new ProviderUpdateByExampleWithoutBLOBsMethodGenerator(useLegacyBuilder);</span>
+<span class="fc" id="L176">            initializeAndExecuteGenerator(methodGenerator, topLevelClass);</span>
+<span class="fc" id="L177">            rc = true;</span>
+        }
+
+<span class="fc" id="L180">        return rc;</span>
+    }
+
+    protected void addUpdateByPrimaryKeySelectiveMethod(
+            TopLevelClass topLevelClass) {
+<span class="fc bfc" id="L185" title="All 2 branches covered.">        if (introspectedTable.getRules().generateUpdateByPrimaryKeySelective()) {</span>
+<span class="fc" id="L186">            AbstractJavaProviderMethodGenerator methodGenerator = new ProviderUpdateByPrimaryKeySelectiveMethodGenerator(useLegacyBuilder);</span>
+<span class="fc" id="L187">            initializeAndExecuteGenerator(methodGenerator, topLevelClass);</span>
+        }
+<span class="fc" id="L189">    }</span>
+
+    protected void addApplyWhereMethod(TopLevelClass topLevelClass) {
+<span class="fc" id="L192">        AbstractJavaProviderMethodGenerator methodGenerator = new ProviderApplyWhereMethodGenerator(useLegacyBuilder);</span>
+<span class="fc" id="L193">        initializeAndExecuteGenerator(methodGenerator, topLevelClass);</span>
+<span class="fc" id="L194">    }</span>
+
+    protected void initializeAndExecuteGenerator(
+            AbstractJavaProviderMethodGenerator methodGenerator,
+            TopLevelClass topLevelClass) {
+<span class="fc" id="L199">        methodGenerator.setContext(context);</span>
+<span class="fc" id="L200">        methodGenerator.setIntrospectedTable(introspectedTable);</span>
+<span class="fc" id="L201">        methodGenerator.setProgressCallback(progressCallback);</span>
+<span class="fc" id="L202">        methodGenerator.setWarnings(warnings);</span>
+<span class="fc" id="L203">        methodGenerator.addClassElements(topLevelClass);</span>
+<span class="fc" id="L204">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>SelectByExampleWithBLOBsMethodGenerator.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.codegen.ibatis2.dao.elements</a> &gt; <span class="el_source">SelectByExampleWithBLOBsMethodGenerator.java</span></div><h1>SelectByExampleWithBLOBsMethodGenerator.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2016 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.codegen.ibatis2.dao.elements;
+
+import java.util.Set;
+import java.util.TreeSet;
+
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.Interface;
+import org.mybatis.generator.api.dom.java.JavaVisibility;
+import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.api.dom.java.TopLevelClass;
+
+/**
+ * 
+ * @author Jeff Butler
+ * 
+ */
+public class SelectByExampleWithBLOBsMethodGenerator extends
+        AbstractDAOElementGenerator {
+
+    private boolean generateForJava5;
+
+    public SelectByExampleWithBLOBsMethodGenerator(boolean generateForJava5) {
+<span class="fc" id="L39">        super();</span>
+<span class="fc" id="L40">        this.generateForJava5 = generateForJava5;</span>
+<span class="fc" id="L41">    }</span>
+
+    @Override
+    public void addImplementationElements(TopLevelClass topLevelClass) {
+<span class="fc" id="L45">        Set&lt;FullyQualifiedJavaType&gt; importedTypes = new TreeSet&lt;FullyQualifiedJavaType&gt;();</span>
+<span class="fc" id="L46">        Method method = getMethodShell(importedTypes);</span>
+
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">        if (generateForJava5) {</span>
+<span class="fc" id="L49">            method.addSuppressTypeWarningsAnnotation();</span>
+        }
+
+<span class="fc" id="L52">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L53">        sb.append(method.getReturnType().getShortName());</span>
+<span class="fc" id="L54">        sb.append(&quot; list = &quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L55">        sb.append(daoTemplate.getQueryForListMethod(introspectedTable</span>
+                .getIbatis2SqlMapNamespace(), introspectedTable
+                .getSelectByExampleWithBLOBsStatementId(), &quot;example&quot;)); //$NON-NLS-1$
+<span class="fc" id="L58">        method.addBodyLine(sb.toString());</span>
+<span class="fc" id="L59">        method.addBodyLine(&quot;return list;&quot;); //$NON-NLS-1$</span>
+
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">        if (context.getPlugins()</span>
+                .clientSelectByExampleWithBLOBsMethodGenerated(method,
+                        topLevelClass, introspectedTable)) {
+<span class="fc" id="L64">            topLevelClass.addImportedTypes(importedTypes);</span>
+<span class="fc" id="L65">            topLevelClass.addMethod(method);</span>
+        }
+<span class="fc" id="L67">    }</span>
+
+    @Override
+    public void addInterfaceElements(Interface interfaze) {
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">        if (getExampleMethodVisibility() == JavaVisibility.PUBLIC) {</span>
+<span class="fc" id="L72">            Set&lt;FullyQualifiedJavaType&gt; importedTypes = new TreeSet&lt;FullyQualifiedJavaType&gt;();</span>
+<span class="fc" id="L73">            Method method = getMethodShell(importedTypes);</span>
+
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">            if (context.getPlugins()</span>
+                    .clientSelectByExampleWithBLOBsMethodGenerated(method,
+                            interfaze, introspectedTable)) {
+<span class="fc" id="L78">                interfaze.addImportedTypes(importedTypes);</span>
+<span class="fc" id="L79">                interfaze.addMethod(method);</span>
+            }
+        }
+<span class="fc" id="L82">    }</span>
+
+    private Method getMethodShell(Set&lt;FullyQualifiedJavaType&gt; importedTypes) {
+<span class="fc" id="L85">        FullyQualifiedJavaType type = new FullyQualifiedJavaType(</span>
+                introspectedTable.getExampleType());
+<span class="fc" id="L87">        importedTypes.add(type);</span>
+<span class="fc" id="L88">        importedTypes.add(FullyQualifiedJavaType.getNewListInstance());</span>
+
+<span class="fc" id="L90">        Method method = new Method();</span>
+<span class="fc" id="L91">        method.setVisibility(getExampleMethodVisibility());</span>
+
+<span class="fc" id="L93">        FullyQualifiedJavaType returnType = FullyQualifiedJavaType</span>
+                .getNewListInstance();
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">        if (generateForJava5) {</span>
+            FullyQualifiedJavaType fqjt;
+<span class="fc bfc" id="L97" title="All 2 branches covered.">            if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {</span>
+<span class="fc" id="L98">                fqjt = new FullyQualifiedJavaType(introspectedTable</span>
+                        .getRecordWithBLOBsType());
+            } else {
+                // the blob fields must be rolled up into the base class
+<span class="fc" id="L102">                fqjt = new FullyQualifiedJavaType(introspectedTable</span>
+                        .getBaseRecordType());
+            }
+
+<span class="fc" id="L106">            importedTypes.add(fqjt);</span>
+<span class="fc" id="L107">            returnType.addTypeArgument(fqjt);</span>
+        }
+<span class="fc" id="L109">        method.setReturnType(returnType);</span>
+
+<span class="fc" id="L111">        method.setName(getDAOMethodNameCalculator()</span>
+                .getSelectByExampleWithBLOBsMethodName(introspectedTable));
+<span class="fc" id="L113">        method.addParameter(new Parameter(type, &quot;example&quot;)); //$NON-NLS-1$</span>
+
+<span class="fc bfc" id="L115" title="All 2 branches covered.">        for (FullyQualifiedJavaType fqjt : daoTemplate.getCheckedExceptions()) {</span>
+<span class="fc" id="L116">            method.addException(fqjt);</span>
+<span class="fc" id="L117">            importedTypes.add(fqjt);</span>
+<span class="fc" id="L118">        }</span>
+
+<span class="fc" id="L120">        context.getCommentGenerator().addGeneralMethodComment(method,</span>
+                introspectedTable);
+
+<span class="fc" id="L123">        return method;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

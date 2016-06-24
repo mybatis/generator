@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>GenericSIDAOTemplate.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.codegen.ibatis2.dao.templates</a> &gt; <span class="el_source">GenericSIDAOTemplate.java</span></div><h1>GenericSIDAOTemplate.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2016 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.codegen.ibatis2.dao.templates;
+
+import org.mybatis.generator.api.dom.java.Field;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.JavaVisibility;
+import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.api.dom.java.Parameter;
+
+/**
+ * @author Jeff Butler
+ */
+public class GenericSIDAOTemplate extends AbstractDAOTemplate {
+
+<span class="fc" id="L29">    private FullyQualifiedJavaType sqlMapClientType = new FullyQualifiedJavaType(</span>
+            &quot;com.ibatis.sqlmap.client.SqlMapClient&quot;); //$NON-NLS-1$
+
+    /**
+     *  
+     */
+    public GenericSIDAOTemplate() {
+<span class="fc" id="L36">        super();</span>
+<span class="fc" id="L37">    }</span>
+
+    @Override
+    protected void configureCheckedExceptions() {
+<span class="fc" id="L41">        addCheckedException(new FullyQualifiedJavaType(&quot;java.sql.SQLException&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L42">    }</span>
+
+    @Override
+    protected void configureConstructorTemplate() {
+<span class="fc" id="L46">        Method method = new Method();</span>
+<span class="fc" id="L47">        method.setConstructor(true);</span>
+<span class="fc" id="L48">        method.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L49">        method.addBodyLine(&quot;super();&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L50">        setConstructorTemplate(method);</span>
+<span class="fc" id="L51">    }</span>
+
+    @Override
+    protected void configureDeleteMethodTemplate() {
+<span class="fc" id="L55">        setDeleteMethodTemplate(&quot;sqlMapClient.delete(\&quot;{0}.{1}\&quot;, {2});&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L56">    }</span>
+
+    @Override
+    protected void configureFields() {
+<span class="fc" id="L60">        Field field = new Field();</span>
+<span class="fc" id="L61">        field.setVisibility(JavaVisibility.PRIVATE);</span>
+<span class="fc" id="L62">        field.setType(sqlMapClientType);</span>
+<span class="fc" id="L63">        field.setName(&quot;sqlMapClient&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L64">        addField(field);</span>
+<span class="fc" id="L65">    }</span>
+
+    @Override
+    protected void configureImplementationImports() {
+<span class="fc" id="L69">        addImplementationImport(sqlMapClientType);</span>
+<span class="fc" id="L70">    }</span>
+
+    @Override
+    protected void configureInsertMethodTemplate() {
+<span class="fc" id="L74">        setInsertMethodTemplate(&quot;sqlMapClient.insert(\&quot;{0}.{1}\&quot;, {2});&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L75">    }</span>
+
+    @Override
+    protected void configureMethods() {
+<span class="fc" id="L79">        Method method = new Method();</span>
+<span class="fc" id="L80">        method.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L81">        method.setName(&quot;setSqlMapClient&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L82">        method.addParameter(new Parameter(sqlMapClientType, &quot;sqlMapClient&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L83">        method.addBodyLine(&quot;this.sqlMapClient = sqlMapClient;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L84">        addMethod(method);</span>
+
+<span class="fc" id="L86">        method = new Method();</span>
+<span class="fc" id="L87">        method.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L88">        method.setName(&quot;getSqlMapClient&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L89">        method.setReturnType(sqlMapClientType);</span>
+<span class="fc" id="L90">        method.addBodyLine(&quot;return sqlMapClient;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L91">        addMethod(method);</span>
+<span class="fc" id="L92">    }</span>
+
+    @Override
+    protected void configureQueryForListMethodTemplate() {
+<span class="fc" id="L96">        setQueryForListMethodTemplate(&quot;sqlMapClient.queryForList(\&quot;{0}.{1}\&quot;, {2});&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L97">    }</span>
+
+    @Override
+    protected void configureQueryForObjectMethodTemplate() {
+<span class="fc" id="L101">        setQueryForObjectMethodTemplate(&quot;sqlMapClient.queryForObject(\&quot;{0}.{1}\&quot;, {2});&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L102">    }</span>
+
+    @Override
+    protected void configureUpdateMethodTemplate() {
+<span class="fc" id="L106">        setUpdateMethodTemplate(&quot;sqlMapClient.update(\&quot;{0}.{1}\&quot;, {2});&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L107">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

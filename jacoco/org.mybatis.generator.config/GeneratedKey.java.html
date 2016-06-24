@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>GeneratedKey.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.config</a> &gt; <span class="el_source">GeneratedKey.java</span></div><h1>GeneratedKey.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2016 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.config;
+
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
+import java.util.List;
+
+import org.mybatis.generator.api.dom.xml.Attribute;
+import org.mybatis.generator.api.dom.xml.XmlElement;
+import org.mybatis.generator.internal.db.DatabaseDialects;
+
+/**
+ * This class specifies that a key is auto-generated, either as an identity
+ * column (post insert), or as some other query like a sequences (pre insert).
+ * 
+ * @author Jeff Butler
+ */
+public class GeneratedKey {
+    
+    /** The column. */
+    private String column;
+
+    /** The configured sql statement. */
+    private String configuredSqlStatement;
+
+    /** The runtime sql statement. */
+    private String runtimeSqlStatement;
+
+    /** The is identity. */
+    private boolean isIdentity;
+
+    /** The type. */
+    private String type;
+
+    /**
+     * Instantiates a new generated key.
+     *
+     * @param column
+     *            the column
+     * @param configuredSqlStatement
+     *            the configured sql statement
+     * @param isIdentity
+     *            the is identity
+     * @param type
+     *            the type
+     */
+    public GeneratedKey(String column, String configuredSqlStatement,
+            boolean isIdentity, String type) {
+<span class="fc" id="L64">        super();</span>
+<span class="fc" id="L65">        this.column = column;</span>
+<span class="fc" id="L66">        this.type = type;</span>
+<span class="fc" id="L67">        this.isIdentity = isIdentity;</span>
+<span class="fc" id="L68">        this.configuredSqlStatement = configuredSqlStatement;</span>
+
+<span class="fc" id="L70">        DatabaseDialects dialect = DatabaseDialects</span>
+                .getDatabaseDialect(configuredSqlStatement);
+<span class="fc bfc" id="L72" title="All 2 branches covered.">        if (dialect == null) {</span>
+<span class="fc" id="L73">            this.runtimeSqlStatement = configuredSqlStatement;</span>
+        } else {
+<span class="fc" id="L75">            this.runtimeSqlStatement = dialect.getIdentityRetrievalStatement();</span>
+        }
+<span class="fc" id="L77">    }</span>
+
+    /**
+     * Gets the column.
+     *
+     * @return the column
+     */
+    public String getColumn() {
+<span class="fc" id="L85">        return column;</span>
+    }
+
+    /**
+     * Checks if is identity.
+     *
+     * @return true, if is identity
+     */
+    public boolean isIdentity() {
+<span class="fc" id="L94">        return isIdentity;</span>
+    }
+
+    /**
+     * Gets the runtime sql statement.
+     *
+     * @return the runtime sql statement
+     */
+    public String getRuntimeSqlStatement() {
+<span class="fc" id="L103">        return runtimeSqlStatement;</span>
+    }
+
+    /**
+     * Gets the type.
+     *
+     * @return the type
+     */
+    public String getType() {
+<span class="fc" id="L112">        return type;</span>
+    }
+
+    /**
+     * This method is used by the iBATIS2 generators to know if the XML &amp;lt;selectKey&amp;gt; element should be placed before the
+     * insert SQL statement.
+     *
+     * @return true, if is placed before insert in ibatis2
+     */
+    public boolean isPlacedBeforeInsertInIbatis2() {
+        boolean rc;
+        
+<span class="fc bfc" id="L124" title="All 2 branches covered.">        if (stringHasValue(type)) {</span>
+<span class="fc" id="L125">            rc = true;</span>
+        } else {
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">            rc = !isIdentity;</span>
+        }
+        
+<span class="fc" id="L130">        return rc;</span>
+    }
+    
+    /**
+     * Gets the my batis3 order.
+     *
+     * @return the my batis3 order
+     */
+    public String getMyBatis3Order() {
+<span class="fc bfc" id="L139" title="All 2 branches covered.">        return isIdentity ? &quot;AFTER&quot; : &quot;BEFORE&quot;; //$NON-NLS-1$ //$NON-NLS-2$</span>
+    }
+    
+    /**
+     * To xml element.
+     *
+     * @return the xml element
+     */
+    public XmlElement toXmlElement() {
+<span class="nc" id="L148">        XmlElement xmlElement = new XmlElement(&quot;generatedKey&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L149">        xmlElement.addAttribute(new Attribute(&quot;column&quot;, column)); //$NON-NLS-1$</span>
+<span class="nc" id="L150">        xmlElement.addAttribute(new Attribute(</span>
+                &quot;sqlStatement&quot;, configuredSqlStatement)); //$NON-NLS-1$
+<span class="nc bnc" id="L152" title="All 2 branches missed.">        if (stringHasValue(type)) {</span>
+<span class="nc" id="L153">            xmlElement.addAttribute(new Attribute(&quot;type&quot;, type)); //$NON-NLS-1$</span>
+        }
+<span class="nc bnc" id="L155" title="All 2 branches missed.">        xmlElement.addAttribute(new Attribute(&quot;identity&quot;, //$NON-NLS-1$</span>
+                isIdentity ? &quot;true&quot; : &quot;false&quot;)); //$NON-NLS-1$ //$NON-NLS-2$
+
+<span class="nc" id="L158">        return xmlElement;</span>
+    }
+
+    /**
+     * Validate.
+     *
+     * @param errors
+     *            the errors
+     * @param tableName
+     *            the table name
+     */
+    public void validate(List&lt;String&gt; errors, String tableName) {
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">        if (!stringHasValue(runtimeSqlStatement)) {</span>
+<span class="nc" id="L171">            errors.add(getString(&quot;ValidationError.7&quot;, //$NON-NLS-1$</span>
+                    tableName));
+        }
+
+<span class="fc bfc" id="L175" title="All 2 branches covered.">        if (stringHasValue(type)) {</span>
+<span class="pc bpc" id="L176" title="3 of 4 branches missed.">            if (!&quot;pre&quot;.equals(type) &amp;&amp; !&quot;post&quot;.equals(type)) { //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="nc" id="L177">                errors.add(getString(&quot;ValidationError.15&quot;, //$NON-NLS-1$</span>
+                        tableName));
+            }
+        }
+        
+<span class="pc bpc" id="L182" title="1 of 4 branches missed.">        if (&quot;pre&quot;.equals(type) &amp;&amp; isIdentity) { //$NON-NLS-1$</span>
+<span class="nc" id="L183">            errors.add(getString(&quot;ValidationError.23&quot;, //$NON-NLS-1$</span>
+                    tableName));
+        }
+        
+<span class="pc bpc" id="L187" title="3 of 4 branches missed.">        if (&quot;post&quot;.equals(type) &amp;&amp; !isIdentity) { //$NON-NLS-1$</span>
+<span class="nc" id="L188">            errors.add(getString(&quot;ValidationError.24&quot;, //$NON-NLS-1$</span>
+                    tableName));
+        }
+<span class="fc" id="L191">    }</span>
+    
+    /**
+     * Checks if is jdbc standard.
+     *
+     * @return true, if is jdbc standard
+     */
+    public boolean isJdbcStandard() {
+<span class="fc" id="L199">        return &quot;JDBC&quot;.equals(runtimeSqlStatement); //$NON-NLS-1$</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

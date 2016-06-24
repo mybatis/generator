@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ResultMapWithoutBLOBsElementGenerator.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.codegen.ibatis2.sqlmap.elements</a> &gt; <span class="el_source">ResultMapWithoutBLOBsElementGenerator.java</span></div><h1>ResultMapWithoutBLOBsElementGenerator.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2016 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.codegen.ibatis2.sqlmap.elements;
+
+import static org.mybatis.generator.internal.util.StringUtility.isTrue;
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+
+import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.dom.xml.Attribute;
+import org.mybatis.generator.api.dom.xml.XmlElement;
+import org.mybatis.generator.codegen.ibatis2.Ibatis2FormattingUtilities;
+import org.mybatis.generator.config.PropertyRegistry;
+
+/**
+ * 
+ * @author Jeff Butler
+ * 
+ */
+public class ResultMapWithoutBLOBsElementGenerator extends
+        AbstractXmlElementGenerator {
+
+    public ResultMapWithoutBLOBsElementGenerator() {
+<span class="fc" id="L36">        super();</span>
+<span class="fc" id="L37">    }</span>
+
+    @Override
+    public void addElements(XmlElement parentElement) {
+<span class="fc" id="L41">        boolean useColumnIndex = isTrue(introspectedTable</span>
+                        .getTableConfigurationProperty(PropertyRegistry.TABLE_USE_COLUMN_INDEXES));
+<span class="fc" id="L43">        XmlElement answer = new XmlElement(&quot;resultMap&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L44">        answer.addAttribute(new Attribute(&quot;id&quot;, //$NON-NLS-1$</span>
+                introspectedTable.getBaseResultMapId()));
+
+        String returnType;
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        if (introspectedTable.getRules().generateBaseRecordClass()) {</span>
+<span class="fc" id="L49">            returnType = introspectedTable.getBaseRecordType();</span>
+        } else {
+<span class="fc" id="L51">            returnType = introspectedTable.getPrimaryKeyType();</span>
+        }
+
+<span class="fc" id="L54">        answer.addAttribute(new Attribute(&quot;class&quot;, //$NON-NLS-1$</span>
+                returnType));
+
+<span class="fc" id="L57">        context.getCommentGenerator().addComment(answer);</span>
+
+<span class="fc" id="L59">        int i = 1;</span>
+<span class="pc bpc" id="L60" title="2 of 4 branches missed.">        if (stringHasValue(introspectedTable</span>
+                .getSelectByPrimaryKeyQueryId())
+                || stringHasValue(introspectedTable
+                        .getSelectByExampleQueryId())) {
+<span class="nc" id="L64">            i++;</span>
+        }
+
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable</span>
+                .getNonBLOBColumns()) {
+<span class="fc" id="L69">            XmlElement resultElement = new XmlElement(&quot;result&quot;); //$NON-NLS-1$</span>
+
+<span class="fc bfc" id="L71" title="All 2 branches covered.">            if (useColumnIndex) {</span>
+<span class="fc" id="L72">                resultElement.addAttribute(new Attribute(</span>
+                        &quot;columnIndex&quot;, Integer.toString(i++))); //$NON-NLS-1$
+            } else {
+<span class="fc" id="L75">                resultElement</span>
+                        .addAttribute(new Attribute(
+                                &quot;column&quot;, Ibatis2FormattingUtilities.getRenamedColumnNameForResultMap(introspectedColumn))); //$NON-NLS-1$
+            }
+
+<span class="fc" id="L80">            resultElement.addAttribute(new Attribute(</span>
+                    &quot;property&quot;, introspectedColumn.getJavaProperty())); //$NON-NLS-1$
+<span class="fc" id="L82">            resultElement.addAttribute(new Attribute(&quot;jdbcType&quot;, //$NON-NLS-1$</span>
+                    introspectedColumn.getJdbcTypeName()));
+
+<span class="fc bfc" id="L85" title="All 2 branches covered.">            if (stringHasValue(introspectedColumn</span>
+                    .getTypeHandler())) {
+<span class="fc" id="L87">                resultElement.addAttribute(new Attribute(</span>
+                        &quot;typeHandler&quot;, introspectedColumn.getTypeHandler())); //$NON-NLS-1$
+            }
+
+<span class="fc" id="L91">            answer.addElement(resultElement);</span>
+<span class="fc" id="L92">        }</span>
+
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">        if (context.getPlugins()</span>
+                .sqlMapResultMapWithoutBLOBsElementGenerated(answer,
+                        introspectedTable)) {
+<span class="fc" id="L97">            parentElement.addElement(answer);</span>
+        }
+<span class="fc" id="L99">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

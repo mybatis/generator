@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>JdbcTypeNameTranslator.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.internal.types</a> &gt; <span class="el_source">JdbcTypeNameTranslator.java</span></div><h1>JdbcTypeNameTranslator.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2016 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.internal.types;
+
+import java.sql.Types;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * TODO - Delete Me
+ * 
+ * @author Jeff Butler
+ */
+public class JdbcTypeNameTranslator {
+
+    private static Map&lt;Integer, String&gt; typeToName;
+    private static Map&lt;String, Integer&gt; nameToType;
+
+    static {
+<span class="nc" id="L33">        typeToName = new HashMap&lt;Integer, String&gt;();</span>
+<span class="nc" id="L34">        typeToName.put(Types.ARRAY, &quot;ARRAY&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L35">        typeToName.put(Types.BIGINT, &quot;BIGINT&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L36">        typeToName.put(Types.BINARY, &quot;BINARY&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L37">        typeToName.put(Types.BIT, &quot;BIT&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L38">        typeToName.put(Types.BLOB, &quot;BLOB&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L39">        typeToName.put(Types.BOOLEAN, &quot;BOOLEAN&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L40">        typeToName.put(Types.CHAR, &quot;CHAR&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L41">        typeToName.put(Types.CLOB, &quot;CLOB&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L42">        typeToName.put(Types.DATALINK, &quot;DATALINK&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L43">        typeToName.put(Types.DATE, &quot;DATE&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L44">        typeToName.put(Types.DECIMAL, &quot;DECIMAL&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L45">        typeToName.put(Types.DISTINCT, &quot;DISTINCT&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L46">        typeToName.put(Types.DOUBLE, &quot;DOUBLE&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L47">        typeToName.put(Types.FLOAT, &quot;FLOAT&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L48">        typeToName.put(Types.INTEGER, &quot;INTEGER&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L49">        typeToName.put(Types.JAVA_OBJECT, &quot;JAVA_OBJECT&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L50">        typeToName.put(Types.LONGVARBINARY, &quot;LONGVARBINARY&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L51">        typeToName.put(Types.LONGVARCHAR, &quot;LONGVARCHAR&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L52">        typeToName.put(Types.NCHAR, &quot;NCHAR&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L53">        typeToName.put(Types.NCLOB, &quot;NCLOB&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L54">        typeToName.put(Types.NVARCHAR, &quot;NVARCHAR&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L55">        typeToName.put(Types.LONGNVARCHAR, &quot;LONGNVARCHAR&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L56">        typeToName.put(Types.NULL, &quot;NULL&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L57">        typeToName.put(Types.NUMERIC, &quot;NUMERIC&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L58">        typeToName.put(Types.OTHER, &quot;OTHER&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L59">        typeToName.put(Types.REAL, &quot;REAL&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L60">        typeToName.put(Types.REF, &quot;REF&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L61">        typeToName.put(Types.SMALLINT, &quot;SMALLINT&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L62">        typeToName.put(Types.STRUCT, &quot;STRUCT&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L63">        typeToName.put(Types.TIME, &quot;TIME&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L64">        typeToName.put(Types.TIMESTAMP, &quot;TIMESTAMP&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L65">        typeToName.put(Types.TINYINT, &quot;TINYINT&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L66">        typeToName.put(Types.VARBINARY, &quot;VARBINARY&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L67">        typeToName.put(Types.VARCHAR, &quot;VARCHAR&quot;); //$NON-NLS-1$</span>
+
+<span class="nc" id="L69">        nameToType = new HashMap&lt;String, Integer&gt;();</span>
+<span class="nc" id="L70">        nameToType.put(&quot;ARRAY&quot;, Types.ARRAY); //$NON-NLS-1$</span>
+<span class="nc" id="L71">        nameToType.put(&quot;BIGINT&quot;, Types.BIGINT); //$NON-NLS-1$</span>
+<span class="nc" id="L72">        nameToType.put(&quot;BINARY&quot;, Types.BINARY); //$NON-NLS-1$</span>
+<span class="nc" id="L73">        nameToType.put(&quot;BIT&quot;, Types.BIT); //$NON-NLS-1$</span>
+<span class="nc" id="L74">        nameToType.put(&quot;BLOB&quot;, Types.BLOB); //$NON-NLS-1$</span>
+<span class="nc" id="L75">        nameToType.put(&quot;BOOLEAN&quot;, Types.BOOLEAN); //$NON-NLS-1$</span>
+<span class="nc" id="L76">        nameToType.put(&quot;CHAR&quot;, Types.CHAR); //$NON-NLS-1$</span>
+<span class="nc" id="L77">        nameToType.put(&quot;CLOB&quot;, Types.CLOB); //$NON-NLS-1$</span>
+<span class="nc" id="L78">        nameToType.put(&quot;DATALINK&quot;, Types.DATALINK); //$NON-NLS-1$</span>
+<span class="nc" id="L79">        nameToType.put(&quot;DATE&quot;, Types.DATE); //$NON-NLS-1$</span>
+<span class="nc" id="L80">        nameToType.put(&quot;DECIMAL&quot;, Types.DECIMAL); //$NON-NLS-1$</span>
+<span class="nc" id="L81">        nameToType.put(&quot;DISTINCT&quot;, Types.DISTINCT); //$NON-NLS-1$</span>
+<span class="nc" id="L82">        nameToType.put(&quot;DOUBLE&quot;, Types.DOUBLE); //$NON-NLS-1$</span>
+<span class="nc" id="L83">        nameToType.put(&quot;FLOAT&quot;, Types.FLOAT); //$NON-NLS-1$</span>
+<span class="nc" id="L84">        nameToType.put(&quot;INTEGER&quot;, Types.INTEGER); //$NON-NLS-1$</span>
+<span class="nc" id="L85">        nameToType.put(&quot;JAVA_OBJECT&quot;, Types.JAVA_OBJECT); //$NON-NLS-1$</span>
+<span class="nc" id="L86">        nameToType.put(&quot;LONGVARBINARY&quot;, Types.LONGVARBINARY); //$NON-NLS-1$</span>
+<span class="nc" id="L87">        nameToType.put(&quot;LONGVARCHAR&quot;, Types.LONGVARCHAR); //$NON-NLS-1$</span>
+<span class="nc" id="L88">        nameToType.put(&quot;NCHAR&quot;, Types.NCHAR); //$NON-NLS-1$</span>
+<span class="nc" id="L89">        nameToType.put(&quot;NCLOB&quot;, Types.NCLOB); //$NON-NLS-1$</span>
+<span class="nc" id="L90">        nameToType.put(&quot;NVARCHAR&quot;, Types.NVARCHAR); //$NON-NLS-1$</span>
+<span class="nc" id="L91">        nameToType.put(&quot;LONGNVARCHAR&quot;, Types.LONGNVARCHAR); //$NON-NLS-1$</span>
+<span class="nc" id="L92">        nameToType.put(&quot;NULL&quot;, Types.NULL); //$NON-NLS-1$</span>
+<span class="nc" id="L93">        nameToType.put(&quot;NUMERIC&quot;, Types.NUMERIC); //$NON-NLS-1$</span>
+<span class="nc" id="L94">        nameToType.put(&quot;OTHER&quot;, Types.OTHER); //$NON-NLS-1$</span>
+<span class="nc" id="L95">        nameToType.put(&quot;REAL&quot;, Types.REAL); //$NON-NLS-1$</span>
+<span class="nc" id="L96">        nameToType.put(&quot;REF&quot;, Types.REF); //$NON-NLS-1$</span>
+<span class="nc" id="L97">        nameToType.put(&quot;SMALLINT&quot;, Types.SMALLINT); //$NON-NLS-1$</span>
+<span class="nc" id="L98">        nameToType.put(&quot;STRUCT&quot;, Types.STRUCT); //$NON-NLS-1$</span>
+<span class="nc" id="L99">        nameToType.put(&quot;TIME&quot;, Types.TIME); //$NON-NLS-1$</span>
+<span class="nc" id="L100">        nameToType.put(&quot;TIMESTAMP&quot;, Types.TIMESTAMP); //$NON-NLS-1$</span>
+<span class="nc" id="L101">        nameToType.put(&quot;TINYINT&quot;, Types.TINYINT); //$NON-NLS-1$</span>
+<span class="nc" id="L102">        nameToType.put(&quot;VARBINARY&quot;, Types.VARBINARY); //$NON-NLS-1$</span>
+<span class="nc" id="L103">        nameToType.put(&quot;VARCHAR&quot;, Types.VARCHAR); //$NON-NLS-1$</span>
+<span class="nc" id="L104">    }</span>
+
+    /**
+     * Utility Class - no instances
+     */
+    private JdbcTypeNameTranslator() {
+<span class="nc" id="L110">        super();</span>
+<span class="nc" id="L111">    }</span>
+
+    /**
+     * Translates from a java.sql.Types values to the proper iBATIS string
+     * representation of the type.
+     * 
+     * @param jdbcType
+     *            a value from java.sql.Types
+     * @return the iBATIS String representation of a JDBC type
+     */
+    public static String getJdbcTypeName(int jdbcType) {
+<span class="nc" id="L122">        String answer = typeToName.get(jdbcType);</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">        if (answer == null) {</span>
+<span class="nc" id="L124">            answer = &quot;OTHER&quot;; //$NON-NLS-1$</span>
+        }
+
+<span class="nc" id="L127">        return answer;</span>
+    }
+
+    /**
+     * Translates from the string representation of the type to the
+     * java.sql.Types value.
+     * 
+     * @param jdbcTypeName
+     *            the iBATIS String representation of a JDBC type
+     * @return a value from java.sql.Types
+     */
+    public static int getJdbcType(String jdbcTypeName) {
+<span class="nc" id="L139">        Integer answer = nameToType.get(jdbcTypeName);</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">        if (answer == null) {</span>
+<span class="nc" id="L141">            answer = Types.OTHER;</span>
+        }
+
+<span class="nc" id="L144">        return answer;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

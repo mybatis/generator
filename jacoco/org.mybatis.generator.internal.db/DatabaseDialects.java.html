@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>DatabaseDialects.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.internal.db</a> &gt; <span class="el_source">DatabaseDialects.java</span></div><h1>DatabaseDialects.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2016 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.internal.db;
+
+/**
+ * Typesafe enum of known database dialects.
+ *
+ * @author Jeff Butler
+ */
+<span class="pc" id="L23">public enum DatabaseDialects {</span>
+
+    /** The D b2. */
+<span class="fc" id="L26">    DB2(&quot;VALUES IDENTITY_VAL_LOCAL()&quot;), //$NON-NLS-1$</span>
+    /** The mysql. */
+<span class="fc" id="L28"> MYSQL(&quot;SELECT LAST_INSERT_ID()&quot;), //$NON-NLS-1$</span>
+    /** The sqlserver. */
+<span class="fc" id="L30"> SQLSERVER(&quot;SELECT SCOPE_IDENTITY()&quot;), //$NON-NLS-1$</span>
+    /** The cloudscape. */
+<span class="fc" id="L32"> CLOUDSCAPE(&quot;VALUES IDENTITY_VAL_LOCAL()&quot;), //$NON-NLS-1$</span>
+    /** The derby. */
+<span class="fc" id="L34"> DERBY(&quot;VALUES IDENTITY_VAL_LOCAL()&quot;), //$NON-NLS-1$</span>
+    /** The hsqldb. */
+<span class="fc" id="L36"> HSQLDB(&quot;CALL IDENTITY()&quot;), //$NON-NLS-1$</span>
+    /** The sybase. */
+<span class="fc" id="L38"> SYBASE(&quot;SELECT @@IDENTITY&quot;), //$NON-NLS-1$</span>
+    /** The D b2_ mf. */
+<span class="fc" id="L40"> DB2_MF(&quot;SELECT IDENTITY_VAL_LOCAL() FROM SYSIBM.SYSDUMMY1&quot;), //$NON-NLS-1$</span>
+    /** The informix. */
+<span class="fc" id="L42"> INFORMIX(&quot;select dbinfo('sqlca.sqlerrd1') from systables where tabid=1&quot;); //$NON-NLS-1$</span>
+
+    /** The identity retrieval statement. */
+ private String identityRetrievalStatement;
+
+    /**
+     * Instantiates a new database dialects.
+     *
+     * @param identityRetrievalStatement
+     *            the identity retrieval statement
+     */
+<span class="fc" id="L53">    private DatabaseDialects(String identityRetrievalStatement) {</span>
+<span class="fc" id="L54">        this.identityRetrievalStatement = identityRetrievalStatement;</span>
+<span class="fc" id="L55">    }</span>
+
+    /**
+     * Gets the identity retrieval statement.
+     *
+     * @return the identity retrieval statement
+     */
+    public String getIdentityRetrievalStatement() {
+<span class="fc" id="L63">        return identityRetrievalStatement;</span>
+    }
+
+    /**
+     * Gets the database dialect.
+     *
+     * @param database
+     *            the database
+     * @return the database dialect for the selected database. May return null if there is no known dialect for the
+     *         selected db
+     */
+    public static DatabaseDialects getDatabaseDialect(String database) {
+<span class="fc" id="L75">        DatabaseDialects returnValue = null;</span>
+
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">        if (&quot;DB2&quot;.equalsIgnoreCase(database)) { //$NON-NLS-1$</span>
+<span class="nc" id="L78">            returnValue = DB2;</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">        } else if (&quot;MySQL&quot;.equalsIgnoreCase(database)) { //$NON-NLS-1$</span>
+<span class="nc" id="L80">            returnValue = MYSQL;</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">        } else if (&quot;SqlServer&quot;.equalsIgnoreCase(database)) { //$NON-NLS-1$</span>
+<span class="nc" id="L82">            returnValue = SQLSERVER;</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">        } else if (&quot;Cloudscape&quot;.equalsIgnoreCase(database)) { //$NON-NLS-1$</span>
+<span class="nc" id="L84">            returnValue = CLOUDSCAPE;</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">        } else if (&quot;Derby&quot;.equalsIgnoreCase(database)) { //$NON-NLS-1$</span>
+<span class="nc" id="L86">            returnValue = DERBY;</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">        } else if (&quot;HSQLDB&quot;.equalsIgnoreCase(database)) { //$NON-NLS-1$</span>
+<span class="fc" id="L88">            returnValue = HSQLDB;</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">        } else if (&quot;SYBASE&quot;.equalsIgnoreCase(database)) { //$NON-NLS-1$</span>
+<span class="nc" id="L90">            returnValue = SYBASE;</span>
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">        } else if (&quot;DB2_MF&quot;.equalsIgnoreCase(database)) { //$NON-NLS-1$</span>
+<span class="nc" id="L92">            returnValue = DB2_MF;</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">        } else if (&quot;Informix&quot;.equalsIgnoreCase(database)) { //$NON-NLS-1$</span>
+<span class="nc" id="L94">            returnValue = INFORMIX;</span>
+        }
+
+<span class="fc" id="L97">        return returnValue;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

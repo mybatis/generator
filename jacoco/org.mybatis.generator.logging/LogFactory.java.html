@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>LogFactory.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.logging</a> &gt; <span class="el_source">LogFactory.java</span></div><h1>LogFactory.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2016 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.logging;
+
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
+import org.mybatis.generator.internal.ObjectFactory;
+
+/**
+ * Factory for creating loggers. Uses runtime introspection to determine the
+ * AbstractLogFactory implementation.
+ * 
+ * @author Jeff Butler
+ * 
+ */
+<span class="nc" id="L29">public class LogFactory {</span>
+    private static AbstractLogFactory logFactory;
+
+    static {
+        try {
+<span class="fc" id="L34">            ObjectFactory.internalClassForName(&quot;org.apache.log4j.Logger&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L35">            logFactory = new Log4jLoggingLogFactory();</span>
+<span class="nc" id="L36">        } catch (Exception e) {</span>
+<span class="nc" id="L37">            logFactory = new JdkLoggingLogFactory();</span>
+<span class="fc" id="L38">        }</span>
+<span class="fc" id="L39">    }</span>
+
+    public static Log getLog(Class&lt;?&gt; clazz) {
+        try {
+<span class="fc" id="L43">            return logFactory.getLog(clazz);</span>
+<span class="nc" id="L44">        } catch (Throwable t) {</span>
+<span class="nc" id="L45">            throw new RuntimeException(getString(&quot;RuntimeError.21&quot;, //$NON-NLS-1$</span>
+                    clazz.getName(), t.getMessage()), t);
+        }
+    }
+
+    /**
+     * This method will switch the logging implementation to Java native
+     * logging. This is useful in situations where you want to use Java native
+     * logging to log activity but Log4J is on the classpath. Note that
+     * this method is only effective for log classes obtained after calling this
+     * method. If you intend to use this method you should call it before
+     * calling any other method.
+     */
+    public static synchronized void forceJavaLogging() {
+<span class="nc" id="L59">        logFactory = new JdkLoggingLogFactory();</span>
+<span class="nc" id="L60">    }</span>
+
+<span class="nc" id="L62">    private static class JdkLoggingLogFactory implements AbstractLogFactory {</span>
+        public Log getLog(Class&lt;?&gt; clazz) {
+<span class="nc" id="L64">            return new JdkLoggingImpl(clazz);</span>
+        }
+    }
+
+<span class="pc" id="L68">    private static class Log4jLoggingLogFactory implements AbstractLogFactory {</span>
+        public Log getLog(Class&lt;?&gt; clazz) {
+<span class="fc" id="L70">            return new Log4jImpl(clazz);</span>
+        }
+    }
+
+    public static void setLogFactory(AbstractLogFactory logFactory) {
+<span class="nc" id="L75">        LogFactory.logFactory = logFactory;</span>
+<span class="nc" id="L76">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

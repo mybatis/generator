@@ -44,7 +44,7 @@
       </activation>
       <properties>
         <p2.repo.base.directory>${project.build.directory}/p2-composite-repo</p2.repo.base.directory>
-        <bintray.subject>jeffgbutler</bintray.subject>
+        <bintray.subject>mybatis</bintray.subject>
         <bintray.repo>mybatis-generator</bintray.repo>
         <bintray.package>mybatis-generator</bintray.package>
       </properties>

@@ -435,10 +435,9 @@ public class Context extends PropertyHolder {
             beginningDelimiter = value;
         } else if (PropertyRegistry.CONTEXT_ENDING_DELIMITER.equals(name)) {
             endingDelimiter = value;
-        } else if (PropertyRegistry.CONTEXT_AUTO_DELIMIT_KEYWORDS.equals(name)) {
-            if (stringHasValue(value)) {
-                autoDelimitKeywords = new Boolean(isTrue(value));
-            }
+        } else if (PropertyRegistry.CONTEXT_AUTO_DELIMIT_KEYWORDS.equals(name)
+                && stringHasValue(value)) {
+            autoDelimitKeywords = isTrue(value);
         }
     }
 
@@ -626,10 +625,9 @@ public class Context extends PropertyHolder {
                                 .getSchema(), tc.getTableName(), '.');
 
                 if (fullyQualifiedTableNames != null
-                        && fullyQualifiedTableNames.size() > 0) {
-                    if (!fullyQualifiedTableNames.contains(tableName)) {
-                        continue;
-                    }
+                        && fullyQualifiedTableNames.size() > 0
+                        && !fullyQualifiedTableNames.contains(tableName)) {
+                    continue;
                 }
 
                 if (!tc.areAnyStatementsEnabled()) {
@@ -750,7 +748,6 @@ public class Context extends PropertyHolder {
                 connection.close();
             } catch (SQLException e) {
                 // ignore
-                ;
             }
         }
     }

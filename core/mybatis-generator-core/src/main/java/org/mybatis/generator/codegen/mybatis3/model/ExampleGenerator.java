@@ -195,9 +195,9 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         topLevelClass
                 .addInnerClass(getGeneratedCriteriaInnerClass(topLevelClass));
 
-        topLevelClass.addInnerClass(getCriteriaInnerClass(topLevelClass));
+        topLevelClass.addInnerClass(getCriteriaInnerClass());
 
-        topLevelClass.addInnerClass(getCriterionInnerClass(topLevelClass));
+        topLevelClass.addInnerClass(getCriterionInnerClass());
 
         List<CompilationUnit> answer = new ArrayList<CompilationUnit>();
         if (context.getPlugins().modelExampleClassGenerated(
@@ -207,7 +207,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         return answer;
     }
 
-    private InnerClass getCriterionInnerClass(TopLevelClass topLevelClass) {
+    private InnerClass getCriterionInnerClass() {
         Field field;
         Method method;
 
@@ -354,7 +354,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         return answer;
     }
 
-    private InnerClass getCriteriaInnerClass(TopLevelClass topLevelClass) {
+    private InnerClass getCriteriaInnerClass() {
         Method method;
 
         InnerClass answer = new InnerClass(FullyQualifiedJavaType

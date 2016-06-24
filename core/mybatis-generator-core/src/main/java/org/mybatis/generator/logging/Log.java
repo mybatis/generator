@@ -27,7 +27,7 @@ public interface Log {
 
     void error(String s);
 
-    public void debug(String s);
+    void debug(String s);
 
-    public void warn(String s);
+    void warn(String s);
 }

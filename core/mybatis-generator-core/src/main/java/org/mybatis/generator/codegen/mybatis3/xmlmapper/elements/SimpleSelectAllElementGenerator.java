@@ -67,7 +67,7 @@ public class SimpleSelectAllElementGenerator extends
         }
 
         if (sb.length() > 0) {
-            answer.addElement((new TextElement(sb.toString())));
+            answer.addElement(new TextElement(sb.toString()));
         }
 
         sb.setLength(0);

@@ -80,6 +80,5 @@ public class SelectByExampleWithBLOBsMethodGenerator extends
     }
 
     public void addMapperAnnotations(Interface interfaze, Method method) {
-        return;
     }
 }

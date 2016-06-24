@@ -73,7 +73,6 @@ public class DefaultCommentGenerator implements CommentGenerator {
      */
     public void addJavaFileComment(CompilationUnit compilationUnit) {
         // add no file level comments by default
-        return;
     }
 
     /**
@@ -114,7 +113,6 @@ public class DefaultCommentGenerator implements CommentGenerator {
      */
     public void addRootComment(XmlElement rootElement) {
         // add no document level comments by default
-        return;
     }
 
     /* (non-Javadoc)

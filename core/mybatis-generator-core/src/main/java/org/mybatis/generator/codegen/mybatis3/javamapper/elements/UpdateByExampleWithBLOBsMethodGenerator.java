@@ -80,6 +80,5 @@ public class UpdateByExampleWithBLOBsMethodGenerator extends
     }
     
     public void addMapperAnnotations(Interface interfaze, Method method) {
-        return;
     }
 }

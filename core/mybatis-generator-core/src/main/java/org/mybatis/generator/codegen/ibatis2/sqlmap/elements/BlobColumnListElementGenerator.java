@@ -62,7 +62,7 @@ public class BlobColumnListElementGenerator extends AbstractXmlElementGenerator 
         }
 
         if (sb.length() > 0) {
-            answer.addElement((new TextElement(sb.toString())));
+            answer.addElement(new TextElement(sb.toString()));
         }
 
         if (context.getPlugins().sqlMapBlobColumnListElementGenerated(

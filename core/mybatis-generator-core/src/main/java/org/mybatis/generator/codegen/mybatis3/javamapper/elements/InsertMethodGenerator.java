@@ -72,6 +72,5 @@ public class InsertMethodGenerator extends AbstractJavaMapperMethodGenerator {
     }
 
     public void addMapperAnnotations(Interface interfaze, Method method) {
-        return;
     }
 }

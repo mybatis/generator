@@ -73,6 +73,5 @@ public class UpdateByPrimaryKeyWithBLOBsMethodGenerator extends
     }
 
     public void addMapperAnnotations(Interface interfaze, Method method) {
-        return;
     }
 }

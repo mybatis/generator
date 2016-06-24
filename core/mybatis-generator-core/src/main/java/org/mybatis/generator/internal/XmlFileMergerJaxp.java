@@ -162,10 +162,8 @@ public class XmlFileMergerJaxp {
         for (int i = 0; i < length; i++) {
             Node node = children.item(i);
             // don't add the last node if it is only white space
-            if (i == length - 1) {
-                if (isWhiteSpace(node)) {
-                    break;
-                }
+            if (i == length - 1 && isWhiteSpace(node)) {
+                break;
             }
 
             Node newNode = existingDocument.importNode(node, true);

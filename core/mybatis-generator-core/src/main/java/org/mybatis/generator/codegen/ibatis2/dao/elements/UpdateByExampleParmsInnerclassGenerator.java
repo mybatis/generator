@@ -80,6 +80,5 @@ public class UpdateByExampleParmsInnerclassGenerator extends
     @Override
     public void addInterfaceElements(Interface interfaze) {
         // nothing to add to the interface
-        ;
     }
 }

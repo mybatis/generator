@@ -138,7 +138,6 @@ public class ShellRunner {
             return;
         } catch (InterruptedException e) {
             // ignore (will never happen with the DefaultShellCallback)
-            ;
         }
 
         for (String warning : warnings) {

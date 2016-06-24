@@ -94,7 +94,7 @@ public class SelectByExampleWithoutBLOBsMethodGenerator extends
 
         FullyQualifiedJavaType returnType = FullyQualifiedJavaType
                 .getNewListInstance();
-        ;
+
         if (generateForJava5) {
             FullyQualifiedJavaType fqjt;
             if (introspectedTable.getRules().generateBaseRecordClass()) {

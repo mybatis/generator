@@ -149,5 +149,13 @@
     <tag>HEAD</tag>
   </scm>
 
+  <distributionManagement>
+    <site>
+      <id>gh-pages</id>
+      <name>Mybatis Generator GitHub Pages</name>
+      <url>git:ssh://git@github.com/mybatis/generator.git?gh-pages#</url>
+    </site>
+  </distributionManagement>
+
   <description>MyBatis Generator - a code generator for MyBatis and iBatis.</description>
 </project>

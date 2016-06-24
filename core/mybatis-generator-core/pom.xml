@@ -142,13 +142,6 @@
     </dependency>
   </dependencies>
 
-  <scm>
-    <url>http://github.com/mybatis/generator</url>
-    <connection>scm:git:ssh://github.com/mybatis/generator.git</connection>
-    <developerConnection>scm:git:ssh://git@github.com/mybatis/generator.git</developerConnection>
-    <tag>HEAD</tag>
-  </scm>
-
   <distributionManagement>
     <site>
       <id>gh-pages</id>
@@ -158,4 +151,7 @@
   </distributionManagement>
 
   <description>MyBatis Generator - a code generator for MyBatis and iBatis.</description>
+  <scm>
+    <url>https://github.com/mybatis/generator</url>
+  </scm>
 </project>

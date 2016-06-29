@@ -20,13 +20,6 @@
   xsi:schemaLocation="http://maven.apache.org/DECORATION/1.7.0 http://maven.apache.org/xsd/decoration-1.7.0.xsd"
   name="MyBatis Generator">
 
-  <bannerLeft>
-    <name>MyBatis Generator</name>
-    <src>images/logo.png</src>
-    <alt>MyBatis logo</alt>
-    <href>index.html</href>
-  </bannerLeft>
-  
   <body>
     <menu name="User's Guide">
       <item href="index.html" name="Introduction" />
@@ -37,6 +30,7 @@
         <item href="running/runningWithAnt.html" name="With Ant" />
         <item href="running/runningWithMaven.html" name="With Maven" />
         <item href="running/runningWithJava.html" name="With Java" />
+        <item href="running/runningWithEclipse.html" name="With Eclipse" />
       </item>
       <item href="afterRunning.html" name="Tasks After Running MyBatis Generator" />
       <item href="migratingFromIbator.html" name="Migrating from Ibator" />

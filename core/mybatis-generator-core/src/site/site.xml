@@ -37,6 +37,7 @@
         <item href="running/runningWithAnt.html" name="With Ant" />
         <item href="running/runningWithMaven.html" name="With Maven" />
         <item href="running/runningWithJava.html" name="With Java" />
+        <item href="running/runningWithEclipse.html" name="With Eclipse" />
       </item>
       <item href="afterRunning.html" name="Tasks After Running MyBatis Generator" />
       <item href="migratingFromIbator.html" name="Migrating from Ibator" />

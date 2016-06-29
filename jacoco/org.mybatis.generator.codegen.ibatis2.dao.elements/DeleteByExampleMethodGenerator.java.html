@@ -44,8 +44,8 @@ public class DeleteByExampleMethodGenerator extends AbstractDAOElementGenerator 
 <span class="fc" id="L44">        StringBuilder sb = new StringBuilder();</span>
 <span class="fc" id="L45">        sb.append(&quot;int rows = &quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L46">        sb.append(daoTemplate.getDeleteMethod(introspectedTable</span>
-                .getIbatis2SqlMapNamespace(), introspectedTable
-                .getDeleteByExampleStatementId(), &quot;example&quot;)); //$NON-NLS-1$
+<span class="fc" id="L47">                .getIbatis2SqlMapNamespace(), introspectedTable</span>
+<span class="fc" id="L48">                .getDeleteByExampleStatementId(), &quot;example&quot;)); //$NON-NLS-1$</span>
 <span class="fc" id="L49">        method.addBodyLine(sb.toString());</span>
 <span class="fc" id="L50">        method.addBodyLine(&quot;return rows;&quot;); //$NON-NLS-1$</span>
 
@@ -72,14 +72,14 @@ public class DeleteByExampleMethodGenerator extends AbstractDAOElementGenerator 
 
     private Method getMethodShell(Set&lt;FullyQualifiedJavaType&gt; importedTypes) {
 <span class="fc" id="L74">        FullyQualifiedJavaType type = new FullyQualifiedJavaType(</span>
-                introspectedTable.getExampleType());
+<span class="fc" id="L75">                introspectedTable.getExampleType());</span>
 <span class="fc" id="L76">        importedTypes.add(type);</span>
 
 <span class="fc" id="L78">        Method method = new Method();</span>
 <span class="fc" id="L79">        method.setVisibility(getExampleMethodVisibility());</span>
 <span class="fc" id="L80">        method.setReturnType(FullyQualifiedJavaType.getIntInstance());</span>
 <span class="fc" id="L81">        method.setName(getDAOMethodNameCalculator()</span>
-                .getDeleteByExampleMethodName(introspectedTable));
+<span class="fc" id="L82">                .getDeleteByExampleMethodName(introspectedTable));</span>
 <span class="fc" id="L83">        method.addParameter(new Parameter(type, &quot;example&quot;)); //$NON-NLS-1$</span>
 
 <span class="fc bfc" id="L85" title="All 2 branches covered.">        for (FullyQualifiedJavaType fqjt : daoTemplate.getCheckedExceptions()) {</span>

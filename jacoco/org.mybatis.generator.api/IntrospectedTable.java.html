@@ -291,8 +291,8 @@ public abstract class IntrospectedTable {
 <span class="fc" id="L291">                        return introspectedColumn;</span>
                     }
                 } else {
-<span class="fc bfc" id="L294" title="All 2 branches covered.">                    if (introspectedColumn.getActualColumnName()</span>
-                            .equalsIgnoreCase(columnName)) {
+<span class="fc" id="L294">                    if (introspectedColumn.getActualColumnName()</span>
+<span class="fc bfc" id="L295" title="All 2 branches covered.">                            .equalsIgnoreCase(columnName)) {</span>
 <span class="fc" id="L296">                        return introspectedColumn;</span>
                     }
                 }
@@ -306,8 +306,8 @@ public abstract class IntrospectedTable {
 <span class="fc" id="L306">                        return introspectedColumn;</span>
                     }
                 } else {
-<span class="fc bfc" id="L309" title="All 2 branches covered.">                    if (introspectedColumn.getActualColumnName()</span>
-                            .equalsIgnoreCase(columnName)) {
+<span class="fc" id="L309">                    if (introspectedColumn.getActualColumnName()</span>
+<span class="fc bfc" id="L310" title="All 2 branches covered.">                            .equalsIgnoreCase(columnName)) {</span>
 <span class="fc" id="L311">                        return introspectedColumn;</span>
                     }
                 }
@@ -321,8 +321,8 @@ public abstract class IntrospectedTable {
 <span class="nc" id="L321">                        return introspectedColumn;</span>
                     }
                 } else {
-<span class="nc bnc" id="L324" title="All 2 branches missed.">                    if (introspectedColumn.getActualColumnName()</span>
-                            .equalsIgnoreCase(columnName)) {
+<span class="nc" id="L324">                    if (introspectedColumn.getActualColumnName()</span>
+<span class="nc bnc" id="L325" title="All 2 branches missed.">                            .equalsIgnoreCase(columnName)) {</span>
 <span class="nc" id="L326">                        return introspectedColumn;</span>
                     }
                 }
@@ -549,7 +549,7 @@ public abstract class IntrospectedTable {
      */
     public String getRecordWithBLOBsType() {
 <span class="fc" id="L551">        return internalAttributes</span>
-                .get(InternalAttribute.ATTR_RECORD_WITH_BLOBS_TYPE);
+<span class="fc" id="L552">                .get(InternalAttribute.ATTR_RECORD_WITH_BLOBS_TYPE);</span>
     }
 
     /**
@@ -561,7 +561,7 @@ public abstract class IntrospectedTable {
      */
     public String getIbatis2SqlMapFileName() {
 <span class="fc" id="L563">        return internalAttributes</span>
-                .get(InternalAttribute.ATTR_IBATIS2_SQL_MAP_FILE_NAME);
+<span class="fc" id="L564">                .get(InternalAttribute.ATTR_IBATIS2_SQL_MAP_FILE_NAME);</span>
     }
 
     /**
@@ -571,7 +571,7 @@ public abstract class IntrospectedTable {
      */
     public String getIbatis2SqlMapNamespace() {
 <span class="fc" id="L573">        return internalAttributes</span>
-                .get(InternalAttribute.ATTR_IBATIS2_SQL_MAP_NAMESPACE);
+<span class="fc" id="L574">                .get(InternalAttribute.ATTR_IBATIS2_SQL_MAP_NAMESPACE);</span>
     }
 
     /**
@@ -595,7 +595,7 @@ public abstract class IntrospectedTable {
      */
     public String getMyBatis3FallbackSqlMapNamespace() {
 <span class="fc" id="L597">        return internalAttributes</span>
-                .get(InternalAttribute.ATTR_MYBATIS3_FALLBACK_SQL_MAP_NAMESPACE);
+<span class="fc" id="L598">                .get(InternalAttribute.ATTR_MYBATIS3_FALLBACK_SQL_MAP_NAMESPACE);</span>
     }
     
     /**
@@ -605,7 +605,7 @@ public abstract class IntrospectedTable {
      */
     public String getIbatis2SqlMapPackage() {
 <span class="fc" id="L607">        return internalAttributes</span>
-                .get(InternalAttribute.ATTR_IBATIS2_SQL_MAP_PACKAGE);
+<span class="fc" id="L608">                .get(InternalAttribute.ATTR_IBATIS2_SQL_MAP_PACKAGE);</span>
     }
 
     /**
@@ -615,7 +615,7 @@ public abstract class IntrospectedTable {
      */
     public String getDAOImplementationType() {
 <span class="fc" id="L617">        return internalAttributes</span>
-                .get(InternalAttribute.ATTR_DAO_IMPLEMENTATION_TYPE);
+<span class="fc" id="L618">                .get(InternalAttribute.ATTR_DAO_IMPLEMENTATION_TYPE);</span>
     }
 
     /**
@@ -625,7 +625,7 @@ public abstract class IntrospectedTable {
      */
     public String getDAOInterfaceType() {
 <span class="fc" id="L627">        return internalAttributes</span>
-                .get(InternalAttribute.ATTR_DAO_INTERFACE_TYPE);
+<span class="fc" id="L628">                .get(InternalAttribute.ATTR_DAO_INTERFACE_TYPE);</span>
     }
 
     /**
@@ -634,8 +634,8 @@ public abstract class IntrospectedTable {
      * @return true, if successful
      */
     public boolean hasAnyColumns() {
-<span class="pc bpc" id="L637" title="1 of 6 branches missed.">        return primaryKeyColumns.size() &gt; 0 || baseColumns.size() &gt; 0</span>
-                || blobColumns.size() &gt; 0;
+<span class="fc bfc" id="L637" title="All 4 branches covered.">        return primaryKeyColumns.size() &gt; 0 || baseColumns.size() &gt; 0</span>
+<span class="pc bpc" id="L638" title="1 of 2 branches missed.">                || blobColumns.size() &gt; 0;</span>
     }
 
     /**
@@ -848,7 +848,7 @@ public abstract class IntrospectedTable {
      */
     public void setMyBatis3UpdateByExampleWhereClauseId(String s) {
 <span class="fc" id="L850">        internalAttributes</span>
-                .put(
+<span class="fc" id="L851">                .put(</span>
                         InternalAttribute.ATTR_MYBATIS3_UPDATE_BY_EXAMPLE_WHERE_CLAUSE_ID,
                         s);
 <span class="fc" id="L854">    }</span>
@@ -882,7 +882,7 @@ public abstract class IntrospectedTable {
      */
     public void setUpdateByPrimaryKeyWithBLOBsStatementId(String s) {
 <span class="fc" id="L884">        internalAttributes</span>
-                .put(
+<span class="fc" id="L885">                .put(</span>
                         InternalAttribute.ATTR_UPDATE_BY_PRIMARY_KEY_WITH_BLOBS_STATEMENT_ID,
                         s);
 <span class="fc" id="L888">    }</span>
@@ -895,7 +895,7 @@ public abstract class IntrospectedTable {
      */
     public void setUpdateByPrimaryKeySelectiveStatementId(String s) {
 <span class="fc" id="L897">        internalAttributes</span>
-                .put(
+<span class="fc" id="L898">                .put(</span>
                         InternalAttribute.ATTR_UPDATE_BY_PRIMARY_KEY_SELECTIVE_STATEMENT_ID,
                         s);
 <span class="fc" id="L901">    }</span>
@@ -919,7 +919,7 @@ public abstract class IntrospectedTable {
      */
     public void setUpdateByExampleWithBLOBsStatementId(String s) {
 <span class="fc" id="L921">        internalAttributes</span>
-                .put(
+<span class="fc" id="L922">                .put(</span>
                         InternalAttribute.ATTR_UPDATE_BY_EXAMPLE_WITH_BLOBS_STATEMENT_ID,
                         s);
 <span class="fc" id="L925">    }</span>
@@ -932,7 +932,7 @@ public abstract class IntrospectedTable {
      */
     public void setUpdateByExampleSelectiveStatementId(String s) {
 <span class="fc" id="L934">        internalAttributes</span>
-                .put(
+<span class="fc" id="L935">                .put(</span>
                         InternalAttribute.ATTR_UPDATE_BY_EXAMPLE_SELECTIVE_STATEMENT_ID,
                         s);
 <span class="fc" id="L938">    }</span>
@@ -967,7 +967,7 @@ public abstract class IntrospectedTable {
      */
     public void setSelectByExampleWithBLOBsStatementId(String s) {
 <span class="fc" id="L969">        internalAttributes</span>
-                .put(
+<span class="fc" id="L970">                .put(</span>
                         InternalAttribute.ATTR_SELECT_BY_EXAMPLE_WITH_BLOBS_STATEMENT_ID,
                         s);
 <span class="fc" id="L973">    }</span>
@@ -1055,7 +1055,7 @@ public abstract class IntrospectedTable {
      */
     public String getBlobColumnListId() {
 <span class="fc" id="L1057">        return internalAttributes</span>
-                .get(InternalAttribute.ATTR_BLOB_COLUMN_LIST_ID);
+<span class="fc" id="L1058">                .get(InternalAttribute.ATTR_BLOB_COLUMN_LIST_ID);</span>
     }
 
     /**
@@ -1065,7 +1065,7 @@ public abstract class IntrospectedTable {
      */
     public String getBaseColumnListId() {
 <span class="fc" id="L1067">        return internalAttributes</span>
-                .get(InternalAttribute.ATTR_BASE_COLUMN_LIST_ID);
+<span class="fc" id="L1068">                .get(InternalAttribute.ATTR_BASE_COLUMN_LIST_ID);</span>
     }
 
     /**
@@ -1075,7 +1075,7 @@ public abstract class IntrospectedTable {
      */
     public String getExampleWhereClauseId() {
 <span class="fc" id="L1077">        return internalAttributes</span>
-                .get(InternalAttribute.ATTR_EXAMPLE_WHERE_CLAUSE_ID);
+<span class="fc" id="L1078">                .get(InternalAttribute.ATTR_EXAMPLE_WHERE_CLAUSE_ID);</span>
     }
 
     /**
@@ -1085,7 +1085,7 @@ public abstract class IntrospectedTable {
      */
     public String getMyBatis3UpdateByExampleWhereClauseId() {
 <span class="fc" id="L1087">        return internalAttributes</span>
-                .get(InternalAttribute.ATTR_MYBATIS3_UPDATE_BY_EXAMPLE_WHERE_CLAUSE_ID);
+<span class="fc" id="L1088">                .get(InternalAttribute.ATTR_MYBATIS3_UPDATE_BY_EXAMPLE_WHERE_CLAUSE_ID);</span>
     }
 
     /**
@@ -1095,7 +1095,7 @@ public abstract class IntrospectedTable {
      */
     public String getResultMapWithBLOBsId() {
 <span class="fc" id="L1097">        return internalAttributes</span>
-                .get(InternalAttribute.ATTR_RESULT_MAP_WITH_BLOBS_ID);
+<span class="fc" id="L1098">                .get(InternalAttribute.ATTR_RESULT_MAP_WITH_BLOBS_ID);</span>
     }
 
     /**
@@ -1105,7 +1105,7 @@ public abstract class IntrospectedTable {
      */
     public String getBaseResultMapId() {
 <span class="fc" id="L1107">        return internalAttributes</span>
-                .get(InternalAttribute.ATTR_BASE_RESULT_MAP_ID);
+<span class="fc" id="L1108">                .get(InternalAttribute.ATTR_BASE_RESULT_MAP_ID);</span>
     }
 
     /**
@@ -1115,7 +1115,7 @@ public abstract class IntrospectedTable {
      */
     public String getUpdateByPrimaryKeyWithBLOBsStatementId() {
 <span class="fc" id="L1117">        return internalAttributes</span>
-                .get(InternalAttribute.ATTR_UPDATE_BY_PRIMARY_KEY_WITH_BLOBS_STATEMENT_ID);
+<span class="fc" id="L1118">                .get(InternalAttribute.ATTR_UPDATE_BY_PRIMARY_KEY_WITH_BLOBS_STATEMENT_ID);</span>
     }
 
     /**
@@ -1125,7 +1125,7 @@ public abstract class IntrospectedTable {
      */
     public String getUpdateByPrimaryKeySelectiveStatementId() {
 <span class="fc" id="L1127">        return internalAttributes</span>
-                .get(InternalAttribute.ATTR_UPDATE_BY_PRIMARY_KEY_SELECTIVE_STATEMENT_ID);
+<span class="fc" id="L1128">                .get(InternalAttribute.ATTR_UPDATE_BY_PRIMARY_KEY_SELECTIVE_STATEMENT_ID);</span>
     }
 
     /**
@@ -1135,7 +1135,7 @@ public abstract class IntrospectedTable {
      */
     public String getUpdateByPrimaryKeyStatementId() {
 <span class="fc" id="L1137">        return internalAttributes</span>
-                .get(InternalAttribute.ATTR_UPDATE_BY_PRIMARY_KEY_STATEMENT_ID);
+<span class="fc" id="L1138">                .get(InternalAttribute.ATTR_UPDATE_BY_PRIMARY_KEY_STATEMENT_ID);</span>
     }
 
     /**
@@ -1145,7 +1145,7 @@ public abstract class IntrospectedTable {
      */
     public String getUpdateByExampleWithBLOBsStatementId() {
 <span class="fc" id="L1147">        return internalAttributes</span>
-                .get(InternalAttribute.ATTR_UPDATE_BY_EXAMPLE_WITH_BLOBS_STATEMENT_ID);
+<span class="fc" id="L1148">                .get(InternalAttribute.ATTR_UPDATE_BY_EXAMPLE_WITH_BLOBS_STATEMENT_ID);</span>
     }
 
     /**
@@ -1155,7 +1155,7 @@ public abstract class IntrospectedTable {
      */
     public String getUpdateByExampleSelectiveStatementId() {
 <span class="fc" id="L1157">        return internalAttributes</span>
-                .get(InternalAttribute.ATTR_UPDATE_BY_EXAMPLE_SELECTIVE_STATEMENT_ID);
+<span class="fc" id="L1158">                .get(InternalAttribute.ATTR_UPDATE_BY_EXAMPLE_SELECTIVE_STATEMENT_ID);</span>
     }
 
     /**
@@ -1165,7 +1165,7 @@ public abstract class IntrospectedTable {
      */
     public String getUpdateByExampleStatementId() {
 <span class="fc" id="L1167">        return internalAttributes</span>
-                .get(InternalAttribute.ATTR_UPDATE_BY_EXAMPLE_STATEMENT_ID);
+<span class="fc" id="L1168">                .get(InternalAttribute.ATTR_UPDATE_BY_EXAMPLE_STATEMENT_ID);</span>
     }
 
     /**
@@ -1175,7 +1175,7 @@ public abstract class IntrospectedTable {
      */
     public String getSelectByPrimaryKeyStatementId() {
 <span class="fc" id="L1177">        return internalAttributes</span>
-                .get(InternalAttribute.ATTR_SELECT_BY_PRIMARY_KEY_STATEMENT_ID);
+<span class="fc" id="L1178">                .get(InternalAttribute.ATTR_SELECT_BY_PRIMARY_KEY_STATEMENT_ID);</span>
     }
 
     /**
@@ -1185,7 +1185,7 @@ public abstract class IntrospectedTable {
      */
     public String getSelectByExampleWithBLOBsStatementId() {
 <span class="fc" id="L1187">        return internalAttributes</span>
-                .get(InternalAttribute.ATTR_SELECT_BY_EXAMPLE_WITH_BLOBS_STATEMENT_ID);
+<span class="fc" id="L1188">                .get(InternalAttribute.ATTR_SELECT_BY_EXAMPLE_WITH_BLOBS_STATEMENT_ID);</span>
     }
 
     /**
@@ -1195,7 +1195,7 @@ public abstract class IntrospectedTable {
      */
     public String getSelectAllStatementId() {
 <span class="fc" id="L1197">        return internalAttributes</span>
-                .get(InternalAttribute.ATTR_SELECT_ALL_STATEMENT_ID);
+<span class="fc" id="L1198">                .get(InternalAttribute.ATTR_SELECT_ALL_STATEMENT_ID);</span>
     }
 
     /**
@@ -1205,7 +1205,7 @@ public abstract class IntrospectedTable {
      */
     public String getSelectByExampleStatementId() {
 <span class="fc" id="L1207">        return internalAttributes</span>
-                .get(InternalAttribute.ATTR_SELECT_BY_EXAMPLE_STATEMENT_ID);
+<span class="fc" id="L1208">                .get(InternalAttribute.ATTR_SELECT_BY_EXAMPLE_STATEMENT_ID);</span>
     }
 
     /**
@@ -1215,7 +1215,7 @@ public abstract class IntrospectedTable {
      */
     public String getInsertSelectiveStatementId() {
 <span class="fc" id="L1217">        return internalAttributes</span>
-                .get(InternalAttribute.ATTR_INSERT_SELECTIVE_STATEMENT_ID);
+<span class="fc" id="L1218">                .get(InternalAttribute.ATTR_INSERT_SELECTIVE_STATEMENT_ID);</span>
     }
 
     /**
@@ -1225,7 +1225,7 @@ public abstract class IntrospectedTable {
      */
     public String getInsertStatementId() {
 <span class="fc" id="L1227">        return internalAttributes</span>
-                .get(InternalAttribute.ATTR_INSERT_STATEMENT_ID);
+<span class="fc" id="L1228">                .get(InternalAttribute.ATTR_INSERT_STATEMENT_ID);</span>
     }
 
     /**
@@ -1235,7 +1235,7 @@ public abstract class IntrospectedTable {
      */
     public String getDeleteByPrimaryKeyStatementId() {
 <span class="fc" id="L1237">        return internalAttributes</span>
-                .get(InternalAttribute.ATTR_DELETE_BY_PRIMARY_KEY_STATEMENT_ID);
+<span class="fc" id="L1238">                .get(InternalAttribute.ATTR_DELETE_BY_PRIMARY_KEY_STATEMENT_ID);</span>
     }
 
     /**
@@ -1245,7 +1245,7 @@ public abstract class IntrospectedTable {
      */
     public String getDeleteByExampleStatementId() {
 <span class="fc" id="L1247">        return internalAttributes</span>
-                .get(InternalAttribute.ATTR_DELETE_BY_EXAMPLE_STATEMENT_ID);
+<span class="fc" id="L1248">                .get(InternalAttribute.ATTR_DELETE_BY_EXAMPLE_STATEMENT_ID);</span>
     }
 
     /**
@@ -1255,7 +1255,7 @@ public abstract class IntrospectedTable {
      */
     public String getCountByExampleStatementId() {
 <span class="fc" id="L1257">        return internalAttributes</span>
-                .get(InternalAttribute.ATTR_COUNT_BY_EXAMPLE_STATEMENT_ID);
+<span class="fc" id="L1258">                .get(InternalAttribute.ATTR_COUNT_BY_EXAMPLE_STATEMENT_ID);</span>
     }
 
     /**
@@ -1265,7 +1265,7 @@ public abstract class IntrospectedTable {
      */
     protected String calculateJavaClientImplementationPackage() {
 <span class="fc" id="L1267">        JavaClientGeneratorConfiguration config = context</span>
-                .getJavaClientGeneratorConfiguration();
+<span class="fc" id="L1268">                .getJavaClientGeneratorConfiguration();</span>
 <span class="pc bpc" id="L1269" title="1 of 2 branches missed.">        if (config == null) {</span>
 <span class="nc" id="L1270">            return null;</span>
         }
@@ -1300,7 +1300,7 @@ public abstract class IntrospectedTable {
      */
     protected String calculateJavaClientInterfacePackage() {
 <span class="fc" id="L1302">        JavaClientGeneratorConfiguration config = context</span>
-                .getJavaClientGeneratorConfiguration();
+<span class="fc" id="L1303">                .getJavaClientGeneratorConfiguration();</span>
 <span class="pc bpc" id="L1304" title="1 of 2 branches missed.">        if (config == null) {</span>
 <span class="nc" id="L1305">            return null;</span>
         }
@@ -1357,7 +1357,7 @@ public abstract class IntrospectedTable {
      */
     protected String calculateJavaModelPackage() {
 <span class="fc" id="L1359">        JavaModelGeneratorConfiguration config = context</span>
-                .getJavaModelGeneratorConfiguration();
+<span class="fc" id="L1360">                .getJavaModelGeneratorConfiguration();</span>
 
 <span class="fc" id="L1362">        StringBuilder sb = new StringBuilder();</span>
 <span class="fc" id="L1363">        sb.append(config.getTargetPackage());</span>
@@ -1408,7 +1408,7 @@ public abstract class IntrospectedTable {
     protected String calculateSqlMapPackage() {
 <span class="fc" id="L1409">        StringBuilder sb = new StringBuilder();</span>
 <span class="fc" id="L1410">        SqlMapGeneratorConfiguration config = context</span>
-                .getSqlMapGeneratorConfiguration();
+<span class="fc" id="L1411">                .getSqlMapGeneratorConfiguration();</span>
         
         // config can be null if the Java client does not require XML
 <span class="fc bfc" id="L1414" title="All 2 branches covered.">        if (config != null) {</span>
@@ -1491,7 +1491,7 @@ public abstract class IntrospectedTable {
      */
     public String getFullyQualifiedTableNameAtRuntime() {
 <span class="fc" id="L1493">        return internalAttributes</span>
-                .get(InternalAttribute.ATTR_FULLY_QUALIFIED_TABLE_NAME_AT_RUNTIME);
+<span class="fc" id="L1494">                .get(InternalAttribute.ATTR_FULLY_QUALIFIED_TABLE_NAME_AT_RUNTIME);</span>
     }
 
     /**
@@ -1501,7 +1501,7 @@ public abstract class IntrospectedTable {
      */
     public String getAliasedFullyQualifiedTableNameAtRuntime() {
 <span class="fc" id="L1503">        return internalAttributes</span>
-                .get(InternalAttribute.ATTR_ALIASED_FULLY_QUALIFIED_TABLE_NAME_AT_RUNTIME);
+<span class="fc" id="L1504">                .get(InternalAttribute.ATTR_ALIASED_FULLY_QUALIFIED_TABLE_NAME_AT_RUNTIME);</span>
     }
 
     /**
@@ -1634,7 +1634,7 @@ public abstract class IntrospectedTable {
      */
     public void setExampleType(String exampleType) {
 <span class="fc" id="L1636">        internalAttributes</span>
-                .put(InternalAttribute.ATTR_EXAMPLE_TYPE, exampleType);
+<span class="fc" id="L1637">                .put(InternalAttribute.ATTR_EXAMPLE_TYPE, exampleType);</span>
 <span class="fc" id="L1638">    }</span>
 
     /**
@@ -1706,7 +1706,7 @@ public abstract class IntrospectedTable {
     public void setSqlMapAliasedFullyQualifiedRuntimeTableName(
             String aliasedFullyQualifiedRuntimeTableName) {
 <span class="fc" id="L1708">        internalAttributes</span>
-                .put(
+<span class="fc" id="L1709">                .put(</span>
                         InternalAttribute.ATTR_ALIASED_FULLY_QUALIFIED_TABLE_NAME_AT_RUNTIME,
                         aliasedFullyQualifiedRuntimeTableName);
 <span class="fc" id="L1712">    }</span>
@@ -1718,7 +1718,7 @@ public abstract class IntrospectedTable {
      */
     public String getMyBatis3XmlMapperPackage() {
 <span class="fc" id="L1720">        return internalAttributes</span>
-                .get(InternalAttribute.ATTR_MYBATIS3_XML_MAPPER_PACKAGE);
+<span class="fc" id="L1721">                .get(InternalAttribute.ATTR_MYBATIS3_XML_MAPPER_PACKAGE);</span>
     }
 
     /**
@@ -1740,7 +1740,7 @@ public abstract class IntrospectedTable {
      */
     public String getMyBatis3XmlMapperFileName() {
 <span class="fc" id="L1742">        return internalAttributes</span>
-                .get(InternalAttribute.ATTR_MYBATIS3_XML_MAPPER_FILE_NAME);
+<span class="fc" id="L1743">                .get(InternalAttribute.ATTR_MYBATIS3_XML_MAPPER_FILE_NAME);</span>
     }
 
     /**
@@ -1762,7 +1762,7 @@ public abstract class IntrospectedTable {
      */
     public String getMyBatis3JavaMapperType() {
 <span class="fc" id="L1764">        return internalAttributes</span>
-                .get(InternalAttribute.ATTR_MYBATIS3_JAVA_MAPPER_TYPE);
+<span class="fc" id="L1765">                .get(InternalAttribute.ATTR_MYBATIS3_JAVA_MAPPER_TYPE);</span>
     }
 
     /**
@@ -1784,7 +1784,7 @@ public abstract class IntrospectedTable {
      */
     public String getMyBatis3SqlProviderType() {
 <span class="fc" id="L1786">        return internalAttributes</span>
-                .get(InternalAttribute.ATTR_MYBATIS3_SQL_PROVIDER_TYPE);
+<span class="fc" id="L1787">                .get(InternalAttribute.ATTR_MYBATIS3_SQL_PROVIDER_TYPE);</span>
     }
 
     /**

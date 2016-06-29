@@ -26,10 +26,10 @@ package org.mybatis.generator.api.dom.java;
      * @param fqjt the type in question
      */
     public static String calculateTypeName(CompilationUnit compilationUnit, FullyQualifiedJavaType fqjt) {
-<span class="pc bpc" id="L29" title="2 of 8 branches missed.">        if(compilationUnit == null</span>
-                || typeDoesNotRequireImport(fqjt)
-                || typeIsInSamePackage(compilationUnit, fqjt) 
-                || typeIsAlreadyImported(compilationUnit, fqjt)) {
+<span class="pc bpc" id="L29" title="1 of 2 branches missed.">        if(compilationUnit == null</span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">                || typeDoesNotRequireImport(fqjt)</span>
+<span class="fc bfc" id="L31" title="All 2 branches covered.">                || typeIsInSamePackage(compilationUnit, fqjt) </span>
+<span class="pc bpc" id="L32" title="1 of 2 branches missed.">                || typeIsAlreadyImported(compilationUnit, fqjt)) {</span>
 <span class="fc" id="L33">            return fqjt.getShortName();</span>
         } else {
 <span class="nc" id="L35">            return fqjt.getFullyQualifiedName();</span>
@@ -37,8 +37,8 @@ package org.mybatis.generator.api.dom.java;
     }
     
     private static boolean typeDoesNotRequireImport(FullyQualifiedJavaType fullyQualifiedJavaType) {
-<span class="fc bfc" id="L40" title="All 4 branches covered.">        return fullyQualifiedJavaType.isPrimitive()</span>
-                || !fullyQualifiedJavaType.isExplicitlyImported();
+<span class="fc bfc" id="L40" title="All 2 branches covered.">        return fullyQualifiedJavaType.isPrimitive()</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">                || !fullyQualifiedJavaType.isExplicitlyImported();</span>
     }
     
     private static boolean typeIsInSamePackage(CompilationUnit compilationUnit, FullyQualifiedJavaType fullyQualifiedJavaType) {

@@ -155,12 +155,12 @@ public class ConfigurationParser {
             Configuration config;
 <span class="fc" id="L156">            Element rootNode = document.getDocumentElement();</span>
 <span class="fc" id="L157">            DocumentType docType = document.getDoctype();</span>
-<span class="pc bpc" id="L158" title="1 of 4 branches missed.">            if (rootNode.getNodeType() == Node.ELEMENT_NODE</span>
-                    &amp;&amp; docType.getPublicId().equals(
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">            if (rootNode.getNodeType() == Node.ELEMENT_NODE</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">                    &amp;&amp; docType.getPublicId().equals(</span>
                             XmlConstants.IBATOR_CONFIG_PUBLIC_ID)) {
 <span class="fc" id="L161">                config = parseIbatorConfiguration(rootNode);</span>
-<span class="pc bpc" id="L162" title="2 of 4 branches missed.">            } else if (rootNode.getNodeType() == Node.ELEMENT_NODE</span>
-                    &amp;&amp; docType.getPublicId().equals(
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">            } else if (rootNode.getNodeType() == Node.ELEMENT_NODE</span>
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">                    &amp;&amp; docType.getPublicId().equals(</span>
                             XmlConstants.MYBATIS_GENERATOR_CONFIG_PUBLIC_ID)) {
 <span class="fc" id="L165">                config = parseMyBatisGeneratorConfiguration(rootNode);</span>
             } else {

@@ -93,7 +93,7 @@ import org.mybatis.generator.logging.LogFactory;
 <span class="nc" id="L93">        Set&lt;String&gt; contexts = new HashSet&lt;String&gt;();</span>
 <span class="nc bnc" id="L94" title="All 2 branches missed.">        if (arguments.containsKey(CONTEXT_IDS)) {</span>
 <span class="nc" id="L95">            StringTokenizer st = new StringTokenizer(</span>
-                    arguments.get(CONTEXT_IDS), &quot;,&quot;); //$NON-NLS-1$
+<span class="nc" id="L96">                    arguments.get(CONTEXT_IDS), &quot;,&quot;); //$NON-NLS-1$</span>
 <span class="nc bnc" id="L97" title="All 2 branches missed.">            while (st.hasMoreTokens()) {</span>
 <span class="nc" id="L98">                String s = st.nextToken().trim();</span>
 <span class="nc bnc" id="L99" title="All 2 branches missed.">                if (s.length() &gt; 0) {</span>
@@ -107,7 +107,7 @@ import org.mybatis.generator.logging.LogFactory;
 <span class="nc" id="L107">            Configuration config = cp.parseConfiguration(configurationFile);</span>
 
 <span class="nc" id="L109">            DefaultShellCallback shellCallback = new DefaultShellCallback(</span>
-                    arguments.containsKey(OVERWRITE));
+<span class="nc" id="L110">                    arguments.containsKey(OVERWRITE));</span>
 
 <span class="nc" id="L112">            MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, shellCallback, warnings);</span>
 

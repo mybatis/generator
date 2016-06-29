@@ -50,10 +50,10 @@ public class InsertMethodGenerator extends AbstractJavaMapperMethodGenerator {
         FullyQualifiedJavaType parameterType;
 <span class="fc bfc" id="L51" title="All 2 branches covered.">        if (isSimple) {</span>
 <span class="fc" id="L52">            parameterType = new FullyQualifiedJavaType(</span>
-                    introspectedTable.getBaseRecordType());
+<span class="fc" id="L53">                    introspectedTable.getBaseRecordType());</span>
         } else {
 <span class="fc" id="L55">            parameterType = introspectedTable.getRules()</span>
-                    .calculateAllFieldsClass();
+<span class="fc" id="L56">                    .calculateAllFieldsClass();</span>
         }
 
 <span class="fc" id="L59">        importedTypes.add(parameterType);</span>

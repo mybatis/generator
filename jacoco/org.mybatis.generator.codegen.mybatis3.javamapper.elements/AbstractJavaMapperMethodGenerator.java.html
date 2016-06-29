@@ -57,7 +57,7 @@ public abstract class AbstractJavaMapperMethodGenerator extends
         
 <span class="fc bfc" id="L58" title="All 2 branches covered.">        if (stringHasValue(introspectedColumn.getTypeHandler())) {</span>
 <span class="fc" id="L59">            FullyQualifiedJavaType fqjt =</span>
-                new FullyQualifiedJavaType(introspectedColumn.getTypeHandler());
+<span class="fc" id="L60">                new FullyQualifiedJavaType(introspectedColumn.getTypeHandler());</span>
 <span class="fc" id="L61">            interfaze.addImportedType(fqjt);</span>
 <span class="fc" id="L62">            sb.append(&quot;, typeHandler=&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L63">            sb.append(fqjt.getShortName());</span>

@@ -56,7 +56,7 @@ public class SimpleModelGenerator extends AbstractJavaGenerator {
 <span class="fc" id="L56">        CommentGenerator commentGenerator = context.getCommentGenerator();</span>
 
 <span class="fc" id="L58">        FullyQualifiedJavaType type = new FullyQualifiedJavaType(</span>
-                introspectedTable.getBaseRecordType());
+<span class="fc" id="L59">                introspectedTable.getBaseRecordType());</span>
 <span class="fc" id="L60">        TopLevelClass topLevelClass = new TopLevelClass(type);</span>
 <span class="fc" id="L61">        topLevelClass.setVisibility(JavaVisibility.PUBLIC);</span>
 <span class="fc" id="L62">        commentGenerator.addJavaFileComment(topLevelClass);</span>
@@ -81,8 +81,8 @@ public class SimpleModelGenerator extends AbstractJavaGenerator {
 
 <span class="fc" id="L82">        String rootClass = getRootClass();</span>
 <span class="fc bfc" id="L83" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedColumns) {</span>
-<span class="pc bpc" id="L84" title="1 of 2 branches missed.">            if (RootClassInfo.getInstance(rootClass, warnings)</span>
-                    .containsProperty(introspectedColumn)) {
+<span class="fc" id="L84">            if (RootClassInfo.getInstance(rootClass, warnings)</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">                    .containsProperty(introspectedColumn)) {</span>
 <span class="nc" id="L86">                continue;</span>
             }
 
@@ -140,12 +140,12 @@ public class SimpleModelGenerator extends AbstractJavaGenerator {
                 introspectedTable);
 
 <span class="nc" id="L142">        List&lt;IntrospectedColumn&gt; constructorColumns = introspectedTable</span>
-                .getAllColumns();
+<span class="nc" id="L143">                .getAllColumns();</span>
 
 <span class="nc bnc" id="L145" title="All 2 branches missed.">        for (IntrospectedColumn introspectedColumn : constructorColumns) {</span>
 <span class="nc" id="L146">            method.addParameter(new Parameter(introspectedColumn</span>
-                    .getFullyQualifiedJavaType(), introspectedColumn
-                    .getJavaProperty()));
+<span class="nc" id="L147">                    .getFullyQualifiedJavaType(), introspectedColumn</span>
+<span class="nc" id="L148">                    .getJavaProperty()));</span>
 <span class="nc" id="L149">        }</span>
 
 <span class="nc" id="L151">        StringBuilder sb = new StringBuilder();</span>
@@ -153,7 +153,7 @@ public class SimpleModelGenerator extends AbstractJavaGenerator {
 <span class="nc" id="L153">            boolean comma = false;</span>
 <span class="nc" id="L154">            sb.append(&quot;super(&quot;); //$NON-NLS-1$</span>
 <span class="nc bnc" id="L155" title="All 2 branches missed.">            for (IntrospectedColumn introspectedColumn : introspectedTable</span>
-                    .getPrimaryKeyColumns()) {
+<span class="nc" id="L156">                    .getPrimaryKeyColumns()) {</span>
 <span class="nc bnc" id="L157" title="All 2 branches missed.">                if (comma) {</span>
 <span class="nc" id="L158">                    sb.append(&quot;, &quot;); //$NON-NLS-1$</span>
                 } else {

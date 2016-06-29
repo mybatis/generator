@@ -150,9 +150,9 @@ public class ProviderApplyWhereMethodGenerator extends
 <span class="fc" id="L150">        FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getExampleType());</span>
 <span class="fc" id="L151">        importedTypes.add(fqjt);</span>
 <span class="fc" id="L152">        importedTypes.add(new FullyQualifiedJavaType(</span>
-                String.format(&quot;%s.Criteria&quot;, fqjt.getFullyQualifiedName()))); //$NON-NLS-1$
+<span class="fc" id="L153">                String.format(&quot;%s.Criteria&quot;, fqjt.getFullyQualifiedName()))); //$NON-NLS-1$</span>
 <span class="fc" id="L154">        importedTypes.add(new FullyQualifiedJavaType(</span>
-                String.format(&quot;%s.Criterion&quot;, fqjt.getFullyQualifiedName()))); //$NON-NLS-1$
+<span class="fc" id="L155">                String.format(&quot;%s.Criterion&quot;, fqjt.getFullyQualifiedName()))); //$NON-NLS-1$</span>
 
 <span class="fc" id="L157">        Method method = new Method(&quot;applyWhere&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L158">        method.setVisibility(JavaVisibility.PROTECTED);</span>

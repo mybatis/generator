@@ -39,10 +39,10 @@ public class SelectByExampleWithBLOBsElementGenerator extends
 
 <span class="fc" id="L40">        XmlElement answer = new XmlElement(&quot;select&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L41">        answer</span>
-                .addAttribute(new Attribute(
-                        &quot;id&quot;, introspectedTable.getSelectByExampleWithBLOBsStatementId())); //$NON-NLS-1$
+<span class="fc" id="L42">                .addAttribute(new Attribute(</span>
+<span class="fc" id="L43">                        &quot;id&quot;, introspectedTable.getSelectByExampleWithBLOBsStatementId())); //$NON-NLS-1$</span>
 <span class="fc" id="L44">        answer.addAttribute(new Attribute(</span>
-                &quot;resultMap&quot;, introspectedTable.getResultMapWithBLOBsId())); //$NON-NLS-1$
+<span class="fc" id="L45">                &quot;resultMap&quot;, introspectedTable.getResultMapWithBLOBsId())); //$NON-NLS-1$</span>
 <span class="fc" id="L46">        answer.addAttribute(new Attribute(&quot;parameterType&quot;, fqjt)); //$NON-NLS-1$</span>
 
 <span class="fc" id="L48">        context.getCommentGenerator().addComment(answer);</span>
@@ -55,7 +55,7 @@ public class SelectByExampleWithBLOBsElementGenerator extends
 
 <span class="fc" id="L56">        StringBuilder sb = new StringBuilder();</span>
 <span class="pc bpc" id="L57" title="1 of 2 branches missed.">        if (stringHasValue(introspectedTable</span>
-                .getSelectByExampleQueryId())) {
+<span class="fc" id="L58">                .getSelectByExampleQueryId())) {</span>
 <span class="nc" id="L59">            sb.append('\'');</span>
 <span class="nc" id="L60">            sb.append(introspectedTable.getSelectByExampleQueryId());</span>
 <span class="nc" id="L61">            sb.append(&quot;' as QUERYID,&quot;); //$NON-NLS-1$</span>
@@ -69,7 +69,7 @@ public class SelectByExampleWithBLOBsElementGenerator extends
 <span class="fc" id="L69">        sb.setLength(0);</span>
 <span class="fc" id="L70">        sb.append(&quot;from &quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L71">        sb.append(introspectedTable</span>
-                .getAliasedFullyQualifiedTableNameAtRuntime());
+<span class="fc" id="L72">                .getAliasedFullyQualifiedTableNameAtRuntime());</span>
 <span class="fc" id="L73">        answer.addElement(new TextElement(sb.toString()));</span>
 <span class="fc" id="L74">        answer.addElement(getExampleIncludeElement());</span>
 
@@ -78,8 +78,8 @@ public class SelectByExampleWithBLOBsElementGenerator extends
 <span class="fc" id="L78">        ifElement.addElement(new TextElement(&quot;order by ${orderByClause}&quot;)); //$NON-NLS-1$</span>
 <span class="fc" id="L79">        answer.addElement(ifElement);</span>
 
-<span class="pc bpc" id="L81" title="1 of 2 branches missed.">        if (context.getPlugins()</span>
-                .sqlMapSelectByExampleWithBLOBsElementGenerated(answer,
+<span class="fc" id="L81">        if (context.getPlugins()</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">                .sqlMapSelectByExampleWithBLOBsElementGenerated(answer,</span>
                         introspectedTable)) {
 <span class="fc" id="L84">            parentElement.addElement(answer);</span>
         }

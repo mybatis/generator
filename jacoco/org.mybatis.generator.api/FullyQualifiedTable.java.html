@@ -137,7 +137,7 @@ public class FullyQualifiedTable {
         }
 
 <span class="fc bfc" id="L139" title="All 2 branches covered.">        beginningDelimiter = delimitIdentifiers ? context</span>
-                .getBeginningDelimiter() : &quot;&quot;; //$NON-NLS-1$
+<span class="fc" id="L140">                .getBeginningDelimiter() : &quot;&quot;; //$NON-NLS-1$</span>
 <span class="fc bfc" id="L141" title="All 2 branches covered.">        endingDelimiter = delimitIdentifiers ? context.getEndingDelimiter()</span>
                 : &quot;&quot;; //$NON-NLS-1$
 <span class="fc" id="L143">    }</span>
@@ -208,7 +208,7 @@ public class FullyQualifiedTable {
 <span class="fc" id="L208">        addDelimiters(localTableName);</span>
 
 <span class="fc" id="L210">        return composeFullyQualifiedTableName(localCatalog</span>
-                .toString(), localSchema.toString(), localTableName.toString(),
+<span class="fc" id="L211">                .toString(), localSchema.toString(), localTableName.toString(),</span>
                 '.');
     }
 
@@ -280,11 +280,11 @@ public class FullyQualifiedTable {
 
 <span class="nc" id="L281">        FullyQualifiedTable other = (FullyQualifiedTable) obj;</span>
 
-<span class="nc bnc" id="L283" title="All 6 branches missed.">        return areEqual(this.introspectedTableName,</span>
+<span class="nc bnc" id="L283" title="All 2 branches missed.">        return areEqual(this.introspectedTableName,</span>
                 other.introspectedTableName)
-                &amp;&amp; areEqual(this.introspectedCatalog,
+<span class="nc bnc" id="L285" title="All 2 branches missed.">                &amp;&amp; areEqual(this.introspectedCatalog,</span>
                         other.introspectedCatalog)
-                &amp;&amp; areEqual(this.introspectedSchema,
+<span class="nc bnc" id="L287" title="All 2 branches missed.">                &amp;&amp; areEqual(this.introspectedSchema,</span>
                         other.introspectedSchema);
     }
 

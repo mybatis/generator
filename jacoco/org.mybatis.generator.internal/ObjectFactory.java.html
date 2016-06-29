@@ -232,7 +232,7 @@ public class ObjectFactory {
     public static JavaTypeResolver createJavaTypeResolver(Context context,
             List&lt;String&gt; warnings) {
 <span class="fc" id="L234">        JavaTypeResolverConfiguration config = context</span>
-                .getJavaTypeResolverConfiguration();
+<span class="fc" id="L235">                .getJavaTypeResolverConfiguration();</span>
         String type;
 
 <span class="pc bpc" id="L238" title="3 of 4 branches missed.">        if (config != null &amp;&amp; config.getConfigurationType() != null) {</span>
@@ -268,7 +268,7 @@ public class ObjectFactory {
     public static Plugin createPlugin(Context context,
             PluginConfiguration pluginConfiguration) {
 <span class="fc" id="L270">        Plugin plugin = (Plugin) createInternalObject(pluginConfiguration</span>
-                .getConfigurationType());
+<span class="fc" id="L271">                .getConfigurationType());</span>
 <span class="fc" id="L272">        plugin.setContext(context);</span>
 <span class="fc" id="L273">        plugin.setProperties(pluginConfiguration.getProperties());</span>
 <span class="fc" id="L274">        return plugin;</span>
@@ -284,7 +284,7 @@ public class ObjectFactory {
     public static CommentGenerator createCommentGenerator(Context context) {
 
 <span class="fc" id="L286">        CommentGeneratorConfiguration config = context</span>
-                .getCommentGeneratorConfiguration();
+<span class="fc" id="L287">                .getCommentGeneratorConfiguration();</span>
         CommentGenerator answer;
 
         String type;

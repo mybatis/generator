@@ -68,7 +68,7 @@ public class GeneratedKey {
 <span class="fc" id="L68">        this.configuredSqlStatement = configuredSqlStatement;</span>
 
 <span class="fc" id="L70">        DatabaseDialects dialect = DatabaseDialects</span>
-                .getDatabaseDialect(configuredSqlStatement);
+<span class="fc" id="L71">                .getDatabaseDialect(configuredSqlStatement);</span>
 <span class="fc bfc" id="L72" title="All 2 branches covered.">        if (dialect == null) {</span>
 <span class="fc" id="L73">            this.runtimeSqlStatement = configuredSqlStatement;</span>
         } else {
@@ -172,8 +172,8 @@ public class GeneratedKey {
                     tableName));
         }
 
-<span class="pc bpc" id="L175" title="3 of 6 branches missed.">        if (stringHasValue(type) &amp;&amp;</span>
-                !&quot;pre&quot;.equals(type) &amp;&amp; !&quot;post&quot;.equals(type)) { //$NON-NLS-1$ //$NON-NLS-2$
+<span class="fc bfc" id="L175" title="All 2 branches covered.">        if (stringHasValue(type) &amp;&amp;</span>
+<span class="pc bpc" id="L176" title="3 of 4 branches missed.">                !&quot;pre&quot;.equals(type) &amp;&amp; !&quot;post&quot;.equals(type)) { //$NON-NLS-1$ //$NON-NLS-2$</span>
 <span class="nc" id="L177">            errors.add(getString(&quot;ValidationError.15&quot;, tableName)); //$NON-NLS-1$</span>
         }
         

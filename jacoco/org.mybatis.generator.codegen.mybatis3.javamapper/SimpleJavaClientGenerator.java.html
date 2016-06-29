@@ -57,20 +57,20 @@ public class SimpleJavaClientGenerator extends AbstractJavaClientGenerator {
     @Override
     public List&lt;CompilationUnit&gt; getCompilationUnits() {
 <span class="fc" id="L59">        progressCallback.startTask(getString(&quot;Progress.17&quot;, //$NON-NLS-1$</span>
-                introspectedTable.getFullyQualifiedTable().toString()));
+<span class="fc" id="L60">                introspectedTable.getFullyQualifiedTable().toString()));</span>
 <span class="fc" id="L61">        CommentGenerator commentGenerator = context.getCommentGenerator();</span>
 
 <span class="fc" id="L63">        FullyQualifiedJavaType type = new FullyQualifiedJavaType(</span>
-                introspectedTable.getMyBatis3JavaMapperType());
+<span class="fc" id="L64">                introspectedTable.getMyBatis3JavaMapperType());</span>
 <span class="fc" id="L65">        Interface interfaze = new Interface(type);</span>
 <span class="fc" id="L66">        interfaze.setVisibility(JavaVisibility.PUBLIC);</span>
 <span class="fc" id="L67">        commentGenerator.addJavaFileComment(interfaze);</span>
 
 <span class="fc" id="L69">        String rootInterface = introspectedTable</span>
-            .getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
+<span class="fc" id="L70">            .getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_INTERFACE);</span>
 <span class="pc bpc" id="L71" title="1 of 2 branches missed.">        if (!stringHasValue(rootInterface)) {</span>
 <span class="fc" id="L72">            rootInterface = context.getJavaClientGeneratorConfiguration()</span>
-                .getProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
+<span class="fc" id="L73">                .getProperty(PropertyRegistry.ANY_ROOT_INTERFACE);</span>
         }
 
 <span class="pc bpc" id="L76" title="1 of 2 branches missed.">        if (stringHasValue(rootInterface)) {</span>

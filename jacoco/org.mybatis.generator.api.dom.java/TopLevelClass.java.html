@@ -87,11 +87,11 @@ public class TopLevelClass extends InnerClass implements CompilationUnit {
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#addImportedType(org.mybatis.generator.api.dom.java.FullyQualifiedJavaType)
      */
     public void addImportedType(FullyQualifiedJavaType importedType) {
-<span class="pc bpc" id="L90" title="1 of 8 branches missed.">        if (importedType != null</span>
-                &amp;&amp; importedType.isExplicitlyImported()
-                &amp;&amp; !importedType.getPackageName().equals(
-                        getType().getPackageName())
-                &amp;&amp; !importedType.getShortName().equals(getType().getShortName())) {
+<span class="fc bfc" id="L90" title="All 2 branches covered.">        if (importedType != null</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">                &amp;&amp; importedType.isExplicitlyImported()</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">                &amp;&amp; !importedType.getPackageName().equals(</span>
+<span class="fc" id="L93">                        getType().getPackageName())</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">                &amp;&amp; !importedType.getShortName().equals(getType().getShortName())) {</span>
 <span class="fc" id="L95">            importedTypes.add(importedType);</span>
         }
 <span class="fc" id="L97">    }</span>

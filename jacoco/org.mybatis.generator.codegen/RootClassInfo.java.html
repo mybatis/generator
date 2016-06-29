@@ -40,7 +40,7 @@ public class RootClassInfo {
 
     static {
 <span class="fc" id="L42">        rootClassInfoMap = Collections</span>
-                .synchronizedMap(new HashMap&lt;String, RootClassInfo&gt;());
+<span class="fc" id="L43">                .synchronizedMap(new HashMap&lt;String, RootClassInfo&gt;());</span>
 <span class="fc" id="L44">    }</span>
 
     public static RootClassInfo getInstance(String className,
@@ -92,7 +92,7 @@ public class RootClassInfo {
 <span class="nc" id="L92">        boolean found = false;</span>
 <span class="nc" id="L93">        String propertyName = introspectedColumn.getJavaProperty();</span>
 <span class="nc" id="L94">        String propertyType = introspectedColumn.getFullyQualifiedJavaType()</span>
-                .getFullyQualifiedName();
+<span class="nc" id="L95">                .getFullyQualifiedName();</span>
 
         // get method names from class and check against this column definition.
         // better yet, have a map of method Names. check against it.

@@ -39,10 +39,10 @@ public class ResultMapWithoutBLOBsElementGenerator extends
     @Override
     public void addElements(XmlElement parentElement) {
 <span class="fc" id="L41">        boolean useColumnIndex = isTrue(introspectedTable</span>
-                        .getTableConfigurationProperty(PropertyRegistry.TABLE_USE_COLUMN_INDEXES));
+<span class="fc" id="L42">                        .getTableConfigurationProperty(PropertyRegistry.TABLE_USE_COLUMN_INDEXES));</span>
 <span class="fc" id="L43">        XmlElement answer = new XmlElement(&quot;resultMap&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L44">        answer.addAttribute(new Attribute(&quot;id&quot;, //$NON-NLS-1$</span>
-                introspectedTable.getBaseResultMapId()));
+<span class="fc" id="L45">                introspectedTable.getBaseResultMapId()));</span>
 
         String returnType;
 <span class="fc bfc" id="L48" title="All 2 branches covered.">        if (introspectedTable.getRules().generateBaseRecordClass()) {</span>
@@ -57,42 +57,42 @@ public class ResultMapWithoutBLOBsElementGenerator extends
 <span class="fc" id="L57">        context.getCommentGenerator().addComment(answer);</span>
 
 <span class="fc" id="L59">        int i = 1;</span>
-<span class="pc bpc" id="L60" title="2 of 4 branches missed.">        if (stringHasValue(introspectedTable</span>
-                .getSelectByPrimaryKeyQueryId())
-                || stringHasValue(introspectedTable
-                        .getSelectByExampleQueryId())) {
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">        if (stringHasValue(introspectedTable</span>
+<span class="fc" id="L61">                .getSelectByPrimaryKeyQueryId())</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">                || stringHasValue(introspectedTable</span>
+<span class="fc" id="L63">                        .getSelectByExampleQueryId())) {</span>
 <span class="nc" id="L64">            i++;</span>
         }
 
 <span class="fc bfc" id="L67" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable</span>
-                .getNonBLOBColumns()) {
+<span class="fc" id="L68">                .getNonBLOBColumns()) {</span>
 <span class="fc" id="L69">            XmlElement resultElement = new XmlElement(&quot;result&quot;); //$NON-NLS-1$</span>
 
 <span class="fc bfc" id="L71" title="All 2 branches covered.">            if (useColumnIndex) {</span>
 <span class="fc" id="L72">                resultElement.addAttribute(new Attribute(</span>
-                        &quot;columnIndex&quot;, Integer.toString(i++))); //$NON-NLS-1$
+<span class="fc" id="L73">                        &quot;columnIndex&quot;, Integer.toString(i++))); //$NON-NLS-1$</span>
             } else {
 <span class="fc" id="L75">                resultElement</span>
-                        .addAttribute(new Attribute(
-                                &quot;column&quot;, Ibatis2FormattingUtilities.getRenamedColumnNameForResultMap(introspectedColumn))); //$NON-NLS-1$
+<span class="fc" id="L76">                        .addAttribute(new Attribute(</span>
+<span class="fc" id="L77">                                &quot;column&quot;, Ibatis2FormattingUtilities.getRenamedColumnNameForResultMap(introspectedColumn))); //$NON-NLS-1$</span>
             }
 
 <span class="fc" id="L80">            resultElement.addAttribute(new Attribute(</span>
-                    &quot;property&quot;, introspectedColumn.getJavaProperty())); //$NON-NLS-1$
+<span class="fc" id="L81">                    &quot;property&quot;, introspectedColumn.getJavaProperty())); //$NON-NLS-1$</span>
 <span class="fc" id="L82">            resultElement.addAttribute(new Attribute(&quot;jdbcType&quot;, //$NON-NLS-1$</span>
-                    introspectedColumn.getJdbcTypeName()));
+<span class="fc" id="L83">                    introspectedColumn.getJdbcTypeName()));</span>
 
 <span class="fc bfc" id="L85" title="All 2 branches covered.">            if (stringHasValue(introspectedColumn</span>
-                    .getTypeHandler())) {
+<span class="fc" id="L86">                    .getTypeHandler())) {</span>
 <span class="fc" id="L87">                resultElement.addAttribute(new Attribute(</span>
-                        &quot;typeHandler&quot;, introspectedColumn.getTypeHandler())); //$NON-NLS-1$
+<span class="fc" id="L88">                        &quot;typeHandler&quot;, introspectedColumn.getTypeHandler())); //$NON-NLS-1$</span>
             }
 
 <span class="fc" id="L91">            answer.addElement(resultElement);</span>
 <span class="fc" id="L92">        }</span>
 
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">        if (context.getPlugins()</span>
-                .sqlMapResultMapWithoutBLOBsElementGenerated(answer,
+<span class="fc" id="L94">        if (context.getPlugins()</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">                .sqlMapResultMapWithoutBLOBsElementGenerated(answer,</span>
                         introspectedTable)) {
 <span class="fc" id="L97">            parentElement.addElement(answer);</span>
         }

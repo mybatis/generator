@@ -43,10 +43,10 @@ public class UpdateByPrimaryKeyWithBLOBsMethodGenerator extends
 
 <span class="fc bfc" id="L44" title="All 2 branches covered.">        if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {</span>
 <span class="fc" id="L45">            parameterType = new FullyQualifiedJavaType(introspectedTable</span>
-                    .getRecordWithBLOBsType());
+<span class="fc" id="L46">                    .getRecordWithBLOBsType());</span>
         } else {
 <span class="fc" id="L48">            parameterType = new FullyQualifiedJavaType(introspectedTable</span>
-                    .getBaseRecordType());
+<span class="fc" id="L49">                    .getBaseRecordType());</span>
         }
 
 <span class="fc" id="L52">        importedTypes.add(parameterType);</span>
@@ -56,7 +56,7 @@ public class UpdateByPrimaryKeyWithBLOBsMethodGenerator extends
 <span class="fc" id="L56">        method.setReturnType(FullyQualifiedJavaType.getIntInstance());</span>
 
 <span class="fc" id="L58">        method.setName(introspectedTable</span>
-            .getUpdateByPrimaryKeyWithBLOBsStatementId());
+<span class="fc" id="L59">            .getUpdateByPrimaryKeyWithBLOBsStatementId());</span>
 <span class="fc" id="L60">        method.addParameter(new Parameter(parameterType, &quot;record&quot;)); //$NON-NLS-1$</span>
 
 <span class="fc" id="L62">        context.getCommentGenerator().addGeneralMethodComment(method,</span>
@@ -64,8 +64,8 @@ public class UpdateByPrimaryKeyWithBLOBsMethodGenerator extends
 
 <span class="fc" id="L65">        addMapperAnnotations(interfaze, method);</span>
 
-<span class="pc bpc" id="L67" title="1 of 2 branches missed.">        if (context.getPlugins()</span>
-                .clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(method,
+<span class="fc" id="L67">        if (context.getPlugins()</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">                .clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(method,</span>
                         interfaze, introspectedTable)) {
 <span class="fc" id="L70">            interfaze.addImportedTypes(importedTypes);</span>
 <span class="fc" id="L71">            interfaze.addMethod(method);</span>

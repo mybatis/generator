@@ -120,9 +120,9 @@ public abstract class BaseRules implements Rules {
 <span class="fc" id="L120">            return false;</span>
         }
         
-<span class="pc bpc" id="L123" title="1 of 6 branches missed.">        boolean rc = tableConfiguration.isUpdateByPrimaryKeyStatementEnabled()</span>
-                &amp;&amp; introspectedTable.hasPrimaryKeyColumns()
-                &amp;&amp; introspectedTable.hasBaseColumns();
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">        boolean rc = tableConfiguration.isUpdateByPrimaryKeyStatementEnabled()</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">                &amp;&amp; introspectedTable.hasPrimaryKeyColumns()</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">                &amp;&amp; introspectedTable.hasBaseColumns();</span>
 
 <span class="fc" id="L127">        return rc;</span>
     }
@@ -140,9 +140,9 @@ public abstract class BaseRules implements Rules {
 <span class="fc" id="L140">            return false;</span>
         }
         
-<span class="pc bpc" id="L143" title="1 of 6 branches missed.">        boolean rc = tableConfiguration.isUpdateByPrimaryKeyStatementEnabled()</span>
-                &amp;&amp; introspectedTable.hasPrimaryKeyColumns()
-                &amp;&amp; introspectedTable.hasBLOBColumns();
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">        boolean rc = tableConfiguration.isUpdateByPrimaryKeyStatementEnabled()</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">                &amp;&amp; introspectedTable.hasPrimaryKeyColumns()</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">                &amp;&amp; introspectedTable.hasBLOBColumns();</span>
 
 <span class="fc" id="L147">        return rc;</span>
     }
@@ -160,10 +160,10 @@ public abstract class BaseRules implements Rules {
 <span class="fc" id="L160">            return false;</span>
         }
         
-<span class="pc bpc" id="L163" title="1 of 8 branches missed.">        boolean rc = tableConfiguration.isUpdateByPrimaryKeyStatementEnabled()</span>
-                &amp;&amp; introspectedTable.hasPrimaryKeyColumns()
-                &amp;&amp; (introspectedTable.hasBLOBColumns() || introspectedTable
-                        .hasBaseColumns());
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">        boolean rc = tableConfiguration.isUpdateByPrimaryKeyStatementEnabled()</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">                &amp;&amp; introspectedTable.hasPrimaryKeyColumns()</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">                &amp;&amp; (introspectedTable.hasBLOBColumns() || introspectedTable</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">                        .hasBaseColumns());</span>
 
 <span class="fc" id="L168">        return rc;</span>
     }
@@ -181,8 +181,8 @@ public abstract class BaseRules implements Rules {
 <span class="fc" id="L181">            return false;</span>
         }
         
-<span class="pc bpc" id="L184" title="1 of 4 branches missed.">        boolean rc = tableConfiguration.isDeleteByPrimaryKeyStatementEnabled()</span>
-                &amp;&amp; introspectedTable.hasPrimaryKeyColumns();
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">        boolean rc = tableConfiguration.isDeleteByPrimaryKeyStatementEnabled()</span>
+<span class="fc bfc" id="L185" title="All 2 branches covered.">                &amp;&amp; introspectedTable.hasPrimaryKeyColumns();</span>
 
 <span class="fc" id="L187">        return rc;</span>
     }
@@ -215,8 +215,8 @@ public abstract class BaseRules implements Rules {
 <span class="fc" id="L215">            return true;</span>
         }
         
-<span class="pc bpc" id="L218" title="3 of 4 branches missed.">        boolean rc = tableConfiguration.isSelectByExampleStatementEnabled()</span>
-                || tableConfiguration.isSelectByPrimaryKeyStatementEnabled();
+<span class="pc bpc" id="L218" title="1 of 2 branches missed.">        boolean rc = tableConfiguration.isSelectByExampleStatementEnabled()</span>
+<span class="pc bnc" id="L219" title="All 2 branches missed.">                || tableConfiguration.isSelectByPrimaryKeyStatementEnabled();</span>
 
 <span class="fc" id="L221">        return rc;</span>
     }
@@ -235,8 +235,8 @@ public abstract class BaseRules implements Rules {
 <span class="fc bfc" id="L235" title="All 2 branches covered.">            if (isModelOnly) {</span>
 <span class="fc" id="L236">                rc = true;</span>
             } else {
-<span class="pc bpc" id="L238" title="3 of 4 branches missed.">                rc = tableConfiguration.isSelectByExampleStatementEnabled() </span>
-                        || tableConfiguration.isSelectByPrimaryKeyStatementEnabled();
+<span class="pc bpc" id="L238" title="1 of 2 branches missed.">                rc = tableConfiguration.isSelectByExampleStatementEnabled() </span>
+<span class="pc bnc" id="L239" title="All 2 branches missed.">                        || tableConfiguration.isSelectByPrimaryKeyStatementEnabled();</span>
             }
         } else {
 <span class="fc" id="L242">            rc = false;</span>
@@ -261,9 +261,9 @@ public abstract class BaseRules implements Rules {
 <span class="fc" id="L261">            return false;</span>
         }
         
-<span class="pc bpc" id="L264" title="5 of 6 branches missed.">        boolean rc = tableConfiguration.isSelectByExampleStatementEnabled()</span>
-                || tableConfiguration.isDeleteByExampleStatementEnabled()
-                || tableConfiguration.isCountByExampleStatementEnabled();
+<span class="pc bpc" id="L264" title="1 of 2 branches missed.">        boolean rc = tableConfiguration.isSelectByExampleStatementEnabled()</span>
+<span class="nc bnc" id="L265" title="All 2 branches missed.">                || tableConfiguration.isDeleteByExampleStatementEnabled()</span>
+<span class="pc bnc" id="L266" title="All 2 branches missed.">                || tableConfiguration.isCountByExampleStatementEnabled();</span>
 
 <span class="fc bfc" id="L268" title="All 2 branches covered.">        if (introspectedTable.getTargetRuntime() == TargetRuntime.IBATIS2) {</span>
 <span class="fc" id="L269">            rc |= tableConfiguration.isUpdateByExampleStatementEnabled();</span>
@@ -288,8 +288,8 @@ public abstract class BaseRules implements Rules {
 <span class="fc" id="L288">            return false;</span>
         }
         
-<span class="pc bpc" id="L291" title="2 of 4 branches missed.">        return introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3</span>
-                &amp;&amp; tableConfiguration.isUpdateByExampleStatementEnabled();
+<span class="pc bpc" id="L291" title="1 of 2 branches missed.">        return introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3</span>
+<span class="pc bpc" id="L292" title="1 of 2 branches missed.">                &amp;&amp; tableConfiguration.isUpdateByExampleStatementEnabled();</span>
     }
 
     /**
@@ -305,10 +305,10 @@ public abstract class BaseRules implements Rules {
 <span class="fc" id="L305">            return false;</span>
         }
         
-<span class="pc bpc" id="L308" title="1 of 8 branches missed.">        boolean rc = tableConfiguration.isSelectByPrimaryKeyStatementEnabled()</span>
-                &amp;&amp; introspectedTable.hasPrimaryKeyColumns()
-                &amp;&amp; (introspectedTable.hasBaseColumns() || introspectedTable
-                        .hasBLOBColumns());
+<span class="pc bpc" id="L308" title="1 of 2 branches missed.">        boolean rc = tableConfiguration.isSelectByPrimaryKeyStatementEnabled()</span>
+<span class="fc bfc" id="L309" title="All 2 branches covered.">                &amp;&amp; introspectedTable.hasPrimaryKeyColumns()</span>
+<span class="fc bfc" id="L310" title="All 2 branches covered.">                &amp;&amp; (introspectedTable.hasBaseColumns() || introspectedTable</span>
+<span class="fc bfc" id="L311" title="All 2 branches covered.">                        .hasBLOBColumns());</span>
 
 <span class="fc" id="L313">        return rc;</span>
     }
@@ -341,8 +341,8 @@ public abstract class BaseRules implements Rules {
 <span class="fc" id="L341">            return false;</span>
         }
         
-<span class="pc bpc" id="L344" title="1 of 4 branches missed.">        boolean rc = tableConfiguration.isSelectByExampleStatementEnabled()</span>
-                &amp;&amp; introspectedTable.hasBLOBColumns();
+<span class="pc bpc" id="L344" title="1 of 2 branches missed.">        boolean rc = tableConfiguration.isSelectByExampleStatementEnabled()</span>
+<span class="fc bfc" id="L345" title="All 2 branches covered.">                &amp;&amp; introspectedTable.hasBLOBColumns();</span>
 
 <span class="fc" id="L347">        return rc;</span>
     }
@@ -355,8 +355,8 @@ public abstract class BaseRules implements Rules {
      * @return true if the example class should be generated
      */
     public boolean generateExampleClass() {
-<span class="fc bfc" id="L358" title="All 4 branches covered.">        if (introspectedTable.getContext().getSqlMapGeneratorConfiguration() == null</span>
-                &amp;&amp; introspectedTable.getContext().getJavaClientGeneratorConfiguration() == null) {
+<span class="fc bfc" id="L358" title="All 2 branches covered.">        if (introspectedTable.getContext().getSqlMapGeneratorConfiguration() == null</span>
+<span class="fc bfc" id="L359" title="All 2 branches covered.">                &amp;&amp; introspectedTable.getContext().getJavaClientGeneratorConfiguration() == null) {</span>
             // this is a model only context - don't generate the example class
 <span class="fc" id="L361">            return false;</span>
         }
@@ -365,10 +365,10 @@ public abstract class BaseRules implements Rules {
 <span class="fc" id="L365">            return false;</span>
         }
         
-<span class="pc bpc" id="L368" title="7 of 8 branches missed.">        boolean rc = tableConfiguration.isSelectByExampleStatementEnabled()</span>
-                || tableConfiguration.isDeleteByExampleStatementEnabled()
-                || tableConfiguration.isCountByExampleStatementEnabled()
-                || tableConfiguration.isUpdateByExampleStatementEnabled();
+<span class="pc bpc" id="L368" title="1 of 2 branches missed.">        boolean rc = tableConfiguration.isSelectByExampleStatementEnabled()</span>
+<span class="nc bnc" id="L369" title="All 2 branches missed.">                || tableConfiguration.isDeleteByExampleStatementEnabled()</span>
+<span class="nc bnc" id="L370" title="All 2 branches missed.">                || tableConfiguration.isCountByExampleStatementEnabled()</span>
+<span class="pc bnc" id="L371" title="All 2 branches missed.">                || tableConfiguration.isUpdateByExampleStatementEnabled();</span>
 
 <span class="fc" id="L373">        return rc;</span>
     }
@@ -407,9 +407,9 @@ public abstract class BaseRules implements Rules {
 <span class="fc" id="L407">            return false;</span>
         }
         
-<span class="pc bpc" id="L410" title="2 of 6 branches missed.">        boolean rc = tableConfiguration.isUpdateByExampleStatementEnabled()</span>
-                &amp;&amp; (introspectedTable.hasPrimaryKeyColumns() || introspectedTable
-                        .hasBaseColumns());
+<span class="pc bpc" id="L410" title="1 of 2 branches missed.">        boolean rc = tableConfiguration.isUpdateByExampleStatementEnabled()</span>
+<span class="fc bfc" id="L411" title="All 2 branches covered.">                &amp;&amp; (introspectedTable.hasPrimaryKeyColumns() || introspectedTable</span>
+<span class="pc bpc" id="L412" title="1 of 2 branches missed.">                        .hasBaseColumns());</span>
 
 <span class="fc" id="L414">        return rc;</span>
     }
@@ -422,8 +422,8 @@ public abstract class BaseRules implements Rules {
 <span class="fc" id="L422">            return false;</span>
         }
         
-<span class="pc bpc" id="L425" title="1 of 4 branches missed.">        boolean rc = tableConfiguration.isUpdateByExampleStatementEnabled()</span>
-                &amp;&amp; introspectedTable.hasBLOBColumns();
+<span class="pc bpc" id="L425" title="1 of 2 branches missed.">        boolean rc = tableConfiguration.isUpdateByExampleStatementEnabled()</span>
+<span class="fc bfc" id="L426" title="All 2 branches covered.">                &amp;&amp; introspectedTable.hasBLOBColumns();</span>
 
 <span class="fc" id="L428">        return rc;</span>
     }
@@ -443,8 +443,8 @@ public abstract class BaseRules implements Rules {
 <span class="fc" id="L443">            return false;</span>
         }
         
-<span class="pc bpc" id="L446" title="1 of 4 branches missed.">        return generateSelectByPrimaryKey()</span>
-                || generateSelectByExampleWithoutBLOBs();
+<span class="fc bfc" id="L446" title="All 2 branches covered.">        return generateSelectByPrimaryKey()</span>
+<span class="pc bpc" id="L447" title="1 of 2 branches missed.">                || generateSelectByExampleWithoutBLOBs();</span>
     }
 
     /* (non-Javadoc)
@@ -455,9 +455,9 @@ public abstract class BaseRules implements Rules {
 <span class="fc" id="L455">            return false;</span>
         }
         
-<span class="pc bpc" id="L458" title="3 of 6 branches missed.">        return introspectedTable.hasBLOBColumns()</span>
-                &amp;&amp; (tableConfiguration.isSelectByExampleStatementEnabled() || tableConfiguration
-                        .isSelectByPrimaryKeyStatementEnabled());
+<span class="fc bfc" id="L458" title="All 2 branches covered.">        return introspectedTable.hasBLOBColumns()</span>
+<span class="pc bpc" id="L459" title="1 of 2 branches missed.">                &amp;&amp; (tableConfiguration.isSelectByExampleStatementEnabled() || tableConfiguration</span>
+<span class="pc bnc" id="L460" title="All 2 branches missed.">                        .isSelectByPrimaryKeyStatementEnabled());</span>
     }
 
     /* (non-Javadoc)

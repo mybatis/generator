@@ -51,12 +51,12 @@ public class RecordWithBLOBsGenerator extends AbstractJavaGenerator {
     public List&lt;CompilationUnit&gt; getCompilationUnits() {
 <span class="fc" id="L52">        FullyQualifiedTable table = introspectedTable.getFullyQualifiedTable();</span>
 <span class="fc" id="L53">        progressCallback.startTask(getString(</span>
-                &quot;Progress.9&quot;, table.toString())); //$NON-NLS-1$
+<span class="fc" id="L54">                &quot;Progress.9&quot;, table.toString())); //$NON-NLS-1$</span>
 <span class="fc" id="L55">        Plugin plugins = context.getPlugins();</span>
 <span class="fc" id="L56">        CommentGenerator commentGenerator = context.getCommentGenerator();</span>
 
 <span class="fc" id="L58">        TopLevelClass topLevelClass = new TopLevelClass(introspectedTable</span>
-                .getRecordWithBLOBsType());
+<span class="fc" id="L59">                .getRecordWithBLOBsType());</span>
 <span class="fc" id="L60">        topLevelClass.setVisibility(JavaVisibility.PUBLIC);</span>
 <span class="fc" id="L61">        commentGenerator.addJavaFileComment(topLevelClass);</span>
 
@@ -77,9 +77,9 @@ public class RecordWithBLOBsGenerator extends AbstractJavaGenerator {
         }
         
 <span class="fc bfc" id="L79" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable</span>
-                .getBLOBColumns()) {
-<span class="pc bpc" id="L81" title="1 of 2 branches missed.">            if (RootClassInfo.getInstance(rootClass, warnings)</span>
-                    .containsProperty(introspectedColumn)) {
+<span class="fc" id="L80">                .getBLOBColumns()) {</span>
+<span class="fc" id="L81">            if (RootClassInfo.getInstance(rootClass, warnings)</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">                    .containsProperty(introspectedColumn)) {</span>
 <span class="nc" id="L83">                continue;</span>
             }
 
@@ -124,9 +124,9 @@ public class RecordWithBLOBsGenerator extends AbstractJavaGenerator {
 <span class="fc" id="L124">        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);</span>
         
 <span class="fc bfc" id="L126" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable</span>
-                .getAllColumns()) {
+<span class="fc" id="L127">                .getAllColumns()) {</span>
 <span class="fc" id="L128">            method.addParameter(new Parameter(introspectedColumn.getFullyQualifiedJavaType(),</span>
-                    introspectedColumn.getJavaProperty()));
+<span class="fc" id="L129">                    introspectedColumn.getJavaProperty()));</span>
 <span class="fc" id="L130">            topLevelClass.addImportedType(introspectedColumn.getFullyQualifiedJavaType());</span>
 <span class="fc" id="L131">        }</span>
         
@@ -134,7 +134,7 @@ public class RecordWithBLOBsGenerator extends AbstractJavaGenerator {
 <span class="fc" id="L134">        StringBuilder sb = new StringBuilder();</span>
 <span class="fc" id="L135">        sb.append(&quot;super(&quot;); //$NON-NLS-1$</span>
 <span class="fc bfc" id="L136" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable</span>
-                .getNonBLOBColumns()) {
+<span class="fc" id="L137">                .getNonBLOBColumns()) {</span>
 <span class="fc bfc" id="L138" title="All 2 branches covered.">            if (comma) {</span>
 <span class="fc" id="L139">                sb.append(&quot;, &quot;); //$NON-NLS-1$</span>
             } else {
@@ -146,7 +146,7 @@ public class RecordWithBLOBsGenerator extends AbstractJavaGenerator {
 <span class="fc" id="L146">        method.addBodyLine(sb.toString());</span>
         
 <span class="fc bfc" id="L148" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable</span>
-                .getBLOBColumns()) {
+<span class="fc" id="L149">                .getBLOBColumns()) {</span>
 <span class="fc" id="L150">            sb.setLength(0);</span>
 <span class="fc" id="L151">            sb.append(&quot;this.&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L152">            sb.append(introspectedColumn.getJavaProperty());</span>

@@ -346,7 +346,7 @@ public class Context extends PropertyHolder {
         
 <span class="nc bnc" id="L347" title="All 2 branches missed.">        if (defaultModelType != ModelType.CONDITIONAL) {</span>
 <span class="nc" id="L348">            xmlElement.addAttribute(new Attribute(</span>
-                    &quot;defaultModelType&quot;, defaultModelType.getModelType())); //$NON-NLS-1$
+<span class="nc" id="L349">                    &quot;defaultModelType&quot;, defaultModelType.getModelType())); //$NON-NLS-1$</span>
         }
 
 <span class="nc bnc" id="L352" title="All 2 branches missed.">        if (stringHasValue(introspectedColumnImpl)) {</span>
@@ -379,7 +379,7 @@ public class Context extends PropertyHolder {
 
 <span class="nc bnc" id="L380" title="All 2 branches missed.">        if (javaModelGeneratorConfiguration != null) {</span>
 <span class="nc" id="L381">            xmlElement.addElement(javaModelGeneratorConfiguration</span>
-                    .toXmlElement());
+<span class="nc" id="L382">                    .toXmlElement());</span>
         }
 
 <span class="nc bnc" id="L385" title="All 2 branches missed.">        if (sqlMapGeneratorConfiguration != null) {</span>
@@ -435,8 +435,8 @@ public class Context extends PropertyHolder {
 <span class="nc" id="L435">            beginningDelimiter = value;</span>
 <span class="pc bpc" id="L436" title="1 of 2 branches missed.">        } else if (PropertyRegistry.CONTEXT_ENDING_DELIMITER.equals(name)) {</span>
 <span class="nc" id="L437">            endingDelimiter = value;</span>
-<span class="pc bpc" id="L438" title="2 of 4 branches missed.">        } else if (PropertyRegistry.CONTEXT_AUTO_DELIMIT_KEYWORDS.equals(name)</span>
-                &amp;&amp; stringHasValue(value)) {
+<span class="pc bpc" id="L438" title="1 of 2 branches missed.">        } else if (PropertyRegistry.CONTEXT_AUTO_DELIMIT_KEYWORDS.equals(name)</span>
+<span class="pc bpc" id="L439" title="1 of 2 branches missed.">                &amp;&amp; stringHasValue(value)) {</span>
 <span class="fc" id="L440">            autoDelimitKeywords = isTrue(value);</span>
         }
 <span class="fc" id="L442">    }</span>
@@ -609,7 +609,7 @@ public class Context extends PropertyHolder {
 
 <span class="fc" id="L610">        introspectedTables = new ArrayList&lt;IntrospectedTable&gt;();</span>
 <span class="fc" id="L611">        JavaTypeResolver javaTypeResolver = ObjectFactory</span>
-                .createJavaTypeResolver(this, warnings);
+<span class="fc" id="L612">                .createJavaTypeResolver(this, warnings);</span>
 
 <span class="fc" id="L614">        Connection connection = null;</span>
 
@@ -618,15 +618,15 @@ public class Context extends PropertyHolder {
 <span class="fc" id="L618">            connection = getConnection();</span>
 
 <span class="fc" id="L620">            DatabaseIntrospector databaseIntrospector = new DatabaseIntrospector(</span>
-                    this, connection.getMetaData(), javaTypeResolver, warnings);
+<span class="fc" id="L621">                    this, connection.getMetaData(), javaTypeResolver, warnings);</span>
 
 <span class="fc bfc" id="L623" title="All 2 branches covered.">            for (TableConfiguration tc : tableConfigurations) {</span>
 <span class="fc" id="L624">                String tableName = composeFullyQualifiedTableName(tc.getCatalog(), tc</span>
-                                .getSchema(), tc.getTableName(), '.');
+<span class="fc" id="L625">                                .getSchema(), tc.getTableName(), '.');</span>
 
-<span class="pc bpc" id="L627" title="5 of 6 branches missed.">                if (fullyQualifiedTableNames != null</span>
-                        &amp;&amp; fullyQualifiedTableNames.size() &gt; 0
-                        &amp;&amp; !fullyQualifiedTableNames.contains(tableName)) {
+<span class="pc bpc" id="L627" title="1 of 2 branches missed.">                if (fullyQualifiedTableNames != null</span>
+<span class="nc bnc" id="L628" title="All 2 branches missed.">                        &amp;&amp; fullyQualifiedTableNames.size() &gt; 0</span>
+<span class="nc bnc" id="L629" title="All 2 branches missed.">                        &amp;&amp; !fullyQualifiedTableNames.contains(tableName)) {</span>
 <span class="nc" id="L630">                    continue;</span>
                 }
 
@@ -637,7 +637,7 @@ public class Context extends PropertyHolder {
 
 <span class="fc" id="L638">                callback.startTask(getString(&quot;Progress.1&quot;, tableName)); //$NON-NLS-1$</span>
 <span class="fc" id="L639">                List&lt;IntrospectedTable&gt; tables = databaseIntrospector</span>
-                        .introspectTables(tc);
+<span class="fc" id="L640">                        .introspectTables(tc);</span>
 
 <span class="fc bfc" id="L642" title="All 2 branches covered.">                if (tables != null) {</span>
 <span class="fc" id="L643">                    introspectedTables.addAll(tables);</span>
@@ -694,7 +694,7 @@ public class Context extends PropertyHolder {
 <span class="fc" id="L694">                pluginAggregator.addPlugin(plugin);</span>
             } else {
 <span class="nc" id="L696">                warnings.add(getString(&quot;Warning.24&quot;, //$NON-NLS-1$</span>
-                        pluginConfiguration.getConfigurationType(), id));
+<span class="nc" id="L697">                        pluginConfiguration.getConfigurationType(), id));</span>
             }
 <span class="fc" id="L699">        }</span>
 
@@ -705,21 +705,21 @@ public class Context extends PropertyHolder {
 <span class="fc" id="L705">                introspectedTable.initialize();</span>
 <span class="fc" id="L706">                introspectedTable.calculateGenerators(warnings, callback);</span>
 <span class="fc" id="L707">                generatedJavaFiles.addAll(introspectedTable</span>
-                        .getGeneratedJavaFiles());
+<span class="fc" id="L708">                        .getGeneratedJavaFiles());</span>
 <span class="fc" id="L709">                generatedXmlFiles.addAll(introspectedTable</span>
-                        .getGeneratedXmlFiles());
+<span class="fc" id="L710">                        .getGeneratedXmlFiles());</span>
 
 <span class="fc" id="L712">                generatedJavaFiles.addAll(pluginAggregator</span>
-                        .contextGenerateAdditionalJavaFiles(introspectedTable));
+<span class="fc" id="L713">                        .contextGenerateAdditionalJavaFiles(introspectedTable));</span>
 <span class="fc" id="L714">                generatedXmlFiles.addAll(pluginAggregator</span>
-                        .contextGenerateAdditionalXmlFiles(introspectedTable));
+<span class="fc" id="L715">                        .contextGenerateAdditionalXmlFiles(introspectedTable));</span>
 <span class="fc" id="L716">            }</span>
         }
 
 <span class="fc" id="L719">        generatedJavaFiles.addAll(pluginAggregator</span>
-                .contextGenerateAdditionalJavaFiles());
+<span class="fc" id="L720">                .contextGenerateAdditionalJavaFiles());</span>
 <span class="fc" id="L721">        generatedXmlFiles.addAll(pluginAggregator</span>
-                .contextGenerateAdditionalXmlFiles());
+<span class="fc" id="L722">                .contextGenerateAdditionalXmlFiles());</span>
 <span class="fc" id="L723">    }</span>
 
     /**
@@ -758,8 +758,8 @@ public class Context extends PropertyHolder {
      * @return true, if successful
      */
     public boolean autoDelimitKeywords() {
-<span class="pc bpc" id="L761" title="1 of 4 branches missed.">        return autoDelimitKeywords != null</span>
-                &amp;&amp; autoDelimitKeywords.booleanValue();
+<span class="fc bfc" id="L761" title="All 2 branches covered.">        return autoDelimitKeywords != null</span>
+<span class="pc bpc" id="L762" title="1 of 2 branches missed.">                &amp;&amp; autoDelimitKeywords.booleanValue();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

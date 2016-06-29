@@ -47,11 +47,11 @@ public class Ibatis2FormattingUtilities {
             IntrospectedColumn introspectedColumn) {
 <span class="fc" id="L48">        StringBuilder sb = new StringBuilder();</span>
 <span class="fc" id="L49">        sb.append(escapeStringForIbatis2(introspectedColumn</span>
-                .getActualColumnName()));
+<span class="fc" id="L50">                .getActualColumnName()));</span>
 
 <span class="fc bfc" id="L52" title="All 2 branches covered.">        if (introspectedColumn.isColumnNameDelimited()) {</span>
 <span class="fc" id="L53">            sb.insert(0, introspectedColumn.getContext()</span>
-                    .getBeginningDelimiter());
+<span class="fc" id="L54">                    .getBeginningDelimiter());</span>
 <span class="fc" id="L55">            sb.append(introspectedColumn.getContext().getEndingDelimiter());</span>
         }
 
@@ -139,12 +139,12 @@ public class Ibatis2FormattingUtilities {
 <span class="fc" id="L139">            sb.append(&quot; as &quot;); //$NON-NLS-1$</span>
 <span class="fc bfc" id="L140" title="All 2 branches covered.">            if (introspectedColumn.isColumnNameDelimited()) {</span>
 <span class="fc" id="L141">                sb.append(introspectedColumn.getContext()</span>
-                        .getBeginningDelimiter());
+<span class="fc" id="L142">                        .getBeginningDelimiter());</span>
             }
 <span class="fc" id="L144">            sb.append(introspectedColumn.getTableAlias());</span>
 <span class="fc" id="L145">            sb.append('_');</span>
 <span class="fc" id="L146">            sb.append(escapeStringForIbatis2(introspectedColumn</span>
-                    .getActualColumnName()));
+<span class="fc" id="L147">                    .getActualColumnName()));</span>
 <span class="fc bfc" id="L148" title="All 2 branches covered.">            if (introspectedColumn.isColumnNameDelimited()) {</span>
 <span class="fc" id="L149">                sb.append(introspectedColumn.getContext().getEndingDelimiter());</span>
             }
@@ -200,14 +200,14 @@ public class Ibatis2FormattingUtilities {
 
 <span class="fc bfc" id="L201" title="All 2 branches covered.">        if (introspectedColumn.isColumnNameDelimited()) {</span>
 <span class="fc" id="L202">            sb.append(escapeStringForJava(introspectedColumn</span>
-                    .getContext().getBeginningDelimiter()));
+<span class="fc" id="L203">                    .getContext().getBeginningDelimiter()));</span>
         }
 
 <span class="fc" id="L206">        sb.append(introspectedColumn.getActualColumnName());</span>
 
 <span class="fc bfc" id="L208" title="All 2 branches covered.">        if (introspectedColumn.isColumnNameDelimited()) {</span>
 <span class="fc" id="L209">            sb.append(escapeStringForJava(introspectedColumn</span>
-                    .getContext().getEndingDelimiter()));
+<span class="fc" id="L210">                    .getContext().getEndingDelimiter()));</span>
         }
 
 <span class="fc" id="L213">        return sb.toString();</span>

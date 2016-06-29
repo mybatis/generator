@@ -51,7 +51,7 @@ public class DeleteByPrimaryKeyMethodGenerator extends
             // no primary key class, but primary key is enabled. Primary
             // key columns must be in the base class.
 <span class="fc" id="L53">            FullyQualifiedJavaType keyType = new FullyQualifiedJavaType(</span>
-                    introspectedTable.getBaseRecordType());
+<span class="fc" id="L54">                    introspectedTable.getBaseRecordType());</span>
 <span class="fc" id="L55">            topLevelClass.addImportedType(keyType);</span>
 
 <span class="fc" id="L57">            sb.setLength(0);</span>
@@ -62,11 +62,11 @@ public class DeleteByPrimaryKeyMethodGenerator extends
 <span class="fc" id="L62">            method.addBodyLine(sb.toString());</span>
 
 <span class="fc bfc" id="L64" title="All 2 branches covered.">            for (IntrospectedColumn introspectedColumn : introspectedTable</span>
-                    .getPrimaryKeyColumns()) {
+<span class="fc" id="L65">                    .getPrimaryKeyColumns()) {</span>
 <span class="fc" id="L66">                sb.setLength(0);</span>
 <span class="fc" id="L67">                sb.append(&quot;_key.&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L68">                sb.append(getSetterMethodName(introspectedColumn</span>
-                        .getJavaProperty()));
+<span class="fc" id="L69">                        .getJavaProperty()));</span>
 <span class="fc" id="L70">                sb.append('(');</span>
 <span class="fc" id="L71">                sb.append(introspectedColumn.getJavaProperty());</span>
 <span class="fc" id="L72">                sb.append(&quot;);&quot;); //$NON-NLS-1$</span>
@@ -77,8 +77,8 @@ public class DeleteByPrimaryKeyMethodGenerator extends
 <span class="fc" id="L77">        sb.setLength(0);</span>
 <span class="fc" id="L78">        sb.append(&quot;int rows = &quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L79">        sb.append(daoTemplate.getDeleteMethod(introspectedTable</span>
-                .getIbatis2SqlMapNamespace(), introspectedTable
-                .getDeleteByPrimaryKeyStatementId(), &quot;_key&quot;)); //$NON-NLS-1$
+<span class="fc" id="L80">                .getIbatis2SqlMapNamespace(), introspectedTable</span>
+<span class="fc" id="L81">                .getDeleteByPrimaryKeyStatementId(), &quot;_key&quot;)); //$NON-NLS-1$</span>
 <span class="fc" id="L82">        method.addBodyLine(sb.toString());</span>
 <span class="fc" id="L83">        method.addBodyLine(&quot;return rows;&quot;); //$NON-NLS-1$</span>
 
@@ -106,21 +106,21 @@ public class DeleteByPrimaryKeyMethodGenerator extends
 <span class="fc" id="L106">        method.setVisibility(JavaVisibility.PUBLIC);</span>
 <span class="fc" id="L107">        method.setReturnType(FullyQualifiedJavaType.getIntInstance());</span>
 <span class="fc" id="L108">        method.setName(getDAOMethodNameCalculator()</span>
-                .getDeleteByPrimaryKeyMethodName(introspectedTable));
+<span class="fc" id="L109">                .getDeleteByPrimaryKeyMethodName(introspectedTable));</span>
 
 <span class="fc bfc" id="L111" title="All 2 branches covered.">        if (introspectedTable.getRules().generatePrimaryKeyClass()) {</span>
 <span class="fc" id="L112">            FullyQualifiedJavaType type = new FullyQualifiedJavaType(</span>
-                    introspectedTable.getPrimaryKeyType());
+<span class="fc" id="L113">                    introspectedTable.getPrimaryKeyType());</span>
 <span class="fc" id="L114">            importedTypes.add(type);</span>
 <span class="fc" id="L115">            method.addParameter(new Parameter(type, &quot;_key&quot;)); //$NON-NLS-1$</span>
 <span class="fc" id="L116">        } else {</span>
 <span class="fc bfc" id="L117" title="All 2 branches covered.">            for (IntrospectedColumn introspectedColumn : introspectedTable</span>
-                    .getPrimaryKeyColumns()) {
+<span class="fc" id="L118">                    .getPrimaryKeyColumns()) {</span>
 <span class="fc" id="L119">                FullyQualifiedJavaType type = introspectedColumn</span>
-                        .getFullyQualifiedJavaType();
+<span class="fc" id="L120">                        .getFullyQualifiedJavaType();</span>
 <span class="fc" id="L121">                importedTypes.add(type);</span>
 <span class="fc" id="L122">                method.addParameter(new Parameter(type, introspectedColumn</span>
-                        .getJavaProperty()));
+<span class="fc" id="L123">                        .getJavaProperty()));</span>
 <span class="fc" id="L124">            }</span>
         }
 

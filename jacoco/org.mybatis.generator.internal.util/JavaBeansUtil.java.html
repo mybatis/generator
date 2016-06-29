@@ -70,7 +70,7 @@ public class JavaBeansUtil {
         }
 
 <span class="fc bfc" id="L72" title="All 2 branches covered.">        if (fullyQualifiedJavaType.equals(FullyQualifiedJavaType</span>
-                .getBooleanPrimitiveInstance())) {
+<span class="fc" id="L73">                .getBooleanPrimitiveInstance())) {</span>
 <span class="fc" id="L74">            sb.insert(0, &quot;is&quot;); //$NON-NLS-1$</span>
         } else {
 <span class="fc" id="L76">            sb.insert(0, &quot;get&quot;); //$NON-NLS-1$</span>
@@ -175,10 +175,10 @@ public class JavaBeansUtil {
 <span class="fc bfc" id="L175" title="All 2 branches covered.">        } else if (inputString.length() &lt; 2) {</span>
 <span class="fc" id="L176">            answer = inputString.toLowerCase(Locale.US);</span>
         } else {
-<span class="fc bfc" id="L178" title="All 4 branches covered.">            if (Character.isUpperCase(inputString.charAt(0))</span>
-                    &amp;&amp; !Character.isUpperCase(inputString.charAt(1))) {
+<span class="fc bfc" id="L178" title="All 2 branches covered.">            if (Character.isUpperCase(inputString.charAt(0))</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">                    &amp;&amp; !Character.isUpperCase(inputString.charAt(1))) {</span>
 <span class="fc" id="L180">                answer = inputString.substring(0, 1).toLowerCase(Locale.US)</span>
-                        + inputString.substring(1);
+<span class="fc" id="L181">                        + inputString.substring(1);</span>
             } else {
 <span class="fc" id="L183">                answer = inputString;</span>
             }
@@ -202,7 +202,7 @@ public class JavaBeansUtil {
             Context context,
             IntrospectedTable introspectedTable) {
 <span class="fc" id="L204">        FullyQualifiedJavaType fqjt = introspectedColumn</span>
-                .getFullyQualifiedJavaType();
+<span class="fc" id="L205">                .getFullyQualifiedJavaType();</span>
 <span class="fc" id="L206">        String property = introspectedColumn.getJavaProperty();</span>
 
 <span class="fc" id="L208">        Method method = new Method();</span>
@@ -236,7 +236,7 @@ public class JavaBeansUtil {
             Context context,
             IntrospectedTable introspectedTable) {
 <span class="fc" id="L238">        FullyQualifiedJavaType fqjt = introspectedColumn</span>
-                .getFullyQualifiedJavaType();
+<span class="fc" id="L239">                .getFullyQualifiedJavaType();</span>
 <span class="fc" id="L240">        String property = introspectedColumn.getJavaProperty();</span>
 
 <span class="fc" id="L242">        Field field = new Field();</span>
@@ -264,7 +264,7 @@ public class JavaBeansUtil {
             Context context,
             IntrospectedTable introspectedTable) {
 <span class="fc" id="L266">        FullyQualifiedJavaType fqjt = introspectedColumn</span>
-                .getFullyQualifiedJavaType();
+<span class="fc" id="L267">                .getFullyQualifiedJavaType();</span>
 <span class="fc" id="L268">        String property = introspectedColumn.getJavaProperty();</span>
 
 <span class="fc" id="L270">        Method method = new Method();</span>
@@ -305,9 +305,9 @@ public class JavaBeansUtil {
      */
     private static boolean isTrimStringsEnabled(Context context) {
 <span class="fc" id="L307">        Properties properties = context</span>
-                .getJavaModelGeneratorConfiguration().getProperties();
+<span class="fc" id="L308">                .getJavaModelGeneratorConfiguration().getProperties();</span>
 <span class="fc" id="L309">        boolean rc = isTrue(properties</span>
-                .getProperty(PropertyRegistry.MODEL_GENERATOR_TRIM_STRINGS));
+<span class="fc" id="L310">                .getProperty(PropertyRegistry.MODEL_GENERATOR_TRIM_STRINGS));</span>
 <span class="fc" id="L311">        return rc;</span>
     }
 

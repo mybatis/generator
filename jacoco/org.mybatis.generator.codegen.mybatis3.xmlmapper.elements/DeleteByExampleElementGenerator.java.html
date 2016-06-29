@@ -38,7 +38,7 @@ public class DeleteByExampleElementGenerator extends
 <span class="fc" id="L38">        String fqjt = introspectedTable.getExampleType();</span>
 
 <span class="fc" id="L40">        answer.addAttribute(new Attribute(</span>
-                &quot;id&quot;, introspectedTable.getDeleteByExampleStatementId())); //$NON-NLS-1$
+<span class="fc" id="L41">                &quot;id&quot;, introspectedTable.getDeleteByExampleStatementId())); //$NON-NLS-1$</span>
 <span class="fc" id="L42">        answer.addAttribute(new Attribute(&quot;parameterType&quot;, fqjt)); //$NON-NLS-1$</span>
 
 <span class="fc" id="L44">        context.getCommentGenerator().addComment(answer);</span>
@@ -46,7 +46,7 @@ public class DeleteByExampleElementGenerator extends
 <span class="fc" id="L46">        StringBuilder sb = new StringBuilder();</span>
 <span class="fc" id="L47">        sb.append(&quot;delete from &quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L48">        sb.append(introspectedTable</span>
-                .getAliasedFullyQualifiedTableNameAtRuntime());
+<span class="fc" id="L49">                .getAliasedFullyQualifiedTableNameAtRuntime());</span>
 <span class="fc" id="L50">        answer.addElement(new TextElement(sb.toString()));</span>
 <span class="fc" id="L51">        answer.addElement(getExampleIncludeElement());</span>
 

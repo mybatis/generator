@@ -43,11 +43,11 @@ public class ExampleWhereClauseElementGenerator extends
 
 <span class="fc bfc" id="L44" title="All 2 branches covered.">        if (isForUpdateByExample) {</span>
 <span class="fc" id="L45">            answer</span>
-                    .addAttribute(new Attribute(
-                            &quot;id&quot;, introspectedTable.getMyBatis3UpdateByExampleWhereClauseId())); //$NON-NLS-1$
+<span class="fc" id="L46">                    .addAttribute(new Attribute(</span>
+<span class="fc" id="L47">                            &quot;id&quot;, introspectedTable.getMyBatis3UpdateByExampleWhereClauseId())); //$NON-NLS-1$</span>
         } else {
 <span class="fc" id="L49">            answer.addAttribute(new Attribute(</span>
-                    &quot;id&quot;, introspectedTable.getExampleWhereClauseId())); //$NON-NLS-1$
+<span class="fc" id="L50">                    &quot;id&quot;, introspectedTable.getExampleWhereClauseId())); //$NON-NLS-1$</span>
         }
 
 <span class="fc" id="L53">        context.getCommentGenerator().addComment(answer);</span>
@@ -81,16 +81,16 @@ public class ExampleWhereClauseElementGenerator extends
 <span class="fc" id="L81">        trimElement.addElement(getMiddleForEachElement(null));</span>
 
 <span class="fc bfc" id="L83" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable</span>
-                .getNonBLOBColumns()) {
+<span class="fc" id="L84">                .getNonBLOBColumns()) {</span>
 <span class="fc bfc" id="L85" title="All 2 branches covered.">            if (stringHasValue(introspectedColumn</span>
-                    .getTypeHandler())) {
+<span class="fc" id="L86">                    .getTypeHandler())) {</span>
 <span class="fc" id="L87">                trimElement</span>
-                        .addElement(getMiddleForEachElement(introspectedColumn));
+<span class="fc" id="L88">                        .addElement(getMiddleForEachElement(introspectedColumn));</span>
             }
 <span class="fc" id="L90">        }</span>
 
-<span class="pc bpc" id="L92" title="1 of 2 branches missed.">        if (context.getPlugins()</span>
-                .sqlMapExampleWhereClauseElementGenerated(answer,
+<span class="fc" id="L92">        if (context.getPlugins()</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">                .sqlMapExampleWhereClauseElementGenerated(answer,</span>
                         introspectedTable)) {
 <span class="fc" id="L95">            parentElement.addElement(answer);</span>
         }
@@ -165,7 +165,7 @@ public class ExampleWhereClauseElementGenerator extends
 <span class="fc" id="L165">        when.addElement(new TextElement(&quot;and ${criterion.condition}&quot;)); //$NON-NLS-1$</span>
 <span class="fc" id="L166">        XmlElement innerForEach = new XmlElement(&quot;foreach&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L167">        innerForEach</span>
-                .addAttribute(new Attribute(&quot;collection&quot;, &quot;criterion.value&quot;)); //$NON-NLS-1$ //$NON-NLS-2$
+<span class="fc" id="L168">                .addAttribute(new Attribute(&quot;collection&quot;, &quot;criterion.value&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
 <span class="fc" id="L169">        innerForEach.addAttribute(new Attribute(&quot;item&quot;, &quot;listItem&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
 <span class="fc" id="L170">        innerForEach.addAttribute(new Attribute(&quot;open&quot;, &quot;(&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
 <span class="fc" id="L171">        innerForEach.addAttribute(new Attribute(&quot;close&quot;, &quot;)&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>

@@ -53,7 +53,7 @@ public abstract class AbstractDAOElementGenerator extends AbstractGenerator {
     public DAOMethodNameCalculator getDAOMethodNameCalculator() {
 <span class="fc bfc" id="L54" title="All 2 branches covered.">        if (dAOMethodNameCalculator == null) {</span>
 <span class="fc" id="L55">            String type = context.getJavaClientGeneratorConfiguration()</span>
-                    .getProperty(PropertyRegistry.DAO_METHOD_NAME_CALCULATOR);
+<span class="fc" id="L56">                    .getProperty(PropertyRegistry.DAO_METHOD_NAME_CALCULATOR);</span>
 <span class="fc bfc" id="L57" title="All 2 branches covered.">            if (stringHasValue(type)) {</span>
 <span class="pc bpc" id="L58" title="1 of 2 branches missed.">                if (&quot;extended&quot;.equalsIgnoreCase(type)) { //$NON-NLS-1$</span>
 <span class="fc" id="L59">                    type = ExtendedDAOMethodNameCalculator.class.getName();</span>
@@ -66,11 +66,11 @@ public abstract class AbstractDAOElementGenerator extends AbstractGenerator {
 
             try {
 <span class="fc" id="L68">                dAOMethodNameCalculator = (DAOMethodNameCalculator) ObjectFactory</span>
-                        .createInternalObject(type);
+<span class="fc" id="L69">                        .createInternalObject(type);</span>
 <span class="nc" id="L70">            } catch (Exception e) {</span>
 <span class="nc" id="L71">                dAOMethodNameCalculator = new DefaultDAOMethodNameCalculator();</span>
 <span class="nc" id="L72">                warnings.add(getString(</span>
-                        &quot;Warning.17&quot;, type, e.getMessage())); //$NON-NLS-1$
+<span class="nc" id="L73">                        &quot;Warning.17&quot;, type, e.getMessage())); //$NON-NLS-1$</span>
 <span class="fc" id="L74">            }</span>
         }
 
@@ -80,8 +80,8 @@ public abstract class AbstractDAOElementGenerator extends AbstractGenerator {
     public JavaVisibility getExampleMethodVisibility() {
 <span class="fc bfc" id="L81" title="All 2 branches covered.">        if (exampleMethodVisibility == null) {</span>
 <span class="fc" id="L82">            String type = context</span>
-                    .getJavaClientGeneratorConfiguration()
-                    .getProperty(PropertyRegistry.DAO_EXAMPLE_METHOD_VISIBILITY);
+<span class="fc" id="L83">                    .getJavaClientGeneratorConfiguration()</span>
+<span class="fc" id="L84">                    .getProperty(PropertyRegistry.DAO_EXAMPLE_METHOD_VISIBILITY);</span>
 <span class="pc bpc" id="L85" title="1 of 2 branches missed.">            if (stringHasValue(type)) {</span>
 <span class="nc bnc" id="L86" title="All 2 branches missed.">                if (&quot;public&quot;.equalsIgnoreCase(type)) { //$NON-NLS-1$</span>
 <span class="nc" id="L87">                    exampleMethodVisibility = JavaVisibility.PUBLIC;</span>

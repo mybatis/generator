@@ -44,9 +44,9 @@ public class UpdateByPrimaryKeyWithoutBLOBsElementGenerator extends
 <span class="fc" id="L44">        XmlElement answer = new XmlElement(&quot;update&quot;); //$NON-NLS-1$</span>
 
 <span class="fc" id="L46">        answer.addAttribute(new Attribute(</span>
-                &quot;id&quot;, introspectedTable.getUpdateByPrimaryKeyStatementId())); //$NON-NLS-1$
+<span class="fc" id="L47">                &quot;id&quot;, introspectedTable.getUpdateByPrimaryKeyStatementId())); //$NON-NLS-1$</span>
 <span class="fc" id="L48">        answer.addAttribute(new Attribute(&quot;parameterType&quot;, //$NON-NLS-1$</span>
-                introspectedTable.getBaseRecordType()));
+<span class="fc" id="L49">                introspectedTable.getBaseRecordType()));</span>
 
 <span class="fc" id="L51">        context.getCommentGenerator().addComment(answer);</span>
 
@@ -69,10 +69,10 @@ public class UpdateByPrimaryKeyWithoutBLOBsElementGenerator extends
 <span class="fc" id="L69">            IntrospectedColumn introspectedColumn = iter.next();</span>
 
 <span class="fc" id="L71">            sb.append(MyBatis3FormattingUtilities</span>
-                    .getEscapedColumnName(introspectedColumn));
+<span class="fc" id="L72">                    .getEscapedColumnName(introspectedColumn));</span>
 <span class="fc" id="L73">            sb.append(&quot; = &quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L74">            sb.append(MyBatis3FormattingUtilities</span>
-                    .getParameterClause(introspectedColumn));
+<span class="fc" id="L75">                    .getParameterClause(introspectedColumn));</span>
 
 <span class="fc bfc" id="L77" title="All 2 branches covered.">            if (iter.hasNext()) {</span>
 <span class="fc" id="L78">                sb.append(',');</span>
@@ -89,7 +89,7 @@ public class UpdateByPrimaryKeyWithoutBLOBsElementGenerator extends
 
 <span class="fc" id="L90">        boolean and = false;</span>
 <span class="fc bfc" id="L91" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable</span>
-                .getPrimaryKeyColumns()) {
+<span class="fc" id="L92">                .getPrimaryKeyColumns()) {</span>
 <span class="fc" id="L93">            sb.setLength(0);</span>
 <span class="fc bfc" id="L94" title="All 2 branches covered.">            if (and) {</span>
 <span class="fc" id="L95">                sb.append(&quot;  and &quot;); //$NON-NLS-1$</span>
@@ -99,15 +99,15 @@ public class UpdateByPrimaryKeyWithoutBLOBsElementGenerator extends
             }
 
 <span class="fc" id="L101">            sb.append(MyBatis3FormattingUtilities</span>
-                    .getEscapedColumnName(introspectedColumn));
+<span class="fc" id="L102">                    .getEscapedColumnName(introspectedColumn));</span>
 <span class="fc" id="L103">            sb.append(&quot; = &quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L104">            sb.append(MyBatis3FormattingUtilities</span>
-                    .getParameterClause(introspectedColumn));
+<span class="fc" id="L105">                    .getParameterClause(introspectedColumn));</span>
 <span class="fc" id="L106">            answer.addElement(new TextElement(sb.toString()));</span>
 <span class="fc" id="L107">        }</span>
 
-<span class="pc bpc" id="L109" title="1 of 2 branches missed.">        if (context.getPlugins()</span>
-                .sqlMapUpdateByPrimaryKeyWithoutBLOBsElementGenerated(answer,
+<span class="fc" id="L109">        if (context.getPlugins()</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">                .sqlMapUpdateByPrimaryKeyWithoutBLOBsElementGenerated(answer,</span>
                         introspectedTable)) {
 <span class="fc" id="L112">            parentElement.addElement(answer);</span>
         }

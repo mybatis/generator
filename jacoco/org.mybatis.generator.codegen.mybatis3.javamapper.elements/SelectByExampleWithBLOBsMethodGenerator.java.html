@@ -40,30 +40,30 @@ public class SelectByExampleWithBLOBsMethodGenerator extends
     public void addInterfaceElements(Interface interfaze) {
 <span class="fc" id="L41">        Set&lt;FullyQualifiedJavaType&gt; importedTypes = new TreeSet&lt;FullyQualifiedJavaType&gt;();</span>
 <span class="fc" id="L42">        FullyQualifiedJavaType type = new FullyQualifiedJavaType(</span>
-                introspectedTable.getExampleType());
+<span class="fc" id="L43">                introspectedTable.getExampleType());</span>
 <span class="fc" id="L44">        importedTypes.add(type);</span>
 <span class="fc" id="L45">        importedTypes.add(FullyQualifiedJavaType.getNewListInstance());</span>
 
 <span class="fc" id="L47">        Method method = new Method();</span>
 <span class="fc" id="L48">        method.setVisibility(JavaVisibility.PUBLIC);</span>
 
-<span class="fc" id="L50">        FullyQualifiedJavaType returnType = FullyQualifiedJavaType</span>
-                .getNewListInstance();
+        FullyQualifiedJavaType returnType = FullyQualifiedJavaType
+<span class="fc" id="L51">                .getNewListInstance();</span>
         FullyQualifiedJavaType listType;
 <span class="fc bfc" id="L53" title="All 2 branches covered.">        if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {</span>
 <span class="fc" id="L54">            listType = new FullyQualifiedJavaType(introspectedTable</span>
-                    .getRecordWithBLOBsType());
+<span class="fc" id="L55">                    .getRecordWithBLOBsType());</span>
         } else {
             // the blob fields must be rolled up into the base class
 <span class="fc" id="L58">            listType = new FullyQualifiedJavaType(introspectedTable</span>
-                    .getBaseRecordType());
+<span class="fc" id="L59">                    .getBaseRecordType());</span>
         }
 
 <span class="fc" id="L62">        importedTypes.add(listType);</span>
 <span class="fc" id="L63">        returnType.addTypeArgument(listType);</span>
 <span class="fc" id="L64">        method.setReturnType(returnType);</span>
 <span class="fc" id="L65">        method.setName(introspectedTable</span>
-                .getSelectByExampleWithBLOBsStatementId());
+<span class="fc" id="L66">                .getSelectByExampleWithBLOBsStatementId());</span>
 <span class="fc" id="L67">        method.addParameter(new Parameter(type, &quot;example&quot;)); //$NON-NLS-1$</span>
 
 <span class="fc" id="L69">        context.getCommentGenerator().addGeneralMethodComment(method,</span>
@@ -71,8 +71,8 @@ public class SelectByExampleWithBLOBsMethodGenerator extends
 
 <span class="fc" id="L72">        addMapperAnnotations(interfaze, method);</span>
         
-<span class="pc bpc" id="L74" title="1 of 2 branches missed.">        if (context.getPlugins()</span>
-                .clientSelectByExampleWithBLOBsMethodGenerated(method, interfaze,
+<span class="fc" id="L74">        if (context.getPlugins()</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">                .clientSelectByExampleWithBLOBsMethodGenerated(method, interfaze,</span>
                         introspectedTable)) {
 <span class="fc" id="L77">            interfaze.addImportedTypes(importedTypes);</span>
 <span class="fc" id="L78">            interfaze.addMethod(method);</span>

@@ -30,10 +30,6 @@
   <name>MyBatis Generator Core</name>
 
   <build>
-    <!-- this build creates and installs an instrumented JAR file
-         for use by the systests projects - so we can gather
-         consolidated coverage information
-    -->
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -41,18 +37,6 @@
         <configuration>
           <skip>false</skip>
         </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-site-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>prepare-package</phase>
-            <goals>
-              <goal>site</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

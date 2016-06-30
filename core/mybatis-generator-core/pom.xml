@@ -38,6 +38,7 @@
           <skip>false</skip>
         </configuration>
       </plugin>
+      <!-- create the Source JAR and JavaDoc a bit earlier so it is ready for the assembly -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
@@ -94,16 +95,6 @@
     </plugins>
   </build>
   
-  <reporting>
-    <plugins>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>jdepend-maven-plugin</artifactId>
-        <version>2.0</version>
-      </plugin>
-    </plugins>
-  </reporting>
-
   <dependencies>
     <dependency>
       <groupId>log4j</groupId>

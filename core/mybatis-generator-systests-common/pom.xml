@@ -54,5 +54,5 @@
       </plugin>
     </plugins>
   </build>
-  <description>Shared classes for all the test project.</description>
+  <description>Shared classes for all the test projects.</description>
 </project>

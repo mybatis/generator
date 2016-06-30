@@ -13,6 +13,8 @@
       </topic>
       <topic href="html/mbgdoc/running/runningWithJava.html" label="With Java">
       </topic>
+      <topic href="html/mbgdoc/running/runningWithEclipse.html" label="In Eclipse">
+      </topic>
    </topic>
    <topic href="html/mbgdoc/afterRunning.html" label="Tasks After Running MyBatis Generator"/>
    <topic href="html/mbgdoc/migratingFromIbator.html" label="Migrating From Ibator"/>

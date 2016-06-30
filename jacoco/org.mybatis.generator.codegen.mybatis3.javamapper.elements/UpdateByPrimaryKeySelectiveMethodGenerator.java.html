@@ -43,10 +43,10 @@ public class UpdateByPrimaryKeySelectiveMethodGenerator extends
 
 <span class="fc bfc" id="L44" title="All 2 branches covered.">        if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {</span>
 <span class="fc" id="L45">            parameterType = new FullyQualifiedJavaType(introspectedTable</span>
-<span class="fc" id="L46">                    .getRecordWithBLOBsType());</span>
+                    .getRecordWithBLOBsType());
         } else {
 <span class="fc" id="L48">            parameterType = new FullyQualifiedJavaType(introspectedTable</span>
-<span class="fc" id="L49">                    .getBaseRecordType());</span>
+                    .getBaseRecordType());
         }
 
 <span class="fc" id="L52">        importedTypes.add(parameterType);</span>
@@ -55,7 +55,7 @@ public class UpdateByPrimaryKeySelectiveMethodGenerator extends
 <span class="fc" id="L55">        method.setVisibility(JavaVisibility.PUBLIC);</span>
 <span class="fc" id="L56">        method.setReturnType(FullyQualifiedJavaType.getIntInstance());</span>
 <span class="fc" id="L57">        method.setName(introspectedTable</span>
-<span class="fc" id="L58">                .getUpdateByPrimaryKeySelectiveStatementId());</span>
+                .getUpdateByPrimaryKeySelectiveStatementId());
 <span class="fc" id="L59">        method.addParameter(new Parameter(parameterType, &quot;record&quot;)); //$NON-NLS-1$</span>
 
 <span class="fc" id="L61">        context.getCommentGenerator().addGeneralMethodComment(method,</span>
@@ -63,8 +63,8 @@ public class UpdateByPrimaryKeySelectiveMethodGenerator extends
 
 <span class="fc" id="L64">        addMapperAnnotations(interfaze, method);</span>
         
-<span class="fc" id="L66">        if (context.getPlugins()</span>
-<span class="pc bpc" id="L67" title="1 of 2 branches missed.">                .clientUpdateByPrimaryKeySelectiveMethodGenerated(method,</span>
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">        if (context.getPlugins()</span>
+                .clientUpdateByPrimaryKeySelectiveMethodGenerated(method,
                         interfaze, introspectedTable)) {
 <span class="fc" id="L69">            interfaze.addImportedTypes(importedTypes);</span>
 <span class="fc" id="L70">            interfaze.addMethod(method);</span>

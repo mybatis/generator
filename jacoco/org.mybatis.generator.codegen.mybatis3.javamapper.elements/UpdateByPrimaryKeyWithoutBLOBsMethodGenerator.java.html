@@ -40,7 +40,7 @@ public class UpdateByPrimaryKeyWithoutBLOBsMethodGenerator extends
     public void addInterfaceElements(Interface interfaze) {
 <span class="fc" id="L41">        Set&lt;FullyQualifiedJavaType&gt; importedTypes = new TreeSet&lt;FullyQualifiedJavaType&gt;();</span>
 <span class="fc" id="L42">        FullyQualifiedJavaType parameterType = new FullyQualifiedJavaType(</span>
-<span class="fc" id="L43">                introspectedTable.getBaseRecordType());</span>
+                introspectedTable.getBaseRecordType());
 <span class="fc" id="L44">        importedTypes.add(parameterType);</span>
 
 <span class="fc" id="L46">        Method method = new Method();</span>
@@ -54,8 +54,8 @@ public class UpdateByPrimaryKeyWithoutBLOBsMethodGenerator extends
 
 <span class="fc" id="L55">        addMapperAnnotations(interfaze, method);</span>
         
-<span class="fc" id="L57">        if (context.getPlugins()</span>
-<span class="pc bpc" id="L58" title="1 of 2 branches missed.">                .clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(method,</span>
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">        if (context.getPlugins()</span>
+                .clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(method,
                         interfaze, introspectedTable)) {
 <span class="fc" id="L60">            interfaze.addImportedTypes(importedTypes);</span>
 <span class="fc" id="L61">            interfaze.addMethod(method);</span>

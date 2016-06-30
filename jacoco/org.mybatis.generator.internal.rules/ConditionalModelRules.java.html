@@ -55,9 +55,9 @@ public class ConditionalModelRules extends BaseRules {
      * @return true if the class should be generated
      */
     public boolean generateBaseRecordClass() {
-<span class="fc bfc" id="L58" title="All 2 branches covered.">        return introspectedTable.hasBaseColumns()</span>
-<span class="fc bfc" id="L59" title="All 2 branches covered.">                || introspectedTable.getPrimaryKeyColumns().size() == 1</span>
-<span class="pc bpc" id="L60" title="1 of 2 branches missed.">                || blobsAreInBaseRecord();</span>
+<span class="pc bpc" id="L58" title="1 of 6 branches missed.">        return introspectedTable.hasBaseColumns()</span>
+                || introspectedTable.getPrimaryKeyColumns().size() == 1
+                || blobsAreInBaseRecord();
     }
     
     /**
@@ -78,10 +78,10 @@ public class ConditionalModelRules extends BaseRules {
      */
     public boolean generateRecordWithBLOBsClass() {
 <span class="fc" id="L80">        int otherColumnCount = introspectedTable.getPrimaryKeyColumns().size()</span>
-<span class="fc" id="L81">                + introspectedTable.getBaseColumns().size();</span>
+                + introspectedTable.getBaseColumns().size();
 
-<span class="fc bfc" id="L83" title="All 2 branches covered.">        return otherColumnCount &gt; 1</span>
-<span class="fc bfc" id="L84" title="All 2 branches covered.">                &amp;&amp; introspectedTable.getBLOBColumns().size() &gt; 1;</span>
+<span class="fc bfc" id="L83" title="All 4 branches covered.">        return otherColumnCount &gt; 1</span>
+                &amp;&amp; introspectedTable.getBLOBColumns().size() &gt; 1;
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

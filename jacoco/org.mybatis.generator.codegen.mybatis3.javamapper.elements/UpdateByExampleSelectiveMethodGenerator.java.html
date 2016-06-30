@@ -39,16 +39,16 @@ import org.mybatis.generator.api.dom.java.Parameter;
 <span class="fc" id="L39">        method.setVisibility(JavaVisibility.PUBLIC);</span>
 <span class="fc" id="L40">        method.setReturnType(FullyQualifiedJavaType.getIntInstance());</span>
 <span class="fc" id="L41">        method.setName(introspectedTable</span>
-<span class="fc" id="L42">                .getUpdateByExampleSelectiveStatementId());</span>
+                .getUpdateByExampleSelectiveStatementId());
 
 <span class="fc" id="L44">        FullyQualifiedJavaType parameterType =</span>
-<span class="fc" id="L45">            introspectedTable.getRules().calculateAllFieldsClass();</span>
+            introspectedTable.getRules().calculateAllFieldsClass();
 <span class="fc" id="L46">        method.addParameter(new Parameter(parameterType,</span>
                 &quot;record&quot;, &quot;@Param(\&quot;record\&quot;)&quot;)); //$NON-NLS-1$ //$NON-NLS-2$
 <span class="fc" id="L48">        importedTypes.add(parameterType);</span>
 
 <span class="fc" id="L50">        FullyQualifiedJavaType exampleType = new FullyQualifiedJavaType(</span>
-<span class="fc" id="L51">                introspectedTable.getExampleType());</span>
+                introspectedTable.getExampleType());
 <span class="fc" id="L52">        method.addParameter(new Parameter(exampleType,</span>
                 &quot;example&quot;, &quot;@Param(\&quot;example\&quot;)&quot;)); //$NON-NLS-1$ //$NON-NLS-2$
 <span class="fc" id="L54">        importedTypes.add(exampleType);</span>
@@ -61,8 +61,8 @@ import org.mybatis.generator.api.dom.java.Parameter;
 
 <span class="fc" id="L62">        addMapperAnnotations(interfaze, method);</span>
         
-<span class="fc" id="L64">        if (context.getPlugins()</span>
-<span class="pc bpc" id="L65" title="1 of 2 branches missed.">                .clientUpdateByExampleSelectiveMethodGenerated(method, interfaze,</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">        if (context.getPlugins()</span>
+                .clientUpdateByExampleSelectiveMethodGenerated(method, interfaze,
                         introspectedTable)) {
 <span class="fc" id="L67">            interfaze.addImportedTypes(importedTypes);</span>
 <span class="fc" id="L68">            interfaze.addMethod(method);</span>

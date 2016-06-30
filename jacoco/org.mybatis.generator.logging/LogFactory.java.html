@@ -43,7 +43,7 @@ import org.mybatis.generator.internal.ObjectFactory;
 <span class="fc" id="L43">            return logFactory.getLog(clazz);</span>
 <span class="nc" id="L44">        } catch (Throwable t) {</span>
 <span class="nc" id="L45">            throw new RuntimeException(getString(&quot;RuntimeError.21&quot;, //$NON-NLS-1$</span>
-<span class="nc" id="L46">                    clazz.getName(), t.getMessage()), t);</span>
+                    clazz.getName(), t.getMessage()), t);
         }
     }
 
@@ -65,7 +65,7 @@ import org.mybatis.generator.internal.ObjectFactory;
         }
     }
 
-<span class="fc" id="L68">    private static class Log4jLoggingLogFactory implements AbstractLogFactory {</span>
+<span class="pc" id="L68">    private static class Log4jLoggingLogFactory implements AbstractLogFactory {</span>
         public Log getLog(Class&lt;?&gt; clazz) {
 <span class="fc" id="L70">            return new Log4jImpl(clazz);</span>
         }

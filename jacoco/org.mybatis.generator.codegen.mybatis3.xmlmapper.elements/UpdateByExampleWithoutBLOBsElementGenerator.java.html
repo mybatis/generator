@@ -41,7 +41,7 @@ public class UpdateByExampleWithoutBLOBsElementGenerator extends
 <span class="fc" id="L41">        XmlElement answer = new XmlElement(&quot;update&quot;); //$NON-NLS-1$</span>
 
 <span class="fc" id="L43">        answer.addAttribute(new Attribute(&quot;id&quot;, //$NON-NLS-1$</span>
-<span class="fc" id="L44">                introspectedTable.getUpdateByExampleStatementId()));</span>
+                introspectedTable.getUpdateByExampleStatementId()));
 
 <span class="fc" id="L46">        answer.addAttribute(new Attribute(&quot;parameterType&quot;, &quot;map&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
 
@@ -50,7 +50,7 @@ public class UpdateByExampleWithoutBLOBsElementGenerator extends
 <span class="fc" id="L50">        StringBuilder sb = new StringBuilder();</span>
 <span class="fc" id="L51">        sb.append(&quot;update &quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L52">        sb.append(introspectedTable</span>
-<span class="fc" id="L53">                .getAliasedFullyQualifiedTableNameAtRuntime());</span>
+                .getAliasedFullyQualifiedTableNameAtRuntime());
 <span class="fc" id="L54">        answer.addElement(new TextElement(sb.toString()));</span>
 
         // set up for first column
@@ -58,12 +58,12 @@ public class UpdateByExampleWithoutBLOBsElementGenerator extends
 <span class="fc" id="L58">        sb.append(&quot;set &quot;); //$NON-NLS-1$</span>
 
 <span class="fc" id="L60">        Iterator&lt;IntrospectedColumn&gt; iter = introspectedTable</span>
-<span class="fc" id="L61">                .getNonBLOBColumns().iterator();</span>
+                .getNonBLOBColumns().iterator();
 <span class="fc bfc" id="L62" title="All 2 branches covered.">        while (iter.hasNext()) {</span>
 <span class="fc" id="L63">            IntrospectedColumn introspectedColumn = iter.next();</span>
 
 <span class="fc" id="L65">            sb.append(MyBatis3FormattingUtilities</span>
-<span class="fc" id="L66">                    .getAliasedEscapedColumnName(introspectedColumn));</span>
+                    .getAliasedEscapedColumnName(introspectedColumn));
 <span class="fc" id="L67">            sb.append(&quot; = &quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L68">            sb.append(MyBatis3FormattingUtilities.getParameterClause(</span>
                     introspectedColumn, &quot;record.&quot;)); //$NON-NLS-1$
@@ -83,8 +83,8 @@ public class UpdateByExampleWithoutBLOBsElementGenerator extends
 
 <span class="fc" id="L84">        answer.addElement(getUpdateByExampleIncludeElement());</span>
 
-<span class="fc" id="L86">        if (context.getPlugins()</span>
-<span class="pc bpc" id="L87" title="1 of 2 branches missed.">                .sqlMapUpdateByExampleWithoutBLOBsElementGenerated(answer,</span>
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">        if (context.getPlugins()</span>
+                .sqlMapUpdateByExampleWithoutBLOBsElementGenerated(answer,
                         introspectedTable)) {
 <span class="fc" id="L89">            parentElement.addElement(answer);</span>
         }

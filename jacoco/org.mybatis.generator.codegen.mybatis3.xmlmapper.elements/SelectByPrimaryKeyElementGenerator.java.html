@@ -40,13 +40,13 @@ public class SelectByPrimaryKeyElementGenerator extends
 <span class="fc" id="L40">        XmlElement answer = new XmlElement(&quot;select&quot;); //$NON-NLS-1$</span>
 
 <span class="fc" id="L42">        answer.addAttribute(new Attribute(</span>
-<span class="fc" id="L43">                &quot;id&quot;, introspectedTable.getSelectByPrimaryKeyStatementId())); //$NON-NLS-1$</span>
+                &quot;id&quot;, introspectedTable.getSelectByPrimaryKeyStatementId())); //$NON-NLS-1$
 <span class="fc bfc" id="L44" title="All 2 branches covered.">        if (introspectedTable.getRules().generateResultMapWithBLOBs()) {</span>
 <span class="fc" id="L45">            answer.addAttribute(new Attribute(&quot;resultMap&quot;, //$NON-NLS-1$</span>
-<span class="fc" id="L46">                    introspectedTable.getResultMapWithBLOBsId()));</span>
+                    introspectedTable.getResultMapWithBLOBsId()));
         } else {
 <span class="fc" id="L48">            answer.addAttribute(new Attribute(&quot;resultMap&quot;, //$NON-NLS-1$</span>
-<span class="fc" id="L49">                    introspectedTable.getBaseResultMapId()));</span>
+                    introspectedTable.getBaseResultMapId()));
         }
 
         String parameterType;
@@ -59,7 +59,7 @@ public class SelectByPrimaryKeyElementGenerator extends
 <span class="fc" id="L59">                parameterType = &quot;map&quot;; //$NON-NLS-1$</span>
             } else {
 <span class="fc" id="L61">                parameterType = introspectedTable.getPrimaryKeyColumns().get(0)</span>
-<span class="fc" id="L62">                        .getFullyQualifiedJavaType().toString();</span>
+                        .getFullyQualifiedJavaType().toString();
             }
         }
 
@@ -72,7 +72,7 @@ public class SelectByPrimaryKeyElementGenerator extends
 <span class="fc" id="L72">        sb.append(&quot;select &quot;); //$NON-NLS-1$</span>
 
 <span class="pc bpc" id="L74" title="1 of 2 branches missed.">        if (stringHasValue(introspectedTable</span>
-<span class="fc" id="L75">                .getSelectByPrimaryKeyQueryId())) {</span>
+                .getSelectByPrimaryKeyQueryId())) {
 <span class="nc" id="L76">            sb.append('\'');</span>
 <span class="nc" id="L77">            sb.append(introspectedTable.getSelectByPrimaryKeyQueryId());</span>
 <span class="nc" id="L78">            sb.append(&quot;' as QUERYID,&quot;); //$NON-NLS-1$</span>
@@ -87,12 +87,12 @@ public class SelectByPrimaryKeyElementGenerator extends
 <span class="fc" id="L87">        sb.setLength(0);</span>
 <span class="fc" id="L88">        sb.append(&quot;from &quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L89">        sb.append(introspectedTable</span>
-<span class="fc" id="L90">                .getAliasedFullyQualifiedTableNameAtRuntime());</span>
+                .getAliasedFullyQualifiedTableNameAtRuntime());
 <span class="fc" id="L91">        answer.addElement(new TextElement(sb.toString()));</span>
 
 <span class="fc" id="L93">        boolean and = false;</span>
 <span class="fc bfc" id="L94" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable</span>
-<span class="fc" id="L95">                .getPrimaryKeyColumns()) {</span>
+                .getPrimaryKeyColumns()) {
 <span class="fc" id="L96">            sb.setLength(0);</span>
 <span class="fc bfc" id="L97" title="All 2 branches covered.">            if (and) {</span>
 <span class="fc" id="L98">                sb.append(&quot;  and &quot;); //$NON-NLS-1$</span>
@@ -102,15 +102,15 @@ public class SelectByPrimaryKeyElementGenerator extends
             }
 
 <span class="fc" id="L104">            sb.append(MyBatis3FormattingUtilities</span>
-<span class="fc" id="L105">                    .getAliasedEscapedColumnName(introspectedColumn));</span>
+                    .getAliasedEscapedColumnName(introspectedColumn));
 <span class="fc" id="L106">            sb.append(&quot; = &quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L107">            sb.append(MyBatis3FormattingUtilities</span>
-<span class="fc" id="L108">                    .getParameterClause(introspectedColumn));</span>
+                    .getParameterClause(introspectedColumn));
 <span class="fc" id="L109">            answer.addElement(new TextElement(sb.toString()));</span>
 <span class="fc" id="L110">        }</span>
 
-<span class="fc" id="L112">        if (context.getPlugins()</span>
-<span class="pc bpc" id="L113" title="1 of 2 branches missed.">                .sqlMapSelectByPrimaryKeyElementGenerated(answer,</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">        if (context.getPlugins()</span>
+                .sqlMapSelectByPrimaryKeyElementGenerated(answer,
                         introspectedTable)) {
 <span class="fc" id="L115">            parentElement.addElement(answer);</span>
         }

@@ -44,13 +44,13 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
 <span class="fc" id="L44">        XmlElement answer = new XmlElement(&quot;insert&quot;); //$NON-NLS-1$</span>
 
 <span class="fc" id="L46">        answer.addAttribute(new Attribute(</span>
-<span class="fc" id="L47">                &quot;id&quot;, introspectedTable.getInsertStatementId())); //$NON-NLS-1$</span>
+                &quot;id&quot;, introspectedTable.getInsertStatementId())); //$NON-NLS-1$
 
 <span class="fc" id="L49">        FullyQualifiedJavaType parameterType = introspectedTable.getRules()</span>
-<span class="fc" id="L50">                .calculateAllFieldsClass();</span>
+                .calculateAllFieldsClass();
 
 <span class="fc" id="L52">        answer.addAttribute(new Attribute(&quot;parameterClass&quot;, //$NON-NLS-1$</span>
-<span class="fc" id="L53">                parameterType.getFullyQualifiedName()));</span>
+                parameterType.getFullyQualifiedName()));
 
 <span class="fc" id="L55">        context.getCommentGenerator().addComment(answer);</span>
 
@@ -58,7 +58,7 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
 
 <span class="fc bfc" id="L59" title="All 4 branches covered.">        if (gk != null &amp;&amp; gk.isPlacedBeforeInsertInIbatis2()) {</span>
 <span class="fc" id="L60">            IntrospectedColumn introspectedColumn = introspectedTable</span>
-<span class="fc" id="L61">                    .getColumn(gk.getColumn());</span>
+                    .getColumn(gk.getColumn());
             // if the column is null, then it's a configuration error. The
             // warning has already been reported
 <span class="pc bpc" id="L64" title="1 of 2 branches missed.">            if (introspectedColumn != null) {</span>
@@ -72,14 +72,14 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
 
 <span class="fc" id="L73">        insertClause.append(&quot;insert into &quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L74">        insertClause.append(introspectedTable</span>
-<span class="fc" id="L75">                .getFullyQualifiedTableNameAtRuntime());</span>
+                .getFullyQualifiedTableNameAtRuntime());
 <span class="fc" id="L76">        insertClause.append(&quot; (&quot;); //$NON-NLS-1$</span>
 
 <span class="fc" id="L78">        valuesClause.append(&quot;values (&quot;); //$NON-NLS-1$</span>
 
 <span class="fc" id="L80">        List&lt;String&gt; valuesClauses = new ArrayList&lt;String&gt;();</span>
 <span class="fc" id="L81">        Iterator&lt;IntrospectedColumn&gt; iter = introspectedTable.getAllColumns()</span>
-<span class="fc" id="L82">                .iterator();</span>
+                .iterator();
 <span class="fc bfc" id="L83" title="All 2 branches covered.">        while (iter.hasNext()) {</span>
 <span class="fc" id="L84">            IntrospectedColumn introspectedColumn = iter.next();</span>
 <span class="fc bfc" id="L85" title="All 2 branches covered.">            if (introspectedColumn.isIdentity()) {</span>
@@ -88,9 +88,9 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
             }
 
 <span class="fc" id="L90">            insertClause.append(Ibatis2FormattingUtilities</span>
-<span class="fc" id="L91">                    .getEscapedColumnName(introspectedColumn));</span>
+                    .getEscapedColumnName(introspectedColumn));
 <span class="fc" id="L92">            valuesClause.append(Ibatis2FormattingUtilities</span>
-<span class="fc" id="L93">                    .getParameterClause(introspectedColumn));</span>
+                    .getParameterClause(introspectedColumn));
 <span class="fc bfc" id="L94" title="All 2 branches covered.">            if (iter.hasNext()) {</span>
 <span class="fc" id="L95">                insertClause.append(&quot;, &quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L96">                valuesClause.append(&quot;, &quot;); //$NON-NLS-1$</span>
@@ -119,7 +119,7 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
 
 <span class="fc bfc" id="L120" title="All 4 branches covered.">        if (gk != null &amp;&amp; !gk.isPlacedBeforeInsertInIbatis2()) {</span>
 <span class="fc" id="L121">            IntrospectedColumn introspectedColumn = introspectedTable</span>
-<span class="fc" id="L122">                    .getColumn(gk.getColumn());</span>
+                    .getColumn(gk.getColumn());
             // if the column is null, then it's a configuration error. The
             // warning has already been reported
 <span class="pc bpc" id="L125" title="1 of 2 branches missed.">            if (introspectedColumn != null) {</span>

@@ -38,7 +38,7 @@ import org.mybatis.generator.config.PropertyRegistry;
     public static Method getGetter(Field field) {
 <span class="fc" id="L39">        Method method = new Method();</span>
 <span class="fc" id="L40">        method.setName(getGetterMethodName(field.getName(), field</span>
-<span class="fc" id="L41">                .getType()));</span>
+                .getType()));
 <span class="fc" id="L42">        method.setReturnType(field.getType());</span>
 <span class="fc" id="L43">        method.setVisibility(JavaVisibility.PUBLIC);</span>
 <span class="fc" id="L44">        StringBuilder sb = new StringBuilder();</span>
@@ -51,10 +51,10 @@ import org.mybatis.generator.config.PropertyRegistry;
 
     public String getRootClass() {
 <span class="fc" id="L53">        String rootClass = introspectedTable</span>
-<span class="fc" id="L54">                .getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_CLASS);</span>
+                .getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_CLASS);
 <span class="pc bpc" id="L55" title="1 of 2 branches missed.">        if (rootClass == null) {</span>
 <span class="fc" id="L56">            Properties properties = context</span>
-<span class="fc" id="L57">                    .getJavaModelGeneratorConfiguration().getProperties();</span>
+                    .getJavaModelGeneratorConfiguration().getProperties();
 <span class="fc" id="L58">            rootClass = properties.getProperty(PropertyRegistry.ANY_ROOT_CLASS);</span>
         }
 

@@ -42,19 +42,19 @@ public class SimpleSelectAllElementGenerator extends
 <span class="fc" id="L42">        XmlElement answer = new XmlElement(&quot;select&quot;); //$NON-NLS-1$</span>
 
 <span class="fc" id="L44">        answer.addAttribute(new Attribute(</span>
-<span class="fc" id="L45">                &quot;id&quot;, introspectedTable.getSelectAllStatementId())); //$NON-NLS-1$</span>
+                &quot;id&quot;, introspectedTable.getSelectAllStatementId())); //$NON-NLS-1$
 <span class="fc" id="L46">        answer.addAttribute(new Attribute(&quot;resultMap&quot;, //$NON-NLS-1$</span>
-<span class="fc" id="L47">                introspectedTable.getBaseResultMapId()));</span>
+                introspectedTable.getBaseResultMapId()));
 
 <span class="fc" id="L49">        context.getCommentGenerator().addComment(answer);</span>
 
 <span class="fc" id="L51">        StringBuilder sb = new StringBuilder();</span>
 <span class="fc" id="L52">        sb.append(&quot;select &quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L53">        Iterator&lt;IntrospectedColumn&gt; iter = introspectedTable.getAllColumns()</span>
-<span class="fc" id="L54">                .iterator();</span>
+                .iterator();
 <span class="fc bfc" id="L55" title="All 2 branches covered.">        while (iter.hasNext()) {</span>
 <span class="fc" id="L56">            sb.append(MyBatis3FormattingUtilities.getSelectListPhrase(iter</span>
-<span class="fc" id="L57">                    .next()));</span>
+                    .next()));
 
 <span class="fc bfc" id="L59" title="All 2 branches covered.">            if (iter.hasNext()) {</span>
 <span class="fc" id="L60">                sb.append(&quot;, &quot;); //$NON-NLS-1$</span>
@@ -73,7 +73,7 @@ public class SimpleSelectAllElementGenerator extends
 <span class="fc" id="L73">        sb.setLength(0);</span>
 <span class="fc" id="L74">        sb.append(&quot;from &quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L75">        sb.append(introspectedTable</span>
-<span class="fc" id="L76">                .getAliasedFullyQualifiedTableNameAtRuntime());</span>
+                .getAliasedFullyQualifiedTableNameAtRuntime());
 <span class="fc" id="L77">        answer.addElement(new TextElement(sb.toString()));</span>
         
 <span class="fc" id="L79">        String orderByClause = introspectedTable.getTableConfigurationProperty(PropertyRegistry.TABLE_SELECT_ALL_ORDER_BY_CLAUSE);</span>

@@ -222,7 +222,7 @@ public class TableConfiguration extends PropertyHolder {
      */
     public boolean isColumnIgnored(String columnName) {
 <span class="fc bfc" id="L224" title="All 2 branches covered.">        for (Map.Entry&lt;IgnoredColumn, Boolean&gt; entry : ignoredColumns</span>
-<span class="fc" id="L225">                .entrySet()) {</span>
+                .entrySet()) {
 <span class="fc" id="L226">            IgnoredColumn ic = entry.getKey();</span>
 <span class="pc bpc" id="L227" title="1 of 2 branches missed.">            if (ic.isColumnNameDelimited()) {</span>
 <span class="nc bnc" id="L228" title="All 2 branches missed.">                if (columnName.equals(ic.getColumnName())) {</span>
@@ -275,9 +275,9 @@ public class TableConfiguration extends PropertyHolder {
 
 <span class="nc" id="L276">        TableConfiguration other = (TableConfiguration) obj;</span>
 
-<span class="nc bnc" id="L278" title="All 2 branches missed.">        return areEqual(this.catalog, other.catalog)</span>
-<span class="nc bnc" id="L279" title="All 2 branches missed.">                &amp;&amp; areEqual(this.schema, other.schema)</span>
-<span class="nc bnc" id="L280" title="All 2 branches missed.">                &amp;&amp; areEqual(this.tableName, other.tableName);</span>
+<span class="nc bnc" id="L278" title="All 6 branches missed.">        return areEqual(this.catalog, other.catalog)</span>
+                &amp;&amp; areEqual(this.schema, other.schema)
+                &amp;&amp; areEqual(this.tableName, other.tableName);
     }
 
     /* (non-Javadoc)
@@ -544,7 +544,7 @@ public class TableConfiguration extends PropertyHolder {
 <span class="fc" id="L544">        List&lt;String&gt; answer = new ArrayList&lt;String&gt;();</span>
 
 <span class="fc bfc" id="L546" title="All 2 branches covered.">        for (Map.Entry&lt;IgnoredColumn, Boolean&gt; entry : ignoredColumns</span>
-<span class="fc" id="L547">                .entrySet()) {</span>
+                .entrySet()) {
 <span class="fc bfc" id="L548" title="All 2 branches covered.">            if (Boolean.FALSE.equals(entry.getValue())) {</span>
 <span class="fc" id="L549">                answer.add(entry.getKey().getColumnName());</span>
             }
@@ -682,7 +682,7 @@ public class TableConfiguration extends PropertyHolder {
 
 <span class="nc bnc" id="L683" title="All 2 branches missed.">        if (delimitIdentifiers) {</span>
 <span class="nc" id="L684">            xmlElement</span>
-<span class="nc" id="L685">                    .addAttribute(new Attribute(&quot;delimitIdentifiers&quot;, &quot;true&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+                    .addAttribute(new Attribute(&quot;delimitIdentifiers&quot;, &quot;true&quot;)); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
 <span class="nc" id="L688">        addPropertyXmlElements(xmlElement);</span>
@@ -789,7 +789,7 @@ public class TableConfiguration extends PropertyHolder {
     public void validate(List&lt;String&gt; errors, int listPosition) {
 <span class="pc bpc" id="L790" title="1 of 2 branches missed.">        if (!stringHasValue(tableName)) {</span>
 <span class="nc" id="L791">            errors.add(getString(</span>
-<span class="nc" id="L792">                    &quot;ValidationError.6&quot;, Integer.toString(listPosition))); //$NON-NLS-1$</span>
+                    &quot;ValidationError.6&quot;, Integer.toString(listPosition))); //$NON-NLS-1$
         }
 
 <span class="fc" id="L795">        String fqTableName = composeFullyQualifiedTableName(</span>

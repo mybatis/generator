@@ -43,11 +43,11 @@ public class SelectAllMethodGenerator extends AbstractJavaMapperMethodGenerator 
 <span class="fc" id="L43">        Method method = new Method();</span>
 <span class="fc" id="L44">        method.setVisibility(JavaVisibility.PUBLIC);</span>
 
-        FullyQualifiedJavaType returnType = FullyQualifiedJavaType
-<span class="fc" id="L47">                .getNewListInstance();</span>
+<span class="fc" id="L46">        FullyQualifiedJavaType returnType = FullyQualifiedJavaType</span>
+                .getNewListInstance();
         FullyQualifiedJavaType listType;
 <span class="fc" id="L49">        listType = new FullyQualifiedJavaType(</span>
-<span class="fc" id="L50">                introspectedTable.getBaseRecordType());</span>
+                introspectedTable.getBaseRecordType());
 
 <span class="fc" id="L52">        importedTypes.add(listType);</span>
 <span class="fc" id="L53">        returnType.addTypeArgument(listType);</span>

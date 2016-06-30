@@ -53,8 +53,8 @@ public class InsertMethodGenerator extends AbstractDAOElementGenerator {
         }
 
 <span class="fc" id="L55">        sb.append(daoTemplate.getInsertMethod(introspectedTable</span>
-<span class="fc" id="L56">                .getIbatis2SqlMapNamespace(), introspectedTable</span>
-<span class="fc" id="L57">                .getInsertStatementId(), &quot;record&quot;)); //$NON-NLS-1$</span>
+                .getIbatis2SqlMapNamespace(), introspectedTable
+                .getInsertStatementId(), &quot;record&quot;)); //$NON-NLS-1$
 <span class="fc" id="L58">        method.addBodyLine(sb.toString());</span>
 
 <span class="fc bfc" id="L60" title="All 2 branches covered.">        if (returnType != null) {</span>
@@ -66,7 +66,7 @@ public class InsertMethodGenerator extends AbstractDAOElementGenerator {
 
 <span class="pc bpc" id="L67" title="1 of 2 branches missed.">                if (returnType.isPrimitive()) {</span>
 <span class="nc" id="L68">                    PrimitiveTypeWrapper ptw = returnType</span>
-<span class="nc" id="L69">                            .getPrimitiveTypeWrapper();</span>
+                            .getPrimitiveTypeWrapper();
 <span class="nc" id="L70">                    sb.append(&quot;return ((&quot;); //$NON-NLS-1$</span>
 <span class="nc" id="L71">                    sb.append(ptw.getShortName());</span>
 <span class="nc" id="L72">                    sb.append(&quot;) newKey&quot;); //$NON-NLS-1$</span>
@@ -108,7 +108,7 @@ public class InsertMethodGenerator extends AbstractDAOElementGenerator {
         FullyQualifiedJavaType returnType;
 <span class="fc bfc" id="L109" title="All 2 branches covered.">        if (introspectedTable.getGeneratedKey() != null) {</span>
 <span class="fc" id="L110">            IntrospectedColumn introspectedColumn = introspectedTable</span>
-<span class="fc" id="L111">                    .getColumn(introspectedTable.getGeneratedKey().getColumn());</span>
+                    .getColumn(introspectedTable.getGeneratedKey().getColumn());
 <span class="pc bpc" id="L112" title="1 of 2 branches missed.">            if (introspectedColumn == null) {</span>
                 // the specified column doesn't exist, so don't do the generated
                 // key
@@ -126,10 +126,10 @@ public class InsertMethodGenerator extends AbstractDAOElementGenerator {
 <span class="fc" id="L126">        method.setVisibility(JavaVisibility.PUBLIC);</span>
 <span class="fc" id="L127">        DAOMethodNameCalculator methodNameCalculator = getDAOMethodNameCalculator();</span>
 <span class="fc" id="L128">        method.setName(methodNameCalculator</span>
-<span class="fc" id="L129">                .getInsertMethodName(introspectedTable));</span>
+                .getInsertMethodName(introspectedTable));
 
 <span class="fc" id="L131">        FullyQualifiedJavaType parameterType = introspectedTable.getRules()</span>
-<span class="fc" id="L132">                .calculateAllFieldsClass();</span>
+                .calculateAllFieldsClass();
 
 <span class="fc" id="L134">        importedTypes.add(parameterType);</span>
 <span class="fc" id="L135">        method.addParameter(new Parameter(parameterType, &quot;record&quot;)); //$NON-NLS-1$</span>

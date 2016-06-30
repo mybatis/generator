@@ -134,7 +134,7 @@ public class IntrospectedColumn {
     public void setActualColumnName(String actualColumnName) {
 <span class="fc" id="L135">        this.actualColumnName = actualColumnName;</span>
 <span class="fc" id="L136">        isColumnNameDelimited = StringUtility</span>
-<span class="fc" id="L137">                .stringContainsSpace(actualColumnName);</span>
+                .stringContainsSpace(actualColumnName);
 <span class="fc" id="L138">    }</span>
 
     /**
@@ -155,15 +155,15 @@ public class IntrospectedColumn {
     public boolean isBLOBColumn() {
 <span class="fc" id="L156">        String typeName = getJdbcTypeName();</span>
 
-<span class="pc bpc" id="L158" title="1 of 4 branches missed.">        return &quot;BINARY&quot;.equals(typeName) || &quot;BLOB&quot;.equals(typeName) //$NON-NLS-1$ //$NON-NLS-2$</span>
-<span class="pc bpc" id="L159" title="1 of 4 branches missed.">                || &quot;CLOB&quot;.equals(typeName) || &quot;LONGNVARCHAR&quot;.equals(typeName) //$NON-NLS-1$ //$NON-NLS-2$ </span>
-<span class="pc bpc" id="L160" title="2 of 4 branches missed.">                || &quot;LONGVARBINARY&quot;.equals(typeName) || &quot;LONGVARCHAR&quot;.equals(typeName) //$NON-NLS-1$ //$NON-NLS-2$</span>
-<span class="pc bpc" id="L161" title="1 of 4 branches missed.">                || &quot;NCLOB&quot;.equals(typeName) || &quot;VARBINARY&quot;.equals(typeName); //$NON-NLS-1$ //$NON-NLS-2$ </span>
+<span class="pc bpc" id="L158" title="5 of 16 branches missed.">        return &quot;BINARY&quot;.equals(typeName) || &quot;BLOB&quot;.equals(typeName) //$NON-NLS-1$ //$NON-NLS-2$</span>
+                || &quot;CLOB&quot;.equals(typeName) || &quot;LONGNVARCHAR&quot;.equals(typeName) //$NON-NLS-1$ //$NON-NLS-2$ 
+                || &quot;LONGVARBINARY&quot;.equals(typeName) || &quot;LONGVARCHAR&quot;.equals(typeName) //$NON-NLS-1$ //$NON-NLS-2$
+                || &quot;NCLOB&quot;.equals(typeName) || &quot;VARBINARY&quot;.equals(typeName); //$NON-NLS-1$ //$NON-NLS-2$ 
     }
 
     public boolean isStringColumn() {
 <span class="fc" id="L165">        return fullyQualifiedJavaType.equals(FullyQualifiedJavaType</span>
-<span class="fc" id="L166">                .getStringInstance());</span>
+                .getStringInstance());
     }
 
     public boolean isJdbcCharacterColumn() {
@@ -194,15 +194,15 @@ public class IntrospectedColumn {
 <span class="fc" id="L194">    }</span>
 
     public boolean isJDBCDateColumn() {
-<span class="fc bfc" id="L197" title="All 2 branches covered.">        return fullyQualifiedJavaType.equals(FullyQualifiedJavaType</span>
-<span class="fc" id="L198">                .getDateInstance())</span>
-<span class="fc bfc" id="L199" title="All 2 branches covered.">                &amp;&amp; &quot;DATE&quot;.equalsIgnoreCase(jdbcTypeName); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L197" title="All 4 branches covered.">        return fullyQualifiedJavaType.equals(FullyQualifiedJavaType</span>
+                .getDateInstance())
+                &amp;&amp; &quot;DATE&quot;.equalsIgnoreCase(jdbcTypeName); //$NON-NLS-1$
     }
 
     public boolean isJDBCTimeColumn() {
-<span class="fc bfc" id="L203" title="All 2 branches covered.">        return fullyQualifiedJavaType.equals(FullyQualifiedJavaType</span>
-<span class="fc" id="L204">                .getDateInstance())</span>
-<span class="fc bfc" id="L205" title="All 2 branches covered.">                &amp;&amp; &quot;TIME&quot;.equalsIgnoreCase(jdbcTypeName); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L203" title="All 4 branches covered.">        return fullyQualifiedJavaType.equals(FullyQualifiedJavaType</span>
+                .getDateInstance())
+                &amp;&amp; &quot;TIME&quot;.equalsIgnoreCase(jdbcTypeName); //$NON-NLS-1$
     }
 
     public String getTypeHandler() {

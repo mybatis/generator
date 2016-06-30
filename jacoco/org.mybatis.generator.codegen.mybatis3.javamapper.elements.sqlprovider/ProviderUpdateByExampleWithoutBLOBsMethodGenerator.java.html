@@ -75,7 +75,7 @@ public class ProviderUpdateByExampleWithoutBLOBsMethodGenerator extends
         
 <span class="fc" id="L76">        method.addBodyLine(String.format(&quot;%sUPDATE(\&quot;%s\&quot;);&quot;, //$NON-NLS-1$</span>
                 builderPrefix,
-<span class="fc" id="L78">        		escapeStringForJava(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime())));</span>
+        		escapeStringForJava(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime())));
 <span class="fc" id="L79">        method.addBodyLine(&quot;&quot;); //$NON-NLS-1$</span>
         
 <span class="fc bfc" id="L81" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : getColumns()) {</span>
@@ -85,17 +85,17 @@ public class ProviderUpdateByExampleWithoutBLOBsMethodGenerator extends
             
 <span class="fc" id="L86">            method.addBodyLine(String.format(&quot;%sSET(\&quot;%s = %s\&quot;);&quot;, //$NON-NLS-1$</span>
                     builderPrefix,
-<span class="fc" id="L88">            		escapeStringForJava(getAliasedEscapedColumnName(introspectedColumn)),</span>
-<span class="fc" id="L89">                    sb.toString()));</span>
+            		escapeStringForJava(getAliasedEscapedColumnName(introspectedColumn)),
+                    sb.toString()));
 <span class="fc" id="L90">        }</span>
         
 <span class="fc" id="L92">        method.addBodyLine(&quot;&quot;); //$NON-NLS-1$</span>
         
 <span class="fc" id="L94">        FullyQualifiedJavaType example =</span>
-<span class="fc" id="L95">            new FullyQualifiedJavaType(introspectedTable.getExampleType());</span>
+            new FullyQualifiedJavaType(introspectedTable.getExampleType());
 <span class="fc" id="L96">        importedTypes.add(example);</span>
 <span class="fc" id="L97">        method.addBodyLine(String.format(&quot;%s example = (%s) parameter.get(\&quot;example\&quot;);&quot;, //$NON-NLS-1$</span>
-<span class="fc" id="L98">                example.getShortName(), example.getShortName()));</span>
+                example.getShortName(), example.getShortName()));
         
 <span class="pc bpc" id="L100" title="1 of 2 branches missed.">        if (useLegacyBuilder) {</span>
 <span class="nc" id="L101">        	method.addBodyLine(&quot;applyWhere(example, true);&quot;); //$NON-NLS-1$</span>

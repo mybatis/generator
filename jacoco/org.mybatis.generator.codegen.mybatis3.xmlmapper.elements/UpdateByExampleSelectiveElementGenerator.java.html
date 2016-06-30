@@ -38,8 +38,8 @@ public class UpdateByExampleSelectiveElementGenerator extends
 <span class="fc" id="L38">        XmlElement answer = new XmlElement(&quot;update&quot;); //$NON-NLS-1$</span>
 
 <span class="fc" id="L40">        answer</span>
-<span class="fc" id="L41">                .addAttribute(new Attribute(</span>
-<span class="fc" id="L42">                        &quot;id&quot;, introspectedTable.getUpdateByExampleSelectiveStatementId())); //$NON-NLS-1$</span>
+                .addAttribute(new Attribute(
+                        &quot;id&quot;, introspectedTable.getUpdateByExampleSelectiveStatementId())); //$NON-NLS-1$
 
 <span class="fc" id="L44">        answer.addAttribute(new Attribute(&quot;parameterType&quot;, &quot;map&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
 
@@ -48,14 +48,14 @@ public class UpdateByExampleSelectiveElementGenerator extends
 <span class="fc" id="L48">        StringBuilder sb = new StringBuilder();</span>
 <span class="fc" id="L49">        sb.append(&quot;update &quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L50">        sb.append(introspectedTable</span>
-<span class="fc" id="L51">                .getAliasedFullyQualifiedTableNameAtRuntime());</span>
+                .getAliasedFullyQualifiedTableNameAtRuntime());
 <span class="fc" id="L52">        answer.addElement(new TextElement(sb.toString()));</span>
 
 <span class="fc" id="L54">        XmlElement dynamicElement = new XmlElement(&quot;set&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L55">        answer.addElement(dynamicElement);</span>
 
 <span class="fc bfc" id="L57" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable</span>
-<span class="fc" id="L58">                .getAllColumns()) {</span>
+                .getAllColumns()) {
 <span class="fc" id="L59">            XmlElement isNotNullElement = new XmlElement(&quot;if&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L60">            sb.setLength(0);</span>
 <span class="fc" id="L61">            sb.append(introspectedColumn.getJavaProperty(&quot;record.&quot;)); //$NON-NLS-1$</span>
@@ -65,7 +65,7 @@ public class UpdateByExampleSelectiveElementGenerator extends
 
 <span class="fc" id="L66">            sb.setLength(0);</span>
 <span class="fc" id="L67">            sb.append(MyBatis3FormattingUtilities</span>
-<span class="fc" id="L68">                    .getAliasedEscapedColumnName(introspectedColumn));</span>
+                    .getAliasedEscapedColumnName(introspectedColumn));
 <span class="fc" id="L69">            sb.append(&quot; = &quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L70">            sb.append(MyBatis3FormattingUtilities.getParameterClause(</span>
                     introspectedColumn, &quot;record.&quot;)); //$NON-NLS-1$
@@ -76,8 +76,8 @@ public class UpdateByExampleSelectiveElementGenerator extends
 
 <span class="fc" id="L77">        answer.addElement(getUpdateByExampleIncludeElement());</span>
 
-<span class="fc" id="L79">        if (context.getPlugins()</span>
-<span class="pc bpc" id="L80" title="1 of 2 branches missed.">                .sqlMapUpdateByExampleSelectiveElementGenerated(answer,</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">        if (context.getPlugins()</span>
+                .sqlMapUpdateByExampleSelectiveElementGenerated(answer,
                         introspectedTable)) {
 <span class="fc" id="L82">            parentElement.addElement(answer);</span>
         }

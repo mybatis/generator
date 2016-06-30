@@ -38,8 +38,8 @@ public class UpdateByPrimaryKeySelectiveElementGenerator extends
 <span class="fc" id="L38">        XmlElement answer = new XmlElement(&quot;update&quot;); //$NON-NLS-1$</span>
 
 <span class="fc" id="L40">        answer</span>
-<span class="fc" id="L41">                .addAttribute(new Attribute(</span>
-<span class="fc" id="L42">                        &quot;id&quot;, introspectedTable.getUpdateByPrimaryKeySelectiveStatementId())); //$NON-NLS-1$</span>
+                .addAttribute(new Attribute(
+                        &quot;id&quot;, introspectedTable.getUpdateByPrimaryKeySelectiveStatementId())); //$NON-NLS-1$
 
         String parameterType;
 
@@ -64,7 +64,7 @@ public class UpdateByPrimaryKeySelectiveElementGenerator extends
 <span class="fc" id="L64">        answer.addElement(dynamicElement);</span>
 
 <span class="fc bfc" id="L66" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable</span>
-<span class="fc" id="L67">                .getNonPrimaryKeyColumns()) {</span>
+                .getNonPrimaryKeyColumns()) {
 <span class="fc" id="L68">            XmlElement isNotNullElement = new XmlElement(&quot;if&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L69">            sb.setLength(0);</span>
 <span class="fc" id="L70">            sb.append(introspectedColumn.getJavaProperty());</span>
@@ -74,10 +74,10 @@ public class UpdateByPrimaryKeySelectiveElementGenerator extends
 
 <span class="fc" id="L75">            sb.setLength(0);</span>
 <span class="fc" id="L76">            sb.append(MyBatis3FormattingUtilities</span>
-<span class="fc" id="L77">                    .getEscapedColumnName(introspectedColumn));</span>
+                    .getEscapedColumnName(introspectedColumn));
 <span class="fc" id="L78">            sb.append(&quot; = &quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L79">            sb.append(MyBatis3FormattingUtilities</span>
-<span class="fc" id="L80">                    .getParameterClause(introspectedColumn));</span>
+                    .getParameterClause(introspectedColumn));
 <span class="fc" id="L81">            sb.append(',');</span>
 
 <span class="fc" id="L83">            isNotNullElement.addElement(new TextElement(sb.toString()));</span>
@@ -85,7 +85,7 @@ public class UpdateByPrimaryKeySelectiveElementGenerator extends
 
 <span class="fc" id="L86">        boolean and = false;</span>
 <span class="fc bfc" id="L87" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable</span>
-<span class="fc" id="L88">                .getPrimaryKeyColumns()) {</span>
+                .getPrimaryKeyColumns()) {
 <span class="fc" id="L89">            sb.setLength(0);</span>
 <span class="fc bfc" id="L90" title="All 2 branches covered.">            if (and) {</span>
 <span class="fc" id="L91">                sb.append(&quot;  and &quot;); //$NON-NLS-1$</span>
@@ -95,15 +95,15 @@ public class UpdateByPrimaryKeySelectiveElementGenerator extends
             }
 
 <span class="fc" id="L97">            sb.append(MyBatis3FormattingUtilities</span>
-<span class="fc" id="L98">                    .getEscapedColumnName(introspectedColumn));</span>
+                    .getEscapedColumnName(introspectedColumn));
 <span class="fc" id="L99">            sb.append(&quot; = &quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L100">            sb.append(MyBatis3FormattingUtilities</span>
-<span class="fc" id="L101">                    .getParameterClause(introspectedColumn));</span>
+                    .getParameterClause(introspectedColumn));
 <span class="fc" id="L102">            answer.addElement(new TextElement(sb.toString()));</span>
 <span class="fc" id="L103">        }</span>
 
-<span class="fc" id="L105">        if (context.getPlugins()</span>
-<span class="pc bpc" id="L106" title="1 of 2 branches missed.">                .sqlMapUpdateByPrimaryKeySelectiveElementGenerated(answer,</span>
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">        if (context.getPlugins()</span>
+                .sqlMapUpdateByPrimaryKeySelectiveElementGenerated(answer,
                         introspectedTable)) {
 <span class="fc" id="L108">            parentElement.addElement(answer);</span>
         }

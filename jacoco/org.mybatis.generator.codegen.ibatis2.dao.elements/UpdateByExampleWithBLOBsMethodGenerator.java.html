@@ -43,19 +43,19 @@ public class UpdateByExampleWithBLOBsMethodGenerator extends
 <span class="fc" id="L43">        Method method = getMethodShell(importedTypes);</span>
 
 <span class="fc" id="L45">        method</span>
-<span class="fc" id="L46">                .addBodyLine(&quot;UpdateByExampleParms parms = new UpdateByExampleParms(record, example);&quot;); //$NON-NLS-1$</span>
+                .addBodyLine(&quot;UpdateByExampleParms parms = new UpdateByExampleParms(record, example);&quot;); //$NON-NLS-1$
 
 <span class="fc" id="L48">        StringBuilder sb = new StringBuilder();</span>
 <span class="fc" id="L49">        sb.append(&quot;int rows = &quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L50">        sb.append(daoTemplate.getUpdateMethod(introspectedTable</span>
-<span class="fc" id="L51">                .getIbatis2SqlMapNamespace(), introspectedTable</span>
-<span class="fc" id="L52">                .getUpdateByExampleWithBLOBsStatementId(), &quot;parms&quot;)); //$NON-NLS-1$</span>
+                .getIbatis2SqlMapNamespace(), introspectedTable
+                .getUpdateByExampleWithBLOBsStatementId(), &quot;parms&quot;)); //$NON-NLS-1$
 <span class="fc" id="L53">        method.addBodyLine(sb.toString());</span>
 
 <span class="fc" id="L55">        method.addBodyLine(&quot;return rows;&quot;); //$NON-NLS-1$</span>
 
-<span class="fc" id="L57">        if (context.getPlugins()</span>
-<span class="pc bpc" id="L58" title="1 of 2 branches missed.">                .clientUpdateByExampleWithBLOBsMethodGenerated(method,</span>
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">        if (context.getPlugins()</span>
+                .clientUpdateByExampleWithBLOBsMethodGenerated(method,
                         topLevelClass, introspectedTable)) {
 <span class="fc" id="L60">            topLevelClass.addImportedTypes(importedTypes);</span>
 <span class="fc" id="L61">            topLevelClass.addMethod(method);</span>
@@ -68,8 +68,8 @@ public class UpdateByExampleWithBLOBsMethodGenerator extends
 <span class="fc" id="L68">            Set&lt;FullyQualifiedJavaType&gt; importedTypes = new TreeSet&lt;FullyQualifiedJavaType&gt;();</span>
 <span class="fc" id="L69">            Method method = getMethodShell(importedTypes);</span>
 
-<span class="fc" id="L71">            if (context.getPlugins()</span>
-<span class="pc bpc" id="L72" title="1 of 2 branches missed.">                    .clientUpdateByExampleWithBLOBsMethodGenerated(method,</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">            if (context.getPlugins()</span>
+                    .clientUpdateByExampleWithBLOBsMethodGenerated(method,
                             interfaze, introspectedTable)) {
 <span class="fc" id="L74">                interfaze.addImportedTypes(importedTypes);</span>
 <span class="fc" id="L75">                interfaze.addMethod(method);</span>
@@ -81,10 +81,10 @@ public class UpdateByExampleWithBLOBsMethodGenerator extends
         FullyQualifiedJavaType parameterType;
 <span class="fc bfc" id="L82" title="All 2 branches covered.">        if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {</span>
 <span class="fc" id="L83">            parameterType = new FullyQualifiedJavaType(introspectedTable</span>
-<span class="fc" id="L84">                    .getRecordWithBLOBsType());</span>
+                    .getRecordWithBLOBsType());
         } else {
 <span class="fc" id="L86">            parameterType = new FullyQualifiedJavaType(introspectedTable</span>
-<span class="fc" id="L87">                    .getBaseRecordType());</span>
+                    .getBaseRecordType());
         }
 
 <span class="fc" id="L90">        importedTypes.add(parameterType);</span>
@@ -93,10 +93,10 @@ public class UpdateByExampleWithBLOBsMethodGenerator extends
 <span class="fc" id="L93">        method.setVisibility(getExampleMethodVisibility());</span>
 <span class="fc" id="L94">        method.setReturnType(FullyQualifiedJavaType.getIntInstance());</span>
 <span class="fc" id="L95">        method.setName(getDAOMethodNameCalculator()</span>
-<span class="fc" id="L96">                .getUpdateByExampleWithBLOBsMethodName(introspectedTable));</span>
+                .getUpdateByExampleWithBLOBsMethodName(introspectedTable));
 <span class="fc" id="L97">        method.addParameter(new Parameter(parameterType, &quot;record&quot;)); //$NON-NLS-1$</span>
 <span class="fc" id="L98">        method.addParameter(new Parameter(new FullyQualifiedJavaType(</span>
-<span class="fc" id="L99">                introspectedTable.getExampleType()), &quot;example&quot;)); //$NON-NLS-1$</span>
+                introspectedTable.getExampleType()), &quot;example&quot;)); //$NON-NLS-1$
 
 <span class="fc bfc" id="L101" title="All 2 branches covered.">        for (FullyQualifiedJavaType fqjt : daoTemplate.getCheckedExceptions()) {</span>
 <span class="fc" id="L102">            method.addException(fqjt);</span>

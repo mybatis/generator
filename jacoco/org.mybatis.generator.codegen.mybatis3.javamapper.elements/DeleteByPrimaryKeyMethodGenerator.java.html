@@ -51,7 +51,7 @@ public class DeleteByPrimaryKeyMethodGenerator extends
 
 <span class="fc bfc" id="L52" title="All 4 branches covered.">        if (!isSimple &amp;&amp; introspectedTable.getRules().generatePrimaryKeyClass()) {</span>
 <span class="fc" id="L53">            FullyQualifiedJavaType type = new FullyQualifiedJavaType(</span>
-<span class="fc" id="L54">                    introspectedTable.getPrimaryKeyType());</span>
+                    introspectedTable.getPrimaryKeyType());
 <span class="fc" id="L55">            importedTypes.add(type);</span>
 <span class="fc" id="L56">            method.addParameter(new Parameter(type, &quot;key&quot;)); //$NON-NLS-1$</span>
 <span class="fc" id="L57">        } else {</span>
@@ -60,7 +60,7 @@ public class DeleteByPrimaryKeyMethodGenerator extends
             // parameters
             // for MyBatis
 <span class="fc" id="L62">            List&lt;IntrospectedColumn&gt; introspectedColumns = introspectedTable</span>
-<span class="fc" id="L63">                    .getPrimaryKeyColumns();</span>
+                    .getPrimaryKeyColumns();
 <span class="fc bfc" id="L64" title="All 2 branches covered.">            boolean annotate = introspectedColumns.size() &gt; 1;</span>
 <span class="fc bfc" id="L65" title="All 2 branches covered.">            if (annotate) {</span>
 <span class="fc" id="L66">                importedTypes.add(new FullyQualifiedJavaType(</span>
@@ -69,10 +69,10 @@ public class DeleteByPrimaryKeyMethodGenerator extends
 <span class="fc" id="L69">            StringBuilder sb = new StringBuilder();</span>
 <span class="fc bfc" id="L70" title="All 2 branches covered.">            for (IntrospectedColumn introspectedColumn : introspectedColumns) {</span>
 <span class="fc" id="L71">                FullyQualifiedJavaType type = introspectedColumn</span>
-<span class="fc" id="L72">                        .getFullyQualifiedJavaType();</span>
+                        .getFullyQualifiedJavaType();
 <span class="fc" id="L73">                importedTypes.add(type);</span>
 <span class="fc" id="L74">                Parameter parameter = new Parameter(type, introspectedColumn</span>
-<span class="fc" id="L75">                        .getJavaProperty());</span>
+                        .getJavaProperty());
 <span class="fc bfc" id="L76" title="All 2 branches covered.">                if (annotate) {</span>
 <span class="fc" id="L77">                    sb.setLength(0);</span>
 <span class="fc" id="L78">                    sb.append(&quot;@Param(\&quot;&quot;); //$NON-NLS-1$</span>

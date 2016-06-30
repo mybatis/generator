@@ -55,13 +55,13 @@ public class SelectByExampleWithoutBLOBsMethodGenerator extends
 <span class="fc" id="L55">        sb.append(method.getReturnType().getShortName());</span>
 <span class="fc" id="L56">        sb.append(&quot; list = &quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L57">        sb.append(daoTemplate.getQueryForListMethod(introspectedTable</span>
-<span class="fc" id="L58">                .getIbatis2SqlMapNamespace(), introspectedTable</span>
-<span class="fc" id="L59">                .getSelectByExampleStatementId(), &quot;example&quot;)); //$NON-NLS-1$</span>
+                .getIbatis2SqlMapNamespace(), introspectedTable
+                .getSelectByExampleStatementId(), &quot;example&quot;)); //$NON-NLS-1$
 <span class="fc" id="L60">        method.addBodyLine(sb.toString());</span>
 <span class="fc" id="L61">        method.addBodyLine(&quot;return list;&quot;); //$NON-NLS-1$</span>
 
-<span class="fc" id="L63">        if (context.getPlugins()</span>
-<span class="pc bpc" id="L64" title="1 of 2 branches missed.">                .clientSelectByExampleWithoutBLOBsMethodGenerated(method,</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">        if (context.getPlugins()</span>
+                .clientSelectByExampleWithoutBLOBsMethodGenerated(method,
                         topLevelClass, introspectedTable)) {
 <span class="fc" id="L66">            topLevelClass.addImportedTypes(importedTypes);</span>
 <span class="fc" id="L67">            topLevelClass.addMethod(method);</span>
@@ -74,8 +74,8 @@ public class SelectByExampleWithoutBLOBsMethodGenerator extends
 <span class="fc" id="L74">            Set&lt;FullyQualifiedJavaType&gt; importedTypes = new TreeSet&lt;FullyQualifiedJavaType&gt;();</span>
 <span class="fc" id="L75">            Method method = getMethodShell(importedTypes);</span>
 
-<span class="fc" id="L77">            if (context.getPlugins()</span>
-<span class="pc bpc" id="L78" title="1 of 2 branches missed.">                    .clientSelectByExampleWithoutBLOBsMethodGenerated(method,</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">            if (context.getPlugins()</span>
+                    .clientSelectByExampleWithoutBLOBsMethodGenerated(method,
                             interfaze, introspectedTable)) {
 <span class="fc" id="L80">                interfaze.addImportedTypes(importedTypes);</span>
 <span class="fc" id="L81">                interfaze.addMethod(method);</span>
@@ -85,24 +85,24 @@ public class SelectByExampleWithoutBLOBsMethodGenerator extends
 
     private Method getMethodShell(Set&lt;FullyQualifiedJavaType&gt; importedTypes) {
 <span class="fc" id="L87">        FullyQualifiedJavaType type = new FullyQualifiedJavaType(</span>
-<span class="fc" id="L88">                introspectedTable.getExampleType());</span>
+                introspectedTable.getExampleType());
 <span class="fc" id="L89">        importedTypes.add(type);</span>
 <span class="fc" id="L90">        importedTypes.add(FullyQualifiedJavaType.getNewListInstance());</span>
 
 <span class="fc" id="L92">        Method method = new Method();</span>
 <span class="fc" id="L93">        method.setVisibility(getExampleMethodVisibility());</span>
 
-        FullyQualifiedJavaType returnType = FullyQualifiedJavaType
-<span class="fc" id="L96">                .getNewListInstance();</span>
+<span class="fc" id="L95">        FullyQualifiedJavaType returnType = FullyQualifiedJavaType</span>
+                .getNewListInstance();
 
 <span class="pc bpc" id="L98" title="1 of 2 branches missed.">        if (generateForJava5) {</span>
             FullyQualifiedJavaType fqjt;
 <span class="fc bfc" id="L100" title="All 2 branches covered.">            if (introspectedTable.getRules().generateBaseRecordClass()) {</span>
 <span class="fc" id="L101">                fqjt = new FullyQualifiedJavaType(introspectedTable</span>
-<span class="fc" id="L102">                        .getBaseRecordType());</span>
+                        .getBaseRecordType());
 <span class="pc bpc" id="L103" title="1 of 2 branches missed.">            } else if (introspectedTable.getRules().generatePrimaryKeyClass()) {</span>
 <span class="fc" id="L104">                fqjt = new FullyQualifiedJavaType(introspectedTable</span>
-<span class="fc" id="L105">                        .getPrimaryKeyType());</span>
+                        .getPrimaryKeyType());
             } else {
 <span class="nc" id="L107">                throw new RuntimeException(getString(&quot;RuntimeError.12&quot;)); //$NON-NLS-1$</span>
             }
@@ -114,7 +114,7 @@ public class SelectByExampleWithoutBLOBsMethodGenerator extends
 <span class="fc" id="L114">        method.setReturnType(returnType);</span>
 
 <span class="fc" id="L116">        method.setName(getDAOMethodNameCalculator()</span>
-<span class="fc" id="L117">                .getSelectByExampleWithoutBLOBsMethodName(introspectedTable));</span>
+                .getSelectByExampleWithoutBLOBsMethodName(introspectedTable));
 <span class="fc" id="L118">        method.addParameter(new Parameter(type, &quot;example&quot;)); //$NON-NLS-1$</span>
 
 <span class="fc bfc" id="L120" title="All 2 branches covered.">        for (FullyQualifiedJavaType fqjt : daoTemplate.getCheckedExceptions()) {</span>

@@ -87,7 +87,7 @@ import org.mybatis.generator.api.dom.java.TopLevelClass;
 <span class="fc" id="L87">        generateEquals(topLevelClass, introspectedTable.getPrimaryKeyColumns(),</span>
                 introspectedTable);
 <span class="fc" id="L89">        generateHashCode(topLevelClass, introspectedTable</span>
-<span class="fc" id="L90">                .getPrimaryKeyColumns(), introspectedTable);</span>
+                .getPrimaryKeyColumns(), introspectedTable);
 
 <span class="fc" id="L92">        return true;</span>
     }
@@ -126,10 +126,10 @@ import org.mybatis.generator.api.dom.java.TopLevelClass;
 <span class="fc" id="L126">        Method method = new Method();</span>
 <span class="fc" id="L127">        method.setVisibility(JavaVisibility.PUBLIC);</span>
 <span class="fc" id="L128">        method.setReturnType(FullyQualifiedJavaType</span>
-<span class="fc" id="L129">                .getBooleanPrimitiveInstance());</span>
+                .getBooleanPrimitiveInstance());
 <span class="fc" id="L130">        method.setName(&quot;equals&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L131">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L132">                .getObjectInstance(), &quot;that&quot;)); //$NON-NLS-1$</span>
+                .getObjectInstance(), &quot;that&quot;)); //$NON-NLS-1$
 <span class="pc bpc" id="L133" title="1 of 2 branches missed.">        if (introspectedTable.isJava5Targeted()) {</span>
 <span class="fc" id="L134">            method.addAnnotation(&quot;@Override&quot;); //$NON-NLS-1$</span>
         }
@@ -178,8 +178,8 @@ import org.mybatis.generator.api.dom.java.TopLevelClass;
             }
 
 <span class="fc" id="L180">            String getterMethod = getGetterMethodName(</span>
-<span class="fc" id="L181">                    introspectedColumn.getJavaProperty(), introspectedColumn</span>
-<span class="fc" id="L182">                            .getFullyQualifiedJavaType());</span>
+                    introspectedColumn.getJavaProperty(), introspectedColumn
+                            .getFullyQualifiedJavaType());
 
 <span class="fc bfc" id="L184" title="All 2 branches covered.">            if (introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {</span>
 <span class="fc" id="L185">                sb.append(&quot;this.&quot;); //$NON-NLS-1$</span>
@@ -260,10 +260,10 @@ import org.mybatis.generator.api.dom.java.TopLevelClass;
 <span class="fc" id="L260">            IntrospectedColumn introspectedColumn = iter.next();</span>
 
 <span class="fc" id="L262">            FullyQualifiedJavaType fqjt = introspectedColumn</span>
-<span class="fc" id="L263">                    .getFullyQualifiedJavaType();</span>
+                    .getFullyQualifiedJavaType();
 
 <span class="fc" id="L265">            String getterMethod = getGetterMethodName(</span>
-<span class="fc" id="L266">                    introspectedColumn.getJavaProperty(), fqjt);</span>
+                    introspectedColumn.getJavaProperty(), fqjt);
 
 <span class="fc" id="L268">            sb.setLength(0);</span>
 <span class="fc bfc" id="L269" title="All 2 branches covered.">            if (fqjt.isPrimitive()) {</span>
@@ -292,10 +292,10 @@ import org.mybatis.generator.api.dom.java.TopLevelClass;
 <span class="nc" id="L292">                    sb.append(&quot;());&quot;); //$NON-NLS-1$</span>
 <span class="nc" id="L293">                    method.addBodyLine(sb.toString());</span>
 <span class="nc" id="L294">                    method</span>
-<span class="nc" id="L295">                            .addBodyLine(&quot;result = prime * result + (int) (temp ^ (temp &gt;&gt;&gt; 32));&quot;); //$NON-NLS-1$</span>
+                            .addBodyLine(&quot;result = prime * result + (int) (temp ^ (temp &gt;&gt;&gt; 32));&quot;); //$NON-NLS-1$
 <span class="pc bpc" id="L296" title="1 of 2 branches missed.">                } else if (&quot;float&quot;.equals(fqjt.getFullyQualifiedName())) { //$NON-NLS-1$</span>
 <span class="nc" id="L297">                    sb</span>
-<span class="nc" id="L298">                            .append(&quot;result = prime * result + Float.floatToIntBits(&quot;); //$NON-NLS-1$</span>
+                            .append(&quot;result = prime * result + Float.floatToIntBits(&quot;); //$NON-NLS-1$
 <span class="nc" id="L299">                    sb.append(getterMethod);</span>
 <span class="nc" id="L300">                    sb.append(&quot;());&quot;); //$NON-NLS-1$</span>
 <span class="nc" id="L301">                    method.addBodyLine(sb.toString());</span>

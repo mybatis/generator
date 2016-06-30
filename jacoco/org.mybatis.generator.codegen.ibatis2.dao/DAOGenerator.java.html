@@ -73,7 +73,7 @@ public class DAOGenerator extends AbstractJavaClientGenerator {
     public List&lt;CompilationUnit&gt; getCompilationUnits() {
 <span class="fc" id="L74">        FullyQualifiedTable table = introspectedTable.getFullyQualifiedTable();</span>
 <span class="fc" id="L75">        progressCallback.startTask(getString(</span>
-<span class="fc" id="L76">                &quot;Progress.14&quot;, table.toString())); //$NON-NLS-1$</span>
+                &quot;Progress.14&quot;, table.toString())); //$NON-NLS-1$
 <span class="fc" id="L77">        TopLevelClass topLevelClass = getTopLevelClassShell();</span>
 <span class="fc" id="L78">        Interface interfaze = getInterfaceShell();</span>
 
@@ -105,9 +105,9 @@ public class DAOGenerator extends AbstractJavaClientGenerator {
 
     protected TopLevelClass getTopLevelClassShell() {
 <span class="fc" id="L107">        FullyQualifiedJavaType interfaceType = new FullyQualifiedJavaType(</span>
-<span class="fc" id="L108">                introspectedTable.getDAOInterfaceType());</span>
+                introspectedTable.getDAOInterfaceType());
 <span class="fc" id="L109">        FullyQualifiedJavaType implementationType = new FullyQualifiedJavaType(</span>
-<span class="fc" id="L110">                introspectedTable.getDAOImplementationType());</span>
+                introspectedTable.getDAOImplementationType());
 
 <span class="fc" id="L112">        CommentGenerator commentGenerator = context.getCommentGenerator();</span>
 
@@ -119,7 +119,7 @@ public class DAOGenerator extends AbstractJavaClientGenerator {
 <span class="fc" id="L119">        answer.addImportedType(interfaceType);</span>
 
 <span class="fc bfc" id="L121" title="All 2 branches covered.">        for (FullyQualifiedJavaType fqjt : daoTemplate</span>
-<span class="fc" id="L122">                .getImplementationImports()) {</span>
+                .getImplementationImports()) {
 <span class="fc" id="L123">            answer.addImportedType(fqjt);</span>
 <span class="fc" id="L124">        }</span>
 
@@ -146,14 +146,14 @@ public class DAOGenerator extends AbstractJavaClientGenerator {
 
     protected Interface getInterfaceShell() {
 <span class="fc" id="L148">        Interface answer = new Interface(new FullyQualifiedJavaType(</span>
-<span class="fc" id="L149">                introspectedTable.getDAOInterfaceType()));</span>
+                introspectedTable.getDAOInterfaceType()));
 <span class="fc" id="L150">        answer.setVisibility(JavaVisibility.PUBLIC);</span>
 
 <span class="fc" id="L152">        String rootInterface = introspectedTable</span>
-<span class="fc" id="L153">                .getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_INTERFACE);</span>
+                .getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
 <span class="pc bpc" id="L154" title="1 of 2 branches missed.">        if (!stringHasValue(rootInterface)) {</span>
 <span class="fc" id="L155">            rootInterface = context.getJavaClientGeneratorConfiguration()</span>
-<span class="fc" id="L156">                    .getProperty(PropertyRegistry.ANY_ROOT_INTERFACE);</span>
+                    .getProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
         }
 
 <span class="fc bfc" id="L159" title="All 2 branches covered.">        if (stringHasValue(rootInterface)) {</span>
@@ -250,9 +250,9 @@ public class DAOGenerator extends AbstractJavaClientGenerator {
     protected void addUpdateByExampleParmsInnerclass(
             TopLevelClass topLevelClass, Interface interfaze) {
 <span class="fc" id="L252">        Rules rules = introspectedTable.getRules();</span>
-<span class="pc bpc" id="L253" title="1 of 2 branches missed.">        if (rules.generateUpdateByExampleSelective()</span>
-<span class="nc bnc" id="L254" title="All 2 branches missed.">                || rules.generateUpdateByExampleWithBLOBs()</span>
-<span class="nc bnc" id="L255" title="All 2 branches missed.">                || rules.generateUpdateByExampleWithoutBLOBs()) {</span>
+<span class="pc bpc" id="L253" title="5 of 6 branches missed.">        if (rules.generateUpdateByExampleSelective()</span>
+                || rules.generateUpdateByExampleWithBLOBs()
+                || rules.generateUpdateByExampleWithoutBLOBs()) {
 <span class="fc" id="L256">            AbstractDAOElementGenerator methodGenerator = new UpdateByExampleParmsInnerclassGenerator();</span>
 <span class="fc" id="L257">            initializeAndExecuteGenerator(methodGenerator, topLevelClass,</span>
                     interfaze);
@@ -306,8 +306,8 @@ public class DAOGenerator extends AbstractJavaClientGenerator {
 
     protected void addUpdateByPrimaryKeyWithoutBLOBsMethod(
             TopLevelClass topLevelClass, Interface interfaze) {
-<span class="fc" id="L309">        if (introspectedTable.getRules()</span>
-<span class="fc bfc" id="L310" title="All 2 branches covered.">                .generateUpdateByPrimaryKeyWithoutBLOBs()) {</span>
+<span class="fc bfc" id="L309" title="All 2 branches covered.">        if (introspectedTable.getRules()</span>
+                .generateUpdateByPrimaryKeyWithoutBLOBs()) {
 <span class="fc" id="L311">            AbstractDAOElementGenerator methodGenerator = new UpdateByPrimaryKeyWithoutBLOBsMethodGenerator();</span>
 <span class="fc" id="L312">            initializeAndExecuteGenerator(methodGenerator, topLevelClass,</span>
                     interfaze);

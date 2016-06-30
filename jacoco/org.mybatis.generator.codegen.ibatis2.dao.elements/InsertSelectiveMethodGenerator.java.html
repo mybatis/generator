@@ -51,8 +51,8 @@ public class InsertSelectiveMethodGenerator extends AbstractDAOElementGenerator 
         }
 
 <span class="fc" id="L53">        sb.append(daoTemplate.getInsertMethod(introspectedTable</span>
-<span class="fc" id="L54">                .getIbatis2SqlMapNamespace(), introspectedTable</span>
-<span class="fc" id="L55">                .getInsertSelectiveStatementId(), &quot;record&quot;)); //$NON-NLS-1$</span>
+                .getIbatis2SqlMapNamespace(), introspectedTable
+                .getInsertSelectiveStatementId(), &quot;record&quot;)); //$NON-NLS-1$
 <span class="fc" id="L56">        method.addBodyLine(sb.toString());</span>
 
 <span class="fc bfc" id="L58" title="All 2 branches covered.">        if (returnType != null) {</span>
@@ -64,7 +64,7 @@ public class InsertSelectiveMethodGenerator extends AbstractDAOElementGenerator 
 
 <span class="pc bpc" id="L65" title="1 of 2 branches missed.">                if (returnType.isPrimitive()) {</span>
 <span class="nc" id="L66">                    PrimitiveTypeWrapper ptw = returnType</span>
-<span class="nc" id="L67">                            .getPrimitiveTypeWrapper();</span>
+                            .getPrimitiveTypeWrapper();
 <span class="nc" id="L68">                    sb.append(&quot;return ((&quot;); //$NON-NLS-1$</span>
 <span class="nc" id="L69">                    sb.append(ptw.getShortName());</span>
 <span class="nc" id="L70">                    sb.append(&quot;) newKey&quot;); //$NON-NLS-1$</span>
@@ -106,7 +106,7 @@ public class InsertSelectiveMethodGenerator extends AbstractDAOElementGenerator 
         FullyQualifiedJavaType returnType;
 <span class="fc bfc" id="L107" title="All 2 branches covered.">        if (introspectedTable.getGeneratedKey() != null) {</span>
 <span class="fc" id="L108">            IntrospectedColumn introspectedColumn = introspectedTable</span>
-<span class="fc" id="L109">                    .getColumn(introspectedTable.getGeneratedKey().getColumn());</span>
+                    .getColumn(introspectedTable.getGeneratedKey().getColumn());
 <span class="pc bpc" id="L110" title="1 of 2 branches missed.">            if (introspectedColumn == null) {</span>
                 // the specified column doesn't exist, so don't do the generated
                 // key
@@ -122,10 +122,10 @@ public class InsertSelectiveMethodGenerator extends AbstractDAOElementGenerator 
 <span class="fc" id="L122">        method.setReturnType(returnType);</span>
 <span class="fc" id="L123">        method.setVisibility(JavaVisibility.PUBLIC);</span>
 <span class="fc" id="L124">        method.setName(getDAOMethodNameCalculator()</span>
-<span class="fc" id="L125">                .getInsertSelectiveMethodName(introspectedTable));</span>
+                .getInsertSelectiveMethodName(introspectedTable));
 
 <span class="fc" id="L127">        FullyQualifiedJavaType parameterType = introspectedTable.getRules()</span>
-<span class="fc" id="L128">                .calculateAllFieldsClass();</span>
+                .calculateAllFieldsClass();
 
 <span class="fc" id="L130">        importedTypes.add(parameterType);</span>
 <span class="fc" id="L131">        method.addParameter(new Parameter(parameterType, &quot;record&quot;)); //$NON-NLS-1$</span>

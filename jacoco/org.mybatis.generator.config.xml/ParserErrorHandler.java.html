@@ -57,8 +57,8 @@ public class ParserErrorHandler implements ErrorHandler {
      */
     public void warning(SAXParseException exception) throws SAXException {
 <span class="nc" id="L59">        warnings.add(getString(&quot;Warning.7&quot;, //$NON-NLS-1$</span>
-<span class="nc" id="L60">                Integer.toString(exception.getLineNumber()), exception</span>
-<span class="nc" id="L61">                        .getMessage()));</span>
+                Integer.toString(exception.getLineNumber()), exception
+                        .getMessage()));
 <span class="nc" id="L62">    }</span>
 
     /*
@@ -68,8 +68,8 @@ public class ParserErrorHandler implements ErrorHandler {
      */
     public void error(SAXParseException exception) throws SAXException {
 <span class="nc" id="L70">        errors.add(getString(&quot;RuntimeError.4&quot;, //$NON-NLS-1$</span>
-<span class="nc" id="L71">                Integer.toString(exception.getLineNumber()), exception</span>
-<span class="nc" id="L72">                        .getMessage()));</span>
+                Integer.toString(exception.getLineNumber()), exception
+                        .getMessage()));
 <span class="nc" id="L73">    }</span>
 
     /*
@@ -79,8 +79,8 @@ public class ParserErrorHandler implements ErrorHandler {
      */
     public void fatalError(SAXParseException exception) throws SAXException {
 <span class="nc" id="L81">        errors.add(getString(&quot;RuntimeError.4&quot;, //$NON-NLS-1$</span>
-<span class="nc" id="L82">                Integer.toString(exception.getLineNumber()), exception</span>
-<span class="nc" id="L83">                        .getMessage()));</span>
+                Integer.toString(exception.getLineNumber()), exception
+                        .getMessage()));
 <span class="nc" id="L84">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

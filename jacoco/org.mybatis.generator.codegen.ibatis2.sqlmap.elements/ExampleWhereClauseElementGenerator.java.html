@@ -39,7 +39,7 @@ public class ExampleWhereClauseElementGenerator extends
 <span class="fc" id="L39">        XmlElement answer = new XmlElement(&quot;sql&quot;); //$NON-NLS-1$</span>
 
 <span class="fc" id="L41">        answer.addAttribute(new Attribute(</span>
-<span class="fc" id="L42">                &quot;id&quot;, introspectedTable.getExampleWhereClauseId())); //$NON-NLS-1$</span>
+                &quot;id&quot;, introspectedTable.getExampleWhereClauseId())); //$NON-NLS-1$
 
 <span class="fc" id="L44">        context.getCommentGenerator().addComment(answer);</span>
 
@@ -75,7 +75,7 @@ public class ExampleWhereClauseElementGenerator extends
                 &quot;property&quot;, &quot;oredCriteria[].criteriaWithSingleValue&quot;)); //$NON-NLS-1$ //$NON-NLS-2$
 <span class="fc" id="L76">        innerIterateElement.addAttribute(new Attribute(&quot;conjunction&quot;, &quot;and&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
 <span class="fc" id="L77">        innerIterateElement</span>
-<span class="fc" id="L78">                .addElement(new TextElement(</span>
+                .addElement(new TextElement(
                         &quot;$oredCriteria[].criteriaWithSingleValue[].condition$ #oredCriteria[].criteriaWithSingleValue[].value#&quot;)); //$NON-NLS-1$
 <span class="fc" id="L80">        isEqualElement.addElement(innerIterateElement);</span>
 
@@ -92,7 +92,7 @@ public class ExampleWhereClauseElementGenerator extends
 <span class="fc" id="L92">        innerInnerIterateElement.addAttribute(new Attribute(&quot;open&quot;, &quot;(&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
 <span class="fc" id="L93">        innerInnerIterateElement.addAttribute(new Attribute(&quot;close&quot;, &quot;)&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
 <span class="fc" id="L94">        innerInnerIterateElement</span>
-<span class="fc" id="L95">                .addAttribute(new Attribute(&quot;conjunction&quot;, &quot;,&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+                .addAttribute(new Attribute(&quot;conjunction&quot;, &quot;,&quot;)); //$NON-NLS-1$ //$NON-NLS-2$
 <span class="fc" id="L96">        innerInnerIterateElement.addElement(new TextElement(</span>
                 &quot;#oredCriteria[].criteriaWithListValue[].values[]#&quot;)); //$NON-NLS-1$
 <span class="fc" id="L98">        innerIterateElement.addElement(innerInnerIterateElement);</span>
@@ -115,23 +115,23 @@ public class ExampleWhereClauseElementGenerator extends
         // to add additional inner iterate elements that specify the type
         // handler
 <span class="fc bfc" id="L117" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable</span>
-<span class="fc" id="L118">                .getNonBLOBColumns()) {</span>
+                .getNonBLOBColumns()) {
 <span class="fc bfc" id="L119" title="All 2 branches covered.">            if (stringHasValue(introspectedColumn</span>
-<span class="fc" id="L120">                    .getTypeHandler())) {</span>
+                    .getTypeHandler())) {
                 // name the property based on the column name, then
                 // add the type handler to the parameter declaration
 <span class="fc" id="L123">                StringBuilder sb1 = new StringBuilder();</span>
 <span class="fc" id="L124">                StringBuilder sb2 = new StringBuilder();</span>
 <span class="fc" id="L125">                innerIterateElement = new XmlElement(&quot;iterate&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L126">                innerIterateElement</span>
-<span class="fc" id="L127">                        .addAttribute(new Attribute(&quot;prepend&quot;, &quot;and&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+                        .addAttribute(new Attribute(&quot;prepend&quot;, &quot;and&quot;)); //$NON-NLS-1$ //$NON-NLS-2$
 
 <span class="fc" id="L129">                sb1.append(&quot;oredCriteria[].&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L130">                sb1.append(introspectedColumn.getJavaProperty());</span>
 <span class="fc" id="L131">                sb1.append(&quot;CriteriaWithSingleValue&quot;); //$NON-NLS-1$</span>
 
 <span class="fc" id="L133">                innerIterateElement.addAttribute(new Attribute(</span>
-<span class="fc" id="L134">                        &quot;property&quot;, sb1.toString())); //$NON-NLS-1$</span>
+                        &quot;property&quot;, sb1.toString())); //$NON-NLS-1$
 <span class="fc" id="L135">                innerIterateElement.addAttribute(new Attribute(</span>
                         &quot;conjunction&quot;, &quot;and&quot;)); //$NON-NLS-1$ //$NON-NLS-2$
 
@@ -158,9 +158,9 @@ public class ExampleWhereClauseElementGenerator extends
 
 <span class="fc" id="L159">                innerIterateElement = new XmlElement(&quot;iterate&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L160">                innerIterateElement</span>
-<span class="fc" id="L161">                        .addAttribute(new Attribute(&quot;prepend&quot;, &quot;and&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+                        .addAttribute(new Attribute(&quot;prepend&quot;, &quot;and&quot;)); //$NON-NLS-1$ //$NON-NLS-2$
 <span class="fc" id="L162">                innerIterateElement.addAttribute(new Attribute(</span>
-<span class="fc" id="L163">                        &quot;property&quot;, sb1.toString())); //$NON-NLS-1$</span>
+                        &quot;property&quot;, sb1.toString())); //$NON-NLS-1$
 <span class="fc" id="L164">                innerIterateElement.addAttribute(new Attribute(</span>
                         &quot;conjunction&quot;, &quot;and&quot;)); //$NON-NLS-1$ //$NON-NLS-2$
 
@@ -176,9 +176,9 @@ public class ExampleWhereClauseElementGenerator extends
 
 <span class="fc" id="L177">                innerInnerIterateElement = new XmlElement(&quot;iterate&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L178">                innerInnerIterateElement.addAttribute(new Attribute(&quot;property&quot;, //$NON-NLS-1$</span>
-<span class="fc" id="L179">                        sb2.toString()));</span>
+                        sb2.toString()));
 <span class="fc" id="L180">                innerInnerIterateElement</span>
-<span class="fc" id="L181">                        .addAttribute(new Attribute(&quot;open&quot;, &quot;(&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+                        .addAttribute(new Attribute(&quot;open&quot;, &quot;(&quot;)); //$NON-NLS-1$ //$NON-NLS-2$
 <span class="fc" id="L182">                innerInnerIterateElement.addAttribute(new Attribute(</span>
                         &quot;close&quot;, &quot;)&quot;)); //$NON-NLS-1$ //$NON-NLS-2$
 <span class="fc" id="L184">                innerInnerIterateElement.addAttribute(new Attribute(</span>
@@ -192,7 +192,7 @@ public class ExampleWhereClauseElementGenerator extends
 <span class="fc" id="L192">                sb2.append('#');</span>
 
 <span class="fc" id="L194">                innerInnerIterateElement.addElement(new TextElement(sb2</span>
-<span class="fc" id="L195">                        .toString()));</span>
+                        .toString()));
 <span class="fc" id="L196">                innerIterateElement.addElement(innerInnerIterateElement);</span>
 <span class="fc" id="L197">                isEqualElement.addElement(innerIterateElement);</span>
 
@@ -204,9 +204,9 @@ public class ExampleWhereClauseElementGenerator extends
 
 <span class="fc" id="L205">                innerIterateElement = new XmlElement(&quot;iterate&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L206">                innerIterateElement</span>
-<span class="fc" id="L207">                        .addAttribute(new Attribute(&quot;prepend&quot;, &quot;and&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+                        .addAttribute(new Attribute(&quot;prepend&quot;, &quot;and&quot;)); //$NON-NLS-1$ //$NON-NLS-2$
 <span class="fc" id="L208">                innerIterateElement.addAttribute(new Attribute(</span>
-<span class="fc" id="L209">                        &quot;property&quot;, sb1.toString())); //$NON-NLS-1$</span>
+                        &quot;property&quot;, sb1.toString())); //$NON-NLS-1$
 <span class="fc" id="L210">                innerIterateElement.addAttribute(new Attribute(</span>
                         &quot;conjunction&quot;, &quot;and&quot;)); //$NON-NLS-1$ //$NON-NLS-2$
 
@@ -237,8 +237,8 @@ public class ExampleWhereClauseElementGenerator extends
 
 <span class="fc" id="L238">        isEqualElement.addElement(new TextElement(&quot;)&quot;)); //$NON-NLS-1$</span>
 
-<span class="fc" id="L240">        if (context.getPlugins()</span>
-<span class="pc bpc" id="L241" title="1 of 2 branches missed.">                .sqlMapExampleWhereClauseElementGenerated(answer,</span>
+<span class="pc bpc" id="L240" title="1 of 2 branches missed.">        if (context.getPlugins()</span>
+                .sqlMapExampleWhereClauseElementGenerated(answer,
                         introspectedTable)) {
 <span class="fc" id="L243">            parentElement.addElement(answer);</span>
         }

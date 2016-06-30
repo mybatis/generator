@@ -46,26 +46,26 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
 <span class="fc" id="L46">        XmlElement answer = new XmlElement(&quot;insert&quot;); //$NON-NLS-1$</span>
 
 <span class="fc" id="L48">        answer.addAttribute(new Attribute(</span>
-<span class="fc" id="L49">                &quot;id&quot;, introspectedTable.getInsertStatementId())); //$NON-NLS-1$</span>
+                &quot;id&quot;, introspectedTable.getInsertStatementId())); //$NON-NLS-1$
 
         FullyQualifiedJavaType parameterType;
 <span class="fc bfc" id="L52" title="All 2 branches covered.">        if (isSimple) {</span>
 <span class="fc" id="L53">            parameterType = new FullyQualifiedJavaType(</span>
-<span class="fc" id="L54">                    introspectedTable.getBaseRecordType());</span>
+                    introspectedTable.getBaseRecordType());
         } else {
 <span class="fc" id="L56">            parameterType = introspectedTable.getRules()</span>
-<span class="fc" id="L57">                    .calculateAllFieldsClass();</span>
+                    .calculateAllFieldsClass();
         }
 
 <span class="fc" id="L60">        answer.addAttribute(new Attribute(&quot;parameterType&quot;, //$NON-NLS-1$</span>
-<span class="fc" id="L61">                parameterType.getFullyQualifiedName()));</span>
+                parameterType.getFullyQualifiedName()));
 
 <span class="fc" id="L63">        context.getCommentGenerator().addComment(answer);</span>
 
 <span class="fc" id="L65">        GeneratedKey gk = introspectedTable.getGeneratedKey();</span>
 <span class="fc bfc" id="L66" title="All 2 branches covered.">        if (gk != null) {</span>
 <span class="fc" id="L67">            IntrospectedColumn introspectedColumn = introspectedTable</span>
-<span class="fc" id="L68">                    .getColumn(gk.getColumn());</span>
+                    .getColumn(gk.getColumn());
             // if the column is null, then it's a configuration error. The
             // warning has already been reported
 <span class="pc bpc" id="L71" title="1 of 2 branches missed.">            if (introspectedColumn != null) {</span>
@@ -73,9 +73,9 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
 <span class="fc" id="L73">                    answer.addAttribute(new Attribute(</span>
                             &quot;useGeneratedKeys&quot;, &quot;true&quot;)); //$NON-NLS-1$ //$NON-NLS-2$
 <span class="fc" id="L75">                    answer.addAttribute(new Attribute(</span>
-<span class="fc" id="L76">                            &quot;keyProperty&quot;, introspectedColumn.getJavaProperty())); //$NON-NLS-1$</span>
+                            &quot;keyProperty&quot;, introspectedColumn.getJavaProperty())); //$NON-NLS-1$
 <span class="fc" id="L77">                    answer.addAttribute(new Attribute(</span>
-<span class="fc" id="L78">                            &quot;keyColumn&quot;, introspectedColumn.getActualColumnName())); //$NON-NLS-1$</span>
+                            &quot;keyColumn&quot;, introspectedColumn.getActualColumnName())); //$NON-NLS-1$
                 } else {
 <span class="fc" id="L80">                    answer.addElement(getSelectKey(introspectedColumn, gk));</span>
                 }
@@ -87,7 +87,7 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
 
 <span class="fc" id="L88">        insertClause.append(&quot;insert into &quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L89">        insertClause.append(introspectedTable</span>
-<span class="fc" id="L90">                .getFullyQualifiedTableNameAtRuntime());</span>
+                .getFullyQualifiedTableNameAtRuntime());
 <span class="fc" id="L91">        insertClause.append(&quot; (&quot;); //$NON-NLS-1$</span>
 
 <span class="fc" id="L93">        valuesClause.append(&quot;values (&quot;); //$NON-NLS-1$</span>
@@ -102,11 +102,11 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
             }
 
 <span class="fc" id="L104">            insertClause.append(MyBatis3FormattingUtilities</span>
-<span class="fc" id="L105">                    .getEscapedColumnName(introspectedColumn));</span>
+                    .getEscapedColumnName(introspectedColumn));
 <span class="fc" id="L106">            valuesClause.append(MyBatis3FormattingUtilities</span>
-<span class="fc" id="L107">                    .getParameterClause(introspectedColumn));</span>
-<span class="fc bfc" id="L108" title="All 2 branches covered.">            if (i + 1 &lt; columns.size() &amp;&amp;</span>
-<span class="pc bpc" id="L109" title="1 of 2 branches missed.">                    !columns.get(i + 1).isIdentity()) {</span>
+                    .getParameterClause(introspectedColumn));
+<span class="pc bpc" id="L108" title="1 of 4 branches missed.">            if (i + 1 &lt; columns.size() &amp;&amp;</span>
+                    !columns.get(i + 1).isIdentity()) {
 <span class="fc" id="L110">                insertClause.append(&quot;, &quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L111">                valuesClause.append(&quot;, &quot;); //$NON-NLS-1$</span>
             }

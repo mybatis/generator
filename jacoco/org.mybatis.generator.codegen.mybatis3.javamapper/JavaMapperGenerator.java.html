@@ -66,20 +66,20 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
     @Override
     public List&lt;CompilationUnit&gt; getCompilationUnits() {
 <span class="fc" id="L68">        progressCallback.startTask(getString(&quot;Progress.17&quot;, //$NON-NLS-1$</span>
-<span class="fc" id="L69">                introspectedTable.getFullyQualifiedTable().toString()));</span>
+                introspectedTable.getFullyQualifiedTable().toString()));
 <span class="fc" id="L70">        CommentGenerator commentGenerator = context.getCommentGenerator();</span>
 
 <span class="fc" id="L72">        FullyQualifiedJavaType type = new FullyQualifiedJavaType(</span>
-<span class="fc" id="L73">                introspectedTable.getMyBatis3JavaMapperType());</span>
+                introspectedTable.getMyBatis3JavaMapperType());
 <span class="fc" id="L74">        Interface interfaze = new Interface(type);</span>
 <span class="fc" id="L75">        interfaze.setVisibility(JavaVisibility.PUBLIC);</span>
 <span class="fc" id="L76">        commentGenerator.addJavaFileComment(interfaze);</span>
 
 <span class="fc" id="L78">        String rootInterface = introspectedTable</span>
-<span class="fc" id="L79">            .getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_INTERFACE);</span>
+            .getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
 <span class="pc bpc" id="L80" title="1 of 2 branches missed.">        if (!stringHasValue(rootInterface)) {</span>
 <span class="fc" id="L81">            rootInterface = context.getJavaClientGeneratorConfiguration()</span>
-<span class="fc" id="L82">                .getProperty(PropertyRegistry.ANY_ROOT_INTERFACE);</span>
+                .getProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
         }
 
 <span class="fc bfc" id="L85" title="All 2 branches covered.">        if (stringHasValue(rootInterface)) {</span>
@@ -210,8 +210,8 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
 <span class="fc" id="L210">    }</span>
 
     protected void addUpdateByPrimaryKeyWithoutBLOBsMethod(Interface interfaze) {
-<span class="fc" id="L213">        if (introspectedTable.getRules()</span>
-<span class="fc bfc" id="L214" title="All 2 branches covered.">                .generateUpdateByPrimaryKeyWithoutBLOBs()) {</span>
+<span class="fc bfc" id="L213" title="All 2 branches covered.">        if (introspectedTable.getRules()</span>
+                .generateUpdateByPrimaryKeyWithoutBLOBs()) {
 <span class="fc" id="L215">            AbstractJavaMapperMethodGenerator methodGenerator = new UpdateByPrimaryKeyWithoutBLOBsMethodGenerator();</span>
 <span class="fc" id="L216">            initializeAndExecuteGenerator(methodGenerator, interfaze);</span>
         }

@@ -67,8 +67,8 @@ public class RenameExampleClassPlugin extends PluginAdapter {
 <span class="fc" id="L67">        searchString = properties.getProperty(&quot;searchString&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L68">        replaceString = properties.getProperty(&quot;replaceString&quot;); //$NON-NLS-1$</span>
 
-<span class="pc bpc" id="L70" title="1 of 2 branches missed.">        boolean valid = stringHasValue(searchString)</span>
-<span class="pc bpc" id="L71" title="1 of 2 branches missed.">                &amp;&amp; stringHasValue(replaceString);</span>
+<span class="pc bpc" id="L70" title="2 of 4 branches missed.">        boolean valid = stringHasValue(searchString)</span>
+                &amp;&amp; stringHasValue(replaceString);
 
 <span class="pc bpc" id="L73" title="1 of 2 branches missed.">        if (valid) {</span>
 <span class="fc" id="L74">            pattern = Pattern.compile(searchString);</span>

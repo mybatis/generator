@@ -57,14 +57,14 @@ public class AnnotatedInsertMethodGenerator extends
 
 <span class="fc" id="L58">        insertClause.append(&quot;\&quot;insert into &quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L59">        insertClause.append(escapeStringForJava(introspectedTable</span>
-<span class="fc" id="L60">                .getFullyQualifiedTableNameAtRuntime()));</span>
+                .getFullyQualifiedTableNameAtRuntime()));
 <span class="fc" id="L61">        insertClause.append(&quot; (&quot;); //$NON-NLS-1$</span>
 
 <span class="fc" id="L63">        valuesClause.append(&quot;\&quot;values (&quot;); //$NON-NLS-1$</span>
 
 <span class="fc" id="L65">        List&lt;String&gt; valuesClauses = new ArrayList&lt;String&gt;();</span>
 <span class="fc" id="L66">        Iterator&lt;IntrospectedColumn&gt; iter = introspectedTable.getAllColumns()</span>
-<span class="fc" id="L67">                .iterator();</span>
+                .iterator();
 <span class="fc" id="L68">        boolean hasFields = false;</span>
 <span class="fc bfc" id="L69" title="All 2 branches covered.">        while (iter.hasNext()) {</span>
 <span class="fc" id="L70">            IntrospectedColumn introspectedColumn = iter.next();</span>

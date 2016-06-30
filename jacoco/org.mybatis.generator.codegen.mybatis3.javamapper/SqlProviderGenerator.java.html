@@ -55,11 +55,11 @@ public class SqlProviderGenerator extends AbstractJavaGenerator {
     @Override
     public List&lt;CompilationUnit&gt; getCompilationUnits() {
 <span class="fc" id="L57">        progressCallback.startTask(getString(&quot;Progress.18&quot;, //$NON-NLS-1$</span>
-<span class="fc" id="L58">                introspectedTable.getFullyQualifiedTable().toString()));</span>
+                introspectedTable.getFullyQualifiedTable().toString()));
 <span class="fc" id="L59">        CommentGenerator commentGenerator = context.getCommentGenerator();</span>
 
 <span class="fc" id="L61">        FullyQualifiedJavaType type = new FullyQualifiedJavaType(</span>
-<span class="fc" id="L62">                introspectedTable.getMyBatis3SqlProviderType());</span>
+                introspectedTable.getMyBatis3SqlProviderType());
 <span class="fc" id="L63">        TopLevelClass topLevelClass = new TopLevelClass(type);</span>
 <span class="fc" id="L64">        topLevelClass.setVisibility(JavaVisibility.PUBLIC);</span>
 <span class="fc" id="L65">        commentGenerator.addJavaFileComment(topLevelClass);</span>
@@ -81,8 +81,8 @@ public class SqlProviderGenerator extends AbstractJavaGenerator {
         
 <span class="fc" id="L82">        List&lt;CompilationUnit&gt; answer = new ArrayList&lt;CompilationUnit&gt;();</span>
         
-<span class="pc bpc" id="L84" title="1 of 2 branches missed.">        if (topLevelClass.getMethods().size() &gt; 0 &amp;&amp;</span>
-<span class="pc bpc" id="L85" title="1 of 2 branches missed.">                context.getPlugins().providerGenerated(topLevelClass, introspectedTable)) {</span>
+<span class="pc bpc" id="L84" title="2 of 4 branches missed.">        if (topLevelClass.getMethods().size() &gt; 0 &amp;&amp;</span>
+                context.getPlugins().providerGenerated(topLevelClass, introspectedTable)) {
 <span class="fc" id="L86">            answer.add(topLevelClass);</span>
         }
 

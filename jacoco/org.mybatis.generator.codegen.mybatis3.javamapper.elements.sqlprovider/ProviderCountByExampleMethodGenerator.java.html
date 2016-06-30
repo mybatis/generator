@@ -56,7 +56,7 @@ public class ProviderCountByExampleMethodGenerator extends
 <span class="fc" id="L56">        importedTypes.add(fqjt);</span>
 
 <span class="fc" id="L58">        Method method = new Method(</span>
-<span class="fc" id="L59">                introspectedTable.getCountByExampleStatementId());</span>
+                introspectedTable.getCountByExampleStatementId());
 <span class="fc" id="L60">        method.setVisibility(JavaVisibility.PUBLIC);</span>
 <span class="fc" id="L61">        method.setReturnType(FullyQualifiedJavaType.getStringInstance());</span>
 <span class="fc" id="L62">        method.addParameter(new Parameter(fqjt, &quot;example&quot;)); //$NON-NLS-1$</span>
@@ -68,13 +68,13 @@ public class ProviderCountByExampleMethodGenerator extends
 <span class="nc" id="L68">        	method.addBodyLine(&quot;BEGIN();&quot;); //$NON-NLS-1$</span>
 <span class="nc" id="L69">        	method.addBodyLine(&quot;SELECT(\&quot;count(*)\&quot;);&quot;); //$NON-NLS-1$</span>
 <span class="nc" id="L70">        	method.addBodyLine(String.format(&quot;FROM(\&quot;%s\&quot;);&quot;, //$NON-NLS-1$</span>
-<span class="nc" id="L71">                escapeStringForJava(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime())));</span>
+                escapeStringForJava(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime())));
 <span class="nc" id="L72">        	method.addBodyLine(&quot;applyWhere(example, false);&quot;); //$NON-NLS-1$</span>
 <span class="nc" id="L73">        	method.addBodyLine(&quot;return SQL();&quot;); //$NON-NLS-1$</span>
         } else {
 <span class="fc" id="L75">        	method.addBodyLine(&quot;SQL sql = new SQL();&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L76">        	method.addBodyLine(String.format(&quot;sql.SELECT(\&quot;count(*)\&quot;).FROM(\&quot;%s\&quot;);&quot;, //$NON-NLS-1$</span>
-<span class="fc" id="L77">                escapeStringForJava(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime())));</span>
+                escapeStringForJava(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime())));
 <span class="fc" id="L78">        	method.addBodyLine(&quot;applyWhere(sql, example, false);&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L79">        	method.addBodyLine(&quot;return sql.toString();&quot;); //$NON-NLS-1$</span>
         }

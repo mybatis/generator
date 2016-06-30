@@ -72,7 +72,7 @@ public class AnnotatedSelectByExampleWithoutBLOBsMethodGenerator extends
 <span class="fc" id="L72">            sb.setLength(0);</span>
 <span class="fc" id="L73">            javaIndent(sb, 1);</span>
 <span class="fc" id="L74">            sb.append(getResultAnnotation(interfaze, introspectedColumn, true,</span>
-<span class="fc" id="L75">                    introspectedTable.isConstructorBased()));</span>
+                    introspectedTable.isConstructorBased()));
             
 <span class="fc bfc" id="L77" title="All 4 branches covered.">            if (iterPk.hasNext() || iterNonPk.hasNext()) {</span>
 <span class="fc" id="L78">                sb.append(',');</span>
@@ -86,7 +86,7 @@ public class AnnotatedSelectByExampleWithoutBLOBsMethodGenerator extends
 <span class="fc" id="L86">            sb.setLength(0);</span>
 <span class="fc" id="L87">            javaIndent(sb, 1);</span>
 <span class="fc" id="L88">            sb.append(getResultAnnotation(interfaze, introspectedColumn, false,</span>
-<span class="fc" id="L89">                    introspectedTable.isConstructorBased()));</span>
+                    introspectedTable.isConstructorBased()));
             
 <span class="fc bfc" id="L91" title="All 2 branches covered.">            if (iterNonPk.hasNext()) {</span>
 <span class="fc" id="L92">                sb.append(',');</span>

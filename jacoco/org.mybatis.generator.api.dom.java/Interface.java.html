@@ -90,8 +90,8 @@ public class Interface extends JavaElement implements CompilationUnit {
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#addImportedType(org.mybatis.generator.api.dom.java.FullyQualifiedJavaType)
      */
     public void addImportedType(FullyQualifiedJavaType importedType) {
-<span class="fc bfc" id="L93" title="All 2 branches covered.">        if (importedType.isExplicitlyImported()</span>
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">                &amp;&amp; !importedType.getPackageName().equals(type.getPackageName())) {</span>
+<span class="pc bpc" id="L93" title="1 of 4 branches missed.">        if (importedType.isExplicitlyImported()</span>
+                &amp;&amp; !importedType.getPackageName().equals(type.getPackageName())) {
 <span class="fc" id="L95">            importedTypes.add(importedType);</span>
         }
 <span class="fc" id="L97">    }</span>

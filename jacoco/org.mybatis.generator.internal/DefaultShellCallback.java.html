@@ -74,7 +74,7 @@ public class DefaultShellCallback implements ShellCallback {
 <span class="nc" id="L74">            boolean rc = directory.mkdirs();</span>
 <span class="nc bnc" id="L75" title="All 2 branches missed.">            if (!rc) {</span>
 <span class="nc" id="L76">                throw new ShellException(getString(&quot;Warning.10&quot;, //$NON-NLS-1$</span>
-<span class="nc" id="L77">                        directory.getAbsolutePath()));</span>
+                        directory.getAbsolutePath()));
             }
         }
 

@@ -110,13 +110,13 @@ public class MyBatisGeneratorConfigurationParser {
 <span class="fc" id="L110">        String resource = attributes.getProperty(&quot;resource&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L111">        String url = attributes.getProperty(&quot;url&quot;); //$NON-NLS-1$</span>
 
-<span class="pc bpc" id="L113" title="1 of 2 branches missed.">        if (!stringHasValue(resource)</span>
-<span class="nc bnc" id="L114" title="All 2 branches missed.">                &amp;&amp; !stringHasValue(url)) {</span>
+<span class="pc bpc" id="L113" title="3 of 4 branches missed.">        if (!stringHasValue(resource)</span>
+                &amp;&amp; !stringHasValue(url)) {
 <span class="nc" id="L115">            throw new XMLParserException(getString(&quot;RuntimeError.14&quot;)); //$NON-NLS-1$</span>
         }
 
-<span class="pc bpc" id="L118" title="1 of 2 branches missed.">        if (stringHasValue(resource)</span>
-<span class="pc bpc" id="L119" title="1 of 2 branches missed.">                &amp;&amp; stringHasValue(url)) {</span>
+<span class="pc bpc" id="L118" title="2 of 4 branches missed.">        if (stringHasValue(resource)</span>
+                &amp;&amp; stringHasValue(url)) {
 <span class="nc" id="L120">            throw new XMLParserException(getString(&quot;RuntimeError.14&quot;)); //$NON-NLS-1$</span>
         }
 
@@ -134,7 +134,7 @@ public class MyBatisGeneratorConfigurationParser {
             }
 
 <span class="fc" id="L136">            InputStream inputStream = resourceUrl.openConnection()</span>
-<span class="fc" id="L137">                    .getInputStream();</span>
+                    .getInputStream();
 
 <span class="fc" id="L139">            configurationProperties.load(inputStream);</span>
 <span class="fc" id="L140">            inputStream.close();</span>
@@ -155,11 +155,11 @@ public class MyBatisGeneratorConfigurationParser {
 <span class="fc" id="L155">        String defaultModelType = attributes.getProperty(&quot;defaultModelType&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L156">        String targetRuntime = attributes.getProperty(&quot;targetRuntime&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L157">        String introspectedColumnImpl = attributes</span>
-<span class="fc" id="L158">                .getProperty(&quot;introspectedColumnImpl&quot;); //$NON-NLS-1$</span>
+                .getProperty(&quot;introspectedColumnImpl&quot;); //$NON-NLS-1$
 <span class="fc" id="L159">        String id = attributes.getProperty(&quot;id&quot;); //$NON-NLS-1$</span>
 
 <span class="fc bfc" id="L161" title="All 2 branches covered.">        ModelType mt = defaultModelType == null ? null : ModelType</span>
-<span class="fc" id="L162">                .getModelType(defaultModelType);</span>
+                .getModelType(defaultModelType);
 
 <span class="fc" id="L164">        Context context = new Context(mt);</span>
 <span class="fc" id="L165">        context.setId(id);</span>
@@ -240,27 +240,27 @@ public class MyBatisGeneratorConfigurationParser {
 <span class="fc" id="L240">        String alias = attributes.getProperty(&quot;alias&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L241">        String enableInsert = attributes.getProperty(&quot;enableInsert&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L242">        String enableSelectByPrimaryKey = attributes</span>
-<span class="fc" id="L243">                .getProperty(&quot;enableSelectByPrimaryKey&quot;); //$NON-NLS-1$</span>
+                .getProperty(&quot;enableSelectByPrimaryKey&quot;); //$NON-NLS-1$
 <span class="fc" id="L244">        String enableSelectByExample = attributes</span>
-<span class="fc" id="L245">                .getProperty(&quot;enableSelectByExample&quot;); //$NON-NLS-1$</span>
+                .getProperty(&quot;enableSelectByExample&quot;); //$NON-NLS-1$
 <span class="fc" id="L246">        String enableUpdateByPrimaryKey = attributes</span>
-<span class="fc" id="L247">                .getProperty(&quot;enableUpdateByPrimaryKey&quot;); //$NON-NLS-1$</span>
+                .getProperty(&quot;enableUpdateByPrimaryKey&quot;); //$NON-NLS-1$
 <span class="fc" id="L248">        String enableDeleteByPrimaryKey = attributes</span>
-<span class="fc" id="L249">                .getProperty(&quot;enableDeleteByPrimaryKey&quot;); //$NON-NLS-1$</span>
+                .getProperty(&quot;enableDeleteByPrimaryKey&quot;); //$NON-NLS-1$
 <span class="fc" id="L250">        String enableDeleteByExample = attributes</span>
-<span class="fc" id="L251">                .getProperty(&quot;enableDeleteByExample&quot;); //$NON-NLS-1$</span>
+                .getProperty(&quot;enableDeleteByExample&quot;); //$NON-NLS-1$
 <span class="fc" id="L252">        String enableCountByExample = attributes</span>
-<span class="fc" id="L253">                .getProperty(&quot;enableCountByExample&quot;); //$NON-NLS-1$</span>
+                .getProperty(&quot;enableCountByExample&quot;); //$NON-NLS-1$
 <span class="fc" id="L254">        String enableUpdateByExample = attributes</span>
-<span class="fc" id="L255">                .getProperty(&quot;enableUpdateByExample&quot;); //$NON-NLS-1$</span>
+                .getProperty(&quot;enableUpdateByExample&quot;); //$NON-NLS-1$
 <span class="fc" id="L256">        String selectByPrimaryKeyQueryId = attributes</span>
-<span class="fc" id="L257">                .getProperty(&quot;selectByPrimaryKeyQueryId&quot;); //$NON-NLS-1$</span>
+                .getProperty(&quot;selectByPrimaryKeyQueryId&quot;); //$NON-NLS-1$
 <span class="fc" id="L258">        String selectByExampleQueryId = attributes</span>
-<span class="fc" id="L259">                .getProperty(&quot;selectByExampleQueryId&quot;); //$NON-NLS-1$</span>
+                .getProperty(&quot;selectByExampleQueryId&quot;); //$NON-NLS-1$
 <span class="fc" id="L260">        String modelType = attributes.getProperty(&quot;modelType&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L261">        String escapeWildcards = attributes.getProperty(&quot;escapeWildcards&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L262">        String delimitIdentifiers = attributes</span>
-<span class="fc" id="L263">                .getProperty(&quot;delimitIdentifiers&quot;); //$NON-NLS-1$</span>
+                .getProperty(&quot;delimitIdentifiers&quot;); //$NON-NLS-1$
 <span class="fc" id="L264">        String delimitAllColumns = attributes.getProperty(&quot;delimitAllColumns&quot;); //$NON-NLS-1$</span>
 
 <span class="pc bpc" id="L266" title="1 of 2 branches missed.">        if (stringHasValue(catalog)) {</span>
@@ -289,37 +289,37 @@ public class MyBatisGeneratorConfigurationParser {
 
 <span class="pc bpc" id="L290" title="1 of 2 branches missed.">        if (stringHasValue(enableSelectByPrimaryKey)) {</span>
 <span class="nc" id="L291">            tc.setSelectByPrimaryKeyStatementEnabled(</span>
-<span class="nc" id="L292">                    isTrue(enableSelectByPrimaryKey));</span>
+                    isTrue(enableSelectByPrimaryKey));
         }
 
 <span class="pc bpc" id="L295" title="1 of 2 branches missed.">        if (stringHasValue(enableSelectByExample)) {</span>
 <span class="nc" id="L296">            tc.setSelectByExampleStatementEnabled(</span>
-<span class="nc" id="L297">                    isTrue(enableSelectByExample));</span>
+                    isTrue(enableSelectByExample));
         }
 
 <span class="pc bpc" id="L300" title="1 of 2 branches missed.">        if (stringHasValue(enableUpdateByPrimaryKey)) {</span>
 <span class="nc" id="L301">            tc.setUpdateByPrimaryKeyStatementEnabled(</span>
-<span class="nc" id="L302">                    isTrue(enableUpdateByPrimaryKey));</span>
+                    isTrue(enableUpdateByPrimaryKey));
         }
 
 <span class="pc bpc" id="L305" title="1 of 2 branches missed.">        if (stringHasValue(enableDeleteByPrimaryKey)) {</span>
 <span class="nc" id="L306">            tc.setDeleteByPrimaryKeyStatementEnabled(</span>
-<span class="nc" id="L307">                    isTrue(enableDeleteByPrimaryKey));</span>
+                    isTrue(enableDeleteByPrimaryKey));
         }
 
 <span class="pc bpc" id="L310" title="1 of 2 branches missed.">        if (stringHasValue(enableDeleteByExample)) {</span>
 <span class="nc" id="L311">            tc.setDeleteByExampleStatementEnabled(</span>
-<span class="nc" id="L312">                    isTrue(enableDeleteByExample));</span>
+                    isTrue(enableDeleteByExample));
         }
 
 <span class="pc bpc" id="L315" title="1 of 2 branches missed.">        if (stringHasValue(enableCountByExample)) {</span>
 <span class="nc" id="L316">            tc.setCountByExampleStatementEnabled(</span>
-<span class="nc" id="L317">                    isTrue(enableCountByExample));</span>
+                    isTrue(enableCountByExample));
         }
 
 <span class="pc bpc" id="L320" title="1 of 2 branches missed.">        if (stringHasValue(enableUpdateByExample)) {</span>
 <span class="nc" id="L321">            tc.setUpdateByExampleStatementEnabled(</span>
-<span class="nc" id="L322">                    isTrue(enableUpdateByExample));</span>
+                    isTrue(enableUpdateByExample));
         }
 
 <span class="pc bpc" id="L325" title="1 of 2 branches missed.">        if (stringHasValue(selectByPrimaryKeyQueryId)) {</span>
@@ -376,7 +376,7 @@ public class MyBatisGeneratorConfigurationParser {
 <span class="fc" id="L376">        String jdbcType = attributes.getProperty(&quot;jdbcType&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L377">        String typeHandler = attributes.getProperty(&quot;typeHandler&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L378">        String delimitedColumnName = attributes</span>
-<span class="fc" id="L379">                .getProperty(&quot;delimitedColumnName&quot;); //$NON-NLS-1$</span>
+                .getProperty(&quot;delimitedColumnName&quot;); //$NON-NLS-1$
 
 <span class="fc" id="L381">        ColumnOverride co = new ColumnOverride(column);</span>
 
@@ -421,7 +421,7 @@ public class MyBatisGeneratorConfigurationParser {
 
 <span class="fc" id="L422">        String column = attributes.getProperty(&quot;column&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L423">        boolean identity = isTrue(attributes</span>
-<span class="fc" id="L424">                .getProperty(&quot;identity&quot;)); //$NON-NLS-1$</span>
+                .getProperty(&quot;identity&quot;)); //$NON-NLS-1$
 <span class="fc" id="L425">        String sqlStatement = attributes.getProperty(&quot;sqlStatement&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L426">        String type = attributes.getProperty(&quot;type&quot;); //$NON-NLS-1$</span>
 
@@ -434,7 +434,7 @@ public class MyBatisGeneratorConfigurationParser {
 <span class="fc" id="L434">        Properties attributes = parseAttributes(node);</span>
 <span class="fc" id="L435">        String column = attributes.getProperty(&quot;column&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L436">        String delimitedColumnName = attributes</span>
-<span class="fc" id="L437">                .getProperty(&quot;delimitedColumnName&quot;); //$NON-NLS-1$</span>
+                .getProperty(&quot;delimitedColumnName&quot;); //$NON-NLS-1$
 
 <span class="fc" id="L439">        IgnoredColumn ic = new IgnoredColumn(column);</span>
 
@@ -515,7 +515,7 @@ public class MyBatisGeneratorConfigurationParser {
 <span class="fc" id="L515">        JavaModelGeneratorConfiguration javaModelGeneratorConfiguration = new JavaModelGeneratorConfiguration();</span>
 
 <span class="fc" id="L517">        context</span>
-<span class="fc" id="L518">                .setJavaModelGeneratorConfiguration(javaModelGeneratorConfiguration);</span>
+                .setJavaModelGeneratorConfiguration(javaModelGeneratorConfiguration);
 
 <span class="fc" id="L520">        Properties attributes = parseAttributes(node);</span>
 <span class="fc" id="L521">        String targetPackage = attributes.getProperty(&quot;targetPackage&quot;); //$NON-NLS-1$</span>
@@ -548,13 +548,13 @@ public class MyBatisGeneratorConfigurationParser {
 <span class="fc" id="L548">        String targetPackage = attributes.getProperty(&quot;targetPackage&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L549">        String targetProject = attributes.getProperty(&quot;targetProject&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L550">        String implementationPackage = attributes</span>
-<span class="fc" id="L551">                .getProperty(&quot;implementationPackage&quot;); //$NON-NLS-1$</span>
+                .getProperty(&quot;implementationPackage&quot;); //$NON-NLS-1$
 
 <span class="fc" id="L553">        javaClientGeneratorConfiguration.setConfigurationType(type);</span>
 <span class="fc" id="L554">        javaClientGeneratorConfiguration.setTargetPackage(targetPackage);</span>
 <span class="fc" id="L555">        javaClientGeneratorConfiguration.setTargetProject(targetProject);</span>
 <span class="fc" id="L556">        javaClientGeneratorConfiguration</span>
-<span class="fc" id="L557">                .setImplementationPackage(implementationPackage);</span>
+                .setImplementationPackage(implementationPackage);
 
 <span class="fc" id="L559">        NodeList nodeList = node.getChildNodes();</span>
 <span class="fc bfc" id="L560" title="All 2 branches covered.">        for (int i = 0; i &lt; nodeList.getLength(); i++) {</span>

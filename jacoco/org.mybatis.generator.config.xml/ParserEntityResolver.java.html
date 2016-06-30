@@ -49,11 +49,11 @@ public class ParserEntityResolver implements EntityResolver {
 <span class="fc" id="L49">            InputSource ins = new InputSource(is);</span>
 
 <span class="fc" id="L51">            return ins;</span>
-<span class="fc" id="L52">        } else if (XmlConstants.MYBATIS_GENERATOR_CONFIG_PUBLIC_ID</span>
-<span class="pc bpc" id="L53" title="1 of 2 branches missed.">                .equalsIgnoreCase(publicId)) {</span>
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">        } else if (XmlConstants.MYBATIS_GENERATOR_CONFIG_PUBLIC_ID</span>
+                .equalsIgnoreCase(publicId)) {
 <span class="fc" id="L54">            InputStream is = getClass()</span>
-<span class="fc" id="L55">                    .getClassLoader()</span>
-<span class="fc" id="L56">                    .getResourceAsStream(</span>
+                    .getClassLoader()
+                    .getResourceAsStream(
                             &quot;org/mybatis/generator/config/xml/mybatis-generator-config_1_0.dtd&quot;); //$NON-NLS-1$
 <span class="fc" id="L58">            InputSource ins = new InputSource(is);</span>
 

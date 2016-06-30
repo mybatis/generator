@@ -48,7 +48,7 @@ public class SelectByPrimaryKeyMethodGenerator extends
 <span class="fc" id="L48">        method.setVisibility(JavaVisibility.PUBLIC);</span>
 
 <span class="fc" id="L50">        FullyQualifiedJavaType returnType = introspectedTable.getRules()</span>
-<span class="fc" id="L51">                .calculateAllFieldsClass();</span>
+                .calculateAllFieldsClass();
 <span class="fc" id="L52">        method.setReturnType(returnType);</span>
 <span class="fc" id="L53">        importedTypes.add(returnType);</span>
 
@@ -56,7 +56,7 @@ public class SelectByPrimaryKeyMethodGenerator extends
 
 <span class="fc bfc" id="L57" title="All 4 branches covered.">        if (!isSimple &amp;&amp; introspectedTable.getRules().generatePrimaryKeyClass()) {</span>
 <span class="fc" id="L58">            FullyQualifiedJavaType type = new FullyQualifiedJavaType(</span>
-<span class="fc" id="L59">                    introspectedTable.getPrimaryKeyType());</span>
+                    introspectedTable.getPrimaryKeyType());
 <span class="fc" id="L60">            importedTypes.add(type);</span>
 <span class="fc" id="L61">            method.addParameter(new Parameter(type, &quot;key&quot;)); //$NON-NLS-1$</span>
 <span class="fc" id="L62">        } else {</span>
@@ -65,7 +65,7 @@ public class SelectByPrimaryKeyMethodGenerator extends
             // parameters
             // for MyBatis3
 <span class="fc" id="L67">            List&lt;IntrospectedColumn&gt; introspectedColumns = introspectedTable</span>
-<span class="fc" id="L68">                    .getPrimaryKeyColumns();</span>
+                    .getPrimaryKeyColumns();
 <span class="fc bfc" id="L69" title="All 2 branches covered.">            boolean annotate = introspectedColumns.size() &gt; 1;</span>
 <span class="fc bfc" id="L70" title="All 2 branches covered.">            if (annotate) {</span>
 <span class="fc" id="L71">                importedTypes.add(new FullyQualifiedJavaType(</span>
@@ -74,10 +74,10 @@ public class SelectByPrimaryKeyMethodGenerator extends
 <span class="fc" id="L74">            StringBuilder sb = new StringBuilder();</span>
 <span class="fc bfc" id="L75" title="All 2 branches covered.">            for (IntrospectedColumn introspectedColumn : introspectedColumns) {</span>
 <span class="fc" id="L76">                FullyQualifiedJavaType type = introspectedColumn</span>
-<span class="fc" id="L77">                        .getFullyQualifiedJavaType();</span>
+                        .getFullyQualifiedJavaType();
 <span class="fc" id="L78">                importedTypes.add(type);</span>
 <span class="fc" id="L79">                Parameter parameter = new Parameter(type, introspectedColumn</span>
-<span class="fc" id="L80">                        .getJavaProperty());</span>
+                        .getJavaProperty());
 <span class="fc bfc" id="L81" title="All 2 branches covered.">                if (annotate) {</span>
 <span class="fc" id="L82">                    sb.setLength(0);</span>
 <span class="fc" id="L83">                    sb.append(&quot;@Param(\&quot;&quot;); //$NON-NLS-1$</span>

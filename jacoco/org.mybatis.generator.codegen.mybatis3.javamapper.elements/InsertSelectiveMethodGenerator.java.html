@@ -46,7 +46,7 @@ public class InsertSelectiveMethodGenerator extends
 <span class="fc" id="L46">        method.setName(introspectedTable.getInsertSelectiveStatementId());</span>
 
 <span class="fc" id="L48">        FullyQualifiedJavaType parameterType = introspectedTable.getRules()</span>
-<span class="fc" id="L49">                .calculateAllFieldsClass();</span>
+                .calculateAllFieldsClass();
 
 <span class="fc" id="L51">        importedTypes.add(parameterType);</span>
 <span class="fc" id="L52">        method.addParameter(new Parameter(parameterType, &quot;record&quot;)); //$NON-NLS-1$</span>

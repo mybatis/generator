@@ -65,16 +65,16 @@ public class ProviderUpdateByExampleSelectiveMethodGenerator extends
                 &quot;parameter&quot;)); //$NON-NLS-1$
         
 <span class="fc" id="L67">        FullyQualifiedJavaType record =</span>
-<span class="fc" id="L68">            introspectedTable.getRules().calculateAllFieldsClass();</span>
+            introspectedTable.getRules().calculateAllFieldsClass();
 <span class="fc" id="L69">        importedTypes.add(record);</span>
 <span class="fc" id="L70">        method.addBodyLine(String.format(&quot;%s record = (%s) parameter.get(\&quot;record\&quot;);&quot;, //$NON-NLS-1$</span>
-<span class="fc" id="L71">                record.getShortName(), record.getShortName()));</span>
+                record.getShortName(), record.getShortName()));
 
 <span class="fc" id="L73">        FullyQualifiedJavaType example =</span>
-<span class="fc" id="L74">            new FullyQualifiedJavaType(introspectedTable.getExampleType());</span>
+            new FullyQualifiedJavaType(introspectedTable.getExampleType());
 <span class="fc" id="L75">        importedTypes.add(example);</span>
 <span class="fc" id="L76">        method.addBodyLine(String.format(&quot;%s example = (%s) parameter.get(\&quot;example\&quot;);&quot;, //$NON-NLS-1$</span>
-<span class="fc" id="L77">                example.getShortName(), example.getShortName()));</span>
+                example.getShortName(), example.getShortName()));
 
 <span class="fc" id="L79">        context.getCommentGenerator().addGeneralMethodComment(method,</span>
                 introspectedTable);
@@ -89,14 +89,14 @@ public class ProviderUpdateByExampleSelectiveMethodGenerator extends
         
 <span class="fc" id="L90">        method.addBodyLine(String.format(&quot;%sUPDATE(\&quot;%s\&quot;);&quot;, //$NON-NLS-1$</span>
         		builderPrefix,
-<span class="fc" id="L92">                escapeStringForJava(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime())));</span>
+                escapeStringForJava(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime())));
 <span class="fc" id="L93">        method.addBodyLine(&quot;&quot;); //$NON-NLS-1$</span>
         
 <span class="fc bfc" id="L95" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable.getAllColumns()) {</span>
 <span class="fc bfc" id="L96" title="All 2 branches covered.">            if (!introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {</span>
 <span class="fc" id="L97">                method.addBodyLine(String.format(&quot;if (record.%s() != null) {&quot;, //$NON-NLS-1$</span>
-<span class="fc" id="L98">                    getGetterMethodName(introspectedColumn.getJavaProperty(),</span>
-<span class="fc" id="L99">                            introspectedColumn.getFullyQualifiedJavaType())));</span>
+                    getGetterMethodName(introspectedColumn.getJavaProperty(),
+                            introspectedColumn.getFullyQualifiedJavaType())));
             }
 
 <span class="fc" id="L102">            StringBuilder sb = new StringBuilder();</span>
@@ -105,8 +105,8 @@ public class ProviderUpdateByExampleSelectiveMethodGenerator extends
             
 <span class="fc" id="L106">            method.addBodyLine(String.format(&quot;%sSET(\&quot;%s = %s\&quot;);&quot;, //$NON-NLS-1$</span>
                     builderPrefix,
-<span class="fc" id="L108">            		escapeStringForJava(getAliasedEscapedColumnName(introspectedColumn)),</span>
-<span class="fc" id="L109">                    sb.toString()));</span>
+            		escapeStringForJava(getAliasedEscapedColumnName(introspectedColumn)),
+                    sb.toString()));
                 
 <span class="fc bfc" id="L111" title="All 2 branches covered.">            if (!introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {</span>
 <span class="fc" id="L112">                method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>

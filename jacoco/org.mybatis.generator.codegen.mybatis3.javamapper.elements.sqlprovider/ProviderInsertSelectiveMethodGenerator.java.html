@@ -57,11 +57,11 @@ public class ProviderInsertSelectiveMethodGenerator extends
         }
 
 <span class="fc" id="L59">        FullyQualifiedJavaType fqjt = introspectedTable.getRules()</span>
-<span class="fc" id="L60">            .calculateAllFieldsClass();</span>
+            .calculateAllFieldsClass();
 <span class="fc" id="L61">        importedTypes.add(fqjt);</span>
 
 <span class="fc" id="L63">        Method method = new Method(</span>
-<span class="fc" id="L64">                introspectedTable.getInsertSelectiveStatementId());</span>
+                introspectedTable.getInsertSelectiveStatementId());
 <span class="fc" id="L65">        method.setVisibility(JavaVisibility.PUBLIC);</span>
 <span class="fc" id="L66">        method.setReturnType(FullyQualifiedJavaType.getStringInstance());</span>
 <span class="fc" id="L67">        method.addParameter(new Parameter(fqjt, &quot;record&quot;)); //$NON-NLS-1$</span>
@@ -77,7 +77,7 @@ public class ProviderInsertSelectiveMethodGenerator extends
 
 <span class="fc" id="L78">    	method.addBodyLine(String.format(&quot;%sINSERT_INTO(\&quot;%s\&quot;);&quot;, //$NON-NLS-1$</span>
                 builderPrefix,
-<span class="fc" id="L80">    			escapeStringForJava(introspectedTable.getFullyQualifiedTableNameAtRuntime())));</span>
+    			escapeStringForJava(introspectedTable.getFullyQualifiedTableNameAtRuntime())));
     	
 <span class="fc bfc" id="L82" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable.getAllColumns()) {</span>
 <span class="fc bfc" id="L83" title="All 2 branches covered.">            if (introspectedColumn.isIdentity()) {</span>
@@ -86,19 +86,19 @@ public class ProviderInsertSelectiveMethodGenerator extends
             }
             
 <span class="fc" id="L88">            method.addBodyLine(&quot;&quot;); //$NON-NLS-1$</span>
-<span class="fc bfc" id="L89" title="All 2 branches covered.">            if (!introspectedColumn.getFullyQualifiedJavaType().isPrimitive()</span>
-<span class="fc bfc" id="L90" title="All 2 branches covered.">                    &amp;&amp; !introspectedColumn.isSequenceColumn()) {</span>
+<span class="fc bfc" id="L89" title="All 4 branches covered.">            if (!introspectedColumn.getFullyQualifiedJavaType().isPrimitive()</span>
+                    &amp;&amp; !introspectedColumn.isSequenceColumn()) {
 <span class="fc" id="L91">                method.addBodyLine(String.format(&quot;if (record.%s() != null) {&quot;, //$NON-NLS-1$</span>
-<span class="fc" id="L92">                    getGetterMethodName(introspectedColumn.getJavaProperty(),</span>
-<span class="fc" id="L93">                            introspectedColumn.getFullyQualifiedJavaType())));</span>
+                    getGetterMethodName(introspectedColumn.getJavaProperty(),
+                            introspectedColumn.getFullyQualifiedJavaType())));
             }
 <span class="fc" id="L95">          	method.addBodyLine(String.format(&quot;%sVALUES(\&quot;%s\&quot;, \&quot;%s\&quot;);&quot;, //$NON-NLS-1$</span>
           			builderPrefix,
-<span class="fc" id="L97">          			escapeStringForJava(getEscapedColumnName(introspectedColumn)),</span>
-<span class="fc" id="L98">                    getParameterClause(introspectedColumn)));</span>
+          			escapeStringForJava(getEscapedColumnName(introspectedColumn)),
+                    getParameterClause(introspectedColumn)));
 
-<span class="fc bfc" id="L100" title="All 2 branches covered.">          	if (!introspectedColumn.getFullyQualifiedJavaType().isPrimitive()</span>
-<span class="fc bfc" id="L101" title="All 2 branches covered.">                    &amp;&amp; !introspectedColumn.isSequenceColumn()) {</span>
+<span class="fc bfc" id="L100" title="All 4 branches covered.">          	if (!introspectedColumn.getFullyQualifiedJavaType().isPrimitive()</span>
+                    &amp;&amp; !introspectedColumn.isSequenceColumn()) {
 <span class="fc" id="L102">                method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>
             }
 <span class="fc" id="L104">        }</span>

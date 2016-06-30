@@ -58,7 +58,7 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
     protected XmlElement getSqlMapElement() {
 <span class="fc" id="L59">        FullyQualifiedTable table = introspectedTable.getFullyQualifiedTable();</span>
 <span class="fc" id="L60">        progressCallback.startTask(getString(</span>
-<span class="fc" id="L61">                &quot;Progress.12&quot;, table.toString())); //$NON-NLS-1$</span>
+                &quot;Progress.12&quot;, table.toString())); //$NON-NLS-1$
 <span class="fc" id="L62">        XmlElement answer = new XmlElement(&quot;mapper&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L63">        String namespace = introspectedTable.getMyBatis3SqlMapNamespace();</span>
 <span class="fc" id="L64">        answer.addAttribute(new Attribute(&quot;namespace&quot;, //$NON-NLS-1$</span>
@@ -114,8 +114,8 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
 
     protected void addMyBatis3UpdateByExampleWhereClauseElement(
             XmlElement parentElement) {
-<span class="fc" id="L117">        if (introspectedTable.getRules()</span>
-<span class="fc bfc" id="L118" title="All 2 branches covered.">                .generateMyBatis3UpdateByExampleWhereClause()) {</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">        if (introspectedTable.getRules()</span>
+                .generateMyBatis3UpdateByExampleWhereClause()) {
 <span class="fc" id="L119">            AbstractXmlElementGenerator elementGenerator = new ExampleWhereClauseElementGenerator(</span>
                     true);
 <span class="fc" id="L121">            initializeAndExecuteGenerator(elementGenerator, parentElement);</span>
@@ -233,8 +233,8 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
 
     protected void addUpdateByPrimaryKeyWithoutBLOBsElement(
             XmlElement parentElement) {
-<span class="fc" id="L236">        if (introspectedTable.getRules()</span>
-<span class="fc bfc" id="L237" title="All 2 branches covered.">                .generateUpdateByPrimaryKeyWithoutBLOBs()) {</span>
+<span class="fc bfc" id="L236" title="All 2 branches covered.">        if (introspectedTable.getRules()</span>
+                .generateUpdateByPrimaryKeyWithoutBLOBs()) {
 <span class="fc" id="L238">            AbstractXmlElementGenerator elementGenerator = new UpdateByPrimaryKeyWithoutBLOBsElementGenerator(false);</span>
 <span class="fc" id="L239">            initializeAndExecuteGenerator(elementGenerator, parentElement);</span>
         }

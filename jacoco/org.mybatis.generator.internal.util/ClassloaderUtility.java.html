@@ -63,7 +63,7 @@ public class ClassloaderUtility {
 <span class="nc" id="L63">        ClassLoader parent = Thread.currentThread().getContextClassLoader();</span>
 
 <span class="nc" id="L65">        URLClassLoader ucl = new URLClassLoader(urls.toArray(new URL[urls</span>
-<span class="nc" id="L66">                .size()]), parent);</span>
+                .size()]), parent);
 
 <span class="nc" id="L68">        return ucl;</span>
     }

@@ -65,8 +65,8 @@ public class TopLevelEnumeration extends InnerEnum implements CompilationUnit {
 <span class="nc" id="L65">            newLine(sb);</span>
 <span class="nc" id="L66">        }</span>
 
-<span class="nc bnc" id="L68" title="All 2 branches missed.">        if (getType().getPackageName() != null</span>
-<span class="nc bnc" id="L69" title="All 2 branches missed.">                &amp;&amp; getType().getPackageName().length() &gt; 0) {</span>
+<span class="nc bnc" id="L68" title="All 4 branches missed.">        if (getType().getPackageName() != null</span>
+                &amp;&amp; getType().getPackageName().length() &gt; 0) {
 <span class="nc" id="L70">            sb.append(&quot;package &quot;); //$NON-NLS-1$</span>
 <span class="nc" id="L71">            sb.append(getType().getPackageName());</span>
 <span class="nc" id="L72">            sb.append(';');</span>
@@ -132,9 +132,9 @@ public class TopLevelEnumeration extends InnerEnum implements CompilationUnit {
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#addImportedType(org.mybatis.generator.api.dom.java.FullyQualifiedJavaType)
      */
     public void addImportedType(FullyQualifiedJavaType importedType) {
-<span class="nc bnc" id="L135" title="All 2 branches missed.">        if (importedType.isExplicitlyImported()</span>
-<span class="nc bnc" id="L136" title="All 2 branches missed.">                &amp;&amp; !importedType.getPackageName().equals(</span>
-<span class="nc" id="L137">                        getType().getPackageName())) {</span>
+<span class="nc bnc" id="L135" title="All 4 branches missed.">        if (importedType.isExplicitlyImported()</span>
+                &amp;&amp; !importedType.getPackageName().equals(
+                        getType().getPackageName())) {
 <span class="nc" id="L138">            importedTypes.add(importedType);</span>
         }
 <span class="nc" id="L140">    }</span>

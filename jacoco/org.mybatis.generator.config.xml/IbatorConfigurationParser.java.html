@@ -72,11 +72,11 @@ public class IbatorConfigurationParser extends MyBatisGeneratorConfigurationPars
 <span class="fc" id="L72">        String defaultModelType = attributes.getProperty(&quot;defaultModelType&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L73">        String targetRuntime = attributes.getProperty(&quot;targetRuntime&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L74">        String introspectedColumnImpl = attributes</span>
-<span class="fc" id="L75">                .getProperty(&quot;introspectedColumnImpl&quot;); //$NON-NLS-1$</span>
+                .getProperty(&quot;introspectedColumnImpl&quot;); //$NON-NLS-1$
 <span class="fc" id="L76">        String id = attributes.getProperty(&quot;id&quot;); //$NON-NLS-1$</span>
 
 <span class="fc bfc" id="L78" title="All 2 branches covered.">        ModelType mt = defaultModelType == null ? null : ModelType</span>
-<span class="fc" id="L79">                .getModelType(defaultModelType);</span>
+                .getModelType(defaultModelType);
 
 <span class="fc" id="L81">        Context context = new Context(mt);</span>
 <span class="fc" id="L82">        context.setId(id);</span>
@@ -153,13 +153,13 @@ public class IbatorConfigurationParser extends MyBatisGeneratorConfigurationPars
 <span class="fc" id="L153">        String targetPackage = attributes.getProperty(&quot;targetPackage&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L154">        String targetProject = attributes.getProperty(&quot;targetProject&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L155">        String implementationPackage = attributes</span>
-<span class="fc" id="L156">                .getProperty(&quot;implementationPackage&quot;); //$NON-NLS-1$</span>
+                .getProperty(&quot;implementationPackage&quot;); //$NON-NLS-1$
 
 <span class="fc" id="L158">        javaClientGeneratorConfiguration.setConfigurationType(type);</span>
 <span class="fc" id="L159">        javaClientGeneratorConfiguration.setTargetPackage(targetPackage);</span>
 <span class="fc" id="L160">        javaClientGeneratorConfiguration.setTargetProject(targetProject);</span>
 <span class="fc" id="L161">        javaClientGeneratorConfiguration</span>
-<span class="fc" id="L162">                .setImplementationPackage(implementationPackage);</span>
+                .setImplementationPackage(implementationPackage);
 
 <span class="fc" id="L164">        NodeList nodeList = node.getChildNodes();</span>
 <span class="fc bfc" id="L165" title="All 2 branches covered.">        for (int i = 0; i &lt; nodeList.getLength(); i++) {</span>

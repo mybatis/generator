@@ -77,24 +77,24 @@ public class IntrospectedTableIbatis2Java2Impl extends IntrospectedTable {
         }
 
 <span class="fc" id="L79">        String type = context.getJavaClientGeneratorConfiguration()</span>
-<span class="fc" id="L80">                .getConfigurationType();</span>
+                .getConfigurationType();
 
         AbstractJavaGenerator javaGenerator;
 <span class="pc bpc" id="L83" title="1 of 2 branches missed.">        if (&quot;IBATIS&quot;.equalsIgnoreCase(type)) { //$NON-NLS-1$</span>
 <span class="nc" id="L84">            javaGenerator = new DAOGenerator(new IbatisDAOTemplate(),</span>
-<span class="nc" id="L85">                    isJava5Targeted());</span>
+                    isJava5Targeted());
 <span class="fc bfc" id="L86" title="All 2 branches covered.">        } else if (&quot;SPRING&quot;.equalsIgnoreCase(type)) { //$NON-NLS-1$</span>
 <span class="fc" id="L87">            javaGenerator = new DAOGenerator(new SpringDAOTemplate(),</span>
-<span class="fc" id="L88">                    isJava5Targeted());</span>
+                    isJava5Targeted());
 <span class="fc bfc" id="L89" title="All 2 branches covered.">        } else if (&quot;GENERIC-CI&quot;.equalsIgnoreCase(type)) { //$NON-NLS-1$</span>
 <span class="fc" id="L90">            javaGenerator = new DAOGenerator(new GenericCIDAOTemplate(),</span>
-<span class="fc" id="L91">                    isJava5Targeted());</span>
+                    isJava5Targeted());
 <span class="pc bpc" id="L92" title="1 of 2 branches missed.">        } else if (&quot;GENERIC-SI&quot;.equalsIgnoreCase(type)) { //$NON-NLS-1$</span>
 <span class="fc" id="L93">            javaGenerator = new DAOGenerator(new GenericSIDAOTemplate(),</span>
-<span class="fc" id="L94">                    isJava5Targeted());</span>
+                    isJava5Targeted());
         } else {
 <span class="nc" id="L96">            javaGenerator = (AbstractJavaGenerator) ObjectFactory</span>
-<span class="nc" id="L97">                    .createInternalObject(type);</span>
+                    .createInternalObject(type);
         }
 
 <span class="fc" id="L100">        initializeAbstractGenerator(javaGenerator, warnings, progressCallback);</span>
@@ -105,7 +105,7 @@ public class IntrospectedTableIbatis2Java2Impl extends IntrospectedTable {
             ProgressCallback progressCallback) {
 <span class="pc bpc" id="L106" title="1 of 2 branches missed.">        if (getRules().generateExampleClass()) {</span>
 <span class="fc" id="L107">            AbstractJavaGenerator javaGenerator = new ExampleGenerator(</span>
-<span class="fc" id="L108">                    isJava5Targeted());</span>
+                    isJava5Targeted());
 <span class="fc" id="L109">            initializeAbstractGenerator(javaGenerator, warnings,</span>
                     progressCallback);
 <span class="fc" id="L111">            javaModelGenerators.add(javaGenerator);</span>
@@ -148,26 +148,26 @@ public class IntrospectedTableIbatis2Java2Impl extends IntrospectedTable {
 
 <span class="fc bfc" id="L149" title="All 2 branches covered.">        for (AbstractJavaGenerator javaGenerator : javaModelGenerators) {</span>
 <span class="fc" id="L150">            List&lt;CompilationUnit&gt; compilationUnits = javaGenerator</span>
-<span class="fc" id="L151">                    .getCompilationUnits();</span>
+                    .getCompilationUnits();
 <span class="fc bfc" id="L152" title="All 2 branches covered.">            for (CompilationUnit compilationUnit : compilationUnits) {</span>
 <span class="fc" id="L153">                GeneratedJavaFile gjf = new GeneratedJavaFile(compilationUnit,</span>
-<span class="fc" id="L154">                        context.getJavaModelGeneratorConfiguration()</span>
-<span class="fc" id="L155">                                .getTargetProject(),</span>
-<span class="fc" id="L156">                                context.getProperty(PropertyRegistry.CONTEXT_JAVA_FILE_ENCODING),</span>
-<span class="fc" id="L157">                                context.getJavaFormatter());</span>
+                        context.getJavaModelGeneratorConfiguration()
+                                .getTargetProject(),
+                                context.getProperty(PropertyRegistry.CONTEXT_JAVA_FILE_ENCODING),
+                                context.getJavaFormatter());
 <span class="fc" id="L158">                answer.add(gjf);</span>
 <span class="fc" id="L159">            }</span>
 <span class="fc" id="L160">        }</span>
 
 <span class="fc bfc" id="L162" title="All 2 branches covered.">        for (AbstractJavaGenerator javaGenerator : daoGenerators) {</span>
 <span class="fc" id="L163">            List&lt;CompilationUnit&gt; compilationUnits = javaGenerator</span>
-<span class="fc" id="L164">                    .getCompilationUnits();</span>
+                    .getCompilationUnits();
 <span class="fc bfc" id="L165" title="All 2 branches covered.">            for (CompilationUnit compilationUnit : compilationUnits) {</span>
 <span class="fc" id="L166">                GeneratedJavaFile gjf = new GeneratedJavaFile(compilationUnit,</span>
-<span class="fc" id="L167">                        context.getJavaClientGeneratorConfiguration()</span>
-<span class="fc" id="L168">                                .getTargetProject(),</span>
-<span class="fc" id="L169">                                context.getProperty(PropertyRegistry.CONTEXT_JAVA_FILE_ENCODING),</span>
-<span class="fc" id="L170">                                context.getJavaFormatter());</span>
+                        context.getJavaClientGeneratorConfiguration()
+                                .getTargetProject(),
+                                context.getProperty(PropertyRegistry.CONTEXT_JAVA_FILE_ENCODING),
+                                context.getJavaFormatter());
 <span class="fc" id="L171">                answer.add(gjf);</span>
 <span class="fc" id="L172">            }</span>
 <span class="fc" id="L173">        }</span>
@@ -181,9 +181,9 @@ public class IntrospectedTableIbatis2Java2Impl extends IntrospectedTable {
 
 <span class="fc" id="L182">        Document document = sqlMapGenerator.getDocument();</span>
 <span class="fc" id="L183">        GeneratedXmlFile gxf = new GeneratedXmlFile(document,</span>
-<span class="fc" id="L184">                getIbatis2SqlMapFileName(), getIbatis2SqlMapPackage(), context</span>
-<span class="fc" id="L185">                        .getSqlMapGeneratorConfiguration().getTargetProject(),</span>
-<span class="fc" id="L186">                true, context.getXmlFormatter());</span>
+                getIbatis2SqlMapFileName(), getIbatis2SqlMapPackage(), context
+                        .getSqlMapGeneratorConfiguration().getTargetProject(),
+                true, context.getXmlFormatter());
 <span class="pc bpc" id="L187" title="1 of 2 branches missed.">        if (context.getPlugins().sqlMapGenerated(gxf, this)) {</span>
 <span class="fc" id="L188">            answer.add(gxf);</span>
         }

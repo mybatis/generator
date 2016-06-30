@@ -35,9 +35,9 @@ public class CountByExampleElementGenerator extends AbstractXmlElementGenerator 
 <span class="fc" id="L35">        XmlElement answer = new XmlElement(&quot;select&quot;); //$NON-NLS-1$</span>
 
 <span class="fc" id="L37">        answer.addAttribute(new Attribute(</span>
-<span class="fc" id="L38">                &quot;id&quot;, introspectedTable.getCountByExampleStatementId())); //$NON-NLS-1$</span>
+                &quot;id&quot;, introspectedTable.getCountByExampleStatementId())); //$NON-NLS-1$
 <span class="fc" id="L39">        answer.addAttribute(new Attribute(</span>
-<span class="fc" id="L40">                &quot;parameterClass&quot;, introspectedTable.getExampleType())); //$NON-NLS-1$</span>
+                &quot;parameterClass&quot;, introspectedTable.getExampleType())); //$NON-NLS-1$
 <span class="fc" id="L41">        answer.addAttribute(new Attribute(&quot;resultClass&quot;, &quot;java.lang.Integer&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
 
 <span class="fc" id="L43">        context.getCommentGenerator().addComment(answer);</span>
@@ -45,7 +45,7 @@ public class CountByExampleElementGenerator extends AbstractXmlElementGenerator 
 <span class="fc" id="L45">        StringBuilder sb = new StringBuilder();</span>
 <span class="fc" id="L46">        sb.append(&quot;select count(*) from &quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L47">        sb.append(introspectedTable</span>
-<span class="fc" id="L48">                .getAliasedFullyQualifiedTableNameAtRuntime());</span>
+                .getAliasedFullyQualifiedTableNameAtRuntime());
 <span class="fc" id="L49">        answer.addElement(new TextElement(sb.toString()));</span>
 
 <span class="fc" id="L51">        XmlElement includeElement = new XmlElement(&quot;include&quot;); //$NON-NLS-1$</span>
@@ -54,7 +54,7 @@ public class CountByExampleElementGenerator extends AbstractXmlElementGenerator 
 <span class="fc" id="L54">        sb.append('.');</span>
 <span class="fc" id="L55">        sb.append(introspectedTable.getExampleWhereClauseId());</span>
 <span class="fc" id="L56">        includeElement.addAttribute(new Attribute(&quot;refid&quot;, //$NON-NLS-1$</span>
-<span class="fc" id="L57">                sb.toString()));</span>
+                sb.toString()));
 
 <span class="fc" id="L59">        answer.addElement(includeElement);</span>
 

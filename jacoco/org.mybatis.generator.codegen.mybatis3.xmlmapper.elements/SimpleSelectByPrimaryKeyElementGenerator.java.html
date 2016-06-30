@@ -42,9 +42,9 @@ public class SimpleSelectByPrimaryKeyElementGenerator extends
 <span class="fc" id="L42">        XmlElement answer = new XmlElement(&quot;select&quot;); //$NON-NLS-1$</span>
 
 <span class="fc" id="L44">        answer.addAttribute(new Attribute(</span>
-<span class="fc" id="L45">                &quot;id&quot;, introspectedTable.getSelectByPrimaryKeyStatementId())); //$NON-NLS-1$</span>
+                &quot;id&quot;, introspectedTable.getSelectByPrimaryKeyStatementId())); //$NON-NLS-1$
 <span class="fc" id="L46">        answer.addAttribute(new Attribute(&quot;resultMap&quot;, //$NON-NLS-1$</span>
-<span class="fc" id="L47">                introspectedTable.getBaseResultMapId()));</span>
+                introspectedTable.getBaseResultMapId()));
 
         String parameterType;
         // PK fields are in the base class. If more than on PK
@@ -53,7 +53,7 @@ public class SimpleSelectByPrimaryKeyElementGenerator extends
 <span class="fc" id="L53">            parameterType = &quot;map&quot;; //$NON-NLS-1$</span>
         } else {
 <span class="fc" id="L55">            parameterType = introspectedTable.getPrimaryKeyColumns().get(0)</span>
-<span class="fc" id="L56">                    .getFullyQualifiedJavaType().toString();</span>
+                    .getFullyQualifiedJavaType().toString();
         }
 
 <span class="fc" id="L59">        answer.addAttribute(new Attribute(&quot;parameterType&quot;, //$NON-NLS-1$</span>
@@ -71,10 +71,10 @@ public class SimpleSelectByPrimaryKeyElementGenerator extends
         }
 
 <span class="fc" id="L73">        Iterator&lt;IntrospectedColumn&gt; iter = introspectedTable.getAllColumns()</span>
-<span class="fc" id="L74">                .iterator();</span>
+                .iterator();
 <span class="fc bfc" id="L75" title="All 2 branches covered.">        while (iter.hasNext()) {</span>
 <span class="fc" id="L76">            sb.append(MyBatis3FormattingUtilities.getSelectListPhrase(iter</span>
-<span class="fc" id="L77">                    .next()));</span>
+                    .next()));
 
 <span class="fc bfc" id="L79" title="All 2 branches covered.">            if (iter.hasNext()) {</span>
 <span class="fc" id="L80">                sb.append(&quot;, &quot;); //$NON-NLS-1$</span>
@@ -93,12 +93,12 @@ public class SimpleSelectByPrimaryKeyElementGenerator extends
 <span class="fc" id="L93">        sb.setLength(0);</span>
 <span class="fc" id="L94">        sb.append(&quot;from &quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L95">        sb.append(introspectedTable</span>
-<span class="fc" id="L96">                .getAliasedFullyQualifiedTableNameAtRuntime());</span>
+                .getAliasedFullyQualifiedTableNameAtRuntime());
 <span class="fc" id="L97">        answer.addElement(new TextElement(sb.toString()));</span>
 
 <span class="fc" id="L99">        boolean and = false;</span>
 <span class="fc bfc" id="L100" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable</span>
-<span class="fc" id="L101">                .getPrimaryKeyColumns()) {</span>
+                .getPrimaryKeyColumns()) {
 <span class="fc" id="L102">            sb.setLength(0);</span>
 <span class="fc bfc" id="L103" title="All 2 branches covered.">            if (and) {</span>
 <span class="fc" id="L104">                sb.append(&quot;  and &quot;); //$NON-NLS-1$</span>
@@ -108,10 +108,10 @@ public class SimpleSelectByPrimaryKeyElementGenerator extends
             }
 
 <span class="fc" id="L110">            sb.append(MyBatis3FormattingUtilities</span>
-<span class="fc" id="L111">                    .getAliasedEscapedColumnName(introspectedColumn));</span>
+                    .getAliasedEscapedColumnName(introspectedColumn));
 <span class="fc" id="L112">            sb.append(&quot; = &quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L113">            sb.append(MyBatis3FormattingUtilities</span>
-<span class="fc" id="L114">                    .getParameterClause(introspectedColumn));</span>
+                    .getParameterClause(introspectedColumn));
 <span class="fc" id="L115">            answer.addElement(new TextElement(sb.toString()));</span>
 <span class="fc" id="L116">        }</span>
 

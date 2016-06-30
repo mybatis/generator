@@ -29,9 +29,11 @@ import mbg.test.common.FirstName;
 import mbg.test.common.MyTime;
 import mbg.test.mb3.common.TestEnum;
 import mbg.test.mb3.generated.annotated.miscellaneous.mapper.EnumtestMapper;
+import mbg.test.mb3.generated.annotated.miscellaneous.mapper.GeneratedalwaystestMapper;
 import mbg.test.mb3.generated.annotated.miscellaneous.mapper.MyObjectMapper;
 import mbg.test.mb3.generated.annotated.miscellaneous.mapper.RegexrenameMapper;
 import mbg.test.mb3.generated.annotated.miscellaneous.model.Enumtest;
+import mbg.test.mb3.generated.annotated.miscellaneous.model.Generatedalwaystest;
 import mbg.test.mb3.generated.annotated.miscellaneous.model.MyObject;
 import mbg.test.mb3.generated.annotated.miscellaneous.model.MyObjectCriteria;
 import mbg.test.mb3.generated.annotated.miscellaneous.model.MyObjectKey;
@@ -1029,6 +1031,63 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
             Enumtest returnedRecord = returnedRecords.get(0);
             assertEquals(1, returnedRecord.getId().intValue());
             assertEquals(TestEnum.FRED, returnedRecord.getName());
+        } finally {
+            sqlSession.close();
+        }
+    }
+    
+    @Test
+    public void testGeneratedAlwaysInsert() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        try {
+            GeneratedalwaystestMapper mapper = sqlSession.getMapper(GeneratedalwaystestMapper.class);
+            
+            Generatedalwaystest gaTest = new Generatedalwaystest();
+            gaTest.setId(1);
+            gaTest.setIdPlus1(55);
+            gaTest.setIdPlus2(66);
+            int rows = mapper.insert(gaTest);
+            assertEquals(1, rows);
+            
+            List<Generatedalwaystest> returnedRecords = mapper.selectByExample(null);
+            assertEquals(1, returnedRecords.size());
+            
+            Generatedalwaystest returnedRecord = returnedRecords.get(0);
+            assertEquals(1, returnedRecord.getId().intValue());
+            assertEquals(2, returnedRecord.getIdPlus1().intValue());
+            assertEquals(3, returnedRecord.getIdPlus2().intValue());
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+    @Test
+    public void testGeneratedAlwaysUpdate() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        try {
+            GeneratedalwaystestMapper mapper = sqlSession.getMapper(GeneratedalwaystestMapper.class);
+            
+            Generatedalwaystest gaTest = new Generatedalwaystest();
+            gaTest.setId(1);
+            gaTest.setIdPlus1(55);
+            gaTest.setIdPlus2(66);
+            int rows = mapper.insert(gaTest);
+            assertEquals(1, rows);
+            
+            gaTest.setIdPlus1(77);
+            gaTest.setIdPlus2(88);
+            rows = mapper.updateByPrimaryKey(gaTest);
+            assertEquals(0, rows);  // shouldn't do anything as there are only generated always fields
+            
+            List<Generatedalwaystest> returnedRecords = mapper.selectByExample(null);
+            assertEquals(1, returnedRecords.size());
+            
+            Generatedalwaystest returnedRecord = returnedRecords.get(0);
+            assertEquals(1, returnedRecord.getId().intValue());
+            assertEquals(2, returnedRecord.getIdPlus1().intValue());
+            assertEquals(3, returnedRecord.getIdPlus2().intValue());
         } finally {
             sqlSession.close();
         }

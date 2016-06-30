@@ -28,6 +28,7 @@ drop table mbgtest.AnotherAwfulTable if exists;
 drop table CompoundKey if exists;
 drop schema mbgtest if exists;
 drop table EnumTest if exists;
+drop table GeneratedAlwaysTest if exists;
 drop sequence TestSequence if exists;
 
 create sequence TestSequence as integer start with 1;
@@ -146,6 +147,13 @@ create table CompoundKey (
 create table EnumTest (
   id int not null,
   name varchar(20) not null,
+  primary key(id)
+);
+
+create table GeneratedAlwaysTest (
+  id int not null,
+  id_plus1 int generated always as (id + 1),
+  id_plus2 int generated always as (id + 2),
   primary key(id)
 );
 

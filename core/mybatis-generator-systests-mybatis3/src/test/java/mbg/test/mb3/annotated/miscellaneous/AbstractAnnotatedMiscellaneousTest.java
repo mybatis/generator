@@ -17,6 +17,7 @@ package mbg.test.mb3.annotated.miscellaneous;
 
 import mbg.test.mb3.AbstractTest;
 import mbg.test.mb3.generated.annotated.miscellaneous.mapper.EnumtestMapper;
+import mbg.test.mb3.generated.annotated.miscellaneous.mapper.GeneratedalwaystestMapper;
 import mbg.test.mb3.generated.annotated.miscellaneous.mapper.MyObjectMapper;
 import mbg.test.mb3.generated.annotated.miscellaneous.mapper.RegexrenameMapper;
 
@@ -28,6 +29,7 @@ public abstract class AbstractAnnotatedMiscellaneousTest extends AbstractTest {
         sqlSessionFactory.getConfiguration().addMapper(EnumtestMapper.class);
         sqlSessionFactory.getConfiguration().addMapper(MyObjectMapper.class);
         sqlSessionFactory.getConfiguration().addMapper(RegexrenameMapper.class);
+        sqlSessionFactory.getConfiguration().addMapper(GeneratedalwaystestMapper.class);
     }
 
     @Override

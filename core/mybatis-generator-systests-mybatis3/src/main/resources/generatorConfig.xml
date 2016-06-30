@@ -493,6 +493,7 @@
     <table tableName="EnumTest">
       <columnOverride column="name" javaType="mbg.test.mb3.common.TestEnum"/>
     </table>
+    <table tableName="GeneratedAlwaysTest" />
   </context>
   
   <context id="miscellaneousTests_immutable_Annotated" targetRuntime="MyBatis3" defaultModelType="hierarchical">
@@ -711,6 +712,7 @@
     <table tableName="EnumTest">
       <columnOverride column="name" javaType="mbg.test.mb3.common.TestEnum"/>
     </table>
+    <table tableName="GeneratedAlwaysTest" />
   </context>
   
   <context id="miscellaneousTests_immutable_Mixed" targetRuntime="MyBatis3" defaultModelType="hierarchical">

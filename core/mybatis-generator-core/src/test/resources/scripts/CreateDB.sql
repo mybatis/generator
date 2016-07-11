@@ -160,7 +160,7 @@ create table GeneratedAlwaysTest (
   primary key(id)
 );
 
--- this table should not have any update statements generated
+-- this table should not have any update by primary key statements generated
 create table GeneratedAlwaysTestNoUpdates (
   id int not null,
   id_plus1 int generated always as (id + 1),

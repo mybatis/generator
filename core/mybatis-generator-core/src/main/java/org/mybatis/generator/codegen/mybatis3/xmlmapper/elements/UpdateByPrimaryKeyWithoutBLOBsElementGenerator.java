@@ -22,6 +22,7 @@ import org.mybatis.generator.api.dom.OutputUtilities;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
+import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 
 /**
@@ -61,9 +62,9 @@ public class UpdateByPrimaryKeyWithoutBLOBsElementGenerator extends
 
         Iterator<IntrospectedColumn> iter;
         if (isSimple) {
-            iter = introspectedTable.getNonPrimaryKeyColumns().iterator();
+            iter = ListUtilities.removeGeneratedAlwaysColumns(introspectedTable.getNonPrimaryKeyColumns()).iterator();
         } else {
-            iter = introspectedTable.getBaseColumns().iterator();
+            iter = ListUtilities.removeGeneratedAlwaysColumns(introspectedTable.getBaseColumns()).iterator();
         }
         while (iter.hasNext()) {
             IntrospectedColumn introspectedColumn = iter.next();

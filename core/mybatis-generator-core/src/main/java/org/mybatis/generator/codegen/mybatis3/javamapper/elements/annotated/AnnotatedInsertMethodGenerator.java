@@ -28,6 +28,7 @@ import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.InsertMethodGenerator;
 import org.mybatis.generator.config.GeneratedKey;
 
@@ -63,15 +64,11 @@ public class AnnotatedInsertMethodGenerator extends
         valuesClause.append("\"values ("); //$NON-NLS-1$
 
         List<String> valuesClauses = new ArrayList<String>();
-        Iterator<IntrospectedColumn> iter = introspectedTable.getAllColumns()
+        Iterator<IntrospectedColumn> iter = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(introspectedTable.getAllColumns())
                 .iterator();
         boolean hasFields = false;
         while (iter.hasNext()) {
             IntrospectedColumn introspectedColumn = iter.next();
-            if (introspectedColumn.isIdentity()) {
-                // cannot set values on identity fields
-                continue;
-            }
 
             insertClause.append(escapeStringForJava(getEscapedColumnName(introspectedColumn)));
             valuesClause.append(getParameterClause(introspectedColumn));

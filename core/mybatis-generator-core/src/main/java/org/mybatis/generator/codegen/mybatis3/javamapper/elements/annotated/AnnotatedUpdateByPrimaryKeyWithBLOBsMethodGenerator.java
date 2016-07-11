@@ -26,6 +26,7 @@ import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.UpdateByPrimaryKeyWithBLOBsMethodGenerator;
 
 /**
@@ -57,8 +58,9 @@ public class AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator extends
         javaIndent(sb, 1);
         sb.append("\"set "); //$NON-NLS-1$
 
-        Iterator<IntrospectedColumn> iter = introspectedTable
-                .getNonPrimaryKeyColumns().iterator();
+        Iterator<IntrospectedColumn> iter =
+                ListUtilities.removeGeneratedAlwaysColumns(introspectedTable.getNonPrimaryKeyColumns())
+                .iterator();
         while (iter.hasNext()) {
             IntrospectedColumn introspectedColumn = iter.next();
 

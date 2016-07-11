@@ -51,6 +51,12 @@ public class ColumnOverride extends PropertyHolder {
 
     /** The configured delimited column name. */
     private String configuredDelimitedColumnName;
+    
+    /**
+     * If true, the column is a GENERATED ALWAYS column which means
+     * that it should not be used in insert or update statements.
+     */
+    private boolean isGeneratedAlways;
 
     /**
      * Instantiates a new column override.
@@ -219,5 +225,13 @@ public class ColumnOverride extends PropertyHolder {
             errors.add(getString("ValidationError.22", //$NON-NLS-1$
                     tableName));
         }
+    }
+
+    public boolean isGeneratedAlways() {
+        return isGeneratedAlways;
+    }
+
+    public void setGeneratedAlways(boolean isGeneratedAlways) {
+        this.isGeneratedAlways = isGeneratedAlways;
     }
 }

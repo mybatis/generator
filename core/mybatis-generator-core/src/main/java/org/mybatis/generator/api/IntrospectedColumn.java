@@ -75,6 +75,11 @@ public class IntrospectedColumn {
      * true if the JDBC driver reports that this column is generated
      */
     protected boolean isGeneratedColumn;
+    
+    /**
+     * True if there is a column override that defines this column as GENERATED ALWAYS
+     */
+    protected boolean isGeneratedAlways;
 
     /**
      * Constructs a Column definition. This object holds all the information
@@ -326,5 +331,13 @@ public class IntrospectedColumn {
 
     public void setGeneratedColumn(boolean isGeneratedColumn) {
         this.isGeneratedColumn = isGeneratedColumn;
+    }
+
+    public boolean isGeneratedAlways() {
+        return isGeneratedAlways;
+    }
+
+    public void setGeneratedAlways(boolean isGeneratedAlways) {
+        this.isGeneratedAlways = isGeneratedAlways;
     }
 }

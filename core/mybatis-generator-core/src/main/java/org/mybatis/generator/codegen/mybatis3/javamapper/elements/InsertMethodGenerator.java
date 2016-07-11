@@ -31,7 +31,7 @@ import org.mybatis.generator.api.dom.java.Parameter;
  */
 public class InsertMethodGenerator extends AbstractJavaMapperMethodGenerator {
 
-    boolean isSimple;
+    private boolean isSimple;
 
     public InsertMethodGenerator(boolean isSimple) {
         super();

@@ -26,6 +26,11 @@ public class JavaDomUtils {
      * @param fqjt the type in question
      */
     public static String calculateTypeName(CompilationUnit compilationUnit, FullyQualifiedJavaType fqjt) {
+        
+        if (fqjt.getTypeArguments().size() > 0) {
+            return calculateParameterizedTypeName(compilationUnit, fqjt);
+        }
+        
         if(compilationUnit == null
                 || typeDoesNotRequireImport(fqjt)
                 || typeIsInSamePackage(compilationUnit, fqjt) 
@@ -34,6 +39,25 @@ public class JavaDomUtils {
         } else {
             return fqjt.getFullyQualifiedName();
         }
+    }
+    
+    private static String calculateParameterizedTypeName(CompilationUnit compilationUnit, FullyQualifiedJavaType fqjt) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(calculateTypeName(compilationUnit, new FullyQualifiedJavaType(fqjt.getFullyQualifiedNameWithoutTypeParameters())));
+        sb.append('<');
+        boolean comma = false;
+        for (FullyQualifiedJavaType ft : fqjt.getTypeArguments()) {
+            if (comma) {
+                sb.append(", ");
+            } else {
+                comma = true;
+            }
+            sb.append(calculateTypeName(compilationUnit, ft));
+        }
+        sb.append('>');
+        
+        return sb.toString();
+        
     }
     
     private static boolean typeDoesNotRequireImport(FullyQualifiedJavaType fullyQualifiedJavaType) {

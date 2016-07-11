@@ -636,4 +636,8 @@ public class FullyQualifiedJavaType implements
     public boolean isArray() {
         return isArray;
     }
+
+    public List<FullyQualifiedJavaType> getTypeArguments() {
+        return typeArguments;
+    }
 }

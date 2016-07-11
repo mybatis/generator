@@ -493,6 +493,14 @@
     <table tableName="EnumTest">
       <columnOverride column="name" javaType="mbg.test.mb3.common.TestEnum"/>
     </table>
+    <table tableName="GeneratedAlwaysTest" >
+      <columnOverride column="ID_PLUS1" isGeneratedAlways="true" />
+      <columnOverride column="ID_PLUS2" isGeneratedAlways="true" />
+    </table>
+    <table tableName="GeneratedAlwaysTestNoUpdates" >
+      <columnOverride column="ID_PLUS1" isGeneratedAlways="true" />
+      <columnOverride column="ID_PLUS2" isGeneratedAlways="true" />
+    </table>
   </context>
   
   <context id="miscellaneousTests_immutable_Annotated" targetRuntime="MyBatis3" defaultModelType="hierarchical">
@@ -710,6 +718,14 @@
     </table>
     <table tableName="EnumTest">
       <columnOverride column="name" javaType="mbg.test.mb3.common.TestEnum"/>
+    </table>
+    <table tableName="GeneratedAlwaysTest" >
+      <columnOverride column="ID_PLUS1" isGeneratedAlways="true" />
+      <columnOverride column="ID_PLUS2" isGeneratedAlways="true" />
+    </table>
+    <table tableName="GeneratedAlwaysTestNoUpdates" >
+      <columnOverride column="ID_PLUS1" isGeneratedAlways="true" />
+      <columnOverride column="ID_PLUS2" isGeneratedAlways="true" />
     </table>
   </context>
   

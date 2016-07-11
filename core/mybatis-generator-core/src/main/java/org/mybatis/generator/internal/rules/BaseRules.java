@@ -18,6 +18,7 @@ package org.mybatis.generator.internal.rules;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.IntrospectedTable.TargetRuntime;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.config.TableConfiguration;
 import org.mybatis.generator.internal.util.StringUtility;
@@ -120,6 +121,10 @@ public abstract class BaseRules implements Rules {
             return false;
         }
         
+        if (ListUtilities.removeGeneratedAlwaysColumns(introspectedTable.getBaseColumns()).isEmpty()) {
+            return false;
+        }
+        
         boolean rc = tableConfiguration.isUpdateByPrimaryKeyStatementEnabled()
                 && introspectedTable.hasPrimaryKeyColumns()
                 && introspectedTable.hasBaseColumns();
@@ -140,6 +145,9 @@ public abstract class BaseRules implements Rules {
             return false;
         }
         
+        if (ListUtilities.removeGeneratedAlwaysColumns(introspectedTable.getNonPrimaryKeyColumns()).isEmpty()) {
+            return false;
+        }
         boolean rc = tableConfiguration.isUpdateByPrimaryKeyStatementEnabled()
                 && introspectedTable.hasPrimaryKeyColumns()
                 && introspectedTable.hasBLOBColumns();
@@ -157,6 +165,10 @@ public abstract class BaseRules implements Rules {
      */
     public boolean generateUpdateByPrimaryKeySelective() {
         if (isModelOnly) {
+            return false;
+        }
+        
+        if (ListUtilities.removeGeneratedAlwaysColumns(introspectedTable.getNonPrimaryKeyColumns()).isEmpty()) {
             return false;
         }
         

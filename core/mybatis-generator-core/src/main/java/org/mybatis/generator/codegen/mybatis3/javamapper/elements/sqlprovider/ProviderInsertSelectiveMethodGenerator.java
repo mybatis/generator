@@ -29,6 +29,7 @@ import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 
 /**
  * 
@@ -79,11 +80,7 @@ public class ProviderInsertSelectiveMethodGenerator extends
                 builderPrefix,
     			escapeStringForJava(introspectedTable.getFullyQualifiedTableNameAtRuntime())));
     	
-        for (IntrospectedColumn introspectedColumn : introspectedTable.getAllColumns()) {
-            if (introspectedColumn.isIdentity()) {
-                // cannot set values on identity fields
-                continue;
-            }
+        for (IntrospectedColumn introspectedColumn : ListUtilities.removeIdentityAndGeneratedAlwaysColumns(introspectedTable.getAllColumns())) {
             
             method.addBodyLine(""); //$NON-NLS-1$
             if (!introspectedColumn.getFullyQualifiedJavaType().isPrimitive()

@@ -377,6 +377,7 @@ public class MyBatisGeneratorConfigurationParser {
         String typeHandler = attributes.getProperty("typeHandler"); //$NON-NLS-1$
         String delimitedColumnName = attributes
                 .getProperty("delimitedColumnName"); //$NON-NLS-1$
+        String isGeneratedAlways = attributes.getProperty("isGeneratedAlways"); //$NON-NLS-1$
 
         ColumnOverride co = new ColumnOverride(column);
 
@@ -398,6 +399,10 @@ public class MyBatisGeneratorConfigurationParser {
 
         if (stringHasValue(delimitedColumnName)) {
             co.setColumnNameDelimited(isTrue(delimitedColumnName));
+        }
+        
+        if (stringHasValue(isGeneratedAlways)) {
+            co.setGeneratedAlways(Boolean.parseBoolean(isGeneratedAlways));
         }
 
         NodeList nodeList = node.getChildNodes();

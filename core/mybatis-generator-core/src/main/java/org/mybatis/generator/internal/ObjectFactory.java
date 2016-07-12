@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.mybatis.generator.api.CommentGenerator;
+import org.mybatis.generator.api.ConnectionFactory;
 import org.mybatis.generator.api.FullyQualifiedTable;
 import org.mybatis.generator.api.JavaFormatter;
 import org.mybatis.generator.api.Plugin;
@@ -37,6 +38,7 @@ import org.mybatis.generator.codegen.ibatis2.IntrospectedTableIbatis2Java5Impl;
 import org.mybatis.generator.codegen.mybatis3.IntrospectedTableMyBatis3Impl;
 import org.mybatis.generator.codegen.mybatis3.IntrospectedTableMyBatis3SimpleImpl;
 import org.mybatis.generator.config.CommentGeneratorConfiguration;
+import org.mybatis.generator.config.ConnectionFactoryConfiguration;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.PluginConfiguration;
 import org.mybatis.generator.config.JavaTypeResolverConfiguration;
@@ -295,6 +297,28 @@ public class ObjectFactory {
         }
 
         answer = (CommentGenerator) createInternalObject(type);
+
+        if (config != null) {
+            answer.addConfigurationProperties(config.getProperties());
+        }
+
+        return answer;
+    }
+
+    public static ConnectionFactory createConnectionFactory(Context context) {
+
+        ConnectionFactoryConfiguration config = context
+                .getConnectionFactoryConfiguration();
+        ConnectionFactory answer;
+
+        String type;
+        if (config == null || config.getConfigurationType() == null) {
+            type = JDBCConnectionFactory.class.getName();
+        } else {
+            type = config.getConfigurationType();
+        }
+
+        answer = (ConnectionFactory) createInternalObject(type);
 
         if (config != null) {
             answer.addConfigurationProperties(config.getProperties());

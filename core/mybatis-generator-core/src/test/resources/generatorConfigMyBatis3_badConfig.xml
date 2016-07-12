@@ -26,9 +26,11 @@
   <context id="MyBatis3NoClient" targetRuntime="MyBatis3" defaultModelType="flat">
     <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
 
-    <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
-        connectionURL="jdbc:hsqldb:mem:aname"
-        userId="sa" />
+    <connectionFactory type="DEFAULT">
+      <property name="driverClass" value="org.hsqldb.jdbcDriver"/>
+      <property name="connectionURL" value="jdbc:hsqldb:mem:aname"/>
+      <property name="userId" value="sa"/>
+    </connectionFactory>
 
     <javaModelGenerator targetPackage="ibatortest.generated.flat.java5.model"
         targetProject="target/generated-sources/mybatis-generator/mybatis3">
@@ -142,7 +144,6 @@
 
     <commentGenerator>
       <property name="addRemarkComments" value="true"/>
-      <property name="dateFormat" value="yyyy-MM-dd"/>
     </commentGenerator>
 
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"

@@ -64,12 +64,21 @@
   The context element is used to describe a context for generating files, and the source
   tables.
 -->
-<!ELEMENT context (property*, plugin*, commentGenerator?, jdbcConnection, javaTypeResolver?,
+<!ELEMENT context (property*, plugin*, commentGenerator?, (connectionFactory | jdbcConnection), javaTypeResolver?,
                          javaModelGenerator, sqlMapGenerator?, javaClientGenerator?, table+)>
 <!ATTLIST context id ID #REQUIRED
   defaultModelType CDATA #IMPLIED
   targetRuntime CDATA #IMPLIED
   introspectedColumnImpl CDATA #IMPLIED>
+
+<!--
+  The connectionFactory element is used to describe the connection factory used
+  for connecting to the database for introspection.  Either connectionFacoty
+  or jdbcConnection must be specified, but not both.
+-->
+<!ELEMENT connectionFactory (property*)>
+<!ATTLIST connectionFactory
+  type CDATA #IMPLIED>
 
 <!--
   The jdbcConnection element is used to describe the JDBC connection that the generator

@@ -41,6 +41,7 @@ import org.mybatis.generator.config.ColumnOverride;
 import org.mybatis.generator.config.ColumnRenamingRule;
 import org.mybatis.generator.config.CommentGeneratorConfiguration;
 import org.mybatis.generator.config.Configuration;
+import org.mybatis.generator.config.ConnectionFactoryConfiguration;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.config.IgnoredColumn;
@@ -188,6 +189,8 @@ public class MyBatisGeneratorConfigurationParser {
                 parseCommentGenerator(context, childNode);
             } else if ("jdbcConnection".equals(childNode.getNodeName())) { //$NON-NLS-1$
                 parseJdbcConnection(context, childNode);
+            } else if ("connectionFactory".equals(childNode.getNodeName())) { //$NON-NLS-1$
+                parseConnectionFactory(context, childNode);
             } else if ("javaModelGenerator".equals(childNode.getNodeName())) { //$NON-NLS-1$
                 parseJavaModelGenerator(context, childNode);
             } else if ("javaTypeResolver".equals(childNode.getNodeName())) { //$NON-NLS-1$
@@ -691,6 +694,32 @@ public class MyBatisGeneratorConfigurationParser {
         }
     }
     
+    protected void parseConnectionFactory(Context context, Node node) {
+        ConnectionFactoryConfiguration connectionFactoryConfiguration = new ConnectionFactoryConfiguration();
+
+        context.setConnectionFactoryConfiguration(connectionFactoryConfiguration);
+
+        Properties attributes = parseAttributes(node);
+        String type = attributes.getProperty("type"); //$NON-NLS-1$
+
+        if (stringHasValue(type)) {
+            connectionFactoryConfiguration.setConfigurationType(type);
+        }
+
+        NodeList nodeList = node.getChildNodes();
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node childNode = nodeList.item(i);
+
+            if (childNode.getNodeType() != Node.ELEMENT_NODE) {
+                continue;
+            }
+
+            if ("property".equals(childNode.getNodeName())) { //$NON-NLS-1$
+                parseProperty(connectionFactoryConfiguration, childNode);
+            }
+        }
+    }
+
     /**
      * This method resolve a property from one of the three sources: system properties,
      * properties loaded from the <properties> configuration element, and

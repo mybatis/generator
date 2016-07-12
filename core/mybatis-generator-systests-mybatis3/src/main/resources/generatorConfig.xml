@@ -28,10 +28,12 @@
     <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin" />
     <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
 
-    <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
-        connectionURL="${database.url}"
-        userId="sa" />
-
+    <connectionFactory>
+      <property name="driverClass" value="org.hsqldb.jdbcDriver"/>
+      <property name="connectionURL" value="${database.url}"/>
+      <property name="userId" value="sa"/>
+    </connectionFactory>
+    
     <javaModelGenerator targetPackage="mbg.test.mb3.generated.flat.model" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
       <property name="trimStrings" value="true" />

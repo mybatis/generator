@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.mybatis.generator.api.CommentGenerator;
+import org.mybatis.generator.api.ConnectionFactory;
 import org.mybatis.generator.api.GeneratedJavaFile;
 import org.mybatis.generator.api.GeneratedXmlFile;
 import org.mybatis.generator.api.JavaFormatter;
@@ -37,9 +38,9 @@ import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.api.XmlFormatter;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.XmlElement;
+import org.mybatis.generator.internal.JDBCConnectionFactory;
 import org.mybatis.generator.internal.ObjectFactory;
 import org.mybatis.generator.internal.PluginAggregator;
-import org.mybatis.generator.internal.db.ConnectionFactory;
 import org.mybatis.generator.internal.db.DatabaseIntrospector;
 
 /**
@@ -54,6 +55,8 @@ public class Context extends PropertyHolder {
 
     /** The jdbc connection configuration. */
     private JDBCConnectionConfiguration jdbcConnectionConfiguration;
+    
+    private ConnectionFactoryConfiguration connectionFactoryConfiguration;
 
     /** The sql map generator configuration. */
     private SqlMapGeneratorConfiguration sqlMapGeneratorConfiguration;
@@ -105,7 +108,7 @@ public class Context extends PropertyHolder {
     
     /** The xml formatter. */
     private XmlFormatter xmlFormatter;
-
+    
     /**
      * Constructs a Context object.
      * 
@@ -203,12 +206,18 @@ public class Context extends PropertyHolder {
             errors.add(getString("ValidationError.16")); //$NON-NLS-1$
         }
 
-        if (jdbcConnectionConfiguration == null) {
+        if (jdbcConnectionConfiguration == null && connectionFactoryConfiguration == null) {
+            // must specify one
             errors.add(getString("ValidationError.10", id)); //$NON-NLS-1$
-        } else {
+        } else if (jdbcConnectionConfiguration != null && connectionFactoryConfiguration != null) {
+            // must not specify both
+            errors.add(getString("ValidationError.10", id)); //$NON-NLS-1$
+        } else if (jdbcConnectionConfiguration != null) {
             jdbcConnectionConfiguration.validate(errors);
+        } else {
+            connectionFactoryConfiguration.validate(errors);
         }
-
+            
         if (javaModelGeneratorConfiguration == null) {
             errors.add(getString("ValidationError.8", id)); //$NON-NLS-1$
         } else {
@@ -371,6 +380,10 @@ public class Context extends PropertyHolder {
 
         if (jdbcConnectionConfiguration != null) {
             xmlElement.addElement(jdbcConnectionConfiguration.toXmlElement());
+        }
+
+        if (connectionFactoryConfiguration != null) {
+            xmlElement.addElement(connectionFactoryConfiguration.toXmlElement());
         }
 
         if (javaTypeResolverConfiguration != null) {
@@ -730,10 +743,14 @@ public class Context extends PropertyHolder {
      *             the SQL exception
      */
     private Connection getConnection() throws SQLException {
-        Connection connection = ConnectionFactory.getInstance().getConnection(
-                jdbcConnectionConfiguration);
-
-        return connection;
+        ConnectionFactory connectionFactory;
+        if (jdbcConnectionConfiguration != null) {
+            connectionFactory = new JDBCConnectionFactory(jdbcConnectionConfiguration);
+        } else {
+            connectionFactory = ObjectFactory.createConnectionFactory(this);
+        }
+        
+        return connectionFactory.getConnection();
     }
 
     /**
@@ -760,5 +777,13 @@ public class Context extends PropertyHolder {
     public boolean autoDelimitKeywords() {
         return autoDelimitKeywords != null
                 && autoDelimitKeywords.booleanValue();
+    }
+
+    public ConnectionFactoryConfiguration getConnectionFactoryConfiguration() {
+        return connectionFactoryConfiguration;
+    }
+
+    public void setConnectionFactoryConfiguration(ConnectionFactoryConfiguration connectionFactoryConfiguration) {
+        this.connectionFactoryConfiguration = connectionFactoryConfiguration;
     }
 }

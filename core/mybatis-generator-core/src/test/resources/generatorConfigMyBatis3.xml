@@ -98,6 +98,10 @@
   <context id="MyBatis3MixedMapper" targetRuntime="MyBatis3" defaultModelType="flat">
     <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
 
+    <commentGenerator>
+      <property name="suppressDate" value="true"/>
+    </commentGenerator>
+
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
         connectionURL="jdbc:hsqldb:mem:aname"
         userId="sa" />
@@ -135,6 +139,11 @@
        for the ANNOTATEDMAPPER client -->
   <context id="MyBatis3AnnotatedMapper" targetRuntime="MyBatis3" defaultModelType="flat">
     <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
+
+    <commentGenerator>
+      <property name="addRemarkComments" value="true"/>
+      <property name="dateFormat" value="yyyy-MM-dd"/>
+    </commentGenerator>
 
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
         connectionURL="jdbc:hsqldb:mem:aname"

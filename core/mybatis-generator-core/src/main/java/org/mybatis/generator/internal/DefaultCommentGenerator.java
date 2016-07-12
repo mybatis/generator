@@ -17,6 +17,7 @@ package org.mybatis.generator.internal;
 
 import static org.mybatis.generator.internal.util.StringUtility.isTrue;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
 
@@ -56,6 +57,8 @@ public class DefaultCommentGenerator implements CommentGenerator {
     /** The addition of table remark's comments.
      * If suppressAllComments is true, this option is ignored*/
     private boolean addRemarkComments;
+    
+    private SimpleDateFormat dateFormat;
 
     /**
      * Instantiates a new default comment generator.
@@ -129,6 +132,11 @@ public class DefaultCommentGenerator implements CommentGenerator {
 
         addRemarkComments = isTrue(properties
                 .getProperty(PropertyRegistry.COMMENT_GENERATOR_ADD_REMARK_COMMENTS));
+        
+        String dateFormatString = properties.getProperty(PropertyRegistry.COMMENT_GENERATOR_DATE_FORMAT);
+        if (StringUtility.stringHasValue(dateFormatString)) {
+            dateFormat = new SimpleDateFormat(dateFormatString);
+        }
     }
 
     /**
@@ -167,6 +175,8 @@ public class DefaultCommentGenerator implements CommentGenerator {
     protected String getDateString() {
         if (suppressDate) {
             return null;
+        } else if (dateFormat != null) {
+            return dateFormat.format(new Date());
         } else {
             return new Date().toString();
         }

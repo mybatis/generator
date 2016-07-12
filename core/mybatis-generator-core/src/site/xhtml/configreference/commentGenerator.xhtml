@@ -142,7 +142,18 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
       </table>
       <p><b>Warning: </b> If suppressAllComments option is true, this option will be ignored.</p>
     </td>
-  </tr></table>
+  </tr>
+  <tr>
+    <td valign="top">dateFormat</td>
+    <td>A date format string to use when writing the date into the generated comment.  This string
+        will be used to construct a <code>java.text.SimpleDateFormat</code> object.  Any 
+        valid format string for that object can be specified here.  By default, the date string
+        will be from the <code>toString()</code> method on <code>java.util.Date</code>.
+      <p>Since 1.3.4</p>
+      <p><b>Warning: </b> If the suppressAllComments option is true, this option will be ignored.</p>
+      <p><b>Warning: </b> If the suppressDate option is true, this option will be ignored.</p>
+    </td>
+</table>
 
 <h2>Example</h2>
 <p>This element specifies that we do not want the timestamp added to any generated comment:</p>

@@ -80,6 +80,7 @@
 
     <commentGenerator>
       <property name="addRemarkComments" value="true"/>
+      <property name="dateFormat" value="yyyy-MM-dd"/>
     </commentGenerator>
 
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"

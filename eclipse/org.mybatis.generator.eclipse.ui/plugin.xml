@@ -49,4 +49,18 @@
             name="MyBatis Generator Configuration File">
       </wizard>
    </extension>
+   <extension
+         point="org.eclipse.wst.xml.core.catalogContributions">
+      <catalogContribution
+            id="default">
+         <public
+               publicId="-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+               uri="dtds/mybatis-generator-config_1_0.dtd">
+         </public>
+         <public
+               publicId="-//Apache Software Foundation//DTD Apache iBATIS Ibator Configuration 1.0//EN"
+               uri="dtds/ibator-config_1_0.dtd">
+         </public>
+      </catalogContribution>
+   </extension>
 </plugin>

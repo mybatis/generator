@@ -15,6 +15,7 @@
  */
 package org.mybatis.generator.plugins;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -675,16 +676,27 @@ public class LogicallyDeletePlugin extends PluginAdapter {
         sb.append("set "); //$NON-NLS-1$
 
         Iterator<IntrospectedColumn> iter;
+        
+        List<IntrospectedColumn> colList = null;
         if (isSimple) {
-            iter = introspectedTable.getNonPrimaryKeyColumns().iterator();
+        	colList = introspectedTable.getNonPrimaryKeyColumns();
         } else {
-            iter = introspectedTable.getBaseColumns().iterator();
+        	colList = introspectedTable.getBaseColumns();
         }
+        
+        List<IntrospectedColumn> copyList = new ArrayList<IntrospectedColumn>(colList);
+        for(IntrospectedColumn ic : copyList)
+        {
+        	if(MyBatis3FormattingUtilities
+                    .getEscapedColumnName(ic).equals("is_delete")){
+        		copyList.remove(ic);
+        		break;
+        	}
+        }
+        iter = copyList.iterator();
+      
         while (iter.hasNext()) {
             IntrospectedColumn introspectedColumn = iter.next();
-            
-            if(MyBatis3FormattingUtilities
-            .getEscapedColumnName(introspectedColumn).equals("is_delete")) continue;
 
             sb.append(MyBatis3FormattingUtilities
                     .getEscapedColumnName(introspectedColumn));
@@ -759,13 +771,24 @@ public class LogicallyDeletePlugin extends PluginAdapter {
         sb.setLength(0);
         sb.append("set "); //$NON-NLS-1$
 
-        Iterator<IntrospectedColumn> iter = introspectedTable
-                .getNonPrimaryKeyColumns().iterator();
+        Iterator<IntrospectedColumn> iter = null;
+        
+        List<IntrospectedColumn> colList = introspectedTable
+                .getNonPrimaryKeyColumns();
+        
+        List<IntrospectedColumn> copyList = new ArrayList<IntrospectedColumn>(colList);
+        for(IntrospectedColumn ic : copyList)
+        {
+        	if(MyBatis3FormattingUtilities
+                    .getEscapedColumnName(ic).equals("is_delete")){
+        		copyList.remove(ic);
+        		break;
+        	}
+        }
+        iter = copyList.iterator();
+        
         while (iter.hasNext()) {
             IntrospectedColumn introspectedColumn = iter.next();
-            
-            if(MyBatis3FormattingUtilities
-                    .getEscapedColumnName(introspectedColumn).equals("is_delete")) continue;
 
             sb.append(MyBatis3FormattingUtilities
                     .getEscapedColumnName(introspectedColumn));
@@ -840,11 +863,19 @@ public class LogicallyDeletePlugin extends PluginAdapter {
 
         XmlElement dynamicElement = new XmlElement("set"); //$NON-NLS-1$
         answer.addElement(dynamicElement);
+        
+        List<IntrospectedColumn> copyList = new ArrayList<IntrospectedColumn>(introspectedTable
+                .getNonPrimaryKeyColumns());
+        for(IntrospectedColumn ic : copyList)
+        {
+        	if(MyBatis3FormattingUtilities
+                    .getEscapedColumnName(ic).equals("is_delete")){
+        		copyList.remove(ic);
+        		break;
+        	}
+        }
 
-        for (IntrospectedColumn introspectedColumn : introspectedTable
-                .getNonPrimaryKeyColumns()) {
-            if(MyBatis3FormattingUtilities
-                    .getEscapedColumnName(introspectedColumn).equals("is_delete")) continue;
+        for (IntrospectedColumn introspectedColumn : copyList) {
         	
             XmlElement isNotNullElement = new XmlElement("if"); //$NON-NLS-1$
             sb.setLength(0);

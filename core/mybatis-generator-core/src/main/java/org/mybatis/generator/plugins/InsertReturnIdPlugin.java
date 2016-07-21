@@ -32,8 +32,8 @@ public class InsertReturnIdPlugin extends PluginAdapter {
     private void enableRetrunId(XmlElement element, IntrospectedTable introspectedTable)
     {
 		element.addAttribute(new Attribute("useGeneratedKeys", "true"));
-		element.addAttribute(new Attribute("keyProperty", MyBatis3FormattingUtilities
-                .getAliasedEscapedColumnName(introspectedTable.getPrimaryKeyColumns().get(0))));
+		element.addAttribute(new Attribute("keyProperty", 
+                introspectedTable.getPrimaryKeyColumns().get(0).getJavaProperty()));
     }
 
 	@Override

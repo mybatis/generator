@@ -92,6 +92,7 @@ public class LogicallyDeletePlugin extends PluginAdapter {
 	public boolean clientGenerated(Interface interfaze, TopLevelClass topLevelClass,
 			IntrospectedTable introspectedTable) {
 		// TODO Auto-generated method stub
+		addClientSelectByPrimaryKeyBulkElements(interfaze, introspectedTable);
 		addClientDeleteElements(interfaze, introspectedTable);
 		addClientDeleteBulkElements(interfaze, introspectedTable);
 		addClientEnableBulkElements(interfaze, introspectedTable);
@@ -110,6 +111,7 @@ public class LogicallyDeletePlugin extends PluginAdapter {
 	@Override
 	public boolean sqlMapDocumentGenerated(Document document, IntrospectedTable introspectedTable) {
 		// TODO Auto-generated method stub
+		addSqlMapSelectByPrimaryKeyBulkElements(document.getRootElement(), introspectedTable);
 		addSqlMapDeleteElements(document.getRootElement(), introspectedTable);
 		addSqlMapDeleteBulkElements(document.getRootElement(), introspectedTable);
 		addSqlMapEnableBulkElements(document.getRootElement(), introspectedTable);
@@ -123,7 +125,50 @@ public class LogicallyDeletePlugin extends PluginAdapter {
 		return super.sqlMapDocumentGenerated(document, introspectedTable);
 	}
 	
-	
+    public void addClientSelectByPrimaryKeyBulkElements(Interface interfaze, IntrospectedTable introspectedTable) {
+        Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
+        importedTypes.add(FullyQualifiedJavaType.getNewListInstance());
+
+        Method method = new Method();
+        method.setVisibility(JavaVisibility.PUBLIC);
+
+        FullyQualifiedJavaType returnType = FullyQualifiedJavaType
+                .getNewListInstance();
+        FullyQualifiedJavaType listType;
+        if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {
+            listType = new FullyQualifiedJavaType(introspectedTable
+                    .getRecordWithBLOBsType());
+        } else {
+            // the blob fields must be rolled up into the base class
+            listType = new FullyQualifiedJavaType(introspectedTable
+                    .getBaseRecordType());
+        }
+
+        importedTypes.add(listType);
+        returnType.addTypeArgument(listType);
+        method.setReturnType(returnType);
+        method.setName("selectByPrimaryKeyBulk");
+        
+        FullyQualifiedJavaType paramType = FullyQualifiedJavaType
+                .getNewListInstance();
+        importedTypes.add(paramType);
+
+        FullyQualifiedJavaType primaryType = new FullyQualifiedJavaType(
+                introspectedTable.getPrimaryKeyColumns().get(0).getFullyQualifiedJavaType().toString());
+        importedTypes.add(primaryType);
+        paramType.addTypeArgument(primaryType);
+        importedTypes.add(new FullyQualifiedJavaType(
+                "org.apache.ibatis.annotations.Param")); //$NON-NLS-1$
+        Parameter parameter = new Parameter(paramType, "ids");
+        parameter.addAnnotation("@Param(\"ids\")");
+        method.addParameter(parameter); //$NON-NLS-1$
+
+        context.getCommentGenerator().addGeneralMethodComment(method,
+                introspectedTable);
+        
+        interfaze.addImportedTypes(importedTypes);
+        interfaze.addMethod(method);
+    }
 
 	public void addClientDeleteElements(Interface interfaze, IntrospectedTable introspectedTable) {
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
@@ -406,6 +451,51 @@ public class LogicallyDeletePlugin extends PluginAdapter {
         interfaze.addMethod(method);
     }
 
+    public void addSqlMapSelectByPrimaryKeyBulkElements(XmlElement parentElement, IntrospectedTable introspectedTable) {
+
+        XmlElement answer = new XmlElement("select"); //$NON-NLS-1$
+    	
+        answer.addAttribute(new Attribute(
+                "id", "selectByPrimaryKeyBulk")); //$NON-NLS-1$
+        
+        if (introspectedTable.getRules().generateResultMapWithBLOBs()) {
+            answer.addAttribute(new Attribute("resultMap", //$NON-NLS-1$
+                    introspectedTable.getResultMapWithBLOBsId()));
+        } else {
+            answer.addAttribute(new Attribute("resultMap", //$NON-NLS-1$
+                    introspectedTable.getBaseResultMapId()));
+        }
+
+        context.getCommentGenerator().addComment(answer);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("select * from "); //$NON-NLS-1$
+        sb.append(introspectedTable.getFullyQualifiedTableNameAtRuntime());
+        answer.addElement(new TextElement(sb.toString()));
+        
+        sb.setLength(0);
+        sb.append("where ");
+        IntrospectedColumn primaryColumn = introspectedTable.getPrimaryKeyColumns().get(0);
+        sb.append(MyBatis3FormattingUtilities.getEscapedColumnName(primaryColumn));
+        sb.append(" in");
+        answer.addElement(new TextElement(sb.toString()));
+        
+        XmlElement dynamicElement = new XmlElement("foreach"); //$NON-NLS-1$
+        dynamicElement.addAttribute(new Attribute("item", "item"));
+        dynamicElement.addAttribute(new Attribute("index", "index"));
+        dynamicElement.addAttribute(new Attribute("collection", "ids"));
+        dynamicElement.addAttribute(new Attribute("open", "("));
+        dynamicElement.addAttribute(new Attribute("separator", ","));
+        dynamicElement.addAttribute(new Attribute("close", ")"));
+        answer.addElement(dynamicElement);
+        
+        dynamicElement.addElement(new TextElement("#{item}"));
+        
+        if(introspectedTable.getColumn("is_delete") != null){
+        	answer.addElement(new TextElement("and is_delete = 0"));
+        }	    	
+        parentElement.addElement(answer);    		
+    }
 	
     public void addSqlMapDeleteElements(XmlElement parentElement, IntrospectedTable introspectedTable) {
     	if(introspectedTable.getColumn("is_delete") != null){

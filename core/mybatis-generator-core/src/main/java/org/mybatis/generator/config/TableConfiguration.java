@@ -18,10 +18,8 @@ package org.mybatis.generator.config;
 import static org.mybatis.generator.internal.util.EqualsUtil.areEqual;
 import static org.mybatis.generator.internal.util.HashCodeUtil.hash;
 import static org.mybatis.generator.internal.util.HashCodeUtil.SEED;
+import static org.mybatis.generator.internal.util.StringUtility.*;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
-import static org.mybatis.generator.internal.util.StringUtility.composeFullyQualifiedTableName;
-import static org.mybatis.generator.internal.util.StringUtility.isTrue;
-import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -67,6 +65,10 @@ public class TableConfiguration extends PropertyHolder {
 
     /** The ignored columns. */
     private Map<IgnoredColumn, Boolean> ignoredColumns;
+    /**
+     * the required columns.
+     */
+    private Map<RequiredColumn,Boolean> requiredColumns;
 
     /** The generated key. */
     private GeneratedKey generatedKey;
@@ -110,6 +112,14 @@ public class TableConfiguration extends PropertyHolder {
     /** The is all column delimiting enabled. */
     private boolean isAllColumnDelimitingEnabled;
 
+    public Map<RequiredColumn, Boolean> getRequiredColumns() {
+        return requiredColumns;
+    }
+
+    public void setRequiredColumns(Map<RequiredColumn, Boolean> requiredColumns) {
+        this.requiredColumns = requiredColumns;
+    }
+
     /**
      * Instantiates a new table configuration.
      *
@@ -123,6 +133,8 @@ public class TableConfiguration extends PropertyHolder {
 
         columnOverrides = new ArrayList<ColumnOverride>();
         ignoredColumns = new HashMap<IgnoredColumn, Boolean>();
+        requiredColumns = new HashMap<RequiredColumn, Boolean>();
+
 
         insertStatementEnabled = true;
         selectByPrimaryKeyStatementEnabled = true;
@@ -241,6 +253,23 @@ public class TableConfiguration extends PropertyHolder {
     }
 
     /**
+     * check if this column is requried;
+     * @param columnName
+     * @return
+     */
+    public boolean isColumnRequired(String columnName){
+        for (Map.Entry<RequiredColumn, Boolean> entry : requiredColumns
+                .entrySet()) {
+            RequiredColumn rc = entry.getKey();
+            if (columnName.equalsIgnoreCase(rc.getColumnName())) {
+                entry.setValue(Boolean.TRUE);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Adds the ignored column.
      *
      * @param ignoredColumn
@@ -248,6 +277,10 @@ public class TableConfiguration extends PropertyHolder {
      */
     public void addIgnoredColumn(IgnoredColumn ignoredColumn) {
         ignoredColumns.put(ignoredColumn, Boolean.FALSE);
+    }
+
+    public void addRequiredColumn(RequiredColumn requiredColumn) {
+        requiredColumns.put(requiredColumn, Boolean.FALSE);
     }
 
     /**
@@ -701,6 +734,12 @@ public class TableConfiguration extends PropertyHolder {
             }
         }
 
+        if (requiredColumns.size() > 0) {
+            for (RequiredColumn requiredColumn : requiredColumns.keySet()) {
+                xmlElement.addElement(requiredColumn.toXmlElement());
+            }
+        }
+
         if (columnOverrides.size() > 0) {
             for (ColumnOverride columnOverride : columnOverrides) {
                 xmlElement.addElement(columnOverride.toXmlElement());
@@ -824,6 +863,12 @@ public class TableConfiguration extends PropertyHolder {
         for (IgnoredColumn ignoredColumn : ignoredColumns.keySet()) {
             ignoredColumn.validate(errors, fqTableName);
         }
+
+        for (RequiredColumn requiredColumn : requiredColumns.keySet()) {
+            requiredColumn.validate(errors, fqTableName);
+        }
+
+
     }
 
     /**

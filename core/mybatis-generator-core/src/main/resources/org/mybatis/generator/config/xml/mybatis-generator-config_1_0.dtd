@@ -155,7 +155,7 @@
   The table element is used to specify a database table that will be the source information
   for a set of generated objects.
 -->
-<!ELEMENT table (property*, generatedKey?, columnRenamingRule?, (columnOverride | ignoreColumn)*) >
+<!ELEMENT table (property*, generatedKey?, columnRenamingRule?, (columnOverride | ignoreColumn | requiredColumn)*) >
 <!ATTLIST table
   catalog CDATA #IMPLIED
   schema CDATA #IMPLIED
@@ -199,7 +199,10 @@
 <!ATTLIST ignoreColumn
   column CDATA #REQUIRED
   delimitedColumnName CDATA #IMPLIED>
+<!ELEMENT requiredColumn EMPTY>
 
+<!ATTLIST requiredColumn
+        column CDATA #REQUIRED>
 <!--
   The generatedKey element is used to identify a column in the table whose value
   is calculated - either from a sequence (or some other query), or as an identity column.

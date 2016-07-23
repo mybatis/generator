@@ -28,6 +28,7 @@
   <artifactId>mybatis-generator-core</artifactId>
   <packaging>jar</packaging>
   <name>MyBatis Generator Core</name>
+  <version>1.3.3_candy</version>
 
   <build>
     <!-- this build creates and installs an instrumented JAR file

@@ -225,8 +225,15 @@ public class DatabaseIntrospector {
                     tc.getSchema(), tc.getTableName()));
             return null;
         }
+        //if requriedcolumn configed,ignore columns will be ignored;
+        //add by candy lee;
+        if (tc.getRequiredColumns() != null && !tc.getRequiredColumns().isEmpty()) {
+            logger.warn("required columns is :"+tc.getRequiredColumns());
+            columns = processRequriedColumns(tc, columns);
+        } else {
+            removeIgnoredColumns(tc, columns);
+        }
 
-        removeIgnoredColumns(tc, columns);
         calculateExtraColumnInformation(tc, columns);
         applyColumnOverrides(tc, columns);
         calculateIdentityColumns(tc, columns);
@@ -296,6 +303,34 @@ public class DatabaseIntrospector {
                 }
             }
         }
+    }
+
+    /**
+     * process the required columns.
+     *
+     * @param tc
+     *            the tc
+     * @param columns
+     *            the columns
+     */
+    private Map<ActualTableName, List<IntrospectedColumn>> processRequriedColumns(TableConfiguration tc,
+                                      Map<ActualTableName, List<IntrospectedColumn>> columns) {
+        Map<ActualTableName, List<IntrospectedColumn>> _columns = new HashMap<ActualTableName, List<IntrospectedColumn>>();
+        for (Map.Entry<ActualTableName, List<IntrospectedColumn>> entry : columns
+                .entrySet()) {
+            Iterator<IntrospectedColumn> tableColumns = entry.getValue()
+                    .iterator();
+            List<IntrospectedColumn> _tableColumns = new ArrayList<IntrospectedColumn>();
+            while (tableColumns.hasNext()) {
+                IntrospectedColumn introspectedColumn = tableColumns.next();
+                if (tc.isColumnRequired(introspectedColumn.getActualColumnName())) {
+                    _tableColumns.add(introspectedColumn);
+                }
+            }
+            _columns.put(entry.getKey(),_tableColumns);
+        }
+        logger.warn("自定义日志生效:"+_columns);
+        return _columns;
     }
 
     /**

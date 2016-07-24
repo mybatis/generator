@@ -61,7 +61,7 @@ public abstract class JavaElement {
         this();
         this.annotations.addAll(original.annotations);
         this.isFinal = original.isFinal;
-        this.isStatic = original.isFinal;
+        this.isStatic = original.isStatic;
         this.javaDocLines.addAll(original.javaDocLines);
         this.visibility = original.visibility;
     }

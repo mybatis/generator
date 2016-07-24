@@ -45,22 +45,6 @@ public class MyBatisGeneratorTest {
             throw e;
         }
     }
-    @Test(expected=InvalidConfigurationException.class)
-    public void testGenerateMyBatis3candy() throws Exception {
-        List<String> warnings = new ArrayList<String>();
-        ConfigurationParser cp = new ConfigurationParser(warnings);
-        Configuration config = cp.parseConfiguration(this.getClass().getClassLoader().getResourceAsStream("generatorConfigMyBatis3_candy.xml"));
-
-        DefaultShellCallback shellCallback = new DefaultShellCallback(true);
-
-        try {
-            MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, shellCallback, warnings);
-            myBatisGenerator.generate(null, null, null, false);
-        } catch (InvalidConfigurationException e) {
-            assertEquals(2, e.getErrors().size());
-            throw e;
-        }
-    }
 
     @Test(expected=InvalidConfigurationException.class)
     public void testGenerateIbatis2() throws Exception {

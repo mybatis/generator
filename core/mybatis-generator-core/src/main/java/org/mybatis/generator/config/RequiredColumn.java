@@ -28,7 +28,7 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
  * The Class RequiredColumn.
  * To declare columns required;
  *
- * @author Canduy Lee
+ * @author Candy Lee
  */
 public class RequiredColumn {
 

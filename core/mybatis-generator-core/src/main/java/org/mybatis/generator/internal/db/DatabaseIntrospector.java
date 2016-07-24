@@ -228,8 +228,11 @@ public class DatabaseIntrospector {
         //if requriedcolumn configed,ignore columns will be ignored;
         //add by candy lee;
         if (tc.getRequiredColumns() != null && !tc.getRequiredColumns().isEmpty()) {
-            logger.warn("required columns is :"+tc.getRequiredColumns());
+//            logger.warn("required columns is :"+tc.getRequiredColumns());
             columns = processRequriedColumns(tc, columns);
+            if (tc.getIgnoredColumns()!=null&&tc.getIgnoredColumns().size()>0) {
+                logger.warn("配置的ignoreColumn将会被忽略....");
+            }
         } else {
             removeIgnoredColumns(tc, columns);
         }
@@ -329,7 +332,6 @@ public class DatabaseIntrospector {
             }
             _columns.put(entry.getKey(),_tableColumns);
         }
-        logger.warn("自定义日志生效:"+_columns);
         return _columns;
     }
 

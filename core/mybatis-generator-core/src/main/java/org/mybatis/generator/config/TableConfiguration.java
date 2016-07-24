@@ -909,4 +909,8 @@ public class TableConfiguration extends PropertyHolder {
             boolean isAllColumnDelimitingEnabled) {
         this.isAllColumnDelimitingEnabled = isAllColumnDelimitingEnabled;
     }
+
+    public Map<IgnoredColumn, Boolean> getIgnoredColumns() {
+        return ignoredColumns;
+    }
 }

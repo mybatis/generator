@@ -13,25 +13,22 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.generator.eclipse.ui.content;
+package org.mybatis.generator.eclipse.ui.launcher.tabs;
 
-import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.debug.core.ILaunchConfiguration;
 
-/**
- * This is the adapter class for files that are generator configuration files.
- * 
- * @author Jeff Butler
- */
-public class ConfigurationFileAdapter {
+public class LauncherUtils {
 
-    private IFile baseFile;
-    
-    public ConfigurationFileAdapter(IFile baseFile) {
-        super();
-        this.baseFile = baseFile;
-    }
-
-    public IFile getBaseFile() {
-        return baseFile;
+    public static String getTextOrBlank(ILaunchConfiguration configuration, String attribute) {
+        String text;
+        
+        try {
+            text = configuration.getAttribute(attribute, ""); //$NON-NLS-1$
+        } catch (CoreException e) {
+            text = ""; //$NON-NLS-1$
+        }
+        
+        return text;
     }
 }

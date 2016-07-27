@@ -13,25 +13,14 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.generator.eclipse.ui.content;
+package org.mybatis.generator.eclipse.ui.launcher.tabs;
 
-import org.eclipse.core.resources.IFile;
+import org.eclipse.jdt.debug.ui.launchConfigurations.JavaClasspathTab;
 
-/**
- * This is the adapter class for files that are generator configuration files.
- * 
- * @author Jeff Butler
- */
-public class ConfigurationFileAdapter {
+public class UserClasspathTab extends JavaClasspathTab {
 
-    private IFile baseFile;
-    
-    public ConfigurationFileAdapter(IFile baseFile) {
-        super();
-        this.baseFile = baseFile;
-    }
-
-    public IFile getBaseFile() {
-        return baseFile;
+    @Override
+    public boolean isShowBootpath() {
+        return false;
     }
 }

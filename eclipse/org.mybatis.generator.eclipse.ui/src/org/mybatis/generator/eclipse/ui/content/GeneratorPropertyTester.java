@@ -15,23 +15,24 @@
  */
 package org.mybatis.generator.eclipse.ui.content;
 
+import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.core.resources.IFile;
 
-/**
- * This is the adapter class for files that are generator configuration files.
- * 
- * @author Jeff Butler
- */
-public class ConfigurationFileAdapter {
+public class GeneratorPropertyTester extends PropertyTester {
 
-    private IFile baseFile;
-    
-    public ConfigurationFileAdapter(IFile baseFile) {
-        super();
-        this.baseFile = baseFile;
-    }
-
-    public IFile getBaseFile() {
-        return baseFile;
+    @Override
+    public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
+        if (!(receiver instanceof IFile)) {
+            return false;
+        }
+        
+        IFile file = (IFile) receiver;
+        
+        if ("isGeneratorConfigurationFile".equals(property)) { //$NON-NLS-1$
+            ConfigVerifyer verifyer = new ConfigVerifyer(file);
+            return verifyer.isConfigurationFile();
+        }
+        
+        return false;
     }
 }

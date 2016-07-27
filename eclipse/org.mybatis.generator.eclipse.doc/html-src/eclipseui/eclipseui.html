@@ -12,7 +12,8 @@
 <p>The MyBatis Generator user interface consists of these elements</p>
 <ul>
   <li>A new file wizard for creating configuration files</li>
-  <li>An popup menu action to run MyBatis Generator</li>
+  <li><b>Deprecated</b> A popup menu action to run MyBatis Generator</li>
+  <li>A custom launch configuration to run MyBatis Generator</li>
   <li>An integrated Ant Task</li>
   <li>The Generator DTDs are also added to the XML catalog</li>
 </ul>
@@ -26,11 +27,25 @@ but it is useful for setting up a new configuration file.</p>
 "MyBatis Generator Configuration File" from the "MyBatis Generator" category.</p>
 
 <h2>Run MyBatis Generator Action</h2>
-<p>The run action is the heart of the Eclipse user interface.  The plug-in will
+<p><b>Important Note:</b> the popup menu item is deprecated and will be removed in 
+the next version of the Eclipse user interface.</p>
+<p style="text-decoration: line-through;">The run action is the heart of the Eclipse user interface.  The plug-in will
    add a popup menu option called "Generate MyBatis/iBATIS Artifacts" to any XML
    file that has the root element of "generatorConfiguration" or "ibatorConfiguration".
    To run MyBatis Generator, right click on a configuration file in any view and
    select the menu option.</p>
+
+<h2>MyBatis Generator Launch Configuration</h2>
+<p>The launch configuration is the heart of the Eclipse user interface.  The plug-in will
+   enable the "Run As&gt;Run MyBatis Generator" option on any XML
+   file that has the root element of "generatorConfiguration" or "ibatorConfiguration".
+   To run MyBatis Generator, right click on a configuration file in any view and
+   select the menu option.</p>
+<p>The launch configuration has the ability to run a SQL script before running the
+generator.  To access this functionality, you can edit the launch configuration
+with the normal Eclipse launch support.  You can also add entries to the generator's
+classpath through the same launch configuration support.  This should make it easier to
+access JDBC drivers, or to access your own generator plugins. </p>
 
 <h2>Integrated Ant Task</h2>
 <p>See the page <a href="usingAnt.html">Using the Integrated Ant Task</a> for more

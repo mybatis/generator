@@ -49,8 +49,9 @@ Releasing the Eclipse Feature:
 -------------------------------------------------------------------------------
 Final Details:
 
-1. Make a Github Release that contains the Bundle and the Zipped Eclipse Site
-2. Send announcement to mailing list
-3. Write a blog post
-4. Update the version numbers in all the Eclipse projects (pom.xml in every
+1. If the DTD has changed, then update it at https://github.com/mybatis/mybatis.github.io
+2. Make a Github Release that contains the Bundle and the Zipped Eclipse Site
+3. Send announcement to mailing list
+4. Write a blog post
+5. Update the version numbers in all the Eclipse projects (pom.xml in every
    project and MANIFEST.MF in most projects)

@@ -106,7 +106,6 @@ public class GeneratorLaunchShortcut implements ILaunchShortcut {
             }
         }
 
-        // should only be 1 or none
         ILaunchConfiguration config;
         if (candidateConfigs.size() > 1) {
             config = chooseConfiguration(candidateConfigs);

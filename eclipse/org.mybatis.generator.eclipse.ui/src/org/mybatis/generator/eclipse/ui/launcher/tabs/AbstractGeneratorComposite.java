@@ -156,10 +156,6 @@ public abstract class AbstractGeneratorComposite extends Composite implements Ge
     }
 
     protected IPath chooseFileFromWorkspace() {
-        // look at class
-        // org.eclipse.wst.xsl.internal.debug.ui.ResourceSelectionBlock
-        // in org.eclipse.wst.xsl.debug.ui plugin for guidance
-
         ElementTreeSelectionDialog esd = new ElementTreeSelectionDialog(getShell(), new WorkbenchLabelProvider(),
                 new WorkbenchContentProvider());
         esd.setTitle(getDialogTitle());

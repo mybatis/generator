@@ -30,6 +30,7 @@ drop schema mbgtest if exists;
 drop table EnumTest if exists;
 drop table GeneratedAlwaysTest if exists;
 drop table GeneratedAlwaysTestNoUpdates if exists;
+drop table IgnoreManyColumns if exists;
 drop sequence TestSequence if exists;
 
 create sequence TestSequence as integer start with 1;
@@ -166,6 +167,25 @@ create table GeneratedAlwaysTestNoUpdates (
   id_plus1 int generated always as (id + 1),
   id_plus2 int generated always as (id + 2),
   primary key(id)
+);
+
+create table IgnoreManyColumns (
+  col01 int not null,
+  col02 int null,
+  col03 int null,
+  col04 int null,
+  col05 int null,
+  col06 int null,
+  col07 int null,
+  col08 int null,
+  col09 int null,
+  col10 int null,
+  col11 int null,
+  col12 int null,
+  col13 int null,
+  col14 int null,
+  col15 int null,
+  primary key(col01)
 );
 
 comment on table EnumTest is 'This is a comment for the EnumTest table';

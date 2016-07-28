@@ -50,6 +50,7 @@
     <mapper resource="mbg/test/mb3/generated/miscellaneous/xml/EnumtestMapper.xml" />
     <mapper resource="mbg/test/mb3/generated/miscellaneous/xml/GeneratedalwaystestMapper.xml" />
     <mapper resource="mbg/test/mb3/generated/miscellaneous/xml/GeneratedalwaystestnoupdatesMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/miscellaneous/xml/IgnoremanycolumnsMapper.xml" />
   </mappers>
 
 </configuration>

@@ -164,7 +164,7 @@
   The table element is used to specify a database table that will be the source information
   for a set of generated objects.
 -->
-<!ELEMENT table (property*, generatedKey?, columnRenamingRule?, (columnOverride | ignoreColumn)*) >
+<!ELEMENT table (property*, generatedKey?, columnRenamingRule?, (columnOverride | ignoreColumn | ignoreColumnsByRegex)*) >
 <!ATTLIST table
   catalog CDATA #IMPLIED
   schema CDATA #IMPLIED
@@ -209,6 +209,25 @@
 -->
 <!ELEMENT ignoreColumn EMPTY>
 <!ATTLIST ignoreColumn
+  column CDATA #REQUIRED
+  delimitedColumnName CDATA #IMPLIED>
+
+<!--
+  The ignoreColumnsByRegex element is used to identify a column pattern that should be ignored.
+  No generated SQL will refer to the column, and no property will be generated
+  for the column in the model objects.
+-->
+<!ELEMENT ignoreColumnsByRegex (except*)>
+<!ATTLIST ignoreColumnsByRegex
+  pattern CDATA #REQUIRED>
+
+<!--
+  The except element is used to identify an exception to the ignoreColumnByRegex rule.
+  If a column matches the regex rule, but also matches the exception, then the
+  column will be included in the generated objects.
+-->
+<!ELEMENT except EMPTY>
+<!ATTLIST except
   column CDATA #REQUIRED
   delimitedColumnName CDATA #IMPLIED>
 

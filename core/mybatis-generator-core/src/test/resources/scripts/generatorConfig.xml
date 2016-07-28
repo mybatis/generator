@@ -229,6 +229,12 @@
     <table tableName="EnumTest">
       <columnOverride column="name" javaType="mbg.test.mb3.common.TestEnum"/>
     </table>
+    <table tableName="IgnoreManyColumns">
+      <ignoreColumnsByRegex pattern="col.*">
+        <except column="col01"/>
+        <except column="col13"/>
+      </ignoreColumnsByRegex>
+    </table>
   </context>
   
   <context id="miscellaneousTests_NoClient" targetRuntime="MyBatis3">

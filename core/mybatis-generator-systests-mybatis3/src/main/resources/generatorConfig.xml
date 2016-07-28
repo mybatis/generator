@@ -237,6 +237,12 @@
       <columnOverride column="ID_PLUS1" isGeneratedAlways="true" />
       <columnOverride column="ID_PLUS2" isGeneratedAlways="true" />
     </table>
+    <table tableName="IgnoreManyColumns">
+      <ignoreColumnsByRegex pattern="(?i)col.*">
+        <except column="col01"/>
+        <except column="col13"/>
+      </ignoreColumnsByRegex>
+    </table>
   </context>
   
   <context id="miscellaneousTests_NoClient" targetRuntime="MyBatis3">

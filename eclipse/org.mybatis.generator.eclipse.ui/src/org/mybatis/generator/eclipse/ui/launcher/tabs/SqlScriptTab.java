@@ -61,4 +61,9 @@ public class SqlScriptTab extends AbstractLaunchConfigurationTab {
     public boolean isValid(ILaunchConfiguration launchConfig) {
         return sqlScriptComposite.isValid();
     }
+
+    @Override
+    public void setErrorMessage(String message) {
+        super.setErrorMessage(message);
+    }
 }

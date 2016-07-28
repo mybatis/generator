@@ -43,6 +43,8 @@
       <topic href="html/javadoc/org/mybatis/generator/eclipse/ui/actions/package-summary.html" label="org.mybatis.generator.eclipse.ui.actions" />
       <topic href="html/javadoc/org/mybatis/generator/eclipse/ui/ant/package-summary.html" label="org.mybatis.generator.eclipse.ui.ant" />
       <topic href="html/javadoc/org/mybatis/generator/eclipse/ui/content/package-summary.html" label="org.mybatis.generator.eclipse.ui.content" />
+      <topic href="html/javadoc/org/mybatis/generator/eclipse/ui/launcher/package-summary.html" label="org.mybatis.generator.eclipse.ui.launcher" />
+      <topic href="html/javadoc/org/mybatis/generator/eclipse/ui/launcher/tabs/package-summary.html" label="org.mybatis.generator.eclipse.ui.launcher.tabs" />
       <topic href="html/javadoc/org/mybatis/generator/eclipse/ui/wizards/package-summary.html" label="org.mybatis.generator.eclipse.ui.wizards" />
    </topic>
    

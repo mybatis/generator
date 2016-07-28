@@ -45,7 +45,7 @@
 
   <mappers>
     <mapper resource="mbg/test/mb3/generated/miscellaneous/xml/AnotherawfultableMapper.xml" />
-    <mapper resource="mbg/test/mb3/generated/miscellaneous/xml/MyObjectMapper.xml" />
+    <mapper resource="mbg/test/mb3/generated/miscellaneous/xml/MyMapper.xml" />
     <mapper resource="mbg/test/mb3/generated/miscellaneous/xml/RegexrenameMapper.xml" />
     <mapper resource="mbg/test/mb3/generated/miscellaneous/xml/EnumtestMapper.xml" />
     <mapper resource="mbg/test/mb3/generated/miscellaneous/xml/GeneratedalwaystestMapper.xml" />

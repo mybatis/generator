@@ -27,11 +27,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+import org.junit.Test;
+
 import mbg.test.common.FirstName;
 import mbg.test.common.MyTime;
 import mbg.test.mb3.common.TestEnum;
 import mbg.test.mb3.generated.miscellaneous.mapper.EnumtestMapper;
-import mbg.test.mb3.generated.miscellaneous.mapper.MyObjectMapper;
+import mbg.test.mb3.generated.miscellaneous.mapper.MyMapper;
 import mbg.test.mb3.generated.miscellaneous.mapper.RegexrenameMapper;
 import mbg.test.mb3.generated.miscellaneous.model.Enumtest;
 import mbg.test.mb3.generated.miscellaneous.model.MyObject;
@@ -39,9 +42,6 @@ import mbg.test.mb3.generated.miscellaneous.model.MyObjectCriteria;
 import mbg.test.mb3.generated.miscellaneous.model.MyObjectKey;
 import mbg.test.mb3.generated.miscellaneous.model.Regexrename;
 import mbg.test.mb3.generated.miscellaneous.model.mbgtest.Anotherawfultable;
-
-import org.apache.ibatis.session.SqlSession;
-import org.junit.Test;
 
 /**
  * @author Jeff Butler
@@ -54,7 +54,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
         try {
-            MyObjectMapper mapper = sqlSession.getMapper(MyObjectMapper.class);
+            MyMapper mapper = sqlSession.getMapper(MyMapper.class);
             MyObject record = new MyObject();
             record.setStartDate(new Date());
             record.setDecimal100field(10L);
@@ -108,7 +108,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
         try {
-            MyObjectMapper mapper = sqlSession.getMapper(MyObjectMapper.class);
+            MyMapper mapper = sqlSession.getMapper(MyMapper.class);
             MyObject record = new MyObject();
             FirstName fn = new FirstName();
             fn.setValue("Jeff");
@@ -147,7 +147,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
         try {
-            MyObjectMapper mapper = sqlSession.getMapper(MyObjectMapper.class);
+            MyMapper mapper = sqlSession.getMapper(MyMapper.class);
             MyObject record = new MyObject();
             FirstName fn = new FirstName();
             fn.setValue("Jeff");
@@ -206,7 +206,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
         try {
-            MyObjectMapper mapper = sqlSession.getMapper(MyObjectMapper.class);
+            MyMapper mapper = sqlSession.getMapper(MyMapper.class);
             MyObject record = new MyObject();
             FirstName fn = new FirstName();
             fn.setValue("Jeff");
@@ -237,7 +237,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
         try {
-            MyObjectMapper mapper = sqlSession.getMapper(MyObjectMapper.class);
+            MyMapper mapper = sqlSession.getMapper(MyMapper.class);
             MyObject record = new MyObject();
             FirstName fn = new FirstName();
             fn.setValue("Jeff");
@@ -279,7 +279,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
         try {
-            MyObjectMapper mapper = sqlSession.getMapper(MyObjectMapper.class);
+            MyMapper mapper = sqlSession.getMapper(MyMapper.class);
             MyObject record = new MyObject();
             FirstName fn = new FirstName();
             fn.setValue("Jeff");
@@ -318,7 +318,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
         try {
-            MyObjectMapper mapper = sqlSession.getMapper(MyObjectMapper.class);
+            MyMapper mapper = sqlSession.getMapper(MyMapper.class);
             MyObject record = new MyObject();
             FirstName fn = new FirstName();
             fn.setValue("Fred");
@@ -399,7 +399,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
         try {
-            MyObjectMapper mapper = sqlSession.getMapper(MyObjectMapper.class);
+            MyMapper mapper = sqlSession.getMapper(MyMapper.class);
             MyObject record = new MyObject();
             FirstName fn = new FirstName();
             fn.setValue("Fred");
@@ -480,7 +480,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
         try {
-            MyObjectMapper mapper = sqlSession.getMapper(MyObjectMapper.class);
+            MyMapper mapper = sqlSession.getMapper(MyMapper.class);
             MyObject record = new MyObject();
             FirstName fn = new FirstName();
             fn.setValue("Fred");
@@ -562,7 +562,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
         try {
-            MyObjectMapper mapper = sqlSession.getMapper(MyObjectMapper.class);
+            MyMapper mapper = sqlSession.getMapper(MyMapper.class);
             MyObject record = new MyObject();
             FirstName fn = new FirstName();
             fn.setValue("Fred");
@@ -656,7 +656,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
         try {
-            MyObjectMapper mapper = sqlSession.getMapper(MyObjectMapper.class);
+            MyMapper mapper = sqlSession.getMapper(MyMapper.class);
             MyObject record = new MyObject();
             FirstName fn = new FirstName();
             fn.setValue("Fred");
@@ -727,7 +727,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
         try {
-            MyObjectMapper mapper = sqlSession.getMapper(MyObjectMapper.class);
+            MyMapper mapper = sqlSession.getMapper(MyMapper.class);
             MyObject record = new MyObject();
             record.setStartDate(new Date());
             record.setDecimal100field(10L);
@@ -785,7 +785,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
         try {
-            MyObjectMapper mapper = sqlSession.getMapper(MyObjectMapper.class);
+            MyMapper mapper = sqlSession.getMapper(MyMapper.class);
             MyObject record = new MyObject();
             FirstName fn = new FirstName();
             fn.setValue("Jeff");
@@ -834,7 +834,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
         try {
-            MyObjectMapper mapper = sqlSession.getMapper(MyObjectMapper.class);
+            MyMapper mapper = sqlSession.getMapper(MyMapper.class);
             MyObject record = new MyObject();
             FirstName fn = new FirstName();
             fn.setValue("Jeff");
@@ -962,7 +962,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
         try {
-            MyObjectMapper mapper = sqlSession.getMapper(MyObjectMapper.class);
+            MyMapper mapper = sqlSession.getMapper(MyMapper.class);
             MyObject record = new MyObject();
             FirstName fn = new FirstName();
             fn.setValue("Fred");

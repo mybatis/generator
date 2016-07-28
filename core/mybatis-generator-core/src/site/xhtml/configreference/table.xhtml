@@ -131,6 +131,31 @@ identifiers in upper case.  In this instance, you should specify the attribute
     </td>
   </tr>
   <tr>
+    <td valign="top">mapperName</td>
+    <td>The name of the MyBatis3 generated mapper class and XML file.
+        If not specified, the name will be whatever the domain object name is, plus the
+        word &quot;Mapper&quot;.
+        <p>You can specify a package fragment in the mapper name.  For example,
+           if you specify <code>foo.BarMapper</code> then the mapper will be
+           <code>BarMapper</code> and package <code>foo</code> will be appended
+           to the target package specified in the generator configurations.</p>
+        <p>Since version 1.3.4</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">sqlProviderName</td>
+    <td>The name of the MyBatis3 generated SQL provider class (which may or may not be generated
+        based on the configuration).
+        If not specified, the name will be whatever the domain object name is, plus the
+        word &quot;SqlProvider&quot;.
+        <p>You can specify a package fragment in the SQL provider name.  For example,
+           if you specify <code>foo.BarSqlProvider</code> then the SQL provider will be
+           <code>BarSqlProvider</code> and package <code>foo</code> will be appended
+           to the target package specified in the generator configurations.</p>
+        <p>Since version 1.3.4</p>
+    </td>
+  </tr>
+  <tr>
     <td valign="top">enableInsert</td>
     <td>Signifies whether an insert statement should be generated.
     <p>The default is <i>true</i>.</p></td>

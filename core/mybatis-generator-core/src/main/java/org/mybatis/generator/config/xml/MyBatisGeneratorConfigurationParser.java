@@ -265,6 +265,9 @@ public class MyBatisGeneratorConfigurationParser {
         String delimitIdentifiers = attributes
                 .getProperty("delimitIdentifiers"); //$NON-NLS-1$
         String delimitAllColumns = attributes.getProperty("delimitAllColumns"); //$NON-NLS-1$
+        
+        String mapperName = attributes.getProperty("mapperName"); //$NON-NLS-1$
+        String sqlProviderName = attributes.getProperty("sqlProviderName"); //$NON-NLS-1$
 
         if (stringHasValue(catalog)) {
             tc.setCatalog(catalog);
@@ -348,7 +351,15 @@ public class MyBatisGeneratorConfigurationParser {
         if (stringHasValue(delimitAllColumns)) {
             tc.setAllColumnDelimitingEnabled(isTrue(delimitAllColumns));
         }
+        
+        if (stringHasValue(mapperName)) {
+            tc.setMapperName(mapperName);
+        }
 
+        if (stringHasValue(sqlProviderName)) {
+            tc.setSqlProviderName(sqlProviderName);
+        }
+        
         NodeList nodeList = node.getChildNodes();
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node childNode = nodeList.item(i);

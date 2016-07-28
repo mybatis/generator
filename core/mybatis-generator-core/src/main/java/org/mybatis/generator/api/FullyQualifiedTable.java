@@ -321,14 +321,18 @@ public class FullyQualifiedTable {
     }
 
     /**
-     * Calculates a Java package fragment based on the table catalog and schema. If qualifiers are ignored, then this
-     * method will return an empty string
+     * Calculates a Java package fragment based on the table catalog and schema.
+     * If qualifiers are ignored, then this method will return an empty string.
+     * 
+     * This method is used for determining the sub package for Java client and 
+     * SQL map (XML) objects.  It ignores any sub-package added to the
+     * domain object name in the table configuration.
      *
      * @param isSubPackagesEnabled
      *            the is sub packages enabled
      * @return the subpackage for this table
      */
-    public String getSubPackage(boolean isSubPackagesEnabled) {
+    public String getSubPackageForClientOrSqlMap(boolean isSubPackagesEnabled) {
         StringBuilder sb = new StringBuilder();
         if (!ignoreQualifiersAtRuntime && isSubPackagesEnabled) {
             if (stringHasValue(runtimeCatalog)) {
@@ -348,12 +352,31 @@ public class FullyQualifiedTable {
             }
         }
         
+        // TODO - strip characters that are not valid in package names
+        return sb.toString();
+    }
+
+    /**
+     * Calculates a Java package fragment based on the table catalog and schema.
+     * If qualifiers are ignored, then this method will return an empty string.
+     * 
+     * This method is used for determining the sub package for Java model objects only.
+     * It takes into account the possibility that a sub-package was added to the
+     * domain object name in the table configuration.
+     *
+     * @param isSubPackagesEnabled
+     *            the is sub packages enabled
+     * @return the subpackage for this table
+     */
+    public String getSubPackageForModel(boolean isSubPackagesEnabled) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getSubPackageForClientOrSqlMap(isSubPackagesEnabled));
+        
         if (stringHasValue(domainObjectSubPackage)) {
             sb.append('.');
             sb.append(domainObjectSubPackage);
         }
 
-        // TODO - strip characters that are not valid in package names
         return sb.toString();
     }
 

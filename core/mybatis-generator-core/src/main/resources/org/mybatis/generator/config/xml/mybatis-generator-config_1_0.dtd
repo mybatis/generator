@@ -171,6 +171,8 @@
   tableName CDATA #REQUIRED
   alias CDATA #IMPLIED
   domainObjectName CDATA #IMPLIED
+  mapperName CDATA #IMPLIED
+  sqlProviderName CDATA #IMPLIED
   enableInsert CDATA #IMPLIED
   enableSelectByPrimaryKey CDATA #IMPLIED
   enableSelectByExample CDATA #IMPLIED

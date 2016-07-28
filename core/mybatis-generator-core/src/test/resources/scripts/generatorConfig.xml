@@ -102,7 +102,8 @@
       <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
 
-    <table tableName="FieldsOnly" domainObjectName="subpackage.Fieldsonly" />
+    <table tableName="FieldsOnly" domainObjectName="subpackage.FieldsonlyEntity"
+     mapperName="subpackage.FieldsOnlyMapper" />
     <table tableName="PKOnly" />
     <table tableName="PKFields" alias="B" >
       <columnOverride column="wierd$Field" delimitedColumnName="true"/>

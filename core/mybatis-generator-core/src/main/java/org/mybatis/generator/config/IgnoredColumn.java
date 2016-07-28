@@ -32,13 +32,13 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
 public class IgnoredColumn {
 
     /** The column name. */
-    private String columnName;
+    protected String columnName;
 
     /** The is column name delimited. */
     private boolean isColumnNameDelimited;
 
     /** The configured delimited column name. */
-    private String configuredDelimitedColumnName;
+    protected String configuredDelimitedColumnName;
 
     /**
      * Instantiates a new ignored column.
@@ -128,6 +128,14 @@ public class IgnoredColumn {
         if (!stringHasValue(columnName)) {
             errors.add(getString("ValidationError.21", //$NON-NLS-1$
                     tableName));
+        }
+    }
+    
+    public boolean matches(String columnName) {
+        if (isColumnNameDelimited) {
+            return this.columnName.equals(columnName);
+        } else {
+            return this.columnName.equalsIgnoreCase(columnName);
         }
     }
 }

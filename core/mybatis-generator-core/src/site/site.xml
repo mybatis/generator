@@ -47,9 +47,11 @@
         <item href="configreference/commentGenerator.html" name="&amp;lt;commentGenerator&amp;gt;" />
         <item href="configreference/connectionFactory.html" name="&amp;lt;connectionFactory&amp;gt;" />
         <item href="configreference/context.html" name="&amp;lt;context&amp;gt;" />
+        <item href="configreference/except.html" name="&amp;lt;except&amp;gt;" />
         <item href="configreference/generatedKey.html" name="&amp;lt;generatedKey&amp;gt;" />
         <item href="configreference/generatorConfiguration.html" name="&amp;lt;generatorConfiguration&amp;gt;" />
         <item href="configreference/ignoreColumn.html" name="&amp;lt;ignoreColumn&amp;gt;" />
+        <item href="configreference/ignoreColumnsByRegex.html" name="&amp;lt;ignoreColumnsByRegex&amp;gt;" />
         <item href="configreference/javaClientGenerator.html" name="&amp;lt;javaClientGenerator&amp;gt;" />
         <item href="configreference/javaModelGenerator.html" name="&amp;lt;javaModelGenerator&amp;gt;" />
         <item href="configreference/javaTypeResolver.html" name="&amp;lt;javaTypeResolver&amp;gt;" />

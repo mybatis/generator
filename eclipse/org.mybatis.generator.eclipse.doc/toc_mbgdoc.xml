@@ -26,9 +26,11 @@
       <topic href="html/mbgdoc/configreference/commentGenerator.html" label="&lt;commentGenerator&gt;"/>
       <topic href="html/mbgdoc/configreference/connectionFactory.html" label="&lt;connectionFactory&gt;"/>
       <topic href="html/mbgdoc/configreference/context.html" label="&lt;context&gt;"/>
+      <topic href="html/mbgdoc/configreference/except.html" label="&lt;except&gt;"/>
       <topic href="html/mbgdoc/configreference/generatedKey.html" label="&lt;generatedKey&gt;"/>
       <topic href="html/mbgdoc/configreference/generatorConfiguration.html" label="&lt;generatorConfiguration&gt;"/>
       <topic href="html/mbgdoc/configreference/ignoreColumn.html" label="&lt;ignoreColumn&gt;"/>
+      <topic href="html/mbgdoc/configreference/ignoreColumnsByRegex.html" label="&lt;ignoreColumnsByRegex&gt;"/>
       <topic href="html/mbgdoc/configreference/javaClientGenerator.html" label="&lt;javaClientGenerator&gt;"/>
       <topic href="html/mbgdoc/configreference/javaModelGenerator.html" label="&lt;javaModelGenerator&gt;"/>
       <topic href="html/mbgdoc/configreference/javaTypeResolver.html" label="&lt;javaTypeResolver&gt;"/>

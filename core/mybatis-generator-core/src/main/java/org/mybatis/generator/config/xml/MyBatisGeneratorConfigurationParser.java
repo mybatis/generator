@@ -45,6 +45,8 @@ import org.mybatis.generator.config.ConnectionFactoryConfiguration;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.config.IgnoredColumn;
+import org.mybatis.generator.config.IgnoredColumnException;
+import org.mybatis.generator.config.IgnoredColumnPattern;
 import org.mybatis.generator.config.JDBCConnectionConfiguration;
 import org.mybatis.generator.config.JavaClientGeneratorConfiguration;
 import org.mybatis.generator.config.JavaModelGeneratorConfiguration;
@@ -374,6 +376,8 @@ public class MyBatisGeneratorConfigurationParser {
                 parseColumnOverride(tc, childNode);
             } else if ("ignoreColumn".equals(childNode.getNodeName())) { //$NON-NLS-1$
                 parseIgnoreColumn(tc, childNode);
+            } else if ("ignoreColumnsByRegex".equals(childNode.getNodeName())) { //$NON-NLS-1$
+                parseIgnoreColumnByRegex(tc, childNode);
             } else if ("generatedKey".equals(childNode.getNodeName())) { //$NON-NLS-1$
                 parseGeneratedKey(tc, childNode);
             } else if ("columnRenamingRule".equals(childNode.getNodeName())) { //$NON-NLS-1$
@@ -462,6 +466,43 @@ public class MyBatisGeneratorConfigurationParser {
         }
 
         tc.addIgnoredColumn(ic);
+    }
+
+    private void parseIgnoreColumnByRegex(TableConfiguration tc, Node node) {
+        Properties attributes = parseAttributes(node);
+        String pattern = attributes.getProperty("pattern"); //$NON-NLS-1$
+
+        IgnoredColumnPattern icPattern = new IgnoredColumnPattern(pattern);
+
+        NodeList nodeList = node.getChildNodes();
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node childNode = nodeList.item(i);
+
+            if (childNode.getNodeType() != Node.ELEMENT_NODE) {
+                continue;
+            }
+
+            if ("except".equals(childNode.getNodeName())) { //$NON-NLS-1$
+                parseException(icPattern, childNode);
+            }
+        }
+
+        tc.addIgnoredColumnPattern(icPattern);
+    }
+    
+    private void parseException(IgnoredColumnPattern icPattern, Node node) {
+        Properties attributes = parseAttributes(node);
+        String column = attributes.getProperty("column"); //$NON-NLS-1$
+        String delimitedColumnName = attributes
+                .getProperty("delimitedColumnName"); //$NON-NLS-1$
+
+        IgnoredColumnException exception = new IgnoredColumnException(column);
+
+        if (stringHasValue(delimitedColumnName)) {
+            exception.setColumnNameDelimited(isTrue(delimitedColumnName));
+        }
+
+        icPattern.addException(exception);
     }
 
     private void parseColumnRenamingRule(TableConfiguration tc, Node node) {

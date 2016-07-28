@@ -16,19 +16,19 @@
 package mbg.test.ib2j5.hierarchical;
 
 
-import mbg.test.ib2j5.AbstractTest;
-import mbg.test.ib2j5.generated.hierarchical.dao.AwfulTableDAO;
-import mbg.test.ib2j5.generated.hierarchical.dao.FieldsblobsDAO;
-import mbg.test.ib2j5.generated.hierarchical.dao.PkblobsDAO;
-import mbg.test.ib2j5.generated.hierarchical.dao.PkfieldsDAO;
-import mbg.test.ib2j5.generated.hierarchical.dao.PkfieldsblobsDAO;
-import mbg.test.ib2j5.generated.hierarchical.dao.PkonlyDAO;
-import mbg.test.ib2j5.generated.hierarchical.dao.subpackage.FieldsonlyDAO;
-
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+
+import mbg.test.ib2j5.AbstractTest;
+import mbg.test.ib2j5.generated.hierarchical.dao.AwfulTableDAO;
+import mbg.test.ib2j5.generated.hierarchical.dao.FieldsblobsDAO;
+import mbg.test.ib2j5.generated.hierarchical.dao.FieldsonlyDAO;
+import mbg.test.ib2j5.generated.hierarchical.dao.PkblobsDAO;
+import mbg.test.ib2j5.generated.hierarchical.dao.PkfieldsDAO;
+import mbg.test.ib2j5.generated.hierarchical.dao.PkfieldsblobsDAO;
+import mbg.test.ib2j5.generated.hierarchical.dao.PkonlyDAO;
 
 public abstract class AbstractHierarchicalJava5Test extends AbstractTest {
     

@@ -109,6 +109,9 @@ public class TableConfiguration extends PropertyHolder {
     
     /** The is all column delimiting enabled. */
     private boolean isAllColumnDelimitingEnabled;
+    
+    private String mapperName;
+    private String sqlProviderName;
 
     /**
      * Instantiates a new table configuration.
@@ -684,6 +687,16 @@ public class TableConfiguration extends PropertyHolder {
             xmlElement
                     .addAttribute(new Attribute("delimitIdentifiers", "true")); //$NON-NLS-1$ //$NON-NLS-2$
         }
+        
+        if (stringHasValue(mapperName)) {
+            xmlElement.addAttribute(new Attribute(
+                    "mapperName", mapperName)); //$NON-NLS-1$
+        }
+
+        if (stringHasValue(sqlProviderName)) {
+            xmlElement.addAttribute(new Attribute(
+                    "sqlProviderName", sqlProviderName)); //$NON-NLS-1$
+        }
 
         addPropertyXmlElements(xmlElement);
 
@@ -863,5 +876,21 @@ public class TableConfiguration extends PropertyHolder {
     public void setAllColumnDelimitingEnabled(
             boolean isAllColumnDelimitingEnabled) {
         this.isAllColumnDelimitingEnabled = isAllColumnDelimitingEnabled;
+    }
+
+    public String getMapperName() {
+        return mapperName;
+    }
+
+    public void setMapperName(String mapperName) {
+        this.mapperName = mapperName;
+    }
+
+    public String getSqlProviderName() {
+        return sqlProviderName;
+    }
+
+    public void setSqlProviderName(String sqlProviderName) {
+        this.sqlProviderName = sqlProviderName;
     }
 }

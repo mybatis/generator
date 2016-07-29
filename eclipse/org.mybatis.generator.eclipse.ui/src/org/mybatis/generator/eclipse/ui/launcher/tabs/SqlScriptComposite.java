@@ -16,9 +16,14 @@
 package org.mybatis.generator.eclipse.ui.launcher.tabs;
 
 import static org.mybatis.generator.eclipse.ui.launcher.tabs.LauncherUtils.getTextOrBlank;
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+
+import java.io.File;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.variables.VariablesPlugin;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.jface.viewers.Viewer;
@@ -140,9 +145,34 @@ public class SqlScriptComposite extends AbstractGeneratorComposite {
     }
     
     public boolean isValid() {
-        // TODO
-        // Script file must exist if specified
-        // class and url must both be specified if file specified
+        String fileName = txtFileName.getText();
+        if (!stringHasValue(fileName)) {
+            // if no filename is specified, then everything else is ignored anyway
+            return true;
+        }
+        
+        try {
+            String fullPath = VariablesPlugin.getDefault().getStringVariableManager()
+                    .performStringSubstitution(fileName);
+            File file = new File(fullPath);
+            if (!file.exists()) {
+                sqlScriptTab.setErrorMessage(Messages.FILE_PICKER_FILE_DOESNT_EXIST);
+                return false;
+            }
+            
+            if (!stringHasValue(txtJdbcDriver.getText())) {
+                sqlScriptTab.setErrorMessage(Messages.SQL_SCRIPT_TAB_JDBC_DRIVER_REQUIRED);
+                return false;
+            }
+            
+            if (!stringHasValue(txtJdbcURL.getText())) {
+                sqlScriptTab.setErrorMessage(Messages.SQL_SCRIPT_TAB_JDBC_URL_REQUIRED);
+                return false;
+            }
+        } catch (CoreException e) {
+            return false;
+        }
+        
         return true;
     }
 

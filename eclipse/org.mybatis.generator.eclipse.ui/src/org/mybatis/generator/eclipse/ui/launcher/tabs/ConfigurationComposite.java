@@ -71,7 +71,7 @@ public class ConfigurationComposite extends AbstractGeneratorComposite {
                     return false;
                 }
             } else {
-                configurationTab.setErrorMessage(Messages.CONFIGURATION_TAB_FILE_DOESNT_EXIST);
+                configurationTab.setErrorMessage(Messages.FILE_PICKER_FILE_DOESNT_EXIST);
                 return false;
             }
         } catch (CoreException e) {

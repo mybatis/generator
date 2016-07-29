@@ -22,9 +22,9 @@ public class Messages extends NLS {
     
     public static String FILE_PICKER_BROWSE_FILE_SYSTEM;
     public static String FILE_PICKER_BROWSE_WORKSPACE;
+    public static String FILE_PICKER_FILE_DOESNT_EXIST;
 
     public static String CONFIGURATION_TAB_INVALID_MESSAGE;
-    public static String CONFIGURATION_TAB_FILE_DOESNT_EXIST;
     public static String CONFIGURATION_TAB_FILE_GROUP_TITLE;
     public static String CONFIGURATION_TAB_FILE_PICKER_DIALOG_MESSAGE;
     public static String CONFIGURATION_TAB_FILE_PICKER_DIALOG_TITLE;
@@ -40,6 +40,8 @@ public class Messages extends NLS {
     public static String SQL_SCRIPT_TAB_JDBC_URL_LABEL;
     public static String SQL_SCRIPT_TAB_USERID_LABEL;
     public static String SQL_SCRIPT_TAB_PASSWORD_LABEL;
+    public static String SQL_SCRIPT_TAB_JDBC_DRIVER_REQUIRED;
+    public static String SQL_SCRIPT_TAB_JDBC_URL_REQUIRED;
     
     public static String LAUNCH_CONFIGURATION_SELECTOR_TITLE;
     public static String LAUNCH_CONFIGURATION_SELECTOR_MESSAGE;

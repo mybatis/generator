@@ -65,7 +65,7 @@ public class CountByExampleTest extends AbstractConditionalJava2Test {
             FieldsonlyExample example = new FieldsonlyExample();
             example.createCriteria().andIntegerfieldGreaterThan(new Integer(5));
     
-            int rows = dao.countByExample(example);
+            long rows = dao.countByExample(example);
             assertEquals(2, rows);
     
             example.clear();
@@ -97,7 +97,7 @@ public class CountByExampleTest extends AbstractConditionalJava2Test {
     
             PkonlyExample example = new PkonlyExample();
             example.createCriteria().andIdGreaterThan(new Integer(4));
-            int rows = dao.countByExample(example);
+            long rows = dao.countByExample(example);
             assertEquals(2, rows);
     
             example.clear();
@@ -130,7 +130,7 @@ public class CountByExampleTest extends AbstractConditionalJava2Test {
     
             PkfieldsblobsExample example = new PkfieldsblobsExample();
             example.createCriteria().andId1NotEqualTo(new Integer(3));
-            int rows = dao.countByExample(example);
+            long rows = dao.countByExample(example);
             assertEquals(1, rows);
     
             example.clear();
@@ -162,7 +162,7 @@ public class CountByExampleTest extends AbstractConditionalJava2Test {
     
             PkfieldsExample example = new PkfieldsExample();
             example.createCriteria().andLastnameLike("J%");
-            int rows = dao.countByExample(example);
+            long rows = dao.countByExample(example);
             assertEquals(1, rows);
     
             example.clear();
@@ -191,7 +191,7 @@ public class CountByExampleTest extends AbstractConditionalJava2Test {
     
             PkblobsExample example = new PkblobsExample();
             example.createCriteria().andIdLessThan(new Integer(4));
-            int rows = dao.countByExample(example);
+            long rows = dao.countByExample(example);
             assertEquals(1, rows);
     
             example.clear();
@@ -222,7 +222,7 @@ public class CountByExampleTest extends AbstractConditionalJava2Test {
     
             FieldsblobsExample example = new FieldsblobsExample();
             example.createCriteria().andFirstnameLike("S%");
-            int rows = dao.countByExample(example);
+            long rows = dao.countByExample(example);
             assertEquals(1, rows);
     
             example.clear();
@@ -269,7 +269,7 @@ public class CountByExampleTest extends AbstractConditionalJava2Test {
     
             AwfulTableExample example = new AwfulTableExample();
             example.createCriteria().andEMailLike("fred@%");
-            int rows = dao.countByExample(example);
+            long rows = dao.countByExample(example);
             assertEquals(1, rows);
     
             example.clear();

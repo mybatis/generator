@@ -231,7 +231,7 @@ public class HierarchicalJava5Test extends AbstractMixedHierarchicalTest {
 
             FieldsonlyExample example = new FieldsonlyExample();
             example.createCriteria().andIntegerfieldGreaterThan(5);
-            int rows = mapper.countByExample(example);
+            long rows = mapper.countByExample(example);
             assertEquals(2, rows);
 
             example.clear();
@@ -415,7 +415,7 @@ public class HierarchicalJava5Test extends AbstractMixedHierarchicalTest {
 
             PkonlyExample example = new PkonlyExample();
             example.createCriteria().andIdGreaterThan(4);
-            int rows = mapper.countByExample(example);
+            long rows = mapper.countByExample(example);
             assertEquals(2, rows);
 
             example.clear();
@@ -1154,7 +1154,7 @@ public class HierarchicalJava5Test extends AbstractMixedHierarchicalTest {
 
             PkfieldsExample example = new PkfieldsExample();
             example.createCriteria().andLastnameLike("J%");
-            int rows = mapper.countByExample(example);
+            long rows = mapper.countByExample(example);
             assertEquals(1, rows);
 
             example.clear();
@@ -1466,7 +1466,7 @@ public class HierarchicalJava5Test extends AbstractMixedHierarchicalTest {
 
             PkblobsExample example = new PkblobsExample();
             example.createCriteria().andIdLessThan(4);
-            int rows = mapper.countByExample(example);
+            long rows = mapper.countByExample(example);
             assertEquals(1, rows);
 
             example.clear();
@@ -1877,7 +1877,7 @@ public class HierarchicalJava5Test extends AbstractMixedHierarchicalTest {
 
             PkfieldsblobsExample example = new PkfieldsblobsExample();
             example.createCriteria().andId1NotEqualTo(3);
-            int rows = mapper.countByExample(example);
+            long rows = mapper.countByExample(example);
             assertEquals(1, rows);
 
             example.clear();
@@ -2076,7 +2076,7 @@ public class HierarchicalJava5Test extends AbstractMixedHierarchicalTest {
 
             FieldsblobsExample example = new FieldsblobsExample();
             example.createCriteria().andFirstnameLike("S%");
-            int rows = mapper.countByExample(example);
+            long rows = mapper.countByExample(example);
             assertEquals(1, rows);
 
             example.clear();
@@ -3132,7 +3132,7 @@ public class HierarchicalJava5Test extends AbstractMixedHierarchicalTest {
 
             AwfulTableExample example = new AwfulTableExample();
             example.createCriteria().andEMailLike("fred@%");
-            int rows = mapper.countByExample(example);
+            long rows = mapper.countByExample(example);
             assertEquals(1, rows);
 
             example.clear();

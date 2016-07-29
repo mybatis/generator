@@ -196,16 +196,16 @@ public class UpdateByExampleTest extends AbstractAnnotatedConditionalTest {
                 .andIdEqualTo(5)
                 .andSeqNumEqualTo(3);
             
-            rows = mapper.countByExample(example);
-            assertEquals(1, rows);
+            long returnedRows = mapper.countByExample(example);
+            assertEquals(1, returnedRows);
             
             example.clear();
             example.createCriteria()
                 .andIdEqualTo(7)
                 .andSeqNumEqualTo(3);
             
-            rows = mapper.countByExample(example);
-            assertEquals(1, rows);
+            returnedRows = mapper.countByExample(example);
+            assertEquals(1, returnedRows);
         } finally {
             sqlSession.close();
         }
@@ -246,8 +246,8 @@ public class UpdateByExampleTest extends AbstractAnnotatedConditionalTest {
                 .andIdEqualTo(22)
                 .andSeqNumEqualTo(3);
             
-            rows = mapper.countByExample(example);
-            assertEquals(1, rows);
+            long returnedRows = mapper.countByExample(example);
+            assertEquals(1, returnedRows);
         } finally {
             sqlSession.close();
         }
@@ -288,8 +288,8 @@ public class UpdateByExampleTest extends AbstractAnnotatedConditionalTest {
                 .andId1EqualTo(3)
                 .andId2EqualTo(4);
     
-            rows = mapper.countByExample(example);
-            assertEquals(1, rows);
+            long returnedRows = mapper.countByExample(example);
+            assertEquals(1, returnedRows);
         } finally {
             sqlSession.close();
         }
@@ -335,8 +335,8 @@ public class UpdateByExampleTest extends AbstractAnnotatedConditionalTest {
                 .andId1EqualTo(3)
                 .andId2EqualTo(4);
     
-            rows = mapper.countByExample(example);
-            assertEquals(1, rows);
+            long returnedRows = mapper.countByExample(example);
+            assertEquals(1, returnedRows);
         } finally {
             sqlSession.close();
         }

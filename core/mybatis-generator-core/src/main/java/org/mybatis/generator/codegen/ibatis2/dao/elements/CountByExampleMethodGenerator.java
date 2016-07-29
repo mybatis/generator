@@ -47,7 +47,7 @@ public class CountByExampleMethodGenerator extends AbstractDAOElementGenerator {
         // generate the implementation method
         StringBuilder sb = new StringBuilder();
 
-        sb.append("Integer count = (Integer)  "); //$NON-NLS-1$
+        sb.append("Long count = (Long)  "); //$NON-NLS-1$
         sb.append(daoTemplate.getQueryForObjectMethod(introspectedTable
                 .getIbatis2SqlMapNamespace(), introspectedTable
                 .getCountByExampleStatementId(), "example")); //$NON-NLS-1$
@@ -56,7 +56,7 @@ public class CountByExampleMethodGenerator extends AbstractDAOElementGenerator {
         if (generateForJava5) {
             method.addBodyLine("return count;"); //$NON-NLS-1$
         } else {
-            method.addBodyLine("return count.intValue();"); //$NON-NLS-1$
+            method.addBodyLine("return count.longValue();"); //$NON-NLS-1$
         }
 
         if (context.getPlugins().clientCountByExampleMethodGenerated(method,
@@ -87,7 +87,7 @@ public class CountByExampleMethodGenerator extends AbstractDAOElementGenerator {
 
         Method method = new Method();
         method.setVisibility(getExampleMethodVisibility());
-        method.setReturnType(FullyQualifiedJavaType.getIntInstance());
+        method.setReturnType(new FullyQualifiedJavaType("long")); //$NON-NLS-1$
         method.setName(getDAOMethodNameCalculator()
                 .getCountByExampleMethodName(introspectedTable));
         method.addParameter(new Parameter(type, "example")); //$NON-NLS-1$

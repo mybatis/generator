@@ -125,7 +125,7 @@ public abstract class IntrospectedTable {
         /** The attr insert selective statement id. */
         ATTR_INSERT_SELECTIVE_STATEMENT_ID,
         
-        /** The attr insert selective statement id. */
+        /** The attr batchinsert selective statement id. */
         ATTR_INSERTBATCH_STATEMENT_ID,
         
         /** The attr select all statement id. */
@@ -1289,7 +1289,7 @@ public abstract class IntrospectedTable {
             sb.append(config.getTargetPackage());
         }
 
-        sb.append(fullyQualifiedTable.getSubPackage(isSubPackagesEnabled(config)));
+        sb.append(fullyQualifiedTable.getSubPackageForClientOrSqlMap(isSubPackagesEnabled(config)));
 
         return sb.toString();
     }
@@ -1320,7 +1320,7 @@ public abstract class IntrospectedTable {
         StringBuilder sb = new StringBuilder();
         sb.append(config.getTargetPackage());
 
-        sb.append(fullyQualifiedTable.getSubPackage(isSubPackagesEnabled(config)));
+        sb.append(fullyQualifiedTable.getSubPackageForClientOrSqlMap(isSubPackagesEnabled(config)));
 
         return sb.toString();
     }
@@ -1350,15 +1350,23 @@ public abstract class IntrospectedTable {
         sb.setLength(0);
         sb.append(calculateJavaClientInterfacePackage());
         sb.append('.');
+        if (stringHasValue(tableConfiguration.getMapperName())) {
+            sb.append(tableConfiguration.getMapperName());
+        } else {
         sb.append(fullyQualifiedTable.getDomainObjectName());
         sb.append("Mapper"); //$NON-NLS-1$
+        }
         setMyBatis3JavaMapperType(sb.toString());
 
         sb.setLength(0);
         sb.append(calculateJavaClientInterfacePackage());
         sb.append('.');
+        if (stringHasValue(tableConfiguration.getSqlProviderName())) {
+            sb.append(tableConfiguration.getSqlProviderName());
+        } else {
         sb.append(fullyQualifiedTable.getDomainObjectName());
         sb.append("SqlProvider"); //$NON-NLS-1$
+        }
         setMyBatis3SqlProviderType(sb.toString());
     }
 
@@ -1373,7 +1381,7 @@ public abstract class IntrospectedTable {
 
         StringBuilder sb = new StringBuilder();
         sb.append(config.getTargetPackage());
-        sb.append(fullyQualifiedTable.getSubPackage(isSubPackagesEnabled(config)));
+        sb.append(fullyQualifiedTable.getSubPackageForModel(isSubPackagesEnabled(config)));
 
         return sb.toString();
     }
@@ -1425,7 +1433,14 @@ public abstract class IntrospectedTable {
         // config can be null if the Java client does not require XML
         if (config != null) {
             sb.append(config.getTargetPackage());
-            sb.append(fullyQualifiedTable.getSubPackage(isSubPackagesEnabled(config)));
+            sb.append(fullyQualifiedTable.getSubPackageForClientOrSqlMap(isSubPackagesEnabled(config)));
+            if (stringHasValue(tableConfiguration.getMapperName())) {
+                String mapperName = tableConfiguration.getMapperName();
+                int ind = mapperName.lastIndexOf('.');
+                if (ind != -1) {
+                    sb.append('.').append(mapperName.substring(0, ind));
+        }
+            }
         }
 
         return sb.toString();
@@ -1450,8 +1465,19 @@ public abstract class IntrospectedTable {
      */
     protected String calculateMyBatis3XmlMapperFileName() {
         StringBuilder sb = new StringBuilder();
+        if (stringHasValue(tableConfiguration.getMapperName())) {
+            String mapperName = tableConfiguration.getMapperName();
+            int ind = mapperName.lastIndexOf('.');
+            if (ind == -1) {
+                sb.append(mapperName);
+            } else {
+                sb.append(mapperName.substring(ind + 1));
+            }
+            sb.append(".xml"); //$NON-NLS-1$
+        } else {
         sb.append(fullyQualifiedTable.getDomainObjectName());
         sb.append("Mapper.xml"); //$NON-NLS-1$
+        }
         return sb.toString();
     }
 
@@ -1473,8 +1499,12 @@ public abstract class IntrospectedTable {
         StringBuilder sb = new StringBuilder();
         sb.append(calculateSqlMapPackage());
         sb.append('.');
+        if (stringHasValue(tableConfiguration.getMapperName())) {
+            sb.append(tableConfiguration.getMapperName());
+        } else {
         sb.append(fullyQualifiedTable.getDomainObjectName());
         sb.append("Mapper"); //$NON-NLS-1$
+        }
         return sb.toString();
     }
 

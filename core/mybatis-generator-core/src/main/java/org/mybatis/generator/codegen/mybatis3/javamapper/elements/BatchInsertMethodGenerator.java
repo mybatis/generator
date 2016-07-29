@@ -1,3 +1,18 @@
+/**
+ *    Copyright 2006-2016 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
 package org.mybatis.generator.codegen.mybatis3.javamapper.elements;
 
 import java.util.Set;
@@ -33,17 +48,16 @@ public class BatchInsertMethodGenerator extends AbstractJavaMapperMethodGenerato
         method.setName(introspectedTable.getInsertBatchStatementId());
 
         FullyQualifiedJavaType parameterType;
-//        if (isSimple) {
-//            parameterType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
-//        } else {
-//            parameterType = introspectedTable.getRules().calculateAllFieldsClass();
-//        }
-        String baseRecordType = introspectedTable.getBaseRecordType();
-        String shortName = new FullyQualifiedJavaType(baseRecordType).getShortName();
-		parameterType = new FullyQualifiedJavaType("java.util.List<" + shortName + ">");
+        if (isSimple) {
+            parameterType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
+        } else {
+            parameterType = introspectedTable.getRules().calculateAllFieldsClass();
+        }
+        String shortName = parameterType.getShortName();
+        FullyQualifiedJavaType newParameterType = new FullyQualifiedJavaType("java.util.List<" + shortName + ">");
 
-        importedTypes.add(parameterType);
-        method.addParameter(new Parameter(parameterType, "list")); //需要跟mapper.xml里面对应
+        importedTypes.add(newParameterType);
+        method.addParameter(new Parameter(newParameterType, "list")); //需要跟mapper.xml里面对应
 
         context.getCommentGenerator().addGeneralMethodComment(method,
                 introspectedTable);

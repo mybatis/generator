@@ -193,16 +193,16 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
                 .andIdEqualTo(5)
                 .andSeqNumEqualTo(3);
             
-            rows = dao.countByExample(example);
-            assertEquals(1, rows);
+            long returnedRows = dao.countByExample(example);
+            assertEquals(1, returnedRows);
             
             example.clear();
             example.createCriteria()
                 .andIdEqualTo(7)
                 .andSeqNumEqualTo(3);
             
-            rows = dao.countByExample(example);
-            assertEquals(1, rows);
+            returnedRows = dao.countByExample(example);
+            assertEquals(1, returnedRows);
         } catch (SQLException e) {
             fail(e.getMessage());
         }
@@ -242,8 +242,8 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
                 .andIdEqualTo(22)
                 .andSeqNumEqualTo(3);
             
-            rows = dao.countByExample(example);
-            assertEquals(1, rows);
+            long returnedRows = dao.countByExample(example);
+            assertEquals(1, returnedRows);
         } catch (SQLException e) {
             fail(e.getMessage());
         }
@@ -283,8 +283,8 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
                 .andId1EqualTo(3)
                 .andId2EqualTo(4);
     
-            rows = dao.countByExample(example);
-            assertEquals(1, rows);
+            long returnedRows = dao.countByExample(example);
+            assertEquals(1, returnedRows);
         } catch (SQLException e) {
             fail(e.getMessage());
         }
@@ -329,8 +329,8 @@ public class UpdateByExampleTest extends AbstractFlatJava5Test {
                 .andId1EqualTo(3)
                 .andId2EqualTo(4);
     
-            rows = dao.countByExample(example);
-            assertEquals(1, rows);
+            long returnedRows = dao.countByExample(example);
+            assertEquals(1, returnedRows);
         } catch (SQLException e) {
             fail(e.getMessage());
         }

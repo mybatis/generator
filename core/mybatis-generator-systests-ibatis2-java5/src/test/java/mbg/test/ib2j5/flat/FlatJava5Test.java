@@ -265,7 +265,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
 
             FieldsonlyExample example = new FieldsonlyExample();
             example.createCriteria().andIntegerfieldGreaterThan(5);
-            int rows = dao.countByExample(example);
+            long rows = dao.countByExample(example);
             assertEquals(2, rows);
 
             example.clear();
@@ -440,7 +440,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
 
             PkonlyExample example = new PkonlyExample();
             example.createCriteria().andIdGreaterThan(4);
-            int rows = dao.countByExample(example);
+            long rows = dao.countByExample(example);
             assertEquals(2, rows);
 
             example.clear();
@@ -1154,7 +1154,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
 
             PkfieldsExample example = new PkfieldsExample();
             example.createCriteria().andLastnameLike("J%");
-            int rows = dao.countByExample(example);
+            long rows = dao.countByExample(example);
             assertEquals(1, rows);
 
             example.clear();
@@ -1445,7 +1445,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
 
             PkblobsExample example = new PkblobsExample();
             example.createCriteria().andIdLessThan(4);
-            int rows = dao.countByExample(example);
+            long rows = dao.countByExample(example);
             assertEquals(1, rows);
 
             example.clear();
@@ -1988,7 +1988,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
 
             PkfieldsblobsExample example = new PkfieldsblobsExample();
             example.createCriteria().andId1NotEqualTo(3);
-            int rows = dao.countByExample(example);
+            long rows = dao.countByExample(example);
             assertEquals(1, rows);
 
             example.clear();
@@ -3010,7 +3010,7 @@ public class FlatJava5Test extends AbstractFlatJava5Test {
 
             AwfulTableExample example = new AwfulTableExample();
             example.createCriteria().andEMailLike("fred@%");
-            int rows = dao.countByExample(example);
+            long rows = dao.countByExample(example);
             assertEquals(1, rows);
 
             example.clear();

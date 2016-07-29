@@ -99,6 +99,10 @@ public class RulesDelegate implements Rules {
     public boolean generateInsertSelective() {
         return rules.generateInsertSelective();
     }
+    
+    public boolean generateInsertBatch() {
+        return rules.generateInsertBatch();
+    }
 
     public boolean generatePrimaryKeyClass() {
         return rules.generatePrimaryKeyClass();

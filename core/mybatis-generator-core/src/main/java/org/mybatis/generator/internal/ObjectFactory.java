@@ -63,12 +63,24 @@ public class ObjectFactory {
     	externalClassLoaders = new ArrayList<ClassLoader>();
         resourceClassLoaders = new ArrayList<ClassLoader>();
     }
-
+    
     /**
      * Utility class. No instances allowed
      */
     private ObjectFactory() {
         super();
+    }
+
+    /**
+     * Clears the class loaders.  This method should be called at the beginning of
+     * a generation run so that and change to the classloading configuration
+     * will be reflected.  For example, if the eclipse launcher changes configuration
+     * it might not be updated if eclipse hasn't been restarted.
+     * 
+     */
+    public static void reset() {
+        externalClassLoaders.clear();
+        resourceClassLoaders.clear();
     }
 
     /**

@@ -54,6 +54,17 @@ public class RootClassInfo {
         return classInfo;
     }
 
+    /**
+     * Clears the internal map containing root class info.  This method should be called at the beginning of
+     * a generation run to clear the cached root class info in case there has been a change.
+     * For example, when using the eclipse launcher, the cache would be kept until eclipse
+     * was restarted.
+     * 
+     */
+    public static void reset() {
+        rootClassInfoMap.clear();
+    }
+
     private PropertyDescriptor[] propertyDescriptors;
     private String className;
     private List<String> warnings;

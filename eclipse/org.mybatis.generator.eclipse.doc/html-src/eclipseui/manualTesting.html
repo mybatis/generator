@@ -13,30 +13,10 @@ UI.  This information may also be helpful in learning how to use the different p
 of the Eclipse user interface for MyBatis Generator.</p>
 <h2>Setup</h2>
 <ol>
-  <li>Make sure that MySQL is installed and running.  The following scripts also assume
-      that the password for <code>root</code> is also <code>root</code></li>
-  <li>Make sure that you have downloaded the MySQL Connector for Java and unzipped
-      it somewhere on your local drive.  The following scripts assume the
-      MySQL JDBC driver is located at
-      "/JavaTools/mysql-connector-java-5.1.12/mysql-connector-java-5.1.12-bin.jar".</li>
-  <li>If you have not created the test database already, then execute the
-      following script:
-      <pre>
-
-drop schema if exists mbgtest;
-create schema mbgtest;
-use mbgtest;
-create table a (id int not null, description varchar(50), primary key(id));
-create table b (id int not null, description varchar(50), primary key(id));
-create table c (id int not null, description varchar(50), primary key(id));
-create table d (id int not null, description varchar(50), primary key(id));
-create table e (id int not null, description varchar(50), primary key(id));
-create table f (id int not null, description varchar(50), primary key(id));
-create table g (id int not null, description varchar(50), primary key(id));
-create table h (id int not null, description varchar(50), primary key(id));
-create table i (id int not null, description varchar(50), primary key(id));
-create table j (id int not null, description varchar(50), primary key(id));
-      </pre>
+  <li>Make sure you have access to the HSQLDB JAR file and know where the file is on
+      your file system.  You can obtain the JAR from http://hsqldb.org.  The jar
+      will probably be on your system in your local Maven repository
+      (../.m2/repository/org/hsqldb/..).
   </li>
   <li>Make sure that the new version of the plugin has been built.</li>
 </ol>
@@ -46,15 +26,11 @@ create table j (id int not null, description varchar(50), primary key(id));
 tests build on items created in previous tests.</p>
 <h3>Installation</h3>
 <ol>
-  <li>Install a fresh version of Eclipse (version 3.6.1 or later)</li>
+  <li>Install a fresh version of Eclipse version 4.4 (Mars) or later.</li>
   <li>Open the fresh Eclipse install, and create a new (empty) workspace</li>
   <li>Configure a local update site to point to the newly generated site
       (Help&gt;Install New Software...)</li>
-  <li>Show all versions of the feature</li>
-  <li>Install the oldest version of the feature</li>
-  <li>Restart Eclipse</li>
-  <li>Do a regular software update and verify that the newest version of the
-      feature is listed as an install option (this may also install other Eclipse updates)</li>
+  <li>Install the feature</li>
   <li>Restart Eclipse</li>
   <li>Verify that the latest version of the feature is listed as installed</li>
 </ol>
@@ -73,6 +49,14 @@ tests build on items created in previous tests.</p>
       Eclipse UI documentation, and the Core MyBatis Generator documentation.</li>
 </ol>
 
+<h3>XML Catalog</h3>
+<ol>
+  <li>Open Window&gt;Preferences</li>
+  <li>Navigate to XML&gt;XML Catalog</li>
+  <li>Verify that two XML catalog entries are present - one for Ibator and
+      one for MyBatis Generator</li>
+</ol>
+
 <h3>New File Wizard</h3>
 <ol>
   <li>Create a new JavaProject called "MBGTest".  Make sure there is a separate source folder
@@ -89,9 +73,6 @@ tests build on items created in previous tests.</p>
       <li>Press Finish</li>
       <li>Verify that an editor opens with a skeleton configuration File</li>
     </ol></li>
-    <li>Right click on the new file, then take the option "Generate MyBatis/iBATIS Artifacts"</li>
-    <li>Verify that an error dialog is shown with the detail message "Exception getting JDBC Driver"</li>
-    <li>Press "OK" to dismiss the dialog</li>
     <li>Make a new package in the <code>src</code> folder called <code>base</code></li>
     <li>Add a new class to the <code>base</code> package named <code>BaseModel</code>.  The class
         doesn't need any attributes or methods.
@@ -109,11 +90,10 @@ tests build on items created in previous tests.</p>
   PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
   "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" &gt;
 &lt;generatorConfiguration&gt;
-  &lt;classPathEntry location="/Program Files (x86)/MySQL/Connector.J 5.1/mysql-connector-java-5.1.39-bin.jar" /&gt;
   &lt;context id="context1" targetRuntime="MyBatis3Simple" &gt;
-    &lt;jdbcConnection driverClass="com.mysql.jdbc.Driver"
-      connectionURL="jdbc:mysql://localhost/mbgtest"
-      userId="root" password="root" &gt;
+    &lt;jdbcConnection driverClass="org.hsqldb.jdbcDriver"
+      connectionURL="jdbc:hsqldb:mem:aname"
+      userId="sa" &gt;
     &lt;/jdbcConnection&gt;
     &lt;javaModelGenerator targetPackage="gen.model" targetProject="MBGTest" &gt;
         &lt;!--
@@ -126,10 +106,11 @@ tests build on items created in previous tests.</p>
   &lt;/context&gt;
 
   &lt;context id="context2" targetRuntime="MyBatis3Simple" &gt;
-    &lt;jdbcConnection driverClass="com.mysql.jdbc.Driver"
-      connectionURL="jdbc:mysql://localhost/mbgtest"
-      userId="root" password="root" &gt;
-    &lt;/jdbcConnection&gt;
+    &lt;connectionFactory type="DEFAULT" &gt;
+        &lt;property name="driverClass" value="org.hsqldb.jdbcDriver" /&gt;
+        &lt;property name="connectionURL" value="jdbc:hsqldb:mem:aname" /&gt;
+        &lt;property name="userId" value="sa" /&gt;
+    &lt;/connectionFactory&gt;
     &lt;javaModelGenerator targetPackage="gen.src.model" targetProject="MBGTest/generatedsrc" /&gt;
     &lt;sqlMapGenerator targetPackage="gen.src.mapper" targetProject="MBGTest/generatedsrc" /&gt;
     &lt;javaClientGenerator targetPackage="gen.src.mapper" targetProject="MBGTest/generatedsrc" type="XMLMAPPER" /&gt;
@@ -137,12 +118,55 @@ tests build on items created in previous tests.</p>
   &lt;/context&gt;
 &lt;/generatorConfiguration&gt;
     </pre></li>
-    <li>Change the location of the JDBC driver in the <code>&lt;classPathEntry&gt;</code> element
-      if different on your system</li>
     <li>Save the file</li>
-    <li>Right click on the file, then take the option "Generate MyBatis/iBATIS Artifacts"</li>
+    <li>Right click on the file, then take the option "Run As&gt;Run MyBatis Generator"</li>
+    <li>Verify that an error dialog is shown with the detail message "Exception getting JDBC Driver"</li>
+    <li>Press "OK" to dismiss the dialog</li>
+    <li>Create a new file in the "config" package named "create_db.sql"</li>
+    <li>Change the contents of the file to the following:
+      <pre>
+      
+drop table a if exists;
+drop table mbgtest.b if exists;
+drop table mbgtest.b if exists;
+drop table mbgtest.c if exists;
+drop table mbgtest.d if exists;
+drop table mbgtest.e if exists;
+drop table mbgtest.f if exists;
+drop table mbgtest.g if exists;
+drop table mbgtest.h if exists;
+drop table mbgtest.i if exists;
+drop table mbgtest.j if exists;
+drop schema if exists mbgtest;
+create schema mbgtest;
+create table a (id int not null, description varchar(50), primary key(id));
+create table mbgtest.b (id int not null, description varchar(50), primary key(id));
+create table mbgtest.c (id int not null, description varchar(50), primary key(id));
+create table mbgtest.d (id int not null, description varchar(50), primary key(id));
+create table mbgtest.e (id int not null, description varchar(50), primary key(id));
+create table mbgtest.f (id int not null, description varchar(50), primary key(id));
+create table mbgtest.g (id int not null, description varchar(50), primary key(id));
+create table mbgtest.h (id int not null, description varchar(50), primary key(id));
+create table mbgtest.i (id int not null, description varchar(50), primary key(id));
+create table mbgtest.j (id int not null, description varchar(50), primary key(id));
+      </pre>
+    </li>
+    <li>Open the launch configuration for this new configuration file.  The launch
+        configuration should be named MBGTest-generatorConfig.xml</li>
+    <li>Alter the launch configuration to run the script before code generation:
+      <ul>
+        <li>Open the SQL Script tab</li>
+        <li>Use the "Workspace..." button to navigate to the new SQL script</li>
+        <li>Set "JDBC Driver Class" to "org.hsqldb.jdbcDriver"</li>
+        <li>Set "JDBC URL" to "jdbc:hsqldb:mem:aname"</li>
+        <li>Set "User ID" to "sa"</li>
+        <li>Open the "Classpath" tab</li>
+        <li>Add a user entry for the HSQLDB Jar</li>
+      </ul>
+    </li>
+    <li>Run the launch configuration</li>
     <li>Verify that code is generated in the two different source folders.  Code for table "a"
-        should be in the "src" folder, code for tables "a" through "j" should be in the
+        should be in the "src" folder, code for tables "b" through "j" should be in the
         "generatedsrc" folder.  Verify that there are no compilation errors or warnings.</li>
 </ol>
 
@@ -154,7 +178,7 @@ tests build on items created in previous tests.</p>
       for the field.</li>
   <li>Save and close the file</li>
   <li>Right click on the configuration file from the last test, and then
-      take the option "Generate MyBatis/iBATIS Artifacts"</li>
+      take the option "Run As&gt;Run MyBatis Generator"</li>
   <li>Verify that the progress bar is reasonably accurate</li>
   <li>Open the Java file <code>gen.model.A.java</code> in the "src" folder</li>
   <li>Verify that the time of generation is later than the time noted above</li>
@@ -164,13 +188,13 @@ tests build on items created in previous tests.</p>
   <li>Uncomment the "rootClass" property line</li>
   <li>Save and close the file</li>
   <li>Right click on the configuration file, and then
-      take the option "Generate MyBatis/iBATIS Artifacts"</li>
+      take the option "Run As&gt;Run MyBatis Generator"</li>
   <li>Verify that <code>gen.model.A</code> now extends <code>BaseModel</code></li>
   <li>Re open the configuration file.</li>
   <li>Re comment the "rootClass" property line</li>
   <li>Save and close the file</li>
   <li>Right click on the configuration file, and then
-      take the option "Generate MyBatis/iBATIS Artifacts"</li>
+      take the option "Run As&gt;Run MyBatis Generator"</li>
   <li>Verify that <code>gen.model.A</code> doesn't extend anything.  There will be one
       warning in the file related to an unused import (the Java merger does not reconcile all
       imports).  Delete the import and verify that there are no other errors in the
@@ -180,21 +204,19 @@ tests build on items created in previous tests.</p>
 
 <h3>Ant Build</h3>
 <ol>
-  <li>Close Eclipse if it is still open, then reopen Eclipse (this resets the plugin classloader
-      for the custom classpath portion of the test).</li>
-  <li>Open the configuration file from the last test.</li>
-  <li>Delete the <code>&lt;classPathEntry&gt;</code> element from the file.</li>
-  <li>Save and close the file.</li>
   <li>Create a new file <code>build.xml</code> in the "MBGTest/src/config" package.</li>
   <li>Change the contents of the new file to the following:
     <pre>
-
+    
 &lt;project default="runMyBatisGenerator"&gt;
   &lt;target name="runMyBatisGenerator"&gt;
+    &lt;eclipse.convertPath resourcepath="MBGTest/src/config/create_db.sql"
+                         property="theScriptPath"/&gt;
+    &lt;sql driver="org.hsqldb.jdbcDriver" url="jdbc:hsqldb:mem:aname"
+            userid="sa" password="" src="${theScriptPath}"/&gt;
     &lt;eclipse.convertPath resourcepath="MBGTest/src/config/generatorConfig.xml"
                          property="thePath"/&gt;
-    &lt;mybatis.generate configfile="${thePath}" &gt;
-    &lt;/mybatis.generate&gt;
+    &lt;mybatis.generate configfile="${thePath}" /&gt;
   &lt;/target&gt;
 &lt;/project&gt;
     </pre>
@@ -208,15 +230,14 @@ tests build on items created in previous tests.</p>
   <li>Select the "JRE" tab, then select the "Run in the same JRE as the workspace" radio
       button.</li>
   <li>Press the "Run" button</li>
-  <li>You should see an error dialog open with a runtime exception stating "Exception
-      getting JDBC Driver".  Press "OK" to dismiss the dialog.</li>
+  <li>You should see an error in the progress window stating "Class not found: JDBC Driver...".</li>
   <li>Right click on the new <code>build.xml</code> file, then select the
       menu option "Run As&gt;Ant Build...".  You should see the Ant launch configuration
       dialog open.</li>
-  <li>Select the "Classpath" tab, then add the MySQL driver to "User Entries"</li>
+  <li>Select the "Classpath" tab, then add the HSQLDB driver to "User Entries"</li>
   <li>Press the "Run" button</li>
   <li>After MyBatis Generator runs, you should see a "BUILD SUCCESSFUL" message.
-      You may see build warnings related to log4j if it is installed in your Eclipse
+      You may see build warnings related to log4j if it is not installed in your Eclipse
       distribution.  You can safely ignore these warnings.
   </li>
   <li>Verify that the workspace errors are gone.</li>

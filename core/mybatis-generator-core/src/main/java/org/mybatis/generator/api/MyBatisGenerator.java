@@ -29,6 +29,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.mybatis.generator.codegen.RootClassInfo;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.MergeConstants;
@@ -223,6 +224,8 @@ public class MyBatisGenerator {
 
         generatedJavaFiles.clear();
         generatedXmlFiles.clear();
+        ObjectFactory.reset();
+        RootClassInfo.reset();
 
         // calculate the contexts to run
         List<Context> contextsToRun;

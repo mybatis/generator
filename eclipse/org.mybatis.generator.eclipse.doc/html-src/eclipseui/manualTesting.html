@@ -26,7 +26,7 @@ of the Eclipse user interface for MyBatis Generator.</p>
 tests build on items created in previous tests.</p>
 <h3>Installation</h3>
 <ol>
-  <li>Install a fresh version of Eclipse version 4.4 (Mars) or later.</li>
+  <li>Install a fresh version of Eclipse version 4.5 (Mars) or later.</li>
   <li>Open the fresh Eclipse install, and create a new (empty) workspace</li>
   <li>Configure a local update site to point to the newly generated site
       (Help&gt;Install New Software...)</li>
@@ -74,8 +74,9 @@ tests build on items created in previous tests.</p>
       <li>Verify that an editor opens with a skeleton configuration File</li>
     </ol></li>
     <li>Make a new package in the <code>src</code> folder called <code>base</code></li>
-    <li>Add a new class to the <code>base</code> package named <code>BaseModel</code>.  The class
-        doesn't need any attributes or methods.
+    <li>Add a new class to the <code>base</code> package named <code>BaseModel</code></li>
+    <li>Add a <code>private Integer id</code> to <code>BaseModel</code> and generate
+        getters and setters.  Then mark the getter and setter <code>final</code>
     </li>
 </ol>
 
@@ -184,12 +185,23 @@ create table mbgtest.j (id int not null, description varchar(50), primary key(id
   <li>Verify that the time of generation is later than the time noted above</li>
   <li>Verify that the field <code>mergetest</code>, and its getter and setter remain
     in the file (they will have been moved to the bottom of the file)</li>
+</ol>
+
+<h3>Adventures with the Classpath</h3>
+<ol>
   <li>Open the configuration file from the last test.</li>
   <li>Uncomment the "rootClass" property line</li>
   <li>Save and close the file</li>
   <li>Right click on the configuration file, and then
       take the option "Run As&gt;Run MyBatis Generator"</li>
   <li>Verify that <code>gen.model.A</code> now extends <code>BaseModel</code></li>
+  <li>Also verify that there are errors in <code>gen.model.A</code> - the generator
+     should have generated a get and set method that override the final
+     methods in the base class</li>
+  <li>Open the launch configuration and add the MBGTest project to the classpath of
+      the launch.  Then run the launch again</li>
+  <li>Verify that there are no more errors and there is no trace
+  of the <code>id</code> field in <code>gen.model.A</code></li>
   <li>Re open the configuration file.</li>
   <li>Re comment the "rootClass" property line</li>
   <li>Save and close the file</li>
@@ -199,7 +211,8 @@ create table mbgtest.j (id int not null, description varchar(50), primary key(id
       warning in the file related to an unused import (the Java merger does not reconcile all
       imports).  Delete the import and verify that there are no other errors in the
       workspace.  Also, verify that the field <code>mergetest</code> and its
-      associated getter and setter still exist.</li>
+      associated getter and setter still exist, and that the id field and its
+      getter and setter are back in the class.</li>
 </ol>
 
 <h3>Ant Build</h3>

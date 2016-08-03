@@ -33,13 +33,13 @@ SQL Map is the name of the table (qualified by schema and catalog if present).  
 add the SQL Map entries to the MyBatis/iBATIS configurtation files - you must do that manually (or you may use
 a plugin to cause MBG to generate a skeleton configuration file if you wish).</p>
 
-<p>Every generated XML element contains an XML comment section that contains the string <code>@mbggenerated
+<p>Every generated XML element contains an XML comment section that contains the string <code>@mbg.generated
 </code>.  On subsequent runs, every element that contains a comment with the string
-<code>@mbggenerated</code>
+<code>@mbg.generated</code>
 will be deleted and replaced.  Any other element in the XML file will remain untouched.
 With this in mind, you can add other elements to the file without fear of losing them in
 subsequent runs - simply do not include the string
-<code>@mbggenerated</code> in any element comment.</p>
+<code>@mbg.generated</code> in any element comment.</p>
 <p>The following sections describe the elements that will be generated.</p>
 
 <p>Note: in the following descriptions, the term "BLOB" is used to refer to any column

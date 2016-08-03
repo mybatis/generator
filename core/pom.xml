@@ -52,7 +52,7 @@
         <configuration>
           <tags>
             <tag>
-              <name>mbggenerated</name>
+              <name>mbg.generated</name>
               <placement>X</placement>
             </tag>
           </tags>
@@ -102,7 +102,7 @@
         <configuration>
           <tags>
             <tag>
-              <name>mbggenerated</name>
+              <name>mbg.generated</name>
               <placement>X</placement>
             </tag>
           </tags>

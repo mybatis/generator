@@ -50,16 +50,16 @@ types:
 </ul>
 
 <p>Every field and method generated includes the non-standard JavaDoc tag
-<code>@mbggenerated</code>.  When run from the Eclipse plugin,
+<code>@mbg.generated</code>.  When run from the Eclipse plugin,
 on subsequent runs every field and method that
 includes this JavaDoc tag will be deleted and replaced.  Any other field or method in the
 class will be untouched.
 With this in mind, you can add other fields and methods to the classes without fear of losing them in
-subsequent runs - simply DO NOT include the <code>@mbggenerated</code>
+subsequent runs - simply DO NOT include the <code>@mbg.generated</code>
 JavaDoc tag on anything that you add to the class.</p>
 
 <p>Outside of the Eclipse plugin, Java files need to be merged by hand, but you can use the
-<code>@mbggenerated</code> JavaDoc tag to know what is safe to delete from a prior
+<code>@mbg.generated</code> JavaDoc tag to know what is safe to delete from a prior
 version of a file.</p>
 
 <p>Note: in the following descriptions, the term "BLOB" is used to refer to any column

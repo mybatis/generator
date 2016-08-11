@@ -25,6 +25,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.tools.ant.Project;
 import org.eclipse.ant.core.AntCorePlugin;
 import org.eclipse.ant.core.AntCorePreferences;
 import org.eclipse.ant.core.AntRunner;
@@ -38,6 +39,7 @@ import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.jdt.launching.AbstractJavaLaunchConfigurationDelegate;
 import org.mybatis.generator.eclipse.ui.Activator;
 import org.mybatis.generator.eclipse.ui.Messages;
+import org.mybatis.generator.eclipse.ui.launcher.tabs.LauncherUtils;
 
 /**
  * This launcher works by invoking the AntRunner on a generated ant script for the generator.
@@ -58,16 +60,28 @@ public class GeneratorLaunchConfigurationDelegate extends AbstractJavaLaunchConf
             throws CoreException {
         AntRunner antRunner = new AntRunner();
         
+        String buildFile;
         try {
-            antRunner.setBuildFileLocation(generateAntScript(configuration));
+            buildFile = generateAntScript(configuration);
         } catch (IOException e) {
             Status status = new Status(Status.ERROR, Activator.PLUGIN_ID, Messages.LAUNCH_ERROR_ERROR_GENERATING_ANT_FILE, e);
             throw new CoreException(status);
         }
 
+        antRunner.setBuildFileLocation(buildFile);
         modifyAntClasspathIfNecessary(configuration, antRunner);
+        if ("debug".equals(mode)) { //$NON-NLS-1$
+            antRunner.setMessageOutputLevel(Project.MSG_DEBUG);
+            antRunner.setArguments("-debug"); //$NON-NLS-1$
+            antRunner.addBuildListener("org.mybatis.generator.eclipse.ui.ant.DebugBuildListener"); //$NON-NLS-1$
+        }
         
         antRunner.run(monitor);
+        
+        if (LauncherUtils.getBooleanOrFalse(configuration, GeneratorLaunchConstants.ATTR_SQL_SCRIPT_SECURE_CREDENTIALS)) {
+            File file = new File(buildFile);
+            file.delete();
+        }
     }
     
     private void modifyAntClasspathIfNecessary(ILaunchConfiguration configuration, AntRunner antRunner) throws CoreException {

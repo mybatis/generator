@@ -23,6 +23,7 @@ import org.eclipse.debug.core.ILaunchConfiguration;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.api.dom.xml.XmlElement;
+import org.mybatis.generator.eclipse.ui.launcher.tabs.LauncherUtils;
 import org.mybatis.generator.internal.util.StringUtility;
 
 /**
@@ -74,8 +75,8 @@ public class AntFileGenerator implements GeneratorLaunchConstants {
 
             sqlTask.addAttribute(new Attribute("driver", getTextOrBlank(configuration, ATTR_SQL_SCRIPT_DRIVER_CLASS))); //$NON-NLS-1$
             sqlTask.addAttribute(new Attribute("url", getTextOrBlank(configuration, ATTR_SQL_SCRIPT_CONNECTION_URL))); //$NON-NLS-1$
-            sqlTask.addAttribute(new Attribute("userid", getTextOrBlank(configuration, ATTR_SQL_SCRIPT_USERID))); //$NON-NLS-1$
-            sqlTask.addAttribute(new Attribute("password", getTextOrBlank(configuration, ATTR_SQL_SCRIPT_PASSWORD))); //$NON-NLS-1$
+            sqlTask.addAttribute(new Attribute("userid", LauncherUtils.getUserId(configuration))); //$NON-NLS-1$
+            sqlTask.addAttribute(new Attribute("password", LauncherUtils.getPassword(configuration))); //$NON-NLS-1$
             sqlTask.addAttribute(new Attribute("src", sqlFileFullPath)); //$NON-NLS-1$
 
             parent.addElement(sqlTask);

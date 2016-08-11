@@ -15,12 +15,15 @@
  */
 package org.mybatis.generator.eclipse.ui.launcher;
 
+import org.mybatis.generator.eclipse.ui.Activator;
+
 public interface GeneratorLaunchConstants {
-    public static final String ATTR_CONFIGURATION_FILE_NAME = "MyBatis.Generator.ConfigTab.FileName"; //$NON-NLS-1$
+    public static final String ATTR_CONFIGURATION_FILE_NAME = Activator.PLUGIN_ID + ".CONFIG_TAB.FILE_NAME"; //$NON-NLS-1$
     
-    public static final String ATTR_SQL_SCRIPT_FILE_NAME = "MyBatis.Generator.SQLTab.ScriptFileName"; //$NON-NLS-1$
-    public static final String ATTR_SQL_SCRIPT_DRIVER_CLASS = "MyBatis.Generator.SQLTab.DriverClass"; //$NON-NLS-1$
-    public static final String ATTR_SQL_SCRIPT_CONNECTION_URL = "MyBatis.Generator.SQLTab.ConnectionURL"; //$NON-NLS-1$
-    public static final String ATTR_SQL_SCRIPT_USERID = "MyBatis.Generator.SQLTab.UserID"; //$NON-NLS-1$
-    public static final String ATTR_SQL_SCRIPT_PASSWORD = "MyBatis.Generator.SQLTab.Password"; //$NON-NLS-1$
+    public static final String ATTR_SQL_SCRIPT_FILE_NAME = Activator.PLUGIN_ID + ".SQL_TAB.FILE_NAME"; //$NON-NLS-1$
+    public static final String ATTR_SQL_SCRIPT_DRIVER_CLASS = Activator.PLUGIN_ID + ".SQL_TAB.DRIVER_CLASS"; //$NON-NLS-1$
+    public static final String ATTR_SQL_SCRIPT_CONNECTION_URL = Activator.PLUGIN_ID + ".SQL_TAB.CONNECTION_URL"; //$NON-NLS-1$
+    public static final String ATTR_SQL_SCRIPT_USERID = Activator.PLUGIN_ID + ".SQL_TAB.USER_ID"; //$NON-NLS-1$
+    public static final String ATTR_SQL_SCRIPT_PASSWORD = Activator.PLUGIN_ID + ".SQL_TAB.PASSWORD"; //$NON-NLS-1$
+    public static final String ATTR_SQL_SCRIPT_SECURE_CREDENTIALS = Activator.PLUGIN_ID + ".SQL_TAB.SECURE_CREDENTIALS"; //$NON-NLS-1$
 }

@@ -16,7 +16,16 @@
 package org.mybatis.generator.eclipse.ui.launcher.tabs;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.debug.core.ILaunchConfiguration;
+import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
+import org.eclipse.equinox.security.storage.ISecurePreferences;
+import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
+import org.eclipse.equinox.security.storage.StorageException;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.widgets.Shell;
+import org.mybatis.generator.eclipse.ui.Activator;
+import org.mybatis.generator.eclipse.ui.launcher.GeneratorLaunchConstants;
 
 public class LauncherUtils {
 
@@ -30,5 +39,95 @@ public class LauncherUtils {
         }
         
         return text;
+    }
+    
+    public static String getTextOrBlank(ISecurePreferences node, String attribute) {
+        String text;
+        
+        try {
+            text = node.get(attribute, ""); //$NON-NLS-1$
+        } catch (StorageException e) {
+            text = ""; //$NON-NLS-1$
+        }
+        
+        return text;
+    }
+
+    public static boolean getBooleanOrFalse(ILaunchConfiguration configuration, String attribute) {
+        boolean answer;
+        
+        try {
+            answer = configuration.getAttribute(attribute, false);
+        } catch (CoreException e) {
+            answer = false;
+        }
+        
+        return answer;
+    }
+    
+    public static void setPassword(ILaunchConfigurationWorkingCopy configuration, String password, Shell shell) {
+        boolean secure = getBooleanOrFalse(configuration, GeneratorLaunchConstants.ATTR_SQL_SCRIPT_SECURE_CREDENTIALS);
+        if (secure) {
+            ISecurePreferences node = getSecurePreferencesNode();
+            try {
+                node.put("password", password, true); //$NON-NLS-1$
+            } catch (StorageException e) {
+                logException(shell, e);
+            }
+        } else {
+            configuration.setAttribute(GeneratorLaunchConstants.ATTR_SQL_SCRIPT_PASSWORD, password);
+        }
+    }
+    
+    public static String getPassword(ILaunchConfiguration configuration) {
+        boolean secure = getBooleanOrFalse(configuration, GeneratorLaunchConstants.ATTR_SQL_SCRIPT_SECURE_CREDENTIALS);
+        String password;
+        if (secure) {
+            ISecurePreferences node = getSecurePreferencesNode();
+            password = getTextOrBlank(node, "password"); //$NON-NLS-1$
+        } else {
+            password = getTextOrBlank(configuration, GeneratorLaunchConstants.ATTR_SQL_SCRIPT_PASSWORD);
+        }
+        return password;
+    }
+
+    public static void setUserId(ILaunchConfigurationWorkingCopy configuration, String userId, Shell shell) {
+        boolean secure = getBooleanOrFalse(configuration, GeneratorLaunchConstants.ATTR_SQL_SCRIPT_SECURE_CREDENTIALS);
+        if (secure) {
+            ISecurePreferences node = getSecurePreferencesNode();
+            try {
+                node.put("user", userId, false); //$NON-NLS-1$
+            } catch (StorageException e) {
+                logException(shell, e);
+            }
+        } else {
+            configuration.setAttribute(GeneratorLaunchConstants.ATTR_SQL_SCRIPT_USERID, userId);
+        }
+    }
+    
+    public static String getUserId(ILaunchConfiguration configuration) {
+        boolean secure = getBooleanOrFalse(configuration, GeneratorLaunchConstants.ATTR_SQL_SCRIPT_SECURE_CREDENTIALS);
+        String userId;
+        if (secure) {
+            ISecurePreferences node = getSecurePreferencesNode();
+            userId = getTextOrBlank(node, "user"); //$NON-NLS-1$
+        } else {
+            userId = getTextOrBlank(configuration, GeneratorLaunchConstants.ATTR_SQL_SCRIPT_USERID);
+        }
+        return userId;
+    }
+
+    private static void logException(Shell shell, StorageException e) {
+        MessageDialog.openError(shell,
+                "Secure Storage Error",
+                "Error writing to secure storage.  See error log for more details.");
+        Status status = new Status(Status.ERROR, Activator.PLUGIN_ID, "Error writing to secure storage", e);
+        Activator.getDefault().getLog().log(status);
+    }
+    
+    private static ISecurePreferences getSecurePreferencesNode() {
+        ISecurePreferences root = SecurePreferencesFactory.getDefault();
+        ISecurePreferences node = root.node("/org.mybatis.generator/sqlscript"); //$NON-NLS-1$
+        return node;
     }
 }

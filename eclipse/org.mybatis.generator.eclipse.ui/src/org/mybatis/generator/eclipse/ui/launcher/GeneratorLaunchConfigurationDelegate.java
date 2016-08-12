@@ -36,6 +36,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
+import org.eclipse.debug.core.ILaunchManager;
 import org.eclipse.jdt.launching.AbstractJavaLaunchConfigurationDelegate;
 import org.mybatis.generator.eclipse.ui.Activator;
 import org.mybatis.generator.eclipse.ui.Messages;
@@ -70,7 +71,7 @@ public class GeneratorLaunchConfigurationDelegate extends AbstractJavaLaunchConf
 
         antRunner.setBuildFileLocation(buildFile);
         modifyAntClasspathIfNecessary(configuration, antRunner);
-        if ("debug".equals(mode)) { //$NON-NLS-1$
+        if (ILaunchManager.DEBUG_MODE.equals(mode)) {
             antRunner.setMessageOutputLevel(Project.MSG_DEBUG);
             antRunner.setArguments("-debug"); //$NON-NLS-1$
             antRunner.addBuildListener("org.mybatis.generator.eclipse.ui.ant.DebugBuildListener"); //$NON-NLS-1$

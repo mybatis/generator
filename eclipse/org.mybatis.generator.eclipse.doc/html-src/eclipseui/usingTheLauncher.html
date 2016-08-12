@@ -52,6 +52,10 @@ launch Ant in debug mode and will log all messages to
 a new Eclipse console called "MyBatis Generator".  This can be useful when
 using an SQL script as you will be able to see the script progress in the
 console.  You will also see many Ant configuration messages.</p>
+<p>Currently the launcher does not support breakpoints in dependent projects.
+If you are developing a plugin you may add the plugin project to the launcher
+classpath and the plugin will be executed, but any breakpoints set in
+plugin code will be ignored.  This is a limitation of Ant support.</p>
 
 <h2>How Passwords are Stored</h2>
 <p>If you specify a password for connecting to a database with the Ant script, you

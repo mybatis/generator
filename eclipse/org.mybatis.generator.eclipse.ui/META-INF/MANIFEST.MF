@@ -20,7 +20,9 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jdt.launching;bundle-version="3.8.0",
  org.eclipse.jdt.debug.ui;bundle-version="3.7.101",
  org.eclipse.core.expressions,
- org.eclipse.core.variables;bundle-version="3.2.800"
+ org.eclipse.core.variables;bundle-version="3.2.800",
+ org.eclipse.equinox.security;bundle-version="1.2.100",
+ org.eclipse.ui.console;bundle-version="3.6.100"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Export-Package: org.mybatis.generator.eclipse.ui,

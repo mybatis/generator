@@ -19,7 +19,6 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 
-    
     public static String FILE_PICKER_BROWSE_FILE_SYSTEM;
     public static String FILE_PICKER_BROWSE_WORKSPACE;
     public static String FILE_PICKER_FILE_DOESNT_EXIST;
@@ -42,11 +41,16 @@ public class Messages extends NLS {
     public static String SQL_SCRIPT_TAB_PASSWORD_LABEL;
     public static String SQL_SCRIPT_TAB_JDBC_DRIVER_REQUIRED;
     public static String SQL_SCRIPT_TAB_JDBC_URL_REQUIRED;
+    public static String SQL_SCRIPT_TAB_SECURE_STORAGE;
     
     public static String LAUNCH_CONFIGURATION_SELECTOR_TITLE;
     public static String LAUNCH_CONFIGURATION_SELECTOR_MESSAGE;
     public static String LAUNCH_ERROR_ERROR_GENERATING_ANT_FILE;
 
+    public static String SECURE_STORAGE_ERROR_DIALOG_TITLE;
+    public static String SECURE_STORAGE_ERROR_DIALOG_MESSAGE;
+    public static String SECURE_STORAGE_ERROR_LOG_MESSAGE;
+    
     static {
         NLS.initializeMessages("org.mybatis.generator.eclipse.ui.messages", Messages.class); //$NON-NLS-1$
     }

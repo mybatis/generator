@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3c.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Using the Launcher</title>
+  <link type="text/css" rel="stylesheet" href="../mbgdoc/mbgstyle.css"/>
+</head>
+<body>
+<h1>Using the Launcher</h1>
+<p>The MyBatis Generator feature includes a custom launcher for
+running MyBatis generator.  The launcher leverages Eclipse's launch support
+and enables you to create any number of custom launches.  The launcher has far
+more capability than the previous popup menu action.  Further, the launch support
+does not alter the Eclipse IDE classpath - which could happen inadvertently with
+the prior popup menu action.</p>
+<p>On this page we will cover some of the technical internals of the launcher.
+We assume you are familiar with how the Eclipse launch support works in general.
+If you are not familiar with Eclipse launching, just know that launch configurations
+can be accessed with the Run&gt;Run Configurations... or Run&gt;Debug Configurations...
+menu options.</p>
+
+<h2>Launcher Internals</h2>
+<p>Internally the launcher uses the MyBatis Generator Ant task to run the generator.  The
+launcher creates an Ant build script based on attributes in the launch
+configuration and then uses Eclipse's Ant support to run the script.</p>
+<p>The launch configuration allows you to specify a SQL script to run
+before the generator is run.  This can be useful when using in-memory databases
+and is used during testing of the feature.  Running a SQL script is accomplished
+by using Ant's built in
+SQL task to run a script you specify.  See the Ant documentation for details
+about the capabilities of the SQL task.</p>
+
+<h2>Working with the Classpath</h2>
+<p>The launcher allows you to add entries to the runtime classpath
+of the launch.  This can be used to add JDBC drivers to the classpath, and could
+also be used to add Eclipse projects to the classpath.  If you are developing a
+plugin, you could add your plugin project to the classpath to test your plugin.</p>
+<p>If you are developing a plugin, you do not need to add MyBatis Generator
+itself to the launch classpath as it will already be added by the launcher.</p>
+<p>Adding entries to the launcher classpath is generally preferable to using
+a <code>&lt;classPathEntry&gt;</code> configuration element in the generator
+configuration file.  However, if you use a dependency JAR that relies on native code
+(such as some DB2 drivers) it would be better to use the  
+<code>&lt;classPathEntry&gt;</code> configuration element.  This because native
+code can only be loaded by a single classloader and it is likely that
+the generator classloader will be garbage collected before the launch classloader.</p>
+
+<h2>What's Different in a Debug Launch?</h2>
+<p>If you launch in debug mode, rather than run mode, the launcher will
+launch Ant in debug mode and will log all messages to
+a new Eclipse console called "MyBatis Generator".  This can be useful when
+using an SQL script as you will be able to see the script progress in the
+console.  You will also see many Ant configuration messages.</p>
+<p>Currently the launcher does not support breakpoints in dependent projects.
+If you are developing a plugin you may add the plugin project to the launcher
+classpath and the plugin will be executed, but any breakpoints set in
+plugin code will be ignored.  This is a limitation of Ant support.</p>
+
+<h2>How Passwords are Stored</h2>
+<p>If you specify a password for connecting to a database with the Ant script, you
+have options on how that password is stored.</p>
+<p>If you select the check box specifying that
+credentials should be stored in secure storage, then the user ID and password will
+be stored in Eclipse's internal secure storage system.  The password will be encrypted
+using Eclipse's default support.  The password will be in clear text in the generated Ant
+script while the launch is running, but the generated Ant file will be deleted after the
+launch completes.</p>
+<p>If you do not select the check box specifying that
+credentials should be stored in secure storage, then the user ID and password will
+be stored in clear text in the Eclipse launch configuration.  The password will also
+be in clear text in the generated Ant script while the launch is running, and the
+generated Ant file will not be deleted after the launch completes.</p>
+<p>Launch configuration files are stored in<br/>
+<code>&lt;workspace-directory&gt;/.metadata/.plugins/org.eclipse.debug.core/.launches</code>
+</p>
+<p>The generated Ant files are stored in<br/>
+<code>&lt;workspace-directory&gt;/.metadata/.plugins/org.mybatis.generator.eclipse.ui/.generatedAntScripts</code>
+</p>
+</body>
+</html>

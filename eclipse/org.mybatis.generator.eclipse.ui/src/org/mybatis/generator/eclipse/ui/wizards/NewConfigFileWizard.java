@@ -47,15 +47,6 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.XmlConstants;
 import org.mybatis.generator.eclipse.ui.Activator;
 
-/**
- * This is a sample new wizard. Its role is to create a new file resource in the
- * provided container. If the container resource (a folder or a project) is
- * selected in the workspace when the wizard is opened, it will accept it as the
- * target container. The wizard creates one file with the extension "mpe". If a
- * sample multi-page editor (also available as a template) is registered for the
- * same extension, it will be able to open it.
- */
-
 public class NewConfigFileWizard extends Wizard implements INewWizard {
     private NewConfigFileWizardPage1 page;
     private ISelection selection;
@@ -71,7 +62,6 @@ public class NewConfigFileWizard extends Wizard implements INewWizard {
     /**
      * Adding the page to the wizard.
      */
-
     public void addPages() {
         page = new NewConfigFileWizardPage1(selection);
         addPage(page);
@@ -114,7 +104,6 @@ public class NewConfigFileWizard extends Wizard implements INewWizard {
      * or just replace its contents, and open the editor on the newly created
      * file.
      */
-
     private void doFinish(String containerName, String fileName,
             IProgressMonitor monitor) throws CoreException {
         // create a sample file
@@ -155,7 +144,6 @@ public class NewConfigFileWizard extends Wizard implements INewWizard {
     /**
      * We will initialize file contents with a sample text.
      */
-
     private InputStream openContentStream() {
 
         Document document = new Document(XmlConstants.MYBATIS_GENERATOR_CONFIG_PUBLIC_ID,

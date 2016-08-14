@@ -25,6 +25,7 @@ import org.eclipse.equinox.security.storage.StorageException;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.mybatis.generator.eclipse.ui.Activator;
+import org.mybatis.generator.eclipse.ui.Messages;
 import org.mybatis.generator.eclipse.ui.launcher.GeneratorLaunchConstants;
 
 public class LauncherUtils {
@@ -119,9 +120,10 @@ public class LauncherUtils {
 
     private static void logException(Shell shell, StorageException e) {
         MessageDialog.openError(shell,
-                "Secure Storage Error",
-                "Error writing to secure storage.  See error log for more details.");
-        Status status = new Status(Status.ERROR, Activator.PLUGIN_ID, "Error writing to secure storage", e);
+                Messages.SECURE_STORAGE_ERROR_DIALOG_TITLE,
+                Messages.SECURE_STORAGE_ERROR_DIALOG_MESSAGE);
+        Status status = new Status(Status.ERROR, Activator.PLUGIN_ID,
+                Messages.SECURE_STORAGE_ERROR_LOG_MESSAGE, e);
         Activator.getDefault().getLog().log(status);
     }
     

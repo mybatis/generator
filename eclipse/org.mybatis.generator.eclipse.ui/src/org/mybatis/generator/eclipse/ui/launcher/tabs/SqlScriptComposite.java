@@ -149,7 +149,7 @@ public class SqlScriptComposite extends AbstractGeneratorComposite {
         new Label(group, SWT.NONE);
         
         btnSecureStorage = new Button(group, SWT.CHECK);
-        btnSecureStorage.setText("Store Credentials in Secure Storage");
+        btnSecureStorage.setText(Messages.SQL_SCRIPT_TAB_SECURE_STORAGE);
         btnSecureStorage.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {

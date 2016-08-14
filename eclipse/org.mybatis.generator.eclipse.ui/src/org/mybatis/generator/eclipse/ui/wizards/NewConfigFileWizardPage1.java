@@ -135,7 +135,7 @@ public class NewConfigFileWizardPage1 extends WizardPage {
                 locationText.setText(container.getFullPath().toString());
             }
         }
-        fileText.setText("generatorConfig.xml");
+        fileText.setText("generatorConfig.xml"); //$NON-NLS-1$
     }
 
     /**

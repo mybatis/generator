@@ -45,6 +45,7 @@ Releasing the Eclipse Feature:
 4. cd ../org.mybatis.generator.eclipse.site/target/p2-composite-repo
 5. Edit bintrayUpload.sh and add your Bintray credentials
 6. ./bintrayUpload.sh
+7. Logon to the eclipse marketplace and add the new release information
 
 -------------------------------------------------------------------------------
 Final Details:

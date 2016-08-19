@@ -38,7 +38,7 @@ public class DeleteByPrimaryKeyElementGenerator extends
 <span class="fc" id="L38">        XmlElement answer = new XmlElement(&quot;delete&quot;); //$NON-NLS-1$</span>
 
 <span class="fc" id="L40">        answer.addAttribute(new Attribute(</span>
-                &quot;id&quot;, introspectedTable.getDeleteByPrimaryKeyStatementId())); //$NON-NLS-1$
+<span class="fc" id="L41">                &quot;id&quot;, introspectedTable.getDeleteByPrimaryKeyStatementId())); //$NON-NLS-1$</span>
         String parameterClass;
 <span class="fc bfc" id="L43" title="All 2 branches covered.">        if (introspectedTable.getRules().generatePrimaryKeyClass()) {</span>
 <span class="fc" id="L44">            parameterClass = introspectedTable.getPrimaryKeyType();</span>
@@ -57,7 +57,7 @@ public class DeleteByPrimaryKeyElementGenerator extends
 
 <span class="fc" id="L58">        boolean and = false;</span>
 <span class="fc bfc" id="L59" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable</span>
-                .getPrimaryKeyColumns()) {
+<span class="fc" id="L60">                .getPrimaryKeyColumns()) {</span>
 <span class="fc" id="L61">            sb.setLength(0);</span>
 <span class="fc bfc" id="L62" title="All 2 branches covered.">            if (and) {</span>
 <span class="fc" id="L63">                sb.append(&quot;  and &quot;); //$NON-NLS-1$</span>
@@ -67,15 +67,15 @@ public class DeleteByPrimaryKeyElementGenerator extends
             }
 
 <span class="fc" id="L69">            sb.append(Ibatis2FormattingUtilities</span>
-                    .getEscapedColumnName(introspectedColumn));
+<span class="fc" id="L70">                    .getEscapedColumnName(introspectedColumn));</span>
 <span class="fc" id="L71">            sb.append(&quot; = &quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L72">            sb.append(Ibatis2FormattingUtilities</span>
-                    .getParameterClause(introspectedColumn));
+<span class="fc" id="L73">                    .getParameterClause(introspectedColumn));</span>
 <span class="fc" id="L74">            answer.addElement(new TextElement(sb.toString()));</span>
 <span class="fc" id="L75">        }</span>
 
-<span class="pc bpc" id="L77" title="1 of 2 branches missed.">        if (context.getPlugins()</span>
-                .sqlMapDeleteByPrimaryKeyElementGenerated(answer,
+<span class="fc" id="L77">        if (context.getPlugins()</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">                .sqlMapDeleteByPrimaryKeyElementGenerated(answer,</span>
                         introspectedTable)) {
 <span class="fc" id="L80">            parentElement.addElement(answer);</span>
         }

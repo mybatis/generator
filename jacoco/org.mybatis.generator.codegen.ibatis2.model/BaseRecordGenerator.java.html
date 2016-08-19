@@ -51,12 +51,12 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
     public List&lt;CompilationUnit&gt; getCompilationUnits() {
 <span class="fc" id="L52">        FullyQualifiedTable table = introspectedTable.getFullyQualifiedTable();</span>
 <span class="fc" id="L53">        progressCallback.startTask(getString(</span>
-                &quot;Progress.8&quot;, table.toString())); //$NON-NLS-1$
+<span class="fc" id="L54">                &quot;Progress.8&quot;, table.toString())); //$NON-NLS-1$</span>
 <span class="fc" id="L55">        Plugin plugins = context.getPlugins();</span>
 <span class="fc" id="L56">        CommentGenerator commentGenerator = context.getCommentGenerator();</span>
 
 <span class="fc" id="L58">        TopLevelClass topLevelClass = new TopLevelClass(introspectedTable</span>
-                .getBaseRecordType());
+<span class="fc" id="L59">                .getBaseRecordType());</span>
 <span class="fc" id="L60">        topLevelClass.setVisibility(JavaVisibility.PUBLIC);</span>
 <span class="fc" id="L61">        commentGenerator.addJavaFileComment(topLevelClass);</span>
 
@@ -76,7 +76,7 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
         } else {
 <span class="fc bfc" id="L77" title="All 2 branches covered.">            if (includeBLOBColumns()) {</span>
 <span class="fc" id="L78">                introspectedColumns = introspectedTable</span>
-                        .getNonPrimaryKeyColumns();
+<span class="fc" id="L79">                        .getNonPrimaryKeyColumns();</span>
             } else {
 <span class="fc" id="L81">                introspectedColumns = introspectedTable.getBaseColumns();</span>
             }
@@ -84,8 +84,8 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
 
 <span class="fc" id="L85">        String rootClass = getRootClass();</span>
 <span class="fc bfc" id="L86" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedColumns) {</span>
-<span class="pc bpc" id="L87" title="1 of 2 branches missed.">            if (RootClassInfo.getInstance(rootClass, warnings)</span>
-                    .containsProperty(introspectedColumn)) {
+<span class="fc" id="L87">            if (RootClassInfo.getInstance(rootClass, warnings)</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">                    .containsProperty(introspectedColumn)) {</span>
 <span class="nc" id="L89">                continue;</span>
             }
 
@@ -124,7 +124,7 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
         FullyQualifiedJavaType superClass;
 <span class="fc bfc" id="L125" title="All 2 branches covered.">        if (introspectedTable.getRules().generatePrimaryKeyClass()) {</span>
 <span class="fc" id="L126">            superClass = new FullyQualifiedJavaType(introspectedTable</span>
-                    .getPrimaryKeyType());
+<span class="fc" id="L127">                    .getPrimaryKeyType());</span>
         } else {
 <span class="fc" id="L129">            String rootClass = getRootClass();</span>
 <span class="fc bfc" id="L130" title="All 2 branches covered.">            if (rootClass != null) {</span>
@@ -138,13 +138,13 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
     }
 
     private boolean includePrimaryKeyColumns() {
-<span class="fc bfc" id="L141" title="All 4 branches covered.">        return !introspectedTable.getRules().generatePrimaryKeyClass()</span>
-                &amp;&amp; introspectedTable.hasPrimaryKeyColumns();
+<span class="fc bfc" id="L141" title="All 2 branches covered.">        return !introspectedTable.getRules().generatePrimaryKeyClass()</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">                &amp;&amp; introspectedTable.hasPrimaryKeyColumns();</span>
     }
 
     private boolean includeBLOBColumns() {
-<span class="fc bfc" id="L146" title="All 4 branches covered.">        return !introspectedTable.getRules().generateRecordWithBLOBsClass()</span>
-                &amp;&amp; introspectedTable.hasBLOBColumns();
+<span class="fc bfc" id="L146" title="All 2 branches covered.">        return !introspectedTable.getRules().generateRecordWithBLOBsClass()</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">                &amp;&amp; introspectedTable.hasBLOBColumns();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

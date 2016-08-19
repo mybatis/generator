@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>IgnoredColumnPattern.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.config</a> &gt; <span class="el_source">IgnoredColumnPattern.java</span></div><h1>IgnoredColumnPattern.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2016 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.config;
+
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
+
+import org.mybatis.generator.api.dom.xml.Attribute;
+import org.mybatis.generator.api.dom.xml.XmlElement;
+
+public class IgnoredColumnPattern {
+
+    private String patternRegex;
+    private Pattern pattern;
+<span class="fc" id="L32">    private List&lt;IgnoredColumnException&gt; exceptions = new ArrayList&lt;IgnoredColumnException&gt;();</span>
+    
+<span class="fc" id="L34">    public IgnoredColumnPattern(String patternRegex) {</span>
+<span class="fc" id="L35">        this.patternRegex = patternRegex;</span>
+<span class="fc" id="L36">        pattern = Pattern.compile(patternRegex);</span>
+<span class="fc" id="L37">    }</span>
+    
+    public void addException(IgnoredColumnException exception) {
+<span class="fc" id="L40">        exceptions.add(exception);</span>
+<span class="fc" id="L41">    }</span>
+    
+    public boolean matches(String columnName) {
+<span class="fc" id="L44">        boolean matches = pattern.matcher(columnName).matches();</span>
+        
+<span class="pc bpc" id="L46" title="1 of 2 branches missed.">        if (matches) {</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">            for (IgnoredColumnException exception : exceptions) {</span>
+<span class="nc bnc" id="L48" title="All 2 branches missed.">                if (exception.matches(columnName)) {</span>
+<span class="nc" id="L49">                    matches = false;</span>
+<span class="nc" id="L50">                    break;</span>
+                }
+<span class="nc" id="L52">            }</span>
+        }
+        
+<span class="fc" id="L55">        return matches;</span>
+    }
+
+    public XmlElement toXmlElement() {
+<span class="nc" id="L59">        XmlElement xmlElement = new XmlElement(&quot;ignoreColumnsByRegex&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L60">        xmlElement.addAttribute(new Attribute(&quot;pattern&quot;, patternRegex)); //$NON-NLS-1$</span>
+        
+<span class="nc bnc" id="L62" title="All 2 branches missed.">        for (IgnoredColumnException exception : exceptions) {</span>
+<span class="nc" id="L63">            xmlElement.addElement(exception.toXmlElement());</span>
+<span class="nc" id="L64">        }</span>
+
+<span class="nc" id="L66">        return xmlElement;</span>
+    }
+
+    public void validate(List&lt;String&gt; errors, String tableName) {
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">        if (!stringHasValue(patternRegex)) {</span>
+<span class="nc" id="L71">            errors.add(getString(&quot;ValidationError.27&quot;, //$NON-NLS-1$</span>
+                    tableName));
+        }
+<span class="fc" id="L74">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

@@ -129,8 +129,8 @@ public final class PluginAggregator implements Plugin {
 <span class="fc" id="L129">        boolean rc = true;</span>
 
 <span class="fc bfc" id="L131" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
-<span class="pc bpc" id="L132" title="1 of 2 branches missed.">            if (!plugin</span>
-                    .sqlMapDeleteByPrimaryKeyElementGenerated(element, table)) {
+<span class="fc" id="L132">            if (!plugin</span>
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">                    .sqlMapDeleteByPrimaryKeyElementGenerated(element, table)) {</span>
 <span class="nc" id="L134">                rc = false;</span>
 <span class="nc" id="L135">                break;</span>
             }
@@ -158,7 +158,7 @@ public final class PluginAggregator implements Plugin {
 <span class="fc" id="L158">        List&lt;GeneratedJavaFile&gt; answer = new ArrayList&lt;GeneratedJavaFile&gt;();</span>
 <span class="fc bfc" id="L159" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
 <span class="fc" id="L160">            List&lt;GeneratedJavaFile&gt; temp = plugin</span>
-                    .contextGenerateAdditionalJavaFiles(introspectedTable);
+<span class="fc" id="L161">                    .contextGenerateAdditionalJavaFiles(introspectedTable);</span>
 <span class="pc bpc" id="L162" title="1 of 2 branches missed.">            if (temp != null) {</span>
 <span class="nc" id="L163">                answer.addAll(temp);</span>
             }
@@ -171,7 +171,7 @@ public final class PluginAggregator implements Plugin {
 <span class="fc" id="L171">        List&lt;GeneratedXmlFile&gt; answer = new ArrayList&lt;GeneratedXmlFile&gt;();</span>
 <span class="fc bfc" id="L172" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
 <span class="fc" id="L173">            List&lt;GeneratedXmlFile&gt; temp = plugin</span>
-                    .contextGenerateAdditionalXmlFiles(introspectedTable);
+<span class="fc" id="L174">                    .contextGenerateAdditionalXmlFiles(introspectedTable);</span>
 <span class="pc bpc" id="L175" title="1 of 2 branches missed.">            if (temp != null) {</span>
 <span class="nc" id="L176">                answer.addAll(temp);</span>
             }
@@ -228,8 +228,8 @@ public final class PluginAggregator implements Plugin {
 <span class="fc" id="L228">        boolean rc = true;</span>
 
 <span class="fc bfc" id="L230" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
-<span class="pc bpc" id="L231" title="1 of 2 branches missed.">            if (!plugin</span>
-                    .sqlMapInsertElementGenerated(element, introspectedTable)) {
+<span class="fc" id="L231">            if (!plugin</span>
+<span class="pc bpc" id="L232" title="1 of 2 branches missed.">                    .sqlMapInsertElementGenerated(element, introspectedTable)) {</span>
 <span class="nc" id="L233">                rc = false;</span>
 <span class="nc" id="L234">                break;</span>
             }
@@ -843,7 +843,7 @@ public final class PluginAggregator implements Plugin {
 <span class="fc" id="L843">        List&lt;GeneratedJavaFile&gt; answer = new ArrayList&lt;GeneratedJavaFile&gt;();</span>
 <span class="fc bfc" id="L844" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
 <span class="fc" id="L845">            List&lt;GeneratedJavaFile&gt; temp = plugin</span>
-                    .contextGenerateAdditionalJavaFiles();
+<span class="fc" id="L846">                    .contextGenerateAdditionalJavaFiles();</span>
 <span class="pc bpc" id="L847" title="1 of 2 branches missed.">            if (temp != null) {</span>
 <span class="nc" id="L848">                answer.addAll(temp);</span>
             }
@@ -855,7 +855,7 @@ public final class PluginAggregator implements Plugin {
 <span class="fc" id="L855">        List&lt;GeneratedXmlFile&gt; answer = new ArrayList&lt;GeneratedXmlFile&gt;();</span>
 <span class="fc bfc" id="L856" title="All 2 branches covered.">        for (Plugin plugin : plugins) {</span>
 <span class="fc" id="L857">            List&lt;GeneratedXmlFile&gt; temp = plugin</span>
-                    .contextGenerateAdditionalXmlFiles();
+<span class="fc" id="L858">                    .contextGenerateAdditionalXmlFiles();</span>
 <span class="fc bfc" id="L859" title="All 2 branches covered.">            if (temp != null) {</span>
 <span class="fc" id="L860">                answer.addAll(temp);</span>
             }

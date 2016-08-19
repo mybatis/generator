@@ -59,7 +59,7 @@ public class IntrospectedTableMyBatis3SimpleImpl extends IntrospectedTableMyBati
         }
         
 <span class="fc" id="L61">        String type = context.getJavaClientGeneratorConfiguration()</span>
-                .getConfigurationType();
+<span class="fc" id="L62">                .getConfigurationType();</span>
 
         AbstractJavaClientGenerator javaGenerator;
 <span class="fc bfc" id="L65" title="All 2 branches covered.">        if (&quot;XMLMAPPER&quot;.equalsIgnoreCase(type)) { //$NON-NLS-1$</span>
@@ -70,7 +70,7 @@ public class IntrospectedTableMyBatis3SimpleImpl extends IntrospectedTableMyBati
 <span class="nc" id="L70">            javaGenerator = new SimpleJavaClientGenerator();</span>
         } else {
 <span class="nc" id="L72">            javaGenerator = (AbstractJavaClientGenerator) ObjectFactory</span>
-                    .createInternalObject(type);
+<span class="nc" id="L73">                    .createInternalObject(type);</span>
         }
         
 <span class="fc" id="L76">        return javaGenerator;</span>

@@ -109,6 +109,11 @@ public class TableConfiguration extends PropertyHolder {
     
     /** The is all column delimiting enabled. */
     private boolean isAllColumnDelimitingEnabled;
+    
+    private String mapperName;
+    private String sqlProviderName;
+    
+<span class="fc" id="L116">    private List&lt;IgnoredColumnPattern&gt; ignoredColumnPatterns = new ArrayList&lt;IgnoredColumnPattern&gt;();</span>
 
     /**
      * Instantiates a new table configuration.
@@ -117,22 +122,22 @@ public class TableConfiguration extends PropertyHolder {
      *            the context
      */
     public TableConfiguration(Context context) {
-<span class="fc" id="L120">        super();</span>
+<span class="fc" id="L125">        super();</span>
 
-<span class="fc" id="L122">        this.modelType = context.getDefaultModelType();</span>
+<span class="fc" id="L127">        this.modelType = context.getDefaultModelType();</span>
 
-<span class="fc" id="L124">        columnOverrides = new ArrayList&lt;ColumnOverride&gt;();</span>
-<span class="fc" id="L125">        ignoredColumns = new HashMap&lt;IgnoredColumn, Boolean&gt;();</span>
+<span class="fc" id="L129">        columnOverrides = new ArrayList&lt;ColumnOverride&gt;();</span>
+<span class="fc" id="L130">        ignoredColumns = new HashMap&lt;IgnoredColumn, Boolean&gt;();</span>
 
-<span class="fc" id="L127">        insertStatementEnabled = true;</span>
-<span class="fc" id="L128">        selectByPrimaryKeyStatementEnabled = true;</span>
-<span class="fc" id="L129">        selectByExampleStatementEnabled = true;</span>
-<span class="fc" id="L130">        updateByPrimaryKeyStatementEnabled = true;</span>
-<span class="fc" id="L131">        deleteByPrimaryKeyStatementEnabled = true;</span>
-<span class="fc" id="L132">        deleteByExampleStatementEnabled = true;</span>
-<span class="fc" id="L133">        countByExampleStatementEnabled = true;</span>
-<span class="fc" id="L134">        updateByExampleStatementEnabled = true;</span>
-<span class="fc" id="L135">    }</span>
+<span class="fc" id="L132">        insertStatementEnabled = true;</span>
+<span class="fc" id="L133">        selectByPrimaryKeyStatementEnabled = true;</span>
+<span class="fc" id="L134">        selectByExampleStatementEnabled = true;</span>
+<span class="fc" id="L135">        updateByPrimaryKeyStatementEnabled = true;</span>
+<span class="fc" id="L136">        deleteByPrimaryKeyStatementEnabled = true;</span>
+<span class="fc" id="L137">        deleteByExampleStatementEnabled = true;</span>
+<span class="fc" id="L138">        countByExampleStatementEnabled = true;</span>
+<span class="fc" id="L139">        updateByExampleStatementEnabled = true;</span>
+<span class="fc" id="L140">    }</span>
 
     /**
      * Checks if is delete by primary key statement enabled.
@@ -140,7 +145,7 @@ public class TableConfiguration extends PropertyHolder {
      * @return true, if is delete by primary key statement enabled
      */
     public boolean isDeleteByPrimaryKeyStatementEnabled() {
-<span class="fc" id="L143">        return deleteByPrimaryKeyStatementEnabled;</span>
+<span class="fc" id="L148">        return deleteByPrimaryKeyStatementEnabled;</span>
     }
 
     /**
@@ -151,8 +156,8 @@ public class TableConfiguration extends PropertyHolder {
      */
     public void setDeleteByPrimaryKeyStatementEnabled(
             boolean deleteByPrimaryKeyStatementEnabled) {
-<span class="nc" id="L154">        this.deleteByPrimaryKeyStatementEnabled = deleteByPrimaryKeyStatementEnabled;</span>
-<span class="nc" id="L155">    }</span>
+<span class="nc" id="L159">        this.deleteByPrimaryKeyStatementEnabled = deleteByPrimaryKeyStatementEnabled;</span>
+<span class="nc" id="L160">    }</span>
 
     /**
      * Checks if is insert statement enabled.
@@ -160,7 +165,7 @@ public class TableConfiguration extends PropertyHolder {
      * @return true, if is insert statement enabled
      */
     public boolean isInsertStatementEnabled() {
-<span class="fc" id="L163">        return insertStatementEnabled;</span>
+<span class="fc" id="L168">        return insertStatementEnabled;</span>
     }
 
     /**
@@ -170,8 +175,8 @@ public class TableConfiguration extends PropertyHolder {
      *            the new insert statement enabled
      */
     public void setInsertStatementEnabled(boolean insertStatementEnabled) {
-<span class="nc" id="L173">        this.insertStatementEnabled = insertStatementEnabled;</span>
-<span class="nc" id="L174">    }</span>
+<span class="nc" id="L178">        this.insertStatementEnabled = insertStatementEnabled;</span>
+<span class="nc" id="L179">    }</span>
 
     /**
      * Checks if is select by primary key statement enabled.
@@ -179,7 +184,7 @@ public class TableConfiguration extends PropertyHolder {
      * @return true, if is select by primary key statement enabled
      */
     public boolean isSelectByPrimaryKeyStatementEnabled() {
-<span class="fc" id="L182">        return selectByPrimaryKeyStatementEnabled;</span>
+<span class="fc" id="L187">        return selectByPrimaryKeyStatementEnabled;</span>
     }
 
     /**
@@ -190,8 +195,8 @@ public class TableConfiguration extends PropertyHolder {
      */
     public void setSelectByPrimaryKeyStatementEnabled(
             boolean selectByPrimaryKeyStatementEnabled) {
-<span class="nc" id="L193">        this.selectByPrimaryKeyStatementEnabled = selectByPrimaryKeyStatementEnabled;</span>
-<span class="nc" id="L194">    }</span>
+<span class="nc" id="L198">        this.selectByPrimaryKeyStatementEnabled = selectByPrimaryKeyStatementEnabled;</span>
+<span class="nc" id="L199">    }</span>
 
     /**
      * Checks if is update by primary key statement enabled.
@@ -199,7 +204,7 @@ public class TableConfiguration extends PropertyHolder {
      * @return true, if is update by primary key statement enabled
      */
     public boolean isUpdateByPrimaryKeyStatementEnabled() {
-<span class="fc" id="L202">        return updateByPrimaryKeyStatementEnabled;</span>
+<span class="fc" id="L207">        return updateByPrimaryKeyStatementEnabled;</span>
     }
 
     /**
@@ -210,8 +215,8 @@ public class TableConfiguration extends PropertyHolder {
      */
     public void setUpdateByPrimaryKeyStatementEnabled(
             boolean updateByPrimaryKeyStatementEnabled) {
-<span class="nc" id="L213">        this.updateByPrimaryKeyStatementEnabled = updateByPrimaryKeyStatementEnabled;</span>
-<span class="nc" id="L214">    }</span>
+<span class="nc" id="L218">        this.updateByPrimaryKeyStatementEnabled = updateByPrimaryKeyStatementEnabled;</span>
+<span class="nc" id="L219">    }</span>
 
     /**
      * Checks if is column ignored.
@@ -221,23 +226,21 @@ public class TableConfiguration extends PropertyHolder {
      * @return true, if is column ignored
      */
     public boolean isColumnIgnored(String columnName) {
-<span class="fc bfc" id="L224" title="All 2 branches covered.">        for (Map.Entry&lt;IgnoredColumn, Boolean&gt; entry : ignoredColumns</span>
-                .entrySet()) {
-<span class="fc" id="L226">            IgnoredColumn ic = entry.getKey();</span>
-<span class="pc bpc" id="L227" title="1 of 2 branches missed.">            if (ic.isColumnNameDelimited()) {</span>
-<span class="nc bnc" id="L228" title="All 2 branches missed.">                if (columnName.equals(ic.getColumnName())) {</span>
-<span class="nc" id="L229">                    entry.setValue(Boolean.TRUE);</span>
-<span class="nc" id="L230">                    return true;</span>
-                }
-            } else {
-<span class="fc bfc" id="L233" title="All 2 branches covered.">                if (columnName.equalsIgnoreCase(ic.getColumnName())) {</span>
-<span class="fc" id="L234">                    entry.setValue(Boolean.TRUE);</span>
-<span class="fc" id="L235">                    return true;</span>
-                }
+<span class="fc bfc" id="L229" title="All 2 branches covered.">        for (Map.Entry&lt;IgnoredColumn, Boolean&gt; entry : ignoredColumns</span>
+<span class="fc" id="L230">                .entrySet()) {</span>
+<span class="fc bfc" id="L231" title="All 2 branches covered.">            if (entry.getKey().matches(columnName)) {</span>
+<span class="fc" id="L232">                entry.setValue(Boolean.TRUE);</span>
+<span class="fc" id="L233">                return true;</span>
             }
-<span class="fc" id="L238">        }</span>
+<span class="fc" id="L235">        }</span>
+        
+<span class="fc bfc" id="L237" title="All 2 branches covered.">        for (IgnoredColumnPattern ignoredColumnPattern : ignoredColumnPatterns) {</span>
+<span class="pc bpc" id="L238" title="1 of 2 branches missed.">            if (ignoredColumnPattern.matches(columnName)) {</span>
+<span class="nc" id="L239">                return true;</span>
+            }
+<span class="fc" id="L241">        }</span>
 
-<span class="fc" id="L240">        return false;</span>
+<span class="fc" id="L243">        return false;</span>
     }
 
     /**
@@ -247,8 +250,12 @@ public class TableConfiguration extends PropertyHolder {
      *            the ignored column
      */
     public void addIgnoredColumn(IgnoredColumn ignoredColumn) {
-<span class="fc" id="L250">        ignoredColumns.put(ignoredColumn, Boolean.FALSE);</span>
-<span class="fc" id="L251">    }</span>
+<span class="fc" id="L253">        ignoredColumns.put(ignoredColumn, Boolean.FALSE);</span>
+<span class="fc" id="L254">    }</span>
+
+    public void addIgnoredColumnPattern(IgnoredColumnPattern ignoredColumnPattern) {
+<span class="fc" id="L257">        ignoredColumnPatterns.add(ignoredColumnPattern);</span>
+<span class="fc" id="L258">    }</span>
 
     /**
      * Adds the column override.
@@ -257,27 +264,27 @@ public class TableConfiguration extends PropertyHolder {
      *            the column override
      */
     public void addColumnOverride(ColumnOverride columnOverride) {
-<span class="fc" id="L260">        columnOverrides.add(columnOverride);</span>
-<span class="fc" id="L261">    }</span>
+<span class="fc" id="L267">        columnOverrides.add(columnOverride);</span>
+<span class="fc" id="L268">    }</span>
 
     /* (non-Javadoc)
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
     public boolean equals(Object obj) {
-<span class="nc bnc" id="L268" title="All 2 branches missed.">        if (this == obj) {</span>
-<span class="nc" id="L269">            return true;</span>
+<span class="nc bnc" id="L275" title="All 2 branches missed.">        if (this == obj) {</span>
+<span class="nc" id="L276">            return true;</span>
         }
 
-<span class="nc bnc" id="L272" title="All 2 branches missed.">        if (!(obj instanceof TableConfiguration)) {</span>
-<span class="nc" id="L273">            return false;</span>
+<span class="nc bnc" id="L279" title="All 2 branches missed.">        if (!(obj instanceof TableConfiguration)) {</span>
+<span class="nc" id="L280">            return false;</span>
         }
 
-<span class="nc" id="L276">        TableConfiguration other = (TableConfiguration) obj;</span>
+<span class="nc" id="L283">        TableConfiguration other = (TableConfiguration) obj;</span>
 
-<span class="nc bnc" id="L278" title="All 6 branches missed.">        return areEqual(this.catalog, other.catalog)</span>
-                &amp;&amp; areEqual(this.schema, other.schema)
-                &amp;&amp; areEqual(this.tableName, other.tableName);
+<span class="nc bnc" id="L285" title="All 2 branches missed.">        return areEqual(this.catalog, other.catalog)</span>
+<span class="nc bnc" id="L286" title="All 2 branches missed.">                &amp;&amp; areEqual(this.schema, other.schema)</span>
+<span class="nc bnc" id="L287" title="All 2 branches missed.">                &amp;&amp; areEqual(this.tableName, other.tableName);</span>
     }
 
     /* (non-Javadoc)
@@ -285,12 +292,12 @@ public class TableConfiguration extends PropertyHolder {
      */
     @Override
     public int hashCode() {
-<span class="nc" id="L288">        int result = SEED;</span>
-<span class="nc" id="L289">        result = hash(result, catalog);</span>
-<span class="nc" id="L290">        result = hash(result, schema);</span>
-<span class="nc" id="L291">        result = hash(result, tableName);</span>
+<span class="nc" id="L295">        int result = SEED;</span>
+<span class="nc" id="L296">        result = hash(result, catalog);</span>
+<span class="nc" id="L297">        result = hash(result, schema);</span>
+<span class="nc" id="L298">        result = hash(result, tableName);</span>
 
-<span class="nc" id="L293">        return result;</span>
+<span class="nc" id="L300">        return result;</span>
     }
 
     /**
@@ -299,7 +306,7 @@ public class TableConfiguration extends PropertyHolder {
      * @return true, if is select by example statement enabled
      */
     public boolean isSelectByExampleStatementEnabled() {
-<span class="fc" id="L302">        return selectByExampleStatementEnabled;</span>
+<span class="fc" id="L309">        return selectByExampleStatementEnabled;</span>
     }
 
     /**
@@ -310,8 +317,8 @@ public class TableConfiguration extends PropertyHolder {
      */
     public void setSelectByExampleStatementEnabled(
             boolean selectByExampleStatementEnabled) {
-<span class="nc" id="L313">        this.selectByExampleStatementEnabled = selectByExampleStatementEnabled;</span>
-<span class="nc" id="L314">    }</span>
+<span class="nc" id="L320">        this.selectByExampleStatementEnabled = selectByExampleStatementEnabled;</span>
+<span class="nc" id="L321">    }</span>
 
     /**
      * May return null if the column has not been overridden.
@@ -321,19 +328,19 @@ public class TableConfiguration extends PropertyHolder {
      * @return the column override (if any) related to this column
      */
     public ColumnOverride getColumnOverride(String columnName) {
-<span class="fc bfc" id="L324" title="All 2 branches covered.">        for (ColumnOverride co : columnOverrides) {</span>
-<span class="fc bfc" id="L325" title="All 2 branches covered.">            if (co.isColumnNameDelimited()) {</span>
-<span class="fc bfc" id="L326" title="All 2 branches covered.">                if (columnName.equals(co.getColumnName())) {</span>
-<span class="fc" id="L327">                    return co;</span>
+<span class="fc bfc" id="L331" title="All 2 branches covered.">        for (ColumnOverride co : columnOverrides) {</span>
+<span class="fc bfc" id="L332" title="All 2 branches covered.">            if (co.isColumnNameDelimited()) {</span>
+<span class="fc bfc" id="L333" title="All 2 branches covered.">                if (columnName.equals(co.getColumnName())) {</span>
+<span class="fc" id="L334">                    return co;</span>
                 }
             } else {
-<span class="fc bfc" id="L330" title="All 2 branches covered.">                if (columnName.equalsIgnoreCase(co.getColumnName())) {</span>
-<span class="fc" id="L331">                    return co;</span>
+<span class="fc bfc" id="L337" title="All 2 branches covered.">                if (columnName.equalsIgnoreCase(co.getColumnName())) {</span>
+<span class="fc" id="L338">                    return co;</span>
                 }
             }
-<span class="fc" id="L334">        }</span>
+<span class="fc" id="L341">        }</span>
 
-<span class="fc" id="L336">        return null;</span>
+<span class="fc" id="L343">        return null;</span>
     }
 
     /**
@@ -342,7 +349,7 @@ public class TableConfiguration extends PropertyHolder {
      * @return the generated key
      */
     public GeneratedKey getGeneratedKey() {
-<span class="fc" id="L345">        return generatedKey;</span>
+<span class="fc" id="L352">        return generatedKey;</span>
     }
 
     /**
@@ -351,7 +358,7 @@ public class TableConfiguration extends PropertyHolder {
      * @return the select by example query id
      */
     public String getSelectByExampleQueryId() {
-<span class="fc" id="L354">        return selectByExampleQueryId;</span>
+<span class="fc" id="L361">        return selectByExampleQueryId;</span>
     }
 
     /**
@@ -361,8 +368,8 @@ public class TableConfiguration extends PropertyHolder {
      *            the new select by example query id
      */
     public void setSelectByExampleQueryId(String selectByExampleQueryId) {
-<span class="nc" id="L364">        this.selectByExampleQueryId = selectByExampleQueryId;</span>
-<span class="nc" id="L365">    }</span>
+<span class="nc" id="L371">        this.selectByExampleQueryId = selectByExampleQueryId;</span>
+<span class="nc" id="L372">    }</span>
 
     /**
      * Gets the select by primary key query id.
@@ -370,7 +377,7 @@ public class TableConfiguration extends PropertyHolder {
      * @return the select by primary key query id
      */
     public String getSelectByPrimaryKeyQueryId() {
-<span class="fc" id="L373">        return selectByPrimaryKeyQueryId;</span>
+<span class="fc" id="L380">        return selectByPrimaryKeyQueryId;</span>
     }
 
     /**
@@ -380,8 +387,8 @@ public class TableConfiguration extends PropertyHolder {
      *            the new select by primary key query id
      */
     public void setSelectByPrimaryKeyQueryId(String selectByPrimaryKeyQueryId) {
-<span class="nc" id="L383">        this.selectByPrimaryKeyQueryId = selectByPrimaryKeyQueryId;</span>
-<span class="nc" id="L384">    }</span>
+<span class="nc" id="L390">        this.selectByPrimaryKeyQueryId = selectByPrimaryKeyQueryId;</span>
+<span class="nc" id="L391">    }</span>
 
     /**
      * Checks if is delete by example statement enabled.
@@ -389,7 +396,7 @@ public class TableConfiguration extends PropertyHolder {
      * @return true, if is delete by example statement enabled
      */
     public boolean isDeleteByExampleStatementEnabled() {
-<span class="fc" id="L392">        return deleteByExampleStatementEnabled;</span>
+<span class="fc" id="L399">        return deleteByExampleStatementEnabled;</span>
     }
 
     /**
@@ -400,8 +407,8 @@ public class TableConfiguration extends PropertyHolder {
      */
     public void setDeleteByExampleStatementEnabled(
             boolean deleteByExampleStatementEnabled) {
-<span class="nc" id="L403">        this.deleteByExampleStatementEnabled = deleteByExampleStatementEnabled;</span>
-<span class="nc" id="L404">    }</span>
+<span class="nc" id="L410">        this.deleteByExampleStatementEnabled = deleteByExampleStatementEnabled;</span>
+<span class="nc" id="L411">    }</span>
 
     /**
      * Are any statements enabled.
@@ -409,7 +416,7 @@ public class TableConfiguration extends PropertyHolder {
      * @return true, if successful
      */
     public boolean areAnyStatementsEnabled() {
-<span class="pc bpc" id="L412" title="15 of 16 branches missed.">        return selectByExampleStatementEnabled</span>
+<span class="pc bpc" id="L419" title="15 of 16 branches missed.">        return selectByExampleStatementEnabled</span>
                 || selectByPrimaryKeyStatementEnabled || insertStatementEnabled
                 || updateByPrimaryKeyStatementEnabled
                 || deleteByExampleStatementEnabled
@@ -425,8 +432,8 @@ public class TableConfiguration extends PropertyHolder {
      *            the new generated key
      */
     public void setGeneratedKey(GeneratedKey generatedKey) {
-<span class="fc" id="L428">        this.generatedKey = generatedKey;</span>
-<span class="fc" id="L429">    }</span>
+<span class="fc" id="L435">        this.generatedKey = generatedKey;</span>
+<span class="fc" id="L436">    }</span>
 
     /**
      * Gets the alias.
@@ -434,7 +441,7 @@ public class TableConfiguration extends PropertyHolder {
      * @return the alias
      */
     public String getAlias() {
-<span class="fc" id="L437">        return alias;</span>
+<span class="fc" id="L444">        return alias;</span>
     }
 
     /**
@@ -444,8 +451,8 @@ public class TableConfiguration extends PropertyHolder {
      *            the new alias
      */
     public void setAlias(String alias) {
-<span class="fc" id="L447">        this.alias = alias;</span>
-<span class="fc" id="L448">    }</span>
+<span class="fc" id="L454">        this.alias = alias;</span>
+<span class="fc" id="L455">    }</span>
 
     /**
      * Gets the catalog.
@@ -453,7 +460,7 @@ public class TableConfiguration extends PropertyHolder {
      * @return the catalog
      */
     public String getCatalog() {
-<span class="fc" id="L456">        return catalog;</span>
+<span class="fc" id="L463">        return catalog;</span>
     }
 
     /**
@@ -463,8 +470,8 @@ public class TableConfiguration extends PropertyHolder {
      *            the new catalog
      */
     public void setCatalog(String catalog) {
-<span class="nc" id="L466">        this.catalog = catalog;</span>
-<span class="nc" id="L467">    }</span>
+<span class="nc" id="L473">        this.catalog = catalog;</span>
+<span class="nc" id="L474">    }</span>
 
     /**
      * Gets the domain object name.
@@ -472,7 +479,7 @@ public class TableConfiguration extends PropertyHolder {
      * @return the domain object name
      */
     public String getDomainObjectName() {
-<span class="fc" id="L475">        return domainObjectName;</span>
+<span class="fc" id="L482">        return domainObjectName;</span>
     }
 
     /**
@@ -482,8 +489,8 @@ public class TableConfiguration extends PropertyHolder {
      *            the new domain object name
      */
     public void setDomainObjectName(String domainObjectName) {
-<span class="fc" id="L485">        this.domainObjectName = domainObjectName;</span>
-<span class="fc" id="L486">    }</span>
+<span class="fc" id="L492">        this.domainObjectName = domainObjectName;</span>
+<span class="fc" id="L493">    }</span>
 
     /**
      * Gets the schema.
@@ -491,7 +498,7 @@ public class TableConfiguration extends PropertyHolder {
      * @return the schema
      */
     public String getSchema() {
-<span class="fc" id="L494">        return schema;</span>
+<span class="fc" id="L501">        return schema;</span>
     }
 
     /**
@@ -501,8 +508,8 @@ public class TableConfiguration extends PropertyHolder {
      *            the new schema
      */
     public void setSchema(String schema) {
-<span class="fc" id="L504">        this.schema = schema;</span>
-<span class="fc" id="L505">    }</span>
+<span class="fc" id="L511">        this.schema = schema;</span>
+<span class="fc" id="L512">    }</span>
 
     /**
      * Gets the table name.
@@ -510,7 +517,7 @@ public class TableConfiguration extends PropertyHolder {
      * @return the table name
      */
     public String getTableName() {
-<span class="fc" id="L513">        return tableName;</span>
+<span class="fc" id="L520">        return tableName;</span>
     }
 
     /**
@@ -520,8 +527,8 @@ public class TableConfiguration extends PropertyHolder {
      *            the new table name
      */
     public void setTableName(String tableName) {
-<span class="fc" id="L523">        this.tableName = tableName;</span>
-<span class="fc" id="L524">    }</span>
+<span class="fc" id="L530">        this.tableName = tableName;</span>
+<span class="fc" id="L531">    }</span>
 
     /**
      * Gets the column overrides.
@@ -529,7 +536,7 @@ public class TableConfiguration extends PropertyHolder {
      * @return the column overrides
      */
     public List&lt;ColumnOverride&gt; getColumnOverrides() {
-<span class="fc" id="L532">        return columnOverrides;</span>
+<span class="fc" id="L539">        return columnOverrides;</span>
     }
 
     /**
@@ -541,16 +548,16 @@ public class TableConfiguration extends PropertyHolder {
      *         as ignored columns
      */
     public List&lt;String&gt; getIgnoredColumnsInError() {
-<span class="fc" id="L544">        List&lt;String&gt; answer = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L551">        List&lt;String&gt; answer = new ArrayList&lt;String&gt;();</span>
 
-<span class="fc bfc" id="L546" title="All 2 branches covered.">        for (Map.Entry&lt;IgnoredColumn, Boolean&gt; entry : ignoredColumns</span>
-                .entrySet()) {
-<span class="fc bfc" id="L548" title="All 2 branches covered.">            if (Boolean.FALSE.equals(entry.getValue())) {</span>
-<span class="fc" id="L549">                answer.add(entry.getKey().getColumnName());</span>
+<span class="fc bfc" id="L553" title="All 2 branches covered.">        for (Map.Entry&lt;IgnoredColumn, Boolean&gt; entry : ignoredColumns</span>
+<span class="fc" id="L554">                .entrySet()) {</span>
+<span class="fc bfc" id="L555" title="All 2 branches covered.">            if (Boolean.FALSE.equals(entry.getValue())) {</span>
+<span class="fc" id="L556">                answer.add(entry.getKey().getColumnName());</span>
             }
-<span class="fc" id="L551">        }</span>
+<span class="fc" id="L558">        }</span>
 
-<span class="fc" id="L553">        return answer;</span>
+<span class="fc" id="L560">        return answer;</span>
     }
 
     /**
@@ -559,7 +566,7 @@ public class TableConfiguration extends PropertyHolder {
      * @return the model type
      */
     public ModelType getModelType() {
-<span class="fc" id="L562">        return modelType;</span>
+<span class="fc" id="L569">        return modelType;</span>
     }
 
     /**
@@ -569,9 +576,9 @@ public class TableConfiguration extends PropertyHolder {
      *            the new configured model type
      */
     public void setConfiguredModelType(String configuredModelType) {
-<span class="nc" id="L572">        this.configuredModelType = configuredModelType;</span>
-<span class="nc" id="L573">        this.modelType = ModelType.getModelType(configuredModelType);</span>
-<span class="nc" id="L574">    }</span>
+<span class="nc" id="L579">        this.configuredModelType = configuredModelType;</span>
+<span class="nc" id="L580">        this.modelType = ModelType.getModelType(configuredModelType);</span>
+<span class="nc" id="L581">    }</span>
 
     /**
      * Checks if is wildcard escaping enabled.
@@ -579,7 +586,7 @@ public class TableConfiguration extends PropertyHolder {
      * @return true, if is wildcard escaping enabled
      */
     public boolean isWildcardEscapingEnabled() {
-<span class="fc" id="L582">        return wildcardEscapingEnabled;</span>
+<span class="fc" id="L589">        return wildcardEscapingEnabled;</span>
     }
 
     /**
@@ -589,8 +596,8 @@ public class TableConfiguration extends PropertyHolder {
      *            the new wildcard escaping enabled
      */
     public void setWildcardEscapingEnabled(boolean wildcardEscapingEnabled) {
-<span class="nc" id="L592">        this.wildcardEscapingEnabled = wildcardEscapingEnabled;</span>
-<span class="nc" id="L593">    }</span>
+<span class="nc" id="L599">        this.wildcardEscapingEnabled = wildcardEscapingEnabled;</span>
+<span class="nc" id="L600">    }</span>
 
     /**
      * To xml element.
@@ -598,116 +605,130 @@ public class TableConfiguration extends PropertyHolder {
      * @return the xml element
      */
     public XmlElement toXmlElement() {
-<span class="nc" id="L601">        XmlElement xmlElement = new XmlElement(&quot;table&quot;); //$NON-NLS-1$</span>
-<span class="nc" id="L602">        xmlElement.addAttribute(new Attribute(&quot;tableName&quot;, tableName)); //$NON-NLS-1$</span>
+<span class="nc" id="L608">        XmlElement xmlElement = new XmlElement(&quot;table&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L609">        xmlElement.addAttribute(new Attribute(&quot;tableName&quot;, tableName)); //$NON-NLS-1$</span>
 
-<span class="nc bnc" id="L604" title="All 2 branches missed.">        if (stringHasValue(catalog)) {</span>
-<span class="nc" id="L605">            xmlElement.addAttribute(new Attribute(&quot;catalog&quot;, catalog)); //$NON-NLS-1$</span>
+<span class="nc bnc" id="L611" title="All 2 branches missed.">        if (stringHasValue(catalog)) {</span>
+<span class="nc" id="L612">            xmlElement.addAttribute(new Attribute(&quot;catalog&quot;, catalog)); //$NON-NLS-1$</span>
         }
 
-<span class="nc bnc" id="L608" title="All 2 branches missed.">        if (stringHasValue(schema)) {</span>
-<span class="nc" id="L609">            xmlElement.addAttribute(new Attribute(&quot;schema&quot;, schema)); //$NON-NLS-1$</span>
+<span class="nc bnc" id="L615" title="All 2 branches missed.">        if (stringHasValue(schema)) {</span>
+<span class="nc" id="L616">            xmlElement.addAttribute(new Attribute(&quot;schema&quot;, schema)); //$NON-NLS-1$</span>
         }
 
-<span class="nc bnc" id="L612" title="All 2 branches missed.">        if (stringHasValue(alias)) {</span>
-<span class="nc" id="L613">            xmlElement.addAttribute(new Attribute(&quot;alias&quot;, alias)); //$NON-NLS-1$</span>
+<span class="nc bnc" id="L619" title="All 2 branches missed.">        if (stringHasValue(alias)) {</span>
+<span class="nc" id="L620">            xmlElement.addAttribute(new Attribute(&quot;alias&quot;, alias)); //$NON-NLS-1$</span>
         }
 
-<span class="nc bnc" id="L616" title="All 2 branches missed.">        if (stringHasValue(domainObjectName)) {</span>
-<span class="nc" id="L617">            xmlElement.addAttribute(new Attribute(</span>
+<span class="nc bnc" id="L623" title="All 2 branches missed.">        if (stringHasValue(domainObjectName)) {</span>
+<span class="nc" id="L624">            xmlElement.addAttribute(new Attribute(</span>
                     &quot;domainObjectName&quot;, domainObjectName)); //$NON-NLS-1$
         }
 
-<span class="nc bnc" id="L621" title="All 2 branches missed.">        if (!insertStatementEnabled) {</span>
-<span class="nc" id="L622">            xmlElement.addAttribute(new Attribute(&quot;enableInsert&quot;, &quot;false&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="nc bnc" id="L628" title="All 2 branches missed.">        if (!insertStatementEnabled) {</span>
+<span class="nc" id="L629">            xmlElement.addAttribute(new Attribute(&quot;enableInsert&quot;, &quot;false&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
         }
 
-<span class="nc bnc" id="L625" title="All 2 branches missed.">        if (!selectByPrimaryKeyStatementEnabled) {</span>
-<span class="nc" id="L626">            xmlElement.addAttribute(new Attribute(</span>
+<span class="nc bnc" id="L632" title="All 2 branches missed.">        if (!selectByPrimaryKeyStatementEnabled) {</span>
+<span class="nc" id="L633">            xmlElement.addAttribute(new Attribute(</span>
                     &quot;enableSelectByPrimaryKey&quot;, &quot;false&quot;)); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
-<span class="nc bnc" id="L630" title="All 2 branches missed.">        if (!selectByExampleStatementEnabled) {</span>
-<span class="nc" id="L631">            xmlElement.addAttribute(new Attribute(</span>
+<span class="nc bnc" id="L637" title="All 2 branches missed.">        if (!selectByExampleStatementEnabled) {</span>
+<span class="nc" id="L638">            xmlElement.addAttribute(new Attribute(</span>
                     &quot;enableSelectByExample&quot;, &quot;false&quot;)); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
-<span class="nc bnc" id="L635" title="All 2 branches missed.">        if (!updateByPrimaryKeyStatementEnabled) {</span>
-<span class="nc" id="L636">            xmlElement.addAttribute(new Attribute(</span>
+<span class="nc bnc" id="L642" title="All 2 branches missed.">        if (!updateByPrimaryKeyStatementEnabled) {</span>
+<span class="nc" id="L643">            xmlElement.addAttribute(new Attribute(</span>
                     &quot;enableUpdateByPrimaryKey&quot;, &quot;false&quot;)); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
-<span class="nc bnc" id="L640" title="All 2 branches missed.">        if (!deleteByPrimaryKeyStatementEnabled) {</span>
-<span class="nc" id="L641">            xmlElement.addAttribute(new Attribute(</span>
+<span class="nc bnc" id="L647" title="All 2 branches missed.">        if (!deleteByPrimaryKeyStatementEnabled) {</span>
+<span class="nc" id="L648">            xmlElement.addAttribute(new Attribute(</span>
                     &quot;enableDeleteByPrimaryKey&quot;, &quot;false&quot;)); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
-<span class="nc bnc" id="L645" title="All 2 branches missed.">        if (!deleteByExampleStatementEnabled) {</span>
-<span class="nc" id="L646">            xmlElement.addAttribute(new Attribute(</span>
+<span class="nc bnc" id="L652" title="All 2 branches missed.">        if (!deleteByExampleStatementEnabled) {</span>
+<span class="nc" id="L653">            xmlElement.addAttribute(new Attribute(</span>
                     &quot;enableDeleteByExample&quot;, &quot;false&quot;)); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
-<span class="nc bnc" id="L650" title="All 2 branches missed.">        if (!countByExampleStatementEnabled) {</span>
-<span class="nc" id="L651">            xmlElement.addAttribute(new Attribute(</span>
+<span class="nc bnc" id="L657" title="All 2 branches missed.">        if (!countByExampleStatementEnabled) {</span>
+<span class="nc" id="L658">            xmlElement.addAttribute(new Attribute(</span>
                     &quot;enableCountByExample&quot;, &quot;false&quot;)); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
-<span class="nc bnc" id="L655" title="All 2 branches missed.">        if (!updateByExampleStatementEnabled) {</span>
-<span class="nc" id="L656">            xmlElement.addAttribute(new Attribute(</span>
+<span class="nc bnc" id="L662" title="All 2 branches missed.">        if (!updateByExampleStatementEnabled) {</span>
+<span class="nc" id="L663">            xmlElement.addAttribute(new Attribute(</span>
                     &quot;enableUpdateByExample&quot;, &quot;false&quot;)); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
-<span class="nc bnc" id="L660" title="All 2 branches missed.">        if (stringHasValue(selectByPrimaryKeyQueryId)) {</span>
-<span class="nc" id="L661">            xmlElement.addAttribute(new Attribute(</span>
+<span class="nc bnc" id="L667" title="All 2 branches missed.">        if (stringHasValue(selectByPrimaryKeyQueryId)) {</span>
+<span class="nc" id="L668">            xmlElement.addAttribute(new Attribute(</span>
                     &quot;selectByPrimaryKeyQueryId&quot;, selectByPrimaryKeyQueryId)); //$NON-NLS-1$
         }
 
-<span class="nc bnc" id="L665" title="All 2 branches missed.">        if (stringHasValue(selectByExampleQueryId)) {</span>
-<span class="nc" id="L666">            xmlElement.addAttribute(new Attribute(</span>
+<span class="nc bnc" id="L672" title="All 2 branches missed.">        if (stringHasValue(selectByExampleQueryId)) {</span>
+<span class="nc" id="L673">            xmlElement.addAttribute(new Attribute(</span>
                     &quot;selectByExampleQueryId&quot;, selectByExampleQueryId)); //$NON-NLS-1$
         }
 
-<span class="nc bnc" id="L670" title="All 2 branches missed.">        if (configuredModelType != null) {</span>
-<span class="nc" id="L671">            xmlElement.addAttribute(new Attribute(</span>
+<span class="nc bnc" id="L677" title="All 2 branches missed.">        if (configuredModelType != null) {</span>
+<span class="nc" id="L678">            xmlElement.addAttribute(new Attribute(</span>
                     &quot;modelType&quot;, configuredModelType)); //$NON-NLS-1$
         }
 
-<span class="nc bnc" id="L675" title="All 2 branches missed.">        if (wildcardEscapingEnabled) {</span>
-<span class="nc" id="L676">            xmlElement.addAttribute(new Attribute(&quot;escapeWildcards&quot;, &quot;true&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="nc bnc" id="L682" title="All 2 branches missed.">        if (wildcardEscapingEnabled) {</span>
+<span class="nc" id="L683">            xmlElement.addAttribute(new Attribute(&quot;escapeWildcards&quot;, &quot;true&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
         }
 
-<span class="nc bnc" id="L679" title="All 2 branches missed.">        if (isAllColumnDelimitingEnabled) {</span>
-<span class="nc" id="L680">            xmlElement.addAttribute(new Attribute(&quot;delimitAllColumns&quot;, &quot;true&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="nc bnc" id="L686" title="All 2 branches missed.">        if (isAllColumnDelimitingEnabled) {</span>
+<span class="nc" id="L687">            xmlElement.addAttribute(new Attribute(&quot;delimitAllColumns&quot;, &quot;true&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
         }
 
-<span class="nc bnc" id="L683" title="All 2 branches missed.">        if (delimitIdentifiers) {</span>
-<span class="nc" id="L684">            xmlElement</span>
-                    .addAttribute(new Attribute(&quot;delimitIdentifiers&quot;, &quot;true&quot;)); //$NON-NLS-1$ //$NON-NLS-2$
+<span class="nc bnc" id="L690" title="All 2 branches missed.">        if (delimitIdentifiers) {</span>
+<span class="nc" id="L691">            xmlElement</span>
+<span class="nc" id="L692">                    .addAttribute(new Attribute(&quot;delimitIdentifiers&quot;, &quot;true&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+        }
+        
+<span class="nc bnc" id="L695" title="All 2 branches missed.">        if (stringHasValue(mapperName)) {</span>
+<span class="nc" id="L696">            xmlElement.addAttribute(new Attribute(</span>
+                    &quot;mapperName&quot;, mapperName)); //$NON-NLS-1$
         }
 
-<span class="nc" id="L688">        addPropertyXmlElements(xmlElement);</span>
-
-<span class="nc bnc" id="L690" title="All 2 branches missed.">        if (generatedKey != null) {</span>
-<span class="nc" id="L691">            xmlElement.addElement(generatedKey.toXmlElement());</span>
+<span class="nc bnc" id="L700" title="All 2 branches missed.">        if (stringHasValue(sqlProviderName)) {</span>
+<span class="nc" id="L701">            xmlElement.addAttribute(new Attribute(</span>
+                    &quot;sqlProviderName&quot;, sqlProviderName)); //$NON-NLS-1$
         }
 
-<span class="nc bnc" id="L694" title="All 2 branches missed.">        if (columnRenamingRule != null) {</span>
-<span class="nc" id="L695">            xmlElement.addElement(columnRenamingRule.toXmlElement());</span>
+<span class="nc" id="L705">        addPropertyXmlElements(xmlElement);</span>
+
+<span class="nc bnc" id="L707" title="All 2 branches missed.">        if (generatedKey != null) {</span>
+<span class="nc" id="L708">            xmlElement.addElement(generatedKey.toXmlElement());</span>
         }
 
-<span class="nc bnc" id="L698" title="All 2 branches missed.">        if (ignoredColumns.size() &gt; 0) {</span>
-<span class="nc bnc" id="L699" title="All 2 branches missed.">            for (IgnoredColumn ignoredColumn : ignoredColumns.keySet()) {</span>
-<span class="nc" id="L700">                xmlElement.addElement(ignoredColumn.toXmlElement());</span>
-<span class="nc" id="L701">            }</span>
+<span class="nc bnc" id="L711" title="All 2 branches missed.">        if (columnRenamingRule != null) {</span>
+<span class="nc" id="L712">            xmlElement.addElement(columnRenamingRule.toXmlElement());</span>
         }
 
-<span class="nc bnc" id="L704" title="All 2 branches missed.">        if (columnOverrides.size() &gt; 0) {</span>
-<span class="nc bnc" id="L705" title="All 2 branches missed.">            for (ColumnOverride columnOverride : columnOverrides) {</span>
-<span class="nc" id="L706">                xmlElement.addElement(columnOverride.toXmlElement());</span>
-<span class="nc" id="L707">            }</span>
+<span class="nc bnc" id="L715" title="All 2 branches missed.">        if (ignoredColumns.size() &gt; 0) {</span>
+<span class="nc bnc" id="L716" title="All 2 branches missed.">            for (IgnoredColumn ignoredColumn : ignoredColumns.keySet()) {</span>
+<span class="nc" id="L717">                xmlElement.addElement(ignoredColumn.toXmlElement());</span>
+<span class="nc" id="L718">            }</span>
+        }
+        
+<span class="nc bnc" id="L721" title="All 2 branches missed.">        for (IgnoredColumnPattern ignoredColumnPattern : ignoredColumnPatterns) {</span>
+<span class="nc" id="L722">            xmlElement.addElement(ignoredColumnPattern.toXmlElement());</span>
+<span class="nc" id="L723">        }</span>
+
+<span class="nc bnc" id="L725" title="All 2 branches missed.">        if (columnOverrides.size() &gt; 0) {</span>
+<span class="nc bnc" id="L726" title="All 2 branches missed.">            for (ColumnOverride columnOverride : columnOverrides) {</span>
+<span class="nc" id="L727">                xmlElement.addElement(columnOverride.toXmlElement());</span>
+<span class="nc" id="L728">            }</span>
         }
 
-<span class="nc" id="L710">        return xmlElement;</span>
+<span class="nc" id="L731">        return xmlElement;</span>
     }
 
     /* (non-Javadoc)
@@ -715,7 +736,7 @@ public class TableConfiguration extends PropertyHolder {
      */
     @Override
     public String toString() {
-<span class="nc" id="L718">        return composeFullyQualifiedTableName(catalog, schema,</span>
+<span class="nc" id="L739">        return composeFullyQualifiedTableName(catalog, schema,</span>
                 tableName, '.');
     }
 
@@ -725,7 +746,7 @@ public class TableConfiguration extends PropertyHolder {
      * @return true, if is delimit identifiers
      */
     public boolean isDelimitIdentifiers() {
-<span class="fc" id="L728">        return delimitIdentifiers;</span>
+<span class="fc" id="L749">        return delimitIdentifiers;</span>
     }
 
     /**
@@ -735,8 +756,8 @@ public class TableConfiguration extends PropertyHolder {
      *            the new delimit identifiers
      */
     public void setDelimitIdentifiers(boolean delimitIdentifiers) {
-<span class="nc" id="L738">        this.delimitIdentifiers = delimitIdentifiers;</span>
-<span class="nc" id="L739">    }</span>
+<span class="nc" id="L759">        this.delimitIdentifiers = delimitIdentifiers;</span>
+<span class="nc" id="L760">    }</span>
 
     /**
      * Checks if is count by example statement enabled.
@@ -744,7 +765,7 @@ public class TableConfiguration extends PropertyHolder {
      * @return true, if is count by example statement enabled
      */
     public boolean isCountByExampleStatementEnabled() {
-<span class="fc" id="L747">        return countByExampleStatementEnabled;</span>
+<span class="fc" id="L768">        return countByExampleStatementEnabled;</span>
     }
 
     /**
@@ -755,8 +776,8 @@ public class TableConfiguration extends PropertyHolder {
      */
     public void setCountByExampleStatementEnabled(
             boolean countByExampleStatementEnabled) {
-<span class="nc" id="L758">        this.countByExampleStatementEnabled = countByExampleStatementEnabled;</span>
-<span class="nc" id="L759">    }</span>
+<span class="nc" id="L779">        this.countByExampleStatementEnabled = countByExampleStatementEnabled;</span>
+<span class="nc" id="L780">    }</span>
 
     /**
      * Checks if is update by example statement enabled.
@@ -764,7 +785,7 @@ public class TableConfiguration extends PropertyHolder {
      * @return true, if is update by example statement enabled
      */
     public boolean isUpdateByExampleStatementEnabled() {
-<span class="fc" id="L767">        return updateByExampleStatementEnabled;</span>
+<span class="fc" id="L788">        return updateByExampleStatementEnabled;</span>
     }
 
     /**
@@ -775,8 +796,8 @@ public class TableConfiguration extends PropertyHolder {
      */
     public void setUpdateByExampleStatementEnabled(
             boolean updateByExampleStatementEnabled) {
-<span class="nc" id="L778">        this.updateByExampleStatementEnabled = updateByExampleStatementEnabled;</span>
-<span class="nc" id="L779">    }</span>
+<span class="nc" id="L799">        this.updateByExampleStatementEnabled = updateByExampleStatementEnabled;</span>
+<span class="nc" id="L800">    }</span>
 
     /**
      * Validate.
@@ -787,44 +808,48 @@ public class TableConfiguration extends PropertyHolder {
      *            the list position
      */
     public void validate(List&lt;String&gt; errors, int listPosition) {
-<span class="pc bpc" id="L790" title="1 of 2 branches missed.">        if (!stringHasValue(tableName)) {</span>
-<span class="nc" id="L791">            errors.add(getString(</span>
-                    &quot;ValidationError.6&quot;, Integer.toString(listPosition))); //$NON-NLS-1$
+<span class="pc bpc" id="L811" title="1 of 2 branches missed.">        if (!stringHasValue(tableName)) {</span>
+<span class="nc" id="L812">            errors.add(getString(</span>
+<span class="nc" id="L813">                    &quot;ValidationError.6&quot;, Integer.toString(listPosition))); //$NON-NLS-1$</span>
         }
 
-<span class="fc" id="L795">        String fqTableName = composeFullyQualifiedTableName(</span>
+<span class="fc" id="L816">        String fqTableName = composeFullyQualifiedTableName(</span>
                 catalog, schema, tableName, '.');
 
-<span class="fc bfc" id="L798" title="All 2 branches covered.">        if (generatedKey != null) {</span>
-<span class="fc" id="L799">            generatedKey.validate(errors, fqTableName);</span>
+<span class="fc bfc" id="L819" title="All 2 branches covered.">        if (generatedKey != null) {</span>
+<span class="fc" id="L820">            generatedKey.validate(errors, fqTableName);</span>
         }
 
         // when using column indexes, either both or neither query ids
         // should be set
-<span class="pc bpc" id="L804" title="2 of 6 branches missed.">        if (isTrue(getProperty(PropertyRegistry.TABLE_USE_COLUMN_INDEXES))</span>
+<span class="pc bpc" id="L825" title="2 of 6 branches missed.">        if (isTrue(getProperty(PropertyRegistry.TABLE_USE_COLUMN_INDEXES))</span>
                 &amp;&amp; selectByExampleStatementEnabled
                 &amp;&amp; selectByPrimaryKeyStatementEnabled) {
-<span class="fc" id="L807">            boolean queryId1Set = stringHasValue(selectByExampleQueryId);</span>
-<span class="fc" id="L808">            boolean queryId2Set = stringHasValue(selectByPrimaryKeyQueryId);</span>
+<span class="fc" id="L828">            boolean queryId1Set = stringHasValue(selectByExampleQueryId);</span>
+<span class="fc" id="L829">            boolean queryId2Set = stringHasValue(selectByPrimaryKeyQueryId);</span>
 
-<span class="pc bpc" id="L810" title="1 of 2 branches missed.">            if (queryId1Set != queryId2Set) {</span>
-<span class="nc" id="L811">                errors.add(getString(&quot;ValidationError.13&quot;, //$NON-NLS-1$</span>
+<span class="pc bpc" id="L831" title="1 of 2 branches missed.">            if (queryId1Set != queryId2Set) {</span>
+<span class="nc" id="L832">                errors.add(getString(&quot;ValidationError.13&quot;, //$NON-NLS-1$</span>
                         fqTableName));
             }
         }
 
-<span class="fc bfc" id="L816" title="All 2 branches covered.">        if (columnRenamingRule != null) {</span>
-<span class="fc" id="L817">            columnRenamingRule.validate(errors, fqTableName);</span>
+<span class="fc bfc" id="L837" title="All 2 branches covered.">        if (columnRenamingRule != null) {</span>
+<span class="fc" id="L838">            columnRenamingRule.validate(errors, fqTableName);</span>
         }
 
-<span class="fc bfc" id="L820" title="All 2 branches covered.">        for (ColumnOverride columnOverride : columnOverrides) {</span>
-<span class="fc" id="L821">            columnOverride.validate(errors, fqTableName);</span>
-<span class="fc" id="L822">        }</span>
+<span class="fc bfc" id="L841" title="All 2 branches covered.">        for (ColumnOverride columnOverride : columnOverrides) {</span>
+<span class="fc" id="L842">            columnOverride.validate(errors, fqTableName);</span>
+<span class="fc" id="L843">        }</span>
 
-<span class="fc bfc" id="L824" title="All 2 branches covered.">        for (IgnoredColumn ignoredColumn : ignoredColumns.keySet()) {</span>
-<span class="fc" id="L825">            ignoredColumn.validate(errors, fqTableName);</span>
-<span class="fc" id="L826">        }</span>
-<span class="fc" id="L827">    }</span>
+<span class="fc bfc" id="L845" title="All 2 branches covered.">        for (IgnoredColumn ignoredColumn : ignoredColumns.keySet()) {</span>
+<span class="fc" id="L846">            ignoredColumn.validate(errors, fqTableName);</span>
+<span class="fc" id="L847">        }</span>
+
+<span class="fc bfc" id="L849" title="All 2 branches covered.">        for (IgnoredColumnPattern ignoredColumnPattern : ignoredColumnPatterns) {</span>
+<span class="fc" id="L850">            ignoredColumnPattern.validate(errors, fqTableName);</span>
+<span class="fc" id="L851">        }</span>
+<span class="fc" id="L852">    }</span>
 
     /**
      * Gets the column renaming rule.
@@ -832,7 +857,7 @@ public class TableConfiguration extends PropertyHolder {
      * @return the column renaming rule
      */
     public ColumnRenamingRule getColumnRenamingRule() {
-<span class="fc" id="L835">        return columnRenamingRule;</span>
+<span class="fc" id="L860">        return columnRenamingRule;</span>
     }
 
     /**
@@ -842,8 +867,8 @@ public class TableConfiguration extends PropertyHolder {
      *            the new column renaming rule
      */
     public void setColumnRenamingRule(ColumnRenamingRule columnRenamingRule) {
-<span class="fc" id="L845">        this.columnRenamingRule = columnRenamingRule;</span>
-<span class="fc" id="L846">    }</span>
+<span class="fc" id="L870">        this.columnRenamingRule = columnRenamingRule;</span>
+<span class="fc" id="L871">    }</span>
 
     /**
      * Checks if is all column delimiting enabled.
@@ -851,7 +876,7 @@ public class TableConfiguration extends PropertyHolder {
      * @return true, if is all column delimiting enabled
      */
     public boolean isAllColumnDelimitingEnabled() {
-<span class="fc" id="L854">        return isAllColumnDelimitingEnabled;</span>
+<span class="fc" id="L879">        return isAllColumnDelimitingEnabled;</span>
     }
 
     /**
@@ -862,7 +887,23 @@ public class TableConfiguration extends PropertyHolder {
      */
     public void setAllColumnDelimitingEnabled(
             boolean isAllColumnDelimitingEnabled) {
-<span class="nc" id="L865">        this.isAllColumnDelimitingEnabled = isAllColumnDelimitingEnabled;</span>
-<span class="nc" id="L866">    }</span>
+<span class="nc" id="L890">        this.isAllColumnDelimitingEnabled = isAllColumnDelimitingEnabled;</span>
+<span class="nc" id="L891">    }</span>
+
+    public String getMapperName() {
+<span class="fc" id="L894">        return mapperName;</span>
+    }
+
+    public void setMapperName(String mapperName) {
+<span class="fc" id="L898">        this.mapperName = mapperName;</span>
+<span class="fc" id="L899">    }</span>
+
+    public String getSqlProviderName() {
+<span class="fc" id="L902">        return sqlProviderName;</span>
+    }
+
+    public void setSqlProviderName(String sqlProviderName) {
+<span class="nc" id="L906">        this.sqlProviderName = sqlProviderName;</span>
+<span class="nc" id="L907">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

@@ -150,8 +150,8 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
 
     @Override
     protected void addUpdateByPrimaryKeyWithoutBLOBsMethod(Interface interfaze) {
-<span class="fc bfc" id="L153" title="All 2 branches covered.">        if (introspectedTable.getRules()</span>
-                .generateUpdateByPrimaryKeyWithoutBLOBs()) {
+<span class="fc" id="L153">        if (introspectedTable.getRules()</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">                .generateUpdateByPrimaryKeyWithoutBLOBs()) {</span>
 <span class="fc" id="L155">            AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator(false);</span>
 <span class="fc" id="L156">            initializeAndExecuteGenerator(methodGenerator, interfaze);</span>
         }

@@ -36,7 +36,7 @@ public class ExtendedDAOMethodNameCalculator implements DAOMethodNameCalculator 
 <span class="fc" id="L36">        StringBuilder sb = new StringBuilder();</span>
 <span class="fc" id="L37">        sb.append(&quot;insert&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L38">        sb.append(introspectedTable.getFullyQualifiedTable()</span>
-                .getDomainObjectName());
+<span class="fc" id="L39">                .getDomainObjectName());</span>
 
 <span class="fc" id="L41">        return sb.toString();</span>
     }
@@ -54,7 +54,7 @@ public class ExtendedDAOMethodNameCalculator implements DAOMethodNameCalculator 
 
 <span class="fc" id="L55">        sb.append(&quot;update&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L56">        sb.append(introspectedTable.getFullyQualifiedTable()</span>
-                .getDomainObjectName());
+<span class="fc" id="L57">                .getDomainObjectName());</span>
 
 <span class="fc" id="L59">        Rules rules = introspectedTable.getRules();</span>
 
@@ -81,7 +81,7 @@ public class ExtendedDAOMethodNameCalculator implements DAOMethodNameCalculator 
 <span class="nc" id="L81">        StringBuilder sb = new StringBuilder();</span>
 <span class="nc" id="L82">        sb.append(&quot;update&quot;); //$NON-NLS-1$</span>
 <span class="nc" id="L83">        sb.append(introspectedTable.getFullyQualifiedTable()</span>
-                .getDomainObjectName());
+<span class="nc" id="L84">                .getDomainObjectName());</span>
 
 <span class="nc" id="L86">        Rules rules = introspectedTable.getRules();</span>
 
@@ -101,7 +101,7 @@ public class ExtendedDAOMethodNameCalculator implements DAOMethodNameCalculator 
 <span class="fc" id="L101">        StringBuilder sb = new StringBuilder();</span>
 <span class="fc" id="L102">        sb.append(&quot;delete&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L103">        sb.append(introspectedTable.getFullyQualifiedTable()</span>
-                .getDomainObjectName());
+<span class="fc" id="L104">                .getDomainObjectName());</span>
 <span class="fc" id="L105">        sb.append(&quot;ByExample&quot;); //$NON-NLS-1$</span>
 
 <span class="fc" id="L107">        return sb.toString();</span>
@@ -112,7 +112,7 @@ public class ExtendedDAOMethodNameCalculator implements DAOMethodNameCalculator 
 <span class="fc" id="L112">        StringBuilder sb = new StringBuilder();</span>
 <span class="fc" id="L113">        sb.append(&quot;delete&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L114">        sb.append(introspectedTable.getFullyQualifiedTable()</span>
-                .getDomainObjectName());
+<span class="fc" id="L115">                .getDomainObjectName());</span>
 <span class="fc" id="L116">        sb.append(&quot;ByPrimaryKey&quot;); //$NON-NLS-1$</span>
 
 <span class="fc" id="L118">        return sb.toString();</span>
@@ -128,7 +128,7 @@ public class ExtendedDAOMethodNameCalculator implements DAOMethodNameCalculator 
 <span class="fc" id="L128">        StringBuilder sb = new StringBuilder();</span>
 <span class="fc" id="L129">        sb.append(&quot;select&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L130">        sb.append(introspectedTable.getFullyQualifiedTable()</span>
-                .getDomainObjectName());
+<span class="fc" id="L131">                .getDomainObjectName());</span>
 <span class="fc" id="L132">        sb.append(&quot;ByExample&quot;); //$NON-NLS-1$</span>
 
 <span class="fc" id="L134">        Rules rules = introspectedTable.getRules();</span>
@@ -150,7 +150,7 @@ public class ExtendedDAOMethodNameCalculator implements DAOMethodNameCalculator 
 <span class="nc" id="L150">        StringBuilder sb = new StringBuilder();</span>
 <span class="nc" id="L151">        sb.append(&quot;select&quot;); //$NON-NLS-1$</span>
 <span class="nc" id="L152">        sb.append(introspectedTable.getFullyQualifiedTable()</span>
-                .getDomainObjectName());
+<span class="nc" id="L153">                .getDomainObjectName());</span>
 <span class="nc" id="L154">        sb.append(&quot;ByExample&quot;); //$NON-NLS-1$</span>
 
 <span class="nc" id="L156">        Rules rules = introspectedTable.getRules();</span>
@@ -167,7 +167,7 @@ public class ExtendedDAOMethodNameCalculator implements DAOMethodNameCalculator 
 <span class="fc" id="L167">        StringBuilder sb = new StringBuilder();</span>
 <span class="fc" id="L168">        sb.append(&quot;select&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L169">        sb.append(introspectedTable.getFullyQualifiedTable()</span>
-                .getDomainObjectName());
+<span class="fc" id="L170">                .getDomainObjectName());</span>
 <span class="fc" id="L171">        sb.append(&quot;ByPrimaryKey&quot;); //$NON-NLS-1$</span>
 
 <span class="fc" id="L173">        return sb.toString();</span>
@@ -178,7 +178,7 @@ public class ExtendedDAOMethodNameCalculator implements DAOMethodNameCalculator 
 <span class="fc" id="L178">        StringBuilder sb = new StringBuilder();</span>
 <span class="fc" id="L179">        sb.append(&quot;update&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L180">        sb.append(introspectedTable.getFullyQualifiedTable()</span>
-                .getDomainObjectName());
+<span class="fc" id="L181">                .getDomainObjectName());</span>
 <span class="fc" id="L182">        sb.append(&quot;ByPrimaryKeySelective&quot;); //$NON-NLS-1$</span>
 
 <span class="fc" id="L184">        return sb.toString();</span>
@@ -189,7 +189,7 @@ public class ExtendedDAOMethodNameCalculator implements DAOMethodNameCalculator 
 <span class="fc" id="L189">        StringBuilder sb = new StringBuilder();</span>
 <span class="fc" id="L190">        sb.append(&quot;count&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L191">        sb.append(introspectedTable.getFullyQualifiedTable()</span>
-                .getDomainObjectName());
+<span class="fc" id="L192">                .getDomainObjectName());</span>
 <span class="fc" id="L193">        sb.append(&quot;ByExample&quot;); //$NON-NLS-1$</span>
 
 <span class="fc" id="L195">        return sb.toString();</span>
@@ -200,7 +200,7 @@ public class ExtendedDAOMethodNameCalculator implements DAOMethodNameCalculator 
 <span class="fc" id="L200">        StringBuilder sb = new StringBuilder();</span>
 <span class="fc" id="L201">        sb.append(&quot;update&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L202">        sb.append(introspectedTable.getFullyQualifiedTable()</span>
-                .getDomainObjectName());
+<span class="fc" id="L203">                .getDomainObjectName());</span>
 <span class="fc" id="L204">        sb.append(&quot;ByExampleSelective&quot;); //$NON-NLS-1$</span>
 
 <span class="fc" id="L206">        return sb.toString();</span>
@@ -211,7 +211,7 @@ public class ExtendedDAOMethodNameCalculator implements DAOMethodNameCalculator 
 <span class="nc" id="L211">        StringBuilder sb = new StringBuilder();</span>
 <span class="nc" id="L212">        sb.append(&quot;update&quot;); //$NON-NLS-1$</span>
 <span class="nc" id="L213">        sb.append(introspectedTable.getFullyQualifiedTable()</span>
-                .getDomainObjectName());
+<span class="nc" id="L214">                .getDomainObjectName());</span>
 
 <span class="nc" id="L216">        Rules rules = introspectedTable.getRules();</span>
 
@@ -232,7 +232,7 @@ public class ExtendedDAOMethodNameCalculator implements DAOMethodNameCalculator 
 
 <span class="fc" id="L233">        sb.append(&quot;update&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L234">        sb.append(introspectedTable.getFullyQualifiedTable()</span>
-                .getDomainObjectName());
+<span class="fc" id="L235">                .getDomainObjectName());</span>
 
 <span class="fc" id="L237">        Rules rules = introspectedTable.getRules();</span>
 
@@ -252,7 +252,7 @@ public class ExtendedDAOMethodNameCalculator implements DAOMethodNameCalculator 
 <span class="fc" id="L252">        StringBuilder sb = new StringBuilder();</span>
 <span class="fc" id="L253">        sb.append(&quot;insert&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L254">        sb.append(introspectedTable.getFullyQualifiedTable()</span>
-                .getDomainObjectName());
+<span class="fc" id="L255">                .getDomainObjectName());</span>
 <span class="fc" id="L256">        sb.append(&quot;Selective&quot;); //$NON-NLS-1$</span>
 
 <span class="fc" id="L258">        return sb.toString();</span>

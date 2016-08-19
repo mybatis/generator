@@ -39,14 +39,14 @@ public class CountByExampleMethodGenerator extends
     @Override
     public void addInterfaceElements(Interface interfaze) {
 <span class="fc" id="L41">        FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(</span>
-                introspectedTable.getExampleType());
+<span class="fc" id="L42">                introspectedTable.getExampleType());</span>
 
 <span class="fc" id="L44">        Set&lt;FullyQualifiedJavaType&gt; importedTypes = new TreeSet&lt;FullyQualifiedJavaType&gt;();</span>
 <span class="fc" id="L45">        importedTypes.add(fqjt);</span>
 
 <span class="fc" id="L47">        Method method = new Method();</span>
 <span class="fc" id="L48">        method.setVisibility(JavaVisibility.PUBLIC);</span>
-<span class="fc" id="L49">        method.setReturnType(FullyQualifiedJavaType.getIntInstance());</span>
+<span class="fc" id="L49">        method.setReturnType(new FullyQualifiedJavaType(&quot;long&quot;)); //$NON-NLS-1$</span>
 <span class="fc" id="L50">        method.setName(introspectedTable.getCountByExampleStatementId());</span>
 <span class="fc" id="L51">        method.addParameter(new Parameter(fqjt, &quot;example&quot;)); //$NON-NLS-1$</span>
 <span class="fc" id="L52">        context.getCommentGenerator().addGeneralMethodComment(method,</span>

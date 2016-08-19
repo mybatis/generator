@@ -137,7 +137,7 @@ public class FullyQualifiedTable {
         }
 
 <span class="fc bfc" id="L139" title="All 2 branches covered.">        beginningDelimiter = delimitIdentifiers ? context</span>
-                .getBeginningDelimiter() : &quot;&quot;; //$NON-NLS-1$
+<span class="fc" id="L140">                .getBeginningDelimiter() : &quot;&quot;; //$NON-NLS-1$</span>
 <span class="fc bfc" id="L141" title="All 2 branches covered.">        endingDelimiter = delimitIdentifiers ? context.getEndingDelimiter()</span>
                 : &quot;&quot;; //$NON-NLS-1$
 <span class="fc" id="L143">    }</span>
@@ -208,7 +208,7 @@ public class FullyQualifiedTable {
 <span class="fc" id="L208">        addDelimiters(localTableName);</span>
 
 <span class="fc" id="L210">        return composeFullyQualifiedTableName(localCatalog</span>
-                .toString(), localSchema.toString(), localTableName.toString(),
+<span class="fc" id="L211">                .toString(), localSchema.toString(), localTableName.toString(),</span>
                 '.');
     }
 
@@ -280,11 +280,11 @@ public class FullyQualifiedTable {
 
 <span class="nc" id="L281">        FullyQualifiedTable other = (FullyQualifiedTable) obj;</span>
 
-<span class="nc bnc" id="L283" title="All 6 branches missed.">        return areEqual(this.introspectedTableName,</span>
+<span class="nc bnc" id="L283" title="All 2 branches missed.">        return areEqual(this.introspectedTableName,</span>
                 other.introspectedTableName)
-                &amp;&amp; areEqual(this.introspectedCatalog,
+<span class="nc bnc" id="L285" title="All 2 branches missed.">                &amp;&amp; areEqual(this.introspectedCatalog,</span>
                         other.introspectedCatalog)
-                &amp;&amp; areEqual(this.introspectedSchema,
+<span class="nc bnc" id="L287" title="All 2 branches missed.">                &amp;&amp; areEqual(this.introspectedSchema,</span>
                         other.introspectedSchema);
     }
 
@@ -321,40 +321,63 @@ public class FullyQualifiedTable {
     }
 
     /**
-     * Calculates a Java package fragment based on the table catalog and schema. If qualifiers are ignored, then this
-     * method will return an empty string
+     * Calculates a Java package fragment based on the table catalog and schema.
+     * If qualifiers are ignored, then this method will return an empty string.
+     * 
+     * This method is used for determining the sub package for Java client and 
+     * SQL map (XML) objects.  It ignores any sub-package added to the
+     * domain object name in the table configuration.
      *
      * @param isSubPackagesEnabled
      *            the is sub packages enabled
      * @return the subpackage for this table
      */
-    public String getSubPackage(boolean isSubPackagesEnabled) {
-<span class="fc" id="L332">        StringBuilder sb = new StringBuilder();</span>
-<span class="pc bpc" id="L333" title="1 of 4 branches missed.">        if (!ignoreQualifiersAtRuntime &amp;&amp; isSubPackagesEnabled) {</span>
-<span class="pc bpc" id="L334" title="1 of 2 branches missed.">            if (stringHasValue(runtimeCatalog)) {</span>
-<span class="nc" id="L335">                sb.append('.');</span>
-<span class="nc" id="L336">                sb.append(runtimeCatalog.toLowerCase());</span>
-<span class="pc bpc" id="L337" title="1 of 2 branches missed.">            } else if (stringHasValue(introspectedCatalog)) {</span>
-<span class="nc" id="L338">                sb.append('.');</span>
-<span class="nc" id="L339">                sb.append(introspectedCatalog.toLowerCase());</span>
+    public String getSubPackageForClientOrSqlMap(boolean isSubPackagesEnabled) {
+<span class="fc" id="L336">        StringBuilder sb = new StringBuilder();</span>
+<span class="pc bpc" id="L337" title="1 of 4 branches missed.">        if (!ignoreQualifiersAtRuntime &amp;&amp; isSubPackagesEnabled) {</span>
+<span class="pc bpc" id="L338" title="1 of 2 branches missed.">            if (stringHasValue(runtimeCatalog)) {</span>
+<span class="nc" id="L339">                sb.append('.');</span>
+<span class="nc" id="L340">                sb.append(runtimeCatalog.toLowerCase());</span>
+<span class="pc bpc" id="L341" title="1 of 2 branches missed.">            } else if (stringHasValue(introspectedCatalog)) {</span>
+<span class="nc" id="L342">                sb.append('.');</span>
+<span class="nc" id="L343">                sb.append(introspectedCatalog.toLowerCase());</span>
             }
 
-<span class="pc bpc" id="L342" title="1 of 2 branches missed.">            if (stringHasValue(runtimeSchema)) {</span>
-<span class="nc" id="L343">                sb.append('.');</span>
-<span class="nc" id="L344">                sb.append(runtimeSchema.toLowerCase());</span>
-<span class="fc bfc" id="L345" title="All 2 branches covered.">            } else if (stringHasValue(introspectedSchema)) {</span>
-<span class="fc" id="L346">                sb.append('.');</span>
-<span class="fc" id="L347">                sb.append(introspectedSchema.toLowerCase());</span>
+<span class="pc bpc" id="L346" title="1 of 2 branches missed.">            if (stringHasValue(runtimeSchema)) {</span>
+<span class="nc" id="L347">                sb.append('.');</span>
+<span class="nc" id="L348">                sb.append(runtimeSchema.toLowerCase());</span>
+<span class="fc bfc" id="L349" title="All 2 branches covered.">            } else if (stringHasValue(introspectedSchema)) {</span>
+<span class="fc" id="L350">                sb.append('.');</span>
+<span class="fc" id="L351">                sb.append(introspectedSchema.toLowerCase());</span>
             }
         }
         
-<span class="fc bfc" id="L351" title="All 2 branches covered.">        if (stringHasValue(domainObjectSubPackage)) {</span>
-<span class="fc" id="L352">            sb.append('.');</span>
-<span class="fc" id="L353">            sb.append(domainObjectSubPackage);</span>
+        // TODO - strip characters that are not valid in package names
+<span class="fc" id="L356">        return sb.toString();</span>
+    }
+
+    /**
+     * Calculates a Java package fragment based on the table catalog and schema.
+     * If qualifiers are ignored, then this method will return an empty string.
+     * 
+     * This method is used for determining the sub package for Java model objects only.
+     * It takes into account the possibility that a sub-package was added to the
+     * domain object name in the table configuration.
+     *
+     * @param isSubPackagesEnabled
+     *            the is sub packages enabled
+     * @return the subpackage for this table
+     */
+    public String getSubPackageForModel(boolean isSubPackagesEnabled) {
+<span class="fc" id="L372">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L373">        sb.append(getSubPackageForClientOrSqlMap(isSubPackagesEnabled));</span>
+        
+<span class="fc bfc" id="L375" title="All 2 branches covered.">        if (stringHasValue(domainObjectSubPackage)) {</span>
+<span class="fc" id="L376">            sb.append('.');</span>
+<span class="fc" id="L377">            sb.append(domainObjectSubPackage);</span>
         }
 
-        // TODO - strip characters that are not valid in package names
-<span class="fc" id="L357">        return sb.toString();</span>
+<span class="fc" id="L380">        return sb.toString();</span>
     }
 
     /**
@@ -364,13 +387,13 @@ public class FullyQualifiedTable {
      *            the sb
      */
     private void addDelimiters(StringBuilder sb) {
-<span class="fc bfc" id="L367" title="All 2 branches covered.">        if (stringHasValue(beginningDelimiter)) {</span>
-<span class="fc" id="L368">            sb.insert(0, beginningDelimiter);</span>
+<span class="fc bfc" id="L390" title="All 2 branches covered.">        if (stringHasValue(beginningDelimiter)) {</span>
+<span class="fc" id="L391">            sb.insert(0, beginningDelimiter);</span>
         }
 
-<span class="fc bfc" id="L371" title="All 2 branches covered.">        if (stringHasValue(endingDelimiter)) {</span>
-<span class="fc" id="L372">            sb.append(endingDelimiter);</span>
+<span class="fc bfc" id="L394" title="All 2 branches covered.">        if (stringHasValue(endingDelimiter)) {</span>
+<span class="fc" id="L395">            sb.append(endingDelimiter);</span>
         }
-<span class="fc" id="L374">    }</span>
+<span class="fc" id="L397">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

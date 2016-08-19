@@ -50,12 +50,12 @@ public class RecordWithBLOBsGenerator extends AbstractJavaGenerator {
     public List&lt;CompilationUnit&gt; getCompilationUnits() {
 <span class="fc" id="L51">        FullyQualifiedTable table = introspectedTable.getFullyQualifiedTable();</span>
 <span class="fc" id="L52">        progressCallback.startTask(getString(</span>
-                &quot;Progress.9&quot;, table.toString())); //$NON-NLS-1$
+<span class="fc" id="L53">                &quot;Progress.9&quot;, table.toString())); //$NON-NLS-1$</span>
 <span class="fc" id="L54">        Plugin plugins = context.getPlugins();</span>
 <span class="fc" id="L55">        CommentGenerator commentGenerator = context.getCommentGenerator();</span>
 
 <span class="fc" id="L57">        TopLevelClass topLevelClass = new TopLevelClass(introspectedTable</span>
-                .getRecordWithBLOBsType());
+<span class="fc" id="L58">                .getRecordWithBLOBsType());</span>
 <span class="fc" id="L59">        topLevelClass.setVisibility(JavaVisibility.PUBLIC);</span>
 <span class="fc" id="L60">        commentGenerator.addJavaFileComment(topLevelClass);</span>
 
@@ -67,9 +67,9 @@ public class RecordWithBLOBsGenerator extends AbstractJavaGenerator {
 
 <span class="fc" id="L68">        String rootClass = getRootClass();</span>
 <span class="fc bfc" id="L69" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable</span>
-                .getBLOBColumns()) {
-<span class="pc bpc" id="L71" title="1 of 2 branches missed.">            if (RootClassInfo.getInstance(rootClass, warnings)</span>
-                    .containsProperty(introspectedColumn)) {
+<span class="fc" id="L70">                .getBLOBColumns()) {</span>
+<span class="fc" id="L71">            if (RootClassInfo.getInstance(rootClass, warnings)</span>
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">                    .containsProperty(introspectedColumn)) {</span>
 <span class="nc" id="L73">                continue;</span>
             }
 

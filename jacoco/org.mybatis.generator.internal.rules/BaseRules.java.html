@@ -18,6 +18,7 @@ package org.mybatis.generator.internal.rules;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.IntrospectedTable.TargetRuntime;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.config.TableConfiguration;
 import org.mybatis.generator.internal.util.StringUtility;
@@ -47,12 +48,12 @@ public abstract class BaseRules implements Rules {
      *            the introspected table
      */
     public BaseRules(IntrospectedTable introspectedTable) {
-<span class="fc" id="L50">        super();</span>
-<span class="fc" id="L51">        this.introspectedTable = introspectedTable;</span>
-<span class="fc" id="L52">        this.tableConfiguration = introspectedTable.getTableConfiguration();</span>
-<span class="fc" id="L53">        String modelOnly = tableConfiguration.getProperty(PropertyRegistry.TABLE_MODEL_ONLY);</span>
-<span class="fc" id="L54">        isModelOnly = StringUtility.isTrue(modelOnly);</span>
-<span class="fc" id="L55">    }</span>
+<span class="fc" id="L51">        super();</span>
+<span class="fc" id="L52">        this.introspectedTable = introspectedTable;</span>
+<span class="fc" id="L53">        this.tableConfiguration = introspectedTable.getTableConfiguration();</span>
+<span class="fc" id="L54">        String modelOnly = tableConfiguration.getProperty(PropertyRegistry.TABLE_MODEL_ONLY);</span>
+<span class="fc" id="L55">        isModelOnly = StringUtility.isTrue(modelOnly);</span>
+<span class="fc" id="L56">    }</span>
 
     /**
      * Implements the rule for generating the insert SQL Map element and DAO
@@ -62,11 +63,11 @@ public abstract class BaseRules implements Rules {
      * @return true if the element and method should be generated
      */
     public boolean generateInsert() {
-<span class="fc bfc" id="L65" title="All 2 branches covered.">        if (isModelOnly) {</span>
-<span class="fc" id="L66">            return false;</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">        if (isModelOnly) {</span>
+<span class="fc" id="L67">            return false;</span>
         }
         
-<span class="fc" id="L69">        return tableConfiguration.isInsertStatementEnabled();</span>
+<span class="fc" id="L70">        return tableConfiguration.isInsertStatementEnabled();</span>
     }
 
     /**
@@ -77,11 +78,11 @@ public abstract class BaseRules implements Rules {
      * @return true if the element and method should be generated
      */
     public boolean generateInsertSelective() {
-<span class="fc bfc" id="L80" title="All 2 branches covered.">        if (isModelOnly) {</span>
-<span class="fc" id="L81">            return false;</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">        if (isModelOnly) {</span>
+<span class="fc" id="L82">            return false;</span>
         }
         
-<span class="fc" id="L84">        return tableConfiguration.isInsertStatementEnabled();</span>
+<span class="fc" id="L85">        return tableConfiguration.isInsertStatementEnabled();</span>
     }
 
     /**
@@ -96,15 +97,15 @@ public abstract class BaseRules implements Rules {
 
         String answer;
 
-<span class="fc bfc" id="L99" title="All 2 branches covered.">        if (generateRecordWithBLOBsClass()) {</span>
-<span class="fc" id="L100">            answer = introspectedTable.getRecordWithBLOBsType();</span>
-<span class="fc bfc" id="L101" title="All 2 branches covered.">        } else if (generateBaseRecordClass()) {</span>
-<span class="fc" id="L102">            answer = introspectedTable.getBaseRecordType();</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">        if (generateRecordWithBLOBsClass()) {</span>
+<span class="fc" id="L101">            answer = introspectedTable.getRecordWithBLOBsType();</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">        } else if (generateBaseRecordClass()) {</span>
+<span class="fc" id="L103">            answer = introspectedTable.getBaseRecordType();</span>
         } else {
-<span class="fc" id="L104">            answer = introspectedTable.getPrimaryKeyType();</span>
+<span class="fc" id="L105">            answer = introspectedTable.getPrimaryKeyType();</span>
         }
 
-<span class="fc" id="L107">        return new FullyQualifiedJavaType(answer);</span>
+<span class="fc" id="L108">        return new FullyQualifiedJavaType(answer);</span>
     }
 
     /**
@@ -116,15 +117,19 @@ public abstract class BaseRules implements Rules {
      * @return true if the element and method should be generated
      */
     public boolean generateUpdateByPrimaryKeyWithoutBLOBs() {
-<span class="fc bfc" id="L119" title="All 2 branches covered.">        if (isModelOnly) {</span>
-<span class="fc" id="L120">            return false;</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">        if (isModelOnly) {</span>
+<span class="fc" id="L121">            return false;</span>
         }
         
-<span class="pc bpc" id="L123" title="1 of 6 branches missed.">        boolean rc = tableConfiguration.isUpdateByPrimaryKeyStatementEnabled()</span>
-                &amp;&amp; introspectedTable.hasPrimaryKeyColumns()
-                &amp;&amp; introspectedTable.hasBaseColumns();
+<span class="fc bfc" id="L124" title="All 2 branches covered.">        if (ListUtilities.removeGeneratedAlwaysColumns(introspectedTable.getBaseColumns()).isEmpty()) {</span>
+<span class="fc" id="L125">            return false;</span>
+        }
+        
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">        boolean rc = tableConfiguration.isUpdateByPrimaryKeyStatementEnabled()</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">                &amp;&amp; introspectedTable.hasPrimaryKeyColumns()</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">                &amp;&amp; introspectedTable.hasBaseColumns();</span>
 
-<span class="fc" id="L127">        return rc;</span>
+<span class="fc" id="L132">        return rc;</span>
     }
 
     /**
@@ -136,15 +141,18 @@ public abstract class BaseRules implements Rules {
      * @return true if the element and method should be generated
      */
     public boolean generateUpdateByPrimaryKeyWithBLOBs() {
-<span class="fc bfc" id="L139" title="All 2 branches covered.">        if (isModelOnly) {</span>
-<span class="fc" id="L140">            return false;</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">        if (isModelOnly) {</span>
+<span class="fc" id="L145">            return false;</span>
         }
         
-<span class="pc bpc" id="L143" title="1 of 6 branches missed.">        boolean rc = tableConfiguration.isUpdateByPrimaryKeyStatementEnabled()</span>
-                &amp;&amp; introspectedTable.hasPrimaryKeyColumns()
-                &amp;&amp; introspectedTable.hasBLOBColumns();
+<span class="fc bfc" id="L148" title="All 2 branches covered.">        if (ListUtilities.removeGeneratedAlwaysColumns(introspectedTable.getNonPrimaryKeyColumns()).isEmpty()) {</span>
+<span class="fc" id="L149">            return false;</span>
+        }
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">        boolean rc = tableConfiguration.isUpdateByPrimaryKeyStatementEnabled()</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">                &amp;&amp; introspectedTable.hasPrimaryKeyColumns()</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">                &amp;&amp; introspectedTable.hasBLOBColumns();</span>
 
-<span class="fc" id="L147">        return rc;</span>
+<span class="fc" id="L155">        return rc;</span>
     }
 
     /**
@@ -156,16 +164,20 @@ public abstract class BaseRules implements Rules {
      * @return true if the element and method should be generated
      */
     public boolean generateUpdateByPrimaryKeySelective() {
-<span class="fc bfc" id="L159" title="All 2 branches covered.">        if (isModelOnly) {</span>
-<span class="fc" id="L160">            return false;</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">        if (isModelOnly) {</span>
+<span class="fc" id="L168">            return false;</span>
         }
         
-<span class="pc bpc" id="L163" title="1 of 8 branches missed.">        boolean rc = tableConfiguration.isUpdateByPrimaryKeyStatementEnabled()</span>
-                &amp;&amp; introspectedTable.hasPrimaryKeyColumns()
-                &amp;&amp; (introspectedTable.hasBLOBColumns() || introspectedTable
-                        .hasBaseColumns());
+<span class="fc bfc" id="L171" title="All 2 branches covered.">        if (ListUtilities.removeGeneratedAlwaysColumns(introspectedTable.getNonPrimaryKeyColumns()).isEmpty()) {</span>
+<span class="fc" id="L172">            return false;</span>
+        }
+        
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">        boolean rc = tableConfiguration.isUpdateByPrimaryKeyStatementEnabled()</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">                &amp;&amp; introspectedTable.hasPrimaryKeyColumns()</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">                &amp;&amp; (introspectedTable.hasBLOBColumns() || introspectedTable</span>
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">                        .hasBaseColumns());</span>
 
-<span class="fc" id="L168">        return rc;</span>
+<span class="fc" id="L180">        return rc;</span>
     }
 
     /**
@@ -177,14 +189,14 @@ public abstract class BaseRules implements Rules {
      * @return true if the element and method should be generated
      */
     public boolean generateDeleteByPrimaryKey() {
-<span class="fc bfc" id="L180" title="All 2 branches covered.">        if (isModelOnly) {</span>
-<span class="fc" id="L181">            return false;</span>
+<span class="fc bfc" id="L192" title="All 2 branches covered.">        if (isModelOnly) {</span>
+<span class="fc" id="L193">            return false;</span>
         }
         
-<span class="pc bpc" id="L184" title="1 of 4 branches missed.">        boolean rc = tableConfiguration.isDeleteByPrimaryKeyStatementEnabled()</span>
-                &amp;&amp; introspectedTable.hasPrimaryKeyColumns();
+<span class="pc bpc" id="L196" title="1 of 2 branches missed.">        boolean rc = tableConfiguration.isDeleteByPrimaryKeyStatementEnabled()</span>
+<span class="fc bfc" id="L197" title="All 2 branches covered.">                &amp;&amp; introspectedTable.hasPrimaryKeyColumns();</span>
 
-<span class="fc" id="L187">        return rc;</span>
+<span class="fc" id="L199">        return rc;</span>
     }
 
     /**
@@ -195,13 +207,13 @@ public abstract class BaseRules implements Rules {
      * @return true if the element and method should be generated
      */
     public boolean generateDeleteByExample() {
-<span class="fc bfc" id="L198" title="All 2 branches covered.">        if (isModelOnly) {</span>
-<span class="fc" id="L199">            return false;</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">        if (isModelOnly) {</span>
+<span class="fc" id="L211">            return false;</span>
         }
         
-<span class="fc" id="L202">        boolean rc = tableConfiguration.isDeleteByExampleStatementEnabled();</span>
+<span class="fc" id="L214">        boolean rc = tableConfiguration.isDeleteByExampleStatementEnabled();</span>
 
-<span class="fc" id="L204">        return rc;</span>
+<span class="fc" id="L216">        return rc;</span>
     }
 
     /**
@@ -211,14 +223,14 @@ public abstract class BaseRules implements Rules {
      * @return true if the result map should be generated
      */
     public boolean generateBaseResultMap() {
-<span class="fc bfc" id="L214" title="All 2 branches covered.">        if (isModelOnly) {</span>
-<span class="fc" id="L215">            return true;</span>
+<span class="fc bfc" id="L226" title="All 2 branches covered.">        if (isModelOnly) {</span>
+<span class="fc" id="L227">            return true;</span>
         }
         
-<span class="pc bpc" id="L218" title="3 of 4 branches missed.">        boolean rc = tableConfiguration.isSelectByExampleStatementEnabled()</span>
-                || tableConfiguration.isSelectByPrimaryKeyStatementEnabled();
+<span class="pc bpc" id="L230" title="1 of 2 branches missed.">        boolean rc = tableConfiguration.isSelectByExampleStatementEnabled()</span>
+<span class="pc bnc" id="L231" title="All 2 branches missed.">                || tableConfiguration.isSelectByPrimaryKeyStatementEnabled();</span>
 
-<span class="fc" id="L221">        return rc;</span>
+<span class="fc" id="L233">        return rc;</span>
     }
 
     /**
@@ -231,18 +243,18 @@ public abstract class BaseRules implements Rules {
     public boolean generateResultMapWithBLOBs() {
         boolean rc;
         
-<span class="fc bfc" id="L234" title="All 2 branches covered.">        if (introspectedTable.hasBLOBColumns()) {</span>
-<span class="fc bfc" id="L235" title="All 2 branches covered.">            if (isModelOnly) {</span>
-<span class="fc" id="L236">                rc = true;</span>
+<span class="fc bfc" id="L246" title="All 2 branches covered.">        if (introspectedTable.hasBLOBColumns()) {</span>
+<span class="fc bfc" id="L247" title="All 2 branches covered.">            if (isModelOnly) {</span>
+<span class="fc" id="L248">                rc = true;</span>
             } else {
-<span class="pc bpc" id="L238" title="3 of 4 branches missed.">                rc = tableConfiguration.isSelectByExampleStatementEnabled() </span>
-                        || tableConfiguration.isSelectByPrimaryKeyStatementEnabled();
+<span class="pc bpc" id="L250" title="1 of 2 branches missed.">                rc = tableConfiguration.isSelectByExampleStatementEnabled() </span>
+<span class="pc bnc" id="L251" title="All 2 branches missed.">                        || tableConfiguration.isSelectByPrimaryKeyStatementEnabled();</span>
             }
         } else {
-<span class="fc" id="L242">            rc = false;</span>
+<span class="fc" id="L254">            rc = false;</span>
         }
         
-<span class="fc" id="L245">        return rc;</span>
+<span class="fc" id="L257">        return rc;</span>
     }
 
     /**
@@ -257,19 +269,19 @@ public abstract class BaseRules implements Rules {
      * @return true if the SQL where clause element should be generated
      */
     public boolean generateSQLExampleWhereClause() {
-<span class="fc bfc" id="L260" title="All 2 branches covered.">        if (isModelOnly) {</span>
-<span class="fc" id="L261">            return false;</span>
+<span class="fc bfc" id="L272" title="All 2 branches covered.">        if (isModelOnly) {</span>
+<span class="fc" id="L273">            return false;</span>
         }
         
-<span class="pc bpc" id="L264" title="5 of 6 branches missed.">        boolean rc = tableConfiguration.isSelectByExampleStatementEnabled()</span>
-                || tableConfiguration.isDeleteByExampleStatementEnabled()
-                || tableConfiguration.isCountByExampleStatementEnabled();
+<span class="pc bpc" id="L276" title="1 of 2 branches missed.">        boolean rc = tableConfiguration.isSelectByExampleStatementEnabled()</span>
+<span class="nc bnc" id="L277" title="All 2 branches missed.">                || tableConfiguration.isDeleteByExampleStatementEnabled()</span>
+<span class="pc bnc" id="L278" title="All 2 branches missed.">                || tableConfiguration.isCountByExampleStatementEnabled();</span>
 
-<span class="fc bfc" id="L268" title="All 2 branches covered.">        if (introspectedTable.getTargetRuntime() == TargetRuntime.IBATIS2) {</span>
-<span class="fc" id="L269">            rc |= tableConfiguration.isUpdateByExampleStatementEnabled();</span>
+<span class="fc bfc" id="L280" title="All 2 branches covered.">        if (introspectedTable.getTargetRuntime() == TargetRuntime.IBATIS2) {</span>
+<span class="fc" id="L281">            rc |= tableConfiguration.isUpdateByExampleStatementEnabled();</span>
         }
 
-<span class="fc" id="L272">        return rc;</span>
+<span class="fc" id="L284">        return rc;</span>
     }
 
     /**
@@ -284,12 +296,12 @@ public abstract class BaseRules implements Rules {
      * @return true if the SQL where clause element should be generated
      */
     public boolean generateMyBatis3UpdateByExampleWhereClause() {
-<span class="fc bfc" id="L287" title="All 2 branches covered.">        if (isModelOnly) {</span>
-<span class="fc" id="L288">            return false;</span>
+<span class="fc bfc" id="L299" title="All 2 branches covered.">        if (isModelOnly) {</span>
+<span class="fc" id="L300">            return false;</span>
         }
         
-<span class="pc bpc" id="L291" title="2 of 4 branches missed.">        return introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3</span>
-                &amp;&amp; tableConfiguration.isUpdateByExampleStatementEnabled();
+<span class="pc bpc" id="L303" title="1 of 2 branches missed.">        return introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3</span>
+<span class="pc bpc" id="L304" title="1 of 2 branches missed.">                &amp;&amp; tableConfiguration.isUpdateByExampleStatementEnabled();</span>
     }
 
     /**
@@ -301,16 +313,16 @@ public abstract class BaseRules implements Rules {
      * @return true if the element and method should be generated
      */
     public boolean generateSelectByPrimaryKey() {
-<span class="fc bfc" id="L304" title="All 2 branches covered.">        if (isModelOnly) {</span>
-<span class="fc" id="L305">            return false;</span>
+<span class="fc bfc" id="L316" title="All 2 branches covered.">        if (isModelOnly) {</span>
+<span class="fc" id="L317">            return false;</span>
         }
         
-<span class="pc bpc" id="L308" title="1 of 8 branches missed.">        boolean rc = tableConfiguration.isSelectByPrimaryKeyStatementEnabled()</span>
-                &amp;&amp; introspectedTable.hasPrimaryKeyColumns()
-                &amp;&amp; (introspectedTable.hasBaseColumns() || introspectedTable
-                        .hasBLOBColumns());
+<span class="pc bpc" id="L320" title="1 of 2 branches missed.">        boolean rc = tableConfiguration.isSelectByPrimaryKeyStatementEnabled()</span>
+<span class="fc bfc" id="L321" title="All 2 branches covered.">                &amp;&amp; introspectedTable.hasPrimaryKeyColumns()</span>
+<span class="fc bfc" id="L322" title="All 2 branches covered.">                &amp;&amp; (introspectedTable.hasBaseColumns() || introspectedTable</span>
+<span class="fc bfc" id="L323" title="All 2 branches covered.">                        .hasBLOBColumns());</span>
 
-<span class="fc" id="L313">        return rc;</span>
+<span class="fc" id="L325">        return rc;</span>
     }
 
     /**
@@ -321,11 +333,11 @@ public abstract class BaseRules implements Rules {
      * @return true if the element and method should be generated
      */
     public boolean generateSelectByExampleWithoutBLOBs() {
-<span class="fc bfc" id="L324" title="All 2 branches covered.">        if (isModelOnly) {</span>
-<span class="fc" id="L325">            return false;</span>
+<span class="fc bfc" id="L336" title="All 2 branches covered.">        if (isModelOnly) {</span>
+<span class="fc" id="L337">            return false;</span>
         }
         
-<span class="fc" id="L328">        return tableConfiguration.isSelectByExampleStatementEnabled();</span>
+<span class="fc" id="L340">        return tableConfiguration.isSelectByExampleStatementEnabled();</span>
     }
 
     /**
@@ -337,14 +349,14 @@ public abstract class BaseRules implements Rules {
      * @return true if the element and method should be generated
      */
     public boolean generateSelectByExampleWithBLOBs() {
-<span class="fc bfc" id="L340" title="All 2 branches covered.">        if (isModelOnly) {</span>
-<span class="fc" id="L341">            return false;</span>
+<span class="fc bfc" id="L352" title="All 2 branches covered.">        if (isModelOnly) {</span>
+<span class="fc" id="L353">            return false;</span>
         }
         
-<span class="pc bpc" id="L344" title="1 of 4 branches missed.">        boolean rc = tableConfiguration.isSelectByExampleStatementEnabled()</span>
-                &amp;&amp; introspectedTable.hasBLOBColumns();
+<span class="pc bpc" id="L356" title="1 of 2 branches missed.">        boolean rc = tableConfiguration.isSelectByExampleStatementEnabled()</span>
+<span class="fc bfc" id="L357" title="All 2 branches covered.">                &amp;&amp; introspectedTable.hasBLOBColumns();</span>
 
-<span class="fc" id="L347">        return rc;</span>
+<span class="fc" id="L359">        return rc;</span>
     }
 
     /**
@@ -355,116 +367,116 @@ public abstract class BaseRules implements Rules {
      * @return true if the example class should be generated
      */
     public boolean generateExampleClass() {
-<span class="fc bfc" id="L358" title="All 4 branches covered.">        if (introspectedTable.getContext().getSqlMapGeneratorConfiguration() == null</span>
-                &amp;&amp; introspectedTable.getContext().getJavaClientGeneratorConfiguration() == null) {
+<span class="fc bfc" id="L370" title="All 2 branches covered.">        if (introspectedTable.getContext().getSqlMapGeneratorConfiguration() == null</span>
+<span class="fc bfc" id="L371" title="All 2 branches covered.">                &amp;&amp; introspectedTable.getContext().getJavaClientGeneratorConfiguration() == null) {</span>
             // this is a model only context - don't generate the example class
-<span class="fc" id="L361">            return false;</span>
+<span class="fc" id="L373">            return false;</span>
         }
         
-<span class="fc bfc" id="L364" title="All 2 branches covered.">        if (isModelOnly) {</span>
-<span class="fc" id="L365">            return false;</span>
+<span class="fc bfc" id="L376" title="All 2 branches covered.">        if (isModelOnly) {</span>
+<span class="fc" id="L377">            return false;</span>
         }
         
-<span class="pc bpc" id="L368" title="7 of 8 branches missed.">        boolean rc = tableConfiguration.isSelectByExampleStatementEnabled()</span>
-                || tableConfiguration.isDeleteByExampleStatementEnabled()
-                || tableConfiguration.isCountByExampleStatementEnabled()
-                || tableConfiguration.isUpdateByExampleStatementEnabled();
+<span class="pc bpc" id="L380" title="1 of 2 branches missed.">        boolean rc = tableConfiguration.isSelectByExampleStatementEnabled()</span>
+<span class="nc bnc" id="L381" title="All 2 branches missed.">                || tableConfiguration.isDeleteByExampleStatementEnabled()</span>
+<span class="nc bnc" id="L382" title="All 2 branches missed.">                || tableConfiguration.isCountByExampleStatementEnabled()</span>
+<span class="pc bnc" id="L383" title="All 2 branches missed.">                || tableConfiguration.isUpdateByExampleStatementEnabled();</span>
 
-<span class="fc" id="L373">        return rc;</span>
+<span class="fc" id="L385">        return rc;</span>
     }
 
     /* (non-Javadoc)
      * @see org.mybatis.generator.internal.rules.Rules#generateCountByExample()
      */
     public boolean generateCountByExample() {
-<span class="fc bfc" id="L380" title="All 2 branches covered.">        if (isModelOnly) {</span>
-<span class="fc" id="L381">            return false;</span>
+<span class="fc bfc" id="L392" title="All 2 branches covered.">        if (isModelOnly) {</span>
+<span class="fc" id="L393">            return false;</span>
         }
         
-<span class="fc" id="L384">        boolean rc = tableConfiguration.isCountByExampleStatementEnabled();</span>
+<span class="fc" id="L396">        boolean rc = tableConfiguration.isCountByExampleStatementEnabled();</span>
 
-<span class="fc" id="L386">        return rc;</span>
+<span class="fc" id="L398">        return rc;</span>
     }
 
     /* (non-Javadoc)
      * @see org.mybatis.generator.internal.rules.Rules#generateUpdateByExampleSelective()
      */
     public boolean generateUpdateByExampleSelective() {
-<span class="fc bfc" id="L393" title="All 2 branches covered.">        if (isModelOnly) {</span>
-<span class="fc" id="L394">            return false;</span>
+<span class="fc bfc" id="L405" title="All 2 branches covered.">        if (isModelOnly) {</span>
+<span class="fc" id="L406">            return false;</span>
         }
         
-<span class="fc" id="L397">        boolean rc = tableConfiguration.isUpdateByExampleStatementEnabled();</span>
+<span class="fc" id="L409">        boolean rc = tableConfiguration.isUpdateByExampleStatementEnabled();</span>
 
-<span class="fc" id="L399">        return rc;</span>
+<span class="fc" id="L411">        return rc;</span>
     }
 
     /* (non-Javadoc)
      * @see org.mybatis.generator.internal.rules.Rules#generateUpdateByExampleWithoutBLOBs()
      */
     public boolean generateUpdateByExampleWithoutBLOBs() {
-<span class="fc bfc" id="L406" title="All 2 branches covered.">        if (isModelOnly) {</span>
-<span class="fc" id="L407">            return false;</span>
+<span class="fc bfc" id="L418" title="All 2 branches covered.">        if (isModelOnly) {</span>
+<span class="fc" id="L419">            return false;</span>
         }
         
-<span class="pc bpc" id="L410" title="2 of 6 branches missed.">        boolean rc = tableConfiguration.isUpdateByExampleStatementEnabled()</span>
-                &amp;&amp; (introspectedTable.hasPrimaryKeyColumns() || introspectedTable
-                        .hasBaseColumns());
+<span class="pc bpc" id="L422" title="1 of 2 branches missed.">        boolean rc = tableConfiguration.isUpdateByExampleStatementEnabled()</span>
+<span class="fc bfc" id="L423" title="All 2 branches covered.">                &amp;&amp; (introspectedTable.hasPrimaryKeyColumns() || introspectedTable</span>
+<span class="pc bpc" id="L424" title="1 of 2 branches missed.">                        .hasBaseColumns());</span>
 
-<span class="fc" id="L414">        return rc;</span>
+<span class="fc" id="L426">        return rc;</span>
     }
 
     /* (non-Javadoc)
      * @see org.mybatis.generator.internal.rules.Rules#generateUpdateByExampleWithBLOBs()
      */
     public boolean generateUpdateByExampleWithBLOBs() {
-<span class="fc bfc" id="L421" title="All 2 branches covered.">        if (isModelOnly) {</span>
-<span class="fc" id="L422">            return false;</span>
+<span class="fc bfc" id="L433" title="All 2 branches covered.">        if (isModelOnly) {</span>
+<span class="fc" id="L434">            return false;</span>
         }
         
-<span class="pc bpc" id="L425" title="1 of 4 branches missed.">        boolean rc = tableConfiguration.isUpdateByExampleStatementEnabled()</span>
-                &amp;&amp; introspectedTable.hasBLOBColumns();
+<span class="pc bpc" id="L437" title="1 of 2 branches missed.">        boolean rc = tableConfiguration.isUpdateByExampleStatementEnabled()</span>
+<span class="fc bfc" id="L438" title="All 2 branches covered.">                &amp;&amp; introspectedTable.hasBLOBColumns();</span>
 
-<span class="fc" id="L428">        return rc;</span>
+<span class="fc" id="L440">        return rc;</span>
     }
 
     /* (non-Javadoc)
      * @see org.mybatis.generator.internal.rules.Rules#getIntrospectedTable()
      */
     public IntrospectedTable getIntrospectedTable() {
-<span class="nc" id="L435">        return introspectedTable;</span>
+<span class="nc" id="L447">        return introspectedTable;</span>
     }
 
     /* (non-Javadoc)
      * @see org.mybatis.generator.internal.rules.Rules#generateBaseColumnList()
      */
     public boolean generateBaseColumnList() {
-<span class="fc bfc" id="L442" title="All 2 branches covered.">        if (isModelOnly) {</span>
-<span class="fc" id="L443">            return false;</span>
+<span class="fc bfc" id="L454" title="All 2 branches covered.">        if (isModelOnly) {</span>
+<span class="fc" id="L455">            return false;</span>
         }
         
-<span class="pc bpc" id="L446" title="1 of 4 branches missed.">        return generateSelectByPrimaryKey()</span>
-                || generateSelectByExampleWithoutBLOBs();
+<span class="fc bfc" id="L458" title="All 2 branches covered.">        return generateSelectByPrimaryKey()</span>
+<span class="pc bpc" id="L459" title="1 of 2 branches missed.">                || generateSelectByExampleWithoutBLOBs();</span>
     }
 
     /* (non-Javadoc)
      * @see org.mybatis.generator.internal.rules.Rules#generateBlobColumnList()
      */
     public boolean generateBlobColumnList() {
-<span class="fc bfc" id="L454" title="All 2 branches covered.">        if (isModelOnly) {</span>
-<span class="fc" id="L455">            return false;</span>
+<span class="fc bfc" id="L466" title="All 2 branches covered.">        if (isModelOnly) {</span>
+<span class="fc" id="L467">            return false;</span>
         }
         
-<span class="pc bpc" id="L458" title="3 of 6 branches missed.">        return introspectedTable.hasBLOBColumns()</span>
-                &amp;&amp; (tableConfiguration.isSelectByExampleStatementEnabled() || tableConfiguration
-                        .isSelectByPrimaryKeyStatementEnabled());
+<span class="fc bfc" id="L470" title="All 2 branches covered.">        return introspectedTable.hasBLOBColumns()</span>
+<span class="pc bpc" id="L471" title="1 of 2 branches missed.">                &amp;&amp; (tableConfiguration.isSelectByExampleStatementEnabled() || tableConfiguration</span>
+<span class="pc bnc" id="L472" title="All 2 branches missed.">                        .isSelectByPrimaryKeyStatementEnabled());</span>
     }
 
     /* (non-Javadoc)
      * @see org.mybatis.generator.internal.rules.Rules#generateJavaClient()
      */
     public boolean generateJavaClient() {
-<span class="fc bfc" id="L467" title="All 2 branches covered.">        return !isModelOnly;</span>
+<span class="fc bfc" id="L479" title="All 2 branches covered.">        return !isModelOnly;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

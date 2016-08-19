@@ -28,6 +28,7 @@ import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.InsertMethodGenerator;
 import org.mybatis.generator.config.GeneratedKey;
 
@@ -39,89 +40,85 @@ public class AnnotatedInsertMethodGenerator extends
     InsertMethodGenerator {
 
     public AnnotatedInsertMethodGenerator(boolean isSimple) {
-<span class="fc" id="L42">        super(isSimple);</span>
-<span class="fc" id="L43">    }</span>
+<span class="fc" id="L43">        super(isSimple);</span>
+<span class="fc" id="L44">    }</span>
 
     @Override
     public void addMapperAnnotations(Interface interfaze, Method method) {
-<span class="fc" id="L47">        interfaze.addImportedType(new FullyQualifiedJavaType(&quot;org.apache.ibatis.annotations.Insert&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L48">        interfaze.addImportedType(new FullyQualifiedJavaType(&quot;org.apache.ibatis.annotations.Insert&quot;)); //$NON-NLS-1$</span>
         
-<span class="fc" id="L49">        GeneratedKey gk = introspectedTable.getGeneratedKey();</span>
+<span class="fc" id="L50">        GeneratedKey gk = introspectedTable.getGeneratedKey();</span>
         
-<span class="fc" id="L51">        method.addAnnotation(&quot;@Insert({&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L52">        StringBuilder insertClause = new StringBuilder();</span>
-<span class="fc" id="L53">        StringBuilder valuesClause = new StringBuilder();</span>
+<span class="fc" id="L52">        method.addAnnotation(&quot;@Insert({&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L53">        StringBuilder insertClause = new StringBuilder();</span>
+<span class="fc" id="L54">        StringBuilder valuesClause = new StringBuilder();</span>
         
-<span class="fc" id="L55">        javaIndent(insertClause, 1);</span>
-<span class="fc" id="L56">        javaIndent(valuesClause, 1);</span>
+<span class="fc" id="L56">        javaIndent(insertClause, 1);</span>
+<span class="fc" id="L57">        javaIndent(valuesClause, 1);</span>
 
-<span class="fc" id="L58">        insertClause.append(&quot;\&quot;insert into &quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L59">        insertClause.append(escapeStringForJava(introspectedTable</span>
-                .getFullyQualifiedTableNameAtRuntime()));
-<span class="fc" id="L61">        insertClause.append(&quot; (&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L59">        insertClause.append(&quot;\&quot;insert into &quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L60">        insertClause.append(escapeStringForJava(introspectedTable</span>
+<span class="fc" id="L61">                .getFullyQualifiedTableNameAtRuntime()));</span>
+<span class="fc" id="L62">        insertClause.append(&quot; (&quot;); //$NON-NLS-1$</span>
 
-<span class="fc" id="L63">        valuesClause.append(&quot;\&quot;values (&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L64">        valuesClause.append(&quot;\&quot;values (&quot;); //$NON-NLS-1$</span>
 
-<span class="fc" id="L65">        List&lt;String&gt; valuesClauses = new ArrayList&lt;String&gt;();</span>
-<span class="fc" id="L66">        Iterator&lt;IntrospectedColumn&gt; iter = introspectedTable.getAllColumns()</span>
-                .iterator();
-<span class="fc" id="L68">        boolean hasFields = false;</span>
-<span class="fc bfc" id="L69" title="All 2 branches covered.">        while (iter.hasNext()) {</span>
-<span class="fc" id="L70">            IntrospectedColumn introspectedColumn = iter.next();</span>
-<span class="fc bfc" id="L71" title="All 2 branches covered.">            if (introspectedColumn.isIdentity()) {</span>
-                // cannot set values on identity fields
-<span class="fc" id="L73">                continue;</span>
+<span class="fc" id="L66">        List&lt;String&gt; valuesClauses = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L67">        Iterator&lt;IntrospectedColumn&gt; iter = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(introspectedTable.getAllColumns())</span>
+<span class="fc" id="L68">                .iterator();</span>
+<span class="fc" id="L69">        boolean hasFields = false;</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        while (iter.hasNext()) {</span>
+<span class="fc" id="L71">            IntrospectedColumn introspectedColumn = iter.next();</span>
+
+<span class="fc" id="L73">            insertClause.append(escapeStringForJava(getEscapedColumnName(introspectedColumn)));</span>
+<span class="fc" id="L74">            valuesClause.append(getParameterClause(introspectedColumn));</span>
+<span class="fc" id="L75">            hasFields = true;</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">            if (iter.hasNext()) {</span>
+<span class="fc" id="L77">                insertClause.append(&quot;, &quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L78">                valuesClause.append(&quot;, &quot;); //$NON-NLS-1$</span>
             }
 
-<span class="fc" id="L76">            insertClause.append(escapeStringForJava(getEscapedColumnName(introspectedColumn)));</span>
-<span class="fc" id="L77">            valuesClause.append(getParameterClause(introspectedColumn));</span>
-<span class="fc" id="L78">            hasFields = true;</span>
-<span class="fc bfc" id="L79" title="All 2 branches covered.">            if (iter.hasNext()) {</span>
-<span class="fc" id="L80">                insertClause.append(&quot;, &quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L81">                valuesClause.append(&quot;, &quot;); //$NON-NLS-1$</span>
-            }
-
-<span class="fc bfc" id="L84" title="All 2 branches covered.">            if (valuesClause.length() &gt; 60) {</span>
-<span class="fc bfc" id="L85" title="All 2 branches covered.">                if (!iter.hasNext()) {</span>
-<span class="fc" id="L86">                    insertClause.append(')');</span>
-<span class="fc" id="L87">                    valuesClause.append(')');</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">            if (valuesClause.length() &gt; 60) {</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">                if (!iter.hasNext()) {</span>
+<span class="fc" id="L83">                    insertClause.append(')');</span>
+<span class="fc" id="L84">                    valuesClause.append(')');</span>
                 }
-<span class="fc" id="L89">                insertClause.append(&quot;\&quot;,&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L90">                valuesClause.append('\&quot;');</span>
-<span class="fc bfc" id="L91" title="All 2 branches covered.">                if (iter.hasNext()) {</span>
-<span class="fc" id="L92">                    valuesClause.append(',');</span>
+<span class="fc" id="L86">                insertClause.append(&quot;\&quot;,&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L87">                valuesClause.append('\&quot;');</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">                if (iter.hasNext()) {</span>
+<span class="fc" id="L89">                    valuesClause.append(',');</span>
                 }
                 
-<span class="fc" id="L95">                method.addAnnotation(insertClause.toString());</span>
-<span class="fc" id="L96">                insertClause.setLength(0);</span>
-<span class="fc" id="L97">                javaIndent(insertClause, 1);</span>
-<span class="fc" id="L98">                insertClause.append('\&quot;');</span>
+<span class="fc" id="L92">                method.addAnnotation(insertClause.toString());</span>
+<span class="fc" id="L93">                insertClause.setLength(0);</span>
+<span class="fc" id="L94">                javaIndent(insertClause, 1);</span>
+<span class="fc" id="L95">                insertClause.append('\&quot;');</span>
                 
-<span class="fc" id="L100">                valuesClauses.add(valuesClause.toString());</span>
-<span class="fc" id="L101">                valuesClause.setLength(0);</span>
-<span class="fc" id="L102">                javaIndent(valuesClause, 1);</span>
-<span class="fc" id="L103">                valuesClause.append('\&quot;');</span>
-<span class="fc" id="L104">                hasFields = false;</span>
+<span class="fc" id="L97">                valuesClauses.add(valuesClause.toString());</span>
+<span class="fc" id="L98">                valuesClause.setLength(0);</span>
+<span class="fc" id="L99">                javaIndent(valuesClause, 1);</span>
+<span class="fc" id="L100">                valuesClause.append('\&quot;');</span>
+<span class="fc" id="L101">                hasFields = false;</span>
             }
-<span class="fc" id="L106">        }</span>
+<span class="fc" id="L103">        }</span>
         
-<span class="fc bfc" id="L108" title="All 2 branches covered.">        if (hasFields) {</span>
-<span class="fc" id="L109">            insertClause.append(&quot;)\&quot;,&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L110">            method.addAnnotation(insertClause.toString());</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">        if (hasFields) {</span>
+<span class="fc" id="L106">            insertClause.append(&quot;)\&quot;,&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L107">            method.addAnnotation(insertClause.toString());</span>
 
-<span class="fc" id="L112">            valuesClause.append(&quot;)\&quot;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L113">            valuesClauses.add(valuesClause.toString());</span>
+<span class="fc" id="L109">            valuesClause.append(&quot;)\&quot;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L110">            valuesClauses.add(valuesClause.toString());</span>
         }
 
-<span class="fc bfc" id="L116" title="All 2 branches covered.">        for (String clause : valuesClauses) {</span>
-<span class="fc" id="L117">            method.addAnnotation(clause);</span>
-<span class="fc" id="L118">        }</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">        for (String clause : valuesClauses) {</span>
+<span class="fc" id="L114">            method.addAnnotation(clause);</span>
+<span class="fc" id="L115">        }</span>
         
-<span class="fc" id="L120">        method.addAnnotation(&quot;})&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L117">        method.addAnnotation(&quot;})&quot;); //$NON-NLS-1$</span>
 
-<span class="fc bfc" id="L122" title="All 2 branches covered.">        if (gk != null) {</span>
-<span class="fc" id="L123">            addGeneratedKeyAnnotation(interfaze, method, gk);</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">        if (gk != null) {</span>
+<span class="fc" id="L120">            addGeneratedKeyAnnotation(interfaze, method, gk);</span>
         }
-<span class="fc" id="L125">    }</span>
+<span class="fc" id="L122">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

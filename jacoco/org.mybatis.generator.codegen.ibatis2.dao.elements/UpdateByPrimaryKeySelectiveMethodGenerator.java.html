@@ -45,14 +45,14 @@ public class UpdateByPrimaryKeySelectiveMethodGenerator extends
 <span class="fc" id="L45">        StringBuilder sb = new StringBuilder();</span>
 <span class="fc" id="L46">        sb.append(&quot;int rows = &quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L47">        sb.append(daoTemplate.getUpdateMethod(introspectedTable</span>
-                .getIbatis2SqlMapNamespace(), introspectedTable
-                .getUpdateByPrimaryKeySelectiveStatementId(), &quot;record&quot;)); //$NON-NLS-1$
+<span class="fc" id="L48">                .getIbatis2SqlMapNamespace(), introspectedTable</span>
+<span class="fc" id="L49">                .getUpdateByPrimaryKeySelectiveStatementId(), &quot;record&quot;)); //$NON-NLS-1$</span>
 <span class="fc" id="L50">        method.addBodyLine(sb.toString());</span>
 
 <span class="fc" id="L52">        method.addBodyLine(&quot;return rows;&quot;); //$NON-NLS-1$</span>
 
-<span class="pc bpc" id="L54" title="1 of 2 branches missed.">        if (context.getPlugins()</span>
-                .clientUpdateByPrimaryKeySelectiveMethodGenerated(method,
+<span class="fc" id="L54">        if (context.getPlugins()</span>
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">                .clientUpdateByPrimaryKeySelectiveMethodGenerated(method,</span>
                         topLevelClass, introspectedTable)) {
 <span class="fc" id="L57">            topLevelClass.addImportedTypes(importedTypes);</span>
 <span class="fc" id="L58">            topLevelClass.addMethod(method);</span>
@@ -64,8 +64,8 @@ public class UpdateByPrimaryKeySelectiveMethodGenerator extends
 <span class="fc" id="L64">        Set&lt;FullyQualifiedJavaType&gt; importedTypes = new TreeSet&lt;FullyQualifiedJavaType&gt;();</span>
 <span class="fc" id="L65">        Method method = getMethodShell(importedTypes);</span>
 
-<span class="pc bpc" id="L67" title="1 of 2 branches missed.">        if (context.getPlugins()</span>
-                .clientUpdateByPrimaryKeySelectiveMethodGenerated(method,
+<span class="fc" id="L67">        if (context.getPlugins()</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">                .clientUpdateByPrimaryKeySelectiveMethodGenerated(method,</span>
                         interfaze, introspectedTable)) {
 <span class="fc" id="L70">            interfaze.addImportedTypes(importedTypes);</span>
 <span class="fc" id="L71">            interfaze.addMethod(method);</span>
@@ -77,10 +77,10 @@ public class UpdateByPrimaryKeySelectiveMethodGenerator extends
 
 <span class="fc bfc" id="L78" title="All 2 branches covered.">        if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {</span>
 <span class="fc" id="L79">            parameterType = new FullyQualifiedJavaType(introspectedTable</span>
-                    .getRecordWithBLOBsType());
+<span class="fc" id="L80">                    .getRecordWithBLOBsType());</span>
         } else {
 <span class="fc" id="L82">            parameterType = new FullyQualifiedJavaType(introspectedTable</span>
-                    .getBaseRecordType());
+<span class="fc" id="L83">                    .getBaseRecordType());</span>
         }
 
 <span class="fc" id="L86">        importedTypes.add(parameterType);</span>
@@ -89,7 +89,7 @@ public class UpdateByPrimaryKeySelectiveMethodGenerator extends
 <span class="fc" id="L89">        method.setVisibility(JavaVisibility.PUBLIC);</span>
 <span class="fc" id="L90">        method.setReturnType(FullyQualifiedJavaType.getIntInstance());</span>
 <span class="fc" id="L91">        method.setName(getDAOMethodNameCalculator()</span>
-                .getUpdateByPrimaryKeySelectiveMethodName(introspectedTable));
+<span class="fc" id="L92">                .getUpdateByPrimaryKeySelectiveMethodName(introspectedTable));</span>
 <span class="fc" id="L93">        method.addParameter(new Parameter(parameterType, &quot;record&quot;)); //$NON-NLS-1$</span>
 
 <span class="fc bfc" id="L95" title="All 2 branches covered.">        for (FullyQualifiedJavaType fqjt : daoTemplate.getCheckedExceptions()) {</span>

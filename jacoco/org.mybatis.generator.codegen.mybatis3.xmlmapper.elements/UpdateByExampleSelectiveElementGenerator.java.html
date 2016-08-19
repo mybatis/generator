@@ -19,6 +19,7 @@ import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
+import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 
 /**
@@ -30,57 +31,57 @@ public class UpdateByExampleSelectiveElementGenerator extends
         AbstractXmlElementGenerator {
 
     public UpdateByExampleSelectiveElementGenerator() {
-<span class="fc" id="L33">        super();</span>
-<span class="fc" id="L34">    }</span>
+<span class="fc" id="L34">        super();</span>
+<span class="fc" id="L35">    }</span>
 
     @Override
     public void addElements(XmlElement parentElement) {
-<span class="fc" id="L38">        XmlElement answer = new XmlElement(&quot;update&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L39">        XmlElement answer = new XmlElement(&quot;update&quot;); //$NON-NLS-1$</span>
 
-<span class="fc" id="L40">        answer</span>
-                .addAttribute(new Attribute(
-                        &quot;id&quot;, introspectedTable.getUpdateByExampleSelectiveStatementId())); //$NON-NLS-1$
+<span class="fc" id="L41">        answer</span>
+<span class="fc" id="L42">                .addAttribute(new Attribute(</span>
+<span class="fc" id="L43">                        &quot;id&quot;, introspectedTable.getUpdateByExampleSelectiveStatementId())); //$NON-NLS-1$</span>
 
-<span class="fc" id="L44">        answer.addAttribute(new Attribute(&quot;parameterType&quot;, &quot;map&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L45">        answer.addAttribute(new Attribute(&quot;parameterType&quot;, &quot;map&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
 
-<span class="fc" id="L46">        context.getCommentGenerator().addComment(answer);</span>
+<span class="fc" id="L47">        context.getCommentGenerator().addComment(answer);</span>
 
-<span class="fc" id="L48">        StringBuilder sb = new StringBuilder();</span>
-<span class="fc" id="L49">        sb.append(&quot;update &quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L50">        sb.append(introspectedTable</span>
-                .getAliasedFullyQualifiedTableNameAtRuntime());
-<span class="fc" id="L52">        answer.addElement(new TextElement(sb.toString()));</span>
+<span class="fc" id="L49">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L50">        sb.append(&quot;update &quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L51">        sb.append(introspectedTable</span>
+<span class="fc" id="L52">                .getAliasedFullyQualifiedTableNameAtRuntime());</span>
+<span class="fc" id="L53">        answer.addElement(new TextElement(sb.toString()));</span>
 
-<span class="fc" id="L54">        XmlElement dynamicElement = new XmlElement(&quot;set&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L55">        answer.addElement(dynamicElement);</span>
+<span class="fc" id="L55">        XmlElement dynamicElement = new XmlElement(&quot;set&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L56">        answer.addElement(dynamicElement);</span>
 
-<span class="fc bfc" id="L57" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable</span>
-                .getAllColumns()) {
-<span class="fc" id="L59">            XmlElement isNotNullElement = new XmlElement(&quot;if&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L60">            sb.setLength(0);</span>
-<span class="fc" id="L61">            sb.append(introspectedColumn.getJavaProperty(&quot;record.&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L62">            sb.append(&quot; != null&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L63">            isNotNullElement.addAttribute(new Attribute(&quot;test&quot;, sb.toString())); //$NON-NLS-1$</span>
-<span class="fc" id="L64">            dynamicElement.addElement(isNotNullElement);</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : ListUtilities.removeGeneratedAlwaysColumns(introspectedTable</span>
+<span class="fc" id="L59">                .getAllColumns())) {</span>
+<span class="fc" id="L60">            XmlElement isNotNullElement = new XmlElement(&quot;if&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L61">            sb.setLength(0);</span>
+<span class="fc" id="L62">            sb.append(introspectedColumn.getJavaProperty(&quot;record.&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L63">            sb.append(&quot; != null&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L64">            isNotNullElement.addAttribute(new Attribute(&quot;test&quot;, sb.toString())); //$NON-NLS-1$</span>
+<span class="fc" id="L65">            dynamicElement.addElement(isNotNullElement);</span>
 
-<span class="fc" id="L66">            sb.setLength(0);</span>
-<span class="fc" id="L67">            sb.append(MyBatis3FormattingUtilities</span>
-                    .getAliasedEscapedColumnName(introspectedColumn));
-<span class="fc" id="L69">            sb.append(&quot; = &quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L70">            sb.append(MyBatis3FormattingUtilities.getParameterClause(</span>
+<span class="fc" id="L67">            sb.setLength(0);</span>
+<span class="fc" id="L68">            sb.append(MyBatis3FormattingUtilities</span>
+<span class="fc" id="L69">                    .getAliasedEscapedColumnName(introspectedColumn));</span>
+<span class="fc" id="L70">            sb.append(&quot; = &quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L71">            sb.append(MyBatis3FormattingUtilities.getParameterClause(</span>
                     introspectedColumn, &quot;record.&quot;)); //$NON-NLS-1$
-<span class="fc" id="L72">            sb.append(',');</span>
+<span class="fc" id="L73">            sb.append(',');</span>
 
-<span class="fc" id="L74">            isNotNullElement.addElement(new TextElement(sb.toString()));</span>
-<span class="fc" id="L75">        }</span>
+<span class="fc" id="L75">            isNotNullElement.addElement(new TextElement(sb.toString()));</span>
+<span class="fc" id="L76">        }</span>
 
-<span class="fc" id="L77">        answer.addElement(getUpdateByExampleIncludeElement());</span>
+<span class="fc" id="L78">        answer.addElement(getUpdateByExampleIncludeElement());</span>
 
-<span class="pc bpc" id="L79" title="1 of 2 branches missed.">        if (context.getPlugins()</span>
-                .sqlMapUpdateByExampleSelectiveElementGenerated(answer,
+<span class="fc" id="L80">        if (context.getPlugins()</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">                .sqlMapUpdateByExampleSelectiveElementGenerated(answer,</span>
                         introspectedTable)) {
-<span class="fc" id="L82">            parentElement.addElement(answer);</span>
+<span class="fc" id="L83">            parentElement.addElement(answer);</span>
         }
-<span class="fc" id="L84">    }</span>
+<span class="fc" id="L85">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

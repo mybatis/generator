@@ -39,17 +39,17 @@ public class BlobColumnListElementGenerator extends AbstractXmlElementGenerator 
 <span class="fc" id="L39">        XmlElement answer = new XmlElement(&quot;sql&quot;); //$NON-NLS-1$</span>
 
 <span class="fc" id="L41">        answer.addAttribute(new Attribute(&quot;id&quot;, //$NON-NLS-1$</span>
-                introspectedTable.getBlobColumnListId()));
+<span class="fc" id="L42">                introspectedTable.getBlobColumnListId()));</span>
 
 <span class="fc" id="L44">        context.getCommentGenerator().addComment(answer);</span>
 
 <span class="fc" id="L46">        StringBuilder sb = new StringBuilder();</span>
 
 <span class="fc" id="L48">        Iterator&lt;IntrospectedColumn&gt; iter = introspectedTable.getBLOBColumns()</span>
-                .iterator();
+<span class="fc" id="L49">                .iterator();</span>
 <span class="fc bfc" id="L50" title="All 2 branches covered.">        while (iter.hasNext()) {</span>
 <span class="fc" id="L51">            sb.append(MyBatis3FormattingUtilities.getSelectListPhrase(iter</span>
-                    .next()));
+<span class="fc" id="L52">                    .next()));</span>
 
 <span class="fc bfc" id="L54" title="All 2 branches covered.">            if (iter.hasNext()) {</span>
 <span class="fc" id="L55">                sb.append(&quot;, &quot;); //$NON-NLS-1$</span>

@@ -26,28 +26,52 @@ package org.mybatis.generator.api.dom.java;
      * @param fqjt the type in question
      */
     public static String calculateTypeName(CompilationUnit compilationUnit, FullyQualifiedJavaType fqjt) {
-<span class="pc bpc" id="L29" title="2 of 8 branches missed.">        if(compilationUnit == null</span>
-                || typeDoesNotRequireImport(fqjt)
-                || typeIsInSamePackage(compilationUnit, fqjt) 
-                || typeIsAlreadyImported(compilationUnit, fqjt)) {
-<span class="fc" id="L33">            return fqjt.getShortName();</span>
+        
+<span class="fc bfc" id="L30" title="All 2 branches covered.">        if (fqjt.getTypeArguments().size() &gt; 0) {</span>
+<span class="fc" id="L31">            return calculateParameterizedTypeName(compilationUnit, fqjt);</span>
+        }
+        
+<span class="pc bpc" id="L34" title="1 of 2 branches missed.">        if(compilationUnit == null</span>
+<span class="fc bfc" id="L35" title="All 2 branches covered.">                || typeDoesNotRequireImport(fqjt)</span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">                || typeIsInSamePackage(compilationUnit, fqjt) </span>
+<span class="fc bfc" id="L37" title="All 2 branches covered.">                || typeIsAlreadyImported(compilationUnit, fqjt)) {</span>
+<span class="fc" id="L38">            return fqjt.getShortName();</span>
         } else {
-<span class="nc" id="L35">            return fqjt.getFullyQualifiedName();</span>
+<span class="fc" id="L40">            return fqjt.getFullyQualifiedName();</span>
         }
     }
     
+    private static String calculateParameterizedTypeName(CompilationUnit compilationUnit, FullyQualifiedJavaType fqjt) {
+<span class="fc" id="L45">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L46">        sb.append(calculateTypeName(compilationUnit, new FullyQualifiedJavaType(fqjt.getFullyQualifiedNameWithoutTypeParameters())));</span>
+<span class="fc" id="L47">        sb.append('&lt;');</span>
+<span class="fc" id="L48">        boolean comma = false;</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">        for (FullyQualifiedJavaType ft : fqjt.getTypeArguments()) {</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">            if (comma) {</span>
+<span class="fc" id="L51">                sb.append(&quot;, &quot;);</span>
+            } else {
+<span class="fc" id="L53">                comma = true;</span>
+            }
+<span class="fc" id="L55">            sb.append(calculateTypeName(compilationUnit, ft));</span>
+<span class="fc" id="L56">        }</span>
+<span class="fc" id="L57">        sb.append('&gt;');</span>
+        
+<span class="fc" id="L59">        return sb.toString();</span>
+        
+    }
+    
     private static boolean typeDoesNotRequireImport(FullyQualifiedJavaType fullyQualifiedJavaType) {
-<span class="fc bfc" id="L40" title="All 4 branches covered.">        return fullyQualifiedJavaType.isPrimitive()</span>
-                || !fullyQualifiedJavaType.isExplicitlyImported();
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        return fullyQualifiedJavaType.isPrimitive()</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">                || !fullyQualifiedJavaType.isExplicitlyImported();</span>
     }
     
     private static boolean typeIsInSamePackage(CompilationUnit compilationUnit, FullyQualifiedJavaType fullyQualifiedJavaType) {
-<span class="fc" id="L45">        return fullyQualifiedJavaType.getPackageName().equals(compilationUnit.getType().getPackageName());</span>
+<span class="fc" id="L69">        return fullyQualifiedJavaType.getPackageName().equals(compilationUnit.getType().getPackageName());</span>
     }
     
     private static boolean typeIsAlreadyImported(CompilationUnit compilationUnit, FullyQualifiedJavaType fullyQualifiedJavaType) {
-<span class="fc" id="L49">        FullyQualifiedJavaType nonGenericType = new FullyQualifiedJavaType(fullyQualifiedJavaType.getFullyQualifiedNameWithoutTypeParameters());</span>
-<span class="fc" id="L50">        return compilationUnit.getImportedTypes().contains(nonGenericType);</span>
+<span class="fc" id="L73">        FullyQualifiedJavaType nonGenericType = new FullyQualifiedJavaType(fullyQualifiedJavaType.getFullyQualifiedNameWithoutTypeParameters());</span>
+<span class="fc" id="L74">        return compilationUnit.getImportedTypes().contains(nonGenericType);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

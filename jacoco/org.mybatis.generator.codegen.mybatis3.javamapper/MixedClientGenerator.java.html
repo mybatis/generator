@@ -72,8 +72,8 @@ public class MixedClientGenerator extends JavaMapperGenerator {
 
     @Override
     protected void addUpdateByPrimaryKeyWithoutBLOBsMethod(Interface interfaze) {
-<span class="fc bfc" id="L75" title="All 2 branches covered.">        if (introspectedTable.getRules()</span>
-                .generateUpdateByPrimaryKeyWithoutBLOBs()) {
+<span class="fc" id="L75">        if (introspectedTable.getRules()</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">                .generateUpdateByPrimaryKeyWithoutBLOBs()) {</span>
 <span class="fc" id="L77">            AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator(false);</span>
 <span class="fc" id="L78">            initializeAndExecuteGenerator(methodGenerator, interfaze);</span>
         }

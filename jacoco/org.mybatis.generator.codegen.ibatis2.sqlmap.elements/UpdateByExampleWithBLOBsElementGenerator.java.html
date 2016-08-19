@@ -41,15 +41,15 @@ public class UpdateByExampleWithBLOBsElementGenerator extends
 <span class="fc" id="L41">        XmlElement answer = new XmlElement(&quot;update&quot;); //$NON-NLS-1$</span>
 
 <span class="fc" id="L43">        answer</span>
-                .addAttribute(new Attribute(
-                        &quot;id&quot;, introspectedTable.getUpdateByExampleWithBLOBsStatementId())); //$NON-NLS-1$
+<span class="fc" id="L44">                .addAttribute(new Attribute(</span>
+<span class="fc" id="L45">                        &quot;id&quot;, introspectedTable.getUpdateByExampleWithBLOBsStatementId())); //$NON-NLS-1$</span>
 
 <span class="fc" id="L47">        context.getCommentGenerator().addComment(answer);</span>
 
 <span class="fc" id="L49">        StringBuilder sb = new StringBuilder();</span>
 <span class="fc" id="L50">        sb.append(&quot;update &quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L51">        sb.append(introspectedTable</span>
-                .getAliasedFullyQualifiedTableNameAtRuntime());
+<span class="fc" id="L52">                .getAliasedFullyQualifiedTableNameAtRuntime());</span>
 <span class="fc" id="L53">        answer.addElement(new TextElement(sb.toString()));</span>
 
         // set up for first column
@@ -57,12 +57,12 @@ public class UpdateByExampleWithBLOBsElementGenerator extends
 <span class="fc" id="L57">        sb.append(&quot;set &quot;); //$NON-NLS-1$</span>
 
 <span class="fc" id="L59">        Iterator&lt;IntrospectedColumn&gt; iter = introspectedTable.getAllColumns()</span>
-                .iterator();
+<span class="fc" id="L60">                .iterator();</span>
 <span class="fc bfc" id="L61" title="All 2 branches covered.">        while (iter.hasNext()) {</span>
 <span class="fc" id="L62">            IntrospectedColumn introspectedColumn = iter.next();</span>
 
 <span class="fc" id="L64">            sb.append(Ibatis2FormattingUtilities</span>
-                    .getAliasedEscapedColumnName(introspectedColumn));
+<span class="fc" id="L65">                    .getAliasedEscapedColumnName(introspectedColumn));</span>
 <span class="fc" id="L66">            sb.append(&quot; = &quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L67">            sb.append(Ibatis2FormattingUtilities.getParameterClause(</span>
                     introspectedColumn, &quot;record.&quot;)); //$NON-NLS-1$
@@ -86,12 +86,12 @@ public class UpdateByExampleWithBLOBsElementGenerator extends
 
 <span class="fc" id="L87">        XmlElement includeElement = new XmlElement(&quot;include&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L88">        includeElement.addAttribute(new Attribute(&quot;refid&quot;, //$NON-NLS-1$</span>
-                introspectedTable.getIbatis2SqlMapNamespace()
-                        + &quot;.&quot; + introspectedTable.getExampleWhereClauseId())); //$NON-NLS-1$
+<span class="fc" id="L89">                introspectedTable.getIbatis2SqlMapNamespace()</span>
+<span class="fc" id="L90">                        + &quot;.&quot; + introspectedTable.getExampleWhereClauseId())); //$NON-NLS-1$</span>
 <span class="fc" id="L91">        isParameterPresentElement.addElement(includeElement);</span>
 
-<span class="pc bpc" id="L93" title="1 of 2 branches missed.">        if (context.getPlugins()</span>
-                .sqlMapUpdateByExampleWithBLOBsElementGenerated(answer,
+<span class="fc" id="L93">        if (context.getPlugins()</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">                .sqlMapUpdateByExampleWithBLOBsElementGenerated(answer,</span>
                         introspectedTable)) {
 <span class="fc" id="L96">            parentElement.addElement(answer);</span>
         }

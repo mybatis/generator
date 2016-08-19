@@ -32,13 +32,13 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
 public class IgnoredColumn {
 
     /** The column name. */
-    private String columnName;
+    protected String columnName;
 
     /** The is column name delimited. */
     private boolean isColumnNameDelimited;
 
     /** The configured delimited column name. */
-    private String configuredDelimitedColumnName;
+    protected String configuredDelimitedColumnName;
 
     /**
      * Instantiates a new ignored column.
@@ -67,7 +67,7 @@ public class IgnoredColumn {
      * @return true, if is column name delimited
      */
     public boolean isColumnNameDelimited() {
-<span class="fc" id="L70">        return isColumnNameDelimited;</span>
+<span class="nc" id="L70">        return isColumnNameDelimited;</span>
     }
 
     /**
@@ -130,5 +130,13 @@ public class IgnoredColumn {
                     tableName));
         }
 <span class="fc" id="L132">    }</span>
+    
+    public boolean matches(String columnName) {
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">        if (isColumnNameDelimited) {</span>
+<span class="nc" id="L136">            return this.columnName.equals(columnName);</span>
+        } else {
+<span class="fc" id="L138">            return this.columnName.equalsIgnoreCase(columnName);</span>
+        }
+    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

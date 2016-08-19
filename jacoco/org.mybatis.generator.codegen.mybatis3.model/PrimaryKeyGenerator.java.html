@@ -52,12 +52,12 @@ public class PrimaryKeyGenerator extends AbstractJavaGenerator {
     public List&lt;CompilationUnit&gt; getCompilationUnits() {
 <span class="fc" id="L53">        FullyQualifiedTable table = introspectedTable.getFullyQualifiedTable();</span>
 <span class="fc" id="L54">        progressCallback.startTask(getString(</span>
-                &quot;Progress.7&quot;, table.toString())); //$NON-NLS-1$
+<span class="fc" id="L55">                &quot;Progress.7&quot;, table.toString())); //$NON-NLS-1$</span>
 <span class="fc" id="L56">        Plugin plugins = context.getPlugins();</span>
 <span class="fc" id="L57">        CommentGenerator commentGenerator = context.getCommentGenerator();</span>
 
 <span class="fc" id="L59">        TopLevelClass topLevelClass = new TopLevelClass(introspectedTable</span>
-                .getPrimaryKeyType());
+<span class="fc" id="L60">                .getPrimaryKeyType());</span>
 <span class="fc" id="L61">        topLevelClass.setVisibility(JavaVisibility.PUBLIC);</span>
 <span class="fc" id="L62">        commentGenerator.addJavaFileComment(topLevelClass);</span>
 
@@ -78,9 +78,9 @@ public class PrimaryKeyGenerator extends AbstractJavaGenerator {
 <span class="fc" id="L78">        commentGenerator.addModelClassComment(topLevelClass, introspectedTable);</span>
 
 <span class="fc bfc" id="L80" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable</span>
-                .getPrimaryKeyColumns()) {
-<span class="pc bpc" id="L82" title="1 of 2 branches missed.">            if (RootClassInfo.getInstance(rootClass, warnings)</span>
-                    .containsProperty(introspectedColumn)) {
+<span class="fc" id="L81">                .getPrimaryKeyColumns()) {</span>
+<span class="fc" id="L82">            if (RootClassInfo.getInstance(rootClass, warnings)</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">                    .containsProperty(introspectedColumn)) {</span>
 <span class="nc" id="L84">                continue;</span>
             }
 
@@ -126,9 +126,9 @@ public class PrimaryKeyGenerator extends AbstractJavaGenerator {
         
 <span class="fc" id="L127">        StringBuilder sb = new StringBuilder();</span>
 <span class="fc bfc" id="L128" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable</span>
-                .getPrimaryKeyColumns()) {
+<span class="fc" id="L129">                .getPrimaryKeyColumns()) {</span>
 <span class="fc" id="L130">            method.addParameter(new Parameter(introspectedColumn.getFullyQualifiedJavaType(),</span>
-                    introspectedColumn.getJavaProperty()));
+<span class="fc" id="L131">                    introspectedColumn.getJavaProperty()));</span>
 <span class="fc" id="L132">            sb.setLength(0);</span>
 <span class="fc" id="L133">            sb.append(&quot;this.&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L134">            sb.append(introspectedColumn.getJavaProperty());</span>

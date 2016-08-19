@@ -78,16 +78,16 @@ public class XmlFileMergerJaxp {
         try {
 <span class="nc" id="L79">            return getMergedSource(new InputSource(new StringReader(generatedXmlFile.getFormattedContent())),</span>
                 new InputSource(new InputStreamReader(new FileInputStream(existingFile), &quot;UTF-8&quot;)), //$NON-NLS-1$
-                existingFile.getName());
+<span class="nc" id="L81">                existingFile.getName());</span>
 <span class="nc" id="L82">        } catch (IOException e) {</span>
 <span class="nc" id="L83">            throw new ShellException(getString(&quot;Warning.13&quot;, //$NON-NLS-1$</span>
-                    existingFile.getName()), e);
+<span class="nc" id="L84">                    existingFile.getName()), e);</span>
 <span class="nc" id="L85">        } catch (SAXException e) {</span>
 <span class="nc" id="L86">            throw new ShellException(getString(&quot;Warning.13&quot;, //$NON-NLS-1$</span>
-                    existingFile.getName()), e);
+<span class="nc" id="L87">                    existingFile.getName()), e);</span>
 <span class="nc" id="L88">        } catch (ParserConfigurationException e) {</span>
 <span class="nc" id="L89">            throw new ShellException(getString(&quot;Warning.13&quot;, //$NON-NLS-1$</span>
-                    existingFile.getName()), e);
+<span class="nc" id="L90">                    existingFile.getName()), e);</span>
         }
     }
     
@@ -95,8 +95,8 @@ public class XmlFileMergerJaxp {
             InputSource existingFile, String existingFileName) throws IOException, SAXException,
             ParserConfigurationException, ShellException {
 
-<span class="fc" id="L98">        DocumentBuilderFactory factory = DocumentBuilderFactory</span>
-                .newInstance();
+        DocumentBuilderFactory factory = DocumentBuilderFactory
+<span class="fc" id="L99">                .newInstance();</span>
 <span class="fc" id="L100">        factory.setExpandEntityReferences(false);</span>
 <span class="fc" id="L101">        DocumentBuilder builder = factory.newDocumentBuilder();</span>
 <span class="fc" id="L102">        builder.setEntityResolver(new NullEntityResolver());</span>
@@ -133,7 +133,7 @@ public class XmlFileMergerJaxp {
 <span class="fc bfc" id="L133" title="All 2 branches covered.">        for (int i = 0; i &lt; attributeCount; i++) {</span>
 <span class="fc" id="L134">            Node node = attributes.item(i);</span>
 <span class="fc" id="L135">            existingRootElement.setAttribute(node.getNodeName(), node</span>
-                    .getNodeValue());
+<span class="fc" id="L136">                    .getNodeValue());</span>
         }
 
         // remove the old generated elements and any
@@ -145,8 +145,8 @@ public class XmlFileMergerJaxp {
 <span class="fc" id="L145">            Node node = children.item(i);</span>
 <span class="fc bfc" id="L146" title="All 2 branches covered.">            if (isGeneratedNode(node)) {</span>
 <span class="fc" id="L147">                nodesToDelete.add(node);</span>
-<span class="pc bpc" id="L148" title="1 of 4 branches missed.">            } else if (isWhiteSpace(node)</span>
-                    &amp;&amp; isGeneratedNode(children.item(i + 1))) {
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">            } else if (isWhiteSpace(node)</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">                    &amp;&amp; isGeneratedNode(children.item(i + 1))) {</span>
 <span class="fc" id="L150">                nodesToDelete.add(node);</span>
             }
         }

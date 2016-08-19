@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JDBCConnectionFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.internal</a> &gt; <span class="el_source">JDBCConnectionFactory.java</span></div><h1>JDBCConnectionFactory.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2016 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.internal;
+
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
+import java.sql.Connection;
+import java.sql.Driver;
+import java.sql.SQLException;
+import java.util.Properties;
+
+import org.mybatis.generator.api.ConnectionFactory;
+import org.mybatis.generator.config.JDBCConnectionConfiguration;
+
+/**
+ * This class assumes that classes are cached elsewhere for performance reasons,
+ * but also to make sure that any native libraries are only loaded one time
+ * (avoids the dreaded UnsatisfiedLinkError library loaded in another
+ * classloader)
+ * 
+ * @author Jeff Butler
+ */
+public class JDBCConnectionFactory implements ConnectionFactory {
+
+    private String userId;
+    private String password;
+    private String connectionURL;
+    private String driverClass;
+    private Properties otherProperties;
+
+    /**
+     * This constructor is called when there is a JDBCConnectionConfiguration
+     * specified in the configuration.
+     * 
+     * @param config
+     */
+    public JDBCConnectionFactory(JDBCConnectionConfiguration config) {
+<span class="fc" id="L52">        super();</span>
+<span class="fc" id="L53">        userId = config.getUserId();</span>
+<span class="fc" id="L54">        password = config.getPassword();</span>
+<span class="fc" id="L55">        connectionURL = config.getConnectionURL();</span>
+<span class="fc" id="L56">        driverClass = config.getDriverClass();</span>
+<span class="fc" id="L57">        otherProperties = config.getProperties();</span>
+<span class="fc" id="L58">    }</span>
+    
+    /**
+     * This constructor is called when this connection factory is specified 
+     * as the type in a ConnectionFactory configuration element. 
+     */
+    public JDBCConnectionFactory() {
+<span class="fc" id="L65">        super();</span>
+<span class="fc" id="L66">    }</span>
+
+    public Connection getConnection()
+            throws SQLException {
+<span class="fc" id="L70">        Driver driver = getDriver();</span>
+
+<span class="fc" id="L72">        Properties props = new Properties();</span>
+
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">        if (stringHasValue(userId)) {</span>
+<span class="fc" id="L75">            props.setProperty(&quot;user&quot;, userId); //$NON-NLS-1$</span>
+        }
+
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">        if (stringHasValue(password)) {</span>
+<span class="nc" id="L79">            props.setProperty(&quot;password&quot;, password); //$NON-NLS-1$</span>
+        }
+
+<span class="fc" id="L82">        props.putAll(otherProperties);</span>
+
+<span class="fc" id="L84">        Connection conn = driver.connect(connectionURL, props);</span>
+
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">        if (conn == null) {</span>
+<span class="nc" id="L87">            throw new SQLException(getString(&quot;RuntimeError.7&quot;)); //$NON-NLS-1$</span>
+        }
+
+<span class="fc" id="L90">        return conn;</span>
+    }
+
+    private Driver getDriver() {
+        Driver driver;
+
+        try {
+<span class="fc" id="L97">            Class&lt;?&gt; clazz = ObjectFactory.externalClassForName(driverClass);</span>
+<span class="fc" id="L98">            driver = (Driver) clazz.newInstance();</span>
+<span class="nc" id="L99">        } catch (Exception e) {</span>
+<span class="nc" id="L100">            throw new RuntimeException(getString(&quot;RuntimeError.8&quot;), e); //$NON-NLS-1$</span>
+<span class="fc" id="L101">        }</span>
+
+<span class="fc" id="L103">        return driver;</span>
+    }
+
+    @Override
+    public void addConfigurationProperties(Properties properties) {
+        // this should only be called when this connection factory is
+        // specified in a ConnectionFactory configuration
+<span class="fc" id="L110">        userId = properties.getProperty(&quot;userId&quot;);</span>
+<span class="fc" id="L111">        password = properties.getProperty(&quot;password&quot;);</span>
+<span class="fc" id="L112">        connectionURL = properties.getProperty(&quot;connectionURL&quot;);</span>
+<span class="fc" id="L113">        driverClass = properties.getProperty(&quot;driverClass&quot;);</span>
+        
+<span class="fc" id="L115">        otherProperties = new Properties();</span>
+<span class="fc" id="L116">        otherProperties.putAll(properties);</span>
+        
+        // remove all the properties that we have specific attributes for
+<span class="fc" id="L119">        otherProperties.remove(&quot;userId&quot;);</span>
+<span class="fc" id="L120">        otherProperties.remove(&quot;password&quot;);</span>
+<span class="fc" id="L121">        otherProperties.remove(&quot;connectionURL&quot;);</span>
+<span class="fc" id="L122">        otherProperties.remove(&quot;driverClass&quot;);</span>
+<span class="fc" id="L123">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

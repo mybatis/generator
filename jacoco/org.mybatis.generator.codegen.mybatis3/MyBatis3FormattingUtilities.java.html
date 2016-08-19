@@ -91,12 +91,12 @@ public class MyBatis3FormattingUtilities {
 <span class="fc" id="L91">            sb.append(&quot; as &quot;); //$NON-NLS-1$</span>
 <span class="fc bfc" id="L92" title="All 2 branches covered.">            if (introspectedColumn.isColumnNameDelimited()) {</span>
 <span class="fc" id="L93">                sb.append(introspectedColumn.getContext()</span>
-                        .getBeginningDelimiter());
+<span class="fc" id="L94">                        .getBeginningDelimiter());</span>
             }
 <span class="fc" id="L96">            sb.append(introspectedColumn.getTableAlias());</span>
 <span class="fc" id="L97">            sb.append('_');</span>
 <span class="fc" id="L98">            sb.append(escapeStringForMyBatis3(introspectedColumn</span>
-                    .getActualColumnName()));
+<span class="fc" id="L99">                    .getActualColumnName()));</span>
 <span class="fc bfc" id="L100" title="All 2 branches covered.">            if (introspectedColumn.isColumnNameDelimited()) {</span>
 <span class="fc" id="L101">                sb.append(introspectedColumn.getContext().getEndingDelimiter());</span>
             }
@@ -117,11 +117,11 @@ public class MyBatis3FormattingUtilities {
             IntrospectedColumn introspectedColumn) {
 <span class="fc" id="L118">        StringBuilder sb = new StringBuilder();</span>
 <span class="fc" id="L119">        sb.append(escapeStringForMyBatis3(introspectedColumn</span>
-                .getActualColumnName()));
+<span class="fc" id="L120">                .getActualColumnName()));</span>
 
 <span class="fc bfc" id="L122" title="All 2 branches covered.">        if (introspectedColumn.isColumnNameDelimited()) {</span>
 <span class="fc" id="L123">            sb.insert(0, introspectedColumn.getContext()</span>
-                    .getBeginningDelimiter());
+<span class="fc" id="L124">                    .getBeginningDelimiter());</span>
 <span class="fc" id="L125">            sb.append(introspectedColumn.getContext().getEndingDelimiter());</span>
         }
 
@@ -171,14 +171,14 @@ public class MyBatis3FormattingUtilities {
 
 <span class="fc bfc" id="L172" title="All 2 branches covered.">        if (introspectedColumn.isColumnNameDelimited()) {</span>
 <span class="fc" id="L173">            sb.append(escapeStringForJava(introspectedColumn</span>
-                    .getContext().getBeginningDelimiter()));
+<span class="fc" id="L174">                    .getContext().getBeginningDelimiter()));</span>
         }
 
 <span class="fc" id="L177">        sb.append(introspectedColumn.getActualColumnName());</span>
 
 <span class="fc bfc" id="L179" title="All 2 branches covered.">        if (introspectedColumn.isColumnNameDelimited()) {</span>
 <span class="fc" id="L180">            sb.append(escapeStringForJava(introspectedColumn</span>
-                    .getContext().getEndingDelimiter()));
+<span class="fc" id="L181">                    .getContext().getEndingDelimiter()));</span>
         }
 
 <span class="fc" id="L184">        return sb.toString();</span>

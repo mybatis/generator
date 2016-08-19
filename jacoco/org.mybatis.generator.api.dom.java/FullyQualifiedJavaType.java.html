@@ -512,7 +512,7 @@ public class FullyQualifiedJavaType implements
 <span class="fc bfc" id="L512" title="All 2 branches covered.">        if (baseQualifiedName.contains(&quot;.&quot;)) { //$NON-NLS-1$</span>
 <span class="fc" id="L513">            packageName = getPackage(baseQualifiedName);</span>
 <span class="fc" id="L514">            baseShortName = baseQualifiedName</span>
-                    .substring(packageName.length() + 1);
+<span class="fc" id="L515">                    .substring(packageName.length() + 1);</span>
 <span class="fc" id="L516">            int index = baseShortName.lastIndexOf('.');</span>
 <span class="pc bpc" id="L517" title="1 of 2 branches missed.">            if (index != -1) {</span>
 <span class="nc" id="L518">                baseShortName = baseShortName.substring(index + 1);</span>
@@ -537,14 +537,14 @@ public class FullyQualifiedJavaType implements
 <span class="fc bfc" id="L537" title="All 2 branches covered.">            } else if (&quot;int&quot;.equals(baseQualifiedName)) { //$NON-NLS-1$</span>
 <span class="fc" id="L538">                primitive = true;</span>
 <span class="fc" id="L539">                primitiveTypeWrapper = PrimitiveTypeWrapper</span>
-                        .getIntegerInstance();
+<span class="fc" id="L540">                        .getIntegerInstance();</span>
 <span class="fc bfc" id="L541" title="All 2 branches covered.">            } else if (&quot;long&quot;.equals(baseQualifiedName)) { //$NON-NLS-1$</span>
 <span class="fc" id="L542">                primitive = true;</span>
 <span class="fc" id="L543">                primitiveTypeWrapper = PrimitiveTypeWrapper.getLongInstance();</span>
 <span class="pc bpc" id="L544" title="1 of 2 branches missed.">            } else if (&quot;char&quot;.equals(baseQualifiedName)) { //$NON-NLS-1$</span>
 <span class="nc" id="L545">                primitive = true;</span>
 <span class="nc" id="L546">                primitiveTypeWrapper = PrimitiveTypeWrapper</span>
-                        .getCharacterInstance();
+<span class="nc" id="L547">                        .getCharacterInstance();</span>
 <span class="pc bpc" id="L548" title="1 of 2 branches missed.">            } else if (&quot;float&quot;.equals(baseQualifiedName)) { //$NON-NLS-1$</span>
 <span class="nc" id="L549">                primitive = true;</span>
 <span class="nc" id="L550">                primitiveTypeWrapper = PrimitiveTypeWrapper.getFloatInstance();</span>
@@ -554,7 +554,7 @@ public class FullyQualifiedJavaType implements
 <span class="fc bfc" id="L554" title="All 2 branches covered.">            } else if (&quot;boolean&quot;.equals(baseQualifiedName)) { //$NON-NLS-1$</span>
 <span class="fc" id="L555">                primitive = true;</span>
 <span class="fc" id="L556">                primitiveTypeWrapper = PrimitiveTypeWrapper</span>
-                        .getBooleanInstance();
+<span class="fc" id="L557">                        .getBooleanInstance();</span>
             } else {
 <span class="fc" id="L559">                primitive = false;</span>
 <span class="fc" id="L560">                primitiveTypeWrapper = null;</span>
@@ -591,7 +591,7 @@ public class FullyQualifiedJavaType implements
 <span class="fc bfc" id="L591" title="All 2 branches covered.">            } else if (&quot;,&quot;.equals(token)) { //$NON-NLS-1$</span>
 <span class="fc bfc" id="L592" title="All 2 branches covered.">                if (openCount == 0) {</span>
 <span class="fc" id="L593">                    typeArguments</span>
-                            .add(new FullyQualifiedJavaType(sb.toString()));
+<span class="fc" id="L594">                            .add(new FullyQualifiedJavaType(sb.toString()));</span>
 <span class="fc" id="L595">                    sb.setLength(0);</span>
                 } else {
 <span class="fc" id="L597">                    sb.append(token);</span>
@@ -635,6 +635,10 @@ public class FullyQualifiedJavaType implements
      */
     public boolean isArray() {
 <span class="fc" id="L637">        return isArray;</span>
+    }
+
+    public List&lt;FullyQualifiedJavaType&gt; getTypeArguments() {
+<span class="fc" id="L641">        return typeArguments;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

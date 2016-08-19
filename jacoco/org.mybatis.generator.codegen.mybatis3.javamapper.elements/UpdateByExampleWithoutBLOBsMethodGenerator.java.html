@@ -47,17 +47,17 @@ public class UpdateByExampleWithoutBLOBsMethodGenerator extends
         FullyQualifiedJavaType parameterType;
 <span class="fc bfc" id="L48" title="All 2 branches covered.">        if (introspectedTable.getRules().generateBaseRecordClass()) {</span>
 <span class="fc" id="L49">            parameterType = new FullyQualifiedJavaType(introspectedTable</span>
-                    .getBaseRecordType());
+<span class="fc" id="L50">                    .getBaseRecordType());</span>
         } else {
 <span class="fc" id="L52">            parameterType = new FullyQualifiedJavaType(introspectedTable</span>
-                    .getPrimaryKeyType());
+<span class="fc" id="L53">                    .getPrimaryKeyType());</span>
         }
 <span class="fc" id="L55">        method.addParameter(new Parameter(parameterType,</span>
                 &quot;record&quot;, &quot;@Param(\&quot;record\&quot;)&quot;)); //$NON-NLS-1$ //$NON-NLS-2$
 <span class="fc" id="L57">        importedTypes.add(parameterType);</span>
 
 <span class="fc" id="L59">        FullyQualifiedJavaType exampleType = new FullyQualifiedJavaType(</span>
-                introspectedTable.getExampleType());
+<span class="fc" id="L60">                introspectedTable.getExampleType());</span>
 <span class="fc" id="L61">        method.addParameter(new Parameter(exampleType,</span>
                 &quot;example&quot;, &quot;@Param(\&quot;example\&quot;)&quot;)); //$NON-NLS-1$ //$NON-NLS-2$
 <span class="fc" id="L63">        importedTypes.add(exampleType);</span>
@@ -70,8 +70,8 @@ public class UpdateByExampleWithoutBLOBsMethodGenerator extends
 
 <span class="fc" id="L71">        addMapperAnnotations(interfaze, method);</span>
         
-<span class="pc bpc" id="L73" title="1 of 2 branches missed.">        if (context.getPlugins()</span>
-                .clientUpdateByExampleWithoutBLOBsMethodGenerated(method,
+<span class="fc" id="L73">        if (context.getPlugins()</span>
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">                .clientUpdateByExampleWithoutBLOBsMethodGenerated(method,</span>
                         interfaze, introspectedTable)) {
 <span class="fc" id="L76">            interfaze.addImportedTypes(importedTypes);</span>
 <span class="fc" id="L77">            interfaze.addMethod(method);</span>

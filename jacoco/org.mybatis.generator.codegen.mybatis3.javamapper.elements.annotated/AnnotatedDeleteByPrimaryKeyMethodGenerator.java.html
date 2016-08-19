@@ -49,7 +49,7 @@ public class AnnotatedDeleteByPrimaryKeyMethodGenerator extends
 <span class="fc" id="L49">        javaIndent(sb, 1);</span>
 <span class="fc" id="L50">        sb.append(&quot;\&quot;delete from &quot; ); //$NON-NLS-1$</span>
 <span class="fc" id="L51">        sb.append(escapeStringForJava(</span>
-                introspectedTable.getFullyQualifiedTableNameAtRuntime()));
+<span class="fc" id="L52">                introspectedTable.getFullyQualifiedTableNameAtRuntime()));</span>
 <span class="fc" id="L53">        sb.append(&quot;\&quot;,&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L54">        method.addAnnotation(sb.toString());</span>
         
@@ -67,7 +67,7 @@ public class AnnotatedDeleteByPrimaryKeyMethodGenerator extends
             }
 
 <span class="fc" id="L69">            sb.append(escapeStringForJava(</span>
-                    getEscapedColumnName(introspectedColumn)));
+<span class="fc" id="L70">                    getEscapedColumnName(introspectedColumn)));</span>
 <span class="fc" id="L71">            sb.append(&quot; = &quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L72">            sb.append(getParameterClause(introspectedColumn));</span>
 <span class="fc" id="L73">            sb.append('\&quot;');</span>

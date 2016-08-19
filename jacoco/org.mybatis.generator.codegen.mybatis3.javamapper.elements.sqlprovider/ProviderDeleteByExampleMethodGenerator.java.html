@@ -55,7 +55,7 @@ public class ProviderDeleteByExampleMethodGenerator extends
 <span class="fc" id="L55">        importedTypes.add(fqjt);</span>
 
 <span class="fc" id="L57">        Method method = new Method(</span>
-                introspectedTable.getDeleteByExampleStatementId());
+<span class="fc" id="L58">                introspectedTable.getDeleteByExampleStatementId());</span>
 <span class="fc" id="L59">        method.setVisibility(JavaVisibility.PUBLIC);</span>
 <span class="fc" id="L60">        method.setReturnType(FullyQualifiedJavaType.getStringInstance());</span>
 <span class="fc" id="L61">        method.addParameter(new Parameter(fqjt, &quot;example&quot;)); //$NON-NLS-1$</span>
@@ -66,13 +66,13 @@ public class ProviderDeleteByExampleMethodGenerator extends
 <span class="pc bpc" id="L66" title="1 of 2 branches missed.">        if (useLegacyBuilder) {</span>
 <span class="nc" id="L67">        	method.addBodyLine(&quot;BEGIN();&quot;); //$NON-NLS-1$</span>
 <span class="nc" id="L68">        	method.addBodyLine(String.format(&quot;DELETE_FROM(\&quot;%s\&quot;);&quot;, //$NON-NLS-1$</span>
-                escapeStringForJava(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime())));
+<span class="nc" id="L69">                escapeStringForJava(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime())));</span>
 <span class="nc" id="L70">        	method.addBodyLine(&quot;applyWhere(example, false);&quot;); //$NON-NLS-1$</span>
 <span class="nc" id="L71">        	method.addBodyLine(&quot;return SQL();&quot;); //$NON-NLS-1$</span>
         } else {
 <span class="fc" id="L73">        	method.addBodyLine(&quot;SQL sql = new SQL();&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L74">        	method.addBodyLine(String.format(&quot;sql.DELETE_FROM(\&quot;%s\&quot;);&quot;, //$NON-NLS-1$</span>
-                escapeStringForJava(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime())));
+<span class="fc" id="L75">                escapeStringForJava(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime())));</span>
 <span class="fc" id="L76">        	method.addBodyLine(&quot;applyWhere(sql, example, false);&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L77">        	method.addBodyLine(&quot;return sql.toString();&quot;); //$NON-NLS-1$</span>
         }

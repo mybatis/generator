@@ -31,46 +31,90 @@
 <a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> org.junit.Test;
 <a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.api.MyBatisGenerator;
 <a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.config.Configuration;
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.config.xml.ConfigurationParser;
-<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.exception.InvalidConfigurationException;
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.internal.DefaultShellCallback;
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>  
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../org/mybatis/generator/MyBatisGeneratorTest.html">MyBatisGeneratorTest</a> {
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>  
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>      @Test(expected=InvalidConfigurationException.<strong class="jxr_keyword">class</strong>)
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testGenerateMyBatis3() <strong class="jxr_keyword">throws</strong> Exception {
-<a class="jxr_linenumber" name="L34" href="#L34">34</a>          List&lt;String&gt; warnings = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>          ConfigurationParser cp = <strong class="jxr_keyword">new</strong> ConfigurationParser(warnings);
-<a class="jxr_linenumber" name="L36" href="#L36">36</a>          Configuration config = cp.parseConfiguration(<strong class="jxr_keyword">this</strong>.getClass().getClassLoader().getResourceAsStream(<span class="jxr_string">"generatorConfigMyBatis3.xml"</span>));
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>              
-<a class="jxr_linenumber" name="L38" href="#L38">38</a>          DefaultShellCallback shellCallback = <strong class="jxr_keyword">new</strong> DefaultShellCallback(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L39" href="#L39">39</a>          
-<a class="jxr_linenumber" name="L40" href="#L40">40</a>          <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>              MyBatisGenerator myBatisGenerator = <strong class="jxr_keyword">new</strong> MyBatisGenerator(config, shellCallback, warnings);
-<a class="jxr_linenumber" name="L42" href="#L42">42</a>              myBatisGenerator.generate(<strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, false);
-<a class="jxr_linenumber" name="L43" href="#L43">43</a>          } <strong class="jxr_keyword">catch</strong> (InvalidConfigurationException e) {
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>              assertEquals(2, e.getErrors().size());
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>              <strong class="jxr_keyword">throw</strong> e;
-<a class="jxr_linenumber" name="L46" href="#L46">46</a>          }
-<a class="jxr_linenumber" name="L47" href="#L47">47</a>      }
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>  
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>      @Test(expected=InvalidConfigurationException.<strong class="jxr_keyword">class</strong>)
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testGenerateIbatis2() <strong class="jxr_keyword">throws</strong> Exception {
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>          List&lt;String&gt; warnings = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>          ConfigurationParser cp = <strong class="jxr_keyword">new</strong> ConfigurationParser(warnings);
-<a class="jxr_linenumber" name="L53" href="#L53">53</a>          Configuration config = cp.parseConfiguration(<strong class="jxr_keyword">this</strong>.getClass().getClassLoader().getResourceAsStream(<span class="jxr_string">"generatorConfigIbatis2.xml"</span>));
-<a class="jxr_linenumber" name="L54" href="#L54">54</a>              
-<a class="jxr_linenumber" name="L55" href="#L55">55</a>          DefaultShellCallback shellCallback = <strong class="jxr_keyword">new</strong> DefaultShellCallback(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L56" href="#L56">56</a>          
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>          <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>              MyBatisGenerator myBatisGenerator = <strong class="jxr_keyword">new</strong> MyBatisGenerator(config, shellCallback, warnings);
-<a class="jxr_linenumber" name="L59" href="#L59">59</a>              myBatisGenerator.generate(<strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, false);
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>          } <strong class="jxr_keyword">catch</strong> (InvalidConfigurationException e) {
-<a class="jxr_linenumber" name="L61" href="#L61">61</a>              assertEquals(1, e.getErrors().size());
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>              <strong class="jxr_keyword">throw</strong> e;
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>          }
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>      }
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>  }
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.config.ConnectionFactoryConfiguration;
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.config.Context;
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.config.JDBCConnectionConfiguration;
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.config.ModelType;
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.config.xml.ConfigurationParser;
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.exception.InvalidConfigurationException;
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.internal.DefaultShellCallback;
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>  
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../org/mybatis/generator/MyBatisGeneratorTest.html">MyBatisGeneratorTest</a> {
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>  
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>      @Test(expected=InvalidConfigurationException.<strong class="jxr_keyword">class</strong>)
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testGenerateMyBatis3WithInvalidConfig() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>          List&lt;String&gt; warnings = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>          ConfigurationParser cp = <strong class="jxr_keyword">new</strong> ConfigurationParser(warnings);
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>          Configuration config = cp.parseConfiguration(<strong class="jxr_keyword">this</strong>.getClass().getClassLoader().getResourceAsStream(<span class="jxr_string">"generatorConfigMyBatis3_badConfig.xml"</span>));
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>              
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>          DefaultShellCallback shellCallback = <strong class="jxr_keyword">new</strong> DefaultShellCallback(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>          
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>          <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>              MyBatisGenerator myBatisGenerator = <strong class="jxr_keyword">new</strong> MyBatisGenerator(config, shellCallback, warnings);
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>              myBatisGenerator.generate(<strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, false);
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>          } <strong class="jxr_keyword">catch</strong> (InvalidConfigurationException e) {
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>              assertEquals(2, e.getErrors().size());
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>              <strong class="jxr_keyword">throw</strong> e;
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>          }
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>      }
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>  
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>      @Test(expected=InvalidConfigurationException.<strong class="jxr_keyword">class</strong>)
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testGenerateIbatis2WithInvalidConfig() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>          List&lt;String&gt; warnings = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>          ConfigurationParser cp = <strong class="jxr_keyword">new</strong> ConfigurationParser(warnings);
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>          Configuration config = cp.parseConfiguration(<strong class="jxr_keyword">this</strong>.getClass().getClassLoader().getResourceAsStream(<span class="jxr_string">"generatorConfigIbatis2_badConfig.xml"</span>));
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>              
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>          DefaultShellCallback shellCallback = <strong class="jxr_keyword">new</strong> DefaultShellCallback(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>          
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>          <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>              MyBatisGenerator myBatisGenerator = <strong class="jxr_keyword">new</strong> MyBatisGenerator(config, shellCallback, warnings);
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>              myBatisGenerator.generate(<strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, false);
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>          } <strong class="jxr_keyword">catch</strong> (InvalidConfigurationException e) {
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>              assertEquals(1, e.getErrors().size());
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>              <strong class="jxr_keyword">throw</strong> e;
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>          }
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>      }
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>  
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>      @Test(expected=InvalidConfigurationException.<strong class="jxr_keyword">class</strong>)
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testGenerateInvalidConfigWithNoConnectionSources() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>          List&lt;String&gt; warnings = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>          Configuration config = <strong class="jxr_keyword">new</strong> Configuration();
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>          Context context = <strong class="jxr_keyword">new</strong> Context(ModelType.HIERARCHICAL);
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>          context.setId(<span class="jxr_string">"MyContext"</span>);
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>          config.addContext(context);
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>          
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>          DefaultShellCallback shellCallback = <strong class="jxr_keyword">new</strong> DefaultShellCallback(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>          
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>          <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>              MyBatisGenerator myBatisGenerator = <strong class="jxr_keyword">new</strong> MyBatisGenerator(config, shellCallback, warnings);
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>              myBatisGenerator.generate(<strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, false);
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>          } <strong class="jxr_keyword">catch</strong> (InvalidConfigurationException e) {
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>              assertEquals(3, e.getErrors().size());
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>              <strong class="jxr_keyword">throw</strong> e;
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>          }
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>      }
+<a class="jxr_linenumber" name="L88" href="#L88">88</a>  
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>      @Test(expected=InvalidConfigurationException.<strong class="jxr_keyword">class</strong>)
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testGenerateInvalidConfigWithTwoConnectionSources() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>          List&lt;String&gt; warnings = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>          Configuration config = <strong class="jxr_keyword">new</strong> Configuration();
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>          Context context = <strong class="jxr_keyword">new</strong> Context(ModelType.HIERARCHICAL);
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>          context.setId(<span class="jxr_string">"MyContext"</span>);
+<a class="jxr_linenumber" name="L95" href="#L95">95</a>          context.setConnectionFactoryConfiguration(<strong class="jxr_keyword">new</strong> ConnectionFactoryConfiguration());
+<a class="jxr_linenumber" name="L96" href="#L96">96</a>          context.setJdbcConnectionConfiguration(<strong class="jxr_keyword">new</strong> JDBCConnectionConfiguration());
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>          config.addContext(context);
+<a class="jxr_linenumber" name="L98" href="#L98">98</a>          
+<a class="jxr_linenumber" name="L99" href="#L99">99</a>          DefaultShellCallback shellCallback = <strong class="jxr_keyword">new</strong> DefaultShellCallback(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L100" href="#L100">100</a>         
+<a class="jxr_linenumber" name="L101" href="#L101">101</a>         <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L102" href="#L102">102</a>             MyBatisGenerator myBatisGenerator = <strong class="jxr_keyword">new</strong> MyBatisGenerator(config, shellCallback, warnings);
+<a class="jxr_linenumber" name="L103" href="#L103">103</a>             myBatisGenerator.generate(<strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, false);
+<a class="jxr_linenumber" name="L104" href="#L104">104</a>         } <strong class="jxr_keyword">catch</strong> (InvalidConfigurationException e) {
+<a class="jxr_linenumber" name="L105" href="#L105">105</a>             assertEquals(3, e.getErrors().size());
+<a class="jxr_linenumber" name="L106" href="#L106">106</a>             <strong class="jxr_keyword">throw</strong> e;
+<a class="jxr_linenumber" name="L107" href="#L107">107</a>         }
+<a class="jxr_linenumber" name="L108" href="#L108">108</a>     }
+<a class="jxr_linenumber" name="L109" href="#L109">109</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2006&#x2013;2016 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>

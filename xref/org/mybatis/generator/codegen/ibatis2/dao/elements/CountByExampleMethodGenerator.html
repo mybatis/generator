@@ -55,7 +55,7 @@
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>          <em class="jxr_comment">// generate the implementation method</em>
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>          StringBuilder sb = <strong class="jxr_keyword">new</strong> StringBuilder();
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>  
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>          sb.append(<span class="jxr_string">"Integer count = (Integer)  "</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>          sb.append(<span class="jxr_string">"Long count = (Long)  "</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>          sb.append(daoTemplate.getQueryForObjectMethod(introspectedTable
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>                  .getIbatis2SqlMapNamespace(), introspectedTable
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>                  .getCountByExampleStatementId(), <span class="jxr_string">"example"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
@@ -64,7 +64,7 @@
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>          <strong class="jxr_keyword">if</strong> (generateForJava5) {
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>              method.addBodyLine(<span class="jxr_string">"return count;"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>          } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L59" href="#L59">59</a>              method.addBodyLine(<span class="jxr_string">"return count.intValue();"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>              method.addBodyLine(<span class="jxr_string">"return count.longValue();"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>          }
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>  
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>          <strong class="jxr_keyword">if</strong> (context.getPlugins().clientCountByExampleMethodGenerated(method,
@@ -95,7 +95,7 @@
 <a class="jxr_linenumber" name="L87" href="#L87">87</a>  
 <a class="jxr_linenumber" name="L88" href="#L88">88</a>          <a href="../../../../../../../org/mybatis/generator/api/dom/java/Method.html">Method</a> method = <strong class="jxr_keyword">new</strong> <a href="../../../../../../../org/mybatis/generator/api/dom/java/Method.html">Method</a>();
 <a class="jxr_linenumber" name="L89" href="#L89">89</a>          method.setVisibility(getExampleMethodVisibility());
-<a class="jxr_linenumber" name="L90" href="#L90">90</a>          method.setReturnType(FullyQualifiedJavaType.getIntInstance());
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>          method.setReturnType(<strong class="jxr_keyword">new</strong> <a href="../../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a>(<span class="jxr_string">"long"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L91" href="#L91">91</a>          method.setName(getDAOMethodNameCalculator()
 <a class="jxr_linenumber" name="L92" href="#L92">92</a>                  .getCountByExampleMethodName(introspectedTable));
 <a class="jxr_linenumber" name="L93" href="#L93">93</a>          method.addParameter(<strong class="jxr_keyword">new</strong> <a href="../../../../../../../org/mybatis/generator/api/dom/java/Parameter.html">Parameter</a>(type, <span class="jxr_string">"example"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>

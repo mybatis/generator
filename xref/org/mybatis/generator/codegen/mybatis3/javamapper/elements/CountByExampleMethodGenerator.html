@@ -54,7 +54,7 @@
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>  
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>          <a href="../../../../../../../org/mybatis/generator/api/dom/java/Method.html">Method</a> method = <strong class="jxr_keyword">new</strong> <a href="../../../../../../../org/mybatis/generator/api/dom/java/Method.html">Method</a>();
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>          method.setVisibility(JavaVisibility.PUBLIC);
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>          method.setReturnType(FullyQualifiedJavaType.getIntInstance());
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>          method.setReturnType(<strong class="jxr_keyword">new</strong> <a href="../../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a>(<span class="jxr_string">"long"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>          method.setName(introspectedTable.getCountByExampleStatementId());
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>          method.addParameter(<strong class="jxr_keyword">new</strong> <a href="../../../../../../../org/mybatis/generator/api/dom/java/Parameter.html">Parameter</a>(fqjt, <span class="jxr_string">"example"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>          context.getCommentGenerator().addGeneralMethodComment(method,

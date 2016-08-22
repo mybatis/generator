@@ -43,6 +43,7 @@
       <item href="configreference/xmlconfig.html" name="XML Configuration Reference" collapse="true" >
         <item href="configreference/classPathEntry.html" name="&amp;lt;classPathEntry&amp;gt;" />
         <item href="configreference/columnOverride.html" name="&amp;lt;columnOverride&amp;gt;" />
+        <item href="configreference/domainObjectRenamingRule.html" name="&amp;lt;domainObjectRenamingRule&amp;gt;" />
         <item href="configreference/columnRenamingRule.html" name="&amp;lt;columnRenamingRule&amp;gt;" />
         <item href="configreference/commentGenerator.html" name="&amp;lt;commentGenerator&amp;gt;" />
         <item href="configreference/connectionFactory.html" name="&amp;lt;connectionFactory&amp;gt;" />

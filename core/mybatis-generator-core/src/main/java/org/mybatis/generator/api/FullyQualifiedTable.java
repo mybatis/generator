@@ -23,6 +23,10 @@ import static org.mybatis.generator.internal.util.StringUtility.composeFullyQual
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
 import org.mybatis.generator.config.Context;
+import org.mybatis.generator.config.DomainObjectRenamingRule;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * The Class FullyQualifiedTable.
@@ -67,6 +71,9 @@ public class FullyQualifiedTable {
     /** The ending delimiter. */
     private String endingDelimiter;
 
+    /** The domain object renaming rule. */
+    private DomainObjectRenamingRule domainObjectRenamingRule;
+
     /**
      * This object is used to hold information related to the table itself, not the columns in the table.
      *
@@ -102,6 +109,9 @@ public class FullyQualifiedTable {
      * @param delimitIdentifiers
      *            if true, then the table identifiers will be delimited at runtime. The delimiter characters are
      *            obtained from the Context.
+     * @param domainObjectRenamingRule
+     *            If domainObjectName is not configured, we'll build the domain object named based on the tableName or runtimeTableName.
+     *            And then we use the domain object renameing rule to generate the final domain object name.
      * @param context
      *            the context
      */
@@ -110,7 +120,8 @@ public class FullyQualifiedTable {
             String domainObjectName, String alias,
             boolean ignoreQualifiersAtRuntime, String runtimeCatalog,
             String runtimeSchema, String runtimeTableName,
-            boolean delimitIdentifiers, Context context) {
+            boolean delimitIdentifiers, DomainObjectRenamingRule domainObjectRenamingRule,
+            Context context) {
         super();
         this.introspectedCatalog = introspectedCatalog;
         this.introspectedSchema = introspectedSchema;
@@ -119,6 +130,7 @@ public class FullyQualifiedTable {
         this.runtimeCatalog = runtimeCatalog;
         this.runtimeSchema = runtimeSchema;
         this.runtimeTableName = runtimeTableName;
+        this.domainObjectRenamingRule = domainObjectRenamingRule;
         
         if (stringHasValue(domainObjectName)) {
             int index = domainObjectName.lastIndexOf('.');
@@ -258,11 +270,21 @@ public class FullyQualifiedTable {
     public String getDomainObjectName() {
         if (stringHasValue(domainObjectName)) {
             return domainObjectName;
-        } else if (stringHasValue(runtimeTableName)) {
-            return getCamelCaseString(runtimeTableName, true);
-        } else {
-            return getCamelCaseString(introspectedTableName, true);
         }
+        String finalDomainObjectName;
+        if (stringHasValue(runtimeTableName)) {
+            finalDomainObjectName =  getCamelCaseString(runtimeTableName, true);
+        } else {
+            finalDomainObjectName =  getCamelCaseString(introspectedTableName, true);
+        }
+        if(domainObjectRenamingRule != null){
+            Pattern pattern = Pattern.compile(domainObjectRenamingRule.getSearchString());
+            String replaceString = domainObjectRenamingRule.getReplaceString();
+            replaceString = replaceString == null ? "" : replaceString;
+            Matcher matcher = pattern.matcher(finalDomainObjectName);
+            finalDomainObjectName = matcher.replaceAll(replaceString);
+        }
+        return finalDomainObjectName;
     }
 
     /* (non-Javadoc)

@@ -144,7 +144,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>build-helper-maven-plugin</artifactId>
-          <version>1.10</version>
+          <version>1.12</version>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
@@ -231,6 +231,7 @@
         <artifactId>mybatis</artifactId>
         <version>3.4.0</version>
       </dependency>
+      <!-- TODO: Raising above 2.4.0 required jdk 8 usage -->
       <dependency>
         <groupId>com.github.javaparser</groupId>
         <artifactId>javaparser-core</artifactId>
@@ -276,7 +277,7 @@
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>findbugs-maven-plugin</artifactId>
-            <version>3.0.3</version>
+            <version>3.0.4</version>
           </plugin>
         </plugins>
       </reporting>

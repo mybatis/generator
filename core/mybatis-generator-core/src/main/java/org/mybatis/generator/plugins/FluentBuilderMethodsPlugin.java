@@ -28,19 +28,21 @@ import java.util.List;
  * This plugin adds fluent builder methods to the generated model
  * classes.
  *
- * Example: given the domain class <code>MyDomainClass</code> with setter-method <code>setValue(Object v)</code>
- * Result: the plugin will create the additional Method <code>public MyDomainClass withValue(Object v)</code>
+ * Example:
  * <p>
+ * Given the domain class <code>MyDomainClass</code> with setter-method <code>setValue(Object v)</code>
+ * <p>
+ * The plugin will create the additional Method <code>public MyDomainClass withValue(Object v)</code>
  *
- * <p>
  *
  * @author Stefan Lack
  */
 public class FluentBuilderMethodsPlugin extends  PluginAdapter {
-    public boolean validate(List<String> warnings) {       
+
+    public boolean validate(List<String> warnings) {
         return true;
     }
-    
+
     
 
     @Override

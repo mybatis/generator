@@ -781,6 +781,20 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
     }
 
     @Test
+    public void testFluentBuilderMethodGenerated() {
+        MyObject myObject = new MyObject();
+        FirstName firstname = new FirstName();
+        firstname.setValue( "Bob" );
+
+        Integer wierdField = 4711;
+        myObject.withWierdField( wierdField )
+                .withFirstname( firstname );
+
+        assertEquals( "firstName was set", "Bob", myObject.getFirstname().getValue() );
+        assertEquals( "wieredField was set", wierdField,myObject.getWierdField());
+    }
+
+    @Test
     public void testMyObjectUpdateByExampleSelective() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 

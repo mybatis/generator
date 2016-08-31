@@ -27,6 +27,7 @@
     <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
     <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin" />
     <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
+    <plugin type="org.mybatis.generator.plugins.FluentBuilderMethodsPlugin" />
 
     <connectionFactory type="DEFAULT">
       <property name="driverClass" value="org.hsqldb.jdbcDriver"/>

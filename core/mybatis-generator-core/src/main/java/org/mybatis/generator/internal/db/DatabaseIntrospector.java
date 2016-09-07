@@ -600,7 +600,7 @@ public class DatabaseIntrospector {
         }
 
         ResultSet rs = databaseMetaData.getColumns(localCatalog, localSchema,
-                localTableName, null);
+                localTableName, "%"); //$NON-NLS-1$
         
         boolean supportsIsAutoIncrement = false;
         boolean supportsIsGeneratedColumn = false;

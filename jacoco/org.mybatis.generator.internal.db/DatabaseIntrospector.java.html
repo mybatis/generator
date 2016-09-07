@@ -26,6 +26,7 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -89,13 +90,13 @@ public class DatabaseIntrospector {
     public DatabaseIntrospector(Context context,
             DatabaseMetaData databaseMetaData,
             JavaTypeResolver javaTypeResolver, List&lt;String&gt; warnings) {
-<span class="fc" id="L92">        super();</span>
-<span class="fc" id="L93">        this.context = context;</span>
-<span class="fc" id="L94">        this.databaseMetaData = databaseMetaData;</span>
-<span class="fc" id="L95">        this.javaTypeResolver = javaTypeResolver;</span>
-<span class="fc" id="L96">        this.warnings = warnings;</span>
-<span class="fc" id="L97">        logger = LogFactory.getLog(getClass());</span>
-<span class="fc" id="L98">    }</span>
+<span class="fc" id="L93">        super();</span>
+<span class="fc" id="L94">        this.context = context;</span>
+<span class="fc" id="L95">        this.databaseMetaData = databaseMetaData;</span>
+<span class="fc" id="L96">        this.javaTypeResolver = javaTypeResolver;</span>
+<span class="fc" id="L97">        this.warnings = warnings;</span>
+<span class="fc" id="L98">        logger = LogFactory.getLog(getClass());</span>
+<span class="fc" id="L99">    }</span>
 
     /**
      * Calculate primary key.
@@ -107,37 +108,37 @@ public class DatabaseIntrospector {
      */
     private void calculatePrimaryKey(FullyQualifiedTable table,
             IntrospectedTable introspectedTable) {
-<span class="fc" id="L110">        ResultSet rs = null;</span>
+<span class="fc" id="L111">        ResultSet rs = null;</span>
 
         try {
-<span class="fc" id="L113">            rs = databaseMetaData.getPrimaryKeys(</span>
-<span class="fc" id="L114">                    table.getIntrospectedCatalog(), table</span>
-<span class="fc" id="L115">                            .getIntrospectedSchema(), table</span>
-<span class="fc" id="L116">                            .getIntrospectedTableName());</span>
-<span class="nc" id="L117">        } catch (SQLException e) {</span>
-<span class="nc" id="L118">            closeResultSet(rs);</span>
-<span class="nc" id="L119">            warnings.add(getString(&quot;Warning.15&quot;)); //$NON-NLS-1$</span>
-<span class="nc" id="L120">            return;</span>
-<span class="fc" id="L121">        }</span>
+<span class="fc" id="L114">            rs = databaseMetaData.getPrimaryKeys(</span>
+<span class="fc" id="L115">                    table.getIntrospectedCatalog(), table</span>
+<span class="fc" id="L116">                            .getIntrospectedSchema(), table</span>
+<span class="fc" id="L117">                            .getIntrospectedTableName());</span>
+<span class="nc" id="L118">        } catch (SQLException e) {</span>
+<span class="nc" id="L119">            closeResultSet(rs);</span>
+<span class="nc" id="L120">            warnings.add(getString(&quot;Warning.15&quot;)); //$NON-NLS-1$</span>
+<span class="nc" id="L121">            return;</span>
+<span class="fc" id="L122">        }</span>
 
         try {
             // keep primary columns in key sequence order
-<span class="fc" id="L125">            Map&lt;Short, String&gt; keyColumns = new TreeMap&lt;Short, String&gt;();</span>
-<span class="fc bfc" id="L126" title="All 2 branches covered.">            while (rs.next()) {</span>
-<span class="fc" id="L127">                String columnName = rs.getString(&quot;COLUMN_NAME&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L128">                short keySeq = rs.getShort(&quot;KEY_SEQ&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L129">                keyColumns.put(keySeq, columnName);</span>
-<span class="fc" id="L130">            }</span>
+<span class="fc" id="L126">            Map&lt;Short, String&gt; keyColumns = new TreeMap&lt;Short, String&gt;();</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">            while (rs.next()) {</span>
+<span class="fc" id="L128">                String columnName = rs.getString(&quot;COLUMN_NAME&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L129">                short keySeq = rs.getShort(&quot;KEY_SEQ&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L130">                keyColumns.put(keySeq, columnName);</span>
+<span class="fc" id="L131">            }</span>
             
-<span class="fc bfc" id="L132" title="All 2 branches covered.">            for (String columnName : keyColumns.values()) {</span>
-<span class="fc" id="L133">                introspectedTable.addPrimaryKeyColumn(columnName);</span>
-<span class="fc" id="L134">            }</span>
-<span class="nc" id="L135">        } catch (SQLException e) {</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">            for (String columnName : keyColumns.values()) {</span>
+<span class="fc" id="L134">                introspectedTable.addPrimaryKeyColumn(columnName);</span>
+<span class="fc" id="L135">            }</span>
+<span class="nc" id="L136">        } catch (SQLException e) {</span>
             // ignore the primary key if there's any error
         } finally {
-<span class="pc" id="L138">            closeResultSet(rs);</span>
-<span class="pc" id="L139">        }</span>
-<span class="fc" id="L140">    }</span>
+<span class="pc" id="L139">            closeResultSet(rs);</span>
+<span class="pc" id="L140">        }</span>
+<span class="fc" id="L141">    }</span>
 
     /**
      * Close result set.
@@ -146,14 +147,14 @@ public class DatabaseIntrospector {
      *            the rs
      */
     private void closeResultSet(ResultSet rs) {
-<span class="pc bpc" id="L149" title="1 of 2 branches missed.">        if (rs != null) {</span>
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">        if (rs != null) {</span>
             try {
-<span class="fc" id="L151">                rs.close();</span>
-<span class="nc" id="L152">            } catch (SQLException e) {</span>
+<span class="fc" id="L152">                rs.close();</span>
+<span class="nc" id="L153">            } catch (SQLException e) {</span>
                 // ignore
-<span class="fc" id="L154">            }</span>
+<span class="fc" id="L155">            }</span>
         }
-<span class="fc" id="L156">    }</span>
+<span class="fc" id="L157">    }</span>
 
     /**
      * Report introspection warnings.
@@ -170,40 +171,40 @@ public class DatabaseIntrospector {
             TableConfiguration tableConfiguration, FullyQualifiedTable table) {
         // make sure that every column listed in column overrides
         // actually exists in the table
-<span class="fc bfc" id="L173" title="All 2 branches covered.">        for (ColumnOverride columnOverride : tableConfiguration</span>
-<span class="fc" id="L174">                .getColumnOverrides()) {</span>
-<span class="pc bpc" id="L175" title="1 of 2 branches missed.">            if (introspectedTable.getColumn(columnOverride.getColumnName()) == null) {</span>
-<span class="nc" id="L176">                warnings.add(getString(&quot;Warning.3&quot;, //$NON-NLS-1$</span>
-<span class="nc" id="L177">                        columnOverride.getColumnName(), table.toString()));</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">        for (ColumnOverride columnOverride : tableConfiguration</span>
+<span class="fc" id="L175">                .getColumnOverrides()) {</span>
+<span class="pc bpc" id="L176" title="1 of 2 branches missed.">            if (introspectedTable.getColumn(columnOverride.getColumnName()) == null) {</span>
+<span class="nc" id="L177">                warnings.add(getString(&quot;Warning.3&quot;, //$NON-NLS-1$</span>
+<span class="nc" id="L178">                        columnOverride.getColumnName(), table.toString()));</span>
             }
-<span class="fc" id="L179">        }</span>
+<span class="fc" id="L180">        }</span>
 
         // make sure that every column listed in ignored columns
         // actually exists in the table
-<span class="fc bfc" id="L183" title="All 2 branches covered.">        for (String string : tableConfiguration.getIgnoredColumnsInError()) {</span>
-<span class="fc" id="L184">            warnings.add(getString(&quot;Warning.4&quot;, //$NON-NLS-1$</span>
-<span class="fc" id="L185">                    string, table.toString()));</span>
-<span class="fc" id="L186">        }</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">        for (String string : tableConfiguration.getIgnoredColumnsInError()) {</span>
+<span class="fc" id="L185">            warnings.add(getString(&quot;Warning.4&quot;, //$NON-NLS-1$</span>
+<span class="fc" id="L186">                    string, table.toString()));</span>
+<span class="fc" id="L187">        }</span>
 
-<span class="fc" id="L188">        GeneratedKey generatedKey = tableConfiguration.getGeneratedKey();</span>
-<span class="fc bfc" id="L189" title="All 2 branches covered.">        if (generatedKey != null</span>
-<span class="pc bpc" id="L190" title="1 of 2 branches missed.">                &amp;&amp; introspectedTable.getColumn(generatedKey.getColumn()) == null) {</span>
-<span class="nc bnc" id="L191" title="All 2 branches missed.">            if (generatedKey.isIdentity()) {</span>
-<span class="nc" id="L192">                warnings.add(getString(&quot;Warning.5&quot;, //$NON-NLS-1$</span>
-<span class="nc" id="L193">                        generatedKey.getColumn(), table.toString()));</span>
+<span class="fc" id="L189">        GeneratedKey generatedKey = tableConfiguration.getGeneratedKey();</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">        if (generatedKey != null</span>
+<span class="pc bpc" id="L191" title="1 of 2 branches missed.">                &amp;&amp; introspectedTable.getColumn(generatedKey.getColumn()) == null) {</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">            if (generatedKey.isIdentity()) {</span>
+<span class="nc" id="L193">                warnings.add(getString(&quot;Warning.5&quot;, //$NON-NLS-1$</span>
+<span class="nc" id="L194">                        generatedKey.getColumn(), table.toString()));</span>
             } else {
-<span class="nc" id="L195">                warnings.add(getString(&quot;Warning.6&quot;, //$NON-NLS-1$</span>
-<span class="nc" id="L196">                        generatedKey.getColumn(), table.toString()));</span>
+<span class="nc" id="L196">                warnings.add(getString(&quot;Warning.6&quot;, //$NON-NLS-1$</span>
+<span class="nc" id="L197">                        generatedKey.getColumn(), table.toString()));</span>
             }
         }
         
-<span class="fc bfc" id="L200" title="All 2 branches covered.">        for (IntrospectedColumn ic : introspectedTable.getAllColumns()) {</span>
-<span class="pc bpc" id="L201" title="1 of 2 branches missed.">            if (JavaReservedWords.containsWord(ic.getJavaProperty())) {</span>
-<span class="nc" id="L202">                warnings.add(getString(&quot;Warning.26&quot;, //$NON-NLS-1$</span>
-<span class="nc" id="L203">                        ic.getActualColumnName(), table.toString()));</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">        for (IntrospectedColumn ic : introspectedTable.getAllColumns()) {</span>
+<span class="pc bpc" id="L202" title="1 of 2 branches missed.">            if (JavaReservedWords.containsWord(ic.getJavaProperty())) {</span>
+<span class="nc" id="L203">                warnings.add(getString(&quot;Warning.26&quot;, //$NON-NLS-1$</span>
+<span class="nc" id="L204">                        ic.getActualColumnName(), table.toString()));</span>
             }
-<span class="fc" id="L205">        }</span>
-<span class="fc" id="L206">    }</span>
+<span class="fc" id="L206">        }</span>
+<span class="fc" id="L207">    }</span>
 
     /**
      * Returns a List of IntrospectedTable elements that matches the specified table configuration.
@@ -218,54 +219,54 @@ public class DatabaseIntrospector {
             throws SQLException {
 
         // get the raw columns from the DB
-<span class="fc" id="L221">        Map&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt; columns = getColumns(tc);</span>
+<span class="fc" id="L222">        Map&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt; columns = getColumns(tc);</span>
 
-<span class="fc bfc" id="L223" title="All 2 branches covered.">        if (columns.isEmpty()) {</span>
-<span class="fc" id="L224">            warnings.add(getString(&quot;Warning.19&quot;, tc.getCatalog(), //$NON-NLS-1$</span>
-<span class="fc" id="L225">                    tc.getSchema(), tc.getTableName()));</span>
-<span class="fc" id="L226">            return null;</span>
+<span class="fc bfc" id="L224" title="All 2 branches covered.">        if (columns.isEmpty()) {</span>
+<span class="fc" id="L225">            warnings.add(getString(&quot;Warning.19&quot;, tc.getCatalog(), //$NON-NLS-1$</span>
+<span class="fc" id="L226">                    tc.getSchema(), tc.getTableName()));</span>
+<span class="fc" id="L227">            return null;</span>
         }
 
-<span class="fc" id="L229">        removeIgnoredColumns(tc, columns);</span>
-<span class="fc" id="L230">        calculateExtraColumnInformation(tc, columns);</span>
-<span class="fc" id="L231">        applyColumnOverrides(tc, columns);</span>
-<span class="fc" id="L232">        calculateIdentityColumns(tc, columns);</span>
+<span class="fc" id="L230">        removeIgnoredColumns(tc, columns);</span>
+<span class="fc" id="L231">        calculateExtraColumnInformation(tc, columns);</span>
+<span class="fc" id="L232">        applyColumnOverrides(tc, columns);</span>
+<span class="fc" id="L233">        calculateIdentityColumns(tc, columns);</span>
 
-<span class="fc" id="L234">        List&lt;IntrospectedTable&gt; introspectedTables = calculateIntrospectedTables(</span>
+<span class="fc" id="L235">        List&lt;IntrospectedTable&gt; introspectedTables = calculateIntrospectedTables(</span>
                 tc, columns);
 
         // now introspectedTables has all the columns from all the
         // tables in the configuration. Do some validation...
 
-<span class="fc" id="L240">        Iterator&lt;IntrospectedTable&gt; iter = introspectedTables.iterator();</span>
-<span class="fc bfc" id="L241" title="All 2 branches covered.">        while (iter.hasNext()) {</span>
-<span class="fc" id="L242">            IntrospectedTable introspectedTable = iter.next();</span>
+<span class="fc" id="L241">        Iterator&lt;IntrospectedTable&gt; iter = introspectedTables.iterator();</span>
+<span class="fc bfc" id="L242" title="All 2 branches covered.">        while (iter.hasNext()) {</span>
+<span class="fc" id="L243">            IntrospectedTable introspectedTable = iter.next();</span>
 
-<span class="pc bpc" id="L244" title="1 of 2 branches missed.">            if (!introspectedTable.hasAnyColumns()) {</span>
+<span class="pc bpc" id="L245" title="1 of 2 branches missed.">            if (!introspectedTable.hasAnyColumns()) {</span>
                 // add warning that the table has no columns, remove from the
                 // list
-<span class="nc" id="L247">                String warning = getString(</span>
-<span class="nc" id="L248">                                &quot;Warning.1&quot;, introspectedTable.getFullyQualifiedTable().toString()); //$NON-NLS-1$</span>
-<span class="nc" id="L249">                warnings.add(warning);</span>
-<span class="nc" id="L250">                iter.remove();</span>
-<span class="pc bfc" id="L251" title="All 2 branches covered.">            } else if (!introspectedTable.hasPrimaryKeyColumns()</span>
-<span class="fc bfc" id="L252" title="All 2 branches covered.">                    &amp;&amp; !introspectedTable.hasBaseColumns()) {</span>
+<span class="nc" id="L248">                String warning = getString(</span>
+<span class="nc" id="L249">                                &quot;Warning.1&quot;, introspectedTable.getFullyQualifiedTable().toString()); //$NON-NLS-1$</span>
+<span class="nc" id="L250">                warnings.add(warning);</span>
+<span class="nc" id="L251">                iter.remove();</span>
+<span class="pc bfc" id="L252" title="All 2 branches covered.">            } else if (!introspectedTable.hasPrimaryKeyColumns()</span>
+<span class="fc bfc" id="L253" title="All 2 branches covered.">                    &amp;&amp; !introspectedTable.hasBaseColumns()) {</span>
                 // add warning that the table has only BLOB columns, remove from
                 // the list
-<span class="fc" id="L255">                String warning = getString(</span>
-<span class="fc" id="L256">                                &quot;Warning.18&quot;, introspectedTable.getFullyQualifiedTable().toString()); //$NON-NLS-1$ </span>
-<span class="fc" id="L257">                warnings.add(warning);</span>
-<span class="fc" id="L258">                iter.remove();</span>
-<span class="fc" id="L259">            } else {</span>
+<span class="fc" id="L256">                String warning = getString(</span>
+<span class="fc" id="L257">                                &quot;Warning.18&quot;, introspectedTable.getFullyQualifiedTable().toString()); //$NON-NLS-1$ </span>
+<span class="fc" id="L258">                warnings.add(warning);</span>
+<span class="fc" id="L259">                iter.remove();</span>
+<span class="fc" id="L260">            } else {</span>
                 // now make sure that all columns called out in the
                 // configuration
                 // actually exist
-<span class="fc" id="L263">                reportIntrospectionWarnings(introspectedTable, tc,</span>
-<span class="fc" id="L264">                        introspectedTable.getFullyQualifiedTable());</span>
+<span class="fc" id="L264">                reportIntrospectionWarnings(introspectedTable, tc,</span>
+<span class="fc" id="L265">                        introspectedTable.getFullyQualifiedTable());</span>
             }
-<span class="fc" id="L266">        }</span>
+<span class="fc" id="L267">        }</span>
 
-<span class="fc" id="L268">        return introspectedTables;</span>
+<span class="fc" id="L269">        return introspectedTables;</span>
     }
 
     /**
@@ -278,25 +279,25 @@ public class DatabaseIntrospector {
      */
     private void removeIgnoredColumns(TableConfiguration tc,
             Map&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt; columns) {
-<span class="fc bfc" id="L281" title="All 2 branches covered.">        for (Map.Entry&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt; entry : columns</span>
-<span class="fc" id="L282">                .entrySet()) {</span>
-<span class="fc" id="L283">            Iterator&lt;IntrospectedColumn&gt; tableColumns = entry.getValue()</span>
-<span class="fc" id="L284">                    .iterator();</span>
-<span class="fc bfc" id="L285" title="All 2 branches covered.">            while (tableColumns.hasNext()) {</span>
-<span class="fc" id="L286">                IntrospectedColumn introspectedColumn = tableColumns.next();</span>
-<span class="fc" id="L287">                if (tc</span>
-<span class="fc bfc" id="L288" title="All 2 branches covered.">                        .isColumnIgnored(introspectedColumn</span>
-<span class="fc" id="L289">                                .getActualColumnName())) {</span>
-<span class="fc" id="L290">                    tableColumns.remove();</span>
-<span class="pc bpc" id="L291" title="1 of 2 branches missed.">                    if (logger.isDebugEnabled()) {</span>
-<span class="nc" id="L292">                        logger.debug(getString(&quot;Tracing.3&quot;, //$NON-NLS-1$</span>
-<span class="nc" id="L293">                                introspectedColumn.getActualColumnName(), entry</span>
-<span class="nc" id="L294">                                        .getKey().toString()));</span>
+<span class="fc bfc" id="L282" title="All 2 branches covered.">        for (Map.Entry&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt; entry : columns</span>
+<span class="fc" id="L283">                .entrySet()) {</span>
+<span class="fc" id="L284">            Iterator&lt;IntrospectedColumn&gt; tableColumns = entry.getValue()</span>
+<span class="fc" id="L285">                    .iterator();</span>
+<span class="fc bfc" id="L286" title="All 2 branches covered.">            while (tableColumns.hasNext()) {</span>
+<span class="fc" id="L287">                IntrospectedColumn introspectedColumn = tableColumns.next();</span>
+<span class="fc" id="L288">                if (tc</span>
+<span class="fc bfc" id="L289" title="All 2 branches covered.">                        .isColumnIgnored(introspectedColumn</span>
+<span class="fc" id="L290">                                .getActualColumnName())) {</span>
+<span class="fc" id="L291">                    tableColumns.remove();</span>
+<span class="pc bpc" id="L292" title="1 of 2 branches missed.">                    if (logger.isDebugEnabled()) {</span>
+<span class="nc" id="L293">                        logger.debug(getString(&quot;Tracing.3&quot;, //$NON-NLS-1$</span>
+<span class="nc" id="L294">                                introspectedColumn.getActualColumnName(), entry</span>
+<span class="nc" id="L295">                                        .getKey().toString()));</span>
                     }
                 }
-<span class="fc" id="L297">            }</span>
-<span class="fc" id="L298">        }</span>
-<span class="fc" id="L299">    }</span>
+<span class="fc" id="L298">            }</span>
+<span class="fc" id="L299">        }</span>
+<span class="fc" id="L300">    }</span>
 
     /**
      * Calculate extra column information.
@@ -308,99 +309,99 @@ public class DatabaseIntrospector {
      */
     private void calculateExtraColumnInformation(TableConfiguration tc,
             Map&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt; columns) {
-<span class="fc" id="L311">        StringBuilder sb = new StringBuilder();</span>
-<span class="fc" id="L312">        Pattern pattern = null;</span>
-<span class="fc" id="L313">        String replaceString = null;</span>
-<span class="fc bfc" id="L314" title="All 2 branches covered.">        if (tc.getColumnRenamingRule() != null) {</span>
-<span class="fc" id="L315">            pattern = Pattern.compile(tc.getColumnRenamingRule()</span>
-<span class="fc" id="L316">                    .getSearchString());</span>
-<span class="fc" id="L317">            replaceString = tc.getColumnRenamingRule().getReplaceString();</span>
-<span class="pc bpc" id="L318" title="1 of 2 branches missed.">            replaceString = replaceString == null ? &quot;&quot; : replaceString; //$NON-NLS-1$</span>
+<span class="fc" id="L312">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L313">        Pattern pattern = null;</span>
+<span class="fc" id="L314">        String replaceString = null;</span>
+<span class="fc bfc" id="L315" title="All 2 branches covered.">        if (tc.getColumnRenamingRule() != null) {</span>
+<span class="fc" id="L316">            pattern = Pattern.compile(tc.getColumnRenamingRule()</span>
+<span class="fc" id="L317">                    .getSearchString());</span>
+<span class="fc" id="L318">            replaceString = tc.getColumnRenamingRule().getReplaceString();</span>
+<span class="pc bpc" id="L319" title="1 of 2 branches missed.">            replaceString = replaceString == null ? &quot;&quot; : replaceString; //$NON-NLS-1$</span>
         }
 
-<span class="fc bfc" id="L321" title="All 2 branches covered.">        for (Map.Entry&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt; entry : columns</span>
-<span class="fc" id="L322">                .entrySet()) {</span>
-<span class="fc bfc" id="L323" title="All 2 branches covered.">            for (IntrospectedColumn introspectedColumn : entry.getValue()) {</span>
+<span class="fc bfc" id="L322" title="All 2 branches covered.">        for (Map.Entry&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt; entry : columns</span>
+<span class="fc" id="L323">                .entrySet()) {</span>
+<span class="fc bfc" id="L324" title="All 2 branches covered.">            for (IntrospectedColumn introspectedColumn : entry.getValue()) {</span>
                 String calculatedColumnName;
-<span class="fc bfc" id="L325" title="All 2 branches covered.">                if (pattern == null) {</span>
-<span class="fc" id="L326">                    calculatedColumnName = introspectedColumn</span>
-<span class="fc" id="L327">                            .getActualColumnName();</span>
+<span class="fc bfc" id="L326" title="All 2 branches covered.">                if (pattern == null) {</span>
+<span class="fc" id="L327">                    calculatedColumnName = introspectedColumn</span>
+<span class="fc" id="L328">                            .getActualColumnName();</span>
                 } else {
-<span class="fc" id="L329">                    Matcher matcher = pattern.matcher(introspectedColumn</span>
-<span class="fc" id="L330">                            .getActualColumnName());</span>
-<span class="fc" id="L331">                    calculatedColumnName = matcher.replaceAll(replaceString);</span>
+<span class="fc" id="L330">                    Matcher matcher = pattern.matcher(introspectedColumn</span>
+<span class="fc" id="L331">                            .getActualColumnName());</span>
+<span class="fc" id="L332">                    calculatedColumnName = matcher.replaceAll(replaceString);</span>
                 }
 
-<span class="pc bpc" id="L334" title="1 of 2 branches missed.">                if (isTrue(tc</span>
-<span class="fc" id="L335">                        .getProperty(PropertyRegistry.TABLE_USE_ACTUAL_COLUMN_NAMES))) {</span>
-<span class="nc" id="L336">                    introspectedColumn.setJavaProperty(</span>
-<span class="nc" id="L337">                            getValidPropertyName(calculatedColumnName));</span>
-<span class="pc bpc" id="L338" title="1 of 2 branches missed.">                } else if (isTrue(tc</span>
-<span class="fc" id="L339">                                .getProperty(PropertyRegistry.TABLE_USE_COMPOUND_PROPERTY_NAMES))) {</span>
-<span class="nc" id="L340">                    sb.setLength(0);</span>
-<span class="nc" id="L341">                    sb.append(calculatedColumnName);</span>
-<span class="nc" id="L342">                    sb.append('_');</span>
-<span class="nc" id="L343">                    sb.append(getCamelCaseString(</span>
-<span class="nc" id="L344">                            introspectedColumn.getRemarks(), true));</span>
-<span class="nc" id="L345">                    introspectedColumn.setJavaProperty(</span>
-<span class="nc" id="L346">                            getValidPropertyName(sb.toString()));</span>
+<span class="pc bpc" id="L335" title="1 of 2 branches missed.">                if (isTrue(tc</span>
+<span class="fc" id="L336">                        .getProperty(PropertyRegistry.TABLE_USE_ACTUAL_COLUMN_NAMES))) {</span>
+<span class="nc" id="L337">                    introspectedColumn.setJavaProperty(</span>
+<span class="nc" id="L338">                            getValidPropertyName(calculatedColumnName));</span>
+<span class="pc bpc" id="L339" title="1 of 2 branches missed.">                } else if (isTrue(tc</span>
+<span class="fc" id="L340">                                .getProperty(PropertyRegistry.TABLE_USE_COMPOUND_PROPERTY_NAMES))) {</span>
+<span class="nc" id="L341">                    sb.setLength(0);</span>
+<span class="nc" id="L342">                    sb.append(calculatedColumnName);</span>
+<span class="nc" id="L343">                    sb.append('_');</span>
+<span class="nc" id="L344">                    sb.append(getCamelCaseString(</span>
+<span class="nc" id="L345">                            introspectedColumn.getRemarks(), true));</span>
+<span class="nc" id="L346">                    introspectedColumn.setJavaProperty(</span>
+<span class="nc" id="L347">                            getValidPropertyName(sb.toString()));</span>
                 } else {
-<span class="fc" id="L348">                    introspectedColumn.setJavaProperty(</span>
-<span class="fc" id="L349">                            getCamelCaseString(calculatedColumnName, false));</span>
+<span class="fc" id="L349">                    introspectedColumn.setJavaProperty(</span>
+<span class="fc" id="L350">                            getCamelCaseString(calculatedColumnName, false));</span>
                 }
 
-<span class="fc" id="L352">                FullyQualifiedJavaType fullyQualifiedJavaType = javaTypeResolver</span>
-<span class="fc" id="L353">                        .calculateJavaType(introspectedColumn);</span>
+<span class="fc" id="L353">                FullyQualifiedJavaType fullyQualifiedJavaType = javaTypeResolver</span>
+<span class="fc" id="L354">                        .calculateJavaType(introspectedColumn);</span>
 
-<span class="pc bpc" id="L355" title="1 of 2 branches missed.">                if (fullyQualifiedJavaType != null) {</span>
-<span class="fc" id="L356">                    introspectedColumn</span>
-<span class="fc" id="L357">                            .setFullyQualifiedJavaType(fullyQualifiedJavaType);</span>
-<span class="fc" id="L358">                    introspectedColumn.setJdbcTypeName(javaTypeResolver</span>
-<span class="fc" id="L359">                            .calculateJdbcTypeName(introspectedColumn));</span>
+<span class="pc bpc" id="L356" title="1 of 2 branches missed.">                if (fullyQualifiedJavaType != null) {</span>
+<span class="fc" id="L357">                    introspectedColumn</span>
+<span class="fc" id="L358">                            .setFullyQualifiedJavaType(fullyQualifiedJavaType);</span>
+<span class="fc" id="L359">                    introspectedColumn.setJdbcTypeName(javaTypeResolver</span>
+<span class="fc" id="L360">                            .calculateJdbcTypeName(introspectedColumn));</span>
                 } else {
                     // type cannot be resolved. Check for ignored or overridden
-<span class="nc" id="L362">                    boolean warn = true;</span>
-<span class="nc bnc" id="L363" title="All 2 branches missed.">                    if (tc.isColumnIgnored(introspectedColumn</span>
-<span class="nc" id="L364">                            .getActualColumnName())) {</span>
-<span class="nc" id="L365">                        warn = false;</span>
+<span class="nc" id="L363">                    boolean warn = true;</span>
+<span class="nc bnc" id="L364" title="All 2 branches missed.">                    if (tc.isColumnIgnored(introspectedColumn</span>
+<span class="nc" id="L365">                            .getActualColumnName())) {</span>
+<span class="nc" id="L366">                        warn = false;</span>
                     }
 
-<span class="nc" id="L368">                    ColumnOverride co = tc.getColumnOverride(introspectedColumn</span>
-<span class="nc" id="L369">                            .getActualColumnName());</span>
-<span class="nc bnc" id="L370" title="All 2 branches missed.">                    if (co != null</span>
-<span class="nc bnc" id="L371" title="All 2 branches missed.">                            &amp;&amp; stringHasValue(co.getJavaType())</span>
-<span class="nc bnc" id="L372" title="All 2 branches missed.">                            &amp;&amp; stringHasValue(co.getJavaType())) {</span>
-<span class="nc" id="L373">                        warn = false;</span>
+<span class="nc" id="L369">                    ColumnOverride co = tc.getColumnOverride(introspectedColumn</span>
+<span class="nc" id="L370">                            .getActualColumnName());</span>
+<span class="nc bnc" id="L371" title="All 2 branches missed.">                    if (co != null</span>
+<span class="nc bnc" id="L372" title="All 2 branches missed.">                            &amp;&amp; stringHasValue(co.getJavaType())</span>
+<span class="nc bnc" id="L373" title="All 2 branches missed.">                            &amp;&amp; stringHasValue(co.getJavaType())) {</span>
+<span class="nc" id="L374">                        warn = false;</span>
                     }
 
                     // if the type is not supported, then we'll report a warning
-<span class="nc bnc" id="L377" title="All 2 branches missed.">                    if (warn) {</span>
-<span class="nc" id="L378">                        introspectedColumn</span>
-<span class="nc" id="L379">                                .setFullyQualifiedJavaType(FullyQualifiedJavaType</span>
-<span class="nc" id="L380">                                        .getObjectInstance());</span>
-<span class="nc" id="L381">                        introspectedColumn.setJdbcTypeName(&quot;OTHER&quot;); //$NON-NLS-1$</span>
+<span class="nc bnc" id="L378" title="All 2 branches missed.">                    if (warn) {</span>
+<span class="nc" id="L379">                        introspectedColumn</span>
+<span class="nc" id="L380">                                .setFullyQualifiedJavaType(FullyQualifiedJavaType</span>
+<span class="nc" id="L381">                                        .getObjectInstance());</span>
+<span class="nc" id="L382">                        introspectedColumn.setJdbcTypeName(&quot;OTHER&quot;); //$NON-NLS-1$</span>
 
-<span class="nc" id="L383">                        String warning = getString(&quot;Warning.14&quot;, //$NON-NLS-1$</span>
-<span class="nc" id="L384">                                Integer.toString(introspectedColumn.getJdbcType()),</span>
-<span class="nc" id="L385">                                entry.getKey().toString(),</span>
-<span class="nc" id="L386">                                introspectedColumn.getActualColumnName());</span>
+<span class="nc" id="L384">                        String warning = getString(&quot;Warning.14&quot;, //$NON-NLS-1$</span>
+<span class="nc" id="L385">                                Integer.toString(introspectedColumn.getJdbcType()),</span>
+<span class="nc" id="L386">                                entry.getKey().toString(),</span>
+<span class="nc" id="L387">                                introspectedColumn.getActualColumnName());</span>
 
-<span class="nc" id="L388">                        warnings.add(warning);</span>
+<span class="nc" id="L389">                        warnings.add(warning);</span>
                     }
                 }
 
-<span class="fc bfc" id="L392" title="All 2 branches covered.">                if (context.autoDelimitKeywords()</span>
-<span class="fc bfc" id="L393" title="All 2 branches covered.">                    &amp;&amp; SqlReservedWords.containsWord(introspectedColumn</span>
-<span class="fc" id="L394">                            .getActualColumnName())) {</span>
-<span class="fc" id="L395">                    introspectedColumn.setColumnNameDelimited(true);</span>
+<span class="fc bfc" id="L393" title="All 2 branches covered.">                if (context.autoDelimitKeywords()</span>
+<span class="fc bfc" id="L394" title="All 2 branches covered.">                    &amp;&amp; SqlReservedWords.containsWord(introspectedColumn</span>
+<span class="fc" id="L395">                            .getActualColumnName())) {</span>
+<span class="fc" id="L396">                    introspectedColumn.setColumnNameDelimited(true);</span>
                 }
 
-<span class="pc bpc" id="L398" title="1 of 2 branches missed.">                if (tc.isAllColumnDelimitingEnabled()) {</span>
-<span class="nc" id="L399">                    introspectedColumn.setColumnNameDelimited(true);</span>
+<span class="pc bpc" id="L399" title="1 of 2 branches missed.">                if (tc.isAllColumnDelimitingEnabled()) {</span>
+<span class="nc" id="L400">                    introspectedColumn.setColumnNameDelimited(true);</span>
                 }
-<span class="fc" id="L401">            }</span>
-<span class="fc" id="L402">        }</span>
-<span class="fc" id="L403">    }</span>
+<span class="fc" id="L402">            }</span>
+<span class="fc" id="L403">        }</span>
+<span class="fc" id="L404">    }</span>
 
     /**
      * Calculate identity columns.
@@ -412,27 +413,27 @@ public class DatabaseIntrospector {
      */
     private void calculateIdentityColumns(TableConfiguration tc,
             Map&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt; columns) {
-<span class="fc" id="L415">        GeneratedKey gk = tc.getGeneratedKey();</span>
-<span class="fc bfc" id="L416" title="All 2 branches covered.">        if (gk == null) {</span>
+<span class="fc" id="L416">        GeneratedKey gk = tc.getGeneratedKey();</span>
+<span class="fc bfc" id="L417" title="All 2 branches covered.">        if (gk == null) {</span>
             // no generated key, then no identity or sequence columns
-<span class="fc" id="L418">            return;</span>
+<span class="fc" id="L419">            return;</span>
         }
         
-<span class="fc bfc" id="L421" title="All 2 branches covered.">        for (Map.Entry&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt; entry : columns</span>
-<span class="fc" id="L422">                .entrySet()) {</span>
-<span class="fc bfc" id="L423" title="All 2 branches covered.">            for (IntrospectedColumn introspectedColumn : entry.getValue()) {</span>
-<span class="fc bfc" id="L424" title="All 2 branches covered.">                if (isMatchedColumn(introspectedColumn, gk)) {</span>
-<span class="fc bfc" id="L425" title="All 4 branches covered.">                    if (gk.isIdentity() || gk.isJdbcStandard()) {</span>
-<span class="fc" id="L426">                        introspectedColumn.setIdentity(true);</span>
-<span class="fc" id="L427">                        introspectedColumn.setSequenceColumn(false);</span>
+<span class="fc bfc" id="L422" title="All 2 branches covered.">        for (Map.Entry&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt; entry : columns</span>
+<span class="fc" id="L423">                .entrySet()) {</span>
+<span class="fc bfc" id="L424" title="All 2 branches covered.">            for (IntrospectedColumn introspectedColumn : entry.getValue()) {</span>
+<span class="fc bfc" id="L425" title="All 2 branches covered.">                if (isMatchedColumn(introspectedColumn, gk)) {</span>
+<span class="fc bfc" id="L426" title="All 4 branches covered.">                    if (gk.isIdentity() || gk.isJdbcStandard()) {</span>
+<span class="fc" id="L427">                        introspectedColumn.setIdentity(true);</span>
+<span class="fc" id="L428">                        introspectedColumn.setSequenceColumn(false);</span>
                     } else {
-<span class="fc" id="L429">                        introspectedColumn.setIdentity(false);</span>
-<span class="fc" id="L430">                        introspectedColumn.setSequenceColumn(true);</span>
+<span class="fc" id="L430">                        introspectedColumn.setIdentity(false);</span>
+<span class="fc" id="L431">                        introspectedColumn.setSequenceColumn(true);</span>
                     }
                 }
-<span class="fc" id="L433">            }</span>
-<span class="fc" id="L434">        }</span>
-<span class="fc" id="L435">    }</span>
+<span class="fc" id="L434">            }</span>
+<span class="fc" id="L435">        }</span>
+<span class="fc" id="L436">    }</span>
     
     /**
      * Checks if is matched column.
@@ -444,10 +445,10 @@ public class DatabaseIntrospector {
      * @return true, if is matched column
      */
     private boolean isMatchedColumn(IntrospectedColumn introspectedColumn, GeneratedKey gk) {
-<span class="fc bfc" id="L447" title="All 2 branches covered.">        if (introspectedColumn.isColumnNameDelimited()) {</span>
-<span class="fc" id="L448">            return introspectedColumn.getActualColumnName().equals(gk.getColumn());</span>
+<span class="fc bfc" id="L448" title="All 2 branches covered.">        if (introspectedColumn.isColumnNameDelimited()) {</span>
+<span class="fc" id="L449">            return introspectedColumn.getActualColumnName().equals(gk.getColumn());</span>
         } else {
-<span class="fc" id="L450">            return introspectedColumn.getActualColumnName().equalsIgnoreCase(gk.getColumn());</span>
+<span class="fc" id="L451">            return introspectedColumn.getActualColumnName().equalsIgnoreCase(gk.getColumn());</span>
         }
     }
 
@@ -461,58 +462,58 @@ public class DatabaseIntrospector {
      */
     private void applyColumnOverrides(TableConfiguration tc,
             Map&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt; columns) {
-<span class="fc bfc" id="L464" title="All 2 branches covered.">        for (Map.Entry&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt; entry : columns</span>
-<span class="fc" id="L465">                .entrySet()) {</span>
-<span class="fc bfc" id="L466" title="All 2 branches covered.">            for (IntrospectedColumn introspectedColumn : entry.getValue()) {</span>
-<span class="fc" id="L467">                ColumnOverride columnOverride = tc</span>
-<span class="fc" id="L468">                        .getColumnOverride(introspectedColumn</span>
-<span class="fc" id="L469">                                .getActualColumnName());</span>
+<span class="fc bfc" id="L465" title="All 2 branches covered.">        for (Map.Entry&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt; entry : columns</span>
+<span class="fc" id="L466">                .entrySet()) {</span>
+<span class="fc bfc" id="L467" title="All 2 branches covered.">            for (IntrospectedColumn introspectedColumn : entry.getValue()) {</span>
+<span class="fc" id="L468">                ColumnOverride columnOverride = tc</span>
+<span class="fc" id="L469">                        .getColumnOverride(introspectedColumn</span>
+<span class="fc" id="L470">                                .getActualColumnName());</span>
 
-<span class="fc bfc" id="L471" title="All 2 branches covered.">                if (columnOverride != null) {</span>
-<span class="pc bpc" id="L472" title="1 of 2 branches missed.">                    if (logger.isDebugEnabled()) {</span>
-<span class="nc" id="L473">                        logger.debug(getString(&quot;Tracing.4&quot;, //$NON-NLS-1$</span>
-<span class="nc" id="L474">                                introspectedColumn.getActualColumnName(), entry</span>
-<span class="nc" id="L475">                                        .getKey().toString()));</span>
+<span class="fc bfc" id="L472" title="All 2 branches covered.">                if (columnOverride != null) {</span>
+<span class="pc bpc" id="L473" title="1 of 2 branches missed.">                    if (logger.isDebugEnabled()) {</span>
+<span class="nc" id="L474">                        logger.debug(getString(&quot;Tracing.4&quot;, //$NON-NLS-1$</span>
+<span class="nc" id="L475">                                introspectedColumn.getActualColumnName(), entry</span>
+<span class="nc" id="L476">                                        .getKey().toString()));</span>
                     }
 
-<span class="fc bfc" id="L478" title="All 2 branches covered.">                    if (stringHasValue(columnOverride</span>
-<span class="fc" id="L479">                            .getJavaProperty())) {</span>
-<span class="fc" id="L480">                        introspectedColumn.setJavaProperty(columnOverride</span>
-<span class="fc" id="L481">                                .getJavaProperty());</span>
+<span class="fc bfc" id="L479" title="All 2 branches covered.">                    if (stringHasValue(columnOverride</span>
+<span class="fc" id="L480">                            .getJavaProperty())) {</span>
+<span class="fc" id="L481">                        introspectedColumn.setJavaProperty(columnOverride</span>
+<span class="fc" id="L482">                                .getJavaProperty());</span>
                     }
 
-<span class="fc bfc" id="L484" title="All 2 branches covered.">                    if (stringHasValue(columnOverride</span>
-<span class="fc" id="L485">                            .getJavaType())) {</span>
-<span class="fc" id="L486">                        introspectedColumn</span>
-<span class="fc" id="L487">                                .setFullyQualifiedJavaType(new FullyQualifiedJavaType(</span>
-<span class="fc" id="L488">                                        columnOverride.getJavaType()));</span>
+<span class="fc bfc" id="L485" title="All 2 branches covered.">                    if (stringHasValue(columnOverride</span>
+<span class="fc" id="L486">                            .getJavaType())) {</span>
+<span class="fc" id="L487">                        introspectedColumn</span>
+<span class="fc" id="L488">                                .setFullyQualifiedJavaType(new FullyQualifiedJavaType(</span>
+<span class="fc" id="L489">                                        columnOverride.getJavaType()));</span>
                     }
 
-<span class="pc bpc" id="L491" title="1 of 2 branches missed.">                    if (stringHasValue(columnOverride</span>
-<span class="fc" id="L492">                            .getJdbcType())) {</span>
-<span class="nc" id="L493">                        introspectedColumn.setJdbcTypeName(columnOverride</span>
-<span class="nc" id="L494">                                .getJdbcType());</span>
+<span class="pc bpc" id="L492" title="1 of 2 branches missed.">                    if (stringHasValue(columnOverride</span>
+<span class="fc" id="L493">                            .getJdbcType())) {</span>
+<span class="nc" id="L494">                        introspectedColumn.setJdbcTypeName(columnOverride</span>
+<span class="nc" id="L495">                                .getJdbcType());</span>
                     }
 
-<span class="fc bfc" id="L497" title="All 2 branches covered.">                    if (stringHasValue(columnOverride</span>
-<span class="fc" id="L498">                            .getTypeHandler())) {</span>
-<span class="fc" id="L499">                        introspectedColumn.setTypeHandler(columnOverride</span>
-<span class="fc" id="L500">                                .getTypeHandler());</span>
+<span class="fc bfc" id="L498" title="All 2 branches covered.">                    if (stringHasValue(columnOverride</span>
+<span class="fc" id="L499">                            .getTypeHandler())) {</span>
+<span class="fc" id="L500">                        introspectedColumn.setTypeHandler(columnOverride</span>
+<span class="fc" id="L501">                                .getTypeHandler());</span>
                     }
 
-<span class="fc bfc" id="L503" title="All 2 branches covered.">                    if (columnOverride.isColumnNameDelimited()) {</span>
-<span class="fc" id="L504">                        introspectedColumn.setColumnNameDelimited(true);</span>
+<span class="fc bfc" id="L504" title="All 2 branches covered.">                    if (columnOverride.isColumnNameDelimited()) {</span>
+<span class="fc" id="L505">                        introspectedColumn.setColumnNameDelimited(true);</span>
                     }
                     
-<span class="fc" id="L507">                    introspectedColumn.setGeneratedAlways(columnOverride.isGeneratedAlways());</span>
+<span class="fc" id="L508">                    introspectedColumn.setGeneratedAlways(columnOverride.isGeneratedAlways());</span>
 
-<span class="fc" id="L509">                    introspectedColumn.setProperties(columnOverride</span>
-<span class="fc" id="L510">                            .getProperties());</span>
+<span class="fc" id="L510">                    introspectedColumn.setProperties(columnOverride</span>
+<span class="fc" id="L511">                            .getProperties());</span>
                     
                 }
-<span class="fc" id="L513">            }</span>
-<span class="fc" id="L514">        }</span>
-<span class="fc" id="L515">    }</span>
+<span class="fc" id="L514">            }</span>
+<span class="fc" id="L515">        }</span>
+<span class="fc" id="L516">    }</span>
 
     /**
      * This method returns a Map&lt;ActualTableName, List&lt;ColumnDefinitions&gt;&gt; of columns returned from the database
@@ -530,142 +531,160 @@ public class DatabaseIntrospector {
         String localSchema;
         String localTableName;
 
-<span class="pc bpc" id="L533" title="1 of 2 branches missed.">        boolean delimitIdentifiers = tc.isDelimitIdentifiers()</span>
-<span class="pc bpc" id="L534" title="1 of 2 branches missed.">                || stringContainsSpace(tc.getCatalog())</span>
-<span class="pc bpc" id="L535" title="1 of 2 branches missed.">                || stringContainsSpace(tc.getSchema())</span>
-<span class="fc bfc" id="L536" title="All 2 branches covered.">                || stringContainsSpace(tc.getTableName());</span>
+<span class="pc bpc" id="L534" title="1 of 2 branches missed.">        boolean delimitIdentifiers = tc.isDelimitIdentifiers()</span>
+<span class="pc bpc" id="L535" title="1 of 2 branches missed.">                || stringContainsSpace(tc.getCatalog())</span>
+<span class="pc bpc" id="L536" title="1 of 2 branches missed.">                || stringContainsSpace(tc.getSchema())</span>
+<span class="fc bfc" id="L537" title="All 2 branches covered.">                || stringContainsSpace(tc.getTableName());</span>
 
-<span class="fc bfc" id="L538" title="All 2 branches covered.">        if (delimitIdentifiers) {</span>
-<span class="fc" id="L539">            localCatalog = tc.getCatalog();</span>
-<span class="fc" id="L540">            localSchema = tc.getSchema();</span>
-<span class="fc" id="L541">            localTableName = tc.getTableName();</span>
-<span class="pc bpc" id="L542" title="1 of 2 branches missed.">        } else if (databaseMetaData.storesLowerCaseIdentifiers()) {</span>
-<span class="nc bnc" id="L543" title="All 2 branches missed.">            localCatalog = tc.getCatalog() == null ? null : tc.getCatalog()</span>
-<span class="nc" id="L544">                    .toLowerCase();</span>
-<span class="nc bnc" id="L545" title="All 2 branches missed.">            localSchema = tc.getSchema() == null ? null : tc.getSchema()</span>
-<span class="nc" id="L546">                    .toLowerCase();</span>
-<span class="nc bnc" id="L547" title="All 2 branches missed.">            localTableName = tc.getTableName() == null ? null : tc</span>
-<span class="nc" id="L548">                    .getTableName().toLowerCase();</span>
-<span class="pc bpc" id="L549" title="1 of 2 branches missed.">        } else if (databaseMetaData.storesUpperCaseIdentifiers()) {</span>
-<span class="pc bpc" id="L550" title="1 of 2 branches missed.">            localCatalog = tc.getCatalog() == null ? null : tc.getCatalog()</span>
-<span class="pc" id="L551">                    .toUpperCase();</span>
-<span class="fc bfc" id="L552" title="All 2 branches covered.">            localSchema = tc.getSchema() == null ? null : tc.getSchema()</span>
-<span class="fc" id="L553">                    .toUpperCase();</span>
-<span class="pc bpc" id="L554" title="1 of 2 branches missed.">            localTableName = tc.getTableName() == null ? null : tc</span>
-<span class="fc" id="L555">                    .getTableName().toUpperCase();</span>
+<span class="fc bfc" id="L539" title="All 2 branches covered.">        if (delimitIdentifiers) {</span>
+<span class="fc" id="L540">            localCatalog = tc.getCatalog();</span>
+<span class="fc" id="L541">            localSchema = tc.getSchema();</span>
+<span class="fc" id="L542">            localTableName = tc.getTableName();</span>
+<span class="pc bpc" id="L543" title="1 of 2 branches missed.">        } else if (databaseMetaData.storesLowerCaseIdentifiers()) {</span>
+<span class="nc bnc" id="L544" title="All 2 branches missed.">            localCatalog = tc.getCatalog() == null ? null : tc.getCatalog()</span>
+<span class="nc" id="L545">                    .toLowerCase();</span>
+<span class="nc bnc" id="L546" title="All 2 branches missed.">            localSchema = tc.getSchema() == null ? null : tc.getSchema()</span>
+<span class="nc" id="L547">                    .toLowerCase();</span>
+<span class="nc bnc" id="L548" title="All 2 branches missed.">            localTableName = tc.getTableName() == null ? null : tc</span>
+<span class="nc" id="L549">                    .getTableName().toLowerCase();</span>
+<span class="pc bpc" id="L550" title="1 of 2 branches missed.">        } else if (databaseMetaData.storesUpperCaseIdentifiers()) {</span>
+<span class="pc bpc" id="L551" title="1 of 2 branches missed.">            localCatalog = tc.getCatalog() == null ? null : tc.getCatalog()</span>
+<span class="pc" id="L552">                    .toUpperCase();</span>
+<span class="fc bfc" id="L553" title="All 2 branches covered.">            localSchema = tc.getSchema() == null ? null : tc.getSchema()</span>
+<span class="fc" id="L554">                    .toUpperCase();</span>
+<span class="pc bpc" id="L555" title="1 of 2 branches missed.">            localTableName = tc.getTableName() == null ? null : tc</span>
+<span class="fc" id="L556">                    .getTableName().toUpperCase();</span>
         } else {
-<span class="nc" id="L557">            localCatalog = tc.getCatalog();</span>
-<span class="nc" id="L558">            localSchema = tc.getSchema();</span>
-<span class="nc" id="L559">            localTableName = tc.getTableName();</span>
+<span class="nc" id="L558">            localCatalog = tc.getCatalog();</span>
+<span class="nc" id="L559">            localSchema = tc.getSchema();</span>
+<span class="nc" id="L560">            localTableName = tc.getTableName();</span>
         }
 
-<span class="pc bpc" id="L562" title="1 of 2 branches missed.">        if (tc.isWildcardEscapingEnabled()) {</span>
-<span class="nc" id="L563">            String escapeString = databaseMetaData.getSearchStringEscape();</span>
+<span class="pc bpc" id="L563" title="1 of 2 branches missed.">        if (tc.isWildcardEscapingEnabled()) {</span>
+<span class="nc" id="L564">            String escapeString = databaseMetaData.getSearchStringEscape();</span>
 
-<span class="nc" id="L565">            StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L566">            StringBuilder sb = new StringBuilder();</span>
             StringTokenizer st;
-<span class="nc bnc" id="L567" title="All 2 branches missed.">            if (localSchema != null) {</span>
-<span class="nc" id="L568">                st = new StringTokenizer(localSchema, &quot;_%&quot;, true); //$NON-NLS-1$</span>
-<span class="nc bnc" id="L569" title="All 2 branches missed.">                while (st.hasMoreTokens()) {</span>
-<span class="nc" id="L570">                    String token = st.nextToken();</span>
-<span class="nc bnc" id="L571" title="All 2 branches missed.">                    if (token.equals(&quot;_&quot;) //$NON-NLS-1$</span>
-<span class="nc bnc" id="L572" title="All 2 branches missed.">                            || token.equals(&quot;%&quot;)) { //$NON-NLS-1$</span>
-<span class="nc" id="L573">                        sb.append(escapeString);</span>
+<span class="nc bnc" id="L568" title="All 2 branches missed.">            if (localSchema != null) {</span>
+<span class="nc" id="L569">                st = new StringTokenizer(localSchema, &quot;_%&quot;, true); //$NON-NLS-1$</span>
+<span class="nc bnc" id="L570" title="All 2 branches missed.">                while (st.hasMoreTokens()) {</span>
+<span class="nc" id="L571">                    String token = st.nextToken();</span>
+<span class="nc bnc" id="L572" title="All 2 branches missed.">                    if (token.equals(&quot;_&quot;) //$NON-NLS-1$</span>
+<span class="nc bnc" id="L573" title="All 2 branches missed.">                            || token.equals(&quot;%&quot;)) { //$NON-NLS-1$</span>
+<span class="nc" id="L574">                        sb.append(escapeString);</span>
                     }
-<span class="nc" id="L575">                    sb.append(token);</span>
-<span class="nc" id="L576">                }</span>
-<span class="nc" id="L577">                localSchema = sb.toString();</span>
+<span class="nc" id="L576">                    sb.append(token);</span>
+<span class="nc" id="L577">                }</span>
+<span class="nc" id="L578">                localSchema = sb.toString();</span>
             }
 
-<span class="nc" id="L580">            sb.setLength(0);</span>
-<span class="nc" id="L581">            st = new StringTokenizer(localTableName, &quot;_%&quot;, true); //$NON-NLS-1$</span>
-<span class="nc bnc" id="L582" title="All 2 branches missed.">            while (st.hasMoreTokens()) {</span>
-<span class="nc" id="L583">                String token = st.nextToken();</span>
-<span class="nc bnc" id="L584" title="All 2 branches missed.">                if (token.equals(&quot;_&quot;) //$NON-NLS-1$</span>
-<span class="nc bnc" id="L585" title="All 2 branches missed.">                        || token.equals(&quot;%&quot;)) { //$NON-NLS-1$</span>
-<span class="nc" id="L586">                    sb.append(escapeString);</span>
+<span class="nc" id="L581">            sb.setLength(0);</span>
+<span class="nc" id="L582">            st = new StringTokenizer(localTableName, &quot;_%&quot;, true); //$NON-NLS-1$</span>
+<span class="nc bnc" id="L583" title="All 2 branches missed.">            while (st.hasMoreTokens()) {</span>
+<span class="nc" id="L584">                String token = st.nextToken();</span>
+<span class="nc bnc" id="L585" title="All 2 branches missed.">                if (token.equals(&quot;_&quot;) //$NON-NLS-1$</span>
+<span class="nc bnc" id="L586" title="All 2 branches missed.">                        || token.equals(&quot;%&quot;)) { //$NON-NLS-1$</span>
+<span class="nc" id="L587">                    sb.append(escapeString);</span>
                 }
-<span class="nc" id="L588">                sb.append(token);</span>
-<span class="nc" id="L589">            }</span>
-<span class="nc" id="L590">            localTableName = sb.toString();</span>
+<span class="nc" id="L589">                sb.append(token);</span>
+<span class="nc" id="L590">            }</span>
+<span class="nc" id="L591">            localTableName = sb.toString();</span>
         }
 
-<span class="fc" id="L593">        Map&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt; answer = new HashMap&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt;();</span>
+<span class="fc" id="L594">        Map&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt; answer = new HashMap&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt;();</span>
 
-<span class="pc bpc" id="L595" title="1 of 2 branches missed.">        if (logger.isDebugEnabled()) {</span>
-<span class="nc" id="L596">            String fullTableName = composeFullyQualifiedTableName(localCatalog, localSchema,</span>
+<span class="pc bpc" id="L596" title="1 of 2 branches missed.">        if (logger.isDebugEnabled()) {</span>
+<span class="nc" id="L597">            String fullTableName = composeFullyQualifiedTableName(localCatalog, localSchema,</span>
                             localTableName, '.');
-<span class="nc" id="L598">            logger.debug(getString(&quot;Tracing.1&quot;, fullTableName)); //$NON-NLS-1$</span>
+<span class="nc" id="L599">            logger.debug(getString(&quot;Tracing.1&quot;, fullTableName)); //$NON-NLS-1$</span>
         }
 
-<span class="fc" id="L601">        ResultSet rs = databaseMetaData.getColumns(localCatalog, localSchema,</span>
-                localTableName, null);
+<span class="fc" id="L602">        ResultSet rs = databaseMetaData.getColumns(localCatalog, localSchema,</span>
+                localTableName, &quot;%&quot;); //$NON-NLS-1$
+        
+<span class="fc" id="L605">        boolean supportsIsAutoIncrement = false;</span>
+<span class="fc" id="L606">        boolean supportsIsGeneratedColumn = false;</span>
+<span class="fc" id="L607">        ResultSetMetaData rsmd = rs.getMetaData();</span>
+<span class="fc" id="L608">        int colCount = rsmd.getColumnCount();</span>
+<span class="fc bfc" id="L609" title="All 2 branches covered.">        for (int i = 1; i &lt;= colCount; i++) {</span>
+<span class="fc bfc" id="L610" title="All 2 branches covered.">            if (&quot;IS_AUTOINCREMENT&quot;.equals(rsmd.getColumnName(i))) { //$NON-NLS-1$</span>
+<span class="fc" id="L611">                supportsIsAutoIncrement = true;</span>
+            }
+<span class="fc bfc" id="L613" title="All 2 branches covered.">            if (&quot;IS_GENERATEDCOLUMN&quot;.equals(rsmd.getColumnName(i))) { //$NON-NLS-1$</span>
+<span class="fc" id="L614">                supportsIsGeneratedColumn = true;</span>
+            }
+        }
 
-<span class="fc bfc" id="L604" title="All 2 branches covered.">        while (rs.next()) {</span>
-<span class="fc" id="L605">            IntrospectedColumn introspectedColumn = ObjectFactory</span>
-<span class="fc" id="L606">                    .createIntrospectedColumn(context);</span>
+<span class="fc bfc" id="L618" title="All 2 branches covered.">        while (rs.next()) {</span>
+<span class="fc" id="L619">            IntrospectedColumn introspectedColumn = ObjectFactory</span>
+<span class="fc" id="L620">                    .createIntrospectedColumn(context);</span>
 
-<span class="fc" id="L608">            introspectedColumn.setTableAlias(tc.getAlias());</span>
-<span class="fc" id="L609">            introspectedColumn.setJdbcType(rs.getInt(&quot;DATA_TYPE&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L610">            introspectedColumn.setLength(rs.getInt(&quot;COLUMN_SIZE&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L611">            introspectedColumn.setActualColumnName(rs.getString(&quot;COLUMN_NAME&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L612">            introspectedColumn</span>
-<span class="fc bfc" id="L613" title="All 2 branches covered.">                    .setNullable(rs.getInt(&quot;NULLABLE&quot;) == DatabaseMetaData.columnNullable); //$NON-NLS-1$</span>
-<span class="fc" id="L614">            introspectedColumn.setScale(rs.getInt(&quot;DECIMAL_DIGITS&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L615">            introspectedColumn.setRemarks(rs.getString(&quot;REMARKS&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L616">            introspectedColumn.setDefaultValue(rs.getString(&quot;COLUMN_DEF&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L622">            introspectedColumn.setTableAlias(tc.getAlias());</span>
+<span class="fc" id="L623">            introspectedColumn.setJdbcType(rs.getInt(&quot;DATA_TYPE&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L624">            introspectedColumn.setLength(rs.getInt(&quot;COLUMN_SIZE&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L625">            introspectedColumn.setActualColumnName(rs.getString(&quot;COLUMN_NAME&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L626">            introspectedColumn</span>
+<span class="fc bfc" id="L627" title="All 2 branches covered.">                    .setNullable(rs.getInt(&quot;NULLABLE&quot;) == DatabaseMetaData.columnNullable); //$NON-NLS-1$</span>
+<span class="fc" id="L628">            introspectedColumn.setScale(rs.getInt(&quot;DECIMAL_DIGITS&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L629">            introspectedColumn.setRemarks(rs.getString(&quot;REMARKS&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L630">            introspectedColumn.setDefaultValue(rs.getString(&quot;COLUMN_DEF&quot;)); //$NON-NLS-1$</span>
             
-<span class="fc" id="L618">            introspectedColumn.setAutoIncrement(&quot;YES&quot;.equals(rs.getString(&quot;IS_AUTOINCREMENT&quot;))); //$NON-NLS-1$ //$NON-NLS-2$</span>
-<span class="fc" id="L619">            introspectedColumn.setGeneratedColumn(&quot;YES&quot;.equals(rs.getString(&quot;IS_GENERATEDCOLUMN&quot;))); //$NON-NLS-1$ //$NON-NLS-2$</span>
-
-<span class="fc" id="L621">            ActualTableName atn = new ActualTableName(</span>
-<span class="fc" id="L622">                    rs.getString(&quot;TABLE_CAT&quot;), //$NON-NLS-1$</span>
-<span class="fc" id="L623">                    rs.getString(&quot;TABLE_SCHEM&quot;), //$NON-NLS-1$</span>
-<span class="fc" id="L624">                    rs.getString(&quot;TABLE_NAME&quot;)); //$NON-NLS-1$</span>
-
-<span class="fc" id="L626">            List&lt;IntrospectedColumn&gt; columns = answer.get(atn);</span>
-<span class="fc bfc" id="L627" title="All 2 branches covered.">            if (columns == null) {</span>
-<span class="fc" id="L628">                columns = new ArrayList&lt;IntrospectedColumn&gt;();</span>
-<span class="fc" id="L629">                answer.put(atn, columns);</span>
+<span class="pc bpc" id="L632" title="1 of 2 branches missed.">            if (supportsIsAutoIncrement) {</span>
+<span class="fc" id="L633">                introspectedColumn.setAutoIncrement(&quot;YES&quot;.equals(rs.getString(&quot;IS_AUTOINCREMENT&quot;))); //$NON-NLS-1$ //$NON-NLS-2$</span>
+            }
+            
+<span class="pc bpc" id="L636" title="1 of 2 branches missed.">            if (supportsIsGeneratedColumn) {</span>
+<span class="fc" id="L637">                introspectedColumn.setGeneratedColumn(&quot;YES&quot;.equals(rs.getString(&quot;IS_GENERATEDCOLUMN&quot;))); //$NON-NLS-1$ //$NON-NLS-2$</span>
             }
 
-<span class="fc" id="L632">            columns.add(introspectedColumn);</span>
+<span class="fc" id="L640">            ActualTableName atn = new ActualTableName(</span>
+<span class="fc" id="L641">                    rs.getString(&quot;TABLE_CAT&quot;), //$NON-NLS-1$</span>
+<span class="fc" id="L642">                    rs.getString(&quot;TABLE_SCHEM&quot;), //$NON-NLS-1$</span>
+<span class="fc" id="L643">                    rs.getString(&quot;TABLE_NAME&quot;)); //$NON-NLS-1$</span>
 
-<span class="pc bpc" id="L634" title="1 of 2 branches missed.">            if (logger.isDebugEnabled()) {</span>
-<span class="nc" id="L635">                logger.debug(getString(</span>
+<span class="fc" id="L645">            List&lt;IntrospectedColumn&gt; columns = answer.get(atn);</span>
+<span class="fc bfc" id="L646" title="All 2 branches covered.">            if (columns == null) {</span>
+<span class="fc" id="L647">                columns = new ArrayList&lt;IntrospectedColumn&gt;();</span>
+<span class="fc" id="L648">                answer.put(atn, columns);</span>
+            }
+
+<span class="fc" id="L651">            columns.add(introspectedColumn);</span>
+
+<span class="pc bpc" id="L653" title="1 of 2 branches missed.">            if (logger.isDebugEnabled()) {</span>
+<span class="nc" id="L654">                logger.debug(getString(</span>
                         &quot;Tracing.2&quot;, //$NON-NLS-1$
-<span class="nc" id="L637">                        introspectedColumn.getActualColumnName(), Integer</span>
-<span class="nc" id="L638">                                .toString(introspectedColumn.getJdbcType()),</span>
-<span class="nc" id="L639">                        atn.toString()));</span>
+<span class="nc" id="L656">                        introspectedColumn.getActualColumnName(), Integer</span>
+<span class="nc" id="L657">                                .toString(introspectedColumn.getJdbcType()),</span>
+<span class="nc" id="L658">                        atn.toString()));</span>
             }
-<span class="fc" id="L641">        }</span>
+<span class="fc" id="L660">        }</span>
 
-<span class="fc" id="L643">        closeResultSet(rs);</span>
+<span class="fc" id="L662">        closeResultSet(rs);</span>
 
-<span class="pc bpc" id="L645" title="1 of 2 branches missed.">        if (answer.size() &gt; 1</span>
-<span class="nc bnc" id="L646" title="All 2 branches missed.">                &amp;&amp; !stringContainsSQLWildcard(localSchema)</span>
-<span class="nc bnc" id="L647" title="All 2 branches missed.">                &amp;&amp; !stringContainsSQLWildcard(localTableName)) {</span>
+<span class="pc bpc" id="L664" title="1 of 2 branches missed.">        if (answer.size() &gt; 1</span>
+<span class="nc bnc" id="L665" title="All 2 branches missed.">                &amp;&amp; !stringContainsSQLWildcard(localSchema)</span>
+<span class="nc bnc" id="L666" title="All 2 branches missed.">                &amp;&amp; !stringContainsSQLWildcard(localTableName)) {</span>
             // issue a warning if there is more than one table and
             // no wildcards were used
-<span class="nc" id="L650">            ActualTableName inputAtn = new ActualTableName(tc.getCatalog(), tc</span>
-<span class="nc" id="L651">                    .getSchema(), tc.getTableName());</span>
+<span class="nc" id="L669">            ActualTableName inputAtn = new ActualTableName(tc.getCatalog(), tc</span>
+<span class="nc" id="L670">                    .getSchema(), tc.getTableName());</span>
 
-<span class="nc" id="L653">            StringBuilder sb = new StringBuilder();</span>
-<span class="nc" id="L654">            boolean comma = false;</span>
-<span class="nc bnc" id="L655" title="All 2 branches missed.">            for (ActualTableName atn : answer.keySet()) {</span>
-<span class="nc bnc" id="L656" title="All 2 branches missed.">                if (comma) {</span>
-<span class="nc" id="L657">                    sb.append(',');</span>
+<span class="nc" id="L672">            StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L673">            boolean comma = false;</span>
+<span class="nc bnc" id="L674" title="All 2 branches missed.">            for (ActualTableName atn : answer.keySet()) {</span>
+<span class="nc bnc" id="L675" title="All 2 branches missed.">                if (comma) {</span>
+<span class="nc" id="L676">                    sb.append(',');</span>
                 } else {
-<span class="nc" id="L659">                    comma = true;</span>
+<span class="nc" id="L678">                    comma = true;</span>
                 }
-<span class="nc" id="L661">                sb.append(atn.toString());</span>
-<span class="nc" id="L662">            }</span>
+<span class="nc" id="L680">                sb.append(atn.toString());</span>
+<span class="nc" id="L681">            }</span>
 
-<span class="nc" id="L664">            warnings.add(getString(&quot;Warning.25&quot;, //$NON-NLS-1$</span>
-<span class="nc" id="L665">                    inputAtn.toString(), sb.toString()));</span>
+<span class="nc" id="L683">            warnings.add(getString(&quot;Warning.25&quot;, //$NON-NLS-1$</span>
+<span class="nc" id="L684">                    inputAtn.toString(), sb.toString()));</span>
         }
 
-<span class="fc" id="L668">        return answer;</span>
+<span class="fc" id="L687">        return answer;</span>
     }
 
     /**
@@ -680,16 +699,16 @@ public class DatabaseIntrospector {
     private List&lt;IntrospectedTable&gt; calculateIntrospectedTables(
             TableConfiguration tc,
             Map&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt; columns) {
-<span class="pc bpc" id="L683" title="1 of 2 branches missed.">        boolean delimitIdentifiers = tc.isDelimitIdentifiers()</span>
-<span class="pc bpc" id="L684" title="1 of 2 branches missed.">                || stringContainsSpace(tc.getCatalog())</span>
-<span class="pc bpc" id="L685" title="1 of 2 branches missed.">                || stringContainsSpace(tc.getSchema())</span>
-<span class="fc bfc" id="L686" title="All 2 branches covered.">                || stringContainsSpace(tc.getTableName());</span>
+<span class="pc bpc" id="L702" title="1 of 2 branches missed.">        boolean delimitIdentifiers = tc.isDelimitIdentifiers()</span>
+<span class="pc bpc" id="L703" title="1 of 2 branches missed.">                || stringContainsSpace(tc.getCatalog())</span>
+<span class="pc bpc" id="L704" title="1 of 2 branches missed.">                || stringContainsSpace(tc.getSchema())</span>
+<span class="fc bfc" id="L705" title="All 2 branches covered.">                || stringContainsSpace(tc.getTableName());</span>
 
-<span class="fc" id="L688">        List&lt;IntrospectedTable&gt; answer = new ArrayList&lt;IntrospectedTable&gt;();</span>
+<span class="fc" id="L707">        List&lt;IntrospectedTable&gt; answer = new ArrayList&lt;IntrospectedTable&gt;();</span>
 
-<span class="fc bfc" id="L690" title="All 2 branches covered.">        for (Map.Entry&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt; entry : columns</span>
-<span class="fc" id="L691">                .entrySet()) {</span>
-<span class="fc" id="L692">            ActualTableName atn = entry.getKey();</span>
+<span class="fc bfc" id="L709" title="All 2 branches covered.">        for (Map.Entry&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt; entry : columns</span>
+<span class="fc" id="L710">                .entrySet()) {</span>
+<span class="fc" id="L711">            ActualTableName atn = entry.getKey();</span>
 
             // we only use the returned catalog and schema if something was
             // actually
@@ -698,35 +717,35 @@ public class DatabaseIntrospector {
             // table
             // configuration, then some sort of DB default is being returned
             // and we don't want that in our SQL
-<span class="fc" id="L701">            FullyQualifiedTable table = new FullyQualifiedTable(</span>
-<span class="pc bpc" id="L702" title="1 of 2 branches missed.">                    stringHasValue(tc.getCatalog()) ? atn</span>
-<span class="pc" id="L703">                            .getCatalog() : null,</span>
-<span class="fc bfc" id="L704" title="All 2 branches covered.">                    stringHasValue(tc.getSchema()) ? atn</span>
-<span class="fc" id="L705">                            .getSchema() : null,</span>
-<span class="fc" id="L706">                    atn.getTableName(),</span>
-<span class="fc" id="L707">                    tc.getDomainObjectName(),</span>
-<span class="fc" id="L708">                    tc.getAlias(),</span>
-<span class="fc" id="L709">                    isTrue(tc.getProperty(PropertyRegistry.TABLE_IGNORE_QUALIFIERS_AT_RUNTIME)),</span>
-<span class="fc" id="L710">                    tc.getProperty(PropertyRegistry.TABLE_RUNTIME_CATALOG),</span>
-<span class="fc" id="L711">                    tc.getProperty(PropertyRegistry.TABLE_RUNTIME_SCHEMA),</span>
-<span class="fc" id="L712">                    tc.getProperty(PropertyRegistry.TABLE_RUNTIME_TABLE_NAME),</span>
+<span class="fc" id="L720">            FullyQualifiedTable table = new FullyQualifiedTable(</span>
+<span class="pc bpc" id="L721" title="1 of 2 branches missed.">                    stringHasValue(tc.getCatalog()) ? atn</span>
+<span class="pc" id="L722">                            .getCatalog() : null,</span>
+<span class="fc bfc" id="L723" title="All 2 branches covered.">                    stringHasValue(tc.getSchema()) ? atn</span>
+<span class="fc" id="L724">                            .getSchema() : null,</span>
+<span class="fc" id="L725">                    atn.getTableName(),</span>
+<span class="fc" id="L726">                    tc.getDomainObjectName(),</span>
+<span class="fc" id="L727">                    tc.getAlias(),</span>
+<span class="fc" id="L728">                    isTrue(tc.getProperty(PropertyRegistry.TABLE_IGNORE_QUALIFIERS_AT_RUNTIME)),</span>
+<span class="fc" id="L729">                    tc.getProperty(PropertyRegistry.TABLE_RUNTIME_CATALOG),</span>
+<span class="fc" id="L730">                    tc.getProperty(PropertyRegistry.TABLE_RUNTIME_SCHEMA),</span>
+<span class="fc" id="L731">                    tc.getProperty(PropertyRegistry.TABLE_RUNTIME_TABLE_NAME),</span>
                     delimitIdentifiers, context);
 
-<span class="fc" id="L715">            IntrospectedTable introspectedTable = ObjectFactory</span>
-<span class="fc" id="L716">                    .createIntrospectedTable(tc, table, context);</span>
+<span class="fc" id="L734">            IntrospectedTable introspectedTable = ObjectFactory</span>
+<span class="fc" id="L735">                    .createIntrospectedTable(tc, table, context);</span>
 
-<span class="fc bfc" id="L718" title="All 2 branches covered.">            for (IntrospectedColumn introspectedColumn : entry.getValue()) {</span>
-<span class="fc" id="L719">                introspectedTable.addColumn(introspectedColumn);</span>
-<span class="fc" id="L720">            }</span>
+<span class="fc bfc" id="L737" title="All 2 branches covered.">            for (IntrospectedColumn introspectedColumn : entry.getValue()) {</span>
+<span class="fc" id="L738">                introspectedTable.addColumn(introspectedColumn);</span>
+<span class="fc" id="L739">            }</span>
 
-<span class="fc" id="L722">            calculatePrimaryKey(table, introspectedTable);</span>
+<span class="fc" id="L741">            calculatePrimaryKey(table, introspectedTable);</span>
             
-<span class="fc" id="L724">            enhanceIntrospectedTable(introspectedTable);</span>
+<span class="fc" id="L743">            enhanceIntrospectedTable(introspectedTable);</span>
 
-<span class="fc" id="L726">            answer.add(introspectedTable);</span>
-<span class="fc" id="L727">        }</span>
+<span class="fc" id="L745">            answer.add(introspectedTable);</span>
+<span class="fc" id="L746">        }</span>
 
-<span class="fc" id="L729">        return answer;</span>
+<span class="fc" id="L748">        return answer;</span>
     }
 
     /**
@@ -739,20 +758,20 @@ public class DatabaseIntrospector {
      */
     private void enhanceIntrospectedTable(IntrospectedTable introspectedTable) {
         try {
-<span class="fc" id="L742">            FullyQualifiedTable fqt = introspectedTable.getFullyQualifiedTable();</span>
+<span class="fc" id="L761">            FullyQualifiedTable fqt = introspectedTable.getFullyQualifiedTable();</span>
 
-<span class="fc" id="L744">            ResultSet rs = databaseMetaData.getTables(fqt.getIntrospectedCatalog(), fqt.getIntrospectedSchema(),</span>
-<span class="fc" id="L745">                    fqt.getIntrospectedTableName(), null);</span>
-<span class="pc bpc" id="L746" title="1 of 2 branches missed.">            if (rs.next()) {</span>
-<span class="fc" id="L747">                String remarks = rs.getString(&quot;REMARKS&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L748">                String tableType = rs.getString(&quot;TABLE_TYPE&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L749">                introspectedTable.setRemarks(remarks);</span>
-<span class="fc" id="L750">                introspectedTable.setTableType(tableType);</span>
+<span class="fc" id="L763">            ResultSet rs = databaseMetaData.getTables(fqt.getIntrospectedCatalog(), fqt.getIntrospectedSchema(),</span>
+<span class="fc" id="L764">                    fqt.getIntrospectedTableName(), null);</span>
+<span class="pc bpc" id="L765" title="1 of 2 branches missed.">            if (rs.next()) {</span>
+<span class="fc" id="L766">                String remarks = rs.getString(&quot;REMARKS&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L767">                String tableType = rs.getString(&quot;TABLE_TYPE&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L768">                introspectedTable.setRemarks(remarks);</span>
+<span class="fc" id="L769">                introspectedTable.setTableType(tableType);</span>
             }
-<span class="fc" id="L752">            closeResultSet(rs);</span>
-<span class="nc" id="L753">        } catch (SQLException e) {</span>
-<span class="nc" id="L754">            warnings.add(getString(&quot;Warning.27&quot;, e.getMessage())); //$NON-NLS-1$</span>
-<span class="fc" id="L755">        }</span>
-<span class="fc" id="L756">    }</span>
+<span class="fc" id="L771">            closeResultSet(rs);</span>
+<span class="nc" id="L772">        } catch (SQLException e) {</span>
+<span class="nc" id="L773">            warnings.add(getString(&quot;Warning.27&quot;, e.getMessage())); //$NON-NLS-1$</span>
+<span class="fc" id="L774">        }</span>
+<span class="fc" id="L775">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

@@ -25,6 +25,7 @@ MyBatis Generator Core,org.mybatis.generator.plugins,ToStringPlugin,21,113,4,4,6
 MyBatis Generator Core,org.mybatis.generator.plugins,CachePlugin.CacheProperty,90,0,0,0,12,0,6,0,6,0
 MyBatis Generator Core,org.mybatis.generator.plugins,RowBoundsPlugin,1,180,6,12,1,43,6,12,0,9
 MyBatis Generator Core,org.mybatis.generator.plugins,CachePlugin,67,0,6,0,15,0,7,0,4,0
+MyBatis Generator Core,org.mybatis.generator.plugins,FluentBuilderMethodsPlugin,0,75,0,0,0,18,0,3,0,3
 MyBatis Generator Core,org.mybatis.generator.plugins,CaseInsensitiveLikePlugin,3,132,3,9,2,37,3,6,0,3
 MyBatis Generator Core,org.mybatis.generator.plugins,EqualsHashCodePlugin,148,486,19,29,38,137,14,18,0,8
 MyBatis Generator Core,org.mybatis.generator.codegen.ibatis2.sqlmap,SqlMapGenerator,2,398,11,29,1,116,11,32,0,23
@@ -171,7 +172,7 @@ MyBatis Generator Core,org.mybatis.generator.codegen.mybatis3.javamapper.element
 MyBatis Generator Core,org.mybatis.generator.api.dom,DefaultJavaFormatter,3,7,0,0,1,3,1,2,1,2
 MyBatis Generator Core,org.mybatis.generator.api.dom,DefaultXmlFormatter,0,10,0,0,0,4,0,3,0,3
 MyBatis Generator Core,org.mybatis.generator.api.dom,OutputUtilities,5,90,1,9,3,24,2,9,1,5
-MyBatis Generator Core,org.mybatis.generator.internal.db,DatabaseIntrospector,406,874,69,115,110,259,49,56,0,13
+MyBatis Generator Core,org.mybatis.generator.internal.db,DatabaseIntrospector,406,911,71,123,110,270,51,59,0,13
 MyBatis Generator Core,org.mybatis.generator.internal.db,SqlReservedWords,6,3691,1,3,3,8,2,3,1,2
 MyBatis Generator Core,org.mybatis.generator.internal.db,DatabaseDialects,32,157,8,10,8,26,10,5,2,4
 MyBatis Generator Core,org.mybatis.generator.internal.db,ActualTableName,5,43,2,2,2,12,3,6,1,6

@@ -15,6 +15,12 @@
  */
 package org.mybatis.generator.eclipse.core.merge;
 
+import java.util.Map;
+
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.dom.AST;
+import org.eclipse.jdt.core.dom.ASTParser;
+import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.ImportDeclaration;
 import org.eclipse.jdt.core.dom.Type;
 import org.mybatis.generator.eclipse.core.merge.visitors.ImportDeclarationStringifier;
@@ -56,5 +62,15 @@ public class EclipseDomUtils {
         type2.accept(ts2);
 
         return ts1.toString().equals(ts2.toString());
+    }
+    
+    public static CompilationUnit getCompilationUnitFromSource(String javaSource) {
+        ASTParser astParser = ASTParser.newParser(AST.JLS8);
+        Map<?,?> options = JavaCore.getDefaultOptions();
+        JavaCore.setComplianceOptions(JavaCore.VERSION_1_8, options);
+        astParser.setCompilerOptions(options);
+        astParser.setSource(javaSource.toCharArray());
+        CompilationUnit cu = (CompilationUnit) astParser.createAST(null);
+        return cu;
     }
 }

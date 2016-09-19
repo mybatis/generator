@@ -16,6 +16,8 @@
  */
 package org.mybatis.generator.eclipse.core.merge;
 
+import static org.mybatis.generator.eclipse.core.merge.EclipseDomUtils.getCompilationUnitFromSource;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -25,7 +27,6 @@ import java.util.Set;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.Annotation;
 import org.eclipse.jdt.core.dom.BodyDeclaration;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -76,8 +77,7 @@ public class JavaFileMerger {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public String getMergedSource() throws ShellException, InvalidExistingFileException {
-        ASTParser astParser = ASTParser.newParser(AST.JLS3);
-        NewJavaFileVisitor newJavaFileVisitor = visitNewJavaFile(astParser);
+        NewJavaFileVisitor newJavaFileVisitor = visitNewJavaFile();
 
         IDocument document = new Document(existingJavaSource);
 
@@ -85,8 +85,7 @@ public class JavaFileMerger {
         ExistingJavaFileVisitor visitor = new ExistingJavaFileVisitor(
                 javaDocTags);
 
-        astParser.setSource(existingJavaSource.toCharArray());
-        CompilationUnit cu = (CompilationUnit) astParser.createAST(null);
+        CompilationUnit cu = getCompilationUnitFromSource(existingJavaSource);
         AST ast = cu.getAST();
         cu.recordModifications();
         cu.accept(visitor);
@@ -139,9 +138,7 @@ public class JavaFileMerger {
         }
 
         // regenerate the CompilationUnit to reflect all the deletes and changes
-        astParser.setSource(document.get().toCharArray());
-        CompilationUnit strippedCu = (CompilationUnit) astParser
-                .createAST(null);
+        CompilationUnit strippedCu = getCompilationUnitFromSource(document.get());
 
         // find the top level public type declaration
         TypeDeclaration topLevelType = null;
@@ -249,12 +246,10 @@ public class JavaFileMerger {
      * characteristics of the new file, and a lost of new nodes that need to be
      * incorporated into the existing file.
      * 
-     * @param astParser
      * @return
      */
-    private NewJavaFileVisitor visitNewJavaFile(ASTParser astParser) {
-        astParser.setSource(newJavaSource.toCharArray());
-        CompilationUnit cu = (CompilationUnit) astParser.createAST(null);
+    private NewJavaFileVisitor visitNewJavaFile() {
+        CompilationUnit cu = getCompilationUnitFromSource(newJavaSource);
         NewJavaFileVisitor newVisitor = new NewJavaFileVisitor();
         cu.accept(newVisitor);
 

@@ -106,7 +106,7 @@ public class DefaultShellCallback implements ShellCallback {
      * @see org.mybatis.generator.api.ShellCallback#mergeJavaFile(java.lang.String, java.lang.String, java.lang.String[], java.lang.String)
      */
     public String mergeJavaFile(String newFileSource,
-            String existingFileFullPath, String[] javadocTags, String fileEncoding)
+            File existingFile, String[] javadocTags, String fileEncoding)
             throws ShellException {
         throw new UnsupportedOperationException();
     }

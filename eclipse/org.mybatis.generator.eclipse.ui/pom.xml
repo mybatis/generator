@@ -20,10 +20,12 @@
         <configuration>
           <filesets>
             <fileset>
-              <!-- Delete the generated ant support library -->
-              <directory>lib</directory>
               <!-- Delete the directory where DTDs are copied -->
               <directory>dtds</directory>
+            </fileset>
+            <fileset>
+              <!-- Delete the generated ant support library -->
+              <directory>lib</directory>
             </fileset>
           </filesets>
         </configuration>

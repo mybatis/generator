@@ -86,8 +86,8 @@ public interface ShellCallback {
      * 
      * @param newFileSource
      *            the source of the newly generated Java file
-     * @param existingFileFullPath
-     *            the fully qualified path name of the existing Java file
+     * @param existingFile
+     *            the existing Java file
      * @param javadocTags
      *            the JavaDoc tags that denotes which methods and fields in the
      *            old file to delete (if the Java element has any of these tags,
@@ -103,7 +103,7 @@ public interface ShellCallback {
      *             existing file will remain undisturbed. The generator will add the
      *             exception message to the list of warnings automatically.
      */
-    String mergeJavaFile(String newFileSource, String existingFileFullPath,
+    String mergeJavaFile(String newFileSource, File existingFile,
             String[] javadocTags, String fileEncoding) throws ShellException;
 
     /**

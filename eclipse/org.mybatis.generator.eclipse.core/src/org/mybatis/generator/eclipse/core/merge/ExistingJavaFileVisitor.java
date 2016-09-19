@@ -32,6 +32,7 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.TagElement;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.mybatis.generator.eclipse.core.merge.visitors.MethodSignatureStringifier;
 
 /**
  * @author Jeff Butler
@@ -82,8 +83,9 @@ public class ExistingJavaFileVisitor extends ASTVisitor {
         if (isGenerated(node)) {
             List<Annotation> annotations = retrieveAnnotations(node);
             if (!annotations.isEmpty()) {
-                String methodSignature = EclipseDomUtils
-                        .getMethodSignature(node);
+                MethodSignatureStringifier mss = new MethodSignatureStringifier();
+                node.accept(mss);
+                String methodSignature = mss.toString();
                 methodAnnotations.put(methodSignature, annotations);
             }
             node.delete();
@@ -180,6 +182,8 @@ public class ExistingJavaFileVisitor extends ASTVisitor {
 
     public List<Annotation> getMethodAnnotations(
             MethodDeclaration methodDeclaration) {
-        return methodAnnotations.get(EclipseDomUtils.getMethodSignature(methodDeclaration));
+        MethodSignatureStringifier mss = new MethodSignatureStringifier();
+        methodDeclaration.accept(mss);
+        return methodAnnotations.get(mss.toString());
     }
 }

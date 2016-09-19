@@ -15,7 +15,11 @@
  */
 package org.mybatis.generator.eclipse.core.callback;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,6 +35,7 @@ import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.JavaCore;
 import org.mybatis.generator.api.ShellCallback;
+import org.mybatis.generator.eclipse.core.merge.InvalidExistingFileException;
 import org.mybatis.generator.eclipse.core.merge.JavaFileMerger;
 import org.mybatis.generator.exception.ShellException;
 
@@ -269,9 +274,65 @@ public class EclipseShellCallback implements ShellCallback {
     }
 
     public String mergeJavaFile(String newFileSource,
-            String existingFileFullPath, String[] javadocTags, String fileEncoding)
+            File existingFile, String[] javadocTags, String fileEncoding)
             throws ShellException {
-        JavaFileMerger merger = new JavaFileMerger(newFileSource, existingFileFullPath, javadocTags, fileEncoding);
-        return merger.getMergedSource();
+        String existingFileContent = getExistingFileContents(existingFile, fileEncoding);
+        JavaFileMerger merger = new JavaFileMerger(newFileSource, existingFileContent, javadocTags);
+        try {
+            return merger.getMergedSource();
+        } catch (InvalidExistingFileException e) {
+            throw translateInvalidExistingFileException(e, existingFile);
+        }
+    }
+    
+    private ShellException translateInvalidExistingFileException (InvalidExistingFileException e, File existingFile) {
+        String message = null;
+        
+        switch(e.getErrorCode()) {
+        case NO_TYPES_DEFINED_IN_FILE:
+            message = "No types defined in file " + existingFile.getAbsolutePath();
+            break;
+        }
+        
+        return new ShellException(message);
+    }
+
+    private String getExistingFileContents(File existingFile, String fileEncoding) throws ShellException {
+        if (!existingFile.exists()) {
+            // this should not happen because MyBatis Generator only returns the
+            // file
+            // calculated by the eclipse callback
+            StringBuilder sb = new StringBuilder();
+            sb.append("The file ");
+            sb.append(existingFile.getAbsolutePath());
+            sb.append(" does not exist");
+            throw new ShellException(sb.toString());
+        }
+
+        try {
+            StringBuilder sb = new StringBuilder();
+            FileInputStream fis = new FileInputStream(existingFile);
+            InputStreamReader isr;
+            if (fileEncoding == null) {
+                isr = new InputStreamReader(fis);
+            } else {
+                isr = new InputStreamReader(fis, fileEncoding);
+            }
+            BufferedReader br = new BufferedReader(isr);
+            char[] buffer = new char[1024];
+            int returnedBytes = br.read(buffer);
+            while (returnedBytes != -1) {
+                sb.append(buffer, 0, returnedBytes);
+                returnedBytes = br.read(buffer);
+            }
+
+            br.close();
+            return sb.toString();
+        } catch (IOException e) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("IOException reading the file ");
+            sb.append(existingFile.getAbsolutePath());
+            throw new ShellException(sb.toString(), e);
+        }
     }
 }

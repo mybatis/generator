@@ -14,6 +14,8 @@
     <module>../org.mybatis.generator.eclipse.doc</module>
     <module>../org.mybatis.generator.eclipse.ui</module>
     <module>../org.mybatis.generator.eclipse.site</module>
+    <module>../org.mybatis.generator.eclipse.core.tests</module>
+    <module>../org.mybatis.generator.eclipse.tests.harness</module>
   </modules>
 
   <properties>

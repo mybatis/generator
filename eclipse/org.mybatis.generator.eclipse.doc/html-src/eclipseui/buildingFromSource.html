@@ -12,38 +12,31 @@ MyBatis Generator (MBG) feature from source.</p>
 
 <h2>Build Overview</h2>
 <p>The feature build uses Eclipse Tycho - which is Maven support for Eclipse projects.
-Tycho is a thin wrapper over the normal eclipse PDE processes, so even though the projects
+Tycho is a thin wrapper over the normal eclipse PDE processes.  Even though the projects
 have a pom.xml, the projects are not structured like normal maven projects.  Within Eclipse, 
 you still need to use normal PDE support and editors to modify the feature.</p>
-<p>Two of the plugins are a bit unique.</p>
-<p>The documentation plugin (org.mybatis.generator.eclipse.doc) reuses the documentation
-from the core (non-Eclipse) MyBatis generator project.  To make this happen, there is an
-ant script (buildDoc.xml) that will copy the core documentation and JavaDocs into the proper
-structure for the plugin.  This ant script is integrated into the Tycho build.</p>
-<p>The core generator plugin (org.mybatis.generator.core) reuses the source code from the
-core (non-eclipse) MyBatis generator project.  There is another ant script (copySource.xml)
-that will copy source into the proper structure for the eclipse plugin.  We do this to make
-it easier to generate an Eclipse source plugin and feature.  This means that if you find a
-bug in the core generator, you should fix the bug in the non-Eclipse project and then re-copy
-the source into the Eclipse project.  The copy is built into the Tycho build, so it is always safe
-to use that.  Just remember that the Tycho build will overwrite any changes you make in
-the org.mybtis.generator.core project.</p>
+
 <h2>Feature Structure</h2>
-<p>The MBG feature is structured as seven different Eclipse projects - a feature project,
-four plugin projects, a parent project, and an eclipse site project for publishing the feature.
-The feature project groups the four plugins together for easy installation.  The MBG feature
-project is <code>org.mybatis.generator</code>. That project references the four plugin projects.
-The plugin projects are structured as follows:</p>
+<p>The MBG feature is structured as five different Eclipse projects - a feature project,
+and four plugin projects.
+The feature project groups the four plugins together for easy installation.
+The projects are structured as follows:</p>
 <table cellspacing="0" cellpadding="5" border="1">
   <tr>
-    <th>Plug-in Project</th>
+    <th>Project</th>
     <th>Description</th>
+  </tr>
+  <tr>
+    <td><code>org.mybatis.generator</code></td>
+    <td>This project is the Eclipse feature project for MBG.</td>
   </tr>
   <tr>
     <td><code>org.mybatis.generator.core</code></td>
     <td>This plugin holds the Java source for the core MBG library.
-      Source from the non-Eclipse MBG source tree is copied into this plugin during the build.
-      There is an Ant build file in this plugin (copySource.xml) that performs the copy.</td>
+      Source from the core MBG source tree is copied into this plugin during the build.
+      There is an Ant build file in this plugin (copySource.xml) that performs the copy.
+      If you find a bug in the core MBG, you must make the correction in the
+      core source tree - NOT this plugin.</td>
   </tr>
   <tr>
     <td><code>org.mybatis.generator.eclipse.core</code></td>
@@ -55,27 +48,31 @@ The plugin projects are structured as follows:</p>
     <td><code>org.mybatis.generator.eclipse.doc</code></td>
     <td>This plug-in holds the documentation for MBG.  There is an Ant build file in this
       plugin (buildDoc.xml) that will build the documentation and package it for inclusion
-      into the Eclipse help system.</td>
+      into the Eclipse help system.  The Ant script merges the core MBG documentation into
+      the eclpse documentation.  If you need to correct something in the core MBG
+      documentation, you must make the correction in the core MPB project - NOT the
+      eclipse documentation project.</td>
   </tr>
   <tr>
     <td><code>org.mybatis.generator.eclipse.ui</code></td>
     <td>This plug-in holds the Java code for the Eclipse user interface for MBG.  If you
       are experiencing trouble with the plugin specific features (like the integrated Ant task), then
-      the code for those features will be found in this plugin.
+      the code for those features will be found in this plugin.  An Ant script in this plugin 
+      (copyDtds.xml) will copy the DTDs from the coure MBG source tree into a location suitable for
+      packaging in this plugin.
+      <p>This plugin also contains a custom Ant builder for the Ant task.  This is required
+      because of the way that eclipse accepts contributed Ant tasks - they need to be in a 
+      separate JAR from the main plugin.</p>
     </td>
   </tr>
 </table>
 
 <h2>Other Projects</h2>
-<p>There are three other Eclipse projects that complete the feature:</p>
+<p>There are four other Eclipse projects that are used in the build of the feature:</p>
 <table cellspacing="0" cellpadding="5" border="1">
   <tr>
     <th>Project</th>
     <th>Description</th>
-  </tr>
-  <tr>
-    <td><code>org.mybatis.generator</code></td>
-    <td>This project is the Eclipse feature project for MBG.</td>
   </tr>
   <tr>
     <td><code>org.mybatis.generator.eclipse.parent</code></td>
@@ -84,6 +81,17 @@ The plugin projects are structured as follows:</p>
   <tr>
     <td><code>org.mybatis.generator.eclipse.site</code></td>
     <td>This project is a P2 publishing site that is used to publish the feature.</td>
+  </tr>
+  <tr>
+    <td><code>org.mybatis.generator.eclipse.core.tests</code></td>
+    <td>This project is a plugin fragment that holds unit tests for the
+        org.mybatis.generator.eclipse.core plugin.</td>
+  </tr>
+  <tr>
+    <td><code>org.mybatis.generator.eclipse.tests.harness</code></td>
+    <td>This project is a plugin that contains specialized AST visitors and custom
+        Hamcrest (<a href="http://hamcrest.org">http://hamcrest.org</a>) matchers that are used in the test fragment for writing unit tests
+        that cover the Java merge functionality.</td>
   </tr>
 </table>
 
@@ -116,7 +124,7 @@ eclipse versions as well.</p>
         (File&gt;Import&gt;General&gt;Existing Projects into Workspace)
       </li>
       <li>Set the root directory to the "eclipse" sub-directory in your Git clone</li>
-      <li>Select all seven projects, do not copy the projects into
+      <li>Select all nine projects, do not copy the projects into
         your workspace.
         The filled out wizard looks like this: <br />
         <p><img src="importWizard.png" alt="Eclipse Project Import Wizard"/></p>
@@ -134,7 +142,7 @@ eclipse versions as well.</p>
           dependent JARs from Maven central and eclipse.org the first time you run it.
           <p>This method is preferred because it runs the full build for all the
              plugins.  This will make is possible to debug all of the plugin
-             features including documentation and Ant support.</p>
+             features including documentation.</p>
         </li>
         <li>If you would rather not run the Maven build, you can run just run the
             <code>copySource.xml</code> Ant file in the <code>org.mybatis.generator.core</code>
@@ -163,7 +171,7 @@ eclipse versions as well.</p>
  in the new workspace, create and fill out an MBG configuration file, and then run MBG.
  MBG should eventually hit your breakpoint, and then you step through the code.
  Note that the "Manual Test Scripts" page in these instructions has instructions for creating
- a start project if you need one.</p>
+ a test project if you need one.</p>
 <p>The following classes will likely be of the most interest in debugging:</p>
 <table cellspacing="0" cellpadding="5" border="1">
   <tr>
@@ -171,10 +179,25 @@ eclipse versions as well.</p>
     <th>Description</th>
   </tr>
   <tr>
-    <td><code>org.mybatis.generator.eclipse.ui.actions.RunGeneratorThread</code></td>
-    <td>This class is a thread that runs MBG on the selected configuration file.
-      You can set a breakpoint in the <code>run</code> method of this class to follow
-      the MBG code generation process from the beginning.
+    <td valign="top"><code>org.mybatis.generator.eclipse.ui.launcher.GeneratorLaunchConfigurationDelegate</code></td>
+    <td>This class is used by eclipse launch support to execute a launch.  If you are
+        experiencing a problem where the attributes you set in a launch configuration seen
+        to be ignored or aren't working, you should set a breakpoint in the
+        <code>launch</code> method of this class to follow the launch from the beginning.
+        <p>Note that the launcher uses Ant under the covers, so this method simply sets up an
+        Ant environment and launches Ant.  If you are experiencing issues in the core
+        functionality of MBG, see below for a better staring point.</p> 
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"><code>org.mybatis.generator.eclipse.ui.ant.GeneratorAntTask</code></td>
+    <td>The MBG launcher uses Ant under the covers, and will eventually cause this task
+      to be executed. You can set a breakpoint in the <code>execute</code> method of this
+      class to follow the MBG code generation process from the beginning.
+      <p>Note that eclipse will not be able to find the source code initially, so the
+      debug window will just show a blank class file.  Add the <code>antsrc</code>
+      directory in the <code>org.mybatis.generator.eclipse.ui</code> project
+      to the source lookup path to solve that issue.</p>
     </td>
   </tr>
   <tr>
@@ -184,6 +207,33 @@ eclipse versions as well.</p>
     </td>
   </tr>
 </table>
+
+<h2>Running the Unit Tests</h2>
+<p>The plugin fragment project <code>org.mybatis.generator.eclipse.core.tests</code>
+contains unit tests for many of the classes in the
+<code>org.mybatis.generator.eclipse.core</code> project.
+These tests cover the core functionality of Java code merging and workspace file resolution
+that is an extra capability added by the eclipse feature.</p>
+<p>The tests will be run during a maven build of the feature, but you can also run them
+directly in eclipse. Running these unit tests is similar to running regular unit tests in
+eclipse with the following exceptions:</p>
+<ul>
+  <li>The tests must be run with the eclipse plugin test runner.  So use the menu option
+      Run As&gt;JUnit Plug-in Test.</li>
+  <li>By default, the plugin test runner will start an instance of eclipse with the full UI.
+      This can be quite slow and is unnecessary for the tests in this project.  To turn this off,
+      follow these steps:
+      <ol>
+        <li>Open the run configuration for your test run (Run&gt;Run Configurations)</li>
+        <li>Open the "main" tab</li>
+        <li>Select the "Run an application" radio button</li>
+        <li>Select "[No Application] - Headless Mode" in the drop down</li>
+      </ol>
+  </li>
+</ul>
+<p>To run all tests, run the class <code>org.mybatis.generator.eclipse.core.tests.RunAllTests</code>
+which contains a test suite of all unit tests.
+</p>
 
 <h2>Building the Documentation</h2>
 <p>The documentation for MBG is integrated into the Eclipse help system.
@@ -200,13 +250,15 @@ not need to do this.
 <p>If you want to build an updated version of the feature and distribute it locally, then
 follow these steps:</p>
 <ol>
-  <li>Run the Maven build by selecting Run As&gt;Maven Test on the <code>pom.xml</code>
+  <li>Run the Maven build by selecting Run As&gt;Maven Build... on the <code>pom.xml</code>
       file in the <code>org.mybatis.generator.eclipse.parent</code> project.</li>
+  <li>Enter the Maven goals "clean integration-test" in the launch configuration (you will
+      only need to do this one time)</li>
   <li>Once the build completes the feature will be available in the <code>target/repository</code>
   directory of the <code>org.mybatis.generator.eclipse.site</code> project.</li>
 </ol>
 
-<p>Once the build executes successfully, the easiest way
+<p>After the build executes, the easiest way
 to install this new version of the feature is to create a new local repository
 that points to this directory (Help&gt;Install New Software...) and install
 the new version with P2.</p>

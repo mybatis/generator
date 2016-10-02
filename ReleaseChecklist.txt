@@ -41,7 +41,7 @@ Releasing the Eclipse Feature:
    git checkout mybatis-generator-1.3.3
    
 2. cd eclipse/org.mybatis.generator.eclipse.parent
-3. mvn -Prelease-composite clean package
+3. mvn -Prelease-composite clean integration-test
 4. cd ../org.mybatis.generator.eclipse.site/target/p2-composite-repo
 5. Edit bintrayUpload.sh and add your Bintray credentials
 6. ./bintrayUpload.sh

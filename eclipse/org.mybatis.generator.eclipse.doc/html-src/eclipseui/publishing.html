@@ -19,7 +19,7 @@ access when running this build.</p>
   <li>Follow the instructions in <a href="buildingFromSource.html">Building from Source</a> to
       checkout the source and setup the projects in Eclipse.  You can use the steps
       on that page to debug any changes and ensure that the build works properly.</li>
-   <li>Once you are ready to publish, run "<code>mvn -Prelease-composite clean package</code>"
+   <li>Once you are ready to publish, run "<code>mvn -Prelease-composite clean integration-test</code>"
       on the <code>pom.xml</code> in the
       <code>org.mybatis.generator.eclipse.parent</code> project. This turns on the "release-composite"
        profile which adds build steps to retrieve the current P2 metadata from Bintray and prepare
@@ -45,10 +45,14 @@ access when running this build.</p>
          <li><code>org.mybatis.generator.core/pom.xml</code></li>
          <li><code>org.mybatis.generator.eclipse.core/META-INF/MANIFEST.MF</code></li>
          <li><code>org.mybatis.generator.eclipse.core/pom.xml</code></li>
+         <li><code>org.mybatis.generator.eclipse.core.tests/META-INF/MANIFEST.MF</code></li>
+         <li><code>org.mybatis.generator.eclipse.core.tests/pom.xml</code></li>
          <li><code>org.mybatis.generator.eclipse.doc/META-INF/MANIFEST.MF</code></li>
          <li><code>org.mybatis.generator.eclipse.doc/pom.xml</code></li>
          <li><code>org.mybatis.generator.eclipse.parent/pom.xml</code></li>
          <li><code>org.mybatis.generator.eclipse.site/pom.xml</code></li>
+         <li><code>org.mybatis.generator.eclipse.tests.harness/META-INF/MANIFEST.MF</code></li>
+         <li><code>org.mybatis.generator.eclipse.tests.harness/pom.xml</code></li>
          <li><code>org.mybatis.generator.eclipse.ui/META-INF/MANIFEST.MF</code></li>
          <li><code>org.mybatis.generator.eclipse.ui/pom.xml</code></li>
        </ul>

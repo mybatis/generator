@@ -19,54 +19,46 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class AbstractSummary extends MatcherSupport {
+public abstract class AbstractSummary {
 
     private Map<String, AnnotationSummary> annotationSummaries = new HashMap<String, AnnotationSummary>();
     private Map<String, ClassSummary> classSummaries = new HashMap<String, ClassSummary>();
     private Map<String, EnumSummary> enumSummaries = new HashMap<String, EnumSummary>();
     private Map<String, InterfaceSummary> interfaceSummaries = new HashMap<String, InterfaceSummary>();
 
-    @Override
     public ClassSummary getClassSummary(String name) {
         return classSummaries.get(name);
     }
 
-    @Override
     public int getClassCount() {
         return classSummaries.size();
     }
 
-    @Override
     public InterfaceSummary getInterfaceSummary(String name) {
         return interfaceSummaries.get(name);
     }
 
-    @Override
     public int getInterfaceCount() {
         return interfaceSummaries.size();
     }
 
-    @Override
     public EnumSummary getEnumSummary(String name) {
         return enumSummaries.get(name);
     }
 
-    @Override
     public int getEnumCount() {
         return enumSummaries.size();
     }
 
-    @Override
     public AnnotationSummary getAnnotationSummary(String name) {
         return annotationSummaries.get(name);
     }
 
-    @Override
     public int getAnnotationCount() {
         return annotationSummaries.size();
     }
     
-    protected static abstract class AbstractSummaryBuilder<T extends AbstractSummaryBuilder<T>> {
+    protected abstract static class AbstractSummaryBuilder<T extends AbstractSummaryBuilder<T>> {
         
         protected T withAnnotationSummaries(List<AnnotationSummary> annotationSummaries) {
             fillMap(annotationSummaries, summary().annotationSummaries);

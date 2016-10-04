@@ -29,12 +29,10 @@ public class AnnotationSummary extends AbstractBodyElementSummary {
         super();
     }
     
-    @Override
     public boolean hasAnnotationMember(String annotationMember) {
         return annotationMembers.contains(annotationMember);
     }
     
-    @Override
     public int getAnnotationMemberCount() {
         return annotationMembers.size();
     }

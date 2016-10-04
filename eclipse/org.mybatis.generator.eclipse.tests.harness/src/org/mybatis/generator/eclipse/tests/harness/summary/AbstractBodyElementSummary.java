@@ -32,12 +32,10 @@ public abstract class AbstractBodyElementSummary extends AbstractSummary {
     private Map<String, FieldSummary> fields = new HashMap<String, FieldSummary>();
     private String name;
 
-    @Override
     public FieldSummary getField(String fieldName) {
         return fields.get(fieldName);
     }
 
-    @Override
     public int getFieldCount() {
         return fields.size();
     }
@@ -46,7 +44,7 @@ public abstract class AbstractBodyElementSummary extends AbstractSummary {
         return name;
     }
     
-    protected static abstract class AbstractBodyElementSummaryBuilder<T extends AbstractBodyElementSummaryBuilder<T>> extends AbstractSummaryBuilder<T> {
+    protected abstract static class AbstractBodyElementSummaryBuilder<T extends AbstractBodyElementSummaryBuilder<T>> extends AbstractSummaryBuilder<T> {
 
         protected T withFields(List<FieldSummary> fields) {
             for (FieldSummary field : fields) {

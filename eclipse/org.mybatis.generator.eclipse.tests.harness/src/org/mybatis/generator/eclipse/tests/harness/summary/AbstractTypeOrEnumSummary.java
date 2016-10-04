@@ -31,27 +31,23 @@ public abstract class AbstractTypeOrEnumSummary extends AbstractBodyElementSumma
     private List<String> methods = new ArrayList<String>();
     private List<String> superInterfaces = new ArrayList<String>();
 
-    @Override
     public boolean hasMethod(String method) {
         return methods.contains(method);
     }
 
-    @Override
     public int getMethodCount() {
         return methods.size();
     }
 
-    @Override
     public boolean hasSuperInterface(String superInterface) {
         return superInterfaces.contains(superInterface);
     }
 
-    @Override
     public int getSuperInterfaceCount() {
         return superInterfaces.size();
     }
     
-    protected static abstract class AbstractTypeOrEnumSummaryBuilder<T extends AbstractTypeOrEnumSummaryBuilder<T>> extends AbstractBodyElementSummaryBuilder<T> {
+    protected abstract static class AbstractTypeOrEnumSummaryBuilder<T extends AbstractTypeOrEnumSummaryBuilder<T>> extends AbstractBodyElementSummaryBuilder<T> {
 
         protected T withMethods(List<String> methods) {
             summary().methods = methods;

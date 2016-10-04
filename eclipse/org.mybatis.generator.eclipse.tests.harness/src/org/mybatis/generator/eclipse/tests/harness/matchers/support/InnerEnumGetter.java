@@ -15,12 +15,12 @@
  */
 package org.mybatis.generator.eclipse.tests.harness.matchers.support;
 
-import org.mybatis.generator.eclipse.tests.harness.summary.MatcherSupport;
+import org.mybatis.generator.eclipse.tests.harness.summary.AbstractSummary;
 
 public class InnerEnumGetter implements InnerElementGetter {
 
     @Override
-    public MatcherSupport getElement(MatcherSupport item, String matchString) {
+    public AbstractSummary getElement(AbstractSummary item, String matchString) {
         return item.getEnumSummary(matchString);
     }
 }

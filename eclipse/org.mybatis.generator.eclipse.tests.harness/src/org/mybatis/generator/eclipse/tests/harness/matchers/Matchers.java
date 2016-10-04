@@ -17,7 +17,6 @@ package org.mybatis.generator.eclipse.tests.harness.matchers;
 
 import org.hamcrest.Matcher;
 import org.mybatis.generator.eclipse.tests.harness.summary.FieldSummary;
-import org.mybatis.generator.eclipse.tests.harness.summary.MatcherSupport;
 
 /**
  * This class holds static methods that create matchers.  This is in keeping
@@ -43,27 +42,27 @@ public class Matchers {
         super();
     }
     
-    public static HasElement hasMethod(String methodSignature) {
-        return new HasElement(methodSignature, HasElement.Type.METHOD);
+    public static HasMethod hasMethod(String methodSignature) {
+        return new HasMethod(methodSignature);
     }
 
-    public static HasElement withMethod(String methodSignature) {
+    public static HasMethod withMethod(String methodSignature) {
         return hasMethod(methodSignature);
     }
 
-    public static HasElement hasAnnotationMember(String member) {
-        return new HasElement(member, HasElement.Type.ANNOTATION_MEMBER);
+    public static HasAnnotationMember hasAnnotationMember(String member) {
+        return new HasAnnotationMember(member);
     }
 
-    public static HasElement withAnnotationMember(String member) {
+    public static HasAnnotationMember withAnnotationMember(String member) {
         return hasAnnotationMember(member);
     }
 
-    public static HasElement hasField(String field) {
-        return new HasElement(field, HasElement.Type.FIELD);
+    public static HasField hasField(String field) {
+        return new HasField(field);
     }
 
-    public static HasElement withField(String field) {
+    public static HasField withField(String field) {
         return hasField(field);
     }
 
@@ -87,16 +86,16 @@ public class Matchers {
         return hasFieldType(fieldType);
     }
     
-    public static HasElement hasEnumConstant(String enumConstant) {
-        return new HasElement(enumConstant, HasElement.Type.ENUM_CONSTANT);
+    public static HasEnumConstant hasEnumConstant(String enumConstant) {
+        return new HasEnumConstant(enumConstant);
     }
 
-    public static HasElement withEnumConstant(String enumConstant) {
+    public static HasEnumConstant withEnumConstant(String enumConstant) {
         return hasEnumConstant(enumConstant);
     }
 
-    public static HasElement hasImport(String importDeclaration) {
-        return new HasElement(importDeclaration, HasElement.Type.IMPORT);
+    public static HasImport hasImport(String importDeclaration) {
+        return new HasImport(importDeclaration);
     }
 
     public static HasElement hasAnnotation(String name) {
@@ -107,11 +106,11 @@ public class Matchers {
         return hasAnnotation(name);
     }
 
-    public static HasElementWithValue hasAnnotation(String name, Matcher<MatcherSupport> matcher) {
+    public static HasElementWithValue hasAnnotation(String name, Matcher<?> matcher) {
         return new HasElementWithValue(name, HasElementWithValue.Type.ANNOTATION, matcher);
     }
 
-    public static HasElementWithValue withAnnotation(String name, Matcher<MatcherSupport> matcher) {
+    public static HasElementWithValue withAnnotation(String name, Matcher<?> matcher) {
         return hasAnnotation(name, matcher);
     }
 
@@ -123,11 +122,11 @@ public class Matchers {
         return hasClass(name);
     }
 
-    public static HasElementWithValue hasClass(String name, Matcher<MatcherSupport> matcher) {
+    public static HasElementWithValue hasClass(String name, Matcher<?> matcher) {
         return new HasElementWithValue(name, HasElementWithValue.Type.CLASS, matcher);
     }
 
-    public static HasElementWithValue withClass(String name, Matcher<MatcherSupport> matcher) {
+    public static HasElementWithValue withClass(String name, Matcher<?> matcher) {
         return hasClass(name, matcher);
     }
 
@@ -139,11 +138,11 @@ public class Matchers {
         return hasInterface(name);
     }
 
-    public static HasElementWithValue hasInterface(String name, Matcher<MatcherSupport> matcher) {
+    public static HasElementWithValue hasInterface(String name, Matcher<?> matcher) {
         return new HasElementWithValue(name, HasElementWithValue.Type.INTERFACE, matcher);
     }
 
-    public static HasElementWithValue withInterface(String name, Matcher<MatcherSupport> matcher) {
+    public static HasElementWithValue withInterface(String name, Matcher<?> matcher) {
         return hasInterface(name, matcher);
     }
 
@@ -155,27 +154,27 @@ public class Matchers {
         return hasEnum(name);
     }
 
-    public static HasElementWithValue hasEnum(String name, Matcher<MatcherSupport> matcher) {
+    public static HasElementWithValue hasEnum(String name, Matcher<?> matcher) {
         return new HasElementWithValue(name, HasElementWithValue.Type.ENUM, matcher);
     }
 
-    public static HasElementWithValue withEnum(String name, Matcher<MatcherSupport> matcher) {
+    public static HasElementWithValue withEnum(String name, Matcher<?> matcher) {
         return hasEnum(name, matcher);
     }
 
-    public static HasElement hasSuperClass(String superClass) {
-        return new HasElement(superClass, HasElement.Type.SUPER_CLASS);
+    public static HasSuperClass hasSuperClass(String superClass) {
+        return new HasSuperClass(superClass);
     }
     
-    public static HasElement withSuperClass(String superClass) {
+    public static HasSuperClass withSuperClass(String superClass) {
         return hasSuperClass(superClass);
     }
     
-    public static HasElement hasSuperInterface(String superInterface) {
-        return new HasElement(superInterface, HasElement.Type.SUPER_INTERFACE);
+    public static HasSuperInterface hasSuperInterface(String superInterface) {
+        return new HasSuperInterface(superInterface);
     }
     
-    public static HasElement withSuperInterface(String superInterface) {
+    public static HasSuperInterface withSuperInterface(String superInterface) {
         return hasSuperInterface(superInterface);
     }
     
@@ -187,11 +186,11 @@ public class Matchers {
         return hasAnnotationCount(count);
     }
     
-    public static HasCount hasAnnotationMemberCount(int count) {
-        return new HasCount(count, HasCount.Type.ANNOTATION_MEMBER);
+    public static HasAnnotationMemberCount hasAnnotationMemberCount(int count) {
+        return new HasAnnotationMemberCount(count);
     }
     
-    public static HasCount withAnnotationMemberCount(int count) {
+    public static HasAnnotationMemberCount withAnnotationMemberCount(int count) {
         return hasAnnotationMemberCount(count);
     }
     
@@ -211,24 +210,24 @@ public class Matchers {
         return hasEnumCount(count);
     }
     
-    public static HasCount hasEnumConstantCount(int count) {
-        return new HasCount(count, HasCount.Type.ENUM_CONSTANT);
+    public static HasEnumConstantCount hasEnumConstantCount(int count) {
+        return new HasEnumConstantCount(count);
     }
     
-    public static HasCount withEnumConstantCount(int count) {
+    public static HasEnumConstantCount withEnumConstantCount(int count) {
         return hasEnumConstantCount(count);
     }
     
-    public static HasCount hasFieldCount(int count) {
-        return new HasCount(count, HasCount.Type.FIELD);
+    public static HasFieldCount hasFieldCount(int count) {
+        return new HasFieldCount(count);
     }
     
-    public static HasCount withFieldCount(int count) {
+    public static HasFieldCount withFieldCount(int count) {
         return hasFieldCount(count);
     }
     
-    public static HasCount hasImportCount(int count) {
-        return new HasCount(count, HasCount.Type.IMPORT);
+    public static HasImportCount hasImportCount(int count) {
+        return new HasImportCount(count);
     }
     
     public static HasCount hasInterfaceCount(int count) {
@@ -239,27 +238,19 @@ public class Matchers {
         return hasInterfaceCount(count);
     }
     
-    public static HasCount hasMethodCount(int count) {
-        return new HasCount(count, HasCount.Type.METHOD);
+    public static HasMethodCount hasMethodCount(int count) {
+        return new HasMethodCount(count);
     }
     
-    public static HasCount withMethodCount(int count) {
+    public static HasMethodCount withMethodCount(int count) {
         return hasMethodCount(count);
     }
 
-    public static HasCount hasSuperInterfaceCount(int count) {
-        return new HasCount(count, HasCount.Type.SUPER_INTERFACE);
+    public static HasSuperInterfaceCount hasSuperInterfaceCount(int count) {
+        return new HasSuperInterfaceCount(count);
     }
     
-    public static HasCount withSuperInterfaceCount(int count) {
+    public static HasSuperInterfaceCount withSuperInterfaceCount(int count) {
         return hasSuperInterfaceCount(count);
-    }
-
-    public static HasCount hasSuperClassCount(int count) {
-        return new HasCount(count, HasCount.Type.SUPER_CLASS);
-    }
-
-    public static HasCount withSuperClassCount(int count) {
-        return hasSuperClassCount(count);
     }
 }

@@ -28,12 +28,10 @@ public class EnumSummary extends AbstractTypeOrEnumSummary {
         super();
     }
     
-    @Override
     public boolean hasEnumConstant(String enumConstant) {
         return enumConstants.contains(enumConstant);
     }
     
-    @Override
     public int getEnumConstantCount() {
         return enumConstants.size();
     }

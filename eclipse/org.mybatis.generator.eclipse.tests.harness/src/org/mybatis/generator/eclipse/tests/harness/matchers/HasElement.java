@@ -19,33 +19,19 @@ import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 import org.mybatis.generator.eclipse.tests.harness.Utilities;
 import org.mybatis.generator.eclipse.tests.harness.matchers.support.AnnotationExistenceChecker;
-import org.mybatis.generator.eclipse.tests.harness.matchers.support.AnnotationMemberExistenceChecker;
 import org.mybatis.generator.eclipse.tests.harness.matchers.support.ClassExistenceChecker;
-import org.mybatis.generator.eclipse.tests.harness.matchers.support.EnumConstantExistenceChecker;
 import org.mybatis.generator.eclipse.tests.harness.matchers.support.EnumExistenceChecker;
 import org.mybatis.generator.eclipse.tests.harness.matchers.support.ExistenceChecker;
-import org.mybatis.generator.eclipse.tests.harness.matchers.support.FieldExistenceChecker;
-import org.mybatis.generator.eclipse.tests.harness.matchers.support.ImportExistenceChecker;
 import org.mybatis.generator.eclipse.tests.harness.matchers.support.InterfaceExistenceChecker;
-import org.mybatis.generator.eclipse.tests.harness.matchers.support.MethodExistenceChecker;
-import org.mybatis.generator.eclipse.tests.harness.matchers.support.SuperClassExistenceChecker;
-import org.mybatis.generator.eclipse.tests.harness.matchers.support.SuperInterfaceExistenceChecker;
-import org.mybatis.generator.eclipse.tests.harness.summary.MatcherSupport;
+import org.mybatis.generator.eclipse.tests.harness.summary.AbstractSummary;
 
-public class HasElement extends TypeSafeMatcher<MatcherSupport>{
+public class HasElement extends TypeSafeMatcher<AbstractSummary>{
     
     public enum Type {
         ANNOTATION("annotation", AnnotationExistenceChecker.class),
-        ANNOTATION_MEMBER("annotation member", AnnotationMemberExistenceChecker.class),
         CLASS("class", ClassExistenceChecker.class),
         ENUM("enum", EnumExistenceChecker.class),
-        ENUM_CONSTANT("enum constant", EnumConstantExistenceChecker.class),
-        FIELD("field", FieldExistenceChecker.class),
-        IMPORT("import", ImportExistenceChecker.class),
-        INTERFACE("interface", InterfaceExistenceChecker.class),
-        METHOD("method", MethodExistenceChecker.class),
-        SUPER_CLASS("super class", SuperClassExistenceChecker.class),
-        SUPER_INTERFACE("super interface", SuperInterfaceExistenceChecker.class);
+        INTERFACE("interface", InterfaceExistenceChecker.class);
         
         private String name;
         private Class<? extends ExistenceChecker> existenceCheckerClass;
@@ -78,12 +64,12 @@ public class HasElement extends TypeSafeMatcher<MatcherSupport>{
     }
 
     @Override
-    protected boolean matchesSafely(MatcherSupport item) {
+    protected boolean matchesSafely(AbstractSummary item) {
         return type.getExistenceChecker().exists(item, matchString);
     }
 
     @Override
-    protected void describeMismatchSafely(MatcherSupport item, Description mismatchDescription) {
+    protected void describeMismatchSafely(AbstractSummary item, Description mismatchDescription) {
         mismatchDescription.appendText(type.getName() + " " + matchString + " was not found");
     }
 }

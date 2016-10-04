@@ -19,6 +19,7 @@ import static org.junit.Assert.assertThat;
 import static org.mybatis.generator.eclipse.tests.harness.Utilities.getCompilationUnitSummaryFromResource;
 import static org.mybatis.generator.eclipse.tests.harness.matchers.Matchers.*;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import org.junit.Test;
@@ -30,9 +31,12 @@ import org.mybatis.generator.eclipse.tests.harness.summary.EnumSummary;
 import org.mybatis.generator.eclipse.tests.harness.summary.InterfaceSummary;
 
 public class SummarizerTest {
-    
+
+    private static final String IMPORT_JAVA_IO_SERIALIZABLE = "import java.io.Serializable";
+    private static final String SERIALIZABLE = "Serializable";
+
     @Test
-    public void testAnnotationSummarizer() throws Exception {
+    public void testAnnotationSummarizer() throws IOException {
         InputStream resource = getClass().getResourceAsStream("/org/mybatis/generator/eclipse/tests/harness/tests/resources/OuterAnnotation.src");
         CompilationUnitSummary cuSummary = getCompilationUnitSummaryFromResource(resource);
 
@@ -64,12 +68,12 @@ public class SummarizerTest {
     }
 
     @Test
-    public void testClassSummarizer() throws Exception {
+    public void testClassSummarizer() throws IOException {
         InputStream resource = getClass().getResourceAsStream("/org/mybatis/generator/eclipse/tests/harness/tests/resources/OuterClass.src");
         CompilationUnitSummary cuSummary = getCompilationUnitSummaryFromResource(resource);
 
         assertThat(cuSummary, hasImportCount(2));
-        assertThat(cuSummary, hasImport("import java.io.Serializable"));
+        assertThat(cuSummary, hasImport(IMPORT_JAVA_IO_SERIALIZABLE));
         assertThat(cuSummary, hasImport("import java.util.ArrayList"));
 
         assertThat(cuSummary, hasClassCount(2));
@@ -82,7 +86,7 @@ public class SummarizerTest {
         ClassSummary classSummary = cuSummary.getClassSummary("OuterClass");
         
         assertThat(classSummary, hasSuperClass("ArrayList<String>"));
-        assertThat(classSummary, hasSuperInterface("Serializable"));
+        assertThat(classSummary, hasSuperInterface(SERIALIZABLE));
         assertThat(classSummary, hasSuperInterfaceCount(1));
         
         assertThat(classSummary, hasField("serialVersionUID", withFieldType("long")));
@@ -97,12 +101,12 @@ public class SummarizerTest {
     }
 
     @Test
-    public void testEnumSummarizer() throws Exception {
+    public void testEnumSummarizer() throws IOException {
         InputStream resource = getClass().getResourceAsStream("/org/mybatis/generator/eclipse/tests/harness/tests/resources/OuterEnum.src");
         CompilationUnitSummary cuSummary = getCompilationUnitSummaryFromResource(resource);
 
         assertThat(cuSummary, hasImportCount(1));
-        assertThat(cuSummary, hasImport("import java.io.Serializable"));
+        assertThat(cuSummary, hasImport(IMPORT_JAVA_IO_SERIALIZABLE));
 
         assertThat(cuSummary, hasClassCount(0));
 
@@ -120,7 +124,7 @@ public class SummarizerTest {
         assertThat(enumSummary, hasEnumConstant("BETTY"));
         assertThat(enumSummary, hasEnumConstantCount(4));
         
-        assertThat(enumSummary, hasSuperInterface("Serializable"));
+        assertThat(enumSummary, hasSuperInterface(SERIALIZABLE));
         assertThat(enumSummary, hasSuperInterfaceCount(1));
         
         assertThat(enumSummary, hasField("name"));
@@ -134,12 +138,12 @@ public class SummarizerTest {
     }
     
     @Test
-    public void testInterfaceSummarizer() throws Exception {
+    public void testInterfaceSummarizer() throws IOException {
         InputStream resource = getClass().getResourceAsStream("/org/mybatis/generator/eclipse/tests/harness/tests/resources/OuterInterface.src");
         CompilationUnitSummary cuSummary = getCompilationUnitSummaryFromResource(resource);
 
         assertThat(cuSummary, hasImportCount(1));
-        assertThat(cuSummary, hasImport("import java.io.Serializable"));
+        assertThat(cuSummary, hasImport(IMPORT_JAVA_IO_SERIALIZABLE));
 
         assertThat(cuSummary, hasClassCount(0));
         assertThat(cuSummary, hasEnumCount(0));
@@ -150,7 +154,7 @@ public class SummarizerTest {
         
         InterfaceSummary interfaceSummary = cuSummary.getInterfaceSummary("OuterInterface");
         
-        assertThat(interfaceSummary, hasSuperInterface("Serializable"));
+        assertThat(interfaceSummary, hasSuperInterface(SERIALIZABLE));
         assertThat(interfaceSummary, hasSuperInterfaceCount(1));
         
         assertThat(interfaceSummary, hasField("MY_NAME"));
@@ -235,6 +239,6 @@ public class SummarizerTest {
         assertThat(classSummary, hasAnnotationCount(0));
         assertThat(classSummary, hasInterfaceCount(0));
         assertThat(classSummary, hasSuperInterfaceCount(0));
-        assertThat(classSummary, hasSuperClassCount(0));
+        assertThat(classSummary, hasSuperClass(null));
     }
 }

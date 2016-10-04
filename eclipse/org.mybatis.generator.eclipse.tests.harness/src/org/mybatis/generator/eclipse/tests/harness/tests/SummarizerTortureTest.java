@@ -19,6 +19,7 @@ import static org.junit.Assert.assertThat;
 import static org.mybatis.generator.eclipse.tests.harness.Utilities.getCompilationUnitSummaryFromResource;
 import static org.mybatis.generator.eclipse.tests.harness.matchers.Matchers.*;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import org.junit.Test;
@@ -26,8 +27,10 @@ import org.mybatis.generator.eclipse.tests.harness.summary.CompilationUnitSummar
 
 public class SummarizerTortureTest {
     
+    private static final String CLASS_NAME = "StringifierExercizer";
+    
     @Test
-    public void testDifficultMethodsAndFields() throws Exception {
+    public void testDifficultMethodsAndFields() throws IOException {
         InputStream resource = getClass().getResourceAsStream("/org/mybatis/generator/eclipse/tests/harness/tests/resources/StringifierExercizer.java.src");
         CompilationUnitSummary summary = getCompilationUnitSummaryFromResource(resource);
         
@@ -39,21 +42,21 @@ public class SummarizerTortureTest {
         assertThat(summary, hasImport("import java.util.*"));
         assertThat(summary, hasImport("import java.math.BigDecimal"));
         
-        assertThat(summary, hasClass("StringifierExercizer", withFieldCount(3)));
-        assertThat(summary, hasClass("StringifierExercizer", withField("primitive1", ofType("int"))));
-        assertThat(summary, hasClass("StringifierExercizer", withField("decimalArray1", ofType("java.math.BigDecimal[]"))));
-        assertThat(summary, hasClass("StringifierExercizer", withField("integerArray2", ofType("java.math.BigInteger[][]"))));
+        assertThat(summary, hasClass(CLASS_NAME, withFieldCount(3)));
+        assertThat(summary, hasClass(CLASS_NAME, withField("primitive1", ofType("int"))));
+        assertThat(summary, hasClass(CLASS_NAME, withField("decimalArray1", ofType("java.math.BigDecimal[]"))));
+        assertThat(summary, hasClass(CLASS_NAME, withField("integerArray2", ofType("java.math.BigInteger[][]"))));
         
-        assertThat(summary, hasClass("StringifierExercizer", withMethodCount(10)));
-        assertThat(summary, hasClass("StringifierExercizer", withMethod("emptyMethod()")));
-        assertThat(summary, hasClass("StringifierExercizer", withMethod("<I extends List<String> & Closeable> intersectionType(I)")));
-        assertThat(summary, hasClass("StringifierExercizer", withMethod("getPrimitive1()")));
-        assertThat(summary, hasClass("StringifierExercizer", withMethod("setPrimitive1(int)")));
-        assertThat(summary, hasClass("StringifierExercizer", withMethod("someMethod(List<Map<Integer,java.lang.String>>,Map<Integer,List<String>>)")));
-        assertThat(summary, hasClass("StringifierExercizer", withMethod("anotherMethod(String[],String[][])")));
-        assertThat(summary, hasClass("StringifierExercizer", withMethod("main(String[])")));
-        assertThat(summary, hasClass("StringifierExercizer", withMethod("method22(List<? extends BigDecimal>)")));
-        assertThat(summary, hasClass("StringifierExercizer", withMethod("method22(Map<Integer,? super java.math.BigDecimal>)")));
-        assertThat(summary, hasClass("StringifierExercizer", withMethod("method33(java.lang.String)")));
+        assertThat(summary, hasClass(CLASS_NAME, withMethodCount(10)));
+        assertThat(summary, hasClass(CLASS_NAME, withMethod("emptyMethod()")));
+        assertThat(summary, hasClass(CLASS_NAME, withMethod("<I extends List<String> & Closeable> intersectionType(I)")));
+        assertThat(summary, hasClass(CLASS_NAME, withMethod("getPrimitive1()")));
+        assertThat(summary, hasClass(CLASS_NAME, withMethod("setPrimitive1(int)")));
+        assertThat(summary, hasClass(CLASS_NAME, withMethod("someMethod(List<Map<Integer,java.lang.String>>,Map<Integer,List<String>>)")));
+        assertThat(summary, hasClass(CLASS_NAME, withMethod("anotherMethod(String[],String[][])")));
+        assertThat(summary, hasClass(CLASS_NAME, withMethod("main(String[])")));
+        assertThat(summary, hasClass(CLASS_NAME, withMethod("method22(List<? extends BigDecimal>)")));
+        assertThat(summary, hasClass(CLASS_NAME, withMethod("method22(Map<Integer,? super java.math.BigDecimal>)")));
+        assertThat(summary, hasClass(CLASS_NAME, withMethod("method33(java.lang.String)")));
     }
 }

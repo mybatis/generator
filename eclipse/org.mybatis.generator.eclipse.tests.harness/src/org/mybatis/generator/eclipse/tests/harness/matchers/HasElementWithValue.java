@@ -25,9 +25,9 @@ import org.mybatis.generator.eclipse.tests.harness.matchers.support.InnerClassGe
 import org.mybatis.generator.eclipse.tests.harness.matchers.support.InnerElementGetter;
 import org.mybatis.generator.eclipse.tests.harness.matchers.support.InnerEnumGetter;
 import org.mybatis.generator.eclipse.tests.harness.matchers.support.InnerInterfaceGetter;
-import org.mybatis.generator.eclipse.tests.harness.summary.MatcherSupport;
+import org.mybatis.generator.eclipse.tests.harness.summary.AbstractSummary;
 
-public class HasElementWithValue extends TypeSafeDiagnosingMatcher<MatcherSupport>{
+public class HasElementWithValue extends TypeSafeDiagnosingMatcher<AbstractSummary>{
 
     public enum Type {
         ANNOTATION("annotation", InnerAnnotationGetter.class),
@@ -54,12 +54,13 @@ public class HasElementWithValue extends TypeSafeDiagnosingMatcher<MatcherSuppor
     
     private String matchString;
     private Type type;
-    private Matcher<MatcherSupport> matcher;
+    private Matcher<Object> matcher;
     
-    public HasElementWithValue(String matchString, Type type, Matcher<MatcherSupport> matcher) {
+    @SuppressWarnings("unchecked")
+    public HasElementWithValue(String matchString, Type type, Matcher<?> matcher) {
         this.matchString = matchString;
         this.type = type;
-        this.matcher = matcher;
+        this.matcher = (Matcher<Object>) matcher;
     }
     
     @Override
@@ -69,14 +70,14 @@ public class HasElementWithValue extends TypeSafeDiagnosingMatcher<MatcherSuppor
     }
 
     @Override
-    protected boolean matchesSafely(MatcherSupport item, Description mismatch) {
+    protected boolean matchesSafely(AbstractSummary item, Description mismatch) {
         return containsElement(item, mismatch)
                 .matching(matcher);
     }
 
-    private Condition<MatcherSupport> containsElement(MatcherSupport item, Description mismatch) {
+    private Condition<Object> containsElement(AbstractSummary item, Description mismatch) {
         // use the abstract type here so we can chain matchers for fields and methods
-        MatcherSupport summary = type.getElementGetter().getElement(item, matchString);
+        Object summary = type.getElementGetter().getElement(item, matchString);
 
         if (summary == null) {
             mismatch.appendText(type.getName() + " " + matchString + " was not found");

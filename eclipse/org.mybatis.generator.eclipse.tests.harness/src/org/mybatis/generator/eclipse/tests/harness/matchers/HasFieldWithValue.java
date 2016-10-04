@@ -19,17 +19,17 @@ import org.hamcrest.Condition;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
-import org.mybatis.generator.eclipse.tests.harness.summary.FieldSummary;
-import org.mybatis.generator.eclipse.tests.harness.summary.MatcherSupport;
+import org.mybatis.generator.eclipse.tests.harness.summary.AbstractBodyElementSummary;
 
-public class HasFieldWithValue extends TypeSafeDiagnosingMatcher<MatcherSupport>{
+public class HasFieldWithValue extends TypeSafeDiagnosingMatcher<AbstractBodyElementSummary>{
 
     private String matchString;
-    private Matcher<FieldSummary> matcher;
+    private Matcher<Object> matcher;
     
-    public HasFieldWithValue(String matchString, Matcher<FieldSummary> matcher) {
+    @SuppressWarnings("unchecked")
+    public HasFieldWithValue(String matchString, Matcher<?> matcher) {
         this.matchString = matchString;
-        this.matcher = matcher;
+        this.matcher = (Matcher<Object>) matcher;
     }
     
     @Override
@@ -39,13 +39,13 @@ public class HasFieldWithValue extends TypeSafeDiagnosingMatcher<MatcherSupport>
     }
 
     @Override
-    protected boolean matchesSafely(MatcherSupport item, Description mismatch) {
+    protected boolean matchesSafely(AbstractBodyElementSummary item, Description mismatch) {
         return containsElement(item, mismatch)
                 .matching(matcher);
     }
 
-    private Condition<FieldSummary> containsElement(MatcherSupport item, Description mismatch) {
-        FieldSummary summary = item.getField(matchString);
+    private Condition<Object> containsElement(AbstractBodyElementSummary item, Description mismatch) {
+        Object summary = item.getField(matchString);
 
         if (summary == null) {
             mismatch.appendText("field " + matchString + " was not found");

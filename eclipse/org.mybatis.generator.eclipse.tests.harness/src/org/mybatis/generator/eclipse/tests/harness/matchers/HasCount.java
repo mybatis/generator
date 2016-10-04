@@ -19,33 +19,19 @@ import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 import org.mybatis.generator.eclipse.tests.harness.Utilities;
 import org.mybatis.generator.eclipse.tests.harness.matchers.support.AnnotationCounter;
-import org.mybatis.generator.eclipse.tests.harness.matchers.support.AnnotationMemberCounter;
 import org.mybatis.generator.eclipse.tests.harness.matchers.support.ClassCounter;
 import org.mybatis.generator.eclipse.tests.harness.matchers.support.Counter;
-import org.mybatis.generator.eclipse.tests.harness.matchers.support.EnumConstantCounter;
 import org.mybatis.generator.eclipse.tests.harness.matchers.support.EnumCounter;
-import org.mybatis.generator.eclipse.tests.harness.matchers.support.FieldCounter;
-import org.mybatis.generator.eclipse.tests.harness.matchers.support.ImportCounter;
 import org.mybatis.generator.eclipse.tests.harness.matchers.support.InterfaceCounter;
-import org.mybatis.generator.eclipse.tests.harness.matchers.support.MethodCounter;
-import org.mybatis.generator.eclipse.tests.harness.matchers.support.SuperClassCounter;
-import org.mybatis.generator.eclipse.tests.harness.matchers.support.SuperInterfaceCounter;
-import org.mybatis.generator.eclipse.tests.harness.summary.MatcherSupport;
+import org.mybatis.generator.eclipse.tests.harness.summary.AbstractSummary;
 
-public class HasCount extends TypeSafeMatcher<MatcherSupport>{
+public class HasCount extends TypeSafeMatcher<AbstractSummary>{
     
     public enum Type {
         ANNOTATION("annotation", AnnotationCounter.class),
-        ANNOTATION_MEMBER("annotation member", AnnotationMemberCounter.class),
         CLASS("class", ClassCounter.class),
         ENUM("enum", EnumCounter.class),
-        ENUM_CONSTANT("enum constant", EnumConstantCounter.class),
-        FIELD("field", FieldCounter.class),
-        IMPORT("import", ImportCounter.class),
-        INTERFACE("interface", InterfaceCounter.class),
-        METHOD("method", MethodCounter.class),
-        SUPER_CLASS("super class", SuperClassCounter.class),
-        SUPER_INTERFACE("super interface", SuperInterfaceCounter.class);
+        INTERFACE("interface", InterfaceCounter.class);
         
         private String name;
         private Class<? extends Counter> counterClass;
@@ -78,12 +64,12 @@ public class HasCount extends TypeSafeMatcher<MatcherSupport>{
     }
 
     @Override
-    protected boolean matchesSafely(MatcherSupport item) {
+    protected boolean matchesSafely(AbstractSummary item) {
         return count == type.getCounter().getCount(item);
     }
 
     @Override
-    protected void describeMismatchSafely(MatcherSupport item, Description mismatchDescription) {
+    protected void describeMismatchSafely(AbstractSummary item, Description mismatchDescription) {
         mismatchDescription.appendText("was " + type.getCounter().getCount(item));
     }
 }

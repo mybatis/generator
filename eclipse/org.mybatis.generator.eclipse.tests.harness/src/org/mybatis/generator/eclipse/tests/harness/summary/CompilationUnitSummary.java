@@ -28,12 +28,10 @@ public class CompilationUnitSummary extends AbstractSummary {
         super();
     }
     
-    @Override
     public boolean hasImportDeclaration(String importDeclaration) {
         return importDeclarations.contains(importDeclaration);
     }
     
-    @Override
     public int getImportCount() {
         return importDeclarations.size();
     }

@@ -15,8 +15,8 @@
  */
 package org.mybatis.generator.eclipse.tests.harness.matchers.support;
 
-import org.mybatis.generator.eclipse.tests.harness.summary.MatcherSupport;
+import org.mybatis.generator.eclipse.tests.harness.summary.AbstractSummary;
 
 public interface ExistenceChecker {
-    boolean exists(MatcherSupport item, String matchString);
+    boolean exists(AbstractSummary item, String matchString);
 }

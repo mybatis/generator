@@ -25,7 +25,6 @@ public class ClassSummary extends AbstractTypeOrEnumSummary {
         super();
     }
     
-    @Override
     public String getSuperClass() {
         return superClass;
     }

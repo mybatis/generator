@@ -28,28 +28,32 @@ import org.mybatis.generator.eclipse.core.merge.visitors.TypeStringifier;
 import org.mybatis.generator.eclipse.tests.harness.summary.CompilationUnitSummary;
 
 public class Utilities {
-    public static CompilationUnitSummary getCompilationUnitSummaryFromResource(InputStream resource) throws Exception {
+    private Utilities() {
+        // utility class - no instances
+    }
+
+    public static CompilationUnitSummary getCompilationUnitSummaryFromResource(InputStream resource)
+            throws IOException {
         String javaSource = getResourceAsString(resource);
         return getCompilationUnitSummaryFromSource(javaSource);
     }
 
-    public static CompilationUnitSummary getCompilationUnitSummaryFromSource(String javaSource) throws Exception {
+    public static CompilationUnitSummary getCompilationUnitSummaryFromSource(String javaSource) throws IOException {
         CompilationUnit cu = getCompilationUnitFromSource(javaSource);
-        CompilationUnitSummary summary = CompilationUnitSummary.from(cu);
-        return summary;
+        return CompilationUnitSummary.from(cu);
     }
 
     public static String getResourceAsString(InputStream resource) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(resource));
         StringBuilder sb = new StringBuilder();
-        
+
         int c;
         while ((c = br.read()) != -1) {
             sb.append((char) c);
         }
-        
+
         br.close();
-        
+
         return sb.toString();
     }
 
@@ -60,16 +64,23 @@ public class Utilities {
 
     public static <T> T newInstance(Class<? extends T> type) {
         try {
-            T instance = type.newInstance();
-            return instance;
+            return type.newInstance();
         } catch (Exception e) {
-            throw new RuntimeException("error creating instance of class " + type.getName(), e);
+            throw new CantCreateInstanceException("error creating instance of class " + type.getName(), e);
         }
     }
-    
+
     public static String getTypeString(Type type) {
         TypeStringifier ts = new TypeStringifier();
         type.accept(ts);
         return ts.toString();
+    }
+
+    public static class CantCreateInstanceException extends RuntimeException {
+        private static final long serialVersionUID = 7972273036610223125L;
+
+        public CantCreateInstanceException(String message, Throwable cause) {
+            super(message, cause);
+        }
     }
 }

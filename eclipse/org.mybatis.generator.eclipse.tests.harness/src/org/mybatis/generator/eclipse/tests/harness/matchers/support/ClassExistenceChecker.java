@@ -15,12 +15,12 @@
  */
 package org.mybatis.generator.eclipse.tests.harness.matchers.support;
 
-import org.mybatis.generator.eclipse.tests.harness.summary.MatcherSupport;
+import org.mybatis.generator.eclipse.tests.harness.summary.AbstractSummary;
 
 public class ClassExistenceChecker implements ExistenceChecker {
 
     @Override
-    public boolean exists(MatcherSupport item, String matchString) {
+    public boolean exists(AbstractSummary item, String matchString) {
         return item.getClassSummary(matchString) != null;
     }
 }

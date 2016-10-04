@@ -15,11 +15,11 @@
  */
 package org.mybatis.generator.eclipse.tests.harness.matchers.support;
 
-import org.mybatis.generator.eclipse.tests.harness.summary.MatcherSupport;
+import org.mybatis.generator.eclipse.tests.harness.summary.AbstractSummary;
 
 public class EnumCounter implements Counter {
     @Override
-    public int getCount(MatcherSupport item) {
+    public int getCount(AbstractSummary item) {
         return item.getEnumCount();
     }
 }

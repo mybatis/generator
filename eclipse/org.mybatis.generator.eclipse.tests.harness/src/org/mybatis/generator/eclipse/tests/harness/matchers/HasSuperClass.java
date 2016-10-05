@@ -29,7 +29,11 @@ public class HasSuperClass extends TypeSafeMatcher<ClassSummary>{
     
     @Override
     public void describeTo(Description description) {
-        description.appendText("class has superclass " + superClass);
+        if (superClass == null) {
+            description.appendText("class has no superclass");
+        } else {
+            description.appendText("class has superclass " + superClass);
+        }
     }
 
     @Override

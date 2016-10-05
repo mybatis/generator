@@ -29,7 +29,7 @@ public class HasImport extends TypeSafeMatcher<CompilationUnitSummary>{
     
     @Override
     public void describeTo(Description description) {
-        description.appendText(importDeclaration + " exists");
+        description.appendText(importDeclaration);
     }
 
     @Override

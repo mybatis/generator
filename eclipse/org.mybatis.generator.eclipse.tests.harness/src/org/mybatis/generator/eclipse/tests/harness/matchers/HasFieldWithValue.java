@@ -34,8 +34,8 @@ public class HasFieldWithValue extends TypeSafeDiagnosingMatcher<AbstractBodyEle
     
     @Override
     public void describeTo(Description description) {
-        description.appendText("field named " + matchString + " exists and ");
-        matcher.describeTo(description);
+        description.appendText("field named " + matchString + ", and ")
+            .appendDescriptionOf(matcher);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class HasFieldWithValue extends TypeSafeDiagnosingMatcher<AbstractBodyEle
         Object summary = item.getField(matchString);
 
         if (summary == null) {
-            mismatch.appendText("field " + matchString + " was not found");
+            mismatch.appendText(matchString + " was not found");
             return Condition.notMatched();
         } else {
             return Condition.matched(summary, mismatch);

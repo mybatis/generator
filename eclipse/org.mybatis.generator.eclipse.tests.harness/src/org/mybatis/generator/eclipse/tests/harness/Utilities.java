@@ -57,11 +57,6 @@ public class Utilities {
         return sb.toString();
     }
 
-    public static CompilationUnit getCompilationUnitFromResource(InputStream resource) throws IOException {
-        String javaSource = getResourceAsString(resource);
-        return getCompilationUnitFromSource(javaSource);
-    }
-
     public static <T> T newInstance(Class<? extends T> type) {
         try {
             return type.newInstance();

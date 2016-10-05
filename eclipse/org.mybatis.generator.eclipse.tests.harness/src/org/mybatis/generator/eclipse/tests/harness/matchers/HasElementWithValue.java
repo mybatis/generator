@@ -65,8 +65,8 @@ public class HasElementWithValue extends TypeSafeDiagnosingMatcher<AbstractSumma
     
     @Override
     public void describeTo(Description description) {
-        description.appendText(type.getName() + " named " + matchString + " exists and ");
-        matcher.describeTo(description);
+        description.appendText(type.getName() + " named " + matchString + ", and ")
+            .appendDescriptionOf(matcher);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class HasElementWithValue extends TypeSafeDiagnosingMatcher<AbstractSumma
         Object summary = type.getElementGetter().getElement(item, matchString);
 
         if (summary == null) {
-            mismatch.appendText(type.getName() + " " + matchString + " was not found");
+            mismatch.appendText(matchString + " was not found");
             return Condition.notMatched();
         } else {
             return Condition.matched(summary, mismatch);

@@ -29,7 +29,7 @@ public class HasEnumConstant extends TypeSafeMatcher<EnumSummary>{
     
     @Override
     public void describeTo(Description description) {
-        description.appendText("enum constant named " + enumConstant + " exists");
+        description.appendText("enum constant named " + enumConstant);
     }
 
     @Override
@@ -39,6 +39,6 @@ public class HasEnumConstant extends TypeSafeMatcher<EnumSummary>{
 
     @Override
     protected void describeMismatchSafely(EnumSummary item, Description mismatchDescription) {
-        mismatchDescription.appendText("enum constant " + enumConstant + " was not found");
+        mismatchDescription.appendText(enumConstant + " was not found");
     }
 }

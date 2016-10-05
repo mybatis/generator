@@ -60,7 +60,7 @@ public class HasElement extends TypeSafeMatcher<AbstractSummary>{
     
     @Override
     public void describeTo(Description description) {
-        description.appendText(type.getName() + " named " + matchString + " exists");
+        description.appendText(type.getName() + " named " + matchString);
     }
 
     @Override
@@ -70,6 +70,6 @@ public class HasElement extends TypeSafeMatcher<AbstractSummary>{
 
     @Override
     protected void describeMismatchSafely(AbstractSummary item, Description mismatchDescription) {
-        mismatchDescription.appendText(type.getName() + " " + matchString + " was not found");
+        mismatchDescription.appendText(matchString + " was not found");
     }
 }

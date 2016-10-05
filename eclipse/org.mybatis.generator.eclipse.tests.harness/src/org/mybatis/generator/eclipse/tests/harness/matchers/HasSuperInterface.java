@@ -29,7 +29,7 @@ public class HasSuperInterface extends TypeSafeMatcher<AbstractTypeOrEnumSummary
     
     @Override
     public void describeTo(Description description) {
-        description.appendText("super interface " + superInterface + " exists");
+        description.appendText("super interface " + superInterface);
     }
 
     @Override
@@ -39,6 +39,6 @@ public class HasSuperInterface extends TypeSafeMatcher<AbstractTypeOrEnumSummary
 
     @Override
     protected void describeMismatchSafely(AbstractTypeOrEnumSummary item, Description mismatchDescription) {
-        mismatchDescription.appendText("super interface " + superInterface + " was not found");
+        mismatchDescription.appendText(superInterface + " was not found");
     }
 }

@@ -29,7 +29,7 @@ public class HasAnnotationMember extends TypeSafeMatcher<AnnotationSummary>{
     
     @Override
     public void describeTo(Description description) {
-        description.appendText("annotation member named " + annotationMember + " exists");
+        description.appendText("annotation member named " + annotationMember);
     }
 
     @Override
@@ -39,6 +39,6 @@ public class HasAnnotationMember extends TypeSafeMatcher<AnnotationSummary>{
 
     @Override
     protected void describeMismatchSafely(AnnotationSummary item, Description mismatchDescription) {
-        mismatchDescription.appendText("annotation member " + annotationMember + " was not found");
+        mismatchDescription.appendText(annotationMember + " was not found");
     }
 }

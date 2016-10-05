@@ -29,7 +29,7 @@ public class HasField extends TypeSafeMatcher<AbstractBodyElementSummary>{
     
     @Override
     public void describeTo(Description description) {
-        description.appendText("field named " + fieldName + " exists");
+        description.appendText("field named " + fieldName);
     }
 
     @Override
@@ -39,6 +39,6 @@ public class HasField extends TypeSafeMatcher<AbstractBodyElementSummary>{
 
     @Override
     protected void describeMismatchSafely(AbstractBodyElementSummary item, Description mismatchDescription) {
-        mismatchDescription.appendText("field " + fieldName + " was not found");
+        mismatchDescription.appendText(fieldName + " was not found");
     }
 }

@@ -19,7 +19,6 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.mybatis.generator.eclipse.core.merge.EclipseDomUtils.getCompilationUnitFromSource;
-import static org.mybatis.generator.eclipse.tests.harness.Utilities.getCompilationUnitFromResource;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,9 +28,10 @@ import org.eclipse.jdt.core.dom.SimpleType;
 import org.junit.Test;
 import org.mybatis.generator.eclipse.core.merge.NewJavaFileVisitor;
 import org.mybatis.generator.eclipse.core.tests.merge.support.TestResourceGenerator;
+import org.mybatis.generator.eclipse.tests.harness.Utilities;
 
 public class NewJavaFileVisitorTest {
-    
+
     @Test
     public void testSimpleClass() {
         CompilationUnit cu = getCompilationUnitFromSource(TestResourceGenerator.simpleClassWithAllGeneratedItems());
@@ -43,25 +43,26 @@ public class NewJavaFileVisitorTest {
         assertThat(visitor.getSuperInterfaceTypes().size(), is(0));
         assertThat(visitor.isInterface(), is(false));
     }
-    
+
     @Test
     public void testRegularClass() throws IOException {
-        InputStream resource = getClass().getResourceAsStream("/org/mybatis/generator/eclipse/core/tests/merge/resources/AwfulTable.java.src");
+        InputStream resource = getClass()
+                .getResourceAsStream("/org/mybatis/generator/eclipse/core/tests/merge/resources/AwfulTable.java.src");
         CompilationUnit cu = getCompilationUnitFromResource(resource);
         NewJavaFileVisitor visitor = new NewJavaFileVisitor();
         cu.accept(visitor);
         assertThat(visitor.getImports().size(), is(1));
         assertThat(visitor.getNewNodes().size(), is(50));
         assertThat(visitor.getSuperclass().isSimpleType(), is(true));
-        assertThat(((SimpleType) visitor.getSuperclass()).getName().getFullyQualifiedName(),
-                is("AwfulTableKey"));
+        assertThat(((SimpleType) visitor.getSuperclass()).getName().getFullyQualifiedName(), is("AwfulTableKey"));
         assertThat(visitor.getSuperInterfaceTypes().size(), is(0));
         assertThat(visitor.isInterface(), is(false));
     }
-    
+
     @Test
     public void testComplexClass() throws IOException {
-        InputStream resource = getClass().getResourceAsStream("/org/mybatis/generator/eclipse/core/tests/merge/resources/AwfulTableExample.java.src");
+        InputStream resource = getClass().getResourceAsStream(
+                "/org/mybatis/generator/eclipse/core/tests/merge/resources/AwfulTableExample.java.src");
         CompilationUnit cu = getCompilationUnitFromResource(resource);
         NewJavaFileVisitor visitor = new NewJavaFileVisitor();
         cu.accept(visitor);
@@ -71,10 +72,11 @@ public class NewJavaFileVisitorTest {
         assertThat(visitor.getSuperInterfaceTypes().size(), is(0));
         assertThat(visitor.isInterface(), is(false));
     }
-    
+
     @Test
     public void testRegularInterface() throws IOException {
-        InputStream resource = getClass().getResourceAsStream("/org/mybatis/generator/eclipse/core/tests/merge/resources/AwfulTableMapper.java.src");
+        InputStream resource = getClass().getResourceAsStream(
+                "/org/mybatis/generator/eclipse/core/tests/merge/resources/AwfulTableMapper.java.src");
         CompilationUnit cu = getCompilationUnitFromResource(resource);
         NewJavaFileVisitor visitor = new NewJavaFileVisitor();
         cu.accept(visitor);
@@ -83,5 +85,10 @@ public class NewJavaFileVisitorTest {
         assertThat(visitor.getSuperclass(), is(nullValue()));
         assertThat(visitor.getSuperInterfaceTypes().size(), is(0));
         assertThat(visitor.isInterface(), is(true));
+    }
+
+    public static CompilationUnit getCompilationUnitFromResource(InputStream resource) throws IOException {
+        String javaSource = Utilities.getResourceAsString(resource);
+        return getCompilationUnitFromSource(javaSource);
     }
 }

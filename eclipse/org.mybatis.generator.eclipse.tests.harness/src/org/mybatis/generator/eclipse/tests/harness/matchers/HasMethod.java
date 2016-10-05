@@ -29,7 +29,7 @@ public class HasMethod extends TypeSafeMatcher<AbstractTypeOrEnumSummary>{
     
     @Override
     public void describeTo(Description description) {
-        description.appendText("mathod named " + methodName + " exists");
+        description.appendText("method with signature " + methodName);
     }
 
     @Override
@@ -39,6 +39,6 @@ public class HasMethod extends TypeSafeMatcher<AbstractTypeOrEnumSummary>{
 
     @Override
     protected void describeMismatchSafely(AbstractTypeOrEnumSummary item, Description mismatchDescription) {
-        mismatchDescription.appendText("method " + methodName + " was not found");
+        mismatchDescription.appendText(methodName + " was not found");
     }
 }

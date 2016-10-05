@@ -42,8 +42,6 @@ public class FieldSummarizer {
         if (node.getParent().getNodeType() == ASTNode.FIELD_DECLARATION) {
             fieldType.append(getFieldType((FieldDeclaration) node.getParent()));
             fieldType.append(getDimensions());
-        } else {
-            fieldType.append("<<unknown>>");
         }
         
         return fieldType.toString();

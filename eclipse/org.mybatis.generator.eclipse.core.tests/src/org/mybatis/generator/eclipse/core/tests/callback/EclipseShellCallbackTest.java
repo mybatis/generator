@@ -25,6 +25,7 @@ import static org.mybatis.generator.eclipse.core.tests.callback.WorkspaceUtiliti
 
 import java.io.File;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.IJavaProject;
@@ -39,12 +40,12 @@ public class EclipseShellCallbackTest {
     private static IJavaProject javaProject;
 
     @BeforeClass
-    public static void setup() throws Exception {
+    public static void setup() throws CoreException {
         javaProject = createJavaProject("P", new String[] { "src/main/java", "generatedsrc" }, "bin", "1.5");
     }
     
     @AfterClass
-    public static void tearDown() throws Exception {
+    public static void tearDown() throws CoreException {
         deleteProject("P");
     }
 

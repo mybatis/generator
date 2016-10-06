@@ -22,6 +22,13 @@
     <tycho-version>0.25.0</tycho-version>
     <tycho-extras-version>0.25.0</tycho-extras-version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <!-- Sonar -->
+    <!-- The destination file for the code coverage report has to be set to the same value
+         in the parent pom and in each module pom. Then JaCoCo will add up information in
+         the same report, so that, it will give the cross-module code coverage. -->
+    <sonar.jacoco.itReportPath>${project.basedir}/../org.mybatis.generator.eclipse.parent/target/jacoco-it.exec</sonar.jacoco.itReportPath>
+    <sonar.language>java</sonar.language>    
   </properties>
 
   <repositories>
@@ -149,15 +156,23 @@
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>0.7.7.201606060606</version>
+        <configuration>
+          <append>true</append>
+        </configuration>
         <executions>
           <execution>
             <id>prepare-agent</id>
             <goals>
               <goal>prepare-agent</goal>
             </goals>
+            <configuration>
+              <destFile>${sonar.jacoco.itReportPath}</destFile>
+              <propertyName>jacoco.agent.arg</propertyName>
+            </configuration>
           </execution>
         </executions>
       </plugin>
     </plugins>
   </build>
+  <name>MyBatis Generator - Eclipse Feature</name>
 </project>

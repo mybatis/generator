@@ -38,13 +38,6 @@
           <skip>false</skip>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>org.eluder.coveralls</groupId>
-        <artifactId>coveralls-maven-plugin</artifactId>
-        <configuration>
-          <skip>false</skip>
-        </configuration>
-      </plugin>
       <!-- create the Source JAR and JavaDoc a bit earlier so it is ready for the assembly -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

@@ -36,7 +36,7 @@ if [ "$mybatis_repo" == "https://github.com/mybatis/generator.git" ] && [ "$TRAV
     echo -e "Successfully deployed SNAPSHOT artifacts to Sonatype under Travis job ${TRAVIS_JOB_NUMBER}"
 
 	# Deploy to Coveralls
-    mvn clean test jacoco:report coveralls:report -q
+    mvn clean test jacoco:report-integration coveralls:report -q
     echo -e "Successfully ran coveralls under Travis job ${TRAVIS_JOB_NUMBER}"
 
 	# Deploy to site

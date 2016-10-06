@@ -12,6 +12,11 @@
   <artifactId>org.mybatis.generator.core</artifactId>
   <packaging>eclipse-plugin</packaging>
 
+  <properties>
+    <!-- skip sonar here - we will do the sonar analysis on the main project -->
+    <sonar.skip>true</sonar.skip>
+  </properties>
+
   <build>
     <plugins>
       <plugin>

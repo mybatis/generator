@@ -11,6 +11,11 @@
   <artifactId>org.mybatis.generator.eclipse.site</artifactId>
   <packaging>eclipse-repository</packaging>
 
+  <properties>
+    <!-- skip sonar - no code here -->
+    <sonar.skip>true</sonar.skip>
+  </properties>
+
   <build>
     <plugins>
       <!-- make sure that zipped p2 repositories have the fully qualified version -->

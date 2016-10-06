@@ -11,4 +11,9 @@
 
   <artifactId>org.mybatis.generator</artifactId>
   <packaging>eclipse-feature</packaging>
+
+  <properties>
+    <!-- skip sonar - no code here -->
+    <sonar.skip>true</sonar.skip>
+  </properties>
 </project>

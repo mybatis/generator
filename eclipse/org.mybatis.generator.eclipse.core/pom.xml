@@ -11,4 +11,5 @@
 
   <artifactId>org.mybatis.generator.eclipse.core</artifactId>
   <packaging>eclipse-plugin</packaging>
+  <name>Core (Non UI) Plugin</name>
 </project>

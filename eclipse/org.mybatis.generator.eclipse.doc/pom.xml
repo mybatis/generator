@@ -12,6 +12,11 @@
   <artifactId>org.mybatis.generator.eclipse.doc</artifactId>
   <packaging>eclipse-plugin</packaging>
 
+  <properties>
+    <!-- skip sonar - no code here -->
+    <sonar.skip>true</sonar.skip>
+  </properties>
+
   <build>
     <plugins>
       <plugin>

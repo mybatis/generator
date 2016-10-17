@@ -83,10 +83,60 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
         }
 
         if (stringHasValue(rootInterface)) {
-            FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(
-                    rootInterface);
-            interfaze.addSuperInterface(fqjt);
-            interfaze.addImportedType(fqjt);
+            // format generic type based on generated classes
+            StringBuilder typeArguments = new StringBuilder();
+            int superNameBeg = 0;
+            int superNameEnd = -1;
+            boolean typeArgumentsStart = false;
+            char c;
+            for (int i = 0; i < rootInterface.length(); ++ i) {
+                c = rootInterface.charAt(i);
+                switch (c) {
+                    case '.': {
+                        superNameBeg = i + 1;
+                        break;
+                    }
+                    case ' ':
+                    case '<': {
+                        typeArgumentsStart = true;
+                        superNameEnd = i;
+                        typeArguments.append(c);
+                        break;
+                    }
+                    case '%': {
+                        switch (rootInterface.charAt(i + 1)) {
+                            case 'p': {
+                                i += 1; // 'p' now and will be added 1 next time
+                                typeArguments.append(introspectedTable.getBaseRecordType());
+                                break;
+                            }
+                            case 'e': {
+                                i += 1; // 'e' now and will be added 1 next time
+                                typeArguments.append(introspectedTable.getExampleType());
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                    default: {
+                        if (typeArgumentsStart)
+                            typeArguments.append(c);
+                        break;
+                    }
+                }
+            }
+
+            if (superNameBeg >= 0) {
+                if (superNameEnd < 0)
+                    superNameEnd = rootInterface.length();
+            }
+
+            final String typeArgumentsFormatted = typeArguments.toString();
+            final String literalRootInterface = rootInterface.substring(superNameBeg, superNameEnd) + typeArgumentsFormatted;
+            rootInterface = rootInterface.substring(0, superNameEnd) + typeArgumentsFormatted;
+
+            interfaze.addSuperInterface(new FullyQualifiedJavaType(literalRootInterface));
+            interfaze.addImportedType(new FullyQualifiedJavaType(rootInterface));
         }
         
         addCountByExampleMethod(interfaze);

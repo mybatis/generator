@@ -84,59 +84,48 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
 
         if (stringHasValue(rootInterface)) {
             // format generic type based on generated classes
-            StringBuilder typeArguments = new StringBuilder();
-            int superNameBeg = 0;
-            int superNameEnd = -1;
-            boolean typeArgumentsStart = false;
-            char c;
+            StringBuilder formatted = new StringBuilder();
+            char c,c1;
             for (int i = 0; i < rootInterface.length(); ++ i) {
                 c = rootInterface.charAt(i);
                 switch (c) {
-                    case '.': {
-                        superNameBeg = i + 1;
-                        break;
-                    }
-                    case ' ':
-                    case '<': {
-                        typeArgumentsStart = true;
-                        superNameEnd = i;
-                        typeArguments.append(c);
-                        break;
-                    }
                     case '%': {
-                        switch (rootInterface.charAt(i + 1)) {
+                        c1 = rootInterface.charAt(i + 1);
+                        switch (c1) {
                             case 'p': {
                                 i += 1; // 'p' now and will be added 1 next time
-                                typeArguments.append(introspectedTable.getBaseRecordType());
+                                formatted.append(introspectedTable.getBaseRecordType());
                                 break;
                             }
                             case 'e': {
                                 i += 1; // 'e' now and will be added 1 next time
-                                typeArguments.append(introspectedTable.getExampleType());
+                                formatted.append(introspectedTable.getExampleType());
+                                break;
+                            }
+                            default: {
+                                formatted.append(c).append(c1);
                                 break;
                             }
                         }
                         break;
                     }
                     default: {
-                        if (typeArgumentsStart)
-                            typeArguments.append(c);
+                        formatted.append(c);
                         break;
                     }
                 }
             }
+            final String importedInterface = formatted.toString();
+            final FullyQualifiedJavaType importedInterfaceType = new FullyQualifiedJavaType(importedInterface);
 
-            if (superNameBeg >= 0) {
-                if (superNameEnd < 0)
-                    superNameEnd = rootInterface.length();
-            }
+            final String importedPackageName = importedInterfaceType.getPackageName();
 
-            final String typeArgumentsFormatted = typeArguments.toString();
-            final String literalRootInterface = rootInterface.substring(superNameBeg, superNameEnd) + typeArgumentsFormatted;
-            rootInterface = rootInterface.substring(0, superNameEnd) + typeArgumentsFormatted;
+            final String superInterface = (importedInterface.startsWith(importedPackageName)) ?
+                importedInterface.substring(importedPackageName.length() + 1) : importedInterface;
+            final FullyQualifiedJavaType superInterfaceType = new FullyQualifiedJavaType(superInterface);
 
-            interfaze.addSuperInterface(new FullyQualifiedJavaType(literalRootInterface));
-            interfaze.addImportedType(new FullyQualifiedJavaType(rootInterface));
+            interfaze.addSuperInterface(superInterfaceType);
+            interfaze.addImportedType(importedInterfaceType);
         }
         
         addCountByExampleMethod(interfaze);

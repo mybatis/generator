@@ -16,14 +16,11 @@
 package org.mybatis.generator.api.dom.java;
 
 import static org.mybatis.generator.api.dom.OutputUtilities.calculateImports;
-import static org.mybatis.generator.api.dom.OutputUtilities.javaIndent;
 import static org.mybatis.generator.api.dom.OutputUtilities.newLine;
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -33,22 +30,13 @@ import java.util.TreeSet;
  *
  * @author Jeff Butler
  */
-public class Interface extends JavaElement implements CompilationUnit {
+public class Interface extends InnerInterface implements CompilationUnit {
     
     /** The imported types. */
     private Set<FullyQualifiedJavaType> importedTypes;
     
     /** The static imports. */
     private Set<String> staticImports;
-
-    /** The type. */
-    private FullyQualifiedJavaType type;
-
-    /** The super interface types. */
-    private Set<FullyQualifiedJavaType> superInterfaceTypes;
-
-    /** The methods. */
-    private List<Method> methods;
 
     /** The file comment lines. */
     private List<String> fileCommentLines;
@@ -60,10 +48,7 @@ public class Interface extends JavaElement implements CompilationUnit {
      *            the type
      */
     public Interface(FullyQualifiedJavaType type) {
-        super();
-        this.type = type;
-        superInterfaceTypes = new LinkedHashSet<FullyQualifiedJavaType>();
-        methods = new ArrayList<Method>();
+        super(type);
         importedTypes = new TreeSet<FullyQualifiedJavaType>();
         fileCommentLines = new ArrayList<String>();
         staticImports = new TreeSet<String>();
@@ -91,7 +76,7 @@ public class Interface extends JavaElement implements CompilationUnit {
      */
     public void addImportedType(FullyQualifiedJavaType importedType) {
         if (importedType.isExplicitlyImported()
-                && !importedType.getPackageName().equals(type.getPackageName())) {
+                && !importedType.getPackageName().equals(getType().getPackageName())) {
             importedTypes.add(importedType);
         }
     }
@@ -100,6 +85,19 @@ public class Interface extends JavaElement implements CompilationUnit {
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#getFormattedContent()
      */
     public String getFormattedContent() {
+
+        return getFormattedContent(0, this);
+    }
+
+    /**
+     * Gets the formatted content.
+     *
+     * @param indentLevel
+     *            the indent level
+     * @param compilationUnit the compilation unit
+     * @return the formatted content
+     */
+    public String getFormattedContent(int indentLevel, CompilationUnit compilationUnit) {
         StringBuilder sb = new StringBuilder();
 
         for (String commentLine : fileCommentLines) {
@@ -136,125 +134,9 @@ public class Interface extends JavaElement implements CompilationUnit {
             newLine(sb);
         }
 
-        int indentLevel = 0;
-
-        addFormattedJavadoc(sb, indentLevel);
-        addFormattedAnnotations(sb, indentLevel);
-
-        sb.append(getVisibility().getValue());
-
-        if (isStatic()) {
-            sb.append("static "); //$NON-NLS-1$
-        }
-
-        if (isFinal()) {
-            sb.append("final "); //$NON-NLS-1$
-        }
-
-        sb.append("interface "); //$NON-NLS-1$
-        sb.append(getType().getShortName());
-
-        if (getSuperInterfaceTypes().size() > 0) {
-            sb.append(" extends "); //$NON-NLS-1$
-
-            boolean comma = false;
-            for (FullyQualifiedJavaType fqjt : getSuperInterfaceTypes()) {
-                if (comma) {
-                    sb.append(", "); //$NON-NLS-1$
-                } else {
-                    comma = true;
-                }
-
-                sb.append(JavaDomUtils.calculateTypeName(this, fqjt));
-            }
-        }
-
-        sb.append(" {"); //$NON-NLS-1$
-        indentLevel++;
-
-        Iterator<Method> mtdIter = getMethods().iterator();
-        while (mtdIter.hasNext()) {
-            newLine(sb);
-            Method method = mtdIter.next();
-            sb.append(method.getFormattedContent(indentLevel, true, this));
-            if (mtdIter.hasNext()) {
-                newLine(sb);
-            }
-        }
-
-        indentLevel--;
-        newLine(sb);
-        javaIndent(sb, indentLevel);
-        sb.append('}');
+        sb.append(super.getFormattedContent(0, this));
 
         return sb.toString();
-    }
-
-    /**
-     * Adds the super interface.
-     *
-     * @param superInterface
-     *            the super interface
-     */
-    public void addSuperInterface(FullyQualifiedJavaType superInterface) {
-        superInterfaceTypes.add(superInterface);
-    }
-
-    /**
-     * Gets the methods.
-     *
-     * @return Returns the methods.
-     */
-    public List<Method> getMethods() {
-        return methods;
-    }
-
-    /**
-     * Adds the method.
-     *
-     * @param method
-     *            the method
-     */
-    public void addMethod(Method method) {
-        methods.add(method);
-    }
-
-    /**
-     * Gets the type.
-     *
-     * @return Returns the type.
-     */
-    public FullyQualifiedJavaType getType() {
-        return type;
-    }
-
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.dom.java.CompilationUnit#getSuperClass()
-     */
-    public FullyQualifiedJavaType getSuperClass() {
-        // interfaces do not have superclasses
-        return null;
-    }
-
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.dom.java.CompilationUnit#getSuperInterfaceTypes()
-     */
-    public Set<FullyQualifiedJavaType> getSuperInterfaceTypes() {
-        return superInterfaceTypes;
-    }
-
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.dom.java.CompilationUnit#isJavaInterface()
-     */
-    public boolean isJavaInterface() {
-        return true;
-    }
-
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.dom.java.CompilationUnit#isJavaEnumeration()
-     */
-    public boolean isJavaEnumeration() {
-        return false;
     }
 
     /* (non-Javadoc)

@@ -148,7 +148,7 @@ public class GeneratorAntTask extends Task {
         }
 
         for (String warning : warnings) {
-            log(warning, Project.MSG_WARN);
+            log("WARNING: " + warning, Project.MSG_WARN);
         }
     }
 

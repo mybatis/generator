@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
@@ -31,6 +32,9 @@ import org.eclipse.debug.core.ILaunchManager;
 import org.eclipse.debug.ui.DebugUITools;
 import org.eclipse.debug.ui.IDebugModelPresentation;
 import org.eclipse.debug.ui.ILaunchShortcut;
+import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
@@ -154,6 +158,9 @@ public class GeneratorLaunchShortcut implements ILaunchShortcut {
                 getLaunchManager().generateLaunchConfigurationName(namePrefix));
         wc.setAttribute(GeneratorLaunchConstants.ATTR_CONFIGURATION_FILE_NAME, variableExpression);
         wc.setMappedResources(new IResource[] { file.getProject() });
+        
+        wc.setAttribute(IJavaLaunchConfigurationConstants.ATTR_PROJECT_NAME, getJavaProjectNameFromResource(file));
+
         ILaunchConfiguration config = wc.doSave();
         return config;
     }
@@ -166,5 +173,28 @@ public class GeneratorLaunchShortcut implements ILaunchShortcut {
     
     private ILaunchManager getLaunchManager() {
         return DebugPlugin.getDefault().getLaunchManager();
+    }
+
+    /**
+     * This will return null if there isn't a JavaProject associated with this
+     * resource.
+     * 
+     * @param resource
+     * @return the JavaProject name if there is one
+     */
+    public static String getJavaProjectNameFromResource(IResource resource) {
+        String name = null;
+        IProject project = resource.getProject();
+        try {
+            if (project != null && project.exists() && project.hasNature(JavaCore.NATURE_ID)) {
+                // add the JavaProject name to the launch - this will add it to the
+                // classpath of the launch automatically
+                IJavaProject javaProject = JavaCore.create(project);
+                name = javaProject.getElementName();
+            }
+        } catch (CoreException e) {
+            // just ignore it - no ultimate harm done if we can't find the Java project
+        }
+        return name;
     }
 }

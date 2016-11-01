@@ -70,11 +70,13 @@ public class GeneratorLaunchConfigurationDelegate extends AbstractJavaLaunchConf
         }
 
         antRunner.setBuildFileLocation(buildFile);
+        antRunner.addBuildLogger("org.mybatis.generator.eclipse.ui.ant.GeneratorBuildLogger"); //$NON-NLS-1$
         modifyAntClasspathIfNecessary(configuration, antRunner);
         if (ILaunchManager.DEBUG_MODE.equals(mode)) {
             antRunner.setMessageOutputLevel(Project.MSG_DEBUG);
             antRunner.setArguments("-debug"); //$NON-NLS-1$
-            antRunner.addBuildListener("org.mybatis.generator.eclipse.ui.ant.DebugBuildListener"); //$NON-NLS-1$
+        } else {
+            antRunner.setMessageOutputLevel(Project.MSG_WARN);
         }
         
         antRunner.run(monitor);

@@ -17,6 +17,7 @@ package org.mybatis.generator.eclipse.core.tests.merge;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.notNullValue;
+import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.mybatis.generator.eclipse.core.merge.EclipseDomUtils.getCompilationUnitFromSource;
 import static org.mybatis.generator.eclipse.tests.harness.Utilities.getCompilationUnitSummaryFromSource;
@@ -88,7 +89,7 @@ public class ExistingJavaFileVisitorTest {
 
         CompilationUnitSummary summary = getCompilationUnitSummaryFromSource(document.get());
         assertThat(summary, hasImportCount(2));
-        assertThat(summary, hasClass("AwfulTableExample", withSuperClass(null)));
+        assertThat(summary, hasClass("AwfulTableExample", withSuperClass(nullValue())));
         assertThat(summary, hasClass("AwfulTableExample", withSuperInterfaceCount(0)));
         assertThat(summary, hasClass("AwfulTableExample", withMethodCount(0)));
         assertThat(summary, hasClass("AwfulTableExample", withFieldCount(0)));

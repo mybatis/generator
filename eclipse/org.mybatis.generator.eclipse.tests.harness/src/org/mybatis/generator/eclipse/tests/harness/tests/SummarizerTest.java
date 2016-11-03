@@ -15,6 +15,7 @@
  */
 package org.mybatis.generator.eclipse.tests.harness.tests;
 
+import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.mybatis.generator.eclipse.tests.harness.Utilities.getCompilationUnitSummaryFromResource;
 import static org.mybatis.generator.eclipse.tests.harness.matchers.Matchers.*;
@@ -23,8 +24,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.junit.Test;
-import org.mybatis.generator.eclipse.tests.harness.summary.AnnotationSummary;
 import org.mybatis.generator.eclipse.tests.harness.summary.AbstractSummary;
+import org.mybatis.generator.eclipse.tests.harness.summary.AnnotationSummary;
 import org.mybatis.generator.eclipse.tests.harness.summary.ClassSummary;
 import org.mybatis.generator.eclipse.tests.harness.summary.CompilationUnitSummary;
 import org.mybatis.generator.eclipse.tests.harness.summary.EnumSummary;
@@ -239,6 +240,6 @@ public class SummarizerTest {
         assertThat(classSummary, hasAnnotationCount(0));
         assertThat(classSummary, hasInterfaceCount(0));
         assertThat(classSummary, hasSuperInterfaceCount(0));
-        assertThat(classSummary, hasSuperClass(null));
+        assertThat(classSummary, hasSuperClass(nullValue()));
     }
 }

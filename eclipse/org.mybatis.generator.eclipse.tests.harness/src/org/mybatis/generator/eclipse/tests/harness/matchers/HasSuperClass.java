@@ -15,42 +15,40 @@
  */
 package org.mybatis.generator.eclipse.tests.harness.matchers;
 
+import static org.hamcrest.core.IsEqual.equalTo;
 import org.hamcrest.Description;
+import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 import org.mybatis.generator.eclipse.tests.harness.summary.ClassSummary;
 
 public class HasSuperClass extends TypeSafeMatcher<ClassSummary>{
 
-    private String superClass;
+    private Matcher<?> matcher;
     
-    public HasSuperClass(String superClass) {
-        this.superClass = superClass;
+    public HasSuperClass(Matcher<?> matcher) {
+        this.matcher = matcher;
     }
     
     @Override
     public void describeTo(Description description) {
-        if (superClass == null) {
-            description.appendText("class has no superclass");
-        } else {
-            description.appendText("class has superclass " + superClass);
-        }
+        description.appendText("superclass is ").appendDescriptionOf(matcher);
     }
 
     @Override
     protected boolean matchesSafely(ClassSummary item) {
-        if (superClass == null) {
-            return item.getSuperClass() == null;
-        } else {
-            return superClass.equals(item.getSuperClass());
-        }
+        return matcher.matches(item.getSuperClass());
     }
 
     @Override
     protected void describeMismatchSafely(ClassSummary item, Description mismatchDescription) {
-        if (item.getSuperClass() == null) {
-            mismatchDescription.appendText("class has no super class");
-        } else {
-            mismatchDescription.appendText("super class was " + item.getSuperClass());
-        }
+        mismatchDescription.appendText("the superclass of " + item.getName() + " is " + item.getSuperClass());
+    }
+    
+    public static HasSuperClass hasSuperClass(Matcher<?> matcher) {
+        return new HasSuperClass(matcher);
+    }
+
+    public static HasSuperClass hasSuperClass(String superClass) {
+        return new HasSuperClass(equalTo(superClass));
     }
 }

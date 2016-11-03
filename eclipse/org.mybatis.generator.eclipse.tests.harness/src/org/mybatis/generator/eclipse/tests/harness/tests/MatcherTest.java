@@ -15,6 +15,7 @@
  */
 package org.mybatis.generator.eclipse.tests.harness.tests;
 
+import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.mybatis.generator.eclipse.tests.harness.Utilities.getCompilationUnitSummaryFromResource;
 import static org.mybatis.generator.eclipse.tests.harness.matchers.Matchers.*;
@@ -246,12 +247,12 @@ public class MatcherTest {
 
     @Test(expected=AssertionError.class)
     public void testHasClassWithNullSuperClassFails() {
-        assertThat(cuSummary, hasClass(OUTER_CLASS, withSuperClass(null)));
+        assertThat(cuSummary, hasClass(OUTER_CLASS, withSuperClass(nullValue())));
     }
 
     @Test
     public void testHasClassWithNullSuperClassSucceeds() {
-        assertThat(cuSummary, hasClass(SECOND_OUTER_CLASS, withSuperClass(null)));
+        assertThat(cuSummary, hasClass(SECOND_OUTER_CLASS, withSuperClass(nullValue())));
     }
 
     @Test(expected=AssertionError.class)

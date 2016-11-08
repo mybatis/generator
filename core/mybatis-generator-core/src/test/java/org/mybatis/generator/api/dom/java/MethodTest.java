@@ -24,6 +24,8 @@ import static org.junit.Assert.*;
 
 public class MethodTest {
 
+    private static final String LINE_SEPARATOR = System.getProperty("line.separator");
+
     @Test
     public void testConstructor() {
 
@@ -225,8 +227,8 @@ public class MethodTest {
 
         method.addBodyLine("return func.apply(t);");
 
-        String excepted = "public static final synchronized <T extends List<String>, R extends List<String> & Comparator<String>> R foo(T t, Function<T, R> func) {\r\n"
-                        + "    return func.apply(t);\r\n"
+        String excepted = "public static final synchronized <T extends List<String>, R extends List<String> & Comparator<String>> R foo(T t, Function<T, R> func) {" + LINE_SEPARATOR
+                        + "    return func.apply(t);" + LINE_SEPARATOR
                         + "}";
 
         assertEquals(excepted, method.getFormattedContent(0, false, null));

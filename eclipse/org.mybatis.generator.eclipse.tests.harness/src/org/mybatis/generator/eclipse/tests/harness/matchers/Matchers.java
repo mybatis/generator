@@ -163,13 +163,21 @@ public class Matchers {
     }
 
     public static HasSuperClass hasSuperClass(String superClass) {
-        return new HasSuperClass(superClass);
+        return HasSuperClass.hasSuperClass(superClass);
     }
     
     public static HasSuperClass withSuperClass(String superClass) {
-        return hasSuperClass(superClass);
+        return HasSuperClass.hasSuperClass(superClass);
     }
     
+    public static HasSuperClass hasSuperClass(Matcher<?> matcher) {
+        return HasSuperClass.hasSuperClass(matcher);
+    }
+    
+    public static HasSuperClass withSuperClass(Matcher<?> matcher) {
+        return HasSuperClass.hasSuperClass(matcher);
+    }
+
     public static HasSuperInterface hasSuperInterface(String superInterface) {
         return new HasSuperInterface(superInterface);
     }

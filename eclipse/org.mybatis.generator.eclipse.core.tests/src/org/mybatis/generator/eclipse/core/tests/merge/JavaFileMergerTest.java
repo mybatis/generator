@@ -15,17 +15,18 @@
  */
 package org.mybatis.generator.eclipse.core.tests.merge;
 
-import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.Assert.assertThat;
-import static org.mybatis.generator.eclipse.core.tests.merge.support.TestResourceGenerator.*;
+import static org.mybatis.generator.eclipse.core.tests.merge.support.TestResourceGenerator.simpleClassWithAllGeneratedItems;
+import static org.mybatis.generator.eclipse.core.tests.merge.support.TestResourceGenerator.simpleClassWithGeneratedAndCustomItems;
+import static org.mybatis.generator.eclipse.core.tests.merge.support.TestResourceGenerator.simpleInterfaceWithAllGeneratedItems;
+import static org.mybatis.generator.eclipse.core.tests.merge.support.TestResourceGenerator.simpleInterfaceWithGeneratedAndCustomItems;
 import static org.mybatis.generator.eclipse.tests.harness.Utilities.getCompilationUnitSummaryFromSource;
 import static org.mybatis.generator.eclipse.tests.harness.matchers.Matchers.*;
 
 import org.junit.Test;
 import org.mybatis.generator.config.MergeConstants;
 import org.mybatis.generator.eclipse.core.merge.JavaFileMerger;
-import org.mybatis.generator.eclipse.tests.harness.summary.ClassSummary;
 import org.mybatis.generator.eclipse.tests.harness.summary.CompilationUnitSummary;
 
 public class JavaFileMergerTest {
@@ -55,10 +56,8 @@ public class JavaFileMergerTest {
         assertThat(summary, hasClass("SimpleClass", withField("amount")));
         assertThat(summary, hasClass("SimpleClass", withField("id")));
         
-        ClassSummary classSummary = summary.getClassSummary("SimpleClass");
-        
-        assertThat(classSummary.getSuperClass(), is(nullValue()));
-   }
+        assertThat(summary, hasClass("SimpleClass", withSuperClass(nullValue())));
+    }
 
     @Test
     public void testMergeOnRegularInterfaces() throws Exception {

@@ -61,11 +61,15 @@ public class SelectAllMethodGenerator extends AbstractJavaMapperMethodGenerator 
 
         if (context.getPlugins().clientSelectAllMethodGenerated(method,
                 interfaze, introspectedTable)) {
+            addExtraImports(interfaze);
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);
         }
     }
 
     public void addMapperAnnotations(Interface interfaze, Method method) {
+    }
+
+    public void addExtraImports(Interface interfaze) {
     }
 }

@@ -96,11 +96,15 @@ public class SelectByPrimaryKeyMethodGenerator extends
 
         if (context.getPlugins().clientSelectByPrimaryKeyMethodGenerated(
                 method, interfaze, introspectedTable)) {
+            addExtraImports(interfaze);
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);
         }
     }
 
     public void addMapperAnnotations(Interface interfaze, Method method) {
+    }
+
+    public void addExtraImports(Interface interfaze) {
     }
 }

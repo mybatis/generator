@@ -41,8 +41,7 @@ public class AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator extends
     }
 
     @Override
-    public void addMapperAnnotations(Interface interfaze, Method method) {
-        interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Update")); //$NON-NLS-1$
+    public void addMapperAnnotations(Method method) {
         
         method.addAnnotation("@Update({"); //$NON-NLS-1$
 
@@ -107,5 +106,10 @@ public class AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator extends
         }
         
         method.addAnnotation("})"); //$NON-NLS-1$
+    }
+
+    @Override
+    public void addExtraImports(Interface interfaze) {
+        interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Update")); //$NON-NLS-1$
     }
 }

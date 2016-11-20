@@ -41,6 +41,9 @@ public class Method extends JavaElement {
     /** The name. */
     private String name;
 
+    /** The type parameters. */
+    private List<TypeParameter> typeParameters;
+
     /** The parameters. */
     private List<Parameter> parameters;
 
@@ -70,6 +73,7 @@ public class Method extends JavaElement {
     public Method(String name) {
         super();
         bodyLines = new ArrayList<String>();
+        typeParameters = new ArrayList<TypeParameter>();
         parameters = new ArrayList<Parameter>();
         exceptions = new ArrayList<FullyQualifiedJavaType>();
         this.name = name;
@@ -84,12 +88,14 @@ public class Method extends JavaElement {
     public Method(Method original) {
         super(original);
         bodyLines = new ArrayList<String>();
+        typeParameters = new ArrayList<TypeParameter>();
         parameters = new ArrayList<Parameter>();
         exceptions = new ArrayList<FullyQualifiedJavaType>();
         this.bodyLines.addAll(original.bodyLines);
         this.constructor = original.constructor;
         this.exceptions.addAll(original.exceptions);
         this.name = original.name;
+        this.typeParameters.addAll(original.typeParameters);
         this.parameters.addAll(original.parameters);
         this.returnType = original.returnType;
         this.isNative = original.isNative;
@@ -187,6 +193,21 @@ public class Method extends JavaElement {
             } else if (bodyLines.size() == 0) {
                 sb.append("abstract "); //$NON-NLS-1$
             }
+        }
+
+        if (!getTypeParameters().isEmpty()) {
+            sb.append("<");
+            boolean comma = false;
+            for (TypeParameter typeParameter : getTypeParameters()) {
+                if (comma) {
+                    sb.append(", "); //$NON-NLS-1$
+                } else {
+                    comma = true;
+                }
+
+                sb.append(typeParameter.getFormattedContent(compilationUnit));
+            }
+            sb.append("> ");
         }
 
         if (!constructor) {
@@ -311,6 +332,37 @@ public class Method extends JavaElement {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    /**
+     * Gets the type parameters.
+     *
+     * @return the type parameters
+     */
+    public List<TypeParameter> getTypeParameters() {
+        return typeParameters;
+    }
+
+    /**
+     * Adds the type parameter.
+     *
+     * @param typeParameter
+     *            the type parameter
+     */
+    public void addTypeParameter(TypeParameter typeParameter) {
+        typeParameters.add(typeParameter);
+    }
+
+    /**
+     * Adds the parameter.
+     *
+     * @param index
+     *            the index
+     * @param typeParameter
+     *            the type parameter
+     */
+    public void addTypeParameter(int index, TypeParameter typeParameter) {
+        typeParameters.add(index, typeParameter);
     }
 
     /**

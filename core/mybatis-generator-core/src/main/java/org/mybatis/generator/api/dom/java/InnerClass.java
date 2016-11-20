@@ -40,6 +40,9 @@ public class InnerClass extends JavaElement {
     /** The inner enums. */
     private List<InnerEnum> innerEnums;
 
+    /** The type parameters. */
+    private List<TypeParameter> typeParameters;
+
     /** The super class. */
     private FullyQualifiedJavaType superClass;
 
@@ -70,6 +73,7 @@ public class InnerClass extends JavaElement {
         fields = new ArrayList<Field>();
         innerClasses = new ArrayList<InnerClass>();
         innerEnums = new ArrayList<InnerEnum>();
+        this.typeParameters = new ArrayList<TypeParameter>();
         superInterfaceTypes = new HashSet<FullyQualifiedJavaType>();
         methods = new ArrayList<Method>();
         initializationBlocks = new ArrayList<InitializationBlock>();
@@ -172,6 +176,25 @@ public class InnerClass extends JavaElement {
     }
 
     /**
+     * Gets the type parameters.
+     *
+     * @return the type parameters
+     */
+    public List<TypeParameter> getTypeParameters() {
+        return this.typeParameters;
+    }
+
+    /**
+     * Adds the type parameter.
+     *
+     * @param typeParameter
+     *            the type parameter
+     */
+    public void addTypeParameter(TypeParameter typeParameter) {
+        this.typeParameters.add(typeParameter);
+    }
+
+    /**
      * Gets the initialization blocks.
      *
      * @return the initialization blocks
@@ -221,6 +244,19 @@ public class InnerClass extends JavaElement {
 
         sb.append("class "); //$NON-NLS-1$
         sb.append(getType().getShortName());
+
+        if(!this.getTypeParameters().isEmpty()) {
+            boolean comma = false;
+            sb.append("<");
+            for (TypeParameter typeParameter: typeParameters) {
+                if(comma) {
+                    sb.append(", ");
+                }
+                sb.append(typeParameter.getFormattedContent(compilationUnit));
+                comma = true;
+            }
+            sb.append("> ");
+        }
 
         if (superClass != null) {
             sb.append(" extends "); //$NON-NLS-1$

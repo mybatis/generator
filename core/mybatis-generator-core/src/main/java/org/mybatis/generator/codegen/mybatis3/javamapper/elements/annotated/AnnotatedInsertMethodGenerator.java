@@ -44,8 +44,7 @@ public class AnnotatedInsertMethodGenerator extends
     }
 
     @Override
-    public void addMapperAnnotations(Interface interfaze, Method method) {
-        interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Insert")); //$NON-NLS-1$
+    public void addMapperAnnotations(Method method) {
         
         GeneratedKey gk = introspectedTable.getGeneratedKey();
         
@@ -117,7 +116,16 @@ public class AnnotatedInsertMethodGenerator extends
         method.addAnnotation("})"); //$NON-NLS-1$
 
         if (gk != null) {
-            addGeneratedKeyAnnotation(interfaze, method, gk);
+            addGeneratedKeyAnnotation(method, gk);
         }
+    }
+    
+    @Override
+    public void addExtraImports(Interface interfaze) {
+        GeneratedKey gk = introspectedTable.getGeneratedKey();
+        if (gk != null) {
+            addGeneratedKeyImports(interfaze, gk);
+        }
+        interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Insert")); //$NON-NLS-1$
     }
 }

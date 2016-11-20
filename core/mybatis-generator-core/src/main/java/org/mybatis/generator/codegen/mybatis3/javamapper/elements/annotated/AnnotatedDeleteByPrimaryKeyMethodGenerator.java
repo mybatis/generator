@@ -40,8 +40,7 @@ public class AnnotatedDeleteByPrimaryKeyMethodGenerator extends
     }
 
     @Override
-    public void addMapperAnnotations(Interface interfaze, Method method) {
-        interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Delete")); //$NON-NLS-1$
+    public void addMapperAnnotations(Method method) {
         
         method.addAnnotation("@Delete({"); //$NON-NLS-1$
         
@@ -79,5 +78,10 @@ public class AnnotatedDeleteByPrimaryKeyMethodGenerator extends
         }
         
         method.addAnnotation("})"); //$NON-NLS-1$
+    }
+
+    @Override
+    public void addExtraImports(Interface interfaze) {
+        interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Delete")); //$NON-NLS-1$
     }
 }

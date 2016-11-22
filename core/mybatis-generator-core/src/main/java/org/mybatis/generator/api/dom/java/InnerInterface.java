@@ -133,7 +133,7 @@ public class InnerInterface extends JavaElement {
             sb.append(field.getFormattedContent(indentLevel, compilationUnit));
         }
 
-        if (methods.size() > 0) {
+        if (fields.size() > 0 && methods.size() > 0) {
             OutputUtilities.newLine(sb);
         }
         

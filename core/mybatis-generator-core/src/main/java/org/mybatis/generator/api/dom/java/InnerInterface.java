@@ -21,6 +21,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.mybatis.generator.api.dom.OutputUtilities;
+
 import static org.mybatis.generator.api.dom.OutputUtilities.javaIndent;
 import static org.mybatis.generator.api.dom.OutputUtilities.newLine;
 
@@ -30,6 +32,8 @@ import static org.mybatis.generator.api.dom.OutputUtilities.newLine;
  * @author Jeff Butler
  */
 public class InnerInterface extends JavaElement {
+
+    private List<Field> fields;
 
     /** The type. */
     private FullyQualifiedJavaType type;
@@ -55,6 +59,7 @@ public class InnerInterface extends JavaElement {
         innerInterfaces = new ArrayList<InnerInterface>();
         superInterfaceTypes = new LinkedHashSet<FullyQualifiedJavaType>();
         methods = new ArrayList<Method>();
+        fields = new ArrayList<Field>();
     }
 
     /**
@@ -65,6 +70,14 @@ public class InnerInterface extends JavaElement {
      */
     public InnerInterface(String type) {
         this(new FullyQualifiedJavaType(type));
+    }
+
+    public List<Field> getFields() {
+        return fields;
+    }
+
+    public void addField(Field field) {
+        fields.add(field);
     }
 
     /**
@@ -113,6 +126,17 @@ public class InnerInterface extends JavaElement {
         sb.append(" {"); //$NON-NLS-1$
         indentLevel++;
 
+        Iterator<Field> fldIter = fields.iterator();
+        while (fldIter.hasNext()) {
+            OutputUtilities.newLine(sb);
+            Field field = fldIter.next();
+            sb.append(field.getFormattedContent(indentLevel, compilationUnit));
+        }
+
+        if (methods.size() > 0) {
+            OutputUtilities.newLine(sb);
+        }
+        
         Iterator<Method> mtdIter = getMethods().iterator();
         while (mtdIter.hasNext()) {
             newLine(sb);

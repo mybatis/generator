@@ -22,7 +22,9 @@ import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.hamcrest.core.Is.*;
 
 public class InterfaceTest {
 
@@ -99,5 +101,28 @@ public class InterfaceTest {
         assertEquals(interfaze.getStaticImports().size(), 2);
         assertTrue(interfaze.getStaticImports().contains("com.foo.StaticUtil1"));
         assertTrue(interfaze.getStaticImports().contains("com.foo.StaticUtil2"));
+    }
+    
+    @Test
+    public void testInterfaceFields() {
+        Interface interfaze = new Interface("foo.Bar");
+        interfaze.setVisibility(JavaVisibility.PUBLIC);
+        
+        Field field = new Field("EMPTY_STRING", FullyQualifiedJavaType.getStringInstance());
+        field.setInitializationString("\"\"");
+        interfaze.addField(field);
+        
+        field = new Field("ONE", FullyQualifiedJavaType.getStringInstance());
+        field.setInitializationString("\"one\"");
+        interfaze.addField(field);
+        
+        String expected = "package foo;" + System.lineSeparator()
+            + System.lineSeparator()
+            + "public interface Bar {" + System.lineSeparator()
+            + "    String EMPTY_STRING = \"\";" + System.lineSeparator()
+            + "    String ONE = \"one\";" + System.lineSeparator()
+            + "}";
+
+        assertThat(interfaze.getFormattedContent(), is(expected));
     }
 }

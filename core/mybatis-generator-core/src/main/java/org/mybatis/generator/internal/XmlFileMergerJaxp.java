@@ -15,34 +15,23 @@
  */
 package org.mybatis.generator.internal;
 
-import static org.mybatis.generator.internal.util.messages.Messages.getString;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.List;
+import org.mybatis.generator.api.GeneratedXmlFile;
+import org.mybatis.generator.api.XmlFormatter;
+import org.mybatis.generator.config.MergeConstants;
+import org.mybatis.generator.exception.ShellException;
+import org.w3c.dom.*;
+import org.xml.sax.EntityResolver;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.mybatis.generator.api.GeneratedXmlFile;
-import org.mybatis.generator.config.MergeConstants;
-import org.mybatis.generator.exception.ShellException;
-import org.w3c.dom.Comment;
-import org.w3c.dom.Document;
-import org.w3c.dom.DocumentType;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Text;
-import org.xml.sax.EntityResolver;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 /**
  * This class handles the task of merging changes into an existing XML file.
@@ -76,8 +65,8 @@ public class XmlFileMergerJaxp {
             File existingFile) throws ShellException {
 
         try {
-            return getMergedSource(new InputSource(new StringReader(generatedXmlFile.getFormattedContent())),
-                new InputSource(new InputStreamReader(new FileInputStream(existingFile), "UTF-8")), //$NON-NLS-1$
+            return getMergedSource(generatedXmlFile,
+                    new InputSource(new InputStreamReader(new FileInputStream(existingFile), "UTF-8")), //$NON-NLS-1$
                 existingFile.getName());
         } catch (IOException e) {
             throw new ShellException(getString("Warning.13", //$NON-NLS-1$
@@ -91,7 +80,7 @@ public class XmlFileMergerJaxp {
         }
     }
     
-    public static String getMergedSource(InputSource newFile,
+    public static String getMergedSource(GeneratedXmlFile generatedXmlFile,
             InputSource existingFile, String existingFileName) throws IOException, SAXException,
             ParserConfigurationException, ShellException {
 
@@ -102,7 +91,7 @@ public class XmlFileMergerJaxp {
         builder.setEntityResolver(new NullEntityResolver());
 
         Document existingDocument = builder.parse(existingFile);
-        Document newDocument = builder.parse(newFile);
+        Document newDocument = builder.parse(new InputSource(new StringReader(generatedXmlFile.getFormattedContent())));
 
         DocumentType newDocType = newDocument.getDoctype();
         DocumentType existingDocType = existingDocument.getDoctype();
@@ -174,7 +163,13 @@ public class XmlFileMergerJaxp {
             }
         }
 
-        // pretty print the result
+        // try to use original xml formatter to render the result
+        // it's necessary when you define a custom xml formatter
+        XmlFormatter xmlFormatter = generatedXmlFile.getXmlFormatter();
+        if (xmlFormatter != null) {
+            return xmlFormatter.getFormattedContent(new org.mybatis.generator.api.dom.xml.Document(existingDocument));
+        }
+        // fallback: use internal dom writer to pretty print the result
         return prettyPrint(existingDocument);
     }
 

@@ -15,11 +15,6 @@
  */
 package org.mybatis.generator.internal;
 
-import static org.junit.Assert.assertEquals;
-
-import java.io.StringReader;
-import java.util.Properties;
-
 import org.junit.Test;
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.GeneratedXmlFile;
@@ -32,6 +27,11 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.XmlConstants;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.xml.sax.InputSource;
+
+import java.io.StringReader;
+import java.util.Properties;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * This test is related to issue #87 where XML files are slightly different
@@ -53,18 +53,19 @@ public class XmlFileMergerTest {
         Document document = new Document(XmlConstants.MYBATIS3_MAPPER_PUBLIC_ID,
                 XmlConstants.MYBATIS3_MAPPER_SYSTEM_ID);
         document.setRootElement(getSqlMapElement(commentGenerator));
+        GeneratedXmlFile generatedFile = new GeneratedXmlFile(document, "TestMapper.xml",
+                "org.mybatis.test", "src", true, xmlFormatter);
 
-        GeneratedXmlFile generatedFile1 = new GeneratedXmlFile(document, "TestMapper.xml", "org.mybatis.test", "src",
-                true, xmlFormatter);
-        InputSource is1 = new InputSource(new StringReader(generatedFile1.getFormattedContent()));
+        Document existingDocument = new Document(XmlConstants.MYBATIS3_MAPPER_PUBLIC_ID,
+                XmlConstants.MYBATIS3_MAPPER_SYSTEM_ID);
+        existingDocument.setRootElement(getExistingSqlMapElement(commentGenerator));
+        GeneratedXmlFile existingGeneratedFile = new GeneratedXmlFile(existingDocument, "TestMapper.xml",
+                "org.mybatis.test", "src", true, xmlFormatter);
+        InputSource existingFile = new InputSource(new StringReader(existingGeneratedFile.getFormattedContent()));
 
-        GeneratedXmlFile generatedFile2 = new GeneratedXmlFile(document, "TestMapper.xml", "org.mybatis.test", "src",
-                true, xmlFormatter);
-        InputSource is2 = new InputSource(new StringReader(generatedFile2.getFormattedContent()));
+        String mergedSource = XmlFileMergerJaxp.getMergedSource(generatedFile, existingFile, "TestMapper.xml");
 
-        String mergedSource = XmlFileMergerJaxp.getMergedSource(is1, is2, "TestMapper.xml");
-
-        assertEquals(generatedFile1.getFormattedContent(), mergedSource);
+        assertEquals(existingGeneratedFile.getFormattedContent(), mergedSource);
     }
 
     private XmlElement getSqlMapElement(CommentGenerator commentGenerator) {
@@ -78,7 +79,14 @@ public class XmlFileMergerTest {
         addInsertElement(commentGenerator, answer);
         addCdataNode1(commentGenerator, answer);
         addCdataNode2(commentGenerator, answer);
+        addResultMapElement(commentGenerator, answer);
 
+        return answer;
+    }
+
+    private XmlElement getExistingSqlMapElement(CommentGenerator commentGenerator) {
+        XmlElement answer = getSqlMapElement(commentGenerator);
+        addElementWithoutComment(answer);
         return answer;
     }
 
@@ -94,18 +102,8 @@ public class XmlFileMergerTest {
 
         commentGenerator.addComment(answer);
 
-        StringBuilder insertClause = new StringBuilder();
-        StringBuilder valuesClause = new StringBuilder();
-
-        insertClause.append("insert into ");
-        insertClause.append("myschema.mytable");
-        insertClause.append(" (id, description)");
-
-        valuesClause.append("values (#{id}, #{description})");
-
-        answer.addElement(new TextElement(insertClause.toString()));
-
-        answer.addElement(new TextElement(valuesClause.toString()));
+        answer.addElement(new TextElement("insert into myschema.mytable (id, description)"));
+        answer.addElement(new TextElement("values (#{id}, #{description})"));
 
         parentElement.addElement(answer);
     }
@@ -129,6 +127,30 @@ public class XmlFileMergerTest {
         
         answer.addElement(new TextElement("select foo from bar where foo <![CDATA[ < ]]> 22"));
         
+        parentElement.addElement(answer);
+    }
+
+    private void addResultMapElement(CommentGenerator commentGenerator, XmlElement parentElement) {
+        XmlElement answer = new XmlElement("resultMap");
+        answer.addAttribute(new Attribute("id", "BaseResultMap"));
+        answer.addAttribute(new Attribute("type", "account"));
+        commentGenerator.addComment(answer);
+
+        XmlElement column = new XmlElement("id");
+        column.addAttribute(new Attribute("column", "id"));
+        column.addAttribute(new Attribute("jdbcType", "INTEGER"));
+        column.addAttribute(new Attribute("property", "id"));
+        answer.addElement(column);
+
+        parentElement.addElement(answer);
+    }
+
+    private void addElementWithoutComment(XmlElement parentElement) {
+        XmlElement answer = new XmlElement("select");
+        answer.addAttribute(new Attribute("id", "selectWithoutComment"));
+
+        answer.addElement(new TextElement("select foo from bar where foo <![CDATA[ < ]]> 22"));
+
         parentElement.addElement(answer);
     }
 }

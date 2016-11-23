@@ -66,6 +66,15 @@ public class GeneratedXmlFile extends GeneratedFile {
         this.xmlFormatter = xmlFormatter;
     }
 
+    /**
+     * Gets the xml formatter.
+     *
+     * @return Returns the xml formatter.
+     */
+    public XmlFormatter getXmlFormatter() {
+        return xmlFormatter;
+    }
+
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.GeneratedFile#getFormattedContent()
      */

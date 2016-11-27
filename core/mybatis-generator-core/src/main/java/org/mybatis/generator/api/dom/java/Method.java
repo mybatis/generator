@@ -55,6 +55,8 @@ public class Method extends JavaElement {
     
     /** The is native. */
     private boolean isNative;
+    
+    private boolean isDefault;
 
     /**
      * Instantiates a new method.
@@ -173,7 +175,13 @@ public class Method extends JavaElement {
 
         OutputUtilities.javaIndent(sb, indentLevel);
 
-        if (!interfaceMethod) {
+        if (interfaceMethod) {
+            if (isStatic()) {
+                sb.append("static "); //$NON-NLS-1$
+            } else if (isDefault()) {
+                sb.append("default "); //$NON-NLS-1$
+            }
+        } else {
             sb.append(getVisibility().getValue());
 
             if (isStatic()) {
@@ -470,5 +478,13 @@ public class Method extends JavaElement {
      */
     public void setNative(boolean isNative) {
         this.isNative = isNative;
+    }
+
+    public boolean isDefault() {
+        return isDefault;
+    }
+
+    public void setDefault(boolean isDefault) {
+        this.isDefault = isDefault;
     }
 }

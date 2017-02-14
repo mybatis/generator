@@ -68,7 +68,7 @@ public class Interface extends InnerInterface implements CompilationUnit {
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#getImportedTypes()
      */
     public Set<FullyQualifiedJavaType> getImportedTypes() {
-        return Collections.unmodifiableSet(importedTypes);
+        return importedTypes;
     }
 
     /* (non-Javadoc)

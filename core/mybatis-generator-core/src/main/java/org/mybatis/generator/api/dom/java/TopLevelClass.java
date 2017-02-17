@@ -70,7 +70,7 @@ public class TopLevelClass extends InnerClass implements CompilationUnit {
      * @return Returns the importedTypes.
      */
     public Set<FullyQualifiedJavaType> getImportedTypes() {
-        return Collections.unmodifiableSet(importedTypes);
+        return importedTypes;
     }
 
     /**

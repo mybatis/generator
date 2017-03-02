@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -164,14 +164,14 @@ public class FullyQualifiedJavaType implements
         if (isExplicitlyImported()) {
             int index = baseShortName.indexOf('.');
             if (index == -1) {
-                answer.add(baseQualifiedName);
+                answer.add(calculateActualImport(baseQualifiedName));
             } else {
                 // an inner class is specified, only import the top
                 // level class
                 StringBuilder sb = new StringBuilder();
                 sb.append(packageName);
                 sb.append('.');
-                sb.append(baseShortName.substring(0, index));
+                sb.append(calculateActualImport(baseShortName.substring(0, index)));
                 answer.add(sb.toString());
             }
         }
@@ -180,6 +180,17 @@ public class FullyQualifiedJavaType implements
             answer.addAll(fqjt.getImportList());
         }
 
+        return answer;
+    }
+
+    private String calculateActualImport(String name) {
+        String answer = name;
+        if (this.isArray()) {
+            int index = name.indexOf("[");
+            if (index != -1) {
+                answer = name.substring(0, index);
+            }
+        }
         return answer;
     }
 

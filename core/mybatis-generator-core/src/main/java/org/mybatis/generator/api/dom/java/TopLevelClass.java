@@ -92,7 +92,7 @@ public class TopLevelClass extends InnerClass implements CompilationUnit {
                 && !importedType.getPackageName().equals(
                         getType().getPackageName())
                 && !importedType.getShortName().equals(getType().getShortName())) {
-                importedTypes.add(importedType);
+            importedTypes.add(importedType);
         }
     }
 

@@ -72,8 +72,12 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
         List<IntrospectedColumn> introspectedColumns = getColumnsInThisClass();
 
         if (introspectedTable.isConstructorBased()) {
-            addParameterizedConstructor(topLevelClass);
-            
+            addParameterizedConstructor(topLevelClass, introspectedTable.getNonBLOBColumns());
+
+            if(includeBLOBColumns()) {
+                addParameterizedConstructor(topLevelClass, introspectedTable.getAllColumns());
+            }
+
             if (!introspectedTable.isImmutable()) {
                 addDefaultConstructor(topLevelClass);
             }
@@ -146,16 +150,12 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
                 && introspectedTable.hasBLOBColumns();
     }
 
-    private void addParameterizedConstructor(TopLevelClass topLevelClass) {
+    private void addParameterizedConstructor(TopLevelClass topLevelClass, List<IntrospectedColumn> constructorColumns) {
         Method method = new Method();
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setConstructor(true);
         method.setName(topLevelClass.getType().getShortName());
         context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
-
-        List<IntrospectedColumn> constructorColumns =
-            includeBLOBColumns() ? introspectedTable.getAllColumns() :
-                introspectedTable.getNonBLOBColumns();
             
         for (IntrospectedColumn introspectedColumn : constructorColumns) {
             method.addParameter(new Parameter(introspectedColumn.getFullyQualifiedJavaType(),
@@ -180,9 +180,7 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
             method.addBodyLine(sb.toString());
         }
 
-        List<IntrospectedColumn> introspectedColumns = getColumnsInThisClass();
-        
-        for (IntrospectedColumn introspectedColumn : introspectedColumns) {
+        for (IntrospectedColumn introspectedColumn : constructorColumns) {
             sb.setLength(0);
             sb.append("this."); //$NON-NLS-1$
             sb.append(introspectedColumn.getJavaProperty());

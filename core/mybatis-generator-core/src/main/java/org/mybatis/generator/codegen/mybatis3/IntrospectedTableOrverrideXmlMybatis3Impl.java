@@ -14,7 +14,7 @@ import java.util.List;
  * @author songzj
  * @date 16/4/18-11:22
  */
-public class MyBatisGeneratorXml extends IntrospectedTableMyBatis3Impl {
+public class IntrospectedTableOrverrideXmlMybatis3Impl extends IntrospectedTableMyBatis3Impl {
 
     @Override
     public List<GeneratedXmlFile> getGeneratedXmlFiles() {

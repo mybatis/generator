@@ -101,7 +101,7 @@ public class LogicallyDeletePlugin extends PluginAdapter {
 		addClientUpdateByPrimaryWithBLOBsElements(interfaze, introspectedTable);
 		addClientUpdateByPrimarySelectiveElements(interfaze, introspectedTable);
 		addClientSelectSelectiveElements(interfaze, introspectedTable);
-		addClientSelectSelectiveWithPageElements(interfaze, introspectedTable);
+//		addClientSelectSelectiveWithPageElements(interfaze, introspectedTable);
 		addClientCountSelectiveElements(interfaze, introspectedTable);
 		
 		return super.clientGenerated(interfaze, topLevelClass, introspectedTable);
@@ -121,7 +121,7 @@ public class LogicallyDeletePlugin extends PluginAdapter {
 		addSqlMapUpdateByPrimaryWithBLOBsElements(document.getRootElement(), introspectedTable);
 		addSqlMapUpdateByPrimarySelectiveElements(document.getRootElement(), introspectedTable);
 		addSqlMapSelectSelectiveElements(document.getRootElement(), introspectedTable);
-		addSqlMapSelectSelectiveWithPageElements(document.getRootElement(), introspectedTable);
+//		addSqlMapSelectSelectiveWithPageElements(document.getRootElement(), introspectedTable);
 		addSqlMapCountSelectiveElements(document.getRootElement(), introspectedTable);
 		
 		return super.sqlMapDocumentGenerated(document, introspectedTable);

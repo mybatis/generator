@@ -254,7 +254,7 @@
       <dependency>
         <groupId>org.mybatis</groupId>
         <artifactId>mybatis</artifactId>
-        <version>3.4.2</version>
+        <version>3.4.4</version>
       </dependency>
       <!-- TODO: Raising above 2.4.0 required jdk 8 usage -->
       <dependency>

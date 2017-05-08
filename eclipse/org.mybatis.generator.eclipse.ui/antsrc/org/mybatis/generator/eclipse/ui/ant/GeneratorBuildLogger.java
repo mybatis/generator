@@ -20,7 +20,6 @@ import java.io.PrintStream;
 
 import org.apache.tools.ant.BuildEvent;
 import org.apache.tools.ant.BuildLogger;
-import org.apache.tools.ant.Project;
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.console.IConsoleManager;
@@ -82,9 +81,6 @@ public class GeneratorBuildLogger implements BuildLogger {
 
     @Override
     public void messageLogged(BuildEvent event) {
-        if ("BUILD SUCCESSFUL".equals(event.getMessage()) && messageOutputLevel < Project.MSG_DEBUG) {
-            return;
-        }
         writeMessage(event.getPriority(), "  " + event.getMessage()); //$NON-NLS-1$
     }
 

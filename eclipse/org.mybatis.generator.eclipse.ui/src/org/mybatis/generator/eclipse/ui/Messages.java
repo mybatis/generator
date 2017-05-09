@@ -28,6 +28,7 @@ public class Messages extends NLS {
     public static String CONFIGURATION_TAB_FILE_PICKER_DIALOG_MESSAGE;
     public static String CONFIGURATION_TAB_FILE_PICKER_DIALOG_TITLE;
     public static String CONFIGURATION_TAB_NAME;
+    public static String CONFIGURATION_TAB_LOGGER_GROUP_TITLE;
 
     public static String SQL_SCRIPT_TAB_FILE_GROUP_TITLE;
     public static String SQL_SCRIPT_TAB_FILE_PICKER_DIALOG_MESSAGE;

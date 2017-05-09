@@ -19,6 +19,7 @@ import org.mybatis.generator.eclipse.ui.Activator;
 
 public interface GeneratorLaunchConstants {
     public static final String ATTR_CONFIGURATION_FILE_NAME = Activator.PLUGIN_ID + ".CONFIG_TAB.FILE_NAME"; //$NON-NLS-1$
+    public static final String ATTR_LOGGING_IMPLEMENTATION = Activator.PLUGIN_ID + ".CONFIG_TAB.LOGGING_IMPLEMENTATION"; //$NON-NLS-1$
     
     public static final String ATTR_SQL_SCRIPT_FILE_NAME = Activator.PLUGIN_ID + ".SQL_TAB.FILE_NAME"; //$NON-NLS-1$
     public static final String ATTR_SQL_SCRIPT_DRIVER_CLASS = Activator.PLUGIN_ID + ".SQL_TAB.DRIVER_CLASS"; //$NON-NLS-1$

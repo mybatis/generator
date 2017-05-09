@@ -83,10 +83,49 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
         }
 
         if (stringHasValue(rootInterface)) {
-            FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(
-                    rootInterface);
-            interfaze.addSuperInterface(fqjt);
-            interfaze.addImportedType(fqjt);
+            // format generic type based on generated classes
+            StringBuilder formatted = new StringBuilder();
+            char c,c1;
+            for (int i = 0; i < rootInterface.length(); ++ i) {
+                c = rootInterface.charAt(i);
+                switch (c) {
+                    case '%': {
+                        c1 = rootInterface.charAt(i + 1);
+                        switch (c1) {
+                            case 'p': {
+                                i += 1; // 'p' now and will be added 1 next time
+                                formatted.append(introspectedTable.getBaseRecordType());
+                                break;
+                            }
+                            case 'e': {
+                                i += 1; // 'e' now and will be added 1 next time
+                                formatted.append(introspectedTable.getExampleType());
+                                break;
+                            }
+                            default: {
+                                formatted.append(c).append(c1);
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                    default: {
+                        formatted.append(c);
+                        break;
+                    }
+                }
+            }
+            final String importedInterface = formatted.toString();
+            final FullyQualifiedJavaType importedInterfaceType = new FullyQualifiedJavaType(importedInterface);
+
+            final String importedPackageName = importedInterfaceType.getPackageName();
+
+            final String superInterface = (importedInterface.startsWith(importedPackageName)) ?
+                importedInterface.substring(importedPackageName.length() + 1) : importedInterface;
+            final FullyQualifiedJavaType superInterfaceType = new FullyQualifiedJavaType(superInterface);
+
+            interfaze.addSuperInterface(superInterfaceType);
+            interfaze.addImportedType(importedInterfaceType);
         }
         
         addCountByExampleMethod(interfaze);

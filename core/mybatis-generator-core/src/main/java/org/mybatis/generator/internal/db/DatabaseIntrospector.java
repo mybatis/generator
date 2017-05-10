@@ -718,10 +718,8 @@ public class DatabaseIntrospector {
             // configuration, then some sort of DB default is being returned
             // and we don't want that in our SQL
             FullyQualifiedTable table = new FullyQualifiedTable(
-                    stringHasValue(tc.getCatalog()) ? atn
-                            .getCatalog() : null,
-                    stringHasValue(tc.getSchema()) ? atn
-                            .getSchema() : null,
+                    stringHasValue(tc.getCatalog()) ? atn.getCatalog() : null,
+                    stringHasValue(tc.getSchema()) ? atn.getSchema() : null,
                     atn.getTableName(),
                     tc.getDomainObjectName(),
                     tc.getAlias(),
@@ -729,7 +727,9 @@ public class DatabaseIntrospector {
                     tc.getProperty(PropertyRegistry.TABLE_RUNTIME_CATALOG),
                     tc.getProperty(PropertyRegistry.TABLE_RUNTIME_SCHEMA),
                     tc.getProperty(PropertyRegistry.TABLE_RUNTIME_TABLE_NAME),
-                    delimitIdentifiers, context);
+                    delimitIdentifiers,
+                    tc.getDomainObjectRenamingRule(),
+                    context);
 
             IntrospectedTable introspectedTable = ObjectFactory
                     .createIntrospectedTable(tc, table, context);

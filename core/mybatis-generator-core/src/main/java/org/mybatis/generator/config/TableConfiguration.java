@@ -104,9 +104,12 @@ public class TableConfiguration extends PropertyHolder {
     /** The delimit identifiers. */
     private boolean delimitIdentifiers;
 
+    /** The domain object renaming rule. */
+    private DomainObjectRenamingRule domainObjectRenamingRule;
+
     /** The column renaming rule. */
     private ColumnRenamingRule columnRenamingRule;
-    
+
     /** The is all column delimiting enabled. */
     private boolean isAllColumnDelimitingEnabled;
     
@@ -708,6 +711,10 @@ public class TableConfiguration extends PropertyHolder {
             xmlElement.addElement(generatedKey.toXmlElement());
         }
 
+        if (domainObjectRenamingRule != null) {
+            xmlElement.addElement(domainObjectRenamingRule.toXmlElement());
+        }
+
         if (columnRenamingRule != null) {
             xmlElement.addElement(columnRenamingRule.toXmlElement());
         }
@@ -834,6 +841,10 @@ public class TableConfiguration extends PropertyHolder {
             }
         }
 
+        if (domainObjectRenamingRule != null) {
+            domainObjectRenamingRule.validate(errors, fqTableName);
+        }
+
         if (columnRenamingRule != null) {
             columnRenamingRule.validate(errors, fqTableName);
         }
@@ -849,6 +860,25 @@ public class TableConfiguration extends PropertyHolder {
         for (IgnoredColumnPattern ignoredColumnPattern : ignoredColumnPatterns) {
             ignoredColumnPattern.validate(errors, fqTableName);
         }
+    }
+
+    /**
+     * Gets the domain object renaming rule.
+     *
+     * @return the domain object renaming rule
+     */
+    public DomainObjectRenamingRule getDomainObjectRenamingRule() {
+        return domainObjectRenamingRule;
+    }
+
+    /**
+     * Sets the domain object renaming rule.
+     *
+     * @param domainObjectRenamingRule
+     *            the new domain object renaming rule
+     */
+    public void setDomainObjectRenamingRule(DomainObjectRenamingRule domainObjectRenamingRule) {
+        this.domainObjectRenamingRule = domainObjectRenamingRule;
     }
 
     /**

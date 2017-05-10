@@ -18,6 +18,7 @@ package org.mybatis.generator.api;
 import static org.mybatis.generator.internal.util.StringUtility.isTrue;
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -1339,7 +1340,7 @@ public abstract class IntrospectedTable {
         sb.append(calculateJavaClientInterfacePackage());
         sb.append('.');
         if (stringHasValue(tableConfiguration.getMapperName())) {
-            sb.append(tableConfiguration.getMapperName());
+            sb.append(MessageFormat.format(tableConfiguration.getMapperName(), fullyQualifiedTable.getDomainObjectName()));
         } else {
             sb.append(fullyQualifiedTable.getDomainObjectName());
             sb.append("Mapper"); //$NON-NLS-1$
@@ -1350,7 +1351,7 @@ public abstract class IntrospectedTable {
         sb.append(calculateJavaClientInterfacePackage());
         sb.append('.');
         if (stringHasValue(tableConfiguration.getSqlProviderName())) {
-            sb.append(tableConfiguration.getSqlProviderName());
+            sb.append(MessageFormat.format(tableConfiguration.getSqlProviderName(), fullyQualifiedTable.getDomainObjectName()));
         } else {
             sb.append(fullyQualifiedTable.getDomainObjectName());
             sb.append("SqlProvider"); //$NON-NLS-1$

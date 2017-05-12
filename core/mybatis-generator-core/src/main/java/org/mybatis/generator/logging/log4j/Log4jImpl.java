@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2009-2015 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -13,16 +13,18 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.generator.logging;
+package org.mybatis.generator.logging.log4j;
 
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.mybatis.generator.logging.Log;
 
 /**
- * 
- * @author Clinton Begin
- * 
+ * @author Eduardo Macarron
  */
 public class Log4jImpl implements Log {
+
+    private static final String FQCN = Log4jImpl.class.getName();
 
     private Logger log;
 
@@ -30,23 +32,29 @@ public class Log4jImpl implements Log {
         log = Logger.getLogger(clazz);
     }
 
+    @Override
     public boolean isDebugEnabled() {
         return log.isDebugEnabled();
     }
 
+    @Override
     public void error(String s, Throwable e) {
-        log.error(s, e);
+        log.log(FQCN, Level.ERROR, s, e);
     }
 
+    @Override
     public void error(String s) {
-        log.error(s);
+        log.log(FQCN, Level.ERROR, s, null);
     }
 
+    @Override
     public void debug(String s) {
-        log.debug(s);
+        log.log(FQCN, Level.DEBUG, s, null);
     }
 
+    @Override
     public void warn(String s) {
-        log.warn(s);
+        log.log(FQCN, Level.WARN, s, null);
     }
+
 }

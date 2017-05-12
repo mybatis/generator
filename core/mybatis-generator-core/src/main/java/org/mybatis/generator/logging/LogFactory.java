@@ -17,7 +17,12 @@ package org.mybatis.generator.logging;
 
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
-import org.mybatis.generator.internal.ObjectFactory;
+import org.mybatis.generator.logging.commons.JakartaCommonsLoggingLogFactory;
+import org.mybatis.generator.logging.jdk14.Jdk14LoggingLogFactory;
+import org.mybatis.generator.logging.log4j.Log4jLoggingLogFactory;
+import org.mybatis.generator.logging.log4j2.Log4j2LoggingLogFactory;
+import org.mybatis.generator.logging.nologging.NoLoggingLogFactory;
+import org.mybatis.generator.logging.slf4j.Slf4jLoggingLogFactory;
 
 /**
  * Factory for creating loggers. Uses runtime introspection to determine the
@@ -28,14 +33,15 @@ import org.mybatis.generator.internal.ObjectFactory;
  */
 public class LogFactory {
     private static AbstractLogFactory logFactory;
+    public static String MARKER = "MYBATIS-GENERATOR";
 
     static {
-        try {
-            ObjectFactory.internalClassForName("org.apache.log4j.Logger"); //$NON-NLS-1$
-            logFactory = new Log4jLoggingLogFactory();
-        } catch (Exception e) {
-            logFactory = new JdkLoggingLogFactory();
-        }
+        tryImplementation(new Slf4jLoggingLogFactory());
+        tryImplementation(new JakartaCommonsLoggingLogFactory());
+        tryImplementation(new Log4j2LoggingLogFactory());
+        tryImplementation(new Log4jLoggingLogFactory());
+        tryImplementation(new Jdk14LoggingLogFactory());
+        tryImplementation(new NoLoggingLogFactory());
     }
 
     public static Log getLog(Class<?> clazz) {
@@ -50,28 +56,38 @@ public class LogFactory {
     /**
      * This method will switch the logging implementation to Java native
      * logging. This is useful in situations where you want to use Java native
-     * logging to log activity but Log4J is on the classpath. Note that
-     * this method is only effective for log classes obtained after calling this
+     * logging to log activity but Log4J is on the classpath. Note that this
+     * method is only effective for log classes obtained after calling this
      * method. If you intend to use this method you should call it before
      * calling any other method.
      */
     public static synchronized void forceJavaLogging() {
-        logFactory = new JdkLoggingLogFactory();
-    }
-
-    private static class JdkLoggingLogFactory implements AbstractLogFactory {
-        public Log getLog(Class<?> clazz) {
-            return new JdkLoggingImpl(clazz);
-        }
-    }
-
-    private static class Log4jLoggingLogFactory implements AbstractLogFactory {
-        public Log getLog(Class<?> clazz) {
-            return new Log4jImpl(clazz);
-        }
+        setImplementation(new Jdk14LoggingLogFactory());
     }
 
     public static void setLogFactory(AbstractLogFactory logFactory) {
-        LogFactory.logFactory = logFactory;
+        setImplementation(logFactory);
+    }
+
+    private static void tryImplementation(AbstractLogFactory factory) {
+        if (logFactory == null) {
+            try {
+                setImplementation(factory);
+            } catch (LogException e) {
+                // ignore
+            }
+        }
+    }
+
+    private static void setImplementation(AbstractLogFactory factory) {
+        try {
+            Log log = factory.getLog(LogFactory.class);
+            if (log.isDebugEnabled()) {
+                log.debug("Logging initialized using '" + factory + "' adapter.");
+            }
+            logFactory = factory;
+        } catch (Exception e) {
+            throw new LogException("Error setting Log implementation.  Cause: " + e.getMessage(), e);
+        }
     }
 }

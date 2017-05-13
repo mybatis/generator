@@ -24,15 +24,14 @@ import org.mybatis.generator.logging.nologging.NoLoggingLogFactory;
 import org.mybatis.generator.logging.slf4j.Slf4jLoggingLogFactory;
 
 /**
- * Factory for creating loggers. Uses runtime introspection to determine the
- * AbstractLogFactory implementation.
+ * Factory for creating loggers
  * 
  * @author Jeff Butler
  * 
  */
 public class LogFactory {
     private static AbstractLogFactory logFactory;
-    public static String MARKER = "MYBATIS-GENERATOR";
+    public static String MARKER = "MYBATIS-GENERATOR"; //$NON-NLS-1$
 
     static {
         tryImplementation(new Slf4jLoggingLogFactory());
@@ -63,6 +62,22 @@ public class LogFactory {
         setImplementation(new Jdk14LoggingLogFactory());
     }
 
+    public static synchronized void forceSlf4jLogging() {
+        setImplementation(new Slf4jLoggingLogFactory());
+    }
+    
+    public static synchronized void forceCommonsLogging() {
+        setImplementation(new JakartaCommonsLoggingLogFactory());
+    }
+    
+    public static synchronized void forceLog4jLogging() {
+        setImplementation(new Log4jLoggingLogFactory());
+    }
+    
+    public static synchronized void forceNoLogging() {
+        setImplementation(new NoLoggingLogFactory());
+    }
+    
     public static void setLogFactory(AbstractLogFactory logFactory) {
         setImplementation(logFactory);
     }
@@ -81,11 +96,11 @@ public class LogFactory {
         try {
             Log log = factory.getLog(LogFactory.class);
             if (log.isDebugEnabled()) {
-                log.debug("Logging initialized using '" + factory + "' adapter.");
+                log.debug("Logging initialized using '" + factory + "' adapter."); //$NON-NLS-1$ //$NON-NLS-2$
             }
             logFactory = factory;
         } catch (Exception e) {
-            throw new LogException("Error setting Log implementation.  Cause: " + e.getMessage(), e);
+            throw new LogException("Error setting Log implementation.  Cause: " + e.getMessage(), e); //$NON-NLS-1$
         }
     }
 }

@@ -4,8 +4,8 @@ public enum LoggingButtonData {
 
     DEFAULT(true, "Default"),
     SLF4J(false, "SLF4J"),
-    LOG4J2(false, "Log4j 2"),
-    LOG4J(false, "Log4j"),
+    COMMONS_LOGGING(false, "Jakarta Commons"),
+    LOG4J(false, "Log4j 1.x"),
     JDK(false, "JDK Standard");
     
     private String displayText;

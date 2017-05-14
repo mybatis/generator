@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_6" inherit-compiler-output="false">
+    <output url="file://$MODULE_DIR$/target/classes" />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.maven:maven-core:3.3.9" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.maven:maven-model:3.3.9" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.maven:maven-settings:3.3.9" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.maven:maven-settings-builder:3.3.9" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.maven:maven-builder-support:3.3.9" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.maven:maven-repository-metadata:3.3.9" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.maven:maven-artifact:3.3.9" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.maven:maven-model-builder:3.3.9" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.google.guava:guava:18.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.maven:maven-aether-provider:3.3.9" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.aether:aether-spi:1.0.2.v20150114" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.aether:aether-impl:1.0.2.v20150114" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.aether:aether-api:1.0.2.v20150114" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.aether:aether-util:1.0.2.v20150114" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.sisu:org.eclipse.sisu.plexus:0.3.2" level="project" />
+    <orderEntry type="library" name="Maven: javax.enterprise:cdi-api:1.0" level="project" />
+    <orderEntry type="library" name="Maven: javax.annotation:jsr250-api:1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.sisu:org.eclipse.sisu.inject:0.3.2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.google.inject:guice:no_aop:4.0" level="project" />
+    <orderEntry type="library" name="Maven: javax.inject:javax.inject:1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: aopalliance:aopalliance:1.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.codehaus.plexus:plexus-interpolation:1.21" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.plexus:plexus-utils:3.0.22" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.plexus:plexus-classworlds:2.5.2" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.plexus:plexus-component-annotations:1.6" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.sonatype.plexus:plexus-sec-dispatcher:1.3" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.sonatype.plexus:plexus-cipher:1.4" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.4" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.maven:maven-plugin-api:3.3.9" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.maven.plugin-tools:maven-plugin-annotations:3.4" level="project" />
+    <orderEntry type="module" module-name="mybatis-generator-core" />
+  </component>
+</module>

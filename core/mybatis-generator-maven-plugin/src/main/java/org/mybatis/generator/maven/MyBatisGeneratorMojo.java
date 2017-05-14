@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -30,6 +30,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.api.ShellCallback;
@@ -46,7 +47,7 @@ import org.mybatis.generator.logging.LogFactory;
 /**
  * Goal which generates MyBatis/iBATIS artifacts.
  */
-@Mojo(name = "generate",defaultPhase = LifecyclePhase.GENERATE_SOURCES)
+@Mojo(name = "generate",defaultPhase = LifecyclePhase.GENERATE_SOURCES, requiresDependencyResolution = ResolutionScope.COMPILE)
 public class MyBatisGeneratorMojo extends AbstractMojo {
 
     /**
@@ -130,6 +131,12 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
     @Parameter(property="mybatis.generator.skip", defaultValue="false")
     private boolean skip;
 
+    /**
+     * project's compile classpath injected
+     */
+    @Parameter(property = "project.compileClasspathElements", required = true, readonly = true)
+    private List<String> classpaths;
+
     public void execute() throws MojoExecutionException {
         if (skip) {
             getLog().info( "MyBatis generator is skipped." );
@@ -137,6 +144,12 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
         }
 
     	LogFactory.setLogFactory(new MavenLogFactory(this));
+
+        // add the project compile classpath to the plugin classpath,
+        // so that the project dependency classes could be found directly, without add the classpath to configuration's classPathEntries repeatedly.
+        // Examples are JDBC drivers, root classes, root interfaces, etc.
+        ClassLoader contextClassLoader = ClassloaderUtility.getCustomClassloader(classpaths);
+        Thread.currentThread().setContextClassLoader(contextClassLoader);
 
     	// add resource directories to the classpath.  This is required to support
         // use of a properties file in the build.  Typically, the properties file

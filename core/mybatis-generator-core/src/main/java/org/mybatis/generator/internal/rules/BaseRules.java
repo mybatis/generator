@@ -84,6 +84,14 @@ public abstract class BaseRules implements Rules {
         
         return tableConfiguration.isInsertStatementEnabled();
     }
+    
+    public boolean generateInsertBatch() {
+    	if (isModelOnly) {
+    		return false;
+    	}
+    	
+    	return tableConfiguration.isInsertStatementEnabled();
+    }
 
     /**
      * Calculates the class that contains all fields. This class is used as the

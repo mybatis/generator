@@ -29,6 +29,7 @@ import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
 import org.mybatis.generator.codegen.AbstractXmlGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.AbstractJavaMapperMethodGenerator;
+import org.mybatis.generator.codegen.mybatis3.javamapper.elements.BatchInsertMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.CountByExampleMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.DeleteByExampleMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.DeleteByPrimaryKeyMethodGenerator;
@@ -94,6 +95,7 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
         addDeleteByPrimaryKeyMethod(interfaze);
         addInsertMethod(interfaze);
         addInsertSelectiveMethod(interfaze);
+        addInsertBatchMethod(interfaze);
         addSelectByExampleWithBLOBsMethod(interfaze);
         addSelectByExampleWithoutBLOBsMethod(interfaze);
         addSelectByPrimaryKeyMethod(interfaze);
@@ -149,6 +151,13 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
     protected void addInsertSelectiveMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateInsertSelective()) {
             AbstractJavaMapperMethodGenerator methodGenerator = new InsertSelectiveMethodGenerator();
+            initializeAndExecuteGenerator(methodGenerator, interfaze);
+        }
+    }
+    
+    protected void addInsertBatchMethod(Interface interfaze) {
+        if (introspectedTable.getRules().generateInsertBatch()) {
+            AbstractJavaMapperMethodGenerator methodGenerator = new BatchInsertMethodGenerator(false);
             initializeAndExecuteGenerator(methodGenerator, interfaze);
         }
     }

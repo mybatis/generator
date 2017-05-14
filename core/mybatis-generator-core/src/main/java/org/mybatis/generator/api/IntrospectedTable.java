@@ -125,6 +125,9 @@ public abstract class IntrospectedTable {
         /** The attr insert selective statement id. */
         ATTR_INSERT_SELECTIVE_STATEMENT_ID,
         
+        /** The attr batchinsert selective statement id. */
+        ATTR_INSERTBATCH_STATEMENT_ID,
+        
         /** The attr select all statement id. */
         ATTR_SELECT_ALL_STATEMENT_ID,
         
@@ -791,6 +794,7 @@ public abstract class IntrospectedTable {
         setDeleteByPrimaryKeyStatementId("deleteByPrimaryKey"); //$NON-NLS-1$
         setInsertStatementId("insert"); //$NON-NLS-1$
         setInsertSelectiveStatementId("insertSelective"); //$NON-NLS-1$
+        setInsertBatchStatementId("insertBatch"); //ljw add
         setSelectAllStatementId("selectAll"); //$NON-NLS-1$
         setSelectByExampleStatementId("selectByExample"); //$NON-NLS-1$
         setSelectByExampleWithBLOBsStatementId("selectByExampleWithBLOBs"); //$NON-NLS-1$
@@ -1003,6 +1007,10 @@ public abstract class IntrospectedTable {
     public void setInsertSelectiveStatementId(String s) {
         internalAttributes.put(
                 InternalAttribute.ATTR_INSERT_SELECTIVE_STATEMENT_ID, s);
+    }
+    
+    public void setInsertBatchStatementId(String s) {
+    	internalAttributes.put(InternalAttribute.ATTR_INSERTBATCH_STATEMENT_ID, s);
     }
 
     /**
@@ -1217,6 +1225,10 @@ public abstract class IntrospectedTable {
         return internalAttributes
                 .get(InternalAttribute.ATTR_INSERT_SELECTIVE_STATEMENT_ID);
     }
+    
+    public String getInsertBatchStatementId() {
+    	return internalAttributes.get(InternalAttribute.ATTR_INSERTBATCH_STATEMENT_ID);
+    }
 
     /**
      * Gets the insert statement id.
@@ -1341,8 +1353,8 @@ public abstract class IntrospectedTable {
         if (stringHasValue(tableConfiguration.getMapperName())) {
             sb.append(tableConfiguration.getMapperName());
         } else {
-            sb.append(fullyQualifiedTable.getDomainObjectName());
-            sb.append("Mapper"); //$NON-NLS-1$
+        sb.append(fullyQualifiedTable.getDomainObjectName());
+        sb.append("Mapper"); //$NON-NLS-1$
         }
         setMyBatis3JavaMapperType(sb.toString());
 
@@ -1352,8 +1364,8 @@ public abstract class IntrospectedTable {
         if (stringHasValue(tableConfiguration.getSqlProviderName())) {
             sb.append(tableConfiguration.getSqlProviderName());
         } else {
-            sb.append(fullyQualifiedTable.getDomainObjectName());
-            sb.append("SqlProvider"); //$NON-NLS-1$
+        sb.append(fullyQualifiedTable.getDomainObjectName());
+        sb.append("SqlProvider"); //$NON-NLS-1$
         }
         setMyBatis3SqlProviderType(sb.toString());
     }
@@ -1427,7 +1439,7 @@ public abstract class IntrospectedTable {
                 int ind = mapperName.lastIndexOf('.');
                 if (ind != -1) {
                     sb.append('.').append(mapperName.substring(0, ind));
-                }
+        }
             }
         }
 
@@ -1463,8 +1475,8 @@ public abstract class IntrospectedTable {
             }
             sb.append(".xml"); //$NON-NLS-1$
         } else {
-            sb.append(fullyQualifiedTable.getDomainObjectName());
-            sb.append("Mapper.xml"); //$NON-NLS-1$
+        sb.append(fullyQualifiedTable.getDomainObjectName());
+        sb.append("Mapper.xml"); //$NON-NLS-1$
         }
         return sb.toString();
     }
@@ -1490,8 +1502,8 @@ public abstract class IntrospectedTable {
         if (stringHasValue(tableConfiguration.getMapperName())) {
             sb.append(tableConfiguration.getMapperName());
         } else {
-            sb.append(fullyQualifiedTable.getDomainObjectName());
-            sb.append("Mapper"); //$NON-NLS-1$
+        sb.append(fullyQualifiedTable.getDomainObjectName());
+        sb.append("Mapper"); //$NON-NLS-1$
         }
         return sb.toString();
     }

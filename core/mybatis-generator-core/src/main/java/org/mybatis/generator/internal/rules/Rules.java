@@ -44,6 +44,8 @@ public interface Rules {
      * @return true if the element and method should be generated
      */
     boolean generateInsertSelective();
+    
+    boolean generateInsertBatch();
 
     /**
      * Calculates the class that contains all fields. This class is used as the

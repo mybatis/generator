@@ -134,8 +134,11 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
     /**
      * project's compile classpath injected
      */
-    @Parameter(property = "project.compileClasspathElements", required = true, readonly = true)
+    @Parameter(property = "project.compileClasspathElements", required = true)
     private List<String> classpaths;
+
+    @Parameter(property = "project.build.directory", required = true)
+    private String targetPath;
 
     public void execute() throws MojoExecutionException {
         if (skip) {
@@ -148,6 +151,7 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
         // add the project compile classpath to the plugin classpath,
         // so that the project dependency classes could be found directly, without add the classpath to configuration's classPathEntries repeatedly.
         // Examples are JDBC drivers, root classes, root interfaces, etc.
+        classpaths.remove(targetPath + "/classes");
         ClassLoader contextClassLoader = ClassloaderUtility.getCustomClassloader(classpaths);
         Thread.currentThread().setContextClassLoader(contextClassLoader);
 

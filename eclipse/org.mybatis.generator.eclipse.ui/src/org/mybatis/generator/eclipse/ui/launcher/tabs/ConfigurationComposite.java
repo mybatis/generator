@@ -71,7 +71,7 @@ public class ConfigurationComposite extends AbstractGeneratorComposite {
         Group loggingButtonGroup = new Group(this, SWT.NONE);
         loggingButtonGroup.setText(Messages.CONFIGURATION_TAB_LOGGER_GROUP_TITLE);
 
-        GridLayout groupLayout = new GridLayout(5, false);
+        GridLayout groupLayout = new GridLayout(LoggingButtonData.values().length, false);
         loggingButtonGroup.setLayout(groupLayout);
         loggingButtonGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         loggingButtonGroup.setFont(this.getFont());

@@ -67,23 +67,23 @@ public class LogFactory {
     public static synchronized void forceSlf4jLogging() {
         setImplementation(new Slf4jLoggingLogFactory());
     }
-    
+
     public static synchronized void forceCommonsLogging() {
         setImplementation(new JakartaCommonsLoggingLogFactory());
     }
-    
+
     public static synchronized void forceLog4jLogging() {
         setImplementation(new Log4jLoggingLogFactory());
     }
-    
+
     public static synchronized void forceLog4j2Logging() {
         setImplementation(new Log4j2LoggingLogFactory());
     }
-    
+
     public static synchronized void forceNoLogging() {
         setImplementation(new NoLoggingLogFactory());
     }
-    
+
     public static void setLogFactory(AbstractLogFactory logFactory) {
         setImplementation(logFactory);
     }

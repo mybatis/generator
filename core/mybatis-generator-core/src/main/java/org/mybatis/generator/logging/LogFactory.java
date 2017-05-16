@@ -20,6 +20,7 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 import org.mybatis.generator.logging.commons.JakartaCommonsLoggingLogFactory;
 import org.mybatis.generator.logging.jdk14.Jdk14LoggingLogFactory;
 import org.mybatis.generator.logging.log4j.Log4jLoggingLogFactory;
+import org.mybatis.generator.logging.log4j2.Log4j2LoggingLogFactory;
 import org.mybatis.generator.logging.nologging.NoLoggingLogFactory;
 import org.mybatis.generator.logging.slf4j.Slf4jLoggingLogFactory;
 
@@ -36,6 +37,7 @@ public class LogFactory {
     static {
         tryImplementation(new Slf4jLoggingLogFactory());
         tryImplementation(new JakartaCommonsLoggingLogFactory());
+        tryImplementation(new Log4j2LoggingLogFactory());
         tryImplementation(new Log4jLoggingLogFactory());
         tryImplementation(new Jdk14LoggingLogFactory());
         tryImplementation(new NoLoggingLogFactory());
@@ -72,6 +74,10 @@ public class LogFactory {
     
     public static synchronized void forceLog4jLogging() {
         setImplementation(new Log4jLoggingLogFactory());
+    }
+    
+    public static synchronized void forceLog4j2Logging() {
+        setImplementation(new Log4j2LoggingLogFactory());
     }
     
     public static synchronized void forceNoLogging() {

@@ -41,6 +41,7 @@ import org.mybatis.generator.eclipse.core.callback.EclipseShellCallback;
 import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.exception.XMLParserException;
 import org.mybatis.generator.internal.util.StringUtility;
+import org.mybatis.generator.logging.LogFactory;
 
 /**
  * @author Jeff Butler
@@ -51,6 +52,7 @@ public class GeneratorAntTask extends Task {
     private String configfile;
     private String contextIds;
     private String fullyQualifiedTableNames;
+    private String loggingImplementation;
 
     /**
      *  
@@ -66,6 +68,8 @@ public class GeneratorAntTask extends Task {
      */
     @Override
     public void execute() throws BuildException {
+        setLoggingImplementation();
+        
         if (!StringUtility.stringHasValue(configfile)) {
             throw new BuildException("configfile is a required parameter");
         }
@@ -152,6 +156,18 @@ public class GeneratorAntTask extends Task {
         }
     }
 
+    private void setLoggingImplementation() {
+        if ("SLF4J".equals(loggingImplementation)) {
+            LogFactory.forceSlf4jLogging();
+        } else if ("COMMONS_LOGGING".equals(loggingImplementation)) {
+            LogFactory.forceCommonsLogging();
+        } else if ("LOG4J".equals(loggingImplementation)) {
+            LogFactory.forceLog4jLogging();
+        } else if ("JDK".equals(loggingImplementation)) {
+            LogFactory.forceJavaLogging();
+        }
+    }
+
     /**
      * @return Returns the configfile.
      */
@@ -189,5 +205,9 @@ public class GeneratorAntTask extends Task {
 
     public void setFullyQualifiedTableNames(String fullyQualifiedTableNames) {
         this.fullyQualifiedTableNames = fullyQualifiedTableNames;
+    }
+
+    public void setLoggingImplementation(String loggingImplementation) {
+        this.loggingImplementation = loggingImplementation;
     }
 }

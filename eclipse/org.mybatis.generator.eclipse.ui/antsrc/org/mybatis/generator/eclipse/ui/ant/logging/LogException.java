@@ -15,7 +15,7 @@
  */
 package org.mybatis.generator.eclipse.ui.ant.logging;
 
-public class LogException extends RuntimeException {
+public class LogException extends Exception {
 
     private static final long serialVersionUID = 7522435242386492002L;
 

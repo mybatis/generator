@@ -35,7 +35,7 @@ import org.mybatis.generator.logging.nologging.NoLoggingLogFactory;
 public class AntLogFactory implements AbstractLogFactory {
     private AbstractLogFactory logFactory;
 
-    public AntLogFactory(String loggingImplementation) {
+    public AntLogFactory(String loggingImplementation) throws LogException {
         if (loggingImplementation == null || loggingImplementation.length() == 0) {
             calculateDefaultImplementation();
         } else {
@@ -83,7 +83,7 @@ public class AntLogFactory implements AbstractLogFactory {
         }
     }
 
-    private void setImplementation(AbstractLogFactory factory) {
+    private void setImplementation(AbstractLogFactory factory) throws LogException {
         try {
             Log log = factory.getLog(AntLogFactory.class);
             if (log.isDebugEnabled()) {

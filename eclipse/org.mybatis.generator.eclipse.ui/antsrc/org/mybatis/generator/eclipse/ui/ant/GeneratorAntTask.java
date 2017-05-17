@@ -39,6 +39,7 @@ import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.eclipse.core.callback.EclipseProgressCallback;
 import org.mybatis.generator.eclipse.core.callback.EclipseShellCallback;
 import org.mybatis.generator.eclipse.ui.ant.logging.AntLogFactory;
+import org.mybatis.generator.eclipse.ui.ant.logging.LogException;
 import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.exception.XMLParserException;
 import org.mybatis.generator.internal.util.StringUtility;
@@ -158,7 +159,13 @@ public class GeneratorAntTask extends Task {
     }
 
     private void setLoggingImplementation() {
-        LogFactory.setLogFactory(new AntLogFactory(loggingImplementation));
+        try {
+            LogFactory.setLogFactory(new AntLogFactory(loggingImplementation));
+        } catch (LogException e) {
+            // this exception will only be thrown when a specific logger is selected
+            LogFactory.forceNoLogging();
+            log("WARNING: Logging Disabled.  Do you need to add a logging implementation to the launch classpath?", Project.MSG_WARN);
+        }
     }
 
     /**

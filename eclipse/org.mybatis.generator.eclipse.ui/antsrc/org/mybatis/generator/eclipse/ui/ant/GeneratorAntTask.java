@@ -38,6 +38,7 @@ import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.eclipse.core.callback.EclipseProgressCallback;
 import org.mybatis.generator.eclipse.core.callback.EclipseShellCallback;
+import org.mybatis.generator.eclipse.ui.ant.logging.AntLogFactory;
 import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.exception.XMLParserException;
 import org.mybatis.generator.internal.util.StringUtility;
@@ -157,15 +158,7 @@ public class GeneratorAntTask extends Task {
     }
 
     private void setLoggingImplementation() {
-        if ("SLF4J".equals(loggingImplementation)) {
-            LogFactory.forceSlf4jLogging();
-        } else if ("COMMONS_LOGGING".equals(loggingImplementation)) {
-            LogFactory.forceCommonsLogging();
-        } else if ("LOG4J".equals(loggingImplementation)) {
-            LogFactory.forceLog4jLogging();
-        } else if ("JDK".equals(loggingImplementation)) {
-            LogFactory.forceJavaLogging();
-        }
+        LogFactory.setLogFactory(new AntLogFactory(loggingImplementation));
     }
 
     /**

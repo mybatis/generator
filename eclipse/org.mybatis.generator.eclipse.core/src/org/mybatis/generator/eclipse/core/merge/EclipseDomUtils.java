@@ -66,7 +66,7 @@ public class EclipseDomUtils {
     
     public static CompilationUnit getCompilationUnitFromSource(String javaSource) {
         ASTParser astParser = ASTParser.newParser(AST.JLS8);
-        Map<?,?> options = JavaCore.getDefaultOptions();
+        Map<String, String> options = JavaCore.getDefaultOptions();
         JavaCore.setComplianceOptions(JavaCore.VERSION_1_8, options);
         astParser.setCompilerOptions(options);
         astParser.setSource(javaSource.toCharArray());

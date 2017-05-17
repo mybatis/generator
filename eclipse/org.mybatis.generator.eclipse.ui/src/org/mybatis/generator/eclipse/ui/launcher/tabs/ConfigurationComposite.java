@@ -18,6 +18,8 @@ package org.mybatis.generator.eclipse.ui.launcher.tabs;
 import static org.mybatis.generator.eclipse.ui.launcher.tabs.LauncherUtils.getTextOrBlank;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
@@ -28,8 +30,15 @@ import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
 import org.mybatis.generator.eclipse.ui.Messages;
 import org.mybatis.generator.eclipse.ui.content.ConfigVerifyer;
 
@@ -42,6 +51,7 @@ import org.mybatis.generator.eclipse.ui.content.ConfigVerifyer;
  */
 public class ConfigurationComposite extends AbstractGeneratorComposite {
     private ConfigurationTab configurationTab;
+    private Map<LoggingButtonData, Button> loggingButtonMap = new HashMap<LoggingButtonData, Button>();
 
     /**
      * Create the composite.
@@ -54,6 +64,35 @@ public class ConfigurationComposite extends AbstractGeneratorComposite {
         this.configurationTab = configurationTab;
         setLayout(new GridLayout(1, false));
         createFileNameGroup(this, Messages.CONFIGURATION_TAB_FILE_GROUP_TITLE);
+        createLoggingSelectorGroup();
+    }
+
+    private void createLoggingSelectorGroup() {
+        Group loggingButtonGroup = new Group(this, SWT.NONE);
+        loggingButtonGroup.setText(Messages.CONFIGURATION_TAB_LOGGER_GROUP_TITLE);
+
+        GridLayout groupLayout = new GridLayout(LoggingButtonData.values().length, false);
+        loggingButtonGroup.setLayout(groupLayout);
+        loggingButtonGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        loggingButtonGroup.setFont(this.getFont());
+        
+        SelectionListener listener = new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                Button button = (Button) e.widget;
+                if (button.getSelection()) {
+                    updateLaunchConfigurationDialog();
+                }
+            }
+        };
+        
+        for (LoggingButtonData data : LoggingButtonData.values()) {
+            Button b = new Button(loggingButtonGroup, SWT.RADIO);
+            b.setText(data.displayText());
+            b.setData(data);
+            b.addSelectionListener(listener);
+            loggingButtonMap.put(data, b);
+        }
     }
 
     public boolean isValid() {
@@ -81,6 +120,7 @@ public class ConfigurationComposite extends AbstractGeneratorComposite {
     }
 
     public void initializeFrom(ILaunchConfiguration configuration) {
+        selectLoggingButton(getTextOrBlank(configuration, ATTR_LOGGING_IMPLEMENTATION));
         txtFileName.setText(getTextOrBlank(configuration, ATTR_CONFIGURATION_FILE_NAME));
         try {
             javaProjectName = configuration.getAttribute(IJavaLaunchConfigurationConstants.ATTR_PROJECT_NAME, (String) null);
@@ -88,8 +128,59 @@ public class ConfigurationComposite extends AbstractGeneratorComposite {
             javaProjectName = null;
         }
     }
+    
+    private void selectLoggingButton(String setting) {
+        deselectAllLoggingButtons();
 
+        if ("".equals(setting)) {
+            selectDefaultLoggingButton();
+            return;
+        }
+        
+        try {
+            LoggingButtonData data = LoggingButtonData.valueOf(setting);
+            Button button = loggingButtonMap.get(data);
+            button.setSelection(true);
+        } catch (Exception e) {
+            selectDefaultLoggingButton();
+        }
+    }
+    
+    private void deselectAllLoggingButtons() {
+        for (Button button : loggingButtonMap.values()) {
+            button.setSelection(false);
+        }
+    }
+
+    private void selectDefaultLoggingButton() {
+        for (Button button : loggingButtonMap.values()) {
+            LoggingButtonData data = (LoggingButtonData) button.getData();
+            if (data.isDefault()) {
+                button.setSelection(true);
+                break;
+            }
+        }
+    }
+    
+    private Button getSelectedLoggingButton() {
+        Button rc = null;
+        for (Button button : loggingButtonMap.values()) {
+            if (button.getSelection()) {
+                rc = button;
+            }
+        }
+        return rc;
+    }
+    
     public void performApply(ILaunchConfigurationWorkingCopy configuration) {
+        Button button = getSelectedLoggingButton();
+        LoggingButtonData data = (LoggingButtonData) button.getData();
+        if (data.isDefault()) {
+            configuration.removeAttribute(ATTR_LOGGING_IMPLEMENTATION);
+        } else {
+            configuration.setAttribute(ATTR_LOGGING_IMPLEMENTATION, data.name());
+        }
+        
         configuration.setAttribute(ATTR_CONFIGURATION_FILE_NAME, txtFileName.getText());
         configuration.setAttribute(IJavaLaunchConfigurationConstants.ATTR_PROJECT_NAME, javaProjectName);
     }

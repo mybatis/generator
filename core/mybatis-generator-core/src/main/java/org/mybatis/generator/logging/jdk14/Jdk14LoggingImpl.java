@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2009-2015 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -13,56 +13,47 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.generator.logging;
+package org.mybatis.generator.logging.jdk14;
 
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
+import org.mybatis.generator.logging.Log;
+
 /**
- * 
  * @author Clinton Begin
- * @author Jeff Butler
- * 
  */
-public class JdkLoggingImpl implements Log {
+public class Jdk14LoggingImpl implements Log {
 
     private Logger log;
 
-    public JdkLoggingImpl(Class<?> clazz) {
+    public Jdk14LoggingImpl(Class<?> clazz) {
         log = Logger.getLogger(clazz.getName());
     }
 
+    @Override
     public boolean isDebugEnabled() {
         return log.isLoggable(Level.FINE);
     }
 
+    @Override
     public void error(String s, Throwable e) {
-        LogRecord lr = new LogRecord(Level.SEVERE, s);
-        lr.setSourceClassName(log.getName());
-        lr.setThrown(e);
-
-        log.log(lr);
+        log.log(Level.SEVERE, s, e);
     }
 
+    @Override
     public void error(String s) {
-        LogRecord lr = new LogRecord(Level.SEVERE, s);
-        lr.setSourceClassName(log.getName());
-
-        log.log(lr);
+        log.log(Level.SEVERE, s);
     }
 
+    @Override
     public void debug(String s) {
-        LogRecord lr = new LogRecord(Level.FINE, s);
-        lr.setSourceClassName(log.getName());
-
-        log.log(lr);
+        log.log(Level.FINE, s);
     }
 
+    @Override
     public void warn(String s) {
-        LogRecord lr = new LogRecord(Level.WARNING, s);
-        lr.setSourceClassName(log.getName());
-
-        log.log(lr);
+        log.log(Level.WARNING, s);
     }
+
 }

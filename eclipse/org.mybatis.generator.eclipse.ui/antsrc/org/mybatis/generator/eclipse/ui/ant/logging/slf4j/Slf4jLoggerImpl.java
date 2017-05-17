@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2009-2015 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -13,40 +13,45 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.generator.logging;
+package org.mybatis.generator.eclipse.ui.ant.logging.slf4j;
 
-import org.apache.log4j.Logger;
+import org.mybatis.generator.logging.Log;
+import org.slf4j.Logger;
 
 /**
- * 
- * @author Clinton Begin
- * 
+ * @author Eduardo Macarron
  */
-public class Log4jImpl implements Log {
+class Slf4jLoggerImpl implements Log {
 
     private Logger log;
 
-    public Log4jImpl(Class<?> clazz) {
-        log = Logger.getLogger(clazz);
+    public Slf4jLoggerImpl(Logger logger) {
+        log = logger;
     }
 
+    @Override
     public boolean isDebugEnabled() {
         return log.isDebugEnabled();
     }
 
+    @Override
     public void error(String s, Throwable e) {
         log.error(s, e);
     }
 
+    @Override
     public void error(String s) {
         log.error(s);
     }
 
+    @Override
     public void debug(String s) {
         log.debug(s);
     }
 
+    @Override
     public void warn(String s) {
         log.warn(s);
     }
+
 }

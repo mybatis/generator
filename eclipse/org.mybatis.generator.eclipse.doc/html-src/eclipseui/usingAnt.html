@@ -88,6 +88,22 @@ interface, logging system, and progress notification system.</p>
       <code>catalog..table</code><br/>
       etc.</td>
 </tr>
+<tr>
+  <td valign="top">loggingImplementation</td>
+  <td>If specified, then this selects a specific logging configuration to use during code generation.
+      If you specify a logging implementation, then you must add the implementation to the classpath
+      of the task (or the launch configuration).  The supported values are:
+      <ol>
+        <li>SLF4J</li>
+        <li>COMMONS_LOGGING</li>
+        <li>LOG4J2</li>
+        <li>LOG4J</li>
+        <li>JDK</li>
+      </ol>
+      <p>If you don't specify a value, the task will search for an implementation in the order
+      shown above and use the first one found.</p>
+  </td>
+</tr>
 </table>
 </body>
 </html>

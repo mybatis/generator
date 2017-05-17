@@ -38,9 +38,12 @@ import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.eclipse.core.callback.EclipseProgressCallback;
 import org.mybatis.generator.eclipse.core.callback.EclipseShellCallback;
+import org.mybatis.generator.eclipse.ui.ant.logging.AntLogFactory;
+import org.mybatis.generator.eclipse.ui.ant.logging.LogException;
 import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.exception.XMLParserException;
 import org.mybatis.generator.internal.util.StringUtility;
+import org.mybatis.generator.logging.LogFactory;
 
 /**
  * @author Jeff Butler
@@ -51,6 +54,7 @@ public class GeneratorAntTask extends Task {
     private String configfile;
     private String contextIds;
     private String fullyQualifiedTableNames;
+    private String loggingImplementation;
 
     /**
      *  
@@ -66,6 +70,8 @@ public class GeneratorAntTask extends Task {
      */
     @Override
     public void execute() throws BuildException {
+        setLoggingImplementation();
+        
         if (!StringUtility.stringHasValue(configfile)) {
             throw new BuildException("configfile is a required parameter");
         }
@@ -152,6 +158,16 @@ public class GeneratorAntTask extends Task {
         }
     }
 
+    private void setLoggingImplementation() {
+        try {
+            LogFactory.setLogFactory(new AntLogFactory(loggingImplementation));
+        } catch (LogException e) {
+            // this exception will only be thrown when a specific logger is selected
+            LogFactory.forceNoLogging();
+            log("WARNING: Logging Disabled.  Do you need to add a logging implementation to the launch classpath?", Project.MSG_WARN);
+        }
+    }
+
     /**
      * @return Returns the configfile.
      */
@@ -189,5 +205,9 @@ public class GeneratorAntTask extends Task {
 
     public void setFullyQualifiedTableNames(String fullyQualifiedTableNames) {
         this.fullyQualifiedTableNames = fullyQualifiedTableNames;
+    }
+
+    public void setLoggingImplementation(String loggingImplementation) {
+        this.loggingImplementation = loggingImplementation;
     }
 }

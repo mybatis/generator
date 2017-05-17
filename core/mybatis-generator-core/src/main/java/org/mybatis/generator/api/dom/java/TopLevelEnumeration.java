@@ -20,7 +20,6 @@ import static org.mybatis.generator.api.dom.OutputUtilities.newLine;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;

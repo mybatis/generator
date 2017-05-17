@@ -2,32 +2,6 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.eclipse.core.runtime.adapters">
-      <factory
-            adaptableType="org.eclipse.core.resources.IFile"
-            class="org.mybatis.generator.eclipse.ui.content.AdapterFactory">
-         <adapter
-               type="org.mybatis.generator.eclipse.ui.content.ConfigurationFileAdapter">
-         </adapter>
-      </factory>
-   </extension>
-   <extension
-         point="org.eclipse.ui.popupMenus">
-      <objectContribution
-            adaptable="true"
-            id="org.mybatis.generator.eclipse.ui.ConfigFileContribution"
-            objectClass="org.mybatis.generator.eclipse.ui.content.ConfigurationFileAdapter">
-         <action
-               class="org.mybatis.generator.eclipse.ui.actions.RunGeneratorAction"
-               enablesFor="1"
-               icon="icons/mybatis.png"
-               id="org.mybatis.generator.eclipse.ui.RunGeneratorAction"
-               label="Generate MyBatis/iBATIS Artifacts"
-               menubarPath="additions">
-         </action>
-      </objectContribution>
-   </extension>
-   <extension
          point="org.eclipse.ant.core.antTasks">
       <antTask
             class="org.mybatis.generator.eclipse.ui.ant.GeneratorAntTask"

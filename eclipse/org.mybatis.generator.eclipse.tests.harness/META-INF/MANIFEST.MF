@@ -9,4 +9,8 @@ Require-Bundle: org.junit;bundle-version="4.12.0",
  org.mybatis.generator.eclipse.core;bundle-version="1.3.6"
 Export-Package: org.mybatis.generator.eclipse.tests.harness,
  org.mybatis.generator.eclipse.tests.harness.matchers,
- org.mybatis.generator.eclipse.tests.harness.summary
+ org.mybatis.generator.eclipse.tests.harness.matchers.support,
+ org.mybatis.generator.eclipse.tests.harness.summary,
+ org.mybatis.generator.eclipse.tests.harness.summary.support,
+ org.mybatis.generator.eclipse.tests.harness.tests,
+ org.mybatis.generator.eclipse.tests.harness.tests.resources

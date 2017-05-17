@@ -25,9 +25,7 @@ Require-Bundle: org.eclipse.ui,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Export-Package: org.mybatis.generator.eclipse.ui,
- org.mybatis.generator.eclipse.ui.actions,
  org.mybatis.generator.eclipse.ui.ant,
- org.mybatis.generator.eclipse.ui.buildpath,
  org.mybatis.generator.eclipse.ui.content,
  org.mybatis.generator.eclipse.ui.launcher,
  org.mybatis.generator.eclipse.ui.launcher.tabs,

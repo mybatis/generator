@@ -5,8 +5,6 @@ Bundle-SymbolicName: org.mybatis.generator.core
 Bundle-Version: 1.3.6.qualifier
 Bundle-Vendor: mybatis.org
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Require-Bundle: org.apache.ant;bundle-version="1.7.1";resolution:=optional,
- org.apache.log4j;bundle-version="1.2.15";resolution:=optional
 Export-Package: org.mybatis.generator.ant,
  org.mybatis.generator.api,
  org.mybatis.generator.api.dom,
@@ -38,4 +36,10 @@ Export-Package: org.mybatis.generator.ant,
  org.mybatis.generator.internal.util,
  org.mybatis.generator.internal.util.messages,
  org.mybatis.generator.logging,
+ org.mybatis.generator.logging.commons,
+ org.mybatis.generator.logging.jdk14,
+ org.mybatis.generator.logging.log4j,
+ org.mybatis.generator.logging.log4j2,
+ org.mybatis.generator.logging.nologging,
+ org.mybatis.generator.logging.slf4j,
  org.mybatis.generator.plugins

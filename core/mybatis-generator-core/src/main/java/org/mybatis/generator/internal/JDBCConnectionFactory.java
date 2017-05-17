@@ -107,18 +107,18 @@ public class JDBCConnectionFactory implements ConnectionFactory {
     public void addConfigurationProperties(Properties properties) {
         // this should only be called when this connection factory is
         // specified in a ConnectionFactory configuration
-        userId = properties.getProperty("userId");
-        password = properties.getProperty("password");
-        connectionURL = properties.getProperty("connectionURL");
-        driverClass = properties.getProperty("driverClass");
+        userId = properties.getProperty("userId"); //$NON-NLS-1$
+        password = properties.getProperty("password"); //$NON-NLS-1$
+        connectionURL = properties.getProperty("connectionURL"); //$NON-NLS-1$
+        driverClass = properties.getProperty("driverClass"); //$NON-NLS-1$
         
         otherProperties = new Properties();
         otherProperties.putAll(properties);
         
         // remove all the properties that we have specific attributes for
-        otherProperties.remove("userId");
-        otherProperties.remove("password");
-        otherProperties.remove("connectionURL");
-        otherProperties.remove("driverClass");
+        otherProperties.remove("userId"); //$NON-NLS-1$
+        otherProperties.remove("password"); //$NON-NLS-1$
+        otherProperties.remove("connectionURL"); //$NON-NLS-1$
+        otherProperties.remove("driverClass"); //$NON-NLS-1$
     }
 }

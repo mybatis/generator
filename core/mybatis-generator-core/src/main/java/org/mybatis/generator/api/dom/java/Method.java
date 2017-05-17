@@ -204,7 +204,7 @@ public class Method extends JavaElement {
         }
 
         if (!getTypeParameters().isEmpty()) {
-            sb.append("<");
+            sb.append("<"); //$NON-NLS-1$
             boolean comma = false;
             for (TypeParameter typeParameter : getTypeParameters()) {
                 if (comma) {
@@ -215,7 +215,7 @@ public class Method extends JavaElement {
 
                 sb.append(typeParameter.getFormattedContent(compilationUnit));
             }
-            sb.append("> ");
+            sb.append("> "); //$NON-NLS-1$
         }
 
         if (!constructor) {

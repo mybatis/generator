@@ -34,8 +34,8 @@ public class MapperAnnotationPlugin extends PluginAdapter {
     public boolean clientGenerated(Interface interfaze, TopLevelClass topLevelClass,
             IntrospectedTable introspectedTable) {
 
-        interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Mapper"));
-        interfaze.addAnnotation("@Mapper");
+        interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Mapper")); //$NON-NLS-1$
+        interfaze.addAnnotation("@Mapper"); //$NON-NLS-1$
         return true;
     }
 }

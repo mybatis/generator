@@ -33,6 +33,12 @@
       <topic href="html/javadoc/org/mybatis/generator/internal/util/package-summary.html" label="org.mybatis.generator.internal.util" />
       <topic href="html/javadoc/org/mybatis/generator/internal/util/messages/package-summary.html" label="org.mybatis.generator.internal.util.messages" />
       <topic href="html/javadoc/org/mybatis/generator/logging/package-summary.html" label="org.mybatis.generator.logging" />
+      <topic href="html/javadoc/org/mybatis/generator/logging/commons/package-summary.html" label="org.mybatis.generator.logging.commons" />
+      <topic href="html/javadoc/org/mybatis/generator/logging/jdk14/package-summary.html" label="org.mybatis.generator.logging.jdk14" />
+      <topic href="html/javadoc/org/mybatis/generator/logging/log4j/package-summary.html" label="org.mybatis.generator.logging.log4j" />
+      <topic href="html/javadoc/org/mybatis/generator/logging/log4j2/package-summary.html" label="org.mybatis.generator.logging.log4j2" />
+      <topic href="html/javadoc/org/mybatis/generator/logging/nologging/package-summary.html" label="org.mybatis.generator.logging.nologging" />
+      <topic href="html/javadoc/org/mybatis/generator/logging/slf4j/package-summary.html" label="org.mybatis.generator.logging.slf4j" />
       <topic href="html/javadoc/org/mybatis/generator/plugins/package-summary.html" label="org.mybatis.generator.plugins" />
    </topic>
    
@@ -42,6 +48,11 @@
       <topic href="html/javadoc/org/mybatis/generator/eclipse/ui/package-summary.html" label="org.mybatis.generator.eclipse.ui" />
       <topic href="html/javadoc/org/mybatis/generator/eclipse/ui/actions/package-summary.html" label="org.mybatis.generator.eclipse.ui.actions" />
       <topic href="html/javadoc/org/mybatis/generator/eclipse/ui/ant/package-summary.html" label="org.mybatis.generator.eclipse.ui.ant" />
+      <topic href="html/javadoc/org/mybatis/generator/eclipse/ui/ant/logging/package-summary.html" label="org.mybatis.generator.eclipse.ui.ant.logging" />
+      <topic href="html/javadoc/org/mybatis/generator/eclipse/ui/ant/logging/commons/package-summary.html" label="org.mybatis.generator.eclipse.ui.ant.logging.commons" />
+      <topic href="html/javadoc/org/mybatis/generator/eclipse/ui/ant/logging/log4j/package-summary.html" label="org.mybatis.generator.eclipse.ui.ant.logging.log4j" />
+      <topic href="html/javadoc/org/mybatis/generator/eclipse/ui/ant/logging/log4j2/package-summary.html" label="org.mybatis.generator.eclipse.ui.ant.logging.log4j2" />
+      <topic href="html/javadoc/org/mybatis/generator/eclipse/ui/ant/logging/slf4j/package-summary.html" label="org.mybatis.generator.eclipse.ui.ant.logging.slf4j" />
       <topic href="html/javadoc/org/mybatis/generator/eclipse/ui/content/package-summary.html" label="org.mybatis.generator.eclipse.ui.content" />
       <topic href="html/javadoc/org/mybatis/generator/eclipse/ui/launcher/package-summary.html" label="org.mybatis.generator.eclipse.ui.launcher" />
       <topic href="html/javadoc/org/mybatis/generator/eclipse/ui/launcher/tabs/package-summary.html" label="org.mybatis.generator.eclipse.ui.launcher.tabs" />

@@ -39,15 +39,15 @@ public class AntLogFactory implements AbstractLogFactory {
         if (loggingImplementation == null || loggingImplementation.length() == 0) {
             calculateDefaultImplementation();
         } else {
-            if ("SLF4J".equals(loggingImplementation)) {
+            if ("SLF4J".equals(loggingImplementation)) { //$NON-NLS-1$
                 setImplementation(new Slf4jLoggingLogFactory());
-            } else if ("COMMONS_LOGGING".equals(loggingImplementation)) {
+            } else if ("COMMONS_LOGGING".equals(loggingImplementation)) { //$NON-NLS-1$
                 setImplementation(new JakartaCommonsLoggingLogFactory());
-            } else if ("LOG4J2".equals(loggingImplementation)) {
+            } else if ("LOG4J2".equals(loggingImplementation)) { //$NON-NLS-1$
                 setImplementation(new Log4j2LoggingLogFactory());
-            } else if ("LOG4J".equals(loggingImplementation)) {
+            } else if ("LOG4J".equals(loggingImplementation)) { //$NON-NLS-1$
                 setImplementation(new Log4jLoggingLogFactory());
-            } else if ("JDK".equals(loggingImplementation)) {
+            } else if ("JDK".equals(loggingImplementation)) { //$NON-NLS-1$
                 setImplementation(new Jdk14LoggingLogFactory());
             } else {
                 setImplementation(new NoLoggingLogFactory());

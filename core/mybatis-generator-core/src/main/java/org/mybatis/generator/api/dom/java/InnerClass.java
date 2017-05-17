@@ -247,15 +247,15 @@ public class InnerClass extends JavaElement {
 
         if(!this.getTypeParameters().isEmpty()) {
             boolean comma = false;
-            sb.append("<");
+            sb.append("<"); //$NON-NLS-1$
             for (TypeParameter typeParameter: typeParameters) {
                 if(comma) {
-                    sb.append(", ");
+                    sb.append(", "); //$NON-NLS-1$
                 }
                 sb.append(typeParameter.getFormattedContent(compilationUnit));
                 comma = true;
             }
-            sb.append("> ");
+            sb.append("> "); //$NON-NLS-1$
         }
 
         if (superClass != null) {

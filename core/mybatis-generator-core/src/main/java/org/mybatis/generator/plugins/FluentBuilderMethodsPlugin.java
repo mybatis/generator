@@ -54,20 +54,20 @@ public class FluentBuilderMethodsPlugin extends  PluginAdapter {
         Method fluentMethod = new Method();
         fluentMethod.setVisibility(JavaVisibility.PUBLIC);
         fluentMethod.setReturnType(topLevelClass.getType());
-        fluentMethod.setName("with"+method.getName().substring(3)); //$NON-NLS-1$
+        fluentMethod.setName("with" + method.getName().substring(3)); //$NON-NLS-1$
         fluentMethod.getParameters().addAll(method.getParameters());
          
 
         context.getCommentGenerator().addGeneralMethodComment(fluentMethod,
                 introspectedTable);
         StringBuilder sb = new StringBuilder()
-          .append("this.")
+          .append("this.") //$NON-NLS-1$
           .append(method.getName())
-          .append("(")
+          .append('(')
           .append(introspectedColumn.getJavaProperty())
-          .append(");");
+          .append(");"); //$NON-NLS-1$
         fluentMethod.addBodyLine(sb.toString()); //$NON-NLS-1$
-        fluentMethod.addBodyLine("return this;");
+        fluentMethod.addBodyLine("return this;"); //$NON-NLS-1$
 
         topLevelClass.addMethod(fluentMethod);
 

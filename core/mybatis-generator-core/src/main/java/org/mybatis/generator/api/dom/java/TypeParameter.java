@@ -57,11 +57,11 @@ public class TypeParameter {
         sb.append(name);
         if (!extendsTypes.isEmpty()) {
 
-            sb.append(" extends ");
+            sb.append(" extends "); //$NON-NLS-1$
             boolean addAnd = false;
             for (FullyQualifiedJavaType type : extendsTypes) {
                 if (addAnd) {
-                    sb.append(" & ");
+                    sb.append(" & "); //$NON-NLS-1$
                 } else {
                     addAnd = true;
                 }

@@ -22,8 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import org.mybatis.generator.internal.util.messages.Messages;
-
 /**
  * The Class FullyQualifiedJavaType.
  *

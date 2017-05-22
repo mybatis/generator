@@ -21,7 +21,7 @@
   <parent>
     <groupId>org.mybatis</groupId>
     <artifactId>mybatis-parent</artifactId>
-    <version>28</version>
+    <version>29-SNAPSHOT</version>
     <relativePath />
   </parent>
 
@@ -132,11 +132,6 @@
             </tag>
           </tags>
         </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <version>3.3.0</version>
       </plugin>
     </plugins>
 

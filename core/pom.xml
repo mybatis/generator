@@ -133,11 +133,6 @@
           </tags>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <version>3.3.0</version>
-      </plugin>
     </plugins>
 
     <resources>

@@ -65,10 +65,22 @@ public class RootClassInfo {
         rootClassInfoMap.clear();
     }
 
+
+    /**
+     * This method assume the class identified by className has ready been loaded
+     * @param className fully-qualified class name
+     * @return the class object or null depending on if the class has been loaded
+     */
+    public static Class<?> retrieveClass(String className) {
+        RootClassInfo rootClassInfo = rootClassInfoMap.get(className);
+        return rootClassInfo == null ? null : rootClassInfo.clazz;
+    }
+
     private PropertyDescriptor[] propertyDescriptors;
     private String className;
     private List<String> warnings;
     private boolean genericMode = false;
+    private Class<?> clazz;
 
     private RootClassInfo(String className, List<String> warnings) {
         super();
@@ -86,7 +98,7 @@ public class RootClassInfo {
         }
 
         try {
-            Class<?> clazz = ObjectFactory.externalClassForName(nameWithoutGenerics);
+            clazz = ObjectFactory.externalClassForName(nameWithoutGenerics);
             BeanInfo bi = Introspector.getBeanInfo(clazz);
             propertyDescriptors = bi.getPropertyDescriptors();
         } catch (Exception e) {

@@ -15,15 +15,19 @@
  */
 package org.mybatis.generator.plugins;
 
-import java.util.List;
-import java.util.Properties;
-
-import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.codegen.RootClassInfo;
+import org.mybatis.generator.config.PropertyRegistry;
+import org.mybatis.generator.internal.util.SerialVerUIDUtil;
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.Properties;
 
 /**
  * This plugin adds the java.io.Serializable marker interface to all generated
@@ -92,19 +96,37 @@ public class SerializablePlugin extends PluginAdapter {
         }
         
         if (!suppressJavaInterface) {
-            topLevelClass.addImportedType(serializable);
-            topLevelClass.addSuperInterface(serializable);
+            String rootClass = getRootClass(introspectedTable);
+            if (rootClass == null || !isSuperClassSerializable(rootClass)) {
+                topLevelClass.addImportedType(serializable);
+                topLevelClass.addSuperInterface(serializable);
+            }
 
             Field field = new Field();
             field.setFinal(true);
-            field.setInitializationString("1L"); //$NON-NLS-1$
-            field.setName("serialVersionUID"); //$NON-NLS-1$
             field.setStatic(true);
+            field.setInitializationString(SerialVerUIDUtil.generateSerialVerUID(topLevelClass));
+            field.setName("serialVersionUID"); //$NON-NLS-1$
             field.setType(new FullyQualifiedJavaType("long")); //$NON-NLS-1$
             field.setVisibility(JavaVisibility.PRIVATE);
             context.getCommentGenerator().addFieldComment(field, introspectedTable);
-
-            topLevelClass.addField(field);
+            topLevelClass.addField(0, field);
         }
+    }
+
+    private boolean isSuperClassSerializable(String rootClass) {
+        Class<?> clazz = RootClassInfo.retrieveClass(rootClass);
+        return clazz != null && Serializable.class.isAssignableFrom(clazz);
+    }
+
+    private String getRootClass(IntrospectedTable introspectedTable) {
+        String rootClass = introspectedTable
+            .getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_CLASS);
+        if (rootClass == null) {
+            Properties properties = context
+                .getJavaModelGeneratorConfiguration().getProperties();
+            rootClass = properties.getProperty(PropertyRegistry.ANY_ROOT_CLASS);
+        }
+        return rootClass;
     }
 }

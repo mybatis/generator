@@ -109,6 +109,18 @@ public class InnerClass extends JavaElement {
     }
 
     /**
+     * Adds the field.
+     *
+     * @param index
+     *            the index
+     * @param field
+     *            the field
+     */
+    public void addField(int index, Field field) {
+        fields.add(index, field);
+    }
+
+    /**
      * Gets the super class.
      *
      * @return Returns the superClass.

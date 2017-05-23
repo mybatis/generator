@@ -200,8 +200,9 @@
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-api</artifactId>
-        <version>1.7.21</version>
+        <version>1.7.25</version>
       </dependency>
+      <!-- TODO: Raising above 2.3 required jdk 7 usage -->
       <dependency>
         <groupId>org.apache.logging.log4j</groupId>
         <artifactId>log4j-api</artifactId>
@@ -212,6 +213,7 @@
         <artifactId>commons-logging</artifactId>
         <version>1.2</version>
       </dependency>
+      <!-- TODO: Raising above 1.9.9 required jdk 8 usage -->
       <dependency>
         <groupId>org.apache.ant</groupId>
         <artifactId>ant</artifactId>

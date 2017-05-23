@@ -47,19 +47,8 @@
           <jdbcURL>jdbc:hsqldb:mem:aname</jdbcURL>
           <jdbcUserId>sa</jdbcUserId>
           <overwrite>true</overwrite>
+          <includeAllDependencies>true</includeAllDependencies>
         </configuration>
-        <dependencies>
-          <dependency>
-            <groupId>org.hsqldb</groupId>
-            <artifactId>hsqldb</artifactId>
-            <version>${hsqldb.version}</version>
-          </dependency>
-          <dependency>
-            <groupId>org.mybatis.generator</groupId>
-            <artifactId>mybatis-generator-systests-common</artifactId>
-            <version>${project.version}</version>
-          </dependency>
-        </dependencies>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

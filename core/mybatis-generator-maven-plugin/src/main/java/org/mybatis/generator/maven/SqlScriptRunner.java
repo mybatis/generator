@@ -22,13 +22,16 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.Driver;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
+import org.mybatis.generator.internal.ObjectFactory;
 import org.mybatis.generator.internal.util.StringUtility;
 import org.mybatis.generator.internal.util.messages.Messages;
 
@@ -75,8 +78,19 @@ public class SqlScriptRunner {
         Connection connection = null;
 
         try {
-            Class.forName(driver);
-            connection = DriverManager.getConnection(url, userid, password);
+            Class<?> driverClass = ObjectFactory.externalClassForName(driver);
+            Driver theDriver = (Driver) driverClass.newInstance();
+            
+            Properties properties = new Properties();
+            if (userid != null) {
+                properties.setProperty("user", userid);
+            }
+            
+            if (password != null) {
+                properties.setProperty("password", password);
+            }
+            
+            connection = theDriver.connect(url, properties);
             connection.setAutoCommit(false);
 
             Statement statement = connection.createStatement();
@@ -92,8 +106,8 @@ public class SqlScriptRunner {
             closeStatement(statement);
             connection.commit();
             br.close();
-        } catch (ClassNotFoundException e) {
-            throw new MojoExecutionException("Class not found: " + e.getMessage());
+        } catch (ReflectiveOperationException e) {
+            throw new MojoExecutionException("Reflection Exception", e);
         } catch (FileNotFoundException e) {
             throw new MojoExecutionException("File note found: " + sourceFile);
         } catch (SQLException e) {
@@ -180,13 +194,13 @@ public class SqlScriptRunner {
         this.log = log;
     }
     
-    private BufferedReader getScriptReader() throws MojoExecutionException, FileNotFoundException {
+    private BufferedReader getScriptReader() throws MojoExecutionException, IOException {
         BufferedReader answer;
         
         if (sourceFile.startsWith("classpath:")) {
             String resource = sourceFile.substring("classpath:".length());
-            InputStream is = 
-                Thread.currentThread().getContextClassLoader().getResourceAsStream(resource);
+            URL url = ObjectFactory.getResource(resource);
+            InputStream is = url.openStream();
             if (is == null) {
                 throw new MojoExecutionException("SQL script file does not exist: " + resource);
             }

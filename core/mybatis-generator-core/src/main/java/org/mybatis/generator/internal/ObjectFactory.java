@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -56,12 +56,8 @@ public class ObjectFactory {
     /** The external class loaders. */
     private static List<ClassLoader> externalClassLoaders;
     
-    /** The resource class loaders. */
-    private static List<ClassLoader> resourceClassLoaders;
-    
     static {
     	externalClassLoaders = new ArrayList<ClassLoader>();
-        resourceClassLoaders = new ArrayList<ClassLoader>();
     }
     
     /**
@@ -80,19 +76,6 @@ public class ObjectFactory {
      */
     public static void reset() {
         externalClassLoaders.clear();
-        resourceClassLoaders.clear();
-    }
-
-    /**
-     * Adds a custom classloader to the collection of classloaders searched for resources. Currently, this is only used
-     * when searching for properties files that may be referenced in the configuration file.
-     *
-     * @param classLoader
-     *            the class loader
-     */
-    public static synchronized void addResourceClassLoader(
-            ClassLoader classLoader) {
-        ObjectFactory.resourceClassLoaders.add(classLoader);
     }
 
     /**
@@ -194,7 +177,7 @@ public class ObjectFactory {
     public static URL getResource(String resource) {
         URL url;
 
-        for (ClassLoader classLoader : resourceClassLoaders) {
+        for (ClassLoader classLoader : externalClassLoaders) {
             url = classLoader.getResource(resource);
             if (url != null) {
               return url;

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+       Copyright 2013-2014 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+-->
+
+<!-- Created by Mahiar Mody for testing the MyBatis Generator Jaxb Annotations Plugin -->
+
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC">
+				<property name="" value="" />
+			</transactionManager>
+			<dataSource type="UNPOOLED">
+				<property name="driver" value="org.hsqldb.jdbcDriver" />
+				<property name="url" value="jdbc:hsqldb:hsql://localhost:9001/jat" />
+				<property name="username" value="sa" />
+			</dataSource>
+		</environment>
+	</environments>
+
+	<mappers>
+		<mapper resource="/resources/generatedFiles/src/fieldType/noLobs/sqlMaps/UserBlogMapper.xml" />
+		<mapper resource="/resources/generatedFiles/src/fieldType/noLobs/sqlMaps/UserPhotosMapper.xml" />
+		<mapper resource="/resources/generatedFiles/src/fieldType/noLobs/sqlMaps/UserSkillsMapper.xml" />
+		<mapper resource="/resources/generatedFiles/src/fieldType/noLobs/sqlMaps/UsersMapper.xml" />
+		<mapper resource="/resources/generatedFiles/src/fieldType/noLobs/sqlMaps/UsersToSkillsMapper.xml" />
+		<mapper resource="/resources/generatedFiles/src/fieldType/noLobs/sqlMaps/UserTutorialMapper.xml" />
+
+		<mapper resource="/resources/generatedFiles/src/fieldType/withLobs/sqlMaps/UserBlogMapper.xml" />
+		<mapper resource="/resources/generatedFiles/src/fieldType/withLobs/sqlMaps/UserPhotosMapper.xml" />
+		<mapper resource="/resources/generatedFiles/src/fieldType/withLobs/sqlMaps/UserSkillsMapper.xml" />
+		<mapper resource="/resources/generatedFiles/src/fieldType/withLobs/sqlMaps/UsersMapper.xml" />
+		<mapper resource="/resources/generatedFiles/src/fieldType/withLobs/sqlMaps/UsersToSkillsMapper.xml" />
+		<mapper resource="/resources/generatedFiles/src/fieldType/withLobs/sqlMaps/UserTutorialMapper.xml" />
+
+		<mapper resource="/resources/generatedFiles/src/propertyType/noLobs/sqlMaps/UserBlogMapper.xml" />
+		<mapper resource="/resources/generatedFiles/src/propertyType/noLobs/sqlMaps/UserPhotosMapper.xml" />
+		<mapper resource="/resources/generatedFiles/src/propertyType/noLobs/sqlMaps/UserSkillsMapper.xml" />
+		<mapper resource="/resources/generatedFiles/src/propertyType/noLobs/sqlMaps/UsersMapper.xml" />
+		<mapper resource="/resources/generatedFiles/src/propertyType/noLobs/sqlMaps/UsersToSkillsMapper.xml" />
+		<mapper resource="/resources/generatedFiles/src/propertyType/noLobs/sqlMaps/UserTutorialMapper.xml" />
+
+		<mapper resource="/resources/generatedFiles/src/propertyType/withLobs/sqlMaps/UserBlogMapper.xml" />
+		<mapper resource="/resources/generatedFiles/src/propertyType/withLobs/sqlMaps/UserPhotosMapper.xml" />
+		<mapper resource="/resources/generatedFiles/src/propertyType/withLobs/sqlMaps/UserSkillsMapper.xml" />
+		<mapper resource="/resources/generatedFiles/src/propertyType/withLobs/sqlMaps/UsersMapper.xml" />
+		<mapper resource="/resources/generatedFiles/src/propertyType/withLobs/sqlMaps/UsersToSkillsMapper.xml" />
+		<mapper resource="/resources/generatedFiles/src/propertyType/withLobs/sqlMaps/UserTutorialMapper.xml" />
+	</mappers>
+
+</configuration>

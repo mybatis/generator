@@ -33,6 +33,23 @@
 
   <inceptionYear>2006</inceptionYear>
 
+  <description>Parent POM for MyBatis Generator</description>
+
+  <scm>
+    <url>https://github.com/mybatis/generator</url>
+    <connection>scm:git:ssh://github.com/mybatis/generator.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/mybatis/generator.git</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
+  <issueManagement>
+    <system>GitHub Issue Management</system>
+    <url>https://github.com/mybatis/generator/issues</url>
+  </issueManagement>
+  <ciManagement>
+    <system>Travis CI</system>
+    <url>https://travis-ci.org/mybatis/generator/</url>
+  </ciManagement>
+
   <properties>
     <findbugs.onlyAnalyze>org.mybatis.generator.*</findbugs.onlyAnalyze>
     <clirr.comparisonVersion>1.3.2</clirr.comparisonVersion>
@@ -397,22 +414,5 @@
       </build>
     </profile>
   </profiles>
-
-  <description>Parent POM for MyBatis Generator</description>
-
-  <scm>
-    <url>https://github.com/mybatis/generator</url>
-    <connection>scm:git:ssh://github.com/mybatis/generator.git</connection>
-    <developerConnection>scm:git:ssh://git@github.com/mybatis/generator.git</developerConnection>
-    <tag>HEAD</tag>
-  </scm>
-  <issueManagement>
-    <system>GitHub Issue Management</system>
-    <url>https://github.com/mybatis/generator/issues</url>
-  </issueManagement>
-  <ciManagement>
-    <system>Travis CI</system>
-    <url>https://travis-ci.org/mybatis/generator/</url>
-  </ciManagement>
 
 </project>

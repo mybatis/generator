@@ -26,6 +26,7 @@ public class JavaDomUtils {
      * @param fqjt the type in question
      */
     public static String calculateTypeName(CompilationUnit compilationUnit, FullyQualifiedJavaType fqjt) {
+
         if (fqjt.getTypeArguments().size() > 0) {
             return calculateParameterizedTypeName(compilationUnit, fqjt);
         }
@@ -39,12 +40,12 @@ public class JavaDomUtils {
             return fqjt.getFullyQualifiedName();
         }
     }
-    
+
     private static String calculateParameterizedTypeName(CompilationUnit compilationUnit,
             FullyQualifiedJavaType fqjt) {
         String baseTypeName = calculateTypeName(compilationUnit,
                 new FullyQualifiedJavaType(fqjt.getFullyQualifiedNameWithoutTypeParameters()));
-        
+
         StringBuilder sb = new StringBuilder();
         sb.append(baseTypeName);
         sb.append('<');
@@ -58,11 +59,11 @@ public class JavaDomUtils {
             sb.append(calculateTypeName(compilationUnit, ft));
         }
         sb.append('>');
-        
+
         return sb.toString();
-        
+
     }
-    
+
     private static boolean typeDoesNotRequireImport(FullyQualifiedJavaType fullyQualifiedJavaType) {
         return fullyQualifiedJavaType.isPrimitive()
                 || !fullyQualifiedJavaType.isExplicitlyImported();

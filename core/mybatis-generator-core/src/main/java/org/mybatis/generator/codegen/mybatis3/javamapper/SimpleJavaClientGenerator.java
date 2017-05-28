@@ -50,7 +50,7 @@ public class SimpleJavaClientGenerator extends AbstractJavaClientGenerator {
     public SimpleJavaClientGenerator(boolean requiresMatchedXMLGenerator) {
         super(requiresMatchedXMLGenerator);
     }
-    
+
     @Override
     public List<CompilationUnit> getCompilationUnits() {
         progressCallback.startTask(getString("Progress.17", //$NON-NLS-1$
@@ -67,7 +67,7 @@ public class SimpleJavaClientGenerator extends AbstractJavaClientGenerator {
                 .getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
         if (!stringHasValue(rootInterface)) {
             rootInterface = context.getJavaClientGeneratorConfiguration()
-                .getProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
+                    .getProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
         }
 
         if (stringHasValue(rootInterface)) {
@@ -76,7 +76,7 @@ public class SimpleJavaClientGenerator extends AbstractJavaClientGenerator {
             interfaze.addSuperInterface(fqjt);
             interfaze.addImportedType(fqjt);
         }
-        
+
         addDeleteByPrimaryKeyMethod(interfaze);
         addInsertMethod(interfaze);
         addSelectByPrimaryKeyMethod(interfaze);
@@ -88,7 +88,7 @@ public class SimpleJavaClientGenerator extends AbstractJavaClientGenerator {
                 introspectedTable)) {
             answer.add(interfaze);
         }
-        
+
         List<CompilationUnit> extraCompilationUnits = getExtraCompilationUnits();
         if (extraCompilationUnits != null) {
             answer.addAll(extraCompilationUnits);

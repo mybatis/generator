@@ -39,7 +39,7 @@ public class AnnotatedUpdateByExampleSelectiveMethodGenerator extends UpdateByEx
         sb.append(".class, method=\""); //$NON-NLS-1$
         sb.append(introspectedTable.getUpdateByExampleSelectiveStatementId());
         sb.append("\")"); //$NON-NLS-1$
-        
+
         method.addAnnotation(sb.toString());
     }
 

@@ -52,14 +52,14 @@ import org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl;
  * @author Jeff Butler
  */
 public class ObjectFactory {
-    
+
     /** The external class loaders. */
     private static List<ClassLoader> externalClassLoaders;
-    
+
     static {
         externalClassLoaders = new ArrayList<ClassLoader>();
     }
-    
+
     /**
      * Utility class. No instances allowed
      */
@@ -90,7 +90,7 @@ public class ObjectFactory {
             ClassLoader classLoader) {
         ObjectFactory.externalClassLoaders.add(classLoader);
     }
-    
+
     /**
      * This method returns a class loaded from the context classloader, or the classloader supplied by a client. This is
      * appropriate for JDBC drivers, model root classes, etc. It is not appropriate for any class that extends one of
@@ -115,7 +115,7 @@ public class ObjectFactory {
                 // ignore - fail safe below
             }
         }
-        
+
         return internalClassForName(type);
     }
 
@@ -183,7 +183,7 @@ public class ObjectFactory {
                 return url;
             }
         }
-        
+
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
         url = cl.getResource(resource);
 
@@ -341,7 +341,7 @@ public class ObjectFactory {
 
         return answer;
     }
-    
+
     /**
      * Creates a new Object object.
      *
@@ -361,7 +361,7 @@ public class ObjectFactory {
 
         return answer;
     }
-    
+
     /**
      * Creates a new Object object.
      *
@@ -414,7 +414,7 @@ public class ObjectFactory {
 
         return answer;
     }
-    
+
     /**
      * Creates a new Object object.
      *

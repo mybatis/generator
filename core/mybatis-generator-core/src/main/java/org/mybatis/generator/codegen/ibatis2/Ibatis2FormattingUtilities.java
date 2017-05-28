@@ -28,7 +28,7 @@ import org.mybatis.generator.api.IntrospectedColumn;
  * @author Jeff Butler
  */
 public class Ibatis2FormattingUtilities {
-    
+
     /**
      * Utility class - no instances.
      */

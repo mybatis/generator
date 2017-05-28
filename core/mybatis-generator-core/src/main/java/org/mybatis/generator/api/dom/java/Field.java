@@ -28,13 +28,13 @@ public class Field extends JavaElement {
         // use a default name to avoid NPE
         this("foo", FullyQualifiedJavaType.getIntInstance()); //$NON-NLS-1$
     }
-    
+
     public Field(String name, FullyQualifiedJavaType type) {
         super();
         this.name = name;
         this.type = type;
     }
-    
+
     public Field(Field field) {
         super(field);
         this.type = field.type;
@@ -86,11 +86,11 @@ public class Field extends JavaElement {
         if (isTransient()) {
             sb.append("transient "); //$NON-NLS-1$
         }
-        
+
         if (isVolatile()) {
             sb.append("volatile "); //$NON-NLS-1$
         }
-        
+
         sb.append(JavaDomUtils.calculateTypeName(compilationUnit, type));
 
         sb.append(' ');

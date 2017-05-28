@@ -30,7 +30,7 @@ import org.mybatis.generator.api.dom.OutputUtilities;
  * @author Jeff Butler
  */
 public class InnerClass extends JavaElement {
-    
+
     /** The fields. */
     private List<Field> fields;
 
@@ -57,7 +57,7 @@ public class InnerClass extends JavaElement {
 
     /** The is abstract. */
     private boolean isAbstract;
-    
+
     /** The initialization blocks. */
     private List<InitializationBlock> initializationBlocks;
 
@@ -248,7 +248,7 @@ public class InnerClass extends JavaElement {
         if (!this.getTypeParameters().isEmpty()) {
             boolean comma = false;
             sb.append("<"); //$NON-NLS-1$
-            for (TypeParameter typeParameter: typeParameters) {
+            for (TypeParameter typeParameter : typeParameters) {
                 if (comma) {
                     sb.append(", "); //$NON-NLS-1$
                 }
@@ -280,7 +280,7 @@ public class InnerClass extends JavaElement {
 
         sb.append(" {"); //$NON-NLS-1$
         indentLevel++;
-        
+
         Iterator<Field> fldIter = fields.iterator();
         while (fldIter.hasNext()) {
             OutputUtilities.newLine(sb);

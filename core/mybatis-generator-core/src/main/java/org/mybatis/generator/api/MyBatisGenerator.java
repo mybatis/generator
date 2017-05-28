@@ -366,7 +366,7 @@ public class MyBatisGenerator {
             warnings.add(e.getMessage());
         }
     }
-    
+
     /**
      * Writes, or overwrites, the contents of the specified file.
      *
@@ -387,7 +387,7 @@ public class MyBatisGenerator {
         } else {
             osw = new OutputStreamWriter(fos, fileEncoding);
         }
-        
+
         BufferedWriter bw = new BufferedWriter(osw);
         bw.write(content);
         bw.close();

@@ -46,7 +46,7 @@ public class ProviderInsertSelectiveMethodGenerator extends AbstractJavaProvider
     public void addClassElements(TopLevelClass topLevelClass) {
         Set<String> staticImports = new TreeSet<String>();
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
-        
+
         if (useLegacyBuilder) {
             staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.BEGIN"); //$NON-NLS-1$
             staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.INSERT_INTO"); //$NON-NLS-1$
@@ -98,7 +98,7 @@ public class ProviderInsertSelectiveMethodGenerator extends AbstractJavaProvider
                 method.addBodyLine("}"); //$NON-NLS-1$
             }
         }
-        
+
         method.addBodyLine(""); //$NON-NLS-1$
         if (useLegacyBuilder) {
             method.addBodyLine("return SQL();"); //$NON-NLS-1$

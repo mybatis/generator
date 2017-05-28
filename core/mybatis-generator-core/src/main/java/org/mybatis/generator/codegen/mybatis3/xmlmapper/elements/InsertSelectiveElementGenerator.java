@@ -94,7 +94,7 @@ public class InsertSelectiveElementGenerator extends
                 // if it is a sequence column, it is not optional
                 // This is required for MyBatis3 because MyBatis3 parses
                 // and calculates the SQL before executing the selectKey
-                
+
                 // if it is primitive, we cannot do a null check
                 sb.setLength(0);
                 sb.append(MyBatis3FormattingUtilities
@@ -109,8 +109,8 @@ public class InsertSelectiveElementGenerator extends
                 valuesTrimElement.addElement(new TextElement(sb.toString()));
 
                 continue;
-            }            
-            
+            }
+
             XmlElement insertNotNullElement = new XmlElement("if"); //$NON-NLS-1$
             sb.setLength(0);
             sb.append(introspectedColumn.getJavaProperty());

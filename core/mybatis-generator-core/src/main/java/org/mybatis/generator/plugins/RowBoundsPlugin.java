@@ -41,7 +41,7 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
  * @author Jeff Butler
  */
 public class RowBoundsPlugin extends PluginAdapter {
-    
+
     private FullyQualifiedJavaType rowBounds;
     private Map<FullyQualifiedTable, List<XmlElement>> elementsToAdd;
 
@@ -49,7 +49,7 @@ public class RowBoundsPlugin extends PluginAdapter {
         rowBounds = new FullyQualifiedJavaType("org.apache.ibatis.session.RowBounds"); //$NON-NLS-1$
         elementsToAdd = new HashMap<FullyQualifiedTable, List<XmlElement>>();
     }
-    
+
     @Override
     public boolean validate(List<String> warnings) {
         return true;
@@ -108,7 +108,7 @@ public class RowBoundsPlugin extends PluginAdapter {
 
         return true;
     }
-    
+
     /**
      * Use the method copy constructor to create a new method, then
      * add the rowBounds parameter.
@@ -132,7 +132,7 @@ public class RowBoundsPlugin extends PluginAdapter {
      */
     private void copyAndSaveElement(XmlElement element, FullyQualifiedTable fqt) {
         XmlElement newElement = new XmlElement(element);
-            
+
         // remove old id attribute and add a new one with the new name
         for (Iterator<Attribute> iterator = newElement.getAttributes().iterator(); iterator.hasNext();) {
             Attribute attribute = iterator.next();
@@ -143,7 +143,7 @@ public class RowBoundsPlugin extends PluginAdapter {
                 break;
             }
         }
-            
+
         // save the new element locally.   We'll add it to the document
         // later
         List<XmlElement> elements = elementsToAdd.get(fqt);

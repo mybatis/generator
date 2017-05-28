@@ -59,7 +59,7 @@ public class ProviderUpdateByPrimaryKeySelectiveMethodGenerator extends Abstract
 
         FullyQualifiedJavaType fqjt = introspectedTable.getRules().calculateAllFieldsClass();
         importedTypes.add(fqjt);
-        
+
         Method method = new Method(introspectedTable.getUpdateByPrimaryKeySelectiveStatementId());
         method.setReturnType(FullyQualifiedJavaType.getStringInstance());
         method.setVisibility(JavaVisibility.PUBLIC);
@@ -73,7 +73,7 @@ public class ProviderUpdateByPrimaryKeySelectiveMethodGenerator extends Abstract
         } else {
             method.addBodyLine("SQL sql = new SQL();"); //$NON-NLS-1$
         }
-        
+
         method.addBodyLine(String.format("%sUPDATE(\"%s\");", //$NON-NLS-1$
                 builderPrefix,
                 escapeStringForJava(introspectedTable.getFullyQualifiedTableNameAtRuntime())));
@@ -90,7 +90,7 @@ public class ProviderUpdateByPrimaryKeySelectiveMethodGenerator extends Abstract
                     builderPrefix,
                     escapeStringForJava(getEscapedColumnName(introspectedColumn)),
                     getParameterClause(introspectedColumn)));
-                
+
             if (!introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {
                 method.addBodyLine("}"); //$NON-NLS-1$
             }
@@ -104,9 +104,9 @@ public class ProviderUpdateByPrimaryKeySelectiveMethodGenerator extends Abstract
                     escapeStringForJava(getEscapedColumnName(introspectedColumn)),
                     getParameterClause(introspectedColumn)));
         }
-        
+
         method.addBodyLine(""); //$NON-NLS-1$
-        
+
         if (useLegacyBuilder) {
             method.addBodyLine("return SQL();"); //$NON-NLS-1$
         } else {

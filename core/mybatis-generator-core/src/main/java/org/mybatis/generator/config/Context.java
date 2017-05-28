@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -49,13 +49,13 @@ import org.mybatis.generator.internal.db.DatabaseIntrospector;
  * @author Jeff Butler
  */
 public class Context extends PropertyHolder {
-    
+
     /** The id. */
     private String id;
 
     /** The jdbc connection configuration. */
     private JDBCConnectionConfiguration jdbcConnectionConfiguration;
-    
+
     private ConnectionFactoryConfiguration connectionFactoryConfiguration;
 
     /** The sql map generator configuration. */
@@ -102,13 +102,13 @@ public class Context extends PropertyHolder {
 
     /** The auto delimit keywords. */
     private Boolean autoDelimitKeywords;
-    
+
     /** The java formatter. */
     private JavaFormatter javaFormatter;
-    
+
     /** The xml formatter. */
     private XmlFormatter xmlFormatter;
-    
+
     /**
      * Constructs a Context object.
      * 
@@ -217,7 +217,7 @@ public class Context extends PropertyHolder {
         } else {
             connectionFactoryConfiguration.validate(errors);
         }
-            
+
         if (javaModelGeneratorConfiguration == null) {
             errors.add(getString("ValidationError.8", id)); //$NON-NLS-1$
         } else {
@@ -234,7 +234,7 @@ public class Context extends PropertyHolder {
         } catch (Exception e) {
             errors.add(getString("ValidationError.25", id)); //$NON-NLS-1$
         }
-        
+
         if (it != null && it.requiresXMLGenerator()) {
             if (sqlMapGeneratorConfiguration == null) {
                 errors.add(getString("ValidationError.9", id)); //$NON-NLS-1$
@@ -350,9 +350,9 @@ public class Context extends PropertyHolder {
      */
     public XmlElement toXmlElement() {
         XmlElement xmlElement = new XmlElement("context"); //$NON-NLS-1$
-        
+
         xmlElement.addAttribute(new Attribute("id", id)); //$NON-NLS-1$
-        
+
         if (defaultModelType != ModelType.CONDITIONAL) {
             xmlElement.addAttribute(new Attribute(
                     "defaultModelType", defaultModelType.getModelType())); //$NON-NLS-1$
@@ -369,7 +369,7 @@ public class Context extends PropertyHolder {
         }
 
         addPropertyXmlElements(xmlElement);
-        
+
         for (PluginConfiguration pluginConfiguration : pluginConfigurations) {
             xmlElement.addElement(pluginConfiguration.toXmlElement());
         }
@@ -479,7 +479,7 @@ public class Context extends PropertyHolder {
 
         return javaFormatter;
     }
-    
+
     /**
      * Gets the xml formatter.
      *
@@ -492,7 +492,7 @@ public class Context extends PropertyHolder {
 
         return xmlFormatter;
     }
-    
+
     /**
      * Gets the comment generator configuration.
      *
@@ -749,7 +749,7 @@ public class Context extends PropertyHolder {
         } else {
             connectionFactory = ObjectFactory.createConnectionFactory(this);
         }
-        
+
         return connectionFactory.getConnection();
     }
 

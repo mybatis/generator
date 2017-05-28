@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -51,7 +51,7 @@ public class ColumnOverride extends PropertyHolder {
 
     /** The configured delimited column name. */
     private String configuredDelimitedColumnName;
-    
+
     /**
      * If true, the column is a GENERATED ALWAYS column which means
      * that it should not be used in insert or update statements.

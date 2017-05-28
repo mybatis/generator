@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ public class JavaDomUtilsTest {
     @Test
     public void testGenericTypeBaseTypeImportedImported() {
         Interface interfaze = new Interface(new FullyQualifiedJavaType("com.foo.UserMapper"));
-        
+
         interfaze.addImportedType(new FullyQualifiedJavaType("java.util.Map"));
         
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType("java.util.Map<java.math.BigDecimal, java.util.List<com.beeant.dto.User>>");
@@ -43,7 +43,7 @@ public class JavaDomUtilsTest {
     @Test
     public void testGenericTypeWithAllTypeParametersImported() {
         Interface interfaze = new Interface(new FullyQualifiedJavaType("com.foo.UserMapper"));
-        
+
         interfaze.addImportedType(new FullyQualifiedJavaType("com.beeant.dto.User"));
         interfaze.addImportedType(new FullyQualifiedJavaType("java.math.BigDecimal"));
         interfaze.addImportedType(new FullyQualifiedJavaType("java.util.List"));
@@ -56,7 +56,7 @@ public class JavaDomUtilsTest {
     @Test
     public void testGenericTypeWithSomeParametersImported() {
         Interface interfaze = new Interface(new FullyQualifiedJavaType("com.foo.UserMapper"));
-        
+
         interfaze.addImportedType(new FullyQualifiedJavaType("com.beeant.dto.User"));
         
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType("java.util.Map<java.math.BigDecimal, java.util.List<com.beeant.dto.User>>");
@@ -67,7 +67,7 @@ public class JavaDomUtilsTest {
     @Test
     public void testGenericTypeWithAllImported() {
         Interface interfaze = new Interface(new FullyQualifiedJavaType("com.foo.UserMapper"));
-        
+
         interfaze.addImportedType(new FullyQualifiedJavaType("java.util.Map"));
         interfaze.addImportedType(new FullyQualifiedJavaType("java.util.List"));
         interfaze.addImportedType(new FullyQualifiedJavaType("com.beeant.dto.User"));
@@ -81,7 +81,7 @@ public class JavaDomUtilsTest {
     @Test
     public void testGenericTypeWithWildCardAllImported() {
         Interface interfaze = new Interface(new FullyQualifiedJavaType("com.foo.UserMapper"));
-        
+
         interfaze.addImportedType(new FullyQualifiedJavaType("java.util.Map"));
         interfaze.addImportedType(new FullyQualifiedJavaType("java.util.List"));
         interfaze.addImportedType(new FullyQualifiedJavaType("com.beeant.dto.User"));
@@ -95,7 +95,7 @@ public class JavaDomUtilsTest {
     @Test
     public void testGenericTypeWithWildCardSomeImported() {
         Interface interfaze = new Interface(new FullyQualifiedJavaType("com.foo.UserMapper"));
-        
+
         interfaze.addImportedType(new FullyQualifiedJavaType("java.util.Map"));
         interfaze.addImportedType(new FullyQualifiedJavaType("java.util.List"));
         interfaze.addImportedType(new FullyQualifiedJavaType("java.math.BigDecimal"));
@@ -108,11 +108,11 @@ public class JavaDomUtilsTest {
     @Test
     public void testGenericTypeWithWildCard() {
         Interface interfaze = new Interface(new FullyQualifiedJavaType("com.foo.UserMapper"));
-        
+
         interfaze.addImportedType(new FullyQualifiedJavaType("java.util.Map"));
         interfaze.addImportedType(new FullyQualifiedJavaType("java.util.List"));
         interfaze.addImportedType(new FullyQualifiedJavaType("java.math.BigDecimal"));
-        
+
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType("java.util.Map<java.math.BigDecimal, java.util.List<?>>");
         assertEquals("Map<BigDecimal, List<?>>",
                 JavaDomUtils.calculateTypeName(interfaze, fqjt));

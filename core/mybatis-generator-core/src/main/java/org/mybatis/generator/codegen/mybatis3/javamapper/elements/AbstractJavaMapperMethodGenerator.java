@@ -54,7 +54,7 @@ public abstract class AbstractJavaMapperMethodGenerator extends
             sb.append(introspectedColumn.getJavaProperty());
             sb.append('\"');
         }
-        
+
         if (stringHasValue(introspectedColumn.getTypeHandler())) {
             FullyQualifiedJavaType fqjt =
                     new FullyQualifiedJavaType(introspectedColumn.getTypeHandler());
@@ -63,7 +63,7 @@ public abstract class AbstractJavaMapperMethodGenerator extends
             sb.append(fqjt.getShortName());
             sb.append(".class"); //$NON-NLS-1$
         }
-        
+
         sb.append(", jdbcType=JdbcType."); //$NON-NLS-1$
         sb.append(introspectedColumn.getJdbcTypeName());
         if (idColumn) {
@@ -98,7 +98,7 @@ public abstract class AbstractJavaMapperMethodGenerator extends
             }
         }
     }
-    
+
     protected void addGeneratedKeyImports(Interface interfaze, GeneratedKey gk) {
         IntrospectedColumn introspectedColumn = introspectedTable.getColumn(gk.getColumn());
         if (introspectedColumn != null) {

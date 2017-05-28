@@ -83,7 +83,7 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
                 addDefaultConstructor(topLevelClass);
             }
         }
-        
+
         String rootClass = getRootClass();
         for (IntrospectedColumn introspectedColumn : introspectedColumns) {
             if (RootClassInfo.getInstance(rootClass, warnings)
@@ -157,13 +157,13 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
         method.setConstructor(true);
         method.setName(topLevelClass.getType().getShortName());
         context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
-            
+
         for (IntrospectedColumn introspectedColumn : constructorColumns) {
             method.addParameter(new Parameter(introspectedColumn.getFullyQualifiedJavaType(),
                     introspectedColumn.getJavaProperty()));
             topLevelClass.addImportedType(introspectedColumn.getFullyQualifiedJavaType());
         }
-        
+
         StringBuilder sb = new StringBuilder();
         List<String> superColumns = new LinkedList<String>();
         if (introspectedTable.getRules().generatePrimaryKeyClass()) {
@@ -196,7 +196,7 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
 
         topLevelClass.addMethod(method);
     }
-    
+
     private List<IntrospectedColumn> getColumnsInThisClass() {
         List<IntrospectedColumn> introspectedColumns;
         if (includePrimaryKeyColumns()) {
@@ -213,7 +213,7 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
                 introspectedColumns = introspectedTable.getBaseColumns();
             }
         }
-        
+
         return introspectedColumns;
     }
 }

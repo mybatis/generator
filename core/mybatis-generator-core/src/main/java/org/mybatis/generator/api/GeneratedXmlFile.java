@@ -23,7 +23,7 @@ import org.mybatis.generator.api.dom.xml.Document;
  * @author Jeff Butler
  */
 public class GeneratedXmlFile extends GeneratedFile {
-    
+
     /** The document. */
     private Document document;
 
@@ -35,7 +35,7 @@ public class GeneratedXmlFile extends GeneratedFile {
 
     /** The is mergeable. */
     private boolean isMergeable;
-    
+
     /** The xml formatter. */
     private XmlFormatter xmlFormatter;
 
@@ -101,7 +101,7 @@ public class GeneratedXmlFile extends GeneratedFile {
     public boolean isMergeable() {
         return isMergeable;
     }
-    
+
     public void setMergeable(boolean isMergeable) {
         this.isMergeable = isMergeable;
     }

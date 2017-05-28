@@ -39,7 +39,7 @@ public class AnnotatedCountByExampleMethodGenerator extends CountByExampleMethod
         sb.append(".class, method=\""); //$NON-NLS-1$
         sb.append(introspectedTable.getCountByExampleStatementId());
         sb.append("\")"); //$NON-NLS-1$
-        
+
         method.addAnnotation(sb.toString());
     }
 

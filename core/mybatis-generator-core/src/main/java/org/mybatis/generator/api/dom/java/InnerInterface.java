@@ -136,7 +136,7 @@ public class InnerInterface extends JavaElement {
         if (fields.size() > 0 && methods.size() > 0) {
             OutputUtilities.newLine(sb);
         }
-        
+
         Iterator<Method> mtdIter = getMethods().iterator();
         while (mtdIter.hasNext()) {
             newLine(sb);

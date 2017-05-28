@@ -62,16 +62,16 @@ public class DatabaseIntrospector {
 
     /** The database meta data. */
     private DatabaseMetaData databaseMetaData;
-    
+
     /** The java type resolver. */
     private JavaTypeResolver javaTypeResolver;
-    
+
     /** The warnings. */
     private List<String> warnings;
-    
+
     /** The context. */
     private Context context;
-    
+
     /** The logger. */
     private Log logger;
 
@@ -129,7 +129,7 @@ public class DatabaseIntrospector {
                 short keySeq = rs.getShort("KEY_SEQ"); //$NON-NLS-1$
                 keyColumns.put(keySeq, columnName);
             }
-            
+
             for (String columnName : keyColumns.values()) {
                 introspectedTable.addPrimaryKeyColumn(columnName);
             }
@@ -197,7 +197,7 @@ public class DatabaseIntrospector {
                         generatedKey.getColumn(), table.toString()));
             }
         }
-        
+
         for (IntrospectedColumn ic : introspectedTable.getAllColumns()) {
             if (JavaReservedWords.containsWord(ic.getJavaProperty())) {
                 warnings.add(getString("Warning.26", //$NON-NLS-1$
@@ -434,7 +434,7 @@ public class DatabaseIntrospector {
             }
         }
     }
-    
+
     /**
      * Checks if is matched column.
      *
@@ -504,7 +504,7 @@ public class DatabaseIntrospector {
                     if (columnOverride.isColumnNameDelimited()) {
                         introspectedColumn.setColumnNameDelimited(true);
                     }
-                    
+
                     introspectedColumn.setGeneratedAlways(columnOverride.isGeneratedAlways());
 
                     introspectedColumn.setProperties(columnOverride
@@ -628,11 +628,11 @@ public class DatabaseIntrospector {
             introspectedColumn.setScale(rs.getInt("DECIMAL_DIGITS")); //$NON-NLS-1$
             introspectedColumn.setRemarks(rs.getString("REMARKS")); //$NON-NLS-1$
             introspectedColumn.setDefaultValue(rs.getString("COLUMN_DEF")); //$NON-NLS-1$
-            
+
             if (supportsIsAutoIncrement) {
                 introspectedColumn.setAutoIncrement("YES".equals(rs.getString("IS_AUTOINCREMENT"))); //$NON-NLS-1$ //$NON-NLS-2$
             }
-            
+
             if (supportsIsGeneratedColumn) {
                 introspectedColumn.setGeneratedColumn("YES".equals(rs.getString("IS_GENERATEDCOLUMN"))); //$NON-NLS-1$ //$NON-NLS-2$
             }
@@ -739,7 +739,7 @@ public class DatabaseIntrospector {
             }
 
             calculatePrimaryKey(table, introspectedTable);
-            
+
             enhanceIntrospectedTable(introspectedTable);
 
             answer.add(introspectedTable);

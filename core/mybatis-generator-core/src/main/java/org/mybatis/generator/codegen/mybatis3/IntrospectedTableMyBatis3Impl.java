@@ -47,9 +47,9 @@ import org.mybatis.generator.internal.ObjectFactory;
 public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
     
     protected List<AbstractJavaGenerator> javaModelGenerators;
-    
+
     protected List<AbstractJavaGenerator> clientGenerators;
-    
+
     protected AbstractXmlGenerator xmlMapperGenerator;
 
     public IntrospectedTableMyBatis3Impl() {
@@ -97,11 +97,11 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
 
         initializeAbstractGenerator(javaGenerator, warnings, progressCallback);
         clientGenerators.add(javaGenerator);
-        
+
         return javaGenerator;
     }
-    
-    protected AbstractJavaClientGenerator createJavaClientGenerator() {
+
+   protected AbstractJavaClientGenerator createJavaClientGenerator() {
         if (context.getJavaClientGeneratorConfiguration() == null) {
             return null;
         }
@@ -122,7 +122,7 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
             javaGenerator = (AbstractJavaClientGenerator) ObjectFactory
                     .createInternalObject(type);
         }
-        
+
         return javaGenerator;
     }
 
@@ -163,7 +163,7 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
         if (abstractGenerator == null) {
             return;
         }
-        
+
         abstractGenerator.setContext(context);
         abstractGenerator.setIntrospectedTable(this);
         abstractGenerator.setProgressCallback(progressCallback);

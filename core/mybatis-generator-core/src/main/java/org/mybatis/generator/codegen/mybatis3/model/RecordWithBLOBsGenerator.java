@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -70,7 +70,7 @@ public class RecordWithBLOBsGenerator extends AbstractJavaGenerator {
 
         if (introspectedTable.isConstructorBased()) {
             addParameterizedConstructor(topLevelClass);
-            
+
             if (!introspectedTable.isImmutable()) {
                 addDefaultConstructor(topLevelClass);
             }
@@ -115,7 +115,7 @@ public class RecordWithBLOBsGenerator extends AbstractJavaGenerator {
         }
         return answer;
     }
-    
+
     private void addParameterizedConstructor(TopLevelClass topLevelClass) {
         Method method = new Method();
         method.setVisibility(JavaVisibility.PUBLIC);
@@ -129,7 +129,7 @@ public class RecordWithBLOBsGenerator extends AbstractJavaGenerator {
                     introspectedColumn.getJavaProperty()));
             topLevelClass.addImportedType(introspectedColumn.getFullyQualifiedJavaType());
         }
-        
+
         boolean comma = false;
         StringBuilder sb = new StringBuilder();
         sb.append("super("); //$NON-NLS-1$

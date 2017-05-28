@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -42,7 +42,7 @@ import org.w3c.dom.Text;
  * @author Jeff Butler (derivation)
  */
 public class DomWriter {
-    
+
     /** The print writer. */
     protected PrintWriter printWriter;
 
@@ -212,7 +212,7 @@ public class DomWriter {
         if (document == null) {
             return null;
         }
-        
+
         return document.getXmlVersion();
     }
 
@@ -441,7 +441,7 @@ public class DomWriter {
         printWriter.print("<!--"); //$NON-NLS-1$
         String comment = node.getNodeValue();
         if (comment != null && comment.length() > 0) {
-            normalizeAndPrint(comment,  false);
+            normalizeAndPrint(comment, false);
         }
         printWriter.print("-->"); //$NON-NLS-1$
         printWriter.flush();

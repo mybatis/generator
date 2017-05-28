@@ -132,7 +132,7 @@ public class IgnoredColumn {
                     tableName));
         }
     }
-    
+
     public boolean matches(String columnName) {
         if (isColumnNameDelimited) {
             return this.columnName.equals(columnName);

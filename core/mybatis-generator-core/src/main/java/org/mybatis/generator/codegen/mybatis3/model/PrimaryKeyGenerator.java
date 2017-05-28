@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -69,7 +69,7 @@ public class PrimaryKeyGenerator extends AbstractJavaGenerator {
 
         if (introspectedTable.isConstructorBased()) {
             addParameterizedConstructor(topLevelClass);
-            
+
             if (!introspectedTable.isImmutable()) {
                 addDefaultConstructor(topLevelClass);
             }
@@ -116,14 +116,14 @@ public class PrimaryKeyGenerator extends AbstractJavaGenerator {
         }
         return answer;
     }
-    
+
     private void addParameterizedConstructor(TopLevelClass topLevelClass) {
         Method method = new Method();
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setConstructor(true);
         method.setName(topLevelClass.getType().getShortName());
         context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
-        
+
         StringBuilder sb = new StringBuilder();
         for (IntrospectedColumn introspectedColumn : introspectedTable
                 .getPrimaryKeyColumns()) {
@@ -137,7 +137,7 @@ public class PrimaryKeyGenerator extends AbstractJavaGenerator {
             sb.append(';');
             method.addBodyLine(sb.toString());
         }
-        
+
         topLevelClass.addMethod(method);
     }
 }

@@ -29,7 +29,7 @@ import org.xml.sax.SAXParseException;
  * @author Jeff Butler
  */
 public class ParserErrorHandler implements ErrorHandler {
-    
+
     /** The warnings. */
     private List<String> warnings;
 

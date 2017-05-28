@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -109,16 +109,16 @@ public class XmlFileMergerTest {
 
         parentElement.addElement(answer);
     }
-    
+
     private void addCdataNode1(CommentGenerator commentGenerator, XmlElement parentElement) {
         XmlElement answer = new XmlElement("select");
         answer.addAttribute(new Attribute("id", "selectWithCdata1"));
         commentGenerator.addComment(answer);
-        
+
         answer.addElement(new TextElement("<![CDATA["));
         answer.addElement(new TextElement("select foo from bar where foo < 22"));
         answer.addElement(new TextElement("]]>"));
-        
+
         parentElement.addElement(answer);
     }
 
@@ -126,9 +126,9 @@ public class XmlFileMergerTest {
         XmlElement answer = new XmlElement("select");
         answer.addAttribute(new Attribute("id", "selectWithCdata2"));
         commentGenerator.addComment(answer);
-        
+
         answer.addElement(new TextElement("select foo from bar where foo <![CDATA[ < ]]> 22"));
-        
+
         parentElement.addElement(answer);
     }
 }

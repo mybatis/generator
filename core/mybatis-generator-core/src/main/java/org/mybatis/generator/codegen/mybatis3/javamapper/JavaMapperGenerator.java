@@ -59,7 +59,7 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
     public JavaMapperGenerator(boolean requiresMatchedXMLGenerator) {
         super(requiresMatchedXMLGenerator);
     }
-    
+
     @Override
     public List<CompilationUnit> getCompilationUnits() {
         progressCallback.startTask(getString("Progress.17", //$NON-NLS-1$
@@ -76,7 +76,7 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
                 .getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
         if (!stringHasValue(rootInterface)) {
             rootInterface = context.getJavaClientGeneratorConfiguration()
-                .getProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
+                    .getProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
         }
 
         if (stringHasValue(rootInterface)) {
@@ -85,7 +85,7 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
             interfaze.addSuperInterface(fqjt);
             interfaze.addImportedType(fqjt);
         }
-        
+
         addCountByExampleMethod(interfaze);
         addDeleteByExampleMethod(interfaze);
         addDeleteByPrimaryKeyMethod(interfaze);
@@ -106,7 +106,7 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
                 introspectedTable)) {
             answer.add(interfaze);
         }
-        
+
         List<CompilationUnit> extraCompilationUnits = getExtraCompilationUnits();
         if (extraCompilationUnits != null) {
             answer.addAll(extraCompilationUnits);

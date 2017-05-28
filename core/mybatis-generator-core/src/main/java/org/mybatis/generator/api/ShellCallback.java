@@ -33,7 +33,7 @@ import org.mybatis.generator.exception.ShellException;
  * @author Jeff Butler
  */
 public interface ShellCallback {
-    
+
     /**
      * This method is called to ask the shell to resolve a project/package combination into a directory on the file
      * system. This method is called repeatedly (once for each generated file), so it would be wise for an implementing

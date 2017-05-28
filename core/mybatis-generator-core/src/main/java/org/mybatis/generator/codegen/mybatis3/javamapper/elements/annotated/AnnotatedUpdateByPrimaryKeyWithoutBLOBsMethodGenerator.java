@@ -37,7 +37,7 @@ public class AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator
         extends UpdateByPrimaryKeyWithoutBLOBsMethodGenerator {
 
     private boolean isSimple;
-    
+
     public AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator(boolean isSimple) {
         super();
         this.isSimple = isSimple;
@@ -45,7 +45,7 @@ public class AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator
 
     @Override
     public void addMapperAnnotations(Method method) {
-        
+
         method.addAnnotation("@Update({"); //$NON-NLS-1$
 
         StringBuilder sb = new StringBuilder();
@@ -68,7 +68,7 @@ public class AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator
             iter = ListUtilities.removeGeneratedAlwaysColumns(introspectedTable.getBaseColumns())
                    .iterator();
         }
-        
+
         while (iter.hasNext()) {
             IntrospectedColumn introspectedColumn = iter.next();
 
@@ -113,7 +113,7 @@ public class AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator
             }
             method.addAnnotation(sb.toString());
         }
-        
+
         method.addAnnotation("})"); //$NON-NLS-1$
     }
 

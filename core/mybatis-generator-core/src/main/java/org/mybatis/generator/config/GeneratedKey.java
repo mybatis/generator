@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ import org.mybatis.generator.internal.db.DatabaseDialects;
  * @author Jeff Butler
  */
 public class GeneratedKey {
-    
+
     /** The column. */
     private String column;
 
@@ -120,16 +120,16 @@ public class GeneratedKey {
      */
     public boolean isPlacedBeforeInsertInIbatis2() {
         boolean rc;
-        
+
         if (stringHasValue(type)) {
             rc = true;
         } else {
             rc = !isIdentity;
         }
-        
+
         return rc;
     }
-    
+
     /**
      * Gets the my batis3 order.
      *
@@ -138,7 +138,7 @@ public class GeneratedKey {
     public String getMyBatis3Order() {
         return isIdentity ? "AFTER" : "BEFORE"; //$NON-NLS-1$ //$NON-NLS-2$
     }
-    
+
     /**
      * To xml element.
      *
@@ -176,18 +176,18 @@ public class GeneratedKey {
                 !"pre".equals(type) && !"post".equals(type)) { //$NON-NLS-1$ //$NON-NLS-2$
             errors.add(getString("ValidationError.15", tableName)); //$NON-NLS-1$
         }
-        
+
         if ("pre".equals(type) && isIdentity) { //$NON-NLS-1$
             errors.add(getString("ValidationError.23", //$NON-NLS-1$
                     tableName));
         }
-        
+
         if ("post".equals(type) && !isIdentity) { //$NON-NLS-1$
             errors.add(getString("ValidationError.24", //$NON-NLS-1$
                     tableName));
         }
     }
-    
+
     /**
      * Checks if is jdbc standard.
      *

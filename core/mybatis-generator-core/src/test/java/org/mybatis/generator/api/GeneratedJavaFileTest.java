@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ public class GeneratedJavaFileTest {
         Interface ifc = new Interface(fqjt);
         JavaFormatter jf = new DefaultJavaFormatter();
         GeneratedJavaFile gjf = new GeneratedJavaFile(ifc, "src", jf);
-        
+
         assertEquals("TestInterface.java", gjf.getFileName());
         assertEquals("org.mybatis.test", gjf.getTargetPackage());
     }
@@ -41,7 +41,7 @@ public class GeneratedJavaFileTest {
         Interface ifc = new Interface(fqjt);
         JavaFormatter jf = new DefaultJavaFormatter();
         GeneratedJavaFile gjf = new GeneratedJavaFile(ifc, "src", jf);
-        
+
         assertEquals("TestInterface.java", gjf.getFileName());
         assertEquals("org.mybatis.test", gjf.getTargetPackage());
     }

@@ -116,13 +116,13 @@ public class ProviderApplyWhereMethodGenerator extends
         "}", //$NON-NLS-1$
         "" //$NON-NLS-1$
     };
-    
+
     private static final String[] LEGACY_ENDING_METHOD_LINES = {
         "if (sb.length() > 0) {", //$NON-NLS-1$
         "WHERE(sb.toString());", //$NON-NLS-1$
         "}" //$NON-NLS-1$
     };
-    
+
     private static final String[] ENDING_METHOD_LINES = {
         "if (sb.length() > 0) {", //$NON-NLS-1$
         "sql.WHERE(sb.toString());", //$NON-NLS-1$
@@ -168,7 +168,7 @@ public class ProviderApplyWhereMethodGenerator extends
         for (String methodLine : BEGINNING_METHOD_LINES) {
             method.addBodyLine(methodLine);
         }
-        
+
         if (useLegacyBuilder) {
             for (String methodLine : LEGACY_ENDING_METHOD_LINES) {
                 method.addBodyLine(methodLine);
@@ -178,7 +178,7 @@ public class ProviderApplyWhereMethodGenerator extends
                 method.addBodyLine(methodLine);
             }
         }
-        
+
         if (context.getPlugins().providerApplyWhereMethodGenerated(method, topLevelClass,
                 introspectedTable)) {
             topLevelClass.addStaticImports(staticImports);

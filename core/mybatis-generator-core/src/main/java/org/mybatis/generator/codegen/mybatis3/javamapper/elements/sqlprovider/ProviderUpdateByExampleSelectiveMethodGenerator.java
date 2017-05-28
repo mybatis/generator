@@ -57,7 +57,7 @@ public class ProviderUpdateByExampleSelectiveMethodGenerator extends AbstractJav
         }
 
         importedTypes.add(new FullyQualifiedJavaType("java.util.Map")); //$NON-NLS-1$
-        
+
         Method method = new Method(introspectedTable.getUpdateByExampleSelectiveStatementId());
         method.setReturnType(FullyQualifiedJavaType.getStringInstance());
         method.setVisibility(JavaVisibility.PUBLIC);
@@ -80,13 +80,13 @@ public class ProviderUpdateByExampleSelectiveMethodGenerator extends AbstractJav
                 introspectedTable);
 
         method.addBodyLine(""); //$NON-NLS-1$
-        
+
         if (useLegacyBuilder) {
             method.addBodyLine("BEGIN();"); //$NON-NLS-1$
         } else {
             method.addBodyLine("SQL sql = new SQL();"); //$NON-NLS-1$
         }
-        
+
         method.addBodyLine(String.format("%sUPDATE(\"%s\");", //$NON-NLS-1$
                 builderPrefix,
                 escapeStringForJava(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime())));
@@ -102,19 +102,19 @@ public class ProviderUpdateByExampleSelectiveMethodGenerator extends AbstractJav
             StringBuilder sb = new StringBuilder();
             sb.append(getParameterClause(introspectedColumn));
             sb.insert(2, "record."); //$NON-NLS-1$
-            
+
             method.addBodyLine(String.format("%sSET(\"%s = %s\");", //$NON-NLS-1$
                     builderPrefix,
                     escapeStringForJava(getAliasedEscapedColumnName(introspectedColumn)),
                     sb.toString()));
-                
+
             if (!introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {
                 method.addBodyLine("}"); //$NON-NLS-1$
             }
 
             method.addBodyLine(""); //$NON-NLS-1$
         }
-        
+
         if (useLegacyBuilder) {
             method.addBodyLine("applyWhere(example, true);"); //$NON-NLS-1$
             method.addBodyLine("return SQL();"); //$NON-NLS-1$
@@ -122,7 +122,7 @@ public class ProviderUpdateByExampleSelectiveMethodGenerator extends AbstractJav
             method.addBodyLine("applyWhere(sql, example, true);"); //$NON-NLS-1$
             method.addBodyLine("return sql.toString();"); //$NON-NLS-1$
         }
-        
+
         if (context.getPlugins().providerUpdateByExampleSelectiveMethodGenerated(method, topLevelClass,
                 introspectedTable)) {
             topLevelClass.addStaticImports(staticImports);

@@ -41,7 +41,7 @@ public class AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator extends UpdateB
 
     @Override
     public void addMapperAnnotations(Method method) {
-        
+
         method.addAnnotation("@Update({"); //$NON-NLS-1$
 
         StringBuilder sb = new StringBuilder();
@@ -103,7 +103,7 @@ public class AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator extends UpdateB
             }
             method.addAnnotation(sb.toString());
         }
-        
+
         method.addAnnotation("})"); //$NON-NLS-1$
     }
 

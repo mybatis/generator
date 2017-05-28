@@ -42,7 +42,7 @@ public class IntrospectedColumn {
     protected int scale;
 
     protected boolean identity;
-    
+
     protected boolean isSequenceColumn;
 
     protected String javaProperty;
@@ -65,17 +65,17 @@ public class IntrospectedColumn {
     protected String remarks;
 
     protected String defaultValue;
-    
+
     /**
      * true if the JDBC driver reports that this column is auto-increment.
      */
     protected boolean isAutoIncrement;
-    
+
     /**
      * true if the JDBC driver reports that this column is generated.
      */
     protected boolean isGeneratedColumn;
-    
+
     /**
      * True if there is a column override that defines this column as GENERATED ALWAYS.
      */

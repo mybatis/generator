@@ -25,7 +25,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class TopLevelEnumeration extends InnerEnum implements CompilationUnit {
-    
+
     private Set<FullyQualifiedJavaType> importedTypes;
 
     private Set<String> staticImports;
@@ -69,11 +69,11 @@ public class TopLevelEnumeration extends InnerEnum implements CompilationUnit {
             sb.append(';');
             newLine(sb);
         }
-        
+
         if (staticImports.size() > 0) {
             newLine(sb);
         }
-        
+
         Set<String> importStrings = calculateImports(importedTypes);
         for (String importString : importStrings) {
             sb.append(importString);

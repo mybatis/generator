@@ -20,6 +20,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public interface ConnectionFactory {
+
     /**
      * Should return a connection to the database in use for this context.
      * The generator will call this method only one time for each context.

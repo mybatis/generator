@@ -36,7 +36,7 @@ import org.mybatis.generator.api.dom.java.TopLevelClass;
  *
  * @author Stefan Lack
  */
-public class FluentBuilderMethodsPlugin extends  PluginAdapter {
+public class FluentBuilderMethodsPlugin extends PluginAdapter {
 
     @Override
     public boolean validate(List<String> warnings) {

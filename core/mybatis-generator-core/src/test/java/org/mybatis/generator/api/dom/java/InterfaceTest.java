@@ -102,16 +102,16 @@ public class InterfaceTest {
         assertTrue(interfaze.getStaticImports().contains("com.foo.StaticUtil1"));
         assertTrue(interfaze.getStaticImports().contains("com.foo.StaticUtil2"));
     }
-    
+
     @Test
     public void testInterfaceFields() {
         Interface interfaze = new Interface("foo.Bar");
         interfaze.setVisibility(JavaVisibility.PUBLIC);
-        
+
         Field field = new Field("EMPTY_STRING", FullyQualifiedJavaType.getStringInstance());
         field.setInitializationString("\"\"");
         interfaze.addField(field);
-        
+
         field = new Field("ONE", FullyQualifiedJavaType.getStringInstance());
         field.setInitializationString("\"one\"");
         interfaze.addField(field);

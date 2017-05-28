@@ -58,7 +58,7 @@ public class ProviderUpdateByExampleWithoutBLOBsMethodGenerator extends
         }
 
         importedTypes.add(new FullyQualifiedJavaType("java.util.Map")); //$NON-NLS-1$
-        
+
         Method method = new Method(getMethodName());
         method.setReturnType(FullyQualifiedJavaType.getStringInstance());
         method.setVisibility(JavaVisibility.PUBLIC);
@@ -73,23 +73,23 @@ public class ProviderUpdateByExampleWithoutBLOBsMethodGenerator extends
         } else {
             method.addBodyLine("SQL sql = new SQL();"); //$NON-NLS-1$
         }
-        
+
         method.addBodyLine(String.format("%sUPDATE(\"%s\");", //$NON-NLS-1$
                 builderPrefix,
                 escapeStringForJava(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime())));
         method.addBodyLine(""); //$NON-NLS-1$
-        
+
         for (IntrospectedColumn introspectedColumn : ListUtilities.removeGeneratedAlwaysColumns(getColumns())) {
             StringBuilder sb = new StringBuilder();
             sb.append(getParameterClause(introspectedColumn));
             sb.insert(2, "record."); //$NON-NLS-1$
-            
+
             method.addBodyLine(String.format("%sSET(\"%s = %s\");", //$NON-NLS-1$
                     builderPrefix,
                     escapeStringForJava(getAliasedEscapedColumnName(introspectedColumn)),
                     sb.toString()));
         }
-        
+
         method.addBodyLine(""); //$NON-NLS-1$
         
         FullyQualifiedJavaType example =
@@ -97,7 +97,7 @@ public class ProviderUpdateByExampleWithoutBLOBsMethodGenerator extends
         importedTypes.add(example);
         method.addBodyLine(String.format("%s example = (%s) parameter.get(\"example\");", //$NON-NLS-1$
                 example.getShortName(), example.getShortName()));
-        
+
         if (useLegacyBuilder) {
             method.addBodyLine("applyWhere(example, true);"); //$NON-NLS-1$
             method.addBodyLine("return SQL();"); //$NON-NLS-1$
@@ -105,22 +105,22 @@ public class ProviderUpdateByExampleWithoutBLOBsMethodGenerator extends
             method.addBodyLine("applyWhere(sql, example, true);"); //$NON-NLS-1$
             method.addBodyLine("return sql.toString();"); //$NON-NLS-1$
         }
-        
+
         if (callPlugins(method, topLevelClass)) {
             topLevelClass.addStaticImports(staticImports);
             topLevelClass.addImportedTypes(importedTypes);
             topLevelClass.addMethod(method);
         }
     }
-    
+
     public String getMethodName() {
-        return introspectedTable.getUpdateByExampleStatementId();        
+        return introspectedTable.getUpdateByExampleStatementId();
     }
-    
+
     public List<IntrospectedColumn> getColumns() {
         return introspectedTable.getNonBLOBColumns();
     }
-    
+
     public boolean callPlugins(Method method, TopLevelClass topLevelClass) {
         return context.getPlugins().providerUpdateByExampleWithoutBLOBsMethodGenerated(method, topLevelClass,
                 introspectedTable);

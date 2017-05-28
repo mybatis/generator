@@ -34,10 +34,10 @@ public abstract class BaseRules implements Rules {
 
     /** The table configuration. */
     protected TableConfiguration tableConfiguration;
-    
+
     /** The introspected table. */
     protected IntrospectedTable introspectedTable;
-    
+
     /** The is model only. */
     protected final boolean isModelOnly;
 
@@ -67,7 +67,7 @@ public abstract class BaseRules implements Rules {
         if (isModelOnly) {
             return false;
         }
-        
+
         return tableConfiguration.isInsertStatementEnabled();
     }
 
@@ -83,7 +83,7 @@ public abstract class BaseRules implements Rules {
         if (isModelOnly) {
             return false;
         }
-        
+
         return tableConfiguration.isInsertStatementEnabled();
     }
 
@@ -124,11 +124,11 @@ public abstract class BaseRules implements Rules {
         if (isModelOnly) {
             return false;
         }
-        
+
         if (ListUtilities.removeGeneratedAlwaysColumns(introspectedTable.getBaseColumns()).isEmpty()) {
             return false;
         }
-        
+
         boolean rc = tableConfiguration.isUpdateByPrimaryKeyStatementEnabled()
                 && introspectedTable.hasPrimaryKeyColumns()
                 && introspectedTable.hasBaseColumns();
@@ -149,7 +149,7 @@ public abstract class BaseRules implements Rules {
         if (isModelOnly) {
             return false;
         }
-        
+
         if (ListUtilities.removeGeneratedAlwaysColumns(introspectedTable.getNonPrimaryKeyColumns()).isEmpty()) {
             return false;
         }
@@ -173,11 +173,11 @@ public abstract class BaseRules implements Rules {
         if (isModelOnly) {
             return false;
         }
-        
+
         if (ListUtilities.removeGeneratedAlwaysColumns(introspectedTable.getNonPrimaryKeyColumns()).isEmpty()) {
             return false;
         }
-        
+
         boolean rc = tableConfiguration.isUpdateByPrimaryKeyStatementEnabled()
                 && introspectedTable.hasPrimaryKeyColumns()
                 && (introspectedTable.hasBLOBColumns() || introspectedTable
@@ -199,7 +199,7 @@ public abstract class BaseRules implements Rules {
         if (isModelOnly) {
             return false;
         }
-        
+
         boolean rc = tableConfiguration.isDeleteByPrimaryKeyStatementEnabled()
                 && introspectedTable.hasPrimaryKeyColumns();
 
@@ -218,7 +218,7 @@ public abstract class BaseRules implements Rules {
         if (isModelOnly) {
             return false;
         }
-        
+
         boolean rc = tableConfiguration.isDeleteByExampleStatementEnabled();
 
         return rc;
@@ -235,7 +235,7 @@ public abstract class BaseRules implements Rules {
         if (isModelOnly) {
             return true;
         }
-        
+
         boolean rc = tableConfiguration.isSelectByExampleStatementEnabled()
                 || tableConfiguration.isSelectByPrimaryKeyStatementEnabled();
 
@@ -252,18 +252,18 @@ public abstract class BaseRules implements Rules {
     @Override
     public boolean generateResultMapWithBLOBs() {
         boolean rc;
-        
+
         if (introspectedTable.hasBLOBColumns()) {
             if (isModelOnly) {
                 rc = true;
             } else {
-                rc = tableConfiguration.isSelectByExampleStatementEnabled() 
+                rc = tableConfiguration.isSelectByExampleStatementEnabled()
                         || tableConfiguration.isSelectByPrimaryKeyStatementEnabled();
             }
         } else {
             rc = false;
         }
-        
+
         return rc;
     }
 
@@ -283,7 +283,7 @@ public abstract class BaseRules implements Rules {
         if (isModelOnly) {
             return false;
         }
-        
+
         boolean rc = tableConfiguration.isSelectByExampleStatementEnabled()
                 || tableConfiguration.isDeleteByExampleStatementEnabled()
                 || tableConfiguration.isCountByExampleStatementEnabled();
@@ -311,7 +311,7 @@ public abstract class BaseRules implements Rules {
         if (isModelOnly) {
             return false;
         }
-        
+
         return introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3
                 && tableConfiguration.isUpdateByExampleStatementEnabled();
     }
@@ -329,7 +329,7 @@ public abstract class BaseRules implements Rules {
         if (isModelOnly) {
             return false;
         }
-        
+
         boolean rc = tableConfiguration.isSelectByPrimaryKeyStatementEnabled()
                 && introspectedTable.hasPrimaryKeyColumns()
                 && (introspectedTable.hasBaseColumns() || introspectedTable
@@ -350,7 +350,7 @@ public abstract class BaseRules implements Rules {
         if (isModelOnly) {
             return false;
         }
-        
+
         return tableConfiguration.isSelectByExampleStatementEnabled();
     }
 
@@ -388,11 +388,11 @@ public abstract class BaseRules implements Rules {
             // this is a model only context - don't generate the example class
             return false;
         }
-        
+
         if (isModelOnly) {
             return false;
         }
-        
+
         boolean rc = tableConfiguration.isSelectByExampleStatementEnabled()
                 || tableConfiguration.isDeleteByExampleStatementEnabled()
                 || tableConfiguration.isCountByExampleStatementEnabled()
@@ -409,7 +409,7 @@ public abstract class BaseRules implements Rules {
         if (isModelOnly) {
             return false;
         }
-        
+
         boolean rc = tableConfiguration.isCountByExampleStatementEnabled();
 
         return rc;
@@ -423,7 +423,7 @@ public abstract class BaseRules implements Rules {
         if (isModelOnly) {
             return false;
         }
-        
+
         boolean rc = tableConfiguration.isUpdateByExampleStatementEnabled();
 
         return rc;
@@ -437,7 +437,7 @@ public abstract class BaseRules implements Rules {
         if (isModelOnly) {
             return false;
         }
-        
+
         boolean rc = tableConfiguration.isUpdateByExampleStatementEnabled()
                 && (introspectedTable.hasPrimaryKeyColumns() || introspectedTable
                         .hasBaseColumns());

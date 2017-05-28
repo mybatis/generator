@@ -45,7 +45,7 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
     protected boolean forceBigDecimals;
 
     protected Map<Integer, JdbcTypeInformation> typeMap;
-    
+
     public JavaTypeResolverDefaultImpl() {
         super();
         properties = new Properties();
@@ -147,7 +147,7 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
     
     protected FullyQualifiedJavaType overrideDefaultType(IntrospectedColumn column, FullyQualifiedJavaType defaultType) {
         FullyQualifiedJavaType answer = defaultType;
-        
+
         switch (column.getJdbcType()) {
         case Types.BIT:
             answer = calculateBitReplacement(column, defaultType);
@@ -163,19 +163,19 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
     
     protected FullyQualifiedJavaType calculateBitReplacement(IntrospectedColumn column, FullyQualifiedJavaType defaultType) {
         FullyQualifiedJavaType answer;
-        
+
         if (column.getLength() > 1) {
             answer = new FullyQualifiedJavaType("byte[]"); //$NON-NLS-1$
         } else {
             answer = defaultType;
         }
-        
+
         return answer;
     }
     
     protected FullyQualifiedJavaType calculateBigDecimalReplacement(IntrospectedColumn column, FullyQualifiedJavaType defaultType) {
         FullyQualifiedJavaType answer;
-        
+
         if (column.getScale() > 0 || column.getLength() > 18 || forceBigDecimals) {
             answer = defaultType;
         } else if (column.getLength() > 9) {
@@ -185,7 +185,7 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
         } else {
             answer = new FullyQualifiedJavaType(Short.class.getName());
         }
-        
+
         return answer;
     }
 

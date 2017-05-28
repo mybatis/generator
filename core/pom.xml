@@ -302,6 +302,32 @@
 
   <profiles>
     <profile>
+      <id>format</id>
+      <activation>
+        <file>
+          <exists>format.xml</exists>
+        </file>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>net.revelc.code.formatter</groupId>
+            <artifactId>formatter-maven-plugin</artifactId>
+            <configuration>
+              <configFile>eclipse-formatter-config-4space.xml</configFile>
+            </configuration>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>format</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
       <id>jdk16</id>
       <activation>
         <jdk>1.6</jdk>

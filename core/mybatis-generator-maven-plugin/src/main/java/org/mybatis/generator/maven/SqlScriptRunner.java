@@ -162,7 +162,7 @@ public class SqlScriptRunner {
     }
 
     private String readStatement(BufferedReader br) throws IOException {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
 
         String line;
 

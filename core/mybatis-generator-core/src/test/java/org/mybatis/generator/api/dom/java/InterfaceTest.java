@@ -116,11 +116,11 @@ public class InterfaceTest {
         field.setInitializationString("\"one\"");
         interfaze.addField(field);
         
-        String expected = "package foo;" + System.lineSeparator()
-            + System.lineSeparator()
-            + "public interface Bar {" + System.lineSeparator()
-            + "    String EMPTY_STRING = \"\";" + System.lineSeparator()
-            + "    String ONE = \"one\";" + System.lineSeparator()
+        String expected = "package foo;" + System.getProperty("line.separator")
+            + System.getProperty("line.separator")
+            + "public interface Bar {" + System.getProperty("line.separator")
+            + "    String EMPTY_STRING = \"\";" + System.getProperty("line.separator")
+            + "    String ONE = \"one\";" + System.getProperty("line.separator")
             + "}";
 
         assertThat(interfaze.getFormattedContent(), is(expected));

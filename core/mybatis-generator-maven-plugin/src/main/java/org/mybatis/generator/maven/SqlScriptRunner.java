@@ -106,14 +106,18 @@ public class SqlScriptRunner {
             closeStatement(statement);
             connection.commit();
             br.close();
-        } catch (ReflectiveOperationException e) {
-            throw new MojoExecutionException("Reflection Exception", e);
+        } catch (ClassNotFoundException e) {
+            throw new MojoExecutionException("Class not found: " + e.getMessage());
         } catch (FileNotFoundException e) {
             throw new MojoExecutionException("File note found: " + sourceFile);
         } catch (SQLException e) {
             throw new MojoExecutionException("SqlException: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new MojoExecutionException("IOException: " + e.getMessage(), e);
+        } catch (InstantiationException e) {
+            throw new MojoExecutionException("InstantiationException: " + e.getMessage());
+        } catch (IllegalAccessException e) {
+            throw new MojoExecutionException("IllegalAccessException: " + e.getMessage());
         } finally {
             closeConnection(connection);
         }

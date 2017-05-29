@@ -1894,19 +1894,19 @@ public abstract class IntrospectedTable {
         return context;
     }
 
-	public String getRemarks() {
-		return remarks;
-	}
+    public String getRemarks() {
+        return remarks;
+    }
 
-	public void setRemarks(String remarks) {
-		this.remarks = remarks;
-	}
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
 
-	public String getTableType() {
-		return tableType;
-	}
+    public String getTableType() {
+        return tableType;
+    }
 
-	public void setTableType(String tableType) {
-		this.tableType = tableType;
-	}
+    public void setTableType(String tableType) {
+        this.tableType = tableType;
+    }
 }

@@ -32,8 +32,8 @@ public class SqlMapGeneratorConfiguration extends PropertyHolder {
     private String targetProject;
 
     /**
-	 *  
-	 */
+     *  
+     */
     public SqlMapGeneratorConfiguration() {
         super();
     }

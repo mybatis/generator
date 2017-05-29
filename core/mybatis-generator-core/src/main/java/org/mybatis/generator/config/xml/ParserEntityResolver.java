@@ -29,8 +29,8 @@ import org.xml.sax.SAXException;
 public class ParserEntityResolver implements EntityResolver {
 
     /**
-	 *  
-	 */
+     *  
+     */
     public ParserEntityResolver() {
         super();
     }

@@ -31,53 +31,53 @@ import org.springframework.core.io.Resource;
 
 public abstract class AbstractConditionalJava2Test extends AbstractTest {
 
-	private GenericApplicationContext factory;
+    private GenericApplicationContext factory;
 
-	protected void setUp() throws Exception {
-		super.setUp();
-	}
+    protected void setUp() throws Exception {
+        super.setUp();
+    }
 
-	public AbstractConditionalJava2Test() {
-		factory = new GenericApplicationContext();
-		Resource res = new ClassPathResource(
-				"/mbg/test/ib2j2/conditional/SpringBeans.xml");
-		XmlBeanDefinitionReader r = new XmlBeanDefinitionReader(factory);
-		r.loadBeanDefinitions(res);
-	}
+    public AbstractConditionalJava2Test() {
+        factory = new GenericApplicationContext();
+        Resource res = new ClassPathResource(
+                "/mbg/test/ib2j2/conditional/SpringBeans.xml");
+        XmlBeanDefinitionReader r = new XmlBeanDefinitionReader(factory);
+        r.loadBeanDefinitions(res);
+    }
 
-	protected FieldsonlyDAO getFieldsonlyDAO() {
-		FieldsonlyDAO dao = (FieldsonlyDAO) factory.getBean("FieldsonlyDAO");
-		return dao;
-	}
+    protected FieldsonlyDAO getFieldsonlyDAO() {
+        FieldsonlyDAO dao = (FieldsonlyDAO) factory.getBean("FieldsonlyDAO");
+        return dao;
+    }
 
-	protected PkonlyDAO getPkonlyDAO() {
-		PkonlyDAO dao = (PkonlyDAO) factory.getBean("PkonlyDAO");
-		return dao;
-	}
+    protected PkonlyDAO getPkonlyDAO() {
+        PkonlyDAO dao = (PkonlyDAO) factory.getBean("PkonlyDAO");
+        return dao;
+    }
 
-	protected PkfieldsDAO getPkfieldsDAO() {
-		PkfieldsDAO dao = (PkfieldsDAO) factory.getBean("PkfieldsDAO");
-		return dao;
-	}
+    protected PkfieldsDAO getPkfieldsDAO() {
+        PkfieldsDAO dao = (PkfieldsDAO) factory.getBean("PkfieldsDAO");
+        return dao;
+    }
 
-	protected PkblobsDAO getPkblobsDAO() {
-		PkblobsDAO dao = (PkblobsDAO) factory.getBean("PkblobsDAO");
-		return dao;
-	}
+    protected PkblobsDAO getPkblobsDAO() {
+        PkblobsDAO dao = (PkblobsDAO) factory.getBean("PkblobsDAO");
+        return dao;
+    }
 
-	protected PkfieldsblobsDAO getPkfieldsblobsDAO() {
-		PkfieldsblobsDAO dao = (PkfieldsblobsDAO) factory
-				.getBean("PkfieldsblobsDAO");
-		return dao;
-	}
+    protected PkfieldsblobsDAO getPkfieldsblobsDAO() {
+        PkfieldsblobsDAO dao = (PkfieldsblobsDAO) factory
+                .getBean("PkfieldsblobsDAO");
+        return dao;
+    }
 
-	protected FieldsblobsDAO getFieldsblobsDAO() {
-		FieldsblobsDAO dao = (FieldsblobsDAO) factory.getBean("FieldsblobsDAO");
-		return dao;
-	}
+    protected FieldsblobsDAO getFieldsblobsDAO() {
+        FieldsblobsDAO dao = (FieldsblobsDAO) factory.getBean("FieldsblobsDAO");
+        return dao;
+    }
 
-	protected AwfulTableDAO getAwfulTableDAO() {
-		AwfulTableDAO dao = (AwfulTableDAO) factory.getBean("AwfulTableDAO");
-		return dao;
-	}
+    protected AwfulTableDAO getAwfulTableDAO() {
+        AwfulTableDAO dao = (AwfulTableDAO) factory.getBean("AwfulTableDAO");
+        return dao;
+    }
 }

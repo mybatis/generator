@@ -43,6 +43,7 @@ import org.eclipse.jdt.core.dom.WildcardType;
 public class TypeStringifier extends ASTVisitor {
     protected StringBuilder buffer = new StringBuilder();
 
+    @Override
     public String toString() {
         return buffer.toString();
     }

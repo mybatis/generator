@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ public interface JavaTypeResolver {
      * Adds properties for this instance from any properties configured in the
      * JavaTypeResolverConfiguration.
      * 
-     * This method will be called before any of the get methods.
+     * <p>This method will be called before any of the get methods.
      * 
      * @param properties
      *            All properties from the configuration
@@ -43,7 +43,7 @@ public interface JavaTypeResolver {
     /**
      * Sets the instance of the Context object associated with this instance.
      * 
-     * This method will be called before any of the get methods.
+     * <p>This method will be called before any of the get methods.
      * 
      * @param context
      *            The current Context

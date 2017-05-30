@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -26,108 +26,39 @@ import java.util.Set;
  */
 public interface CompilationUnit {
     
-    /**
-     * Gets the formatted content.
-     *
-     * @return the formatted content
-     */
     String getFormattedContent();
 
-    /**
-     * Gets the imported types.
-     *
-     * @return the imported types
-     */
     Set<FullyQualifiedJavaType> getImportedTypes();
     
-    /**
-     * Gets the static imports.
-     *
-     * @return the static imports
-     */
     Set<String> getStaticImports();
 
-    /**
-     * Gets the super class.
-     *
-     * @return the super class
-     */
     FullyQualifiedJavaType getSuperClass();
 
-    /**
-     * Checks if is java interface.
-     *
-     * @return true, if is java interface
-     */
     boolean isJavaInterface();
 
-    /**
-     * Checks if is java enumeration.
-     *
-     * @return true, if is java enumeration
-     */
     boolean isJavaEnumeration();
 
-    /**
-     * Gets the super interface types.
-     *
-     * @return the super interface types
-     */
     Set<FullyQualifiedJavaType> getSuperInterfaceTypes();
 
-    /**
-     * Gets the type.
-     *
-     * @return the type
-     */
     FullyQualifiedJavaType getType();
 
-    /**
-     * Adds the imported type.
-     *
-     * @param importedType
-     *            the imported type
-     */
     void addImportedType(FullyQualifiedJavaType importedType);
 
-    /**
-     * Adds the imported types.
-     *
-     * @param importedTypes
-     *            the imported types
-     */
     void addImportedTypes(Set<FullyQualifiedJavaType> importedTypes);
     
-    /**
-     * Adds the static import.
-     *
-     * @param staticImport
-     *            the static import
-     */
     void addStaticImport(String staticImport);
     
-    /**
-     * Adds the static imports.
-     *
-     * @param staticImports
-     *            the static imports
-     */
     void addStaticImports(Set<String> staticImports);
 
     /**
      * Comments will be written at the top of the file as is, we do not append any start or end comment characters.
      * 
-     * Note that in the Eclipse plugin, file comments will not be merged.
+     * <p>Note that in the Eclipse plugin, file comments will not be merged.
      *
      * @param commentLine
      *            the comment line
      */
     void addFileCommentLine(String commentLine);
 
-    /**
-     * Gets the file comment lines.
-     *
-     * @return the file comment lines
-     */
     List<String> getFileCommentLines();
 }

@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -40,6 +40,7 @@ public class MyTimeTypeHandler implements TypeHandler<MyTime> {
         super();
     }
 
+    @Override
     public MyTime getResult(CallableStatement cs, int columnIndex)
             throws SQLException {
         MyTime answer = null;
@@ -58,6 +59,7 @@ public class MyTimeTypeHandler implements TypeHandler<MyTime> {
         return answer;
     }
 
+    @Override
     public MyTime getResult(ResultSet rs, String columnName)
             throws SQLException {
         MyTime answer = null;
@@ -76,6 +78,7 @@ public class MyTimeTypeHandler implements TypeHandler<MyTime> {
         return answer;
     }
 
+    @Override
     public MyTime getResult(ResultSet rs, int columnIndex)
             throws SQLException {
         MyTime answer = null;
@@ -94,6 +97,7 @@ public class MyTimeTypeHandler implements TypeHandler<MyTime> {
         return answer;
     }
 
+    @Override
     public void setParameter(PreparedStatement ps, int i, MyTime parameter,
             JdbcType jdbcType) throws SQLException {
         if (parameter == null) {

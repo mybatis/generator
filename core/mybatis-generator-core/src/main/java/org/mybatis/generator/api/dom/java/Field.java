@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,9 +17,6 @@ package org.mybatis.generator.api.dom.java;
 
 import org.mybatis.generator.api.dom.OutputUtilities;
 
-/**
- * @author Jeff Butler
- */
 public class Field extends JavaElement {
     private FullyQualifiedJavaType type;
     private String name;
@@ -27,9 +24,6 @@ public class Field extends JavaElement {
     private boolean isTransient;
     private boolean isVolatile;
 
-    /**
-     *  
-     */
     public Field() {
         // use a default name to avoid NPE
         this("foo", FullyQualifiedJavaType.getIntInstance()); //$NON-NLS-1$
@@ -48,47 +42,26 @@ public class Field extends JavaElement {
         this.initializationString = field.initializationString;
     }
 
-    /**
-     * @return Returns the name.
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * @param name
-     *            The name to set.
-     */
     public void setName(String name) {
         this.name = name;
     }
 
-    /**
-     * @return Returns the type.
-     */
     public FullyQualifiedJavaType getType() {
         return type;
     }
 
-    /**
-     * @param type
-     *            The type to set.
-     */
     public void setType(FullyQualifiedJavaType type) {
         this.type = type;
     }
 
-    /**
-     * @return Returns the initializationString.
-     */
     public String getInitializationString() {
         return initializationString;
     }
 
-    /**
-     * @param initializationString
-     *            The initializationString to set.
-     */
     public void setInitializationString(String initializationString) {
         this.initializationString = initializationString;
     }

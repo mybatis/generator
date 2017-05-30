@@ -48,18 +48,21 @@ public class NewJavaFileVisitor extends ASTVisitor {
         newNodes = new ArrayList<ASTNode>();
     }
 
+    @Override
     public boolean visit(FieldDeclaration node) {
         newNodes.add(node);
 
         return false;
     }
 
+    @Override
     public boolean visit(EnumDeclaration node) {
         newNodes.add(node);
 
         return false;
     }
 
+    @Override
     public boolean visit(MethodDeclaration node) {
         newNodes.add(node);
 
@@ -67,6 +70,7 @@ public class NewJavaFileVisitor extends ASTVisitor {
     }
 
     @SuppressWarnings("unchecked")
+    @Override
     public boolean visit(TypeDeclaration node) {
         // make sure we don't pick up the top level class
         if (node.getParent().getNodeType() == ASTNode.COMPILATION_UNIT) {

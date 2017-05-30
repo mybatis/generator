@@ -75,7 +75,7 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
         if (introspectedTable.isConstructorBased()) {
             addParameterizedConstructor(topLevelClass, introspectedTable.getNonBLOBColumns());
 
-            if(includeBLOBColumns()) {
+            if (includeBLOBColumns()) {
                 addParameterizedConstructor(topLevelClass, introspectedTable.getAllColumns());
             }
 
@@ -183,7 +183,7 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
         }
 
         for (IntrospectedColumn introspectedColumn : constructorColumns) {
-            if(!superColumns.contains(introspectedColumn.getActualColumnName())) {
+            if (!superColumns.contains(introspectedColumn.getActualColumnName())) {
                 sb.setLength(0);
                 sb.append("this."); //$NON-NLS-1$
                 sb.append(introspectedColumn.getJavaProperty());

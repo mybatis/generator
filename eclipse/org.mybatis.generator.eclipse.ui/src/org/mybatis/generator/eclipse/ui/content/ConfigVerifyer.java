@@ -108,6 +108,7 @@ public class ConfigVerifyer extends DefaultHandler {
         return isConfig;
     }
 
+    @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         if (rootElementRead) {
             // Root element was not correct
@@ -127,6 +128,7 @@ public class ConfigVerifyer extends DefaultHandler {
         }
     }
 
+    @Override
     public InputSource resolveEntity(String publicId, String systemId) throws SAXException {
         boolean hasCorrectDocType = false;
         

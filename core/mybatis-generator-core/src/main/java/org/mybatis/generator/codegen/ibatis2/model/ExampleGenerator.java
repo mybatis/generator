@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -724,7 +724,6 @@ public class ExampleGenerator extends AbstractJavaGenerator {
     private List<String> addtypeHandledObjectsAndMethods(
             IntrospectedColumn introspectedColumn, Method constructor,
             InnerClass innerClass) {
-        List<String> answer = new ArrayList<String>();
         StringBuilder sb = new StringBuilder();
 
         // add new private fields and public accessors in the class
@@ -736,6 +735,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
             listOfMaps = new FullyQualifiedJavaType("java.util.List"); //$NON-NLS-1$
         }
 
+        List<String> answer = new ArrayList<String>();
         sb.setLength(0);
         sb.append(introspectedColumn.getJavaProperty());
         sb.append("CriteriaWithSingleValue"); //$NON-NLS-1$
@@ -848,7 +848,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
                     "value")); //$NON-NLS-1$
         } else {
             method.addParameter(new Parameter(introspectedColumn
-                .getFullyQualifiedJavaType(), "value")); //$NON-NLS-1$
+                    .getFullyQualifiedJavaType(), "value")); //$NON-NLS-1$
         }
         method.addParameter(new Parameter(FullyQualifiedJavaType
                 .getStringInstance(), "property")); //$NON-NLS-1$
@@ -881,7 +881,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
                         .getFullyQualifiedJavaType().getPrimitiveTypeWrapper());
             } else {
                 listOfObjects.addTypeArgument(introspectedColumn
-                    .getFullyQualifiedJavaType());
+                        .getFullyQualifiedJavaType());
             }
         }
 
@@ -933,14 +933,14 @@ public class ExampleGenerator extends AbstractJavaGenerator {
             method.addParameter(new Parameter(introspectedColumn
                     .getFullyQualifiedJavaType().getPrimitiveTypeWrapper(),
                     "value1")); //$NON-NLS-1$
-                method.addParameter(new Parameter(introspectedColumn
+            method.addParameter(new Parameter(introspectedColumn
                     .getFullyQualifiedJavaType().getPrimitiveTypeWrapper(),
                     "value2")); //$NON-NLS-1$
         } else {
             method.addParameter(new Parameter(introspectedColumn
-                .getFullyQualifiedJavaType(), "value1")); //$NON-NLS-1$
+                    .getFullyQualifiedJavaType(), "value1")); //$NON-NLS-1$
             method.addParameter(new Parameter(introspectedColumn
-                .getFullyQualifiedJavaType(), "value2")); //$NON-NLS-1$
+                    .getFullyQualifiedJavaType(), "value2")); //$NON-NLS-1$
         }
         method.addParameter(new Parameter(FullyQualifiedJavaType
                 .getStringInstance(), "property")); //$NON-NLS-1$
@@ -1085,7 +1085,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
     }
 
     /**
-     * Generates methods that set between and not between conditions
+     * Generates methods that set between and not between conditions.
      * 
      * @param introspectedColumn
      * @param betweenMethod

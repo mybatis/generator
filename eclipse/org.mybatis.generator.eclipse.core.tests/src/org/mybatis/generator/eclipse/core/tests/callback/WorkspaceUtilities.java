@@ -57,6 +57,7 @@ public class WorkspaceUtilities {
     private static IProject createProject(String projectName) throws CoreException {
         final IProject project = getWorkspaceRoot().getProject(projectName);
         IWorkspaceRunnable create = new IWorkspaceRunnable() {
+            @Override
             public void run(IProgressMonitor monitor) throws CoreException {
                 project.create(null);
                 project.open(null);
@@ -86,6 +87,7 @@ public class WorkspaceUtilities {
 
         final IJavaProject[] result = new IJavaProject[1];
         IWorkspaceRunnable create = new IWorkspaceRunnable() {
+            @Override
             public void run(IProgressMonitor monitor) throws CoreException {
                 // create project
                 createProject(projectName);

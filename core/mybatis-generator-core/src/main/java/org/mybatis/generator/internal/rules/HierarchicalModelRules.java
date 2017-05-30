@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -43,6 +43,7 @@ public class HierarchicalModelRules extends BaseRules {
      * 
      * @return true if the primary key should be generated
      */
+    @Override
     public boolean generatePrimaryKeyClass() {
         return introspectedTable.hasPrimaryKeyColumns();
     }
@@ -54,6 +55,7 @@ public class HierarchicalModelRules extends BaseRules {
      * 
      * @return true if the class should be generated
      */
+    @Override
     public boolean generateBaseRecordClass() {
         return introspectedTable.hasBaseColumns();
     }
@@ -64,6 +66,7 @@ public class HierarchicalModelRules extends BaseRules {
      * 
      * @return true if the record with BLOBs class should be generated
      */
+    @Override
     public boolean generateRecordWithBLOBsClass() {
         return introspectedTable.hasBLOBColumns();
     }

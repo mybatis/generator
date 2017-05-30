@@ -27,6 +27,7 @@ public class MavenLogFactory implements AbstractLogFactory {
         logImplementation = new MavenLogImpl(mojo.getLog());
     }
 
+    @Override
     public Log getLog(Class<?> aClass) {
         return logImplementation;
     }

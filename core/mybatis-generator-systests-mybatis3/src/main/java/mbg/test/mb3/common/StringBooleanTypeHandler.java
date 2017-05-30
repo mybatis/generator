@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -25,23 +25,27 @@ import org.apache.ibatis.type.TypeHandler;
 
 public class StringBooleanTypeHandler implements TypeHandler<Boolean> {
 
+    @Override
     public Boolean getResult(CallableStatement cs, int columnIndex)
             throws SQLException {
         String s = cs.getString(columnIndex);
         return "Y".equals(s);
     }
 
+    @Override
     public Boolean getResult(ResultSet rs, String columnName) throws SQLException {
         String s = rs.getString(columnName);
         return "Y".equals(s);
     }
 
+    @Override
     public void setParameter(PreparedStatement ps, int columnIndex, Boolean parameter,
             JdbcType jdbcType) throws SQLException {
         String s = parameter == null ? "N" : parameter.booleanValue() ? "Y" : "N";
         ps.setString(columnIndex, s);
     }
 
+    @Override
     public Boolean getResult(ResultSet rs, int columnIndex) throws SQLException {
         String s = rs.getString(columnIndex);
         return "Y".equals(s);

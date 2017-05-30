@@ -94,6 +94,7 @@ public class SqlScriptComposite extends AbstractGeneratorComposite {
         
         txtJdbcDriver = new Text(group, SWT.BORDER);
         txtJdbcDriver.addModifyListener(new ModifyListener() {
+            @Override
             public void modifyText(ModifyEvent e) {
                 sqlScriptTab.updateLaunchConfigurationDialog();
             }
@@ -109,6 +110,7 @@ public class SqlScriptComposite extends AbstractGeneratorComposite {
         
         txtJdbcURL = new Text(group, SWT.BORDER);
         txtJdbcURL.addModifyListener(new ModifyListener() {
+            @Override
             public void modifyText(ModifyEvent e) {
                 sqlScriptTab.updateLaunchConfigurationDialog();
             }
@@ -124,6 +126,7 @@ public class SqlScriptComposite extends AbstractGeneratorComposite {
         
         txtUserID = new Text(group, SWT.BORDER);
         txtUserID.addModifyListener(new ModifyListener() {
+            @Override
             public void modifyText(ModifyEvent e) {
                 sqlScriptTab.updateLaunchConfigurationDialog();
             }
@@ -139,6 +142,7 @@ public class SqlScriptComposite extends AbstractGeneratorComposite {
         
         txtPassword = new Text(group, SWT.PASSWORD | SWT.BORDER);
         txtPassword.addModifyListener(new ModifyListener() {
+            @Override
             public void modifyText(ModifyEvent e) {
                 sqlScriptTab.updateLaunchConfigurationDialog();
             }

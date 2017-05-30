@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -122,6 +122,7 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
                 new FullyQualifiedJavaType(String.class.getName())));
     }
 
+    @Override
     public void addConfigurationProperties(Properties properties) {
         this.properties.putAll(properties);
         forceBigDecimals = StringUtility
@@ -129,6 +130,7 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
                         .getProperty(PropertyRegistry.TYPE_RESOLVER_FORCE_BIG_DECIMALS));
     }
 
+    @Override
     public FullyQualifiedJavaType calculateJavaType(
             IntrospectedColumn introspectedColumn) {
         FullyQualifiedJavaType answer = null;
@@ -187,6 +189,7 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
         return answer;
     }
 
+    @Override
     public String calculateJdbcTypeName(IntrospectedColumn introspectedColumn) {
         String answer = null;
         JdbcTypeInformation jdbcTypeInformation = typeMap
@@ -199,10 +202,12 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
         return answer;
     }
 
+    @Override
     public void setWarnings(List<String> warnings) {
         this.warnings = warnings;
     }
 
+    @Override
     public void setContext(Context context) {
         this.context = context;
     }

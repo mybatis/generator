@@ -62,6 +62,7 @@ public class NewConfigFileWizard extends Wizard implements INewWizard {
     /**
      * Adding the page to the wizard.
      */
+    @Override
     public void addPages() {
         page = new NewConfigFileWizardPage1(selection);
         addPage(page);
@@ -71,10 +72,12 @@ public class NewConfigFileWizard extends Wizard implements INewWizard {
      * This method is called when 'Finish' button is pressed in the wizard. We
      * will create an operation and run it using wizard as execution context.
      */
+    @Override
     public boolean performFinish() {
         final String containerName = page.getLocation();
         final String fileName = page.getFileName();
         IRunnableWithProgress op = new IRunnableWithProgress() {
+            @Override
             public void run(IProgressMonitor monitor)
                     throws InvocationTargetException {
                 try {
@@ -129,6 +132,7 @@ public class NewConfigFileWizard extends Wizard implements INewWizard {
         monitor.worked(1);
         monitor.setTaskName("Opening file for editing...");
         getShell().getDisplay().asyncExec(new Runnable() {
+            @Override
             public void run() {
                 IWorkbenchPage page = PlatformUI.getWorkbench()
                         .getActiveWorkbenchWindow().getActivePage();
@@ -202,6 +206,7 @@ public class NewConfigFileWizard extends Wizard implements INewWizard {
      * We will accept the selection in the workbench to see if we can initialize
      * from it.
      */
+    @Override
     public void init(IWorkbench workbench, IStructuredSelection selection) {
         this.selection = selection;
     }

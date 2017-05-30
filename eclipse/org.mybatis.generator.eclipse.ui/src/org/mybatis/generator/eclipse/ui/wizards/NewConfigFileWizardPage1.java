@@ -63,6 +63,7 @@ public class NewConfigFileWizardPage1 extends WizardPage {
         this.selection = selection;
     }
 
+    @Override
     public void createControl(Composite parent) {
         Composite container = new Composite(parent, SWT.NULL);
         GridLayout layout = new GridLayout();
@@ -76,6 +77,7 @@ public class NewConfigFileWizardPage1 extends WizardPage {
         GridData gd = new GridData(GridData.FILL_HORIZONTAL);
         locationText.setLayoutData(gd);
         locationText.addModifyListener(new ModifyListener() {
+            @Override
             public void modifyText(ModifyEvent e) {
                 dialogChanged();
             }
@@ -84,6 +86,7 @@ public class NewConfigFileWizardPage1 extends WizardPage {
         Button button = new Button(container, SWT.PUSH);
         button.setText("Browse...");
         button.addSelectionListener(new SelectionAdapter() {
+            @Override
             public void widgetSelected(SelectionEvent e) {
                 handleBrowse();
             }
@@ -95,6 +98,7 @@ public class NewConfigFileWizardPage1 extends WizardPage {
         gd = new GridData(GridData.FILL_HORIZONTAL);
         fileText.setLayoutData(gd);
         fileText.addModifyListener(new ModifyListener() {
+            @Override
             public void modifyText(ModifyEvent e) {
                 dialogChanged();
             }

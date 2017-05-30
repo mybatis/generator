@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -32,6 +32,7 @@ public class ExtendedDAOMethodNameCalculator implements DAOMethodNameCalculator 
         super();
     }
 
+    @Override
     public String getInsertMethodName(IntrospectedTable introspectedTable) {
         StringBuilder sb = new StringBuilder();
         sb.append("insert"); //$NON-NLS-1$
@@ -48,6 +49,7 @@ public class ExtendedDAOMethodNameCalculator implements DAOMethodNameCalculator 
      * updateByPrimaryKey 3. Else the method name should be
      * updateByPrimaryKeyWithoutBLOBs
      */
+    @Override
     public String getUpdateByPrimaryKeyWithoutBLOBsMethodName(
             IntrospectedTable introspectedTable) {
         StringBuilder sb = new StringBuilder();
@@ -76,6 +78,7 @@ public class ExtendedDAOMethodNameCalculator implements DAOMethodNameCalculator 
      * updateByPrimaryKey 3. Else the method name should be
      * updateByPrimaryKeyWithBLOBs
      */
+    @Override
     public String getUpdateByPrimaryKeyWithBLOBsMethodName(
             IntrospectedTable introspectedTable) {
         StringBuilder sb = new StringBuilder();
@@ -96,6 +99,7 @@ public class ExtendedDAOMethodNameCalculator implements DAOMethodNameCalculator 
         return sb.toString();
     }
 
+    @Override
     public String getDeleteByExampleMethodName(
             IntrospectedTable introspectedTable) {
         StringBuilder sb = new StringBuilder();
@@ -107,6 +111,7 @@ public class ExtendedDAOMethodNameCalculator implements DAOMethodNameCalculator 
         return sb.toString();
     }
 
+    @Override
     public String getDeleteByPrimaryKeyMethodName(
             IntrospectedTable introspectedTable) {
         StringBuilder sb = new StringBuilder();
@@ -123,6 +128,7 @@ public class ExtendedDAOMethodNameCalculator implements DAOMethodNameCalculator 
      * selectByExample. 2. Else the method name should be
      * selectByExampleWithoutBLOBs
      */
+    @Override
     public String getSelectByExampleWithoutBLOBsMethodName(
             IntrospectedTable introspectedTable) {
         StringBuilder sb = new StringBuilder();
@@ -145,6 +151,7 @@ public class ExtendedDAOMethodNameCalculator implements DAOMethodNameCalculator 
      * selectByExample. 2. Else the method name should be
      * selectByExampleWithBLOBs
      */
+    @Override
     public String getSelectByExampleWithBLOBsMethodName(
             IntrospectedTable introspectedTable) {
         StringBuilder sb = new StringBuilder();
@@ -162,6 +169,7 @@ public class ExtendedDAOMethodNameCalculator implements DAOMethodNameCalculator 
         return sb.toString();
     }
 
+    @Override
     public String getSelectByPrimaryKeyMethodName(
             IntrospectedTable introspectedTable) {
         StringBuilder sb = new StringBuilder();
@@ -173,6 +181,7 @@ public class ExtendedDAOMethodNameCalculator implements DAOMethodNameCalculator 
         return sb.toString();
     }
 
+    @Override
     public String getUpdateByPrimaryKeySelectiveMethodName(
             IntrospectedTable introspectedTable) {
         StringBuilder sb = new StringBuilder();
@@ -184,6 +193,7 @@ public class ExtendedDAOMethodNameCalculator implements DAOMethodNameCalculator 
         return sb.toString();
     }
 
+    @Override
     public String getCountByExampleMethodName(
             IntrospectedTable introspectedTable) {
         StringBuilder sb = new StringBuilder();
@@ -195,6 +205,7 @@ public class ExtendedDAOMethodNameCalculator implements DAOMethodNameCalculator 
         return sb.toString();
     }
 
+    @Override
     public String getUpdateByExampleSelectiveMethodName(
             IntrospectedTable introspectedTable) {
         StringBuilder sb = new StringBuilder();
@@ -206,6 +217,7 @@ public class ExtendedDAOMethodNameCalculator implements DAOMethodNameCalculator 
         return sb.toString();
     }
 
+    @Override
     public String getUpdateByExampleWithBLOBsMethodName(
             IntrospectedTable introspectedTable) {
         StringBuilder sb = new StringBuilder();
@@ -226,6 +238,7 @@ public class ExtendedDAOMethodNameCalculator implements DAOMethodNameCalculator 
         return sb.toString();
     }
 
+    @Override
     public String getUpdateByExampleWithoutBLOBsMethodName(
             IntrospectedTable introspectedTable) {
         StringBuilder sb = new StringBuilder();
@@ -247,6 +260,7 @@ public class ExtendedDAOMethodNameCalculator implements DAOMethodNameCalculator 
         return sb.toString();
     }
 
+    @Override
     public String getInsertSelectiveMethodName(
             IntrospectedTable introspectedTable) {
         StringBuilder sb = new StringBuilder();

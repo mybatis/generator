@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -47,6 +47,7 @@ public class DefaultShellCallback implements ShellCallback {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.ShellCallback#getDirectory(java.lang.String, java.lang.String)
      */
+    @Override
     public File getDirectory(String targetProject, String targetPackage)
             throws ShellException {
         // targetProject is interpreted as a directory that must exist
@@ -84,6 +85,7 @@ public class DefaultShellCallback implements ShellCallback {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.ShellCallback#refreshProject(java.lang.String)
      */
+    @Override
     public void refreshProject(String project) {
         // nothing to do in the default shell callback
     }
@@ -91,6 +93,7 @@ public class DefaultShellCallback implements ShellCallback {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.ShellCallback#isMergeSupported()
      */
+    @Override
     public boolean isMergeSupported() {
         return false;
     }
@@ -98,6 +101,7 @@ public class DefaultShellCallback implements ShellCallback {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.ShellCallback#isOverwriteEnabled()
      */
+    @Override
     public boolean isOverwriteEnabled() {
         return overwrite;
     }
@@ -105,6 +109,7 @@ public class DefaultShellCallback implements ShellCallback {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.ShellCallback#mergeJavaFile(java.lang.String, java.lang.String, java.lang.String[], java.lang.String)
      */
+    @Override
     public String mergeJavaFile(String newFileSource,
             File existingFile, String[] javadocTags, String fileEncoding)
             throws ShellException {

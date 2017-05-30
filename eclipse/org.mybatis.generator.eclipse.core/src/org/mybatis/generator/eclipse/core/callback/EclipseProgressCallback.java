@@ -44,12 +44,14 @@ public class EclipseProgressCallback implements ProgressCallback {
      * (non-Javadoc)
      * @see org.mybatis.generator.api.ProgressCallback#checkCancel()
      */
+    @Override
     public void checkCancel() throws InterruptedException {
         if (currentChildProgress.isCanceled()) {
             throw new InterruptedException();
         }
     }
 
+    @Override
     public void generationStarted(int totalTasks) {
         currentChildProgress = parentProgress.newChild(GENERATION_FACTOR);
         currentTick = totalTasks <= 0 ? GENERATION_FACTOR : GENERATION_FACTOR / totalTasks;
@@ -60,6 +62,7 @@ public class EclipseProgressCallback implements ProgressCallback {
         currentChildProgress.beginTask("Generating Files", GENERATION_FACTOR);
     }
 
+    @Override
     public void introspectionStarted(int totalTasks) {
         currentChildProgress = parentProgress.newChild(INTROSPECTION_FACTOR);
         currentTick = totalTasks <= 0 ? INTROSPECTION_FACTOR : INTROSPECTION_FACTOR / totalTasks;
@@ -70,6 +73,7 @@ public class EclipseProgressCallback implements ProgressCallback {
         currentChildProgress.beginTask("Introspecting Tables", INTROSPECTION_FACTOR);
     }
 
+    @Override
     public void saveStarted(int totalTasks) {
         currentChildProgress = parentProgress.newChild(SAVE_FACTOR);
         currentTick = totalTasks <= 0 ? SAVE_FACTOR : SAVE_FACTOR / totalTasks;
@@ -80,11 +84,13 @@ public class EclipseProgressCallback implements ProgressCallback {
         currentChildProgress.beginTask("Saving Generated Files", SAVE_FACTOR);
     }
 
+    @Override
     public void startTask(String taskName) {
         currentChildProgress.subTask(taskName);
         currentChildProgress.worked(currentTick);
     }
 
+    @Override
     public void done() {
         // ignore - don't call done on SubMonitors - leave that to the calling method
         ;

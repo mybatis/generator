@@ -63,6 +63,7 @@ public class EclipseShellCallback implements ShellCallback {
      * (non-Javadoc)
      * @see org.mybatis.generator.api.ShellCallback#getDirectory(java.lang.String, java.lang.String)
      */
+    @Override
     public File getDirectory(String targetProject, String targetPackage) throws ShellException {
         if (targetProject.startsWith("/") || targetProject.startsWith("\\")) {
             StringBuffer sb = new StringBuffer();
@@ -82,6 +83,7 @@ public class EclipseShellCallback implements ShellCallback {
      * (non-Javadoc)
      * @see org.mybatis.generator.api.ShellCallback#refreshProject(java.lang.String)
      */
+    @Override
     public void refreshProject(String project) {
         try {
             IPackageFragmentRoot root = getSourceFolder(project);
@@ -238,6 +240,7 @@ public class EclipseShellCallback implements ShellCallback {
      * (non-Javadoc)
      * @see org.mybatis.generator.api.ShellCallback#isMergeSupported()
      */
+    @Override
     public boolean isMergeSupported() {
         return true;
     }
@@ -269,10 +272,12 @@ public class EclipseShellCallback implements ShellCallback {
         return answer;
     }
 
+    @Override
     public boolean isOverwriteEnabled() {
         return false;
     }
 
+    @Override
     public String mergeJavaFile(String newFileSource,
             File existingFile, String[] javadocTags, String fileEncoding)
             throws ShellException {

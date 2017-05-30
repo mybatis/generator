@@ -64,6 +64,7 @@ public class AntLogFactory implements AbstractLogFactory {
         tryImplementation(new NoLoggingLogFactory());
     }
 
+    @Override
     public Log getLog(Class<?> clazz) {
         try {
             return logFactory.getLog(clazz);

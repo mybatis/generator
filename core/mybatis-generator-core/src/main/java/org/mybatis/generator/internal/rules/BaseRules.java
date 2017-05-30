@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -62,6 +62,7 @@ public abstract class BaseRules implements Rules {
      * 
      * @return true if the element and method should be generated
      */
+    @Override
     public boolean generateInsert() {
         if (isModelOnly) {
             return false;
@@ -77,6 +78,7 @@ public abstract class BaseRules implements Rules {
      * 
      * @return true if the element and method should be generated
      */
+    @Override
     public boolean generateInsertSelective() {
         if (isModelOnly) {
             return false;
@@ -93,6 +95,7 @@ public abstract class BaseRules implements Rules {
      * 
      * @return the type of the class that holds all fields
      */
+    @Override
     public FullyQualifiedJavaType calculateAllFieldsClass() {
 
         String answer;
@@ -116,6 +119,7 @@ public abstract class BaseRules implements Rules {
      * 
      * @return true if the element and method should be generated
      */
+    @Override
     public boolean generateUpdateByPrimaryKeyWithoutBLOBs() {
         if (isModelOnly) {
             return false;
@@ -140,6 +144,7 @@ public abstract class BaseRules implements Rules {
      * 
      * @return true if the element and method should be generated
      */
+    @Override
     public boolean generateUpdateByPrimaryKeyWithBLOBs() {
         if (isModelOnly) {
             return false;
@@ -163,6 +168,7 @@ public abstract class BaseRules implements Rules {
      * 
      * @return true if the element and method should be generated
      */
+    @Override
     public boolean generateUpdateByPrimaryKeySelective() {
         if (isModelOnly) {
             return false;
@@ -188,6 +194,7 @@ public abstract class BaseRules implements Rules {
      * 
      * @return true if the element and method should be generated
      */
+    @Override
     public boolean generateDeleteByPrimaryKey() {
         if (isModelOnly) {
             return false;
@@ -206,6 +213,7 @@ public abstract class BaseRules implements Rules {
      * 
      * @return true if the element and method should be generated
      */
+    @Override
     public boolean generateDeleteByExample() {
         if (isModelOnly) {
             return false;
@@ -222,6 +230,7 @@ public abstract class BaseRules implements Rules {
      * 
      * @return true if the result map should be generated
      */
+    @Override
     public boolean generateBaseResultMap() {
         if (isModelOnly) {
             return true;
@@ -240,6 +249,7 @@ public abstract class BaseRules implements Rules {
      * 
      * @return true if the result map should be generated
      */
+    @Override
     public boolean generateResultMapWithBLOBs() {
         boolean rc;
         
@@ -268,6 +278,7 @@ public abstract class BaseRules implements Rules {
      * 
      * @return true if the SQL where clause element should be generated
      */
+    @Override
     public boolean generateSQLExampleWhereClause() {
         if (isModelOnly) {
             return false;
@@ -295,6 +306,7 @@ public abstract class BaseRules implements Rules {
      * 
      * @return true if the SQL where clause element should be generated
      */
+    @Override
     public boolean generateMyBatis3UpdateByExampleWhereClause() {
         if (isModelOnly) {
             return false;
@@ -312,6 +324,7 @@ public abstract class BaseRules implements Rules {
      * 
      * @return true if the element and method should be generated
      */
+    @Override
     public boolean generateSelectByPrimaryKey() {
         if (isModelOnly) {
             return false;
@@ -332,6 +345,7 @@ public abstract class BaseRules implements Rules {
      * 
      * @return true if the element and method should be generated
      */
+    @Override
     public boolean generateSelectByExampleWithoutBLOBs() {
         if (isModelOnly) {
             return false;
@@ -348,6 +362,7 @@ public abstract class BaseRules implements Rules {
      * 
      * @return true if the element and method should be generated
      */
+    @Override
     public boolean generateSelectByExampleWithBLOBs() {
         if (isModelOnly) {
             return false;
@@ -366,6 +381,7 @@ public abstract class BaseRules implements Rules {
      * 
      * @return true if the example class should be generated
      */
+    @Override
     public boolean generateExampleClass() {
         if (introspectedTable.getContext().getSqlMapGeneratorConfiguration() == null
                 && introspectedTable.getContext().getJavaClientGeneratorConfiguration() == null) {
@@ -388,6 +404,7 @@ public abstract class BaseRules implements Rules {
     /* (non-Javadoc)
      * @see org.mybatis.generator.internal.rules.Rules#generateCountByExample()
      */
+    @Override
     public boolean generateCountByExample() {
         if (isModelOnly) {
             return false;
@@ -401,6 +418,7 @@ public abstract class BaseRules implements Rules {
     /* (non-Javadoc)
      * @see org.mybatis.generator.internal.rules.Rules#generateUpdateByExampleSelective()
      */
+    @Override
     public boolean generateUpdateByExampleSelective() {
         if (isModelOnly) {
             return false;
@@ -414,6 +432,7 @@ public abstract class BaseRules implements Rules {
     /* (non-Javadoc)
      * @see org.mybatis.generator.internal.rules.Rules#generateUpdateByExampleWithoutBLOBs()
      */
+    @Override
     public boolean generateUpdateByExampleWithoutBLOBs() {
         if (isModelOnly) {
             return false;
@@ -429,6 +448,7 @@ public abstract class BaseRules implements Rules {
     /* (non-Javadoc)
      * @see org.mybatis.generator.internal.rules.Rules#generateUpdateByExampleWithBLOBs()
      */
+    @Override
     public boolean generateUpdateByExampleWithBLOBs() {
         if (isModelOnly) {
             return false;
@@ -443,6 +463,7 @@ public abstract class BaseRules implements Rules {
     /* (non-Javadoc)
      * @see org.mybatis.generator.internal.rules.Rules#getIntrospectedTable()
      */
+    @Override
     public IntrospectedTable getIntrospectedTable() {
         return introspectedTable;
     }
@@ -450,6 +471,7 @@ public abstract class BaseRules implements Rules {
     /* (non-Javadoc)
      * @see org.mybatis.generator.internal.rules.Rules#generateBaseColumnList()
      */
+    @Override
     public boolean generateBaseColumnList() {
         if (isModelOnly) {
             return false;
@@ -462,6 +484,7 @@ public abstract class BaseRules implements Rules {
     /* (non-Javadoc)
      * @see org.mybatis.generator.internal.rules.Rules#generateBlobColumnList()
      */
+    @Override
     public boolean generateBlobColumnList() {
         if (isModelOnly) {
             return false;
@@ -475,6 +498,7 @@ public abstract class BaseRules implements Rules {
     /* (non-Javadoc)
      * @see org.mybatis.generator.internal.rules.Rules#generateJavaClient()
      */
+    @Override
     public boolean generateJavaClient() {
         return !isModelOnly;
     }

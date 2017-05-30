@@ -31,21 +31,12 @@ import java.util.TreeSet;
  */
 public class Interface extends InnerInterface implements CompilationUnit {
     
-    /** The imported types. */
     private Set<FullyQualifiedJavaType> importedTypes;
     
-    /** The static imports. */
     private Set<String> staticImports;
 
-    /** The file comment lines. */
     private List<String> fileCommentLines;
 
-    /**
-     * Instantiates a new interface.
-     *
-     * @param type
-     *            the type
-     */
     public Interface(FullyQualifiedJavaType type) {
         super(type);
         importedTypes = new TreeSet<FullyQualifiedJavaType>();
@@ -53,26 +44,16 @@ public class Interface extends InnerInterface implements CompilationUnit {
         staticImports = new TreeSet<String>();
     }
 
-    /**
-     * Instantiates a new interface.
-     *
-     * @param type
-     *            the type
-     */
     public Interface(String type) {
         this(new FullyQualifiedJavaType(type));
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.dom.java.CompilationUnit#getImportedTypes()
-     */
+    @Override
     public Set<FullyQualifiedJavaType> getImportedTypes() {
         return importedTypes;
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.dom.java.CompilationUnit#addImportedType(org.mybatis.generator.api.dom.java.FullyQualifiedJavaType)
-     */
+    @Override
     public void addImportedType(FullyQualifiedJavaType importedType) {
         if (importedType.isExplicitlyImported()
                 && !importedType.getPackageName().equals(getType().getPackageName())) {
@@ -80,22 +61,13 @@ public class Interface extends InnerInterface implements CompilationUnit {
         }
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.dom.java.CompilationUnit#getFormattedContent()
-     */
+    @Override
     public String getFormattedContent() {
 
         return getFormattedContent(0, this);
     }
 
-    /**
-     * Gets the formatted content.
-     *
-     * @param indentLevel
-     *            the indent level
-     * @param compilationUnit the compilation unit
-     * @return the formatted content
-     */
+    @Override
     public String getFormattedContent(int indentLevel, CompilationUnit compilationUnit) {
         StringBuilder sb = new StringBuilder();
 
@@ -138,44 +110,32 @@ public class Interface extends InnerInterface implements CompilationUnit {
         return sb.toString();
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.dom.java.CompilationUnit#addFileCommentLine(java.lang.String)
-     */
+    @Override
     public void addFileCommentLine(String commentLine) {
         fileCommentLines.add(commentLine);
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.dom.java.CompilationUnit#getFileCommentLines()
-     */
+    @Override
     public List<String> getFileCommentLines() {
         return fileCommentLines;
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.dom.java.CompilationUnit#addImportedTypes(java.util.Set)
-     */
+    @Override
     public void addImportedTypes(Set<FullyQualifiedJavaType> importedTypes) {
         this.importedTypes.addAll(importedTypes);
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.dom.java.CompilationUnit#getStaticImports()
-     */
+    @Override
     public Set<String> getStaticImports() {
         return staticImports;
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.dom.java.CompilationUnit#addStaticImport(java.lang.String)
-     */
+    @Override
     public void addStaticImport(String staticImport) {
         staticImports.add(staticImport);
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.dom.java.CompilationUnit#addStaticImports(java.util.Set)
-     */
+    @Override
     public void addStaticImports(Set<String> staticImports) {
         this.staticImports.addAll(staticImports);
     }

@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -40,6 +40,7 @@ public class FirstNameTypeHandler implements TypeHandlerCallback {
     /* (non-Javadoc)
      * @see com.ibatis.sqlmap.client.extensions.TypeHandlerCallback#setParameter(com.ibatis.sqlmap.client.extensions.ParameterSetter, java.lang.Object)
      */
+    @Override
     public void setParameter(ParameterSetter arg0, Object arg1)
             throws SQLException {
         if (arg1 == null) {
@@ -52,6 +53,7 @@ public class FirstNameTypeHandler implements TypeHandlerCallback {
     /* (non-Javadoc)
      * @see com.ibatis.sqlmap.client.extensions.TypeHandlerCallback#getResult(com.ibatis.sqlmap.client.extensions.ResultGetter)
      */
+    @Override
     public Object getResult(ResultGetter arg0) throws SQLException {
         return valueOf(arg0.getString());
     }
@@ -59,6 +61,7 @@ public class FirstNameTypeHandler implements TypeHandlerCallback {
     /* (non-Javadoc)
      * @see com.ibatis.sqlmap.client.extensions.TypeHandlerCallback#valueOf(java.lang.String)
      */
+    @Override
     public Object valueOf(String arg0) {
         if (arg0 == null) {
             return null;

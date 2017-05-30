@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -31,8 +31,8 @@ import org.mybatis.generator.config.Context;
  * the code generation process. These methods can be used to extend or modify
  * the generated code. Clients may implement this interface in its entirety, or
  * extend the PluginAdapter (highly recommended).
- * <p>
- * Plugins have a lifecycle. In general, the lifecycle is this:
+ * 
+ * <p>Plugins have a lifecycle. In general, the lifecycle is this:
  * 
  * <ol>
  * <li>The setXXX methods are called one time</li>
@@ -50,14 +50,14 @@ import org.mybatis.generator.config.Context;
  * <li>The contextGenerateAdditionalXmlFiles() method is called one time</li>
  * </ol>
  * 
- * Plugins are related to contexts - so each context will have its own set of
+ * <p>Plugins are related to contexts - so each context will have its own set of
  * plugins. If the same plugin is specified in multiple contexts, then each
  * context will hold a unique instance of the plugin.
- * <p>
- * Plugins are called, and initialized, in the same order they are specified in
+ * 
+ * <p>Plugins are called, and initialized, in the same order they are specified in
  * the configuration.
- * <p>
- * The clientXXX, modelXXX, and sqlMapXXX methods are called by the code
+ * 
+ * <p>The clientXXX, modelXXX, and sqlMapXXX methods are called by the code
  * generators. If you replace the default code generators with other
  * implementations, these methods may not be called.
  * 
@@ -67,17 +67,10 @@ import org.mybatis.generator.config.Context;
  */
 public interface Plugin {
     
-    /**
-     * The Enum ModelClassType.
-     */
     public enum ModelClassType {
-        
-        /** The primary key. */
         PRIMARY_KEY, 
- /** The base record. */
- BASE_RECORD, 
- /** The record with blobs. */
- RECORD_WITH_BLOBS
+        BASE_RECORD, 
+        RECORD_WITH_BLOBS
     }
 
     /**
@@ -101,14 +94,14 @@ public interface Plugin {
      * can implement this method to override any of the default attributes, or change the results of database
      * introspection, before any code generation activities occur. Attributes are listed as static Strings with the
      * prefix ATTR_ in IntrospectedTable.
-     * <p>
-     * A good example of overriding an attribute would be the case where a user wanted to change the name of one of the
-     * generated classes, change the target package, or change the name of the generated SQL map file.
-     * <p>
-     * <b>Warning:</b> Anything that is listed as an attribute should not be changed by one of the other plugin methods.
-     * For example, if you want to change the name of a generated example class, you should not simply change the Type
-     * in the <code>modelExampleClassGenerated()</code> method. If you do, the change will not be reflected in other
-     * generated artifacts.
+     * 
+     * <p>A good example of overriding an attribute would be the case where a user wanted to change the name of one
+     * of the generated classes, change the target package, or change the name of the generated SQL map file.
+     * 
+     * <p><b>Warning:</b> Anything that is listed as an attribute should not be changed by one of the other plugin
+     * methods. For example, if you want to change the name of a generated example class, you should not simply change
+     * the Type in the <code>modelExampleClassGenerated()</code> method. If you do, the change will not be reflected
+     * in other generated artifacts.
      *
      * @param introspectedTable
      *            the introspected table

@@ -31,7 +31,7 @@ public class JavaDomUtils {
             return calculateParameterizedTypeName(compilationUnit, fqjt);
         }
         
-        if(compilationUnit == null
+        if (compilationUnit == null
                 || typeDoesNotRequireImport(fqjt)
                 || typeIsInSamePackage(compilationUnit, fqjt) 
                 || typeIsAlreadyImported(compilationUnit, fqjt)) {

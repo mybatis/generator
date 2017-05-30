@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -39,6 +39,7 @@ public class Test1Generator implements CompilationUnitGenerator {
     
     private static final String BASE_PACKAGE = "mbg.domtest.generators.fieldtype1.output";
 
+    @Override
     public List<CompilationUnit> generate() {
         FullyQualifiedJavaType cls = new FullyQualifiedJavaType(BASE_PACKAGE + ".SomeClass");
         

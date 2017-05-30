@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -74,6 +74,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.CommentGenerator#addJavaFileComment(org.mybatis.generator.api.dom.java.CompilationUnit)
      */
+    @Override
     public void addJavaFileComment(CompilationUnit compilationUnit) {
         // add no file level comments by default
     }
@@ -84,6 +85,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
      * @param xmlElement
      *            the xml element
      */
+    @Override
     public void addComment(XmlElement xmlElement) {
         if (suppressAllComments) {
             return;
@@ -114,6 +116,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.CommentGenerator#addRootComment(org.mybatis.generator.api.dom.xml.XmlElement)
      */
+    @Override
     public void addRootComment(XmlElement rootElement) {
         // add no document level comments by default
     }
@@ -121,6 +124,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.CommentGenerator#addConfigurationProperties(java.util.Properties)
      */
+    @Override
     public void addConfigurationProperties(Properties properties) {
         this.properties.putAll(properties);
 
@@ -185,6 +189,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.CommentGenerator#addClassComment(org.mybatis.generator.api.dom.java.InnerClass, org.mybatis.generator.api.IntrospectedTable)
      */
+    @Override
     public void addClassComment(InnerClass innerClass,
             IntrospectedTable introspectedTable) {
         if (suppressAllComments) {
@@ -245,6 +250,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.CommentGenerator#addEnumComment(org.mybatis.generator.api.dom.java.InnerEnum, org.mybatis.generator.api.IntrospectedTable)
      */
+    @Override
     public void addEnumComment(InnerEnum innerEnum,
             IntrospectedTable introspectedTable) {
         if (suppressAllComments) {
@@ -269,6 +275,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.CommentGenerator#addFieldComment(org.mybatis.generator.api.dom.java.Field, org.mybatis.generator.api.IntrospectedTable, org.mybatis.generator.api.IntrospectedColumn)
      */
+    @Override
     public void addFieldComment(Field field,
             IntrospectedTable introspectedTable,
             IntrospectedColumn introspectedColumn) {
@@ -306,6 +313,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.CommentGenerator#addFieldComment(org.mybatis.generator.api.dom.java.Field, org.mybatis.generator.api.IntrospectedTable)
      */
+    @Override
     public void addFieldComment(Field field, IntrospectedTable introspectedTable) {
         if (suppressAllComments) {
             return;
@@ -329,6 +337,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.CommentGenerator#addGeneralMethodComment(org.mybatis.generator.api.dom.java.Method, org.mybatis.generator.api.IntrospectedTable)
      */
+    @Override
     public void addGeneralMethodComment(Method method,
             IntrospectedTable introspectedTable) {
         if (suppressAllComments) {
@@ -353,6 +362,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.CommentGenerator#addGetterComment(org.mybatis.generator.api.dom.java.Method, org.mybatis.generator.api.IntrospectedTable, org.mybatis.generator.api.IntrospectedColumn)
      */
+    @Override
     public void addGetterComment(Method method,
             IntrospectedTable introspectedTable,
             IntrospectedColumn introspectedColumn) {
@@ -389,6 +399,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.CommentGenerator#addSetterComment(org.mybatis.generator.api.dom.java.Method, org.mybatis.generator.api.IntrospectedTable, org.mybatis.generator.api.IntrospectedColumn)
      */
+    @Override
     public void addSetterComment(Method method,
             IntrospectedTable introspectedTable,
             IntrospectedColumn introspectedColumn) {
@@ -428,6 +439,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.CommentGenerator#addClassComment(org.mybatis.generator.api.dom.java.InnerClass, org.mybatis.generator.api.IntrospectedTable, boolean)
      */
+    @Override
     public void addClassComment(InnerClass innerClass,
             IntrospectedTable introspectedTable, boolean markAsDoNotDelete) {
         if (suppressAllComments) {

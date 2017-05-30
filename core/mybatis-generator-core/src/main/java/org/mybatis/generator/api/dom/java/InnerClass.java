@@ -245,11 +245,11 @@ public class InnerClass extends JavaElement {
         sb.append("class "); //$NON-NLS-1$
         sb.append(getType().getShortName());
 
-        if(!this.getTypeParameters().isEmpty()) {
+        if (!this.getTypeParameters().isEmpty()) {
             boolean comma = false;
             sb.append("<"); //$NON-NLS-1$
             for (TypeParameter typeParameter: typeParameters) {
-                if(comma) {
+                if (comma) {
                     sb.append(", "); //$NON-NLS-1$
                 }
                 sb.append(typeParameter.getFormattedContent(compilationUnit));

@@ -38,6 +38,7 @@ public class FirstName {
         this.value = value;
     }
 
+    @Override
     public boolean equals(Object arg0) {
         if (arg0 == null) {
             return false;
@@ -46,6 +47,7 @@ public class FirstName {
         return value.equals(((FirstName)arg0).getValue());
     }
 
+    @Override
     public int hashCode() {
         return value == null ? 0 : value.hashCode();
     }

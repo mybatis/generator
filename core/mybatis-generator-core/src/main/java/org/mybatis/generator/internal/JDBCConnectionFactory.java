@@ -65,6 +65,7 @@ public class JDBCConnectionFactory implements ConnectionFactory {
         super();
     }
 
+    @Override
     public Connection getConnection()
             throws SQLException {
         Driver driver = getDriver();

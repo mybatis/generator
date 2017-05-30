@@ -25,23 +25,27 @@ import org.apache.ibatis.type.TypeHandler;
 
 public class StringBooleanTypeHandler implements TypeHandler<Boolean> {
 
+    @Override
     public Boolean getResult(CallableStatement cs, int columnIndex)
             throws SQLException {
         String s = cs.getString(columnIndex);
         return "Y".equals(s);
     }
 
+    @Override
     public Boolean getResult(ResultSet rs, String columnName) throws SQLException {
         String s = rs.getString(columnName);
         return "Y".equals(s);
     }
 
+    @Override
     public void setParameter(PreparedStatement ps, int columnIndex, Boolean parameter,
             JdbcType jdbcType) throws SQLException {
         String s = parameter == null ? "N" : parameter.booleanValue() ? "Y" : "N";
         ps.setString(columnIndex, s);
     }
 
+    @Override
     public Boolean getResult(ResultSet rs, int columnIndex) throws SQLException {
         String s = rs.getString(columnIndex);
         return "Y".equals(s);

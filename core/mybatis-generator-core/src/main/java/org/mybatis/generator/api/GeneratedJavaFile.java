@@ -90,6 +90,7 @@ public class GeneratedJavaFile extends GeneratedFile {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.GeneratedFile#getTargetPackage()
      */
+    @Override
     public String getTargetPackage() {
         return compilationUnit.getType().getPackageName();
     }

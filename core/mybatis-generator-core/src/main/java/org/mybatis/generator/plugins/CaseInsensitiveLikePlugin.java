@@ -48,6 +48,7 @@ public class CaseInsensitiveLikePlugin extends PluginAdapter {
         super();
     }
 
+    @Override
     public boolean validate(List<String> warnings) {
         return true;
     }

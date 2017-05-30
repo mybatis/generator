@@ -39,6 +39,7 @@ public class VirtualPrimaryKeyPlugin extends PluginAdapter {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.Plugin#validate(java.util.List)
      */
+    @Override
     public boolean validate(List<String> warnings) {
         return true;
     }

@@ -61,6 +61,7 @@ public class MapperConfigPlugin extends PluginAdapter {
         mapperFiles = new ArrayList<String>();
     }
 
+    @Override
     public boolean validate(List<String> warnings) {
         boolean valid = true;
 

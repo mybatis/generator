@@ -84,6 +84,7 @@ public class IgnoredColumn {
     /* (non-Javadoc)
      * @see java.lang.Object#equals(java.lang.Object)
      */
+    @Override
     public boolean equals(Object obj) {
         if (obj == null || !(obj instanceof IgnoredColumn)) {
             return false;
@@ -95,6 +96,7 @@ public class IgnoredColumn {
     /* (non-Javadoc)
      * @see java.lang.Object#hashCode()
      */
+    @Override
     public int hashCode() {
         return columnName.hashCode();
     }

@@ -38,6 +38,7 @@ public class ToStringPlugin extends PluginAdapter {
         useToStringFromRoot = isTrue(properties.getProperty("useToStringFromRoot"));
     }
 
+    @Override
     public boolean validate(List<String> warnings) {
         return true;
     }

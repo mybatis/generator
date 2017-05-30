@@ -39,6 +39,7 @@ import java.util.List;
  */
 public class FluentBuilderMethodsPlugin extends  PluginAdapter {
 
+    @Override
     public boolean validate(List<String> warnings) {
         return true;
     }

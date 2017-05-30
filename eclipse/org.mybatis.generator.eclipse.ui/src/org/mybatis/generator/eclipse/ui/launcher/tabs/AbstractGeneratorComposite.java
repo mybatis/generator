@@ -114,6 +114,7 @@ public abstract class AbstractGeneratorComposite extends Composite implements Ge
 
         txtFileName = new Text(fileNameComposite, SWT.SINGLE | SWT.BORDER);
         txtFileName.addModifyListener(new ModifyListener() {
+            @Override
             public void modifyText(ModifyEvent e) {
                 updateLaunchConfigurationDialog();
             }

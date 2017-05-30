@@ -43,6 +43,7 @@ public class HierarchicalModelRules extends BaseRules {
      * 
      * @return true if the primary key should be generated
      */
+    @Override
     public boolean generatePrimaryKeyClass() {
         return introspectedTable.hasPrimaryKeyColumns();
     }
@@ -54,6 +55,7 @@ public class HierarchicalModelRules extends BaseRules {
      * 
      * @return true if the class should be generated
      */
+    @Override
     public boolean generateBaseRecordClass() {
         return introspectedTable.hasBaseColumns();
     }
@@ -64,6 +66,7 @@ public class HierarchicalModelRules extends BaseRules {
      * 
      * @return true if the record with BLOBs class should be generated
      */
+    @Override
     public boolean generateRecordWithBLOBsClass() {
         return introspectedTable.hasBLOBColumns();
     }

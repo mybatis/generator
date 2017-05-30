@@ -38,6 +38,7 @@ public class FirstNameTypeHandler implements TypeHandler<FirstName> {
         super();
     }
 
+    @Override
     public FirstName getResult(CallableStatement cs, int columnIndex)
             throws SQLException {
         FirstName answer = null;
@@ -50,6 +51,7 @@ public class FirstNameTypeHandler implements TypeHandler<FirstName> {
         return answer;
     }
 
+    @Override
     public FirstName getResult(ResultSet rs, String columnName)
             throws SQLException {
         FirstName answer = null;
@@ -62,6 +64,7 @@ public class FirstNameTypeHandler implements TypeHandler<FirstName> {
         return answer;
     }
 
+    @Override
     public FirstName getResult(ResultSet rs, int columnIndex)
             throws SQLException {
         FirstName answer = null;
@@ -74,6 +77,7 @@ public class FirstNameTypeHandler implements TypeHandler<FirstName> {
         return answer;
     }
 
+    @Override
     public void setParameter(PreparedStatement ps, int i, FirstName parameter,
             JdbcType jdbcType) throws SQLException {
         if (parameter == null) {

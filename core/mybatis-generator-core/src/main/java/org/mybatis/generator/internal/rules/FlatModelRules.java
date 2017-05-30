@@ -41,6 +41,7 @@ public class FlatModelRules extends BaseRules {
      * 
      * @return true if the primary key should be generated
      */
+    @Override
     public boolean generatePrimaryKeyClass() {
         return false;
     }
@@ -50,6 +51,7 @@ public class FlatModelRules extends BaseRules {
      * 
      * @return true if the class should be generated
      */
+    @Override
     public boolean generateBaseRecordClass() {
         return true;
     }
@@ -59,6 +61,7 @@ public class FlatModelRules extends BaseRules {
      * 
      * @return true if the record with BLOBs class should be generated
      */
+    @Override
     public boolean generateRecordWithBLOBsClass() {
         return false;
     }

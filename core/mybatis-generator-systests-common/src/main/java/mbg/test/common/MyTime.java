@@ -55,6 +55,7 @@ public class MyTime {
         this.seconds = seconds;
     }
 
+    @Override
     public boolean equals(Object arg0) {
         if (arg0 == null) {
             return false;
@@ -67,6 +68,7 @@ public class MyTime {
             && this.seconds == other.seconds;
     }
 
+    @Override
     public int hashCode() {
         return hours + minutes + seconds;
     }

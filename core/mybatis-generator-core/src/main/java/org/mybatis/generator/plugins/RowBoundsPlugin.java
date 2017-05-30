@@ -50,6 +50,7 @@ public class RowBoundsPlugin extends PluginAdapter {
         elementsToAdd = new HashMap<FullyQualifiedTable, List<XmlElement>>();
     }
     
+    @Override
     public boolean validate(List<String> warnings) {
         return true;
     }

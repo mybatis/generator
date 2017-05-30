@@ -39,6 +39,7 @@ public class MyTimeTypeHandler implements TypeHandlerCallback {
         super();
     }
 
+    @Override
     public Object getResult(ResultGetter resultGetter) throws SQLException {
         Time time = resultGetter.getTime();
         if (time == null) {
@@ -58,6 +59,7 @@ public class MyTimeTypeHandler implements TypeHandlerCallback {
         }
     }
 
+    @Override
     public void setParameter(ParameterSetter parameterSetter, Object value)
             throws SQLException {
         if (value == null) {
@@ -76,6 +78,7 @@ public class MyTimeTypeHandler implements TypeHandlerCallback {
         }
     }
 
+    @Override
     public Object valueOf(String arg0) {
         return arg0;
     }

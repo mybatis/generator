@@ -56,6 +56,7 @@ public class XmlFileMergerJaxp {
          * attempt to read a DTD. We don't need that support for the merge and
          * it can cause problems on systems that aren't Internet connected.
          */
+        @Override
         public InputSource resolveEntity(String publicId, String systemId)
                 throws SAXException, IOException {
 

@@ -62,6 +62,7 @@ public class RenameExampleClassPlugin extends PluginAdapter {
     public RenameExampleClassPlugin() {
     }
 
+    @Override
     public boolean validate(List<String> warnings) {
 
         searchString = properties.getProperty("searchString"); //$NON-NLS-1$

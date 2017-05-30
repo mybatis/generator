@@ -39,6 +39,7 @@ public class Test1Generator implements CompilationUnitGenerator {
     
     private static final String BASE_PACKAGE = "mbg.domtest.generators.fieldtype1.output";
 
+    @Override
     public List<CompilationUnit> generate() {
         FullyQualifiedJavaType cls = new FullyQualifiedJavaType(BASE_PACKAGE + ".SomeClass");
         

@@ -61,6 +61,7 @@ public class SqlMapConfigPlugin extends PluginAdapter {
         sqlMapFiles = new ArrayList<String>();
     }
 
+    @Override
     public boolean validate(List<String> warnings) {
         boolean valid = true;
 

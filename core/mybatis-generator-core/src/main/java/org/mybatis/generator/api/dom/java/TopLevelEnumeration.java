@@ -56,6 +56,7 @@ public class TopLevelEnumeration extends InnerEnum implements CompilationUnit {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#getFormattedContent()
      */
+    @Override
     public String getFormattedContent() {
         StringBuilder sb = new StringBuilder();
 
@@ -102,6 +103,7 @@ public class TopLevelEnumeration extends InnerEnum implements CompilationUnit {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#getImportedTypes()
      */
+    @Override
     public Set<FullyQualifiedJavaType> getImportedTypes() {
         return importedTypes;
     }
@@ -109,6 +111,7 @@ public class TopLevelEnumeration extends InnerEnum implements CompilationUnit {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#getSuperClass()
      */
+    @Override
     public FullyQualifiedJavaType getSuperClass() {
         throw new UnsupportedOperationException(getString("RuntimeError.11")); //$NON-NLS-1$
     }
@@ -116,6 +119,7 @@ public class TopLevelEnumeration extends InnerEnum implements CompilationUnit {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#isJavaInterface()
      */
+    @Override
     public boolean isJavaInterface() {
         return false;
     }
@@ -123,6 +127,7 @@ public class TopLevelEnumeration extends InnerEnum implements CompilationUnit {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#isJavaEnumeration()
      */
+    @Override
     public boolean isJavaEnumeration() {
         return true;
     }
@@ -130,6 +135,7 @@ public class TopLevelEnumeration extends InnerEnum implements CompilationUnit {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#addImportedType(org.mybatis.generator.api.dom.java.FullyQualifiedJavaType)
      */
+    @Override
     public void addImportedType(FullyQualifiedJavaType importedType) {
         if (importedType.isExplicitlyImported()
                 && !importedType.getPackageName().equals(
@@ -141,6 +147,7 @@ public class TopLevelEnumeration extends InnerEnum implements CompilationUnit {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#addFileCommentLine(java.lang.String)
      */
+    @Override
     public void addFileCommentLine(String commentLine) {
         fileCommentLines.add(commentLine);
     }
@@ -148,6 +155,7 @@ public class TopLevelEnumeration extends InnerEnum implements CompilationUnit {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#getFileCommentLines()
      */
+    @Override
     public List<String> getFileCommentLines() {
         return fileCommentLines;
     }
@@ -155,6 +163,7 @@ public class TopLevelEnumeration extends InnerEnum implements CompilationUnit {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#addImportedTypes(java.util.Set)
      */
+    @Override
     public void addImportedTypes(Set<FullyQualifiedJavaType> importedTypes) {
         this.importedTypes.addAll(importedTypes);
     }
@@ -162,6 +171,7 @@ public class TopLevelEnumeration extends InnerEnum implements CompilationUnit {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#getStaticImports()
      */
+    @Override
     public Set<String> getStaticImports() {
         return staticImports;
     }
@@ -169,6 +179,7 @@ public class TopLevelEnumeration extends InnerEnum implements CompilationUnit {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#addStaticImport(java.lang.String)
      */
+    @Override
     public void addStaticImport(String staticImport) {
         staticImports.add(staticImport);
     }
@@ -176,6 +187,7 @@ public class TopLevelEnumeration extends InnerEnum implements CompilationUnit {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#addStaticImports(java.util.Set)
      */
+    @Override
     public void addStaticImports(Set<String> staticImports) {
         this.staticImports.addAll(staticImports);
     }

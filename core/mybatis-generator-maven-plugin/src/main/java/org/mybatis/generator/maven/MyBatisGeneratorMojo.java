@@ -150,6 +150,7 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
     @Parameter(property="mybatis.generator.includeAllDependencies", defaultValue="false")
     private boolean includeAllDependencies;
     
+    @Override
     public void execute() throws MojoExecutionException {
         if (skip) {
             getLog().info( "MyBatis generator is skipped." );

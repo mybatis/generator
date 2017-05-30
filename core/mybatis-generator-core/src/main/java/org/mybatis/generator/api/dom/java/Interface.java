@@ -66,6 +66,7 @@ public class Interface extends InnerInterface implements CompilationUnit {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#getImportedTypes()
      */
+    @Override
     public Set<FullyQualifiedJavaType> getImportedTypes() {
         return importedTypes;
     }
@@ -73,6 +74,7 @@ public class Interface extends InnerInterface implements CompilationUnit {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#addImportedType(org.mybatis.generator.api.dom.java.FullyQualifiedJavaType)
      */
+    @Override
     public void addImportedType(FullyQualifiedJavaType importedType) {
         if (importedType.isExplicitlyImported()
                 && !importedType.getPackageName().equals(getType().getPackageName())) {
@@ -83,6 +85,7 @@ public class Interface extends InnerInterface implements CompilationUnit {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#getFormattedContent()
      */
+    @Override
     public String getFormattedContent() {
 
         return getFormattedContent(0, this);
@@ -96,6 +99,7 @@ public class Interface extends InnerInterface implements CompilationUnit {
      * @param compilationUnit the compilation unit
      * @return the formatted content
      */
+    @Override
     public String getFormattedContent(int indentLevel, CompilationUnit compilationUnit) {
         StringBuilder sb = new StringBuilder();
 
@@ -141,6 +145,7 @@ public class Interface extends InnerInterface implements CompilationUnit {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#addFileCommentLine(java.lang.String)
      */
+    @Override
     public void addFileCommentLine(String commentLine) {
         fileCommentLines.add(commentLine);
     }
@@ -148,6 +153,7 @@ public class Interface extends InnerInterface implements CompilationUnit {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#getFileCommentLines()
      */
+    @Override
     public List<String> getFileCommentLines() {
         return fileCommentLines;
     }
@@ -155,6 +161,7 @@ public class Interface extends InnerInterface implements CompilationUnit {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#addImportedTypes(java.util.Set)
      */
+    @Override
     public void addImportedTypes(Set<FullyQualifiedJavaType> importedTypes) {
         this.importedTypes.addAll(importedTypes);
     }
@@ -162,6 +169,7 @@ public class Interface extends InnerInterface implements CompilationUnit {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#getStaticImports()
      */
+    @Override
     public Set<String> getStaticImports() {
         return staticImports;
     }
@@ -169,6 +177,7 @@ public class Interface extends InnerInterface implements CompilationUnit {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#addStaticImport(java.lang.String)
      */
+    @Override
     public void addStaticImport(String staticImport) {
         staticImports.add(staticImport);
     }
@@ -176,6 +185,7 @@ public class Interface extends InnerInterface implements CompilationUnit {
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.dom.java.CompilationUnit#addStaticImports(java.util.Set)
      */
+    @Override
     public void addStaticImports(Set<String> staticImports) {
         this.staticImports.addAll(staticImports);
     }

@@ -139,9 +139,9 @@ public class ProviderApplyWhereMethodGenerator extends
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
 
         if (useLegacyBuilder) {
-        	staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.WHERE"); //$NON-NLS-1$
+            staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.WHERE"); //$NON-NLS-1$
         } else {
-        	importedTypes.add(NEW_BUILDER_IMPORT);
+            importedTypes.add(NEW_BUILDER_IMPORT);
         }
         
         importedTypes.add(new FullyQualifiedJavaType(
@@ -170,13 +170,13 @@ public class ProviderApplyWhereMethodGenerator extends
         }
         
         if (useLegacyBuilder) {
-        	for (String methodLine : LEGACY_ENDING_METHOD_LINES) {
-        		method.addBodyLine(methodLine);
-        	}
+            for (String methodLine : LEGACY_ENDING_METHOD_LINES) {
+                method.addBodyLine(methodLine);
+            }
         } else {
-        	for (String methodLine : ENDING_METHOD_LINES) {
-        		method.addBodyLine(methodLine);
-        	}
+            for (String methodLine : ENDING_METHOD_LINES) {
+                method.addBodyLine(methodLine);
+            }
         }
         
         if (context.getPlugins().providerApplyWhereMethodGenerated(method, topLevelClass,

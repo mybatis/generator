@@ -24,8 +24,8 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
 public class JavaTypeResolverConfiguration extends TypedPropertyHolder {
 
     /**
-	 *  
-	 */
+     *  
+     */
     public JavaTypeResolverConfiguration() {
         super();
     }

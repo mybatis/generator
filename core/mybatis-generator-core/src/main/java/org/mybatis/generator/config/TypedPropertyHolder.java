@@ -23,8 +23,8 @@ public abstract class TypedPropertyHolder extends PropertyHolder {
     private String configurationType;
 
     /**
-	 *  
-	 */
+     *  
+     */
     public TypedPropertyHolder() {
         super();
     }

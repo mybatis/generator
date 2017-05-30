@@ -159,12 +159,12 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
 
     @Override
     public List<CompilationUnit> getExtraCompilationUnits() {
-    	boolean useLegacyBuilder = false;
-    	
-    	String prop = context.getJavaClientGeneratorConfiguration().getProperty(PropertyRegistry.CLIENT_USE_LEGACY_BUILDER);
-    	if (StringUtility.stringHasValue(prop)) {
-    		useLegacyBuilder = Boolean.valueOf(prop);
-    	}
+        boolean useLegacyBuilder = false;
+
+        String prop = context.getJavaClientGeneratorConfiguration().getProperty(PropertyRegistry.CLIENT_USE_LEGACY_BUILDER);
+        if (StringUtility.stringHasValue(prop)) {
+            useLegacyBuilder = Boolean.valueOf(prop);
+        }
         SqlProviderGenerator sqlProviderGenerator = new SqlProviderGenerator(useLegacyBuilder);
         sqlProviderGenerator.setContext(context);
         sqlProviderGenerator.setIntrospectedTable(introspectedTable);

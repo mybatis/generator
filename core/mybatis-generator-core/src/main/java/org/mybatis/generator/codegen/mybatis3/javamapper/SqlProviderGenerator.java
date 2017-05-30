@@ -45,8 +45,8 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider.Pr
  */
 public class SqlProviderGenerator extends AbstractJavaGenerator {
 
-	private boolean useLegacyBuilder;
-	
+    private boolean useLegacyBuilder;
+    
     public SqlProviderGenerator(boolean useLegacyBuilder) {
         super();
         this.useLegacyBuilder = useLegacyBuilder;

@@ -81,7 +81,7 @@ public class ConfigurationParser {
      * </ol>
      * 
      * @param extraProperties an (optional) set of properties used to resolve property
-     *   references in the configuration file
+     *     references in the configuration file
      * @param warnings
      */
     public ConfigurationParser(Properties extraProperties, List<String> warnings) {

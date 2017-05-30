@@ -31,8 +31,7 @@ import org.mybatis.generator.api.dom.java.TopLevelClass;
  * @author Jeff Butler
  * 
  */
-public class ProviderCountByExampleMethodGenerator extends
-        AbstractJavaProviderMethodGenerator {
+public class ProviderCountByExampleMethodGenerator extends AbstractJavaProviderMethodGenerator {
 
     public ProviderCountByExampleMethodGenerator(boolean useLegacyBuilder) {
         super(useLegacyBuilder);
@@ -68,13 +67,13 @@ public class ProviderCountByExampleMethodGenerator extends
             method.addBodyLine("BEGIN();"); //$NON-NLS-1$
             method.addBodyLine("SELECT(\"count(*)\");"); //$NON-NLS-1$
             method.addBodyLine(String.format("FROM(\"%s\");", //$NON-NLS-1$
-                escapeStringForJava(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime())));
+                    escapeStringForJava(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime())));
             method.addBodyLine("applyWhere(example, false);"); //$NON-NLS-1$
             method.addBodyLine("return SQL();"); //$NON-NLS-1$
         } else {
             method.addBodyLine("SQL sql = new SQL();"); //$NON-NLS-1$
             method.addBodyLine(String.format("sql.SELECT(\"count(*)\").FROM(\"%s\");", //$NON-NLS-1$
-                escapeStringForJava(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime())));
+                    escapeStringForJava(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime())));
             method.addBodyLine("applyWhere(sql, example, false);"); //$NON-NLS-1$
             method.addBodyLine("return sql.toString();"); //$NON-NLS-1$
         }

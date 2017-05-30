@@ -180,7 +180,7 @@ public class ObjectFactory {
         for (ClassLoader classLoader : externalClassLoaders) {
             url = classLoader.getResource(resource);
             if (url != null) {
-              return url;
+                return url;
             }
         }
         

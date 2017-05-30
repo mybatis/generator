@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,43 +22,22 @@ package org.mybatis.generator.internal.db;
  */
 public enum DatabaseDialects {
 
-    /** The D b2. */
     DB2("VALUES IDENTITY_VAL_LOCAL()"), //$NON-NLS-1$
-    /** The mysql. */
- MYSQL("SELECT LAST_INSERT_ID()"), //$NON-NLS-1$
-    /** The sqlserver. */
- SQLSERVER("SELECT SCOPE_IDENTITY()"), //$NON-NLS-1$
-    /** The cloudscape. */
- CLOUDSCAPE("VALUES IDENTITY_VAL_LOCAL()"), //$NON-NLS-1$
-    /** The derby. */
- DERBY("VALUES IDENTITY_VAL_LOCAL()"), //$NON-NLS-1$
-    /** The hsqldb. */
- HSQLDB("CALL IDENTITY()"), //$NON-NLS-1$
-    /** The sybase. */
- SYBASE("SELECT @@IDENTITY"), //$NON-NLS-1$
-    /** The D b2_ mf. */
- DB2_MF("SELECT IDENTITY_VAL_LOCAL() FROM SYSIBM.SYSDUMMY1"), //$NON-NLS-1$
-    /** The informix. */
- INFORMIX("select dbinfo('sqlca.sqlerrd1') from systables where tabid=1"); //$NON-NLS-1$
+    MYSQL("SELECT LAST_INSERT_ID()"), //$NON-NLS-1$
+    SQLSERVER("SELECT SCOPE_IDENTITY()"), //$NON-NLS-1$
+    CLOUDSCAPE("VALUES IDENTITY_VAL_LOCAL()"), //$NON-NLS-1$
+    DERBY("VALUES IDENTITY_VAL_LOCAL()"), //$NON-NLS-1$
+    HSQLDB("CALL IDENTITY()"), //$NON-NLS-1$
+    SYBASE("SELECT @@IDENTITY"), //$NON-NLS-1$
+    DB2_MF("SELECT IDENTITY_VAL_LOCAL() FROM SYSIBM.SYSDUMMY1"), //$NON-NLS-1$
+    INFORMIX("select dbinfo('sqlca.sqlerrd1') from systables where tabid=1"); //$NON-NLS-1$
 
-    /** The identity retrieval statement. */
- private String identityRetrievalStatement;
+    private String identityRetrievalStatement;
 
-    /**
-     * Instantiates a new database dialects.
-     *
-     * @param identityRetrievalStatement
-     *            the identity retrieval statement
-     */
     private DatabaseDialects(String identityRetrievalStatement) {
         this.identityRetrievalStatement = identityRetrievalStatement;
     }
 
-    /**
-     * Gets the identity retrieval statement.
-     *
-     * @return the identity retrieval statement
-     */
     public String getIdentityRetrievalStatement() {
         return identityRetrievalStatement;
     }

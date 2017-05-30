@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ package org.mybatis.generator.api.dom.xml;
  *
  * @author Jeff Butler
  */
-public class Attribute implements Comparable<Attribute>{
+public class Attribute implements Comparable<Attribute> {
     
     /** The name. */
     private String name;
@@ -78,7 +78,7 @@ public class Attribute implements Comparable<Attribute>{
     @Override
     public int compareTo(Attribute o) {
         if (this.name == null) {
-            return o.name == null ? 0: -1;
+            return o.name == null ? 0 : -1;
         } else {
             if (o.name == null) {
                 return 0;

@@ -18,9 +18,6 @@ package org.mybatis.generator.api.dom.java;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author Shinichi Kozake
- */
 public class TypeParameter {
 
     private String name;

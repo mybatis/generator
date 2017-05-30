@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -92,8 +92,9 @@ public interface DAOMethodNameCalculator {
             IntrospectedTable introspectedTable);
 
     /**
-     * Calculates and returns a name for the select by example with BLOBs method. If the table contains BLOBs, then we
-     * will generate different select by example methods - one including BLOBs, one not including BLOBs.
+     * Calculates and returns a name for the select by example with BLOBs method. If the table
+     * contains BLOBs, then we will generate different select by example methods - one including
+     * BLOBs, one not including BLOBs.
      *
      * @param introspectedTable
      *            the introspected table

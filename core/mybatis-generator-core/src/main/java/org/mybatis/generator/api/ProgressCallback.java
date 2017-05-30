@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,10 +16,9 @@
 package org.mybatis.generator.api;
 
 /**
- * This interface can be implemented to return progress information from the
- * file generation process.
+ * This interface can be implemented to return progress information from the file generation process.
  * 
- * During the execution of code generation, there are three main operations:
+ * <p>During the execution of code generation, there are three main operations:
  * database introspection, code generation based on the results of
  * introspection, and then merging/saving generated files. Methods
  * in this interface accordingly and in this order:
@@ -32,11 +31,11 @@ package org.mybatis.generator.api;
  * <li>(Repeatedly) startTask(String)</li>
  * <li>done()</li>
  * </ol>
- * <p>
- * Periodically, the <code>checkCancel()</code> method will be called to see if the
+ * 
+ * <p>Periodically, the <code>checkCancel()</code> method will be called to see if the
  * method should be canceled.
- * <p>
- * For planning purposes, the most common use case will have a ratio of 20%
+ * 
+ * <p>For planning purposes, the most common use case will have a ratio of 20%
  * introspection tasks, 40% generation tasks, and 40% save tasks.
  * 
  * @author Jeff Butler
@@ -75,7 +74,7 @@ public interface ProgressCallback {
     void saveStarted(int totalTasks);
 
     /**
-     * Called to denote the beginning of a save task
+     * Called to denote the beginning of a save task.
      * 
      * @param taskName
      *            a descriptive name of the current work step
@@ -83,7 +82,7 @@ public interface ProgressCallback {
     void startTask(String taskName);
 
     /**
-     * This method is called when all generated files have been saved
+     * This method is called when all generated files have been saved.
      */
     void done();
 

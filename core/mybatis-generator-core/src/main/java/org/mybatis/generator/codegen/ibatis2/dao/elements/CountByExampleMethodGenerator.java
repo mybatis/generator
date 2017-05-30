@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -43,6 +43,9 @@ public class CountByExampleMethodGenerator extends AbstractDAOElementGenerator {
     public void addImplementationElements(TopLevelClass topLevelClass) {
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
         Method method = getMethodShell(importedTypes);
+        if (generateForJava5) {
+            method.addAnnotation("@Override"); //$NON-NLS-1$
+        }
 
         // generate the implementation method
         StringBuilder sb = new StringBuilder();

@@ -23,6 +23,7 @@ import mbg.test.ib2j5.generated.miscellaneous.dao.impl.RegexrenameDAOImpl;
 
 public abstract class AbstractMiscellaneousTest extends AbstractTest {
 
+    @Override
     public void setUp() throws Exception {
         super.setUp();
         initSqlMapClient("mbg/test/ib2j5/miscellaneous/SqlMapConfig.xml",

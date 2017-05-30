@@ -34,6 +34,7 @@ public abstract class AbstractHierarchicalJava5Test extends AbstractTest {
     
     private GenericApplicationContext factory;
 
+    @Override
     public void setUp() throws Exception {
         super.setUp();
         factory = new GenericApplicationContext();

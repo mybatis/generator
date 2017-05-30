@@ -33,6 +33,7 @@ import mbg.test.ib2j5.generated.flat.dao.PkonlyDAOImpl;
 
 public abstract class AbstractFlatJava5Test extends AbstractTest {
 
+    @Override
     public void setUp() throws Exception {
         super.setUp();
         initSqlMapClient("mbg/test/ib2j5/flat/SqlMapConfig.xml", null);

@@ -33,6 +33,7 @@ import mbg.test.ib2j5.generated.conditional.dao.PkonlyDAOImpl;
 
 public abstract class AbstractConditionalJava5Test extends AbstractTest {
 
+    @Override
     public void setUp() throws Exception {
         super.setUp();
         initSqlMapClient(

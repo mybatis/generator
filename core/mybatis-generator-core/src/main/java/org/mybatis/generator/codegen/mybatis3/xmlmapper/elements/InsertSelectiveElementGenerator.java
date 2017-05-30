@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -54,7 +54,7 @@ public class InsertSelectiveElementGenerator extends
         GeneratedKey gk = introspectedTable.getGeneratedKey();
         if (gk != null) {
             IntrospectedColumn introspectedColumn = introspectedTable
-                .getColumn(gk.getColumn());
+                    .getColumn(gk.getColumn());
             // if the column is null, then it's a configuration error. The
             // warning has already been reported
             if (introspectedColumn != null) {
@@ -98,13 +98,13 @@ public class InsertSelectiveElementGenerator extends
                 // if it is primitive, we cannot do a null check
                 sb.setLength(0);
                 sb.append(MyBatis3FormattingUtilities
-                    .getEscapedColumnName(introspectedColumn));
+                        .getEscapedColumnName(introspectedColumn));
                 sb.append(',');
                 insertTrimElement.addElement(new TextElement(sb.toString()));
 
                 sb.setLength(0);
                 sb.append(MyBatis3FormattingUtilities
-                    .getParameterClause(introspectedColumn));
+                        .getParameterClause(introspectedColumn));
                 sb.append(',');
                 valuesTrimElement.addElement(new TextElement(sb.toString()));
 

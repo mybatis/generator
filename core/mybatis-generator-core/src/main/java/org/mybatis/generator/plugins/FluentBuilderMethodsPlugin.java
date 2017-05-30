@@ -15,6 +15,8 @@
  */
 package org.mybatis.generator.plugins;
 
+import java.util.List;
+
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.PluginAdapter;
@@ -22,17 +24,14 @@ import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 
-import java.util.List;
-
 /**
- * This plugin adds fluent builder methods to the generated model
- * classes.
+ * This plugin adds fluent builder methods to the generated model classes.
  *
- * Example:
- * <p>
- * Given the domain class <code>MyDomainClass</code> with setter-method <code>setValue(Object v)</code>
- * <p>
- * The plugin will create the additional Method <code>public MyDomainClass withValue(Object v)</code>
+ * <p>Example:
+ * 
+ * <p>Given the domain class <code>MyDomainClass</code> with setter-method <code>setValue(Object v)</code>
+ * 
+ * <p>The plugin will create the additional Method <code>public MyDomainClass withValue(Object v)</code>
  *
  *
  * @author Stefan Lack
@@ -43,8 +42,6 @@ public class FluentBuilderMethodsPlugin extends  PluginAdapter {
     public boolean validate(List<String> warnings) {
         return true;
     }
-
-    
 
     @Override
     public boolean modelSetterMethodGenerated(Method method,
@@ -62,11 +59,11 @@ public class FluentBuilderMethodsPlugin extends  PluginAdapter {
         context.getCommentGenerator().addGeneralMethodComment(fluentMethod,
                 introspectedTable);
         StringBuilder sb = new StringBuilder()
-          .append("this.") //$NON-NLS-1$
-          .append(method.getName())
-          .append('(')
-          .append(introspectedColumn.getJavaProperty())
-          .append(");"); //$NON-NLS-1$
+                .append("this.") //$NON-NLS-1$
+                .append(method.getName())
+                .append('(')
+                .append(introspectedColumn.getJavaProperty())
+                .append(");"); //$NON-NLS-1$
         fluentMethod.addBodyLine(sb.toString()); //$NON-NLS-1$
         fluentMethod.addBodyLine("return this;"); //$NON-NLS-1$
 

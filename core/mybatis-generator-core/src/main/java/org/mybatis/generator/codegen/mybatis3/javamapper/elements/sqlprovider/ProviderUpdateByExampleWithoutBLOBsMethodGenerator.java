@@ -93,7 +93,7 @@ public class ProviderUpdateByExampleWithoutBLOBsMethodGenerator extends
         method.addBodyLine(""); //$NON-NLS-1$
         
         FullyQualifiedJavaType example =
-            new FullyQualifiedJavaType(introspectedTable.getExampleType());
+                new FullyQualifiedJavaType(introspectedTable.getExampleType());
         importedTypes.add(example);
         method.addBodyLine(String.format("%s example = (%s) parameter.get(\"example\");", //$NON-NLS-1$
                 example.getShortName(), example.getShortName()));

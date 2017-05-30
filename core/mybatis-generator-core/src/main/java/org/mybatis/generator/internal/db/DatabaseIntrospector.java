@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -391,7 +391,7 @@ public class DatabaseIntrospector {
                 }
 
                 if (context.autoDelimitKeywords()
-                    && SqlReservedWords.containsWord(introspectedColumn
+                        && SqlReservedWords.containsWord(introspectedColumn
                             .getActualColumnName())) {
                     introspectedColumn.setColumnNameDelimited(true);
                 }
@@ -516,7 +516,7 @@ public class DatabaseIntrospector {
     }
 
     /**
-     * This method returns a Map<ActualTableName, List<ColumnDefinitions>> of columns returned from the database
+     * This method returns a Map<ActualTableName, List<IntrospectedColumn>> of columns returned from the database
      * introspection.
      *
      * @param tc

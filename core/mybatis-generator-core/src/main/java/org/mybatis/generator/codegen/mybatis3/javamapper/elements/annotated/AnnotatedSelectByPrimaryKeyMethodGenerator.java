@@ -33,8 +33,7 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.SelectByPrimar
  * 
  * @author Jeff Butler
  */
-public class AnnotatedSelectByPrimaryKeyMethodGenerator extends
-    SelectByPrimaryKeyMethodGenerator {
+public class AnnotatedSelectByPrimaryKeyMethodGenerator extends SelectByPrimaryKeyMethodGenerator {
     
     private boolean useResultMapIfAvailable;
 
@@ -53,7 +52,7 @@ public class AnnotatedSelectByPrimaryKeyMethodGenerator extends
         method.addAnnotation(sb.toString());
         
         Iterator<IntrospectedColumn> iter = introspectedTable
-            .getAllColumns().iterator();
+                .getAllColumns().iterator();
         sb.setLength(0);
         javaIndent(sb, 1);
         sb.append('"');

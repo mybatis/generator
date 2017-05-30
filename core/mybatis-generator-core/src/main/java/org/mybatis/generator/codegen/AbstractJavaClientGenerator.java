@@ -47,7 +47,7 @@ public abstract class AbstractJavaClientGenerator extends AbstractJavaGenerator 
      * with this client generator.
      * 
      * @return the matched XML generator.  May return null if no
-     * XML is required by this generator
+     *     XML is required by this generator
      */
     public abstract AbstractXmlGenerator getMatchedXMLGenerator();
 }

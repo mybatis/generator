@@ -36,8 +36,7 @@ import org.mybatis.generator.codegen.mybatis3.ListUtilities;
  * @author Jeff Butler
  * 
  */
-public class ProviderUpdateByExampleSelectiveMethodGenerator extends
-        AbstractJavaProviderMethodGenerator {
+public class ProviderUpdateByExampleSelectiveMethodGenerator extends AbstractJavaProviderMethodGenerator {
 
     public ProviderUpdateByExampleSelectiveMethodGenerator(boolean useLegacyBuilder) {
         super(useLegacyBuilder);
@@ -66,13 +65,13 @@ public class ProviderUpdateByExampleSelectiveMethodGenerator extends
                 "parameter")); //$NON-NLS-1$
         
         FullyQualifiedJavaType record =
-            introspectedTable.getRules().calculateAllFieldsClass();
+                introspectedTable.getRules().calculateAllFieldsClass();
         importedTypes.add(record);
         method.addBodyLine(String.format("%s record = (%s) parameter.get(\"record\");", //$NON-NLS-1$
                 record.getShortName(), record.getShortName()));
 
         FullyQualifiedJavaType example =
-            new FullyQualifiedJavaType(introspectedTable.getExampleType());
+                new FullyQualifiedJavaType(introspectedTable.getExampleType());
         importedTypes.add(example);
         method.addBodyLine(String.format("%s example = (%s) parameter.get(\"example\");", //$NON-NLS-1$
                 example.getShortName(), example.getShortName()));
@@ -96,8 +95,8 @@ public class ProviderUpdateByExampleSelectiveMethodGenerator extends
         for (IntrospectedColumn introspectedColumn : ListUtilities.removeGeneratedAlwaysColumns(introspectedTable.getAllColumns())) {
             if (!introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {
                 method.addBodyLine(String.format("if (record.%s() != null) {", //$NON-NLS-1$
-                    getGetterMethodName(introspectedColumn.getJavaProperty(),
-                            introspectedColumn.getFullyQualifiedJavaType())));
+                        getGetterMethodName(introspectedColumn.getJavaProperty(),
+                                introspectedColumn.getFullyQualifiedJavaType())));
             }
 
             StringBuilder sb = new StringBuilder();

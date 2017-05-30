@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -185,7 +185,7 @@ public class DAOGenerator extends AbstractJavaClientGenerator {
     protected void addDeleteByExampleMethod(TopLevelClass topLevelClass,
             Interface interfaze) {
         if (introspectedTable.getRules().generateDeleteByExample()) {
-            AbstractDAOElementGenerator methodGenerator = new DeleteByExampleMethodGenerator();
+            AbstractDAOElementGenerator methodGenerator = new DeleteByExampleMethodGenerator(generateForJava5);
             initializeAndExecuteGenerator(methodGenerator, topLevelClass,
                     interfaze);
         }
@@ -194,7 +194,7 @@ public class DAOGenerator extends AbstractJavaClientGenerator {
     protected void addDeleteByPrimaryKeyMethod(TopLevelClass topLevelClass,
             Interface interfaze) {
         if (introspectedTable.getRules().generateDeleteByPrimaryKey()) {
-            AbstractDAOElementGenerator methodGenerator = new DeleteByPrimaryKeyMethodGenerator();
+            AbstractDAOElementGenerator methodGenerator = new DeleteByPrimaryKeyMethodGenerator(generateForJava5);
             initializeAndExecuteGenerator(methodGenerator, topLevelClass,
                     interfaze);
         }
@@ -203,7 +203,7 @@ public class DAOGenerator extends AbstractJavaClientGenerator {
     protected void addInsertMethod(TopLevelClass topLevelClass,
             Interface interfaze) {
         if (introspectedTable.getRules().generateInsert()) {
-            AbstractDAOElementGenerator methodGenerator = new InsertMethodGenerator();
+            AbstractDAOElementGenerator methodGenerator = new InsertMethodGenerator(generateForJava5);
             initializeAndExecuteGenerator(methodGenerator, topLevelClass,
                     interfaze);
         }
@@ -212,7 +212,7 @@ public class DAOGenerator extends AbstractJavaClientGenerator {
     protected void addInsertSelectiveMethod(TopLevelClass topLevelClass,
             Interface interfaze) {
         if (introspectedTable.getRules().generateInsertSelective()) {
-            AbstractDAOElementGenerator methodGenerator = new InsertSelectiveMethodGenerator();
+            AbstractDAOElementGenerator methodGenerator = new InsertSelectiveMethodGenerator(generateForJava5);
             initializeAndExecuteGenerator(methodGenerator, topLevelClass,
                     interfaze);
         }
@@ -241,7 +241,7 @@ public class DAOGenerator extends AbstractJavaClientGenerator {
     protected void addSelectByPrimaryKeyMethod(TopLevelClass topLevelClass,
             Interface interfaze) {
         if (introspectedTable.getRules().generateSelectByPrimaryKey()) {
-            AbstractDAOElementGenerator methodGenerator = new SelectByPrimaryKeyMethodGenerator();
+            AbstractDAOElementGenerator methodGenerator = new SelectByPrimaryKeyMethodGenerator(generateForJava5);
             initializeAndExecuteGenerator(methodGenerator, topLevelClass,
                     interfaze);
         }
@@ -262,7 +262,7 @@ public class DAOGenerator extends AbstractJavaClientGenerator {
     protected void addUpdateByExampleSelectiveMethod(
             TopLevelClass topLevelClass, Interface interfaze) {
         if (introspectedTable.getRules().generateUpdateByExampleSelective()) {
-            AbstractDAOElementGenerator methodGenerator = new UpdateByExampleSelectiveMethodGenerator();
+            AbstractDAOElementGenerator methodGenerator = new UpdateByExampleSelectiveMethodGenerator(generateForJava5);
             initializeAndExecuteGenerator(methodGenerator, topLevelClass,
                     interfaze);
         }
@@ -271,7 +271,7 @@ public class DAOGenerator extends AbstractJavaClientGenerator {
     protected void addUpdateByExampleWithBLOBsMethod(
             TopLevelClass topLevelClass, Interface interfaze) {
         if (introspectedTable.getRules().generateUpdateByExampleWithBLOBs()) {
-            AbstractDAOElementGenerator methodGenerator = new UpdateByExampleWithBLOBsMethodGenerator();
+            AbstractDAOElementGenerator methodGenerator = new UpdateByExampleWithBLOBsMethodGenerator(generateForJava5);
             initializeAndExecuteGenerator(methodGenerator, topLevelClass,
                     interfaze);
         }
@@ -280,7 +280,7 @@ public class DAOGenerator extends AbstractJavaClientGenerator {
     protected void addUpdateByExampleWithoutBLOBsMethod(
             TopLevelClass topLevelClass, Interface interfaze) {
         if (introspectedTable.getRules().generateUpdateByExampleWithoutBLOBs()) {
-            AbstractDAOElementGenerator methodGenerator = new UpdateByExampleWithoutBLOBsMethodGenerator();
+            AbstractDAOElementGenerator methodGenerator = new UpdateByExampleWithoutBLOBsMethodGenerator(generateForJava5);
             initializeAndExecuteGenerator(methodGenerator, topLevelClass,
                     interfaze);
         }
@@ -289,7 +289,7 @@ public class DAOGenerator extends AbstractJavaClientGenerator {
     protected void addUpdateByPrimaryKeySelectiveMethod(
             TopLevelClass topLevelClass, Interface interfaze) {
         if (introspectedTable.getRules().generateUpdateByPrimaryKeySelective()) {
-            AbstractDAOElementGenerator methodGenerator = new UpdateByPrimaryKeySelectiveMethodGenerator();
+            AbstractDAOElementGenerator methodGenerator = new UpdateByPrimaryKeySelectiveMethodGenerator(generateForJava5);
             initializeAndExecuteGenerator(methodGenerator, topLevelClass,
                     interfaze);
         }
@@ -298,7 +298,7 @@ public class DAOGenerator extends AbstractJavaClientGenerator {
     protected void addUpdateByPrimaryKeyWithBLOBsMethod(
             TopLevelClass topLevelClass, Interface interfaze) {
         if (introspectedTable.getRules().generateUpdateByPrimaryKeyWithBLOBs()) {
-            AbstractDAOElementGenerator methodGenerator = new UpdateByPrimaryKeyWithBLOBsMethodGenerator();
+            AbstractDAOElementGenerator methodGenerator = new UpdateByPrimaryKeyWithBLOBsMethodGenerator(generateForJava5);
             initializeAndExecuteGenerator(methodGenerator, topLevelClass,
                     interfaze);
         }
@@ -308,7 +308,7 @@ public class DAOGenerator extends AbstractJavaClientGenerator {
             TopLevelClass topLevelClass, Interface interfaze) {
         if (introspectedTable.getRules()
                 .generateUpdateByPrimaryKeyWithoutBLOBs()) {
-            AbstractDAOElementGenerator methodGenerator = new UpdateByPrimaryKeyWithoutBLOBsMethodGenerator();
+            AbstractDAOElementGenerator methodGenerator = new UpdateByPrimaryKeyWithoutBLOBsMethodGenerator(generateForJava5);
             initializeAndExecuteGenerator(methodGenerator, topLevelClass,
                     interfaze);
         }

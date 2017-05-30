@@ -181,14 +181,14 @@ public class ConfigurationParser {
     private Configuration parseIbatorConfiguration(Element rootNode)
             throws XMLParserException {
         IbatorConfigurationParser parser = new IbatorConfigurationParser(
-        		extraProperties);
+                extraProperties);
         return parser.parseIbatorConfiguration(rootNode);
     }
 
     private Configuration parseMyBatisGeneratorConfiguration(Element rootNode)
             throws XMLParserException {
         MyBatisGeneratorConfigurationParser parser = new MyBatisGeneratorConfigurationParser(
-        		extraProperties);
+                extraProperties);
         return parser.parseConfiguration(rootNode);
     }
 }

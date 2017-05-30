@@ -73,7 +73,7 @@
     </javaModelGenerator>
     
     <javaClientGenerator type="XMLMAPPER" targetPackage="ibatortest.generated.flat.java5.client"
-     	targetProject="target/generated-sources/mybatis-generator/mybatis3">
+        targetProject="target/generated-sources/mybatis-generator/mybatis3">
     </javaClientGenerator>
 
     <table tableName="FieldsOnly" />
@@ -115,7 +115,7 @@
     </javaModelGenerator>
     
     <javaClientGenerator type="MIXEDMAPPER" targetPackage="ibatortest.generated.flat.java5.client"
-     	targetProject="target/generated-sources/mybatis-generator/mybatis3">
+        targetProject="target/generated-sources/mybatis-generator/mybatis3">
     </javaClientGenerator>
 
     <table tableName="FieldsOnly" />
@@ -157,7 +157,7 @@
     </javaModelGenerator>
     
     <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="ibatortest.generated.flat.java5.client"
-     	targetProject="target/generated-sources/mybatis-generator/mybatis3">
+        targetProject="target/generated-sources/mybatis-generator/mybatis3">
     </javaClientGenerator>
 
     <table tableName="FieldsOnly" />

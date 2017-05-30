@@ -131,7 +131,7 @@ public class AnnotatedSelectByPrimaryKeyMethodGenerator extends
     private void addResultMapAnnotation(Method method) {
         
         String annotation = String.format("@ResultMap(\"%s.%s\")", //$NON-NLS-1$
-        		introspectedTable.getMyBatis3SqlMapNamespace(),
+                introspectedTable.getMyBatis3SqlMapNamespace(),
                 introspectedTable.getRules().generateResultMapWithBLOBs() ?
                         introspectedTable.getResultMapWithBLOBsId() : introspectedTable.getBaseResultMapId());
         method.addAnnotation(annotation);

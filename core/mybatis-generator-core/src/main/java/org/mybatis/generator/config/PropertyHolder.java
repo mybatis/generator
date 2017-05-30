@@ -28,8 +28,8 @@ public abstract class PropertyHolder {
     private Properties properties;
 
     /**
-	 *  
-	 */
+     *  
+     */
     public PropertyHolder() {
         super();
         properties = new Properties();

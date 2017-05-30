@@ -34,9 +34,9 @@ public abstract class AbstractJavaProviderMethodGenerator extends
         super();
         this.useLegacyBuilder = useLegacyBuilder;
         if (useLegacyBuilder) {
-        	builderPrefix = ""; //$NON-NLS-1$
+            builderPrefix = ""; //$NON-NLS-1$
         } else {
-        	builderPrefix = "sql."; //$NON-NLS-1$
+            builderPrefix = "sql."; //$NON-NLS-1$
         }
     }
     

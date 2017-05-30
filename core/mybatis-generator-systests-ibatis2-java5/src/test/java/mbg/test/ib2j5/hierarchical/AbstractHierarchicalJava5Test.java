@@ -35,11 +35,11 @@ public abstract class AbstractHierarchicalJava5Test extends AbstractTest {
     private GenericApplicationContext factory;
 
     public void setUp() throws Exception {
-    	super.setUp();
-		factory = new GenericApplicationContext();
+        super.setUp();
+        factory = new GenericApplicationContext();
         Resource res = new ClassPathResource("/mbg/test/ib2j5/hierarchical/SpringBeans.xml");
-		XmlBeanDefinitionReader r = new XmlBeanDefinitionReader(factory);
-		r.loadBeanDefinitions(res);
+        XmlBeanDefinitionReader r = new XmlBeanDefinitionReader(factory);
+        r.loadBeanDefinitions(res);
     }
 
     protected FieldsonlyDAO getFieldsonlyDAO() {

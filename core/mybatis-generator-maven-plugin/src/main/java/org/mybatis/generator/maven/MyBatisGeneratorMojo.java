@@ -157,11 +157,11 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
         }
         
         ClassLoader savedClassloader = Thread.currentThread().getContextClassLoader();
-    	LogFactory.setLogFactory(new MavenLogFactory(this));
+        LogFactory.setLogFactory(new MavenLogFactory(this));
 
         calculateClassPath();
-        
-    	// add resource directories to the classpath.  This is required to support
+
+        // add resource directories to the classpath.  This is required to support
         // use of a properties file in the build.  Typically, the properties file
         // is in the project's source tree, but the plugin classpath does not
         // include the project classpath.

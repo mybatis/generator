@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package org.mybatis.generator.codegen.ibatis2;
 
 /**
+ * Introspected table implementation for iBatis targeting Java versions 1.5 or later.
  * 
  * @author Jeff Butler
  * 

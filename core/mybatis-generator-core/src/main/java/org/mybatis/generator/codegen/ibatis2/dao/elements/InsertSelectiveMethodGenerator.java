@@ -28,6 +28,7 @@ import org.mybatis.generator.api.dom.java.PrimitiveTypeWrapper;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 
 /**
+ * Generates the Insert Selective method.
  * 
  * @author Jeff Butler
  * 

@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -25,12 +25,12 @@ import org.mybatis.generator.codegen.ibatis2.Ibatis2FormattingUtilities;
 import org.mybatis.generator.config.PropertyRegistry;
 
 /**
+ * Generates the resultmap without BLOBs for iBatis2.
  * 
  * @author Jeff Butler
  * 
  */
-public class ResultMapWithoutBLOBsElementGenerator extends
-        AbstractXmlElementGenerator {
+public class ResultMapWithoutBLOBsElementGenerator extends AbstractXmlElementGenerator {
 
     public ResultMapWithoutBLOBsElementGenerator() {
         super();
@@ -38,8 +38,8 @@ public class ResultMapWithoutBLOBsElementGenerator extends
 
     @Override
     public void addElements(XmlElement parentElement) {
-        boolean useColumnIndex = isTrue(introspectedTable
-                        .getTableConfigurationProperty(PropertyRegistry.TABLE_USE_COLUMN_INDEXES));
+        boolean useColumnIndex = isTrue(
+                introspectedTable.getTableConfigurationProperty(PropertyRegistry.TABLE_USE_COLUMN_INDEXES));
         XmlElement answer = new XmlElement("resultMap"); //$NON-NLS-1$
         answer.addAttribute(new Attribute("id", //$NON-NLS-1$
                 introspectedTable.getBaseResultMapId()));
@@ -57,43 +57,33 @@ public class ResultMapWithoutBLOBsElementGenerator extends
         context.getCommentGenerator().addComment(answer);
 
         int i = 1;
-        if (stringHasValue(introspectedTable
-                .getSelectByPrimaryKeyQueryId())
-                || stringHasValue(introspectedTable
-                        .getSelectByExampleQueryId())) {
+        if (stringHasValue(introspectedTable.getSelectByPrimaryKeyQueryId())
+                || stringHasValue(introspectedTable.getSelectByExampleQueryId())) {
             i++;
         }
 
-        for (IntrospectedColumn introspectedColumn : introspectedTable
-                .getNonBLOBColumns()) {
+        for (IntrospectedColumn introspectedColumn : introspectedTable.getNonBLOBColumns()) {
             XmlElement resultElement = new XmlElement("result"); //$NON-NLS-1$
 
             if (useColumnIndex) {
-                resultElement.addAttribute(new Attribute(
-                        "columnIndex", Integer.toString(i++))); //$NON-NLS-1$
+                resultElement.addAttribute(new Attribute("columnIndex", Integer.toString(i++))); //$NON-NLS-1$
             } else {
-                resultElement
-                        .addAttribute(new Attribute(
-                                "column", Ibatis2FormattingUtilities.getRenamedColumnNameForResultMap(introspectedColumn))); //$NON-NLS-1$
+                resultElement.addAttribute(new Attribute("column", //$NON-NLS-1$
+                        Ibatis2FormattingUtilities.getRenamedColumnNameForResultMap(introspectedColumn)));
             }
 
-            resultElement.addAttribute(new Attribute(
-                    "property", introspectedColumn.getJavaProperty())); //$NON-NLS-1$
+            resultElement.addAttribute(new Attribute("property", introspectedColumn.getJavaProperty())); //$NON-NLS-1$
             resultElement.addAttribute(new Attribute("jdbcType", //$NON-NLS-1$
                     introspectedColumn.getJdbcTypeName()));
 
-            if (stringHasValue(introspectedColumn
-                    .getTypeHandler())) {
-                resultElement.addAttribute(new Attribute(
-                        "typeHandler", introspectedColumn.getTypeHandler())); //$NON-NLS-1$
+            if (stringHasValue(introspectedColumn.getTypeHandler())) {
+                resultElement.addAttribute(new Attribute("typeHandler", introspectedColumn.getTypeHandler())); //$NON-NLS-1$
             }
 
             answer.addElement(resultElement);
         }
 
-        if (context.getPlugins()
-                .sqlMapResultMapWithoutBLOBsElementGenerated(answer,
-                        introspectedTable)) {
+        if (context.getPlugins().sqlMapResultMapWithoutBLOBsElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

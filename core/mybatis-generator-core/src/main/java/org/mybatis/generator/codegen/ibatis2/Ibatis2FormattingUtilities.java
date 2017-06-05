@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -183,8 +183,8 @@ public class Ibatis2FormattingUtilities {
      * selects in SqlMaps because the column is not escaped for iBATIS. If there is a table alias, the value will be
      * alias.columnName.
      * 
-     * This method is used in the Example classes and the returned value will be in a Java string. So we need to escape
-     * double quotes if they are the delimiters.
+     * <p>This method is used in the Example classes and the returned value will be in a Java string. So we need
+     * to escape double quotes if they are the delimiters.
      *
      * @param introspectedColumn
      *            the introspected column

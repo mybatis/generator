@@ -26,7 +26,6 @@ public class JavaDomUtils {
      * @param fqjt the type in question
      */
     public static String calculateTypeName(CompilationUnit compilationUnit, FullyQualifiedJavaType fqjt) {
-        
         if (fqjt.getTypeArguments().size() > 0) {
             return calculateParameterizedTypeName(compilationUnit, fqjt);
         }
@@ -41,9 +40,13 @@ public class JavaDomUtils {
         }
     }
     
-    private static String calculateParameterizedTypeName(CompilationUnit compilationUnit, FullyQualifiedJavaType fqjt) {
+    private static String calculateParameterizedTypeName(CompilationUnit compilationUnit,
+            FullyQualifiedJavaType fqjt) {
+        String baseTypeName = calculateTypeName(compilationUnit,
+                new FullyQualifiedJavaType(fqjt.getFullyQualifiedNameWithoutTypeParameters()));
+        
         StringBuilder sb = new StringBuilder();
-        sb.append(calculateTypeName(compilationUnit, new FullyQualifiedJavaType(fqjt.getFullyQualifiedNameWithoutTypeParameters())));
+        sb.append(baseTypeName);
         sb.append('<');
         boolean comma = false;
         for (FullyQualifiedJavaType ft : fqjt.getTypeArguments()) {
@@ -65,12 +68,17 @@ public class JavaDomUtils {
                 || !fullyQualifiedJavaType.isExplicitlyImported();
     }
     
-    private static boolean typeIsInSamePackage(CompilationUnit compilationUnit, FullyQualifiedJavaType fullyQualifiedJavaType) {
-        return fullyQualifiedJavaType.getPackageName().equals(compilationUnit.getType().getPackageName());
+    private static boolean typeIsInSamePackage(CompilationUnit compilationUnit,
+            FullyQualifiedJavaType fullyQualifiedJavaType) {
+        return fullyQualifiedJavaType
+                .getPackageName()
+                .equals(compilationUnit.getType().getPackageName());
     }
     
-    private static boolean typeIsAlreadyImported(CompilationUnit compilationUnit, FullyQualifiedJavaType fullyQualifiedJavaType) {
-        FullyQualifiedJavaType nonGenericType = new FullyQualifiedJavaType(fullyQualifiedJavaType.getFullyQualifiedNameWithoutTypeParameters());
+    private static boolean typeIsAlreadyImported(CompilationUnit compilationUnit,
+            FullyQualifiedJavaType fullyQualifiedJavaType) {
+        FullyQualifiedJavaType nonGenericType =
+                new FullyQualifiedJavaType(fullyQualifiedJavaType.getFullyQualifiedNameWithoutTypeParameters());
         return compilationUnit.getImportedTypes().contains(nonGenericType);
     }
 }

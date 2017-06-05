@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -47,11 +47,11 @@ public class SelectByExampleWithBLOBsElementGenerator extends
         context.getCommentGenerator().addComment(answer);
 
         answer.addElement(new TextElement("select")); //$NON-NLS-1$
-        XmlElement isParameterPresent = new XmlElement("isParameterPresent"); //$NON-NLS-1$
         XmlElement isEqualElement = new XmlElement("isEqual"); //$NON-NLS-1$
         isEqualElement.addAttribute(new Attribute("property", "distinct")); //$NON-NLS-1$ //$NON-NLS-2$
         isEqualElement.addAttribute(new Attribute("compareValue", "true")); //$NON-NLS-1$ //$NON-NLS-2$
         isEqualElement.addElement(new TextElement("distinct")); //$NON-NLS-1$
+        XmlElement isParameterPresent = new XmlElement("isParameterPresent"); //$NON-NLS-1$
         isParameterPresent.addElement(isEqualElement);
         answer.addElement(isParameterPresent);
 

@@ -88,7 +88,7 @@ public class FullyQualifiedJavaType implements
     }
 
     /**
-     * This method returns the fully qualified name - including any generic type parameters.
+     * Returns the fully qualified name - including any generic type parameters.
      *
      * @return Returns the fullyQualifiedName.
      */

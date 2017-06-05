@@ -26,6 +26,7 @@ import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 
 /**
+ * Generates the Count By Example method.
  * 
  * @author Jeff Butler
  * 

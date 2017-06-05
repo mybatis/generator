@@ -45,8 +45,6 @@ public class AnnotatedInsertMethodGenerator extends InsertMethodGenerator {
     @Override
     public void addMapperAnnotations(Method method) {
         
-        GeneratedKey gk = introspectedTable.getGeneratedKey();
-        
         method.addAnnotation("@Insert({"); //$NON-NLS-1$
         StringBuilder insertClause = new StringBuilder();
         StringBuilder valuesClause = new StringBuilder();
@@ -62,7 +60,8 @@ public class AnnotatedInsertMethodGenerator extends InsertMethodGenerator {
         valuesClause.append("\"values ("); //$NON-NLS-1$
 
         List<String> valuesClauses = new ArrayList<String>();
-        Iterator<IntrospectedColumn> iter = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(introspectedTable.getAllColumns())
+        Iterator<IntrospectedColumn> iter =
+                ListUtilities.removeIdentityAndGeneratedAlwaysColumns(introspectedTable.getAllColumns())
                 .iterator();
         boolean hasFields = false;
         while (iter.hasNext()) {
@@ -114,6 +113,7 @@ public class AnnotatedInsertMethodGenerator extends InsertMethodGenerator {
         
         method.addAnnotation("})"); //$NON-NLS-1$
 
+        GeneratedKey gk = introspectedTable.getGeneratedKey();
         if (gk != null) {
             addGeneratedKeyAnnotation(method, gk);
         }

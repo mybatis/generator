@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ public abstract class GeneratedFile {
     }
 
     /**
-     * This method returns the entire contents of the generated file. Clients
+     * Returns the entire contents of the generated file. Clients
      * can simply save the value returned from this method as the file contents.
      * Subclasses such as @see org.mybatis.generator.api.GeneratedJavaFile offer
      * more fine grained access to file parts, but still implement this method

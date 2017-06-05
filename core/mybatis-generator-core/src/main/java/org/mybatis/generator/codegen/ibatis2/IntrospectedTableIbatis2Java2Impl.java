@@ -41,6 +41,7 @@ import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.internal.ObjectFactory;
 
 /**
+ * Introspected table implementation for iBatis targeting Java versions before 1.5.
  * 
  * @author Jeff Butler
  * 

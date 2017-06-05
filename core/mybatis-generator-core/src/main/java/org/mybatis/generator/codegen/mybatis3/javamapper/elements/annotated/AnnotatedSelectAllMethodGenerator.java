@@ -49,12 +49,11 @@ public class AnnotatedSelectAllMethodGenerator extends SelectAllMethodGenerator 
         sb.append("\"select\","); //$NON-NLS-1$
         method.addAnnotation(sb.toString());
         
-        Iterator<IntrospectedColumn> iter = introspectedTable
-                .getAllColumns().iterator();
         sb.setLength(0);
         javaIndent(sb, 1);
         sb.append('"');
         boolean hasColumns = false;
+        Iterator<IntrospectedColumn> iter = introspectedTable.getAllColumns().iterator();
         while (iter.hasNext()) {
             sb.append(escapeStringForJava(getSelectListPhrase(iter.next())));
             hasColumns = true;
@@ -80,7 +79,6 @@ public class AnnotatedSelectAllMethodGenerator extends SelectAllMethodGenerator 
         }
         
         String orderByClause = introspectedTable.getTableConfigurationProperty(PropertyRegistry.TABLE_SELECT_ALL_ORDER_BY_CLAUSE);
-        boolean hasOrderBy = StringUtility.stringHasValue(orderByClause);
         
         sb.setLength(0);
         javaIndent(sb, 1);
@@ -88,6 +86,7 @@ public class AnnotatedSelectAllMethodGenerator extends SelectAllMethodGenerator 
         sb.append(escapeStringForJava(introspectedTable
                 .getAliasedFullyQualifiedTableNameAtRuntime()));
         sb.append('\"');
+        boolean hasOrderBy = StringUtility.stringHasValue(orderByClause);
         if (hasOrderBy) {
             sb.append(',');
         }

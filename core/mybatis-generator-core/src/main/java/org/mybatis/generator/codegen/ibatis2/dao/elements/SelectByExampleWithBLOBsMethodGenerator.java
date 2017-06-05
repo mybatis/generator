@@ -26,6 +26,7 @@ import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 
 /**
+ * Generates the Select By Example with BLOBs method.
  * 
  * @author Jeff Butler
  * 

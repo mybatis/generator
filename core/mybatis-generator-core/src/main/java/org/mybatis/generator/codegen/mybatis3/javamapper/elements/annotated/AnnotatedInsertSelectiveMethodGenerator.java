@@ -55,6 +55,7 @@ public class AnnotatedInsertSelectiveMethodGenerator extends InsertSelectiveMeth
         if (gk != null) {
             addGeneratedKeyImports(interfaze, gk);
         }
-        interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.InsertProvider")); //$NON-NLS-1$
+        interfaze.addImportedType(
+                new FullyQualifiedJavaType("org.apache.ibatis.annotations.InsertProvider")); //$NON-NLS-1$
     }
 }

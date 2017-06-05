@@ -211,7 +211,7 @@ public class FullyQualifiedTable {
     }
 
     /**
-     * This method returns a string that is the fully qualified table name, with
+     * Returns a string that is the fully qualified table name, with
      * underscores as the separator.
      * 
      * @return the namespace

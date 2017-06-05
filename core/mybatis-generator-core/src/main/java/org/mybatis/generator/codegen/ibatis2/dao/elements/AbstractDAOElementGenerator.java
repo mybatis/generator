@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -30,6 +30,7 @@ import org.mybatis.generator.internal.ExtendedDAOMethodNameCalculator;
 import org.mybatis.generator.internal.ObjectFactory;
 
 /**
+ * Base class for all DAO element generators.
  * 
  * @author Jeff Butler
  */
@@ -39,7 +40,7 @@ public abstract class AbstractDAOElementGenerator extends AbstractGenerator {
     public abstract void addImplementationElements(TopLevelClass topLevelClass);
 
     protected AbstractDAOTemplate daoTemplate;
-    private DAOMethodNameCalculator dAOMethodNameCalculator;
+    private DAOMethodNameCalculator daoMethodNameCalculator;
     private JavaVisibility exampleMethodVisibility;
 
     public AbstractDAOElementGenerator() {
@@ -51,7 +52,7 @@ public abstract class AbstractDAOElementGenerator extends AbstractGenerator {
     }
 
     public DAOMethodNameCalculator getDAOMethodNameCalculator() {
-        if (dAOMethodNameCalculator == null) {
+        if (daoMethodNameCalculator == null) {
             String type = context.getJavaClientGeneratorConfiguration()
                     .getProperty(PropertyRegistry.DAO_METHOD_NAME_CALCULATOR);
             if (stringHasValue(type)) {
@@ -65,16 +66,16 @@ public abstract class AbstractDAOElementGenerator extends AbstractGenerator {
             }
 
             try {
-                dAOMethodNameCalculator = (DAOMethodNameCalculator) ObjectFactory
+                daoMethodNameCalculator = (DAOMethodNameCalculator) ObjectFactory
                         .createInternalObject(type);
             } catch (Exception e) {
-                dAOMethodNameCalculator = new DefaultDAOMethodNameCalculator();
+                daoMethodNameCalculator = new DefaultDAOMethodNameCalculator();
                 warnings.add(getString(
                         "Warning.17", type, e.getMessage())); //$NON-NLS-1$
             }
         }
 
-        return dAOMethodNameCalculator;
+        return daoMethodNameCalculator;
     }
 
     public JavaVisibility getExampleMethodVisibility() {

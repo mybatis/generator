@@ -1030,14 +1030,14 @@ public abstract class IntrospectedTable {
         return tableConfiguration;
     }
 
-    public void setDAOImplementationType(String DAOImplementationType) {
+    public void setDAOImplementationType(String daoImplementationType) {
         internalAttributes.put(InternalAttribute.ATTR_DAO_IMPLEMENTATION_TYPE,
-                DAOImplementationType);
+                daoImplementationType);
     }
 
-    public void setDAOInterfaceType(String DAOInterfaceType) {
+    public void setDAOInterfaceType(String daoInterfaceType) {
         internalAttributes.put(InternalAttribute.ATTR_DAO_INTERFACE_TYPE,
-                DAOInterfaceType);
+                daoInterfaceType);
     }
 
     public void setPrimaryKeyType(String primaryKeyType) {

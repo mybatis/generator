@@ -65,7 +65,7 @@ public class AnnotatedSelectAllMethodGenerator extends SelectAllMethodGenerator 
             if (sb.length() > 80) {
                 sb.append("\","); //$NON-NLS-1$
                 method.addAnnotation(sb.toString());
-                
+
                 sb.setLength(0);
                 javaIndent(sb, 1);
                 sb.append('"');
@@ -79,7 +79,7 @@ public class AnnotatedSelectAllMethodGenerator extends SelectAllMethodGenerator 
         }
         
         String orderByClause = introspectedTable.getTableConfigurationProperty(PropertyRegistry.TABLE_SELECT_ALL_ORDER_BY_CLAUSE);
-        
+
         sb.setLength(0);
         javaIndent(sb, 1);
         sb.append("\"from "); //$NON-NLS-1$
@@ -91,7 +91,7 @@ public class AnnotatedSelectAllMethodGenerator extends SelectAllMethodGenerator 
             sb.append(',');
         }
         method.addAnnotation(sb.toString());
-        
+
         if (hasOrderBy) {
             sb.setLength(0);
             javaIndent(sb, 1);
@@ -100,22 +100,22 @@ public class AnnotatedSelectAllMethodGenerator extends SelectAllMethodGenerator 
             sb.append('\"');
             method.addAnnotation(sb.toString());
         }
-        
+
         method.addAnnotation("})"); //$NON-NLS-1$
 
         addAnnotatedResults(interfaze, method);
     }
-    
+
     private void addAnnotatedResults(Interface interfaze, Method method) {
-        
+
         if (introspectedTable.isConstructorBased()) {
             method.addAnnotation("@ConstructorArgs({"); //$NON-NLS-1$
         } else {
             method.addAnnotation("@Results({"); //$NON-NLS-1$
         }
-        
+
         StringBuilder sb = new StringBuilder();
-        
+
         Iterator<IntrospectedColumn> iterPk = introspectedTable.getPrimaryKeyColumns().iterator();
         Iterator<IntrospectedColumn> iterNonPk = introspectedTable.getNonPrimaryKeyColumns().iterator();
         while (iterPk.hasNext()) {
@@ -128,7 +128,7 @@ public class AnnotatedSelectAllMethodGenerator extends SelectAllMethodGenerator 
             if (iterPk.hasNext() || iterNonPk.hasNext()) {
                 sb.append(',');
             }
-            
+
             method.addAnnotation(sb.toString());
         }
 
@@ -142,10 +142,10 @@ public class AnnotatedSelectAllMethodGenerator extends SelectAllMethodGenerator 
             if (iterNonPk.hasNext()) {
                 sb.append(',');
             }
-            
+
             method.addAnnotation(sb.toString());
         }
-        
+
         method.addAnnotation("})"); //$NON-NLS-1$
     }
 

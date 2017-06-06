@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ import org.mybatis.generator.api.dom.OutputUtilities;
  * @author Jeff Butler
  */
 public class XmlElement extends Element {
-    
+
     /** The attributes. */
     private List<Attribute> attributes;
 
@@ -49,7 +49,7 @@ public class XmlElement extends Element {
         elements = new ArrayList<Element>();
         this.name = name;
     }
-    
+
     /**
      * Copy constructor. Not a truly deep copy, but close enough for most purposes.
      *

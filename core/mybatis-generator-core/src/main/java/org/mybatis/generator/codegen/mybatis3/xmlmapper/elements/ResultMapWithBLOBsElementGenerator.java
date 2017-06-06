@@ -137,7 +137,7 @@ public class ResultMapWithBLOBsElementGenerator extends
                 sb.append(introspectedColumn.getFullyQualifiedJavaType().getShortName());
                 resultElement.addAttribute(new Attribute("javaType", //$NON-NLS-1$
                         sb.toString()));
-                
+
             } else if ("byte[]".equals(introspectedColumn.getFullyQualifiedJavaType() //$NON-NLS-1$
                     .getFullyQualifiedName())) {
                 // need to use the MyBatis type alias for a primitive byte arry

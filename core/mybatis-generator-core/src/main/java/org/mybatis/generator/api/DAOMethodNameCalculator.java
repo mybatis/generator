@@ -23,7 +23,7 @@ package org.mybatis.generator.api;
  * 
  */
 public interface DAOMethodNameCalculator {
-    
+
     /**
      * Calculates and returns a name for the insert method.
      *

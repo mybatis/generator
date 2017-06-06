@@ -31,19 +31,19 @@ public class FullyQualifiedJavaType implements
         Comparable<FullyQualifiedJavaType> {
     
     private static final String JAVA_LANG = "java.lang"; //$NON-NLS-1$
-    
+
     private static FullyQualifiedJavaType intInstance = null;
-    
+
     private static FullyQualifiedJavaType stringInstance = null;
-    
+
     private static FullyQualifiedJavaType booleanPrimitiveInstance = null;
-    
+
     private static FullyQualifiedJavaType objectInstance = null;
-    
+
     private static FullyQualifiedJavaType dateInstance = null;
-    
+
     private static FullyQualifiedJavaType criteriaInstance = null;
-    
+
     private static FullyQualifiedJavaType generatedCriteriaInstance = null;
 
     /** The short name without any generic arguments. */
@@ -53,22 +53,22 @@ public class FullyQualifiedJavaType implements
     private String baseQualifiedName;
 
     private boolean explicitlyImported;
-    
+
     private String packageName;
-    
+
     private boolean primitive;
-    
+
     private boolean isArray;
-    
+
     private PrimitiveTypeWrapper primitiveTypeWrapper;
-    
+
     private List<FullyQualifiedJavaType> typeArguments;
 
     // the following three values are used for dealing with wildcard types
     private boolean wildcardType;
-    
+
     private boolean boundedWildcard;
-    
+
     private boolean extendsBoundedWildcard;
 
     /**
@@ -130,7 +130,7 @@ public class FullyQualifiedJavaType implements
     public String getFullyQualifiedNameWithoutTypeParameters() {
         return baseQualifiedName;
     }
-    
+
     /**
      * Returns a list of Strings that are the fully qualified names of this type, and any generic type argument
      * associated with this type.
@@ -215,7 +215,7 @@ public class FullyQualifiedJavaType implements
 
         return sb.toString();
     }
-    
+
     public String getShortNameWithoutTypeArguments() {
         return baseShortName;
     }
@@ -380,7 +380,7 @@ public class FullyQualifiedJavaType implements
                 }
                 genericParse(fullTypeSpecification.substring(index, endIndex + 1));
             }
-            
+
             // this is far from a perfect test for detecting arrays, but is close
             // enough for most cases.  It will not detect an improperly specified
             // array type like byte], but it will detect byte[] and byte[   ]
@@ -399,7 +399,7 @@ public class FullyQualifiedJavaType implements
             if (index != -1) {
                 baseShortName = baseShortName.substring(index + 1);
             }
-            
+
             if (JAVA_LANG.equals(packageName)) { //$NON-NLS-1$
                 explicitlyImported = false;
             } else {

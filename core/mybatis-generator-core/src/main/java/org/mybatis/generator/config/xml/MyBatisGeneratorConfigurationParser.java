@@ -267,7 +267,7 @@ public class MyBatisGeneratorConfigurationParser {
         String delimitIdentifiers = attributes
                 .getProperty("delimitIdentifiers"); //$NON-NLS-1$
         String delimitAllColumns = attributes.getProperty("delimitAllColumns"); //$NON-NLS-1$
-        
+
         String mapperName = attributes.getProperty("mapperName"); //$NON-NLS-1$
         String sqlProviderName = attributes.getProperty("sqlProviderName"); //$NON-NLS-1$
 
@@ -353,7 +353,7 @@ public class MyBatisGeneratorConfigurationParser {
         if (stringHasValue(delimitAllColumns)) {
             tc.setAllColumnDelimitingEnabled(isTrue(delimitAllColumns));
         }
-        
+
         if (stringHasValue(mapperName)) {
             tc.setMapperName(mapperName);
         }
@@ -361,7 +361,7 @@ public class MyBatisGeneratorConfigurationParser {
         if (stringHasValue(sqlProviderName)) {
             tc.setSqlProviderName(sqlProviderName);
         }
-        
+
         NodeList nodeList = node.getChildNodes();
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node childNode = nodeList.item(i);
@@ -418,7 +418,7 @@ public class MyBatisGeneratorConfigurationParser {
         if (stringHasValue(delimitedColumnName)) {
             co.setColumnNameDelimited(isTrue(delimitedColumnName));
         }
-        
+
         if (stringHasValue(isGeneratedAlways)) {
             co.setGeneratedAlways(Boolean.parseBoolean(isGeneratedAlways));
         }
@@ -489,7 +489,7 @@ public class MyBatisGeneratorConfigurationParser {
 
         tc.addIgnoredColumnPattern(icPattern);
     }
-    
+
     private void parseException(IgnoredColumnPattern icPattern, Node node) {
         Properties attributes = parseAttributes(node);
         String column = attributes.getProperty("column"); //$NON-NLS-1$
@@ -745,7 +745,7 @@ public class MyBatisGeneratorConfigurationParser {
             }
         }
     }
-    
+
     protected void parseConnectionFactory(Context context, Node node) {
         ConnectionFactoryConfiguration connectionFactoryConfiguration = new ConnectionFactoryConfiguration();
 

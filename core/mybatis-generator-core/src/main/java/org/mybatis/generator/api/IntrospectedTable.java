@@ -48,14 +48,13 @@ import org.mybatis.generator.internal.rules.Rules;
  * 
  */
 public abstract class IntrospectedTable {
-    
+
     public enum TargetRuntime {
         IBATIS2, 
         MYBATIS3
     }
 
     protected enum InternalAttribute {
-        
         ATTR_DAO_IMPLEMENTATION_TYPE,
         ATTR_DAO_INTERFACE_TYPE,
         ATTR_PRIMARY_KEY_TYPE,
@@ -98,19 +97,19 @@ public abstract class IntrospectedTable {
     }
 
     protected TableConfiguration tableConfiguration;
-    
+
     protected FullyQualifiedTable fullyQualifiedTable;
-    
+
     protected Context context;
-    
+
     protected Rules rules;
-    
+
     protected List<IntrospectedColumn> primaryKeyColumns;
-    
+
     protected List<IntrospectedColumn> baseColumns;
-    
+
     protected List<IntrospectedColumn> blobColumns;
-    
+
     protected TargetRuntime targetRuntime;
 
     /**
@@ -121,12 +120,12 @@ public abstract class IntrospectedTable {
 
     /** Internal attributes are used to store commonly accessed items by all code generators. */
     protected Map<IntrospectedTable.InternalAttribute, String> internalAttributes;
-    
+
     /**
      * Table remarks retrieved from database metadata.
      */
     protected String remarks;
-    
+
     /**
      * Table type retrieved from database metadata.
      */
@@ -402,15 +401,15 @@ public abstract class IntrospectedTable {
         if (namespace == null) {
             namespace = getMyBatis3FallbackSqlMapNamespace();
         }
-        
+
         return namespace;
     }
-    
+
     public String getMyBatis3FallbackSqlMapNamespace() {
         return internalAttributes
                 .get(InternalAttribute.ATTR_MYBATIS3_FALLBACK_SQL_MAP_NAMESPACE);
     }
-    
+
     /**
      * Calculates the package for the current table.
      * 
@@ -523,7 +522,7 @@ public abstract class IntrospectedTable {
 
         setIbatis2SqlMapNamespace(calculateIbatis2SqlMapNamespace());
         setMyBatis3FallbackSqlMapNamespace(calculateMyBatis3FallbackSqlMapNamespace());
-        
+
         setSqlMapFullyQualifiedRuntimeTableName(calculateSqlMapFullyQualifiedRuntimeTableName());
         setSqlMapAliasedFullyQualifiedRuntimeTableName(calculateSqlMapAliasedFullyQualifiedRuntimeTableName());
 
@@ -783,7 +782,7 @@ public abstract class IntrospectedTable {
 
         return sb.toString();
     }
-    
+
     private boolean isSubPackagesEnabled(PropertyHolder propertyHolder) {
         return isTrue(propertyHolder.getProperty(PropertyRegistry.ANY_ENABLE_SUB_PACKAGES));
     }
@@ -936,7 +935,7 @@ public abstract class IntrospectedTable {
     protected String calculateIbatis2SqlMapNamespace() {
         return fullyQualifiedTable.getIbatis2SqlMapNamespace();
     }
-    
+
     protected String calculateMyBatis3FallbackSqlMapNamespace() {
         StringBuilder sb = new StringBuilder();
         sb.append(calculateSqlMapPackage());
@@ -1076,7 +1075,7 @@ public abstract class IntrospectedTable {
                 InternalAttribute.ATTR_IBATIS2_SQL_MAP_NAMESPACE,
                 sqlMapNamespace);
     }
-    
+
     public void setMyBatis3FallbackSqlMapNamespace(String sqlMapNamespace) {
         internalAttributes.put(
                 InternalAttribute.ATTR_MYBATIS3_FALLBACK_SQL_MAP_NAMESPACE,
@@ -1148,29 +1147,29 @@ public abstract class IntrospectedTable {
     
     public boolean isImmutable() {
         Properties properties;
-        
+
         if (tableConfiguration.getProperties().containsKey(PropertyRegistry.ANY_IMMUTABLE)) {
             properties = tableConfiguration.getProperties();
         } else {
             properties = context.getJavaModelGeneratorConfiguration().getProperties();
         }
-        
+
         return isTrue(properties.getProperty(PropertyRegistry.ANY_IMMUTABLE));
     }
-    
+
     public boolean isConstructorBased() {
         if (isImmutable()) {
             return true;
         }
-        
+
         Properties properties;
-        
+
         if (tableConfiguration.getProperties().containsKey(PropertyRegistry.ANY_CONSTRUCTOR_BASED)) {
             properties = tableConfiguration.getProperties();
         } else {
             properties = context.getJavaModelGeneratorConfiguration().getProperties();
         }
-        
+
         return isTrue(properties.getProperty(PropertyRegistry.ANY_CONSTRUCTOR_BASED));
     }
 

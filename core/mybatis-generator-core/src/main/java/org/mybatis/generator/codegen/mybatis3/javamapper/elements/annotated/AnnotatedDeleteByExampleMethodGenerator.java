@@ -40,7 +40,7 @@ public class AnnotatedDeleteByExampleMethodGenerator extends
         sb.append(".class, method=\""); //$NON-NLS-1$
         sb.append(introspectedTable.getDeleteByExampleStatementId());
         sb.append("\")"); //$NON-NLS-1$
-        
+
         method.addAnnotation(sb.toString());
     }
 

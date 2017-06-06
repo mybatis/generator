@@ -38,22 +38,22 @@ public class AnnotatedSelectByExampleWithoutBLOBsMethodGenerator extends SelectB
     @Override
     public void addMapperAnnotations(Interface interfaze, Method method) {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getMyBatis3SqlProviderType());
-        
+
         StringBuilder sb = new StringBuilder();
         sb.append("@SelectProvider(type="); //$NON-NLS-1$
         sb.append(fqjt.getShortName());
         sb.append(".class, method=\""); //$NON-NLS-1$
         sb.append(introspectedTable.getSelectByExampleStatementId());
         sb.append("\")"); //$NON-NLS-1$
-        
+
         method.addAnnotation(sb.toString());
-        
+
         if (introspectedTable.isConstructorBased()) {
             method.addAnnotation("@ConstructorArgs({"); //$NON-NLS-1$
         } else {
             method.addAnnotation("@Results({"); //$NON-NLS-1$
         }
-        
+
         Iterator<IntrospectedColumn> iterPk = introspectedTable.getPrimaryKeyColumns().iterator();
         Iterator<IntrospectedColumn> iterNonPk = introspectedTable.getBaseColumns().iterator();
         while (iterPk.hasNext()) {
@@ -66,7 +66,7 @@ public class AnnotatedSelectByExampleWithoutBLOBsMethodGenerator extends SelectB
             if (iterPk.hasNext() || iterNonPk.hasNext()) {
                 sb.append(',');
             }
-            
+
             method.addAnnotation(sb.toString());
         }
 
@@ -80,10 +80,10 @@ public class AnnotatedSelectByExampleWithoutBLOBsMethodGenerator extends SelectB
             if (iterNonPk.hasNext()) {
                 sb.append(',');
             }
-            
+
             method.addAnnotation(sb.toString());
         }
-        
+
         method.addAnnotation("})"); //$NON-NLS-1$
     }
 

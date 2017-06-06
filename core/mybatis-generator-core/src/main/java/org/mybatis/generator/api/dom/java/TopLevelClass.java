@@ -30,11 +30,11 @@ import java.util.TreeSet;
  * @author Jeff Butler
  */
 public class TopLevelClass extends InnerClass implements CompilationUnit {
-    
+
     private Set<FullyQualifiedJavaType> importedTypes;
 
     private Set<String> staticImports;
-    
+
     private List<String> fileCommentLines;
 
     public TopLevelClass(FullyQualifiedJavaType type) {
@@ -56,7 +56,7 @@ public class TopLevelClass extends InnerClass implements CompilationUnit {
     public void addImportedType(String importedType) {
         addImportedType(new FullyQualifiedJavaType(importedType));
     }
-    
+
     @Override
     public void addImportedType(FullyQualifiedJavaType importedType) {
         if (importedType != null
@@ -91,11 +91,11 @@ public class TopLevelClass extends InnerClass implements CompilationUnit {
             sb.append(';');
             newLine(sb);
         }
-        
+
         if (staticImports.size() > 0) {
             newLine(sb);
         }
-        
+
         Set<String> importStrings = calculateImports(importedTypes);
         for (String importString : importStrings) {
             sb.append(importString);

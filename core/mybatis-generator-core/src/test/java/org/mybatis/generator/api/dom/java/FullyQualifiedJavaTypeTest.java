@@ -66,7 +66,7 @@ public class FullyQualifiedJavaTypeTest {
         assertEquals(1, fqjt.getImportList().size());
         assertEquals("com.foo.bar", fqjt.getImportList().get(0));
     }
-    
+
     @Test
     public void testSimpleType3() {
         FullyQualifiedJavaType fqjt =
@@ -77,7 +77,7 @@ public class FullyQualifiedJavaTypeTest {
         assertEquals("", fqjt.getPackageName()); //$NON-NLS-1$
         assertEquals(0, fqjt.getImportList().size());
     }
-    
+
     @Test
     public void testGenericType1() {
         FullyQualifiedJavaType fqjt =
@@ -91,7 +91,6 @@ public class FullyQualifiedJavaTypeTest {
         assertEquals("java.util.List", fqjt.getFullyQualifiedNameWithoutTypeParameters()); //$NON-NLS-1$
     }
 
-
     @Test
     public void testGenericType2() {
         FullyQualifiedJavaType fqjt =
@@ -103,7 +102,6 @@ public class FullyQualifiedJavaTypeTest {
         assertEquals(2, fqjt.getImportList().size());
         assertEquals("java.util.Map", fqjt.getFullyQualifiedNameWithoutTypeParameters()); //$NON-NLS-1$
     }
-
 
     @Test
     public void testGenericType3() {
@@ -230,20 +228,20 @@ public class FullyQualifiedJavaTypeTest {
         assertTrue(fqjt.getImportList().contains("java.util.List"));
         assertTrue(fqjt.getImportList().contains("org.foo.Bar.Inner"));
     }
-    
+
     @Test
     public void testImportList() {
         Set<FullyQualifiedJavaType> types = new TreeSet<FullyQualifiedJavaType>();
-        
+
         types.add(new FullyQualifiedJavaType("foo.bar.Example"));
         types.add(new FullyQualifiedJavaType("foo.bar.Example.Criteria"));
         types.add(new FullyQualifiedJavaType("foo.bar.Example.Criterion"));
         assertEquals(3, types.size());
-        
+
         Set<String> imports = OutputUtilities.calculateImports(types);
         assertEquals(3, imports.size());
     }
-    
+
     @Test
     public void testByteArray1() {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType("byte[]");

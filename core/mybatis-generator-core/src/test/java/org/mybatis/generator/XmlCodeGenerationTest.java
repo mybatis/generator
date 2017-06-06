@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -64,7 +64,7 @@ public class XmlCodeGenerationTest {
             fail("Generated XML File " + generatedXmlFile.getFileName() + " will not parse");
         }
     }
-    
+
     @Parameters
     public static List<GeneratedXmlFile> generateXmlFiles() throws Exception {
         List<GeneratedXmlFile> generatedFiles = new ArrayList<GeneratedXmlFile>();
@@ -72,7 +72,7 @@ public class XmlCodeGenerationTest {
         generatedFiles.addAll(generateXmlFilesIbatis());
         return generatedFiles;
     }
-    
+
     private static List<GeneratedXmlFile> generateXmlFilesMybatis() throws Exception {
         JavaCodeGenerationTest.createDatabase();
         return generateXmlFiles("/scripts/generatorConfig.xml");
@@ -87,9 +87,9 @@ public class XmlCodeGenerationTest {
         List<String> warnings = new ArrayList<String>();
         ConfigurationParser cp = new ConfigurationParser(warnings);
         Configuration config = cp.parseConfiguration(JavaCodeGenerationTest.class.getResourceAsStream(configFile));
-            
+
         DefaultShellCallback shellCallback = new DefaultShellCallback(true);
-        
+
         MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, shellCallback, warnings);
         myBatisGenerator.generate(null, null, null, false);
         return myBatisGenerator.getGeneratedXmlFiles();
@@ -103,9 +103,9 @@ public class XmlCodeGenerationTest {
             return new InputSource(new ByteArrayInputStream("".getBytes()));
         }
     }
-    
+
     public static class TestErrorHandler implements ErrorHandler {
-        
+
         private List<String> errors = new ArrayList<String>();
         private List<String> warnings = new ArrayList<String>();
 

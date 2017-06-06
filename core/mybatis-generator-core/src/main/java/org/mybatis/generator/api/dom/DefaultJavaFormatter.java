@@ -28,7 +28,7 @@ import org.mybatis.generator.config.Context;
  */
 public class DefaultJavaFormatter implements JavaFormatter {
     protected Context context;
-    
+
     @Override
     public String getFormattedContent(CompilationUnit compilationUnit) {
         return compilationUnit.getFormattedContent();

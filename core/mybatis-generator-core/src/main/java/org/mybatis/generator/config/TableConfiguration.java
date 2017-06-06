@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
  * @author Jeff Butler
  */
 public class TableConfiguration extends PropertyHolder {
-    
+
     /** The insert statement enabled. */
     private boolean insertStatementEnabled;
 
@@ -79,40 +79,40 @@ public class TableConfiguration extends PropertyHolder {
 
     /** The catalog. */
     private String catalog;
-    
+
     /** The schema. */
     private String schema;
-    
+
     /** The table name. */
     private String tableName;
-    
+
     /** The domain object name. */
     private String domainObjectName;
-    
+
     /** The alias. */
     private String alias;
-    
+
     /** The model type. */
     private ModelType modelType;
-    
+
     /** The wildcard escaping enabled. */
     private boolean wildcardEscapingEnabled;
-    
+
     /** The configured model type. */
     private String configuredModelType;
-    
+
     /** The delimit identifiers. */
     private boolean delimitIdentifiers;
 
     /** The column renaming rule. */
     private ColumnRenamingRule columnRenamingRule;
-    
+
     /** The is all column delimiting enabled. */
     private boolean isAllColumnDelimitingEnabled;
-    
+
     private String mapperName;
     private String sqlProviderName;
-    
+
     private List<IgnoredColumnPattern> ignoredColumnPatterns = new ArrayList<IgnoredColumnPattern>();
 
     /**
@@ -233,7 +233,7 @@ public class TableConfiguration extends PropertyHolder {
                 return true;
             }
         }
-        
+
         for (IgnoredColumnPattern ignoredColumnPattern : ignoredColumnPatterns) {
             if (ignoredColumnPattern.matches(columnName)) {
                 return true;
@@ -691,7 +691,7 @@ public class TableConfiguration extends PropertyHolder {
             xmlElement
                     .addAttribute(new Attribute("delimitIdentifiers", "true")); //$NON-NLS-1$ //$NON-NLS-2$
         }
-        
+
         if (stringHasValue(mapperName)) {
             xmlElement.addAttribute(new Attribute(
                     "mapperName", mapperName)); //$NON-NLS-1$
@@ -717,7 +717,7 @@ public class TableConfiguration extends PropertyHolder {
                 xmlElement.addElement(ignoredColumn.toXmlElement());
             }
         }
-        
+
         for (IgnoredColumnPattern ignoredColumnPattern : ignoredColumnPatterns) {
             xmlElement.addElement(ignoredColumnPattern.toXmlElement());
         }

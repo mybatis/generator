@@ -99,7 +99,7 @@ public class FullyQualifiedTable {
         this.runtimeCatalog = runtimeCatalog;
         this.runtimeSchema = runtimeSchema;
         this.runtimeTableName = runtimeTableName;
-        
+
         if (stringHasValue(domainObjectName)) {
             int index = domainObjectName.lastIndexOf('.');
             if (index == -1) {
@@ -331,7 +331,7 @@ public class FullyQualifiedTable {
                 sb.append(introspectedSchema.toLowerCase());
             }
         }
-        
+
         // TODO - strip characters that are not valid in package names
         return sb.toString();
     }
@@ -351,7 +351,7 @@ public class FullyQualifiedTable {
     public String getSubPackageForModel(boolean isSubPackagesEnabled) {
         StringBuilder sb = new StringBuilder();
         sb.append(getSubPackageForClientOrSqlMap(isSubPackagesEnabled));
-        
+
         if (stringHasValue(domainObjectSubPackage)) {
             sb.append('.');
             sb.append(domainObjectSubPackage);

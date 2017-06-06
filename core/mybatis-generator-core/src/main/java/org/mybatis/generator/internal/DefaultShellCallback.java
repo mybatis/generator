@@ -29,7 +29,7 @@ import org.mybatis.generator.exception.ShellException;
  * @author Jeff Butler
  */
 public class DefaultShellCallback implements ShellCallback {
-    
+
     /** The overwrite. */
     private boolean overwrite;
 

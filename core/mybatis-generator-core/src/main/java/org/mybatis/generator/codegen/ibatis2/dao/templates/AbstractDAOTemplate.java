@@ -34,7 +34,7 @@ import org.mybatis.generator.api.dom.java.Parameter;
  * @author Jeff Butler
  */
 public abstract class AbstractDAOTemplate {
-    
+
     private List<FullyQualifiedJavaType> interfaceImports;
 
     private List<FullyQualifiedJavaType> implementationImports;

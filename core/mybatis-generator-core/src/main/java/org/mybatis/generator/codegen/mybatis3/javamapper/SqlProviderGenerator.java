@@ -46,7 +46,7 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider.Pr
 public class SqlProviderGenerator extends AbstractJavaGenerator {
 
     private boolean useLegacyBuilder;
-    
+
     public SqlProviderGenerator(boolean useLegacyBuilder) {
         super();
         this.useLegacyBuilder = useLegacyBuilder;
@@ -78,7 +78,7 @@ public class SqlProviderGenerator extends AbstractJavaGenerator {
         if (addApplyWhereMethod) {
             addApplyWhereMethod(topLevelClass);
         }
-        
+
         List<CompilationUnit> answer = new ArrayList<CompilationUnit>();
         
         if (topLevelClass.getMethods().size() > 0 &&

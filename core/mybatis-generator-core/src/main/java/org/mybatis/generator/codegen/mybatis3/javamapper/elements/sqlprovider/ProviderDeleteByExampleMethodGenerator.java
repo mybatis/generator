@@ -49,7 +49,7 @@ public class ProviderDeleteByExampleMethodGenerator extends AbstractJavaProvider
         } else {
             importedTypes.add(NEW_BUILDER_IMPORT);
         }
-        
+
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getExampleType());
         importedTypes.add(fqjt);
 

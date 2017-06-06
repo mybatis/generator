@@ -47,17 +47,17 @@ public class DefaultCommentGenerator implements CommentGenerator {
 
     /** The properties. */
     private Properties properties;
-    
+
     /** The suppress date. */
     private boolean suppressDate;
-    
+
     /** The suppress all comments. */
     private boolean suppressAllComments;
 
     /** The addition of table remark's comments.
      * If suppressAllComments is true, this option is ignored*/
     private boolean addRemarkComments;
-    
+
     private SimpleDateFormat dateFormat;
 
     /**
@@ -195,7 +195,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
         if (suppressAllComments) {
             return;
         }
-        
+
         StringBuilder sb = new StringBuilder();
 
         innerClass.addJavaDocLine("/**"); //$NON-NLS-1$

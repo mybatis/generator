@@ -63,7 +63,7 @@ public class SerializablePlugin extends PluginAdapter {
         addGWTInterface = Boolean.valueOf(properties.getProperty("addGWTInterface")); //$NON-NLS-1$
         suppressJavaInterface = Boolean.valueOf(properties.getProperty("suppressJavaInterface")); //$NON-NLS-1$
     }
-    
+
     @Override
     public boolean modelBaseRecordClassGenerated(TopLevelClass topLevelClass,
             IntrospectedTable introspectedTable) {
@@ -91,7 +91,7 @@ public class SerializablePlugin extends PluginAdapter {
             topLevelClass.addImportedType(gwtSerializable);
             topLevelClass.addSuperInterface(gwtSerializable);
         }
-        
+
         if (!suppressJavaInterface) {
             topLevelClass.addImportedType(serializable);
             topLevelClass.addSuperInterface(serializable);

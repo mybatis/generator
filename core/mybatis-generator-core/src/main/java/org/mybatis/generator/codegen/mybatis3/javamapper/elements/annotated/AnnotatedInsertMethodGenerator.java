@@ -44,11 +44,11 @@ public class AnnotatedInsertMethodGenerator extends InsertMethodGenerator {
 
     @Override
     public void addMapperAnnotations(Method method) {
-        
+
         method.addAnnotation("@Insert({"); //$NON-NLS-1$
         StringBuilder insertClause = new StringBuilder();
         StringBuilder valuesClause = new StringBuilder();
-        
+
         javaIndent(insertClause, 1);
         javaIndent(valuesClause, 1);
 
@@ -85,12 +85,12 @@ public class AnnotatedInsertMethodGenerator extends InsertMethodGenerator {
                 if (iter.hasNext()) {
                     valuesClause.append(',');
                 }
-                
+
                 method.addAnnotation(insertClause.toString());
                 insertClause.setLength(0);
                 javaIndent(insertClause, 1);
                 insertClause.append('\"');
-                
+
                 valuesClauses.add(valuesClause.toString());
                 valuesClause.setLength(0);
                 javaIndent(valuesClause, 1);
@@ -98,7 +98,7 @@ public class AnnotatedInsertMethodGenerator extends InsertMethodGenerator {
                 hasFields = false;
             }
         }
-        
+
         if (hasFields) {
             insertClause.append(")\","); //$NON-NLS-1$
             method.addAnnotation(insertClause.toString());
@@ -110,7 +110,7 @@ public class AnnotatedInsertMethodGenerator extends InsertMethodGenerator {
         for (String clause : valuesClauses) {
             method.addAnnotation(clause);
         }
-        
+
         method.addAnnotation("})"); //$NON-NLS-1$
 
         GeneratedKey gk = introspectedTable.getGeneratedKey();
@@ -118,7 +118,7 @@ public class AnnotatedInsertMethodGenerator extends InsertMethodGenerator {
             addGeneratedKeyAnnotation(method, gk);
         }
     }
-    
+
     @Override
     public void addExtraImports(Interface interfaze) {
         GeneratedKey gk = introspectedTable.getGeneratedKey();

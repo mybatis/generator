@@ -56,7 +56,7 @@ public class ToStringPlugin extends PluginAdapter {
         generateToString(introspectedTable, topLevelClass);
         return true;
     }
-    
+
     @Override
     public boolean modelPrimaryKeyClassGenerated(TopLevelClass topLevelClass,
             IntrospectedTable introspectedTable) {

@@ -28,7 +28,7 @@ import org.mybatis.generator.config.Context;
  */
 public class DefaultXmlFormatter implements XmlFormatter {
     protected Context context;
-    
+
     @Override
     public String getFormattedContent(Document document) {
         return document.getFormattedContent();

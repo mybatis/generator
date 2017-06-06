@@ -39,7 +39,7 @@ public class AnnotatedUpdateByExampleWithBLOBsMethodGenerator extends UpdateByEx
         sb.append(".class, method=\""); //$NON-NLS-1$
         sb.append(introspectedTable.getUpdateByExampleWithBLOBsStatementId());
         sb.append("\")"); //$NON-NLS-1$
-        
+
         method.addAnnotation(sb.toString());
     }
 

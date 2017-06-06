@@ -78,7 +78,7 @@ public class Parameter {
         }
 
         sb.append(JavaDomUtils.calculateTypeName(compilationUnit, type));
-        
+
         sb.append(' ');
         if (isVarargs) {
             sb.append("... "); //$NON-NLS-1$

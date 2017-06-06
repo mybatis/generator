@@ -49,13 +49,13 @@ public class Method extends JavaElement {
 
     /** The exceptions. */
     private List<FullyQualifiedJavaType> exceptions;
-    
+
     /** The is synchronized. */
     private boolean isSynchronized;
-    
+
     /** The is native. */
     private boolean isNative;
-    
+
     private boolean isDefault;
 
     /**
@@ -65,7 +65,7 @@ public class Method extends JavaElement {
         // use a default name to avoid malformed code
         this("bar"); //$NON-NLS-1$
     }
-    
+
     /**
      * Instantiates a new method.
      *
@@ -80,7 +80,7 @@ public class Method extends JavaElement {
         exceptions = new ArrayList<FullyQualifiedJavaType>();
         this.name = name;
     }
-    
+
     /**
      * Copy constructor. Not a truly deep copy, but close enough for most purposes.
      *
@@ -191,11 +191,11 @@ public class Method extends JavaElement {
             if (isFinal()) {
                 sb.append("final "); //$NON-NLS-1$
             }
-            
+
             if (isSynchronized()) {
                 sb.append("synchronized "); //$NON-NLS-1$
             }
-            
+
             if (isNative()) {
                 sb.append("native "); //$NON-NLS-1$
             } else if (bodyLines.size() == 0) {

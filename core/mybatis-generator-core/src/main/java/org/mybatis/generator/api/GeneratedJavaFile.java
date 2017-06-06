@@ -23,13 +23,13 @@ import org.mybatis.generator.api.dom.java.CompilationUnit;
  * @author Jeff Butler
  */
 public class GeneratedJavaFile extends GeneratedFile {
-    
+
     /** The compilation unit. */
     private CompilationUnit compilationUnit;
-    
+
     /** The file encoding. */
     private String fileEncoding;
-    
+
     /** The java formatter. */
     private JavaFormatter javaFormatter;
 
@@ -70,7 +70,7 @@ public class GeneratedJavaFile extends GeneratedFile {
             JavaFormatter javaFormatter) {
         this(compilationUnit, targetProject, null, javaFormatter);
     }
-    
+
     /* (non-Javadoc)
      * @see org.mybatis.generator.api.GeneratedFile#getFormattedContent()
      */

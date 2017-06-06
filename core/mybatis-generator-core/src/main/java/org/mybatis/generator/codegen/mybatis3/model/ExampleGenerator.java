@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -459,7 +459,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         } else {
             method.addBodyLine("if (allCriteria == null) {"); //$NON-NLS-1$
             method.addBodyLine("allCriteria = new ArrayList<Criterion>();"); //$NON-NLS-1$
-            
+
             strIter = criteriaLists.iterator();
             while (strIter.hasNext()) {
                 method.addBodyLine(String.format("allCriteria.addAll(%s);", strIter.next())); //$NON-NLS-1$
@@ -469,7 +469,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
             method.addBodyLine("return allCriteria;"); //$NON-NLS-1$
         }
         answer.addMethod(method);
-        
+
         // now we need to generate the methods that will be used in the SqlMap
         // to generate the dynamic where clause
         topLevelClass.addImportedType(FullyQualifiedJavaType

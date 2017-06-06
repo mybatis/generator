@@ -41,7 +41,7 @@ public class ProviderCountByExampleMethodGenerator extends AbstractJavaProviderM
     public void addClassElements(TopLevelClass topLevelClass) {
         Set<String> staticImports = new TreeSet<String>();
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
-        
+
         if (useLegacyBuilder) {
             staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.BEGIN"); //$NON-NLS-1$
             staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.FROM"); //$NON-NLS-1$
@@ -50,7 +50,7 @@ public class ProviderCountByExampleMethodGenerator extends AbstractJavaProviderM
         } else {
             importedTypes.add(NEW_BUILDER_IMPORT);
         }
-        
+
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getExampleType());
         importedTypes.add(fqjt);
 

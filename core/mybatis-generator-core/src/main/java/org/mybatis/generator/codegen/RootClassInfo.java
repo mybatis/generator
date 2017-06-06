@@ -78,7 +78,7 @@ public class RootClassInfo {
         if (className == null) {
             return;
         }
-        
+
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(className);
         String nameWithoutGenerics = fqjt.getFullyQualifiedNameWithoutTypeParameters();
         if (!nameWithoutGenerics.equals(className)) {

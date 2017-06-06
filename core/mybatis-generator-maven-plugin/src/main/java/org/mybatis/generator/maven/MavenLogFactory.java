@@ -28,7 +28,7 @@ public class MavenLogFactory implements AbstractLogFactory {
     }
 
     @Override
-    public Log getLog(Class<?> aClass) {
+    public Log getLog(Class<?> targetClass) {
         return logImplementation;
     }
 }

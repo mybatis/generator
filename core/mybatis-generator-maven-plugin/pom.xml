@@ -31,6 +31,17 @@
   <build>
     <plugins>
       <plugin>
+        <!-- turn on the site so we can see the reports.  But don't publish the site -
+             the maven plugin is documented in the regular generator documentation.
+         -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <configuration>
+          <skip>false</skip>
+          <skipDeploy>true</skipDeploy>
+        </configuration>
+      </plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-plugin-plugin</artifactId>
         <executions>

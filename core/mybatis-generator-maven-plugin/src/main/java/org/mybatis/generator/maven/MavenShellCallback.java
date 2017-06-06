@@ -23,14 +23,13 @@ import org.mybatis.generator.internal.DefaultShellCallback;
 import org.mybatis.generator.internal.util.messages.Messages;
 
 /**
+ * Shell callback that calculates the Maven output directory.
+ * 
  * @author Jeff Butler
  */
 public class MavenShellCallback extends DefaultShellCallback {
     private MyBatisGeneratorMojo mybatisGeneratorMojo;
 
-    /**
-     * @param overwrite
-     */
     public MavenShellCallback(MyBatisGeneratorMojo mybatisGeneratorMojo, boolean overwrite) {
         super(overwrite);
         this.mybatisGeneratorMojo = mybatisGeneratorMojo;

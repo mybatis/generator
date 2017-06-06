@@ -48,32 +48,37 @@ import org.mybatis.generator.logging.LogFactory;
 /**
  * Goal which generates MyBatis/iBATIS artifacts.
  */
-@Mojo(name = "generate",defaultPhase = LifecyclePhase.GENERATE_SOURCES, requiresDependencyResolution = ResolutionScope.TEST)
+@Mojo(name = "generate", defaultPhase = LifecyclePhase.GENERATE_SOURCES,
+        requiresDependencyResolution = ResolutionScope.TEST)
 public class MyBatisGeneratorMojo extends AbstractMojo {
+    
+    private ThreadLocal<ClassLoader> savedClassloader = new ThreadLocal<ClassLoader>();
 
     /**
      * Maven Project.
      *
      */
-    @Parameter(property="project",required=true,readonly=true)
+    @Parameter(property = "project", required = true, readonly = true)
     private MavenProject project;
 
     /**
      * Output Directory.
      */
-    @Parameter(property="mybatis.generator.outputDirectory", defaultValue="${project.build.directory}/generated-sources/mybatis-generator", required=true)
+    @Parameter(property = "mybatis.generator.outputDirectory",
+            defaultValue = "${project.build.directory}/generated-sources/mybatis-generator", required = true)
     private File outputDirectory;
 
     /**
      * Location of the configuration file.
      */
-    @Parameter(property="mybatis.generator.configurationFile",defaultValue="${project.basedir}/src/main/resources/generatorConfig.xml", required=true)
+    @Parameter(property = "mybatis.generator.configurationFile",
+            defaultValue = "${project.basedir}/src/main/resources/generatorConfig.xml", required = true)
     private File configurationFile;
 
     /**
      * Specifies whether the mojo writes progress messages to the log.
      */
-    @Parameter(property="mybatis.generator.verbose", defaultValue="false")
+    @Parameter(property = "mybatis.generator.verbose", defaultValue = "false")
     private boolean verbose;
 
     /**
@@ -81,7 +86,7 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
      * <br>
      * Note that XML files are always merged.
      */
-    @Parameter(property="mybatis.generator.overwrite", defaultValue="false")
+    @Parameter(property = "mybatis.generator.overwrite", defaultValue = "false")
     private boolean overwrite;
 
     /**
@@ -89,49 +94,49 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
      * then no script will be run. If not null, then jdbcDriver, jdbcURL must be
      * supplied also, and jdbcUserId and jdbcPassword may be supplied.
      */
-    @Parameter(property="mybatis.generator.sqlScript")
+    @Parameter(property = "mybatis.generator.sqlScript")
     private String sqlScript;
 
     /**
      * JDBC Driver to use if a sql.script.file is specified.
      */
-    @Parameter(property="mybatis.generator.jdbcDriver")
+    @Parameter(property = "mybatis.generator.jdbcDriver")
     private String jdbcDriver;
 
     /**
      * JDBC URL to use if a sql.script.file is specified.
      */
-    @Parameter(property="mybatis.generator.jdbcURL")
+    @Parameter(property = "mybatis.generator.jdbcURL")
     private String jdbcURL;
 
     /**
      * JDBC user ID to use if a sql.script.file is specified.
      */
-    @Parameter(property="mybatis.generator.jdbcUserId")
+    @Parameter(property = "mybatis.generator.jdbcUserId")
     private String jdbcUserId;
 
     /**
      * JDBC password to use if a sql.script.file is specified.
      */
-    @Parameter(property="mybatis.generator.jdbcPassword")
+    @Parameter(property = "mybatis.generator.jdbcPassword")
     private String jdbcPassword;
 
     /**
      * Comma delimited list of table names to generate.
      */
-    @Parameter(property="mybatis.generator.tableNames")
+    @Parameter(property = "mybatis.generator.tableNames")
     private String tableNames;
 
     /**
      * Comma delimited list of contexts to generate.
      */
-    @Parameter(property="mybatis.generator.contexts")
+    @Parameter(property = "mybatis.generator.contexts")
     private String contexts;
 
     /**
      * Skip generator.
      */
-    @Parameter(property="mybatis.generator.skip", defaultValue="false")
+    @Parameter(property = "mybatis.generator.skip", defaultValue = "false")
     private boolean skip;
     
     /**
@@ -139,7 +144,7 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
      * added to the classpath of the generator.  These dependencies will be searched for
      * JDBC drivers, root classes, root interfaces, generator plugins, etc.
      */
-    @Parameter(property="mybatis.generator.includeCompileDependencies", defaultValue="false")
+    @Parameter(property = "mybatis.generator.includeCompileDependencies", defaultValue = "false")
     private boolean includeCompileDependencies;
 
     /**
@@ -147,17 +152,18 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
      * added to the classpath of the generator.  These dependencies will be searched for
      * JDBC drivers, root classes, root interfaces, generator plugins, etc.
      */
-    @Parameter(property="mybatis.generator.includeAllDependencies", defaultValue="false")
+    @Parameter(property = "mybatis.generator.includeAllDependencies", defaultValue = "false")
     private boolean includeAllDependencies;
     
     @Override
     public void execute() throws MojoExecutionException {
         if (skip) {
-            getLog().info( "MyBatis generator is skipped." );
+            getLog().info("MyBatis generator is skipped.");
             return;
         }
+
+        saveClassLoader();
         
-        ClassLoader savedClassloader = Thread.currentThread().getContextClassLoader();
         LogFactory.setLogFactory(new MavenLogFactory(this));
 
         calculateClassPath();
@@ -257,7 +263,7 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
             project.addResource(resource);
         }
         
-        Thread.currentThread().setContextClassLoader(savedClassloader);
+        restoreClassLoader();
     }
 
     private void calculateClassPath() throws MojoExecutionException {
@@ -303,5 +309,13 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
 
     public File getOutputDirectory() {
         return outputDirectory;
+    }
+    
+    private void saveClassLoader() {
+        savedClassloader.set(Thread.currentThread().getContextClassLoader());
+    }
+
+    private void restoreClassLoader() {
+        Thread.currentThread().setContextClassLoader(savedClassloader.get());
     }
 }

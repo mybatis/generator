@@ -144,8 +144,7 @@ public class SqlScriptRunner {
             try {
                 connection.close();
             } catch (SQLException e) {
-                // ignore
-                ;
+                log.debug("SQLException on close connection", e);
             }
         }
     }
@@ -155,8 +154,7 @@ public class SqlScriptRunner {
             try {
                 statement.close();
             } catch (SQLException e) {
-                // ignore
-                ;
+                log.debug("SQLException on close statement", e);
             }
         }
     }
@@ -188,7 +186,7 @@ public class SqlScriptRunner {
         String s = sb.toString().trim();
 
         if (s.length() > 0) {
-            log.debug((Messages.getString("Progress.13", s))); //$NON-NLS-1$
+            log.debug(Messages.getString("Progress.13", s)); //$NON-NLS-1$
         }
 
         return s.length() > 0 ? s : null;

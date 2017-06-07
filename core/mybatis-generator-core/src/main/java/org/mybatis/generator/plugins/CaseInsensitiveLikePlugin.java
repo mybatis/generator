@@ -17,9 +17,9 @@ package org.mybatis.generator.plugins;
 
 import java.util.List;
 
-import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.InnerClass;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
@@ -33,7 +33,7 @@ import org.mybatis.generator.codegen.ibatis2.Ibatis2FormattingUtilities;
  * case-insensitive LIKE searches. It shows hows to construct new methods and
  * add them to an existing class.
  * 
- * This plugin only adds methods for String fields mapped to a JDBC character
+ * <p>This plugin only adds methods for String fields mapped to a JDBC character
  * type (CHAR, VARCHAR, etc.)
  * 
  * @author Jeff Butler
@@ -41,9 +41,6 @@ import org.mybatis.generator.codegen.ibatis2.Ibatis2FormattingUtilities;
  */
 public class CaseInsensitiveLikePlugin extends PluginAdapter {
 
-    /**
-     * 
-     */
     public CaseInsensitiveLikePlugin() {
         super();
     }

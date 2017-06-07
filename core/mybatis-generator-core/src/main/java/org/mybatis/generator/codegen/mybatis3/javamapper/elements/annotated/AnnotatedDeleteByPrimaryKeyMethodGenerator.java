@@ -46,7 +46,7 @@ public class AnnotatedDeleteByPrimaryKeyMethodGenerator extends
 
         StringBuilder sb = new StringBuilder();
         javaIndent(sb, 1);
-        sb.append("\"delete from " ); //$NON-NLS-1$
+        sb.append("\"delete from "); //$NON-NLS-1$
         sb.append(escapeStringForJava(
                 introspectedTable.getFullyQualifiedTableNameAtRuntime()));
         sb.append("\","); //$NON-NLS-1$
@@ -55,7 +55,6 @@ public class AnnotatedDeleteByPrimaryKeyMethodGenerator extends
         boolean and = false;
         Iterator<IntrospectedColumn> iter = introspectedTable.getPrimaryKeyColumns().iterator();
         while (iter.hasNext()) {
-            IntrospectedColumn introspectedColumn = iter.next();
             sb.setLength(0);
             javaIndent(sb, 1);
             if (and) {
@@ -65,6 +64,7 @@ public class AnnotatedDeleteByPrimaryKeyMethodGenerator extends
                 and = true;
             }
 
+            IntrospectedColumn introspectedColumn = iter.next();
             sb.append(escapeStringForJava(
                     getEscapedColumnName(introspectedColumn)));
             sb.append(" = "); //$NON-NLS-1$

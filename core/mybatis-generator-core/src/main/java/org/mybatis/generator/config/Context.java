@@ -30,10 +30,10 @@ import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.ConnectionFactory;
 import org.mybatis.generator.api.GeneratedJavaFile;
 import org.mybatis.generator.api.GeneratedXmlFile;
-import org.mybatis.generator.api.JavaFormatter;
-import org.mybatis.generator.api.Plugin;
 import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.JavaFormatter;
 import org.mybatis.generator.api.JavaTypeResolver;
+import org.mybatis.generator.api.Plugin;
 import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.api.XmlFormatter;
 import org.mybatis.generator.api.dom.xml.Attribute;
@@ -50,71 +50,46 @@ import org.mybatis.generator.internal.db.DatabaseIntrospector;
  */
 public class Context extends PropertyHolder {
 
-    /** The id. */
     private String id;
 
-    /** The jdbc connection configuration. */
     private JDBCConnectionConfiguration jdbcConnectionConfiguration;
 
     private ConnectionFactoryConfiguration connectionFactoryConfiguration;
 
-    /** The sql map generator configuration. */
     private SqlMapGeneratorConfiguration sqlMapGeneratorConfiguration;
 
-    /** The java type resolver configuration. */
     private JavaTypeResolverConfiguration javaTypeResolverConfiguration;
 
-    /** The java model generator configuration. */
     private JavaModelGeneratorConfiguration javaModelGeneratorConfiguration;
 
-    /** The java client generator configuration. */
     private JavaClientGeneratorConfiguration javaClientGeneratorConfiguration;
 
-    /** The table configurations. */
     private ArrayList<TableConfiguration> tableConfigurations;
 
-    /** The default model type. */
     private ModelType defaultModelType;
 
-    /** The beginning delimiter. */
     private String beginningDelimiter = "\""; //$NON-NLS-1$
 
-    /** The ending delimiter. */
     private String endingDelimiter = "\""; //$NON-NLS-1$
 
-    /** The comment generator configuration. */
     private CommentGeneratorConfiguration commentGeneratorConfiguration;
 
-    /** The comment generator. */
     private CommentGenerator commentGenerator;
 
-    /** The plugin aggregator. */
     private PluginAggregator pluginAggregator;
 
-    /** The plugin configurations. */
     private List<PluginConfiguration> pluginConfigurations;
 
-    /** The target runtime. */
     private String targetRuntime;
 
-    /** The introspected column impl. */
     private String introspectedColumnImpl;
 
-    /** The auto delimit keywords. */
     private Boolean autoDelimitKeywords;
 
-    /** The java formatter. */
     private JavaFormatter javaFormatter;
 
-    /** The xml formatter. */
     private XmlFormatter xmlFormatter;
 
-    /**
-     * Constructs a Context object.
-     * 
-     * @param defaultModelType
-     *            - may be null
-     */
     public Context(ModelType defaultModelType) {
         super();
 
@@ -128,67 +103,30 @@ public class Context extends PropertyHolder {
         pluginConfigurations = new ArrayList<PluginConfiguration>();
     }
 
-    /**
-     * Adds the table configuration.
-     *
-     * @param tc
-     *            the tc
-     */
     public void addTableConfiguration(TableConfiguration tc) {
         tableConfigurations.add(tc);
     }
 
-    /**
-     * Gets the jdbc connection configuration.
-     *
-     * @return the jdbc connection configuration
-     */
     public JDBCConnectionConfiguration getJdbcConnectionConfiguration() {
         return jdbcConnectionConfiguration;
     }
 
-    /**
-     * Gets the java client generator configuration.
-     *
-     * @return the java client generator configuration
-     */
     public JavaClientGeneratorConfiguration getJavaClientGeneratorConfiguration() {
         return javaClientGeneratorConfiguration;
     }
 
-    /**
-     * Gets the java model generator configuration.
-     *
-     * @return the java model generator configuration
-     */
     public JavaModelGeneratorConfiguration getJavaModelGeneratorConfiguration() {
         return javaModelGeneratorConfiguration;
     }
 
-    /**
-     * Gets the java type resolver configuration.
-     *
-     * @return the java type resolver configuration
-     */
     public JavaTypeResolverConfiguration getJavaTypeResolverConfiguration() {
         return javaTypeResolverConfiguration;
     }
 
-    /**
-     * Gets the sql map generator configuration.
-     *
-     * @return the sql map generator configuration
-     */
     public SqlMapGeneratorConfiguration getSqlMapGeneratorConfiguration() {
         return sqlMapGeneratorConfiguration;
     }
 
-    /**
-     * Adds the plugin configuration.
-     *
-     * @param pluginConfiguration
-     *            the plugin configuration
-     */
     public void addPluginConfiguration(
             PluginConfiguration pluginConfiguration) {
         pluginConfigurations.add(pluginConfiguration);
@@ -258,85 +196,39 @@ public class Context extends PropertyHolder {
         }
     }
 
-    /**
-     * Gets the id.
-     *
-     * @return the id
-     */
     public String getId() {
         return id;
     }
 
-    /**
-     * Sets the id.
-     *
-     * @param id
-     *            the new id
-     */
     public void setId(String id) {
         this.id = id;
     }
 
-    /**
-     * Sets the java client generator configuration.
-     *
-     * @param javaClientGeneratorConfiguration
-     *            the new java client generator configuration
-     */
     public void setJavaClientGeneratorConfiguration(
             JavaClientGeneratorConfiguration javaClientGeneratorConfiguration) {
         this.javaClientGeneratorConfiguration = javaClientGeneratorConfiguration;
     }
 
-    /**
-     * Sets the java model generator configuration.
-     *
-     * @param javaModelGeneratorConfiguration
-     *            the new java model generator configuration
-     */
     public void setJavaModelGeneratorConfiguration(
             JavaModelGeneratorConfiguration javaModelGeneratorConfiguration) {
         this.javaModelGeneratorConfiguration = javaModelGeneratorConfiguration;
     }
 
-    /**
-     * Sets the java type resolver configuration.
-     *
-     * @param javaTypeResolverConfiguration
-     *            the new java type resolver configuration
-     */
     public void setJavaTypeResolverConfiguration(
             JavaTypeResolverConfiguration javaTypeResolverConfiguration) {
         this.javaTypeResolverConfiguration = javaTypeResolverConfiguration;
     }
 
-    /**
-     * Sets the jdbc connection configuration.
-     *
-     * @param jdbcConnectionConfiguration
-     *            the new jdbc connection configuration
-     */
     public void setJdbcConnectionConfiguration(
             JDBCConnectionConfiguration jdbcConnectionConfiguration) {
         this.jdbcConnectionConfiguration = jdbcConnectionConfiguration;
     }
 
-    /**
-     * Sets the sql map generator configuration.
-     *
-     * @param sqlMapGeneratorConfiguration
-     *            the new sql map generator configuration
-     */
     public void setSqlMapGeneratorConfiguration(
             SqlMapGeneratorConfiguration sqlMapGeneratorConfiguration) {
         this.sqlMapGeneratorConfiguration = sqlMapGeneratorConfiguration;
     }
 
-    /**
-     * Gets the default model type.
-     *
-     * @return the default model type
-     */
     public ModelType getDefaultModelType() {
         return defaultModelType;
     }
@@ -410,36 +302,18 @@ public class Context extends PropertyHolder {
         return xmlElement;
     }
 
-    /**
-     * Gets the table configurations.
-     *
-     * @return the table configurations
-     */
     public List<TableConfiguration> getTableConfigurations() {
         return tableConfigurations;
     }
 
-    /**
-     * Gets the beginning delimiter.
-     *
-     * @return the beginning delimiter
-     */
     public String getBeginningDelimiter() {
         return beginningDelimiter;
     }
 
-    /**
-     * Gets the ending delimiter.
-     *
-     * @return the ending delimiter
-     */
     public String getEndingDelimiter() {
         return endingDelimiter;
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.config.PropertyHolder#addProperty(java.lang.String, java.lang.String)
-     */
     @Override
     public void addProperty(String name, String value) {
         super.addProperty(name, value);
@@ -454,11 +328,6 @@ public class Context extends PropertyHolder {
         }
     }
 
-    /**
-     * Gets the comment generator.
-     *
-     * @return the comment generator
-     */
     public CommentGenerator getCommentGenerator() {
         if (commentGenerator == null) {
             commentGenerator = ObjectFactory.createCommentGenerator(this);
@@ -467,11 +336,6 @@ public class Context extends PropertyHolder {
         return commentGenerator;
     }
 
-    /**
-     * Gets the java formatter.
-     *
-     * @return the java formatter
-     */
     public JavaFormatter getJavaFormatter() {
         if (javaFormatter == null) {
             javaFormatter = ObjectFactory.createJavaFormatter(this);
@@ -480,11 +344,6 @@ public class Context extends PropertyHolder {
         return javaFormatter;
     }
 
-    /**
-     * Gets the xml formatter.
-     *
-     * @return the xml formatter
-     */
     public XmlFormatter getXmlFormatter() {
         if (xmlFormatter == null) {
             xmlFormatter = ObjectFactory.createXmlFormatter(this);
@@ -493,69 +352,31 @@ public class Context extends PropertyHolder {
         return xmlFormatter;
     }
 
-    /**
-     * Gets the comment generator configuration.
-     *
-     * @return the comment generator configuration
-     */
     public CommentGeneratorConfiguration getCommentGeneratorConfiguration() {
         return commentGeneratorConfiguration;
     }
 
-    /**
-     * Sets the comment generator configuration.
-     *
-     * @param commentGeneratorConfiguration
-     *            the new comment generator configuration
-     */
     public void setCommentGeneratorConfiguration(
             CommentGeneratorConfiguration commentGeneratorConfiguration) {
         this.commentGeneratorConfiguration = commentGeneratorConfiguration;
     }
 
-    /**
-     * Gets the plugins.
-     *
-     * @return the plugins
-     */
     public Plugin getPlugins() {
         return pluginAggregator;
     }
 
-    /**
-     * Gets the target runtime.
-     *
-     * @return the target runtime
-     */
     public String getTargetRuntime() {
         return targetRuntime;
     }
 
-    /**
-     * Sets the target runtime.
-     *
-     * @param targetRuntime
-     *            the new target runtime
-     */
     public void setTargetRuntime(String targetRuntime) {
         this.targetRuntime = targetRuntime;
     }
 
-    /**
-     * Gets the introspected column impl.
-     *
-     * @return the introspected column impl
-     */
     public String getIntrospectedColumnImpl() {
         return introspectedColumnImpl;
     }
 
-    /**
-     * Sets the introspected column impl.
-     *
-     * @param introspectedColumnImpl
-     *            the new introspected column impl
-     */
     public void setIntrospectedColumnImpl(String introspectedColumnImpl) {
         this.introspectedColumnImpl = introspectedColumnImpl;
     }
@@ -570,14 +391,8 @@ public class Context extends PropertyHolder {
     // 4. generateFiles()
     //
 
-    /** The introspected tables. */
     private List<IntrospectedTable> introspectedTables;
 
-    /**
-     * Gets the introspection steps.
-     *
-     * @return the introspection steps
-     */
     public int getIntrospectionSteps() {
         int steps = 0;
 
@@ -663,11 +478,6 @@ public class Context extends PropertyHolder {
         }
     }
 
-    /**
-     * Gets the generation steps.
-     *
-     * @return the generation steps
-     */
     public int getGenerationSteps() {
         int steps = 0;
 
@@ -680,20 +490,6 @@ public class Context extends PropertyHolder {
         return steps;
     }
 
-    /**
-     * Generate files.
-     *
-     * @param callback
-     *            the callback
-     * @param generatedJavaFiles
-     *            the generated java files
-     * @param generatedXmlFiles
-     *            the generated xml files
-     * @param warnings
-     *            the warnings
-     * @throws InterruptedException
-     *             the interrupted exception
-     */
     public void generateFiles(ProgressCallback callback,
             List<GeneratedJavaFile> generatedJavaFiles,
             List<GeneratedXmlFile> generatedXmlFiles, List<String> warnings)
@@ -735,13 +531,6 @@ public class Context extends PropertyHolder {
                 .contextGenerateAdditionalXmlFiles());
     }
 
-    /**
-     * Gets the connection.
-     *
-     * @return the connection
-     * @throws SQLException
-     *             the SQL exception
-     */
     private Connection getConnection() throws SQLException {
         ConnectionFactory connectionFactory;
         if (jdbcConnectionConfiguration != null) {
@@ -753,12 +542,6 @@ public class Context extends PropertyHolder {
         return connectionFactory.getConnection();
     }
 
-    /**
-     * Close connection.
-     *
-     * @param connection
-     *            the connection
-     */
     private void closeConnection(Connection connection) {
         if (connection != null) {
             try {
@@ -769,11 +552,6 @@ public class Context extends PropertyHolder {
         }
     }
 
-    /**
-     * Auto delimit keywords.
-     *
-     * @return true, if successful
-     */
     public boolean autoDelimitKeywords() {
         return autoDelimitKeywords != null
                 && autoDelimitKeywords.booleanValue();

@@ -21,9 +21,9 @@ import java.util.Properties;
 
 import org.mybatis.generator.api.GeneratedJavaFile;
 import org.mybatis.generator.api.GeneratedXmlFile;
-import org.mybatis.generator.api.Plugin;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.Plugin;
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
@@ -37,8 +37,8 @@ import org.mybatis.generator.config.Context;
  * current context and is used to aggregate plugins together. This class
  * implements the rule that if any plugin returns "false" from a method, then no
  * other plugin is called.
- * <p>
- * This class does not follow the normal plugin lifecycle and should not be
+ * 
+ * <p>This class does not follow the normal plugin lifecycle and should not be
  * subclassed by clients.
  * 
  * @author Jeff Butler
@@ -177,12 +177,38 @@ public final class PluginAggregator implements Plugin {
     }
 
     @Override
+    public List<GeneratedJavaFile> contextGenerateAdditionalJavaFiles() {
+        List<GeneratedJavaFile> answer = new ArrayList<GeneratedJavaFile>();
+        for (Plugin plugin : plugins) {
+            List<GeneratedJavaFile> temp = plugin
+                    .contextGenerateAdditionalJavaFiles();
+            if (temp != null) {
+                answer.addAll(temp);
+            }
+        }
+        return answer;
+    }
+
+    @Override
     public List<GeneratedXmlFile> contextGenerateAdditionalXmlFiles(
             IntrospectedTable introspectedTable) {
         List<GeneratedXmlFile> answer = new ArrayList<GeneratedXmlFile>();
         for (Plugin plugin : plugins) {
             List<GeneratedXmlFile> temp = plugin
                     .contextGenerateAdditionalXmlFiles(introspectedTable);
+            if (temp != null) {
+                answer.addAll(temp);
+            }
+        }
+        return answer;
+    }
+
+    @Override
+    public List<GeneratedXmlFile> contextGenerateAdditionalXmlFiles() {
+        List<GeneratedXmlFile> answer = new ArrayList<GeneratedXmlFile>();
+        for (Plugin plugin : plugins) {
+            List<GeneratedXmlFile> temp = plugin
+                    .contextGenerateAdditionalXmlFiles();
             if (temp != null) {
                 answer.addAll(temp);
             }
@@ -892,32 +918,6 @@ public final class PluginAggregator implements Plugin {
         }
 
         return rc;
-    }
-
-    @Override
-    public List<GeneratedJavaFile> contextGenerateAdditionalJavaFiles() {
-        List<GeneratedJavaFile> answer = new ArrayList<GeneratedJavaFile>();
-        for (Plugin plugin : plugins) {
-            List<GeneratedJavaFile> temp = plugin
-                    .contextGenerateAdditionalJavaFiles();
-            if (temp != null) {
-                answer.addAll(temp);
-            }
-        }
-        return answer;
-    }
-
-    @Override
-    public List<GeneratedXmlFile> contextGenerateAdditionalXmlFiles() {
-        List<GeneratedXmlFile> answer = new ArrayList<GeneratedXmlFile>();
-        for (Plugin plugin : plugins) {
-            List<GeneratedXmlFile> temp = plugin
-                    .contextGenerateAdditionalXmlFiles();
-            if (temp != null) {
-                answer.addAll(temp);
-            }
-        }
-        return answer;
     }
 
     @Override

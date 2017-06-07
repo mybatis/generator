@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -25,9 +25,10 @@ import org.mybatis.generator.api.IntrospectedColumn;
  * columns easier.  If a column is GENERATED ALWAYS, it should not
  * be references on an insert or update method.
  * 
- * If a column is identity, it should not be referenced on an insert method.
+ * <p>If a column is identity, it should not be referenced on an insert method.
  *  
- * TODO - Replace this with Lambdas when we get to Java 8
+ * <p>TODO - Replace this with Lambdas when we get to Java 8
+ * 
  * @author Jeff Butler
  *
  */

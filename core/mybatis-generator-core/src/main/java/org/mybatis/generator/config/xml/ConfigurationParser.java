@@ -69,7 +69,7 @@ public class ConfigurationParser {
      * an additional property set.  Typically this property set will be Ant or Maven properties
      * specified in the build.xml file or the POM.
      * 
-     * If there are name collisions between the different property sets, they will be 
+     * <p>If there are name collisions between the different property sets, they will be 
      * resolved in this order:
      * 
      * <ol>
@@ -82,7 +82,7 @@ public class ConfigurationParser {
      * 
      * @param extraProperties an (optional) set of properties used to resolve property
      *     references in the configuration file
-     * @param warnings
+     * @param warnings any warnings are added to this array
      */
     public ConfigurationParser(Properties extraProperties, List<String> warnings) {
         super();

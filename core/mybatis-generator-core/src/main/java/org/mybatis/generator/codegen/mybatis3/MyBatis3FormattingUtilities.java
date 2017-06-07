@@ -154,7 +154,7 @@ public class MyBatis3FormattingUtilities {
      * selects in SqlMaps because the column is not escaped for MyBatis. If there is a table alias, the value will be
      * alias.columnName.
      * 
-     * This method is used in the Example classes and the returned value will be in a Java string. So we need to escape
+     * <p>This method is used in the Example classes and the returned value will be in a Java string. So we need to escape
      * double quotes if they are the delimiters.
      *
      * @param introspectedColumn

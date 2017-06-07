@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -48,11 +48,11 @@ public class DeleteByExampleElementGenerator extends
                 .getAliasedFullyQualifiedTableNameAtRuntime());
         answer.addElement(new TextElement(sb.toString()));
 
-        XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
         sb.setLength(0);
         sb.append(introspectedTable.getIbatis2SqlMapNamespace());
         sb.append('.');
         sb.append(introspectedTable.getExampleWhereClauseId());
+        XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
         includeElement.addAttribute(new Attribute("refid", //$NON-NLS-1$
                 sb.toString()));
 

@@ -69,6 +69,7 @@ public class FluentBuilderMethodsPlugin extends PluginAdapter {
 
         topLevelClass.addMethod(fluentMethod);
 
-        return super.modelSetterMethodGenerated(method, topLevelClass, introspectedColumn, introspectedTable, modelClassType);
+        return super.modelSetterMethodGenerated(method, topLevelClass, introspectedColumn,
+                introspectedTable, modelClassType);
     }
 }

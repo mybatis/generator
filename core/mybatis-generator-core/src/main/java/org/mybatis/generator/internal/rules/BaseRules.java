@@ -32,21 +32,12 @@ import org.mybatis.generator.internal.util.StringUtility;
  */
 public abstract class BaseRules implements Rules {
 
-    /** The table configuration. */
     protected TableConfiguration tableConfiguration;
 
-    /** The introspected table. */
     protected IntrospectedTable introspectedTable;
 
-    /** The is model only. */
     protected final boolean isModelOnly;
 
-    /**
-     * Instantiates a new base rules.
-     *
-     * @param introspectedTable
-     *            the introspected table
-     */
     public BaseRules(IntrospectedTable introspectedTable) {
         super();
         this.introspectedTable = introspectedTable;
@@ -270,10 +261,10 @@ public abstract class BaseRules implements Rules {
     /**
      * Implements the rule for generating the SQL example where clause element.
      * 
-     * In iBATIS2, generate the element if the selectByExample, deleteByExample,
+     * <p>In iBATIS2, generate the element if the selectByExample, deleteByExample,
      * updateByExample, or countByExample statements are allowed.
      * 
-     * In MyBatis3, generate the element if the selectByExample,
+     * <p>In MyBatis3, generate the element if the selectByExample,
      * deleteByExample, or countByExample statements are allowed.
      * 
      * @return true if the SQL where clause element should be generated
@@ -299,9 +290,9 @@ public abstract class BaseRules implements Rules {
      * Implements the rule for generating the SQL example where clause element
      * specifically for use in the update by example methods.
      * 
-     * In iBATIS2, do not generate the element.
+     * <p>In iBATIS2, do not generate the element.
      * 
-     * In MyBatis3, generate the element if the updateByExample statements are
+     * <p>In MyBatis3, generate the element if the updateByExample statements are
      * allowed.
      * 
      * @return true if the SQL where clause element should be generated
@@ -401,9 +392,6 @@ public abstract class BaseRules implements Rules {
         return rc;
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.internal.rules.Rules#generateCountByExample()
-     */
     @Override
     public boolean generateCountByExample() {
         if (isModelOnly) {
@@ -415,9 +403,6 @@ public abstract class BaseRules implements Rules {
         return rc;
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.internal.rules.Rules#generateUpdateByExampleSelective()
-     */
     @Override
     public boolean generateUpdateByExampleSelective() {
         if (isModelOnly) {
@@ -429,9 +414,6 @@ public abstract class BaseRules implements Rules {
         return rc;
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.internal.rules.Rules#generateUpdateByExampleWithoutBLOBs()
-     */
     @Override
     public boolean generateUpdateByExampleWithoutBLOBs() {
         if (isModelOnly) {
@@ -445,9 +427,6 @@ public abstract class BaseRules implements Rules {
         return rc;
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.internal.rules.Rules#generateUpdateByExampleWithBLOBs()
-     */
     @Override
     public boolean generateUpdateByExampleWithBLOBs() {
         if (isModelOnly) {
@@ -460,17 +439,11 @@ public abstract class BaseRules implements Rules {
         return rc;
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.internal.rules.Rules#getIntrospectedTable()
-     */
     @Override
     public IntrospectedTable getIntrospectedTable() {
         return introspectedTable;
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.internal.rules.Rules#generateBaseColumnList()
-     */
     @Override
     public boolean generateBaseColumnList() {
         if (isModelOnly) {
@@ -481,9 +454,6 @@ public abstract class BaseRules implements Rules {
                 || generateSelectByExampleWithoutBLOBs();
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.internal.rules.Rules#generateBlobColumnList()
-     */
     @Override
     public boolean generateBlobColumnList() {
         if (isModelOnly) {
@@ -495,9 +465,6 @@ public abstract class BaseRules implements Rules {
                         .isSelectByPrimaryKeyStatementEnabled());
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.internal.rules.Rules#generateJavaClient()
-     */
     @Override
     public boolean generateJavaClient() {
         return !isModelOnly;

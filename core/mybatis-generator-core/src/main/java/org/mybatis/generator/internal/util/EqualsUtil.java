@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,11 +18,11 @@ package org.mybatis.generator.internal.util;
 /**
  * This class is from javapractices.com:
  * 
- * http://www.javapractices.com/Topic17.cjp
+ * <p>http://www.javapractices.com/Topic17.cjp
  * 
- * Collected methods which allow easy implementation of <code>equals</code>.
+ * <p>Collected methods which allow easy implementation of <code>equals</code>.
  * 
- * Example use case in a class called Car:
+ * <p>Example use case in a class called Car:
  * 
  * <pre>
  * public boolean equals(Object that) {
@@ -44,87 +44,42 @@ package org.mybatis.generator.internal.util;
  */
 public final class EqualsUtil {
 
-    /**
-     * Are equal.
-     *
-     * @param aThis
-     *            the a this
-     * @param aThat
-     *            the a that
-     * @return true, if successful
-     */
-    static public boolean areEqual(boolean aThis, boolean aThat) {
-        return aThis == aThat;
+    public static boolean areEqual(boolean b1, boolean b2) {
+        return b1 == b2;
     }
 
-    /**
-     * Are equal.
-     *
-     * @param aThis
-     *            the a this
-     * @param aThat
-     *            the a that
-     * @return true, if successful
-     */
-    static public boolean areEqual(char aThis, char aThat) {
-        return aThis == aThat;
+    public static boolean areEqual(char c1, char c2) {
+        return c1 == c2;
     }
 
-    /**
-     * Are equal.
-     *
-     * @param aThis
-     *            the a this
-     * @param aThat
-     *            the a that
-     * @return true, if successful
-     */
-    static public boolean areEqual(long aThis, long aThat) {
+    public static boolean areEqual(long l1, long l2) {
         /*
          * Implementation Note Note that byte, short, and int are handled by
          * this method, through implicit conversion.
          */
-        return aThis == aThat;
+        return l1 == l2;
     }
 
-    /**
-     * Are equal.
-     *
-     * @param aThis
-     *            the a this
-     * @param aThat
-     *            the a that
-     * @return true, if successful
-     */
-    static public boolean areEqual(float aThis, float aThat) {
-        return Float.floatToIntBits(aThis) == Float.floatToIntBits(aThat);
+    public static boolean areEqual(float f1, float f2) {
+        return Float.floatToIntBits(f1) == Float.floatToIntBits(f2);
     }
 
-    /**
-     * Are equal.
-     *
-     * @param aThis
-     *            the a this
-     * @param aThat
-     *            the a that
-     * @return true, if successful
-     */
-    static public boolean areEqual(double aThis, double aThat) {
-        return Double.doubleToLongBits(aThis) == Double.doubleToLongBits(aThat);
+    public static boolean areEqual(double d1, double d2) {
+        return Double.doubleToLongBits(d1) == Double.doubleToLongBits(d2);
     }
 
     /**
      * Possibly-null object field.
      * 
-     * Includes type-safe enumerations and collections, but does not include arrays. See class comment.
+     * <p>Includes type-safe enumerations and collections, but does not include arrays. See class comment.
      *
-     * @param aThis
-     *            the a this
-     * @param aThat
-     *            the a that
-     * @return true, if successful
+     * @param o1
+     *            the first object
+     * @param o2
+     *            the second object
+     * @return true, if the objects are equals (meaning that the equals() method returns true)
      */
-    static public boolean areEqual(Object aThis, Object aThat) {
-        return aThis == null ? aThat == null : aThis.equals(aThat);
+    public static boolean areEqual(Object o1, Object o2) {
+        return o1 == null ? o2 == null : o1.equals(o2);
     }
 }

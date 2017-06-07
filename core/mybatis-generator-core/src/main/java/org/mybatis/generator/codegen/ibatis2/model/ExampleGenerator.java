@@ -687,7 +687,6 @@ public class ExampleGenerator extends AbstractJavaGenerator {
     private List<String> addtypeHandledObjectsAndMethods(
             IntrospectedColumn introspectedColumn, Method constructor,
             InnerClass innerClass) {
-        StringBuilder sb = new StringBuilder();
 
         // add new private fields and public accessors in the class
         FullyQualifiedJavaType listOfMaps;
@@ -699,7 +698,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         }
 
         List<String> answer = new ArrayList<String>();
-        sb.setLength(0);
+        StringBuilder sb = new StringBuilder();
         sb.append(introspectedColumn.getJavaProperty());
         sb.append("CriteriaWithSingleValue"); //$NON-NLS-1$
         answer.add(sb.toString());
@@ -1050,8 +1049,8 @@ public class ExampleGenerator extends AbstractJavaGenerator {
     /**
      * Generates methods that set between and not between conditions.
      * 
-     * @param introspectedColumn
-     * @param betweenMethod
+     * @param introspectedColumn the introspected column
+     * @param betweenMethod true is between, else not between
      * @return a generated method for the between or not between method
      */
     private Method getSetBetweenOrNotBetweenMethod(

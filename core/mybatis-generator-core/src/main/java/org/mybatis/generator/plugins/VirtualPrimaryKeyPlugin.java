@@ -25,11 +25,10 @@ import org.mybatis.generator.api.PluginAdapter;
  * This plugin can be used to specify columns that act as a primary key, even if
  * they are not strictly defined as primary keys in the database.
  * 
- * To use the plugin, add a property to the table configuration specifying a
+ * <p>To use the plugin, add a property to the table configuration specifying a
  * comma delimited list of column names to use as a primary key:
  * 
- * <br><br>
- * &lt;property name="virtualKeyColumns" value="ID1,ID2"&gt;
+ * <p>&lt;property name="virtualKeyColumns" value="ID1,ID2"&gt;
  * 
  * @author Jeff Butler
  * 

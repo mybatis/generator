@@ -34,7 +34,6 @@ public class UpdateByExampleSelectiveMethodGenerator extends
 
     @Override
     public void addInterfaceElements(Interface interfaze) {
-        Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
         Method method = new Method();
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
@@ -45,6 +44,8 @@ public class UpdateByExampleSelectiveMethodGenerator extends
                 introspectedTable.getRules().calculateAllFieldsClass();
         method.addParameter(new Parameter(parameterType,
                 "record", "@Param(\"record\")")); //$NON-NLS-1$ //$NON-NLS-2$
+
+        Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
         importedTypes.add(parameterType);
 
         FullyQualifiedJavaType exampleType = new FullyQualifiedJavaType(

@@ -156,6 +156,8 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
         case Types.NUMERIC:
             answer = calculateBigDecimalReplacement(column, defaultType);
             break;
+        default:
+            break;
         }
 
         return answer;

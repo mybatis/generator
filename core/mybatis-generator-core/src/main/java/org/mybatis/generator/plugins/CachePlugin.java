@@ -29,13 +29,15 @@ import org.mybatis.generator.internal.util.StringUtility;
  * is for MyBatis3 targeted runtimes only.  The plugin accepts the
  * following properties (all are optional):
  * 
- * cache_eviction
- * cache_flushInterval
- * cache_size
- * cache_readOnly
- * cache_type
+ * <ul>
+ *   <li>cache_eviction</li>
+ *   <li>cache_flushInterval</li>
+ *   <li>cache_size</li>
+ *   <li>cache_readOnly</li>
+ *   <li>cache_type</li>
+ * </ul>
  * 
- * All properties correspond to properties of the MyBatis cache element and
+ * <p>All properties correspond to properties of the MyBatis cache element and
  * are passed "as is" to the corresponding properties of the generated cache
  * element.  All properties can be specified at the table level, or on the
  * plugin element.  The property on the table element will override any

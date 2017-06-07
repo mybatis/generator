@@ -208,9 +208,6 @@ public class ExampleGenerator extends AbstractJavaGenerator {
     }
 
     private InnerClass getCriterionInnerClass() {
-        Field field;
-        Method method;
-
         InnerClass answer = new InnerClass(new FullyQualifiedJavaType(
                 "Criterion")); //$NON-NLS-1$
         answer.setVisibility(JavaVisibility.PUBLIC);
@@ -218,7 +215,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         context.getCommentGenerator().addClassComment(answer,
                 introspectedTable);
 
-        field = new Field();
+        Field field = new Field();
         field.setName("condition"); //$NON-NLS-1$
         field.setType(FullyQualifiedJavaType.getStringInstance());
         field.setVisibility(JavaVisibility.PRIVATE);
@@ -274,7 +271,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         answer.addField(field);
         answer.addMethod(getGetter(field));
 
-        method = new Method();
+        Method method = new Method();
         method.setVisibility(JavaVisibility.PROTECTED);
         method.setName("Criterion"); //$NON-NLS-1$
         method.setConstructor(true);
@@ -355,8 +352,6 @@ public class ExampleGenerator extends AbstractJavaGenerator {
     }
 
     private InnerClass getCriteriaInnerClass() {
-        Method method;
-
         InnerClass answer = new InnerClass(FullyQualifiedJavaType
                 .getCriteriaInstance());
 
@@ -368,7 +363,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         context.getCommentGenerator().addClassComment(answer,
                 introspectedTable, true);
 
-        method = new Method();
+        Method method = new Method();
         method.setVisibility(JavaVisibility.PROTECTED);
         method.setName("Criteria"); //$NON-NLS-1$
         method.setConstructor(true);
@@ -381,7 +376,6 @@ public class ExampleGenerator extends AbstractJavaGenerator {
     private InnerClass getGeneratedCriteriaInnerClass(
             TopLevelClass topLevelClass) {
         Field field;
-        Method method;
 
         InnerClass answer = new InnerClass(FullyQualifiedJavaType
                 .getGeneratedCriteriaInstance());
@@ -392,7 +386,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         context.getCommentGenerator().addClassComment(answer,
                 introspectedTable);
 
-        method = new Method();
+        Method method = new Method();
         method.setVisibility(JavaVisibility.PROTECTED);
         method.setName("GeneratedCriteria"); //$NON-NLS-1$
         method.setConstructor(true);
@@ -805,8 +799,8 @@ public class ExampleGenerator extends AbstractJavaGenerator {
     /**
      * Generates methods that set between and not between conditions
      * 
-     * @param introspectedColumn
-     * @param betweenMethod
+     * @param introspectedColumn the introspected column
+     * @param betweenMethod true if between, else not between
      * @return a generated method for the between or not between method
      */
     private Method getSetBetweenOrNotBetweenMethod(
@@ -864,8 +858,9 @@ public class ExampleGenerator extends AbstractJavaGenerator {
     }
 
     /**
+     * Generates an In or NotIn method.
      * 
-     * @param introspectedColumn
+     * @param introspectedColumn the introspected column
      * @param inMethod
      *            if true generates an "in" method, else generates a "not in"
      *            method
@@ -958,22 +953,21 @@ public class ExampleGenerator extends AbstractJavaGenerator {
      * This method adds all the extra methods and fields required to support a
      * user defined type handler on some column.
      * 
-     * @param introspectedColumn
-     * @param constructor
-     * @param innerClass
+     * @param introspectedColumn the introspected column
+     * @param constructor the constructor
+     * @param innerClass the enclosing class
      * @return the name of the List added to the class by this method
      */
     private String addtypeHandledObjectsAndMethods(
             IntrospectedColumn introspectedColumn, Method constructor,
             InnerClass innerClass) {
-        String answer;
         StringBuilder sb = new StringBuilder();
 
         // add new private field and public accessor in the class
         sb.setLength(0);
         sb.append(introspectedColumn.getJavaProperty());
         sb.append("Criteria"); //$NON-NLS-1$
-        answer = sb.toString();
+        String answer = sb.toString();
 
         Field field = new Field();
         field.setVisibility(JavaVisibility.PROTECTED);

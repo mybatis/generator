@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,11 +20,11 @@ import java.lang.reflect.Array;
 /**
  * This class is from javapractices.com:
  * 
- * http://www.javapractices.com/Topic28.cjp
+ * <p>http://www.javapractices.com/Topic28.cjp
  * 
- * Collected methods which allow easy implementation of <code>hashCode</code>.
+ * <p>Collected methods which allow easy implementation of <code>hashCode</code>.
  * 
- * Example use case:
+ * <p>Example use case:
  * 
  * <pre>
  * public int hashCode() {
@@ -45,110 +45,57 @@ public final class HashCodeUtil {
      * <code>hashCode</code> values.
      */
     public static final int SEED = 23;
+    private static final int ODD_PRIME_NUMBER = 37;
 
-    /**
-     * booleans.
-     *
-     * @param aSeed
-     *            the a seed
-     * @param aBoolean
-     *            the a boolean
-     * @return the int
-     */
-    public static int hash(int aSeed, boolean aBoolean) {
-        return firstTerm(aSeed) + (aBoolean ? 1 : 0);
+    public static int hash(int seed, boolean b) {
+        return firstTerm(seed) + (b ? 1 : 0);
     }
 
-    /**
-     * chars.
-     *
-     * @param aSeed
-     *            the a seed
-     * @param aChar
-     *            the a char
-     * @return the int
-     */
-    public static int hash(int aSeed, char aChar) {
-        return firstTerm(aSeed) + aChar;
+    public static int hash(int seed, char c) {
+        return firstTerm(seed) + c;
     }
 
-    /**
-     * ints.
-     *
-     * @param aSeed
-     *            the a seed
-     * @param aInt
-     *            the a int
-     * @return the int
-     */
-    public static int hash(int aSeed, int aInt) {
+    public static int hash(int seed, int i) {
         /*
          * Implementation Note Note that byte and short are handled by this
          * method, through implicit conversion.
          */
-        return firstTerm(aSeed) + aInt;
+        return firstTerm(seed) + i;
     }
 
-    /**
-     * longs.
-     *
-     * @param aSeed
-     *            the a seed
-     * @param aLong
-     *            the a long
-     * @return the int
-     */
-    public static int hash(int aSeed, long aLong) {
-        return firstTerm(aSeed) + (int) (aLong ^ (aLong >>> 32));
+    public static int hash(int seed, long l) {
+        return firstTerm(seed) + (int) (l ^ (l >>> 32));
     }
 
-    /**
-     * floats.
-     *
-     * @param aSeed
-     *            the a seed
-     * @param aFloat
-     *            the a float
-     * @return the int
-     */
-    public static int hash(int aSeed, float aFloat) {
-        return hash(aSeed, Float.floatToIntBits(aFloat));
+    public static int hash(int seed, float f) {
+        return hash(seed, Float.floatToIntBits(f));
     }
 
-    /**
-     * doubles.
-     *
-     * @param aSeed
-     *            the a seed
-     * @param aDouble
-     *            the a double
-     * @return the int
-     */
-    public static int hash(int aSeed, double aDouble) {
-        return hash(aSeed, Double.doubleToLongBits(aDouble));
+    public static int hash(int seed, double d) {
+        return hash(seed, Double.doubleToLongBits(d));
     }
 
     /**
      * <code>aObject</code> is a possibly-null object field, and possibly an array.
      * 
-     * If <code>aObject</code> is an array, then each element may be a primitive or a possibly-null object.
+     * <p>If <code>aObject</code> is an array, then each element may be a primitive or a possibly-null object.
      *
-     * @param aSeed
-     *            the a seed
-     * @param aObject
-     *            the a object
-     * @return the int
+     * @param seed
+     *            the seed
+     * @param o
+     *            the object
+     * @return the hash code for an object
      */
-    public static int hash(int aSeed, Object aObject) {
-        int result = aSeed;
-        if (aObject == null) {
+    public static int hash(int seed, Object o) {
+        int result = seed;
+        if (o == null) {
             result = hash(result, 0);
-        } else if (!isArray(aObject)) {
-            result = hash(result, aObject.hashCode());
+        } else if (!isArray(o)) {
+            result = hash(result, o.hashCode());
         } else {
-            int length = Array.getLength(aObject);
+            int length = Array.getLength(o);
             for (int idx = 0; idx < length; ++idx) {
-                Object item = Array.get(aObject, idx);
+                Object item = Array.get(o, idx);
                 // recursive call!
                 result = hash(result, item);
             }
@@ -156,29 +103,11 @@ public final class HashCodeUtil {
         return result;
     }
 
-    // / PRIVATE ///
-    /** The odd prime number. */
-    private static final int fODD_PRIME_NUMBER = 37;
-
-    /**
-     * First term.
-     *
-     * @param aSeed
-     *            the a seed
-     * @return the int
-     */
-    private static int firstTerm(int aSeed) {
-        return fODD_PRIME_NUMBER * aSeed;
+    private static int firstTerm(int seed) {
+        return ODD_PRIME_NUMBER * seed;
     }
 
-    /**
-     * Checks if is array.
-     *
-     * @param aObject
-     *            the a object
-     * @return true, if is array
-     */
-    private static boolean isArray(Object aObject) {
-        return aObject.getClass().isArray();
+    private static boolean isArray(Object anObject) {
+        return anObject.getClass().isArray();
     }
 }

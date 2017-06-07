@@ -94,7 +94,6 @@ public class AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator
         boolean and = false;
         iter = introspectedTable.getPrimaryKeyColumns().iterator();
         while (iter.hasNext()) {
-            IntrospectedColumn introspectedColumn = iter.next();
             sb.setLength(0);
             javaIndent(sb, 1);
             if (and) {
@@ -104,6 +103,7 @@ public class AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator
                 and = true;
             }
 
+            IntrospectedColumn introspectedColumn = iter.next();
             sb.append(escapeStringForJava(getEscapedColumnName(introspectedColumn)));
             sb.append(" = "); //$NON-NLS-1$
             sb.append(getParameterClause(introspectedColumn));

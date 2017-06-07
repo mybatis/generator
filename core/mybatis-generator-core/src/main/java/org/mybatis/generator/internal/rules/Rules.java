@@ -124,10 +124,10 @@ public interface Rules {
     /**
      * Implements the rule for generating the SQL example where clause element.
      * 
-     * In iBATIS2, generate the element if the selectByExample, deleteByExample,
+     * <p>In iBATIS2, generate the element if the selectByExample, deleteByExample,
      * updateByExample, or countByExample statements are allowed.
      * 
-     * In MyBatis3, generate the element if the selectByExample,
+     * <p>In MyBatis3, generate the element if the selectByExample,
      * deleteByExample, or countByExample statements are allowed.
      * 
      * @return true if the SQL where clause element should be generated
@@ -138,9 +138,9 @@ public interface Rules {
      * Implements the rule for generating the SQL example where clause element
      * specifically for use in the update by example methods.
      * 
-     * In iBATIS2, do not generate the element.
+     * <p>In iBATIS2, do not generate the element.
      * 
-     * In MyBatis, generate the element if the updateByExample statements are
+     * <p>In MyBatis, generate the element if the updateByExample statements are
      * allowed.
      * 
      * @return true if the SQL where clause element should be generated

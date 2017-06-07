@@ -81,8 +81,8 @@ public class SqlProviderGenerator extends AbstractJavaGenerator {
 
         List<CompilationUnit> answer = new ArrayList<CompilationUnit>();
         
-        if (topLevelClass.getMethods().size() > 0 &&
-                context.getPlugins().providerGenerated(topLevelClass, introspectedTable)) {
+        if (topLevelClass.getMethods().size() > 0
+                && context.getPlugins().providerGenerated(topLevelClass, introspectedTable)) {
             answer.add(topLevelClass);
         }
 

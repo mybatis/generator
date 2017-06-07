@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -32,26 +32,18 @@ import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.config.TableConfiguration;
 
 /**
- * The Class JavaBeansUtil.
- *
  * @author Jeff Butler
  */
 public class JavaBeansUtil {
 
-    /**
-     * Instantiates a new java beans util.
-     */
     private JavaBeansUtil() {
         super();
     }
 
     /**
-     * JavaBeans rules:
+     * Computes a getter method name.  Warning - does not check to see that the property is a valid
+     * property.  Call getValidPropertyName first.
      * 
-     * eMail &gt; geteMail() firstName &gt; getFirstName() URL $gt; getURL() XAxis &gt; getXAxis() a &gt; getA() B &gt;
-     * invalid - this method assumes that this is not the case. Call getValidPropertyName first. Yaxis &gt; invalid -
-     * this method assumes that this is not the case. Call getValidPropertyName first.
-     *
      * @param property
      *            the property
      * @param fullyQualifiedJavaType
@@ -80,11 +72,8 @@ public class JavaBeansUtil {
     }
 
     /**
-     * JavaBeans rules:
-     * 
-     * eMail &gt; seteMail() firstName &gt; setFirstName() URL &gt; setURL() XAxis &gt; setXAxis() a &gt; setA() B &gt;
-     * invalid - this method assumes that this is not the case. Call getValidPropertyName first. Yaxis &gt; invalid -
-     * this method assumes that this is not the case. Call getValidPropertyName first.
+     * Computes a setter method name.  Warning - does not check to see that the property is a valid
+     * property.  Call getValidPropertyName first.
      *
      * @param property
      *            the property
@@ -105,15 +94,6 @@ public class JavaBeansUtil {
         return sb.toString();
     }
 
-    /**
-     * Gets the camel case string.
-     *
-     * @param inputString
-     *            the input string
-     * @param firstCharacterUppercase
-     *            the first character uppercase
-     * @return the camel case string
-     */
     public static String getCamelCaseString(String inputString,
             boolean firstCharacterUppercase) {
         StringBuilder sb = new StringBuilder();
@@ -155,13 +135,28 @@ public class JavaBeansUtil {
     }
 
     /**
-     * This method ensures that the specified input string is a valid Java property name. The rules are as follows:
+     * This method ensures that the specified input string is a valid Java property name.
      * 
-     * 1. If the first character is lower case, then OK 2. If the first two characters are upper case, then OK 3. If the
-     * first character is upper case, and the second character is lower case, then the first character should be made
-     * lower case
+     * <p>The rules are as follows:
      * 
-     * eMail &gt; eMail firstName &gt; firstName URL &gt; URL XAxis &gt; XAxis a &gt; a B &gt; b Yaxis &gt; yaxis
+     * <ol>
+     *   <li>If the first character is lower case, then OK</li>
+     *   <li>If the first two characters are upper case, then OK</li>
+     *   <li>If the first character is upper case, and the second character is lower case, then the first character should be made
+     *       lower case</li>
+     * </ol>
+     * 
+     * <p>For example:
+     * 
+     * <ul>
+     *   <li>eMail &gt; eMail</li>
+     *   <li>firstName &gt; firstName</li>
+     *   <li>URL &gt; URL</li>
+     *   <li>XAxis &gt; XAxis</li>
+     *   <li>a &gt; a</li>
+     *   <li>B &gt; b</li>
+     *   <li>Yaxis &gt; yaxis</li>
+     * </ul>
      *
      * @param inputString
      *            the input string
@@ -187,17 +182,6 @@ public class JavaBeansUtil {
         return answer;
     }
 
-    /**
-     * Gets the java beans getter.
-     *
-     * @param introspectedColumn
-     *            the introspected column
-     * @param context
-     *            the context
-     * @param introspectedTable
-     *            the introspected table
-     * @return the java beans getter
-     */
     public static Method getJavaBeansGetter(IntrospectedColumn introspectedColumn,
             Context context,
             IntrospectedTable introspectedTable) {
@@ -221,17 +205,6 @@ public class JavaBeansUtil {
         return method;
     }
 
-    /**
-     * Gets the java beans field.
-     *
-     * @param introspectedColumn
-     *            the introspected column
-     * @param context
-     *            the context
-     * @param introspectedTable
-     *            the introspected table
-     * @return the java beans field
-     */
     public static Field getJavaBeansField(IntrospectedColumn introspectedColumn,
             Context context,
             IntrospectedTable introspectedTable) {
@@ -249,17 +222,6 @@ public class JavaBeansUtil {
         return field;
     }
 
-    /**
-     * Gets the java beans setter.
-     *
-     * @param introspectedColumn
-     *            the introspected column
-     * @param context
-     *            the context
-     * @param introspectedTable
-     *            the introspected table
-     * @return the java beans setter
-     */
     public static Method getJavaBeansSetter(IntrospectedColumn introspectedColumn,
             Context context,
             IntrospectedTable introspectedTable) {
@@ -296,13 +258,6 @@ public class JavaBeansUtil {
         return method;
     }
 
-    /**
-     * Checks if is trim strings enabled.
-     *
-     * @param context
-     *            the context
-     * @return true, if is trim strings enabled
-     */
     private static boolean isTrimStringsEnabled(Context context) {
         Properties properties = context
                 .getJavaModelGeneratorConfiguration().getProperties();
@@ -311,13 +266,6 @@ public class JavaBeansUtil {
         return rc;
     }
 
-    /**
-     * Checks if is trim strings enabled.
-     *
-     * @param table
-     *            the table
-     * @return true, if is trim strings enabled
-     */
     private static boolean isTrimStringsEnabled(IntrospectedTable table) {
         TableConfiguration tableConfiguration = table.getTableConfiguration();
         String trimSpaces = tableConfiguration.getProperties().getProperty(PropertyRegistry.MODEL_GENERATOR_TRIM_STRINGS);
@@ -327,13 +275,6 @@ public class JavaBeansUtil {
         return isTrimStringsEnabled(table.getContext());
     }
 
-    /**
-     * Checks if is trim strings enabled.
-     *
-     * @param column
-     *            the column
-     * @return true, if is trim strings enabled
-     */
     private static boolean isTrimStringsEnabled(IntrospectedColumn column) {
         String trimSpaces = column.getProperties().getProperty(PropertyRegistry.MODEL_GENERATOR_TRIM_STRINGS);
         if (trimSpaces != null) {
@@ -341,5 +282,4 @@ public class JavaBeansUtil {
         }
         return isTrimStringsEnabled(column.getIntrospectedTable());
     }
-
 }

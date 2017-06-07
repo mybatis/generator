@@ -64,7 +64,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * This class parses configuration files into the new Configuration API
+ * This class parses configuration files into the new Configuration API.
  * 
  * @author Jeff Butler
  */
@@ -238,126 +238,125 @@ public class MyBatisGeneratorConfigurationParser {
         context.addTableConfiguration(tc);
 
         Properties attributes = parseAttributes(node);
+
         String catalog = attributes.getProperty("catalog"); //$NON-NLS-1$
-        String schema = attributes.getProperty("schema"); //$NON-NLS-1$
-        String tableName = attributes.getProperty("tableName"); //$NON-NLS-1$
-        String domainObjectName = attributes.getProperty("domainObjectName"); //$NON-NLS-1$
-        String alias = attributes.getProperty("alias"); //$NON-NLS-1$
-        String enableInsert = attributes.getProperty("enableInsert"); //$NON-NLS-1$
-        String enableSelectByPrimaryKey = attributes
-                .getProperty("enableSelectByPrimaryKey"); //$NON-NLS-1$
-        String enableSelectByExample = attributes
-                .getProperty("enableSelectByExample"); //$NON-NLS-1$
-        String enableUpdateByPrimaryKey = attributes
-                .getProperty("enableUpdateByPrimaryKey"); //$NON-NLS-1$
-        String enableDeleteByPrimaryKey = attributes
-                .getProperty("enableDeleteByPrimaryKey"); //$NON-NLS-1$
-        String enableDeleteByExample = attributes
-                .getProperty("enableDeleteByExample"); //$NON-NLS-1$
-        String enableCountByExample = attributes
-                .getProperty("enableCountByExample"); //$NON-NLS-1$
-        String enableUpdateByExample = attributes
-                .getProperty("enableUpdateByExample"); //$NON-NLS-1$
-        String selectByPrimaryKeyQueryId = attributes
-                .getProperty("selectByPrimaryKeyQueryId"); //$NON-NLS-1$
-        String selectByExampleQueryId = attributes
-                .getProperty("selectByExampleQueryId"); //$NON-NLS-1$
-        String modelType = attributes.getProperty("modelType"); //$NON-NLS-1$
-        String escapeWildcards = attributes.getProperty("escapeWildcards"); //$NON-NLS-1$
-        String delimitIdentifiers = attributes
-                .getProperty("delimitIdentifiers"); //$NON-NLS-1$
-        String delimitAllColumns = attributes.getProperty("delimitAllColumns"); //$NON-NLS-1$
-
-        String mapperName = attributes.getProperty("mapperName"); //$NON-NLS-1$
-        String sqlProviderName = attributes.getProperty("sqlProviderName"); //$NON-NLS-1$
-
         if (stringHasValue(catalog)) {
             tc.setCatalog(catalog);
         }
 
+        String schema = attributes.getProperty("schema"); //$NON-NLS-1$
         if (stringHasValue(schema)) {
             tc.setSchema(schema);
         }
 
+        String tableName = attributes.getProperty("tableName"); //$NON-NLS-1$
         if (stringHasValue(tableName)) {
             tc.setTableName(tableName);
         }
 
+        String domainObjectName = attributes.getProperty("domainObjectName"); //$NON-NLS-1$
         if (stringHasValue(domainObjectName)) {
             tc.setDomainObjectName(domainObjectName);
         }
 
+        String alias = attributes.getProperty("alias"); //$NON-NLS-1$
         if (stringHasValue(alias)) {
             tc.setAlias(alias);
         }
 
+        String enableInsert = attributes.getProperty("enableInsert"); //$NON-NLS-1$
         if (stringHasValue(enableInsert)) {
             tc.setInsertStatementEnabled(isTrue(enableInsert));
         }
 
+        String enableSelectByPrimaryKey = attributes
+                .getProperty("enableSelectByPrimaryKey"); //$NON-NLS-1$
         if (stringHasValue(enableSelectByPrimaryKey)) {
             tc.setSelectByPrimaryKeyStatementEnabled(
                     isTrue(enableSelectByPrimaryKey));
         }
 
+        String enableSelectByExample = attributes
+                .getProperty("enableSelectByExample"); //$NON-NLS-1$
         if (stringHasValue(enableSelectByExample)) {
             tc.setSelectByExampleStatementEnabled(
                     isTrue(enableSelectByExample));
         }
 
+        String enableUpdateByPrimaryKey = attributes
+                .getProperty("enableUpdateByPrimaryKey"); //$NON-NLS-1$
         if (stringHasValue(enableUpdateByPrimaryKey)) {
             tc.setUpdateByPrimaryKeyStatementEnabled(
                     isTrue(enableUpdateByPrimaryKey));
         }
 
+        String enableDeleteByPrimaryKey = attributes
+                .getProperty("enableDeleteByPrimaryKey"); //$NON-NLS-1$
         if (stringHasValue(enableDeleteByPrimaryKey)) {
             tc.setDeleteByPrimaryKeyStatementEnabled(
                     isTrue(enableDeleteByPrimaryKey));
         }
 
+        String enableDeleteByExample = attributes
+                .getProperty("enableDeleteByExample"); //$NON-NLS-1$
         if (stringHasValue(enableDeleteByExample)) {
             tc.setDeleteByExampleStatementEnabled(
                     isTrue(enableDeleteByExample));
         }
 
+        String enableCountByExample = attributes
+                .getProperty("enableCountByExample"); //$NON-NLS-1$
         if (stringHasValue(enableCountByExample)) {
             tc.setCountByExampleStatementEnabled(
                     isTrue(enableCountByExample));
         }
 
+        String enableUpdateByExample = attributes
+                .getProperty("enableUpdateByExample"); //$NON-NLS-1$
         if (stringHasValue(enableUpdateByExample)) {
             tc.setUpdateByExampleStatementEnabled(
                     isTrue(enableUpdateByExample));
         }
 
+        String selectByPrimaryKeyQueryId = attributes
+                .getProperty("selectByPrimaryKeyQueryId"); //$NON-NLS-1$
         if (stringHasValue(selectByPrimaryKeyQueryId)) {
             tc.setSelectByPrimaryKeyQueryId(selectByPrimaryKeyQueryId);
         }
 
+        String selectByExampleQueryId = attributes
+                .getProperty("selectByExampleQueryId"); //$NON-NLS-1$
         if (stringHasValue(selectByExampleQueryId)) {
             tc.setSelectByExampleQueryId(selectByExampleQueryId);
         }
 
+        String modelType = attributes.getProperty("modelType"); //$NON-NLS-1$
         if (stringHasValue(modelType)) {
             tc.setConfiguredModelType(modelType);
         }
 
+        String escapeWildcards = attributes.getProperty("escapeWildcards"); //$NON-NLS-1$
         if (stringHasValue(escapeWildcards)) {
             tc.setWildcardEscapingEnabled(isTrue(escapeWildcards));
         }
 
+        String delimitIdentifiers = attributes
+                .getProperty("delimitIdentifiers"); //$NON-NLS-1$
         if (stringHasValue(delimitIdentifiers)) {
             tc.setDelimitIdentifiers(isTrue(delimitIdentifiers));
         }
 
+        String delimitAllColumns = attributes.getProperty("delimitAllColumns"); //$NON-NLS-1$
         if (stringHasValue(delimitAllColumns)) {
             tc.setAllColumnDelimitingEnabled(isTrue(delimitAllColumns));
         }
 
+        String mapperName = attributes.getProperty("mapperName"); //$NON-NLS-1$
         if (stringHasValue(mapperName)) {
             tc.setMapperName(mapperName);
         }
 
+        String sqlProviderName = attributes.getProperty("sqlProviderName"); //$NON-NLS-1$
         if (stringHasValue(sqlProviderName)) {
             tc.setSqlProviderName(sqlProviderName);
         }
@@ -389,36 +388,36 @@ public class MyBatisGeneratorConfigurationParser {
     private void parseColumnOverride(TableConfiguration tc, Node node) {
         Properties attributes = parseAttributes(node);
         String column = attributes.getProperty("column"); //$NON-NLS-1$
-        String property = attributes.getProperty("property"); //$NON-NLS-1$
-        String javaType = attributes.getProperty("javaType"); //$NON-NLS-1$
-        String jdbcType = attributes.getProperty("jdbcType"); //$NON-NLS-1$
-        String typeHandler = attributes.getProperty("typeHandler"); //$NON-NLS-1$
-        String delimitedColumnName = attributes
-                .getProperty("delimitedColumnName"); //$NON-NLS-1$
-        String isGeneratedAlways = attributes.getProperty("isGeneratedAlways"); //$NON-NLS-1$
 
         ColumnOverride co = new ColumnOverride(column);
 
+        String property = attributes.getProperty("property"); //$NON-NLS-1$
         if (stringHasValue(property)) {
             co.setJavaProperty(property);
         }
 
+        String javaType = attributes.getProperty("javaType"); //$NON-NLS-1$
         if (stringHasValue(javaType)) {
             co.setJavaType(javaType);
         }
 
+        String jdbcType = attributes.getProperty("jdbcType"); //$NON-NLS-1$
         if (stringHasValue(jdbcType)) {
             co.setJdbcType(jdbcType);
         }
 
+        String typeHandler = attributes.getProperty("typeHandler"); //$NON-NLS-1$
         if (stringHasValue(typeHandler)) {
             co.setTypeHandler(typeHandler);
         }
 
+        String delimitedColumnName = attributes
+                .getProperty("delimitedColumnName"); //$NON-NLS-1$
         if (stringHasValue(delimitedColumnName)) {
             co.setColumnNameDelimited(isTrue(delimitedColumnName));
         }
 
+        String isGeneratedAlways = attributes.getProperty("isGeneratedAlways"); //$NON-NLS-1$
         if (stringHasValue(isGeneratedAlways)) {
             co.setGeneratedAlways(Boolean.parseBoolean(isGeneratedAlways));
         }
@@ -638,16 +637,16 @@ public class MyBatisGeneratorConfigurationParser {
         Properties attributes = parseAttributes(node);
         String driverClass = attributes.getProperty("driverClass"); //$NON-NLS-1$
         String connectionURL = attributes.getProperty("connectionURL"); //$NON-NLS-1$
-        String userId = attributes.getProperty("userId"); //$NON-NLS-1$
-        String password = attributes.getProperty("password"); //$NON-NLS-1$
 
         jdbcConnectionConfiguration.setDriverClass(driverClass);
         jdbcConnectionConfiguration.setConnectionURL(connectionURL);
 
+        String userId = attributes.getProperty("userId"); //$NON-NLS-1$
         if (stringHasValue(userId)) {
             jdbcConnectionConfiguration.setUserId(userId);
         }
 
+        String password = attributes.getProperty("password"); //$NON-NLS-1$
         if (stringHasValue(password)) {
             jdbcConnectionConfiguration.setPassword(password);
         }
@@ -774,15 +773,15 @@ public class MyBatisGeneratorConfigurationParser {
 
     /**
      * This method resolve a property from one of the three sources: system properties,
-     * properties loaded from the <properties> configuration element, and
-     * "extra" properties that may be supplied by the Maven or Ant envireonments.
+     * properties loaded from the &lt;properties&gt; configuration element, and
+     * "extra" properties that may be supplied by the Maven or Ant environments.
      * 
-     * If there is a name collision, system properties take precedence, followed by
+     * <p>If there is a name collision, system properties take precedence, followed by
      * configuration properties, followed by extra properties.
      * 
-     * @param key
+     * @param key property key
      * @return the resolved property.  This method will return null if the property is
-     *   undefined in any of the sources.
+     *     undefined in any of the sources.
      */
     private String resolveProperty(String key) {
         String property = null;

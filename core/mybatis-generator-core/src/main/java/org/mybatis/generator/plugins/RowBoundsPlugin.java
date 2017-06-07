@@ -113,8 +113,8 @@ public class RowBoundsPlugin extends PluginAdapter {
      * Use the method copy constructor to create a new method, then
      * add the rowBounds parameter.
      * 
-     * @param fullyQualifiedTable
-     * @param method
+     * @param fullyQualifiedTable the table
+     * @param method the method
      */
     private void copyAndAddMethod(Method method, Interface interfaze) {
         Method newMethod = new Method(method);
@@ -127,8 +127,8 @@ public class RowBoundsPlugin extends PluginAdapter {
     /**
      * Use the method copy constructor to create a new element
      * 
-     * @param fullyQualifiedTable
-     * @param method
+     * @param fullyQualifiedTable the table
+     * @param method the method
      */
     private void copyAndSaveElement(XmlElement element, FullyQualifiedTable fqt) {
         XmlElement newElement = new XmlElement(element);

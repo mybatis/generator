@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import java.util.Set;
  * inclusive of many different databases - so it may include words that are not
  * reserved in some databases.
  * 
- * This list is based on the list from Drupal Handbook:
+ * <p>This list is based on the list from Drupal Handbook:
  * http://drupal.org/node/141051 With additions for DB2
  * 
  * @author Jeff Butler
@@ -970,7 +970,7 @@ public class SqlReservedWords {
     }
 
     /**
-     * Utility class - no instances allowed
+     * Utility class - no instances allowed.
      */
     private SqlReservedWords() {
     }

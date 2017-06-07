@@ -18,8 +18,8 @@ package org.mybatis.generator.plugins;
 import java.util.List;
 import java.util.Properties;
 
-import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
@@ -28,11 +28,11 @@ import org.mybatis.generator.api.dom.java.TopLevelClass;
 /**
  * This plugin adds the java.io.Serializable marker interface to all generated
  * model objects.
- * <p>
- * This plugin demonstrates adding capabilities to generated Java artifacts, and
+ * 
+ * <p>This plugin demonstrates adding capabilities to generated Java artifacts, and
  * shows the proper way to add imports to a compilation unit.
- * <p>
- * Important: This is a simplistic implementation of serializable and does not
+ * 
+ * <p>Important: This is a simplistic implementation of serializable and does not
  * attempt to do any versioning of classes.
  * 
  * @author Jeff Butler

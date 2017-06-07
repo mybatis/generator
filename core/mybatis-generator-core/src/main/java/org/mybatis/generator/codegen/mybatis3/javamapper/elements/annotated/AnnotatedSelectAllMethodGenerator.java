@@ -78,14 +78,15 @@ public class AnnotatedSelectAllMethodGenerator extends SelectAllMethodGenerator 
             method.addAnnotation(sb.toString());
         }
         
-        String orderByClause = introspectedTable.getTableConfigurationProperty(PropertyRegistry.TABLE_SELECT_ALL_ORDER_BY_CLAUSE);
-
         sb.setLength(0);
         javaIndent(sb, 1);
         sb.append("\"from "); //$NON-NLS-1$
         sb.append(escapeStringForJava(introspectedTable
                 .getAliasedFullyQualifiedTableNameAtRuntime()));
         sb.append('\"');
+
+        String orderByClause = introspectedTable.getTableConfigurationProperty(
+                PropertyRegistry.TABLE_SELECT_ALL_ORDER_BY_CLAUSE);
         boolean hasOrderBy = StringUtility.stringHasValue(orderByClause);
         if (hasOrderBy) {
             sb.append(',');

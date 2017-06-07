@@ -46,7 +46,7 @@ public class JDBCConnectionFactory implements ConnectionFactory {
      * This constructor is called when there is a JDBCConnectionConfiguration
      * specified in the configuration.
      * 
-     * @param config
+     * @param config the configuration
      */
     public JDBCConnectionFactory(JDBCConnectionConfiguration config) {
         super();
@@ -66,9 +66,7 @@ public class JDBCConnectionFactory implements ConnectionFactory {
     }
 
     @Override
-    public Connection getConnection()
-            throws SQLException {
-        Driver driver = getDriver();
+    public Connection getConnection() throws SQLException {
 
         Properties props = new Properties();
 
@@ -82,6 +80,7 @@ public class JDBCConnectionFactory implements ConnectionFactory {
 
         props.putAll(otherProperties);
 
+        Driver driver = getDriver();
         Connection conn = driver.connect(connectionURL, props);
 
         if (conn == null) {

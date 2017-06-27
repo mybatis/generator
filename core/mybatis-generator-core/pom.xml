@@ -146,13 +146,13 @@
     <site>
       <id>gh-pages</id>
       <name>Mybatis Generator GitHub Pages</name>
-      <url>git:ssh://git@github.com/mybatis/generator.git?gh-pages#</url>
+      <url>git:ssh://git@github.com/dickzh/generator.git?gh-pages#</url>
     </site>
   </distributionManagement>
 
   <description>MyBatis Generator - a code generator for MyBatis and iBatis.</description>
   <scm>
-    <url>https://github.com/mybatis/generator</url>
+    <url>https://github.com/dickzh/generator</url>
     <tag>HEAD</tag>
   </scm>
 </project>

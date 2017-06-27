@@ -36,19 +36,15 @@
   <description>Parent POM for MyBatis Generator</description>
 
   <scm>
-    <url>https://github.com/mybatis/generator</url>
-    <connection>scm:git:ssh://github.com/mybatis/generator.git</connection>
-    <developerConnection>scm:git:ssh://git@github.com/mybatis/generator.git</developerConnection>
+    <url>https://github.com/dickzh/generator</url>
+    <connection>scm:git:ssh://github.com/dickzh/generator.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/dickzh/generator.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
   <issueManagement>
     <system>GitHub Issue Management</system>
-    <url>https://github.com/mybatis/generator/issues</url>
+    <url>https://github.com/dickzh/generator/issues</url>
   </issueManagement>
-  <ciManagement>
-    <system>Travis CI</system>
-    <url>https://travis-ci.org/mybatis/generator/</url>
-  </ciManagement>
 
   <properties>
     <findbugs.onlyAnalyze>org.mybatis.generator.*</findbugs.onlyAnalyze>

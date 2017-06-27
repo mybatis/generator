@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: org.mybatis.generator.internal.XmlFileMergerTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.144 s - in org.mybatis.generator.internal.XmlFileMergerTest

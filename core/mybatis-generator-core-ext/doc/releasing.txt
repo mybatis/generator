@@ -1,0 +1,86 @@
+====
+       Copyright 2006-2017 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+====
+
+Releasing MyBatis Generator
+===========================
+
+Core Release Process
+====================
+
+Setup encrypted server passwords for Maven as shown here:
+
+   http://code.google.com/p/mybatis/wiki/ProcessRelease
+   
+Also, make sure that SVN and GPG are in your path, and that your gpg key
+has been published properly.
+
+1. (optional) mvn release:prepare -DdryRun=true
+
+   Make sure the new POMs look OK (pom.xml.next and pom.xml.tag)
+   
+2. (if you did #1) mvn release:clean
+
+3. mvn release:prepare [-Dusername=xxx -Dpassword=xxx]
+
+The username and password properties are only required if you have not saved
+your SVN authentication information.
+
+This build might fail if the the newly versioned artifacts don't get installed
+in the local repository properly.  If so, then run "mvn install" for the individual
+projects: core, maven-plugin, systests-common (in that order).  Then, resume the
+release with
+
+  mvn release:prepare -Dresume=true [-Dusername=xxx -Dpassword=xxx]
+
+4. mvn release:perform
+
+This step should upload to sonatype, as well as uploading the core bundle to google code.  If
+the google upload fails, you will need to upload the bundle manually.
+
+5. On google code, set the prior version of the generator to deprecated
+
+6. Log in to sonatype at http://oss.sonatype.org
+
+Go to "staging repositories" - you should see the uploaded artifacts.
+Close, and then release the staging repository.
+
+7. Update the DTD on the site if required
+
+8. Send out the announcement notice
+
+Eclipse Release Process
+=======================
+
+1. Build the new version of the Eclipse feature:
+  - Increment the version number of the feature
+  - Increment the version number of any plugin that has changed
+  - Add the new version to the category.xml in the build project
+  - Run the build.xml script in the build project (creates a new feature version
+    at \temp\mybatis.generator.build\etc.)
+  
+2. Install a fresh version of Eclipse, and install the new version of the feature
+   from \temp\mybatis.generator.build\buildRepo.  Run through the manual test
+   scripts for the Eclipse feature
+
+3. If everything is OK, run the publish.xml script in the build project.
+   This will merge the new plugin into the update site.
+  
+4. Commit the update site
+
+5. Update the wiki with new version information
+
+6. Send out the announcement notice
+

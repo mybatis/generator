@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: org.mybatis.generator.JavaCodeGenerationTest
+-------------------------------------------------------------------------------
+Tests run: 542, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.893 s - in org.mybatis.generator.JavaCodeGenerationTest

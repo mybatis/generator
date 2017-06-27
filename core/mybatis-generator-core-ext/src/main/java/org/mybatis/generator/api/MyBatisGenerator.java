@@ -340,13 +340,13 @@ public class MyBatisGenerator {
                     .getTargetProject(), gxf.getTargetPackage());
             targetFile = new File(directory, gxf.getFileName());
             if (targetFile.exists()) {
-                if (gxf.isMergeable()) {
-                    source = XmlFileMergerJaxp.getMergedSource(gxf,
-                            targetFile);
-                } else if (shellCallback.isOverwriteEnabled()) {
+                if (shellCallback.isOverwriteEnabled()) {
                     source = gxf.getFormattedContent();
                     warnings.add(getString("Warning.11", //$NON-NLS-1$
                             targetFile.getAbsolutePath()));
+                } else if (gxf.isMergeable()) {
+                    source = XmlFileMergerJaxp.getMergedSource(gxf,
+                            targetFile);
                 } else {
                     source = gxf.getFormattedContent();
                     targetFile = getUniqueFileName(directory, gxf

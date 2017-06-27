@@ -25,8 +25,7 @@ import java.util.List;
 import java.util.Properties;
 
 /**
- * This plugin adds the java.io.Serializable marker interface to all generated
- * model objects.
+ * This plugin adds the annotation @Repository to Client Object
  * <p>
  * This plugin demonstrates adding capabilities to generated Java artifacts, and
  * shows the proper way to add imports to a compilation unit.

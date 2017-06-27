@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: org.mybatis.generator.XmlCodeGenerationTest
--------------------------------------------------------------------------------
-Tests run: 110, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.66 s - in org.mybatis.generator.XmlCodeGenerationTest

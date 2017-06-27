@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: org.mybatis.generator.api.dom.java.JavaDomUtilsTest
--------------------------------------------------------------------------------
-Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.017 s - in org.mybatis.generator.api.dom.java.JavaDomUtilsTest

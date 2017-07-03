@@ -32,6 +32,7 @@ drop table GeneratedAlwaysTest if exists;
 drop table GeneratedAlwaysTestNoUpdates if exists;
 drop table IgnoreManyColumns if exists;
 drop sequence TestSequence if exists;
+drop table suffix_rename if exists;
 
 create sequence TestSequence as integer start with 1;
 
@@ -190,3 +191,11 @@ create table IgnoreManyColumns (
 
 comment on table EnumTest is 'This is a comment for the EnumTest table';
 comment on column EnumTest.name is 'This is a comment for the EnumTest.name column';
+
+create table suffix_rename (
+  ID integer not null,
+  NAME varchar(30),
+  ADDRESS varchar(30),
+  ZIP_CODE char(5),
+  primary key(ID)
+);

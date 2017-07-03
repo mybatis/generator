@@ -43,6 +43,7 @@ import org.mybatis.generator.config.CommentGeneratorConfiguration;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.ConnectionFactoryConfiguration;
 import org.mybatis.generator.config.Context;
+import org.mybatis.generator.config.DomainObjectRenamingRule;
 import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.config.IgnoredColumn;
 import org.mybatis.generator.config.IgnoredColumnException;
@@ -379,6 +380,8 @@ public class MyBatisGeneratorConfigurationParser {
                 parseIgnoreColumnByRegex(tc, childNode);
             } else if ("generatedKey".equals(childNode.getNodeName())) { //$NON-NLS-1$
                 parseGeneratedKey(tc, childNode);
+            } else if ("domainObjectRenamingRule".equals(childNode.getNodeName())) { //$NON-NLS-1$
+                parseDomainObjectRenamingRule(tc, childNode);
             } else if ("columnRenamingRule".equals(childNode.getNodeName())) { //$NON-NLS-1$
                 parseColumnRenamingRule(tc, childNode);
             }
@@ -502,6 +505,22 @@ public class MyBatisGeneratorConfigurationParser {
         }
 
         icPattern.addException(exception);
+    }
+
+    private void parseDomainObjectRenamingRule(TableConfiguration tc, Node node) {
+        Properties attributes = parseAttributes(node);
+        String searchString = attributes.getProperty("searchString"); //$NON-NLS-1$
+        String replaceString = attributes.getProperty("replaceString"); //$NON-NLS-1$
+
+        DomainObjectRenamingRule dorr = new DomainObjectRenamingRule();
+
+        dorr.setSearchString(searchString);
+
+        if (stringHasValue(replaceString)) {
+            dorr.setReplaceString(replaceString);
+        }
+
+        tc.setDomainObjectRenamingRule(dorr);
     }
 
     private void parseColumnRenamingRule(TableConfiguration tc, Node node) {

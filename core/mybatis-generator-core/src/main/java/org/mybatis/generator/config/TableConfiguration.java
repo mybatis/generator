@@ -82,6 +82,8 @@ public class TableConfiguration extends PropertyHolder {
 
     private boolean delimitIdentifiers;
 
+    private DomainObjectRenamingRule domainObjectRenamingRule;
+
     private ColumnRenamingRule columnRenamingRule;
 
     private boolean isAllColumnDelimitingEnabled;
@@ -462,6 +464,10 @@ public class TableConfiguration extends PropertyHolder {
             xmlElement.addElement(generatedKey.toXmlElement());
         }
 
+        if (domainObjectRenamingRule != null) {
+            xmlElement.addElement(domainObjectRenamingRule.toXmlElement());
+        }
+
         if (columnRenamingRule != null) {
             xmlElement.addElement(columnRenamingRule.toXmlElement());
         }
@@ -544,6 +550,10 @@ public class TableConfiguration extends PropertyHolder {
             }
         }
 
+        if (domainObjectRenamingRule != null) {
+            domainObjectRenamingRule.validate(errors, fqTableName);
+        }
+
         if (columnRenamingRule != null) {
             columnRenamingRule.validate(errors, fqTableName);
         }
@@ -559,6 +569,14 @@ public class TableConfiguration extends PropertyHolder {
         for (IgnoredColumnPattern ignoredColumnPattern : ignoredColumnPatterns) {
             ignoredColumnPattern.validate(errors, fqTableName);
         }
+    }
+
+    public DomainObjectRenamingRule getDomainObjectRenamingRule() {
+        return domainObjectRenamingRule;
+    }
+
+    public void setDomainObjectRenamingRule(DomainObjectRenamingRule domainObjectRenamingRule) {
+        this.domainObjectRenamingRule = domainObjectRenamingRule;
     }
 
     public ColumnRenamingRule getColumnRenamingRule() {

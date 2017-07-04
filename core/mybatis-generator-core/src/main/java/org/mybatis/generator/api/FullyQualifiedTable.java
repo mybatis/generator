@@ -22,11 +22,11 @@ import static org.mybatis.generator.internal.util.JavaBeansUtil.getCamelCaseStri
 import static org.mybatis.generator.internal.util.StringUtility.composeFullyQualifiedTableName;
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
-import org.mybatis.generator.config.Context;
-import org.mybatis.generator.config.DomainObjectRenamingRule;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.mybatis.generator.config.Context;
+import org.mybatis.generator.config.DomainObjectRenamingRule;
 
 /**
  * The Class FullyQualifiedTable.
@@ -249,13 +249,15 @@ public class FullyQualifiedTable {
         if (stringHasValue(domainObjectName)) {
             return domainObjectName;
         }
+
         String finalDomainObjectName;
         if (stringHasValue(runtimeTableName)) {
             finalDomainObjectName =  getCamelCaseString(runtimeTableName, true);
         } else {
             finalDomainObjectName =  getCamelCaseString(introspectedTableName, true);
         }
-        if(domainObjectRenamingRule != null){
+
+        if (domainObjectRenamingRule != null) {
             Pattern pattern = Pattern.compile(domainObjectRenamingRule.getSearchString());
             String replaceString = domainObjectRenamingRule.getReplaceString();
             replaceString = replaceString == null ? "" : replaceString;
@@ -360,7 +362,7 @@ public class FullyQualifiedTable {
      * Calculates a Java package fragment based on the table catalog and schema.
      * If qualifiers are ignored, then this method will return an empty string.
      * 
-     * This method is used for determining the sub package for Java model objects only.
+     * <p>This method is used for determining the sub package for Java model objects only.
      * It takes into account the possibility that a sub-package was added to the
      * domain object name in the table configuration.
      *

@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -1160,6 +1160,25 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         
         if (!resourceExists("mbg/test/mb3/generated/miscellaneous/modelonly2/xml/FieldsonlyMapper.xml")) {
             fail("FieldsonlyMapper.xml file should be generated in model only configuration");
+        }
+    }
+    
+    @Test
+    public void testDomainObjcetRename() {
+        if (!classExists("mbg.test.mb3.generated.miscellaneous.model.Rename")) {
+            fail("Rename class should be generated (renamed from suffix_rename)");
+        }
+
+        if (!classExists("mbg.test.mb3.generated.miscellaneous.model.RenameCriteria")) {
+            fail("RenameCriteria class should be generated (renamed from suffix_rename)");
+        }
+
+        if (!classExists("mbg.test.mb3.generated.miscellaneous.mapper.RenameMapper")) {
+            fail("RenameMapper class should be generated (renamed from suffix_rename)");
+        }
+
+        if (!resourceExists("mbg/test/mb3/generated/miscellaneous/xml/RenameMapper.xml")) {
+            fail("RenameMapper.xml file should be generated (renamed from suffix_rename)");
         }
     }
 

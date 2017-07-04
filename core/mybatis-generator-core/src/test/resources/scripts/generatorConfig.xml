@@ -245,6 +245,9 @@
         <except column="col13"/>
       </ignoreColumnsByRegex>
     </table>
+    <table tableName="suffix_rename">
+      <domainObjectRenamingRule searchString="^Suffix" replaceString=""/>
+    </table>
   </context>
   
   <context id="miscellaneousTests_NoClient" targetRuntime="MyBatis3">
@@ -894,31 +897,6 @@
       <columnOverride column="id6$" delimitedColumnName="true" />
       <columnOverride column="id7$$" delimitedColumnName="true" />
       <columnOverride column="class" property="dbClass" />
-    </table>
-  </context>
-
-  <context id="domainObjectRenamingRule" defaultModelType="flat">
-    <connectionFactory>
-      <property name="driverClass" value="org.hsqldb.jdbcDriver"/>
-      <property name="connectionURL" value="${database.url}"/>
-      <property name="userId" value="sa"/>
-    </connectionFactory>
-
-    <javaModelGenerator targetPackage="mbg.test.mb3.generated.domainobjectrenamingrule.model" targetProject="MAVEN">
-      <property name="enableSubPackages" value="true" />
-      <property name="trimStrings" value="true" />
-    </javaModelGenerator>
-
-    <sqlMapGenerator targetPackage="mbg.test.mb3.generated.domainobjectrenamingrule.xml"  targetProject="MAVEN">
-      <property name="enableSubPackages" value="true" />
-    </sqlMapGenerator>
-
-    <javaClientGenerator type="XMLMAPPER" targetPackage="mbg.test.mb3.generated.domainobjectrenamingrule.mapper"  targetProject="MAVEN">
-      <property name="enableSubPackages" value="true" />
-    </javaClientGenerator>
-
-    <table tableName="suffix_rename">
-      <domainObjectRenamingRule searchString="^Suffix" replaceString=""/>
     </table>
   </context>
 </generatorConfiguration>

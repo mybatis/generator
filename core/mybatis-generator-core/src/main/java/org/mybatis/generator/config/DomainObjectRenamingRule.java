@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,21 +15,21 @@
  */
 package org.mybatis.generator.config;
 
-import org.mybatis.generator.api.dom.xml.Attribute;
-import org.mybatis.generator.api.dom.xml.XmlElement;
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.List;
 
-import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
-import static org.mybatis.generator.internal.util.messages.Messages.getString;
+import org.mybatis.generator.api.dom.xml.Attribute;
+import org.mybatis.generator.api.dom.xml.XmlElement;
 
 /**
  * This class is used to specify a renaming rule for table's domain object name.
  * If domainObjectName is not configured, we'll build the domain object named
  * based on the tableName or runtimeTableName. And then we use the domain object
- * renameing rule to generate the final domain object name.
+ * renaming rule to generate the final domain object name.
  * 
- * For example, if some tables are named:
+ * <p>For example, if some tables are named:
  * 
  * <ul>
  * <li>SYS_USER</li>
@@ -37,7 +37,7 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
  * <li>SYS_FUNCTIONS</li>
  * </ul>
  * 
- * it might be annoying to have the generated domain name all containing the SYS
+ * <p>it might be annoying to have the generated domain name all containing the SYS
  * prefix. This class can be used to remove the prefix by specifying
  * 
  * <ul>
@@ -45,7 +45,7 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
  * <li>replaceString=""</li>
  * </ul>
  * 
- * Note that internally, the generator uses the
+ * <p>Note that internally, the generator uses the
  * <code>java.util.regex.Matcher.replaceAll</code> method for this function. See
  * the documentation of that method for example of the regular expression
  * language used in Java.

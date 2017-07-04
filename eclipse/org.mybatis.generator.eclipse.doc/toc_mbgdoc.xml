@@ -26,6 +26,7 @@
       <topic href="html/mbgdoc/configreference/commentGenerator.html" label="&lt;commentGenerator&gt;"/>
       <topic href="html/mbgdoc/configreference/connectionFactory.html" label="&lt;connectionFactory&gt;"/>
       <topic href="html/mbgdoc/configreference/context.html" label="&lt;context&gt;"/>
+      <topic href="html/mbgdoc/configreference/domainObjectRenamingRule.html" label="&lt;domainObjectRenamingRule&gt;"/>
       <topic href="html/mbgdoc/configreference/except.html" label="&lt;except&gt;"/>
       <topic href="html/mbgdoc/configreference/generatedKey.html" label="&lt;generatedKey&gt;"/>
       <topic href="html/mbgdoc/configreference/generatorConfiguration.html" label="&lt;generatorConfiguration&gt;"/>

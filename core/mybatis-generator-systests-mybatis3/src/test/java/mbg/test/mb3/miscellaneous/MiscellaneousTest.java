@@ -1162,6 +1162,25 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
             fail("FieldsonlyMapper.xml file should be generated in model only configuration");
         }
     }
+    
+    @Test
+    public void testDomainObjcetRename() {
+        if (!classExists("mbg.test.mb3.generated.miscellaneous.model.Rename")) {
+            fail("Rename class should be generated (renamed from suffix_rename)");
+        }
+
+        if (!classExists("mbg.test.mb3.generated.miscellaneous.model.RenameCriteria")) {
+            fail("RenameCriteria class should be generated (renamed from suffix_rename)");
+        }
+
+        if (!classExists("mbg.test.mb3.generated.miscellaneous.mapper.RenameMapper")) {
+            fail("RenameMapper class should be generated (renamed from suffix_rename)");
+        }
+
+        if (!resourceExists("mbg/test/mb3/generated/miscellaneous/xml/RenameMapper.xml")) {
+            fail("RenameMapper.xml file should be generated (renamed from suffix_rename)");
+        }
+    }
 
     private boolean classExists(String className) {
         try {

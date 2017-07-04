@@ -245,6 +245,9 @@
         <except column="col13"/>
       </ignoreColumnsByRegex>
     </table>
+    <table tableName="suffix_rename">
+      <domainObjectRenamingRule searchString="^Suffix" replaceString=""/>
+    </table>
   </context>
   
   <context id="miscellaneousTests_NoClient" targetRuntime="MyBatis3">

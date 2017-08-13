@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ package mbg.test.mb3.annotated.flat;
 import mbg.test.mb3.AbstractTest;
 import mbg.test.mb3.generated.annotated.flat.mapper.AwfulTableMapper;
 import mbg.test.mb3.generated.annotated.flat.mapper.FieldsblobsMapper;
-import mbg.test.mb3.generated.annotated.flat.mapper.FieldsonlyMapper;
+import mbg.test.mb3.generated.annotated.flat.mapper.subpackage.FieldsonlyMapper;
 import mbg.test.mb3.generated.annotated.flat.mapper.PkblobsMapper;
 import mbg.test.mb3.generated.annotated.flat.mapper.PkfieldsMapper;
 import mbg.test.mb3.generated.annotated.flat.mapper.PkfieldsblobsMapper;

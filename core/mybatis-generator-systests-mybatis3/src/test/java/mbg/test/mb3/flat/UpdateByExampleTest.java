@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -23,19 +23,20 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+import org.junit.Test;
+
 import mbg.test.mb3.generated.flat.mapper.AwfulTableMapper;
 import mbg.test.mb3.generated.flat.mapper.FieldsblobsMapper;
-import mbg.test.mb3.generated.flat.mapper.FieldsonlyMapper;
 import mbg.test.mb3.generated.flat.mapper.PkblobsMapper;
 import mbg.test.mb3.generated.flat.mapper.PkfieldsMapper;
 import mbg.test.mb3.generated.flat.mapper.PkfieldsblobsMapper;
 import mbg.test.mb3.generated.flat.mapper.PkonlyMapper;
+import mbg.test.mb3.generated.flat.mapper.subpackage.FieldsonlyMapper;
 import mbg.test.mb3.generated.flat.model.AwfulTable;
 import mbg.test.mb3.generated.flat.model.AwfulTableExample;
 import mbg.test.mb3.generated.flat.model.Fieldsblobs;
 import mbg.test.mb3.generated.flat.model.FieldsblobsExample;
-import mbg.test.mb3.generated.flat.model.Fieldsonly;
-import mbg.test.mb3.generated.flat.model.FieldsonlyExample;
 import mbg.test.mb3.generated.flat.model.Pkblobs;
 import mbg.test.mb3.generated.flat.model.PkblobsExample;
 import mbg.test.mb3.generated.flat.model.Pkfields;
@@ -44,9 +45,8 @@ import mbg.test.mb3.generated.flat.model.Pkfieldsblobs;
 import mbg.test.mb3.generated.flat.model.PkfieldsblobsExample;
 import mbg.test.mb3.generated.flat.model.Pkonly;
 import mbg.test.mb3.generated.flat.model.PkonlyExample;
-
-import org.apache.ibatis.session.SqlSession;
-import org.junit.Test;
+import mbg.test.mb3.generated.flat.model.subpackage.Fieldsonly;
+import mbg.test.mb3.generated.flat.model.subpackage.FieldsonlyExample;
 
 /**
  * 

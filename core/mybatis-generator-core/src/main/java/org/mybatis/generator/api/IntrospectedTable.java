@@ -827,6 +827,10 @@ public abstract class IntrospectedTable {
         if (stringHasValue(tableConfiguration.getMapperName())) {
             sb.append(tableConfiguration.getMapperName());
         } else {
+            if (stringHasValue(fullyQualifiedTable.getDomainObjectSubPackage())) {
+                sb.append(fullyQualifiedTable.getDomainObjectSubPackage());
+                sb.append('.');
+            }
             sb.append(fullyQualifiedTable.getDomainObjectName());
             sb.append("Mapper"); //$NON-NLS-1$
         }
@@ -838,6 +842,10 @@ public abstract class IntrospectedTable {
         if (stringHasValue(tableConfiguration.getSqlProviderName())) {
             sb.append(tableConfiguration.getSqlProviderName());
         } else {
+            if (stringHasValue(fullyQualifiedTable.getDomainObjectSubPackage())) {
+                sb.append(fullyQualifiedTable.getDomainObjectSubPackage());
+                sb.append('.');
+            }
             sb.append(fullyQualifiedTable.getDomainObjectName());
             sb.append("SqlProvider"); //$NON-NLS-1$
         }
@@ -901,6 +909,8 @@ public abstract class IntrospectedTable {
                 if (ind != -1) {
                     sb.append('.').append(mapperName.substring(0, ind));
                 }
+            } else if (stringHasValue(fullyQualifiedTable.getDomainObjectSubPackage())) {
+                sb.append('.').append(fullyQualifiedTable.getDomainObjectSubPackage());
             }
         }
 

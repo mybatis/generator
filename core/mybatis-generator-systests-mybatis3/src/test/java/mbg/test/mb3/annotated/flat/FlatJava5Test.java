@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2017 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ import java.util.List;
 
 import mbg.test.mb3.generated.annotated.flat.mapper.AwfulTableMapper;
 import mbg.test.mb3.generated.annotated.flat.mapper.FieldsblobsMapper;
-import mbg.test.mb3.generated.annotated.flat.mapper.FieldsonlyMapper;
+import mbg.test.mb3.generated.annotated.flat.mapper.subpackage.FieldsonlyMapper;
 import mbg.test.mb3.generated.annotated.flat.mapper.PkblobsMapper;
 import mbg.test.mb3.generated.annotated.flat.mapper.PkfieldsMapper;
 import mbg.test.mb3.generated.annotated.flat.mapper.PkfieldsblobsMapper;
@@ -41,8 +41,8 @@ import mbg.test.mb3.generated.annotated.flat.model.AwfulTable;
 import mbg.test.mb3.generated.annotated.flat.model.AwfulTableExample;
 import mbg.test.mb3.generated.annotated.flat.model.Fieldsblobs;
 import mbg.test.mb3.generated.annotated.flat.model.FieldsblobsExample;
-import mbg.test.mb3.generated.annotated.flat.model.Fieldsonly;
-import mbg.test.mb3.generated.annotated.flat.model.FieldsonlyExample;
+import mbg.test.mb3.generated.annotated.flat.model.subpackage.Fieldsonly;
+import mbg.test.mb3.generated.annotated.flat.model.subpackage.FieldsonlyExample;
 import mbg.test.mb3.generated.annotated.flat.model.Pkblobs;
 import mbg.test.mb3.generated.annotated.flat.model.PkblobsExample;
 import mbg.test.mb3.generated.annotated.flat.model.Pkfields;

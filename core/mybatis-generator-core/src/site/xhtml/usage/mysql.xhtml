@@ -41,9 +41,21 @@ of how to deal with an unsigned bigint field in MySql:</p>
 <code>java.math.BigInteger</code>).</p>
 <h2>Catalogs and Schema</h2>
 <p>MySql does not properly support SQL catalogs and schema.  If you run the <code>create schema</code>
-command in Mysql, it actually creates a database - and the JDBC driver reports it back as a catalog.
+command in MySql, it actually creates a database - and the JDBC driver reports it back as a catalog.
 But MySql syntax does not support the standard <code>catalog..table</code> SQL syntax.</p>
 <p>For this reason, it is best to not specify either catalog or schema in generator configurations.
 Just specify table names and specify the database in the JDBC URL.</p>
+<p>If you are using version 8.x of Connector/J you may notice that the generator attempts to generate code
+for tables in the MySql information schemas (sys, information_schema, performance_schema, etc.)  This is
+probably not what you want!  To disable this behavior, add the property "nullCatalogMeansCurrent=true" to
+your JDBC URL.</p>
+<p>For example:
+<pre>
+    &lt;jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost/my_schema"
+            userId="my_user" password="my_password"&gt;
+        &lt;property name="nullCatalogMeansCurrent" value=true" /&gt;
+    &lt;/jdbcConnection&gt;
+</pre>
+</p>
 </body>
 </html>

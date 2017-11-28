@@ -24,10 +24,7 @@ import static org.mybatis.generator.internal.util.StringUtility.stringContainsSp
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
-import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -527,7 +524,24 @@ public class DatabaseIntrospector {
                     .createIntrospectedColumn(context);
 
             introspectedColumn.setTableAlias(tc.getAlias());
-            introspectedColumn.setJdbcType(rs.getInt("DATA_TYPE")); //$NON-NLS-1$
+            
+            int jdbcType = rs.getInt("DATA_TYPE");
+
+            // In oracle,
+            // when the data type is NVARCHAR2, match it to Types.NVARCHAR
+            // when the data type is VARCHAR2, match it to Types.VARCHAR
+            // which finally map to String
+            if (rs.getInt("DATA_TYPE") == Types.OTHER) {
+                String columnTypeName = rs.getString("TYPE_NAME");
+                if ("NVARCHAR2".equalsIgnoreCase(columnTypeName)) {
+                    jdbcType = Types.NVARCHAR;
+                } else if ("VARCHAR2".equalsIgnoreCase(columnTypeName)) {
+                    jdbcType = Types.VARCHAR;
+                }
+            }
+
+            introspectedColumn.setJdbcType(jdbcType); //$NON-NLS-1$
+
             introspectedColumn.setLength(rs.getInt("COLUMN_SIZE")); //$NON-NLS-1$
             introspectedColumn.setActualColumnName(rs.getString("COLUMN_NAME")); //$NON-NLS-1$
             introspectedColumn

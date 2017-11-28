@@ -178,14 +178,19 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
     protected FullyQualifiedJavaType calculateBigDecimalReplacement(IntrospectedColumn column, FullyQualifiedJavaType defaultType) {
         FullyQualifiedJavaType answer;
 
-        if (column.getScale() > 0 || column.getLength() > 18 || forceBigDecimals) {
-            answer = defaultType;
-        } else if (column.getLength() > 9) {
+        //If not forceBigDecimals,   do not use BigDecimals
+        if (forceBigDecimals) {
+            answer = new FullyQualifiedJavaType(BigDecimal.class.getName());
+        } else if (column.getScale() > 0 || column.getLength() > 18) {
+            answer = new FullyQualifiedJavaType(Double.class.getName());
+        } else if (column.getLength() > 9 || column.getLength() == 0) {
             answer = new FullyQualifiedJavaType(Long.class.getName());
         } else if (column.getLength() > 4) {
             answer = new FullyQualifiedJavaType(Integer.class.getName());
-        } else {
+        } else if (column.getLength() > 2) {
             answer = new FullyQualifiedJavaType(Short.class.getName());
+        } else {
+            answer = new FullyQualifiedJavaType(Byte.class.getName());
         }
 
         return answer;

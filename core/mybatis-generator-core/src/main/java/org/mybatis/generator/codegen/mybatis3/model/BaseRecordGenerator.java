@@ -84,6 +84,27 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
             }
         }
 
+        if (introspectedTable.isLombok()) {
+            String lombokAnnotations=introspectedTable.getLombokAnnotations();
+            if (lombokAnnotations!=null&&lombokAnnotations.length()!=0) {
+                for (String annotation : lombokAnnotations.split(",")) {
+                    if (annotation.startsWith("@")){
+                        topLevelClass.getAnnotations().add(annotation);
+                        topLevelClass.addImportedType("lombok."+annotation.substring(1));
+                    }
+                }
+            }else {
+                topLevelClass.getAnnotations().add("@Data");
+                topLevelClass.getAnnotations().add("@NoArgsConstructor");
+                topLevelClass.getAnnotations().add("@AllArgsConstructor");
+                topLevelClass.getAnnotations().add("@Builder");
+                topLevelClass.addImportedType("lombok.Data");
+                topLevelClass.addImportedType("lombok.NoArgsConstructor");
+                topLevelClass.addImportedType("lombok.AllArgsConstructor");
+                topLevelClass.addImportedType("lombok.Builder");
+            }
+        }
+
         String rootClass = getRootClass();
         for (IntrospectedColumn introspectedColumn : introspectedColumns) {
             if (RootClassInfo.getInstance(rootClass, warnings)
@@ -97,6 +118,10 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
                     Plugin.ModelClassType.BASE_RECORD)) {
                 topLevelClass.addField(field);
                 topLevelClass.addImportedType(field.getType());
+            }
+
+            if (introspectedTable.isLombok()){
+                continue;
             }
 
             Method method = getJavaBeansGetter(introspectedColumn, context, introspectedTable);

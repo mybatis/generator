@@ -1183,6 +1183,14 @@ public abstract class IntrospectedTable {
         return isTrue(properties.getProperty(PropertyRegistry.ANY_CONSTRUCTOR_BASED));
     }
 
+    public Boolean isLombok(){
+        return isTrue(context.getJavaModelGeneratorConfiguration().getProperties().getProperty(PropertyRegistry.ENABLE_LOMBOK));
+    }
+
+    public String getLombokAnnotations(){
+        return context.getJavaModelGeneratorConfiguration().getProperties().getProperty(PropertyRegistry.LOMBOK_ANNOTATIONS);
+    }
+
     /**
      * Should return true if an XML generator is required for this table. This method will be called during validation
      * of the configuration, so it should not rely on database introspection. This method simply tells the validator if

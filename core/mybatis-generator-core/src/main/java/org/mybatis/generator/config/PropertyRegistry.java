@@ -32,6 +32,8 @@ public class PropertyRegistry {
     public static final String ANY_ROOT_CLASS = "rootClass"; //$NON-NLS-1$
     public static final String ANY_IMMUTABLE = "immutable"; //$NON-NLS-1$
     public static final String ANY_CONSTRUCTOR_BASED = "constructorBased"; //$NON-NLS-1$
+    public static final String ENABLE_LOMBOK="enableLombok";
+    public static final String LOMBOK_ANNOTATIONS="lombokAnnotations";
 
     /**
      * recognized by table and java client generator

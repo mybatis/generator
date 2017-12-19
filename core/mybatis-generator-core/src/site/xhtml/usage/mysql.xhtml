@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2016 the original author or authors.
+       Copyright 2006-2017 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -49,13 +49,12 @@ Just specify table names and specify the database in the JDBC URL.</p>
 for tables in the MySql information schemas (sys, information_schema, performance_schema, etc.)  This is
 probably not what you want!  To disable this behavior, add the property "nullCatalogMeansCurrent=true" to
 your JDBC URL.</p>
-<p>For example:
+<p>For example:</p>
 <pre>
     &lt;jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost/my_schema"
             userId="my_user" password="my_password"&gt;
         &lt;property name="nullCatalogMeansCurrent" value=true" /&gt;
     &lt;/jdbcConnection&gt;
 </pre>
-</p>
 </body>
 </html>

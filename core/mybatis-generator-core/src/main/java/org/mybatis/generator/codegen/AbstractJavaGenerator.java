@@ -57,12 +57,16 @@ public abstract class AbstractJavaGenerator extends AbstractGenerator {
     }
 
     protected void addDefaultConstructor(TopLevelClass topLevelClass) {
+        topLevelClass.addMethod(getDefaultConstructor(topLevelClass));
+    }
+
+    protected Method getDefaultConstructor(TopLevelClass topLevelClass) {
         Method method = new Method();
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setConstructor(true);
         method.setName(topLevelClass.getType().getShortName());
         method.addBodyLine("super();"); //$NON-NLS-1$
         context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
-        topLevelClass.addMethod(method);
+        return method;
     }
 }

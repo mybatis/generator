@@ -40,6 +40,8 @@
       <topic href="html/javadoc/org/mybatis/generator/logging/nologging/package-summary.html" label="org.mybatis.generator.logging.nologging" />
       <topic href="html/javadoc/org/mybatis/generator/logging/slf4j/package-summary.html" label="org.mybatis.generator.logging.slf4j" />
       <topic href="html/javadoc/org/mybatis/generator/plugins/package-summary.html" label="org.mybatis.generator.plugins" />
+      <topic href="html/javadoc/org/mybatis/generator/runtime/dynamic/sql/package-summary.html" label="org.mybatis.generator.runtime.dynamic.sql" />
+      <topic href="html/javadoc/org/mybatis/generator/runtime/dynamic/sql/elements/package-summary.html" label="org.mybatis.generator.runtime.dynamic.sql.elements" />
    </topic>
    
    <topic label="MyBatis Generator Eclipse Plugin Javadoc">

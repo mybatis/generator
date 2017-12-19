@@ -16,9 +16,11 @@
 package org.mybatis.generator.api;
 
 import java.util.Properties;
+import java.util.Set;
 
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.Field;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.InnerClass;
 import org.mybatis.generator.api.dom.java.InnerEnum;
 import org.mybatis.generator.api.dom.java.Method;
@@ -198,4 +200,83 @@ public interface CommentGenerator {
      *            the root element
      */
     void addRootComment(XmlElement rootElement);
+
+    /**
+     * Adds a @Generated annotation to a method.
+     *
+     * @param method
+     *            the method
+     * @param introspectedTable
+     *            the introspected table
+     * @param imports
+     *   the comment generator may add a required imported type to this list
+     * 
+     * @since 1.3.6
+     */
+    void addGeneralMethodAnnotation(Method method, IntrospectedTable introspectedTable,
+            Set<FullyQualifiedJavaType> imports);
+
+    /**
+     * Adds a @Generated annotation to a method.
+     *
+     * @param method
+     *            the method
+     * @param introspectedTable
+     *            the introspected table
+     * @param introspected column
+     *     thr introspected column
+     * @param imports
+     *   the comment generator may add a required imported type to this list
+     * 
+     * @since 1.3.6
+     */
+    void addGeneralMethodAnnotation(Method method, IntrospectedTable introspectedTable,
+            IntrospectedColumn introspectedColumn, Set<FullyQualifiedJavaType> imports);
+    
+    /**
+     * Adds a @Generated annotation to a field.
+     *
+     * @param field
+     *            the field
+     * @param introspectedTable
+     *            the introspected table
+     * @param imports
+     *   the comment generator may add a required imported type to this list
+     * 
+     * @since 1.3.6
+     */
+    void addFieldAnnotation(Field field, IntrospectedTable introspectedTable,
+            Set<FullyQualifiedJavaType> imports);
+
+    /**
+     * Adds a @Generated annotation to a field.
+     *
+     * @param field
+     *            the field
+     * @param introspectedTable
+     *            the introspected table
+     * @param introspectedColumn
+     *            the introspected column
+     * @param imports
+     *   the comment generator may add a required imported type to this list
+     * 
+     * @since 1.3.6
+     */
+    void addFieldAnnotation(Field field, IntrospectedTable introspectedTable,
+            IntrospectedColumn introspectedColumn, Set<FullyQualifiedJavaType> imports);
+
+    /**
+     * Adds a @Generated annotation to a class.
+     *
+     * @param innerClass
+     *            the class
+     * @param introspectedTable
+     *            the introspected table
+     * @param imports
+     *   the comment generator may add a required imported type to this list
+     * 
+     * @since 1.3.6
+     */
+    void addClassAnnotation(InnerClass innerClass, IntrospectedTable introspectedTable,
+            Set<FullyQualifiedJavaType> imports);
 }

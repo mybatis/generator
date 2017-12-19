@@ -260,7 +260,7 @@ public class FullyQualifiedTable {
         if (domainObjectRenamingRule != null) {
             Pattern pattern = Pattern.compile(domainObjectRenamingRule.getSearchString());
             String replaceString = domainObjectRenamingRule.getReplaceString();
-            replaceString = replaceString == null ? "" : replaceString;
+            replaceString = replaceString == null ? "" : replaceString; //$NON-NLS-1$
             Matcher matcher = pattern.matcher(finalDomainObjectName);
             finalDomainObjectName = matcher.replaceAll(replaceString);
         }

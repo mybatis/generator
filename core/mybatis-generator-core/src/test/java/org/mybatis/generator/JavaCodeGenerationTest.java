@@ -57,6 +57,7 @@ public class JavaCodeGenerationTest {
     public static List<GeneratedJavaFile> generateJavaFiles() throws Exception {
         List<GeneratedJavaFile> generatedFiles = new ArrayList<GeneratedJavaFile>();
         generatedFiles.addAll(generateJavaFilesMybatis());
+        generatedFiles.addAll(generateJavaFilesMybatisDsql());
         generatedFiles.addAll(generateJavaFilesIbatis());
         return generatedFiles;
     }
@@ -64,6 +65,11 @@ public class JavaCodeGenerationTest {
     private static List<GeneratedJavaFile> generateJavaFilesMybatis() throws Exception {
         createDatabase();
         return generateJavaFiles("/scripts/generatorConfig.xml");
+    }
+
+    private static List<GeneratedJavaFile> generateJavaFilesMybatisDsql() throws Exception {
+        createDatabase();
+        return generateJavaFiles("/scripts/generatorConfig_Dsql.xml");
     }
 
     private static List<GeneratedJavaFile> generateJavaFilesIbatis() throws Exception {

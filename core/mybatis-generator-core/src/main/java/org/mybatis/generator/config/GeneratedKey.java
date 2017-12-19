@@ -118,7 +118,7 @@ public class GeneratedKey {
         }
 
         if (stringHasValue(type)
-                && !"pre".equals(type)
+                && !"pre".equals(type) //$NON-NLS-1$
                 && !"post".equals(type)) { //$NON-NLS-1$ //$NON-NLS-2$
             errors.add(getString("ValidationError.15", tableName)); //$NON-NLS-1$
         }

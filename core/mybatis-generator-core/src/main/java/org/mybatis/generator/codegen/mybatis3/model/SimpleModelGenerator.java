@@ -149,24 +149,7 @@ public class SimpleModelGenerator extends AbstractJavaGenerator {
         }
 
         StringBuilder sb = new StringBuilder();
-        if (introspectedTable.getRules().generatePrimaryKeyClass()) {
-            boolean comma = false;
-            sb.append("super("); //$NON-NLS-1$
-            for (IntrospectedColumn introspectedColumn : introspectedTable
-                    .getPrimaryKeyColumns()) {
-                if (comma) {
-                    sb.append(", "); //$NON-NLS-1$
-                } else {
-                    comma = true;
-                }
-                sb.append(introspectedColumn.getJavaProperty());
-            }
-            sb.append(");"); //$NON-NLS-1$
-            method.addBodyLine(sb.toString());
-        }
-
         List<IntrospectedColumn> introspectedColumns = introspectedTable.getAllColumns();
-
         for (IntrospectedColumn introspectedColumn : introspectedColumns) {
             sb.setLength(0);
             sb.append("this."); //$NON-NLS-1$

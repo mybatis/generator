@@ -102,11 +102,11 @@ public class LogFactory {
         try {
             Log log = factory.getLog(LogFactory.class);
             if (log.isDebugEnabled()) {
-                log.debug("Logging initialized using '" + factory + "' adapter.");
+                log.debug("Logging initialized using '" + factory + "' adapter."); //$NON-NLS-1$ //$NON-NLS-2$
             }
             logFactory = factory;
         } catch (Throwable t) {
-            throw new LogException("Error setting Log implementation.  Cause: " + t.getMessage(), t);
+            throw new LogException("Error setting Log implementation.  Cause: " + t.getMessage(), t); //$NON-NLS-1$
         }
     }
 }

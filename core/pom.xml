@@ -320,6 +320,7 @@
     <module>mybatis-generator-maven-plugin</module>
     <module>mybatis-generator-systests-common</module>
     <module>mybatis-generator-systests-mybatis3</module>
+    <module>mybatis-generator-systests-mybatis3-java8</module>
     <module>mybatis-generator-systests-ibatis2-java2</module>
     <module>mybatis-generator-systests-ibatis2-java5</module>
   </modules>

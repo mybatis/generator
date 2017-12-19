@@ -35,7 +35,7 @@ public class ToStringPlugin extends PluginAdapter {
     @Override
     public void setProperties(Properties properties) {
         super.setProperties(properties);
-        useToStringFromRoot = isTrue(properties.getProperty("useToStringFromRoot"));
+        useToStringFromRoot = isTrue(properties.getProperty("useToStringFromRoot")); //$NON-NLS-1$
     }
 
     @Override

@@ -21,9 +21,8 @@ Releasing Core:
 
 1. Clone the main repo (with ssh), checkout the master branch
 2. cd core
-3. mvn -Dgpg.passphrase=[your passphrase] release:prepare
-4. mvn -Dgpg.passphrase=[your passphrase] release:perform (this also updates
-   the site)
+3. mvn release:prepare
+4. mvn release:perform (this also updates the site)
 5. Logon to https://oss.sonatype.org/
 6. Find the mybatis staging repo
 7. Verify everything looks OK (I usually delete the bundle files as they're not
@@ -54,5 +53,10 @@ Final Details:
 2. Make a Github Release that contains the Bundle and the Zipped Eclipse Site
 3. Send announcement to mailing list
 4. Write a blog post
-5. Update the version numbers in all the Eclipse projects (pom.xml in every
-   project and MANIFEST.MF in most projects)
+5. Update the version numbers in all the Eclipse projects with the tycho-versions plugin.  For example:
+
+   git checkout master
+   cd .../org.mybatis.generator.eclipse.parent
+   mvn tycho-versions:set-version -DnewVersion=1.3.7-SNAPSHOT
+   git commit -m "Update versions for new release" .
+   git push

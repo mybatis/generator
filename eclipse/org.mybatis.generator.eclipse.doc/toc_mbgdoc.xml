@@ -48,6 +48,7 @@
       <topic href="html/mbgdoc/generatedobjects/javaclient.html" label="Java Client Objects"/>
       <topic href="html/mbgdoc/generatedobjects/exampleClassUsage.html" label="Example Class Usage Notes"/>
       <topic href="html/mbgdoc/generatedobjects/extendingExampleClass.html" label="Extending the Example Classes"/>
+      <topic href="html/mbgdoc/generatedobjects/dynamicSql.html" label="MyBatis Dynamic SQL Usage Notes"/>
    </topic>
    <topic href="html/mbgdoc/usage/intro.html" label="Database Specific Information">
       <topic href="html/mbgdoc/usage/db2.html" label="DB2"/>

@@ -2,7 +2,7 @@
 <feature
       id="org.mybatis.generator"
       label="MyBatis Generator"
-      version="1.3.6.qualifier"
+      version="1.3.7.qualifier"
       provider-name="mybatis.org">
 
    <description url="http://www.mybatis.org/generator/">

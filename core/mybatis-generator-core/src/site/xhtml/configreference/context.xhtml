@@ -121,14 +121,15 @@ databases, or with different generation parameters, in the same run of MyBatis G
             Java model and mapper interfaces will use generic types and other Java 8
             features like default methods in interfaces).
             <p><b>Important:</b> The Java code generated with this target runtime is dependent on the 
-            "MyBatis Dynamic SQL" support library".</p>
+            "MyBatis Dynamic SQL" support library.</p>
             <p>Other important information:</p>
             <ul>
               <li>The model objects are generated in the "FLAT" style regardless of what is specified
                   for the "defaultModelType".  This also means that there are no "with BLOBs" and
                   "without BLOBs" methods.</li>
               <li>The mappers are generated as annotated mappers regardless of what is specified
-                  for the "type"" of &lt;javaClientGenerator&gt;.</li>
+                  for the "type" of &lt;javaClientGenerator&gt;.</li>
+              <li>No XML will be generated. &lt;sqlMapGenerator&gt; is not required and will be ignored if specified.</li>
               <li>MyBatis Dynamic SQL supports table aliases in a "per query" manner rather than the "all or nothing"
                   manner of the other runtimes.  For this reason, configured table aliases are ignored.</li>
             </ul>

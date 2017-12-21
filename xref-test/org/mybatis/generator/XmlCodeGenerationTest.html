@@ -7,7 +7,7 @@
 <body>
 <div id="overview"><a href="../../../../testapidocs/org/mybatis/generator/XmlCodeGenerationTest.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_javadoccomment"> *    Copyright 2006-2016 the original author or authors.</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_javadoccomment"> *    Copyright 2006-2017 the original author or authors.</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_javadoccomment"> *    Licensed under the Apache License, Version 2.0 (the "License");</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_javadoccomment"> *    you may not use this file except in compliance with the License.</em>
@@ -72,7 +72,7 @@
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>              fail(<span class="jxr_string">"Generated XML File "</span> + generatedXmlFile.getFileName() + <span class="jxr_string">" will not parse"</span>);
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>          }
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>      }
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>      
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>  
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>      @Parameters
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> List&lt;GeneratedXmlFile&gt; generateXmlFiles() <strong class="jxr_keyword">throws</strong> Exception {
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>          List&lt;GeneratedXmlFile&gt; generatedFiles = <strong class="jxr_keyword">new</strong> ArrayList&lt;GeneratedXmlFile&gt;();
@@ -80,7 +80,7 @@
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>          generatedFiles.addAll(generateXmlFilesIbatis());
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>          <strong class="jxr_keyword">return</strong> generatedFiles;
 <a class="jxr_linenumber" name="L74" href="#L74">74</a>      }
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>      
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>  
 <a class="jxr_linenumber" name="L76" href="#L76">76</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> List&lt;GeneratedXmlFile&gt; generateXmlFilesMybatis() <strong class="jxr_keyword">throws</strong> Exception {
 <a class="jxr_linenumber" name="L77" href="#L77">77</a>          JavaCodeGenerationTest.createDatabase();
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>          <strong class="jxr_keyword">return</strong> generateXmlFiles(<span class="jxr_string">"/scripts/generatorConfig.xml"</span>);
@@ -95,9 +95,9 @@
 <a class="jxr_linenumber" name="L87" href="#L87">87</a>          List&lt;String&gt; warnings = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
 <a class="jxr_linenumber" name="L88" href="#L88">88</a>          ConfigurationParser cp = <strong class="jxr_keyword">new</strong> ConfigurationParser(warnings);
 <a class="jxr_linenumber" name="L89" href="#L89">89</a>          Configuration config = cp.parseConfiguration(JavaCodeGenerationTest.<strong class="jxr_keyword">class</strong>.getResourceAsStream(configFile));
-<a class="jxr_linenumber" name="L90" href="#L90">90</a>              
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>  
 <a class="jxr_linenumber" name="L91" href="#L91">91</a>          DefaultShellCallback shellCallback = <strong class="jxr_keyword">new</strong> DefaultShellCallback(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L92" href="#L92">92</a>          
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>  
 <a class="jxr_linenumber" name="L93" href="#L93">93</a>          MyBatisGenerator myBatisGenerator = <strong class="jxr_keyword">new</strong> MyBatisGenerator(config, shellCallback, warnings);
 <a class="jxr_linenumber" name="L94" href="#L94">94</a>          myBatisGenerator.generate(<strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, false);
 <a class="jxr_linenumber" name="L95" href="#L95">95</a>          <strong class="jxr_keyword">return</strong> myBatisGenerator.getGeneratedXmlFiles();
@@ -111,9 +111,9 @@
 <a class="jxr_linenumber" name="L103" href="#L103">103</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> InputSource(<strong class="jxr_keyword">new</strong> ByteArrayInputStream(<span class="jxr_string">""</span>.getBytes()));
 <a class="jxr_linenumber" name="L104" href="#L104">104</a>         }
 <a class="jxr_linenumber" name="L105" href="#L105">105</a>     }
-<a class="jxr_linenumber" name="L106" href="#L106">106</a>     
+<a class="jxr_linenumber" name="L106" href="#L106">106</a> 
 <a class="jxr_linenumber" name="L107" href="#L107">107</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> <a href="../../../org/mybatis/generator/XmlCodeGenerationTest.html">TestErrorHandler</a> <strong class="jxr_keyword">implements</strong> ErrorHandler {
-<a class="jxr_linenumber" name="L108" href="#L108">108</a>         
+<a class="jxr_linenumber" name="L108" href="#L108">108</a> 
 <a class="jxr_linenumber" name="L109" href="#L109">109</a>         <strong class="jxr_keyword">private</strong> List&lt;String&gt; errors = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
 <a class="jxr_linenumber" name="L110" href="#L110">110</a>         <strong class="jxr_keyword">private</strong> List&lt;String&gt; warnings = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
 <a class="jxr_linenumber" name="L111" href="#L111">111</a> 
@@ -143,6 +143,6 @@
 <a class="jxr_linenumber" name="L135" href="#L135">135</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2006&#x2013;2016 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2006&#x2013;2017 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
 </body>
 </html>

@@ -7,7 +7,7 @@
 <body>
 <div id="overview"><a href="../../../../../../../../apidocs/org/mybatis/generator/codegen/mybatis3/xmlmapper/elements/InsertSelectiveElementGenerator.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_javadoccomment"> *    Copyright 2006-2016 the original author or authors.</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_javadoccomment"> *    Copyright 2006-2017 the original author or authors.</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_javadoccomment"> *    Licensed under the Apache License, Version 2.0 (the "License");</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_javadoccomment"> *    you may not use this file except in compliance with the License.</em>
@@ -62,7 +62,7 @@
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>          <a href="../../../../../../../org/mybatis/generator/config/GeneratedKey.html">GeneratedKey</a> gk = introspectedTable.getGeneratedKey();
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>          <strong class="jxr_keyword">if</strong> (gk != <strong class="jxr_keyword">null</strong>) {
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>              <a href="../../../../../../../org/mybatis/generator/api/IntrospectedColumn.html">IntrospectedColumn</a> introspectedColumn = introspectedTable
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>                  .getColumn(gk.getColumn());
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>                      .getColumn(gk.getColumn());
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>              <em class="jxr_comment">// if the column is null, then it's a configuration error. The</em>
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>              <em class="jxr_comment">// warning has already been reported</em>
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>              <strong class="jxr_keyword">if</strong> (introspectedColumn != <strong class="jxr_keyword">null</strong>) {
@@ -102,27 +102,27 @@
 <a class="jxr_linenumber" name="L94" href="#L94">94</a>                  <em class="jxr_comment">// if it is a sequence column, it is not optional</em>
 <a class="jxr_linenumber" name="L95" href="#L95">95</a>                  <em class="jxr_comment">// This is required for MyBatis3 because MyBatis3 parses</em>
 <a class="jxr_linenumber" name="L96" href="#L96">96</a>                  <em class="jxr_comment">// and calculates the SQL before executing the selectKey</em>
-<a class="jxr_linenumber" name="L97" href="#L97">97</a>                  
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>  
 <a class="jxr_linenumber" name="L98" href="#L98">98</a>                  <em class="jxr_comment">// if it is primitive, we cannot do a null check</em>
 <a class="jxr_linenumber" name="L99" href="#L99">99</a>                  sb.setLength(0);
 <a class="jxr_linenumber" name="L100" href="#L100">100</a>                 sb.append(<a href="../../../../../../../org/mybatis/generator/codegen/mybatis3/MyBatis3FormattingUtilities.html">MyBatis3FormattingUtilities</a>
-<a class="jxr_linenumber" name="L101" href="#L101">101</a>                     .getEscapedColumnName(introspectedColumn));
+<a class="jxr_linenumber" name="L101" href="#L101">101</a>                         .getEscapedColumnName(introspectedColumn));
 <a class="jxr_linenumber" name="L102" href="#L102">102</a>                 sb.append(',');
 <a class="jxr_linenumber" name="L103" href="#L103">103</a>                 insertTrimElement.addElement(<strong class="jxr_keyword">new</strong> <a href="../../../../../../../org/mybatis/generator/api/dom/xml/TextElement.html">TextElement</a>(sb.toString()));
 <a class="jxr_linenumber" name="L104" href="#L104">104</a> 
 <a class="jxr_linenumber" name="L105" href="#L105">105</a>                 sb.setLength(0);
 <a class="jxr_linenumber" name="L106" href="#L106">106</a>                 sb.append(<a href="../../../../../../../org/mybatis/generator/codegen/mybatis3/MyBatis3FormattingUtilities.html">MyBatis3FormattingUtilities</a>
-<a class="jxr_linenumber" name="L107" href="#L107">107</a>                     .getParameterClause(introspectedColumn));
+<a class="jxr_linenumber" name="L107" href="#L107">107</a>                         .getParameterClause(introspectedColumn));
 <a class="jxr_linenumber" name="L108" href="#L108">108</a>                 sb.append(',');
 <a class="jxr_linenumber" name="L109" href="#L109">109</a>                 valuesTrimElement.addElement(<strong class="jxr_keyword">new</strong> <a href="../../../../../../../org/mybatis/generator/api/dom/xml/TextElement.html">TextElement</a>(sb.toString()));
 <a class="jxr_linenumber" name="L110" href="#L110">110</a> 
 <a class="jxr_linenumber" name="L111" href="#L111">111</a>                 <strong class="jxr_keyword">continue</strong>;
-<a class="jxr_linenumber" name="L112" href="#L112">112</a>             }            
-<a class="jxr_linenumber" name="L113" href="#L113">113</a>             
-<a class="jxr_linenumber" name="L114" href="#L114">114</a>             <a href="../../../../../../../org/mybatis/generator/api/dom/xml/XmlElement.html">XmlElement</a> insertNotNullElement = <strong class="jxr_keyword">new</strong> <a href="../../../../../../../org/mybatis/generator/api/dom/xml/XmlElement.html">XmlElement</a>(<span class="jxr_string">"if"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L115" href="#L115">115</a>             sb.setLength(0);
-<a class="jxr_linenumber" name="L116" href="#L116">116</a>             sb.append(introspectedColumn.getJavaProperty());
-<a class="jxr_linenumber" name="L117" href="#L117">117</a>             sb.append(<span class="jxr_string">" != null"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L112" href="#L112">112</a>             }
+<a class="jxr_linenumber" name="L113" href="#L113">113</a> 
+<a class="jxr_linenumber" name="L114" href="#L114">114</a>             sb.setLength(0);
+<a class="jxr_linenumber" name="L115" href="#L115">115</a>             sb.append(introspectedColumn.getJavaProperty());
+<a class="jxr_linenumber" name="L116" href="#L116">116</a>             sb.append(<span class="jxr_string">" != null"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L117" href="#L117">117</a>             <a href="../../../../../../../org/mybatis/generator/api/dom/xml/XmlElement.html">XmlElement</a> insertNotNullElement = <strong class="jxr_keyword">new</strong> <a href="../../../../../../../org/mybatis/generator/api/dom/xml/XmlElement.html">XmlElement</a>(<span class="jxr_string">"if"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L118" href="#L118">118</a>             insertNotNullElement.addAttribute(<strong class="jxr_keyword">new</strong> <a href="../../../../../../../org/mybatis/generator/api/dom/xml/Attribute.html">Attribute</a>(
 <a class="jxr_linenumber" name="L119" href="#L119">119</a>                     <span class="jxr_string">"test"</span>, sb.toString())); <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L120" href="#L120">120</a> 
@@ -133,10 +133,10 @@
 <a class="jxr_linenumber" name="L125" href="#L125">125</a>             insertNotNullElement.addElement(<strong class="jxr_keyword">new</strong> <a href="../../../../../../../org/mybatis/generator/api/dom/xml/TextElement.html">TextElement</a>(sb.toString()));
 <a class="jxr_linenumber" name="L126" href="#L126">126</a>             insertTrimElement.addElement(insertNotNullElement);
 <a class="jxr_linenumber" name="L127" href="#L127">127</a> 
-<a class="jxr_linenumber" name="L128" href="#L128">128</a>             <a href="../../../../../../../org/mybatis/generator/api/dom/xml/XmlElement.html">XmlElement</a> valuesNotNullElement = <strong class="jxr_keyword">new</strong> <a href="../../../../../../../org/mybatis/generator/api/dom/xml/XmlElement.html">XmlElement</a>(<span class="jxr_string">"if"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L129" href="#L129">129</a>             sb.setLength(0);
-<a class="jxr_linenumber" name="L130" href="#L130">130</a>             sb.append(introspectedColumn.getJavaProperty());
-<a class="jxr_linenumber" name="L131" href="#L131">131</a>             sb.append(<span class="jxr_string">" != null"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L128" href="#L128">128</a>             sb.setLength(0);
+<a class="jxr_linenumber" name="L129" href="#L129">129</a>             sb.append(introspectedColumn.getJavaProperty());
+<a class="jxr_linenumber" name="L130" href="#L130">130</a>             sb.append(<span class="jxr_string">" != null"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L131" href="#L131">131</a>             <a href="../../../../../../../org/mybatis/generator/api/dom/xml/XmlElement.html">XmlElement</a> valuesNotNullElement = <strong class="jxr_keyword">new</strong> <a href="../../../../../../../org/mybatis/generator/api/dom/xml/XmlElement.html">XmlElement</a>(<span class="jxr_string">"if"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L132" href="#L132">132</a>             valuesNotNullElement.addAttribute(<strong class="jxr_keyword">new</strong> <a href="../../../../../../../org/mybatis/generator/api/dom/xml/Attribute.html">Attribute</a>(
 <a class="jxr_linenumber" name="L133" href="#L133">133</a>                     <span class="jxr_string">"test"</span>, sb.toString())); <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L134" href="#L134">134</a> 
@@ -156,6 +156,6 @@
 <a class="jxr_linenumber" name="L148" href="#L148">148</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2006&#x2013;2016 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2006&#x2013;2017 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
 </body>
 </html>

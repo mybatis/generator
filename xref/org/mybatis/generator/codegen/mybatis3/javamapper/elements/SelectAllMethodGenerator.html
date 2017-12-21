@@ -69,16 +69,20 @@
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>  
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>          <strong class="jxr_keyword">if</strong> (context.getPlugins().clientSelectAllMethodGenerated(method,
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>                  interfaze, introspectedTable)) {
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>              interfaze.addImportedTypes(importedTypes);
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>              interfaze.addMethod(method);
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>          }
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>      }
-<a class="jxr_linenumber" name="L68" href="#L68">68</a>  
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> addMapperAnnotations(<a href="../../../../../../../org/mybatis/generator/api/dom/java/Interface.html">Interface</a> interfaze, <a href="../../../../../../../org/mybatis/generator/api/dom/java/Method.html">Method</a> method) {
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>      }
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>  }
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>              addExtraImports(interfaze);
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>              interfaze.addImportedTypes(importedTypes);
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>              interfaze.addMethod(method);
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>          }
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>      }
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>  
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> addMapperAnnotations(<a href="../../../../../../../org/mybatis/generator/api/dom/java/Interface.html">Interface</a> interfaze, <a href="../../../../../../../org/mybatis/generator/api/dom/java/Method.html">Method</a> method) {
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>      }
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>  
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> addExtraImports(<a href="../../../../../../../org/mybatis/generator/api/dom/java/Interface.html">Interface</a> interfaze) {
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>      }
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>  }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2006&#x2013;2016 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2006&#x2013;2017 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
 </body>
 </html>

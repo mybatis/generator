@@ -7,7 +7,7 @@
 <body>
 <div id="overview"><a href="../../../../../../apidocs/org/mybatis/generator/config/xml/ConfigurationParser.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_javadoccomment"> *    Copyright 2006-2016 the original author or authors.</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_javadoccomment"> *    Copyright 2006-2017 the original author or authors.</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_javadoccomment"> *    Licensed under the Apache License, Version 2.0 (the "License");</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_javadoccomment"> *    you may not use this file except in compliance with the License.</em>
@@ -77,7 +77,7 @@
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>  <em class="jxr_javadoccomment">     * an additional property set.  Typically this property set will be Ant or Maven properties</em>
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>  <em class="jxr_javadoccomment">     * specified in the build.xml file or the POM.</em>
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>  <em class="jxr_javadoccomment">     * </em>
-<a class="jxr_linenumber" name="L72" href="#L72">72</a>  <em class="jxr_javadoccomment">     * If there are name collisions between the different property sets, they will be </em>
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>  <em class="jxr_javadoccomment">     * &lt;p&gt;If there are name collisions between the different property sets, they will be </em>
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>  <em class="jxr_javadoccomment">     * resolved in this order:</em>
 <a class="jxr_linenumber" name="L74" href="#L74">74</a>  <em class="jxr_javadoccomment">     * </em>
 <a class="jxr_linenumber" name="L75" href="#L75">75</a>  <em class="jxr_javadoccomment">     * &lt;ol&gt;</em>
@@ -89,8 +89,8 @@
 <a class="jxr_linenumber" name="L81" href="#L81">81</a>  <em class="jxr_javadoccomment">     * &lt;/ol&gt;</em>
 <a class="jxr_linenumber" name="L82" href="#L82">82</a>  <em class="jxr_javadoccomment">     * </em>
 <a class="jxr_linenumber" name="L83" href="#L83">83</a>  <em class="jxr_javadoccomment">     * @param extraProperties an (optional) set of properties used to resolve property</em>
-<a class="jxr_linenumber" name="L84" href="#L84">84</a>  <em class="jxr_javadoccomment">     *   references in the configuration file</em>
-<a class="jxr_linenumber" name="L85" href="#L85">85</a>  <em class="jxr_javadoccomment">     * @param warnings</em>
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>  <em class="jxr_javadoccomment">     *     references in the configuration file</em>
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>  <em class="jxr_javadoccomment">     * @param warnings any warnings are added to this array</em>
 <a class="jxr_linenumber" name="L86" href="#L86">86</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L87" href="#L87">87</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../../org/mybatis/generator/config/xml/ConfigurationParser.html">ConfigurationParser</a>(Properties extraProperties, List&lt;String&gt; warnings) {
 <a class="jxr_linenumber" name="L88" href="#L88">88</a>          <strong class="jxr_keyword">super</strong>();
@@ -189,19 +189,19 @@
 <a class="jxr_linenumber" name="L181" href="#L181">181</a>     <strong class="jxr_keyword">private</strong> <a href="../../../../../org/mybatis/generator/config/Configuration.html">Configuration</a> parseIbatorConfiguration(Element rootNode)
 <a class="jxr_linenumber" name="L182" href="#L182">182</a>             <strong class="jxr_keyword">throws</strong> <a href="../../../../../org/mybatis/generator/exception/XMLParserException.html">XMLParserException</a> {
 <a class="jxr_linenumber" name="L183" href="#L183">183</a>         <a href="../../../../../org/mybatis/generator/config/xml/IbatorConfigurationParser.html">IbatorConfigurationParser</a> parser = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/mybatis/generator/config/xml/IbatorConfigurationParser.html">IbatorConfigurationParser</a>(
-<a class="jxr_linenumber" name="L184" href="#L184">184</a>         		extraProperties);
+<a class="jxr_linenumber" name="L184" href="#L184">184</a>                 extraProperties);
 <a class="jxr_linenumber" name="L185" href="#L185">185</a>         <strong class="jxr_keyword">return</strong> parser.parseIbatorConfiguration(rootNode);
 <a class="jxr_linenumber" name="L186" href="#L186">186</a>     }
 <a class="jxr_linenumber" name="L187" href="#L187">187</a> 
 <a class="jxr_linenumber" name="L188" href="#L188">188</a>     <strong class="jxr_keyword">private</strong> <a href="../../../../../org/mybatis/generator/config/Configuration.html">Configuration</a> parseMyBatisGeneratorConfiguration(Element rootNode)
 <a class="jxr_linenumber" name="L189" href="#L189">189</a>             <strong class="jxr_keyword">throws</strong> <a href="../../../../../org/mybatis/generator/exception/XMLParserException.html">XMLParserException</a> {
 <a class="jxr_linenumber" name="L190" href="#L190">190</a>         <a href="../../../../../org/mybatis/generator/config/xml/MyBatisGeneratorConfigurationParser.html">MyBatisGeneratorConfigurationParser</a> parser = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/mybatis/generator/config/xml/MyBatisGeneratorConfigurationParser.html">MyBatisGeneratorConfigurationParser</a>(
-<a class="jxr_linenumber" name="L191" href="#L191">191</a>         		extraProperties);
+<a class="jxr_linenumber" name="L191" href="#L191">191</a>                 extraProperties);
 <a class="jxr_linenumber" name="L192" href="#L192">192</a>         <strong class="jxr_keyword">return</strong> parser.parseConfiguration(rootNode);
 <a class="jxr_linenumber" name="L193" href="#L193">193</a>     }
 <a class="jxr_linenumber" name="L194" href="#L194">194</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2006&#x2013;2016 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2006&#x2013;2017 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
 </body>
 </html>

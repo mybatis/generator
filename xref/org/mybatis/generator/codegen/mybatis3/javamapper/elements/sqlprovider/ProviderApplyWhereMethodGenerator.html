@@ -7,7 +7,7 @@
 <body>
 <div id="overview"><a href="../../../../../../../../../apidocs/org/mybatis/generator/codegen/mybatis3/javamapper/elements/sqlprovider/ProviderApplyWhereMethodGenerator.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_javadoccomment"> *    Copyright 2006-2016 the original author or authors.</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_javadoccomment"> *    Copyright 2006-2017 the original author or authors.</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_javadoccomment"> *    Licensed under the Apache License, Version 2.0 (the "License");</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_javadoccomment"> *    you may not use this file except in compliance with the License.</em>
@@ -124,13 +124,13 @@
 <a class="jxr_linenumber" name="L116" href="#L116">116</a>         <span class="jxr_string">"}"</span>, <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L117" href="#L117">117</a>         <span class="jxr_string">""</span> <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L118" href="#L118">118</a>     };
-<a class="jxr_linenumber" name="L119" href="#L119">119</a>     
+<a class="jxr_linenumber" name="L119" href="#L119">119</a> 
 <a class="jxr_linenumber" name="L120" href="#L120">120</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String[] LEGACY_ENDING_METHOD_LINES = {
 <a class="jxr_linenumber" name="L121" href="#L121">121</a>         <span class="jxr_string">"if (sb.length() &gt; 0) {"</span>, <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L122" href="#L122">122</a>         <span class="jxr_string">"WHERE(sb.toString());"</span>, <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L123" href="#L123">123</a>         <span class="jxr_string">"}"</span> <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L124" href="#L124">124</a>     };
-<a class="jxr_linenumber" name="L125" href="#L125">125</a>     
+<a class="jxr_linenumber" name="L125" href="#L125">125</a> 
 <a class="jxr_linenumber" name="L126" href="#L126">126</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String[] ENDING_METHOD_LINES = {
 <a class="jxr_linenumber" name="L127" href="#L127">127</a>         <span class="jxr_string">"if (sb.length() &gt; 0) {"</span>, <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L128" href="#L128">128</a>         <span class="jxr_string">"sql.WHERE(sb.toString());"</span>, <em class="jxr_comment">//$NON-NLS-1$</em>
@@ -147,9 +147,9 @@
 <a class="jxr_linenumber" name="L139" href="#L139">139</a>         Set&lt;FullyQualifiedJavaType&gt; importedTypes = <strong class="jxr_keyword">new</strong> TreeSet&lt;FullyQualifiedJavaType&gt;();
 <a class="jxr_linenumber" name="L140" href="#L140">140</a> 
 <a class="jxr_linenumber" name="L141" href="#L141">141</a>         <strong class="jxr_keyword">if</strong> (useLegacyBuilder) {
-<a class="jxr_linenumber" name="L142" href="#L142">142</a>         	staticImports.add(<span class="jxr_string">"org.apache.ibatis.jdbc.SqlBuilder.WHERE"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L142" href="#L142">142</a>             staticImports.add(<span class="jxr_string">"org.apache.ibatis.jdbc.SqlBuilder.WHERE"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L143" href="#L143">143</a>         } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L144" href="#L144">144</a>         	importedTypes.add(NEW_BUILDER_IMPORT);
+<a class="jxr_linenumber" name="L144" href="#L144">144</a>             importedTypes.add(NEW_BUILDER_IMPORT);
 <a class="jxr_linenumber" name="L145" href="#L145">145</a>         }
 <a class="jxr_linenumber" name="L146" href="#L146">146</a>         
 <a class="jxr_linenumber" name="L147" href="#L147">147</a>         importedTypes.add(<strong class="jxr_keyword">new</strong> <a href="../../../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a>(
@@ -176,17 +176,17 @@
 <a class="jxr_linenumber" name="L168" href="#L168">168</a>         <strong class="jxr_keyword">for</strong> (String methodLine : BEGINNING_METHOD_LINES) {
 <a class="jxr_linenumber" name="L169" href="#L169">169</a>             method.addBodyLine(methodLine);
 <a class="jxr_linenumber" name="L170" href="#L170">170</a>         }
-<a class="jxr_linenumber" name="L171" href="#L171">171</a>         
+<a class="jxr_linenumber" name="L171" href="#L171">171</a> 
 <a class="jxr_linenumber" name="L172" href="#L172">172</a>         <strong class="jxr_keyword">if</strong> (useLegacyBuilder) {
-<a class="jxr_linenumber" name="L173" href="#L173">173</a>         	<strong class="jxr_keyword">for</strong> (String methodLine : LEGACY_ENDING_METHOD_LINES) {
-<a class="jxr_linenumber" name="L174" href="#L174">174</a>         		method.addBodyLine(methodLine);
-<a class="jxr_linenumber" name="L175" href="#L175">175</a>         	}
+<a class="jxr_linenumber" name="L173" href="#L173">173</a>             <strong class="jxr_keyword">for</strong> (String methodLine : LEGACY_ENDING_METHOD_LINES) {
+<a class="jxr_linenumber" name="L174" href="#L174">174</a>                 method.addBodyLine(methodLine);
+<a class="jxr_linenumber" name="L175" href="#L175">175</a>             }
 <a class="jxr_linenumber" name="L176" href="#L176">176</a>         } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L177" href="#L177">177</a>         	<strong class="jxr_keyword">for</strong> (String methodLine : ENDING_METHOD_LINES) {
-<a class="jxr_linenumber" name="L178" href="#L178">178</a>         		method.addBodyLine(methodLine);
-<a class="jxr_linenumber" name="L179" href="#L179">179</a>         	}
+<a class="jxr_linenumber" name="L177" href="#L177">177</a>             <strong class="jxr_keyword">for</strong> (String methodLine : ENDING_METHOD_LINES) {
+<a class="jxr_linenumber" name="L178" href="#L178">178</a>                 method.addBodyLine(methodLine);
+<a class="jxr_linenumber" name="L179" href="#L179">179</a>             }
 <a class="jxr_linenumber" name="L180" href="#L180">180</a>         }
-<a class="jxr_linenumber" name="L181" href="#L181">181</a>         
+<a class="jxr_linenumber" name="L181" href="#L181">181</a> 
 <a class="jxr_linenumber" name="L182" href="#L182">182</a>         <strong class="jxr_keyword">if</strong> (context.getPlugins().providerApplyWhereMethodGenerated(method, topLevelClass,
 <a class="jxr_linenumber" name="L183" href="#L183">183</a>                 introspectedTable)) {
 <a class="jxr_linenumber" name="L184" href="#L184">184</a>             topLevelClass.addStaticImports(staticImports);
@@ -197,6 +197,6 @@
 <a class="jxr_linenumber" name="L189" href="#L189">189</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2006&#x2013;2016 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2006&#x2013;2017 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
 </body>
 </html>

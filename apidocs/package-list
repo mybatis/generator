@@ -29,4 +29,12 @@ org.mybatis.generator.internal.types
 org.mybatis.generator.internal.util
 org.mybatis.generator.internal.util.messages
 org.mybatis.generator.logging
+org.mybatis.generator.logging.commons
+org.mybatis.generator.logging.jdk14
+org.mybatis.generator.logging.log4j
+org.mybatis.generator.logging.log4j2
+org.mybatis.generator.logging.nologging
+org.mybatis.generator.logging.slf4j
 org.mybatis.generator.plugins
+org.mybatis.generator.runtime.dynamic.sql
+org.mybatis.generator.runtime.dynamic.sql.elements

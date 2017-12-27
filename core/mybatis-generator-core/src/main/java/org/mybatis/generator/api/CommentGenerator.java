@@ -223,7 +223,7 @@ public interface CommentGenerator {
      *            the method
      * @param introspectedTable
      *            the introspected table
-     * @param introspected column
+     * @param introspectedColumn
      *     thr introspected column
      * @param imports
      *   the comment generator may add a required imported type to this list

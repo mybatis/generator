@@ -366,13 +366,20 @@
             <artifactId>findbugs-maven-plugin</artifactId>
             <version>2.5.5</version>
           </plugin>
+          <plugin>
+            <groupId>com.github.spotbugs</groupId>
+            <artifactId>spotbugs-maven-plugin</artifactId>
+            <configuration>
+              <skip>true</skip>
+            </configuration>
+          </plugin>
         </plugins>
       </reporting>
     </profile>
     <profile>
       <id>jdk17</id>
       <activation>
-        <jdk>[1.7,1.9)</jdk>
+        <jdk>1.7</jdk>
       </activation>
       <modules>
         <module>mybatis-generator-systests-ibatis2-java2</module>
@@ -384,8 +391,24 @@
             <artifactId>findbugs-maven-plugin</artifactId>
             <version>3.0.5</version>
           </plugin>
+          <plugin>
+            <groupId>com.github.spotbugs</groupId>
+            <artifactId>spotbugs-maven-plugin</artifactId>
+            <configuration>
+              <skip>true</skip>
+            </configuration>
+          </plugin>
         </plugins>
       </reporting>
+    </profile>
+    <profile>
+      <id>jdk18</id>
+      <activation>
+        <jdk>1.8</jdk>
+      </activation>
+      <modules>
+        <module>mybatis-generator-systests-ibatis2-java2</module>
+      </modules>
     </profile>
     <profile>
       <id>jdk9</id>

@@ -102,6 +102,7 @@ public class Method extends JavaElement {
         this.returnType = original.returnType;
         this.isNative = original.isNative;
         this.isSynchronized = original.isSynchronized;
+        this.isDefault = original.isDefault;
     }
 
     /**

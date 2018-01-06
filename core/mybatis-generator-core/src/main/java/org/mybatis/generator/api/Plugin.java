@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -192,6 +192,110 @@ public interface Plugin {
     boolean clientGenerated(Interface interfaze, TopLevelClass topLevelClass,
             IntrospectedTable introspectedTable);
 
+    /**
+     * This method is called when the count method has been generated for the mapper interface.
+     * This method is only called in the MyBatis3DynamicSql runtime.
+     * 
+     * @param method
+     *     the generated count method
+     * @param interfaze
+     *     the partially generated mapper interfaces 
+     * @param introspectedTable
+     *     The class containing information about the table as introspected from the database
+     * @return true if the method should be generated, false if the generated
+     *         method should be ignored. In the case of multiple plugins, the
+     *         first plugin returning false will disable the calling of further
+     *         plugins.
+     */
+    boolean clientBasicCountMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable);
+
+    /**
+     * This method is called when the delete method has been generated for the mapper interface.
+     * This method is only called in the MyBatis3DynamicSql runtime.
+     * 
+     * @param method
+     *     the generated delete method
+     * @param interfaze
+     *     the partially generated mapper interfaces 
+     * @param introspectedTable
+     *     The class containing information about the table as introspected from the database
+     * @return true if the method should be generated, false if the generated
+     *         method should be ignored. In the case of multiple plugins, the
+     *         first plugin returning false will disable the calling of further
+     *         plugins.
+     */
+    boolean clientBasicDeleteMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable);
+
+    /**
+     * This method is called when the insert method has been generated for the mapper interface.
+     * This method is only called in the MyBatis3DynamicSql runtime.
+     * 
+     * @param method
+     *     the generated insert method
+     * @param interfaze
+     *     the partially generated mapper interfaces 
+     * @param introspectedTable
+     *     The class containing information about the table as introspected from the database
+     * @return true if the method should be generated, false if the generated
+     *         method should be ignored. In the case of multiple plugins, the
+     *         first plugin returning false will disable the calling of further
+     *         plugins.
+     */
+    boolean clientBasicInsertMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable);
+
+    /**
+     * This method is called when the selectMany method has been generated for the mapper interface.
+     * This method is only called in the MyBatis3DynamicSql runtime.
+     * 
+     * @param method
+     *     the generated selectMany method
+     * @param interfaze
+     *     the partially generated mapper interfaces 
+     * @param introspectedTable
+     *     The class containing information about the table as introspected from the database
+     * @return true if the method should be generated, false if the generated
+     *         method should be ignored. In the case of multiple plugins, the
+     *         first plugin returning false will disable the calling of further
+     *         plugins.
+     */
+    boolean clientBasicSelectManyMethodGenerated(Method method, Interface interfaze,
+            IntrospectedTable introspectedTable);
+
+    /**
+     * This method is called when the selectOne method has been generated for the mapper interface.
+     * This method is only called in the MyBatis3DynamicSql runtime.
+     * 
+     * @param method
+     *     the generated selectOne method
+     * @param interfaze
+     *     the partially generated mapper interfaces 
+     * @param introspectedTable
+     *     The class containing information about the table as introspected from the database
+     * @return true if the method should be generated, false if the generated
+     *         method should be ignored. In the case of multiple plugins, the
+     *         first plugin returning false will disable the calling of further
+     *         plugins.
+     */
+    boolean clientBasicSelectOneMethodGenerated(Method method, Interface interfaze,
+            IntrospectedTable introspectedTable);
+
+    /**
+     * This method is called when the update method has been generated for the mapper interface.
+     * This method is only called in the MyBatis3DynamicSql runtime.
+     * 
+     * @param method
+     *     the generated update method
+     * @param interfaze
+     *     the partially generated mapper interfaces 
+     * @param introspectedTable
+     *     The class containing information about the table as introspected from the database
+     * @return true if the method should be generated, false if the generated
+     *         method should be ignored. In the case of multiple plugins, the
+     *         first plugin returning false will disable the calling of further
+     *         plugins.
+     */
+    boolean clientBasicUpdateMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable);
+    
     /**
      * This method is called when the countByExample method has been generated
      * in the client implementation class.

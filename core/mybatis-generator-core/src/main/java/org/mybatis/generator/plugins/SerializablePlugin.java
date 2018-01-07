@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Properties;
 
 import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.IntrospectedTable.TargetRuntime;
 import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
@@ -103,7 +104,13 @@ public class SerializablePlugin extends PluginAdapter {
             field.setStatic(true);
             field.setType(new FullyQualifiedJavaType("long")); //$NON-NLS-1$
             field.setVisibility(JavaVisibility.PRIVATE);
-            context.getCommentGenerator().addFieldComment(field, introspectedTable);
+            
+            if(introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3_DSQL) {
+                context.getCommentGenerator().addFieldAnnotation(field, introspectedTable,
+                        topLevelClass.getImportedTypes());
+            } else {
+                context.getCommentGenerator().addFieldComment(field, introspectedTable);
+            }
 
             topLevelClass.addField(field);
         }

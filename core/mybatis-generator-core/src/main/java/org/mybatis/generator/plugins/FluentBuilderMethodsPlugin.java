@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ import java.util.List;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.IntrospectedTable.TargetRuntime;
 import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
@@ -55,9 +56,14 @@ public class FluentBuilderMethodsPlugin extends PluginAdapter {
         fluentMethod.setName("with" + method.getName().substring(3)); //$NON-NLS-1$
         fluentMethod.getParameters().addAll(method.getParameters());
          
-
-        context.getCommentGenerator().addGeneralMethodComment(fluentMethod,
+        if(introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3_DSQL) {
+            context.getCommentGenerator().addGeneralMethodAnnotation(fluentMethod,
+                    introspectedTable, topLevelClass.getImportedTypes());
+        } else {
+            context.getCommentGenerator().addGeneralMethodComment(fluentMethod,
                 introspectedTable);
+        }
+        
         StringBuilder sb = new StringBuilder()
                 .append("this.") //$NON-NLS-1$
                 .append(method.getName())

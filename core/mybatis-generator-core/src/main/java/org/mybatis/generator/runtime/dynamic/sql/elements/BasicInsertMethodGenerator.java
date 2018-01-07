@@ -61,8 +61,8 @@ public class BasicInsertMethodGenerator extends AbstractMethodGenerator {
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
         method.addAnnotation("@InsertProvider(type=SqlProviderAdapter.class, method=\"insert\")"); //$NON-NLS-1$
 
-      MethodAndImports.Builder builder = MethodAndImports.withMethod(method)
-              .withImports(imports);
+        MethodAndImports.Builder builder = MethodAndImports.withMethod(method)
+                .withImports(imports);
       
         GeneratedKey gk = introspectedTable.getGeneratedKey();
         if (gk != null) {

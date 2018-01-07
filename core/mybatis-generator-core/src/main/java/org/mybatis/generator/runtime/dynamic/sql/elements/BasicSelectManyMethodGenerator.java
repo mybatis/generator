@@ -50,13 +50,12 @@ public class BasicSelectManyMethodGenerator extends AbstractMethodGenerator {
         imports.add(adapter);
         imports.add(annotation);
         
-        Method method = new Method("selectMany"); //$NON-NLS-1$
-
         imports.add(FullyQualifiedJavaType.getNewListInstance());
         
         imports.add(recordType);
         FullyQualifiedJavaType returnType = FullyQualifiedJavaType.getNewListInstance();
         returnType.addTypeArgument(recordType);
+        Method method = new Method("selectMany"); //$NON-NLS-1$
         method.setReturnType(returnType);
         method.addParameter(new Parameter(parameterType, "selectStatement")); //$NON-NLS-1$
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);

@@ -56,12 +56,12 @@ public class FluentBuilderMethodsPlugin extends PluginAdapter {
         fluentMethod.setName("with" + method.getName().substring(3)); //$NON-NLS-1$
         fluentMethod.getParameters().addAll(method.getParameters());
          
-        if(introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3_DSQL) {
+        if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3_DSQL) {
             context.getCommentGenerator().addGeneralMethodAnnotation(fluentMethod,
                     introspectedTable, topLevelClass.getImportedTypes());
         } else {
             context.getCommentGenerator().addGeneralMethodComment(fluentMethod,
-                introspectedTable);
+                    introspectedTable);
         }
         
         StringBuilder sb = new StringBuilder()

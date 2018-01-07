@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -60,8 +60,8 @@ public class InsertMethodGenerator extends AbstractMethodGenerator {
         List<IntrospectedColumn> columns = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(introspectedTable.getAllColumns());
         for (IntrospectedColumn column : columns) {
             method.addBodyLine("        .map(" + column.getJavaProperty() //$NON-NLS-1$
-            + ").toProperty(\"" + column.getJavaProperty() //$NON-NLS-1$
-            + "\")"); //$NON-NLS-1$
+                    + ").toProperty(\"" + column.getJavaProperty() //$NON-NLS-1$
+                    + "\")"); //$NON-NLS-1$
         }
         
         method.addBodyLine("        .build()"); //$NON-NLS-1$

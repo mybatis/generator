@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -66,13 +66,13 @@ public class FragmentGenerator {
             builder.withParameter(new Parameter(column.getFullyQualifiedJavaType(), column.getJavaProperty() + "_")); //$NON-NLS-1$
             if (first) {
                 builder.withBodyLine("        .where(" + column.getJavaProperty() //$NON-NLS-1$
-                + ", isEqualTo(" + column.getJavaProperty() //$NON-NLS-1$
-                + "_))"); //$NON-NLS-1$
+                        + ", isEqualTo(" + column.getJavaProperty() //$NON-NLS-1$
+                        + "_))"); //$NON-NLS-1$
                 first = false;
             } else {
                 builder.withBodyLine("        .and(" + column.getJavaProperty() //$NON-NLS-1$
-                + ", isEqualTo(" + column.getJavaProperty() //$NON-NLS-1$
-                + "_))"); //$NON-NLS-1$
+                        + ", isEqualTo(" + column.getJavaProperty() //$NON-NLS-1$
+                        + "_))"); //$NON-NLS-1$
             }
         }
         
@@ -87,13 +87,13 @@ public class FragmentGenerator {
             String methodName = JavaBeansUtil.getGetterMethodName(column.getJavaProperty(), column.getFullyQualifiedJavaType());
             if (first) {
                 lines.add("        .where(" + column.getJavaProperty() //$NON-NLS-1$
-                + ", isEqualTo(record::" + methodName //$NON-NLS-1$
-                + "))"); //$NON-NLS-1$
+                        + ", isEqualTo(record::" + methodName //$NON-NLS-1$
+                        + "))"); //$NON-NLS-1$
                 first = false;
             } else {
                 lines.add("        .and(" + column.getJavaProperty() //$NON-NLS-1$
-                + ", isEqualTo(record::" + methodName //$NON-NLS-1$
-                + "))"); //$NON-NLS-1$
+                        + ", isEqualTo(record::" + methodName //$NON-NLS-1$
+                        + "))"); //$NON-NLS-1$
             }
         }
         
@@ -287,8 +287,8 @@ public class FragmentGenerator {
             IntrospectedColumn column = iter.next();
             String methodName = JavaBeansUtil.getGetterMethodName(column.getJavaProperty(), column.getFullyQualifiedJavaType());
             String line = "        .set(" + column.getJavaProperty() //$NON-NLS-1$
-            + ").equalTo(record::" + methodName //$NON-NLS-1$
-            + ")"; //$NON-NLS-1$
+                    + ").equalTo(record::" + methodName //$NON-NLS-1$
+                    + ")"; //$NON-NLS-1$
             if (terminate && !iter.hasNext()) {
                 line += ";"; //$NON-NLS-1$
             }
@@ -306,8 +306,8 @@ public class FragmentGenerator {
             IntrospectedColumn column = iter.next();
             String methodName = JavaBeansUtil.getGetterMethodName(column.getJavaProperty(), column.getFullyQualifiedJavaType());
             String line = "        .set(" + column.getJavaProperty() //$NON-NLS-1$
-            + ").equalToWhenPresent(record::" //$NON-NLS-1$
-            + methodName + ")"; //$NON-NLS-1$
+                    + ").equalToWhenPresent(record::" //$NON-NLS-1$
+                    + methodName + ")"; //$NON-NLS-1$
             if (terminate && !iter.hasNext()) {
                 line += ";"; //$NON-NLS-1$
             }

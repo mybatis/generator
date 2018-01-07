@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -64,6 +64,7 @@ public class DynamicSqlSupportClassGenerator {
         return mapperType.getPackageName() + "." + recordType.getShortNameWithoutTypeArguments() + "DynamicSqlSupport"; //$NON-NLS-1$ //$NON-NLS-2$
         
     }
+
     private TopLevelClass buildBasicClass() {
         TopLevelClass topLevelClass = new TopLevelClass(calculateClassName());
         topLevelClass.setVisibility(JavaVisibility.PUBLIC);
@@ -149,7 +150,7 @@ public class DynamicSqlSupportClassGenerator {
         
         initializationString.append(String.format("column(\"%s\", JDBCType.%s", //$NON-NLS-1$ //$NON-NLS-2$
                 escapeStringForJava(getEscapedColumnName(column)),
-            column.getJdbcTypeName()));
+                column.getJdbcTypeName()));
         
         if (StringUtility.stringHasValue(column.getTypeHandler())) {
             initializationString.append(String.format(", \"%s\")", column.getTypeHandler())); //$NON-NLS-1$

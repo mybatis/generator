@@ -141,7 +141,7 @@ public class EqualsHashCodePlugin extends PluginAdapter {
                     topLevelClass.getImportedTypes());
         } else {
             context.getCommentGenerator().addGeneralMethodComment(method,
-                introspectedTable);
+                    introspectedTable);
         }
 
         method.addBodyLine("if (this == that) {"); //$NON-NLS-1$
@@ -255,7 +255,7 @@ public class EqualsHashCodePlugin extends PluginAdapter {
                     topLevelClass.getImportedTypes());
         } else {
             context.getCommentGenerator().addGeneralMethodComment(method,
-                introspectedTable);
+                    introspectedTable);
         }
 
         method.addBodyLine("final int prime = 31;"); //$NON-NLS-1$

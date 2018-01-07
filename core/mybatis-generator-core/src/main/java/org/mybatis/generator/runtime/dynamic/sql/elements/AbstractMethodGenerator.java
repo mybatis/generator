@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -44,9 +44,10 @@ public abstract class AbstractMethodGenerator {
     }
 
     public abstract MethodAndImports generateMethodAndImports();
+    
     public abstract boolean callPlugins(Method method, Interface interfaze);
     
-    public static abstract class BaseBuilder<T extends BaseBuilder<T, R>, R> {
+    public abstract static class BaseBuilder<T extends BaseBuilder<T, R>, R> {
         private Context context;
         private IntrospectedTable introspectedTable;
         
@@ -61,6 +62,7 @@ public abstract class AbstractMethodGenerator {
         }
 
         public abstract T getThis();
+        
         public abstract R build();
     }
 }

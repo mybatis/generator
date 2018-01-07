@@ -71,6 +71,7 @@
 
   <context id="miscellaneousTests_Annotated" targetRuntime="MyBatis3DynamicSql">
     <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
+    <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin" />
 
     <commentGenerator>
       <property name="suppressAllComments" value="true"/>

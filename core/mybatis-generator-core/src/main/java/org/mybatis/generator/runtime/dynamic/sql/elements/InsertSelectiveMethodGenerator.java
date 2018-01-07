@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -62,14 +62,14 @@ public class InsertSelectiveMethodGenerator extends AbstractMethodGenerator {
         for (IntrospectedColumn column : columns) {
             if (column.isSequenceColumn()) {
                 method.addBodyLine("        .map(" + column.getJavaProperty() //$NON-NLS-1$
-                + ").toProperty(\"" + column.getJavaProperty() //$NON-NLS-1$
-                + "\")"); //$NON-NLS-1$
+                        + ").toProperty(\"" + column.getJavaProperty() //$NON-NLS-1$
+                        + "\")"); //$NON-NLS-1$
             } else {
                 String methodName = JavaBeansUtil.getGetterMethodName(column.getJavaProperty(), column.getFullyQualifiedJavaType());
                 method.addBodyLine("        .map(" + column.getJavaProperty() //$NON-NLS-1$
-                + ").toPropertyWhenPresent(\"" + column.getJavaProperty() //$NON-NLS-1$
-                + "\", record::" + methodName //$NON-NLS-1$
-                + ")"); //$NON-NLS-1$
+                        + ").toPropertyWhenPresent(\"" + column.getJavaProperty() //$NON-NLS-1$
+                        + "\", record::" + methodName //$NON-NLS-1$
+                        + ")"); //$NON-NLS-1$
             }
         }
         

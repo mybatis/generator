@@ -80,7 +80,7 @@ public class ToStringPlugin extends PluginAdapter {
                     introspectedTable, topLevelClass.getImportedTypes());
         } else {
             context.getCommentGenerator().addGeneralMethodComment(method,
-                introspectedTable);
+                    introspectedTable);
         }
 
         method.addBodyLine("StringBuilder sb = new StringBuilder();"); //$NON-NLS-1$

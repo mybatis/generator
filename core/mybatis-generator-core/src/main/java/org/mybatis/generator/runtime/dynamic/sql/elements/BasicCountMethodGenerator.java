@@ -23,7 +23,7 @@ import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 
-public class BasicCountMethodGenerator extends AbstractMethodGenerator{
+public class BasicCountMethodGenerator extends AbstractMethodGenerator {
     
     private BasicCountMethodGenerator(Builder builder) {
         super(builder);

@@ -105,7 +105,7 @@ public class SerializablePlugin extends PluginAdapter {
             field.setType(new FullyQualifiedJavaType("long")); //$NON-NLS-1$
             field.setVisibility(JavaVisibility.PRIVATE);
             
-            if(introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3_DSQL) {
+            if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3_DSQL) {
                 context.getCommentGenerator().addFieldAnnotation(field, introspectedTable,
                         topLevelClass.getImportedTypes());
             } else {

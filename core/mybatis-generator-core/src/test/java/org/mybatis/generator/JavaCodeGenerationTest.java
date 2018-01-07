@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,11 +15,12 @@
  */
 package org.mybatis.generator;
 
+import static org.junit.Assert.fail;
+
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.fail;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -31,7 +32,7 @@ import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.internal.DefaultShellCallback;
 
 import com.github.javaparser.JavaParser;
-import com.github.javaparser.ParseException;
+import com.github.javaparser.ParseProblemException;
 
 @RunWith(Parameterized.class)
 public class JavaCodeGenerationTest {
@@ -48,7 +49,7 @@ public class JavaCodeGenerationTest {
                 generatedJavaFile.getCompilationUnit().getFormattedContent().getBytes());
         try {
             JavaParser.parse(is);
-        } catch (ParseException e) {
+        } catch (ParseProblemException e) {
             fail("Generated Java File " + generatedJavaFile.getFileName() + " will not compile");
         }
     }

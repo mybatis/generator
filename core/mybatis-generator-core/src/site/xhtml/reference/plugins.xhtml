@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2016 the original author or authors.
+       Copyright 2006-2018 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -183,6 +183,13 @@ model classes.</p>
         fields of root class. It can be useful for tables with inheritance relation.</li>
 </ul>
 
+<h2>org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin</h2>
+<p>This plugin will disable the XML merge function for generated mapper XML files.  This
+will cause the generator to respect the overwrite flag for XML files in the same way it does
+for Java files - if overwrite is true, then an existing file will be overwritten, else a
+new file will be written with a unique name.</p>
+<p>This plugin can be helpful if you disable all comments.</p>
+
 <h2>org.mybatis.generator.plugins.VirtualPrimaryKeyPlugin</h2>
 <p>This plugin can be used to specify columns that act as primary
 keys, even if they are not defined as primary key in the database.
@@ -200,5 +207,6 @@ returned from the database (typically all UPPERCASE).  For example:</p>
     &lt;property name="virtualKeyColumns" value="ID1, ID2" /&gt;
   &lt;/table&gt;
 </pre>
+
 </body>
 </html>

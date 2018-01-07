@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2017 the original author or authors.
+       Copyright 2006-2018 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -729,9 +729,10 @@
       <property name="searchString" value="Example$"/>
       <property name="replaceString" value="Criteria"/>
     </plugin>
+    <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin" />
 
     <commentGenerator>
-      <property name="suppressDate" value="true"/>
+      <property name="suppressAllComments" value="true"/>
     </commentGenerator>
     
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"

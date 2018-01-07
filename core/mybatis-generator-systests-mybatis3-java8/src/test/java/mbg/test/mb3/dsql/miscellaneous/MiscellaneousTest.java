@@ -15,6 +15,7 @@
  */
 package mbg.test.mb3.dsql.miscellaneous;
 
+import static mbg.test.mb3.generated.dsql.miscellaneous.mapper.RegexrenameDynamicSqlSupport.*;
 import static mbg.test.mb3.generated.dsql.miscellaneous.mapper.MyObjectDynamicSqlSupport.*;
 import static org.mybatis.dynamic.sql.SqlBuilder.*;
 import static mbg.test.common.util.TestUtilities.datesAreEqual;
@@ -37,6 +38,7 @@ import mbg.test.mb3.generated.dsql.miscellaneous.model.Enumtest;
 import mbg.test.mb3.generated.dsql.miscellaneous.model.MyObject;
 import mbg.test.mb3.generated.dsql.miscellaneous.model.Regexrename;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 
@@ -904,6 +906,64 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
             assertEquals(1, returnedRecord.getId().intValue());
             assertEquals(record.getName(), returnedRecord.getName());
             assertEquals(record.getZipCode(), returnedRecord.getZipCode());
+        } finally {
+            sqlSession.close();
+        }
+    }
+    
+    @Test
+    public void testRegexRenameRowbounds() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        
+        try {
+            RegexrenameMapper mapper = sqlSession.getMapper(RegexrenameMapper.class);
+            Regexrename record = new Regexrename();
+            record.setId(1);
+            record.setAddress("123 Main Street");
+            record.setName("Fred");
+            record.setZipCode("99999");
+            mapper.insert(record);
+            
+            record = new Regexrename();
+            record.setId(2);
+            record.setAddress("234 Elm Street");
+            record.setName("Barney");
+            record.setZipCode("99999");
+            mapper.insert(record);
+            
+            record = new Regexrename();
+            record.setId(3);
+            record.setAddress("345 Maple Street");
+            record.setName("Wilma");
+            record.setZipCode("99999");
+            mapper.insert(record);
+            
+            record = new Regexrename();
+            record.setId(4);
+            record.setAddress("456 Oak Street");
+            record.setName("Betty");
+            record.setZipCode("99999");
+            mapper.insert(record);
+            
+            RowBounds rowBounds = new RowBounds(0, 2);
+            List<Regexrename> records = mapper.selectByExample(rowBounds)
+                    .orderBy(regexrename.id)
+                    .build()
+                    .execute();
+            
+            assertEquals(2, records.size());
+            assertEquals(records.get(0).getId().intValue(), 1);
+            assertEquals(records.get(1).getId().intValue(), 2);
+
+            rowBounds = new RowBounds(2, 4);
+            records = mapper.selectByExample(rowBounds)
+                    .orderBy(regexrename.id)
+                    .build()
+                    .execute();
+            
+            assertEquals(2, records.size());
+            assertEquals(records.get(0).getId().intValue(), 3);
+            assertEquals(records.get(1).getId().intValue(), 4);
         } finally {
             sqlSession.close();
         }

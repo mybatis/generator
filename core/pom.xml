@@ -301,12 +301,16 @@
         <artifactId>mybatis</artifactId>
         <version>3.4.5</version>
       </dependency>
-      <!-- TODO: Raising above 2.4.0 required jdk 8 usage -->
       <dependency>
         <groupId>com.github.javaparser</groupId>
         <artifactId>javaparser-core</artifactId>
         <version>3.5.8</version>
         <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.mybatis.dynamic-sql</groupId>
+        <artifactId>mybatis-dynamic-sql</artifactId>
+        <version>1.0.1-SNAPSHOT</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

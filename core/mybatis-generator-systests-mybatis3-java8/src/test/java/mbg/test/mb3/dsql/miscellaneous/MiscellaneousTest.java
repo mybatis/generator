@@ -362,7 +362,7 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
             fn.setValue("B%");
             
             List<MyObject> answer = mapper.selectByExample()
-                    .where(myObject.firstname, IsLikeGeneric.of(fn))
+                    .where(myObject.firstname, isLike(fn))
                     .orderBy(myObject.id1, myObject.id2)
                     .build()
                     .execute();
@@ -446,7 +446,7 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
             fn.setValue("B%");
             
             List<MyObject> answer = mapper.selectByExample()
-                    .where(myObject.firstname, IsNotLikeGeneric.of(fn))
+                    .where(myObject.firstname, isNotLike(fn))
                     .orderBy(myObject.id1, myObject.id2)
                     .build()
                     .execute();
@@ -526,18 +526,14 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
             record.setId2(3);
             mapper.insert(record);
 
-//            MyObjectCriteria example = new MyObjectCriteria();
             FirstName fn1 = new FirstName();
             fn1.setValue("B%");
-//            example.createCriteria().andFirstnameLike(fn).andId2EqualTo(3);
             FirstName fn2 = new FirstName();
             fn2.setValue("W%");
-//            example.or(example.createCriteria().andFirstnameLike(fn));
-//            example.setOrderByClause("ID1, ID2");
 
             List<MyObject> answer = mapper.selectByExample()
-                    .where(myObject.firstname, IsLikeGeneric.of(fn1), and(myObject.id2, isEqualTo(3)))
-                    .or(myObject.firstname, IsLikeGeneric.of(fn2))
+                    .where(myObject.firstname, isLike(fn1), and(myObject.id2, isEqualTo(3)))
+                    .or(myObject.firstname, isLike(fn2))
                     .orderBy(myObject.id1, myObject.id2)
                     .build()
                     .execute();
@@ -811,13 +807,13 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
             fn.setValue("B%");
             
             int rows = mapper.updateByExampleSelective(newRecord)
-                    .where(myObject.firstname, IsLikeGeneric.of(fn))
+                    .where(myObject.firstname, isLike(fn))
                     .build()
                     .execute();
             assertEquals(1, rows);
 
             List<MyObject> answer = mapper.selectByExample()
-                    .where(myObject.firstname, IsLikeGeneric.of(fn))
+                    .where(myObject.firstname, isLike(fn))
                     .build()
                     .execute();
             assertEquals(1, answer.size());

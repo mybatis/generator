@@ -115,7 +115,6 @@
     <dependency>
       <groupId>org.mybatis.dynamic-sql</groupId>
       <artifactId>mybatis-dynamic-sql</artifactId>
-      <version>1.0.0</version>
     </dependency>
   </dependencies>
   <profiles>

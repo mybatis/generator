@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -245,8 +245,6 @@ public class DefaultCommentGenerator implements CommentGenerator {
         sb.append(introspectedTable.getFullyQualifiedTable());
         topLevelClass.addJavaDocLine(sb.toString());
 
-        addJavadocTag(topLevelClass, true);
-
         topLevelClass.addJavaDocLine(" */"); //$NON-NLS-1$
     }
 
@@ -457,6 +455,19 @@ public class DefaultCommentGenerator implements CommentGenerator {
                 + "." //$NON-NLS-1$
                 + introspectedColumn.getActualColumnName();
         field.addAnnotation(getGeneratedAnnotation(comment));
+        
+        if (!suppressAllComments && addRemarkComments) {
+            String remarks = introspectedColumn.getRemarks();
+            if (addRemarkComments && StringUtility.stringHasValue(remarks)) {
+                field.addJavaDocLine("/**"); //$NON-NLS-1$
+                field.addJavaDocLine(" * Database Column Remarks:"); //$NON-NLS-1$
+                String[] remarkLines = remarks.split(System.getProperty("line.separator"));  //$NON-NLS-1$
+                for (String remarkLine : remarkLines) {
+                    field.addJavaDocLine(" *   " + remarkLine);  //$NON-NLS-1$
+                }
+                field.addJavaDocLine(" */"); //$NON-NLS-1$
+            }
+        }
     }
 
     @Override

@@ -211,7 +211,7 @@ public class DatabaseIntrospector {
                 // add warning that the table has only BLOB columns, remove from
                 // the list
                 String warning = getString(
-                                "Warning.18", introspectedTable.getFullyQualifiedTable().toString()); //$NON-NLS-1$ 
+                                "Warning.18", introspectedTable.getFullyQualifiedTable().toString()); //$NON-NLS-1$
                 warnings.add(warning);
                 iter.remove();
             } else {
@@ -310,7 +310,6 @@ public class DatabaseIntrospector {
                     ColumnOverride co = tc.getColumnOverride(introspectedColumn
                             .getActualColumnName());
                     if (co != null
-                            && stringHasValue(co.getJavaType())
                             && stringHasValue(co.getJavaType())) {
                         warn = false;
                     }
@@ -351,7 +350,7 @@ public class DatabaseIntrospector {
             // no generated key, then no identity or sequence columns
             return;
         }
-        
+
         for (Map.Entry<ActualTableName, List<IntrospectedColumn>> entry : columns
                 .entrySet()) {
             for (IntrospectedColumn introspectedColumn : entry.getValue()) {
@@ -425,7 +424,7 @@ public class DatabaseIntrospector {
 
                     introspectedColumn.setProperties(columnOverride
                             .getProperties());
-                    
+
                 }
             }
         }
@@ -508,7 +507,7 @@ public class DatabaseIntrospector {
 
         ResultSet rs = databaseMetaData.getColumns(localCatalog, localSchema,
                 localTableName, "%"); //$NON-NLS-1$
-        
+
         boolean supportsIsAutoIncrement = false;
         boolean supportsIsGeneratedColumn = false;
         ResultSetMetaData rsmd = rs.getMetaData();
@@ -651,9 +650,9 @@ public class DatabaseIntrospector {
     /**
      * Calls database metadata to retrieve extra information about the table
      * such as remarks associated with the table and the type.
-     * 
+     *
      * <p>If there is any error, we just add a warning and continue.
-     * 
+     *
      * @param introspectedTable the introspected table to enhance
      */
     private void enhanceIntrospectedTable(IntrospectedTable introspectedTable) {

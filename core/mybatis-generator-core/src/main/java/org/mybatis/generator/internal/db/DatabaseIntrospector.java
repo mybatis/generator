@@ -28,6 +28,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -527,6 +528,15 @@ public class DatabaseIntrospector {
 
             introspectedColumn.setTableAlias(tc.getAlias());
             introspectedColumn.setJdbcType(rs.getInt("DATA_TYPE")); //$NON-NLS-1$
+            if(rs.getInt("DATA_TYPE") == Types.OTHER){
+            	String typeName = rs.getString("TYPE_NAME");
+            	if(typeName.startsWith("NVARCHAR")){
+            		introspectedColumn.setJdbcType(Types.NVARCHAR);
+            	}
+            }
+            if(rs.getInt("DATA_TYPE") == Types.DATE){
+            	introspectedColumn.setJdbcType(Types.TIMESTAMP);
+            }
             introspectedColumn.setLength(rs.getInt("COLUMN_SIZE")); //$NON-NLS-1$
             introspectedColumn.setActualColumnName(rs.getString("COLUMN_NAME")); //$NON-NLS-1$
             introspectedColumn

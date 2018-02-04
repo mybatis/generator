@@ -223,14 +223,7 @@ public abstract class BaseRules implements Rules {
      */
     @Override
     public boolean generateBaseResultMap() {
-        if (isModelOnly) {
-            return true;
-        }
-
-        boolean rc = tableConfiguration.isSelectByExampleStatementEnabled()
-                || tableConfiguration.isSelectByPrimaryKeyStatementEnabled();
-
-        return rc;
+        return true;
     }
 
     /**
@@ -446,23 +439,12 @@ public abstract class BaseRules implements Rules {
 
     @Override
     public boolean generateBaseColumnList() {
-        if (isModelOnly) {
-            return false;
-        }
-        
-        return generateSelectByPrimaryKey()
-                || generateSelectByExampleWithoutBLOBs();
+        return true;
     }
 
     @Override
     public boolean generateBlobColumnList() {
-        if (isModelOnly) {
-            return false;
-        }
-        
-        return introspectedTable.hasBLOBColumns()
-                && (tableConfiguration.isSelectByExampleStatementEnabled() || tableConfiguration
-                        .isSelectByPrimaryKeyStatementEnabled());
+        return introspectedTable.hasBLOBColumns();
     }
 
     @Override

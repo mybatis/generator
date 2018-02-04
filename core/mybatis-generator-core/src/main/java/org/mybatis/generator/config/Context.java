@@ -458,10 +458,10 @@ public class Context extends PropertyHolder {
                     continue;
                 }
 
-                if (!tc.areAnyStatementsEnabled()) {
+                /*if (!tc.areAnyStatementsEnabled()) {
                     warnings.add(getString("Warning.0", tableName)); //$NON-NLS-1$
                     continue;
-                }
+                }*/
 
                 callback.startTask(getString("Progress.1", tableName)); //$NON-NLS-1$
                 List<IntrospectedTable> tables = databaseIntrospector

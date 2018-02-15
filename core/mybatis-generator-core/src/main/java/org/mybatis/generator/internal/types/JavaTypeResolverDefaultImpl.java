@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -43,8 +43,13 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
     protected Context context;
 
     protected boolean forceBigDecimals;
+    protected boolean useJSR310Types;
 
     protected Map<Integer, JdbcTypeInformation> typeMap;
+    
+    // TODO - remove when we get to JDK 8
+    private static final int TIME_WITH_TIMEZONE = 2013;
+    private static final int TIMESTAMP_WITH_TIMEZONE = 2014;
 
     public JavaTypeResolverDefaultImpl() {
         super();
@@ -120,6 +125,11 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
                 new FullyQualifiedJavaType("byte[]"))); //$NON-NLS-1$
         typeMap.put(Types.VARCHAR, new JdbcTypeInformation("VARCHAR", //$NON-NLS-1$
                 new FullyQualifiedJavaType(String.class.getName())));
+        // JDK 1.8 types
+        typeMap.put(TIME_WITH_TIMEZONE, new JdbcTypeInformation("TIME_WITH_TIMEZONE", //$NON-NLS-1$
+                new FullyQualifiedJavaType("java.time.OffsetTime"))); //$NON-NLS-1$
+        typeMap.put(TIMESTAMP_WITH_TIMEZONE, new JdbcTypeInformation("TIMESTAMP_WITH_TIMEZONE", //$NON-NLS-1$
+                new FullyQualifiedJavaType("java.time.OffsetDateTime"))); //$NON-NLS-1$
     }
 
     @Override
@@ -128,6 +138,9 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
         forceBigDecimals = StringUtility
                 .isTrue(properties
                         .getProperty(PropertyRegistry.TYPE_RESOLVER_FORCE_BIG_DECIMALS));
+        useJSR310Types = StringUtility
+                .isTrue(properties
+                        .getProperty(PropertyRegistry.TYPE_RESOLVER_USE_JSR310_TYPES));
     }
 
     @Override
@@ -152,9 +165,18 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
         case Types.BIT:
             answer = calculateBitReplacement(column, defaultType);
             break;
+        case Types.DATE:
+            answer = calculateDateType(column, defaultType);
+            break;
         case Types.DECIMAL:
         case Types.NUMERIC:
             answer = calculateBigDecimalReplacement(column, defaultType);
+            break;
+        case Types.TIME:
+            answer = calculateTimeType(column, defaultType);
+            break;
+        case Types.TIMESTAMP:
+            answer = calculateTimestampType(column, defaultType);
             break;
         default:
             break;
@@ -163,6 +185,42 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
         return answer;
     }
     
+    protected FullyQualifiedJavaType calculateDateType(IntrospectedColumn column, FullyQualifiedJavaType defaultType) {
+        FullyQualifiedJavaType answer;
+        
+        if (useJSR310Types) {
+            answer = new FullyQualifiedJavaType("java.time.LocalDate"); //$NON-NLS-1$
+        } else {
+            answer = defaultType;
+        }
+        
+        return answer;
+    }
+
+    protected FullyQualifiedJavaType calculateTimeType(IntrospectedColumn column, FullyQualifiedJavaType defaultType) {
+        FullyQualifiedJavaType answer;
+        
+        if (useJSR310Types) {
+            answer = new FullyQualifiedJavaType("java.time.LocalTime"); //$NON-NLS-1$
+        } else {
+            answer = defaultType;
+        }
+        
+        return answer;
+    }
+
+    protected FullyQualifiedJavaType calculateTimestampType(IntrospectedColumn column, FullyQualifiedJavaType defaultType) {
+        FullyQualifiedJavaType answer;
+        
+        if (useJSR310Types) {
+            answer = new FullyQualifiedJavaType("java.time.LocalDateTime"); //$NON-NLS-1$
+        } else {
+            answer = defaultType;
+        }
+        
+        return answer;
+    }
+
     protected FullyQualifiedJavaType calculateBitReplacement(IntrospectedColumn column, FullyQualifiedJavaType defaultType) {
         FullyQualifiedJavaType answer;
 

@@ -16,9 +16,7 @@
 package mbg.test.mb3.dsql;
 
 import static mbg.test.common.util.TestUtilities.blobsAreEqual;
-import static mbg.test.common.util.TestUtilities.datesAreEqual;
 import static mbg.test.common.util.TestUtilities.generateRandomBlob;
-import static mbg.test.common.util.TestUtilities.timesAreEqual;
 import static mbg.test.mb3.generated.dsql.mapper.AwfulTableDynamicSqlSupport.*;
 import static mbg.test.mb3.generated.dsql.mapper.FieldsblobsDynamicSqlSupport.*;
 import static mbg.test.mb3.generated.dsql.mapper.FieldsonlyDynamicSqlSupport.*;
@@ -33,8 +31,10 @@ import static org.junit.Assert.assertTrue;
 import static org.mybatis.dynamic.sql.SqlBuilder.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -521,7 +521,7 @@ public class DynamicSqlTest extends AbstractTest {
         try {
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
             Pkfields record = new Pkfields();
-            record.setDatefield(new Date());
+            record.setDatefield(LocalDate.now());
             record.setDecimal100field(10L);
             record.setDecimal155field(new BigDecimal("15.12345"));
             record.setDecimal30field((short) 3);
@@ -530,8 +530,8 @@ public class DynamicSqlTest extends AbstractTest {
             record.setId1(1);
             record.setId2(2);
             record.setLastname("Butler");
-            record.setTimefield(new Date());
-            record.setTimestampfield(new Date());
+            record.setTimefield(LocalTime.of(13, 2, 4));
+            record.setTimestampfield(LocalDateTime.now());
             record.setStringboolean(true);
 
             mapper.insert(record);
@@ -539,8 +539,8 @@ public class DynamicSqlTest extends AbstractTest {
             Pkfields returnedRecord = mapper.selectByPrimaryKey(2, 1);
             assertNotNull(returnedRecord);
 
-            assertTrue(datesAreEqual(record.getDatefield(), returnedRecord
-                    .getDatefield()));
+            assertEquals(record.getDatefield(), returnedRecord
+                    .getDatefield());
             assertEquals(record.getDecimal100field(), returnedRecord
                     .getDecimal100field());
             assertEquals(record.getDecimal155field(), returnedRecord
@@ -553,8 +553,8 @@ public class DynamicSqlTest extends AbstractTest {
             assertEquals(record.getId1(), returnedRecord.getId1());
             assertEquals(record.getId2(), returnedRecord.getId2());
             assertEquals(record.getLastname(), returnedRecord.getLastname());
-            assertTrue(timesAreEqual(record.getTimefield(), returnedRecord
-                    .getTimefield()));
+            assertEquals(record.getTimefield(), returnedRecord
+                    .getTimefield());
             assertEquals(record.getTimestampfield(), returnedRecord
                     .getTimestampfield());
             assertEquals(record.isStringboolean(), returnedRecord.isStringboolean());
@@ -620,8 +620,8 @@ public class DynamicSqlTest extends AbstractTest {
 
             Pkfields returnedRecord = mapper.selectByPrimaryKey(2, 1);
 
-            assertTrue(datesAreEqual(record.getDatefield(), returnedRecord
-                    .getDatefield()));
+            assertEquals(record.getDatefield(), returnedRecord
+                    .getDatefield());
             assertEquals(record.getDecimal100field(), returnedRecord
                     .getDecimal100field());
             assertEquals(record.getDecimal155field(), returnedRecord
@@ -635,8 +635,8 @@ public class DynamicSqlTest extends AbstractTest {
             assertEquals(record.getId1(), returnedRecord.getId1());
             assertEquals(record.getId2(), returnedRecord.getId2());
             assertEquals(record.getLastname(), returnedRecord.getLastname());
-            assertTrue(timesAreEqual(record.getTimefield(), returnedRecord
-                    .getTimefield()));
+            assertEquals(record.getTimefield(), returnedRecord
+                    .getTimefield());
             assertEquals(record.getTimestampfield(), returnedRecord
                     .getTimestampfield());
         } finally {

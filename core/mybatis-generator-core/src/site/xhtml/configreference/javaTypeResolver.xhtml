@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2016 the original author or authors.
+       Copyright 2006-2018 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -98,6 +98,47 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
           <th valign="top">true</th>
           <td>When the property is true, the Java type resolver will always use
            java.math.BigDecimal if the database column is of type DECIMAL or NUMERIC.</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">useJSR310Types</td>
+    <td>
+      This property is used to specify whether MyBatis Generator should force the use
+      of JSR-310 data types for DATE, TIME, and TIMESTAMP fields, rather than using <code>java.util.Date</code>.
+      If true, the types will be resolved as follows:
+      <table border="1">
+        <tr>
+          <th>JDBC Type</th>
+          <th>Resolved Java Type</th>
+        </tr>
+        <tr>
+          <td>DATE</td>
+          <td><code>java.time.LocalDate</code></td>
+        </tr>
+        <tr>
+          <td>TIME</td>
+          <td><code>java.time.LocalTime</code></td>
+        </tr>
+        <tr>
+          <td>TIMESTAMP</td>
+          <td><code>java.time.LocalDateTime</code></td>
+        </tr>
+      </table>
+      <p>Note: the type resolver will always resolve the following JSR-310 types regardless of the value of this property:</p>
+      <table border="1">
+        <tr>
+          <th>JDBC Type</th>
+          <th>Resolved Java Type</th>
+        </tr>
+        <tr>
+          <td>TIME_WITH_TIMEZONE</td>
+          <td><code>java.time.OffsetTime</code></td>
+        </tr>
+        <tr>
+          <td>TIMESTAMP_WITH_TIMEZONE</td>
+          <td><code>java.time.OffsetDateTime</code></td>
         </tr>
       </table>
     </td>

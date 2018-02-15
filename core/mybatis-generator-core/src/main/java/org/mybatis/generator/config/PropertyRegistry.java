@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -61,6 +61,7 @@ public class PropertyRegistry {
     public static final String DAO_METHOD_NAME_CALCULATOR = "methodNameCalculator"; //$NON-NLS-1$
 
     public static final String TYPE_RESOLVER_FORCE_BIG_DECIMALS = "forceBigDecimals"; //$NON-NLS-1$
+    public static final String TYPE_RESOLVER_USE_JSR310_TYPES = "useJSR310Types"; //$NON-NLS-1$
 
     public static final String MODEL_GENERATOR_TRIM_STRINGS = "trimStrings"; //$NON-NLS-1$
 

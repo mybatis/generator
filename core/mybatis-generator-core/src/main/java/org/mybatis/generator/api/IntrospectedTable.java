@@ -94,7 +94,8 @@ public abstract class IntrospectedTable {
         ATTR_BASE_COLUMN_LIST_ID,
         ATTR_BLOB_COLUMN_LIST_ID,
         ATTR_MYBATIS3_UPDATE_BY_EXAMPLE_WHERE_CLAUSE_ID,
-        ATTR_MYBATIS3_SQL_PROVIDER_TYPE
+        ATTR_MYBATIS3_SQL_PROVIDER_TYPE,
+        ATTR_MYBATIS_DYNAMIC_SQL_SUPPORT_TYPE
     }
 
     protected TableConfiguration tableConfiguration;
@@ -851,6 +852,13 @@ public abstract class IntrospectedTable {
             sb.append("SqlProvider"); //$NON-NLS-1$
         }
         setMyBatis3SqlProviderType(sb.toString());
+        
+        sb.setLength(0);
+        sb.append(calculateJavaClientInterfacePackage());
+        sb.append('.');
+        sb.append(fullyQualifiedTable.getDomainObjectName());
+        sb.append("DynamicSqlSupport"); //$NON-NLS-1$
+        setMyBatisDynamicSqlSupportType(sb.toString());
     }
 
     protected String calculateJavaModelPackage() {
@@ -1150,6 +1158,14 @@ public abstract class IntrospectedTable {
         internalAttributes.put(
                 InternalAttribute.ATTR_MYBATIS3_SQL_PROVIDER_TYPE,
                 mybatis3SqlProviderType);
+    }
+    
+    public String getMyBatisDynamicSqlSupportType() {
+        return internalAttributes.get(InternalAttribute.ATTR_MYBATIS_DYNAMIC_SQL_SUPPORT_TYPE);
+    }
+    
+    public void setMyBatisDynamicSqlSupportType(String s) {
+        internalAttributes.put(InternalAttribute.ATTR_MYBATIS_DYNAMIC_SQL_SUPPORT_TYPE, s);
     }
     
     public TargetRuntime getTargetRuntime() {

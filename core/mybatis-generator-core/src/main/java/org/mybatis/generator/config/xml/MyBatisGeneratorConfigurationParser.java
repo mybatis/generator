@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -32,8 +32,10 @@ import static org.mybatis.generator.internal.util.StringUtility.isTrue;
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Properties;
 
@@ -70,6 +72,7 @@ import org.w3c.dom.NodeList;
  * @author Jeff Butler
  */
 public class MyBatisGeneratorConfigurationParser {
+    private static final String PROJECT_HOME_PATH_PREFIX = "." + File.separator;    // for Linx:   ./
     private Properties extraProperties;
     private Properties configurationProperties;
 
@@ -128,7 +131,15 @@ public class MyBatisGeneratorConfigurationParser {
 
         try {
             if (stringHasValue(resource)) {
-                resourceUrl = ObjectFactory.getResource(resource);
+                resource = resource.trim();
+                if (resource.startsWith(PROJECT_HOME_PATH_PREFIX)) { // relative path, to mvn command path  {./mysql-xxx.jar}
+                    resource = System.getProperty("user.dir") + File.separator + resource.replaceFirst(PROJECT_HOME_PATH_PREFIX, "");
+                    resourceUrl = stringToFileUrl(resource);
+                } else if (resource.startsWith(File.separator)) { // to absolute path  {/path/to/mysql-xxx.jar}
+                    resourceUrl = stringToFileUrl(resource);
+                } else { // classpath   {src/main/resources/mysql-xxx.jar}
+                    resourceUrl = ObjectFactory.getResource(resource);
+                }
                 if (resourceUrl == null) {
                     throw new XMLParserException(getString(
                             "RuntimeError.15", resource)); //$NON-NLS-1$
@@ -151,6 +162,14 @@ public class MyBatisGeneratorConfigurationParser {
                         "RuntimeError.17", url)); //$NON-NLS-1$
             }
         }
+    }
+    
+    private URL stringToFileUrl(String resource) throws MalformedURLException {
+        File f = new File(resource);
+        if (f.exists()) {
+            return f.toURI().toURL();
+        }
+        return null;
     }
 
     private void parseContext(Configuration configuration, Node node) {
@@ -686,8 +705,24 @@ public class MyBatisGeneratorConfigurationParser {
 
     protected void parseClassPathEntry(Configuration configuration, Node node) {
         Properties attributes = parseAttributes(node);
+        
+        String classPathEntry = attributes.getProperty("location");
+        if (classPathEntry != null) {
+            classPathEntry = classPathEntry.trim();
+        }
+        if (classPathEntry != null && classPathEntry.length() > 0) {
+            if (classPathEntry.startsWith(PROJECT_HOME_PATH_PREFIX)) {// relative path, to mvn command path  {./mysql-xxx.jar}
+                classPathEntry = System.getProperty("user.dir") + File.separator + classPathEntry.replaceFirst(PROJECT_HOME_PATH_PREFIX, "");
+            } else if (!classPathEntry.startsWith(File.separator)) { // classpath   {src/main/resources/mysql-xxx.jar}
+                URL resource = ObjectFactory.getResource(classPathEntry);
+                if (resource != null) {
+                    classPathEntry = resource.getPath();
+                }
+            }
+            // for absolute path: {/path/to/mysql-xxx.jar}  do  as before
+        }
 
-        configuration.addClasspathEntry(attributes.getProperty("location")); //$NON-NLS-1$
+        configuration.addClasspathEntry(classPathEntry); //$NON-NLS-1$
     }
 
     protected void parseProperty(PropertyHolder propertyHolder, Node node) {

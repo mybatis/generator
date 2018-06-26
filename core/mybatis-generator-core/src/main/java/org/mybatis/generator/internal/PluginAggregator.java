@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import org.mybatis.generator.api.GeneratedJavaFile;
+import org.mybatis.generator.api.GeneratedModelFile;
 import org.mybatis.generator.api.GeneratedXmlFile;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
@@ -163,11 +163,11 @@ public final class PluginAggregator implements Plugin {
     }
 
     @Override
-    public List<GeneratedJavaFile> contextGenerateAdditionalJavaFiles(
+    public List<GeneratedModelFile> contextGenerateAdditionalJavaFiles(
             IntrospectedTable introspectedTable) {
-        List<GeneratedJavaFile> answer = new ArrayList<GeneratedJavaFile>();
+        List<GeneratedModelFile> answer = new ArrayList<GeneratedModelFile>();
         for (Plugin plugin : plugins) {
-            List<GeneratedJavaFile> temp = plugin
+            List<GeneratedModelFile> temp = plugin
                     .contextGenerateAdditionalJavaFiles(introspectedTable);
             if (temp != null) {
                 answer.addAll(temp);
@@ -177,10 +177,10 @@ public final class PluginAggregator implements Plugin {
     }
 
     @Override
-    public List<GeneratedJavaFile> contextGenerateAdditionalJavaFiles() {
-        List<GeneratedJavaFile> answer = new ArrayList<GeneratedJavaFile>();
+    public List<GeneratedModelFile> contextGenerateAdditionalJavaFiles() {
+        List<GeneratedModelFile> answer = new ArrayList<GeneratedModelFile>();
         for (Plugin plugin : plugins) {
-            List<GeneratedJavaFile> temp = plugin
+            List<GeneratedModelFile> temp = plugin
                     .contextGenerateAdditionalJavaFiles();
             if (temp != null) {
                 answer.addAll(temp);

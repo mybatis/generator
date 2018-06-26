@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -25,15 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.mybatis.generator.config.Context;
-import org.mybatis.generator.config.GeneratedKey;
-import org.mybatis.generator.config.JavaClientGeneratorConfiguration;
-import org.mybatis.generator.config.JavaModelGeneratorConfiguration;
-import org.mybatis.generator.config.ModelType;
-import org.mybatis.generator.config.PropertyHolder;
-import org.mybatis.generator.config.PropertyRegistry;
-import org.mybatis.generator.config.SqlMapGeneratorConfiguration;
-import org.mybatis.generator.config.TableConfiguration;
+import org.mybatis.generator.config.*;
 import org.mybatis.generator.internal.rules.ConditionalModelRules;
 import org.mybatis.generator.internal.rules.FlatModelRules;
 import org.mybatis.generator.internal.rules.HierarchicalModelRules;
@@ -64,6 +56,7 @@ public abstract class IntrospectedTable {
         ATTR_IBATIS2_SQL_MAP_PACKAGE,
         ATTR_IBATIS2_SQL_MAP_FILE_NAME,
         ATTR_IBATIS2_SQL_MAP_NAMESPACE,
+        ATTR_MYBATIS3_EXAMPLE_PACKAGE,
         ATTR_MYBATIS3_XML_MAPPER_PACKAGE,
         ATTR_MYBATIS3_XML_MAPPER_FILE_NAME,
         /** also used as XML Mapper namespace if a Java mapper is generated. */
@@ -501,6 +494,7 @@ public abstract class IntrospectedTable {
     public void initialize() {
         calculateJavaClientAttributes();
         calculateModelAttributes();
+        calculateExampleAttributes();
         calculateXmlAttributes();
 
         if (tableConfiguration.getModelType() == ModelType.HIERARCHICAL) {
@@ -863,6 +857,31 @@ public abstract class IntrospectedTable {
         return sb.toString();
     }
 
+    protected String calculateJavaExamplePackage() {
+        String targetPackage = getExampleTargetPackage();
+        JavaExampleGeneratorConfiguration config = context.getJavaExampleGeneratorConfiguration();
+        StringBuilder sb = new StringBuilder();
+        sb.append(targetPackage);
+        PropertyHolder propertyHolder = config != null ? config : context.getJavaModelGeneratorConfiguration();
+        sb.append(fullyQualifiedTable.getSubPackageForModel(isSubPackagesEnabled(propertyHolder)));
+
+        return sb.toString();
+    }
+
+    private String getExampleTargetPackage(){
+        JavaExampleGeneratorConfiguration  javaExampleGeneratorConfiguration = context.getJavaExampleGeneratorConfiguration();
+        if(javaExampleGeneratorConfiguration==null || javaExampleGeneratorConfiguration.getTargetProject()==null
+                || javaExampleGeneratorConfiguration.getTargetProject().length() == 0){
+            return context.getJavaModelGeneratorConfiguration().getTargetPackage();
+        }
+        return javaExampleGeneratorConfiguration.getTargetPackage();
+    }
+
+    protected void calculateExampleAttributes() {
+        String pakkage = calculateJavaExamplePackage();
+        setMyBatis3ExamplePackage(pakkage);
+    }
+
     protected void calculateModelAttributes() {
         String pakkage = calculateJavaModelPackage();
 
@@ -886,8 +905,9 @@ public abstract class IntrospectedTable {
         sb.append("WithBLOBs"); //$NON-NLS-1$
         setRecordWithBLOBsType(sb.toString());
 
+        String examplePackage = calculateJavaExamplePackage();
         sb.setLength(0);
-        sb.append(pakkage);
+        sb.append(examplePackage);
         sb.append('.');
         sb.append(fullyQualifiedTable.getDomainObjectName());
         sb.append("Example"); //$NON-NLS-1$
@@ -998,7 +1018,11 @@ public abstract class IntrospectedTable {
      * 
      * @return the list of generated Java files for this table
      */
-    public abstract List<GeneratedJavaFile> getGeneratedJavaFiles();
+    public abstract List<GeneratedModelFile> getGeneratedJavaFiles();
+
+    public  List<GeneratedExampleFile> getGeneratedExampleFiles(){
+        return new ArrayList<GeneratedExampleFile>();
+    }
 
     /**
      * This method should return a list of generated XML files related to this
@@ -1107,6 +1131,17 @@ public abstract class IntrospectedTable {
                         aliasedFullyQualifiedRuntimeTableName);
     }
 
+    public String getMyBatis3ExamplePackage() {
+        return internalAttributes
+                .get(InternalAttribute.ATTR_MYBATIS3_EXAMPLE_PACKAGE);
+    }
+
+    public void setMyBatis3ExamplePackage(String mybatis3ExamplePackage) {
+        internalAttributes.put(
+                InternalAttribute.ATTR_MYBATIS3_EXAMPLE_PACKAGE,
+                mybatis3ExamplePackage);
+    }
+
     public String getMyBatis3XmlMapperPackage() {
         return internalAttributes
                 .get(InternalAttribute.ATTR_MYBATIS3_XML_MAPPER_PACKAGE);
@@ -1119,8 +1154,7 @@ public abstract class IntrospectedTable {
     }
 
     public String getMyBatis3XmlMapperFileName() {
-        return internalAttributes
-                .get(InternalAttribute.ATTR_MYBATIS3_XML_MAPPER_FILE_NAME);
+        return internalAttributes.get(InternalAttribute.ATTR_MYBATIS3_XML_MAPPER_FILE_NAME);
     }
 
     public void setMyBatis3XmlMapperFileName(String mybatis3XmlMapperFileName) {

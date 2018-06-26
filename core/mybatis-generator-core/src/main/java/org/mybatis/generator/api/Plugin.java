@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -132,7 +132,7 @@ public interface Plugin {
      * @return a List of GeneratedJavaFiles - these files will be saved
      *         with the other files from this run.
      */
-    List<GeneratedJavaFile> contextGenerateAdditionalJavaFiles();
+    List<GeneratedModelFile> contextGenerateAdditionalJavaFiles();
 
     /**
      * This method can be used to generate additional Java files needed by your
@@ -145,7 +145,7 @@ public interface Plugin {
      * @return a List of GeneratedJavaFiles - these files will be saved
      *         with the other files from this run.
      */
-    List<GeneratedJavaFile> contextGenerateAdditionalJavaFiles(
+    List<GeneratedModelFile> contextGenerateAdditionalJavaFiles(
             IntrospectedTable introspectedTable);
 
     /**

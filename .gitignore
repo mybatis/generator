@@ -56,4 +56,4 @@
 /.project
 .idea
 *.iml
-.mvn/wrapper/maven-wrapper.jar
+/core/.mvn/wrapper/maven-wrapper.jar

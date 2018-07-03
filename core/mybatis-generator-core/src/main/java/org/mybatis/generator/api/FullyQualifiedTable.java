@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -89,7 +89,7 @@ public class FullyQualifiedTable {
      *            obtained from the Context.
      * @param domainObjectRenamingRule
      *            If domainObjectName is not configured, we'll build the domain object named based on the tableName or runtimeTableName.
-     *            And then we use the domain object renameing rule to generate the final domain object name.
+     *            And then we use the domain object renaming rule to generate the final domain object name.
      * @param context
      *            the context
      */
@@ -262,7 +262,7 @@ public class FullyQualifiedTable {
             String replaceString = domainObjectRenamingRule.getReplaceString();
             replaceString = replaceString == null ? "" : replaceString; //$NON-NLS-1$
             Matcher matcher = pattern.matcher(finalDomainObjectName);
-            finalDomainObjectName = matcher.replaceAll(replaceString);
+            finalDomainObjectName = getCamelCaseString(matcher.replaceAll(replaceString), true);
         }
         return finalDomainObjectName;
     }

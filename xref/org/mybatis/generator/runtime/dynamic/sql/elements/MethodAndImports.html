@@ -35,7 +35,7 @@
 <a class="jxr_linenumber" name="L27" href="#L27">27</a>      <strong class="jxr_keyword">private</strong> Set&lt;FullyQualifiedJavaType&gt; imports;
 <a class="jxr_linenumber" name="L28" href="#L28">28</a>      <strong class="jxr_keyword">private</strong> Set&lt;String&gt; staticImports;
 <a class="jxr_linenumber" name="L29" href="#L29">29</a>      
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>      <strong class="jxr_keyword">private</strong> <a href="../../../../../../../org/mybatis/generator/runtime/dynamic/sql/elements/MethodAndImports.html">MethodAndImports</a>(<a href="../../../../../../../org/mybatis/generator/runtime/dynamic/sql/elements/UpdateByPrimaryKeySelectiveMethodGenerator.html">Builder</a> builder) {
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>      <strong class="jxr_keyword">private</strong> <a href="../../../../../../../org/mybatis/generator/runtime/dynamic/sql/elements/MethodAndImports.html">MethodAndImports</a>(<a href="../../../../../../../org/mybatis/generator/runtime/dynamic/sql/elements/UpdateByExampleMethodGenerator.html">Builder</a> builder) {
 <a class="jxr_linenumber" name="L31" href="#L31">31</a>          method = builder.method;
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>          imports = builder.imports;
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>          staticImports = builder.staticImports;
@@ -53,36 +53,36 @@
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>          <strong class="jxr_keyword">return</strong> staticImports;
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>      }
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>      
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../../../../org/mybatis/generator/runtime/dynamic/sql/elements/UpdateByPrimaryKeySelectiveMethodGenerator.html">Builder</a> withMethod(<a href="../../../../../../../org/mybatis/generator/api/dom/java/Method.html">Method</a> method) {
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../../../../org/mybatis/generator/runtime/dynamic/sql/elements/UpdateByPrimaryKeySelectiveMethodGenerator.html">Builder</a>().withMethod(method);
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../../../../org/mybatis/generator/runtime/dynamic/sql/elements/UpdateByExampleMethodGenerator.html">Builder</a> withMethod(<a href="../../../../../../../org/mybatis/generator/api/dom/java/Method.html">Method</a> method) {
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../../../../org/mybatis/generator/runtime/dynamic/sql/elements/UpdateByExampleMethodGenerator.html">Builder</a>().withMethod(method);
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>      }
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>      
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../../../org/mybatis/generator/runtime/dynamic/sql/elements/UpdateByPrimaryKeySelectiveMethodGenerator.html">Builder</a> {
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../../../org/mybatis/generator/runtime/dynamic/sql/elements/UpdateByExampleMethodGenerator.html">Builder</a> {
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>          <strong class="jxr_keyword">private</strong> <a href="../../../../../../../org/mybatis/generator/api/dom/java/Method.html">Method</a> method;
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>          <strong class="jxr_keyword">private</strong> Set&lt;FullyQualifiedJavaType&gt; imports = <strong class="jxr_keyword">new</strong> HashSet&lt;FullyQualifiedJavaType&gt;();
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>          <strong class="jxr_keyword">private</strong> Set&lt;String&gt; staticImports = <strong class="jxr_keyword">new</strong> HashSet&lt;String&gt;();
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>          
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>          <strong class="jxr_keyword">public</strong> <a href="../../../../../../../org/mybatis/generator/runtime/dynamic/sql/elements/UpdateByPrimaryKeySelectiveMethodGenerator.html">Builder</a> withMethod(<a href="../../../../../../../org/mybatis/generator/api/dom/java/Method.html">Method</a> method) {
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>          <strong class="jxr_keyword">public</strong> <a href="../../../../../../../org/mybatis/generator/runtime/dynamic/sql/elements/UpdateByExampleMethodGenerator.html">Builder</a> withMethod(<a href="../../../../../../../org/mybatis/generator/api/dom/java/Method.html">Method</a> method) {
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>              <strong class="jxr_keyword">this</strong>.method = method;
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>              <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>;
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>          }
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>          
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>          <strong class="jxr_keyword">public</strong> <a href="../../../../../../../org/mybatis/generator/runtime/dynamic/sql/elements/UpdateByPrimaryKeySelectiveMethodGenerator.html">Builder</a> withImport(<a href="../../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a> importedType) {
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>          <strong class="jxr_keyword">public</strong> <a href="../../../../../../../org/mybatis/generator/runtime/dynamic/sql/elements/UpdateByExampleMethodGenerator.html">Builder</a> withImport(<a href="../../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a> importedType) {
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>              <strong class="jxr_keyword">this</strong>.imports.add(importedType);
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>              <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>;
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>          }
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>          
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>          <strong class="jxr_keyword">public</strong> <a href="../../../../../../../org/mybatis/generator/runtime/dynamic/sql/elements/UpdateByPrimaryKeySelectiveMethodGenerator.html">Builder</a> withImports(Set&lt;FullyQualifiedJavaType&gt; imports) {
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>          <strong class="jxr_keyword">public</strong> <a href="../../../../../../../org/mybatis/generator/runtime/dynamic/sql/elements/UpdateByExampleMethodGenerator.html">Builder</a> withImports(Set&lt;FullyQualifiedJavaType&gt; imports) {
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>              <strong class="jxr_keyword">this</strong>.imports.addAll(imports);
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>              <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>;
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>          }
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>          
-<a class="jxr_linenumber" name="L72" href="#L72">72</a>          <strong class="jxr_keyword">public</strong> <a href="../../../../../../../org/mybatis/generator/runtime/dynamic/sql/elements/UpdateByPrimaryKeySelectiveMethodGenerator.html">Builder</a> withStaticImport(String staticImport) {
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>          <strong class="jxr_keyword">public</strong> <a href="../../../../../../../org/mybatis/generator/runtime/dynamic/sql/elements/UpdateByExampleMethodGenerator.html">Builder</a> withStaticImport(String staticImport) {
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>              <strong class="jxr_keyword">this</strong>.staticImports.add(staticImport);
 <a class="jxr_linenumber" name="L74" href="#L74">74</a>              <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>;
 <a class="jxr_linenumber" name="L75" href="#L75">75</a>          }
 <a class="jxr_linenumber" name="L76" href="#L76">76</a>  
-<a class="jxr_linenumber" name="L77" href="#L77">77</a>          <strong class="jxr_keyword">public</strong> <a href="../../../../../../../org/mybatis/generator/runtime/dynamic/sql/elements/UpdateByPrimaryKeySelectiveMethodGenerator.html">Builder</a> withStaticImports(Set&lt;String&gt; staticImports) {
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>          <strong class="jxr_keyword">public</strong> <a href="../../../../../../../org/mybatis/generator/runtime/dynamic/sql/elements/UpdateByExampleMethodGenerator.html">Builder</a> withStaticImports(Set&lt;String&gt; staticImports) {
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>              <strong class="jxr_keyword">this</strong>.staticImports.addAll(staticImports);
 <a class="jxr_linenumber" name="L79" href="#L79">79</a>              <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>;
 <a class="jxr_linenumber" name="L80" href="#L80">80</a>          }
@@ -94,6 +94,6 @@
 <a class="jxr_linenumber" name="L86" href="#L86">86</a>  }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2006&#x2013;2017 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2006&#x2013;2018 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
 </body>
 </html>

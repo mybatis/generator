@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InsertSelectiveMethodGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.dynamic.sql.elements</a> &gt; <span class="el_source">InsertSelectiveMethodGenerator.java</span></div><h1>InsertSelectiveMethodGenerator.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2018 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime.dynamic.sql.elements;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.Interface;
+import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.codegen.mybatis3.ListUtilities;
+import org.mybatis.generator.internal.util.JavaBeansUtil;
+
+public class InsertSelectiveMethodGenerator extends AbstractMethodGenerator {
+    private FullyQualifiedJavaType recordType;
+    private String tableFieldName;
+    
+    private InsertSelectiveMethodGenerator(Builder builder) {
+<span class="fc" id="L35">        super(builder);</span>
+<span class="fc" id="L36">        recordType = builder.recordType;</span>
+<span class="fc" id="L37">        tableFieldName = builder.tableFieldName;</span>
+<span class="fc" id="L38">    }</span>
+
+    @Override
+    public MethodAndImports generateMethodAndImports() {
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">        if (!introspectedTable.getRules().generateInsertSelective()) {</span>
+<span class="nc" id="L43">            return null;</span>
+        }
+
+<span class="fc" id="L46">        Set&lt;FullyQualifiedJavaType&gt; imports = new HashSet&lt;FullyQualifiedJavaType&gt;();</span>
+        
+<span class="fc" id="L48">        imports.add(new FullyQualifiedJavaType(&quot;org.mybatis.dynamic.sql.SqlBuilder&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L49">        imports.add(new FullyQualifiedJavaType(&quot;org.mybatis.dynamic.sql.render.RenderingStrategy&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L50">        imports.add(recordType);</span>
+        
+<span class="fc" id="L52">        Method method = new Method(&quot;insertSelective&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L53">        method.setDefault(true);</span>
+<span class="fc" id="L54">        context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);</span>
+<span class="fc" id="L55">        method.setReturnType(FullyQualifiedJavaType.getIntInstance());</span>
+<span class="fc" id="L56">        method.addParameter(new Parameter(recordType, &quot;record&quot;)); //$NON-NLS-1$</span>
+        
+<span class="fc" id="L58">        method.addBodyLine(&quot;return insert(SqlBuilder.insert(record)&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L59">        method.addBodyLine(&quot;        .into(&quot; + tableFieldName + &quot;)&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+        
+<span class="fc" id="L61">        List&lt;IntrospectedColumn&gt; columns = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(introspectedTable.getAllColumns());</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        for (IntrospectedColumn column : columns) {</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">            if (column.isSequenceColumn()) {</span>
+<span class="fc" id="L64">                method.addBodyLine(&quot;        .map(&quot; + column.getJavaProperty() //$NON-NLS-1$</span>
+<span class="fc" id="L65">                        + &quot;).toProperty(\&quot;&quot; + column.getJavaProperty() //$NON-NLS-1$</span>
+                        + &quot;\&quot;)&quot;); //$NON-NLS-1$
+            } else {
+<span class="fc" id="L68">                String methodName = JavaBeansUtil.getGetterMethodName(column.getJavaProperty(), column.getFullyQualifiedJavaType());</span>
+<span class="fc" id="L69">                method.addBodyLine(&quot;        .map(&quot; + column.getJavaProperty() //$NON-NLS-1$</span>
+<span class="fc" id="L70">                        + &quot;).toPropertyWhenPresent(\&quot;&quot; + column.getJavaProperty() //$NON-NLS-1$</span>
+                        + &quot;\&quot;, record::&quot; + methodName //$NON-NLS-1$
+                        + &quot;)&quot;); //$NON-NLS-1$
+            }
+<span class="fc" id="L74">        }</span>
+        
+<span class="fc" id="L76">        method.addBodyLine(&quot;        .build()&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L77">        method.addBodyLine(&quot;        .render(RenderingStrategy.MYBATIS3));&quot;); //$NON-NLS-1$</span>
+        
+<span class="fc" id="L79">        return MethodAndImports.withMethod(method)</span>
+<span class="fc" id="L80">                .withImports(imports)</span>
+<span class="fc" id="L81">                .build();</span>
+    }
+
+    @Override
+    public boolean callPlugins(Method method, Interface interfaze) {
+<span class="fc" id="L86">        return context.getPlugins().clientInsertSelectiveMethodGenerated(method, interfaze, introspectedTable);</span>
+    }
+
+<span class="fc" id="L89">    public static class Builder extends BaseBuilder&lt;Builder, InsertSelectiveMethodGenerator&gt; {</span>
+        private FullyQualifiedJavaType recordType;
+        private String tableFieldName;
+        
+        public Builder withRecordType(FullyQualifiedJavaType recordType) {
+<span class="fc" id="L94">            this.recordType = recordType;</span>
+<span class="fc" id="L95">            return this;</span>
+        }
+        
+        public Builder withTableFieldName(String tableFieldName) {
+<span class="fc" id="L99">            this.tableFieldName = tableFieldName;</span>
+<span class="fc" id="L100">            return this;</span>
+        }
+
+        @Override
+        public Builder getThis() {
+<span class="fc" id="L105">            return this;</span>
+        }
+
+        @Override
+        public InsertSelectiveMethodGenerator build() {
+<span class="fc" id="L110">            return new InsertSelectiveMethodGenerator(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

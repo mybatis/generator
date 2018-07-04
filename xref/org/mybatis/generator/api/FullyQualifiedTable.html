@@ -7,7 +7,7 @@
 <body>
 <div id="overview"><a href="../../../../../apidocs/org/mybatis/generator/api/FullyQualifiedTable.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_javadoccomment"> *    Copyright 2006-2017 the original author or authors.</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_javadoccomment"> *    Copyright 2006-2018 the original author or authors.</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_javadoccomment"> *    Licensed under the Apache License, Version 2.0 (the "License");</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_javadoccomment"> *    you may not use this file except in compliance with the License.</em>
@@ -97,7 +97,7 @@
 <a class="jxr_linenumber" name="L89" href="#L89">89</a>  <em class="jxr_javadoccomment">     *            obtained from the Context.</em>
 <a class="jxr_linenumber" name="L90" href="#L90">90</a>  <em class="jxr_javadoccomment">     * @param domainObjectRenamingRule</em>
 <a class="jxr_linenumber" name="L91" href="#L91">91</a>  <em class="jxr_javadoccomment">     *            If domainObjectName is not configured, we'll build the domain object named based on the tableName or runtimeTableName.</em>
-<a class="jxr_linenumber" name="L92" href="#L92">92</a>  <em class="jxr_javadoccomment">     *            And then we use the domain object renameing rule to generate the final domain object name.</em>
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>  <em class="jxr_javadoccomment">     *            And then we use the domain object renaming rule to generate the final domain object name.</em>
 <a class="jxr_linenumber" name="L93" href="#L93">93</a>  <em class="jxr_javadoccomment">     * @param context</em>
 <a class="jxr_linenumber" name="L94" href="#L94">94</a>  <em class="jxr_javadoccomment">     *            the context</em>
 <a class="jxr_linenumber" name="L95" href="#L95">95</a>  <em class="jxr_javadoccomment">     */</em>
@@ -270,7 +270,7 @@
 <a class="jxr_linenumber" name="L262" href="#L262">262</a>             String replaceString = domainObjectRenamingRule.getReplaceString();
 <a class="jxr_linenumber" name="L263" href="#L263">263</a>             replaceString = replaceString == <strong class="jxr_keyword">null</strong> ? <span class="jxr_string">""</span> : replaceString; <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L264" href="#L264">264</a>             Matcher matcher = pattern.matcher(finalDomainObjectName);
-<a class="jxr_linenumber" name="L265" href="#L265">265</a>             finalDomainObjectName = matcher.replaceAll(replaceString);
+<a class="jxr_linenumber" name="L265" href="#L265">265</a>             finalDomainObjectName = getCamelCaseString(matcher.replaceAll(replaceString), <strong class="jxr_keyword">true</strong>);
 <a class="jxr_linenumber" name="L266" href="#L266">266</a>         }
 <a class="jxr_linenumber" name="L267" href="#L267">267</a>         <strong class="jxr_keyword">return</strong> finalDomainObjectName;
 <a class="jxr_linenumber" name="L268" href="#L268">268</a>     }
@@ -412,6 +412,6 @@
 <a class="jxr_linenumber" name="L404" href="#L404">404</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2006&#x2013;2017 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2006&#x2013;2018 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
 </body>
 </html>

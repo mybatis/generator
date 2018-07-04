@@ -7,7 +7,7 @@
 <body>
 <div id="overview"><a href="../../../../../../apidocs/org/mybatis/generator/internal/db/DatabaseIntrospector.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_javadoccomment"> *    Copyright 2006-2017 the original author or authors.</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_javadoccomment"> *    Copyright 2006-2018 the original author or authors.</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_javadoccomment"> *    Licensed under the Apache License, Version 2.0 (the "License");</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_javadoccomment"> *    you may not use this file except in compliance with the License.</em>
@@ -219,7 +219,7 @@
 <a class="jxr_linenumber" name="L211" href="#L211">211</a>                 <em class="jxr_comment">// add warning that the table has only BLOB columns, remove from</em>
 <a class="jxr_linenumber" name="L212" href="#L212">212</a>                 <em class="jxr_comment">// the list</em>
 <a class="jxr_linenumber" name="L213" href="#L213">213</a>                 String warning = getString(
-<a class="jxr_linenumber" name="L214" href="#L214">214</a>                                 <span class="jxr_string">"Warning.18"</span>, introspectedTable.getFullyQualifiedTable().toString()); <em class="jxr_comment">//$NON-NLS-1$ </em>
+<a class="jxr_linenumber" name="L214" href="#L214">214</a>                                 <span class="jxr_string">"Warning.18"</span>, introspectedTable.getFullyQualifiedTable().toString()); <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L215" href="#L215">215</a>                 warnings.add(warning);
 <a class="jxr_linenumber" name="L216" href="#L216">216</a>                 iter.remove();
 <a class="jxr_linenumber" name="L217" href="#L217">217</a>             } <strong class="jxr_keyword">else</strong> {
@@ -318,372 +318,371 @@
 <a class="jxr_linenumber" name="L310" href="#L310">310</a>                     <a href="../../../../../org/mybatis/generator/config/ColumnOverride.html">ColumnOverride</a> co = tc.getColumnOverride(introspectedColumn
 <a class="jxr_linenumber" name="L311" href="#L311">311</a>                             .getActualColumnName());
 <a class="jxr_linenumber" name="L312" href="#L312">312</a>                     <strong class="jxr_keyword">if</strong> (co != <strong class="jxr_keyword">null</strong>
-<a class="jxr_linenumber" name="L313" href="#L313">313</a>                             &amp;&amp; stringHasValue(co.getJavaType())
-<a class="jxr_linenumber" name="L314" href="#L314">314</a>                             &amp;&amp; stringHasValue(co.getJavaType())) {
-<a class="jxr_linenumber" name="L315" href="#L315">315</a>                         warn = false;
-<a class="jxr_linenumber" name="L316" href="#L316">316</a>                     }
-<a class="jxr_linenumber" name="L317" href="#L317">317</a> 
-<a class="jxr_linenumber" name="L318" href="#L318">318</a>                     <em class="jxr_comment">// if the type is not supported, then we'll report a warning</em>
-<a class="jxr_linenumber" name="L319" href="#L319">319</a>                     <strong class="jxr_keyword">if</strong> (warn) {
-<a class="jxr_linenumber" name="L320" href="#L320">320</a>                         introspectedColumn
-<a class="jxr_linenumber" name="L321" href="#L321">321</a>                                 .setFullyQualifiedJavaType(<a href="../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a>
-<a class="jxr_linenumber" name="L322" href="#L322">322</a>                                         .getObjectInstance());
-<a class="jxr_linenumber" name="L323" href="#L323">323</a>                         introspectedColumn.setJdbcTypeName(<span class="jxr_string">"OTHER"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L324" href="#L324">324</a> 
-<a class="jxr_linenumber" name="L325" href="#L325">325</a>                         String warning = getString(<span class="jxr_string">"Warning.14"</span>, <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L326" href="#L326">326</a>                                 Integer.toString(introspectedColumn.getJdbcType()),
-<a class="jxr_linenumber" name="L327" href="#L327">327</a>                                 entry.getKey().toString(),
-<a class="jxr_linenumber" name="L328" href="#L328">328</a>                                 introspectedColumn.getActualColumnName());
-<a class="jxr_linenumber" name="L329" href="#L329">329</a> 
-<a class="jxr_linenumber" name="L330" href="#L330">330</a>                         warnings.add(warning);
-<a class="jxr_linenumber" name="L331" href="#L331">331</a>                     }
-<a class="jxr_linenumber" name="L332" href="#L332">332</a>                 }
-<a class="jxr_linenumber" name="L333" href="#L333">333</a> 
-<a class="jxr_linenumber" name="L334" href="#L334">334</a>                 <strong class="jxr_keyword">if</strong> (context.autoDelimitKeywords()
-<a class="jxr_linenumber" name="L335" href="#L335">335</a>                         &amp;&amp; SqlReservedWords.containsWord(introspectedColumn
-<a class="jxr_linenumber" name="L336" href="#L336">336</a>                             .getActualColumnName())) {
-<a class="jxr_linenumber" name="L337" href="#L337">337</a>                     introspectedColumn.setColumnNameDelimited(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L338" href="#L338">338</a>                 }
-<a class="jxr_linenumber" name="L339" href="#L339">339</a> 
-<a class="jxr_linenumber" name="L340" href="#L340">340</a>                 <strong class="jxr_keyword">if</strong> (tc.isAllColumnDelimitingEnabled()) {
-<a class="jxr_linenumber" name="L341" href="#L341">341</a>                     introspectedColumn.setColumnNameDelimited(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L342" href="#L342">342</a>                 }
-<a class="jxr_linenumber" name="L343" href="#L343">343</a>             }
-<a class="jxr_linenumber" name="L344" href="#L344">344</a>         }
-<a class="jxr_linenumber" name="L345" href="#L345">345</a>     }
-<a class="jxr_linenumber" name="L346" href="#L346">346</a> 
-<a class="jxr_linenumber" name="L347" href="#L347">347</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> calculateIdentityColumns(<a href="../../../../../org/mybatis/generator/config/TableConfiguration.html">TableConfiguration</a> tc,
-<a class="jxr_linenumber" name="L348" href="#L348">348</a>             Map&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt; columns) {
-<a class="jxr_linenumber" name="L349" href="#L349">349</a>         <a href="../../../../../org/mybatis/generator/config/GeneratedKey.html">GeneratedKey</a> gk = tc.getGeneratedKey();
-<a class="jxr_linenumber" name="L350" href="#L350">350</a>         <strong class="jxr_keyword">if</strong> (gk == <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L351" href="#L351">351</a>             <em class="jxr_comment">// no generated key, then no identity or sequence columns</em>
-<a class="jxr_linenumber" name="L352" href="#L352">352</a>             <strong class="jxr_keyword">return</strong>;
-<a class="jxr_linenumber" name="L353" href="#L353">353</a>         }
-<a class="jxr_linenumber" name="L354" href="#L354">354</a>         
-<a class="jxr_linenumber" name="L355" href="#L355">355</a>         <strong class="jxr_keyword">for</strong> (Map.Entry&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt; entry : columns
-<a class="jxr_linenumber" name="L356" href="#L356">356</a>                 .entrySet()) {
-<a class="jxr_linenumber" name="L357" href="#L357">357</a>             <strong class="jxr_keyword">for</strong> (IntrospectedColumn introspectedColumn : entry.getValue()) {
-<a class="jxr_linenumber" name="L358" href="#L358">358</a>                 <strong class="jxr_keyword">if</strong> (isMatchedColumn(introspectedColumn, gk)) {
-<a class="jxr_linenumber" name="L359" href="#L359">359</a>                     <strong class="jxr_keyword">if</strong> (gk.isIdentity() || gk.isJdbcStandard()) {
-<a class="jxr_linenumber" name="L360" href="#L360">360</a>                         introspectedColumn.setIdentity(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L361" href="#L361">361</a>                         introspectedColumn.setSequenceColumn(false);
-<a class="jxr_linenumber" name="L362" href="#L362">362</a>                     } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L363" href="#L363">363</a>                         introspectedColumn.setIdentity(false);
-<a class="jxr_linenumber" name="L364" href="#L364">364</a>                         introspectedColumn.setSequenceColumn(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L365" href="#L365">365</a>                     }
-<a class="jxr_linenumber" name="L366" href="#L366">366</a>                 }
-<a class="jxr_linenumber" name="L367" href="#L367">367</a>             }
-<a class="jxr_linenumber" name="L368" href="#L368">368</a>         }
-<a class="jxr_linenumber" name="L369" href="#L369">369</a>     }
-<a class="jxr_linenumber" name="L370" href="#L370">370</a> 
-<a class="jxr_linenumber" name="L371" href="#L371">371</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> isMatchedColumn(<a href="../../../../../org/mybatis/generator/api/IntrospectedColumn.html">IntrospectedColumn</a> introspectedColumn, <a href="../../../../../org/mybatis/generator/config/GeneratedKey.html">GeneratedKey</a> gk) {
-<a class="jxr_linenumber" name="L372" href="#L372">372</a>         <strong class="jxr_keyword">if</strong> (introspectedColumn.isColumnNameDelimited()) {
-<a class="jxr_linenumber" name="L373" href="#L373">373</a>             <strong class="jxr_keyword">return</strong> introspectedColumn.getActualColumnName().equals(gk.getColumn());
-<a class="jxr_linenumber" name="L374" href="#L374">374</a>         } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L375" href="#L375">375</a>             <strong class="jxr_keyword">return</strong> introspectedColumn.getActualColumnName().equalsIgnoreCase(gk.getColumn());
-<a class="jxr_linenumber" name="L376" href="#L376">376</a>         }
-<a class="jxr_linenumber" name="L377" href="#L377">377</a>     }
-<a class="jxr_linenumber" name="L378" href="#L378">378</a> 
-<a class="jxr_linenumber" name="L379" href="#L379">379</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> applyColumnOverrides(<a href="../../../../../org/mybatis/generator/config/TableConfiguration.html">TableConfiguration</a> tc,
-<a class="jxr_linenumber" name="L380" href="#L380">380</a>             Map&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt; columns) {
-<a class="jxr_linenumber" name="L381" href="#L381">381</a>         <strong class="jxr_keyword">for</strong> (Map.Entry&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt; entry : columns
-<a class="jxr_linenumber" name="L382" href="#L382">382</a>                 .entrySet()) {
-<a class="jxr_linenumber" name="L383" href="#L383">383</a>             <strong class="jxr_keyword">for</strong> (IntrospectedColumn introspectedColumn : entry.getValue()) {
-<a class="jxr_linenumber" name="L384" href="#L384">384</a>                 <a href="../../../../../org/mybatis/generator/config/ColumnOverride.html">ColumnOverride</a> columnOverride = tc
-<a class="jxr_linenumber" name="L385" href="#L385">385</a>                         .getColumnOverride(introspectedColumn
-<a class="jxr_linenumber" name="L386" href="#L386">386</a>                                 .getActualColumnName());
-<a class="jxr_linenumber" name="L387" href="#L387">387</a> 
-<a class="jxr_linenumber" name="L388" href="#L388">388</a>                 <strong class="jxr_keyword">if</strong> (columnOverride != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L389" href="#L389">389</a>                     <strong class="jxr_keyword">if</strong> (logger.isDebugEnabled()) {
-<a class="jxr_linenumber" name="L390" href="#L390">390</a>                         logger.debug(getString(<span class="jxr_string">"Tracing.4"</span>, <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L391" href="#L391">391</a>                                 introspectedColumn.getActualColumnName(), entry
-<a class="jxr_linenumber" name="L392" href="#L392">392</a>                                         .getKey().toString()));
-<a class="jxr_linenumber" name="L393" href="#L393">393</a>                     }
-<a class="jxr_linenumber" name="L394" href="#L394">394</a> 
-<a class="jxr_linenumber" name="L395" href="#L395">395</a>                     <strong class="jxr_keyword">if</strong> (stringHasValue(columnOverride
-<a class="jxr_linenumber" name="L396" href="#L396">396</a>                             .getJavaProperty())) {
-<a class="jxr_linenumber" name="L397" href="#L397">397</a>                         introspectedColumn.setJavaProperty(columnOverride
-<a class="jxr_linenumber" name="L398" href="#L398">398</a>                                 .getJavaProperty());
-<a class="jxr_linenumber" name="L399" href="#L399">399</a>                     }
-<a class="jxr_linenumber" name="L400" href="#L400">400</a> 
-<a class="jxr_linenumber" name="L401" href="#L401">401</a>                     <strong class="jxr_keyword">if</strong> (stringHasValue(columnOverride
-<a class="jxr_linenumber" name="L402" href="#L402">402</a>                             .getJavaType())) {
-<a class="jxr_linenumber" name="L403" href="#L403">403</a>                         introspectedColumn
-<a class="jxr_linenumber" name="L404" href="#L404">404</a>                                 .setFullyQualifiedJavaType(<strong class="jxr_keyword">new</strong> <a href="../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a>(
-<a class="jxr_linenumber" name="L405" href="#L405">405</a>                                         columnOverride.getJavaType()));
-<a class="jxr_linenumber" name="L406" href="#L406">406</a>                     }
-<a class="jxr_linenumber" name="L407" href="#L407">407</a> 
-<a class="jxr_linenumber" name="L408" href="#L408">408</a>                     <strong class="jxr_keyword">if</strong> (stringHasValue(columnOverride
-<a class="jxr_linenumber" name="L409" href="#L409">409</a>                             .getJdbcType())) {
-<a class="jxr_linenumber" name="L410" href="#L410">410</a>                         introspectedColumn.setJdbcTypeName(columnOverride
-<a class="jxr_linenumber" name="L411" href="#L411">411</a>                                 .getJdbcType());
-<a class="jxr_linenumber" name="L412" href="#L412">412</a>                     }
-<a class="jxr_linenumber" name="L413" href="#L413">413</a> 
-<a class="jxr_linenumber" name="L414" href="#L414">414</a>                     <strong class="jxr_keyword">if</strong> (stringHasValue(columnOverride
-<a class="jxr_linenumber" name="L415" href="#L415">415</a>                             .getTypeHandler())) {
-<a class="jxr_linenumber" name="L416" href="#L416">416</a>                         introspectedColumn.setTypeHandler(columnOverride
-<a class="jxr_linenumber" name="L417" href="#L417">417</a>                                 .getTypeHandler());
-<a class="jxr_linenumber" name="L418" href="#L418">418</a>                     }
-<a class="jxr_linenumber" name="L419" href="#L419">419</a> 
-<a class="jxr_linenumber" name="L420" href="#L420">420</a>                     <strong class="jxr_keyword">if</strong> (columnOverride.isColumnNameDelimited()) {
-<a class="jxr_linenumber" name="L421" href="#L421">421</a>                         introspectedColumn.setColumnNameDelimited(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L422" href="#L422">422</a>                     }
-<a class="jxr_linenumber" name="L423" href="#L423">423</a> 
-<a class="jxr_linenumber" name="L424" href="#L424">424</a>                     introspectedColumn.setGeneratedAlways(columnOverride.isGeneratedAlways());
-<a class="jxr_linenumber" name="L425" href="#L425">425</a> 
-<a class="jxr_linenumber" name="L426" href="#L426">426</a>                     introspectedColumn.setProperties(columnOverride
-<a class="jxr_linenumber" name="L427" href="#L427">427</a>                             .getProperties());
-<a class="jxr_linenumber" name="L428" href="#L428">428</a>                     
-<a class="jxr_linenumber" name="L429" href="#L429">429</a>                 }
-<a class="jxr_linenumber" name="L430" href="#L430">430</a>             }
-<a class="jxr_linenumber" name="L431" href="#L431">431</a>         }
-<a class="jxr_linenumber" name="L432" href="#L432">432</a>     }
-<a class="jxr_linenumber" name="L433" href="#L433">433</a> 
-<a class="jxr_linenumber" name="L434" href="#L434">434</a>     <strong class="jxr_keyword">private</strong> Map&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt; getColumns(
-<a class="jxr_linenumber" name="L435" href="#L435">435</a>             <a href="../../../../../org/mybatis/generator/config/TableConfiguration.html">TableConfiguration</a> tc) <strong class="jxr_keyword">throws</strong> SQLException {
-<a class="jxr_linenumber" name="L436" href="#L436">436</a>         String localCatalog;
-<a class="jxr_linenumber" name="L437" href="#L437">437</a>         String localSchema;
-<a class="jxr_linenumber" name="L438" href="#L438">438</a>         String localTableName;
-<a class="jxr_linenumber" name="L439" href="#L439">439</a> 
-<a class="jxr_linenumber" name="L440" href="#L440">440</a>         <strong class="jxr_keyword">boolean</strong> delimitIdentifiers = tc.isDelimitIdentifiers()
-<a class="jxr_linenumber" name="L441" href="#L441">441</a>                 || stringContainsSpace(tc.getCatalog())
-<a class="jxr_linenumber" name="L442" href="#L442">442</a>                 || stringContainsSpace(tc.getSchema())
-<a class="jxr_linenumber" name="L443" href="#L443">443</a>                 || stringContainsSpace(tc.getTableName());
-<a class="jxr_linenumber" name="L444" href="#L444">444</a> 
-<a class="jxr_linenumber" name="L445" href="#L445">445</a>         <strong class="jxr_keyword">if</strong> (delimitIdentifiers) {
-<a class="jxr_linenumber" name="L446" href="#L446">446</a>             localCatalog = tc.getCatalog();
-<a class="jxr_linenumber" name="L447" href="#L447">447</a>             localSchema = tc.getSchema();
-<a class="jxr_linenumber" name="L448" href="#L448">448</a>             localTableName = tc.getTableName();
-<a class="jxr_linenumber" name="L449" href="#L449">449</a>         } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (databaseMetaData.storesLowerCaseIdentifiers()) {
-<a class="jxr_linenumber" name="L450" href="#L450">450</a>             localCatalog = tc.getCatalog() == <strong class="jxr_keyword">null</strong> ? <strong class="jxr_keyword">null</strong> : tc.getCatalog()
-<a class="jxr_linenumber" name="L451" href="#L451">451</a>                     .toLowerCase();
-<a class="jxr_linenumber" name="L452" href="#L452">452</a>             localSchema = tc.getSchema() == <strong class="jxr_keyword">null</strong> ? <strong class="jxr_keyword">null</strong> : tc.getSchema()
-<a class="jxr_linenumber" name="L453" href="#L453">453</a>                     .toLowerCase();
-<a class="jxr_linenumber" name="L454" href="#L454">454</a>             localTableName = tc.getTableName() == <strong class="jxr_keyword">null</strong> ? <strong class="jxr_keyword">null</strong> : tc
-<a class="jxr_linenumber" name="L455" href="#L455">455</a>                     .getTableName().toLowerCase();
-<a class="jxr_linenumber" name="L456" href="#L456">456</a>         } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (databaseMetaData.storesUpperCaseIdentifiers()) {
-<a class="jxr_linenumber" name="L457" href="#L457">457</a>             localCatalog = tc.getCatalog() == <strong class="jxr_keyword">null</strong> ? <strong class="jxr_keyword">null</strong> : tc.getCatalog()
-<a class="jxr_linenumber" name="L458" href="#L458">458</a>                     .toUpperCase();
-<a class="jxr_linenumber" name="L459" href="#L459">459</a>             localSchema = tc.getSchema() == <strong class="jxr_keyword">null</strong> ? <strong class="jxr_keyword">null</strong> : tc.getSchema()
-<a class="jxr_linenumber" name="L460" href="#L460">460</a>                     .toUpperCase();
-<a class="jxr_linenumber" name="L461" href="#L461">461</a>             localTableName = tc.getTableName() == <strong class="jxr_keyword">null</strong> ? <strong class="jxr_keyword">null</strong> : tc
-<a class="jxr_linenumber" name="L462" href="#L462">462</a>                     .getTableName().toUpperCase();
-<a class="jxr_linenumber" name="L463" href="#L463">463</a>         } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L464" href="#L464">464</a>             localCatalog = tc.getCatalog();
-<a class="jxr_linenumber" name="L465" href="#L465">465</a>             localSchema = tc.getSchema();
-<a class="jxr_linenumber" name="L466" href="#L466">466</a>             localTableName = tc.getTableName();
-<a class="jxr_linenumber" name="L467" href="#L467">467</a>         }
-<a class="jxr_linenumber" name="L468" href="#L468">468</a> 
-<a class="jxr_linenumber" name="L469" href="#L469">469</a>         <strong class="jxr_keyword">if</strong> (tc.isWildcardEscapingEnabled()) {
-<a class="jxr_linenumber" name="L470" href="#L470">470</a>             String escapeString = databaseMetaData.getSearchStringEscape();
-<a class="jxr_linenumber" name="L471" href="#L471">471</a> 
-<a class="jxr_linenumber" name="L472" href="#L472">472</a>             StringBuilder sb = <strong class="jxr_keyword">new</strong> StringBuilder();
-<a class="jxr_linenumber" name="L473" href="#L473">473</a>             StringTokenizer st;
-<a class="jxr_linenumber" name="L474" href="#L474">474</a>             <strong class="jxr_keyword">if</strong> (localSchema != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L475" href="#L475">475</a>                 st = <strong class="jxr_keyword">new</strong> StringTokenizer(localSchema, <span class="jxr_string">"_%"</span>, <strong class="jxr_keyword">true</strong>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L476" href="#L476">476</a>                 <strong class="jxr_keyword">while</strong> (st.hasMoreTokens()) {
-<a class="jxr_linenumber" name="L477" href="#L477">477</a>                     String token = st.nextToken();
-<a class="jxr_linenumber" name="L478" href="#L478">478</a>                     <strong class="jxr_keyword">if</strong> (token.equals(<span class="jxr_string">"_"</span>) <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L479" href="#L479">479</a>                             || token.equals(<span class="jxr_string">"%"</span>)) { <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L480" href="#L480">480</a>                         sb.append(escapeString);
-<a class="jxr_linenumber" name="L481" href="#L481">481</a>                     }
-<a class="jxr_linenumber" name="L482" href="#L482">482</a>                     sb.append(token);
-<a class="jxr_linenumber" name="L483" href="#L483">483</a>                 }
-<a class="jxr_linenumber" name="L484" href="#L484">484</a>                 localSchema = sb.toString();
-<a class="jxr_linenumber" name="L485" href="#L485">485</a>             }
-<a class="jxr_linenumber" name="L486" href="#L486">486</a> 
-<a class="jxr_linenumber" name="L487" href="#L487">487</a>             sb.setLength(0);
-<a class="jxr_linenumber" name="L488" href="#L488">488</a>             st = <strong class="jxr_keyword">new</strong> StringTokenizer(localTableName, <span class="jxr_string">"_%"</span>, <strong class="jxr_keyword">true</strong>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L489" href="#L489">489</a>             <strong class="jxr_keyword">while</strong> (st.hasMoreTokens()) {
-<a class="jxr_linenumber" name="L490" href="#L490">490</a>                 String token = st.nextToken();
-<a class="jxr_linenumber" name="L491" href="#L491">491</a>                 <strong class="jxr_keyword">if</strong> (token.equals(<span class="jxr_string">"_"</span>) <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L492" href="#L492">492</a>                         || token.equals(<span class="jxr_string">"%"</span>)) { <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L493" href="#L493">493</a>                     sb.append(escapeString);
-<a class="jxr_linenumber" name="L494" href="#L494">494</a>                 }
-<a class="jxr_linenumber" name="L495" href="#L495">495</a>                 sb.append(token);
-<a class="jxr_linenumber" name="L496" href="#L496">496</a>             }
-<a class="jxr_linenumber" name="L497" href="#L497">497</a>             localTableName = sb.toString();
-<a class="jxr_linenumber" name="L498" href="#L498">498</a>         }
-<a class="jxr_linenumber" name="L499" href="#L499">499</a> 
-<a class="jxr_linenumber" name="L500" href="#L500">500</a>         Map&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt; answer =
-<a class="jxr_linenumber" name="L501" href="#L501">501</a>                 <strong class="jxr_keyword">new</strong> HashMap&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt;();
-<a class="jxr_linenumber" name="L502" href="#L502">502</a> 
-<a class="jxr_linenumber" name="L503" href="#L503">503</a>         <strong class="jxr_keyword">if</strong> (logger.isDebugEnabled()) {
-<a class="jxr_linenumber" name="L504" href="#L504">504</a>             String fullTableName = composeFullyQualifiedTableName(localCatalog, localSchema,
-<a class="jxr_linenumber" name="L505" href="#L505">505</a>                             localTableName, '.');
-<a class="jxr_linenumber" name="L506" href="#L506">506</a>             logger.debug(getString(<span class="jxr_string">"Tracing.1"</span>, fullTableName)); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L507" href="#L507">507</a>         }
-<a class="jxr_linenumber" name="L508" href="#L508">508</a> 
-<a class="jxr_linenumber" name="L509" href="#L509">509</a>         ResultSet rs = databaseMetaData.getColumns(localCatalog, localSchema,
-<a class="jxr_linenumber" name="L510" href="#L510">510</a>                 localTableName, <span class="jxr_string">"%"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L511" href="#L511">511</a>         
-<a class="jxr_linenumber" name="L512" href="#L512">512</a>         <strong class="jxr_keyword">boolean</strong> supportsIsAutoIncrement = false;
-<a class="jxr_linenumber" name="L513" href="#L513">513</a>         <strong class="jxr_keyword">boolean</strong> supportsIsGeneratedColumn = false;
-<a class="jxr_linenumber" name="L514" href="#L514">514</a>         ResultSetMetaData rsmd = rs.getMetaData();
-<a class="jxr_linenumber" name="L515" href="#L515">515</a>         <strong class="jxr_keyword">int</strong> colCount = rsmd.getColumnCount();
-<a class="jxr_linenumber" name="L516" href="#L516">516</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 1; i &lt;= colCount; i++) {
-<a class="jxr_linenumber" name="L517" href="#L517">517</a>             <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"IS_AUTOINCREMENT"</span>.equals(rsmd.getColumnName(i))) { <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L518" href="#L518">518</a>                 supportsIsAutoIncrement = <strong class="jxr_keyword">true</strong>;
-<a class="jxr_linenumber" name="L519" href="#L519">519</a>             }
-<a class="jxr_linenumber" name="L520" href="#L520">520</a>             <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"IS_GENERATEDCOLUMN"</span>.equals(rsmd.getColumnName(i))) { <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L521" href="#L521">521</a>                 supportsIsGeneratedColumn = <strong class="jxr_keyword">true</strong>;
-<a class="jxr_linenumber" name="L522" href="#L522">522</a>             }
-<a class="jxr_linenumber" name="L523" href="#L523">523</a>         }
-<a class="jxr_linenumber" name="L524" href="#L524">524</a> 
-<a class="jxr_linenumber" name="L525" href="#L525">525</a>         <strong class="jxr_keyword">while</strong> (rs.next()) {
-<a class="jxr_linenumber" name="L526" href="#L526">526</a>             <a href="../../../../../org/mybatis/generator/api/IntrospectedColumn.html">IntrospectedColumn</a> introspectedColumn = <a href="../../../../../org/mybatis/generator/internal/ObjectFactory.html">ObjectFactory</a>
-<a class="jxr_linenumber" name="L527" href="#L527">527</a>                     .createIntrospectedColumn(context);
-<a class="jxr_linenumber" name="L528" href="#L528">528</a> 
-<a class="jxr_linenumber" name="L529" href="#L529">529</a>             introspectedColumn.setTableAlias(tc.getAlias());
-<a class="jxr_linenumber" name="L530" href="#L530">530</a>             introspectedColumn.setJdbcType(rs.getInt(<span class="jxr_string">"DATA_TYPE"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L531" href="#L531">531</a>             introspectedColumn.setLength(rs.getInt(<span class="jxr_string">"COLUMN_SIZE"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L532" href="#L532">532</a>             introspectedColumn.setActualColumnName(rs.getString(<span class="jxr_string">"COLUMN_NAME"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L533" href="#L533">533</a>             introspectedColumn
-<a class="jxr_linenumber" name="L534" href="#L534">534</a>                     .setNullable(rs.getInt(<span class="jxr_string">"NULLABLE"</span>) == DatabaseMetaData.columnNullable); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L535" href="#L535">535</a>             introspectedColumn.setScale(rs.getInt(<span class="jxr_string">"DECIMAL_DIGITS"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L536" href="#L536">536</a>             introspectedColumn.setRemarks(rs.getString(<span class="jxr_string">"REMARKS"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L537" href="#L537">537</a>             introspectedColumn.setDefaultValue(rs.getString(<span class="jxr_string">"COLUMN_DEF"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L538" href="#L538">538</a> 
-<a class="jxr_linenumber" name="L539" href="#L539">539</a>             <strong class="jxr_keyword">if</strong> (supportsIsAutoIncrement) {
-<a class="jxr_linenumber" name="L540" href="#L540">540</a>                 introspectedColumn.setAutoIncrement(
-<a class="jxr_linenumber" name="L541" href="#L541">541</a>                         <span class="jxr_string">"YES"</span>.equals(rs.getString(<span class="jxr_string">"IS_AUTOINCREMENT"</span>))); <em class="jxr_comment">//$NON-NLS-1$ //$NON-NLS-2$</em>
-<a class="jxr_linenumber" name="L542" href="#L542">542</a>             }
-<a class="jxr_linenumber" name="L543" href="#L543">543</a> 
-<a class="jxr_linenumber" name="L544" href="#L544">544</a>             <strong class="jxr_keyword">if</strong> (supportsIsGeneratedColumn) {
-<a class="jxr_linenumber" name="L545" href="#L545">545</a>                 introspectedColumn.setGeneratedColumn(
-<a class="jxr_linenumber" name="L546" href="#L546">546</a>                         <span class="jxr_string">"YES"</span>.equals(rs.getString(<span class="jxr_string">"IS_GENERATEDCOLUMN"</span>))); <em class="jxr_comment">//$NON-NLS-1$ //$NON-NLS-2$</em>
-<a class="jxr_linenumber" name="L547" href="#L547">547</a>             }
-<a class="jxr_linenumber" name="L548" href="#L548">548</a> 
-<a class="jxr_linenumber" name="L549" href="#L549">549</a>             <a href="../../../../../org/mybatis/generator/internal/db/ActualTableName.html">ActualTableName</a> atn = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/mybatis/generator/internal/db/ActualTableName.html">ActualTableName</a>(
-<a class="jxr_linenumber" name="L550" href="#L550">550</a>                     rs.getString(<span class="jxr_string">"TABLE_CAT"</span>), <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L551" href="#L551">551</a>                     rs.getString(<span class="jxr_string">"TABLE_SCHEM"</span>), <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L552" href="#L552">552</a>                     rs.getString(<span class="jxr_string">"TABLE_NAME"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L553" href="#L553">553</a> 
-<a class="jxr_linenumber" name="L554" href="#L554">554</a>             List&lt;IntrospectedColumn&gt; columns = answer.get(atn);
-<a class="jxr_linenumber" name="L555" href="#L555">555</a>             <strong class="jxr_keyword">if</strong> (columns == <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L556" href="#L556">556</a>                 columns = <strong class="jxr_keyword">new</strong> ArrayList&lt;IntrospectedColumn&gt;();
-<a class="jxr_linenumber" name="L557" href="#L557">557</a>                 answer.put(atn, columns);
-<a class="jxr_linenumber" name="L558" href="#L558">558</a>             }
-<a class="jxr_linenumber" name="L559" href="#L559">559</a> 
-<a class="jxr_linenumber" name="L560" href="#L560">560</a>             columns.add(introspectedColumn);
-<a class="jxr_linenumber" name="L561" href="#L561">561</a> 
-<a class="jxr_linenumber" name="L562" href="#L562">562</a>             <strong class="jxr_keyword">if</strong> (logger.isDebugEnabled()) {
-<a class="jxr_linenumber" name="L563" href="#L563">563</a>                 logger.debug(getString(
-<a class="jxr_linenumber" name="L564" href="#L564">564</a>                         <span class="jxr_string">"Tracing.2"</span>, <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L565" href="#L565">565</a>                         introspectedColumn.getActualColumnName(), Integer
-<a class="jxr_linenumber" name="L566" href="#L566">566</a>                                 .toString(introspectedColumn.getJdbcType()),
-<a class="jxr_linenumber" name="L567" href="#L567">567</a>                         atn.toString()));
-<a class="jxr_linenumber" name="L568" href="#L568">568</a>             }
-<a class="jxr_linenumber" name="L569" href="#L569">569</a>         }
-<a class="jxr_linenumber" name="L570" href="#L570">570</a> 
-<a class="jxr_linenumber" name="L571" href="#L571">571</a>         closeResultSet(rs);
-<a class="jxr_linenumber" name="L572" href="#L572">572</a> 
-<a class="jxr_linenumber" name="L573" href="#L573">573</a>         <strong class="jxr_keyword">if</strong> (answer.size() &gt; 1
-<a class="jxr_linenumber" name="L574" href="#L574">574</a>                 &amp;&amp; !stringContainsSQLWildcard(localSchema)
-<a class="jxr_linenumber" name="L575" href="#L575">575</a>                 &amp;&amp; !stringContainsSQLWildcard(localTableName)) {
-<a class="jxr_linenumber" name="L576" href="#L576">576</a>             <em class="jxr_comment">// issue a warning if there is more than one table and</em>
-<a class="jxr_linenumber" name="L577" href="#L577">577</a>             <em class="jxr_comment">// no wildcards were used</em>
-<a class="jxr_linenumber" name="L578" href="#L578">578</a>             <a href="../../../../../org/mybatis/generator/internal/db/ActualTableName.html">ActualTableName</a> inputAtn = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/mybatis/generator/internal/db/ActualTableName.html">ActualTableName</a>(tc.getCatalog(), tc
-<a class="jxr_linenumber" name="L579" href="#L579">579</a>                     .getSchema(), tc.getTableName());
-<a class="jxr_linenumber" name="L580" href="#L580">580</a> 
-<a class="jxr_linenumber" name="L581" href="#L581">581</a>             StringBuilder sb = <strong class="jxr_keyword">new</strong> StringBuilder();
-<a class="jxr_linenumber" name="L582" href="#L582">582</a>             <strong class="jxr_keyword">boolean</strong> comma = false;
-<a class="jxr_linenumber" name="L583" href="#L583">583</a>             <strong class="jxr_keyword">for</strong> (ActualTableName atn : answer.keySet()) {
-<a class="jxr_linenumber" name="L584" href="#L584">584</a>                 <strong class="jxr_keyword">if</strong> (comma) {
-<a class="jxr_linenumber" name="L585" href="#L585">585</a>                     sb.append(',');
-<a class="jxr_linenumber" name="L586" href="#L586">586</a>                 } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L587" href="#L587">587</a>                     comma = <strong class="jxr_keyword">true</strong>;
-<a class="jxr_linenumber" name="L588" href="#L588">588</a>                 }
-<a class="jxr_linenumber" name="L589" href="#L589">589</a>                 sb.append(atn.toString());
-<a class="jxr_linenumber" name="L590" href="#L590">590</a>             }
-<a class="jxr_linenumber" name="L591" href="#L591">591</a> 
-<a class="jxr_linenumber" name="L592" href="#L592">592</a>             warnings.add(getString(<span class="jxr_string">"Warning.25"</span>, <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L593" href="#L593">593</a>                     inputAtn.toString(), sb.toString()));
-<a class="jxr_linenumber" name="L594" href="#L594">594</a>         }
-<a class="jxr_linenumber" name="L595" href="#L595">595</a> 
-<a class="jxr_linenumber" name="L596" href="#L596">596</a>         <strong class="jxr_keyword">return</strong> answer;
-<a class="jxr_linenumber" name="L597" href="#L597">597</a>     }
-<a class="jxr_linenumber" name="L598" href="#L598">598</a> 
-<a class="jxr_linenumber" name="L599" href="#L599">599</a>     <strong class="jxr_keyword">private</strong> List&lt;IntrospectedTable&gt; calculateIntrospectedTables(
-<a class="jxr_linenumber" name="L600" href="#L600">600</a>             <a href="../../../../../org/mybatis/generator/config/TableConfiguration.html">TableConfiguration</a> tc,
-<a class="jxr_linenumber" name="L601" href="#L601">601</a>             Map&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt; columns) {
-<a class="jxr_linenumber" name="L602" href="#L602">602</a>         <strong class="jxr_keyword">boolean</strong> delimitIdentifiers = tc.isDelimitIdentifiers()
-<a class="jxr_linenumber" name="L603" href="#L603">603</a>                 || stringContainsSpace(tc.getCatalog())
-<a class="jxr_linenumber" name="L604" href="#L604">604</a>                 || stringContainsSpace(tc.getSchema())
-<a class="jxr_linenumber" name="L605" href="#L605">605</a>                 || stringContainsSpace(tc.getTableName());
-<a class="jxr_linenumber" name="L606" href="#L606">606</a> 
-<a class="jxr_linenumber" name="L607" href="#L607">607</a>         List&lt;IntrospectedTable&gt; answer = <strong class="jxr_keyword">new</strong> ArrayList&lt;IntrospectedTable&gt;();
-<a class="jxr_linenumber" name="L608" href="#L608">608</a> 
-<a class="jxr_linenumber" name="L609" href="#L609">609</a>         <strong class="jxr_keyword">for</strong> (Map.Entry&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt; entry : columns
-<a class="jxr_linenumber" name="L610" href="#L610">610</a>                 .entrySet()) {
-<a class="jxr_linenumber" name="L611" href="#L611">611</a>             <a href="../../../../../org/mybatis/generator/internal/db/ActualTableName.html">ActualTableName</a> atn = entry.getKey();
-<a class="jxr_linenumber" name="L612" href="#L612">612</a> 
-<a class="jxr_linenumber" name="L613" href="#L613">613</a>             <em class="jxr_comment">// we only use the returned catalog and schema if something was</em>
-<a class="jxr_linenumber" name="L614" href="#L614">614</a>             <em class="jxr_comment">// actually</em>
-<a class="jxr_linenumber" name="L615" href="#L615">615</a>             <em class="jxr_comment">// specified on the table configuration. If something was returned</em>
-<a class="jxr_linenumber" name="L616" href="#L616">616</a>             <em class="jxr_comment">// from the DB for these fields, but nothing was specified on the</em>
-<a class="jxr_linenumber" name="L617" href="#L617">617</a>             <em class="jxr_comment">// table</em>
-<a class="jxr_linenumber" name="L618" href="#L618">618</a>             <em class="jxr_comment">// configuration, then some sort of DB default is being returned</em>
-<a class="jxr_linenumber" name="L619" href="#L619">619</a>             <em class="jxr_comment">// and we don't want that in our SQL</em>
-<a class="jxr_linenumber" name="L620" href="#L620">620</a>             <a href="../../../../../org/mybatis/generator/api/FullyQualifiedTable.html">FullyQualifiedTable</a> table = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/mybatis/generator/api/FullyQualifiedTable.html">FullyQualifiedTable</a>(
-<a class="jxr_linenumber" name="L621" href="#L621">621</a>                     stringHasValue(tc.getCatalog()) ? atn.getCatalog() : <strong class="jxr_keyword">null</strong>,
-<a class="jxr_linenumber" name="L622" href="#L622">622</a>                     stringHasValue(tc.getSchema()) ? atn.getSchema() : <strong class="jxr_keyword">null</strong>,
-<a class="jxr_linenumber" name="L623" href="#L623">623</a>                     atn.getTableName(),
-<a class="jxr_linenumber" name="L624" href="#L624">624</a>                     tc.getDomainObjectName(),
-<a class="jxr_linenumber" name="L625" href="#L625">625</a>                     tc.getAlias(),
-<a class="jxr_linenumber" name="L626" href="#L626">626</a>                     isTrue(tc.getProperty(PropertyRegistry.TABLE_IGNORE_QUALIFIERS_AT_RUNTIME)),
-<a class="jxr_linenumber" name="L627" href="#L627">627</a>                     tc.getProperty(PropertyRegistry.TABLE_RUNTIME_CATALOG),
-<a class="jxr_linenumber" name="L628" href="#L628">628</a>                     tc.getProperty(PropertyRegistry.TABLE_RUNTIME_SCHEMA),
-<a class="jxr_linenumber" name="L629" href="#L629">629</a>                     tc.getProperty(PropertyRegistry.TABLE_RUNTIME_TABLE_NAME),
-<a class="jxr_linenumber" name="L630" href="#L630">630</a>                     delimitIdentifiers,
-<a class="jxr_linenumber" name="L631" href="#L631">631</a>                     tc.getDomainObjectRenamingRule(),
-<a class="jxr_linenumber" name="L632" href="#L632">632</a>                     context);
-<a class="jxr_linenumber" name="L633" href="#L633">633</a> 
-<a class="jxr_linenumber" name="L634" href="#L634">634</a>             <a href="../../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable = <a href="../../../../../org/mybatis/generator/internal/ObjectFactory.html">ObjectFactory</a>
-<a class="jxr_linenumber" name="L635" href="#L635">635</a>                     .createIntrospectedTable(tc, table, context);
-<a class="jxr_linenumber" name="L636" href="#L636">636</a> 
-<a class="jxr_linenumber" name="L637" href="#L637">637</a>             <strong class="jxr_keyword">for</strong> (IntrospectedColumn introspectedColumn : entry.getValue()) {
-<a class="jxr_linenumber" name="L638" href="#L638">638</a>                 introspectedTable.addColumn(introspectedColumn);
-<a class="jxr_linenumber" name="L639" href="#L639">639</a>             }
-<a class="jxr_linenumber" name="L640" href="#L640">640</a> 
-<a class="jxr_linenumber" name="L641" href="#L641">641</a>             calculatePrimaryKey(table, introspectedTable);
-<a class="jxr_linenumber" name="L642" href="#L642">642</a> 
-<a class="jxr_linenumber" name="L643" href="#L643">643</a>             enhanceIntrospectedTable(introspectedTable);
-<a class="jxr_linenumber" name="L644" href="#L644">644</a> 
-<a class="jxr_linenumber" name="L645" href="#L645">645</a>             answer.add(introspectedTable);
-<a class="jxr_linenumber" name="L646" href="#L646">646</a>         }
-<a class="jxr_linenumber" name="L647" href="#L647">647</a> 
-<a class="jxr_linenumber" name="L648" href="#L648">648</a>         <strong class="jxr_keyword">return</strong> answer;
-<a class="jxr_linenumber" name="L649" href="#L649">649</a>     }
-<a class="jxr_linenumber" name="L650" href="#L650">650</a> 
-<a class="jxr_linenumber" name="L651" href="#L651">651</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L652" href="#L652">652</a> <em class="jxr_javadoccomment">     * Calls database metadata to retrieve extra information about the table</em>
-<a class="jxr_linenumber" name="L653" href="#L653">653</a> <em class="jxr_javadoccomment">     * such as remarks associated with the table and the type.</em>
-<a class="jxr_linenumber" name="L654" href="#L654">654</a> <em class="jxr_javadoccomment">     * </em>
-<a class="jxr_linenumber" name="L655" href="#L655">655</a> <em class="jxr_javadoccomment">     * &lt;p&gt;If there is any error, we just add a warning and continue.</em>
-<a class="jxr_linenumber" name="L656" href="#L656">656</a> <em class="jxr_javadoccomment">     * </em>
-<a class="jxr_linenumber" name="L657" href="#L657">657</a> <em class="jxr_javadoccomment">     * @param introspectedTable the introspected table to enhance</em>
-<a class="jxr_linenumber" name="L658" href="#L658">658</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L659" href="#L659">659</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> enhanceIntrospectedTable(<a href="../../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable) {
-<a class="jxr_linenumber" name="L660" href="#L660">660</a>         <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L661" href="#L661">661</a>             <a href="../../../../../org/mybatis/generator/api/FullyQualifiedTable.html">FullyQualifiedTable</a> fqt = introspectedTable.getFullyQualifiedTable();
-<a class="jxr_linenumber" name="L662" href="#L662">662</a> 
-<a class="jxr_linenumber" name="L663" href="#L663">663</a>             ResultSet rs = databaseMetaData.getTables(fqt.getIntrospectedCatalog(), fqt.getIntrospectedSchema(),
-<a class="jxr_linenumber" name="L664" href="#L664">664</a>                     fqt.getIntrospectedTableName(), <strong class="jxr_keyword">null</strong>);
-<a class="jxr_linenumber" name="L665" href="#L665">665</a>             <strong class="jxr_keyword">if</strong> (rs.next()) {
-<a class="jxr_linenumber" name="L666" href="#L666">666</a>                 String remarks = rs.getString(<span class="jxr_string">"REMARKS"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L667" href="#L667">667</a>                 String tableType = rs.getString(<span class="jxr_string">"TABLE_TYPE"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L668" href="#L668">668</a>                 introspectedTable.setRemarks(remarks);
-<a class="jxr_linenumber" name="L669" href="#L669">669</a>                 introspectedTable.setTableType(tableType);
-<a class="jxr_linenumber" name="L670" href="#L670">670</a>             }
-<a class="jxr_linenumber" name="L671" href="#L671">671</a>             closeResultSet(rs);
-<a class="jxr_linenumber" name="L672" href="#L672">672</a>         } <strong class="jxr_keyword">catch</strong> (SQLException e) {
-<a class="jxr_linenumber" name="L673" href="#L673">673</a>             warnings.add(getString(<span class="jxr_string">"Warning.27"</span>, e.getMessage())); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L674" href="#L674">674</a>         }
-<a class="jxr_linenumber" name="L675" href="#L675">675</a>     }
-<a class="jxr_linenumber" name="L676" href="#L676">676</a> }
+<a class="jxr_linenumber" name="L313" href="#L313">313</a>                             &amp;&amp; stringHasValue(co.getJavaType())) {
+<a class="jxr_linenumber" name="L314" href="#L314">314</a>                         warn = false;
+<a class="jxr_linenumber" name="L315" href="#L315">315</a>                     }
+<a class="jxr_linenumber" name="L316" href="#L316">316</a> 
+<a class="jxr_linenumber" name="L317" href="#L317">317</a>                     <em class="jxr_comment">// if the type is not supported, then we'll report a warning</em>
+<a class="jxr_linenumber" name="L318" href="#L318">318</a>                     <strong class="jxr_keyword">if</strong> (warn) {
+<a class="jxr_linenumber" name="L319" href="#L319">319</a>                         introspectedColumn
+<a class="jxr_linenumber" name="L320" href="#L320">320</a>                                 .setFullyQualifiedJavaType(<a href="../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a>
+<a class="jxr_linenumber" name="L321" href="#L321">321</a>                                         .getObjectInstance());
+<a class="jxr_linenumber" name="L322" href="#L322">322</a>                         introspectedColumn.setJdbcTypeName(<span class="jxr_string">"OTHER"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L323" href="#L323">323</a> 
+<a class="jxr_linenumber" name="L324" href="#L324">324</a>                         String warning = getString(<span class="jxr_string">"Warning.14"</span>, <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L325" href="#L325">325</a>                                 Integer.toString(introspectedColumn.getJdbcType()),
+<a class="jxr_linenumber" name="L326" href="#L326">326</a>                                 entry.getKey().toString(),
+<a class="jxr_linenumber" name="L327" href="#L327">327</a>                                 introspectedColumn.getActualColumnName());
+<a class="jxr_linenumber" name="L328" href="#L328">328</a> 
+<a class="jxr_linenumber" name="L329" href="#L329">329</a>                         warnings.add(warning);
+<a class="jxr_linenumber" name="L330" href="#L330">330</a>                     }
+<a class="jxr_linenumber" name="L331" href="#L331">331</a>                 }
+<a class="jxr_linenumber" name="L332" href="#L332">332</a> 
+<a class="jxr_linenumber" name="L333" href="#L333">333</a>                 <strong class="jxr_keyword">if</strong> (context.autoDelimitKeywords()
+<a class="jxr_linenumber" name="L334" href="#L334">334</a>                         &amp;&amp; SqlReservedWords.containsWord(introspectedColumn
+<a class="jxr_linenumber" name="L335" href="#L335">335</a>                             .getActualColumnName())) {
+<a class="jxr_linenumber" name="L336" href="#L336">336</a>                     introspectedColumn.setColumnNameDelimited(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L337" href="#L337">337</a>                 }
+<a class="jxr_linenumber" name="L338" href="#L338">338</a> 
+<a class="jxr_linenumber" name="L339" href="#L339">339</a>                 <strong class="jxr_keyword">if</strong> (tc.isAllColumnDelimitingEnabled()) {
+<a class="jxr_linenumber" name="L340" href="#L340">340</a>                     introspectedColumn.setColumnNameDelimited(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L341" href="#L341">341</a>                 }
+<a class="jxr_linenumber" name="L342" href="#L342">342</a>             }
+<a class="jxr_linenumber" name="L343" href="#L343">343</a>         }
+<a class="jxr_linenumber" name="L344" href="#L344">344</a>     }
+<a class="jxr_linenumber" name="L345" href="#L345">345</a> 
+<a class="jxr_linenumber" name="L346" href="#L346">346</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> calculateIdentityColumns(<a href="../../../../../org/mybatis/generator/config/TableConfiguration.html">TableConfiguration</a> tc,
+<a class="jxr_linenumber" name="L347" href="#L347">347</a>             Map&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt; columns) {
+<a class="jxr_linenumber" name="L348" href="#L348">348</a>         <a href="../../../../../org/mybatis/generator/config/GeneratedKey.html">GeneratedKey</a> gk = tc.getGeneratedKey();
+<a class="jxr_linenumber" name="L349" href="#L349">349</a>         <strong class="jxr_keyword">if</strong> (gk == <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L350" href="#L350">350</a>             <em class="jxr_comment">// no generated key, then no identity or sequence columns</em>
+<a class="jxr_linenumber" name="L351" href="#L351">351</a>             <strong class="jxr_keyword">return</strong>;
+<a class="jxr_linenumber" name="L352" href="#L352">352</a>         }
+<a class="jxr_linenumber" name="L353" href="#L353">353</a> 
+<a class="jxr_linenumber" name="L354" href="#L354">354</a>         <strong class="jxr_keyword">for</strong> (Map.Entry&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt; entry : columns
+<a class="jxr_linenumber" name="L355" href="#L355">355</a>                 .entrySet()) {
+<a class="jxr_linenumber" name="L356" href="#L356">356</a>             <strong class="jxr_keyword">for</strong> (IntrospectedColumn introspectedColumn : entry.getValue()) {
+<a class="jxr_linenumber" name="L357" href="#L357">357</a>                 <strong class="jxr_keyword">if</strong> (isMatchedColumn(introspectedColumn, gk)) {
+<a class="jxr_linenumber" name="L358" href="#L358">358</a>                     <strong class="jxr_keyword">if</strong> (gk.isIdentity() || gk.isJdbcStandard()) {
+<a class="jxr_linenumber" name="L359" href="#L359">359</a>                         introspectedColumn.setIdentity(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L360" href="#L360">360</a>                         introspectedColumn.setSequenceColumn(false);
+<a class="jxr_linenumber" name="L361" href="#L361">361</a>                     } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L362" href="#L362">362</a>                         introspectedColumn.setIdentity(false);
+<a class="jxr_linenumber" name="L363" href="#L363">363</a>                         introspectedColumn.setSequenceColumn(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L364" href="#L364">364</a>                     }
+<a class="jxr_linenumber" name="L365" href="#L365">365</a>                 }
+<a class="jxr_linenumber" name="L366" href="#L366">366</a>             }
+<a class="jxr_linenumber" name="L367" href="#L367">367</a>         }
+<a class="jxr_linenumber" name="L368" href="#L368">368</a>     }
+<a class="jxr_linenumber" name="L369" href="#L369">369</a> 
+<a class="jxr_linenumber" name="L370" href="#L370">370</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> isMatchedColumn(<a href="../../../../../org/mybatis/generator/api/IntrospectedColumn.html">IntrospectedColumn</a> introspectedColumn, <a href="../../../../../org/mybatis/generator/config/GeneratedKey.html">GeneratedKey</a> gk) {
+<a class="jxr_linenumber" name="L371" href="#L371">371</a>         <strong class="jxr_keyword">if</strong> (introspectedColumn.isColumnNameDelimited()) {
+<a class="jxr_linenumber" name="L372" href="#L372">372</a>             <strong class="jxr_keyword">return</strong> introspectedColumn.getActualColumnName().equals(gk.getColumn());
+<a class="jxr_linenumber" name="L373" href="#L373">373</a>         } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L374" href="#L374">374</a>             <strong class="jxr_keyword">return</strong> introspectedColumn.getActualColumnName().equalsIgnoreCase(gk.getColumn());
+<a class="jxr_linenumber" name="L375" href="#L375">375</a>         }
+<a class="jxr_linenumber" name="L376" href="#L376">376</a>     }
+<a class="jxr_linenumber" name="L377" href="#L377">377</a> 
+<a class="jxr_linenumber" name="L378" href="#L378">378</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> applyColumnOverrides(<a href="../../../../../org/mybatis/generator/config/TableConfiguration.html">TableConfiguration</a> tc,
+<a class="jxr_linenumber" name="L379" href="#L379">379</a>             Map&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt; columns) {
+<a class="jxr_linenumber" name="L380" href="#L380">380</a>         <strong class="jxr_keyword">for</strong> (Map.Entry&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt; entry : columns
+<a class="jxr_linenumber" name="L381" href="#L381">381</a>                 .entrySet()) {
+<a class="jxr_linenumber" name="L382" href="#L382">382</a>             <strong class="jxr_keyword">for</strong> (IntrospectedColumn introspectedColumn : entry.getValue()) {
+<a class="jxr_linenumber" name="L383" href="#L383">383</a>                 <a href="../../../../../org/mybatis/generator/config/ColumnOverride.html">ColumnOverride</a> columnOverride = tc
+<a class="jxr_linenumber" name="L384" href="#L384">384</a>                         .getColumnOverride(introspectedColumn
+<a class="jxr_linenumber" name="L385" href="#L385">385</a>                                 .getActualColumnName());
+<a class="jxr_linenumber" name="L386" href="#L386">386</a> 
+<a class="jxr_linenumber" name="L387" href="#L387">387</a>                 <strong class="jxr_keyword">if</strong> (columnOverride != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L388" href="#L388">388</a>                     <strong class="jxr_keyword">if</strong> (logger.isDebugEnabled()) {
+<a class="jxr_linenumber" name="L389" href="#L389">389</a>                         logger.debug(getString(<span class="jxr_string">"Tracing.4"</span>, <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L390" href="#L390">390</a>                                 introspectedColumn.getActualColumnName(), entry
+<a class="jxr_linenumber" name="L391" href="#L391">391</a>                                         .getKey().toString()));
+<a class="jxr_linenumber" name="L392" href="#L392">392</a>                     }
+<a class="jxr_linenumber" name="L393" href="#L393">393</a> 
+<a class="jxr_linenumber" name="L394" href="#L394">394</a>                     <strong class="jxr_keyword">if</strong> (stringHasValue(columnOverride
+<a class="jxr_linenumber" name="L395" href="#L395">395</a>                             .getJavaProperty())) {
+<a class="jxr_linenumber" name="L396" href="#L396">396</a>                         introspectedColumn.setJavaProperty(columnOverride
+<a class="jxr_linenumber" name="L397" href="#L397">397</a>                                 .getJavaProperty());
+<a class="jxr_linenumber" name="L398" href="#L398">398</a>                     }
+<a class="jxr_linenumber" name="L399" href="#L399">399</a> 
+<a class="jxr_linenumber" name="L400" href="#L400">400</a>                     <strong class="jxr_keyword">if</strong> (stringHasValue(columnOverride
+<a class="jxr_linenumber" name="L401" href="#L401">401</a>                             .getJavaType())) {
+<a class="jxr_linenumber" name="L402" href="#L402">402</a>                         introspectedColumn
+<a class="jxr_linenumber" name="L403" href="#L403">403</a>                                 .setFullyQualifiedJavaType(<strong class="jxr_keyword">new</strong> <a href="../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a>(
+<a class="jxr_linenumber" name="L404" href="#L404">404</a>                                         columnOverride.getJavaType()));
+<a class="jxr_linenumber" name="L405" href="#L405">405</a>                     }
+<a class="jxr_linenumber" name="L406" href="#L406">406</a> 
+<a class="jxr_linenumber" name="L407" href="#L407">407</a>                     <strong class="jxr_keyword">if</strong> (stringHasValue(columnOverride
+<a class="jxr_linenumber" name="L408" href="#L408">408</a>                             .getJdbcType())) {
+<a class="jxr_linenumber" name="L409" href="#L409">409</a>                         introspectedColumn.setJdbcTypeName(columnOverride
+<a class="jxr_linenumber" name="L410" href="#L410">410</a>                                 .getJdbcType());
+<a class="jxr_linenumber" name="L411" href="#L411">411</a>                     }
+<a class="jxr_linenumber" name="L412" href="#L412">412</a> 
+<a class="jxr_linenumber" name="L413" href="#L413">413</a>                     <strong class="jxr_keyword">if</strong> (stringHasValue(columnOverride
+<a class="jxr_linenumber" name="L414" href="#L414">414</a>                             .getTypeHandler())) {
+<a class="jxr_linenumber" name="L415" href="#L415">415</a>                         introspectedColumn.setTypeHandler(columnOverride
+<a class="jxr_linenumber" name="L416" href="#L416">416</a>                                 .getTypeHandler());
+<a class="jxr_linenumber" name="L417" href="#L417">417</a>                     }
+<a class="jxr_linenumber" name="L418" href="#L418">418</a> 
+<a class="jxr_linenumber" name="L419" href="#L419">419</a>                     <strong class="jxr_keyword">if</strong> (columnOverride.isColumnNameDelimited()) {
+<a class="jxr_linenumber" name="L420" href="#L420">420</a>                         introspectedColumn.setColumnNameDelimited(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L421" href="#L421">421</a>                     }
+<a class="jxr_linenumber" name="L422" href="#L422">422</a> 
+<a class="jxr_linenumber" name="L423" href="#L423">423</a>                     introspectedColumn.setGeneratedAlways(columnOverride.isGeneratedAlways());
+<a class="jxr_linenumber" name="L424" href="#L424">424</a> 
+<a class="jxr_linenumber" name="L425" href="#L425">425</a>                     introspectedColumn.setProperties(columnOverride
+<a class="jxr_linenumber" name="L426" href="#L426">426</a>                             .getProperties());
+<a class="jxr_linenumber" name="L427" href="#L427">427</a> 
+<a class="jxr_linenumber" name="L428" href="#L428">428</a>                 }
+<a class="jxr_linenumber" name="L429" href="#L429">429</a>             }
+<a class="jxr_linenumber" name="L430" href="#L430">430</a>         }
+<a class="jxr_linenumber" name="L431" href="#L431">431</a>     }
+<a class="jxr_linenumber" name="L432" href="#L432">432</a> 
+<a class="jxr_linenumber" name="L433" href="#L433">433</a>     <strong class="jxr_keyword">private</strong> Map&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt; getColumns(
+<a class="jxr_linenumber" name="L434" href="#L434">434</a>             <a href="../../../../../org/mybatis/generator/config/TableConfiguration.html">TableConfiguration</a> tc) <strong class="jxr_keyword">throws</strong> SQLException {
+<a class="jxr_linenumber" name="L435" href="#L435">435</a>         String localCatalog;
+<a class="jxr_linenumber" name="L436" href="#L436">436</a>         String localSchema;
+<a class="jxr_linenumber" name="L437" href="#L437">437</a>         String localTableName;
+<a class="jxr_linenumber" name="L438" href="#L438">438</a> 
+<a class="jxr_linenumber" name="L439" href="#L439">439</a>         <strong class="jxr_keyword">boolean</strong> delimitIdentifiers = tc.isDelimitIdentifiers()
+<a class="jxr_linenumber" name="L440" href="#L440">440</a>                 || stringContainsSpace(tc.getCatalog())
+<a class="jxr_linenumber" name="L441" href="#L441">441</a>                 || stringContainsSpace(tc.getSchema())
+<a class="jxr_linenumber" name="L442" href="#L442">442</a>                 || stringContainsSpace(tc.getTableName());
+<a class="jxr_linenumber" name="L443" href="#L443">443</a> 
+<a class="jxr_linenumber" name="L444" href="#L444">444</a>         <strong class="jxr_keyword">if</strong> (delimitIdentifiers) {
+<a class="jxr_linenumber" name="L445" href="#L445">445</a>             localCatalog = tc.getCatalog();
+<a class="jxr_linenumber" name="L446" href="#L446">446</a>             localSchema = tc.getSchema();
+<a class="jxr_linenumber" name="L447" href="#L447">447</a>             localTableName = tc.getTableName();
+<a class="jxr_linenumber" name="L448" href="#L448">448</a>         } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (databaseMetaData.storesLowerCaseIdentifiers()) {
+<a class="jxr_linenumber" name="L449" href="#L449">449</a>             localCatalog = tc.getCatalog() == <strong class="jxr_keyword">null</strong> ? <strong class="jxr_keyword">null</strong> : tc.getCatalog()
+<a class="jxr_linenumber" name="L450" href="#L450">450</a>                     .toLowerCase();
+<a class="jxr_linenumber" name="L451" href="#L451">451</a>             localSchema = tc.getSchema() == <strong class="jxr_keyword">null</strong> ? <strong class="jxr_keyword">null</strong> : tc.getSchema()
+<a class="jxr_linenumber" name="L452" href="#L452">452</a>                     .toLowerCase();
+<a class="jxr_linenumber" name="L453" href="#L453">453</a>             localTableName = tc.getTableName() == <strong class="jxr_keyword">null</strong> ? <strong class="jxr_keyword">null</strong> : tc
+<a class="jxr_linenumber" name="L454" href="#L454">454</a>                     .getTableName().toLowerCase();
+<a class="jxr_linenumber" name="L455" href="#L455">455</a>         } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (databaseMetaData.storesUpperCaseIdentifiers()) {
+<a class="jxr_linenumber" name="L456" href="#L456">456</a>             localCatalog = tc.getCatalog() == <strong class="jxr_keyword">null</strong> ? <strong class="jxr_keyword">null</strong> : tc.getCatalog()
+<a class="jxr_linenumber" name="L457" href="#L457">457</a>                     .toUpperCase();
+<a class="jxr_linenumber" name="L458" href="#L458">458</a>             localSchema = tc.getSchema() == <strong class="jxr_keyword">null</strong> ? <strong class="jxr_keyword">null</strong> : tc.getSchema()
+<a class="jxr_linenumber" name="L459" href="#L459">459</a>                     .toUpperCase();
+<a class="jxr_linenumber" name="L460" href="#L460">460</a>             localTableName = tc.getTableName() == <strong class="jxr_keyword">null</strong> ? <strong class="jxr_keyword">null</strong> : tc
+<a class="jxr_linenumber" name="L461" href="#L461">461</a>                     .getTableName().toUpperCase();
+<a class="jxr_linenumber" name="L462" href="#L462">462</a>         } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L463" href="#L463">463</a>             localCatalog = tc.getCatalog();
+<a class="jxr_linenumber" name="L464" href="#L464">464</a>             localSchema = tc.getSchema();
+<a class="jxr_linenumber" name="L465" href="#L465">465</a>             localTableName = tc.getTableName();
+<a class="jxr_linenumber" name="L466" href="#L466">466</a>         }
+<a class="jxr_linenumber" name="L467" href="#L467">467</a> 
+<a class="jxr_linenumber" name="L468" href="#L468">468</a>         <strong class="jxr_keyword">if</strong> (tc.isWildcardEscapingEnabled()) {
+<a class="jxr_linenumber" name="L469" href="#L469">469</a>             String escapeString = databaseMetaData.getSearchStringEscape();
+<a class="jxr_linenumber" name="L470" href="#L470">470</a> 
+<a class="jxr_linenumber" name="L471" href="#L471">471</a>             StringBuilder sb = <strong class="jxr_keyword">new</strong> StringBuilder();
+<a class="jxr_linenumber" name="L472" href="#L472">472</a>             StringTokenizer st;
+<a class="jxr_linenumber" name="L473" href="#L473">473</a>             <strong class="jxr_keyword">if</strong> (localSchema != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L474" href="#L474">474</a>                 st = <strong class="jxr_keyword">new</strong> StringTokenizer(localSchema, <span class="jxr_string">"_%"</span>, <strong class="jxr_keyword">true</strong>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L475" href="#L475">475</a>                 <strong class="jxr_keyword">while</strong> (st.hasMoreTokens()) {
+<a class="jxr_linenumber" name="L476" href="#L476">476</a>                     String token = st.nextToken();
+<a class="jxr_linenumber" name="L477" href="#L477">477</a>                     <strong class="jxr_keyword">if</strong> (token.equals(<span class="jxr_string">"_"</span>) <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L478" href="#L478">478</a>                             || token.equals(<span class="jxr_string">"%"</span>)) { <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L479" href="#L479">479</a>                         sb.append(escapeString);
+<a class="jxr_linenumber" name="L480" href="#L480">480</a>                     }
+<a class="jxr_linenumber" name="L481" href="#L481">481</a>                     sb.append(token);
+<a class="jxr_linenumber" name="L482" href="#L482">482</a>                 }
+<a class="jxr_linenumber" name="L483" href="#L483">483</a>                 localSchema = sb.toString();
+<a class="jxr_linenumber" name="L484" href="#L484">484</a>             }
+<a class="jxr_linenumber" name="L485" href="#L485">485</a> 
+<a class="jxr_linenumber" name="L486" href="#L486">486</a>             sb.setLength(0);
+<a class="jxr_linenumber" name="L487" href="#L487">487</a>             st = <strong class="jxr_keyword">new</strong> StringTokenizer(localTableName, <span class="jxr_string">"_%"</span>, <strong class="jxr_keyword">true</strong>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L488" href="#L488">488</a>             <strong class="jxr_keyword">while</strong> (st.hasMoreTokens()) {
+<a class="jxr_linenumber" name="L489" href="#L489">489</a>                 String token = st.nextToken();
+<a class="jxr_linenumber" name="L490" href="#L490">490</a>                 <strong class="jxr_keyword">if</strong> (token.equals(<span class="jxr_string">"_"</span>) <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L491" href="#L491">491</a>                         || token.equals(<span class="jxr_string">"%"</span>)) { <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L492" href="#L492">492</a>                     sb.append(escapeString);
+<a class="jxr_linenumber" name="L493" href="#L493">493</a>                 }
+<a class="jxr_linenumber" name="L494" href="#L494">494</a>                 sb.append(token);
+<a class="jxr_linenumber" name="L495" href="#L495">495</a>             }
+<a class="jxr_linenumber" name="L496" href="#L496">496</a>             localTableName = sb.toString();
+<a class="jxr_linenumber" name="L497" href="#L497">497</a>         }
+<a class="jxr_linenumber" name="L498" href="#L498">498</a> 
+<a class="jxr_linenumber" name="L499" href="#L499">499</a>         Map&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt; answer =
+<a class="jxr_linenumber" name="L500" href="#L500">500</a>                 <strong class="jxr_keyword">new</strong> HashMap&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt;();
+<a class="jxr_linenumber" name="L501" href="#L501">501</a> 
+<a class="jxr_linenumber" name="L502" href="#L502">502</a>         <strong class="jxr_keyword">if</strong> (logger.isDebugEnabled()) {
+<a class="jxr_linenumber" name="L503" href="#L503">503</a>             String fullTableName = composeFullyQualifiedTableName(localCatalog, localSchema,
+<a class="jxr_linenumber" name="L504" href="#L504">504</a>                             localTableName, '.');
+<a class="jxr_linenumber" name="L505" href="#L505">505</a>             logger.debug(getString(<span class="jxr_string">"Tracing.1"</span>, fullTableName)); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L506" href="#L506">506</a>         }
+<a class="jxr_linenumber" name="L507" href="#L507">507</a> 
+<a class="jxr_linenumber" name="L508" href="#L508">508</a>         ResultSet rs = databaseMetaData.getColumns(localCatalog, localSchema,
+<a class="jxr_linenumber" name="L509" href="#L509">509</a>                 localTableName, <span class="jxr_string">"%"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L510" href="#L510">510</a> 
+<a class="jxr_linenumber" name="L511" href="#L511">511</a>         <strong class="jxr_keyword">boolean</strong> supportsIsAutoIncrement = false;
+<a class="jxr_linenumber" name="L512" href="#L512">512</a>         <strong class="jxr_keyword">boolean</strong> supportsIsGeneratedColumn = false;
+<a class="jxr_linenumber" name="L513" href="#L513">513</a>         ResultSetMetaData rsmd = rs.getMetaData();
+<a class="jxr_linenumber" name="L514" href="#L514">514</a>         <strong class="jxr_keyword">int</strong> colCount = rsmd.getColumnCount();
+<a class="jxr_linenumber" name="L515" href="#L515">515</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 1; i &lt;= colCount; i++) {
+<a class="jxr_linenumber" name="L516" href="#L516">516</a>             <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"IS_AUTOINCREMENT"</span>.equals(rsmd.getColumnName(i))) { <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L517" href="#L517">517</a>                 supportsIsAutoIncrement = <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="L518" href="#L518">518</a>             }
+<a class="jxr_linenumber" name="L519" href="#L519">519</a>             <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"IS_GENERATEDCOLUMN"</span>.equals(rsmd.getColumnName(i))) { <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L520" href="#L520">520</a>                 supportsIsGeneratedColumn = <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="L521" href="#L521">521</a>             }
+<a class="jxr_linenumber" name="L522" href="#L522">522</a>         }
+<a class="jxr_linenumber" name="L523" href="#L523">523</a> 
+<a class="jxr_linenumber" name="L524" href="#L524">524</a>         <strong class="jxr_keyword">while</strong> (rs.next()) {
+<a class="jxr_linenumber" name="L525" href="#L525">525</a>             <a href="../../../../../org/mybatis/generator/api/IntrospectedColumn.html">IntrospectedColumn</a> introspectedColumn = <a href="../../../../../org/mybatis/generator/internal/ObjectFactory.html">ObjectFactory</a>
+<a class="jxr_linenumber" name="L526" href="#L526">526</a>                     .createIntrospectedColumn(context);
+<a class="jxr_linenumber" name="L527" href="#L527">527</a> 
+<a class="jxr_linenumber" name="L528" href="#L528">528</a>             introspectedColumn.setTableAlias(tc.getAlias());
+<a class="jxr_linenumber" name="L529" href="#L529">529</a>             introspectedColumn.setJdbcType(rs.getInt(<span class="jxr_string">"DATA_TYPE"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L530" href="#L530">530</a>             introspectedColumn.setLength(rs.getInt(<span class="jxr_string">"COLUMN_SIZE"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L531" href="#L531">531</a>             introspectedColumn.setActualColumnName(rs.getString(<span class="jxr_string">"COLUMN_NAME"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L532" href="#L532">532</a>             introspectedColumn
+<a class="jxr_linenumber" name="L533" href="#L533">533</a>                     .setNullable(rs.getInt(<span class="jxr_string">"NULLABLE"</span>) == DatabaseMetaData.columnNullable); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L534" href="#L534">534</a>             introspectedColumn.setScale(rs.getInt(<span class="jxr_string">"DECIMAL_DIGITS"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L535" href="#L535">535</a>             introspectedColumn.setRemarks(rs.getString(<span class="jxr_string">"REMARKS"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L536" href="#L536">536</a>             introspectedColumn.setDefaultValue(rs.getString(<span class="jxr_string">"COLUMN_DEF"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L537" href="#L537">537</a> 
+<a class="jxr_linenumber" name="L538" href="#L538">538</a>             <strong class="jxr_keyword">if</strong> (supportsIsAutoIncrement) {
+<a class="jxr_linenumber" name="L539" href="#L539">539</a>                 introspectedColumn.setAutoIncrement(
+<a class="jxr_linenumber" name="L540" href="#L540">540</a>                         <span class="jxr_string">"YES"</span>.equals(rs.getString(<span class="jxr_string">"IS_AUTOINCREMENT"</span>))); <em class="jxr_comment">//$NON-NLS-1$ //$NON-NLS-2$</em>
+<a class="jxr_linenumber" name="L541" href="#L541">541</a>             }
+<a class="jxr_linenumber" name="L542" href="#L542">542</a> 
+<a class="jxr_linenumber" name="L543" href="#L543">543</a>             <strong class="jxr_keyword">if</strong> (supportsIsGeneratedColumn) {
+<a class="jxr_linenumber" name="L544" href="#L544">544</a>                 introspectedColumn.setGeneratedColumn(
+<a class="jxr_linenumber" name="L545" href="#L545">545</a>                         <span class="jxr_string">"YES"</span>.equals(rs.getString(<span class="jxr_string">"IS_GENERATEDCOLUMN"</span>))); <em class="jxr_comment">//$NON-NLS-1$ //$NON-NLS-2$</em>
+<a class="jxr_linenumber" name="L546" href="#L546">546</a>             }
+<a class="jxr_linenumber" name="L547" href="#L547">547</a> 
+<a class="jxr_linenumber" name="L548" href="#L548">548</a>             <a href="../../../../../org/mybatis/generator/internal/db/ActualTableName.html">ActualTableName</a> atn = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/mybatis/generator/internal/db/ActualTableName.html">ActualTableName</a>(
+<a class="jxr_linenumber" name="L549" href="#L549">549</a>                     rs.getString(<span class="jxr_string">"TABLE_CAT"</span>), <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L550" href="#L550">550</a>                     rs.getString(<span class="jxr_string">"TABLE_SCHEM"</span>), <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L551" href="#L551">551</a>                     rs.getString(<span class="jxr_string">"TABLE_NAME"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L552" href="#L552">552</a> 
+<a class="jxr_linenumber" name="L553" href="#L553">553</a>             List&lt;IntrospectedColumn&gt; columns = answer.get(atn);
+<a class="jxr_linenumber" name="L554" href="#L554">554</a>             <strong class="jxr_keyword">if</strong> (columns == <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L555" href="#L555">555</a>                 columns = <strong class="jxr_keyword">new</strong> ArrayList&lt;IntrospectedColumn&gt;();
+<a class="jxr_linenumber" name="L556" href="#L556">556</a>                 answer.put(atn, columns);
+<a class="jxr_linenumber" name="L557" href="#L557">557</a>             }
+<a class="jxr_linenumber" name="L558" href="#L558">558</a> 
+<a class="jxr_linenumber" name="L559" href="#L559">559</a>             columns.add(introspectedColumn);
+<a class="jxr_linenumber" name="L560" href="#L560">560</a> 
+<a class="jxr_linenumber" name="L561" href="#L561">561</a>             <strong class="jxr_keyword">if</strong> (logger.isDebugEnabled()) {
+<a class="jxr_linenumber" name="L562" href="#L562">562</a>                 logger.debug(getString(
+<a class="jxr_linenumber" name="L563" href="#L563">563</a>                         <span class="jxr_string">"Tracing.2"</span>, <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L564" href="#L564">564</a>                         introspectedColumn.getActualColumnName(), Integer
+<a class="jxr_linenumber" name="L565" href="#L565">565</a>                                 .toString(introspectedColumn.getJdbcType()),
+<a class="jxr_linenumber" name="L566" href="#L566">566</a>                         atn.toString()));
+<a class="jxr_linenumber" name="L567" href="#L567">567</a>             }
+<a class="jxr_linenumber" name="L568" href="#L568">568</a>         }
+<a class="jxr_linenumber" name="L569" href="#L569">569</a> 
+<a class="jxr_linenumber" name="L570" href="#L570">570</a>         closeResultSet(rs);
+<a class="jxr_linenumber" name="L571" href="#L571">571</a> 
+<a class="jxr_linenumber" name="L572" href="#L572">572</a>         <strong class="jxr_keyword">if</strong> (answer.size() &gt; 1
+<a class="jxr_linenumber" name="L573" href="#L573">573</a>                 &amp;&amp; !stringContainsSQLWildcard(localSchema)
+<a class="jxr_linenumber" name="L574" href="#L574">574</a>                 &amp;&amp; !stringContainsSQLWildcard(localTableName)) {
+<a class="jxr_linenumber" name="L575" href="#L575">575</a>             <em class="jxr_comment">// issue a warning if there is more than one table and</em>
+<a class="jxr_linenumber" name="L576" href="#L576">576</a>             <em class="jxr_comment">// no wildcards were used</em>
+<a class="jxr_linenumber" name="L577" href="#L577">577</a>             <a href="../../../../../org/mybatis/generator/internal/db/ActualTableName.html">ActualTableName</a> inputAtn = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/mybatis/generator/internal/db/ActualTableName.html">ActualTableName</a>(tc.getCatalog(), tc
+<a class="jxr_linenumber" name="L578" href="#L578">578</a>                     .getSchema(), tc.getTableName());
+<a class="jxr_linenumber" name="L579" href="#L579">579</a> 
+<a class="jxr_linenumber" name="L580" href="#L580">580</a>             StringBuilder sb = <strong class="jxr_keyword">new</strong> StringBuilder();
+<a class="jxr_linenumber" name="L581" href="#L581">581</a>             <strong class="jxr_keyword">boolean</strong> comma = false;
+<a class="jxr_linenumber" name="L582" href="#L582">582</a>             <strong class="jxr_keyword">for</strong> (ActualTableName atn : answer.keySet()) {
+<a class="jxr_linenumber" name="L583" href="#L583">583</a>                 <strong class="jxr_keyword">if</strong> (comma) {
+<a class="jxr_linenumber" name="L584" href="#L584">584</a>                     sb.append(',');
+<a class="jxr_linenumber" name="L585" href="#L585">585</a>                 } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L586" href="#L586">586</a>                     comma = <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="L587" href="#L587">587</a>                 }
+<a class="jxr_linenumber" name="L588" href="#L588">588</a>                 sb.append(atn.toString());
+<a class="jxr_linenumber" name="L589" href="#L589">589</a>             }
+<a class="jxr_linenumber" name="L590" href="#L590">590</a> 
+<a class="jxr_linenumber" name="L591" href="#L591">591</a>             warnings.add(getString(<span class="jxr_string">"Warning.25"</span>, <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L592" href="#L592">592</a>                     inputAtn.toString(), sb.toString()));
+<a class="jxr_linenumber" name="L593" href="#L593">593</a>         }
+<a class="jxr_linenumber" name="L594" href="#L594">594</a> 
+<a class="jxr_linenumber" name="L595" href="#L595">595</a>         <strong class="jxr_keyword">return</strong> answer;
+<a class="jxr_linenumber" name="L596" href="#L596">596</a>     }
+<a class="jxr_linenumber" name="L597" href="#L597">597</a> 
+<a class="jxr_linenumber" name="L598" href="#L598">598</a>     <strong class="jxr_keyword">private</strong> List&lt;IntrospectedTable&gt; calculateIntrospectedTables(
+<a class="jxr_linenumber" name="L599" href="#L599">599</a>             <a href="../../../../../org/mybatis/generator/config/TableConfiguration.html">TableConfiguration</a> tc,
+<a class="jxr_linenumber" name="L600" href="#L600">600</a>             Map&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt; columns) {
+<a class="jxr_linenumber" name="L601" href="#L601">601</a>         <strong class="jxr_keyword">boolean</strong> delimitIdentifiers = tc.isDelimitIdentifiers()
+<a class="jxr_linenumber" name="L602" href="#L602">602</a>                 || stringContainsSpace(tc.getCatalog())
+<a class="jxr_linenumber" name="L603" href="#L603">603</a>                 || stringContainsSpace(tc.getSchema())
+<a class="jxr_linenumber" name="L604" href="#L604">604</a>                 || stringContainsSpace(tc.getTableName());
+<a class="jxr_linenumber" name="L605" href="#L605">605</a> 
+<a class="jxr_linenumber" name="L606" href="#L606">606</a>         List&lt;IntrospectedTable&gt; answer = <strong class="jxr_keyword">new</strong> ArrayList&lt;IntrospectedTable&gt;();
+<a class="jxr_linenumber" name="L607" href="#L607">607</a> 
+<a class="jxr_linenumber" name="L608" href="#L608">608</a>         <strong class="jxr_keyword">for</strong> (Map.Entry&lt;ActualTableName, List&lt;IntrospectedColumn&gt;&gt; entry : columns
+<a class="jxr_linenumber" name="L609" href="#L609">609</a>                 .entrySet()) {
+<a class="jxr_linenumber" name="L610" href="#L610">610</a>             <a href="../../../../../org/mybatis/generator/internal/db/ActualTableName.html">ActualTableName</a> atn = entry.getKey();
+<a class="jxr_linenumber" name="L611" href="#L611">611</a> 
+<a class="jxr_linenumber" name="L612" href="#L612">612</a>             <em class="jxr_comment">// we only use the returned catalog and schema if something was</em>
+<a class="jxr_linenumber" name="L613" href="#L613">613</a>             <em class="jxr_comment">// actually</em>
+<a class="jxr_linenumber" name="L614" href="#L614">614</a>             <em class="jxr_comment">// specified on the table configuration. If something was returned</em>
+<a class="jxr_linenumber" name="L615" href="#L615">615</a>             <em class="jxr_comment">// from the DB for these fields, but nothing was specified on the</em>
+<a class="jxr_linenumber" name="L616" href="#L616">616</a>             <em class="jxr_comment">// table</em>
+<a class="jxr_linenumber" name="L617" href="#L617">617</a>             <em class="jxr_comment">// configuration, then some sort of DB default is being returned</em>
+<a class="jxr_linenumber" name="L618" href="#L618">618</a>             <em class="jxr_comment">// and we don't want that in our SQL</em>
+<a class="jxr_linenumber" name="L619" href="#L619">619</a>             <a href="../../../../../org/mybatis/generator/api/FullyQualifiedTable.html">FullyQualifiedTable</a> table = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/mybatis/generator/api/FullyQualifiedTable.html">FullyQualifiedTable</a>(
+<a class="jxr_linenumber" name="L620" href="#L620">620</a>                     stringHasValue(tc.getCatalog()) ? atn.getCatalog() : <strong class="jxr_keyword">null</strong>,
+<a class="jxr_linenumber" name="L621" href="#L621">621</a>                     stringHasValue(tc.getSchema()) ? atn.getSchema() : <strong class="jxr_keyword">null</strong>,
+<a class="jxr_linenumber" name="L622" href="#L622">622</a>                     atn.getTableName(),
+<a class="jxr_linenumber" name="L623" href="#L623">623</a>                     tc.getDomainObjectName(),
+<a class="jxr_linenumber" name="L624" href="#L624">624</a>                     tc.getAlias(),
+<a class="jxr_linenumber" name="L625" href="#L625">625</a>                     isTrue(tc.getProperty(PropertyRegistry.TABLE_IGNORE_QUALIFIERS_AT_RUNTIME)),
+<a class="jxr_linenumber" name="L626" href="#L626">626</a>                     tc.getProperty(PropertyRegistry.TABLE_RUNTIME_CATALOG),
+<a class="jxr_linenumber" name="L627" href="#L627">627</a>                     tc.getProperty(PropertyRegistry.TABLE_RUNTIME_SCHEMA),
+<a class="jxr_linenumber" name="L628" href="#L628">628</a>                     tc.getProperty(PropertyRegistry.TABLE_RUNTIME_TABLE_NAME),
+<a class="jxr_linenumber" name="L629" href="#L629">629</a>                     delimitIdentifiers,
+<a class="jxr_linenumber" name="L630" href="#L630">630</a>                     tc.getDomainObjectRenamingRule(),
+<a class="jxr_linenumber" name="L631" href="#L631">631</a>                     context);
+<a class="jxr_linenumber" name="L632" href="#L632">632</a> 
+<a class="jxr_linenumber" name="L633" href="#L633">633</a>             <a href="../../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable = <a href="../../../../../org/mybatis/generator/internal/ObjectFactory.html">ObjectFactory</a>
+<a class="jxr_linenumber" name="L634" href="#L634">634</a>                     .createIntrospectedTable(tc, table, context);
+<a class="jxr_linenumber" name="L635" href="#L635">635</a> 
+<a class="jxr_linenumber" name="L636" href="#L636">636</a>             <strong class="jxr_keyword">for</strong> (IntrospectedColumn introspectedColumn : entry.getValue()) {
+<a class="jxr_linenumber" name="L637" href="#L637">637</a>                 introspectedTable.addColumn(introspectedColumn);
+<a class="jxr_linenumber" name="L638" href="#L638">638</a>             }
+<a class="jxr_linenumber" name="L639" href="#L639">639</a> 
+<a class="jxr_linenumber" name="L640" href="#L640">640</a>             calculatePrimaryKey(table, introspectedTable);
+<a class="jxr_linenumber" name="L641" href="#L641">641</a> 
+<a class="jxr_linenumber" name="L642" href="#L642">642</a>             enhanceIntrospectedTable(introspectedTable);
+<a class="jxr_linenumber" name="L643" href="#L643">643</a> 
+<a class="jxr_linenumber" name="L644" href="#L644">644</a>             answer.add(introspectedTable);
+<a class="jxr_linenumber" name="L645" href="#L645">645</a>         }
+<a class="jxr_linenumber" name="L646" href="#L646">646</a> 
+<a class="jxr_linenumber" name="L647" href="#L647">647</a>         <strong class="jxr_keyword">return</strong> answer;
+<a class="jxr_linenumber" name="L648" href="#L648">648</a>     }
+<a class="jxr_linenumber" name="L649" href="#L649">649</a> 
+<a class="jxr_linenumber" name="L650" href="#L650">650</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L651" href="#L651">651</a> <em class="jxr_javadoccomment">     * Calls database metadata to retrieve extra information about the table</em>
+<a class="jxr_linenumber" name="L652" href="#L652">652</a> <em class="jxr_javadoccomment">     * such as remarks associated with the table and the type.</em>
+<a class="jxr_linenumber" name="L653" href="#L653">653</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L654" href="#L654">654</a> <em class="jxr_javadoccomment">     * &lt;p&gt;If there is any error, we just add a warning and continue.</em>
+<a class="jxr_linenumber" name="L655" href="#L655">655</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L656" href="#L656">656</a> <em class="jxr_javadoccomment">     * @param introspectedTable the introspected table to enhance</em>
+<a class="jxr_linenumber" name="L657" href="#L657">657</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L658" href="#L658">658</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> enhanceIntrospectedTable(<a href="../../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable) {
+<a class="jxr_linenumber" name="L659" href="#L659">659</a>         <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L660" href="#L660">660</a>             <a href="../../../../../org/mybatis/generator/api/FullyQualifiedTable.html">FullyQualifiedTable</a> fqt = introspectedTable.getFullyQualifiedTable();
+<a class="jxr_linenumber" name="L661" href="#L661">661</a> 
+<a class="jxr_linenumber" name="L662" href="#L662">662</a>             ResultSet rs = databaseMetaData.getTables(fqt.getIntrospectedCatalog(), fqt.getIntrospectedSchema(),
+<a class="jxr_linenumber" name="L663" href="#L663">663</a>                     fqt.getIntrospectedTableName(), <strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="L664" href="#L664">664</a>             <strong class="jxr_keyword">if</strong> (rs.next()) {
+<a class="jxr_linenumber" name="L665" href="#L665">665</a>                 String remarks = rs.getString(<span class="jxr_string">"REMARKS"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L666" href="#L666">666</a>                 String tableType = rs.getString(<span class="jxr_string">"TABLE_TYPE"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L667" href="#L667">667</a>                 introspectedTable.setRemarks(remarks);
+<a class="jxr_linenumber" name="L668" href="#L668">668</a>                 introspectedTable.setTableType(tableType);
+<a class="jxr_linenumber" name="L669" href="#L669">669</a>             }
+<a class="jxr_linenumber" name="L670" href="#L670">670</a>             closeResultSet(rs);
+<a class="jxr_linenumber" name="L671" href="#L671">671</a>         } <strong class="jxr_keyword">catch</strong> (SQLException e) {
+<a class="jxr_linenumber" name="L672" href="#L672">672</a>             warnings.add(getString(<span class="jxr_string">"Warning.27"</span>, e.getMessage())); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L673" href="#L673">673</a>         }
+<a class="jxr_linenumber" name="L674" href="#L674">674</a>     }
+<a class="jxr_linenumber" name="L675" href="#L675">675</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2006&#x2013;2017 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2006&#x2013;2018 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
 </body>
 </html>

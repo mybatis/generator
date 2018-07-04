@@ -7,7 +7,7 @@
 <body>
 <div id="overview"><a href="../../../../../../../../apidocs/org/mybatis/generator/runtime/dynamic/sql/elements/FragmentGenerator.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_javadoccomment"> *    Copyright 2006-2017 the original author or authors.</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_javadoccomment"> *    Copyright 2006-2018 the original author or authors.</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_javadoccomment"> *    Licensed under the Apache License, Version 2.0 (the "License");</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_javadoccomment"> *    you may not use this file except in compliance with the License.</em>
@@ -45,7 +45,7 @@
 <a class="jxr_linenumber" name="L37" href="#L37">37</a>      <strong class="jxr_keyword">private</strong> <a href="../../../../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable;
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>      <strong class="jxr_keyword">private</strong> String resultMapId;
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>      
-<a class="jxr_linenumber" name="L40" href="#L40">40</a>      <strong class="jxr_keyword">private</strong> <a href="../../../../../../../org/mybatis/generator/runtime/dynamic/sql/elements/FragmentGenerator.html">FragmentGenerator</a>(<a href="../../../../../../../org/mybatis/generator/runtime/dynamic/sql/elements/UpdateByPrimaryKeySelectiveMethodGenerator.html">Builder</a> builder) {
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>      <strong class="jxr_keyword">private</strong> <a href="../../../../../../../org/mybatis/generator/runtime/dynamic/sql/elements/FragmentGenerator.html">FragmentGenerator</a>(<a href="../../../../../../../org/mybatis/generator/runtime/dynamic/sql/elements/UpdateByExampleMethodGenerator.html">Builder</a> builder) {
 <a class="jxr_linenumber" name="L41" href="#L41">41</a>          <strong class="jxr_keyword">this</strong>.introspectedTable = builder.introspectedTable;
 <a class="jxr_linenumber" name="L42" href="#L42">42</a>          <strong class="jxr_keyword">this</strong>.resultMapId = builder.resultMapId;
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>      }
@@ -74,13 +74,13 @@
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>              builder.withParameter(<strong class="jxr_keyword">new</strong> <a href="../../../../../../../org/mybatis/generator/api/dom/java/Parameter.html">Parameter</a>(column.getFullyQualifiedJavaType(), column.getJavaProperty() + <span class="jxr_string">"_"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>              <strong class="jxr_keyword">if</strong> (first) {
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>                  builder.withBodyLine(<span class="jxr_string">"        .where("</span> + column.getJavaProperty() <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>                  + <span class="jxr_string">", isEqualTo("</span> + column.getJavaProperty() <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>                  + <span class="jxr_string">"_))"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>                          + <span class="jxr_string">", isEqualTo("</span> + column.getJavaProperty() <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>                          + <span class="jxr_string">"_))"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>                  first = false;
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>              } <strong class="jxr_keyword">else</strong> {
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>                  builder.withBodyLine(<span class="jxr_string">"        .and("</span> + column.getJavaProperty() <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>                  + <span class="jxr_string">", isEqualTo("</span> + column.getJavaProperty() <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>                  + <span class="jxr_string">"_))"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>                          + <span class="jxr_string">", isEqualTo("</span> + column.getJavaProperty() <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>                          + <span class="jxr_string">"_))"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L76" href="#L76">76</a>              }
 <a class="jxr_linenumber" name="L77" href="#L77">77</a>          }
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>          
@@ -95,13 +95,13 @@
 <a class="jxr_linenumber" name="L87" href="#L87">87</a>              String methodName = JavaBeansUtil.getGetterMethodName(column.getJavaProperty(), column.getFullyQualifiedJavaType());
 <a class="jxr_linenumber" name="L88" href="#L88">88</a>              <strong class="jxr_keyword">if</strong> (first) {
 <a class="jxr_linenumber" name="L89" href="#L89">89</a>                  lines.add(<span class="jxr_string">"        .where("</span> + column.getJavaProperty() <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L90" href="#L90">90</a>                  + <span class="jxr_string">", isEqualTo(record::"</span> + methodName <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L91" href="#L91">91</a>                  + <span class="jxr_string">"))"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>                          + <span class="jxr_string">", isEqualTo(record::"</span> + methodName <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>                          + <span class="jxr_string">"))"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L92" href="#L92">92</a>                  first = false;
 <a class="jxr_linenumber" name="L93" href="#L93">93</a>              } <strong class="jxr_keyword">else</strong> {
 <a class="jxr_linenumber" name="L94" href="#L94">94</a>                  lines.add(<span class="jxr_string">"        .and("</span> + column.getJavaProperty() <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L95" href="#L95">95</a>                  + <span class="jxr_string">", isEqualTo(record::"</span> + methodName <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L96" href="#L96">96</a>                  + <span class="jxr_string">"))"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L95" href="#L95">95</a>                          + <span class="jxr_string">", isEqualTo(record::"</span> + methodName <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L96" href="#L96">96</a>                          + <span class="jxr_string">"))"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L97" href="#L97">97</a>              }
 <a class="jxr_linenumber" name="L98" href="#L98">98</a>          }
 <a class="jxr_linenumber" name="L99" href="#L99">99</a>          
@@ -295,8 +295,8 @@
 <a class="jxr_linenumber" name="L287" href="#L287">287</a>             <a href="../../../../../../../org/mybatis/generator/api/IntrospectedColumn.html">IntrospectedColumn</a> column = iter.next();
 <a class="jxr_linenumber" name="L288" href="#L288">288</a>             String methodName = JavaBeansUtil.getGetterMethodName(column.getJavaProperty(), column.getFullyQualifiedJavaType());
 <a class="jxr_linenumber" name="L289" href="#L289">289</a>             String line = <span class="jxr_string">"        .set("</span> + column.getJavaProperty() <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L290" href="#L290">290</a>             + <span class="jxr_string">").equalTo(record::"</span> + methodName <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L291" href="#L291">291</a>             + <span class="jxr_string">")"</span>; <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L290" href="#L290">290</a>                     + <span class="jxr_string">").equalTo(record::"</span> + methodName <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L291" href="#L291">291</a>                     + <span class="jxr_string">")"</span>; <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L292" href="#L292">292</a>             <strong class="jxr_keyword">if</strong> (terminate &amp;&amp; !iter.hasNext()) {
 <a class="jxr_linenumber" name="L293" href="#L293">293</a>                 line += <span class="jxr_string">";"</span>; <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L294" href="#L294">294</a>             }
@@ -314,8 +314,8 @@
 <a class="jxr_linenumber" name="L306" href="#L306">306</a>             <a href="../../../../../../../org/mybatis/generator/api/IntrospectedColumn.html">IntrospectedColumn</a> column = iter.next();
 <a class="jxr_linenumber" name="L307" href="#L307">307</a>             String methodName = JavaBeansUtil.getGetterMethodName(column.getJavaProperty(), column.getFullyQualifiedJavaType());
 <a class="jxr_linenumber" name="L308" href="#L308">308</a>             String line = <span class="jxr_string">"        .set("</span> + column.getJavaProperty() <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L309" href="#L309">309</a>             + <span class="jxr_string">").equalToWhenPresent(record::"</span> <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L310" href="#L310">310</a>             + methodName + <span class="jxr_string">")"</span>; <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L309" href="#L309">309</a>                     + <span class="jxr_string">").equalToWhenPresent(record::"</span> <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L310" href="#L310">310</a>                     + methodName + <span class="jxr_string">")"</span>; <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L311" href="#L311">311</a>             <strong class="jxr_keyword">if</strong> (terminate &amp;&amp; !iter.hasNext()) {
 <a class="jxr_linenumber" name="L312" href="#L312">312</a>                 line += <span class="jxr_string">";"</span>; <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L313" href="#L313">313</a>             }
@@ -324,16 +324,16 @@
 <a class="jxr_linenumber" name="L316" href="#L316">316</a>         <strong class="jxr_keyword">return</strong> lines;
 <a class="jxr_linenumber" name="L317" href="#L317">317</a>     }
 <a class="jxr_linenumber" name="L318" href="#L318">318</a> 
-<a class="jxr_linenumber" name="L319" href="#L319">319</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../../../org/mybatis/generator/runtime/dynamic/sql/elements/UpdateByPrimaryKeySelectiveMethodGenerator.html">Builder</a> {
+<a class="jxr_linenumber" name="L319" href="#L319">319</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../../../org/mybatis/generator/runtime/dynamic/sql/elements/UpdateByExampleMethodGenerator.html">Builder</a> {
 <a class="jxr_linenumber" name="L320" href="#L320">320</a>         <strong class="jxr_keyword">private</strong> <a href="../../../../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable;
 <a class="jxr_linenumber" name="L321" href="#L321">321</a>         <strong class="jxr_keyword">private</strong> String resultMapId;
 <a class="jxr_linenumber" name="L322" href="#L322">322</a>         
-<a class="jxr_linenumber" name="L323" href="#L323">323</a>         <strong class="jxr_keyword">public</strong> <a href="../../../../../../../org/mybatis/generator/runtime/dynamic/sql/elements/UpdateByPrimaryKeySelectiveMethodGenerator.html">Builder</a> withIntrospectedTable(<a href="../../../../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable) {
+<a class="jxr_linenumber" name="L323" href="#L323">323</a>         <strong class="jxr_keyword">public</strong> <a href="../../../../../../../org/mybatis/generator/runtime/dynamic/sql/elements/UpdateByExampleMethodGenerator.html">Builder</a> withIntrospectedTable(<a href="../../../../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable) {
 <a class="jxr_linenumber" name="L324" href="#L324">324</a>             <strong class="jxr_keyword">this</strong>.introspectedTable = introspectedTable;
 <a class="jxr_linenumber" name="L325" href="#L325">325</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>;
 <a class="jxr_linenumber" name="L326" href="#L326">326</a>         }
 <a class="jxr_linenumber" name="L327" href="#L327">327</a>         
-<a class="jxr_linenumber" name="L328" href="#L328">328</a>         <strong class="jxr_keyword">public</strong> <a href="../../../../../../../org/mybatis/generator/runtime/dynamic/sql/elements/UpdateByPrimaryKeySelectiveMethodGenerator.html">Builder</a> withResultMapId(String resultMapId) {
+<a class="jxr_linenumber" name="L328" href="#L328">328</a>         <strong class="jxr_keyword">public</strong> <a href="../../../../../../../org/mybatis/generator/runtime/dynamic/sql/elements/UpdateByExampleMethodGenerator.html">Builder</a> withResultMapId(String resultMapId) {
 <a class="jxr_linenumber" name="L329" href="#L329">329</a>             <strong class="jxr_keyword">this</strong>.resultMapId = resultMapId;
 <a class="jxr_linenumber" name="L330" href="#L330">330</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>;
 <a class="jxr_linenumber" name="L331" href="#L331">331</a>         }
@@ -345,6 +345,6 @@
 <a class="jxr_linenumber" name="L337" href="#L337">337</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2006&#x2013;2017 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2006&#x2013;2018 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
 </body>
 </html>

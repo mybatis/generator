@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BasicSelectOneMethodGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.dynamic.sql.elements</a> &gt; <span class="el_source">BasicSelectOneMethodGenerator.java</span></div><h1>BasicSelectOneMethodGenerator.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2018 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime.dynamic.sql.elements;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.Interface;
+import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.api.dom.java.Parameter;
+
+public class BasicSelectOneMethodGenerator extends AbstractMethodGenerator {
+    
+    private FullyQualifiedJavaType recordType;
+    private String resultMapId;
+    private FragmentGenerator fragmentGenerator;
+    
+    private BasicSelectOneMethodGenerator(Builder builder) {
+<span class="fc" id="L33">        super(builder);</span>
+<span class="fc" id="L34">        recordType = builder.recordType;</span>
+<span class="fc" id="L35">        resultMapId = builder.resultMapId;</span>
+<span class="fc" id="L36">        fragmentGenerator = builder.fragmentGenerator;</span>
+<span class="fc" id="L37">    }</span>
+
+    @Override
+    public MethodAndImports generateMethodAndImports() {
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        if (!introspectedTable.getRules().generateSelectByPrimaryKey()) {</span>
+<span class="fc" id="L42">            return null;</span>
+        }
+        
+<span class="fc" id="L45">        Set&lt;FullyQualifiedJavaType&gt; imports = new HashSet&lt;FullyQualifiedJavaType&gt;();</span>
+        
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        boolean reuseResultMap = introspectedTable.getRules().generateSelectByExampleWithBLOBs()</span>
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">                || introspectedTable.getRules().generateSelectByExampleWithoutBLOBs();</span>
+                
+<span class="fc" id="L50">        FullyQualifiedJavaType parameterType = new FullyQualifiedJavaType(&quot;org.mybatis.dynamic.sql.select.render.SelectStatementProvider&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L51">        FullyQualifiedJavaType adapter = new FullyQualifiedJavaType(&quot;org.mybatis.dynamic.sql.util.SqlProviderAdapter&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L52">        FullyQualifiedJavaType annotation = new FullyQualifiedJavaType(&quot;org.apache.ibatis.annotations.SelectProvider&quot;); //$NON-NLS-1$</span>
+        
+<span class="fc" id="L54">        imports.add(parameterType);</span>
+<span class="fc" id="L55">        imports.add(adapter);</span>
+<span class="fc" id="L56">        imports.add(annotation);</span>
+        
+<span class="fc" id="L58">        Method method = new Method(&quot;selectOne&quot;); //$NON-NLS-1$</span>
+
+<span class="fc" id="L60">        imports.add(recordType);</span>
+<span class="fc" id="L61">        method.setReturnType(recordType);</span>
+<span class="fc" id="L62">        method.addParameter(new Parameter(parameterType, &quot;selectStatement&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L63">        context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);</span>
+<span class="fc" id="L64">        method.addAnnotation(&quot;@SelectProvider(type=SqlProviderAdapter.class, method=\&quot;select\&quot;)&quot;); //$NON-NLS-1$</span>
+        
+<span class="fc" id="L66">        MethodAndImports.Builder builder = MethodAndImports.withMethod(method)</span>
+<span class="fc" id="L67">                .withImports(imports);</span>
+
+<span class="fc bfc" id="L69" title="All 2 branches covered.">        if (introspectedTable.isConstructorBased()) {</span>
+<span class="fc" id="L70">            MethodParts methodParts = fragmentGenerator.getAnnotatedConstructorArgs();</span>
+<span class="fc" id="L71">            acceptParts(builder, method, methodParts);</span>
+<span class="fc" id="L72">        } else {</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">            if (reuseResultMap) {</span>
+<span class="fc" id="L74">                FullyQualifiedJavaType rmAnnotation = new FullyQualifiedJavaType(&quot;org.apache.ibatis.annotations.ResultMap&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L75">                builder.withImport(rmAnnotation);</span>
+<span class="fc" id="L76">                method.addAnnotation(&quot;@ResultMap(\&quot;&quot; + resultMapId + &quot;\&quot;)&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L77">            } else {</span>
+<span class="nc" id="L78">                MethodParts methodParts = fragmentGenerator.getAnnotatedResults();</span>
+<span class="nc" id="L79">                acceptParts(builder, method, methodParts);</span>
+            }
+        }
+
+<span class="fc" id="L83">        return builder.build();</span>
+    }
+
+    @Override
+    public boolean callPlugins(Method method, Interface interfaze) {
+<span class="fc" id="L88">        return context.getPlugins().clientBasicSelectOneMethodGenerated(method, interfaze, introspectedTable);</span>
+    }
+
+<span class="fc" id="L91">    public static class Builder extends BaseBuilder&lt;Builder, BasicSelectOneMethodGenerator&gt; {</span>
+
+        private FullyQualifiedJavaType recordType;
+        private String resultMapId;
+        private FragmentGenerator fragmentGenerator;
+        
+        public Builder withRecordType(FullyQualifiedJavaType recordType) {
+<span class="fc" id="L98">            this.recordType = recordType;</span>
+<span class="fc" id="L99">            return this;</span>
+        }
+        
+        public Builder withResultMapId(String resultMapId) {
+<span class="fc" id="L103">            this.resultMapId = resultMapId;</span>
+<span class="fc" id="L104">            return this;</span>
+        }
+        
+        public Builder withFragmentGenerator(FragmentGenerator fragmentGenerator) {
+<span class="fc" id="L108">            this.fragmentGenerator = fragmentGenerator;</span>
+<span class="fc" id="L109">            return this;</span>
+        }
+        
+        @Override
+        public Builder getThis() {
+<span class="fc" id="L114">            return this;</span>
+        }
+
+        @Override
+        public BasicSelectOneMethodGenerator build() {
+<span class="fc" id="L119">            return new BasicSelectOneMethodGenerator(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

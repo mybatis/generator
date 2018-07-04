@@ -7,7 +7,7 @@
 <body>
 <div id="overview"><a href="../../../../../../../apidocs/org/mybatis/generator/runtime/dynamic/sql/DynamicSqlSupportClassGenerator.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_javadoccomment"> *    Copyright 2006-2017 the original author or authors.</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_javadoccomment"> *    Copyright 2006-2018 the original author or authors.</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_javadoccomment"> *    Licensed under the Apache License, Version 2.0 (the "License");</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_javadoccomment"> *    you may not use this file except in compliance with the License.</em>
@@ -65,118 +65,111 @@
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>          <strong class="jxr_keyword">return</strong> topLevelClass;
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>      }
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>  
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>      <strong class="jxr_keyword">private</strong> String calculateClassName() {
-<a class="jxr_linenumber" name="L61" href="#L61">61</a>          <a href="../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a> mapperType = <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a>(introspectedTable.getMyBatis3JavaMapperType());
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>          <a href="../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a> recordType = <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a>(introspectedTable.getBaseRecordType());
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>          
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>          <strong class="jxr_keyword">return</strong> mapperType.getPackageName() + <span class="jxr_string">"."</span> + recordType.getShortNameWithoutTypeArguments() + <span class="jxr_string">"DynamicSqlSupport"</span>; <em class="jxr_comment">//$NON-NLS-1$ //$NON-NLS-2$</em>
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>          
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>      }
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>      <strong class="jxr_keyword">private</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/TopLevelClass.html">TopLevelClass</a> buildBasicClass() {
-<a class="jxr_linenumber" name="L68" href="#L68">68</a>          <a href="../../../../../../org/mybatis/generator/api/dom/java/TopLevelClass.html">TopLevelClass</a> topLevelClass = <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/TopLevelClass.html">TopLevelClass</a>(calculateClassName());
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>          topLevelClass.setVisibility(JavaVisibility.PUBLIC);
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>          topLevelClass.setFinal(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>          topLevelClass.addImportedType(<strong class="jxr_keyword">new</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a>(<span class="jxr_string">"org.mybatis.dynamic.sql.SqlColumn"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L72" href="#L72">72</a>          topLevelClass.addImportedType(<strong class="jxr_keyword">new</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a>(<span class="jxr_string">"org.mybatis.dynamic.sql.SqlTable"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L73" href="#L73">73</a>          topLevelClass.addImportedType(<strong class="jxr_keyword">new</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a>(<span class="jxr_string">"java.sql.JDBCType"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>          <strong class="jxr_keyword">return</strong> topLevelClass;
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>      }
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>      
-<a class="jxr_linenumber" name="L77" href="#L77">77</a>      <strong class="jxr_keyword">private</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/InnerClass.html">InnerClass</a> buildInnerTableClass(<a href="../../../../../../org/mybatis/generator/api/dom/java/TopLevelClass.html">TopLevelClass</a> topLevelClass) {
-<a class="jxr_linenumber" name="L78" href="#L78">78</a>          <a href="../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a> fqjt = <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a>(introspectedTable.getFullyQualifiedTable().getDomainObjectName());
-<a class="jxr_linenumber" name="L79" href="#L79">79</a>          <a href="../../../../../../org/mybatis/generator/api/dom/java/InnerClass.html">InnerClass</a> innerClass = <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/InnerClass.html">InnerClass</a>(fqjt.getShortName());
-<a class="jxr_linenumber" name="L80" href="#L80">80</a>          innerClass.setVisibility(JavaVisibility.PUBLIC);
-<a class="jxr_linenumber" name="L81" href="#L81">81</a>          innerClass.setStatic(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L82" href="#L82">82</a>          innerClass.setFinal(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L83" href="#L83">83</a>          innerClass.setSuperClass(<strong class="jxr_keyword">new</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a>(<span class="jxr_string">"org.mybatis.dynamic.sql.SqlTable"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L84" href="#L84">84</a>          
-<a class="jxr_linenumber" name="L85" href="#L85">85</a>          <a href="../../../../../../org/mybatis/generator/api/dom/java/Method.html">Method</a> method = <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/Method.html">Method</a>(fqjt.getShortName());
-<a class="jxr_linenumber" name="L86" href="#L86">86</a>          method.setVisibility(JavaVisibility.PUBLIC);
-<a class="jxr_linenumber" name="L87" href="#L87">87</a>          method.setConstructor(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L88" href="#L88">88</a>          method.addBodyLine(<span class="jxr_string">"super(\&quot;"</span> <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L89" href="#L89">89</a>                  + escapeStringForJava(introspectedTable.getFullyQualifiedTableNameAtRuntime())
-<a class="jxr_linenumber" name="L90" href="#L90">90</a>                  + <span class="jxr_string">"\&quot;);"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L91" href="#L91">91</a>          innerClass.addMethod(method);
-<a class="jxr_linenumber" name="L92" href="#L92">92</a>          
-<a class="jxr_linenumber" name="L93" href="#L93">93</a>          commentGenerator.addClassAnnotation(innerClass, introspectedTable, topLevelClass.getImportedTypes());
-<a class="jxr_linenumber" name="L94" href="#L94">94</a>          
-<a class="jxr_linenumber" name="L95" href="#L95">95</a>          <strong class="jxr_keyword">return</strong> innerClass;
-<a class="jxr_linenumber" name="L96" href="#L96">96</a>      }
-<a class="jxr_linenumber" name="L97" href="#L97">97</a>  
-<a class="jxr_linenumber" name="L98" href="#L98">98</a>      <strong class="jxr_keyword">private</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/Field.html">Field</a> calculateTableDefinition(<a href="../../../../../../org/mybatis/generator/api/dom/java/TopLevelClass.html">TopLevelClass</a> topLevelClass) {
-<a class="jxr_linenumber" name="L99" href="#L99">99</a>          <a href="../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a> fqjt = <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a>(introspectedTable.getFullyQualifiedTable().getDomainObjectName());
-<a class="jxr_linenumber" name="L100" href="#L100">100</a>         String fieldName =
-<a class="jxr_linenumber" name="L101" href="#L101">101</a>                 JavaBeansUtil.getValidPropertyName(introspectedTable.getFullyQualifiedTable().getDomainObjectName());
-<a class="jxr_linenumber" name="L102" href="#L102">102</a>         <a href="../../../../../../org/mybatis/generator/api/dom/java/Field.html">Field</a> field = <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/Field.html">Field</a>(fieldName, fqjt);
-<a class="jxr_linenumber" name="L103" href="#L103">103</a>         commentGenerator.addFieldAnnotation(field, introspectedTable, topLevelClass.getImportedTypes());
-<a class="jxr_linenumber" name="L104" href="#L104">104</a>         field.setVisibility(JavaVisibility.PUBLIC);
-<a class="jxr_linenumber" name="L105" href="#L105">105</a>         field.setStatic(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L106" href="#L106">106</a>         field.setFinal(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L107" href="#L107">107</a>         
-<a class="jxr_linenumber" name="L108" href="#L108">108</a>         StringBuilder initializationString = <strong class="jxr_keyword">new</strong> StringBuilder();
-<a class="jxr_linenumber" name="L109" href="#L109">109</a>         initializationString.append(String.format(<span class="jxr_string">"new %s()"</span>, <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L110" href="#L110">110</a>                 escapeStringForJava(introspectedTable.getFullyQualifiedTable().getDomainObjectName())));
-<a class="jxr_linenumber" name="L111" href="#L111">111</a>         field.setInitializationString(initializationString.toString());
-<a class="jxr_linenumber" name="L112" href="#L112">112</a>         <strong class="jxr_keyword">return</strong> field;
-<a class="jxr_linenumber" name="L113" href="#L113">113</a>     }
-<a class="jxr_linenumber" name="L114" href="#L114">114</a>     
-<a class="jxr_linenumber" name="L115" href="#L115">115</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> handleColumn(<a href="../../../../../../org/mybatis/generator/api/dom/java/TopLevelClass.html">TopLevelClass</a> topLevelClass, <a href="../../../../../../org/mybatis/generator/api/dom/java/InnerClass.html">InnerClass</a> innerClass, <a href="../../../../../../org/mybatis/generator/api/IntrospectedColumn.html">IntrospectedColumn</a> column, String tableFieldName) {
-<a class="jxr_linenumber" name="L116" href="#L116">116</a>         topLevelClass.addImportedType(column.getFullyQualifiedJavaType());
-<a class="jxr_linenumber" name="L117" href="#L117">117</a>         <a href="../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a> fieldType = calculateFieldType(column);
-<a class="jxr_linenumber" name="L118" href="#L118">118</a>         String fieldName = column.getJavaProperty();
-<a class="jxr_linenumber" name="L119" href="#L119">119</a>         
-<a class="jxr_linenumber" name="L120" href="#L120">120</a>         <em class="jxr_comment">// tlc field</em>
-<a class="jxr_linenumber" name="L121" href="#L121">121</a>         <a href="../../../../../../org/mybatis/generator/api/dom/java/Field.html">Field</a> field = <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/Field.html">Field</a>(fieldName, fieldType);
-<a class="jxr_linenumber" name="L122" href="#L122">122</a>         field.setVisibility(JavaVisibility.PUBLIC);
-<a class="jxr_linenumber" name="L123" href="#L123">123</a>         field.setStatic(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L124" href="#L124">124</a>         field.setFinal(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L125" href="#L125">125</a>         field.setInitializationString(tableFieldName + <span class="jxr_string">"."</span> + fieldName); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L126" href="#L126">126</a>         commentGenerator.addFieldAnnotation(field, introspectedTable, column, topLevelClass.getImportedTypes());
-<a class="jxr_linenumber" name="L127" href="#L127">127</a>         topLevelClass.addField(field);
-<a class="jxr_linenumber" name="L128" href="#L128">128</a>         
-<a class="jxr_linenumber" name="L129" href="#L129">129</a>         <em class="jxr_comment">// inner class field</em>
-<a class="jxr_linenumber" name="L130" href="#L130">130</a>         field = <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/Field.html">Field</a>(fieldName, fieldType);
-<a class="jxr_linenumber" name="L131" href="#L131">131</a>         field.setVisibility(JavaVisibility.PUBLIC);
-<a class="jxr_linenumber" name="L132" href="#L132">132</a>         field.setFinal(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L133" href="#L133">133</a>         field.setInitializationString(calculateInnerInitializationString(column));
-<a class="jxr_linenumber" name="L134" href="#L134">134</a>         innerClass.addField(field);
-<a class="jxr_linenumber" name="L135" href="#L135">135</a>     }
-<a class="jxr_linenumber" name="L136" href="#L136">136</a> 
-<a class="jxr_linenumber" name="L137" href="#L137">137</a>     <strong class="jxr_keyword">private</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a> calculateFieldType(<a href="../../../../../../org/mybatis/generator/api/IntrospectedColumn.html">IntrospectedColumn</a> column) {
-<a class="jxr_linenumber" name="L138" href="#L138">138</a>         <a href="../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a> typeParameter;
-<a class="jxr_linenumber" name="L139" href="#L139">139</a>         <strong class="jxr_keyword">if</strong> (column.getFullyQualifiedJavaType().isPrimitive()) {
-<a class="jxr_linenumber" name="L140" href="#L140">140</a>             typeParameter = column.getFullyQualifiedJavaType().getPrimitiveTypeWrapper();
-<a class="jxr_linenumber" name="L141" href="#L141">141</a>         } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L142" href="#L142">142</a>             typeParameter = column.getFullyQualifiedJavaType();
-<a class="jxr_linenumber" name="L143" href="#L143">143</a>         }
-<a class="jxr_linenumber" name="L144" href="#L144">144</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a>(String.format(<span class="jxr_string">"SqlColumn&lt;%s&gt;"</span>, typeParameter.getShortName())); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L145" href="#L145">145</a>     }
-<a class="jxr_linenumber" name="L146" href="#L146">146</a> 
-<a class="jxr_linenumber" name="L147" href="#L147">147</a>     <strong class="jxr_keyword">private</strong> String calculateInnerInitializationString(<a href="../../../../../../org/mybatis/generator/api/IntrospectedColumn.html">IntrospectedColumn</a> column) {
-<a class="jxr_linenumber" name="L148" href="#L148">148</a>         StringBuilder initializationString = <strong class="jxr_keyword">new</strong> StringBuilder();
-<a class="jxr_linenumber" name="L149" href="#L149">149</a>         
-<a class="jxr_linenumber" name="L150" href="#L150">150</a>         initializationString.append(String.format(<span class="jxr_string">"column(\&quot;%s\&quot;, JDBCType.%s"</span>, <em class="jxr_comment">//$NON-NLS-1$ //$NON-NLS-2$</em>
-<a class="jxr_linenumber" name="L151" href="#L151">151</a>                 escapeStringForJava(getEscapedColumnName(column)),
-<a class="jxr_linenumber" name="L152" href="#L152">152</a>             column.getJdbcTypeName()));
-<a class="jxr_linenumber" name="L153" href="#L153">153</a>         
-<a class="jxr_linenumber" name="L154" href="#L154">154</a>         <strong class="jxr_keyword">if</strong> (StringUtility.stringHasValue(column.getTypeHandler())) {
-<a class="jxr_linenumber" name="L155" href="#L155">155</a>             initializationString.append(String.format(<span class="jxr_string">", \&quot;%s\&quot;)"</span>, column.getTypeHandler())); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L156" href="#L156">156</a>         } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L157" href="#L157">157</a>             initializationString.append(')');
-<a class="jxr_linenumber" name="L158" href="#L158">158</a>         }
-<a class="jxr_linenumber" name="L159" href="#L159">159</a>         
-<a class="jxr_linenumber" name="L160" href="#L160">160</a>         <strong class="jxr_keyword">return</strong> initializationString.toString();
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>      <strong class="jxr_keyword">private</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/TopLevelClass.html">TopLevelClass</a> buildBasicClass() {
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>          <a href="../../../../../../org/mybatis/generator/api/dom/java/TopLevelClass.html">TopLevelClass</a> topLevelClass = <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/TopLevelClass.html">TopLevelClass</a>(introspectedTable.getMyBatisDynamicSqlSupportType());
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>          topLevelClass.setVisibility(JavaVisibility.PUBLIC);
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>          topLevelClass.setFinal(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>          topLevelClass.addImportedType(<strong class="jxr_keyword">new</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a>(<span class="jxr_string">"org.mybatis.dynamic.sql.SqlColumn"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>          topLevelClass.addImportedType(<strong class="jxr_keyword">new</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a>(<span class="jxr_string">"org.mybatis.dynamic.sql.SqlTable"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>          topLevelClass.addImportedType(<strong class="jxr_keyword">new</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a>(<span class="jxr_string">"java.sql.JDBCType"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>          <strong class="jxr_keyword">return</strong> topLevelClass;
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>      }
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>      
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>      <strong class="jxr_keyword">private</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/InnerClass.html">InnerClass</a> buildInnerTableClass(<a href="../../../../../../org/mybatis/generator/api/dom/java/TopLevelClass.html">TopLevelClass</a> topLevelClass) {
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>          <a href="../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a> fqjt = <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a>(introspectedTable.getFullyQualifiedTable().getDomainObjectName());
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>          <a href="../../../../../../org/mybatis/generator/api/dom/java/InnerClass.html">InnerClass</a> innerClass = <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/InnerClass.html">InnerClass</a>(fqjt.getShortName());
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>          innerClass.setVisibility(JavaVisibility.PUBLIC);
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>          innerClass.setStatic(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>          innerClass.setFinal(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>          innerClass.setSuperClass(<strong class="jxr_keyword">new</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a>(<span class="jxr_string">"org.mybatis.dynamic.sql.SqlTable"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>          
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>          <a href="../../../../../../org/mybatis/generator/api/dom/java/Method.html">Method</a> method = <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/Method.html">Method</a>(fqjt.getShortName());
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>          method.setVisibility(JavaVisibility.PUBLIC);
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>          method.setConstructor(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>          method.addBodyLine(<span class="jxr_string">"super(\&quot;"</span> <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>                  + escapeStringForJava(introspectedTable.getFullyQualifiedTableNameAtRuntime())
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>                  + <span class="jxr_string">"\&quot;);"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>          innerClass.addMethod(method);
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>          
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>          commentGenerator.addClassAnnotation(innerClass, introspectedTable, topLevelClass.getImportedTypes());
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>          
+<a class="jxr_linenumber" name="L88" href="#L88">88</a>          <strong class="jxr_keyword">return</strong> innerClass;
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>      }
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>  
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>      <strong class="jxr_keyword">private</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/Field.html">Field</a> calculateTableDefinition(<a href="../../../../../../org/mybatis/generator/api/dom/java/TopLevelClass.html">TopLevelClass</a> topLevelClass) {
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>          <a href="../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a> fqjt = <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a>(introspectedTable.getFullyQualifiedTable().getDomainObjectName());
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>          String fieldName =
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>                  JavaBeansUtil.getValidPropertyName(introspectedTable.getFullyQualifiedTable().getDomainObjectName());
+<a class="jxr_linenumber" name="L95" href="#L95">95</a>          <a href="../../../../../../org/mybatis/generator/api/dom/java/Field.html">Field</a> field = <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/Field.html">Field</a>(fieldName, fqjt);
+<a class="jxr_linenumber" name="L96" href="#L96">96</a>          commentGenerator.addFieldAnnotation(field, introspectedTable, topLevelClass.getImportedTypes());
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>          field.setVisibility(JavaVisibility.PUBLIC);
+<a class="jxr_linenumber" name="L98" href="#L98">98</a>          field.setStatic(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L99" href="#L99">99</a>          field.setFinal(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L100" href="#L100">100</a>         
+<a class="jxr_linenumber" name="L101" href="#L101">101</a>         StringBuilder initializationString = <strong class="jxr_keyword">new</strong> StringBuilder();
+<a class="jxr_linenumber" name="L102" href="#L102">102</a>         initializationString.append(String.format(<span class="jxr_string">"new %s()"</span>, <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L103" href="#L103">103</a>                 escapeStringForJava(introspectedTable.getFullyQualifiedTable().getDomainObjectName())));
+<a class="jxr_linenumber" name="L104" href="#L104">104</a>         field.setInitializationString(initializationString.toString());
+<a class="jxr_linenumber" name="L105" href="#L105">105</a>         <strong class="jxr_keyword">return</strong> field;
+<a class="jxr_linenumber" name="L106" href="#L106">106</a>     }
+<a class="jxr_linenumber" name="L107" href="#L107">107</a>     
+<a class="jxr_linenumber" name="L108" href="#L108">108</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> handleColumn(<a href="../../../../../../org/mybatis/generator/api/dom/java/TopLevelClass.html">TopLevelClass</a> topLevelClass, <a href="../../../../../../org/mybatis/generator/api/dom/java/InnerClass.html">InnerClass</a> innerClass, <a href="../../../../../../org/mybatis/generator/api/IntrospectedColumn.html">IntrospectedColumn</a> column, String tableFieldName) {
+<a class="jxr_linenumber" name="L109" href="#L109">109</a>         topLevelClass.addImportedType(column.getFullyQualifiedJavaType());
+<a class="jxr_linenumber" name="L110" href="#L110">110</a>         <a href="../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a> fieldType = calculateFieldType(column);
+<a class="jxr_linenumber" name="L111" href="#L111">111</a>         String fieldName = column.getJavaProperty();
+<a class="jxr_linenumber" name="L112" href="#L112">112</a>         
+<a class="jxr_linenumber" name="L113" href="#L113">113</a>         <em class="jxr_comment">// tlc field</em>
+<a class="jxr_linenumber" name="L114" href="#L114">114</a>         <a href="../../../../../../org/mybatis/generator/api/dom/java/Field.html">Field</a> field = <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/Field.html">Field</a>(fieldName, fieldType);
+<a class="jxr_linenumber" name="L115" href="#L115">115</a>         field.setVisibility(JavaVisibility.PUBLIC);
+<a class="jxr_linenumber" name="L116" href="#L116">116</a>         field.setStatic(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L117" href="#L117">117</a>         field.setFinal(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L118" href="#L118">118</a>         field.setInitializationString(tableFieldName + <span class="jxr_string">"."</span> + fieldName); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L119" href="#L119">119</a>         commentGenerator.addFieldAnnotation(field, introspectedTable, column, topLevelClass.getImportedTypes());
+<a class="jxr_linenumber" name="L120" href="#L120">120</a>         topLevelClass.addField(field);
+<a class="jxr_linenumber" name="L121" href="#L121">121</a>         
+<a class="jxr_linenumber" name="L122" href="#L122">122</a>         <em class="jxr_comment">// inner class field</em>
+<a class="jxr_linenumber" name="L123" href="#L123">123</a>         field = <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/Field.html">Field</a>(fieldName, fieldType);
+<a class="jxr_linenumber" name="L124" href="#L124">124</a>         field.setVisibility(JavaVisibility.PUBLIC);
+<a class="jxr_linenumber" name="L125" href="#L125">125</a>         field.setFinal(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L126" href="#L126">126</a>         field.setInitializationString(calculateInnerInitializationString(column));
+<a class="jxr_linenumber" name="L127" href="#L127">127</a>         innerClass.addField(field);
+<a class="jxr_linenumber" name="L128" href="#L128">128</a>     }
+<a class="jxr_linenumber" name="L129" href="#L129">129</a> 
+<a class="jxr_linenumber" name="L130" href="#L130">130</a>     <strong class="jxr_keyword">private</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a> calculateFieldType(<a href="../../../../../../org/mybatis/generator/api/IntrospectedColumn.html">IntrospectedColumn</a> column) {
+<a class="jxr_linenumber" name="L131" href="#L131">131</a>         <a href="../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a> typeParameter;
+<a class="jxr_linenumber" name="L132" href="#L132">132</a>         <strong class="jxr_keyword">if</strong> (column.getFullyQualifiedJavaType().isPrimitive()) {
+<a class="jxr_linenumber" name="L133" href="#L133">133</a>             typeParameter = column.getFullyQualifiedJavaType().getPrimitiveTypeWrapper();
+<a class="jxr_linenumber" name="L134" href="#L134">134</a>         } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L135" href="#L135">135</a>             typeParameter = column.getFullyQualifiedJavaType();
+<a class="jxr_linenumber" name="L136" href="#L136">136</a>         }
+<a class="jxr_linenumber" name="L137" href="#L137">137</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a>(String.format(<span class="jxr_string">"SqlColumn&lt;%s&gt;"</span>, typeParameter.getShortName())); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L138" href="#L138">138</a>     }
+<a class="jxr_linenumber" name="L139" href="#L139">139</a> 
+<a class="jxr_linenumber" name="L140" href="#L140">140</a>     <strong class="jxr_keyword">private</strong> String calculateInnerInitializationString(<a href="../../../../../../org/mybatis/generator/api/IntrospectedColumn.html">IntrospectedColumn</a> column) {
+<a class="jxr_linenumber" name="L141" href="#L141">141</a>         StringBuilder initializationString = <strong class="jxr_keyword">new</strong> StringBuilder();
+<a class="jxr_linenumber" name="L142" href="#L142">142</a>         
+<a class="jxr_linenumber" name="L143" href="#L143">143</a>         initializationString.append(String.format(<span class="jxr_string">"column(\&quot;%s\&quot;, JDBCType.%s"</span>, <em class="jxr_comment">//$NON-NLS-1$ //$NON-NLS-2$</em>
+<a class="jxr_linenumber" name="L144" href="#L144">144</a>                 escapeStringForJava(getEscapedColumnName(column)),
+<a class="jxr_linenumber" name="L145" href="#L145">145</a>                 column.getJdbcTypeName()));
+<a class="jxr_linenumber" name="L146" href="#L146">146</a>         
+<a class="jxr_linenumber" name="L147" href="#L147">147</a>         <strong class="jxr_keyword">if</strong> (StringUtility.stringHasValue(column.getTypeHandler())) {
+<a class="jxr_linenumber" name="L148" href="#L148">148</a>             initializationString.append(String.format(<span class="jxr_string">", \&quot;%s\&quot;)"</span>, column.getTypeHandler())); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L149" href="#L149">149</a>         } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L150" href="#L150">150</a>             initializationString.append(')');
+<a class="jxr_linenumber" name="L151" href="#L151">151</a>         }
+<a class="jxr_linenumber" name="L152" href="#L152">152</a>         
+<a class="jxr_linenumber" name="L153" href="#L153">153</a>         <strong class="jxr_keyword">return</strong> initializationString.toString();
+<a class="jxr_linenumber" name="L154" href="#L154">154</a>     }
+<a class="jxr_linenumber" name="L155" href="#L155">155</a>     
+<a class="jxr_linenumber" name="L156" href="#L156">156</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../../../org/mybatis/generator/runtime/dynamic/sql/DynamicSqlSupportClassGenerator.html">DynamicSqlSupportClassGenerator</a> of(<a href="../../../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable, <a href="../../../../../../org/mybatis/generator/api/CommentGenerator.html">CommentGenerator</a> commentGenerator) {
+<a class="jxr_linenumber" name="L157" href="#L157">157</a>         <a href="../../../../../../org/mybatis/generator/runtime/dynamic/sql/DynamicSqlSupportClassGenerator.html">DynamicSqlSupportClassGenerator</a> generator = <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/mybatis/generator/runtime/dynamic/sql/DynamicSqlSupportClassGenerator.html">DynamicSqlSupportClassGenerator</a>();
+<a class="jxr_linenumber" name="L158" href="#L158">158</a>         generator.introspectedTable = introspectedTable;
+<a class="jxr_linenumber" name="L159" href="#L159">159</a>         generator.commentGenerator = commentGenerator;
+<a class="jxr_linenumber" name="L160" href="#L160">160</a>         <strong class="jxr_keyword">return</strong> generator;
 <a class="jxr_linenumber" name="L161" href="#L161">161</a>     }
-<a class="jxr_linenumber" name="L162" href="#L162">162</a>     
-<a class="jxr_linenumber" name="L163" href="#L163">163</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../../../../org/mybatis/generator/runtime/dynamic/sql/DynamicSqlSupportClassGenerator.html">DynamicSqlSupportClassGenerator</a> of(<a href="../../../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable, <a href="../../../../../../org/mybatis/generator/api/CommentGenerator.html">CommentGenerator</a> commentGenerator) {
-<a class="jxr_linenumber" name="L164" href="#L164">164</a>         <a href="../../../../../../org/mybatis/generator/runtime/dynamic/sql/DynamicSqlSupportClassGenerator.html">DynamicSqlSupportClassGenerator</a> generator = <strong class="jxr_keyword">new</strong> <a href="../../../../../../org/mybatis/generator/runtime/dynamic/sql/DynamicSqlSupportClassGenerator.html">DynamicSqlSupportClassGenerator</a>();
-<a class="jxr_linenumber" name="L165" href="#L165">165</a>         generator.introspectedTable = introspectedTable;
-<a class="jxr_linenumber" name="L166" href="#L166">166</a>         generator.commentGenerator = commentGenerator;
-<a class="jxr_linenumber" name="L167" href="#L167">167</a>         <strong class="jxr_keyword">return</strong> generator;
-<a class="jxr_linenumber" name="L168" href="#L168">168</a>     }
-<a class="jxr_linenumber" name="L169" href="#L169">169</a> }
+<a class="jxr_linenumber" name="L162" href="#L162">162</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2006&#x2013;2017 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2006&#x2013;2018 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
 </body>
 </html>

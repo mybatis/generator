@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MethodParts.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.dynamic.sql.elements</a> &gt; <span class="el_source">MethodParts.java</span></div><h1>MethodParts.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2018 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime.dynamic.sql.elements;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.Parameter;
+
+public class MethodParts {
+
+    private List&lt;String&gt; annotations;
+    private List&lt;String&gt; bodyLines;
+    private Set&lt;FullyQualifiedJavaType&gt; imports;
+    private List&lt;Parameter&gt; parameters;
+    
+<span class="fc" id="L33">    private MethodParts(Builder builder) {</span>
+<span class="fc" id="L34">        imports = builder.imports;</span>
+<span class="fc" id="L35">        bodyLines = builder.bodyLines;</span>
+<span class="fc" id="L36">        parameters = builder.parameters;</span>
+<span class="fc" id="L37">        annotations = builder.annotations;</span>
+<span class="fc" id="L38">    }</span>
+    
+    public Set&lt;FullyQualifiedJavaType&gt; getImports() {
+<span class="fc" id="L41">        return imports;</span>
+    }
+    
+    public List&lt;String&gt; getAnnotations() {
+<span class="fc" id="L45">        return annotations;</span>
+    }
+    
+    public List&lt;String&gt; getBodyLines() {
+<span class="fc" id="L49">        return bodyLines;</span>
+    }
+    
+    public List&lt;Parameter&gt; getParameters() {
+<span class="fc" id="L53">        return parameters;</span>
+    }
+    
+<span class="fc" id="L56">    public static class Builder {</span>
+<span class="fc" id="L57">        private List&lt;String&gt; bodyLines = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L58">        private Set&lt;FullyQualifiedJavaType&gt; imports = new HashSet&lt;FullyQualifiedJavaType&gt;();</span>
+<span class="fc" id="L59">        private List&lt;Parameter&gt; parameters = new ArrayList&lt;Parameter&gt;();</span>
+<span class="fc" id="L60">        private List&lt;String&gt; annotations = new ArrayList&lt;String&gt;();</span>
+        
+        public Builder withAnnotation(String annotation) {
+<span class="fc" id="L63">            annotations.add(annotation);</span>
+<span class="fc" id="L64">            return this;</span>
+        }
+        
+        public Builder withBodyLine(String bodyLine) {
+<span class="fc" id="L68">            this.bodyLines.add(bodyLine);</span>
+<span class="fc" id="L69">            return this;</span>
+        }
+        
+        public Builder withBodyLines(List&lt;String&gt; bodyLines) {
+<span class="nc" id="L73">            this.bodyLines.addAll(bodyLines);</span>
+<span class="nc" id="L74">            return this;</span>
+        }
+
+        public Builder withImport(FullyQualifiedJavaType importedType) {
+<span class="fc" id="L78">            this.imports.add(importedType);</span>
+<span class="fc" id="L79">            return this;</span>
+        }
+        
+        public Builder withImports(Set&lt;FullyQualifiedJavaType&gt; imports) {
+<span class="fc" id="L83">            this.imports.addAll(imports);</span>
+<span class="fc" id="L84">            return this;</span>
+        }
+        
+        public Builder withParameter(Parameter parameter) {
+<span class="fc" id="L88">            parameters.add(parameter);</span>
+<span class="fc" id="L89">            return this;</span>
+        }
+        
+        public MethodParts build() {
+<span class="fc" id="L93">            return new MethodParts(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

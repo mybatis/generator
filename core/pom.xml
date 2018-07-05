@@ -28,7 +28,7 @@
   <groupId>org.mybatis.generator</groupId>
   <artifactId>mybatis-generator</artifactId>
   <name>MyBatis Generator</name>
-  <version>1.3.8-SNAPSHOT</version>
+  <version>1.4.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <inceptionYear>2006</inceptionYear>
@@ -299,26 +299,6 @@
       </dependency>
       <dependency>
         <groupId>org.mybatis</groupId>
-        <artifactId>mybatis2</artifactId>
-        <version>2.3.7</version>
-      </dependency>
-      <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-context</artifactId>
-        <version>3.1.4.RELEASE</version>
-      </dependency>
-      <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-orm</artifactId>
-        <version>3.1.4.RELEASE</version>
-      </dependency>
-      <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-jdbc</artifactId>
-        <version>3.1.4.RELEASE</version>
-      </dependency>
-      <dependency>
-        <groupId>org.mybatis</groupId>
         <artifactId>mybatis</artifactId>
         <version>3.4.6</version>
       </dependency>
@@ -343,7 +323,6 @@
     <module>mybatis-generator-systests-common</module>
     <module>mybatis-generator-systests-mybatis3</module>
     <module>mybatis-generator-systests-mybatis3-java8</module>
-    <module>mybatis-generator-systests-ibatis2-java5</module>
   </modules>
 
   <profiles>
@@ -371,55 +350,6 @@
             </executions>
           </plugin>
         </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>jdk18</id>
-      <activation>
-        <jdk>1.8</jdk>
-      </activation>
-      <modules>
-        <module>mybatis-generator-systests-ibatis2-java2</module>
-      </modules>
-    </profile>
-    <profile>
-      <id>jdk9</id>
-      <activation>
-        <jdk>9</jdk>
-      </activation>
-      <build>
-        <pluginManagement>
-          <plugins>
-            <!-- Exposes a bug due to java 4 module being skipped so skip run -->
-            <plugin>
-              <groupId>com.mycila</groupId>
-              <artifactId>license-maven-plugin</artifactId>
-              <configuration>
-                <skip>true</skip>
-              </configuration>
-            </plugin>
-          </plugins>
-        </pluginManagement>
-      </build>
-    </profile>
-    <profile>
-      <id>jdk10</id>
-      <activation>
-        <jdk>10</jdk>
-      </activation>
-      <build>
-        <pluginManagement>
-          <plugins>
-            <!-- Exposes a bug due to java 4 module being skipped so skip run -->
-            <plugin>
-              <groupId>com.mycila</groupId>
-              <artifactId>license-maven-plugin</artifactId>
-              <configuration>
-                <skip>true</skip>
-              </configuration>
-            </plugin>
-          </plugins>
-        </pluginManagement>
       </build>
     </profile>
     <profile>

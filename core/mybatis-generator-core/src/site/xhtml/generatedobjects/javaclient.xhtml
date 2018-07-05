@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2016 the original author or authors.
+       Copyright 2006-2018 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -25,29 +25,11 @@
 </head>
 <body>
 <h1>MyBatis Generator Generated Java Client Objects</h1>
-<p>MyBatis Generator (MBG) generates Java client objects of several types.  Java client objects
+<p>MyBatis Generator (MBG) generates Java client objects that
 are used to make interaction with the generated XML elements much easier.
-For each table in the configuration, MBG generates one or more Java client objects.  For MyBatis 3,
-these are mapper interfaces.  For iBATIS 2.x, these are DAO interfaces and implementation classes.
+For each table in the configuration, MBG generates a MyBatis mapper interface.
 Generating Java client objects is optional, and is controlled by the
-<code>&lt;javaClientGenerator&gt;</code> configuration element.  MBGr can generate clients of the following
-types:
-</p>
-<ul>
-  <li>For MyBatis 3.x:
-    <ul>
-      <li>XMLMAPPER - for use with the MyBatis 3.x mapper support</li>
-    </ul>
-  </li>
-  <li>For iBATIS 2.x:
-    <ul>
-      <li>IBATIS - for use with the iBATIS DAO Framework</li>
-      <li>SPRING - for use with the Spring Framework</li>
-      <li>GENERIC-CI - with no dependencies beyond the iBATIS Data Mapper</li>
-      <li>GENERIC-SI - also with no dependencies beyond the iBATIS Data Mapper</li>
-    </ul>
-  </li>
-</ul>
+<code>&lt;javaClientGenerator&gt;</code> configuration element.</p>
 
 <p>Every field and method generated includes the non-standard JavaDoc tag
 <code>@mbg.generated</code>.  When run from the Eclipse plugin,
@@ -65,7 +47,7 @@ version of a file.</p>
 <p>Note: in the following descriptions, the term "BLOB" is used to refer to any column
 with a data type of BLOB, CLOB, LONGVARCHAR, or LONGVARBINARY.</p>
 
-<h2>Methods Common to All DAO Types</h2>
+<h2>Client Methods</h2>
 <p>Depending on the specifics of the table, and the configuration options, the Java client generator
 will generate these methods:</p>
 <ul>
@@ -89,9 +71,10 @@ on the situation.</p>
 <a href="exampleClassUsage.html">Example Class Usage</a>
 page for an example of using the <code>selectByExample</code> method.</p>
 
-<h2>XMLMAPPER Clients (MyBatis 3.x)</h2>
-<p>XMLMAPPER clients are interfaces that will map to
-methods in the generated XML mapper files.  For example, suppos that MBG generated
+<h2>Client Usage in MyBatis</h2>
+<p>MyBatis mappers are interfaces that will map to
+methods in the generated XML mapper files (if you have chosen to generated XML). If you have chosen an annotated
+mapper, then the mapper interface contains all the generated code within itself. For example, suppose that MBG generated
 an interface called <code>MyTableMapper</code>.  You can use the interface as follows:</p>
 <pre>
   SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -105,29 +88,6 @@ an interface called <code>MyTableMapper</code>.  You can use the interface as fo
 </pre>
 <p>See the standard MyBatis documentation for details on how to create the instance
 of <code>sqlSessionFactory</code>.</p>
-
-<h2>IBATIS DAOs (iBATIS 2.x)</h2>
-<p>iBATIS DAOs depend on the iBATIS DAO framework (an optional part of iBATIS - now deprecated).
-They extend the SqlMapDaoTemplate class and are
-constructed with an instance of the DAOManager object, and call methods in their super class
-to execute the different statements.</p>
-<p>MBG does not update the "dao.xml" file for you - you must add the appropriate entries
-manually.</p>
-<p>The iBATIS DAO framework is a very elementary IoC container and can be useful if you
-are not already using something like Spring or PicoContainer to manage dependencies.
-However, the framework is now deprecated and we suggest that you move to Spring.</p>
-
-<h2>SPRING DAOs (iBATIS 2.x)</h2>
-<p>SPRING DAOs depend on the Spring framework.  They extend Spring's SqlMapClientDaoSupport class,
-and are constructed by the Spring container.</p>
-
-<h2>GENERIC-CI DAOs (iBATIS 2.x)</h2>
-<p>GENERIC-CI DAOs call methods in iBATIS' SqlMapClient interface directly.  An instance of the
-interface is supplied through constructor injection.</p>
-
-<h2>GENERIC-SI DAOs (iBATIS 2.x)</h2>
-<p>GENERIC-SI DAOs call methods in iBATIS' SqlMapClient interface directly.  An instance of the
-interface is supplied through setter injection.</p>
 
 </body>
 </html>

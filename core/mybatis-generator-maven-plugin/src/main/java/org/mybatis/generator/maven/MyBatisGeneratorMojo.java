@@ -46,7 +46,7 @@ import org.mybatis.generator.internal.util.messages.Messages;
 import org.mybatis.generator.logging.LogFactory;
 
 /**
- * Goal which generates MyBatis/iBATIS artifacts.
+ * Goal which generates MyBatis artifacts.
  */
 @Mojo(name = "generate", defaultPhase = LifecyclePhase.GENERATE_SOURCES,
         requiresDependencyResolution = ResolutionScope.TEST)

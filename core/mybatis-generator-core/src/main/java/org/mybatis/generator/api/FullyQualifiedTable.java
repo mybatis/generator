@@ -221,26 +221,6 @@ public class FullyQualifiedTable {
     }
 
     /**
-     * Returns a string that is the fully qualified table name, with
-     * underscores as the separator.
-     * 
-     * @return the namespace
-     */
-    public String getIbatis2SqlMapNamespace() {
-        String localCatalog = stringHasValue(runtimeCatalog) ? runtimeCatalog
-                : introspectedCatalog;
-        String localSchema = stringHasValue(runtimeSchema) ? runtimeSchema
-                : introspectedSchema;
-        String localTable = stringHasValue(runtimeTableName) ? runtimeTableName
-                : introspectedTableName;
-
-        return composeFullyQualifiedTableName(
-                        ignoreQualifiersAtRuntime ? null : localCatalog,
-                        ignoreQualifiersAtRuntime ? null : localSchema,
-                        localTable, '_');
-    }
-
-    /**
      * Gets the domain object name.
      *
      * @return the domain object name

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2016 the original author or authors.
+       Copyright 2006-2018 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -26,18 +26,16 @@
 <body>
 <h1>The &lt;sqlMapGenerator&gt; Element</h1>
 <p>The &lt;sqlMapGenerator&gt; element is used to define properties of the SQL map
-generator.  The SQL Map Generator builds a MyBatis/iBATIS formatted SQL map XML file
+generator.  The SQL Map Generator builds a MyBatis formatted SQL map XML file
 for each introspected table.</p>
-<p>If iBATIS2 is targeted, then this element is a required child element
-of the <a href="context.html">&lt;context&gt;</a> element.</p>
-<p>If MyBatis3 is targeted, then this element is a required child element
+<p>This element is a required child element
 of the <a href="context.html">&lt;context&gt;</a> element only if your chosen
 javaClientGenerator requires XML.</p>
 <p>If you do not specify a javaClientGenerator, then
 the following rules apply:</p>
 <ul>
   <li>If you specify an sqlMapGenerator, then MBG will generate SQL map XML
-      files and model classess only.</li>
+      files and model classes only.</li>
   <li>If you do not specify an sqlMapGenerator, then MBG will generate
       model classes only.</li>
 </ul>

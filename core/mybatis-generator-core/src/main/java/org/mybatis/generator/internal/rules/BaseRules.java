@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -261,9 +261,6 @@ public abstract class BaseRules implements Rules {
     /**
      * Implements the rule for generating the SQL example where clause element.
      * 
-     * <p>In iBATIS2, generate the element if the selectByExample, deleteByExample,
-     * updateByExample, or countByExample statements are allowed.
-     * 
      * <p>In MyBatis3, generate the element if the selectByExample,
      * deleteByExample, or countByExample statements are allowed.
      * 
@@ -279,18 +276,12 @@ public abstract class BaseRules implements Rules {
                 || tableConfiguration.isDeleteByExampleStatementEnabled()
                 || tableConfiguration.isCountByExampleStatementEnabled();
 
-        if (introspectedTable.getTargetRuntime() == TargetRuntime.IBATIS2) {
-            rc |= tableConfiguration.isUpdateByExampleStatementEnabled();
-        }
-
         return rc;
     }
 
     /**
      * Implements the rule for generating the SQL example where clause element
      * specifically for use in the update by example methods.
-     * 
-     * <p>In iBATIS2, do not generate the element.
      * 
      * <p>In MyBatis3, generate the element if the updateByExample statements are
      * allowed.

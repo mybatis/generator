@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2017 the original author or authors.
+       Copyright 2006-2018 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@
 introspection.  Selected tables will cause the following objects to be generated
 for each table:</p>
 <ul>
-  <li>A MyBatis/iBATIS formatted SQL Map file</li>
+  <li>A MyBatis formatted SQL Map file</li>
   <li>A set of classes that form the "model" of the table including:
     <ul>
       <li>A class to match the primary key of the table (if the table
@@ -44,7 +44,7 @@ for each table:</p>
           different "by example" methods (selectByExample, deleteByExample).</li>
     </ul>
   </li>
-  <li>(Optionally) A DAO interface and class</li>
+  <li>(Optionally) A MyBatis mapper interface</li>
 </ul>
 <p>At least one &lt;table&gt; element must be specified as a required child element
 of the <a href="context.html">&lt;context&gt;</a> element.
@@ -315,8 +315,6 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
       This property is used to select whether MyBatis Generator will generate a constructor
       for the class that accepts a value for each field in the class.  Also, the SQL result map
       will be built to use the constructor rather than the "setter" for each field.
-      <p>This property is only applicable for MyBatis3 and will be ignored for
-         iBATIS2.</p>
       <p>This property is ignored (and forced "true") if the "immutable" property
          is set "true".</p>
       <p><i>The default value is false.</i></p></td>
@@ -338,8 +336,6 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
       the constructor will accept values for each field in the class.
       <p>If true, this forces the model classes to be built with paramterized constructors
          regardless of the value of the "constructorBased" property.</p>
-      <p>This property is only applicable for MyBatis3 and will be ignored for
-         iBATIS2.</p>
       <p><i>The default value is false.</i></p></td>
   </tr>
   <tr>

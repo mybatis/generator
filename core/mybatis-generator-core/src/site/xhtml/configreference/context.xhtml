@@ -228,6 +228,14 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
     </td>
   </tr>
   <tr>
+    <td valign="top">targetJava8</td>
+    <td>Use this property to specify that the generated code can use Java 8+ features. For example,
+        the diamond operator for collection instantiation.
+        <p/>
+        <p>Valid values are <code>true</code> or <code>false</code>. The default value is <code>false</code>.</p>
+    </td>
+  </tr>
+  <tr>
     <td valign="top">xmlFormatter</td>
     <td>Use this property to specify the full class name of a user provided formater for generated
         XML files.  The class must implement <code>org.mybatis.generator.api.XmlFormatter</code>

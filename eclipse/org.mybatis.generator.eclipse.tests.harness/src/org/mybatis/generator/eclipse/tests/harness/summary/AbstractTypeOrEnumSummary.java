@@ -28,8 +28,8 @@ import java.util.List;
  */
 public abstract class AbstractTypeOrEnumSummary extends AbstractBodyElementSummary {
 
-    private List<String> methods = new ArrayList<String>();
-    private List<String> superInterfaces = new ArrayList<String>();
+    private List<String> methods = new ArrayList<>();
+    private List<String> superInterfaces = new ArrayList<>();
 
     public boolean hasMethod(String method) {
         return methods.contains(method);

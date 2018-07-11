@@ -44,8 +44,7 @@ public class RowBoundsPlugin extends PluginAdapter {
 
     private FullyQualifiedJavaType rowBounds =
             new FullyQualifiedJavaType("org.apache.ibatis.session.RowBounds"); //$NON-NLS-1$
-    private Map<FullyQualifiedTable, List<XmlElement>> elementsToAdd =
-            new HashMap<FullyQualifiedTable, List<XmlElement>>();
+    private Map<FullyQualifiedTable, List<XmlElement>> elementsToAdd = new HashMap<>();
 
     @Override
     public boolean validate(List<String> warnings) {
@@ -148,7 +147,7 @@ public class RowBoundsPlugin extends PluginAdapter {
     }
 
     private void copyAndAddSelectManyMethod(Method method, Interface interfaze) {
-        List<String> annotations = new ArrayList<String>(method.getAnnotations());
+        List<String> annotations = new ArrayList<>(method.getAnnotations());
         
         // remove the @Results annotation and replace it with @ResultMap
         boolean inResultsAnnotation = false;
@@ -234,7 +233,7 @@ public class RowBoundsPlugin extends PluginAdapter {
         // later
         List<XmlElement> elements = elementsToAdd.get(fqt);
         if (elements == null) {
-            elements = new ArrayList<XmlElement>();
+            elements = new ArrayList<>();
             elementsToAdd.put(fqt, elements);
         }
         elements.add(newElement);

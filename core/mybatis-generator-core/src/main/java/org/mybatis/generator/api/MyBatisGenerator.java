@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -108,13 +108,13 @@ public class MyBatisGenerator {
         }
 
         if (warnings == null) {
-            this.warnings = new ArrayList<String>();
+            this.warnings = new ArrayList<>();
         } else {
             this.warnings = warnings;
         }
-        generatedJavaFiles = new ArrayList<GeneratedJavaFile>();
-        generatedXmlFiles = new ArrayList<GeneratedXmlFile>();
-        projects = new HashSet<String>();
+        generatedJavaFiles = new ArrayList<>();
+        generatedXmlFiles = new ArrayList<>();
+        projects = new HashSet<>();
 
         this.configuration.validate();
     }
@@ -232,7 +232,7 @@ public class MyBatisGenerator {
         if (contextIds == null || contextIds.size() == 0) {
             contextsToRun = configuration.getContexts();
         } else {
-            contextsToRun = new ArrayList<Context>();
+            contextsToRun = new ArrayList<>();
             for (Context context : configuration.getContexts()) {
                 if (contextIds.contains(context.getId())) {
                     contextsToRun.add(context);

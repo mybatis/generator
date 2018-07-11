@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -51,8 +51,8 @@ public class MethodAndImports {
     
     public static class Builder {
         private Method method;
-        private Set<FullyQualifiedJavaType> imports = new HashSet<FullyQualifiedJavaType>();
-        private Set<String> staticImports = new HashSet<String>();
+        private Set<FullyQualifiedJavaType> imports = new HashSet<>();
+        private Set<String> staticImports = new HashSet<>();
         
         public Builder withMethod(Method method) {
             this.method = method;

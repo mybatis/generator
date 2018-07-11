@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -45,8 +45,8 @@ public class Configuration {
      */
     public Configuration() {
         super();
-        contexts = new ArrayList<Context>();
-        classPathEntries = new ArrayList<String>();
+        contexts = new ArrayList<>();
+        classPathEntries = new ArrayList<>();
     }
 
     /**
@@ -77,7 +77,7 @@ public class Configuration {
      *             the invalid configuration exception
      */
     public void validate() throws InvalidConfigurationException {
-        List<String> errors = new ArrayList<String>();
+        List<String> errors = new ArrayList<>();
 
         for (String classPathEntry : classPathEntries) {
             if (!stringHasValue(classPathEntry)) {

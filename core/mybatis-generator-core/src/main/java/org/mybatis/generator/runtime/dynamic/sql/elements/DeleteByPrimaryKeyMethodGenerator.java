@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -40,8 +40,8 @@ public class DeleteByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
             return null;
         }
 
-        Set<FullyQualifiedJavaType> imports = new HashSet<FullyQualifiedJavaType>();
-        Set<String> staticImports = new HashSet<String>();
+        Set<FullyQualifiedJavaType> imports = new HashSet<>();
+        Set<String> staticImports = new HashSet<>();
         
         imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.delete.DeleteDSL")); //$NON-NLS-1$
         staticImports.add("org.mybatis.dynamic.sql.SqlBuilder.*"); //$NON-NLS-1$

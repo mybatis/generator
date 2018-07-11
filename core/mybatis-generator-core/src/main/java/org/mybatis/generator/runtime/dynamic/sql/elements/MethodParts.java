@@ -54,10 +54,10 @@ public class MethodParts {
     }
     
     public static class Builder {
-        private List<String> bodyLines = new ArrayList<String>();
-        private Set<FullyQualifiedJavaType> imports = new HashSet<FullyQualifiedJavaType>();
-        private List<Parameter> parameters = new ArrayList<Parameter>();
-        private List<String> annotations = new ArrayList<String>();
+        private List<String> bodyLines = new ArrayList<>();
+        private Set<FullyQualifiedJavaType> imports = new HashSet<>();
+        private List<Parameter> parameters = new ArrayList<>();
+        private List<String> annotations = new ArrayList<>();
         
         public Builder withAnnotation(String annotation) {
             annotations.add(annotation);

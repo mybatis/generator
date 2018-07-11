@@ -41,7 +41,7 @@ public class SelectDistinctByExampleMethodGenerator extends AbstractMethodGenera
             return null;
         }
         
-        Set<FullyQualifiedJavaType> imports = new HashSet<FullyQualifiedJavaType>();
+        Set<FullyQualifiedJavaType> imports = new HashSet<>();
 
         imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.select.QueryExpressionDSL")); //$NON-NLS-1$
         imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.select.MyBatis3SelectModelAdapter")); //$NON-NLS-1$

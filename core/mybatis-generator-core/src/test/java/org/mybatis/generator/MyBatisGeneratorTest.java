@@ -35,7 +35,7 @@ public class MyBatisGeneratorTest {
 
     @Test(expected = InvalidConfigurationException.class)
     public void testGenerateMyBatis3WithInvalidConfig() throws Exception {
-        List<String> warnings = new ArrayList<String>();
+        List<String> warnings = new ArrayList<>();
         ConfigurationParser cp = new ConfigurationParser(warnings);
         Configuration config = cp.parseConfiguration(this.getClass().getClassLoader().getResourceAsStream("generatorConfigMyBatis3_badConfig.xml"));
             
@@ -52,7 +52,7 @@ public class MyBatisGeneratorTest {
 
     @Test(expected = InvalidConfigurationException.class)
     public void testGenerateInvalidConfigWithNoConnectionSources() throws Exception {
-        List<String> warnings = new ArrayList<String>();
+        List<String> warnings = new ArrayList<>();
         Configuration config = new Configuration();
         Context context = new Context(ModelType.HIERARCHICAL);
         context.setId("MyContext");
@@ -71,7 +71,7 @@ public class MyBatisGeneratorTest {
 
     @Test(expected = InvalidConfigurationException.class)
     public void testGenerateInvalidConfigWithTwoConnectionSources() throws Exception {
-        List<String> warnings = new ArrayList<String>();
+        List<String> warnings = new ArrayList<>();
         Configuration config = new Configuration();
         Context context = new Context(ModelType.HIERARCHICAL);
         context.setId("MyContext");

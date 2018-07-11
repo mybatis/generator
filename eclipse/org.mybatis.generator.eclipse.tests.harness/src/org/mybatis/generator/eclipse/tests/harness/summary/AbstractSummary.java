@@ -21,10 +21,10 @@ import java.util.Map;
 
 public abstract class AbstractSummary {
 
-    private Map<String, AnnotationSummary> annotationSummaries = new HashMap<String, AnnotationSummary>();
-    private Map<String, ClassSummary> classSummaries = new HashMap<String, ClassSummary>();
-    private Map<String, EnumSummary> enumSummaries = new HashMap<String, EnumSummary>();
-    private Map<String, InterfaceSummary> interfaceSummaries = new HashMap<String, InterfaceSummary>();
+    private Map<String, AnnotationSummary> annotationSummaries = new HashMap<>();
+    private Map<String, ClassSummary> classSummaries = new HashMap<>();
+    private Map<String, EnumSummary> enumSummaries = new HashMap<>();
+    private Map<String, InterfaceSummary> interfaceSummaries = new HashMap<>();
 
     public ClassSummary getClassSummary(String name) {
         return classSummaries.get(name);

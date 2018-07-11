@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ public class IgnoredColumnPattern {
 
     private String patternRegex;
     private Pattern pattern;
-    private List<IgnoredColumnException> exceptions = new ArrayList<IgnoredColumnException>();
+    private List<IgnoredColumnException> exceptions = new ArrayList<>();
 
     public IgnoredColumnPattern(String patternRegex) {
         this.patternRegex = patternRegex;

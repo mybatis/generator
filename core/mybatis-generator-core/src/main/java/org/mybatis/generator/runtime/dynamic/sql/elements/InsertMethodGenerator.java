@@ -42,7 +42,7 @@ public class InsertMethodGenerator extends AbstractMethodGenerator {
             return null;
         }
         
-        Set<FullyQualifiedJavaType> imports = new HashSet<FullyQualifiedJavaType>();
+        Set<FullyQualifiedJavaType> imports = new HashSet<>();
 
         imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.SqlBuilder")); //$NON-NLS-1$
         imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.render.RenderingStrategy")); //$NON-NLS-1$

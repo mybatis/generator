@@ -24,7 +24,7 @@ import org.mybatis.generator.eclipse.core.merge.visitors.ImportDeclarationString
 
 public class ImportGatheringVisitor extends ASTVisitor {
 
-    private List<String> imports = new ArrayList<String>();
+    private List<String> imports = new ArrayList<>();
 
     @Override
     public boolean visit(ImportDeclaration node) {

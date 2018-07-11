@@ -58,9 +58,9 @@ public class ExistingJavaFileVisitor extends ASTVisitor {
     public ExistingJavaFileVisitor(String[] javadocTags) {
         super();
         this.javadocTags = javadocTags;
-        generatedInnerClassesToKeep = new ArrayList<String>();
-        fieldAnnotations = new HashMap<String, List<Annotation>>();
-        methodAnnotations = new HashMap<String, List<Annotation>>();
+        generatedInnerClassesToKeep = new ArrayList<>();
+        fieldAnnotations = new HashMap<>();
+        methodAnnotations = new HashMap<>();
     }
 
     /**
@@ -229,7 +229,7 @@ public class ExistingJavaFileVisitor extends ASTVisitor {
 
     private List<Annotation> retrieveAnnotations(BodyDeclaration node) {
         List<?> modifiers = node.modifiers();
-        List<Annotation> annotations = new ArrayList<Annotation>();
+        List<Annotation> annotations = new ArrayList<>();
         for (Object modifier : modifiers) {
             if (modifier instanceof Annotation) {
                 annotations.add((Annotation) modifier);

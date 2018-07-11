@@ -22,7 +22,7 @@ import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.mybatis.generator.eclipse.tests.harness.summary.support.CompilationUnitSummerizer;
 
 public class CompilationUnitSummary extends AbstractSummary {
-    private List<String> importDeclarations = new ArrayList<String>();
+    private List<String> importDeclarations = new ArrayList<>();
 
     private CompilationUnitSummary() {
         super();

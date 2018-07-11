@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -91,15 +91,15 @@ public class TableConfiguration extends PropertyHolder {
     private String mapperName;
     private String sqlProviderName;
 
-    private List<IgnoredColumnPattern> ignoredColumnPatterns = new ArrayList<IgnoredColumnPattern>();
+    private List<IgnoredColumnPattern> ignoredColumnPatterns = new ArrayList<>();
 
     public TableConfiguration(Context context) {
         super();
 
         this.modelType = context.getDefaultModelType();
 
-        columnOverrides = new ArrayList<ColumnOverride>();
-        ignoredColumns = new HashMap<IgnoredColumn, Boolean>();
+        columnOverrides = new ArrayList<>();
+        ignoredColumns = new HashMap<>();
 
         insertStatementEnabled = true;
         selectByPrimaryKeyStatementEnabled = true;
@@ -331,7 +331,7 @@ public class TableConfiguration extends PropertyHolder {
      *         as ignored columns
      */
     public List<String> getIgnoredColumnsInError() {
-        List<String> answer = new ArrayList<String>();
+        List<String> answer = new ArrayList<>();
 
         for (Map.Entry<IgnoredColumn, Boolean> entry : ignoredColumns
                 .entrySet()) {

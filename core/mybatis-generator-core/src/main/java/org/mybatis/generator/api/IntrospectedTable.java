@@ -130,11 +130,11 @@ public abstract class IntrospectedTable {
     public IntrospectedTable(TargetRuntime targetRuntime) {
         super();
         this.targetRuntime = targetRuntime;
-        primaryKeyColumns = new ArrayList<IntrospectedColumn>();
-        baseColumns = new ArrayList<IntrospectedColumn>();
-        blobColumns = new ArrayList<IntrospectedColumn>();
-        attributes = new HashMap<String, Object>();
-        internalAttributes = new HashMap<IntrospectedTable.InternalAttribute, String>();
+        primaryKeyColumns = new ArrayList<>();
+        baseColumns = new ArrayList<>();
+        blobColumns = new ArrayList<>();
+        attributes = new HashMap<>();
+        internalAttributes = new HashMap<>();
     }
 
     public FullyQualifiedTable getFullyQualifiedTable() {
@@ -288,7 +288,7 @@ public abstract class IntrospectedTable {
      * @return a List of ColumnDefinition objects for all columns in the table
      */
     public List<IntrospectedColumn> getAllColumns() {
-        List<IntrospectedColumn> answer = new ArrayList<IntrospectedColumn>();
+        List<IntrospectedColumn> answer = new ArrayList<>();
         answer.addAll(primaryKeyColumns);
         answer.addAll(baseColumns);
         answer.addAll(blobColumns);
@@ -302,7 +302,7 @@ public abstract class IntrospectedTable {
      * @return a List of ColumnDefinition objects for columns in the table that are non BLOBs
      */
     public List<IntrospectedColumn> getNonBLOBColumns() {
-        List<IntrospectedColumn> answer = new ArrayList<IntrospectedColumn>();
+        List<IntrospectedColumn> answer = new ArrayList<>();
         answer.addAll(primaryKeyColumns);
         answer.addAll(baseColumns);
 
@@ -314,7 +314,7 @@ public abstract class IntrospectedTable {
     }
 
     public List<IntrospectedColumn> getNonPrimaryKeyColumns() {
-        List<IntrospectedColumn> answer = new ArrayList<IntrospectedColumn>();
+        List<IntrospectedColumn> answer = new ArrayList<>();
         answer.addAll(baseColumns);
         answer.addAll(blobColumns);
 
@@ -946,14 +946,6 @@ public abstract class IntrospectedTable {
      * @return the list of generated XML files for this table
      */
     public abstract List<GeneratedXmlFile> getGeneratedXmlFiles();
-
-    /**
-     * Denotes whether generated code is targeted for Java version 5.0 or
-     * higher.
-     * 
-     * @return true if the generated code makes use of Java5 features
-     */
-    public abstract boolean isJava5Targeted();
 
     /**
      * This method should return the number of progress messages that will be

@@ -40,7 +40,7 @@ public class BasicUpdateMethodGenerator extends AbstractMethodGenerator {
             return null;
         }
         
-        Set<FullyQualifiedJavaType> imports = new HashSet<FullyQualifiedJavaType>();
+        Set<FullyQualifiedJavaType> imports = new HashSet<>();
         
         FullyQualifiedJavaType parameterType = new FullyQualifiedJavaType("org.mybatis.dynamic.sql.update.render.UpdateStatementProvider"); //$NON-NLS-1$
         FullyQualifiedJavaType adapter = new FullyQualifiedJavaType("org.mybatis.dynamic.sql.util.SqlProviderAdapter"); //$NON-NLS-1$

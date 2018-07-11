@@ -36,7 +36,7 @@ public class BasicDeleteMethodGenerator extends AbstractMethodGenerator {
             return null;
         }
         
-        Set<FullyQualifiedJavaType> imports = new HashSet<FullyQualifiedJavaType>();
+        Set<FullyQualifiedJavaType> imports = new HashSet<>();
         
         FullyQualifiedJavaType parameterType = new FullyQualifiedJavaType("org.mybatis.dynamic.sql.delete.render.DeleteStatementProvider"); //$NON-NLS-1$
         FullyQualifiedJavaType adapter = new FullyQualifiedJavaType("org.mybatis.dynamic.sql.util.SqlProviderAdapter"); //$NON-NLS-1$

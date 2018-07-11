@@ -40,7 +40,7 @@ public class EnumSummarizer extends AbstractTypeOrEnumSummarizer {
     }
     
     private List<String> getEnumConstants(List<EnumConstantDeclaration> enums) {
-        List<String> enumConstants = new ArrayList<String>();
+        List<String> enumConstants = new ArrayList<>();
         for (EnumConstantDeclaration enumConstant : enums) {
             enumConstants.add(enumConstant.getName().getFullyQualifiedName());
         }

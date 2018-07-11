@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ public class SelectByExampleWithBLOBsMethodGenerator extends
 
     @Override
     public void addInterfaceElements(Interface interfaze) {
-        Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
+        Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
         FullyQualifiedJavaType type = new FullyQualifiedJavaType(
                 introspectedTable.getExampleType());
         importedTypes.add(type);

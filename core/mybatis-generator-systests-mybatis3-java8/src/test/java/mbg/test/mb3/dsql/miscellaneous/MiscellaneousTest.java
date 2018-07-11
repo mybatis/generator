@@ -611,7 +611,7 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
             record.setId2(3);
             mapper.insert(record);
 
-            List<Integer> ids = new ArrayList<Integer>();
+            List<Integer> ids = new ArrayList<>();
             ids.add(1);
             ids.add(3);
 

@@ -132,9 +132,7 @@ public class ConfigVerifyer extends DefaultHandler {
     public InputSource resolveEntity(String publicId, String systemId) throws SAXException {
         boolean hasCorrectDocType = false;
         
-        if (XmlConstants.IBATOR_CONFIG_PUBLIC_ID.equals(publicId)) {
-            hasCorrectDocType = true;
-        } else if (XmlConstants.MYBATIS_GENERATOR_CONFIG_PUBLIC_ID.equals(publicId)) {
+        if (XmlConstants.MYBATIS_GENERATOR_CONFIG_PUBLIC_ID.equals(publicId)) {
             hasCorrectDocType = true;
         }
 

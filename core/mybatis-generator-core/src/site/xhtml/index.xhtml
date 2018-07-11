@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2016 the original author or authors.
+       Copyright 2006-2018 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -25,9 +25,8 @@
 </head>
 <body>
 <h1>Introduction to MyBatis Generator</h1>
-<p>MyBatis Generator (MBG) is a code generator for MyBatis <a target="_blank" href="http://mybatis.org">MyBatis</a>
- and <a target="_blank" href="http://ibatis.apache.org">iBATIS</a>.
- It will generate code for all versions of MyBatis, and versions of iBATIS after version 2.2.0.
+<p>MyBatis Generator (MBG) is a code generator for MyBatis <a target="_blank" href="http://mybatis.org">MyBatis</a>.
+ It will generate code for all versions of MyBatis.
  It will introspect a database
  table (or many tables) and will generate artifacts that can be used to
  access the table(s).  This lessens the initial nuisance of setting up objects and configuration
@@ -49,7 +48,7 @@
        for example, you may choose to generate a single domain object for each table if you so
        desire.</p>
   </li>
-  <li>MyBatis/iBATIS Compatible SQL Map XML Files.  MBG generates SQL for simple
+  <li>MyBatis Compatible SQL Map XML Files.  MBG generates SQL for simple
    CRUD functions on each table in a configuration.  The generated SQL
    statements include:
     <ul>
@@ -68,22 +67,7 @@
   </li>
   <li>Java client classes that make appropriate use of the
     above objects.  The generation of Java client classes is optional.
-    MBG will generate Java clients of the following type for MyBatis 3.x:
-    <ul>
-      <li>A mapper interface that works with the MyBatis 3.x mapper infrastructure</li>
-    </ul>
-    MBG will generate Java clients of the following types for iBATIS 2.x:
-    <ul>
-      <li>DAOs that conform to the
-          <a target="_blank" href="http://www.springframework.org">Spring</a> framework</li>
-      <li>DAOs that only use the iBATIS SQL mapping API.  These DAOs can be
-          generated in two varieties: supplying the <code>SqlMapClient</code> through
-          either constructor or setter injection.</li>
-      <li>DAOs that conform to the iBATIS DAO Framework (an optional part of iBATIS, this
-          framework is now deprecated and we suggest that you use the Spring framework
-          instead)</li>
-    </ul>
-  </li>
+    MBG will generate a mapper interface that works with the MyBatis 3.x mapper infrastructure</li>
 </ul>
 
 <p>MyBatis generator is designed to run well in an iterative development environment, and
@@ -116,7 +100,7 @@ a full user manual for the generator to the Eclipse help system.</p>
   <a href="https://marketplace.eclipse.org/content/mybatis-generator">https://marketplace.eclipse.org/content/mybatis-generator</a>.
 </p>
 <h2>Dependencies</h2>
-<p>MBG has no dependencies beyond the JRE.  JRE 6.0 or
+<p>MBG has no dependencies beyond the JRE.  Java 8 or
 above is required.  Also, a JDBC driver that implements the
 DatabaseMetaData interface, especially the <code>getColumns</code> and
 <code>getPrimaryKeys</code> methods is required.</p>

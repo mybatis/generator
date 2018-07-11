@@ -28,7 +28,7 @@
   <groupId>org.mybatis.generator</groupId>
   <artifactId>mybatis-generator</artifactId>
   <name>MyBatis Generator</name>
-  <version>1.3.7-SNAPSHOT</version>
+  <version>1.4.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <inceptionYear>2006</inceptionYear>
@@ -53,7 +53,7 @@
   <properties>
     <findbugs.onlyAnalyze>org.mybatis.generator.*</findbugs.onlyAnalyze>
     <clirr.comparisonVersion>1.3.2</clirr.comparisonVersion>
-    <hsqldb.version>2.4.0</hsqldb.version>
+    <hsqldb.version>2.4.1</hsqldb.version>
     <jacoco.itReportPath>${project.basedir}/../mybatis-generator-core/target/jacoco-it.exec</jacoco.itReportPath>
     <checkstyle.config>${project.basedir}/../checkstyle-override.xml</checkstyle.config>
   </properties>
@@ -64,12 +64,12 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jar-plugin</artifactId>
-          <version>3.0.2</version>
+          <version>3.1.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>3.0.0</version>
+          <version>3.0.1</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -89,7 +89,23 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-plugin-plugin</artifactId>
-          <version>3.5</version>
+          <version>3.5.2</version>
+        </plugin>
+        <!-- Added for JDK 10 -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.22.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>3.7.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <version>0.8.1</version>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -199,6 +215,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.0.1</version>
         <configuration>
           <tags>
             <tag>
@@ -214,6 +231,12 @@
         <configuration>
           <configLocation>${checkstyle.config}</configLocation>
         </configuration>
+      </plugin>
+      <!-- added for JDK 10 -->
+      <plugin>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+        <version>3.1.5</version>
       </plugin>
     </plugins>
   </reporting>
@@ -243,12 +266,12 @@
       <dependency>
         <groupId>org.apache.ant</groupId>
         <artifactId>ant</artifactId>
-        <version>1.10.3</version>
+        <version>1.10.4</version>
       </dependency>
       <dependency>
         <groupId>org.junit.vintage</groupId>
         <artifactId>junit-vintage-engine</artifactId>
-        <version>5.1.1</version>
+        <version>5.2.0</version>
         <scope>test</scope>
       </dependency>
       <dependency>
@@ -260,39 +283,19 @@
       <dependency>
         <groupId>org.apache.maven</groupId>
         <artifactId>maven-plugin-api</artifactId>
-        <version>3.5.3</version>
+        <version>3.5.4</version>
       </dependency>
       <dependency>
         <groupId>org.apache.maven.plugin-tools</groupId>
         <artifactId>maven-plugin-annotations</artifactId>
-        <version>3.5.1</version>
+        <version>3.5.2</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>org.apache.maven</groupId>
         <artifactId>maven-core</artifactId>
-        <version>3.5.3</version>
+        <version>3.5.4</version>
         <scope>provided</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.mybatis</groupId>
-        <artifactId>mybatis2</artifactId>
-        <version>2.3.7</version>
-      </dependency>
-      <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-context</artifactId>
-        <version>3.1.4.RELEASE</version>
-      </dependency>
-      <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-orm</artifactId>
-        <version>3.1.4.RELEASE</version>
-      </dependency>
-      <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-jdbc</artifactId>
-        <version>3.1.4.RELEASE</version>
       </dependency>
       <dependency>
         <groupId>org.mybatis</groupId>
@@ -302,7 +305,7 @@
       <dependency>
         <groupId>com.github.javaparser</groupId>
         <artifactId>javaparser-core</artifactId>
-        <version>3.6.2</version>
+        <version>3.6.12</version>
         <scope>test</scope>
       </dependency>
       <dependency>
@@ -320,7 +323,6 @@
     <module>mybatis-generator-systests-common</module>
     <module>mybatis-generator-systests-mybatis3</module>
     <module>mybatis-generator-systests-mybatis3-java8</module>
-    <module>mybatis-generator-systests-ibatis2-java5</module>
   </modules>
 
   <profiles>
@@ -348,92 +350,6 @@
             </executions>
           </plugin>
         </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>jdk16</id>
-      <activation>
-        <jdk>1.6</jdk>
-      </activation>
-      <modules>
-        <module>mybatis-generator-systests-ibatis2-java2</module>
-      </modules>
-      <reporting>
-        <plugins>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>findbugs-maven-plugin</artifactId>
-            <version>2.5.5</version>
-          </plugin>
-          <plugin>
-            <groupId>com.github.spotbugs</groupId>
-            <artifactId>spotbugs-maven-plugin</artifactId>
-            <configuration>
-              <skip>true</skip>
-            </configuration>
-          </plugin>
-        </plugins>
-      </reporting>
-    </profile>
-    <profile>
-      <id>jdk17</id>
-      <activation>
-        <jdk>1.7</jdk>
-      </activation>
-      <modules>
-        <module>mybatis-generator-systests-ibatis2-java2</module>
-      </modules>
-      <reporting>
-        <plugins>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>findbugs-maven-plugin</artifactId>
-            <version>3.0.5</version>
-          </plugin>
-          <plugin>
-            <groupId>com.github.spotbugs</groupId>
-            <artifactId>spotbugs-maven-plugin</artifactId>
-            <configuration>
-              <skip>true</skip>
-            </configuration>
-          </plugin>
-        </plugins>
-      </reporting>
-    </profile>
-    <profile>
-      <id>jdk18</id>
-      <activation>
-        <jdk>1.8</jdk>
-      </activation>
-      <modules>
-        <module>mybatis-generator-systests-ibatis2-java2</module>
-      </modules>
-    </profile>
-    <profile>
-      <id>jdk9</id>
-      <activation>
-        <jdk>9</jdk>
-      </activation>
-      <dependencies>
-        <dependency>
-          <groupId>javax.xml.bind</groupId>
-          <artifactId>jaxb-api</artifactId>
-          <version>2.3.0</version>
-        </dependency>
-      </dependencies>
-      <build>
-        <pluginManagement>
-          <plugins>
-            <!-- Exposes a bug due to java 4 module being skipped so skip run -->
-            <plugin>
-              <groupId>com.mycila</groupId>
-              <artifactId>license-maven-plugin</artifactId>
-              <configuration>
-                <skip>true</skip>
-              </configuration>
-            </plugin>
-          </plugins>
-        </pluginManagement>
       </build>
     </profile>
     <profile>

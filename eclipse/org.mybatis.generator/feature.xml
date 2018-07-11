@@ -2,11 +2,11 @@
 <feature
       id="org.mybatis.generator"
       label="MyBatis Generator"
-      version="1.3.7.qualifier"
+      version="1.4.0.qualifier"
       provider-name="mybatis.org">
 
    <description url="http://www.mybatis.org/generator/">
-      MyBatis Generator - a code generator for MyBatis/iBATIS
+      MyBatis Generator - a code generator for MyBatis
    </description>
 
    <copyright>

@@ -56,4 +56,5 @@
 /.project
 .idea
 *.iml
-.mvn/wrapper/maven-wrapper.jar
+/core/.mvn/wrapper/maven-wrapper.jar
+**/.DS_Store

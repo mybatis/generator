@@ -115,7 +115,7 @@ public class GeneratorAntTask extends Task {
         
         try {
             SubMonitor subMonitor = SubMonitor.convert(monitor, 1000);
-            subMonitor.beginTask("Generating MyBatis/iBATIS Artifacts:", 1000);
+            subMonitor.beginTask("Generating MyBatis Artifacts:", 1000);
             subMonitor.subTask("Parsing Configuration");
             
             Properties p = propertyset == null ? null : propertyset.getProperties();

@@ -129,8 +129,8 @@
 
 <!--
   The sqlMapGenerator element is used to define properties of the SQL Map Generator.
-  The SQL Map Generator builds an XML file for each table that conforms to iBATIS'
-  SqlMap DTD.
+  The SQL Map Generator builds an XML file for each table that conforms to MyBatis'
+  SQL Mapper DTD.
 -->
 <!ELEMENT sqlMapGenerator (property*)>
 <!ATTLIST sqlMapGenerator

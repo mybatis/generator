@@ -42,22 +42,15 @@ import org.mybatis.generator.internal.rules.Rules;
 public abstract class IntrospectedTable {
 
     public enum TargetRuntime {
-        IBATIS2, 
         MYBATIS3,
         MYBATIS3_DSQL
     }
 
     protected enum InternalAttribute {
-        ATTR_DAO_IMPLEMENTATION_TYPE,
-        ATTR_DAO_INTERFACE_TYPE,
         ATTR_PRIMARY_KEY_TYPE,
         ATTR_BASE_RECORD_TYPE,
         ATTR_RECORD_WITH_BLOBS_TYPE,
         ATTR_EXAMPLE_TYPE,
-        ATTR_IBATIS2_SQL_MAP_PACKAGE,
-        ATTR_IBATIS2_SQL_MAP_FILE_NAME,
-        ATTR_IBATIS2_SQL_MAP_NAMESPACE,
-        ATTR_MYBATIS3_EXAMPLE_PACKAGE,
         ATTR_MYBATIS3_XML_MAPPER_PACKAGE,
         ATTR_MYBATIS3_XML_MAPPER_FILE_NAME,
         /** also used as XML Mapper namespace if a Java mapper is generated. */
@@ -374,23 +367,6 @@ public abstract class IntrospectedTable {
                 .get(InternalAttribute.ATTR_RECORD_WITH_BLOBS_TYPE);
     }
 
-    /**
-     * Calculates an SQL Map file name for the table. Typically the name is
-     * "XXXX_SqlMap.xml" where XXXX is the fully qualified table name (delimited
-     * with underscores).
-     * 
-     * @return the name of the SqlMap file
-     */
-    public String getIbatis2SqlMapFileName() {
-        return internalAttributes
-                .get(InternalAttribute.ATTR_IBATIS2_SQL_MAP_FILE_NAME);
-    }
-
-    public String getIbatis2SqlMapNamespace() {
-        return internalAttributes
-                .get(InternalAttribute.ATTR_IBATIS2_SQL_MAP_NAMESPACE);
-    }
-
     public String getMyBatis3SqlMapNamespace() {
         String namespace = getMyBatis3JavaMapperType();
         if (namespace == null) {
@@ -403,26 +379,6 @@ public abstract class IntrospectedTable {
     public String getMyBatis3FallbackSqlMapNamespace() {
         return internalAttributes
                 .get(InternalAttribute.ATTR_MYBATIS3_FALLBACK_SQL_MAP_NAMESPACE);
-    }
-
-    /**
-     * Calculates the package for the current table.
-     * 
-     * @return the package for the SqlMap for the current table
-     */
-    public String getIbatis2SqlMapPackage() {
-        return internalAttributes
-                .get(InternalAttribute.ATTR_IBATIS2_SQL_MAP_PACKAGE);
-    }
-
-    public String getDAOImplementationType() {
-        return internalAttributes
-                .get(InternalAttribute.ATTR_DAO_IMPLEMENTATION_TYPE);
-    }
-
-    public String getDAOInterfaceType() {
-        return internalAttributes
-                .get(InternalAttribute.ATTR_DAO_INTERFACE_TYPE);
     }
 
     public boolean hasAnyColumns() {
@@ -511,12 +467,9 @@ public abstract class IntrospectedTable {
     }
 
     protected void calculateXmlAttributes() {
-        setIbatis2SqlMapPackage(calculateSqlMapPackage());
-        setIbatis2SqlMapFileName(calculateIbatis2SqlMapFileName());
         setMyBatis3XmlMapperFileName(calculateMyBatis3XmlMapperFileName());
         setMyBatis3XmlMapperPackage(calculateSqlMapPackage());
 
-        setIbatis2SqlMapNamespace(calculateIbatis2SqlMapNamespace());
         setMyBatis3FallbackSqlMapNamespace(calculateMyBatis3FallbackSqlMapNamespace());
 
         setSqlMapFullyQualifiedRuntimeTableName(calculateSqlMapFullyQualifiedRuntimeTableName());
@@ -804,20 +757,6 @@ public abstract class IntrospectedTable {
         }
 
         StringBuilder sb = new StringBuilder();
-        sb.append(calculateJavaClientImplementationPackage());
-        sb.append('.');
-        sb.append(fullyQualifiedTable.getDomainObjectName());
-        sb.append("DAOImpl"); //$NON-NLS-1$
-        setDAOImplementationType(sb.toString());
-
-        sb.setLength(0);
-        sb.append(calculateJavaClientInterfacePackage());
-        sb.append('.');
-        sb.append(fullyQualifiedTable.getDomainObjectName());
-        sb.append("DAO"); //$NON-NLS-1$
-        setDAOInterfaceType(sb.toString());
-
-        sb.setLength(0);
         sb.append(calculateJavaClientInterfacePackage());
         sb.append('.');
         if (stringHasValue(tableConfiguration.getMapperName())) {
@@ -946,13 +885,6 @@ public abstract class IntrospectedTable {
         return sb.toString();
     }
 
-    protected String calculateIbatis2SqlMapFileName() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(fullyQualifiedTable.getIbatis2SqlMapNamespace());
-        sb.append("_SqlMap.xml"); //$NON-NLS-1$
-        return sb.toString();
-    }
-
     protected String calculateMyBatis3XmlMapperFileName() {
         StringBuilder sb = new StringBuilder();
         if (stringHasValue(tableConfiguration.getMapperName())) {
@@ -969,10 +901,6 @@ public abstract class IntrospectedTable {
             sb.append("Mapper.xml"); //$NON-NLS-1$
         }
         return sb.toString();
-    }
-
-    protected String calculateIbatis2SqlMapNamespace() {
-        return fullyQualifiedTable.getIbatis2SqlMapNamespace();
     }
 
     protected String calculateMyBatis3FallbackSqlMapNamespace() {
@@ -1072,16 +1000,6 @@ public abstract class IntrospectedTable {
         return tableConfiguration;
     }
 
-    public void setDAOImplementationType(String daoImplementationType) {
-        internalAttributes.put(InternalAttribute.ATTR_DAO_IMPLEMENTATION_TYPE,
-                daoImplementationType);
-    }
-
-    public void setDAOInterfaceType(String daoInterfaceType) {
-        internalAttributes.put(InternalAttribute.ATTR_DAO_INTERFACE_TYPE,
-                daoInterfaceType);
-    }
-
     public void setPrimaryKeyType(String primaryKeyType) {
         internalAttributes.put(InternalAttribute.ATTR_PRIMARY_KEY_TYPE,
                 primaryKeyType);
@@ -1100,23 +1018,6 @@ public abstract class IntrospectedTable {
     public void setExampleType(String exampleType) {
         internalAttributes
                 .put(InternalAttribute.ATTR_EXAMPLE_TYPE, exampleType);
-    }
-
-    public void setIbatis2SqlMapPackage(String sqlMapPackage) {
-        internalAttributes.put(InternalAttribute.ATTR_IBATIS2_SQL_MAP_PACKAGE,
-                sqlMapPackage);
-    }
-
-    public void setIbatis2SqlMapFileName(String sqlMapFileName) {
-        internalAttributes.put(
-                InternalAttribute.ATTR_IBATIS2_SQL_MAP_FILE_NAME,
-                sqlMapFileName);
-    }
-
-    public void setIbatis2SqlMapNamespace(String sqlMapNamespace) {
-        internalAttributes.put(
-                InternalAttribute.ATTR_IBATIS2_SQL_MAP_NAMESPACE,
-                sqlMapNamespace);
     }
 
     public void setMyBatis3FallbackSqlMapNamespace(String sqlMapNamespace) {

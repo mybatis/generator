@@ -22,7 +22,7 @@
   <parent>
     <groupId>org.mybatis.generator</groupId>
     <artifactId>mybatis-generator</artifactId>
-    <version>1.3.7-SNAPSHOT</version>
+    <version>1.4.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>mybatis-generator-core</artifactId>
@@ -99,6 +99,17 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>animal-sniffer-maven-plugin</artifactId>
+        <configuration>
+          <signature>
+            <groupId>org.codehaus.mojo.signature</groupId>
+            <artifactId>java18</artifactId>
+            <version>1.0</version>
+          </signature>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
   
@@ -157,7 +168,7 @@
     </site>
   </distributionManagement>
 
-  <description>MyBatis Generator - a code generator for MyBatis and iBatis.</description>
+  <description>MyBatis Generator - a code generator for MyBatis.</description>
   <scm>
     <url>https://github.com/mybatis/generator</url>
     <tag>HEAD</tag>

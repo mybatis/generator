@@ -132,7 +132,7 @@ public interface Plugin {
      * @return a List of GeneratedJavaFiles - these files will be saved
      *         with the other files from this run.
      */
-    List<GeneratedJavaFile> contextGenerateAdditionalJavaFiles();
+    List<GeneratedModelFile> contextGenerateAdditionalJavaFiles();
 
     /**
      * This method can be used to generate additional Java files needed by your
@@ -145,7 +145,7 @@ public interface Plugin {
      * @return a List of GeneratedJavaFiles - these files will be saved
      *         with the other files from this run.
      */
-    List<GeneratedJavaFile> contextGenerateAdditionalJavaFiles(
+    List<GeneratedModelFile> contextGenerateAdditionalJavaFiles(
             IntrospectedTable introspectedTable);
 
     /**

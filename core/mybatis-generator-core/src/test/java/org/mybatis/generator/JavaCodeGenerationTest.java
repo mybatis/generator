@@ -25,7 +25,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-import org.mybatis.generator.api.GeneratedJavaFile;
+import org.mybatis.generator.api.GeneratedModelFile;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
@@ -37,42 +37,42 @@ import com.github.javaparser.ParseProblemException;
 @RunWith(Parameterized.class)
 public class JavaCodeGenerationTest {
 
-    private GeneratedJavaFile generatedJavaFile;
+    private GeneratedModelFile generatedModelFile;
 
-    public JavaCodeGenerationTest(GeneratedJavaFile generatedJavaFile) {
-        this.generatedJavaFile = generatedJavaFile;
+    public JavaCodeGenerationTest(GeneratedModelFile generatedModelFile) {
+        this.generatedModelFile = generatedModelFile;
     }
 
     @Test
     public void testJavaParse() {
         ByteArrayInputStream is = new ByteArrayInputStream(
-                generatedJavaFile.getCompilationUnit().getFormattedContent().getBytes());
+                generatedModelFile.getCompilationUnit().getFormattedContent().getBytes());
         try {
             JavaParser.parse(is);
         } catch (ParseProblemException e) {
-            fail("Generated Java File " + generatedJavaFile.getFileName() + " will not compile");
+            fail("Generated Java File " + generatedModelFile.getFileName() + " will not compile");
         }
     }
 
     @Parameters
-    public static List<GeneratedJavaFile> generateJavaFiles() throws Exception {
-        List<GeneratedJavaFile> generatedFiles = new ArrayList<GeneratedJavaFile>();
+    public static List<GeneratedModelFile> generateJavaFiles() throws Exception {
+        List<GeneratedModelFile> generatedFiles = new ArrayList<GeneratedModelFile>();
         generatedFiles.addAll(generateJavaFilesMybatis());
         generatedFiles.addAll(generateJavaFilesMybatisDsql());
         return generatedFiles;
     }
 
-    private static List<GeneratedJavaFile> generateJavaFilesMybatis() throws Exception {
+    private static List<GeneratedModelFile> generateJavaFilesMybatis() throws Exception {
         createDatabase();
-        return generateJavaFiles("/scripts/generatorConfig.xml");
+        return generateModelFiles("/scripts/generatorConfig.xml");
     }
 
-    private static List<GeneratedJavaFile> generateJavaFilesMybatisDsql() throws Exception {
+    private static List<GeneratedModelFile> generateJavaFilesMybatisDsql() throws Exception {
         createDatabase();
-        return generateJavaFiles("/scripts/generatorConfig_Dsql.xml");
+        return generateModelFiles("/scripts/generatorConfig_Dsql.xml");
     }
 
-    private static List<GeneratedJavaFile> generateJavaFiles(String configFile) throws Exception {
+    private static List<GeneratedModelFile> generateModelFiles(String configFile) throws Exception {
         List<String> warnings = new ArrayList<String>();
         ConfigurationParser cp = new ConfigurationParser(warnings);
         Configuration config = cp.parseConfiguration(JavaCodeGenerationTest.class.getResourceAsStream(configFile));
@@ -81,7 +81,7 @@ public class JavaCodeGenerationTest {
 
         MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, shellCallback, warnings);
         myBatisGenerator.generate(null, null, null, false);
-        return myBatisGenerator.getGeneratedJavaFiles();
+        return myBatisGenerator.getGeneratedModelFiles();
     }
 
     public static void createDatabase() throws Exception {

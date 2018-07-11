@@ -56,7 +56,7 @@ public class JavaCodeGenerationTest {
 
     @Parameters
     public static List<GeneratedJavaFile> generateJavaFiles() throws Exception {
-        List<GeneratedJavaFile> generatedFiles = new ArrayList<GeneratedJavaFile>();
+        List<GeneratedJavaFile> generatedFiles = new ArrayList<>();
         generatedFiles.addAll(generateJavaFilesMybatis());
         generatedFiles.addAll(generateJavaFilesMybatisDsql());
         return generatedFiles;
@@ -73,7 +73,7 @@ public class JavaCodeGenerationTest {
     }
 
     private static List<GeneratedJavaFile> generateJavaFiles(String configFile) throws Exception {
-        List<String> warnings = new ArrayList<String>();
+        List<String> warnings = new ArrayList<>();
         ConfigurationParser cp = new ConfigurationParser(warnings);
         Configuration config = cp.parseConfiguration(JavaCodeGenerationTest.class.getResourceAsStream(configFile));
 

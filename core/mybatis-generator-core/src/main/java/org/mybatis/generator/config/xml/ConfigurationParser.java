@@ -89,12 +89,12 @@ public class ConfigurationParser {
         this.extraProperties = extraProperties;
 
         if (warnings == null) {
-            this.warnings = new ArrayList<String>();
+            this.warnings = new ArrayList<>();
         } else {
             this.warnings = warnings;
         }
 
-        parseErrors = new ArrayList<String>();
+        parseErrors = new ArrayList<>();
     }
 
     public Configuration parseConfiguration(File inputFile) throws IOException,

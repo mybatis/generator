@@ -48,7 +48,7 @@ public final class PluginAggregator implements Plugin {
     private List<Plugin> plugins;
 
     public PluginAggregator() {
-        plugins = new ArrayList<Plugin>();
+        plugins = new ArrayList<>();
     }
 
     public void addPlugin(Plugin plugin) {
@@ -165,7 +165,7 @@ public final class PluginAggregator implements Plugin {
     @Override
     public List<GeneratedJavaFile> contextGenerateAdditionalJavaFiles(
             IntrospectedTable introspectedTable) {
-        List<GeneratedJavaFile> answer = new ArrayList<GeneratedJavaFile>();
+        List<GeneratedJavaFile> answer = new ArrayList<>();
         for (Plugin plugin : plugins) {
             List<GeneratedJavaFile> temp = plugin
                     .contextGenerateAdditionalJavaFiles(introspectedTable);
@@ -178,7 +178,7 @@ public final class PluginAggregator implements Plugin {
 
     @Override
     public List<GeneratedJavaFile> contextGenerateAdditionalJavaFiles() {
-        List<GeneratedJavaFile> answer = new ArrayList<GeneratedJavaFile>();
+        List<GeneratedJavaFile> answer = new ArrayList<>();
         for (Plugin plugin : plugins) {
             List<GeneratedJavaFile> temp = plugin
                     .contextGenerateAdditionalJavaFiles();
@@ -192,7 +192,7 @@ public final class PluginAggregator implements Plugin {
     @Override
     public List<GeneratedXmlFile> contextGenerateAdditionalXmlFiles(
             IntrospectedTable introspectedTable) {
-        List<GeneratedXmlFile> answer = new ArrayList<GeneratedXmlFile>();
+        List<GeneratedXmlFile> answer = new ArrayList<>();
         for (Plugin plugin : plugins) {
             List<GeneratedXmlFile> temp = plugin
                     .contextGenerateAdditionalXmlFiles(introspectedTable);
@@ -205,7 +205,7 @@ public final class PluginAggregator implements Plugin {
 
     @Override
     public List<GeneratedXmlFile> contextGenerateAdditionalXmlFiles() {
-        List<GeneratedXmlFile> answer = new ArrayList<GeneratedXmlFile>();
+        List<GeneratedXmlFile> answer = new ArrayList<>();
         for (Plugin plugin : plugins) {
             List<GeneratedXmlFile> temp = plugin
                     .contextGenerateAdditionalXmlFiles();

@@ -22,7 +22,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.variables;bundle-version="3.2.800",
  org.eclipse.equinox.security;bundle-version="1.2.100",
  org.eclipse.ui.console;bundle-version="3.6.100"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: org.mybatis.generator.eclipse.ui,
  org.mybatis.generator.eclipse.ui.ant,

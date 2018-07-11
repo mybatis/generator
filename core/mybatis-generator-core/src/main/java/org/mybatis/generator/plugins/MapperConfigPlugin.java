@@ -57,7 +57,7 @@ import org.mybatis.generator.codegen.XmlConstants;
  */
 public class MapperConfigPlugin extends PluginAdapter {
 
-    private List<String> mapperFiles = new ArrayList<String>();
+    private List<String> mapperFiles = new ArrayList<>();
 
     @Override
     public boolean validate(List<String> warnings) {
@@ -127,7 +127,7 @@ public class MapperConfigPlugin extends PluginAdapter {
                 properties.getProperty("targetProject"), //$NON-NLS-1$
                 false, context.getXmlFormatter());
 
-        List<GeneratedXmlFile> answer = new ArrayList<GeneratedXmlFile>(1);
+        List<GeneratedXmlFile> answer = new ArrayList<>(1);
         answer.add(gxf);
 
         return answer;

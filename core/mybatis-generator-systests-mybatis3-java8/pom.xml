@@ -8,12 +8,6 @@
   <artifactId>mybatis-generator-systests-mybatis3-java8</artifactId>
   <description>Tests for the MyBatis3 code generator using Java8 Features.</description>
   <name>MyBatis Generator Tests (MyBatis3 with Java 8)</name>
-  <properties>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
-    <maven.compiler.testTarget>1.8</maven.compiler.testTarget>
-    <maven.compiler.testSource>1.8</maven.compiler.testSource>
-  </properties>
   <build>
     <plugins>
       <plugin>

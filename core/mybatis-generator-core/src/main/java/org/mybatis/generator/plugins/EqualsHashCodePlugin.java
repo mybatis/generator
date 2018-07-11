@@ -132,9 +132,7 @@ public class EqualsHashCodePlugin extends PluginAdapter {
         method.setName("equals"); //$NON-NLS-1$
         method.addParameter(new Parameter(FullyQualifiedJavaType
                 .getObjectInstance(), "that")); //$NON-NLS-1$
-        if (introspectedTable.isJava5Targeted()) {
-            method.addAnnotation("@Override"); //$NON-NLS-1$
-        }
+        method.addAnnotation("@Override"); //$NON-NLS-1$
 
         if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3_DSQL) {
             context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable,
@@ -246,9 +244,7 @@ public class EqualsHashCodePlugin extends PluginAdapter {
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
         method.setName("hashCode"); //$NON-NLS-1$
-        if (introspectedTable.isJava5Targeted()) {
-            method.addAnnotation("@Override"); //$NON-NLS-1$
-        }
+        method.addAnnotation("@Override"); //$NON-NLS-1$
 
         if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3_DSQL) {
             context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable,

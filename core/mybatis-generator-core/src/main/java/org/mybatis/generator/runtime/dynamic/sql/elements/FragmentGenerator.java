@@ -80,7 +80,7 @@ public class FragmentGenerator {
     }
 
     public List<String> getPrimaryKeyWhereClauseForUpdate() {
-        List<String> lines = new ArrayList<String>();
+        List<String> lines = new ArrayList<>();
         
         boolean first = true;
         for (IntrospectedColumn column : introspectedTable.getPrimaryKeyColumns()) {
@@ -111,7 +111,7 @@ public class FragmentGenerator {
 
         StringBuilder sb = new StringBuilder();
 
-        Set<FullyQualifiedJavaType> imports = new HashSet<FullyQualifiedJavaType>();
+        Set<FullyQualifiedJavaType> imports = new HashSet<>();
         Iterator<IntrospectedColumn> iterPk = introspectedTable.getPrimaryKeyColumns().iterator();
         Iterator<IntrospectedColumn> iterNonPk = introspectedTable.getNonPrimaryKeyColumns().iterator();
         while (iterPk.hasNext()) {
@@ -186,7 +186,7 @@ public class FragmentGenerator {
 
         StringBuilder sb = new StringBuilder();
 
-        Set<FullyQualifiedJavaType> imports = new HashSet<FullyQualifiedJavaType>();
+        Set<FullyQualifiedJavaType> imports = new HashSet<>();
         Iterator<IntrospectedColumn> iterPk = introspectedTable.getPrimaryKeyColumns().iterator();
         Iterator<IntrospectedColumn> iterNonPk = introspectedTable.getNonPrimaryKeyColumns().iterator();
         while (iterPk.hasNext()) {
@@ -280,7 +280,7 @@ public class FragmentGenerator {
     }
     
     public List<String> getSetEqualLines(List<IntrospectedColumn> columnList, boolean terminate) {
-        List<String> lines = new ArrayList<String>();
+        List<String> lines = new ArrayList<>();
         List<IntrospectedColumn> columns = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(columnList);
         Iterator<IntrospectedColumn> iter = columns.iterator();
         while (iter.hasNext()) {
@@ -299,7 +299,7 @@ public class FragmentGenerator {
     }
     
     public List<String> getSetEqualWhenPresentLines(List<IntrospectedColumn> columnList, boolean terminate) {
-        List<String> lines = new ArrayList<String>();
+        List<String> lines = new ArrayList<>();
         List<IntrospectedColumn> columns = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(columnList);
         Iterator<IntrospectedColumn> iter = columns.iterator();
         while (iter.hasNext()) {

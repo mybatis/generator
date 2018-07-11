@@ -22,7 +22,7 @@ import org.eclipse.jdt.core.dom.EnumDeclaration;
 import org.mybatis.generator.eclipse.tests.harness.summary.support.EnumSummarizer;
 
 public class EnumSummary extends AbstractTypeOrEnumSummary {
-    private List<String> enumConstants = new ArrayList<String>();
+    private List<String> enumConstants = new ArrayList<>();
 
     private EnumSummary() {
         super();

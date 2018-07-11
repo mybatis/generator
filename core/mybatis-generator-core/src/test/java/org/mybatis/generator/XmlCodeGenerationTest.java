@@ -67,7 +67,7 @@ public class XmlCodeGenerationTest {
 
     @Parameters
     public static List<GeneratedXmlFile> generateXmlFiles() throws Exception {
-        List<GeneratedXmlFile> generatedFiles = new ArrayList<GeneratedXmlFile>();
+        List<GeneratedXmlFile> generatedFiles = new ArrayList<>();
         generatedFiles.addAll(generateXmlFilesMybatis());
         return generatedFiles;
     }
@@ -78,7 +78,7 @@ public class XmlCodeGenerationTest {
     }
 
     private static List<GeneratedXmlFile> generateXmlFiles(String configFile) throws Exception {
-        List<String> warnings = new ArrayList<String>();
+        List<String> warnings = new ArrayList<>();
         ConfigurationParser cp = new ConfigurationParser(warnings);
         Configuration config = cp.parseConfiguration(JavaCodeGenerationTest.class.getResourceAsStream(configFile));
 
@@ -100,8 +100,8 @@ public class XmlCodeGenerationTest {
 
     public static class TestErrorHandler implements ErrorHandler {
 
-        private List<String> errors = new ArrayList<String>();
-        private List<String> warnings = new ArrayList<String>();
+        private List<String> errors = new ArrayList<>();
+        private List<String> warnings = new ArrayList<>();
 
         @Override
         public void warning(SAXParseException exception) throws SAXException {

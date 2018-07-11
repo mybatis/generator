@@ -232,12 +232,12 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
     <td>Use this property to specify that the generated code can use Java 8+ features. For example,
         the diamond operator for collection instantiation.
         <p/>
-        <p>Valid values are <code>true</code> or <code>false</code>. The default value is <code>false</code>.</p>
+        <p>Valid values are <code>true</code> or <code>false</code>. The default value is <code>true</code>.</p>
     </td>
   </tr>
   <tr>
     <td valign="top">xmlFormatter</td>
-    <td>Use this property to specify the full class name of a user provided formater for generated
+    <td>Use this property to specify the full class name of a user provided formatter for generated
         XML files.  The class must implement <code>org.mybatis.generator.api.XmlFormatter</code>
         and must have a default (no argument) constructor.  Each context holds a single instance
         of the XML formatter.  The default XML formatter is

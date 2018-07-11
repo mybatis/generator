@@ -41,7 +41,7 @@ public abstract class AbstractTypeOrEnumSummarizer extends AbstractBodyElementSu
     }
 
     public List<String> getSuperInterfaces() {
-        List<String> superInterfaces = new ArrayList<String>();
+        List<String> superInterfaces = new ArrayList<>();
         for (Type superInterfaceType : superInterfaceTypes) {
             superInterfaces.add(getTypeString(superInterfaceType));
         }

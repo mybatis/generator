@@ -29,13 +29,6 @@
   <packaging>jar</packaging>
   <name>MyBatis Generator Core</name>
 
-  <properties>
-    <maven.compiler.source>1.6</maven.compiler.source>
-    <maven.compiler.target>1.6</maven.compiler.target>
-    <maven.compiler.testTarget>1.8</maven.compiler.testTarget>
-    <maven.compiler.testSource>1.8</maven.compiler.testSource>
-  </properties>
-  
   <build>
     <plugins>
       <plugin>
@@ -98,17 +91,6 @@
             <phase>package</phase>
           </execution>
         </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>animal-sniffer-maven-plugin</artifactId>
-        <configuration>
-          <signature>
-            <groupId>org.codehaus.mojo.signature</groupId>
-            <artifactId>java18</artifactId>
-            <version>1.0</version>
-          </signature>
-        </configuration>
       </plugin>
     </plugins>
   </build>

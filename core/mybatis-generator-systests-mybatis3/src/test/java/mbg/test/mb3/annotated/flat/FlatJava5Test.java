@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -936,7 +936,7 @@ public class FlatJava5Test extends AbstractAnnotatedFlatTest {
             record.setId2(3);
             mapper.insert(record);
 
-            List<Integer> ids = new ArrayList<Integer>();
+            List<Integer> ids = new ArrayList<>();
             ids.add(1);
             ids.add(3);
 
@@ -1198,7 +1198,7 @@ public class FlatJava5Test extends AbstractAnnotatedFlatTest {
             record.setWierdField(66);
             mapper.insert(record);
 
-            List<Integer> values = new ArrayList<Integer>();
+            List<Integer> values = new ArrayList<>();
             values.add(11);
             values.add(22);
 
@@ -2877,7 +2877,7 @@ public class FlatJava5Test extends AbstractAnnotatedFlatTest {
             record.setThirdFirstName("bammbamm3");
             mapper.insert(record);
 
-            List<Integer> ids = new ArrayList<Integer>();
+            List<Integer> ids = new ArrayList<>();
             ids.add(1);
             ids.add(11);
 

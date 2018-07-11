@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -63,10 +63,10 @@ public class GenerateTestSourceFiles {
     private void run(File outputDirectory) throws IOException, InstantiationException, IllegalAccessException {
         setupOutputDirectry(outputDirectory);
         
-        List<CompilationUnitGenerator> generators = new ArrayList<CompilationUnitGenerator>();
+        List<CompilationUnitGenerator> generators = new ArrayList<>();
         gatherGenerators(generators);
         
-        List<CompilationUnit> cus = new ArrayList<CompilationUnit>();
+        List<CompilationUnit> cus = new ArrayList<>();
         
         for (CompilationUnitGenerator generator : generators) {
             cus.addAll(generator.generate());

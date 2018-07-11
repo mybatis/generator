@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -70,13 +70,13 @@ public class InnerClass extends JavaElement {
     public InnerClass(FullyQualifiedJavaType type) {
         super();
         this.type = type;
-        fields = new ArrayList<Field>();
-        innerClasses = new ArrayList<InnerClass>();
-        innerEnums = new ArrayList<InnerEnum>();
-        this.typeParameters = new ArrayList<TypeParameter>();
-        superInterfaceTypes = new HashSet<FullyQualifiedJavaType>();
-        methods = new ArrayList<Method>();
-        initializationBlocks = new ArrayList<InitializationBlock>();
+        fields = new ArrayList<>();
+        innerClasses = new ArrayList<>();
+        innerEnums = new ArrayList<>();
+        this.typeParameters = new ArrayList<>();
+        superInterfaceTypes = new HashSet<>();
+        methods = new ArrayList<>();
+        initializationBlocks = new ArrayList<>();
     }
 
     /**

@@ -23,7 +23,7 @@ import org.mybatis.generator.eclipse.tests.harness.summary.support.AnnotationSum
 
 public class AnnotationSummary extends AbstractBodyElementSummary {
 
-    private List<String> annotationMembers = new ArrayList<String>();
+    private List<String> annotationMembers = new ArrayList<>();
 
     private AnnotationSummary() {
         super();

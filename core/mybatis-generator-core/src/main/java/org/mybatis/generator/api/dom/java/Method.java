@@ -74,10 +74,10 @@ public class Method extends JavaElement {
      */
     public Method(String name) {
         super();
-        bodyLines = new ArrayList<String>();
-        typeParameters = new ArrayList<TypeParameter>();
-        parameters = new ArrayList<Parameter>();
-        exceptions = new ArrayList<FullyQualifiedJavaType>();
+        bodyLines = new ArrayList<>();
+        typeParameters = new ArrayList<>();
+        parameters = new ArrayList<>();
+        exceptions = new ArrayList<>();
         this.name = name;
     }
 
@@ -89,10 +89,10 @@ public class Method extends JavaElement {
      */
     public Method(Method original) {
         super(original);
-        bodyLines = new ArrayList<String>();
-        typeParameters = new ArrayList<TypeParameter>();
-        parameters = new ArrayList<Parameter>();
-        exceptions = new ArrayList<FullyQualifiedJavaType>();
+        bodyLines = new ArrayList<>();
+        typeParameters = new ArrayList<>();
+        parameters = new ArrayList<>();
+        exceptions = new ArrayList<>();
         this.bodyLines.addAll(original.bodyLines);
         this.constructor = original.constructor;
         this.exceptions.addAll(original.exceptions);

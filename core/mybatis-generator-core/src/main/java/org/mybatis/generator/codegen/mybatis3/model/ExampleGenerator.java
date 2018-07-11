@@ -203,7 +203,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 
         topLevelClass.addInnerClass(getCriterionInnerClass());
 
-        List<CompilationUnit> answer = new ArrayList<CompilationUnit>();
+        List<CompilationUnit> answer = new ArrayList<>();
         if (context.getPlugins().modelExampleClassGenerated(
                 topLevelClass, introspectedTable)) {
             answer.add(topLevelClass);
@@ -402,7 +402,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         }
         answer.addMethod(method);
 
-        List<String> criteriaLists = new ArrayList<String>();
+        List<String> criteriaLists = new ArrayList<>();
         criteriaLists.add("criteria"); //$NON-NLS-1$
 
         for (IntrospectedColumn introspectedColumn : introspectedTable
@@ -1006,7 +1006,11 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         // add constructor initialization
         sb.setLength(0);
         sb.append(field.getName());
-        sb.append(" = new ArrayList<Criterion>();"); //$NON-NLS-1$;
+        if (context.isJava8Targeted()) {
+            sb.append(" = new ArrayList<>();"); //$NON-NLS-1$;            
+        } else {
+            sb.append(" = new ArrayList<Criterion>();"); //$NON-NLS-1$;
+        }
         constructor.addBodyLine(sb.toString());
 
         // now add the methods for simplifying the individual field set methods

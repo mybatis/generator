@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -51,7 +51,7 @@ public class InterfaceTest {
     public void testAddImportedTypes() {
 
         Interface interfaze = new Interface("com.foo.UserInterface");
-        Set<FullyQualifiedJavaType> importedTypes = new HashSet<FullyQualifiedJavaType>();
+        Set<FullyQualifiedJavaType> importedTypes = new HashSet<>();
 
         FullyQualifiedJavaType arrayList = FullyQualifiedJavaType.getNewArrayListInstance();
         FullyQualifiedJavaType hashMap = FullyQualifiedJavaType.getNewHashMapInstance();
@@ -92,7 +92,7 @@ public class InterfaceTest {
     public void testAddStaticImports() {
 
         Interface interfaze = new Interface("com.foo.UserInterface");
-        Set<String> staticImports = new HashSet<String>();
+        Set<String> staticImports = new HashSet<>();
         staticImports.add("com.foo.StaticUtil1");
         staticImports.add("com.foo.StaticUtil2");
         interfaze.addStaticImports(staticImports);

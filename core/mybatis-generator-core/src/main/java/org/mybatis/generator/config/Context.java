@@ -90,7 +90,7 @@ public class Context extends PropertyHolder {
 
     private XmlFormatter xmlFormatter;
     
-    private boolean isJava8Targeted = false;
+    private boolean isJava8Targeted = true;
 
     public Context(ModelType defaultModelType) {
         super();
@@ -101,8 +101,8 @@ public class Context extends PropertyHolder {
             this.defaultModelType = defaultModelType;
         }
 
-        tableConfigurations = new ArrayList<TableConfiguration>();
-        pluginConfigurations = new ArrayList<PluginConfiguration>();
+        tableConfigurations = new ArrayList<>();
+        pluginConfigurations = new ArrayList<>();
     }
 
     public void addTableConfiguration(TableConfiguration tc) {
@@ -440,7 +440,7 @@ public class Context extends PropertyHolder {
             List<String> warnings, Set<String> fullyQualifiedTableNames)
             throws SQLException, InterruptedException {
 
-        introspectedTables = new ArrayList<IntrospectedTable>();
+        introspectedTables = new ArrayList<>();
         JavaTypeResolver javaTypeResolver = ObjectFactory
                 .createJavaTypeResolver(this, warnings);
 

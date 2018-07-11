@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -52,8 +52,8 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
 
     public IntrospectedTableMyBatis3Impl() {
         super(TargetRuntime.MYBATIS3);
-        javaModelGenerators = new ArrayList<AbstractJavaGenerator>();
-        clientGenerators = new ArrayList<AbstractJavaGenerator>();
+        javaModelGenerators = new ArrayList<>();
+        clientGenerators = new ArrayList<>();
     }
 
     @Override
@@ -170,7 +170,7 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
 
     @Override
     public List<GeneratedJavaFile> getGeneratedJavaFiles() {
-        List<GeneratedJavaFile> answer = new ArrayList<GeneratedJavaFile>();
+        List<GeneratedJavaFile> answer = new ArrayList<>();
 
         for (AbstractJavaGenerator javaGenerator : javaModelGenerators) {
             List<CompilationUnit> compilationUnits = javaGenerator
@@ -203,7 +203,7 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
 
     @Override
     public List<GeneratedXmlFile> getGeneratedXmlFiles() {
-        List<GeneratedXmlFile> answer = new ArrayList<GeneratedXmlFile>();
+        List<GeneratedXmlFile> answer = new ArrayList<>();
 
         if (xmlMapperGenerator != null) {
             Document document = xmlMapperGenerator.getDocument();
@@ -224,11 +224,6 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
         return javaModelGenerators.size()
                 + clientGenerators.size()
                 + (xmlMapperGenerator == null ? 0 : 1);
-    }
-
-    @Override
-    public boolean isJava5Targeted() {
-        return true;
     }
 
     @Override

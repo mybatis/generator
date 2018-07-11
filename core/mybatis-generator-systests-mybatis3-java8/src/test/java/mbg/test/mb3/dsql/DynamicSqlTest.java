@@ -1189,7 +1189,7 @@ public class DynamicSqlTest extends AbstractTest {
             record.setWierdField(66);
             mapper.insert(record);
 
-            List<Integer> values = new ArrayList<Integer>();
+            List<Integer> values = new ArrayList<>();
             values.add(11);
             values.add(22);
 

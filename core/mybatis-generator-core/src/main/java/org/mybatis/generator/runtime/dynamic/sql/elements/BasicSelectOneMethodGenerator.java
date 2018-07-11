@@ -42,7 +42,7 @@ public class BasicSelectOneMethodGenerator extends AbstractMethodGenerator {
             return null;
         }
         
-        Set<FullyQualifiedJavaType> imports = new HashSet<FullyQualifiedJavaType>();
+        Set<FullyQualifiedJavaType> imports = new HashSet<>();
         
         boolean reuseResultMap = introspectedTable.getRules().generateSelectByExampleWithBLOBs()
                 || introspectedTable.getRules().generateSelectByExampleWithoutBLOBs();

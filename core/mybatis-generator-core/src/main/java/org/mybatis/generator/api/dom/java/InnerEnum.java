@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -61,12 +61,12 @@ public class InnerEnum extends JavaElement {
     public InnerEnum(FullyQualifiedJavaType type) {
         super();
         this.type = type;
-        fields = new ArrayList<Field>();
-        innerClasses = new ArrayList<InnerClass>();
-        innerEnums = new ArrayList<InnerEnum>();
-        superInterfaceTypes = new HashSet<FullyQualifiedJavaType>();
-        methods = new ArrayList<Method>();
-        enumConstants = new ArrayList<String>();
+        fields = new ArrayList<>();
+        innerClasses = new ArrayList<>();
+        innerEnums = new ArrayList<>();
+        superInterfaceTypes = new HashSet<>();
+        methods = new ArrayList<>();
+        enumConstants = new ArrayList<>();
     }
 
     /**

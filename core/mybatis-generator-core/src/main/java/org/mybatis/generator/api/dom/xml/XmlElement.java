@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -45,8 +45,8 @@ public class XmlElement extends Element {
      */
     public XmlElement(String name) {
         super();
-        attributes = new ArrayList<Attribute>();
-        elements = new ArrayList<Element>();
+        attributes = new ArrayList<>();
+        elements = new ArrayList<>();
         this.name = name;
     }
 
@@ -58,9 +58,9 @@ public class XmlElement extends Element {
      */
     public XmlElement(XmlElement original) {
         super();
-        attributes = new ArrayList<Attribute>();
+        attributes = new ArrayList<>();
         attributes.addAll(original.attributes);
-        elements = new ArrayList<Element>();
+        elements = new ArrayList<>();
         elements.addAll(original.elements);
         this.name = original.name;
     }

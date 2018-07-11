@@ -89,7 +89,7 @@ public class GeneratorLaunchConfigurationDelegate extends AbstractJavaLaunchConf
             return;
         }
         
-        List<URL> classpathURLs = new ArrayList<URL>();
+        List<URL> classpathURLs = new ArrayList<>();
 
         // this is a hack determined by looking at the source for 
         // org.eclipse.ant.internal.core.ant.InternalAntRunner

@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -42,7 +42,7 @@ import org.mybatis.generator.internal.XmlFileMergerJaxp;
 
 /**
  * This class is the main interface to MyBatis generator. A typical execution of the tool involves these steps:
- * 
+ *
  * <ol>
  * <li>Create a Configuration object. The Configuration can be the result of a parsing the XML configuration file, or it
  * can be created solely in Java.</li>
@@ -62,7 +62,9 @@ public class MyBatisGenerator {
     private ShellCallback shellCallback;
 
     /** The generated java files. */
-    private List<GeneratedJavaFile> generatedJavaFiles;
+    private List<GeneratedModelFile> generatedModelFiles;
+
+    private List<GeneratedExampleFile> generatedExampleFiles;
 
     /** The generated xml files. */
     private List<GeneratedXmlFile> generatedXmlFiles;
@@ -75,7 +77,7 @@ public class MyBatisGenerator {
 
     /**
      * Constructs a MyBatisGenerator object.
-     * 
+     *
      * @param configuration
      *            The configuration for this invocation
      * @param shellCallback
@@ -93,7 +95,7 @@ public class MyBatisGenerator {
      *             if the specified configuration is invalid
      */
     public MyBatisGenerator(Configuration configuration, ShellCallback shellCallback,
-            List<String> warnings) throws InvalidConfigurationException {
+                            List<String> warnings) throws InvalidConfigurationException {
         super();
         if (configuration == null) {
             throw new IllegalArgumentException(getString("RuntimeError.2")); //$NON-NLS-1$
@@ -112,7 +114,8 @@ public class MyBatisGenerator {
         } else {
             this.warnings = warnings;
         }
-        generatedJavaFiles = new ArrayList<GeneratedJavaFile>();
+        generatedModelFiles = new ArrayList<GeneratedModelFile>();
+        generatedExampleFiles = new ArrayList<GeneratedExampleFile>();
         generatedXmlFiles = new ArrayList<GeneratedXmlFile>();
         projects = new HashSet<String>();
 
@@ -184,7 +187,7 @@ public class MyBatisGenerator {
      *             if the method is canceled through the ProgressCallback
      */
     public void generate(ProgressCallback callback, Set<String> contextIds,
-            Set<String> fullyQualifiedTableNames) throws SQLException,
+                         Set<String> fullyQualifiedTableNames) throws SQLException,
             IOException, InterruptedException {
         generate(callback, contextIds, fullyQualifiedTableNames, true);
     }
@@ -215,14 +218,15 @@ public class MyBatisGenerator {
      *             if the method is canceled through the ProgressCallback
      */
     public void generate(ProgressCallback callback, Set<String> contextIds,
-            Set<String> fullyQualifiedTableNames, boolean writeFiles) throws SQLException,
+                         Set<String> fullyQualifiedTableNames, boolean writeFiles) throws SQLException,
             IOException, InterruptedException {
 
         if (callback == null) {
             callback = new NullProgressCallback();
         }
 
-        generatedJavaFiles.clear();
+        generatedModelFiles.clear();
+        generatedExampleFiles.clear();
         generatedXmlFiles.clear();
         ObjectFactory.reset();
         RootClassInfo.reset();
@@ -254,8 +258,7 @@ public class MyBatisGenerator {
         callback.introspectionStarted(totalSteps);
 
         for (Context context : contextsToRun) {
-            context.introspectTables(callback, warnings,
-                    fullyQualifiedTableNames);
+            context.introspectTables(callback, warnings,fullyQualifiedTableNames);
         }
 
         // now run the generates
@@ -266,21 +269,26 @@ public class MyBatisGenerator {
         callback.generationStarted(totalSteps);
 
         for (Context context : contextsToRun) {
-            context.generateFiles(callback, generatedJavaFiles,
+            context.generateFiles(callback, generatedModelFiles,generatedExampleFiles,
                     generatedXmlFiles, warnings);
         }
 
         // now save the files
         if (writeFiles) {
-            callback.saveStarted(generatedXmlFiles.size()
-                    + generatedJavaFiles.size());
+            callback.saveStarted(generatedXmlFiles.size()+generatedExampleFiles.size()
+                    + generatedModelFiles.size());
 
             for (GeneratedXmlFile gxf : generatedXmlFiles) {
                 projects.add(gxf.getTargetProject());
                 writeGeneratedXmlFile(gxf, callback);
             }
 
-            for (GeneratedJavaFile gjf : generatedJavaFiles) {
+            for (GeneratedExampleFile gjf : generatedExampleFiles) {
+                projects.add(gjf.getTargetProject());
+                writeGeneratedExampleFile(gjf, callback);
+            }
+
+            for (GeneratedModelFile gjf : generatedModelFiles) {
                 projects.add(gjf.getTargetProject());
                 writeGeneratedJavaFile(gjf, callback);
             }
@@ -293,7 +301,7 @@ public class MyBatisGenerator {
         callback.done();
     }
 
-    private void writeGeneratedJavaFile(GeneratedJavaFile gjf, ProgressCallback callback)
+    private void writeGeneratedJavaFile(GeneratedModelFile gjf, ProgressCallback callback)
             throws InterruptedException, IOException {
         File targetFile;
         String source;
@@ -304,7 +312,45 @@ public class MyBatisGenerator {
             if (targetFile.exists()) {
                 if (shellCallback.isMergeSupported()) {
                     source = shellCallback.mergeJavaFile(gjf
-                            .getFormattedContent(), targetFile,
+                                    .getFormattedContent(), targetFile,
+                            MergeConstants.OLD_ELEMENT_TAGS,
+                            gjf.getFileEncoding());
+                } else if (shellCallback.isOverwriteEnabled()) {
+                    source = gjf.getFormattedContent();
+                    warnings.add(getString("Warning.11", //$NON-NLS-1$
+                            targetFile.getAbsolutePath()));
+                } else {
+                    source = gjf.getFormattedContent();
+                    targetFile = getUniqueFileName(directory, gjf
+                            .getFileName());
+                    warnings.add(getString(
+                            "Warning.2", targetFile.getAbsolutePath())); //$NON-NLS-1$
+                }
+            } else {
+                source = gjf.getFormattedContent();
+            }
+
+            callback.checkCancel();
+            callback.startTask(getString(
+                    "Progress.15", targetFile.getName())); //$NON-NLS-1$
+            writeFile(targetFile, source, gjf.getFileEncoding());
+        } catch (ShellException e) {
+            warnings.add(e.getMessage());
+        }
+    }
+
+    private void writeGeneratedExampleFile(GeneratedExampleFile gjf, ProgressCallback callback)
+            throws InterruptedException, IOException {
+        File targetFile;
+        String source;
+        try {
+
+            File directory = shellCallback.getDirectory(gjf.getTargetProject(), gjf.getTargetPackage());
+            targetFile = new File(directory, gjf.getFileName());
+            if (targetFile.exists()) {
+                if (shellCallback.isMergeSupported()) {
+                    source = shellCallback.mergeJavaFile(gjf
+                                    .getFormattedContent(), targetFile,
                             MergeConstants.OLD_ELEMENT_TAGS,
                             gjf.getFileEncoding());
                 } else if (shellCallback.isOverwriteEnabled()) {
@@ -340,13 +386,13 @@ public class MyBatisGenerator {
                     .getTargetProject(), gxf.getTargetPackage());
             targetFile = new File(directory, gxf.getFileName());
             if (targetFile.exists()) {
-                if (gxf.isMergeable()) {
-                    source = XmlFileMergerJaxp.getMergedSource(gxf,
-                            targetFile);
-                } else if (shellCallback.isOverwriteEnabled()) {
+                if (shellCallback.isOverwriteEnabled()) {
                     source = gxf.getFormattedContent();
                     warnings.add(getString("Warning.11", //$NON-NLS-1$
                             targetFile.getAbsolutePath()));
+                } else if (gxf.isMergeable()) {
+                    source = XmlFileMergerJaxp.getMergedSource(gxf,
+                            targetFile);
                 } else {
                     source = gxf.getFormattedContent();
                     targetFile = getUniqueFileName(directory, gxf
@@ -432,18 +478,18 @@ public class MyBatisGenerator {
      * Returns the list of generated Java files after a call to one of the generate methods.
      * This is useful if you prefer to process the generated files yourself and do not want
      * the generator to write them to disk.
-     *  
+     *
      * @return the list of generated Java files
      */
-    public List<GeneratedJavaFile> getGeneratedJavaFiles() {
-        return generatedJavaFiles;
+    public List<GeneratedModelFile> getGeneratedModelFiles() {
+        return generatedModelFiles;
     }
 
     /**
      * Returns the list of generated XML files after a call to one of the generate methods.
      * This is useful if you prefer to process the generated files yourself and do not want
      * the generator to write them to disk.
-     *  
+     *
      * @return the list of generated XML files
      */
     public List<GeneratedXmlFile> getGeneratedXmlFiles() {

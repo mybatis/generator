@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -42,7 +42,7 @@ import org.mybatis.generator.internal.DefaultShellCallback;
 /**
  * This is an Ant task that will run the generator. The following is a sample
  * Ant script that shows how to run the generator from Ant:
- * 
+ *
  * <pre>
  *  &lt;project default="genfiles" basedir="."&gt;
  *    &lt;property name="generated.source.dir" value="${basedir}" /&gt;
@@ -58,10 +58,10 @@ import org.mybatis.generator.internal.DefaultShellCallback;
  *    &lt;/target&gt;
  *  &lt;/project&gt;
  * </pre>
- * 
+ *
  * <p>The task requires that the attribute "configFile" be set to an existing XML
  * configuration file.
- * 
+ *
  * <p>The task supports these optional attributes:
  * <ul>
  * <li>"overwrite" - if true, then existing Java files will be overwritten. if
@@ -73,8 +73,8 @@ import org.mybatis.generator.internal.DefaultShellCallback;
  * <li>"fullyQualifiedTableNames" - a comma delimited list of fully qualified
  * table names to use for this run</li>
  * </ul>
- * 
- * 
+ *
+ *
  * @author Jeff Butler
  */
 public class GeneratorAntTask extends Task {
@@ -92,7 +92,7 @@ public class GeneratorAntTask extends Task {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.apache.tools.ant.Task#execute()
      */
     @Override
@@ -109,14 +109,13 @@ public class GeneratorAntTask extends Task {
                     "RuntimeError.1", configfile)); //$NON-NLS-1$
         }
 
-        Set<String> fullyqualifiedTables = new HashSet<String>();
+        Set<String> fullyQualifiedTables = new HashSet<String>();
         if (stringHasValue(fullyQualifiedTableNames)) {
-            StringTokenizer st = new StringTokenizer(fullyQualifiedTableNames,
-                    ","); //$NON-NLS-1$
+            StringTokenizer st = new StringTokenizer(fullyQualifiedTableNames, ","); //$NON-NLS-1$
             while (st.hasMoreTokens()) {
                 String s = st.nextToken().trim();
                 if (s.length() > 0) {
-                    fullyqualifiedTables.add(s);
+                    fullyQualifiedTables.add(s);
                 }
             }
         }
@@ -133,8 +132,7 @@ public class GeneratorAntTask extends Task {
         }
 
         try {
-            Properties p = propertyset == null ? null : propertyset
-                    .getProperties();
+            Properties p = propertyset == null ? null : propertyset.getProperties();
 
             ConfigurationParser cp = new ConfigurationParser(p, warnings);
             Configuration config = cp.parseConfiguration(configurationFile);
@@ -144,7 +142,7 @@ public class GeneratorAntTask extends Task {
             MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
 
             myBatisGenerator.generate(new AntProgressCallback(this, verbose), contexts,
-                    fullyqualifiedTables);
+                    fullyQualifiedTables);
 
         } catch (XMLParserException e) {
             for (String error : e.getErrors()) {

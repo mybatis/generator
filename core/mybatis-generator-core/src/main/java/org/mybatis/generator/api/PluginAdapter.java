@@ -64,12 +64,12 @@ public abstract class PluginAdapter implements Plugin {
     }
 
     @Override
-    public List<GeneratedJavaFile> contextGenerateAdditionalJavaFiles() {
+    public List<GeneratedModelFile> contextGenerateAdditionalJavaFiles() {
         return null;
     }
 
     @Override
-    public List<GeneratedJavaFile> contextGenerateAdditionalJavaFiles(
+    public List<GeneratedModelFile> contextGenerateAdditionalJavaFiles(
             IntrospectedTable introspectedTable) {
         return null;
     }

@@ -26,8 +26,8 @@
   </parent>
 
   <artifactId>mybatis-generator-core</artifactId>
-  <packaging>jar</packaging>
-  <name>MyBatis Generator Core</name>
+  <name>MyBatis Generator</name>
+  <version>1.3.6.1</version>
 
   <properties>
     <maven.compiler.source>1.6</maven.compiler.source>

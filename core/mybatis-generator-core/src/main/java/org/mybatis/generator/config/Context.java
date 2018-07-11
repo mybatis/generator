@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -26,16 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.mybatis.generator.api.CommentGenerator;
-import org.mybatis.generator.api.ConnectionFactory;
-import org.mybatis.generator.api.GeneratedJavaFile;
-import org.mybatis.generator.api.GeneratedXmlFile;
-import org.mybatis.generator.api.IntrospectedTable;
-import org.mybatis.generator.api.JavaFormatter;
-import org.mybatis.generator.api.JavaTypeResolver;
-import org.mybatis.generator.api.Plugin;
-import org.mybatis.generator.api.ProgressCallback;
-import org.mybatis.generator.api.XmlFormatter;
+import org.mybatis.generator.api.*;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.internal.JDBCConnectionFactory;
@@ -61,6 +52,8 @@ public class Context extends PropertyHolder {
     private JavaTypeResolverConfiguration javaTypeResolverConfiguration;
 
     private JavaModelGeneratorConfiguration javaModelGeneratorConfiguration;
+
+    private JavaExampleGeneratorConfiguration javaExampleGeneratorConfiguration;
 
     private JavaClientGeneratorConfiguration javaClientGeneratorConfiguration;
 
@@ -119,6 +112,14 @@ public class Context extends PropertyHolder {
         return javaModelGeneratorConfiguration;
     }
 
+    public JavaExampleGeneratorConfiguration getJavaExampleGeneratorConfiguration() {
+        return javaExampleGeneratorConfiguration;
+    }
+
+    public void setJavaExampleGeneratorConfiguration(JavaExampleGeneratorConfiguration javaExampleGeneratorConfiguration) {
+        this.javaExampleGeneratorConfiguration = javaExampleGeneratorConfiguration;
+    }
+
     public JavaTypeResolverConfiguration getJavaTypeResolverConfiguration() {
         return javaTypeResolverConfiguration;
     }
@@ -161,6 +162,12 @@ public class Context extends PropertyHolder {
         } else {
             javaModelGeneratorConfiguration.validate(errors, id);
         }
+//
+//        if (javaExampleGeneratorConfiguration == null) {
+//            errors.add(getString("ValidationError.8", id)); //$NON-NLS-1$
+//        } else {
+//            javaExampleGeneratorConfiguration.validate(errors, id);
+//        }
 
         if (javaClientGeneratorConfiguration != null) {
             javaClientGeneratorConfiguration.validate(errors, id);
@@ -284,6 +291,11 @@ public class Context extends PropertyHolder {
 
         if (javaModelGeneratorConfiguration != null) {
             xmlElement.addElement(javaModelGeneratorConfiguration
+                    .toXmlElement());
+        }
+
+        if (javaExampleGeneratorConfiguration != null) {
+            xmlElement.addElement(javaExampleGeneratorConfiguration
                     .toXmlElement());
         }
 
@@ -491,7 +503,7 @@ public class Context extends PropertyHolder {
     }
 
     public void generateFiles(ProgressCallback callback,
-            List<GeneratedJavaFile> generatedJavaFiles,
+            List<GeneratedModelFile> generatedModelFiles, List<GeneratedExampleFile> generatedExampleFiles,
             List<GeneratedXmlFile> generatedXmlFiles, List<String> warnings)
             throws InterruptedException {
 
@@ -513,22 +525,17 @@ public class Context extends PropertyHolder {
 
                 introspectedTable.initialize();
                 introspectedTable.calculateGenerators(warnings, callback);
-                generatedJavaFiles.addAll(introspectedTable
-                        .getGeneratedJavaFiles());
-                generatedXmlFiles.addAll(introspectedTable
-                        .getGeneratedXmlFiles());
+                generatedExampleFiles.addAll(introspectedTable.getGeneratedExampleFiles());
+                generatedModelFiles.addAll(introspectedTable.getGeneratedJavaFiles());
+                generatedXmlFiles.addAll(introspectedTable.getGeneratedXmlFiles());
 
-                generatedJavaFiles.addAll(pluginAggregator
-                        .contextGenerateAdditionalJavaFiles(introspectedTable));
-                generatedXmlFiles.addAll(pluginAggregator
-                        .contextGenerateAdditionalXmlFiles(introspectedTable));
+                generatedModelFiles.addAll(pluginAggregator.contextGenerateAdditionalJavaFiles(introspectedTable));
+                generatedXmlFiles.addAll(pluginAggregator.contextGenerateAdditionalXmlFiles(introspectedTable));
             }
         }
 
-        generatedJavaFiles.addAll(pluginAggregator
-                .contextGenerateAdditionalJavaFiles());
-        generatedXmlFiles.addAll(pluginAggregator
-                .contextGenerateAdditionalXmlFiles());
+        generatedModelFiles.addAll(pluginAggregator.contextGenerateAdditionalJavaFiles());
+        generatedXmlFiles.addAll(pluginAggregator.contextGenerateAdditionalXmlFiles());
     }
 
     private Connection getConnection() throws SQLException {
@@ -553,8 +560,7 @@ public class Context extends PropertyHolder {
     }
 
     public boolean autoDelimitKeywords() {
-        return autoDelimitKeywords != null
-                && autoDelimitKeywords.booleanValue();
+        return autoDelimitKeywords != null && autoDelimitKeywords.booleanValue();
     }
 
     public ConnectionFactoryConfiguration getConnectionFactoryConfiguration() {

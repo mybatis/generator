@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ package org.mybatis.generator.codegen.ibatis2;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.mybatis.generator.api.GeneratedJavaFile;
+import org.mybatis.generator.api.GeneratedModelFile;
 import org.mybatis.generator.api.GeneratedXmlFile;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.ProgressCallback;
@@ -144,14 +144,14 @@ public class IntrospectedTableIbatis2Java2Impl extends IntrospectedTable {
     }
 
     @Override
-    public List<GeneratedJavaFile> getGeneratedJavaFiles() {
-        List<GeneratedJavaFile> answer = new ArrayList<GeneratedJavaFile>();
+    public List<GeneratedModelFile> getGeneratedJavaFiles() {
+        List<GeneratedModelFile> answer = new ArrayList<GeneratedModelFile>();
 
         for (AbstractJavaGenerator javaGenerator : javaModelGenerators) {
             List<CompilationUnit> compilationUnits = javaGenerator
                     .getCompilationUnits();
             for (CompilationUnit compilationUnit : compilationUnits) {
-                GeneratedJavaFile gjf = new GeneratedJavaFile(compilationUnit,
+                GeneratedModelFile gjf = new GeneratedModelFile(compilationUnit,
                         context.getJavaModelGeneratorConfiguration()
                                 .getTargetProject(),
                                 context.getProperty(PropertyRegistry.CONTEXT_JAVA_FILE_ENCODING),
@@ -164,7 +164,7 @@ public class IntrospectedTableIbatis2Java2Impl extends IntrospectedTable {
             List<CompilationUnit> compilationUnits = javaGenerator
                     .getCompilationUnits();
             for (CompilationUnit compilationUnit : compilationUnits) {
-                GeneratedJavaFile gjf = new GeneratedJavaFile(compilationUnit,
+                GeneratedModelFile gjf = new GeneratedModelFile(compilationUnit,
                         context.getJavaClientGeneratorConfiguration()
                                 .getTargetProject(),
                                 context.getProperty(PropertyRegistry.CONTEXT_JAVA_FILE_ENCODING),

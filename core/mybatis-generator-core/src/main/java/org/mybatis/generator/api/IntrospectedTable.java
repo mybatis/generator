@@ -53,6 +53,7 @@ public abstract class IntrospectedTable {
         ATTR_EXAMPLE_TYPE,
         ATTR_MYBATIS3_XML_MAPPER_PACKAGE,
         ATTR_MYBATIS3_XML_MAPPER_FILE_NAME,
+        ATTR_MYBATIS3_EXAMPLE_PACKAGE,
         /** also used as XML Mapper namespace if a Java mapper is generated. */
         ATTR_MYBATIS3_JAVA_MAPPER_TYPE,
         /** used as XML Mapper namespace if no client is generated. */

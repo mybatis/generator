@@ -16,6 +16,11 @@
 package org.mybatis.generator.api.dom.xml;
 
 import org.mybatis.generator.api.dom.OutputUtilities;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import static org.w3c.dom.Node.*;
 
 /**
  * The Class Document.
@@ -45,6 +50,19 @@ public class Document {
         super();
         this.publicId = publicId;
         this.systemId = systemId;
+    }
+
+    /**
+     * Instantiates a new document.
+     *
+     * @param document
+     *            w3c document
+     */
+    public Document(org.w3c.dom.Document document) {
+        super();
+        this.systemId = document.getDoctype().getSystemId();
+        this.publicId = document.getDoctype().getPublicId();
+        this.rootElement = toXmlElement(document.getDocumentElement());
     }
 
     /**
@@ -116,5 +134,87 @@ public class Document {
         sb.append(rootElement.getFormattedContent(0));
 
         return sb.toString();
+    }
+
+    /**
+     * Converts to xml element
+     * @param node
+     *            w3c node
+     * @return Returns the xml element.
+     */
+    private XmlElement toXmlElement(Node node) {
+        if (node.getNodeType() != ELEMENT_NODE) {
+            throw new IllegalArgumentException("this node must be an element node");
+        }
+        XmlElement element = new XmlElement(node.getNodeName());
+        NamedNodeMap attrs = node.getAttributes();
+        if (attrs != null) {
+            for (int i = 0; i < attrs.getLength(); i++) {
+                Node attr = attrs.item(i);
+                element.addAttribute(new Attribute(attr.getNodeName(), attr.getTextContent()));
+            }
+        }
+        if (!node.hasChildNodes()) {
+            return element;
+        }
+        NodeList childNodes = node.getChildNodes();
+        for (int i = 0; i < childNodes.getLength(); i++) {
+            Node curNode = childNodes.item(i);
+            switch (curNode.getNodeType()) {
+                case ELEMENT_NODE:
+                    element.addElement(toXmlElement(curNode));
+                    break;
+                case CDATA_SECTION_NODE: {
+                    element.addElement(new TextElement("<![CDATA["));
+                    String content = curNode.getTextContent();
+                    for (String line : content.split(content.substring(content.lastIndexOf('\n')))) {
+                        if (line.length() > 0) {
+                            element.addElement(new TextElement(line));
+                        }
+                    }
+                    element.addElement(new TextElement("]]>"));
+                }
+                break;
+                case COMMENT_NODE: {
+                    element.addElement(new TextElement("<!--"));
+                    String content = curNode.getTextContent();
+                    for (String line : content.split(content.substring(content.lastIndexOf('\n')))) {
+                        if (line.length() > 0) {
+                            element.addElement(new TextElement(line));
+                        }
+                    }
+                    element.addElement(new TextElement("-->"));
+                }
+                break;
+                case TEXT_NODE: {
+                    String content = curNode.getTextContent();
+                    while (!content.matches("^(.|\n)*\n\\s*$")) {
+                        Node nextNode = curNode.getNextSibling();
+                        if (nextNode != null) {
+                            curNode = curNode.getNextSibling();
+                            if (curNode.getNodeType() == CDATA_SECTION_NODE) {
+                                content += "<![CDATA[" + curNode.getTextContent() + "]]>";
+                            } else {
+                                content += curNode.getTextContent();
+                            }
+                            i++;
+                        } else {
+                            break;
+                        }
+                    }
+                    for (String line : content.split("\n")) {
+                        line = line.trim();
+                        if (line.length() > 0) {
+                            element.addElement(new TextElement(line));
+                        }
+                    }
+                }
+                break;
+                default:
+                    element.addElement(new TextElement(curNode.getTextContent()));
+                    break;
+            }
+        }
+        return element;
     }
 }

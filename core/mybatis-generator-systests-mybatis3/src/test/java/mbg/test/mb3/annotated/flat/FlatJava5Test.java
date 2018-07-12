@@ -19,30 +19,28 @@ import static mbg.test.common.util.TestUtilities.blobsAreEqual;
 import static mbg.test.common.util.TestUtilities.datesAreEqual;
 import static mbg.test.common.util.TestUtilities.generateRandomBlob;
 import static mbg.test.common.util.TestUtilities.timesAreEqual;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
+import org.apache.ibatis.session.SqlSession;
+import org.junit.jupiter.api.Test;
+
 import mbg.test.mb3.generated.annotated.flat.mapper.AwfulTableMapper;
 import mbg.test.mb3.generated.annotated.flat.mapper.FieldsblobsMapper;
-import mbg.test.mb3.generated.annotated.flat.mapper.subpackage.FieldsonlyMapper;
 import mbg.test.mb3.generated.annotated.flat.mapper.PkblobsMapper;
 import mbg.test.mb3.generated.annotated.flat.mapper.PkfieldsMapper;
 import mbg.test.mb3.generated.annotated.flat.mapper.PkfieldsblobsMapper;
 import mbg.test.mb3.generated.annotated.flat.mapper.PkonlyMapper;
+import mbg.test.mb3.generated.annotated.flat.mapper.subpackage.FieldsonlyMapper;
 import mbg.test.mb3.generated.annotated.flat.model.AwfulTable;
 import mbg.test.mb3.generated.annotated.flat.model.AwfulTableExample;
 import mbg.test.mb3.generated.annotated.flat.model.Fieldsblobs;
 import mbg.test.mb3.generated.annotated.flat.model.FieldsblobsExample;
-import mbg.test.mb3.generated.annotated.flat.model.subpackage.Fieldsonly;
-import mbg.test.mb3.generated.annotated.flat.model.subpackage.FieldsonlyExample;
 import mbg.test.mb3.generated.annotated.flat.model.Pkblobs;
 import mbg.test.mb3.generated.annotated.flat.model.PkblobsExample;
 import mbg.test.mb3.generated.annotated.flat.model.Pkfields;
@@ -51,10 +49,8 @@ import mbg.test.mb3.generated.annotated.flat.model.Pkfieldsblobs;
 import mbg.test.mb3.generated.annotated.flat.model.PkfieldsblobsExample;
 import mbg.test.mb3.generated.annotated.flat.model.Pkonly;
 import mbg.test.mb3.generated.annotated.flat.model.PkonlyExample;
-
-import org.apache.ibatis.session.RowBounds;
-import org.apache.ibatis.session.SqlSession;
-import org.junit.Test;
+import mbg.test.mb3.generated.annotated.flat.model.subpackage.Fieldsonly;
+import mbg.test.mb3.generated.annotated.flat.model.subpackage.FieldsonlyExample;
 
 /**
  * @author Jeff Butler

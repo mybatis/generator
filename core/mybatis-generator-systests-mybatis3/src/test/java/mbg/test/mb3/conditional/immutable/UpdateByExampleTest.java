@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,11 +17,12 @@ package mbg.test.mb3.conditional.immutable;
 
 import static mbg.test.common.util.TestUtilities.blobsAreEqual;
 import static mbg.test.common.util.TestUtilities.generateRandomBlob;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.junit.jupiter.api.Test;
 
 import mbg.test.mb3.generated.conditional.immutable.mapper.FieldsblobsMapper;
 import mbg.test.mb3.generated.conditional.immutable.mapper.FieldsonlyMapper;
@@ -34,17 +35,14 @@ import mbg.test.mb3.generated.conditional.immutable.model.FieldsblobsExample;
 import mbg.test.mb3.generated.conditional.immutable.model.FieldsblobsWithBLOBs;
 import mbg.test.mb3.generated.conditional.immutable.model.Fieldsonly;
 import mbg.test.mb3.generated.conditional.immutable.model.FieldsonlyExample;
-import mbg.test.mb3.generated.conditional.immutable.model.PkblobsExample;
 import mbg.test.mb3.generated.conditional.immutable.model.Pkblobs;
+import mbg.test.mb3.generated.conditional.immutable.model.PkblobsExample;
 import mbg.test.mb3.generated.conditional.immutable.model.Pkfields;
 import mbg.test.mb3.generated.conditional.immutable.model.PkfieldsExample;
 import mbg.test.mb3.generated.conditional.immutable.model.Pkfieldsblobs;
 import mbg.test.mb3.generated.conditional.immutable.model.PkfieldsblobsExample;
 import mbg.test.mb3.generated.conditional.immutable.model.PkonlyExample;
 import mbg.test.mb3.generated.conditional.immutable.model.PkonlyKey;
-
-import org.apache.ibatis.session.SqlSession;
-import org.junit.Test;
 
 /**
  * 
@@ -81,8 +79,8 @@ public class UpdateByExampleTest extends AbstractConditionalImmutableTest {
             List<Fieldsonly> answer = mapper.selectByExample(example);
             assertEquals(1, answer.size());
             record = answer.get(0);
-            assertEquals(record.getDoublefield(), 11.22, 0.0);
-            assertEquals(record.getFloatfield(), 33.44, 0.0);
+            assertEquals(record.getDoublefield(), 11.22, 0.001);
+            assertEquals(record.getFloatfield(), 33.44, 0.001);
             assertEquals(record.getIntegerfield().intValue(), 5);
 
             example.clear();
@@ -90,8 +88,8 @@ public class UpdateByExampleTest extends AbstractConditionalImmutableTest {
             answer = mapper.selectByExample(example);
             assertEquals(1, answer.size());
             record = answer.get(0);
-            assertEquals(record.getDoublefield(), 99d, 0.0);
-            assertEquals(record.getFloatfield(), 66.77, 0.0);
+            assertEquals(record.getDoublefield(), 99d, 0.001);
+            assertEquals(record.getFloatfield(), 66.77, 0.001);
             assertEquals(record.getIntegerfield().intValue(), 8);
 
             example.clear();
@@ -99,8 +97,8 @@ public class UpdateByExampleTest extends AbstractConditionalImmutableTest {
             answer = mapper.selectByExample(example);
             assertEquals(1, answer.size());
             record = answer.get(0);
-            assertEquals(record.getDoublefield(), 99d, 0.0);
-            assertEquals(record.getFloatfield(), 100.111, 0.0);
+            assertEquals(record.getDoublefield(), 99d, 0.001);
+            assertEquals(record.getFloatfield(), 100.111, 0.001);
             assertEquals(record.getIntegerfield().intValue(), 9);
         } finally {
             sqlSession.close();

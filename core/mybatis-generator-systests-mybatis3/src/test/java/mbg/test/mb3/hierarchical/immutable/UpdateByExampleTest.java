@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,11 +17,12 @@ package mbg.test.mb3.hierarchical.immutable;
 
 import static mbg.test.common.util.TestUtilities.blobsAreEqual;
 import static mbg.test.common.util.TestUtilities.generateRandomBlob;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.junit.jupiter.api.Test;
 
 import mbg.test.mb3.generated.hierarchical.immutable.mapper.FieldsblobsMapper;
 import mbg.test.mb3.generated.hierarchical.immutable.mapper.FieldsonlyMapper;
@@ -44,9 +45,6 @@ import mbg.test.mb3.generated.hierarchical.immutable.model.PkfieldsblobsExample;
 import mbg.test.mb3.generated.hierarchical.immutable.model.PkfieldsblobsWithBLOBs;
 import mbg.test.mb3.generated.hierarchical.immutable.model.PkonlyExample;
 import mbg.test.mb3.generated.hierarchical.immutable.model.PkonlyKey;
-
-import org.apache.ibatis.session.SqlSession;
-import org.junit.Test;
 
 /**
  * 
@@ -83,8 +81,8 @@ public class UpdateByExampleTest extends AbstractHierarchicalImmutableTest {
             List<Fieldsonly> answer = mapper.selectByExample(example);
             assertEquals(1, answer.size());
             record = answer.get(0);
-            assertEquals(record.getDoublefield(), 11.22, 0.0);
-            assertEquals(record.getFloatfield(), 33.44, 0.0);
+            assertEquals(record.getDoublefield(), 11.22, 0.001);
+            assertEquals(record.getFloatfield(), 33.44, 0.001);
             assertEquals(record.getIntegerfield().intValue(), 5);
 
             example.clear();
@@ -92,8 +90,8 @@ public class UpdateByExampleTest extends AbstractHierarchicalImmutableTest {
             answer = mapper.selectByExample(example);
             assertEquals(1, answer.size());
             record = answer.get(0);
-            assertEquals(record.getDoublefield(), 99d, 0.0);
-            assertEquals(record.getFloatfield(), 66.77, 0.0);
+            assertEquals(record.getDoublefield(), 99d, 0.001);
+            assertEquals(record.getFloatfield(), 66.77, 0.001);
             assertEquals(record.getIntegerfield().intValue(), 8);
 
             example.clear();
@@ -101,8 +99,8 @@ public class UpdateByExampleTest extends AbstractHierarchicalImmutableTest {
             answer = mapper.selectByExample(example);
             assertEquals(1, answer.size());
             record = answer.get(0);
-            assertEquals(record.getDoublefield(), 99d, 0.0);
-            assertEquals(record.getFloatfield(), 100.111, 0.0);
+            assertEquals(record.getDoublefield(), 99d, 0.001);
+            assertEquals(record.getFloatfield(), 100.111, 0.001);
             assertEquals(record.getIntegerfield().intValue(), 9);
         } finally {
             sqlSession.close();

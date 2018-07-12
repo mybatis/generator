@@ -15,7 +15,7 @@
  */
 package org.mybatis.generator;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -25,10 +25,8 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mybatis.generator.api.GeneratedXmlFile;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.Configuration;
@@ -40,17 +38,11 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-@RunWith(Parameterized.class)
 public class XmlCodeGenerationTest {
 
-    private GeneratedXmlFile generatedXmlFile;
-
-    public XmlCodeGenerationTest(GeneratedXmlFile generatedXmlFile) {
-        this.generatedXmlFile = generatedXmlFile;
-    }
-
-    @Test
-    public void testXmlParse() {
+    @ParameterizedTest
+    @MethodSource("generateXmlFiles")
+    public void testXmlParse(GeneratedXmlFile generatedXmlFile) {
         ByteArrayInputStream is = new ByteArrayInputStream(
                 generatedXmlFile.getFormattedContent().getBytes());
         try {
@@ -65,7 +57,6 @@ public class XmlCodeGenerationTest {
         }
     }
 
-    @Parameters
     public static List<GeneratedXmlFile> generateXmlFiles() throws Exception {
         List<GeneratedXmlFile> generatedFiles = new ArrayList<>();
         generatedFiles.addAll(generateXmlFilesMybatis());

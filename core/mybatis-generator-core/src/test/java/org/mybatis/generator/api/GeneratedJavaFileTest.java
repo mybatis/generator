@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,8 +15,9 @@
  */
 package org.mybatis.generator.api;
 
-import static org.junit.Assert.*;
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.Test;
 import org.mybatis.generator.api.dom.DefaultJavaFormatter;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
@@ -30,8 +31,8 @@ public class GeneratedJavaFileTest {
         JavaFormatter jf = new DefaultJavaFormatter();
         GeneratedJavaFile gjf = new GeneratedJavaFile(ifc, "src", jf);
 
-        assertEquals("TestInterface.java", gjf.getFileName());
-        assertEquals("org.mybatis.test", gjf.getTargetPackage());
+        assertThat(gjf.getFileName()).isEqualTo("TestInterface.java");
+        assertThat(gjf.getTargetPackage()).isEqualTo("org.mybatis.test");
     }
 
     @Test
@@ -42,7 +43,7 @@ public class GeneratedJavaFileTest {
         JavaFormatter jf = new DefaultJavaFormatter();
         GeneratedJavaFile gjf = new GeneratedJavaFile(ifc, "src", jf);
 
-        assertEquals("TestInterface.java", gjf.getFileName());
-        assertEquals("org.mybatis.test", gjf.getTargetPackage());
+        assertThat(gjf.getFileName()).isEqualTo("TestInterface.java");
+        assertThat(gjf.getTargetPackage()).isEqualTo("org.mybatis.test");
     }
 }

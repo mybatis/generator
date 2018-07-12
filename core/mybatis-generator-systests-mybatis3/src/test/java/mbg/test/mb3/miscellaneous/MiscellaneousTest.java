@@ -16,11 +16,7 @@
 package mbg.test.mb3.miscellaneous;
 
 import static mbg.test.common.util.TestUtilities.datesAreEqual;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -28,7 +24,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import mbg.test.common.FirstName;
 import mbg.test.common.MyTime;
@@ -775,23 +771,25 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         }
     }
 
-    @Test(expected=NoSuchFieldException.class)
-    public void testFieldIgnored() throws NoSuchFieldException {
-        MyObject.class.getDeclaredField("decimal30field");
+    @Test
+    public void testFieldIgnored() {
+        assertThrows(NoSuchFieldException.class, () -> {
+            MyObject.class.getDeclaredField("decimal30field");
+        });
     }
 
     @Test
     public void testFluentBuilderMethodGenerated() {
         MyObject myObject = new MyObject();
         FirstName firstname = new FirstName();
-        firstname.setValue( "Bob" );
+        firstname.setValue("Bob");
 
         Integer wierdField = 4711;
-        myObject.withWierdField( wierdField )
-                .withFirstname( firstname );
+        myObject.withWierdField(wierdField)
+                .withFirstname(firstname);
 
-        assertEquals( "firstName was set", "Bob", myObject.getFirstname().getValue() );
-        assertEquals( "wieredField was set", wierdField,myObject.getWierdField());
+        assertEquals("Bob", myObject.getFirstname().getValue());
+        assertEquals(wierdField, myObject.getWierdField());
     }
 
     @Test

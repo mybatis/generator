@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,13 +17,14 @@ package mbg.test.mb3.simple;
 
 import static mbg.test.common.util.TestUtilities.datesAreEqual;
 import static mbg.test.common.util.TestUtilities.timesAreEqual;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.junit.jupiter.api.Test;
 
 import mbg.test.common.util.TestUtilities;
 import mbg.test.mb3.generated.simple.mapper.AwfulTableMapper;
@@ -40,9 +41,6 @@ import mbg.test.mb3.generated.simple.model.Pkblobs;
 import mbg.test.mb3.generated.simple.model.Pkfields;
 import mbg.test.mb3.generated.simple.model.Pkfieldsblobs;
 import mbg.test.mb3.generated.simple.model.Pkonly;
-
-import org.apache.ibatis.session.SqlSession;
-import org.junit.Test;
 
 public class SimpleTest extends AbstractSimpleTest {
 

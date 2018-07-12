@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,23 +17,20 @@ package mbg.test.mb3.dsql;
 
 import static mbg.test.common.util.TestUtilities.blobsAreEqual;
 import static mbg.test.common.util.TestUtilities.generateRandomBlob;
-import static mbg.test.mb3.generated.dsql.mapper.AwfulTableDynamicSqlSupport.*;
-import static mbg.test.mb3.generated.dsql.mapper.FieldsblobsDynamicSqlSupport.*;
-import static mbg.test.mb3.generated.dsql.mapper.FieldsonlyDynamicSqlSupport.*;
-import static mbg.test.mb3.generated.dsql.mapper.PkblobsDynamicSqlSupport.*;
-import static mbg.test.mb3.generated.dsql.mapper.PkfieldsDynamicSqlSupport.*;
-import static mbg.test.mb3.generated.dsql.mapper.PkfieldsblobsDynamicSqlSupport.*;
-import static mbg.test.mb3.generated.dsql.mapper.PkonlyDynamicSqlSupport.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static mbg.test.mb3.generated.dsql.mapper.AwfulTableDynamicSqlSupport.awfulTable;
+import static mbg.test.mb3.generated.dsql.mapper.FieldsblobsDynamicSqlSupport.fieldsblobs;
+import static mbg.test.mb3.generated.dsql.mapper.FieldsonlyDynamicSqlSupport.fieldsonly;
+import static mbg.test.mb3.generated.dsql.mapper.PkblobsDynamicSqlSupport.pkblobs;
+import static mbg.test.mb3.generated.dsql.mapper.PkfieldsDynamicSqlSupport.pkfields;
+import static mbg.test.mb3.generated.dsql.mapper.PkfieldsblobsDynamicSqlSupport.pkfieldsblobs;
+import static mbg.test.mb3.generated.dsql.mapper.PkonlyDynamicSqlSupport.pkonly;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mybatis.dynamic.sql.SqlBuilder.*;
-
 
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import mbg.test.mb3.generated.dsql.mapper.AwfulTableMapper;
 import mbg.test.mb3.generated.dsql.mapper.FieldsblobsMapper;
@@ -96,8 +93,8 @@ public class UpdateByExampleTest extends AbstractTest {
                     .execute();
             assertEquals(1, answer.size());
             record = answer.get(0);
-            assertEquals(record.getDoublefield(), 11.22, 0.0);
-            assertEquals(record.getFloatfield(), 33.44, 0.0);
+            assertEquals(record.getDoublefield(), 11.22, 0.001);
+            assertEquals(record.getFloatfield(), 33.44, 0.001);
             assertEquals(record.getIntegerfield().intValue(), 5);
             
             answer = mapper.selectByExample()
@@ -107,8 +104,8 @@ public class UpdateByExampleTest extends AbstractTest {
                     
             assertEquals(1, answer.size());
             record = answer.get(0);
-            assertEquals(record.getDoublefield(), 99d, 0.0);
-            assertEquals(record.getFloatfield(), 66.77, 0.0);
+            assertEquals(record.getDoublefield(), 99d, 0.001);
+            assertEquals(record.getFloatfield(), 66.77, 0.001);
             assertEquals(record.getIntegerfield().intValue(), 8);
             
             answer = mapper.selectByExample()
@@ -117,8 +114,8 @@ public class UpdateByExampleTest extends AbstractTest {
                     .execute();
             assertEquals(1, answer.size());
             record = answer.get(0);
-            assertEquals(record.getDoublefield(), 99d, 0.0);
-            assertEquals(record.getFloatfield(), 100.111, 0.0);
+            assertEquals(record.getDoublefield(), 99d, 0.001);
+            assertEquals(record.getFloatfield(), 100.111, 0.001);
             assertEquals(record.getIntegerfield().intValue(), 9);
         } finally {
             sqlSession.close();

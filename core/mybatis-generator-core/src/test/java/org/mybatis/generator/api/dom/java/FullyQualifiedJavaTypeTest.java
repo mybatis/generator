@@ -15,16 +15,13 @@
  */
 package org.mybatis.generator.api.dom.java;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mybatis.generator.api.dom.OutputUtilities;
-import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 
 /**
  * @author Jeff Butler

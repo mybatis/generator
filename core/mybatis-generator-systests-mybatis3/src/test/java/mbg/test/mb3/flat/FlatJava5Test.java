@@ -19,11 +19,7 @@ import static mbg.test.common.util.TestUtilities.blobsAreEqual;
 import static mbg.test.common.util.TestUtilities.datesAreEqual;
 import static mbg.test.common.util.TestUtilities.generateRandomBlob;
 import static mbg.test.common.util.TestUtilities.timesAreEqual;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -32,7 +28,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import mbg.test.mb3.generated.flat.mapper.AwfulTableMapper;
 import mbg.test.mb3.generated.flat.mapper.FieldsblobsMapper;

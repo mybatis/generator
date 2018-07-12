@@ -15,16 +15,14 @@
  */
 package org.mybatis.generator;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mybatis.generator.api.GeneratedJavaFile;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.Configuration;
@@ -34,17 +32,11 @@ import org.mybatis.generator.internal.DefaultShellCallback;
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ParseProblemException;
 
-@RunWith(Parameterized.class)
 public class JavaCodeGenerationTest {
 
-    private GeneratedJavaFile generatedJavaFile;
-
-    public JavaCodeGenerationTest(GeneratedJavaFile generatedJavaFile) {
-        this.generatedJavaFile = generatedJavaFile;
-    }
-
-    @Test
-    public void testJavaParse() {
+    @ParameterizedTest
+    @MethodSource("generateJavaFiles")
+    public void testJavaParse(GeneratedJavaFile generatedJavaFile) {
         ByteArrayInputStream is = new ByteArrayInputStream(
                 generatedJavaFile.getCompilationUnit().getFormattedContent().getBytes());
         try {
@@ -54,7 +46,6 @@ public class JavaCodeGenerationTest {
         }
     }
 
-    @Parameters
     public static List<GeneratedJavaFile> generateJavaFiles() throws Exception {
         List<GeneratedJavaFile> generatedFiles = new ArrayList<>();
         generatedFiles.addAll(generateJavaFilesMybatis());

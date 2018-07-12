@@ -15,16 +15,13 @@
  */
 package org.mybatis.generator.api.dom.java;
 
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.hamcrest.core.Is.*;
+import org.junit.jupiter.api.Test;
 
 public class InterfaceTest {
 
@@ -123,6 +120,6 @@ public class InterfaceTest {
             + "    String ONE = \"one\";" + System.getProperty("line.separator")
             + "}";
 
-        assertThat(interfaze.getFormattedContent(), is(expected));
+        assertThat(interfaze.getFormattedContent()).isEqualTo(expected);
     }
 }

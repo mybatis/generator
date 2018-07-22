@@ -19,6 +19,7 @@ import static org.mybatis.generator.internal.util.EqualsUtil.areEqual;
 import static org.mybatis.generator.internal.util.HashCodeUtil.SEED;
 import static org.mybatis.generator.internal.util.HashCodeUtil.hash;
 import static org.mybatis.generator.internal.util.JavaBeansUtil.getCamelCaseString;
+import static org.mybatis.generator.internal.util.JavaBeansUtil.getFirstCharacterUppercase;
 import static org.mybatis.generator.internal.util.StringUtility.composeFullyQualifiedTableName;
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
@@ -242,7 +243,7 @@ public class FullyQualifiedTable {
             String replaceString = domainObjectRenamingRule.getReplaceString();
             replaceString = replaceString == null ? "" : replaceString; //$NON-NLS-1$
             Matcher matcher = pattern.matcher(finalDomainObjectName);
-            finalDomainObjectName = getCamelCaseString(matcher.replaceAll(replaceString), true);
+            finalDomainObjectName = getFirstCharacterUppercase(matcher.replaceAll(replaceString));
         }
         return finalDomainObjectName;
     }

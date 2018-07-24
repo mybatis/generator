@@ -94,6 +94,12 @@ public class JavaBeansUtil {
         return sb.toString();
     }
 
+    public static String getFirstCharacterUppercase(String inputString) {
+        StringBuilder sb = new StringBuilder(inputString);
+        sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
+        return sb.toString();
+    }
+
     public static String getCamelCaseString(String inputString,
             boolean firstCharacterUppercase) {
         StringBuilder sb = new StringBuilder();

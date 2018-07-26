@@ -844,11 +844,18 @@ public abstract class IntrospectedTable {
         setExampleType(sb.toString());
     }
 
+    /**
+     * if property exampleTargetPackage specified for example ,use the specified value .
+     * use default value (targetPackage) otherwise
+     * @return
+     */
     private String calculateJavaModelExamplePackage() {
         JavaModelGeneratorConfiguration config = context.getJavaModelGeneratorConfiguration();
         String exampleTargetPackage = config.getProperty("exampleTargetPackage");
-        String javaModelPackage = config.getTargetPackage();
-        String targetPackage = exampleTargetPackage == null || exampleTargetPackage.length() == 0 ? javaModelPackage : exampleTargetPackage;
+        String targetPackage = config.getTargetPackage();
+        if (exampleTargetPackage != null && exampleTargetPackage.length() > 0) {
+            targetPackage = exampleTargetPackage;
+        }
         StringBuilder sb = new StringBuilder();
         sb.append(targetPackage);
         sb.append(fullyQualifiedTable.getSubPackageForModel(isSubPackagesEnabled(config)));

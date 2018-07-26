@@ -201,10 +201,15 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
         return answer;
     }
 
+    /**
+     * if property exampleTargetProject specified for example ,use the specified value .
+     * use default value (targetProject) otherwise
+     * @return
+     */
     private String calculateJavaModelTargetProject(AbstractJavaGenerator javaGenerator) {
         String defaultTargetProject = context.getJavaModelGeneratorConfiguration().getTargetProject();
         if (javaGenerator instanceof ExampleGenerator) {
-            String exampleTargetProject = context.getJavaClientGeneratorConfiguration().getProperty("exampleTargetProject");
+            String exampleTargetProject = context.getJavaModelGeneratorConfiguration().getProperty("exampleTargetProject");
             if (exampleTargetProject != null && exampleTargetProject.length() > 0) {
                 return exampleTargetProject;
             }

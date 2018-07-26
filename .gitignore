@@ -58,3 +58,25 @@
 *.iml
 /core/.mvn/wrapper/maven-wrapper.jar
 **/.DS_Store
+
+ *.ipr
+*.iws
+*.iml
+.gradle/*
+.classpath
+build/*
+classes/*
+out
+.gradle*
+.idea
+.idea/*
+.idea*
+.classpath
+.project
+.settings/
+*.log
+*.log.*
+*.bak
+bin/
+data/*
+*workspace.xml

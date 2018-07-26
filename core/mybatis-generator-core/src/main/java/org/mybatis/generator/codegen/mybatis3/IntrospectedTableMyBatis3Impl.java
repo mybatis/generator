@@ -175,10 +175,10 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
         for (AbstractJavaGenerator javaGenerator : javaModelGenerators) {
             List<CompilationUnit> compilationUnits = javaGenerator
                     .getCompilationUnits();
+            String javaModelTargetProject = calculateJavaModelTargetProject(javaGenerator);
             for (CompilationUnit compilationUnit : compilationUnits) {
                 GeneratedJavaFile gjf = new GeneratedJavaFile(compilationUnit,
-                        context.getJavaModelGeneratorConfiguration()
-                                .getTargetProject(),
+                                javaModelTargetProject,
                                 context.getProperty(PropertyRegistry.CONTEXT_JAVA_FILE_ENCODING),
                                 context.getJavaFormatter());
                 answer.add(gjf);
@@ -199,6 +199,17 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
         }
 
         return answer;
+    }
+
+    private String calculateJavaModelTargetProject(AbstractJavaGenerator javaGenerator) {
+        String defaultTargetProject = context.getJavaModelGeneratorConfiguration().getTargetProject();
+        if (javaGenerator instanceof ExampleGenerator) {
+            String exampleTargetProject = context.getJavaClientGeneratorConfiguration().getProperty("exampleTargetProject");
+            if (exampleTargetProject != null && exampleTargetProject.length() > 0) {
+                return exampleTargetProject;
+            }
+        }
+        return defaultTargetProject;
     }
 
     @Override

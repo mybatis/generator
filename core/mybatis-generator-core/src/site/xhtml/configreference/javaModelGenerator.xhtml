@@ -101,6 +101,22 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
         <p><i>The default value is false.</i></p></td>
   </tr>
   <tr>
+    <td valign="top">exampleTargetPackage</td>
+    <td>
+      This property is used to specify a different package for the generated example objects. If not specified,
+      the example objects will be generated in the same package as other model objects.
+      <p>Note: this property is ignored in the MyBatis Dynamic SQL runtime.</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">exampleTargetProject</td>
+    <td>
+      This property is used to specify a different project for the generated example objects. If not specified,
+      the example objects will be generated in the same project as other model objects.
+      <p>Note: this property is ignored in the MyBatis Dynamic SQL runtime.</p>
+    </td>
+  </tr>
+  <tr>
     <td valign="top">immutable</td>
     <td>
       This property is used to select whether MyBatis Generator will generate immutable

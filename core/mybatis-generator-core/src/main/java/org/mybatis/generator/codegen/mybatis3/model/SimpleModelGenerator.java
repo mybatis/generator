@@ -44,8 +44,8 @@ import org.mybatis.generator.codegen.RootClassInfo;
  */
 public class SimpleModelGenerator extends AbstractJavaGenerator {
 
-    public SimpleModelGenerator() {
-        super();
+    public SimpleModelGenerator(String project) {
+        super(project);
     }
 
     @Override

@@ -44,8 +44,8 @@ import org.mybatis.generator.codegen.RootClassInfo;
  */
 public class PrimaryKeyGenerator extends AbstractJavaGenerator {
 
-    public PrimaryKeyGenerator() {
-        super();
+    public PrimaryKeyGenerator(String project) {
+        super(project);
     }
 
     @Override

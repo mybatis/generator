@@ -68,8 +68,8 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
     
     private FragmentGenerator fragmentGenerator;
 
-    public DynamicSqlMapperGenerator() {
-        super(false);
+    public DynamicSqlMapperGenerator(String project) {
+        super(project, false);
     }
     
     @Override

@@ -16,7 +16,12 @@
 package mbg.test.mb3.miscellaneous;
 
 import static mbg.test.common.util.TestUtilities.datesAreEqual;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -37,6 +42,7 @@ import mbg.test.mb3.generated.miscellaneous.model.MyObject;
 import mbg.test.mb3.generated.miscellaneous.model.MyObjectCriteria;
 import mbg.test.mb3.generated.miscellaneous.model.MyObjectKey;
 import mbg.test.mb3.generated.miscellaneous.model.Regexrename;
+import mbg.test.mb3.generated.miscellaneous.model.example.mbgtest.AnotherawfultableExample;
 import mbg.test.mb3.generated.miscellaneous.model.mbgtest.Anotherawfultable;
 
 /**
@@ -958,6 +964,39 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
             Anotherawfultable returnedRecord = (Anotherawfultable)
                 sqlSession.selectOne("mbg.test.mb3.generated.miscellaneous.xml.AnotherawfultableMapper.selectByPrimaryKey",
                         key);
+            
+            assertEquals(record.getId(), returnedRecord.getId());
+            assertEquals(record.getSelect(), returnedRecord.getSelect());
+            assertEquals(record.getInsert(), returnedRecord.getInsert());
+            assertEquals(record.getUpdate(), returnedRecord.getUpdate());
+            assertEquals(record.getDelete(), returnedRecord.getDelete());
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+    @Test
+    public void testAnotherAwfulTableSelectByExample() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        
+        try {
+            Anotherawfultable record = new Anotherawfultable();
+            record.setId(5);
+            record.setSelect("select");
+            record.setInsert("insert");
+            
+            sqlSession.insert("mbg.test.mb3.generated.miscellaneous.xml.AnotherawfultableMapper.insert", record);
+            
+            AnotherawfultableExample example = new AnotherawfultableExample();
+            example.or().andIdEqualTo(5);
+            
+            List<?> returnedRecords = 
+                sqlSession.selectList("mbg.test.mb3.generated.miscellaneous.xml.AnotherawfultableMapper.selectByExample",
+                        example);
+            
+            assertEquals(returnedRecords.size(), 1);
+            
+            Anotherawfultable returnedRecord = (Anotherawfultable) returnedRecords.get(0);
             
             assertEquals(record.getId(), returnedRecord.getId());
             assertEquals(record.getSelect(), returnedRecord.getSelect());

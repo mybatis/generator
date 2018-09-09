@@ -70,7 +70,7 @@ public class JavaClientGeneratorConfiguration extends TypedPropertyHolder {
 
         if (implementationPackage != null) {
             answer.addAttribute(new Attribute(
-                    "implementationPackage", targetProject)); //$NON-NLS-1$
+                    "implementationPackage", implementationPackage)); //$NON-NLS-1$
         }
 
         addPropertyXmlElements(answer);

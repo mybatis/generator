@@ -835,12 +835,31 @@ public abstract class IntrospectedTable {
         sb.append("WithBLOBs"); //$NON-NLS-1$
         setRecordWithBLOBsType(sb.toString());
 
+        String exampleTargetPackage = calculateJavaModelExamplePackage();
         sb.setLength(0);
-        sb.append(pakkage);
+        sb.append(exampleTargetPackage);
         sb.append('.');
         sb.append(fullyQualifiedTable.getDomainObjectName());
         sb.append("Example"); //$NON-NLS-1$
         setExampleType(sb.toString());
+    }
+
+    /**
+     * if property exampleTargetPackage specified for example ,use the specified value .
+     * use default value (targetPackage) otherwise
+     * @return
+     */
+    private String calculateJavaModelExamplePackage() {
+        JavaModelGeneratorConfiguration config = context.getJavaModelGeneratorConfiguration();
+        String exampleTargetPackage = config.getProperty("exampleTargetPackage");
+        String targetPackage = config.getTargetPackage();
+        if (exampleTargetPackage != null && exampleTargetPackage.length() > 0) {
+            targetPackage = exampleTargetPackage;
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append(targetPackage);
+        sb.append(fullyQualifiedTable.getSubPackageForModel(isSubPackagesEnabled(config)));
+        return sb.toString();
     }
 
     protected String calculateSqlMapPackage() {

@@ -45,8 +45,8 @@ import org.mybatis.generator.codegen.RootClassInfo;
  */
 public class BaseRecordGenerator extends AbstractJavaGenerator {
 
-    public BaseRecordGenerator() {
-        super();
+    public BaseRecordGenerator(String project) {
+        super(project);
     }
 
     @Override

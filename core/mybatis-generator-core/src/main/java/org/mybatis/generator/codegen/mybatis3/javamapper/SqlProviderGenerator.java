@@ -47,8 +47,8 @@ public class SqlProviderGenerator extends AbstractJavaGenerator {
 
     private boolean useLegacyBuilder;
 
-    public SqlProviderGenerator(boolean useLegacyBuilder) {
-        super();
+    public SqlProviderGenerator(String project, boolean useLegacyBuilder) {
+        super(project);
         this.useLegacyBuilder = useLegacyBuilder;
     }
 

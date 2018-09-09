@@ -43,8 +43,8 @@ import org.mybatis.generator.codegen.RootClassInfo;
  */
 public class RecordWithBLOBsGenerator extends AbstractJavaGenerator {
 
-    public RecordWithBLOBsGenerator() {
-        super();
+    public RecordWithBLOBsGenerator(String project) {
+        super(project);
     }
 
     @Override

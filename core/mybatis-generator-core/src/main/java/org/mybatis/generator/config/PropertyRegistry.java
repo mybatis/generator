@@ -65,6 +65,8 @@ public class PropertyRegistry {
     public static final String TYPE_RESOLVER_USE_JSR310_TYPES = "useJSR310Types"; //$NON-NLS-1$
 
     public static final String MODEL_GENERATOR_TRIM_STRINGS = "trimStrings"; //$NON-NLS-1$
+    public static final String MODEL_GENERATOR_EXAMPLE_PACKAGE = "exampleTargetPackage"; //$NON-NLS-1$
+    public static final String MODEL_GENERATOR_EXAMPLE_PROJECT = "exampleTargetProject"; //$NON-NLS-1$
 
     public static final String COMMENT_GENERATOR_SUPPRESS_DATE = "suppressDate"; //$NON-NLS-1$
     public static final String COMMENT_GENERATOR_SUPPRESS_ALL_COMMENTS = "suppressAllComments"; //$NON-NLS-1$

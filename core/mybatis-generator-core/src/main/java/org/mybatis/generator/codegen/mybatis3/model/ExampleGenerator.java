@@ -45,8 +45,8 @@ import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
  */
 public class ExampleGenerator extends AbstractJavaGenerator {
 
-    public ExampleGenerator() {
-        super();
+    public ExampleGenerator(String project) {
+        super(project);
     }
 
     @Override

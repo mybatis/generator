@@ -52,12 +52,12 @@ import org.mybatis.generator.config.PropertyRegistry;
  */
 public class JavaMapperGenerator extends AbstractJavaClientGenerator {
 
-    public JavaMapperGenerator() {
-        super(true);
+    public JavaMapperGenerator(String project) {
+        this(project, true);
     }
 
-    public JavaMapperGenerator(boolean requiresMatchedXMLGenerator) {
-        super(requiresMatchedXMLGenerator);
+    public JavaMapperGenerator(String project, boolean requiresMatchedXMLGenerator) {
+        super(project, requiresMatchedXMLGenerator);
     }
 
     @Override

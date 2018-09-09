@@ -43,12 +43,12 @@ import org.mybatis.generator.config.PropertyRegistry;
  */
 public class SimpleJavaClientGenerator extends AbstractJavaClientGenerator {
 
-    public SimpleJavaClientGenerator() {
-        super(true);
+    public SimpleJavaClientGenerator(String project) {
+        this(project, true);
     }
 
-    public SimpleJavaClientGenerator(boolean requiresMatchedXMLGenerator) {
-        super(requiresMatchedXMLGenerator);
+    public SimpleJavaClientGenerator(String project, boolean requiresMatchedXMLGenerator) {
+        super(project, requiresMatchedXMLGenerator);
     }
 
     @Override

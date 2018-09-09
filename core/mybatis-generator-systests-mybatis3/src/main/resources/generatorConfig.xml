@@ -260,6 +260,7 @@
     <javaModelGenerator targetPackage="mbg.test.mb3.generated.miscellaneous.model" targetProject="MAVEN">
       <property name="trimStrings" value="true" />
       <property name="enableSubPackages" value="true"/>
+      <property name="exampleTargetPackage" value="mbg.test.mb3.generated.miscellaneous.model.example"/>
     </javaModelGenerator>
 
     <sqlMapGenerator targetPackage="mbg.test.mb3.generated.miscellaneous.xml"

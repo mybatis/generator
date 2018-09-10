@@ -29,6 +29,10 @@
   <packaging>jar</packaging>
   <name>MyBatis Generator Tests (Common Classes)</name>
 
+  <properties>
+    <checkstyle.config>${project.basedir}/../checkstyle-override.xml</checkstyle.config>
+  </properties>
+
   <build>
     <plugins>
       <plugin>

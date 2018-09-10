@@ -29,11 +29,6 @@ import java.util.regex.Pattern;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.DomainObjectRenamingRule;
 
-/**
- * The Class FullyQualifiedTable.
- *
- * @author Jeff Butler
- */
 public class FullyQualifiedTable {
 
     private String introspectedCatalog;
@@ -133,38 +128,18 @@ public class FullyQualifiedTable {
                 : ""; //$NON-NLS-1$
     }
 
-    /**
-     * Gets the introspected catalog.
-     *
-     * @return the introspected catalog
-     */
     public String getIntrospectedCatalog() {
         return introspectedCatalog;
     }
 
-    /**
-     * Gets the introspected schema.
-     *
-     * @return the introspected schema
-     */
     public String getIntrospectedSchema() {
         return introspectedSchema;
     }
 
-    /**
-     * Gets the introspected table name.
-     *
-     * @return the introspected table name
-     */
     public String getIntrospectedTableName() {
         return introspectedTableName;
     }
 
-    /**
-     * Gets the fully qualified table name at runtime.
-     *
-     * @return the fully qualified table name at runtime
-     */
     public String getFullyQualifiedTableNameAtRuntime() {
         StringBuilder localCatalog = new StringBuilder();
         if (!ignoreQualifiersAtRuntime) {
@@ -203,11 +178,6 @@ public class FullyQualifiedTable {
                 '.');
     }
 
-    /**
-     * Gets the aliased fully qualified table name at runtime.
-     *
-     * @return the aliased fully qualified table name at runtime
-     */
     public String getAliasedFullyQualifiedTableNameAtRuntime() {
         StringBuilder sb = new StringBuilder();
 
@@ -221,11 +191,6 @@ public class FullyQualifiedTable {
         return sb.toString();
     }
 
-    /**
-     * Gets the domain object name.
-     *
-     * @return the domain object name
-     */
     public String getDomainObjectName() {
         if (stringHasValue(domainObjectName)) {
             return domainObjectName;
@@ -248,9 +213,6 @@ public class FullyQualifiedTable {
         return finalDomainObjectName;
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -271,9 +233,6 @@ public class FullyQualifiedTable {
                         other.introspectedSchema);
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
     @Override
     public int hashCode() {
         int result = SEED;
@@ -284,9 +243,6 @@ public class FullyQualifiedTable {
         return result;
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
     @Override
     public String toString() {
         return composeFullyQualifiedTableName(
@@ -294,11 +250,6 @@ public class FullyQualifiedTable {
                 '.');
     }
 
-    /**
-     * Gets the alias.
-     *
-     * @return the alias
-     */
     public String getAlias() {
         return alias;
     }
@@ -363,12 +314,6 @@ public class FullyQualifiedTable {
         return sb.toString();
     }
 
-    /**
-     * Adds the delimiters.
-     *
-     * @param sb
-     *            the sb
-     */
     private void addDelimiters(StringBuilder sb) {
         if (stringHasValue(beginningDelimiter)) {
             sb.insert(0, beginningDelimiter);

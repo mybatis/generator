@@ -41,6 +41,8 @@ import org.mybatis.generator.internal.ObjectFactory;
 import org.mybatis.generator.internal.util.StringUtility;
 
 /**
+ * Introspected table implementation for generating MyBatis3 artifacts.
+ * 
  * @author Jeff Butler
  */
 public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {

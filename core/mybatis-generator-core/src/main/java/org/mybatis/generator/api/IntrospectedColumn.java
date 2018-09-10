@@ -151,17 +151,10 @@ public class IntrospectedColumn {
                 .stringContainsSpace(actualColumnName);
     }
 
-    /**
-     * @return Returns the identity.
-     */
     public boolean isIdentity() {
         return identity;
     }
 
-    /**
-     * @param identity
-     *            The identity to set.
-     */
     public void setIdentity(boolean identity) {
         this.identity = identity;
     }

@@ -31,34 +31,24 @@ import org.mybatis.generator.api.dom.OutputUtilities;
  */
 public class InnerClass extends JavaElement {
 
-    /** The fields. */
     private List<Field> fields;
 
-    /** The inner classes. */
     private List<InnerClass> innerClasses;
 
-    /** The inner enums. */
     private List<InnerEnum> innerEnums;
 
-    /** The type parameters. */
     private List<TypeParameter> typeParameters;
 
-    /** The super class. */
     private FullyQualifiedJavaType superClass;
 
-    /** The type. */
     private FullyQualifiedJavaType type;
 
-    /** The super interface types. */
     private Set<FullyQualifiedJavaType> superInterfaceTypes;
 
-    /** The methods. */
     private List<Method> methods;
 
-    /** The is abstract. */
     private boolean isAbstract;
 
-    /** The initialization blocks. */
     private List<InitializationBlock> initializationBlocks;
 
     /**
@@ -89,138 +79,58 @@ public class InnerClass extends JavaElement {
         this(new FullyQualifiedJavaType(typeName));
     }
 
-    /**
-     * Gets the fields.
-     *
-     * @return Returns the fields.
-     */
     public List<Field> getFields() {
         return fields;
     }
 
-    /**
-     * Adds the field.
-     *
-     * @param field
-     *            the field
-     */
     public void addField(Field field) {
         fields.add(field);
     }
 
-    /**
-     * Gets the super class.
-     *
-     * @return Returns the superClass.
-     */
     public FullyQualifiedJavaType getSuperClass() {
         return superClass;
     }
 
-    /**
-     * Sets the super class.
-     *
-     * @param superClass
-     *            The superClass to set.
-     */
     public void setSuperClass(FullyQualifiedJavaType superClass) {
         this.superClass = superClass;
     }
 
-    /**
-     * Sets the super class.
-     *
-     * @param superClassType
-     *            the new super class
-     */
     public void setSuperClass(String superClassType) {
         this.superClass = new FullyQualifiedJavaType(superClassType);
     }
 
-    /**
-     * Gets the inner classes.
-     *
-     * @return Returns the innerClasses.
-     */
     public List<InnerClass> getInnerClasses() {
         return innerClasses;
     }
 
-    /**
-     * Adds the inner class.
-     *
-     * @param innerClass
-     *            the inner class
-     */
     public void addInnerClass(InnerClass innerClass) {
         innerClasses.add(innerClass);
     }
 
-    /**
-     * Gets the inner enums.
-     *
-     * @return the inner enums
-     */
     public List<InnerEnum> getInnerEnums() {
         return innerEnums;
     }
 
-    /**
-     * Adds the inner enum.
-     *
-     * @param innerEnum
-     *            the inner enum
-     */
     public void addInnerEnum(InnerEnum innerEnum) {
         innerEnums.add(innerEnum);
     }
 
-    /**
-     * Gets the type parameters.
-     *
-     * @return the type parameters
-     */
     public List<TypeParameter> getTypeParameters() {
         return this.typeParameters;
     }
 
-    /**
-     * Adds the type parameter.
-     *
-     * @param typeParameter
-     *            the type parameter
-     */
     public void addTypeParameter(TypeParameter typeParameter) {
         this.typeParameters.add(typeParameter);
     }
 
-    /**
-     * Gets the initialization blocks.
-     *
-     * @return the initialization blocks
-     */
     public List<InitializationBlock> getInitializationBlocks() {
         return initializationBlocks;
     }
 
-    /**
-     * Adds the initialization block.
-     *
-     * @param initializationBlock
-     *            the initialization block
-     */
     public void addInitializationBlock(InitializationBlock initializationBlock) {
         initializationBlocks.add(initializationBlock);
     }
 
-    /**
-     * Gets the formatted content.
-     *
-     * @param indentLevel
-     *            the indent level
-     * @param compilationUnit the compilation unit      
-     * @return the formatted content
-     */
     public String getFormattedContent(int indentLevel, CompilationUnit compilationUnit) {
         StringBuilder sb = new StringBuilder();
 
@@ -354,68 +264,30 @@ public class InnerClass extends JavaElement {
         return sb.toString();
     }
 
-    /**
-     * Gets the super interface types.
-     *
-     * @return Returns the superInterfaces.
-     */
     public Set<FullyQualifiedJavaType> getSuperInterfaceTypes() {
         return superInterfaceTypes;
     }
 
-    /**
-     * Adds the super interface.
-     *
-     * @param superInterface
-     *            the super interface
-     */
     public void addSuperInterface(FullyQualifiedJavaType superInterface) {
         superInterfaceTypes.add(superInterface);
     }
 
-    /**
-     * Gets the methods.
-     *
-     * @return Returns the methods.
-     */
     public List<Method> getMethods() {
         return methods;
     }
 
-    /**
-     * Adds the method.
-     *
-     * @param method
-     *            the method
-     */
     public void addMethod(Method method) {
         methods.add(method);
     }
 
-    /**
-     * Gets the type.
-     *
-     * @return Returns the type.
-     */
     public FullyQualifiedJavaType getType() {
         return type;
     }
 
-    /**
-     * Checks if is abstract.
-     *
-     * @return true, if is abstract
-     */
     public boolean isAbstract() {
         return isAbstract;
     }
 
-    /**
-     * Sets the abstract.
-     *
-     * @param isAbtract
-     *            the new abstract
-     */
     public void setAbstract(boolean isAbtract) {
         this.isAbstract = isAbtract;
     }

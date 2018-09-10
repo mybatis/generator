@@ -809,7 +809,7 @@ public interface Plugin {
      *         document should be ignored. In the case of multiple plugins, the
      *         first plugin returning false will disable the calling of further
      *         plugins. Also, if any plugin returns false, then the
-     *         <tt>sqlMapGenerated</tt> method will not be called.
+     *         <code>sqlMapGenerated</code> method will not be called.
      */
     boolean sqlMapDocumentGenerated(Document document,
             IntrospectedTable introspectedTable);

@@ -67,7 +67,7 @@ public class XmlFileMergerJaxp {
     }
 
     /**
-     * Utility class - no instances allowed
+     * Utility class - no instances allowed.
      */
     private XmlFileMergerJaxp() {
         super();

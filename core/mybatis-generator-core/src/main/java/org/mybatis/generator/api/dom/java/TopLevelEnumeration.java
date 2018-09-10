@@ -32,12 +32,6 @@ public class TopLevelEnumeration extends InnerEnum implements CompilationUnit {
 
     private List<String> fileCommentLines;
 
-    /**
-     * Instantiates a new top level enumeration.
-     *
-     * @param type
-     *            the type
-     */
     public TopLevelEnumeration(FullyQualifiedJavaType type) {
         super(type);
         importedTypes = new TreeSet<>();

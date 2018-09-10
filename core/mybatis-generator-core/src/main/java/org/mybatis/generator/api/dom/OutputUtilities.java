@@ -20,14 +20,8 @@ import java.util.TreeSet;
 
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 
-/**
- * The Class OutputUtilities.
- *
- * @author Jeff Butler
- */
 public class OutputUtilities {
 
-    /** The Constant lineSeparator. */
     private static final String lineSeparator;
 
     static {

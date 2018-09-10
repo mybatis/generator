@@ -31,7 +31,7 @@ import org.mybatis.generator.config.Context;
  * Plugin interface. Clients may extend this class to implement some or all of
  * the methods in a plugin.
  * 
- * <p>This adapter does not implement the <tt>validate</tt> method - all plugins
+ * <p>This adapter does not implement the <code>validate</code> method - all plugins
  * must perform validation.
  * 
  * @author Jeff Butler

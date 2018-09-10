@@ -24,11 +24,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-/**
- * The Class TopLevelClass.
- *
- * @author Jeff Butler
- */
 public class TopLevelClass extends InnerClass implements CompilationUnit {
 
     private Set<FullyQualifiedJavaType> importedTypes;

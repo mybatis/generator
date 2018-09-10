@@ -27,14 +27,14 @@ public class PropertyRegistry {
     public static final String ANY_ENABLE_SUB_PACKAGES = "enableSubPackages"; //$NON-NLS-1$
 
     /**
-     * recognized by table and java model generator
+     * recognized by table and java model generator.
      */
     public static final String ANY_ROOT_CLASS = "rootClass"; //$NON-NLS-1$
     public static final String ANY_IMMUTABLE = "immutable"; //$NON-NLS-1$
     public static final String ANY_CONSTRUCTOR_BASED = "constructorBased"; //$NON-NLS-1$
 
     /**
-     * recognized by table and java client generator
+     * recognized by table and java client generator.
      */
     public static final String ANY_ROOT_INTERFACE = "rootInterface"; //$NON-NLS-1$
 

@@ -31,33 +31,20 @@ import org.mybatis.generator.api.dom.OutputUtilities;
  */
 public class InnerEnum extends JavaElement {
 
-    /** The fields. */
     private List<Field> fields;
 
-    /** The inner classes. */
     private List<InnerClass> innerClasses;
 
-    /** The inner enums. */
     private List<InnerEnum> innerEnums;
 
-    /** The type. */
     private FullyQualifiedJavaType type;
 
-    /** The super interface types. */
     private Set<FullyQualifiedJavaType> superInterfaceTypes;
 
-    /** The methods. */
     private List<Method> methods;
 
-    /** The enum constants. */
     private List<String> enumConstants;
 
-    /**
-     * Instantiates a new inner enum.
-     *
-     * @param type
-     *            the type
-     */
     public InnerEnum(FullyQualifiedJavaType type) {
         super();
         this.type = type;
@@ -69,90 +56,38 @@ public class InnerEnum extends JavaElement {
         enumConstants = new ArrayList<>();
     }
 
-    /**
-     * Gets the fields.
-     *
-     * @return Returns the fields.
-     */
     public List<Field> getFields() {
         return fields;
     }
 
-    /**
-     * Adds the field.
-     *
-     * @param field
-     *            the field
-     */
     public void addField(Field field) {
         fields.add(field);
     }
 
-    /**
-     * Gets the inner classes.
-     *
-     * @return Returns the innerClasses.
-     */
     public List<InnerClass> getInnerClasses() {
         return innerClasses;
     }
 
-    /**
-     * Adds the inner class.
-     *
-     * @param innerClass
-     *            the inner class
-     */
     public void addInnerClass(InnerClass innerClass) {
         innerClasses.add(innerClass);
     }
 
-    /**
-     * Gets the inner enums.
-     *
-     * @return the inner enums
-     */
     public List<InnerEnum> getInnerEnums() {
         return innerEnums;
     }
 
-    /**
-     * Adds the inner enum.
-     *
-     * @param innerEnum
-     *            the inner enum
-     */
     public void addInnerEnum(InnerEnum innerEnum) {
         innerEnums.add(innerEnum);
     }
 
-    /**
-     * Gets the enum constants.
-     *
-     * @return the enum constants
-     */
     public List<String> getEnumConstants() {
         return enumConstants;
     }
 
-    /**
-     * Adds the enum constant.
-     *
-     * @param enumConstant
-     *            the enum constant
-     */
     public void addEnumConstant(String enumConstant) {
         enumConstants.add(enumConstant);
     }
 
-    /**
-     * Gets the formatted content.
-     *
-     * @param indentLevel
-     *            the indent level
-     * @param compilationUnit the compilation unit
-     * @return the formatted content
-     */
     public String getFormattedContent(int indentLevel, CompilationUnit compilationUnit) {
         StringBuilder sb = new StringBuilder();
 
@@ -263,49 +198,22 @@ public class InnerEnum extends JavaElement {
         return sb.toString();
     }
 
-    /**
-     * Gets the super interface types.
-     *
-     * @return Returns the superInterfaces.
-     */
     public Set<FullyQualifiedJavaType> getSuperInterfaceTypes() {
         return superInterfaceTypes;
     }
 
-    /**
-     * Adds the super interface.
-     *
-     * @param superInterface
-     *            the super interface
-     */
     public void addSuperInterface(FullyQualifiedJavaType superInterface) {
         superInterfaceTypes.add(superInterface);
     }
 
-    /**
-     * Gets the methods.
-     *
-     * @return Returns the methods.
-     */
     public List<Method> getMethods() {
         return methods;
     }
 
-    /**
-     * Adds the method.
-     *
-     * @param method
-     *            the method
-     */
     public void addMethod(Method method) {
         methods.add(method);
     }
 
-    /**
-     * Gets the type.
-     *
-     * @return Returns the type.
-     */
     public FullyQualifiedJavaType getType() {
         return type;
     }

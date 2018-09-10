@@ -815,7 +815,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
     }
 
     /**
-     * Generates methods that set between and not between conditions
+     * Generates methods that set between and not between conditions.
      * 
      * @param introspectedColumn the introspected column
      * @param betweenMethod true if between, else not between

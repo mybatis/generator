@@ -47,16 +47,10 @@ public class Parameter {
         addAnnotation(annotation);
     }
 
-    /**
-     * @return Returns the name.
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * @return Returns the type.
-     */
     public FullyQualifiedJavaType getType() {
         return type;
     }

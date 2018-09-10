@@ -25,6 +25,11 @@
   <artifactId>mybatis-generator-systests-mybatis3-java8</artifactId>
   <description>Tests for the MyBatis3 code generator using Java8 Features.</description>
   <name>MyBatis Generator Tests (MyBatis3 with Java 8)</name>
+
+  <properties>
+    <checkstyle.config>${project.basedir}/../checkstyle-override.xml</checkstyle.config>
+  </properties>
+
   <build>
     <pluginManagement>
       <plugins>
@@ -71,26 +76,6 @@
             <version>${project.version}</version>
           </dependency>
         </dependencies>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>animal-sniffer-maven-plugin</artifactId>
-        <configuration>
-          <signature>
-            <groupId>org.codehaus.mojo.signature</groupId>
-            <artifactId>java18</artifactId>
-            <version>1.0</version>
-          </signature>
-        </configuration>
-        <executions>
-          <execution>
-            <id>check-java-1.8-compat</id>
-            <phase>process-classes</phase>
-            <goals>
-              <goal>check</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

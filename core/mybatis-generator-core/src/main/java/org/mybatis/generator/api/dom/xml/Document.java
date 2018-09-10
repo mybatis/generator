@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,85 +17,40 @@ package org.mybatis.generator.api.dom.xml;
 
 import org.mybatis.generator.api.dom.OutputUtilities;
 
-/**
- * The Class Document.
- *
- * @author Jeff Butler
- */
 public class Document {
 
-    /** The public id. */
     private String publicId;
 
-    /** The system id. */
     private String systemId;
 
-    /** The root element. */
     private XmlElement rootElement;
 
-    /**
-     * Instantiates a new document.
-     *
-     * @param publicId
-     *            the public id
-     * @param systemId
-     *            the system id
-     */
     public Document(String publicId, String systemId) {
         super();
         this.publicId = publicId;
         this.systemId = systemId;
     }
 
-    /**
-     * Instantiates a new document.
-     */
     public Document() {
         super();
     }
 
-    /**
-     * Gets the root element.
-     *
-     * @return Returns the rootElement.
-     */
     public XmlElement getRootElement() {
         return rootElement;
     }
 
-    /**
-     * Sets the root element.
-     *
-     * @param rootElement
-     *            The rootElement to set.
-     */
     public void setRootElement(XmlElement rootElement) {
         this.rootElement = rootElement;
     }
 
-    /**
-     * Gets the public id.
-     *
-     * @return Returns the publicId.
-     */
     public String getPublicId() {
         return publicId;
     }
 
-    /**
-     * Gets the system id.
-     *
-     * @return Returns the systemId.
-     */
     public String getSystemId() {
         return systemId;
     }
 
-    /**
-     * Gets the formatted content.
-     *
-     * @return the formatted content
-     */
     public String getFormattedContent() {
         StringBuilder sb = new StringBuilder();
 

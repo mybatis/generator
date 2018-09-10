@@ -22,11 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-/**
- * The Class FullyQualifiedJavaType.
- *
- * @author Jeff Butler
- */
 public class FullyQualifiedJavaType implements
         Comparable<FullyQualifiedJavaType> {
     
@@ -176,11 +171,6 @@ public class FullyQualifiedJavaType implements
         return packageName;
     }
 
-    /**
-     * Gets the short name.
-     *
-     * @return Returns the shortName - including any type arguments.
-     */
     public String getShortName() {
         StringBuilder sb = new StringBuilder();
         if (wildcardType) {
@@ -249,11 +239,6 @@ public class FullyQualifiedJavaType implements
         return primitive;
     }
 
-    /**
-     * Gets the primitive type wrapper.
-     *
-     * @return Returns the wrapperClass.
-     */
     public PrimitiveTypeWrapper getPrimitiveTypeWrapper() {
         return primitiveTypeWrapper;
     }

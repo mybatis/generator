@@ -21,28 +21,14 @@ import java.util.List;
 
 import org.mybatis.generator.api.dom.OutputUtilities;
 
-/**
- * The Class XmlElement.
- *
- * @author Jeff Butler
- */
 public class XmlElement extends Element {
 
-    /** The attributes. */
     private List<Attribute> attributes;
 
-    /** The elements. */
     private List<Element> elements;
 
-    /** The name. */
     private String name;
 
-    /**
-     * Instantiates a new xml element.
-     *
-     * @param name
-     *            the name
-     */
     public XmlElement(String name) {
         super();
         attributes = new ArrayList<>();
@@ -65,68 +51,30 @@ public class XmlElement extends Element {
         this.name = original.name;
     }
 
-    /**
-     * Gets the attributes.
-     *
-     * @return Returns the attributes.
-     */
     public List<Attribute> getAttributes() {
         return attributes;
     }
 
-    /**
-     * Adds the attribute.
-     *
-     * @param attribute
-     *            the attribute
-     */
     public void addAttribute(Attribute attribute) {
         attributes.add(attribute);
     }
 
-    /**
-     * Gets the elements.
-     *
-     * @return Returns the elements.
-     */
     public List<Element> getElements() {
         return elements;
     }
 
-    /**
-     * Adds the element.
-     *
-     * @param element
-     *            the element
-     */
     public void addElement(Element element) {
         elements.add(element);
     }
 
-    /**
-     * Adds the element.
-     *
-     * @param index
-     *            the index
-     * @param element
-     *            the element
-     */
     public void addElement(int index, Element element) {
         elements.add(index, element);
     }
 
-    /**
-     * Gets the name.
-     *
-     * @return Returns the name.
-     */
     public String getName() {
         return name;
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.dom.xml.Element#getFormattedContent(int)
-     */
     @Override
     public String getFormattedContent(int indentLevel) {
         StringBuilder sb = new StringBuilder();
@@ -160,12 +108,6 @@ public class XmlElement extends Element {
         return sb.toString();
     }
 
-    /**
-     * Sets the name.
-     *
-     * @param name
-     *            the new name
-     */
     public void setName(String name) {
         this.name = name;
     }

@@ -31,11 +31,6 @@ import java.util.Map;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
-/**
- * The Class TableConfiguration.
- *
- * @author Jeff Butler
- */
 public class TableConfiguration extends PropertyHolder {
 
     private boolean insertStatementEnabled;

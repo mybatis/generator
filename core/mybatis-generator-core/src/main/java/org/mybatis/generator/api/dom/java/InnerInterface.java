@@ -26,33 +26,18 @@ import java.util.Set;
 
 import org.mybatis.generator.api.dom.OutputUtilities;
 
-/**
- * The Class Interface.
- *
- * @author Jeff Butler
- */
 public class InnerInterface extends JavaElement {
 
     private List<Field> fields;
 
-    /** The type. */
     private FullyQualifiedJavaType type;
 
-    /** The inner interfaces. */
     private List<InnerInterface> innerInterfaces;
 
-    /** The super interface types. */
     private Set<FullyQualifiedJavaType> superInterfaceTypes;
 
-    /** The methods. */
     private List<Method> methods;
 
-    /**
-     * Instantiates a new interface.
-     *
-     * @param type
-     *            the type
-     */
     public InnerInterface(FullyQualifiedJavaType type) {
         super();
         this.type = type;
@@ -62,12 +47,6 @@ public class InnerInterface extends JavaElement {
         fields = new ArrayList<>();
     }
 
-    /**
-     * Instantiates a new interface.
-     *
-     * @param type
-     *            the type
-     */
     public InnerInterface(String type) {
         this(new FullyQualifiedJavaType(type));
     }
@@ -80,14 +59,6 @@ public class InnerInterface extends JavaElement {
         fields.add(field);
     }
 
-    /**
-     * Gets the formatted content.
-     *
-     * @param indentLevel
-     *            the indent level
-     * @param compilationUnit the compilation unit
-     * @return the formatted content
-     */
     public String getFormattedContent(int indentLevel, CompilationUnit compilationUnit) {
         StringBuilder sb = new StringBuilder();
 
@@ -168,88 +139,43 @@ public class InnerInterface extends JavaElement {
         return sb.toString();
     }
 
-    /**
-     * Adds the super interface.
-     *
-     * @param superInterface
-     *            the super interface
-     */
     public void addSuperInterface(FullyQualifiedJavaType superInterface) {
         superInterfaceTypes.add(superInterface);
     }
 
-    /**
-     * Gets the methods.
-     *
-     * @return Returns the methods.
-     */
     public List<Method> getMethods() {
         return methods;
     }
 
-    /**
-     * Adds the method.
-     *
-     * @param method
-     *            the method
-     */
     public void addMethod(Method method) {
         methods.add(method);
     }
 
-    /**
-     * Gets the type.
-     *
-     * @return Returns the type.
-     */
     public FullyQualifiedJavaType getType() {
         return type;
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.dom.java.CompilationUnit#getSuperClass()
-     */
     public FullyQualifiedJavaType getSuperClass() {
         // interfaces do not have superclasses
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.dom.java.CompilationUnit#getSuperInterfaceTypes()
-     */
     public Set<FullyQualifiedJavaType> getSuperInterfaceTypes() {
         return superInterfaceTypes;
     }
 
-    /**
-     * Gets the inner interface.
-     *
-     * @return Returns the innerInterfaces.
-     */
     public List<InnerInterface> getInnerInterfaces() {
         return innerInterfaces;
     }
 
-    /**
-     * Adds the inner interface.
-     *
-     * @param innerInterface
-     *            the inner interface
-     */
     public void addInnerInterfaces(InnerInterface innerInterface) {
         innerInterfaces.add(innerInterface);
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.dom.java.CompilationUnit#isJavaInterface()
-     */
     public boolean isJavaInterface() {
         return true;
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.dom.java.CompilationUnit#isJavaEnumeration()
-     */
     public boolean isJavaEnumeration() {
         return false;
     }

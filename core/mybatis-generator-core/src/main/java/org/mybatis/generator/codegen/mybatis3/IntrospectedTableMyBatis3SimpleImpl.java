@@ -27,6 +27,8 @@ import org.mybatis.generator.codegen.mybatis3.xmlmapper.SimpleXMLMapperGenerator
 import org.mybatis.generator.internal.ObjectFactory;
 
 /**
+ * Introspected table implementation for generating simple MyBatis3 artifacts (no "by example" methods,
+ * flat model, etc.)
  * 
  * @author Jeff Butler
  * 

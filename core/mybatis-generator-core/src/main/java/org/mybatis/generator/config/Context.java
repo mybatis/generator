@@ -43,11 +43,6 @@ import org.mybatis.generator.internal.ObjectFactory;
 import org.mybatis.generator.internal.PluginAggregator;
 import org.mybatis.generator.internal.db.DatabaseIntrospector;
 
-/**
- * The Class Context.
- *
- * @author Jeff Butler
- */
 public class Context extends PropertyHolder {
 
     private String id;

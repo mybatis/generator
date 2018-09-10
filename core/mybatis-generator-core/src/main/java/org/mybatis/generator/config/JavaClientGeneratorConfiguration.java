@@ -23,17 +23,11 @@ import java.util.List;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
-/**
- * @author Jeff Butler
- */
 public class JavaClientGeneratorConfiguration extends TypedPropertyHolder {
     private String targetPackage;
     private String implementationPackage;
     private String targetProject;
 
-    /**
-     *  
-     */
     public JavaClientGeneratorConfiguration() {
         super();
     }

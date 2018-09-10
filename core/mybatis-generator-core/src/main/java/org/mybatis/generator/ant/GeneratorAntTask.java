@@ -174,32 +174,18 @@ public class GeneratorAntTask extends Task {
         }
     }
 
-    /**
-     * @return Returns the configfile.
-     */
     public String getConfigfile() {
         return configfile;
     }
 
-    /**
-     * @param configfile
-     *            The configfile to set.
-     */
     public void setConfigfile(String configfile) {
         this.configfile = configfile;
     }
 
-    /**
-     * @return Returns the overwrite.
-     */
     public boolean isOverwrite() {
         return overwrite;
     }
 
-    /**
-     * @param overwrite
-     *            The overwrite to set.
-     */
     public void setOverwrite(boolean overwrite) {
         this.overwrite = overwrite;
     }

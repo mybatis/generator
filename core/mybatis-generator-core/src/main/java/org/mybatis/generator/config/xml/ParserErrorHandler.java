@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -23,38 +23,18 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-/**
- * The Class ParserErrorHandler.
- *
- * @author Jeff Butler
- */
 public class ParserErrorHandler implements ErrorHandler {
 
-    /** The warnings. */
     private List<String> warnings;
 
-    /** The errors. */
     private List<String> errors;
 
-    /**
-     * Instantiates a new parser error handler.
-     *
-     * @param warnings
-     *            the warnings
-     * @param errors
-     *            the errors
-     */
     public ParserErrorHandler(List<String> warnings, List<String> errors) {
         super();
         this.warnings = warnings;
         this.errors = errors;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.xml.sax.ErrorHandler#warning(org.xml.sax.SAXParseException)
-     */
     @Override
     public void warning(SAXParseException exception) throws SAXException {
         warnings.add(getString("Warning.7", //$NON-NLS-1$
@@ -62,11 +42,6 @@ public class ParserErrorHandler implements ErrorHandler {
                         .getMessage()));
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.xml.sax.ErrorHandler#error(org.xml.sax.SAXParseException)
-     */
     @Override
     public void error(SAXParseException exception) throws SAXException {
         errors.add(getString("RuntimeError.4", //$NON-NLS-1$
@@ -74,11 +49,6 @@ public class ParserErrorHandler implements ErrorHandler {
                         .getMessage()));
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.xml.sax.ErrorHandler#fatalError(org.xml.sax.SAXParseException)
-     */
     @Override
     public void fatalError(SAXParseException exception) throws SAXException {
         errors.add(getString("RuntimeError.4", //$NON-NLS-1$

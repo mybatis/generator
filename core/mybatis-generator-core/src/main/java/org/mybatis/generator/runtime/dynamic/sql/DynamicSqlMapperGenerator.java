@@ -105,7 +105,7 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
         addUpdateByPrimaryKeySelectiveMethod(interfaze);
         
         List<CompilationUnit> answer = new ArrayList<>();
-        if (context.getPlugins().clientGenerated(interfaze, null, introspectedTable)) {
+        if (context.getPlugins().clientGenerated(interfaze, introspectedTable)) {
             answer.add(interfaze);
             answer.add(supportClass);
         }

@@ -22,7 +22,6 @@ import org.mybatis.generator.api.IntrospectedTable.TargetRuntime;
 import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
-import org.mybatis.generator.api.dom.java.TopLevelClass;
 
 public class MapperAnnotationPlugin extends PluginAdapter {
 
@@ -32,8 +31,7 @@ public class MapperAnnotationPlugin extends PluginAdapter {
     }
 
     @Override
-    public boolean clientGenerated(Interface interfaze, TopLevelClass topLevelClass,
-            IntrospectedTable introspectedTable) {
+    public boolean clientGenerated(Interface interfaze, IntrospectedTable introspectedTable) {
 
         if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3) {
             // don't need to do this for MYBATIS3_DSQL as that runtime already adds this annotation 

@@ -22,9 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import org.mybatis.generator.api.dom.xml.Attribute;
-import org.mybatis.generator.api.dom.xml.XmlElement;
-
 public class IgnoredColumnPattern {
 
     private String patternRegex;
@@ -53,17 +50,6 @@ public class IgnoredColumnPattern {
         }
 
         return matches;
-    }
-
-    public XmlElement toXmlElement() {
-        XmlElement xmlElement = new XmlElement("ignoreColumnsByRegex"); //$NON-NLS-1$
-        xmlElement.addAttribute(new Attribute("pattern", patternRegex)); //$NON-NLS-1$
-
-        for (IgnoredColumnException exception : exceptions) {
-            xmlElement.addElement(exception.toXmlElement());
-        }
-
-        return xmlElement;
     }
 
     public void validate(List<String> errors, String tableName) {

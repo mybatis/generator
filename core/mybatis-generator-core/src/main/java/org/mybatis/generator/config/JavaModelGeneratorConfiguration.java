@@ -20,9 +20,6 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.List;
 
-import org.mybatis.generator.api.dom.xml.Attribute;
-import org.mybatis.generator.api.dom.xml.XmlElement;
-
 public class JavaModelGeneratorConfiguration extends PropertyHolder {
 
     private String targetPackage;
@@ -47,22 +44,6 @@ public class JavaModelGeneratorConfiguration extends PropertyHolder {
 
     public void setTargetPackage(String targetPackage) {
         this.targetPackage = targetPackage;
-    }
-
-    public XmlElement toXmlElement() {
-        XmlElement answer = new XmlElement("javaModelGenerator"); //$NON-NLS-1$
-
-        if (targetPackage != null) {
-            answer.addAttribute(new Attribute("targetPackage", targetPackage)); //$NON-NLS-1$
-        }
-
-        if (targetProject != null) {
-            answer.addAttribute(new Attribute("targetProject", targetProject)); //$NON-NLS-1$
-        }
-
-        addPropertyXmlElements(answer);
-
-        return answer;
     }
 
     public void validate(List<String> errors, String contextId) {

@@ -26,7 +26,7 @@ if [ $TRAVIS_REPO_SLUG == "mybatis/generator" ] && [ "$TRAVIS_PULL_REQUEST" == "
     echo -e "Successfully deployed SNAPSHOT artifacts to Sonatype under Travis job ${TRAVIS_JOB_NUMBER}"
 
 	# Deploy to Coveralls
-    ./mvnw clean test jacoco:report-integration coveralls:report -q --settings ../travis/settings.xml
+    ./mvnw clean test jacoco:report coveralls:report -q --settings ../travis/settings.xml
     echo -e "Successfully ran coveralls under Travis job ${TRAVIS_JOB_NUMBER}"
 
 	# Deploy to site

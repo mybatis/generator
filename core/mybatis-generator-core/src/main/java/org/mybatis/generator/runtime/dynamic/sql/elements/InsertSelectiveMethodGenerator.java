@@ -29,12 +29,10 @@ import org.mybatis.generator.internal.util.JavaBeansUtil;
 
 public class InsertSelectiveMethodGenerator extends AbstractMethodGenerator {
     private FullyQualifiedJavaType recordType;
-    private String tableFieldName;
     
     private InsertSelectiveMethodGenerator(Builder builder) {
         super(builder);
         recordType = builder.recordType;
-        tableFieldName = builder.tableFieldName;
     }
 
     @Override
@@ -60,13 +58,14 @@ public class InsertSelectiveMethodGenerator extends AbstractMethodGenerator {
         
         List<IntrospectedColumn> columns = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(introspectedTable.getAllColumns());
         for (IntrospectedColumn column : columns) {
+            String fieldName = calculateFieldName(column);
             if (column.isSequenceColumn()) {
-                method.addBodyLine("        .map(" + column.getJavaProperty() //$NON-NLS-1$
+                method.addBodyLine("        .map(" + fieldName //$NON-NLS-1$
                         + ").toProperty(\"" + column.getJavaProperty() //$NON-NLS-1$
                         + "\")"); //$NON-NLS-1$
             } else {
                 String methodName = JavaBeansUtil.getGetterMethodName(column.getJavaProperty(), column.getFullyQualifiedJavaType());
-                method.addBodyLine("        .map(" + column.getJavaProperty() //$NON-NLS-1$
+                method.addBodyLine("        .map(" + fieldName //$NON-NLS-1$
                         + ").toPropertyWhenPresent(\"" + column.getJavaProperty() //$NON-NLS-1$
                         + "\", record::" + methodName //$NON-NLS-1$
                         + ")"); //$NON-NLS-1$
@@ -88,18 +87,12 @@ public class InsertSelectiveMethodGenerator extends AbstractMethodGenerator {
 
     public static class Builder extends BaseBuilder<Builder, InsertSelectiveMethodGenerator> {
         private FullyQualifiedJavaType recordType;
-        private String tableFieldName;
         
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
             this.recordType = recordType;
             return this;
         }
         
-        public Builder withTableFieldName(String tableFieldName) {
-            this.tableFieldName = tableFieldName;
-            return this;
-        }
-
         @Override
         public Builder getThis() {
             return this;

@@ -23,11 +23,9 @@ import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 
 public class DeleteByExampleMethodGenerator extends AbstractMethodGenerator {
-    private String tableFieldName;
     
     private DeleteByExampleMethodGenerator(Builder builder) {
         super(builder);
-        tableFieldName = builder.tableFieldName;
     }
 
     @Override
@@ -61,13 +59,6 @@ public class DeleteByExampleMethodGenerator extends AbstractMethodGenerator {
 
     public static class Builder extends BaseBuilder<Builder, DeleteByExampleMethodGenerator> {
 
-        private String tableFieldName;
-        
-        public Builder withTableFieldName(String tableFIeldName) {
-            this.tableFieldName = tableFIeldName;
-            return this;
-        }
-        
         @Override
         public Builder getThis() {
             return this;

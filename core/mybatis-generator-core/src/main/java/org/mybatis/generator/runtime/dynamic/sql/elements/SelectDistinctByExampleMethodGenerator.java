@@ -24,13 +24,11 @@ import org.mybatis.generator.api.dom.java.Method;
 
 public class SelectDistinctByExampleMethodGenerator extends AbstractMethodGenerator {
     private FullyQualifiedJavaType recordType;
-    private String tableFieldName;
     private FragmentGenerator fragmentGenerator;
     
     private SelectDistinctByExampleMethodGenerator(Builder builder) {
         super(builder);
         recordType = builder.recordType;
-        tableFieldName = builder.tableFieldName;
         fragmentGenerator = builder.fragmentGenerator;
     }
 
@@ -76,7 +74,6 @@ public class SelectDistinctByExampleMethodGenerator extends AbstractMethodGenera
 
     public static class Builder extends BaseBuilder<Builder, SelectDistinctByExampleMethodGenerator> {
         private FullyQualifiedJavaType recordType;
-        private String tableFieldName;
         private FragmentGenerator fragmentGenerator;
         
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
@@ -84,11 +81,6 @@ public class SelectDistinctByExampleMethodGenerator extends AbstractMethodGenera
             return this;
         }
         
-        public Builder withTableFieldName(String tableFieldName) {
-            this.tableFieldName = tableFieldName;
-            return this;
-        }
-
         public Builder withFragmentGenerator(FragmentGenerator fragmentGenerator) {
             this.fragmentGenerator = fragmentGenerator;
             return this;

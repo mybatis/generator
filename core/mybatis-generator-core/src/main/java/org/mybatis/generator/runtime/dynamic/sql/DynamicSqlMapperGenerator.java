@@ -121,6 +121,7 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
         fragmentGenerator = new FragmentGenerator.Builder()
                 .withIntrospectedTable(introspectedTable)
                 .withResultMapId(resultMapId)
+                .withTableFieldName(tableFieldName)
                 .build();
     }
 
@@ -161,6 +162,7 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
         BasicDeleteMethodGenerator generator = new BasicDeleteMethodGenerator.Builder()
                 .withContext(context)
                 .withIntrospectedTable(introspectedTable)
+                .withTableFieldName(tableFieldName)
                 .build();
         
         generate(interfaze, generator);
@@ -171,6 +173,7 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
                 .withContext(context)
                 .withFragmentGenerator(fragmentGenerator)
                 .withIntrospectedTable(introspectedTable)
+                .withTableFieldName(tableFieldName)
                 .withRecordType(recordType)
                 .build();
         
@@ -182,6 +185,7 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
                 .withContext(context)
                 .withFragmentGenerator(fragmentGenerator)
                 .withIntrospectedTable(introspectedTable)
+                .withTableFieldName(tableFieldName)
                 .withRecordType(recordType)
                 .withResultMapId(resultMapId)
                 .build();
@@ -194,6 +198,7 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
                 .withContext(context)
                 .withFragmentGenerator(fragmentGenerator)
                 .withIntrospectedTable(introspectedTable)
+                .withTableFieldName(tableFieldName)
                 .withRecordType(recordType)
                 .build();
         
@@ -204,6 +209,7 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
         BasicUpdateMethodGenerator generator = new BasicUpdateMethodGenerator.Builder()
                 .withContext(context)
                 .withIntrospectedTable(introspectedTable)
+                .withTableFieldName(tableFieldName)
                 .build();
         
         generate(interfaze, generator);
@@ -347,7 +353,7 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
     }
 
     private TopLevelClass getSupportClass() {
-        return DynamicSqlSupportClassGenerator.of(introspectedTable, context.getCommentGenerator()).generate();
+        return DynamicSqlSupportClassGenerator.of(introspectedTable, context.getCommentGenerator(), warnings).generate();
     }
 
     private void generate(Interface interfaze, AbstractMethodGenerator generator) {

@@ -32,6 +32,8 @@ import mbg.test.mb3.generated.dsql.mapper.PkblobsMapper;
 import mbg.test.mb3.generated.dsql.mapper.PkfieldsMapper;
 import mbg.test.mb3.generated.dsql.mapper.PkfieldsblobsMapper;
 import mbg.test.mb3.generated.dsql.mapper.PkonlyMapper;
+import mbg.test.mb3.generated.dsql.mapper.mbgtest.IdMapper;
+import mbg.test.mb3.generated.dsql.mapper.mbgtest.TranslationMapper;
 
 /**
  * @author Jeff Butler
@@ -58,6 +60,8 @@ public abstract class AbstractTest {
         config.addMapper(PkfieldsblobsMapper.class);
         config.addMapper(PkfieldsMapper.class);
         config.addMapper(PkonlyMapper.class);
+        config.addMapper(TranslationMapper.class);
+        config.addMapper(IdMapper.class);
         sqlSessionFactory = new SqlSessionFactoryBuilder().build(config);
     }
 }

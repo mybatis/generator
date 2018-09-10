@@ -38,7 +38,7 @@ import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.codegen.RootClassInfo;
 
 /**
- * This model generator builds a flat model qith default constructor and getters/setters.
+ * This model generator builds a flat model with default constructor and getters/setters.
  * It does not support the immutable model, or constructor based attributes.
  * 
  * @author Jeff Butler

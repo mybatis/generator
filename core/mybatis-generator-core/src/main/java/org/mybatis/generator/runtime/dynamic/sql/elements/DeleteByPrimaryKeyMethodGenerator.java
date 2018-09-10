@@ -25,12 +25,10 @@ import org.mybatis.generator.api.dom.java.Parameter;
 
 public class DeleteByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
     
-    private String tableFieldName;
     private FragmentGenerator fragmentGenerator;
     
     private DeleteByPrimaryKeyMethodGenerator(Builder builder) {
         super(builder);
-        tableFieldName = builder.tableFieldName;
         fragmentGenerator = builder.fragmentGenerator;
     }
 
@@ -76,13 +74,7 @@ public class DeleteByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
 
     public static class Builder extends BaseBuilder<Builder, DeleteByPrimaryKeyMethodGenerator> {
         
-        private String tableFieldName;
         private FragmentGenerator fragmentGenerator;
-        
-        public Builder withTableFieldName(String tableFieldName) {
-            this.tableFieldName = tableFieldName;
-            return this;
-        }
         
         public Builder withFragmentGenerator(FragmentGenerator fragmentGenerator) {
             this.fragmentGenerator = fragmentGenerator;

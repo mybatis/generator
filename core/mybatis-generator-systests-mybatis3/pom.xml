@@ -28,6 +28,19 @@
   <name>MyBatis Generator Tests (MyBatis3)</name>
 
   <build>
+    <pluginManagement>
+      <plugins>
+        <!-- Don't run the coverage reports here. It will throw off the coverage calculation for the core module -->
+        <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <configuration>
+            <skip>true</skip>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
     <plugins>
       <plugin>
         <groupId>org.mybatis.generator</groupId>

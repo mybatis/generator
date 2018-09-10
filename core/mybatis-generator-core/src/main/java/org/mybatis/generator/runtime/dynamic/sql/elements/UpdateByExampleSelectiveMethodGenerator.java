@@ -25,13 +25,11 @@ import org.mybatis.generator.api.dom.java.Parameter;
 
 public class UpdateByExampleSelectiveMethodGenerator extends AbstractMethodGenerator {
     private FullyQualifiedJavaType recordType;
-    private String tableFieldName;
     private FragmentGenerator fragmentGenerator;
     
     private UpdateByExampleSelectiveMethodGenerator(Builder builder) {
         super(builder);
         recordType = builder.recordType;
-        tableFieldName = builder.tableFieldName;
         fragmentGenerator = builder.fragmentGenerator;
     }
 
@@ -71,7 +69,6 @@ public class UpdateByExampleSelectiveMethodGenerator extends AbstractMethodGener
 
     public static class Builder extends BaseBuilder<Builder, UpdateByExampleSelectiveMethodGenerator> {
         private FullyQualifiedJavaType recordType;
-        private String tableFieldName;
         private FragmentGenerator fragmentGenerator;
         
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
@@ -79,11 +76,6 @@ public class UpdateByExampleSelectiveMethodGenerator extends AbstractMethodGener
             return this;
         }
         
-        public Builder withTableFieldName(String tableFieldName) {
-            this.tableFieldName = tableFieldName;
-            return this;
-        }
-
         public Builder withFragmentGenerator(FragmentGenerator fragmentGenerator) {
             this.fragmentGenerator = fragmentGenerator;
             return this;

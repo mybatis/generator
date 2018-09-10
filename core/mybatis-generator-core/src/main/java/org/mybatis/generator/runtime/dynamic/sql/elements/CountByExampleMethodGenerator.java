@@ -24,11 +24,8 @@ import org.mybatis.generator.api.dom.java.Method;
 
 public class CountByExampleMethodGenerator extends AbstractMethodGenerator {
 
-    private String tableFieldName;
-    
     private CountByExampleMethodGenerator(Builder builder) {
         super(builder);
-        this.tableFieldName = builder.tableFieldName;
     }
     
     @Override
@@ -64,13 +61,6 @@ public class CountByExampleMethodGenerator extends AbstractMethodGenerator {
     }
 
     public static class Builder extends BaseBuilder<Builder, CountByExampleMethodGenerator> {
-        private String tableFieldName;
-        
-        public Builder withTableFieldName(String tableFieldName) {
-            this.tableFieldName = tableFieldName;
-            return this;
-        }
-        
         @Override
         public Builder getThis() {
             return this;

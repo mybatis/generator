@@ -20,8 +20,6 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.List;
 
-import org.mybatis.generator.api.dom.xml.Attribute;
-import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.internal.db.DatabaseDialects;
 
 /**
@@ -33,8 +31,6 @@ import org.mybatis.generator.internal.db.DatabaseDialects;
 public class GeneratedKey {
 
     private String column;
-
-    private String configuredSqlStatement;
 
     private String runtimeSqlStatement;
 
@@ -48,7 +44,6 @@ public class GeneratedKey {
         this.column = column;
         this.type = type;
         this.isIdentity = isIdentity;
-        this.configuredSqlStatement = configuredSqlStatement;
 
         DatabaseDialects dialect = DatabaseDialects
                 .getDatabaseDialect(configuredSqlStatement);
@@ -77,20 +72,6 @@ public class GeneratedKey {
 
     public String getMyBatis3Order() {
         return isIdentity ? "AFTER" : "BEFORE"; //$NON-NLS-1$ //$NON-NLS-2$
-    }
-
-    public XmlElement toXmlElement() {
-        XmlElement xmlElement = new XmlElement("generatedKey"); //$NON-NLS-1$
-        xmlElement.addAttribute(new Attribute("column", column)); //$NON-NLS-1$
-        xmlElement.addAttribute(new Attribute(
-                "sqlStatement", configuredSqlStatement)); //$NON-NLS-1$
-        if (stringHasValue(type)) {
-            xmlElement.addAttribute(new Attribute("type", type)); //$NON-NLS-1$
-        }
-        xmlElement.addAttribute(new Attribute("identity", //$NON-NLS-1$
-                isIdentity ? "true" : "false")); //$NON-NLS-1$ //$NON-NLS-2$
-
-        return xmlElement;
     }
 
     public void validate(List<String> errors, String tableName) {

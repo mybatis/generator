@@ -21,9 +21,6 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.List;
 
-import org.mybatis.generator.api.dom.xml.Attribute;
-import org.mybatis.generator.api.dom.xml.XmlElement;
-
 public class IgnoredColumn {
 
     protected String columnName;
@@ -63,18 +60,6 @@ public class IgnoredColumn {
     @Override
     public int hashCode() {
         return columnName.hashCode();
-    }
-
-    public XmlElement toXmlElement() {
-        XmlElement xmlElement = new XmlElement("ignoreColumn"); //$NON-NLS-1$
-        xmlElement.addAttribute(new Attribute("column", columnName)); //$NON-NLS-1$
-
-        if (stringHasValue(configuredDelimitedColumnName)) {
-            xmlElement.addAttribute(new Attribute(
-                    "delimitedColumnName", configuredDelimitedColumnName)); //$NON-NLS-1$
-        }
-
-        return xmlElement;
     }
 
     public void validate(List<String> errors, String tableName) {

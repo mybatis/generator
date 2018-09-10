@@ -36,8 +36,6 @@ import org.mybatis.generator.api.JavaTypeResolver;
 import org.mybatis.generator.api.Plugin;
 import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.api.XmlFormatter;
-import org.mybatis.generator.api.dom.xml.Attribute;
-import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.internal.JDBCConnectionFactory;
 import org.mybatis.generator.internal.ObjectFactory;
 import org.mybatis.generator.internal.PluginAggregator;
@@ -228,75 +226,6 @@ public class Context extends PropertyHolder {
 
     public ModelType getDefaultModelType() {
         return defaultModelType;
-    }
-
-    /**
-     * Builds an XmlElement representation of this context. Note that the XML
-     * may not necessarily validate if the context is invalid. Call the
-     * <code>validate</code> method to check validity of this context.
-     * 
-     * @return the XML representation of this context
-     */
-    public XmlElement toXmlElement() {
-        XmlElement xmlElement = new XmlElement("context"); //$NON-NLS-1$
-
-        xmlElement.addAttribute(new Attribute("id", id)); //$NON-NLS-1$
-
-        if (defaultModelType != ModelType.CONDITIONAL) {
-            xmlElement.addAttribute(new Attribute(
-                    "defaultModelType", defaultModelType.getModelType())); //$NON-NLS-1$
-        }
-
-        if (stringHasValue(introspectedColumnImpl)) {
-            xmlElement.addAttribute(new Attribute(
-                    "introspectedColumnImpl", introspectedColumnImpl)); //$NON-NLS-1$
-        }
-
-        if (stringHasValue(targetRuntime)) {
-            xmlElement.addAttribute(new Attribute(
-                    "targetRuntime", targetRuntime)); //$NON-NLS-1$
-        }
-
-        addPropertyXmlElements(xmlElement);
-
-        for (PluginConfiguration pluginConfiguration : pluginConfigurations) {
-            xmlElement.addElement(pluginConfiguration.toXmlElement());
-        }
-
-        if (commentGeneratorConfiguration != null) {
-            xmlElement.addElement(commentGeneratorConfiguration.toXmlElement());
-        }
-
-        if (jdbcConnectionConfiguration != null) {
-            xmlElement.addElement(jdbcConnectionConfiguration.toXmlElement());
-        }
-
-        if (connectionFactoryConfiguration != null) {
-            xmlElement.addElement(connectionFactoryConfiguration.toXmlElement());
-        }
-
-        if (javaTypeResolverConfiguration != null) {
-            xmlElement.addElement(javaTypeResolverConfiguration.toXmlElement());
-        }
-
-        if (javaModelGeneratorConfiguration != null) {
-            xmlElement.addElement(javaModelGeneratorConfiguration
-                    .toXmlElement());
-        }
-
-        if (sqlMapGeneratorConfiguration != null) {
-            xmlElement.addElement(sqlMapGeneratorConfiguration.toXmlElement());
-        }
-
-        if (javaClientGeneratorConfiguration != null) {
-            xmlElement.addElement(javaClientGeneratorConfiguration.toXmlElement());
-        }
-
-        for (TableConfiguration tableConfiguration : tableConfigurations) {
-            xmlElement.addElement(tableConfiguration.toXmlElement());
-        }
-
-        return xmlElement;
     }
 
     public List<TableConfiguration> getTableConfigurations() {

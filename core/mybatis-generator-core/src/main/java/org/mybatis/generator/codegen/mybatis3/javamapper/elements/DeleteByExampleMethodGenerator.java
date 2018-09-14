@@ -43,10 +43,9 @@ public class DeleteByExampleMethodGenerator extends
                 introspectedTable.getExampleType());
         importedTypes.add(type);
 
-        Method method = new Method();
+        Method method = new Method(introspectedTable.getDeleteByExampleStatementId());
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
-        method.setName(introspectedTable.getDeleteByExampleStatementId());
         method.addParameter(new Parameter(type, "example")); //$NON-NLS-1$
 
         context.getCommentGenerator().addGeneralMethodComment(method,

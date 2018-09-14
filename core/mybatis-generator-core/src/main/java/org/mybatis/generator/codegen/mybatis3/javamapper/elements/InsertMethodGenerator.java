@@ -40,11 +40,10 @@ public class InsertMethodGenerator extends AbstractJavaMapperMethodGenerator {
 
     @Override
     public void addInterfaceElements(Interface interfaze) {
-        Method method = new Method();
+        Method method = new Method(introspectedTable.getInsertStatementId());
 
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
         method.setVisibility(JavaVisibility.PUBLIC);
-        method.setName(introspectedTable.getInsertStatementId());
 
         FullyQualifiedJavaType parameterType;
         if (isSimple) {

@@ -74,62 +74,53 @@ public class Test1Generator implements CompilationUnitGenerator {
         field.setVisibility(JavaVisibility.PRIVATE);
         topLvlClass.addField(field);
         
-        Method m = new Method();
+        Method m = new Method("executeMain");
         m.setVisibility(JavaVisibility.PUBLIC);
-        m.setName("executeMain");
         m.addBodyLine("main.mainMethod();");
         topLvlClass.addMethod(m);
         
-        m = new Method();
+        m = new Method("setMain");
         m.setVisibility(JavaVisibility.PUBLIC);
-        m.setName("setMain");
         m.addParameter(new Parameter(tlcMain.getType(), "main"));
         m.addBodyLine("this.main = main;");
         topLvlClass.addMethod(m);
         
-        m = new Method();
+        m = new Method("getMain");
         m.setVisibility(JavaVisibility.PUBLIC);
-        m.setName("getMain");
         m.setReturnType(tlcMain.getType());
         m.addBodyLine("return main;");
         topLvlClass.addMethod(m);
 
-        m = new Method();
+        m = new Method("executeSub1");
         m.setVisibility(JavaVisibility.PUBLIC);
-        m.setName("executeSub1");
         m.addBodyLine("sub1.sub1Method();");
         topLvlClass.addMethod(m);
 
-        m = new Method();
+        m = new Method("setSub1");
         m.setVisibility(JavaVisibility.PUBLIC);
-        m.setName("setSub1");
         m.addParameter(new Parameter(tlcSub1.getType(), "sub1"));
         m.addBodyLine("this.sub1 = sub1;");
         topLvlClass.addMethod(m);
         
-        m = new Method();
+        m = new Method("getSub1");
         m.setVisibility(JavaVisibility.PUBLIC);
-        m.setName("getSub1");
         m.setReturnType(tlcSub1.getType());
         m.addBodyLine("return sub1;");
         topLvlClass.addMethod(m);
 
-        m = new Method();
+        m = new Method("executeSub2");
         m.setVisibility(JavaVisibility.PUBLIC);
-        m.setName("executeSub2");
         m.addBodyLine("sub2.sub2Method();");
         topLvlClass.addMethod(m);
         
-        m = new Method();
+        m = new Method("setSub2");
         m.setVisibility(JavaVisibility.PUBLIC);
-        m.setName("setSub2");
         m.addParameter(new Parameter(tlcSub2.getType(), "sub2"));
         m.addBodyLine("this.sub2 = sub2;");
         topLvlClass.addMethod(m);
         
-        m = new Method();
+        m = new Method("getSub2");
         m.setVisibility(JavaVisibility.PUBLIC);
-        m.setName("getSub2");
         m.setReturnType(tlcSub2.getType());
         m.addBodyLine("return sub2;");
         topLvlClass.addMethod(m);
@@ -144,9 +135,8 @@ public class Test1Generator implements CompilationUnitGenerator {
         TopLevelClass tlc = new TopLevelClass(fqjt);
         tlc.setVisibility(JavaVisibility.PUBLIC);
         
-        Method m = new Method();
+        Method m = new Method("mainMethod");
         m.setVisibility(JavaVisibility.PUBLIC);
-        m.setName("mainMethod");
         m.addBodyLine("System.out.println(\"main method\");");
         tlc.addMethod(m);
         
@@ -158,9 +148,8 @@ public class Test1Generator implements CompilationUnitGenerator {
         TopLevelClass tlc = new TopLevelClass(fqjt);
         tlc.setVisibility(JavaVisibility.PUBLIC);
         
-        Method m = new Method();
+        Method m = new Method("sub1Method");
         m.setVisibility(JavaVisibility.PUBLIC);
-        m.setName("sub1Method");
         m.addBodyLine("System.out.println(\"sub1 method\");");
         tlc.addMethod(m);
         
@@ -172,9 +161,8 @@ public class Test1Generator implements CompilationUnitGenerator {
         TopLevelClass tlc = new TopLevelClass(fqjt);
         tlc.setVisibility(JavaVisibility.PUBLIC);
         
-        Method m = new Method();
+        Method m = new Method("testClassMethod");
         m.setVisibility(JavaVisibility.PUBLIC);
-        m.setName("testClassMethod");
         m.addBodyLine("System.out.println(\"testClass sub1 method\");");
         tlc.addMethod(m);
         
@@ -186,9 +174,8 @@ public class Test1Generator implements CompilationUnitGenerator {
         TopLevelClass tlc = new TopLevelClass(fqjt);
         tlc.setVisibility(JavaVisibility.PUBLIC);
         
-        Method m = new Method();
+        Method m = new Method("sub2Method");
         m.setVisibility(JavaVisibility.PUBLIC);
-        m.setName("sub2Method");
         m.addBodyLine("System.out.println(\"sub2 method\");");
         tlc.addMethod(m);
         

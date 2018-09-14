@@ -38,10 +38,9 @@ public class UpdateByExampleWithoutBLOBsMethodGenerator extends
 
     @Override
     public void addInterfaceElements(Interface interfaze) {
-        Method method = new Method();
+        Method method = new Method(introspectedTable.getUpdateByExampleStatementId());
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
-        method.setName(introspectedTable.getUpdateByExampleStatementId());
 
         FullyQualifiedJavaType parameterType;
         if (introspectedTable.getRules().generateBaseRecordClass()) {

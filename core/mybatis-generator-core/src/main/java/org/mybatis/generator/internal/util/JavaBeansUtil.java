@@ -195,10 +195,9 @@ public class JavaBeansUtil {
                 .getFullyQualifiedJavaType();
         String property = introspectedColumn.getJavaProperty();
 
-        Method method = new Method();
+        Method method = new Method(getGetterMethodName(property, fqjt));
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(fqjt);
-        method.setName(getGetterMethodName(property, fqjt));
         context.getCommentGenerator().addGetterComment(method,
                 introspectedTable, introspectedColumn);
 
@@ -218,10 +217,8 @@ public class JavaBeansUtil {
                 .getFullyQualifiedJavaType();
         String property = introspectedColumn.getJavaProperty();
 
-        Field field = new Field();
+        Field field = new Field(property, fqjt);
         field.setVisibility(JavaVisibility.PRIVATE);
-        field.setType(fqjt);
-        field.setName(property);
         context.getCommentGenerator().addFieldComment(field,
                 introspectedTable, introspectedColumn);
 
@@ -235,9 +232,8 @@ public class JavaBeansUtil {
                 .getFullyQualifiedJavaType();
         String property = introspectedColumn.getJavaProperty();
 
-        Method method = new Method();
+        Method method = new Method(getSetterMethodName(property));
         method.setVisibility(JavaVisibility.PUBLIC);
-        method.setName(getSetterMethodName(property));
         method.addParameter(new Parameter(fqjt, property));
         context.getCommentGenerator().addSetterComment(method,
                 introspectedTable, introspectedColumn);

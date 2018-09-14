@@ -42,7 +42,7 @@ public class InnerInterfaceTest {
     public void testAddMethod() {
 
         InnerInterface interfaze = new InnerInterface("com.foo.UserInterface");
-        Method method = new Method();
+        Method method = new Method("foo");
         interfaze.addMethod(method);
 
         assertNotNull(interfaze.getMethods());

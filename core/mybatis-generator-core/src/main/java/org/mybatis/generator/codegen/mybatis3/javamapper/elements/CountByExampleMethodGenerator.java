@@ -44,10 +44,9 @@ public class CountByExampleMethodGenerator extends
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
         importedTypes.add(fqjt);
 
-        Method method = new Method();
+        Method method = new Method(introspectedTable.getCountByExampleStatementId());
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(new FullyQualifiedJavaType("long")); //$NON-NLS-1$
-        method.setName(introspectedTable.getCountByExampleStatementId());
         method.addParameter(new Parameter(fqjt, "example")); //$NON-NLS-1$
         context.getCommentGenerator().addGeneralMethodComment(method,
                 introspectedTable);

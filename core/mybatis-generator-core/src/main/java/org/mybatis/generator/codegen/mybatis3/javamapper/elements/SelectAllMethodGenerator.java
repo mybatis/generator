@@ -40,7 +40,7 @@ public class SelectAllMethodGenerator extends AbstractJavaMapperMethodGenerator 
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
         importedTypes.add(FullyQualifiedJavaType.getNewListInstance());
 
-        Method method = new Method();
+        Method method = new Method(introspectedTable.getSelectAllStatementId());
         method.setVisibility(JavaVisibility.PUBLIC);
 
         FullyQualifiedJavaType returnType = FullyQualifiedJavaType
@@ -52,7 +52,6 @@ public class SelectAllMethodGenerator extends AbstractJavaMapperMethodGenerator 
         importedTypes.add(listType);
         returnType.addTypeArgument(listType);
         method.setReturnType(returnType);
-        method.setName(introspectedTable.getSelectAllStatementId());
 
         context.getCommentGenerator().addGeneralMethodComment(method,
                 introspectedTable);

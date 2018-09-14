@@ -29,7 +29,7 @@ public class MethodTest {
     @Test
     public void testConstructor() {
 
-        Method method = new Method();
+        Method method = new Method("bar");
         assertNotNull(method);
         assertEquals("bar", method.getName());
     }
@@ -82,7 +82,7 @@ public class MethodTest {
     @Test
     public void testAddBodyLines() {
 
-        Method method = new Method();
+        Method method = new Method("bar");
         assertEquals(0, method.getBodyLines().size());
 
         method.addBodyLine("// test1");
@@ -109,7 +109,7 @@ public class MethodTest {
     @Test
     public void testSetConstructor() {
 
-        Method method = new Method();
+        Method method = new Method("Bar");
         assertEquals(false, method.isConstructor());
 
         method.setConstructor(true);
@@ -119,7 +119,7 @@ public class MethodTest {
     @Test
     public void testSetName() {
 
-        Method method = new Method();
+        Method method = new Method("bar");
         assertEquals("bar", method.getName());
 
         method.setName("foo");
@@ -129,7 +129,7 @@ public class MethodTest {
     @Test
     public void testAddTypeParamaters() {
 
-        Method method = new Method();
+        Method method = new Method("bar");
         assertEquals(0, method.getTypeParameters().size());
 
         method.addTypeParameter(new TypeParameter("T"));
@@ -145,7 +145,7 @@ public class MethodTest {
     @Test
     public void testAddParamaters() {
 
-        Method method = new Method();
+        Method method = new Method("bar");
         assertEquals(0, method.getParameters().size());
 
         method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "test1"));
@@ -161,7 +161,7 @@ public class MethodTest {
     @Test
     public void testSetReturnType() {
 
-        Method method = new Method();
+        Method method = new Method("bar");
         assertNull(method.getReturnType());
 
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
@@ -171,7 +171,7 @@ public class MethodTest {
     @Test
     public void testAddExceptions() {
 
-        Method method = new Method();
+        Method method = new Method("bar");
         assertEquals(0, method.getExceptions().size());
 
         method.addException(new FullyQualifiedJavaType("java.lang.Exception"));
@@ -182,7 +182,7 @@ public class MethodTest {
     @Test
     public void testSetSynchronized() {
 
-        Method method = new Method();
+        Method method = new Method("bar");
         assertEquals(false, method.isSynchronized());
         method.setSynchronized(true);
         assertEquals(true, method.isSynchronized());
@@ -191,7 +191,7 @@ public class MethodTest {
     @Test
     public void testSetNative() {
 
-        Method method = new Method();
+        Method method = new Method("bar");
         assertEquals(false, method.isNative());
         method.setNative(true);
         assertEquals(true, method.isNative());

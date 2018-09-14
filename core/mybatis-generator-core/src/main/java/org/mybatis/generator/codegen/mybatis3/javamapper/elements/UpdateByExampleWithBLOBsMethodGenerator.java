@@ -38,11 +38,10 @@ public class UpdateByExampleWithBLOBsMethodGenerator extends
 
     @Override
     public void addInterfaceElements(Interface interfaze) {
-        Method method = new Method();
+        Method method = new Method(introspectedTable
+                .getUpdateByExampleWithBLOBsStatementId());
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
-        method.setName(introspectedTable
-                .getUpdateByExampleWithBLOBsStatementId());
 
         FullyQualifiedJavaType parameterType;
         if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {

@@ -51,12 +51,11 @@ public class UpdateByPrimaryKeyWithBLOBsMethodGenerator extends
 
         importedTypes.add(parameterType);
 
-        Method method = new Method();
+        Method method = new Method(introspectedTable
+                .getUpdateByPrimaryKeyWithBLOBsStatementId());
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
 
-        method.setName(introspectedTable
-                .getUpdateByPrimaryKeyWithBLOBsStatementId());
         method.addParameter(new Parameter(parameterType, "record")); //$NON-NLS-1$
 
         context.getCommentGenerator().addGeneralMethodComment(method,

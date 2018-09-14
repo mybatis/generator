@@ -34,11 +34,10 @@ public class UpdateByExampleSelectiveMethodGenerator extends
 
     @Override
     public void addInterfaceElements(Interface interfaze) {
-        Method method = new Method();
+        Method method = new Method(introspectedTable
+                .getUpdateByExampleSelectiveStatementId());
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
-        method.setName(introspectedTable
-                .getUpdateByExampleSelectiveStatementId());
 
         FullyQualifiedJavaType parameterType =
                 introspectedTable.getRules().calculateAllFieldsClass();

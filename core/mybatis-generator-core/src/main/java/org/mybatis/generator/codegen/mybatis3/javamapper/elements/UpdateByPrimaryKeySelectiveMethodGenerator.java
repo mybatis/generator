@@ -51,11 +51,10 @@ public class UpdateByPrimaryKeySelectiveMethodGenerator extends
 
         importedTypes.add(parameterType);
 
-        Method method = new Method();
+        Method method = new Method(introspectedTable
+                .getUpdateByPrimaryKeySelectiveStatementId());
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
-        method.setName(introspectedTable
-                .getUpdateByPrimaryKeySelectiveStatementId());
         method.addParameter(new Parameter(parameterType, "record")); //$NON-NLS-1$
 
         context.getCommentGenerator().addGeneralMethodComment(method,

@@ -75,17 +75,16 @@ public class CaseInsensitiveLikePlugin extends PluginAdapter {
                 continue;
             }
 
-            Method method = new Method();
-            method.setVisibility(JavaVisibility.PUBLIC);
-            method.addParameter(new Parameter(introspectedColumn
-                    .getFullyQualifiedJavaType(), "value")); //$NON-NLS-1$
-
             StringBuilder sb = new StringBuilder();
             sb.append(introspectedColumn.getJavaProperty());
             sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
             sb.insert(0, "and"); //$NON-NLS-1$
             sb.append("LikeInsensitive"); //$NON-NLS-1$
-            method.setName(sb.toString());
+            Method method = new Method(sb.toString());
+            method.setVisibility(JavaVisibility.PUBLIC);
+            method.addParameter(new Parameter(introspectedColumn
+                    .getFullyQualifiedJavaType(), "value")); //$NON-NLS-1$
+
             method.setReturnType(FullyQualifiedJavaType.getCriteriaInstance());
 
             sb.setLength(0);

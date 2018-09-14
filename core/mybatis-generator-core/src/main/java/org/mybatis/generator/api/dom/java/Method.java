@@ -44,11 +44,6 @@ public class Method extends JavaElement {
 
     private boolean isDefault;
 
-    public Method() {
-        // use a default name to avoid malformed code
-        this("bar"); //$NON-NLS-1$
-    }
-
     public Method(String name) {
         super();
         bodyLines = new ArrayList<>();

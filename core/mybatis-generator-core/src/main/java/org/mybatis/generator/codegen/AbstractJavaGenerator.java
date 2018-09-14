@@ -40,8 +40,7 @@ public abstract class AbstractJavaGenerator extends AbstractGenerator {
     }
 
     public static Method getGetter(Field field) {
-        Method method = new Method();
-        method.setName(getGetterMethodName(field.getName(), field
+        Method method = new Method(getGetterMethodName(field.getName(), field
                 .getType()));
         method.setReturnType(field.getType());
         method.setVisibility(JavaVisibility.PUBLIC);
@@ -70,10 +69,9 @@ public abstract class AbstractJavaGenerator extends AbstractGenerator {
     }
 
     protected Method getDefaultConstructor(TopLevelClass topLevelClass) {
-        Method method = new Method();
+        Method method = new Method(topLevelClass.getType().getShortName());
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setConstructor(true);
-        method.setName(topLevelClass.getType().getShortName());
         method.addBodyLine("super();"); //$NON-NLS-1$
         context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
         return method;

@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -23,11 +23,6 @@ public class Field extends JavaElement {
     private String initializationString;
     private boolean isTransient;
     private boolean isVolatile;
-
-    public Field() {
-        // use a default name to avoid NPE
-        this("foo", FullyQualifiedJavaType.getIntInstance()); //$NON-NLS-1$
-    }
 
     public Field(String name, FullyQualifiedJavaType type) {
         super();

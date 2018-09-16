@@ -29,6 +29,7 @@ import org.mybatis.generator.config.PropertyRegistry;
 
 public abstract class AbstractJavaGenerator extends AbstractGenerator {
     public abstract List<CompilationUnit> getCompilationUnits();
+    
     private String project;
     
     public AbstractJavaGenerator(String project) {

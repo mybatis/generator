@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.StringTokenizer;
 
+import org.mybatis.generator.api.dom.DefaultJavaFormatter;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.internal.util.StringUtility;
 import org.reflections.Reflections;
@@ -109,7 +110,8 @@ public class GenerateTestSourceFiles {
         String fileName = cu.getType().getShortName() + ".java";
         File targetFile = new File(directory, fileName);
 
-        writeFile(targetFile, cu.getFormattedContent());
+        DefaultJavaFormatter formatter = new DefaultJavaFormatter();
+        writeFile(targetFile, formatter.getFormattedContent(cu));
     }
 
     private void writeFile(File file, String content) throws IOException {

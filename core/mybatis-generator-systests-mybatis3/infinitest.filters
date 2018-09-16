@@ -1,0 +1,2 @@
+# exclude all tests as these are really integration tests and slow
+exclude .*Test

@@ -37,6 +37,7 @@ public class UpdateByExampleSelectiveMethodGenerator extends
         Method method = new Method(introspectedTable
                 .getUpdateByExampleSelectiveStatementId());
         method.setVisibility(JavaVisibility.PUBLIC);
+        method.setAbstract(true);
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
 
         FullyQualifiedJavaType parameterType =

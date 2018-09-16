@@ -56,6 +56,7 @@ public class BasicSelectOneMethodGenerator extends AbstractMethodGenerator {
         imports.add(annotation);
         
         Method method = new Method("selectOne"); //$NON-NLS-1$
+        method.setAbstract(true);
 
         imports.add(recordType);
         method.setReturnType(recordType);

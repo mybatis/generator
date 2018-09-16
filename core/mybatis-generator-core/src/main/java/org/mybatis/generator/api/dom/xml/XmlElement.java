@@ -16,23 +16,18 @@
 package org.mybatis.generator.api.dom.xml;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
-import org.mybatis.generator.api.dom.OutputUtilities;
 
 public class XmlElement extends Element {
 
-    private List<Attribute> attributes;
+    private List<Attribute> attributes = new ArrayList<>();
 
-    private List<Element> elements;
+    private List<Element> elements = new ArrayList<>();
 
     private String name;
 
     public XmlElement(String name) {
         super();
-        attributes = new ArrayList<>();
-        elements = new ArrayList<>();
         this.name = name;
     }
 
@@ -44,9 +39,7 @@ public class XmlElement extends Element {
      */
     public XmlElement(XmlElement original) {
         super();
-        attributes = new ArrayList<>();
         attributes.addAll(original.attributes);
-        elements = new ArrayList<>();
         elements.addAll(original.elements);
         this.name = original.name;
     }
@@ -74,41 +67,17 @@ public class XmlElement extends Element {
     public String getName() {
         return name;
     }
-
-    @Override
-    public String getFormattedContent(int indentLevel) {
-        StringBuilder sb = new StringBuilder();
-
-        OutputUtilities.xmlIndent(sb, indentLevel);
-        sb.append('<');
-        sb.append(name);
-
-        Collections.sort(attributes);
-        for (Attribute att : attributes) {
-            sb.append(' ');
-            sb.append(att.getFormattedContent());
-        }
-
-        if (elements.size() > 0) {
-            sb.append(">"); //$NON-NLS-1$
-            for (Element element : elements) {
-                OutputUtilities.newLine(sb);
-                sb.append(element.getFormattedContent(indentLevel + 1));
-            }
-            OutputUtilities.newLine(sb);
-            OutputUtilities.xmlIndent(sb, indentLevel);
-            sb.append("</"); //$NON-NLS-1$
-            sb.append(name);
-            sb.append('>');
-
-        } else {
-            sb.append(" />"); //$NON-NLS-1$
-        }
-
-        return sb.toString();
+    
+    public boolean hasChildren() {
+        return elements.size() > 0;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public <R> R accept(ElementVisitor<R> visitor) {
+        return visitor.visit(this);
     }
 }

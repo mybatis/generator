@@ -22,6 +22,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
+import org.mybatis.generator.api.dom.java.render.TopLevelInterfaceRenderer;
 
 public class InterfaceTest {
 
@@ -116,10 +117,11 @@ public class InterfaceTest {
         String expected = "package foo;" + System.getProperty("line.separator")
             + System.getProperty("line.separator")
             + "public interface Bar {" + System.getProperty("line.separator")
-            + "    String EMPTY_STRING = \"\";" + System.getProperty("line.separator")
+            + "    String EMPTY_STRING = \"\";" + System.getProperty("line.separator") + System.getProperty("line.separator")
             + "    String ONE = \"one\";" + System.getProperty("line.separator")
             + "}";
 
-        assertThat(interfaze.getFormattedContent()).isEqualTo(expected);
+        TopLevelInterfaceRenderer renderer = new TopLevelInterfaceRenderer();
+        assertThat(renderer.render(interfaze)).isEqualTo(expected);
     }
 }

@@ -35,16 +35,6 @@ public class Attribute implements Comparable<Attribute> {
         return value;
     }
 
-    public String getFormattedContent() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(name);
-        sb.append("=\""); //$NON-NLS-1$
-        sb.append(value);
-        sb.append('\"');
-
-        return sb.toString();
-    }
-
     @Override
     public int compareTo(Attribute o) {
         if (this.name == null) {

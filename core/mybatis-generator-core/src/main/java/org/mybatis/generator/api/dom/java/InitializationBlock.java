@@ -18,15 +18,12 @@ package org.mybatis.generator.api.dom.java;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.ListIterator;
-
-import org.mybatis.generator.api.dom.OutputUtilities;
 
 public class InitializationBlock {
 
     private boolean isStatic;
-    private List<String> bodyLines;
-    private List<String> javaDocLines;
+    private List<String> bodyLines = new ArrayList<>();
+    private List<String> javaDocLines = new ArrayList<>();
 
     public InitializationBlock() {
         this(false);
@@ -34,8 +31,6 @@ public class InitializationBlock {
 
     public InitializationBlock(boolean isStatic) {
         this.isStatic = isStatic;
-        bodyLines = new ArrayList<>();
-        javaDocLines = new ArrayList<>();
     }
 
     public boolean isStatic() {
@@ -72,62 +67,5 @@ public class InitializationBlock {
 
     public void addJavaDocLine(String javaDocLine) {
         javaDocLines.add(javaDocLine);
-    }
-
-    public String getFormattedContent(int indentLevel) {
-        StringBuilder sb = new StringBuilder();
-
-        for (String javaDocLine : javaDocLines) {
-            OutputUtilities.javaIndent(sb, indentLevel);
-            sb.append(javaDocLine);
-            OutputUtilities.newLine(sb);
-        }
-
-        OutputUtilities.javaIndent(sb, indentLevel);
-
-        if (isStatic) {
-            sb.append("static "); //$NON-NLS-1$
-        }
-
-        sb.append('{');
-        indentLevel++;
-
-        ListIterator<String> listIter = bodyLines.listIterator();
-        while (listIter.hasNext()) {
-            String line = listIter.next();
-            if (line.startsWith("}")) { //$NON-NLS-1$
-                indentLevel--;
-            }
-
-            OutputUtilities.newLine(sb);
-            OutputUtilities.javaIndent(sb, indentLevel);
-            sb.append(line);
-
-            if ((line.endsWith("{") && !line.startsWith("switch")) //$NON-NLS-1$ //$NON-NLS-2$
-                    || line.endsWith(":")) { //$NON-NLS-1$
-                indentLevel++;
-            }
-
-            if (line.startsWith("break")) { //$NON-NLS-1$
-                // if the next line is '}', then don't outdent
-                if (listIter.hasNext()) {
-                    String nextLine = listIter.next();
-                    if (nextLine.startsWith("}")) { //$NON-NLS-1$
-                        indentLevel++;
-                    }
-
-                    // set back to the previous element
-                    listIter.previous();
-                }
-                indentLevel--;
-            }
-        }
-
-        indentLevel--;
-        OutputUtilities.newLine(sb);
-        OutputUtilities.javaIndent(sb, indentLevel);
-        sb.append('}');
-
-        return sb.toString();
     }
 }

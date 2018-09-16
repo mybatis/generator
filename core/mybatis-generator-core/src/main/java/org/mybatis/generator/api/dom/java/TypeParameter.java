@@ -18,20 +18,23 @@ package org.mybatis.generator.api.dom.java;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.mybatis.generator.api.dom.java.render.TypeParameterRenderer;
+
 public class TypeParameter {
 
     private String name;
 
-    private List<FullyQualifiedJavaType> extendsTypes;
+    private List<FullyQualifiedJavaType> extendsTypes = new ArrayList<>();
 
     public TypeParameter(String name) {
-        this(name, new ArrayList<FullyQualifiedJavaType>());
+        super();
+        this.name = name;
     }
 
     public TypeParameter(String name, List<FullyQualifiedJavaType> extendsTypes) {
         super();
         this.name = name;
-        this.extendsTypes = extendsTypes;
+        this.extendsTypes.addAll(extendsTypes);
     }
 
     public String getName() {
@@ -42,29 +45,8 @@ public class TypeParameter {
         return extendsTypes;
     }
 
-    public String getFormattedContent(CompilationUnit compilationUnit) {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(name);
-        if (!extendsTypes.isEmpty()) {
-
-            sb.append(" extends "); //$NON-NLS-1$
-            boolean addAnd = false;
-            for (FullyQualifiedJavaType type : extendsTypes) {
-                if (addAnd) {
-                    sb.append(" & "); //$NON-NLS-1$
-                } else {
-                    addAnd = true;
-                }
-                sb.append(JavaDomUtils.calculateTypeName(compilationUnit, type));
-            }
-        }
-
-        return sb.toString();
-    }
-
     @Override
     public String toString() {
-        return getFormattedContent(null);
+        return new TypeParameterRenderer().render(this, null);
     }
 }

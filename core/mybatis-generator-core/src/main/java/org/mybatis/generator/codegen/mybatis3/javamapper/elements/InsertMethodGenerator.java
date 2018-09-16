@@ -44,6 +44,7 @@ public class InsertMethodGenerator extends AbstractJavaMapperMethodGenerator {
 
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
         method.setVisibility(JavaVisibility.PUBLIC);
+        method.setAbstract(true);
 
         FullyQualifiedJavaType parameterType;
         if (isSimple) {

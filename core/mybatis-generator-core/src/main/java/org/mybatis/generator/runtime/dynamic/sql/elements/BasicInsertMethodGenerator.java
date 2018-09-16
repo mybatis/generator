@@ -56,6 +56,7 @@ public class BasicInsertMethodGenerator extends AbstractMethodGenerator {
         parameterType.addTypeArgument(recordType);
         
         Method method = new Method("insert"); //$NON-NLS-1$
+        method.setAbstract(true);
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
         method.addParameter(new Parameter(parameterType, "insertStatement")); //$NON-NLS-1$
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);

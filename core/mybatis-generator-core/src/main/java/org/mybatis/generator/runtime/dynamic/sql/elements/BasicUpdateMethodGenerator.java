@@ -51,6 +51,7 @@ public class BasicUpdateMethodGenerator extends AbstractMethodGenerator {
         imports.add(annotation);
         
         Method method = new Method("update"); //$NON-NLS-1$
+        method.setAbstract(true);
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
         method.addParameter(new Parameter(parameterType, "updateStatement")); //$NON-NLS-1$
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);

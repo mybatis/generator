@@ -57,8 +57,9 @@
     <checkstyle.config>${project.basedir}/checkstyle-override.xml</checkstyle.config>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <junit.jupiter.version>5.3.0</junit.jupiter.version>
-    <junit.platform.version>1.3.0</junit.platform.version>
+    <kotlin.version>1.2.70</kotlin.version>
+    <junit.jupiter.version>5.3.1</junit.jupiter.version>
+    <junit.platform.version>1.3.1</junit.platform.version>
   </properties>
   
   <build>
@@ -96,6 +97,11 @@
               </tag>
             </tags>
           </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>kotlin-maven-plugin</artifactId>
+          <groupId>org.jetbrains.kotlin</groupId>
+          <version>${kotlin.version}</version>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -258,13 +264,19 @@
       <dependency>
         <groupId>com.github.javaparser</groupId>
         <artifactId>javaparser-core</artifactId>
-        <version>3.6.20</version>
+        <version>3.6.22</version>
         <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.mybatis.dynamic-sql</groupId>
         <artifactId>mybatis-dynamic-sql</artifactId>
         <version>1.1.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jetbrains.kotlin</groupId>
+        <artifactId>kotlin-stdlib</artifactId>
+        <version>${kotlin.version}</version>
+        <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.reflections</groupId>

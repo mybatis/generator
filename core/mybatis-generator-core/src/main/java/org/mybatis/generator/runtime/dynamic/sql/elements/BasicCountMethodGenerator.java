@@ -46,6 +46,7 @@ public class BasicCountMethodGenerator extends AbstractMethodGenerator {
         imports.add(annotation);
         
         Method method = new Method("count"); //$NON-NLS-1$
+        method.setAbstract(true);
         method.setReturnType(new FullyQualifiedJavaType("long")); //$NON-NLS-1$
         method.addParameter(new Parameter(parameterType, "selectStatement")); //$NON-NLS-1$
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);

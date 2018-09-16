@@ -26,15 +26,40 @@
 <body>
 <h1>What's New in MyBatis Generator</h1>
 <h2>Version 1.4.0</h2>
+<p>This is a fairly major change with these themes:</p>
+<ul>
+  <li>Move to Java 8</li>
+  <li>Remove support for iBatis2</li>
+  <li>General code cleanup</li>
+</ul>
+
+<h3>Breaking API Changes</h3>
+<ul>
+  <li>Removed Plugin methods that were specific to iBatis2 (these were the <code>clientXXXGenerated</code>
+      methods that accepted a <code>TopLevelClass</code> as a parameter).</li>
+  <li>Changed the signature of the Plugin <code>clientGenerated</code> method.</li>
+  <li>Removed the <code>toXmlElement</code> methods in the configuration classes. These methods were never properly
+      implemented.</li>
+  <li>In the Java DOM, the <code>Method</code> class now requires an explicit call to <code>setAbstract</code>
+      to mark the method as an abstract method. This was done to support private methods in interfaces for Java9+
+      code.</li>
+  <li>In the Java DOM, removed the default constructors for <code>Method</code> and <code>Field</code></li>
+  <li>Removed several methods from <code>CompilationUnit</code> including <code>isJavaInterface</code>,
+      <code>isJavaEnumeration</code>, <code>getSuperClass</code>, and <code>getSuperInterfaceTypes</code>.</li>
+  <li>Changed return types to Optionals in the DOM methods where appropriate.</li>
+  <li>Removed the <code>getFormattedContent</code> method from all Java and XML DOM classes. These methods
+      are replaced by a new set of renderer classes. Note that the new renderer classes will produce
+      code that is the same as the prior methods with very few exceptions - and those exceptions are related to
+      bugs in the old methods.</li>
+</ul>
+
+<h3>Other Changes</h3>
 <ul>
   <li>Support for iBatis2 removed</li>
   <li>Support for parsing old Ibator configuration files removed</li>
   <li>Removed SqlMapConfigPlugin as that was specific to iBatis2</li>
   <li>Added ability to specify a different project and package for generated model objects</li>
-  <li>Removed Plugin methods that were specific to iBatis2. Also changed the signature of
-      the Plugin <code>clientGenerated</code> method.</li>
-  <li>Removed the <code>toXmlElement</code> methods in the configuration classes. These methods were never properly
-      implemented.</li>
+  <li>Expanded the capabilities of the Java DOM and fixed a few inconsistencies</li>
 </ul>
 
 <h2>Version 1.3.7</h2>

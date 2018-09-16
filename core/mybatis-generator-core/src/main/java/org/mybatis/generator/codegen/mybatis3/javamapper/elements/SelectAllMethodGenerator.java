@@ -42,6 +42,7 @@ public class SelectAllMethodGenerator extends AbstractJavaMapperMethodGenerator 
 
         Method method = new Method(introspectedTable.getSelectAllStatementId());
         method.setVisibility(JavaVisibility.PUBLIC);
+        method.setAbstract(true);
 
         FullyQualifiedJavaType returnType = FullyQualifiedJavaType
                 .getNewListInstance();

@@ -42,6 +42,7 @@ public class InsertSelectiveMethodGenerator extends
 
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
         method.setVisibility(JavaVisibility.PUBLIC);
+        method.setAbstract(true);
 
         FullyQualifiedJavaType parameterType = introspectedTable.getRules()
                 .calculateAllFieldsClass();

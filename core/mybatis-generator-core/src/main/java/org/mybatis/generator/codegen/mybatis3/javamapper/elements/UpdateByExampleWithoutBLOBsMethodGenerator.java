@@ -40,6 +40,7 @@ public class UpdateByExampleWithoutBLOBsMethodGenerator extends
     public void addInterfaceElements(Interface interfaze) {
         Method method = new Method(introspectedTable.getUpdateByExampleStatementId());
         method.setVisibility(JavaVisibility.PUBLIC);
+        method.setAbstract(true);
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
 
         FullyQualifiedJavaType parameterType;

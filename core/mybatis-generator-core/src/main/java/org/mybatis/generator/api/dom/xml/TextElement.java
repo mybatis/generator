@@ -15,8 +15,6 @@
  */
 package org.mybatis.generator.api.dom.xml;
 
-import org.mybatis.generator.api.dom.OutputUtilities;
-
 public class TextElement extends Element {
 
     private String content;
@@ -26,15 +24,12 @@ public class TextElement extends Element {
         this.content = content;
     }
 
-    @Override
-    public String getFormattedContent(int indentLevel) {
-        StringBuilder sb = new StringBuilder();
-        OutputUtilities.xmlIndent(sb, indentLevel);
-        sb.append(content);
-        return sb.toString();
-    }
-
     public String getContent() {
         return content;
+    }
+
+    @Override
+    public <R> R accept(ElementVisitor<R> visitor) {
+        return visitor.visit(this);
     }
 }

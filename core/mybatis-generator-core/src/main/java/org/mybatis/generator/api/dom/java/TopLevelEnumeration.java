@@ -15,10 +15,6 @@
  */
 package org.mybatis.generator.api.dom.java;
 
-import static org.mybatis.generator.api.dom.OutputUtilities.calculateImports;
-import static org.mybatis.generator.api.dom.OutputUtilities.newLine;
-import static org.mybatis.generator.internal.util.messages.Messages.getString;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -26,81 +22,23 @@ import java.util.TreeSet;
 
 public class TopLevelEnumeration extends InnerEnum implements CompilationUnit {
 
-    private Set<FullyQualifiedJavaType> importedTypes;
+    private Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
 
-    private Set<String> staticImports;
+    private Set<String> staticImports = new TreeSet<>();
 
-    private List<String> fileCommentLines;
+    private List<String> fileCommentLines = new ArrayList<>();
 
     public TopLevelEnumeration(FullyQualifiedJavaType type) {
         super(type);
-        importedTypes = new TreeSet<>();
-        fileCommentLines = new ArrayList<>();
-        staticImports = new TreeSet<>();
     }
 
-    @Override
-    public String getFormattedContent() {
-        StringBuilder sb = new StringBuilder();
-
-        for (String fileCommentLine : fileCommentLines) {
-            sb.append(fileCommentLine);
-            newLine(sb);
-        }
-
-        if (getType().getPackageName() != null
-                && getType().getPackageName().length() > 0) {
-            sb.append("package "); //$NON-NLS-1$
-            sb.append(getType().getPackageName());
-            sb.append(';');
-            newLine(sb);
-            newLine(sb);
-        }
-
-        for (String staticImport : staticImports) {
-            sb.append("import static "); //$NON-NLS-1$
-            sb.append(staticImport);
-            sb.append(';');
-            newLine(sb);
-        }
-
-        if (staticImports.size() > 0) {
-            newLine(sb);
-        }
-
-        Set<String> importStrings = calculateImports(importedTypes);
-        for (String importString : importStrings) {
-            sb.append(importString);
-            newLine(sb);
-        }
-
-        if (importStrings.size() > 0) {
-            newLine(sb);
-        }
-
-        sb.append(super.getFormattedContent(0, this));
-
-        return sb.toString();
+    public TopLevelEnumeration(String type) {
+        super(type);
     }
 
     @Override
     public Set<FullyQualifiedJavaType> getImportedTypes() {
         return importedTypes;
-    }
-
-    @Override
-    public FullyQualifiedJavaType getSuperClass() {
-        throw new UnsupportedOperationException(getString("RuntimeError.11")); //$NON-NLS-1$
-    }
-
-    @Override
-    public boolean isJavaInterface() {
-        return false;
-    }
-
-    @Override
-    public boolean isJavaEnumeration() {
-        return true;
     }
 
     @Override
@@ -140,5 +78,10 @@ public class TopLevelEnumeration extends InnerEnum implements CompilationUnit {
     @Override
     public void addStaticImports(Set<String> staticImports) {
         this.staticImports.addAll(staticImports);
+    }
+
+    @Override
+    public <R> R accept(CompilationUnitVisitor<R> visitor) {
+        return visitor.visit(this);
     }
 }

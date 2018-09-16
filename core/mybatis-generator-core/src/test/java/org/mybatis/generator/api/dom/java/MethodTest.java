@@ -19,8 +19,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
+import org.mybatis.generator.api.dom.java.render.MethodRenderer;
 
 public class MethodTest {
 
@@ -162,10 +164,10 @@ public class MethodTest {
     public void testSetReturnType() {
 
         Method method = new Method("bar");
-        assertNull(method.getReturnType());
+        assertFalse(method.getReturnType().isPresent());
 
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
-        assertEquals(FullyQualifiedJavaType.getIntInstance(), method.getReturnType());
+        assertEquals(FullyQualifiedJavaType.getIntInstance(), method.getReturnType().get());
     }
 
     @Test
@@ -231,6 +233,8 @@ public class MethodTest {
                         + "    return func.apply(t);" + LINE_SEPARATOR
                         + "}";
 
-        assertEquals(excepted, method.getFormattedContent(0, false, null));
+        MethodRenderer renderer = new MethodRenderer();
+        String rendered = renderer.render(method, false, null).stream().collect(Collectors.joining(LINE_SEPARATOR));
+        assertEquals(excepted, rendered);
     }
 }

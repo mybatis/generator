@@ -41,6 +41,7 @@ public class UpdateByExampleWithBLOBsMethodGenerator extends
         Method method = new Method(introspectedTable
                 .getUpdateByExampleWithBLOBsStatementId());
         method.setVisibility(JavaVisibility.PUBLIC);
+        method.setAbstract(true);
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
 
         FullyQualifiedJavaType parameterType;

@@ -47,6 +47,7 @@ public class SelectByExampleWithBLOBsMethodGenerator extends
         Method method = new Method(introspectedTable
                 .getSelectByExampleWithBLOBsStatementId());
         method.setVisibility(JavaVisibility.PUBLIC);
+        method.setAbstract(true);
 
         FullyQualifiedJavaType returnType = FullyQualifiedJavaType
                 .getNewListInstance();

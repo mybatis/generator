@@ -15,6 +15,8 @@
  */
 package org.mybatis.generator.api.dom.java;
 
+import java.util.stream.Collectors;
+
 public class JavaDomUtils {
     /**
      * Calculates type names for writing into generated Java.  We try to
@@ -47,22 +49,9 @@ public class JavaDomUtils {
         String baseTypeName = calculateTypeName(compilationUnit,
                 new FullyQualifiedJavaType(fqjt.getFullyQualifiedNameWithoutTypeParameters()));
 
-        StringBuilder sb = new StringBuilder();
-        sb.append(baseTypeName);
-        sb.append('<');
-        boolean comma = false;
-        for (FullyQualifiedJavaType ft : fqjt.getTypeArguments()) {
-            if (comma) {
-                sb.append(", "); //$NON-NLS-1$
-            } else {
-                comma = true;
-            }
-            sb.append(calculateTypeName(compilationUnit, ft));
-        }
-        sb.append('>');
-
-        return sb.toString();
-
+        return fqjt.getTypeArguments().stream()
+                .map(t -> calculateTypeName(compilationUnit, t))
+                .collect(Collectors.joining(", ", baseTypeName + "<", ">")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
     private static boolean typeDoesNotRequireImport(FullyQualifiedJavaType fullyQualifiedJavaType) {

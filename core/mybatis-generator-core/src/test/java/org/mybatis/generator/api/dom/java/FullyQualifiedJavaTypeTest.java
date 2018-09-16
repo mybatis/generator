@@ -15,13 +15,11 @@
  */
 package org.mybatis.generator.api.dom.java;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.Set;
-import java.util.TreeSet;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
-import org.mybatis.generator.api.dom.OutputUtilities;
 
 /**
  * @author Jeff Butler
@@ -224,19 +222,6 @@ public class FullyQualifiedJavaTypeTest {
         assertEquals(2, fqjt.getImportList().size());
         assertTrue(fqjt.getImportList().contains("java.util.List"));
         assertTrue(fqjt.getImportList().contains("org.foo.Bar.Inner"));
-    }
-
-    @Test
-    public void testImportList() {
-        Set<FullyQualifiedJavaType> types = new TreeSet<>();
-
-        types.add(new FullyQualifiedJavaType("foo.bar.Example"));
-        types.add(new FullyQualifiedJavaType("foo.bar.Example.Criteria"));
-        types.add(new FullyQualifiedJavaType("foo.bar.Example.Criterion"));
-        assertEquals(3, types.size());
-
-        Set<String> imports = OutputUtilities.calculateImports(types);
-        assertEquals(3, imports.size());
     }
 
     @Test

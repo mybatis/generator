@@ -47,6 +47,7 @@ public class BasicDeleteMethodGenerator extends AbstractMethodGenerator {
         imports.add(annotation);
         
         Method method = new Method("delete"); //$NON-NLS-1$
+        method.setAbstract(true);
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
         method.addParameter(new Parameter(parameterType, "deleteStatement")); //$NON-NLS-1$
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);

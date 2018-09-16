@@ -17,7 +17,10 @@ package org.mybatis.generator.api.dom.java;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.stream.Collectors;
+
 import org.junit.jupiter.api.Test;
+import org.mybatis.generator.api.dom.java.render.InnerClassRenderer;
 
 public class InnerClassTest {
 
@@ -29,7 +32,7 @@ public class InnerClassTest {
 
         assertNotNull(clazz);
 
-        assertNull(clazz.getSuperClass());
+        assertFalse(clazz.getSuperClass().isPresent());
 
         assertNotNull(clazz.getType());
         assertEquals("com.foo.UserClass", clazz.getType().getFullyQualifiedName());
@@ -73,10 +76,10 @@ public class InnerClassTest {
     public void testSetSuperClass() {
         InnerClass clazz = new InnerClass("com.foo.UserClass");
 
-        assertNull(clazz.getSuperClass());
+        assertFalse(clazz.getSuperClass().isPresent());
         clazz.setSuperClass("com.hoge.SuperClass");
         assertNotNull(clazz.getSuperClass());
-        assertEquals("com.hoge.SuperClass", clazz.getSuperClass().getFullyQualifiedName());
+        assertEquals("com.hoge.SuperClass", clazz.getSuperClass().get().getFullyQualifiedName());
     }
 
     @Test
@@ -156,17 +159,20 @@ public class InnerClassTest {
 
     @Test
     public void testGetFormattedContent() {
-        InnerClass clazz = new InnerClass("com.foo.UserClass");
-        clazz.addField(new Field("test", FullyQualifiedJavaType.getStringInstance()));
-        clazz.setSuperClass("com.hoge.SuperClass");
-        clazz.addInnerClass(new InnerClass("InnerUserClass"));
-        clazz.addInnerEnum(new InnerEnum(new FullyQualifiedJavaType("TestEnum")));
-        clazz.addTypeParameter(new TypeParameter("T"));
-        clazz.addTypeParameter(new TypeParameter("U"));
-        clazz.addInitializationBlock(new InitializationBlock(false));
-        clazz.addSuperInterface(new FullyQualifiedJavaType("com.hoge.UserInterface"));
-        clazz.addMethod(new Method("method1"));
-        clazz.setAbstract(true);
+        InnerClass innerClass = new InnerClass("com.foo.UserClass");
+        innerClass.addField(new Field("test", FullyQualifiedJavaType.getStringInstance()));
+        innerClass.setSuperClass("com.hoge.SuperClass");
+        innerClass.addInnerClass(new InnerClass("InnerUserClass"));
+        innerClass.addInnerEnum(new InnerEnum(new FullyQualifiedJavaType("TestEnum")));
+        innerClass.addTypeParameter(new TypeParameter("T"));
+        innerClass.addTypeParameter(new TypeParameter("U"));
+        innerClass.addInitializationBlock(new InitializationBlock(false));
+        innerClass.addSuperInterface(new FullyQualifiedJavaType("com.hoge.UserInterface"));
+        
+        Method method = new Method("method1");
+        method.setAbstract(true);
+        innerClass.addMethod(method);
+        innerClass.setAbstract(true);
 
         String excepted = "abstract class UserClass<T, U>  extends SuperClass implements UserInterface {" + LF
                 + "    String test;" + LF
@@ -183,6 +189,8 @@ public class InnerClassTest {
                 + "    }" + LF
                 + "}";
 
-        assertEquals(excepted, clazz.getFormattedContent(0, null));
+        InnerClassRenderer renderer = new InnerClassRenderer();
+        String rendered = renderer.render(innerClass, null).stream().collect(Collectors.joining(LF));
+        assertEquals(excepted, rendered);
     }
 }

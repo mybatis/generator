@@ -18,19 +18,19 @@ package org.mybatis.generator.api.dom.java;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.mybatis.generator.api.dom.java.render.ParameterRenderer;
+
 public class Parameter {
     private String name;
     private FullyQualifiedJavaType type;
     private boolean isVarargs;
 
-    private List<String> annotations;
+    private List<String> annotations = new ArrayList<>();
 
     public Parameter(FullyQualifiedJavaType type, String name, boolean isVarargs) {
-        super();
         this.name = name;
         this.type = type;
         this.isVarargs = isVarargs;
-        annotations = new ArrayList<>();
     }
 
     public Parameter(FullyQualifiedJavaType type, String name) {
@@ -63,28 +63,9 @@ public class Parameter {
         annotations.add(annotation);
     }
 
-    public String getFormattedContent(CompilationUnit compilationUnit) {
-        StringBuilder sb = new StringBuilder();
-
-        for (String annotation : annotations) {
-            sb.append(annotation);
-            sb.append(' ');
-        }
-
-        sb.append(JavaDomUtils.calculateTypeName(compilationUnit, type));
-
-        sb.append(' ');
-        if (isVarargs) {
-            sb.append("... "); //$NON-NLS-1$
-        }
-        sb.append(name);
-
-        return sb.toString();
-    }
-
     @Override
     public String toString() {
-        return getFormattedContent(null);
+        return new ParameterRenderer().render(this, null);
     }
 
     public boolean isVarargs() {

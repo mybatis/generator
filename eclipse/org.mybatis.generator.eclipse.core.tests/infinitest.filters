@@ -1,0 +1,4 @@
+# exclude all tests as these are eclipse tests and can only run with the
+# eclipse JUnit plugin test runner
+exclude .*Test
+exclude .*Tests

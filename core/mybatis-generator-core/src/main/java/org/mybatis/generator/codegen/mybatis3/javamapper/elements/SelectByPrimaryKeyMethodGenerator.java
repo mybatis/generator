@@ -46,6 +46,7 @@ public class SelectByPrimaryKeyMethodGenerator extends
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
         Method method = new Method(introspectedTable.getSelectByPrimaryKeyStatementId());
         method.setVisibility(JavaVisibility.PUBLIC);
+        method.setAbstract(true);
 
         FullyQualifiedJavaType returnType = introspectedTable.getRules()
                 .calculateAllFieldsClass();

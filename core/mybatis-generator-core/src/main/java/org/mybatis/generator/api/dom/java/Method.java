@@ -18,13 +18,11 @@ package org.mybatis.generator.api.dom.java;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.ListIterator;
-
-import org.mybatis.generator.api.dom.OutputUtilities;
+import java.util.Optional;
 
 public class Method extends JavaElement {
 
-    private List<String> bodyLines;
+    private List<String> bodyLines = new ArrayList<>();
 
     private boolean constructor;
 
@@ -32,11 +30,11 @@ public class Method extends JavaElement {
 
     private String name;
 
-    private List<TypeParameter> typeParameters;
+    private List<TypeParameter> typeParameters = new ArrayList<>();
 
-    private List<Parameter> parameters;
+    private List<Parameter> parameters = new ArrayList<>();
 
-    private List<FullyQualifiedJavaType> exceptions;
+    private List<FullyQualifiedJavaType> exceptions = new ArrayList<>();
 
     private boolean isSynchronized;
 
@@ -44,12 +42,11 @@ public class Method extends JavaElement {
 
     private boolean isDefault;
 
+    private boolean isAbstract;
+    
+    private boolean isFinal;
+    
     public Method(String name) {
-        super();
-        bodyLines = new ArrayList<>();
-        typeParameters = new ArrayList<>();
-        parameters = new ArrayList<>();
-        exceptions = new ArrayList<>();
         this.name = name;
     }
 
@@ -61,10 +58,6 @@ public class Method extends JavaElement {
      */
     public Method(Method original) {
         super(original);
-        bodyLines = new ArrayList<>();
-        typeParameters = new ArrayList<>();
-        parameters = new ArrayList<>();
-        exceptions = new ArrayList<>();
         this.bodyLines.addAll(original.bodyLines);
         this.constructor = original.constructor;
         this.exceptions.addAll(original.exceptions);
@@ -75,6 +68,8 @@ public class Method extends JavaElement {
         this.isNative = original.isNative;
         this.isSynchronized = original.isSynchronized;
         this.isDefault = original.isDefault;
+        this.isAbstract = original.isAbstract;
+        this.isFinal = original.isFinal;
     }
 
     public List<String> getBodyLines() {
@@ -95,143 +90,6 @@ public class Method extends JavaElement {
 
     public void addBodyLines(int index, Collection<String> lines) {
         bodyLines.addAll(index, lines);
-    }
-
-    public String getFormattedContent(int indentLevel, boolean interfaceMethod, CompilationUnit compilationUnit) {
-        StringBuilder sb = new StringBuilder();
-
-        addFormattedJavadoc(sb, indentLevel);
-        addFormattedAnnotations(sb, indentLevel);
-
-        OutputUtilities.javaIndent(sb, indentLevel);
-
-        if (interfaceMethod) {
-            if (isStatic()) {
-                sb.append("static "); //$NON-NLS-1$
-            } else if (isDefault()) {
-                sb.append("default "); //$NON-NLS-1$
-            }
-        } else {
-            sb.append(getVisibility().getValue());
-
-            if (isStatic()) {
-                sb.append("static "); //$NON-NLS-1$
-            }
-
-            if (isFinal()) {
-                sb.append("final "); //$NON-NLS-1$
-            }
-
-            if (isSynchronized()) {
-                sb.append("synchronized "); //$NON-NLS-1$
-            }
-
-            if (isNative()) {
-                sb.append("native "); //$NON-NLS-1$
-            } else if (bodyLines.size() == 0) {
-                sb.append("abstract "); //$NON-NLS-1$
-            }
-        }
-
-        if (!getTypeParameters().isEmpty()) {
-            sb.append("<"); //$NON-NLS-1$
-            boolean comma = false;
-            for (TypeParameter typeParameter : getTypeParameters()) {
-                if (comma) {
-                    sb.append(", "); //$NON-NLS-1$
-                } else {
-                    comma = true;
-                }
-
-                sb.append(typeParameter.getFormattedContent(compilationUnit));
-            }
-            sb.append("> "); //$NON-NLS-1$
-        }
-
-        if (!constructor) {
-            if (getReturnType() == null) {
-                sb.append("void"); //$NON-NLS-1$
-            } else {
-                sb.append(JavaDomUtils.calculateTypeName(compilationUnit, getReturnType()));
-            }
-            sb.append(' ');
-        }
-
-        sb.append(getName());
-        sb.append('(');
-
-        boolean comma = false;
-        for (Parameter parameter : getParameters()) {
-            if (comma) {
-                sb.append(", "); //$NON-NLS-1$
-            } else {
-                comma = true;
-            }
-
-            sb.append(parameter.getFormattedContent(compilationUnit));
-        }
-
-        sb.append(')');
-
-        if (getExceptions().size() > 0) {
-            sb.append(" throws "); //$NON-NLS-1$
-            comma = false;
-            for (FullyQualifiedJavaType fqjt : getExceptions()) {
-                if (comma) {
-                    sb.append(", "); //$NON-NLS-1$
-                } else {
-                    comma = true;
-                }
-
-                sb.append(JavaDomUtils.calculateTypeName(compilationUnit, fqjt));
-            }
-        }
-
-        // if no body lines, then this is an abstract method
-        if (bodyLines.size() == 0 || isNative()) {
-            sb.append(';');
-        } else {
-            sb.append(" {"); //$NON-NLS-1$
-            indentLevel++;
-
-            ListIterator<String> listIter = bodyLines.listIterator();
-            while (listIter.hasNext()) {
-                String line = listIter.next();
-                if (line.startsWith("}")) { //$NON-NLS-1$
-                    indentLevel--;
-                }
-
-                OutputUtilities.newLine(sb);
-                OutputUtilities.javaIndent(sb, indentLevel);
-                sb.append(line);
-
-                if ((line.endsWith("{") && !line.startsWith("switch")) //$NON-NLS-1$ //$NON-NLS-2$
-                        || line.endsWith(":")) { //$NON-NLS-1$
-                    indentLevel++;
-                }
-
-                if (line.startsWith("break")) { //$NON-NLS-1$
-                    // if the next line is '}', then don't outdent
-                    if (listIter.hasNext()) {
-                        String nextLine = listIter.next();
-                        if (nextLine.startsWith("}")) { //$NON-NLS-1$
-                            indentLevel++;
-                        }
-
-                        // set back to the previous element
-                        listIter.previous();
-                    }
-                    indentLevel--;
-                }
-            }
-
-            indentLevel--;
-            OutputUtilities.newLine(sb);
-            OutputUtilities.javaIndent(sb, indentLevel);
-            sb.append('}');
-        }
-
-        return sb.toString();
     }
 
     public boolean isConstructor() {
@@ -274,8 +132,8 @@ public class Method extends JavaElement {
         parameters.add(index, parameter);
     }
 
-    public FullyQualifiedJavaType getReturnType() {
-        return returnType;
+    public Optional<FullyQualifiedJavaType> getReturnType() {
+        return Optional.ofNullable(returnType);
     }
 
     public void setReturnType(FullyQualifiedJavaType returnType) {
@@ -312,5 +170,21 @@ public class Method extends JavaElement {
 
     public void setDefault(boolean isDefault) {
         this.isDefault = isDefault;
+    }
+
+    public boolean isAbstract() {
+        return isAbstract;
+    }
+
+    public void setAbstract(boolean isAbstract) {
+        this.isAbstract = isAbstract;
+    }
+
+    public boolean isFinal() {
+        return isFinal;
+    }
+
+    public void setFinal(boolean isFinal) {
+        this.isFinal = isFinal;
     }
 }

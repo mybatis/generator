@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.mybatis.generator.api.FullyQualifiedTable;
 import org.mybatis.generator.api.IntrospectedTable;
@@ -116,11 +117,12 @@ public class RowBoundsPlugin extends PluginAdapter {
         return true;
     }
 
-    private void addNewComposedFunction(Interface interfaze, IntrospectedTable introspectedTable, FullyQualifiedJavaType baseMethodReturnType) {
+    private void addNewComposedFunction(Interface interfaze, IntrospectedTable introspectedTable,
+            Optional<FullyQualifiedJavaType> baseMethodReturnType) {
         interfaze.addImportedType(new FullyQualifiedJavaType("java.util.function.Function")); //$NON-NLS-1$
         
         FullyQualifiedJavaType returnType = new FullyQualifiedJavaType("Function<SelectStatementProvider, " //$NON-NLS-1$
-                + baseMethodReturnType.getShortName() + ">"); //$NON-NLS-1$
+                + baseMethodReturnType.get().getShortName() + ">"); //$NON-NLS-1$
         
         Method method = new Method("selectManyWithRowbounds"); //$NON-NLS-1$
         method.setDefault(true);

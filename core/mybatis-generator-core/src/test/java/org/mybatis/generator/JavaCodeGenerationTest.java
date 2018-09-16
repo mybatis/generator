@@ -25,6 +25,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mybatis.generator.api.GeneratedJavaFile;
 import org.mybatis.generator.api.MyBatisGenerator;
+import org.mybatis.generator.api.dom.DefaultJavaFormatter;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.internal.DefaultShellCallback;
@@ -37,8 +38,10 @@ public class JavaCodeGenerationTest {
     @ParameterizedTest
     @MethodSource("generateJavaFiles")
     public void testJavaParse(GeneratedJavaFile generatedJavaFile) {
+        DefaultJavaFormatter formatter = new DefaultJavaFormatter();
+
         ByteArrayInputStream is = new ByteArrayInputStream(
-                generatedJavaFile.getCompilationUnit().getFormattedContent().getBytes());
+                formatter.getFormattedContent(generatedJavaFile.getCompilationUnit()).getBytes());
         try {
             JavaParser.parse(is);
         } catch (ParseProblemException e) {

@@ -63,8 +63,9 @@ public class PrimaryKeyGenerator extends AbstractJavaGenerator {
 
         String rootClass = getRootClass();
         if (rootClass != null) {
-            topLevelClass.setSuperClass(new FullyQualifiedJavaType(rootClass));
-            topLevelClass.addImportedType(topLevelClass.getSuperClass());
+            FullyQualifiedJavaType rootType = new FullyQualifiedJavaType(rootClass);
+            topLevelClass.setSuperClass(rootType);
+            topLevelClass.addImportedType(rootType);
         }
 
         if (introspectedTable.isConstructorBased()) {

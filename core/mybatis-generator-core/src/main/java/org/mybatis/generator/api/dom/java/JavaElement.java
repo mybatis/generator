@@ -18,30 +18,22 @@ package org.mybatis.generator.api.dom.java;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.mybatis.generator.api.dom.OutputUtilities;
-
 public abstract class JavaElement {
 
-    private List<String> javaDocLines;
+    private List<String> javaDocLines = new ArrayList<>();
 
     private JavaVisibility visibility = JavaVisibility.DEFAULT;
 
     private boolean isStatic;
 
-    private boolean isFinal;
-
-    private List<String> annotations;
+    private List<String> annotations = new ArrayList<>();
 
     public JavaElement() {
         super();
-        javaDocLines = new ArrayList<>();
-        annotations = new ArrayList<>();
     }
 
     public JavaElement(JavaElement original) {
-        this();
         this.annotations.addAll(original.annotations);
-        this.isFinal = original.isFinal;
         this.isStatic = original.isStatic;
         this.javaDocLines.addAll(original.javaDocLines);
         this.visibility = original.visibility;
@@ -73,30 +65,6 @@ public abstract class JavaElement {
 
     public void addSuppressTypeWarningsAnnotation() {
         addAnnotation("@SuppressWarnings(\"unchecked\")"); //$NON-NLS-1$
-    }
-
-    public void addFormattedJavadoc(StringBuilder sb, int indentLevel) {
-        for (String javaDocLine : javaDocLines) {
-            OutputUtilities.javaIndent(sb, indentLevel);
-            sb.append(javaDocLine);
-            OutputUtilities.newLine(sb);
-        }
-    }
-
-    public void addFormattedAnnotations(StringBuilder sb, int indentLevel) {
-        for (String annotation : annotations) {
-            OutputUtilities.javaIndent(sb, indentLevel);
-            sb.append(annotation);
-            OutputUtilities.newLine(sb);
-        }
-    }
-
-    public boolean isFinal() {
-        return isFinal;
-    }
-
-    public void setFinal(boolean isFinal) {
-        this.isFinal = isFinal;
     }
 
     public boolean isStatic() {

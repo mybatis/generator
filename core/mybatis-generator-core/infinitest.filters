@@ -1,0 +1,2 @@
+# exclude tests with the "slow" tag
+excludeGroups slow

@@ -93,7 +93,6 @@
     </javaModelGenerator>
 
     <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.dsql.miscellaneous.mapper"  targetProject="MAVEN">
-      <property name="methodNameCalculator" value="EXTENDED"/>
     </javaClientGenerator>
 
     <table tableName="PKFields" domainObjectName="MyObject" alias="A" >

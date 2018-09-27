@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2016 the original author or authors.
+       Copyright 2006-2018 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -82,8 +82,6 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
       This property is used to select whether MyBatis Generator will generate a constructor
       for the class that accepts a value for each field in the class.  Also, the SQL result map
       will be built to use the constructor rather than the "setter" for each field.
-      <p>This property is only applicable for MyBatis3 and will be ignored for
-         iBATIS2.</p>
       <p>This property is ignored (and forced "true") if the "immutable" property
          is set "true".</p>
       <p>This property can be overridden by the corresponding property in a
@@ -103,15 +101,29 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
         <p><i>The default value is false.</i></p></td>
   </tr>
   <tr>
+    <td valign="top">exampleTargetPackage</td>
+    <td>
+      This property is used to specify a different package for the generated example objects. If not specified,
+      the example objects will be generated in the same package as other model objects.
+      <p>Note: this property is ignored in the MyBatis Dynamic SQL runtime.</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">exampleTargetProject</td>
+    <td>
+      This property is used to specify a different project for the generated example objects. If not specified,
+      the example objects will be generated in the same project as other model objects.
+      <p>Note: this property is ignored in the MyBatis Dynamic SQL runtime.</p>
+    </td>
+  </tr>
+  <tr>
     <td valign="top">immutable</td>
     <td>
       This property is used to select whether MyBatis Generator will generate immutable
       model classes - this means that the classes will not have "setter" methods and
       the constructor will accept values for each field in the class.
-      <p>If true, this forces the model classes to be built with paramterized constructors
+      <p>If true, this forces the model classes to be built with parameterized constructors
          regardless of the value of the "constructorBased" property.</p>
-      <p>This property is only applicable for MyBatis3 and will be ignored for
-         iBATIS2.</p>
       <p>This property can be overridden by the corresponding property in a
       <a href="table.html">&lt;table&gt;</a> element.</p>
       <p><i>The default value is false.</i></p></td>

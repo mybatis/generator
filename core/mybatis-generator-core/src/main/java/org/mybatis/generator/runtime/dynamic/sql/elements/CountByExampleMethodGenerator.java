@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -24,11 +24,8 @@ import org.mybatis.generator.api.dom.java.Method;
 
 public class CountByExampleMethodGenerator extends AbstractMethodGenerator {
 
-    private String tableFieldName;
-    
     private CountByExampleMethodGenerator(Builder builder) {
         super(builder);
-        this.tableFieldName = builder.tableFieldName;
     }
     
     @Override
@@ -37,7 +34,7 @@ public class CountByExampleMethodGenerator extends AbstractMethodGenerator {
             return null;
         }
         
-        Set<FullyQualifiedJavaType> imports = new HashSet<FullyQualifiedJavaType>();
+        Set<FullyQualifiedJavaType> imports = new HashSet<>();
 
         imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.select.QueryExpressionDSL")); //$NON-NLS-1$
         imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.select.MyBatis3SelectModelAdapter")); //$NON-NLS-1$
@@ -64,13 +61,6 @@ public class CountByExampleMethodGenerator extends AbstractMethodGenerator {
     }
 
     public static class Builder extends BaseBuilder<Builder, CountByExampleMethodGenerator> {
-        private String tableFieldName;
-        
-        public Builder withTableFieldName(String tableFieldName) {
-            this.tableFieldName = tableFieldName;
-            return this;
-        }
-        
         @Override
         public Builder getThis() {
             return this;

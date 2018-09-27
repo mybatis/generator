@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,14 +15,13 @@
  */
 package mbg.test.mb3.dsql.miscellaneous;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.lang.reflect.Method;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import mbg.test.mb3.generated.dsql.miscellaneous.mapper.GeneratedalwaystestnoupdatesMapper;
 import mbg.test.mb3.generated.dsql.miscellaneous.model.Generatedalwaystestnoupdates;

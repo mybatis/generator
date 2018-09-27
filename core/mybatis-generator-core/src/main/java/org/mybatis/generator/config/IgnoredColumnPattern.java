@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,14 +22,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import org.mybatis.generator.api.dom.xml.Attribute;
-import org.mybatis.generator.api.dom.xml.XmlElement;
-
 public class IgnoredColumnPattern {
 
     private String patternRegex;
     private Pattern pattern;
-    private List<IgnoredColumnException> exceptions = new ArrayList<IgnoredColumnException>();
+    private List<IgnoredColumnException> exceptions = new ArrayList<>();
 
     public IgnoredColumnPattern(String patternRegex) {
         this.patternRegex = patternRegex;
@@ -53,17 +50,6 @@ public class IgnoredColumnPattern {
         }
 
         return matches;
-    }
-
-    public XmlElement toXmlElement() {
-        XmlElement xmlElement = new XmlElement("ignoreColumnsByRegex"); //$NON-NLS-1$
-        xmlElement.addAttribute(new Attribute("pattern", patternRegex)); //$NON-NLS-1$
-
-        for (IgnoredColumnException exception : exceptions) {
-            xmlElement.addElement(exception.toXmlElement());
-        }
-
-        return xmlElement;
     }
 
     public void validate(List<String> errors, String tableName) {

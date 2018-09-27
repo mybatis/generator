@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -89,12 +89,12 @@ public class ConfigurationParser {
         this.extraProperties = extraProperties;
 
         if (warnings == null) {
-            this.warnings = new ArrayList<String>();
+            this.warnings = new ArrayList<>();
         } else {
             this.warnings = warnings;
         }
 
-        parseErrors = new ArrayList<String>();
+        parseErrors = new ArrayList<>();
     }
 
     public Configuration parseConfiguration(File inputFile) throws IOException,
@@ -157,10 +157,6 @@ public class ConfigurationParser {
             DocumentType docType = document.getDoctype();
             if (rootNode.getNodeType() == Node.ELEMENT_NODE
                     && docType.getPublicId().equals(
-                            XmlConstants.IBATOR_CONFIG_PUBLIC_ID)) {
-                config = parseIbatorConfiguration(rootNode);
-            } else if (rootNode.getNodeType() == Node.ELEMENT_NODE
-                    && docType.getPublicId().equals(
                             XmlConstants.MYBATIS_GENERATOR_CONFIG_PUBLIC_ID)) {
                 config = parseMyBatisGeneratorConfiguration(rootNode);
             } else {
@@ -176,13 +172,6 @@ public class ConfigurationParser {
             parseErrors.add(e.getMessage());
             throw new XMLParserException(parseErrors);
         }
-    }
-
-    private Configuration parseIbatorConfiguration(Element rootNode)
-            throws XMLParserException {
-        IbatorConfigurationParser parser = new IbatorConfigurationParser(
-                extraProperties);
-        return parser.parseIbatorConfiguration(rootNode);
     }
 
     private Configuration parseMyBatisGeneratorConfiguration(Element rootNode)

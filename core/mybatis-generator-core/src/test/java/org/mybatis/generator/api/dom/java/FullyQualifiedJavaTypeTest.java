@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,16 +15,11 @@
  */
 package org.mybatis.generator.api.dom.java;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.Set;
-import java.util.TreeSet;
-
-import org.junit.Test;
-import org.mybatis.generator.api.dom.OutputUtilities;
-import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Jeff Butler
@@ -227,19 +222,6 @@ public class FullyQualifiedJavaTypeTest {
         assertEquals(2, fqjt.getImportList().size());
         assertTrue(fqjt.getImportList().contains("java.util.List"));
         assertTrue(fqjt.getImportList().contains("org.foo.Bar.Inner"));
-    }
-
-    @Test
-    public void testImportList() {
-        Set<FullyQualifiedJavaType> types = new TreeSet<FullyQualifiedJavaType>();
-
-        types.add(new FullyQualifiedJavaType("foo.bar.Example"));
-        types.add(new FullyQualifiedJavaType("foo.bar.Example.Criteria"));
-        types.add(new FullyQualifiedJavaType("foo.bar.Example.Criterion"));
-        assertEquals(3, types.size());
-
-        Set<String> imports = OutputUtilities.calculateImports(types);
-        assertEquals(3, imports.size());
     }
 
     @Test

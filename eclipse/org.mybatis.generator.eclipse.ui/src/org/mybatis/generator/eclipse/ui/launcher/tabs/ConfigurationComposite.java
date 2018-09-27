@@ -51,7 +51,7 @@ import org.mybatis.generator.eclipse.ui.content.ConfigVerifyer;
  */
 public class ConfigurationComposite extends AbstractGeneratorComposite {
     private ConfigurationTab configurationTab;
-    private Map<LoggingButtonData, Button> loggingButtonMap = new HashMap<LoggingButtonData, Button>();
+    private Map<LoggingButtonData, Button> loggingButtonMap = new HashMap<>();
 
     /**
      * Create the composite.

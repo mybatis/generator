@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,33 +15,21 @@
  */
 package org.mybatis.generator.api.dom.java;
 
-import static org.mybatis.generator.api.dom.OutputUtilities.calculateImports;
-import static org.mybatis.generator.api.dom.OutputUtilities.newLine;
-import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-/**
- * The Class Interface.
- *
- * @author Jeff Butler
- */
 public class Interface extends InnerInterface implements CompilationUnit {
     
-    private Set<FullyQualifiedJavaType> importedTypes;
+    private Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
 
-    private Set<String> staticImports;
+    private Set<String> staticImports = new TreeSet<>();
 
-    private List<String> fileCommentLines;
+    private List<String> fileCommentLines = new ArrayList<>();
 
     public Interface(FullyQualifiedJavaType type) {
         super(type);
-        importedTypes = new TreeSet<FullyQualifiedJavaType>();
-        fileCommentLines = new ArrayList<String>();
-        staticImports = new TreeSet<String>();
     }
 
     public Interface(String type) {
@@ -59,55 +47,6 @@ public class Interface extends InnerInterface implements CompilationUnit {
                 && !importedType.getPackageName().equals(getType().getPackageName())) {
             importedTypes.add(importedType);
         }
-    }
-
-    @Override
-    public String getFormattedContent() {
-
-        return getFormattedContent(0, this);
-    }
-
-    @Override
-    public String getFormattedContent(int indentLevel, CompilationUnit compilationUnit) {
-        StringBuilder sb = new StringBuilder();
-
-        for (String commentLine : fileCommentLines) {
-            sb.append(commentLine);
-            newLine(sb);
-        }
-
-        if (stringHasValue(getType().getPackageName())) {
-            sb.append("package "); //$NON-NLS-1$
-            sb.append(getType().getPackageName());
-            sb.append(';');
-            newLine(sb);
-            newLine(sb);
-        }
-
-        for (String staticImport : staticImports) {
-            sb.append("import static "); //$NON-NLS-1$
-            sb.append(staticImport);
-            sb.append(';');
-            newLine(sb);
-        }
-
-        if (staticImports.size() > 0) {
-            newLine(sb);
-        }
-
-        Set<String> importStrings = calculateImports(importedTypes);
-        for (String importString : importStrings) {
-            sb.append(importString);
-            newLine(sb);
-        }
-
-        if (importStrings.size() > 0) {
-            newLine(sb);
-        }
-
-        sb.append(super.getFormattedContent(0, this));
-
-        return sb.toString();
     }
 
     @Override
@@ -138,5 +77,10 @@ public class Interface extends InnerInterface implements CompilationUnit {
     @Override
     public void addStaticImports(Set<String> staticImports) {
         this.staticImports.addAll(staticImports);
+    }
+
+    @Override
+    public <R> R accept(CompilationUnitVisitor<R> visitor) {
+        return visitor.visit(this);
     }
 }

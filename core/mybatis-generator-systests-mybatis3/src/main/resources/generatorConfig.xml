@@ -207,7 +207,6 @@
 
     <javaClientGenerator type="XMLMAPPER" targetPackage="mbg.test.mb3.generated.miscellaneous.mapper"  targetProject="MAVEN">
       <property name="rootInterface" value="mbg.test.common.BaseInterface" />
-      <property name="methodNameCalculator" value="EXTENDED"/>
     </javaClientGenerator>
 
     <table tableName="BlobsOnly" /> <!-- should generate a warning -->
@@ -260,6 +259,7 @@
     <javaModelGenerator targetPackage="mbg.test.mb3.generated.miscellaneous.model" targetProject="MAVEN">
       <property name="trimStrings" value="true" />
       <property name="enableSubPackages" value="true"/>
+      <property name="exampleTargetPackage" value="mbg.test.mb3.generated.miscellaneous.model.example"/>
     </javaModelGenerator>
 
     <sqlMapGenerator targetPackage="mbg.test.mb3.generated.miscellaneous.xml"
@@ -523,7 +523,6 @@
 
     <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.annotated.miscellaneous.mapper"  targetProject="MAVEN">
       <property name="rootInterface" value="mbg.test.common.BaseInterface" />
-      <property name="methodNameCalculator" value="EXTENDED"/>
     </javaClientGenerator>
 
     <table tableName="BlobsOnly" />
@@ -750,7 +749,6 @@
     
     <javaClientGenerator type="MIXEDMAPPER" targetPackage="mbg.test.mb3.generated.mixed.miscellaneous.mapper"  targetProject="MAVEN">
       <property name="rootInterface" value="mbg.test.common.BaseInterface" />
-      <property name="methodNameCalculator" value="EXTENDED"/>
     </javaClientGenerator>
 
     <table tableName="BlobsOnly" />

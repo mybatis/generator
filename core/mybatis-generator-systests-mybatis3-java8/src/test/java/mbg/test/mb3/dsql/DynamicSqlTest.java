@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,17 +17,14 @@ package mbg.test.mb3.dsql;
 
 import static mbg.test.common.util.TestUtilities.blobsAreEqual;
 import static mbg.test.common.util.TestUtilities.generateRandomBlob;
-import static mbg.test.mb3.generated.dsql.mapper.AwfulTableDynamicSqlSupport.*;
-import static mbg.test.mb3.generated.dsql.mapper.FieldsblobsDynamicSqlSupport.*;
-import static mbg.test.mb3.generated.dsql.mapper.FieldsonlyDynamicSqlSupport.*;
-import static mbg.test.mb3.generated.dsql.mapper.PkblobsDynamicSqlSupport.*;
-import static mbg.test.mb3.generated.dsql.mapper.PkfieldsDynamicSqlSupport.*;
-import static mbg.test.mb3.generated.dsql.mapper.PkfieldsblobsDynamicSqlSupport.*;
-import static mbg.test.mb3.generated.dsql.mapper.PkonlyDynamicSqlSupport.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static mbg.test.mb3.generated.dsql.mapper.AwfulTableDynamicSqlSupport.awfulTable;
+import static mbg.test.mb3.generated.dsql.mapper.FieldsblobsDynamicSqlSupport.fieldsblobs;
+import static mbg.test.mb3.generated.dsql.mapper.FieldsonlyDynamicSqlSupport.fieldsonly;
+import static mbg.test.mb3.generated.dsql.mapper.PkblobsDynamicSqlSupport.pkblobs;
+import static mbg.test.mb3.generated.dsql.mapper.PkfieldsDynamicSqlSupport.pkfields;
+import static mbg.test.mb3.generated.dsql.mapper.PkfieldsblobsDynamicSqlSupport.pkfieldsblobs;
+import static mbg.test.mb3.generated.dsql.mapper.PkonlyDynamicSqlSupport.pkonly;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mybatis.dynamic.sql.SqlBuilder.*;
 
 import java.math.BigDecimal;
@@ -38,7 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mybatis.dynamic.sql.render.RenderingStrategy;
 import org.mybatis.dynamic.sql.select.render.SelectStatementProvider;
 
@@ -49,6 +46,8 @@ import mbg.test.mb3.generated.dsql.mapper.PkblobsMapper;
 import mbg.test.mb3.generated.dsql.mapper.PkfieldsMapper;
 import mbg.test.mb3.generated.dsql.mapper.PkfieldsblobsMapper;
 import mbg.test.mb3.generated.dsql.mapper.PkonlyMapper;
+import mbg.test.mb3.generated.dsql.mapper.mbgtest.IdMapper;
+import mbg.test.mb3.generated.dsql.mapper.mbgtest.TranslationMapper;
 import mbg.test.mb3.generated.dsql.model.AwfulTable;
 import mbg.test.mb3.generated.dsql.model.Fieldsblobs;
 import mbg.test.mb3.generated.dsql.model.Fieldsonly;
@@ -56,6 +55,8 @@ import mbg.test.mb3.generated.dsql.model.Pkblobs;
 import mbg.test.mb3.generated.dsql.model.Pkfields;
 import mbg.test.mb3.generated.dsql.model.Pkfieldsblobs;
 import mbg.test.mb3.generated.dsql.model.Pkonly;
+import mbg.test.mb3.generated.dsql.model.mbgtest.Id;
+import mbg.test.mb3.generated.dsql.model.mbgtest.Translation;
 
 /**
  * @author Jeff Butler
@@ -1189,7 +1190,7 @@ public class DynamicSqlTest extends AbstractTest {
             record.setWierdField(66);
             mapper.insert(record);
 
-            List<Integer> values = new ArrayList<Integer>();
+            List<Integer> values = new ArrayList<>();
             values.add(11);
             values.add(22);
 
@@ -3011,6 +3012,66 @@ public class DynamicSqlTest extends AbstractTest {
             assertEquals(2, rows);
         } finally {
             sqlSession.close();
+        }
+    }
+    
+    @Test
+    public void testTranslationTable() {
+        try(SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            TranslationMapper mapper = sqlSession.getMapper(TranslationMapper.class);
+            
+            Translation t = new Translation();
+            t.setId(1);
+            t.setTranslation("Spanish");
+            mapper.insert(t);
+            
+            t = new Translation();
+            t.setId(2);
+            t.setTranslation("French");
+            mapper.insert(t);
+            
+            Translation returnedRecord = mapper.selectByPrimaryKey(2);
+            
+            assertEquals(t.getId(), returnedRecord.getId());
+            assertEquals(t.getTranslation(), returnedRecord.getTranslation());
+            
+            t.setTranslation("Italian");
+            mapper.updateByPrimaryKey(t);
+            
+            returnedRecord = mapper.selectByPrimaryKey(2);
+            
+            assertEquals(t.getId(), returnedRecord.getId());
+            assertEquals(t.getTranslation(), returnedRecord.getTranslation());
+        }
+    }
+    
+    @Test
+    public void testIdTable() {
+        try(SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            IdMapper mapper = sqlSession.getMapper(IdMapper.class);
+            
+            Id id = new Id();
+            id.setId(1);
+            id.setDescription("Spanish");
+            mapper.insert(id);
+            
+            id = new Id();
+            id.setId(2);
+            id.setDescription("French");
+            mapper.insert(id);
+            
+            Id returnedRecord = mapper.selectByPrimaryKey(2);
+            
+            assertEquals(id.getId(), returnedRecord.getId());
+            assertEquals(id.getDescription(), returnedRecord.getDescription());
+            
+            id.setDescription("Italian");
+            mapper.updateByPrimaryKey(id);
+            
+            returnedRecord = mapper.selectByPrimaryKey(2);
+            
+            assertEquals(id.getId(), returnedRecord.getId());
+            assertEquals(id.getDescription(), returnedRecord.getDescription());
         }
     }
     

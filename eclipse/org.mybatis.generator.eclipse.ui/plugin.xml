@@ -31,10 +31,6 @@
                publicId="-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
                uri="dtds/mybatis-generator-config_1_0.dtd">
          </public>
-         <public
-               publicId="-//Apache Software Foundation//DTD Apache iBATIS Ibator Configuration 1.0//EN"
-               uri="dtds/ibator-config_1_0.dtd">
-         </public>
       </catalogContribution>
    </extension>
    <extension
@@ -81,11 +77,11 @@
             label="Run MyBatis Generator"
             modes="run, debug">
          <description
-               description="Generates MyBatis/iBATIS Artifacts"
+               description="Generates MyBatis Artifacts"
                mode="run">
          </description>
          <description
-               description="Generates MyBatis/iBATIS Artifacts"
+               description="Generates MyBatis Artifacts"
                mode="debug">
          </description>
          <contextualLaunch>

@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -46,13 +46,13 @@ import org.mybatis.generator.internal.util.messages.Messages;
 import org.mybatis.generator.logging.LogFactory;
 
 /**
- * Goal which generates MyBatis/iBATIS artifacts.
+ * Goal which generates MyBatis artifacts.
  */
 @Mojo(name = "generate", defaultPhase = LifecyclePhase.GENERATE_SOURCES,
         requiresDependencyResolution = ResolutionScope.TEST)
 public class MyBatisGeneratorMojo extends AbstractMojo {
     
-    private ThreadLocal<ClassLoader> savedClassloader = new ThreadLocal<ClassLoader>();
+    private ThreadLocal<ClassLoader> savedClassloader = new ThreadLocal<>();
 
     /**
      * Maven Project.
@@ -173,7 +173,7 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
         // is in the project's source tree, but the plugin classpath does not
         // include the project classpath.
         List<Resource> resources = project.getResources();
-        List<String> resourceDirectories = new ArrayList<String>();
+        List<String> resourceDirectories = new ArrayList<>();
         for (Resource resource: resources) {
             resourceDirectories.add(resource.getDirectory());
         }
@@ -185,7 +185,7 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
                     Messages.getString("RuntimeError.0")); //$NON-NLS-1$
         }
 
-        List<String> warnings = new ArrayList<String>();
+        List<String> warnings = new ArrayList<>();
 
         if (!configurationFile.exists()) {
             throw new MojoExecutionException(Messages.getString(
@@ -194,7 +194,7 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
 
         runScriptIfNecessary();
 
-        Set<String> fullyqualifiedTables = new HashSet<String>();
+        Set<String> fullyqualifiedTables = new HashSet<>();
         if (StringUtility.stringHasValue(tableNames)) {
             StringTokenizer st = new StringTokenizer(tableNames, ","); //$NON-NLS-1$
             while (st.hasMoreTokens()) {
@@ -205,7 +205,7 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
             }
         }
 
-        Set<String> contextsToRun = new HashSet<String>();
+        Set<String> contextsToRun = new HashSet<>();
         if (StringUtility.stringHasValue(contexts)) {
             StringTokenizer st = new StringTokenizer(contexts, ","); //$NON-NLS-1$
             while (st.hasMoreTokens()) {
@@ -273,7 +273,7 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
                 // so that the project dependency classes can be found
                 // directly, without adding the classpath to configuration's classPathEntries
                 // repeatedly.Examples are JDBC drivers, root classes, root interfaces, etc.
-                Set<String> entries = new HashSet<String>();
+                Set<String> entries = new HashSet<>();
                 if (includeCompileDependencies) {
                     entries.addAll(project.getCompileClasspathElements());
                 }

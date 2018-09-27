@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -23,11 +23,9 @@ import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 
 public class DeleteByExampleMethodGenerator extends AbstractMethodGenerator {
-    private String tableFieldName;
     
     private DeleteByExampleMethodGenerator(Builder builder) {
         super(builder);
-        tableFieldName = builder.tableFieldName;
     }
 
     @Override
@@ -36,7 +34,7 @@ public class DeleteByExampleMethodGenerator extends AbstractMethodGenerator {
             return null;
         }
         
-        Set<FullyQualifiedJavaType> imports = new HashSet<FullyQualifiedJavaType>();
+        Set<FullyQualifiedJavaType> imports = new HashSet<>();
 
         imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.delete.DeleteDSL")); //$NON-NLS-1$
         imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.delete.MyBatis3DeleteModelAdapter")); //$NON-NLS-1$
@@ -61,13 +59,6 @@ public class DeleteByExampleMethodGenerator extends AbstractMethodGenerator {
 
     public static class Builder extends BaseBuilder<Builder, DeleteByExampleMethodGenerator> {
 
-        private String tableFieldName;
-        
-        public Builder withTableFieldName(String tableFIeldName) {
-            this.tableFieldName = tableFIeldName;
-            return this;
-        }
-        
         @Override
         public Builder getThis() {
             return this;

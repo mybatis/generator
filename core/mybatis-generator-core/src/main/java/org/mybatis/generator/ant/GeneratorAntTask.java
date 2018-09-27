@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -101,7 +101,7 @@ public class GeneratorAntTask extends Task {
             throw new BuildException(getString("RuntimeError.0")); //$NON-NLS-1$
         }
 
-        List<String> warnings = new ArrayList<String>();
+        List<String> warnings = new ArrayList<>();
 
         File configurationFile = new File(configfile);
         if (!configurationFile.exists()) {
@@ -109,7 +109,7 @@ public class GeneratorAntTask extends Task {
                     "RuntimeError.1", configfile)); //$NON-NLS-1$
         }
 
-        Set<String> fullyqualifiedTables = new HashSet<String>();
+        Set<String> fullyqualifiedTables = new HashSet<>();
         if (stringHasValue(fullyQualifiedTableNames)) {
             StringTokenizer st = new StringTokenizer(fullyQualifiedTableNames,
                     ","); //$NON-NLS-1$
@@ -121,7 +121,7 @@ public class GeneratorAntTask extends Task {
             }
         }
 
-        Set<String> contexts = new HashSet<String>();
+        Set<String> contexts = new HashSet<>();
         if (stringHasValue(contextIds)) {
             StringTokenizer st = new StringTokenizer(contextIds, ","); //$NON-NLS-1$
             while (st.hasMoreTokens()) {
@@ -174,32 +174,18 @@ public class GeneratorAntTask extends Task {
         }
     }
 
-    /**
-     * @return Returns the configfile.
-     */
     public String getConfigfile() {
         return configfile;
     }
 
-    /**
-     * @param configfile
-     *            The configfile to set.
-     */
     public void setConfigfile(String configfile) {
         this.configfile = configfile;
     }
 
-    /**
-     * @return Returns the overwrite.
-     */
     public boolean isOverwrite() {
         return overwrite;
     }
 
-    /**
-     * @param overwrite
-     *            The overwrite to set.
-     */
     public void setOverwrite(boolean overwrite) {
         this.overwrite = overwrite;
     }

@@ -45,7 +45,7 @@ public class NewJavaFileVisitor extends ASTVisitor {
      */
     public NewJavaFileVisitor() {
         super();
-        newNodes = new ArrayList<ASTNode>();
+        newNodes = new ArrayList<>();
     }
 
     @Override

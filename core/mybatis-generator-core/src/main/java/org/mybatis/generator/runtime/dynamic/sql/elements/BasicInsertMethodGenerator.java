@@ -42,7 +42,7 @@ public class BasicInsertMethodGenerator extends AbstractMethodGenerator {
             return null;
         }
 
-        Set<FullyQualifiedJavaType> imports = new HashSet<FullyQualifiedJavaType>();
+        Set<FullyQualifiedJavaType> imports = new HashSet<>();
         
         FullyQualifiedJavaType adapter = new FullyQualifiedJavaType("org.mybatis.dynamic.sql.util.SqlProviderAdapter"); //$NON-NLS-1$
         FullyQualifiedJavaType annotation = new FullyQualifiedJavaType("org.apache.ibatis.annotations.InsertProvider"); //$NON-NLS-1$
@@ -56,6 +56,7 @@ public class BasicInsertMethodGenerator extends AbstractMethodGenerator {
         parameterType.addTypeArgument(recordType);
         
         Method method = new Method("insert"); //$NON-NLS-1$
+        method.setAbstract(true);
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
         method.addParameter(new Parameter(parameterType, "insertStatement")); //$NON-NLS-1$
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);

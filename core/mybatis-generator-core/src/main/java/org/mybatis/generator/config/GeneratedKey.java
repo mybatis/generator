@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,8 +20,6 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.List;
 
-import org.mybatis.generator.api.dom.xml.Attribute;
-import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.internal.db.DatabaseDialects;
 
 /**
@@ -33,8 +31,6 @@ import org.mybatis.generator.internal.db.DatabaseDialects;
 public class GeneratedKey {
 
     private String column;
-
-    private String configuredSqlStatement;
 
     private String runtimeSqlStatement;
 
@@ -48,7 +44,6 @@ public class GeneratedKey {
         this.column = column;
         this.type = type;
         this.isIdentity = isIdentity;
-        this.configuredSqlStatement = configuredSqlStatement;
 
         DatabaseDialects dialect = DatabaseDialects
                 .getDatabaseDialect(configuredSqlStatement);
@@ -75,40 +70,8 @@ public class GeneratedKey {
         return type;
     }
 
-    /**
-     * This method is used by the iBATIS2 generators to know if the XML &lt;selectKey&gt; element should be placed before the
-     * insert SQL statement.
-     *
-     * @return true, if is placed before insert in ibatis2
-     */
-    public boolean isPlacedBeforeInsertInIbatis2() {
-        boolean rc;
-
-        if (stringHasValue(type)) {
-            rc = true;
-        } else {
-            rc = !isIdentity;
-        }
-
-        return rc;
-    }
-
     public String getMyBatis3Order() {
         return isIdentity ? "AFTER" : "BEFORE"; //$NON-NLS-1$ //$NON-NLS-2$
-    }
-
-    public XmlElement toXmlElement() {
-        XmlElement xmlElement = new XmlElement("generatedKey"); //$NON-NLS-1$
-        xmlElement.addAttribute(new Attribute("column", column)); //$NON-NLS-1$
-        xmlElement.addAttribute(new Attribute(
-                "sqlStatement", configuredSqlStatement)); //$NON-NLS-1$
-        if (stringHasValue(type)) {
-            xmlElement.addAttribute(new Attribute("type", type)); //$NON-NLS-1$
-        }
-        xmlElement.addAttribute(new Attribute("identity", //$NON-NLS-1$
-                isIdentity ? "true" : "false")); //$NON-NLS-1$ //$NON-NLS-2$
-
-        return xmlElement;
     }
 
     public void validate(List<String> errors, String tableName) {

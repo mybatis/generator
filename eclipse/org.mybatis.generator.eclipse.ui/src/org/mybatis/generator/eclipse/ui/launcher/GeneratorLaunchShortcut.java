@@ -94,7 +94,7 @@ public class GeneratorLaunchShortcut implements ILaunchShortcut {
         ILaunchConfigurationType ctype = getLaunchConfigurationType();
 
         ILaunchConfiguration[] configs = getLaunchManager().getLaunchConfigurations(ctype);
-        List<ILaunchConfiguration> candidateConfigs = new ArrayList<ILaunchConfiguration>(configs.length);
+        List<ILaunchConfiguration> candidateConfigs = new ArrayList<>(configs.length);
         for (ILaunchConfiguration config : configs) {
             String configFile = config.getAttribute(GeneratorLaunchConstants.ATTR_CONFIGURATION_FILE_NAME,
                     (String) null);

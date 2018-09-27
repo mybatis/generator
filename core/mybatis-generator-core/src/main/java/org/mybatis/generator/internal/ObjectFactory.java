@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -33,8 +33,6 @@ import org.mybatis.generator.api.Plugin;
 import org.mybatis.generator.api.XmlFormatter;
 import org.mybatis.generator.api.dom.DefaultJavaFormatter;
 import org.mybatis.generator.api.dom.DefaultXmlFormatter;
-import org.mybatis.generator.codegen.ibatis2.IntrospectedTableIbatis2Java2Impl;
-import org.mybatis.generator.codegen.ibatis2.IntrospectedTableIbatis2Java5Impl;
 import org.mybatis.generator.codegen.mybatis3.IntrospectedTableMyBatis3Impl;
 import org.mybatis.generator.codegen.mybatis3.IntrospectedTableMyBatis3SimpleImpl;
 import org.mybatis.generator.config.CommentGeneratorConfiguration;
@@ -57,7 +55,7 @@ public class ObjectFactory {
     private static List<ClassLoader> externalClassLoaders;
 
     static {
-        externalClassLoaders = new ArrayList<ClassLoader>();
+        externalClassLoaders = new ArrayList<>();
     }
 
     /**
@@ -305,8 +303,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Creates an introspected table implementation that is only usable for validation (i.e. for a context
-     * to determine if the target is ibatis2 or mybatis3).
+     * Creates an introspected table implementation that is only usable for validation .
      * 
      *
      * @param context
@@ -316,12 +313,6 @@ public class ObjectFactory {
     public static IntrospectedTable createIntrospectedTableForValidation(Context context) {
         String type = context.getTargetRuntime();
         if (!stringHasValue(type)) {
-            type = IntrospectedTableMyBatis3Impl.class.getName();
-        } else if ("Ibatis2Java2".equalsIgnoreCase(type)) { //$NON-NLS-1$
-            type = IntrospectedTableIbatis2Java2Impl.class.getName();
-        } else if ("Ibatis2Java5".equalsIgnoreCase(type)) { //$NON-NLS-1$
-            type = IntrospectedTableIbatis2Java5Impl.class.getName();
-        } else if ("Ibatis3".equalsIgnoreCase(type)) { //$NON-NLS-1$
             type = IntrospectedTableMyBatis3Impl.class.getName();
         } else if ("MyBatis3".equalsIgnoreCase(type)) { //$NON-NLS-1$
             type = IntrospectedTableMyBatis3Impl.class.getName();

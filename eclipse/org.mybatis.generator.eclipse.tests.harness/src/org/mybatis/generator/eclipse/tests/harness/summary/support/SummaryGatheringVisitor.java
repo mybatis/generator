@@ -33,13 +33,13 @@ import org.mybatis.generator.eclipse.tests.harness.summary.FieldSummary;
 import org.mybatis.generator.eclipse.tests.harness.summary.InterfaceSummary;
 
 public class SummaryGatheringVisitor extends ASTVisitor {
-    private List<String> methodSignatures = new ArrayList<String>();
-    private List<FieldSummary> fieldSummaries = new ArrayList<FieldSummary>();
-    private List<AnnotationSummary> annotationSummaries = new ArrayList<AnnotationSummary>();
-    private List<ClassSummary> classSummaries = new ArrayList<ClassSummary>();
-    private List<EnumSummary> enumSummaries = new ArrayList<EnumSummary>();
-    private List<InterfaceSummary> interfaceSummaries = new ArrayList<InterfaceSummary>();
-    private List<String> annotationMembers = new ArrayList<String>();
+    private List<String> methodSignatures = new ArrayList<>();
+    private List<FieldSummary> fieldSummaries = new ArrayList<>();
+    private List<AnnotationSummary> annotationSummaries = new ArrayList<>();
+    private List<ClassSummary> classSummaries = new ArrayList<>();
+    private List<EnumSummary> enumSummaries = new ArrayList<>();
+    private List<InterfaceSummary> interfaceSummaries = new ArrayList<>();
+    private List<String> annotationMembers = new ArrayList<>();
 
     @Override
     public boolean visit(AnnotationTypeMemberDeclaration node) {

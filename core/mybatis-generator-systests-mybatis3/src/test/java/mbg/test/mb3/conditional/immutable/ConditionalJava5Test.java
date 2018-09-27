@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,15 +19,15 @@ import static mbg.test.common.util.TestUtilities.blobsAreEqual;
 import static mbg.test.common.util.TestUtilities.datesAreEqual;
 import static mbg.test.common.util.TestUtilities.generateRandomBlob;
 import static mbg.test.common.util.TestUtilities.timesAreEqual;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.junit.jupiter.api.Test;
 
 import mbg.test.mb3.generated.conditional.immutable.mapper.FieldsblobsMapper;
 import mbg.test.mb3.generated.conditional.immutable.mapper.FieldsonlyMapper;
@@ -40,8 +40,8 @@ import mbg.test.mb3.generated.conditional.immutable.model.FieldsblobsExample;
 import mbg.test.mb3.generated.conditional.immutable.model.FieldsblobsWithBLOBs;
 import mbg.test.mb3.generated.conditional.immutable.model.Fieldsonly;
 import mbg.test.mb3.generated.conditional.immutable.model.FieldsonlyExample;
-import mbg.test.mb3.generated.conditional.immutable.model.PkblobsExample;
 import mbg.test.mb3.generated.conditional.immutable.model.Pkblobs;
+import mbg.test.mb3.generated.conditional.immutable.model.PkblobsExample;
 import mbg.test.mb3.generated.conditional.immutable.model.Pkfields;
 import mbg.test.mb3.generated.conditional.immutable.model.PkfieldsExample;
 import mbg.test.mb3.generated.conditional.immutable.model.PkfieldsKey;
@@ -50,9 +50,6 @@ import mbg.test.mb3.generated.conditional.immutable.model.PkfieldsblobsExample;
 import mbg.test.mb3.generated.conditional.immutable.model.PkfieldsblobsKey;
 import mbg.test.mb3.generated.conditional.immutable.model.PkonlyExample;
 import mbg.test.mb3.generated.conditional.immutable.model.PkonlyKey;
-
-import org.apache.ibatis.session.SqlSession;
-import org.junit.Test;
 
 /**
  * @author Jeff Butler
@@ -839,7 +836,7 @@ public class ConditionalJava5Test extends AbstractConditionalImmutableTest {
             record.setId2(3);
             mapper.insert(record);
 
-            List<Integer> ids = new ArrayList<Integer>();
+            List<Integer> ids = new ArrayList<>();
             ids.add(1);
             ids.add(3);
 
@@ -1038,7 +1035,7 @@ public class ConditionalJava5Test extends AbstractConditionalImmutableTest {
             record.setWierdField(66);
             mapper.insert(record);
 
-            List<Integer> values = new ArrayList<Integer>();
+            List<Integer> values = new ArrayList<>();
             values.add(11);
             values.add(22);
 

@@ -76,7 +76,7 @@ public class GeneratorAntTask extends Task {
             throw new BuildException("configfile is a required parameter");
         }
 
-        List<String> warnings = new ArrayList<String>();
+        List<String> warnings = new ArrayList<>();
 
         File configurationFile = new File(configfile);
         if (!configurationFile.exists()) {
@@ -84,7 +84,7 @@ public class GeneratorAntTask extends Task {
                     + " does not exist");
         }
 
-        Set<String> fullyqualifiedTables = new HashSet<String>();
+        Set<String> fullyqualifiedTables = new HashSet<>();
         if (StringUtility.stringHasValue(fullyQualifiedTableNames)) {
             StringTokenizer st = new StringTokenizer(fullyQualifiedTableNames, ","); //$NON-NLS-1$
             while (st.hasMoreTokens()) {
@@ -95,7 +95,7 @@ public class GeneratorAntTask extends Task {
             }
         }
         
-        Set<String> contexts = new HashSet<String>();
+        Set<String> contexts = new HashSet<>();
         if (StringUtility.stringHasValue(contextIds)) {
             StringTokenizer st = new StringTokenizer(contextIds, ","); //$NON-NLS-1$
             while (st.hasMoreTokens()) {
@@ -115,7 +115,7 @@ public class GeneratorAntTask extends Task {
         
         try {
             SubMonitor subMonitor = SubMonitor.convert(monitor, 1000);
-            subMonitor.beginTask("Generating MyBatis/iBATIS Artifacts:", 1000);
+            subMonitor.beginTask("Generating MyBatis Artifacts:", 1000);
             subMonitor.subTask("Parsing Configuration");
             
             Properties p = propertyset == null ? null : propertyset.getProperties();

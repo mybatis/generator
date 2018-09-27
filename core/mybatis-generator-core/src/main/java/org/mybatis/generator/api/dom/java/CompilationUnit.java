@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -26,19 +26,9 @@ import java.util.Set;
  */
 public interface CompilationUnit {
 
-    String getFormattedContent();
-
     Set<FullyQualifiedJavaType> getImportedTypes();
 
     Set<String> getStaticImports();
-
-    FullyQualifiedJavaType getSuperClass();
-
-    boolean isJavaInterface();
-
-    boolean isJavaEnumeration();
-
-    Set<FullyQualifiedJavaType> getSuperInterfaceTypes();
 
     FullyQualifiedJavaType getType();
 
@@ -61,4 +51,6 @@ public interface CompilationUnit {
     void addFileCommentLine(String commentLine);
 
     List<String> getFileCommentLines();
+    
+    <R> R accept(CompilationUnitVisitor<R> visitor);
 }

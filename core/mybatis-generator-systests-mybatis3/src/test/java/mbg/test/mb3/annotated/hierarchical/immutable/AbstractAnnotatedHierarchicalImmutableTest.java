@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,8 +15,9 @@
  */
 package mbg.test.mb3.annotated.hierarchical.immutable;
 
-import mbg.test.mb3.AbstractTest;
+import org.junit.jupiter.api.BeforeEach;
 
+import mbg.test.mb3.AbstractTest;
 import mbg.test.mb3.generated.annotated.hierarchical.Immutable.Mapper.FieldsblobsMapper;
 import mbg.test.mb3.generated.annotated.hierarchical.Immutable.Mapper.FieldsonlyMapper;
 import mbg.test.mb3.generated.annotated.hierarchical.Immutable.Mapper.PkblobsMapper;
@@ -26,6 +27,7 @@ import mbg.test.mb3.generated.annotated.hierarchical.Immutable.Mapper.PkonlyMapp
 
 public abstract class AbstractAnnotatedHierarchicalImmutableTest extends AbstractTest {
 
+    @BeforeEach
     @Override
     public void setUp() throws Exception {
         super.setUp();

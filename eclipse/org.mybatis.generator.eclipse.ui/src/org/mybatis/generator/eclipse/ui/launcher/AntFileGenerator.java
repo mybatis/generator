@@ -20,6 +20,7 @@ import static org.mybatis.generator.eclipse.ui.launcher.tabs.LauncherUtils.getTe
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.variables.VariablesPlugin;
 import org.eclipse.debug.core.ILaunchConfiguration;
+import org.mybatis.generator.api.dom.DefaultXmlFormatter;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.api.dom.xml.XmlElement;
@@ -45,7 +46,7 @@ public class AntFileGenerator implements GeneratorLaunchConstants {
         Document document = new Document();
         document.setRootElement(getProjectElement());
 
-        return document.getFormattedContent();
+        return new DefaultXmlFormatter().getFormattedContent(document);
     }
 
     private XmlElement getProjectElement() {

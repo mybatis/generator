@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2016 the original author or authors.
+       Copyright 2006-2018 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@
     <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.dsql.mapper"  targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
-    
+
     <table tableName="FieldsOnly" />
     <table tableName="PKOnly">
       <property name="immutable" value="true"/>
@@ -71,6 +71,8 @@
       <columnOverride column="id7$$" delimitedColumnName="true" />
       <columnOverride column="class" property="dbClass" />
     </table>
+    <table schema="mbgtest" tableName="Translations" domainObjectName="Translation"/>
+    <table schema="mbgtest" tableName="Ids" domainObjectName="Id"/>
   </context>
 
   <context id="miscellaneousTests_Annotated" targetRuntime="MyBatis3DynamicSql">
@@ -91,7 +93,6 @@
     </javaModelGenerator>
 
     <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.dsql.miscellaneous.mapper"  targetProject="MAVEN">
-      <property name="methodNameCalculator" value="EXTENDED"/>
     </javaClientGenerator>
 
     <table tableName="PKFields" domainObjectName="MyObject" alias="A" >

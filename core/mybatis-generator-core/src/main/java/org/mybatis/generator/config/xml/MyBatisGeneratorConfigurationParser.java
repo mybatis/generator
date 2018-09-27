@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -35,7 +35,10 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 import org.mybatis.generator.config.ColumnOverride;
 import org.mybatis.generator.config.ColumnRenamingRule;
@@ -711,33 +714,57 @@ public class MyBatisGeneratorConfigurationParser {
         return attributes;
     }
 
-    private String parsePropertyTokens(String string) {
+    String parsePropertyTokens(String s) {
         final String OPEN = "${"; //$NON-NLS-1$
         final String CLOSE = "}"; //$NON-NLS-1$
+        int currentIndex = 0;
 
-        String newString = string;
-        if (newString != null) {
-            int start = newString.indexOf(OPEN);
-            int end = newString.indexOf(CLOSE);
-
-            while (start > -1 && end > start) {
-                String prepend = newString.substring(0, start);
-                String append = newString.substring(end + CLOSE.length());
-                String propName = newString.substring(start + OPEN.length(),
-                        end);
-                String propValue = resolveProperty(propName);
-                if (propValue != null) {
-                    newString = prepend + propValue + append;
-                }
-
-                start = newString.indexOf(OPEN, end);
-                end = newString.indexOf(CLOSE, end);
-            }
+        List<String> answer = new ArrayList<>();
+        
+        int markerStartIndex = s.indexOf(OPEN);
+        if (markerStartIndex < 0) {
+            // no parameter markers
+            answer.add(s);
+            currentIndex = s.length();
         }
+        
+        while (markerStartIndex > -1) {
+            if (markerStartIndex > currentIndex) {
+                // add the characters before the next parameter marker
+                answer.add(s.substring(currentIndex, markerStartIndex));
+                currentIndex = markerStartIndex;
+            }
 
-        return newString;
+            int markerEndIndex = s.indexOf(CLOSE, currentIndex);
+
+            if (markerEndIndex < 0) {
+                // no closing delimiter, just move to the end of the string
+                answer.add(s.substring(markerStartIndex));
+                currentIndex = s.length();
+                break;
+            }
+
+            // we have a valid property marker...
+            String property = s.substring(markerStartIndex + OPEN.length(), markerEndIndex);
+            String propertyValue = resolveProperty(property);
+            if (propertyValue == null) {
+                // add the property marker back into the stream
+                answer.add(s.substring(markerStartIndex, markerEndIndex + 1));
+            } else {
+                answer.add(propertyValue);
+            }
+            
+            currentIndex = markerEndIndex + CLOSE.length();
+            markerStartIndex = s.indexOf(OPEN, currentIndex);
+        }
+        
+        if (currentIndex < s.length()) {
+            answer.add(s.substring(currentIndex));
+        }
+        
+        return answer.stream().collect(Collectors.joining());
     }
-
+    
     protected void parseCommentGenerator(Context context, Node node) {
         CommentGeneratorConfiguration commentGeneratorConfiguration = new CommentGeneratorConfiguration();
 

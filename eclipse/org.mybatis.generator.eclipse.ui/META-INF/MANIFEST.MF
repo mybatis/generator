@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: MyBatis Generator UI Plugin
 Bundle-SymbolicName: org.mybatis.generator.eclipse.ui;singleton:=true
-Bundle-Version: 1.3.7.qualifier
+Bundle-Version: 1.4.0.qualifier
 Bundle-Activator: org.mybatis.generator.eclipse.ui.Activator
 Bundle-Vendor: mybatis.org
 Require-Bundle: org.eclipse.ui,
@@ -22,7 +22,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.variables;bundle-version="3.2.800",
  org.eclipse.equinox.security;bundle-version="1.2.100",
  org.eclipse.ui.console;bundle-version="3.6.100"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: org.mybatis.generator.eclipse.ui,
  org.mybatis.generator.eclipse.ui.ant,

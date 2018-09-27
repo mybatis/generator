@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.StringTokenizer;
 
+import org.mybatis.generator.api.dom.DefaultJavaFormatter;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.internal.util.StringUtility;
 import org.reflections.Reflections;
@@ -63,10 +64,10 @@ public class GenerateTestSourceFiles {
     private void run(File outputDirectory) throws IOException, InstantiationException, IllegalAccessException {
         setupOutputDirectry(outputDirectory);
         
-        List<CompilationUnitGenerator> generators = new ArrayList<CompilationUnitGenerator>();
+        List<CompilationUnitGenerator> generators = new ArrayList<>();
         gatherGenerators(generators);
         
-        List<CompilationUnit> cus = new ArrayList<CompilationUnit>();
+        List<CompilationUnit> cus = new ArrayList<>();
         
         for (CompilationUnitGenerator generator : generators) {
             cus.addAll(generator.generate());
@@ -109,7 +110,8 @@ public class GenerateTestSourceFiles {
         String fileName = cu.getType().getShortName() + ".java";
         File targetFile = new File(directory, fileName);
 
-        writeFile(targetFile, cu.getFormattedContent());
+        DefaultJavaFormatter formatter = new DefaultJavaFormatter();
+        writeFile(targetFile, formatter.getFormattedContent(cu));
     }
 
     private void writeFile(File file, String content) throws IOException {

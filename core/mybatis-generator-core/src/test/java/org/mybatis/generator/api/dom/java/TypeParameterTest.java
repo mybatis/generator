@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,12 +15,12 @@
  */
 package org.mybatis.generator.api.dom.java;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import org.junit.jupiter.api.Test;
+import org.mybatis.generator.api.dom.java.render.TypeParameterRenderer;
 
 public class TypeParameterTest {
 
@@ -49,19 +49,20 @@ public class TypeParameterTest {
 
     @Test
     public void testGetFormattedContent() {
+        TypeParameterRenderer renderer = new TypeParameterRenderer();
 
         FullyQualifiedJavaType list = FullyQualifiedJavaType.getNewListInstance();
         FullyQualifiedJavaType compare = new FullyQualifiedJavaType("java.util.Comparator");
 
         TypeParameter typeParameter = new TypeParameter("T", Arrays.asList(list, compare));
         assertNotNull(typeParameter);
-        assertEquals("T extends List & Comparator", typeParameter.getFormattedContent(null));
+        assertEquals("T extends List & Comparator", renderer.render(typeParameter, null));
 
         TopLevelClass compilationUnit = new TopLevelClass("java.util.Test");
-        assertEquals("T extends List & Comparator", typeParameter.getFormattedContent(compilationUnit));
+        assertEquals("T extends List & Comparator", renderer.render(typeParameter, compilationUnit));
 
         TopLevelClass compilationUnit2 = new TopLevelClass("java.lang.Test");
-        assertEquals("T extends java.util.List & java.util.Comparator", typeParameter.getFormattedContent(compilationUnit2));
+        assertEquals("T extends java.util.List & java.util.Comparator", renderer.render(typeParameter, compilationUnit2));
     }
 
     @Test

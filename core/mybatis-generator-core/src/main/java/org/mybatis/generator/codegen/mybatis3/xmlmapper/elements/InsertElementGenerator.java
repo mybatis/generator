@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -93,7 +93,7 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
         StringBuilder valuesClause = new StringBuilder();
         valuesClause.append("values ("); //$NON-NLS-1$
 
-        List<String> valuesClauses = new ArrayList<String>();
+        List<String> valuesClauses = new ArrayList<>();
         List<IntrospectedColumn> columns = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(introspectedTable.getAllColumns());
         for (int i = 0; i < columns.size(); i++) {
             IntrospectedColumn introspectedColumn = columns.get(i);

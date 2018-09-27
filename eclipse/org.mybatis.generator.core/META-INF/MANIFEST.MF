@@ -2,22 +2,15 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: MyBatis Generator Core
 Bundle-SymbolicName: org.mybatis.generator.core
-Bundle-Version: 1.3.7.qualifier
+Bundle-Version: 1.4.0.qualifier
 Bundle-Vendor: mybatis.org
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.mybatis.generator.ant,
  org.mybatis.generator.api,
  org.mybatis.generator.api.dom,
  org.mybatis.generator.api.dom.java,
  org.mybatis.generator.api.dom.xml,
  org.mybatis.generator.codegen,
- org.mybatis.generator.codegen.ibatis2,
- org.mybatis.generator.codegen.ibatis2.dao,
- org.mybatis.generator.codegen.ibatis2.dao.elements,
- org.mybatis.generator.codegen.ibatis2.dao.templates,
- org.mybatis.generator.codegen.ibatis2.model,
- org.mybatis.generator.codegen.ibatis2.sqlmap,
- org.mybatis.generator.codegen.ibatis2.sqlmap.elements,
  org.mybatis.generator.codegen.mybatis3,
  org.mybatis.generator.codegen.mybatis3.javamapper,
  org.mybatis.generator.codegen.mybatis3.javamapper.elements,

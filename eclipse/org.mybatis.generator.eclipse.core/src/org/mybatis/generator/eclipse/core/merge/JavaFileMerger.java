@@ -196,7 +196,7 @@ public class JavaFileMerger {
             List<Type> existingSuperInterfaces,
             NewJavaFileVisitor newJavaFileVisitor) {
 
-        List<Type> answer = new ArrayList<Type>();
+        List<Type> answer = new ArrayList<>();
 
         for (Type newSuperInterface : newJavaFileVisitor
                 .getSuperInterfaceTypes()) {
@@ -220,7 +220,7 @@ public class JavaFileMerger {
     private List<ImportDeclaration> getNewImports(
             List<ImportDeclaration> existingImports,
             NewJavaFileVisitor newJavaFileVisitor) {
-        List<ImportDeclaration> answer = new ArrayList<ImportDeclaration>();
+        List<ImportDeclaration> answer = new ArrayList<>();
 
         for (ImportDeclaration newImport : newJavaFileVisitor.getImports()) {
             boolean found = false;
@@ -259,7 +259,7 @@ public class JavaFileMerger {
     @SuppressWarnings("unchecked")
     private void addExistsAnnotations(BodyDeclaration node,
             List<Annotation> oldAnnotations) {
-        Set<String> newAnnotationTypes = new HashSet<String>();
+        Set<String> newAnnotationTypes = new HashSet<>();
         int lastAnnotationIndex = 0;
         int idx = 0;
         for (Object modifier : node.modifiers()) {

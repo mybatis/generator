@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -67,7 +67,7 @@ public class XmlFileMergerJaxp {
     }
 
     /**
-     * Utility class - no instances allowed
+     * Utility class - no instances allowed.
      */
     private XmlFileMergerJaxp() {
         super();
@@ -139,7 +139,7 @@ public class XmlFileMergerJaxp {
 
         // remove the old generated elements and any
         // white space before the old nodes
-        List<Node> nodesToDelete = new ArrayList<Node>();
+        List<Node> nodesToDelete = new ArrayList<>();
         NodeList children = existingRootElement.getChildNodes();
         int length = children.getLength();
         for (int i = 0; i < length; i++) {

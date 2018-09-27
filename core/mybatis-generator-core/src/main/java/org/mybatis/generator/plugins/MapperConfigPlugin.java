@@ -40,11 +40,11 @@ import org.mybatis.generator.codegen.XmlConstants;
  * <p>This plugin accepts three properties:
  * 
  * <ul>
- * <li><tt>fileName</tt> (optional) the name of the generated file. this
+ * <li><code>fileName</code> (optional) the name of the generated file. this
  * defaults to "SqlMapConfig.xml" if not specified.</li>
- * <li><tt>targetPackage</tt> (required) the name of the package where the file
+ * <li><code>targetPackage</code> (required) the name of the package where the file
  * should be placed. Specified like "com.mycompany.sql".</li>
- * <li><tt>targetProject</tt> (required) the name of the project where the file
+ * <li><code>targetProject</code> (required) the name of the project where the file
  * should be placed.</li>
  * </ul>
  * 
@@ -57,7 +57,7 @@ import org.mybatis.generator.codegen.XmlConstants;
  */
 public class MapperConfigPlugin extends PluginAdapter {
 
-    private List<String> mapperFiles = new ArrayList<String>();
+    private List<String> mapperFiles = new ArrayList<>();
 
     @Override
     public boolean validate(List<String> warnings) {
@@ -127,7 +127,7 @@ public class MapperConfigPlugin extends PluginAdapter {
                 properties.getProperty("targetProject"), //$NON-NLS-1$
                 false, context.getXmlFormatter());
 
-        List<GeneratedXmlFile> answer = new ArrayList<GeneratedXmlFile>(1);
+        List<GeneratedXmlFile> answer = new ArrayList<>(1);
         answer.add(gxf);
 
         return answer;

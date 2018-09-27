@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -36,18 +36,11 @@ import org.mybatis.generator.api.JavaTypeResolver;
 import org.mybatis.generator.api.Plugin;
 import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.api.XmlFormatter;
-import org.mybatis.generator.api.dom.xml.Attribute;
-import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.internal.JDBCConnectionFactory;
 import org.mybatis.generator.internal.ObjectFactory;
 import org.mybatis.generator.internal.PluginAggregator;
 import org.mybatis.generator.internal.db.DatabaseIntrospector;
 
-/**
- * The Class Context.
- *
- * @author Jeff Butler
- */
 public class Context extends PropertyHolder {
 
     private String id;
@@ -89,6 +82,8 @@ public class Context extends PropertyHolder {
     private JavaFormatter javaFormatter;
 
     private XmlFormatter xmlFormatter;
+    
+    private boolean isJava8Targeted = true;
 
     public Context(ModelType defaultModelType) {
         super();
@@ -99,8 +94,8 @@ public class Context extends PropertyHolder {
             this.defaultModelType = defaultModelType;
         }
 
-        tableConfigurations = new ArrayList<TableConfiguration>();
-        pluginConfigurations = new ArrayList<PluginConfiguration>();
+        tableConfigurations = new ArrayList<>();
+        pluginConfigurations = new ArrayList<>();
     }
 
     public void addTableConfiguration(TableConfiguration tc) {
@@ -233,75 +228,6 @@ public class Context extends PropertyHolder {
         return defaultModelType;
     }
 
-    /**
-     * Builds an XmlElement representation of this context. Note that the XML
-     * may not necessarily validate if the context is invalid. Call the
-     * <code>validate</code> method to check validity of this context.
-     * 
-     * @return the XML representation of this context
-     */
-    public XmlElement toXmlElement() {
-        XmlElement xmlElement = new XmlElement("context"); //$NON-NLS-1$
-
-        xmlElement.addAttribute(new Attribute("id", id)); //$NON-NLS-1$
-
-        if (defaultModelType != ModelType.CONDITIONAL) {
-            xmlElement.addAttribute(new Attribute(
-                    "defaultModelType", defaultModelType.getModelType())); //$NON-NLS-1$
-        }
-
-        if (stringHasValue(introspectedColumnImpl)) {
-            xmlElement.addAttribute(new Attribute(
-                    "introspectedColumnImpl", introspectedColumnImpl)); //$NON-NLS-1$
-        }
-
-        if (stringHasValue(targetRuntime)) {
-            xmlElement.addAttribute(new Attribute(
-                    "targetRuntime", targetRuntime)); //$NON-NLS-1$
-        }
-
-        addPropertyXmlElements(xmlElement);
-
-        for (PluginConfiguration pluginConfiguration : pluginConfigurations) {
-            xmlElement.addElement(pluginConfiguration.toXmlElement());
-        }
-
-        if (commentGeneratorConfiguration != null) {
-            xmlElement.addElement(commentGeneratorConfiguration.toXmlElement());
-        }
-
-        if (jdbcConnectionConfiguration != null) {
-            xmlElement.addElement(jdbcConnectionConfiguration.toXmlElement());
-        }
-
-        if (connectionFactoryConfiguration != null) {
-            xmlElement.addElement(connectionFactoryConfiguration.toXmlElement());
-        }
-
-        if (javaTypeResolverConfiguration != null) {
-            xmlElement.addElement(javaTypeResolverConfiguration.toXmlElement());
-        }
-
-        if (javaModelGeneratorConfiguration != null) {
-            xmlElement.addElement(javaModelGeneratorConfiguration
-                    .toXmlElement());
-        }
-
-        if (sqlMapGeneratorConfiguration != null) {
-            xmlElement.addElement(sqlMapGeneratorConfiguration.toXmlElement());
-        }
-
-        if (javaClientGeneratorConfiguration != null) {
-            xmlElement.addElement(javaClientGeneratorConfiguration.toXmlElement());
-        }
-
-        for (TableConfiguration tableConfiguration : tableConfigurations) {
-            xmlElement.addElement(tableConfiguration.toXmlElement());
-        }
-
-        return xmlElement;
-    }
-
     public List<TableConfiguration> getTableConfigurations() {
         return tableConfigurations;
     }
@@ -325,6 +251,9 @@ public class Context extends PropertyHolder {
         } else if (PropertyRegistry.CONTEXT_AUTO_DELIMIT_KEYWORDS.equals(name)
                 && stringHasValue(value)) {
             autoDelimitKeywords = isTrue(value);
+        } else if (PropertyRegistry.CONTEXT_TARGET_JAVA8.equals(name)
+                && stringHasValue(value)) {
+            isJava8Targeted = isTrue(value);
         }
     }
 
@@ -435,7 +364,7 @@ public class Context extends PropertyHolder {
             List<String> warnings, Set<String> fullyQualifiedTableNames)
             throws SQLException, InterruptedException {
 
-        introspectedTables = new ArrayList<IntrospectedTable>();
+        introspectedTables = new ArrayList<>();
         JavaTypeResolver javaTypeResolver = ObjectFactory
                 .createJavaTypeResolver(this, warnings);
 
@@ -563,5 +492,13 @@ public class Context extends PropertyHolder {
 
     public void setConnectionFactoryConfiguration(ConnectionFactoryConfiguration connectionFactoryConfiguration) {
         this.connectionFactoryConfiguration = connectionFactoryConfiguration;
+    }
+
+    public boolean isJava8Targeted() {
+        return isJava8Targeted;
+    }
+
+    public void setJava8Targeted(boolean isJava8Targeted) {
+        this.isJava8Targeted = isJava8Targeted;
     }
 }

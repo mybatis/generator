@@ -2,8 +2,8 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Tests for MyBatis Generator Eclipse Core Support
 Bundle-SymbolicName: org.mybatis.generator.eclipse.core.tests
-Bundle-Version: 1.3.7.qualifier
+Bundle-Version: 1.4.0.qualifier
 Fragment-Host: org.mybatis.generator.eclipse.core;bundle-version="1.3.6"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.junit;bundle-version="4.12.0",
  org.mybatis.generator.eclipse.tests.harness;bundle-version="1.3.6"

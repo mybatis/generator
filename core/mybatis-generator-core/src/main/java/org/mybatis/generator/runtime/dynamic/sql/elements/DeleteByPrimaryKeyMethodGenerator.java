@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -25,12 +25,10 @@ import org.mybatis.generator.api.dom.java.Parameter;
 
 public class DeleteByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
     
-    private String tableFieldName;
     private FragmentGenerator fragmentGenerator;
     
     private DeleteByPrimaryKeyMethodGenerator(Builder builder) {
         super(builder);
-        tableFieldName = builder.tableFieldName;
         fragmentGenerator = builder.fragmentGenerator;
     }
 
@@ -40,8 +38,8 @@ public class DeleteByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
             return null;
         }
 
-        Set<FullyQualifiedJavaType> imports = new HashSet<FullyQualifiedJavaType>();
-        Set<String> staticImports = new HashSet<String>();
+        Set<FullyQualifiedJavaType> imports = new HashSet<>();
+        Set<String> staticImports = new HashSet<>();
         
         imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.delete.DeleteDSL")); //$NON-NLS-1$
         staticImports.add("org.mybatis.dynamic.sql.SqlBuilder.*"); //$NON-NLS-1$
@@ -76,13 +74,7 @@ public class DeleteByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
 
     public static class Builder extends BaseBuilder<Builder, DeleteByPrimaryKeyMethodGenerator> {
         
-        private String tableFieldName;
         private FragmentGenerator fragmentGenerator;
-        
-        public Builder withTableFieldName(String tableFieldName) {
-            this.tableFieldName = tableFieldName;
-            return this;
-        }
         
         public Builder withFragmentGenerator(FragmentGenerator fragmentGenerator) {
             this.fragmentGenerator = fragmentGenerator;

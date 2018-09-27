@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 
 import mbg.test.mb3.generated.dsql.mapper.AwfulTableMapper;
 import mbg.test.mb3.generated.dsql.mapper.FieldsblobsMapper;
@@ -32,6 +32,8 @@ import mbg.test.mb3.generated.dsql.mapper.PkblobsMapper;
 import mbg.test.mb3.generated.dsql.mapper.PkfieldsMapper;
 import mbg.test.mb3.generated.dsql.mapper.PkfieldsblobsMapper;
 import mbg.test.mb3.generated.dsql.mapper.PkonlyMapper;
+import mbg.test.mb3.generated.dsql.mapper.mbgtest.IdMapper;
+import mbg.test.mb3.generated.dsql.mapper.mbgtest.TranslationMapper;
 
 /**
  * @author Jeff Butler
@@ -44,7 +46,7 @@ public abstract class AbstractTest {
 
     protected SqlSessionFactory sqlSessionFactory;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         createDatabase();
 
@@ -58,6 +60,8 @@ public abstract class AbstractTest {
         config.addMapper(PkfieldsblobsMapper.class);
         config.addMapper(PkfieldsMapper.class);
         config.addMapper(PkonlyMapper.class);
+        config.addMapper(TranslationMapper.class);
+        config.addMapper(IdMapper.class);
         sqlSessionFactory = new SqlSessionFactoryBuilder().build(config);
     }
 }

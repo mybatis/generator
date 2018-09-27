@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,17 +15,20 @@
  */
 package mbg.test.mb3.annotated.flat;
 
+import org.junit.jupiter.api.BeforeEach;
+
 import mbg.test.mb3.AbstractTest;
 import mbg.test.mb3.generated.annotated.flat.mapper.AwfulTableMapper;
 import mbg.test.mb3.generated.annotated.flat.mapper.FieldsblobsMapper;
-import mbg.test.mb3.generated.annotated.flat.mapper.subpackage.FieldsonlyMapper;
 import mbg.test.mb3.generated.annotated.flat.mapper.PkblobsMapper;
 import mbg.test.mb3.generated.annotated.flat.mapper.PkfieldsMapper;
 import mbg.test.mb3.generated.annotated.flat.mapper.PkfieldsblobsMapper;
 import mbg.test.mb3.generated.annotated.flat.mapper.PkonlyMapper;
+import mbg.test.mb3.generated.annotated.flat.mapper.subpackage.FieldsonlyMapper;
 
 public abstract class AbstractAnnotatedFlatTest extends AbstractTest {
 
+    @BeforeEach
     @Override
     public void setUp() throws Exception {
         super.setUp();

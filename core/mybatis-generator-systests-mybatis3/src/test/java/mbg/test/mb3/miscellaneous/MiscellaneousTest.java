@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,11 +16,12 @@
 package mbg.test.mb3.miscellaneous;
 
 import static mbg.test.common.util.TestUtilities.datesAreEqual;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import mbg.test.common.FirstName;
 import mbg.test.common.MyTime;
@@ -41,6 +42,7 @@ import mbg.test.mb3.generated.miscellaneous.model.MyObject;
 import mbg.test.mb3.generated.miscellaneous.model.MyObjectCriteria;
 import mbg.test.mb3.generated.miscellaneous.model.MyObjectKey;
 import mbg.test.mb3.generated.miscellaneous.model.Regexrename;
+import mbg.test.mb3.generated.miscellaneous.model.example.mbgtest.AnotherawfultableExample;
 import mbg.test.mb3.generated.miscellaneous.model.mbgtest.Anotherawfultable;
 
 /**
@@ -617,7 +619,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
             record.setId2(3);
             mapper.insert(record);
 
-            List<Integer> ids = new ArrayList<Integer>();
+            List<Integer> ids = new ArrayList<>();
             ids.add(1);
             ids.add(3);
 
@@ -775,23 +777,25 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         }
     }
 
-    @Test(expected=NoSuchFieldException.class)
-    public void testFieldIgnored() throws NoSuchFieldException {
-        MyObject.class.getDeclaredField("decimal30field");
+    @Test
+    public void testFieldIgnored() {
+        assertThrows(NoSuchFieldException.class, () -> {
+            MyObject.class.getDeclaredField("decimal30field");
+        });
     }
 
     @Test
     public void testFluentBuilderMethodGenerated() {
         MyObject myObject = new MyObject();
         FirstName firstname = new FirstName();
-        firstname.setValue( "Bob" );
+        firstname.setValue("Bob");
 
         Integer wierdField = 4711;
-        myObject.withWierdField( wierdField )
-                .withFirstname( firstname );
+        myObject.withWierdField(wierdField)
+                .withFirstname(firstname);
 
-        assertEquals( "firstName was set", "Bob", myObject.getFirstname().getValue() );
-        assertEquals( "wieredField was set", wierdField,myObject.getWierdField());
+        assertEquals("Bob", myObject.getFirstname().getValue());
+        assertEquals(wierdField, myObject.getWierdField());
     }
 
     @Test
@@ -960,6 +964,39 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
             Anotherawfultable returnedRecord = (Anotherawfultable)
                 sqlSession.selectOne("mbg.test.mb3.generated.miscellaneous.xml.AnotherawfultableMapper.selectByPrimaryKey",
                         key);
+            
+            assertEquals(record.getId(), returnedRecord.getId());
+            assertEquals(record.getSelect(), returnedRecord.getSelect());
+            assertEquals(record.getInsert(), returnedRecord.getInsert());
+            assertEquals(record.getUpdate(), returnedRecord.getUpdate());
+            assertEquals(record.getDelete(), returnedRecord.getDelete());
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+    @Test
+    public void testAnotherAwfulTableSelectByExample() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        
+        try {
+            Anotherawfultable record = new Anotherawfultable();
+            record.setId(5);
+            record.setSelect("select");
+            record.setInsert("insert");
+            
+            sqlSession.insert("mbg.test.mb3.generated.miscellaneous.xml.AnotherawfultableMapper.insert", record);
+            
+            AnotherawfultableExample example = new AnotherawfultableExample();
+            example.or().andIdEqualTo(5);
+            
+            List<?> returnedRecords = 
+                sqlSession.selectList("mbg.test.mb3.generated.miscellaneous.xml.AnotherawfultableMapper.selectByExample",
+                        example);
+            
+            assertEquals(returnedRecords.size(), 1);
+            
+            Anotherawfultable returnedRecord = (Anotherawfultable) returnedRecords.get(0);
             
             assertEquals(record.getId(), returnedRecord.getId());
             assertEquals(record.getSelect(), returnedRecord.getSelect());

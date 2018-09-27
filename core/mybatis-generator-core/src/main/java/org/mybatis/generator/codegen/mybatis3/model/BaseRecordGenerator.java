@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -45,8 +45,8 @@ import org.mybatis.generator.codegen.RootClassInfo;
  */
 public class BaseRecordGenerator extends AbstractJavaGenerator {
 
-    public BaseRecordGenerator() {
-        super();
+    public BaseRecordGenerator(String project) {
+        super(project);
     }
 
     @Override
@@ -116,7 +116,7 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
             }
         }
 
-        List<CompilationUnit> answer = new ArrayList<CompilationUnit>();
+        List<CompilationUnit> answer = new ArrayList<>();
         if (context.getPlugins().modelBaseRecordClassGenerated(
                 topLevelClass, introspectedTable)) {
             answer.add(topLevelClass);
@@ -152,10 +152,9 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
     }
 
     private void addParameterizedConstructor(TopLevelClass topLevelClass, List<IntrospectedColumn> constructorColumns) {
-        Method method = new Method();
+        Method method = new Method(topLevelClass.getType().getShortName());
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setConstructor(true);
-        method.setName(topLevelClass.getType().getShortName());
         context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
 
         for (IntrospectedColumn introspectedColumn : constructorColumns) {
@@ -165,7 +164,7 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
         }
 
         StringBuilder sb = new StringBuilder();
-        List<String> superColumns = new LinkedList<String>();
+        List<String> superColumns = new LinkedList<>();
         if (introspectedTable.getRules().generatePrimaryKeyClass()) {
             boolean comma = false;
             sb.append("super("); //$NON-NLS-1$

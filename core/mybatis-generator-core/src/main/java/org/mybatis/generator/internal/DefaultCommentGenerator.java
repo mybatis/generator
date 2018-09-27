@@ -18,12 +18,11 @@ package org.mybatis.generator.internal;
 import static org.mybatis.generator.internal.util.StringUtility.isTrue;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Properties;
 import java.util.Set;
-
-import javax.xml.bind.DatatypeConverter;
 
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.IntrospectedColumn;
@@ -492,7 +491,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
         
         if (!suppressDate && !suppressAllComments) {
             buffer.append(", date=\""); //$NON-NLS-1$
-            buffer.append(DatatypeConverter.printDateTime(Calendar.getInstance()));
+            buffer.append(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(ZonedDateTime.now()));
             buffer.append('\"');
         }
         

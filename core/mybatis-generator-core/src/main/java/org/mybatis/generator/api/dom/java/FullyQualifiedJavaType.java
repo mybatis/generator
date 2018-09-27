@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,11 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-/**
- * The Class FullyQualifiedJavaType.
- *
- * @author Jeff Butler
- */
 public class FullyQualifiedJavaType implements
         Comparable<FullyQualifiedJavaType> {
     
@@ -79,7 +74,7 @@ public class FullyQualifiedJavaType implements
      */
     public FullyQualifiedJavaType(String fullTypeSpecification) {
         super();
-        typeArguments = new ArrayList<FullyQualifiedJavaType>();
+        typeArguments = new ArrayList<>();
         parse(fullTypeSpecification);
     }
 
@@ -138,7 +133,7 @@ public class FullyQualifiedJavaType implements
      * @return the import list
      */
     public List<String> getImportList() {
-        List<String> answer = new ArrayList<String>();
+        List<String> answer = new ArrayList<>();
         if (isExplicitlyImported()) {
             int index = baseShortName.indexOf('.');
             if (index == -1) {
@@ -176,11 +171,6 @@ public class FullyQualifiedJavaType implements
         return packageName;
     }
 
-    /**
-     * Gets the short name.
-     *
-     * @return Returns the shortName - including any type arguments.
-     */
     public String getShortName() {
         StringBuilder sb = new StringBuilder();
         if (wildcardType) {
@@ -249,11 +239,6 @@ public class FullyQualifiedJavaType implements
         return primitive;
     }
 
-    /**
-     * Gets the primitive type wrapper.
-     *
-     * @return Returns the wrapperClass.
-     */
     public PrimitiveTypeWrapper getPrimitiveTypeWrapper() {
         return primitiveTypeWrapper;
     }

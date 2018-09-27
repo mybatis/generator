@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2017 the original author or authors.
+       Copyright 2006-2018 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -135,30 +135,6 @@ databases, or with different generation parameters, in the same run of MyBatis G
             </ul>
           </td>
         </tr>
-        <tr>
-          <th valign="top">Ibatis2Java2</th>
-          <td>
-            With this value, MBG will generate objects that are compatible
-            with iBATIS versions 2.2.0 and higher (but not iBATIS 3), and all levels of Java 2.
-            The "by example" methods in these generated objects support virtually
-            unlimited dynamic where clauses.  The objects generated with
-            this set of generators are not 100% compatible with the
-            objects generated with the original version of Abator, or one
-            of the other sets of code generators.</td>
-        </tr>
-        <tr>
-          <th valign="top">Ibatis2Java5</th>
-          <td>With the value, MBG will generate objects that are compatible
-            with iBATIS versions 2.2.0 and higher (but not iBATIS 3), and JSE 5.0 and higher
-            (e.g. the Java model and DAO classes will use generic types).
-            The "by example" methods in these generated objects support virtually
-            unlimited dynamic where clauses.  Additionally, the Java objects
-            generated with these generators support many JSE 5.0 features including
-            parameterized types and annotations. The objects generated with
-            this set of generators are not 100% compatible with the
-            objects generated with the original version of Abator, or one
-            of the other sets of code generators.</td>
-        </tr>
       </table>
       <p>If you want to create a different code generator in entirety,
          then use this value to specify the fully qualified name of a
@@ -252,8 +228,16 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
     </td>
   </tr>
   <tr>
+    <td valign="top">targetJava8</td>
+    <td>Use this property to specify that the generated code can use Java 8+ features. For example,
+        the diamond operator for collection instantiation.
+        <p/>
+        <p>Valid values are <code>true</code> or <code>false</code>. The default value is <code>true</code>.</p>
+    </td>
+  </tr>
+  <tr>
     <td valign="top">xmlFormatter</td>
-    <td>Use this property to specify the full class name of a user provided formater for generated
+    <td>Use this property to specify the full class name of a user provided formatter for generated
         XML files.  The class must implement <code>org.mybatis.generator.api.XmlFormatter</code>
         and must have a default (no argument) constructor.  Each context holds a single instance
         of the XML formatter.  The default XML formatter is

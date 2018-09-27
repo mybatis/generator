@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -133,25 +133,25 @@ public class WorkspaceUtilities {
 
                 // set compliance level options
                 if ("1.5".equals(compliance)) {
-                    Map<String, String> options = new HashMap<String, String>();
+                    Map<String, String> options = new HashMap<>();
                     options.put(JavaCore.COMPILER_COMPLIANCE, JavaCore.VERSION_1_5);
                     options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_5);
                     options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, JavaCore.VERSION_1_5);
                     javaProject.setOptions(options);
                 } else if ("1.6".equals(compliance)) {
-                    Map<String, String> options = new HashMap<String, String>();
+                    Map<String, String> options = new HashMap<>();
                     options.put(JavaCore.COMPILER_COMPLIANCE, JavaCore.VERSION_1_6);
                     options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_6);
                     options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, JavaCore.VERSION_1_6);
                     javaProject.setOptions(options);
                 } else if ("1.7".equals(compliance)) {
-                    Map<String, String> options = new HashMap<String, String>();
+                    Map<String, String> options = new HashMap<>();
                     options.put(JavaCore.COMPILER_COMPLIANCE, JavaCore.VERSION_1_7);
                     options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_7);
                     options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, JavaCore.VERSION_1_7);
                     javaProject.setOptions(options);
                 } else if ("1.8".equals(compliance)) {
-                    Map<String, String> options = new HashMap<String, String>();
+                    Map<String, String> options = new HashMap<>();
                     options.put(JavaCore.COMPILER_COMPLIANCE, JavaCore.VERSION_1_8);
                     options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_8);
                     options.put(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, JavaCore.VERSION_1_8);

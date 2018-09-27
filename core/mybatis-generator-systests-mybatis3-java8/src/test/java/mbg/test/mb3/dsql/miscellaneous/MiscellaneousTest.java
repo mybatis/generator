@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,18 +15,19 @@
  */
 package mbg.test.mb3.dsql.miscellaneous;
 
-import static mbg.test.mb3.generated.dsql.miscellaneous.mapper.RegexrenameDynamicSqlSupport.*;
-import static mbg.test.mb3.generated.dsql.miscellaneous.mapper.MyObjectDynamicSqlSupport.*;
-import static org.mybatis.dynamic.sql.SqlBuilder.*;
 import static mbg.test.common.util.TestUtilities.datesAreEqual;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static mbg.test.mb3.generated.dsql.miscellaneous.mapper.MyObjectDynamicSqlSupport.myObject;
+import static mbg.test.mb3.generated.dsql.miscellaneous.mapper.RegexrenameDynamicSqlSupport.regexrename;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mybatis.dynamic.sql.SqlBuilder.*;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import org.apache.ibatis.session.RowBounds;
+import org.apache.ibatis.session.SqlSession;
+import org.junit.jupiter.api.Test;
 
 import mbg.test.common.FirstName;
 import mbg.test.common.MyTime;
@@ -37,10 +38,6 @@ import mbg.test.mb3.generated.dsql.miscellaneous.mapper.RegexrenameMapper;
 import mbg.test.mb3.generated.dsql.miscellaneous.model.Enumtest;
 import mbg.test.mb3.generated.dsql.miscellaneous.model.MyObject;
 import mbg.test.mb3.generated.dsql.miscellaneous.model.Regexrename;
-
-import org.apache.ibatis.session.RowBounds;
-import org.apache.ibatis.session.SqlSession;
-import org.junit.Test;
 
 /**
  * @author Jeff Butler
@@ -611,7 +608,7 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
             record.setId2(3);
             mapper.insert(record);
 
-            List<Integer> ids = new ArrayList<Integer>();
+            List<Integer> ids = new ArrayList<>();
             ids.add(1);
             ids.add(3);
 
@@ -770,9 +767,11 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
         }
     }
 
-    @Test(expected=NoSuchFieldException.class)
-    public void testFieldIgnored() throws NoSuchFieldException {
-        MyObject.class.getDeclaredField("decimal30field");
+    @Test
+    public void testFieldIgnored() {
+        assertThrows(NoSuchFieldException.class, () -> {
+            MyObject.class.getDeclaredField("decimal30field");
+        });
     }
 
     @Test

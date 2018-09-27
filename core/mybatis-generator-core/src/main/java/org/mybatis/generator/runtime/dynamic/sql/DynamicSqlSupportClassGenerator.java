@@ -31,10 +31,12 @@ import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
 import org.mybatis.generator.internal.util.StringUtility;
+import org.mybatis.generator.internal.util.messages.Messages;
 
 public class DynamicSqlSupportClassGenerator {
     private IntrospectedTable introspectedTable;
     private CommentGenerator commentGenerator;
+    private List<String> warnings;
     
     private DynamicSqlSupportClassGenerator() {
         super();
@@ -57,16 +59,8 @@ public class DynamicSqlSupportClassGenerator {
         return topLevelClass;
     }
 
-    private String calculateClassName() {
-        FullyQualifiedJavaType mapperType = new FullyQualifiedJavaType(introspectedTable.getMyBatis3JavaMapperType());
-        FullyQualifiedJavaType recordType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
-        
-        return mapperType.getPackageName() + "." + recordType.getShortNameWithoutTypeArguments() + "DynamicSqlSupport"; //$NON-NLS-1$ //$NON-NLS-2$
-        
-    }
-
     private TopLevelClass buildBasicClass() {
-        TopLevelClass topLevelClass = new TopLevelClass(calculateClassName());
+        TopLevelClass topLevelClass = new TopLevelClass(introspectedTable.getMyBatisDynamicSqlSupportType());
         topLevelClass.setVisibility(JavaVisibility.PUBLIC);
         topLevelClass.setFinal(true);
         topLevelClass.addImportedType(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.SqlColumn")); //$NON-NLS-1$
@@ -118,17 +112,24 @@ public class DynamicSqlSupportClassGenerator {
         FullyQualifiedJavaType fieldType = calculateFieldType(column);
         String fieldName = column.getJavaProperty();
         
-        // tlc field
-        Field field = new Field(fieldName, fieldType);
-        field.setVisibility(JavaVisibility.PUBLIC);
-        field.setStatic(true);
-        field.setFinal(true);
-        field.setInitializationString(tableFieldName + "." + fieldName); //$NON-NLS-1$
-        commentGenerator.addFieldAnnotation(field, introspectedTable, column, topLevelClass.getImportedTypes());
-        topLevelClass.addField(field);
+        if (fieldName.equals(tableFieldName)) {
+            // name collision, skip the shortcut field
+            warnings.add(
+                    Messages.getString("Warning.29", //$NON-NLS-1$
+                            fieldName, topLevelClass.getType().getFullyQualifiedName()));
+        } else {
+            // shortcut field
+            Field field = new Field(fieldName, fieldType);
+            field.setVisibility(JavaVisibility.PUBLIC);
+            field.setStatic(true);
+            field.setFinal(true);
+            field.setInitializationString(tableFieldName + "." + fieldName); //$NON-NLS-1$
+            commentGenerator.addFieldAnnotation(field, introspectedTable, column, topLevelClass.getImportedTypes());
+            topLevelClass.addField(field);
+        }
         
         // inner class field
-        field = new Field(fieldName, fieldType);
+        Field field = new Field(fieldName, fieldType);
         field.setVisibility(JavaVisibility.PUBLIC);
         field.setFinal(true);
         field.setInitializationString(calculateInnerInitializationString(column));
@@ -161,10 +162,11 @@ public class DynamicSqlSupportClassGenerator {
         return initializationString.toString();
     }
     
-    public static DynamicSqlSupportClassGenerator of(IntrospectedTable introspectedTable, CommentGenerator commentGenerator) {
+    public static DynamicSqlSupportClassGenerator of(IntrospectedTable introspectedTable, CommentGenerator commentGenerator, List<String> warnings) {
         DynamicSqlSupportClassGenerator generator = new DynamicSqlSupportClassGenerator();
         generator.introspectedTable = introspectedTable;
         generator.commentGenerator = commentGenerator;
+        generator.warnings = warnings;
         return generator;
     }
 }

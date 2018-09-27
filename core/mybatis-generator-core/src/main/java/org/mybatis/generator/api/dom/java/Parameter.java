@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,19 +18,19 @@ package org.mybatis.generator.api.dom.java;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.mybatis.generator.api.dom.java.render.ParameterRenderer;
+
 public class Parameter {
     private String name;
     private FullyQualifiedJavaType type;
     private boolean isVarargs;
 
-    private List<String> annotations;
+    private List<String> annotations = new ArrayList<>();
 
     public Parameter(FullyQualifiedJavaType type, String name, boolean isVarargs) {
-        super();
         this.name = name;
         this.type = type;
         this.isVarargs = isVarargs;
-        annotations = new ArrayList<String>();
     }
 
     public Parameter(FullyQualifiedJavaType type, String name) {
@@ -47,16 +47,10 @@ public class Parameter {
         addAnnotation(annotation);
     }
 
-    /**
-     * @return Returns the name.
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * @return Returns the type.
-     */
     public FullyQualifiedJavaType getType() {
         return type;
     }
@@ -69,28 +63,9 @@ public class Parameter {
         annotations.add(annotation);
     }
 
-    public String getFormattedContent(CompilationUnit compilationUnit) {
-        StringBuilder sb = new StringBuilder();
-
-        for (String annotation : annotations) {
-            sb.append(annotation);
-            sb.append(' ');
-        }
-
-        sb.append(JavaDomUtils.calculateTypeName(compilationUnit, type));
-
-        sb.append(' ');
-        if (isVarargs) {
-            sb.append("... "); //$NON-NLS-1$
-        }
-        sb.append(name);
-
-        return sb.toString();
-    }
-
     @Override
     public String toString() {
-        return getFormattedContent(null);
+        return new ParameterRenderer().render(this, null);
     }
 
     public boolean isVarargs() {

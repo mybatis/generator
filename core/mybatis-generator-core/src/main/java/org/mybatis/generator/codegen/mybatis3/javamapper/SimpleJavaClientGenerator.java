@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -43,12 +43,12 @@ import org.mybatis.generator.config.PropertyRegistry;
  */
 public class SimpleJavaClientGenerator extends AbstractJavaClientGenerator {
 
-    public SimpleJavaClientGenerator() {
-        super(true);
+    public SimpleJavaClientGenerator(String project) {
+        this(project, true);
     }
 
-    public SimpleJavaClientGenerator(boolean requiresMatchedXMLGenerator) {
-        super(requiresMatchedXMLGenerator);
+    public SimpleJavaClientGenerator(String project, boolean requiresMatchedXMLGenerator) {
+        super(project, requiresMatchedXMLGenerator);
     }
 
     @Override
@@ -83,9 +83,8 @@ public class SimpleJavaClientGenerator extends AbstractJavaClientGenerator {
         addSelectAllMethod(interfaze);
         addUpdateByPrimaryKeyMethod(interfaze);
 
-        List<CompilationUnit> answer = new ArrayList<CompilationUnit>();
-        if (context.getPlugins().clientGenerated(interfaze, null,
-                introspectedTable)) {
+        List<CompilationUnit> answer = new ArrayList<>();
+        if (context.getPlugins().clientGenerated(interfaze, introspectedTable)) {
             answer.add(interfaze);
         }
 

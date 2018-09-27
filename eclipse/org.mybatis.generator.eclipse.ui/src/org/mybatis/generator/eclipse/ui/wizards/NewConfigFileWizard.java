@@ -41,6 +41,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
+import org.mybatis.generator.api.dom.DefaultXmlFormatter;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.api.dom.xml.XmlElement;
@@ -192,8 +193,7 @@ public class NewConfigFileWizard extends Wizard implements INewWizard {
         table.addElement(columnOverride);
         context.addElement(table);
 
-        return new ByteArrayInputStream(document.getFormattedContent()
-                .getBytes());
+        return new ByteArrayInputStream(new DefaultXmlFormatter().getFormattedContent(document).getBytes());
     }
 
     private void throwCoreException(String message) throws CoreException {

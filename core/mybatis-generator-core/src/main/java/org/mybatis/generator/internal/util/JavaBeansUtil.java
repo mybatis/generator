@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -91,6 +91,12 @@ public class JavaBeansUtil {
 
         sb.insert(0, "set"); //$NON-NLS-1$
 
+        return sb.toString();
+    }
+
+    public static String getFirstCharacterUppercase(String inputString) {
+        StringBuilder sb = new StringBuilder(inputString);
+        sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
         return sb.toString();
     }
 
@@ -189,10 +195,9 @@ public class JavaBeansUtil {
                 .getFullyQualifiedJavaType();
         String property = introspectedColumn.getJavaProperty();
 
-        Method method = new Method();
+        Method method = new Method(getGetterMethodName(property, fqjt));
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(fqjt);
-        method.setName(getGetterMethodName(property, fqjt));
         context.getCommentGenerator().addGetterComment(method,
                 introspectedTable, introspectedColumn);
 
@@ -212,10 +217,8 @@ public class JavaBeansUtil {
                 .getFullyQualifiedJavaType();
         String property = introspectedColumn.getJavaProperty();
 
-        Field field = new Field();
+        Field field = new Field(property, fqjt);
         field.setVisibility(JavaVisibility.PRIVATE);
-        field.setType(fqjt);
-        field.setName(property);
         context.getCommentGenerator().addFieldComment(field,
                 introspectedTable, introspectedColumn);
 
@@ -229,9 +232,8 @@ public class JavaBeansUtil {
                 .getFullyQualifiedJavaType();
         String property = introspectedColumn.getJavaProperty();
 
-        Method method = new Method();
+        Method method = new Method(getSetterMethodName(property));
         method.setVisibility(JavaVisibility.PUBLIC);
-        method.setName(getSetterMethodName(property));
         method.addParameter(new Parameter(fqjt, property));
         context.getCommentGenerator().addSetterComment(method,
                 introspectedTable, introspectedColumn);

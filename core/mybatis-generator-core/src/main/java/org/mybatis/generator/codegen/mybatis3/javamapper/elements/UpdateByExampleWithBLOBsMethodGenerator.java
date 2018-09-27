@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -38,11 +38,11 @@ public class UpdateByExampleWithBLOBsMethodGenerator extends
 
     @Override
     public void addInterfaceElements(Interface interfaze) {
-        Method method = new Method();
-        method.setVisibility(JavaVisibility.PUBLIC);
-        method.setReturnType(FullyQualifiedJavaType.getIntInstance());
-        method.setName(introspectedTable
+        Method method = new Method(introspectedTable
                 .getUpdateByExampleWithBLOBsStatementId());
+        method.setVisibility(JavaVisibility.PUBLIC);
+        method.setAbstract(true);
+        method.setReturnType(FullyQualifiedJavaType.getIntInstance());
 
         FullyQualifiedJavaType parameterType;
         if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {
@@ -55,7 +55,7 @@ public class UpdateByExampleWithBLOBsMethodGenerator extends
         method.addParameter(new Parameter(parameterType,
                 "record", "@Param(\"record\")")); //$NON-NLS-1$ //$NON-NLS-2$
 
-        Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
+        Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
         importedTypes.add(parameterType);
 
         FullyQualifiedJavaType exampleType = new FullyQualifiedJavaType(

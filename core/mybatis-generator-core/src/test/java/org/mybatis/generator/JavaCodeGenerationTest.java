@@ -15,18 +15,17 @@
  */
 package org.mybatis.generator;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mybatis.generator.api.GeneratedJavaFile;
 import org.mybatis.generator.api.MyBatisGenerator;
+import org.mybatis.generator.api.dom.DefaultJavaFormatter;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.internal.DefaultShellCallback;
@@ -34,19 +33,15 @@ import org.mybatis.generator.internal.DefaultShellCallback;
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ParseProblemException;
 
-@RunWith(Parameterized.class)
 public class JavaCodeGenerationTest {
 
-    private GeneratedJavaFile generatedJavaFile;
+    @ParameterizedTest
+    @MethodSource("generateJavaFiles")
+    public void testJavaParse(GeneratedJavaFile generatedJavaFile) {
+        DefaultJavaFormatter formatter = new DefaultJavaFormatter();
 
-    public JavaCodeGenerationTest(GeneratedJavaFile generatedJavaFile) {
-        this.generatedJavaFile = generatedJavaFile;
-    }
-
-    @Test
-    public void testJavaParse() {
         ByteArrayInputStream is = new ByteArrayInputStream(
-                generatedJavaFile.getCompilationUnit().getFormattedContent().getBytes());
+                formatter.getFormattedContent(generatedJavaFile.getCompilationUnit()).getBytes());
         try {
             JavaParser.parse(is);
         } catch (ParseProblemException e) {
@@ -54,12 +49,10 @@ public class JavaCodeGenerationTest {
         }
     }
 
-    @Parameters
     public static List<GeneratedJavaFile> generateJavaFiles() throws Exception {
-        List<GeneratedJavaFile> generatedFiles = new ArrayList<GeneratedJavaFile>();
+        List<GeneratedJavaFile> generatedFiles = new ArrayList<>();
         generatedFiles.addAll(generateJavaFilesMybatis());
         generatedFiles.addAll(generateJavaFilesMybatisDsql());
-        generatedFiles.addAll(generateJavaFilesIbatis());
         return generatedFiles;
     }
 
@@ -73,13 +66,8 @@ public class JavaCodeGenerationTest {
         return generateJavaFiles("/scripts/generatorConfig_Dsql.xml");
     }
 
-    private static List<GeneratedJavaFile> generateJavaFilesIbatis() throws Exception {
-        createDatabase();
-        return generateJavaFiles("/scripts/ibatorConfig.xml");
-    }
-
     private static List<GeneratedJavaFile> generateJavaFiles(String configFile) throws Exception {
-        List<String> warnings = new ArrayList<String>();
+        List<String> warnings = new ArrayList<>();
         ConfigurationParser cp = new ConfigurationParser(warnings);
         Configuration config = cp.parseConfiguration(JavaCodeGenerationTest.class.getResourceAsStream(configFile));
 

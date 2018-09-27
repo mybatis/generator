@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,20 +20,11 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.List;
 
-import org.mybatis.generator.api.dom.xml.Attribute;
-import org.mybatis.generator.api.dom.xml.XmlElement;
-
-/**
- * @author Jeff Butler
- */
 public class SqlMapGeneratorConfiguration extends PropertyHolder {
     private String targetPackage;
 
     private String targetProject;
 
-    /**
-     *  
-     */
     public SqlMapGeneratorConfiguration() {
         super();
     }
@@ -52,22 +43,6 @@ public class SqlMapGeneratorConfiguration extends PropertyHolder {
 
     public void setTargetPackage(String targetPackage) {
         this.targetPackage = targetPackage;
-    }
-
-    public XmlElement toXmlElement() {
-        XmlElement answer = new XmlElement("sqlMapGenerator"); //$NON-NLS-1$
-
-        if (targetPackage != null) {
-            answer.addAttribute(new Attribute("targetPackage", targetPackage)); //$NON-NLS-1$
-        }
-
-        if (targetProject != null) {
-            answer.addAttribute(new Attribute("targetProject", targetProject)); //$NON-NLS-1$
-        }
-
-        addPropertyXmlElements(answer);
-
-        return answer;
     }
 
     public void validate(List<String> errors, String contextId) {

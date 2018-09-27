@@ -54,9 +54,9 @@ public class EclipseShellCallback implements ShellCallback {
      */
     public EclipseShellCallback() {
         super();
-        projects = new HashMap<String, IJavaProject>();
-        folders = new HashMap<String, IFolder>();
-        sourceFolders = new HashMap<String, IPackageFragmentRoot>();
+        projects = new HashMap<>();
+        folders = new HashMap<>();
+        sourceFolders = new HashMap<>();
     }
 
     /*

@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -40,8 +40,8 @@ import org.mybatis.generator.internal.util.StringUtility;
 
 public class AnnotatedClientGenerator extends JavaMapperGenerator {
 
-    public AnnotatedClientGenerator() {
-        super(false);
+    public AnnotatedClientGenerator(String project) {
+        super(project, false);
     }
 
     @Override
@@ -171,7 +171,7 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
         if (StringUtility.stringHasValue(prop)) {
             useLegacyBuilder = Boolean.valueOf(prop);
         }
-        SqlProviderGenerator sqlProviderGenerator = new SqlProviderGenerator(useLegacyBuilder);
+        SqlProviderGenerator sqlProviderGenerator = new SqlProviderGenerator(getProject(), useLegacyBuilder);
         sqlProviderGenerator.setContext(context);
         sqlProviderGenerator.setIntrospectedTable(introspectedTable);
         sqlProviderGenerator.setProgressCallback(progressCallback);

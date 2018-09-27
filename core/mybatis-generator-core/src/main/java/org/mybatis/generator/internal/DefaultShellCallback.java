@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -23,30 +23,15 @@ import java.util.StringTokenizer;
 import org.mybatis.generator.api.ShellCallback;
 import org.mybatis.generator.exception.ShellException;
 
-/**
- * The Class DefaultShellCallback.
- *
- * @author Jeff Butler
- */
 public class DefaultShellCallback implements ShellCallback {
 
-    /** The overwrite. */
     private boolean overwrite;
 
-    /**
-     * Instantiates a new default shell callback.
-     *
-     * @param overwrite
-     *            the overwrite
-     */
     public DefaultShellCallback(boolean overwrite) {
         super();
         this.overwrite = overwrite;
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.ShellCallback#getDirectory(java.lang.String, java.lang.String)
-     */
     @Override
     public File getDirectory(String targetProject, String targetPackage)
             throws ShellException {
@@ -82,33 +67,21 @@ public class DefaultShellCallback implements ShellCallback {
         return directory;
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.ShellCallback#refreshProject(java.lang.String)
-     */
     @Override
     public void refreshProject(String project) {
         // nothing to do in the default shell callback
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.ShellCallback#isMergeSupported()
-     */
     @Override
     public boolean isMergeSupported() {
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.ShellCallback#isOverwriteEnabled()
-     */
     @Override
     public boolean isOverwriteEnabled() {
         return overwrite;
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.ShellCallback#mergeJavaFile(java.lang.String, java.lang.String, java.lang.String[], java.lang.String)
-     */
     @Override
     public String mergeJavaFile(String newFileSource,
             File existingFile, String[] javadocTags, String fileEncoding)

@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,13 +20,6 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.List;
 
-import org.mybatis.generator.api.dom.xml.Attribute;
-import org.mybatis.generator.api.dom.xml.XmlElement;
-
-/**
- * 
- * @author Jeff Butler
- */
 public class JDBCConnectionConfiguration extends PropertyHolder {
 
     private String driverClass;
@@ -71,24 +64,6 @@ public class JDBCConnectionConfiguration extends PropertyHolder {
 
     public void setDriverClass(String driverClass) {
         this.driverClass = driverClass;
-    }
-
-    public XmlElement toXmlElement() {
-        XmlElement xmlElement = new XmlElement("jdbcConnection"); //$NON-NLS-1$
-        xmlElement.addAttribute(new Attribute("driverClass", driverClass)); //$NON-NLS-1$
-        xmlElement.addAttribute(new Attribute("connectionURL", connectionURL)); //$NON-NLS-1$
-
-        if (stringHasValue(userId)) {
-            xmlElement.addAttribute(new Attribute("userId", userId)); //$NON-NLS-1$
-        }
-
-        if (stringHasValue(password)) {
-            xmlElement.addAttribute(new Attribute("password", password)); //$NON-NLS-1$
-        }
-
-        addPropertyXmlElements(xmlElement);
-
-        return xmlElement;
     }
 
     public void validate(List<String> errors) {

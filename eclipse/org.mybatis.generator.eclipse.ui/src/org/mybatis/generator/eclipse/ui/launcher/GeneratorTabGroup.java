@@ -17,6 +17,7 @@ package org.mybatis.generator.eclipse.ui.launcher;
 
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTabGroup;
 import org.eclipse.debug.ui.CommonTab;
+import org.eclipse.debug.ui.EnvironmentTab;
 import org.eclipse.debug.ui.ILaunchConfigurationDialog;
 import org.eclipse.debug.ui.ILaunchConfigurationTab;
 import org.mybatis.generator.eclipse.ui.launcher.tabs.ConfigurationTab;
@@ -31,6 +32,7 @@ public class GeneratorTabGroup extends AbstractLaunchConfigurationTabGroup {
                 new ConfigurationTab(),
                 new SqlScriptTab(),
                 new UserClasspathTab(),
+                new EnvironmentTab(),
                 new CommonTab()
         };
         setTabs(tabs);

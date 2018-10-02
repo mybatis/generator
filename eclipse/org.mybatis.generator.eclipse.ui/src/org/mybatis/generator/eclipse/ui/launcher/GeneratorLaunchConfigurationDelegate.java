@@ -23,7 +23,11 @@ import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.eclipse.ant.core.AntCorePlugin;
 import org.eclipse.ant.core.AntCorePreferences;
@@ -75,6 +79,7 @@ public class GeneratorLaunchConfigurationDelegate extends AbstractJavaLaunchConf
             antRunner.setArguments("-debug"); //$NON-NLS-1$
         }
         
+        antRunner.addUserProperties(getUserProperties(configuration));
         antRunner.run(monitor);
         
         if (LauncherUtils.getBooleanOrFalse(configuration, GeneratorLaunchConstants.ATTR_SQL_SCRIPT_SECURE_CREDENTIALS)) {
@@ -83,6 +88,21 @@ public class GeneratorLaunchConfigurationDelegate extends AbstractJavaLaunchConf
         }
     }
     
+    private Map<String, String> getUserProperties(ILaunchConfiguration configuration) throws CoreException {
+        String[] env = getEnvironment(configuration);
+        if (env == null) {
+            return Collections.emptyMap();
+        }
+        
+        return Arrays.stream(env)
+                .map(this::parseProperty)
+                .collect(Collectors.toMap(sa -> sa[0], sa -> sa[1]));
+    }
+    
+    private String[] parseProperty(String in) {
+        return in.split("=", 2); //$NON-NLS-1$
+    }
+
     private void modifyAntClasspathIfNecessary(ILaunchConfiguration configuration, AntRunner antRunner) throws CoreException {
         String[] classpathEntries = getClasspath(configuration);
         if (classpathEntries == null || classpathEntries.length == 0) {

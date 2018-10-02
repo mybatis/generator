@@ -118,7 +118,8 @@ public class GeneratorAntTask extends Task {
             subMonitor.beginTask("Generating MyBatis Artifacts:", 1000);
             subMonitor.subTask("Parsing Configuration");
             
-            Properties p = propertyset == null ? null : propertyset.getProperties();
+            Properties p = propertyset == null ? new Properties() : propertyset.getProperties();
+            p.putAll(getProject().getUserProperties());
             
             ConfigurationParser cp = new ConfigurationParser(p,
                     warnings);

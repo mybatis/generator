@@ -61,7 +61,7 @@
     <junit.jupiter.version>5.3.1</junit.jupiter.version>
     <junit.platform.version>1.3.1</junit.platform.version>
   </properties>
-  
+
   <build>
     <pluginManagement>
       <plugins>
@@ -308,7 +308,7 @@
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-javadoc-plugin</artifactId>
               <configuration>
-                <additionalOptions>-html5 --add-modules java.xml.ws.annotation</additionalOptions>
+                <additionalOptions>-html5</additionalOptions>
               </configuration>
             </plugin>
           </plugins>

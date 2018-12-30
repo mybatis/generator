@@ -31,6 +31,7 @@
   
   <properties>
     <checkstyle.config>${project.basedir}/../checkstyle-override.xml</checkstyle.config>
+    <module.name>org.mybatis.generator</module.name>
   </properties>
 
   <build>

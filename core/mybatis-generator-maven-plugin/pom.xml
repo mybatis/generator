@@ -30,6 +30,7 @@
 
   <properties>
     <checkstyle.config>${project.basedir}/../checkstyle-override.xml</checkstyle.config>
+    <module.name>org.mybatis.generator.maven.plugin</module.name>
   </properties>
 
   <build>

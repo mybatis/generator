@@ -607,7 +607,6 @@ public class DatabaseIntrospector {
         for (Map.Entry<ActualTableName, List<IntrospectedColumn>> entry : columns
                 .entrySet()) {
             ActualTableName atn = entry.getKey();
-
             // we only use the returned catalog and schema if something was
             // actually
             // specified on the table configuration. If something was returned
@@ -616,8 +615,8 @@ public class DatabaseIntrospector {
             // configuration, then some sort of DB default is being returned
             // and we don't want that in our SQL
             FullyQualifiedTable table = new FullyQualifiedTable(
-                    stringHasValue(tc.getCatalog()) ? atn.getCatalog() : null,
-                    stringHasValue(tc.getSchema()) ? atn.getSchema() : null,
+                    stringHasValue(tc.getCatalog()) ? tc.getCatalog() : atn.getCatalog(),
+                    stringHasValue(tc.getSchema()) ? tc.getSchema() : atn.getSchema(),
                     atn.getTableName(),
                     tc.getDomainObjectName(),
                     tc.getAlias(),

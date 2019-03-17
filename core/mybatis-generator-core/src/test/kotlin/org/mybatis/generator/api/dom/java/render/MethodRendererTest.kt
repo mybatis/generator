@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ class MethodRendererTest {
         method.setVisibility(JavaVisibility.PUBLIC)
         method.addBodyLine("return name;")
 
-        assertThat(toString(method)).isEqualTo("""
+        assertThat(toString(method)).isEqualToNormalizingNewlines("""
                 |public String getName() {
                 |    return name;
                 |}
@@ -46,7 +46,7 @@ class MethodRendererTest {
         method.addParameter(Parameter(FullyQualifiedJavaType.getStringInstance(), "name"))
         method.addBodyLine("this.name = name;")
 
-        assertThat(toString(method)).isEqualTo("""
+        assertThat(toString(method)).isEqualToNormalizingNewlines("""
                 |public void setName(String name) {
                 |    this.name = name;
                 |}
@@ -64,7 +64,7 @@ class MethodRendererTest {
         method.addBodyLine("this.name = name;")
         method.addBodyLine("}")
 
-        assertThat(toString(method)).isEqualTo("""
+        assertThat(toString(method)).isEqualToNormalizingNewlines("""
                 |public void setName(String name) {
                 |    if(name == null) {
                 |        this.name = null;
@@ -92,7 +92,7 @@ class MethodRendererTest {
         method.addBodyLine("break;")
         method.addBodyLine("}")
 
-        assertThat(toString(method)).isEqualTo("""
+        assertThat(toString(method)).isEqualToNormalizingNewlines("""
                 |public void setType(int type) {
                 |    switch(type) {
                 |    case 1:
@@ -118,7 +118,7 @@ class MethodRendererTest {
         method.addParameter(Parameter(FullyQualifiedJavaType("R"), "name"))
         method.addBodyLine("""return "Fred";""")
 
-        assertThat(toString(method)).isEqualTo("""
+        assertThat(toString(method)).isEqualToNormalizingNewlines("""
                 |public <R> String getName(R name) {
                 |    return "Fred";
                 |}
@@ -135,7 +135,7 @@ class MethodRendererTest {
         method.addParameter(Parameter(FullyQualifiedJavaType("R"), "name"))
         method.addBodyLine("""return "Fred";""")
 
-        assertThat(toString(method)).isEqualTo("""
+        assertThat(toString(method)).isEqualToNormalizingNewlines("""
                 |public <R, T> String getName(R name) {
                 |    return "Fred";
                 |}
@@ -153,7 +153,7 @@ class MethodRendererTest {
         method.addParameter(Parameter(FullyQualifiedJavaType("T"), "type"))
         method.addBodyLine("""return "Fred";""")
 
-        assertThat(toString(method)).isEqualTo("""
+        assertThat(toString(method)).isEqualToNormalizingNewlines("""
                 |public <R, T> String getName(R name, T type) {
                 |    return "Fred";
                 |}
@@ -170,7 +170,7 @@ class MethodRendererTest {
         method.addException(FullyQualifiedJavaType("Exception"))
         method.addBodyLine("""return "Fred";""")
 
-        assertThat(toString(method)).isEqualTo("""
+        assertThat(toString(method)).isEqualToNormalizingNewlines("""
                 |public <R> String getName(R name) throws Exception {
                 |    return "Fred";
                 |}
@@ -188,7 +188,7 @@ class MethodRendererTest {
         method.setAbstract(true)
         method.addBodyLine("""return "Fred";""") // should be ignored
 
-        assertThat(toString(method)).isEqualTo("""
+        assertThat(toString(method)).isEqualToNormalizingNewlines("""
                 |public abstract <R> String getName(R name) throws Exception;
                 """.trimMargin())
     }
@@ -204,7 +204,7 @@ class MethodRendererTest {
         method.setVisibility(JavaVisibility.PUBLIC)  // should be ignored
         method.addBodyLine("""return "Fred";""") // should be ignored
 
-        assertThat(toString(method, true)).isEqualTo("""
+        assertThat(toString(method, true)).isEqualToNormalizingNewlines("""
                 |<R> String getName(R name) throws Exception;
                 """.trimMargin())
     }
@@ -219,7 +219,7 @@ class MethodRendererTest {
         method.setVisibility(JavaVisibility.PRIVATE)
         method.addBodyLine("""return "Fred";""") // should be ignored
 
-        assertThat(toString(method, true)).isEqualTo("""
+        assertThat(toString(method, true)).isEqualToNormalizingNewlines("""
                 |private <R> String getName(R name) throws Exception {
                 |    return "Fred";
                 |}
@@ -237,7 +237,7 @@ class MethodRendererTest {
         method.setNative(true)
         method.addBodyLine("""return "Fred";""") // should be ignored
 
-        assertThat(toString(method)).isEqualTo("""
+        assertThat(toString(method)).isEqualToNormalizingNewlines("""
                 |public native <R> String getName(R name) throws Exception;
                 """.trimMargin())
     }
@@ -248,7 +248,7 @@ class MethodRendererTest {
         method.setVisibility(JavaVisibility.PUBLIC)
         method.addParameter(Parameter(FullyQualifiedJavaType.getStringInstance(), "name"))
 
-        assertThat(toString(method)).isEqualTo("""
+        assertThat(toString(method)).isEqualToNormalizingNewlines("""
                 |public void setName(String name) {
                 |}
                 """.trimMargin())
@@ -263,7 +263,7 @@ class MethodRendererTest {
         method.addBodyLine("super(name);")
         method.setReturnType(FullyQualifiedJavaType.getStringInstance()) // should be ignored
 
-        assertThat(toString(method)).isEqualTo("""
+        assertThat(toString(method)).isEqualToNormalizingNewlines("""
                 |public MyClass(String name) {
                 |    super(name);
                 |}
@@ -284,7 +284,7 @@ class MethodRendererTest {
 	method.addJavaDocLine(" */")
 
 
-        assertThat(toString(method)).isEqualTo("""
+        assertThat(toString(method)).isEqualToNormalizingNewlines("""
                 |/**
                 | * Some Javadoc
                 | */

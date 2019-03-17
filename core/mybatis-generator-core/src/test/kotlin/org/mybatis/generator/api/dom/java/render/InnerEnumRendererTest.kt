@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ class InnerEnumRendererTest {
         outerEnum.addEnumConstant("TWO")
         outerEnum.addEnumConstant("THREE")
 
-        assertThat(toString(outerEnum)).isEqualTo("""
+        assertThat(toString(outerEnum)).isEqualToNormalizingNewlines("""
                 |public enum Bar {
                 |    ONE,
                 |    TWO,
@@ -94,7 +94,7 @@ class InnerEnumRendererTest {
 	innerInterface.addMethod(method)
 	outerEnum.addInnerInterface(innerInterface)
 
-        assertThat(TopLevelEnumerationRenderer().render(outerEnum)).isEqualTo("""
+        assertThat(TopLevelEnumerationRenderer().render(outerEnum)).isEqualToNormalizingNewlines("""
                 |package com.foo;
                 |
                 |public enum Bar {

@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,11 +15,14 @@
  */
 package org.mybatis.generator.codegen.mybatis3.javamapper;
 
+import static org.mybatis.generator.internal.util.StringUtility.isTrue;
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
@@ -64,6 +67,7 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
 
         FullyQualifiedJavaType type = new FullyQualifiedJavaType(
                 introspectedTable.getMyBatis3JavaMapperType());
+
         Interface interfaze = new Interface(type);
         interfaze.setVisibility(JavaVisibility.PUBLIC);
         commentGenerator.addJavaFileComment(interfaze);
@@ -80,23 +84,40 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
                     rootInterface);
             interfaze.addSuperInterface(fqjt);
             interfaze.addImportedType(fqjt);
+
+            FullyQualifiedJavaType baseType = new FullyQualifiedJavaType(
+                    introspectedTable.getBaseRecordType());
+
+            FullyQualifiedJavaType fullyQualifiedJavaType = new FullyQualifiedJavaType(
+                    introspectedTable.getExampleType());
+
+
+            Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
+            importedTypes.add(baseType);
+            importedTypes.add(fullyQualifiedJavaType);
+            interfaze.addImportedTypes(importedTypes);
         }
 
-        addCountByExampleMethod(interfaze);
-        addDeleteByExampleMethod(interfaze);
-        addDeleteByPrimaryKeyMethod(interfaze);
-        addInsertMethod(interfaze);
-        addInsertSelectiveMethod(interfaze);
-        addSelectByExampleWithBLOBsMethod(interfaze);
-        addSelectByExampleWithoutBLOBsMethod(interfaze);
-        addSelectByPrimaryKeyMethod(interfaze);
-        addUpdateByExampleSelectiveMethod(interfaze);
-        addUpdateByExampleWithBLOBsMethod(interfaze);
-        addUpdateByExampleWithoutBLOBsMethod(interfaze);
-        addUpdateByPrimaryKeySelectiveMethod(interfaze);
-        addUpdateByPrimaryKeyWithBLOBsMethod(interfaze);
-        addUpdateByPrimaryKeyWithoutBLOBsMethod(interfaze);
 
+        String skip = context.getJavaClientGeneratorConfiguration()
+                .getProperty(PropertyRegistry.SKIP);
+
+        if (!stringHasValue(skip) || !isTrue(skip)) {
+            addCountByExampleMethod(interfaze);
+            addDeleteByExampleMethod(interfaze);
+            addDeleteByPrimaryKeyMethod(interfaze);
+            addInsertMethod(interfaze);
+            addInsertSelectiveMethod(interfaze);
+            addSelectByExampleWithBLOBsMethod(interfaze);
+            addSelectByExampleWithoutBLOBsMethod(interfaze);
+            addSelectByPrimaryKeyMethod(interfaze);
+            addUpdateByExampleSelectiveMethod(interfaze);
+            addUpdateByExampleWithBLOBsMethod(interfaze);
+            addUpdateByExampleWithoutBLOBsMethod(interfaze);
+            addUpdateByPrimaryKeySelectiveMethod(interfaze);
+            addUpdateByPrimaryKeyWithBLOBsMethod(interfaze);
+            addUpdateByPrimaryKeyWithoutBLOBsMethod(interfaze);
+        }
         List<CompilationUnit> answer = new ArrayList<>();
         if (context.getPlugins().clientGenerated(interfaze, introspectedTable)) {
             answer.add(interfaze);

@@ -736,6 +736,11 @@ public class MyBatisGeneratorConfigurationParser {
             }
 
             int markerEndIndex = s.indexOf(CLOSE, currentIndex);
+            int nestedStartIndex = s.indexOf(OPEN, markerStartIndex + OPEN.length());
+            while (nestedStartIndex > -1 && markerEndIndex > -1 && nestedStartIndex < markerEndIndex) {
+	            nestedStartIndex = s.indexOf(OPEN, nestedStartIndex + OPEN.length());
+	            markerEndIndex = s.indexOf(CLOSE, markerEndIndex + CLOSE.length());
+            }
 
             if (markerEndIndex < 0) {
                 // no closing delimiter, just move to the end of the string
@@ -746,7 +751,7 @@ public class MyBatisGeneratorConfigurationParser {
 
             // we have a valid property marker...
             String property = s.substring(markerStartIndex + OPEN.length(), markerEndIndex);
-            String propertyValue = resolveProperty(property);
+            String propertyValue = resolveProperty(parsePropertyTokens(property));
             if (propertyValue == null) {
                 // add the property marker back into the stream
                 answer.add(s.substring(markerStartIndex, markerEndIndex + 1));

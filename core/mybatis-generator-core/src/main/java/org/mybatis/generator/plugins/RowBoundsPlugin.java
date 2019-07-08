@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -119,6 +119,11 @@ public class RowBoundsPlugin extends PluginAdapter {
 
     private void addNewComposedFunction(Interface interfaze, IntrospectedTable introspectedTable,
             Optional<FullyQualifiedJavaType> baseMethodReturnType) {
+        if (!baseMethodReturnType.isPresent()) {
+            // shouldn't happen, but just in case...
+            return;
+        }
+        
         interfaze.addImportedType(new FullyQualifiedJavaType("java.util.function.Function")); //$NON-NLS-1$
         
         FullyQualifiedJavaType returnType = new FullyQualifiedJavaType("Function<SelectStatementProvider, " //$NON-NLS-1$

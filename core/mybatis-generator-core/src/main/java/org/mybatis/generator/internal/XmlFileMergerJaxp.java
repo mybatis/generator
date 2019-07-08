@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -211,7 +211,7 @@ public class XmlFileMergerJaxp {
                     Node childNode = children.item(i);
                     if (isWhiteSpace(childNode)) {
                         continue;
-                    } else if (childNode.getNodeType() == Node.COMMENT_NODE) {
+                    } else if (childNode != null && childNode.getNodeType() == Node.COMMENT_NODE) {
                         Comment comment = (Comment) childNode;
                         String commentData = comment.getData();
                         for (String tag : MergeConstants.OLD_ELEMENT_TAGS) {

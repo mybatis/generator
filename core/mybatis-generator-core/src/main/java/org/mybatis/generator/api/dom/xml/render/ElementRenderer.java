@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@ package org.mybatis.generator.api.dom.xml.render;
 
 import java.util.stream.Stream;
 
-import org.mybatis.generator.api.dom.xml.Element;
+import org.mybatis.generator.api.dom.xml.VisitableElement;
 import org.mybatis.generator.api.dom.xml.ElementVisitor;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
@@ -55,7 +55,7 @@ public class ElementRenderer implements ElementVisitor<Stream<String>> {
 
     private String renderAttributes(XmlElement element) {
         return element.getAttributes().stream()
-                .sorted()
+                .sorted((a1, a2) -> a1.getName().compareTo(a2.getName()))
                 .map(attributeRenderer::render)
                 .collect(CustomCollectors.joining(" ", " ", "")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
@@ -73,7 +73,7 @@ public class ElementRenderer implements ElementVisitor<Stream<String>> {
                 .map(this::indent);
     }
 
-    private Stream<String> renderChild(Element child) {
+    private Stream<String> renderChild(VisitableElement child) {
         return child.accept(this);
     }
 

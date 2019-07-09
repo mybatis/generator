@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -41,8 +41,7 @@ public class Messages {
 
     public static String getString(String key, String parm1) {
         try {
-            return MessageFormat.format(RESOURCE_BUNDLE.getString(key),
-                    new Object[] { parm1 });
+            return MessageFormat.format(RESOURCE_BUNDLE.getString(key), parm1);
         } catch (MissingResourceException e) {
             return '!' + key + '!';
         }
@@ -50,8 +49,7 @@ public class Messages {
 
     public static String getString(String key, String parm1, String parm2) {
         try {
-            return MessageFormat.format(RESOURCE_BUNDLE.getString(key),
-                    new Object[] { parm1, parm2 });
+            return MessageFormat.format(RESOURCE_BUNDLE.getString(key), parm1, parm2);
         } catch (MissingResourceException e) {
             return '!' + key + '!';
         }
@@ -60,8 +58,7 @@ public class Messages {
     public static String getString(String key, String parm1, String parm2,
             String parm3) {
         try {
-            return MessageFormat.format(RESOURCE_BUNDLE.getString(key),
-                    new Object[] { parm1, parm2, parm3 });
+            return MessageFormat.format(RESOURCE_BUNDLE.getString(key), parm1, parm2, parm3);
         } catch (MissingResourceException e) {
             return '!' + key + '!';
         }

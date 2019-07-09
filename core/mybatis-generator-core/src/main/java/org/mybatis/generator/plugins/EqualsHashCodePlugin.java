@@ -322,9 +322,6 @@ public class EqualsHashCodePlugin extends PluginAdapter {
                     sb.append(getterMethod);
                     sb.append("();"); //$NON-NLS-1$
                     method.addBodyLine(sb.toString());
-                } else {
-                    // should never happen
-                    continue;
                 }
             } else if (fqjt.isArray()) {
                 // Arrays is already imported by the generateEquals method, we don't need

@@ -96,7 +96,7 @@ public class GeneratorAntTask extends Task {
      * @see org.apache.tools.ant.Task#execute()
      */
     @Override
-    public void execute() throws BuildException {
+    public void execute() {
         if (!stringHasValue(configfile)) {
             throw new BuildException(getString("RuntimeError.0")); //$NON-NLS-1$
         }
@@ -146,21 +146,13 @@ public class GeneratorAntTask extends Task {
             myBatisGenerator.generate(new AntProgressCallback(this, verbose), contexts,
                     fullyqualifiedTables);
 
-        } catch (XMLParserException e) {
+        } catch (XMLParserException | InvalidConfigurationException e) {
             for (String error : e.getErrors()) {
                 log(error, Project.MSG_ERR);
             }
 
             throw new BuildException(e.getMessage());
-        } catch (SQLException e) {
-            throw new BuildException(e.getMessage());
-        } catch (IOException e) {
-            throw new BuildException(e.getMessage());
-        } catch (InvalidConfigurationException e) {
-            for (String error : e.getErrors()) {
-                log(error, Project.MSG_ERR);
-            }
-
+        } catch (SQLException | IOException e) {
             throw new BuildException(e.getMessage());
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();

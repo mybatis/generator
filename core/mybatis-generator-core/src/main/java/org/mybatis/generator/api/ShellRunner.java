@@ -124,10 +124,7 @@ public class ShellRunner {
             }
 
             return;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return;
-        } catch (IOException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
             return;
         } catch (InvalidConfigurationException e) {

@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -56,8 +56,7 @@ public class DomWriter {
         StringWriter sw = new StringWriter();
         printWriter = new PrintWriter(sw);
         write(document);
-        String s = sw.toString();
-        return s;
+        return sw.toString();
     }
 
     protected Attr[] sortAttributes(NamedNodeMap attrs) {
@@ -100,68 +99,89 @@ public class DomWriter {
     protected void normalizeAndPrint(char c, boolean isAttValue) {
 
         switch (c) {
-        case '<': {
-            printWriter.print("&lt;"); //$NON-NLS-1$
+        case '<':
+            handleLessThan();
             break;
-        }
-        case '>': {
-            printWriter.print("&gt;"); //$NON-NLS-1$
+        case '>':
+            handleGreaterThan();
             break;
-        }
-        case '&': {
-            printWriter.print("&amp;"); //$NON-NLS-1$
+        case '&':
+            handleAmpersand();
             break;
-        }
-        case '"': {
-            // A '"' that appears in character data
-            // does not need to be escaped.
-            if (isAttValue) {
-                printWriter.print("&quot;"); //$NON-NLS-1$
-            } else {
-                printWriter.print('"');
-            }
+        case '"':
+            handleDoubleQuote(isAttValue);
             break;
-        }
-        case '\r': {
-            // If CR is part of the document's content, it
-            // must be printed as a literal otherwise
-            // it would be normalized to LF when the document
-            // is reparsed.
-            printWriter.print("&#xD;"); //$NON-NLS-1$
+        case '\r':
+            handleCarriageReturn();
             break;
-        }
-        case '\n': {
-            // If LF is part of the document's content, it
-            // should be printed back out with the system default
-            // line separator.  XML parsing forces \n only after a parse,
-            // but we should write it out as it was to avoid whitespace
-            // commits on some version control systems.
-            printWriter.print(System.getProperty("line.separator")); //$NON-NLS-1$
+        case '\n':
+            handleLineFeed();
             break;
+        default:
+            handleDefault(c, isAttValue);
         }
-        default: {
-            // In XML 1.1, control chars in the ranges [#x1-#x1F, #x7F-#x9F]
-            // must be escaped.
-            //
-            // Escape space characters that would be normalized to #x20 in
-            // attribute values
-            // when the document is reparsed.
-            //
-            // Escape NEL (0x85) and LSEP (0x2028) that appear in content
-            // if the document is XML 1.1, since they would be normalized to LF
-            // when the document is reparsed.
-            if (isXML11
-                    && ((c >= 0x01 && c <= 0x1F && c != 0x09 && c != 0x0A)
-                            || (c >= 0x7F && c <= 0x9F) || c == 0x2028)
-                    || isAttValue && (c == 0x09 || c == 0x0A)) {
-                printWriter.print("&#x"); //$NON-NLS-1$
-                printWriter.print(Integer.toHexString(c).toUpperCase());
-                printWriter.print(';');
-            } else {
-                printWriter.print(c);
-            }
+    }
+
+    private void handleDefault(char c, boolean isAttValue) {
+        // In XML 1.1, control chars in the ranges [#x1-#x1F, #x7F-#x9F]
+        // must be escaped.
+        //
+        // Escape space characters that would be normalized to #x20 in
+        // attribute values
+        // when the document is reparsed.
+        //
+        // Escape NEL (0x85) and LSEP (0x2028) that appear in content
+        // if the document is XML 1.1, since they would be normalized to LF
+        // when the document is reparsed.
+        if (isXML11
+                && ((c >= 0x01 && c <= 0x1F && c != 0x09 && c != 0x0A)
+                        || (c >= 0x7F && c <= 0x9F) || c == 0x2028)
+                || isAttValue && (c == 0x09 || c == 0x0A)) {
+            printWriter.print("&#x"); //$NON-NLS-1$
+            printWriter.print(Integer.toHexString(c).toUpperCase());
+            printWriter.print(';');
+        } else {
+            printWriter.print(c);
         }
+    }
+
+    private void handleLineFeed() {
+        // If LF is part of the document's content, it
+        // should be printed back out with the system default
+        // line separator.  XML parsing forces \n only after a parse,
+        // but we should write it out as it was to avoid whitespace
+        // commits on some version control systems.
+        printWriter.print(System.getProperty("line.separator")); //$NON-NLS-1$
+    }
+
+    private void handleCarriageReturn() {
+        // If CR is part of the document's content, it
+        // must be printed as a literal otherwise
+        // it would be normalized to LF when the document
+        // is reparsed.
+        printWriter.print("&#xD;"); //$NON-NLS-1$
+    }
+
+    private void handleDoubleQuote(boolean isAttValue) {
+        // A '"' that appears in character data
+        // does not need to be escaped.
+        if (isAttValue) {
+            printWriter.print("&quot;"); //$NON-NLS-1$
+        } else {
+            printWriter.print('"');
         }
+    }
+
+    private void handleAmpersand() {
+        printWriter.print("&amp;"); //$NON-NLS-1$
+    }
+
+    private void handleGreaterThan() {
+        printWriter.print("&gt;"); //$NON-NLS-1$
+    }
+
+    private void handleLessThan() {
+        printWriter.print("&lt;"); //$NON-NLS-1$
     }
 
     /**
@@ -237,7 +257,7 @@ public class DomWriter {
         write(node.getDocumentElement());
     }
 
-    protected void write(DocumentType node) throws ShellException {
+    protected void write(DocumentType node) {
         printWriter.print("<!DOCTYPE "); //$NON-NLS-1$
         printWriter.print(node.getName());
         String publicId = node.getPublicId();
@@ -312,7 +332,7 @@ public class DomWriter {
         for (int i = 0; i < len; i++) {
             char c = data.charAt(i);
             if (c == '\n') {
-                printWriter.print(System.getProperty("line.separator")); //$NON-NLS-1$
+                handleLineFeed();
             } else {
                 printWriter.print(c);
             }

@@ -19,6 +19,7 @@ import static org.mybatis.generator.internal.util.StringUtility.isTrue;
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -100,11 +101,11 @@ public abstract class IntrospectedTable {
 
     protected Rules rules;
 
-    protected List<IntrospectedColumn> primaryKeyColumns;
+    protected List<IntrospectedColumn> primaryKeyColumns = new ArrayList<>();
 
-    protected List<IntrospectedColumn> baseColumns;
+    protected List<IntrospectedColumn> baseColumns = new ArrayList<>();
 
-    protected List<IntrospectedColumn> blobColumns;
+    protected List<IntrospectedColumn> blobColumns = new ArrayList<>();
 
     protected TargetRuntime targetRuntime;
 
@@ -112,10 +113,10 @@ public abstract class IntrospectedTable {
      * Attributes may be used by plugins to capture table related state between
      * the different plugin calls.
      */
-    protected Map<String, Object> attributes;
+    protected Map<String, Object> attributes = new HashMap<>();
 
     /** Internal attributes are used to store commonly accessed items by all code generators. */
-    protected Map<IntrospectedTable.InternalAttribute, String> internalAttributes;
+    protected Map<IntrospectedTable.InternalAttribute, String> internalAttributes = new EnumMap<>(InternalAttribute.class);
 
     /**
      * Table remarks retrieved from database metadata.
@@ -130,11 +131,6 @@ public abstract class IntrospectedTable {
     public IntrospectedTable(TargetRuntime targetRuntime) {
         super();
         this.targetRuntime = targetRuntime;
-        primaryKeyColumns = new ArrayList<>();
-        baseColumns = new ArrayList<>();
-        blobColumns = new ArrayList<>();
-        attributes = new HashMap<>();
-        internalAttributes = new HashMap<>();
     }
 
     public FullyQualifiedTable getFullyQualifiedTable() {

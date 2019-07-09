@@ -15,17 +15,31 @@
  */
 package org.mybatis.generator.exception;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class XMLParserException extends MultiMessageException {
+public class MultiMessageException extends Exception {
 
-    private static final long serialVersionUID = 3481108770555387812L;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -5358501949588130025L;
+    private final List<String> errors = new ArrayList<>();
 
-    public XMLParserException(List<String> errors) {
-        super(errors);
+    public MultiMessageException(List<String> errors) {
+        this.errors.addAll(errors);
     }
 
-    public XMLParserException(String error) {
-        super(error);
+    public MultiMessageException(String error) {
+        this.errors.add(error);
+    }
+
+    public List<String> getErrors() {
+        return errors;
+    }
+
+    @Override
+    public String getMessage() {
+        return errors.get(0);
     }
 }

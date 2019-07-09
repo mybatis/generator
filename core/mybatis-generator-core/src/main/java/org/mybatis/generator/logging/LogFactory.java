@@ -31,7 +31,7 @@ import org.mybatis.generator.logging.slf4j.Slf4jLoggingLogFactory;
  * 
  */
 public class LogFactory {
-    private static AbstractLogFactory logFactory;
+    private static AbstractLogFactory theFactory;
     public static final String MARKER = "MYBATIS-GENERATOR"; //$NON-NLS-1$
 
     static {
@@ -45,8 +45,8 @@ public class LogFactory {
 
     public static Log getLog(Class<?> clazz) {
         try {
-            return logFactory.getLog(clazz);
-        } catch (Throwable t) {
+            return theFactory.getLog(clazz);
+        } catch (Exception t) {
             throw new RuntimeException(getString("RuntimeError.21", //$NON-NLS-1$
                     clazz.getName(), t.getMessage()), t);
         }
@@ -89,7 +89,7 @@ public class LogFactory {
     }
 
     private static void tryImplementation(AbstractLogFactory factory) {
-        if (logFactory == null) {
+        if (theFactory == null) {
             try {
                 setImplementation(factory);
             } catch (LogException e) {
@@ -104,8 +104,8 @@ public class LogFactory {
             if (log.isDebugEnabled()) {
                 log.debug("Logging initialized using '" + factory + "' adapter."); //$NON-NLS-1$ //$NON-NLS-2$
             }
-            logFactory = factory;
-        } catch (Throwable t) {
+            theFactory = factory;
+        } catch (Exception t) {
             throw new LogException("Error setting Log implementation.  Cause: " + t.getMessage(), t); //$NON-NLS-1$
         }
     }

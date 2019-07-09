@@ -55,10 +55,9 @@ public class JavaBeansUtil {
         StringBuilder sb = new StringBuilder();
 
         sb.append(property);
-        if (Character.isLowerCase(sb.charAt(0))) {
-            if (sb.length() == 1 || !Character.isUpperCase(sb.charAt(1))) {
-                sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
-            }
+        if (Character.isLowerCase(sb.charAt(0))
+                && (sb.length() == 1 || !Character.isUpperCase(sb.charAt(1)))) {
+            sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
         }
 
         if (fullyQualifiedJavaType.equals(FullyQualifiedJavaType
@@ -83,10 +82,9 @@ public class JavaBeansUtil {
         StringBuilder sb = new StringBuilder();
 
         sb.append(property);
-        if (Character.isLowerCase(sb.charAt(0))) {
-            if (sb.length() == 1 || !Character.isUpperCase(sb.charAt(1))) {
-                sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
-            }
+        if (Character.isLowerCase(sb.charAt(0))
+                && (sb.length() == 1 || !Character.isUpperCase(sb.charAt(1)))) {
+            sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
         }
 
         sb.insert(0, "set"); //$NON-NLS-1$

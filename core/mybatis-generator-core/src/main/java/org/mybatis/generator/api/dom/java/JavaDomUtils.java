@@ -18,6 +18,8 @@ package org.mybatis.generator.api.dom.java;
 import java.util.stream.Collectors;
 
 public class JavaDomUtils {
+    private JavaDomUtils() {}
+    
     /**
      * Calculates type names for writing into generated Java.  We try to
      * use short names wherever possible.  If the type requires an import,

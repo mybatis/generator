@@ -38,6 +38,6 @@ public class MergeConstants {
             "@ibatorgenerated", //$NON-NLS-1$
             "@abatorgenerated", //$NON-NLS-1$
             "@mbggenerated", //$NON-NLS-1$
-            "@mbg.generated" }; //$NON-NLS-1$
+            NEW_ELEMENT_TAG };
 
 }

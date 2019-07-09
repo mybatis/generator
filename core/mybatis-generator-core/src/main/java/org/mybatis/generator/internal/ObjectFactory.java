@@ -109,7 +109,7 @@ public class ObjectFactory {
             try {
                 clazz = Class.forName(type, true, classLoader);
                 return clazz;
-            } catch (Throwable e) {
+            } catch (Exception e) {
                 // ignore - fail safe below
             }
         }

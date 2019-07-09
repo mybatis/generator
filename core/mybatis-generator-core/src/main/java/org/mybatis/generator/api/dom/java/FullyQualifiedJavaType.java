@@ -159,7 +159,7 @@ public class FullyQualifiedJavaType implements
     private String calculateActualImport(String name) {
         String answer = name;
         if (this.isArray()) {
-            int index = name.indexOf("["); //$NON-NLS-1$
+            int index = name.indexOf('[');
             if (index != -1) {
                 answer = name.substring(0, index);
             }

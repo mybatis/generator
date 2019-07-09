@@ -56,9 +56,6 @@ public class RenameExampleClassPlugin extends PluginAdapter {
     private String replaceString;
     private Pattern pattern;
 
-    public RenameExampleClassPlugin() {
-    }
-
     @Override
     public boolean validate(List<String> warnings) {
 

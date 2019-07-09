@@ -45,13 +45,7 @@ public class RootClassInfo {
 
     public static RootClassInfo getInstance(String className,
             List<String> warnings) {
-        RootClassInfo classInfo = rootClassInfoMap.get(className);
-        if (classInfo == null) {
-            classInfo = new RootClassInfo(className, warnings);
-            rootClassInfoMap.put(className, classInfo);
-        }
-
-        return classInfo;
+        return rootClassInfoMap.computeIfAbsent(className, k -> new RootClassInfo(k, warnings));
     }
 
     /**

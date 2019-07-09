@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -33,6 +33,8 @@ import org.mybatis.generator.api.IntrospectedColumn;
  *
  */
 public class ListUtilities {
+    
+    private ListUtilities() {}
 
     public static List<IntrospectedColumn> removeGeneratedAlwaysColumns(List<IntrospectedColumn> columns) {
         List<IntrospectedColumn> filteredList = new ArrayList<>();

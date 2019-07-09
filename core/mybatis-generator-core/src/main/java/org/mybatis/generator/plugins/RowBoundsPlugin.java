@@ -238,11 +238,7 @@ public class RowBoundsPlugin extends PluginAdapter {
 
         // save the new element locally.   We'll add it to the document
         // later
-        List<XmlElement> elements = elementsToAdd.get(fqt);
-        if (elements == null) {
-            elements = new ArrayList<>();
-            elementsToAdd.put(fqt, elements);
-        }
+        List<XmlElement> elements = elementsToAdd.computeIfAbsent(fqt, k -> new ArrayList<>());
         elements.add(newElement);
     }
 }

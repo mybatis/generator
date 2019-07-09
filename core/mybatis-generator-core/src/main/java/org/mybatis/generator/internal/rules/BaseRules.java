@@ -71,11 +71,7 @@ public abstract class BaseRules implements Rules {
      */
     @Override
     public boolean generateInsertSelective() {
-        if (isModelOnly) {
-            return false;
-        }
-
-        return tableConfiguration.isInsertStatementEnabled();
+        return generateInsert();
     }
 
     /**

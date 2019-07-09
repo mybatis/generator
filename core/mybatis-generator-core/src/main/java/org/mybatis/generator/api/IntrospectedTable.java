@@ -433,7 +433,6 @@ public abstract class IntrospectedTable {
                 if (introspectedColumn.getActualColumnName().equals(columnName)) {
                     primaryKeyColumns.add(introspectedColumn);
                     iter.remove();
-                    found = true;
                     break;
                 }
             }

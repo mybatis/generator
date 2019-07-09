@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@ public class InterfaceTest {
         interfaze.addImportedType(arrayList);
 
         assertNotNull(interfaze.getImportedTypes());
-        assertEquals(interfaze.getImportedTypes().size(), 1);
+        assertEquals(1, interfaze.getImportedTypes().size());
         assertTrue(interfaze.getImportedTypes().contains(arrayList));
     }
 
@@ -59,7 +59,7 @@ public class InterfaceTest {
         interfaze.addImportedTypes(importedTypes);
 
         assertNotNull(interfaze.getImportedTypes());
-        assertEquals(interfaze.getImportedTypes().size(), 2);
+        assertEquals(2, interfaze.getImportedTypes().size());
         assertTrue(interfaze.getImportedTypes().contains(arrayList));
         assertTrue(interfaze.getImportedTypes().contains(hashMap));
     }
@@ -71,8 +71,8 @@ public class InterfaceTest {
         interfaze.addFileCommentLine("test");
 
         assertNotNull(interfaze.getFileCommentLines());
-        assertEquals(interfaze.getFileCommentLines().size(), 1);
-        assertEquals(interfaze.getFileCommentLines().get(0), "test");
+        assertEquals(1, interfaze.getFileCommentLines().size());
+        assertEquals("test", interfaze.getFileCommentLines().get(0));
     }
 
     @Test
@@ -82,7 +82,7 @@ public class InterfaceTest {
         interfaze.addStaticImport("com.foo.StaticUtil");
 
         assertNotNull(interfaze.getStaticImports());
-        assertEquals(interfaze.getStaticImports().size(), 1);
+        assertEquals(1, interfaze.getStaticImports().size());
         assertTrue(interfaze.getStaticImports().contains("com.foo.StaticUtil"));
     }
 
@@ -96,7 +96,7 @@ public class InterfaceTest {
         interfaze.addStaticImports(staticImports);
 
         assertNotNull(interfaze.getStaticImports());
-        assertEquals(interfaze.getStaticImports().size(), 2);
+        assertEquals(2, interfaze.getStaticImports().size());
         assertTrue(interfaze.getStaticImports().contains("com.foo.StaticUtil1"));
         assertTrue(interfaze.getStaticImports().contains("com.foo.StaticUtil2"));
     }

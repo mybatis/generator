@@ -150,12 +150,7 @@ public class ShellRunner {
     }
 
     private static void usage() {
-        String lines = getString("Usage.Lines"); //$NON-NLS-1$
-        int intLines = Integer.parseInt(lines);
-        for (int i = 0; i < intLines; i++) {
-            String key = "Usage." + i; //$NON-NLS-1$
-            writeLine(getString(key));
-        }
+        writeLine(getString("Usage"));
     }
 
     private static void writeLine(String message) {

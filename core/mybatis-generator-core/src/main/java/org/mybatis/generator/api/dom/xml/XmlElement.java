@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -69,7 +69,7 @@ public class XmlElement extends Element {
     }
     
     public boolean hasChildren() {
-        return elements.size() > 0;
+        return !elements.isEmpty();
     }
 
     public void setName(String name) {

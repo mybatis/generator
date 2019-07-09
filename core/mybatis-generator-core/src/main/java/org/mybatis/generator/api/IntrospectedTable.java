@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -274,7 +274,7 @@ public abstract class IntrospectedTable {
     }
 
     public boolean hasPrimaryKeyColumns() {
-        return primaryKeyColumns.size() > 0;
+        return !primaryKeyColumns.isEmpty();
     }
 
     public List<IntrospectedColumn> getBaseColumns() {
@@ -326,11 +326,11 @@ public abstract class IntrospectedTable {
     }
 
     public boolean hasBLOBColumns() {
-        return blobColumns.size() > 0;
+        return !blobColumns.isEmpty();
     }
 
     public boolean hasBaseColumns() {
-        return baseColumns.size() > 0;
+        return !baseColumns.isEmpty();
     }
 
     public Rules getRules() {
@@ -390,8 +390,7 @@ public abstract class IntrospectedTable {
     }
 
     public boolean hasAnyColumns() {
-        return primaryKeyColumns.size() > 0 || baseColumns.size() > 0
-                || blobColumns.size() > 0;
+        return hasPrimaryKeyColumns() || hasBaseColumns() || hasBLOBColumns();
     }
 
     public void setTableConfiguration(TableConfiguration tableConfiguration) {

@@ -229,7 +229,7 @@ public class MyBatisGenerator {
 
         // calculate the contexts to run
         List<Context> contextsToRun;
-        if (contextIds == null || contextIds.size() == 0) {
+        if (contextIds == null || contextIds.isEmpty()) {
             contextsToRun = configuration.getContexts();
         } else {
             contextsToRun = new ArrayList<>();
@@ -241,7 +241,7 @@ public class MyBatisGenerator {
         }
 
         // setup custom classloader if required
-        if (configuration.getClassPathEntries().size() > 0) {
+        if (!configuration.getClassPathEntries().isEmpty()) {
             ClassLoader classLoader = getCustomClassloader(configuration.getClassPathEntries());
             ObjectFactory.addExternalClassLoader(classLoader);
         }

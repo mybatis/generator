@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ public class JavaDomUtils {
      */
     public static String calculateTypeName(CompilationUnit compilationUnit, FullyQualifiedJavaType fqjt) {
 
-        if (fqjt.getTypeArguments().size() > 0) {
+        if (!fqjt.getTypeArguments().isEmpty()) {
             return calculateParameterizedTypeName(compilationUnit, fqjt);
         }
         

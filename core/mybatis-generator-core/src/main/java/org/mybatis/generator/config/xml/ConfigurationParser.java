@@ -148,7 +148,7 @@ public class ConfigurationParser {
                 }
             }
 
-            if (document == null || parseErrors.size() > 0) {
+            if (document == null || !parseErrors.isEmpty()) {
                 throw new XMLParserException(parseErrors);
             }
 
@@ -163,7 +163,7 @@ public class ConfigurationParser {
                 throw new XMLParserException(getString("RuntimeError.5")); //$NON-NLS-1$
             }
 
-            if (parseErrors.size() > 0) {
+            if (!parseErrors.isEmpty()) {
                 throw new XMLParserException(parseErrors);
             }
 

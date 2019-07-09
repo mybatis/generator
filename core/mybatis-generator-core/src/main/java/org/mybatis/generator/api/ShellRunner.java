@@ -144,7 +144,7 @@ public class ShellRunner {
             writeLine(warning);
         }
 
-        if (warnings.size() == 0) {
+        if (warnings.isEmpty()) {
             writeLine(getString("Progress.4")); //$NON-NLS-1$
         } else {
             writeLine();

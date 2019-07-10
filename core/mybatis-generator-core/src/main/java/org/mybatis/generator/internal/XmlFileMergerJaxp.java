@@ -26,6 +26,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -89,6 +90,7 @@ public class XmlFileMergerJaxp {
         DocumentBuilderFactory factory = DocumentBuilderFactory
                 .newInstance();
         factory.setExpandEntityReferences(false);
+        factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
         DocumentBuilder builder = factory.newDocumentBuilder();
         builder.setEntityResolver(new NullEntityResolver());
 

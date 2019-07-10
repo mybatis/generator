@@ -227,7 +227,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         answer.addField(field);
         answer.addMethod(getGetter(field));
 
-        field = new Field("betweenValue", FullyQualifiedJavaType.getBooleanPrimitiveInstance()); //$NON-NLS-1$);
+        field = new Field("betweenValue", FullyQualifiedJavaType.getBooleanPrimitiveInstance()); //$NON-NLS-1$
         field.setVisibility(JavaVisibility.PRIVATE);
         answer.addField(field);
         answer.addMethod(getGetter(field));
@@ -950,9 +950,9 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         sb.setLength(0);
         sb.append(field.getName());
         if (context.isJava8Targeted()) {
-            sb.append(" = new ArrayList<>();"); //$NON-NLS-1$;            
+            sb.append(" = new ArrayList<>();"); //$NON-NLS-1$
         } else {
-            sb.append(" = new ArrayList<Criterion>();"); //$NON-NLS-1$;
+            sb.append(" = new ArrayList<Criterion>();"); //$NON-NLS-1$
         }
         constructor.addBodyLine(sb.toString());
 

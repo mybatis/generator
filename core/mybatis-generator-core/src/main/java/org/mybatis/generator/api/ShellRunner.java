@@ -125,7 +125,7 @@ public class ShellRunner {
 
             return;
         } catch (SQLException | IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(System.out);
             return;
         } catch (InvalidConfigurationException e) {
             writeLine(getString("Progress.16")); //$NON-NLS-1$

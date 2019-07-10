@@ -90,48 +90,13 @@ public class GeneratorAntTask extends Task {
         super();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.apache.tools.ant.Task#execute()
-     */
     @Override
     public void execute() {
-        if (!stringHasValue(configfile)) {
-            throw new BuildException(getString("RuntimeError.0")); //$NON-NLS-1$
-        }
+        File configurationFile = calculateConfigurationFile();
+        Set<String> fullyqualifiedTables = calculateTables();
+        Set<String> contexts = calculateContexts();
 
         List<String> warnings = new ArrayList<>();
-
-        File configurationFile = new File(configfile);
-        if (!configurationFile.exists()) {
-            throw new BuildException(getString(
-                    "RuntimeError.1", configfile)); //$NON-NLS-1$
-        }
-
-        Set<String> fullyqualifiedTables = new HashSet<>();
-        if (stringHasValue(fullyQualifiedTableNames)) {
-            StringTokenizer st = new StringTokenizer(fullyQualifiedTableNames,
-                    ","); //$NON-NLS-1$
-            while (st.hasMoreTokens()) {
-                String s = st.nextToken().trim();
-                if (s.length() > 0) {
-                    fullyqualifiedTables.add(s);
-                }
-            }
-        }
-
-        Set<String> contexts = new HashSet<>();
-        if (stringHasValue(contextIds)) {
-            StringTokenizer st = new StringTokenizer(contextIds, ","); //$NON-NLS-1$
-            while (st.hasMoreTokens()) {
-                String s = st.nextToken().trim();
-                if (s.length() > 0) {
-                    contexts.add(s);
-                }
-            }
-        }
-
         try {
             Properties p = propertyset == null ? null : propertyset
                     .getProperties();
@@ -164,6 +129,49 @@ public class GeneratorAntTask extends Task {
         for (String error : warnings) {
             log(error, Project.MSG_WARN);
         }
+    }
+
+    private Set<String> calculateContexts() {
+        Set<String> contexts = new HashSet<>();
+        if (stringHasValue(contextIds)) {
+            StringTokenizer st = new StringTokenizer(contextIds, ","); //$NON-NLS-1$
+            while (st.hasMoreTokens()) {
+                String s = st.nextToken().trim();
+                if (s.length() > 0) {
+                    contexts.add(s);
+                }
+            }
+        }
+        return contexts;
+    }
+
+    private Set<String> calculateTables() {
+        Set<String> fullyqualifiedTables = new HashSet<>();
+        if (stringHasValue(fullyQualifiedTableNames)) {
+            StringTokenizer st = new StringTokenizer(fullyQualifiedTableNames,
+                    ","); //$NON-NLS-1$
+            while (st.hasMoreTokens()) {
+                String s = st.nextToken().trim();
+                if (s.length() > 0) {
+                    fullyqualifiedTables.add(s);
+                }
+            }
+        }
+        return fullyqualifiedTables;
+    }
+
+    private File calculateConfigurationFile() {
+        if (!stringHasValue(configfile)) {
+            throw new BuildException(getString("RuntimeError.0")); //$NON-NLS-1$
+        }
+
+
+        File configurationFile = new File(configfile);
+        if (!configurationFile.exists()) {
+            throw new BuildException(getString(
+                    "RuntimeError.1", configfile)); //$NON-NLS-1$
+        }
+        return configurationFile;
     }
 
     public String getConfigfile() {

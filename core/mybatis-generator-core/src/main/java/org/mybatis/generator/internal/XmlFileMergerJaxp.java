@@ -186,11 +186,7 @@ public class XmlFileMergerJaxp {
         Element element = (Element) node;
         String id = element.getAttribute("id"); //$NON-NLS-1$
         if (id != null) {
-            for (String prefix : MergeConstants.OLD_XML_ELEMENT_PREFIXES) {
-                if (id.startsWith(prefix)) {
-                    return true;
-                }
-            }
+            return MergeConstants.idStartsWithPrefix(id);
         }
         
         return false;
@@ -207,11 +203,7 @@ public class XmlFileMergerJaxp {
             Node childNode = children.item(i);
             if (childNode != null && childNode.getNodeType() == Node.COMMENT_NODE) {
                 String commentData = ((Comment) childNode).getData();
-                for (String tag : MergeConstants.OLD_ELEMENT_TAGS) {
-                    if (commentData.contains(tag)) {
-                        return true;
-                    }
-                }
+                return MergeConstants.comentContainsTag(commentData);
             }
         }
         

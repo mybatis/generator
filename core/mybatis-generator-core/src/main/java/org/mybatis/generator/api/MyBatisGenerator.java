@@ -305,7 +305,7 @@ public class MyBatisGenerator {
                 if (shellCallback.isMergeSupported()) {
                     source = shellCallback.mergeJavaFile(gjf
                             .getFormattedContent(), targetFile,
-                            MergeConstants.OLD_ELEMENT_TAGS,
+                            MergeConstants.getOldElementTags(),
                             gjf.getFileEncoding());
                 } else if (shellCallback.isOverwriteEnabled()) {
                     source = gjf.getFormattedContent();

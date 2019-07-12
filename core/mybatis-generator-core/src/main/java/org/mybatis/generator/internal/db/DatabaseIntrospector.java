@@ -131,7 +131,7 @@ public class DatabaseIntrospector {
         // actually exists in the table
         for (ColumnOverride columnOverride : tableConfiguration
                 .getColumnOverrides()) {
-            if (introspectedTable.getColumn(columnOverride.getColumnName()) == null) {
+            if (!introspectedTable.getColumn(columnOverride.getColumnName()).isPresent()) {
                 warnings.add(getString("Warning.3", //$NON-NLS-1$
                         columnOverride.getColumnName(), table.toString()));
             }
@@ -146,7 +146,7 @@ public class DatabaseIntrospector {
 
         GeneratedKey generatedKey = tableConfiguration.getGeneratedKey();
         if (generatedKey != null
-                && introspectedTable.getColumn(generatedKey.getColumn()) == null) {
+                && !introspectedTable.getColumn(generatedKey.getColumn()).isPresent()) {
             if (generatedKey.isIdentity()) {
                 warnings.add(getString("Warning.5", //$NON-NLS-1$
                         generatedKey.getColumn(), table.toString()));

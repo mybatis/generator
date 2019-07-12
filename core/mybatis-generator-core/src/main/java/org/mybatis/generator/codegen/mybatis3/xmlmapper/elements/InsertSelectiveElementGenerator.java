@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -53,11 +53,9 @@ public class InsertSelectiveElementGenerator extends
 
         GeneratedKey gk = introspectedTable.getGeneratedKey();
         if (gk != null) {
-            IntrospectedColumn introspectedColumn = introspectedTable
-                    .getColumn(gk.getColumn());
-            // if the column is null, then it's a configuration error. The
-            // warning has already been reported
-            if (introspectedColumn != null) {
+            introspectedTable.getColumn(gk.getColumn()).ifPresent(introspectedColumn -> {
+                // if the column is null, then it's a configuration error. The
+                // warning has already been reported
                 if (gk.isJdbcStandard()) {
                     answer.addAttribute(new Attribute("useGeneratedKeys", "true")); //$NON-NLS-1$ //$NON-NLS-2$
                     answer.addAttribute(new Attribute("keyProperty", introspectedColumn.getJavaProperty())); //$NON-NLS-1$
@@ -65,7 +63,7 @@ public class InsertSelectiveElementGenerator extends
                 } else {
                     answer.addElement(getSelectKey(introspectedColumn, gk));
                 }
-            }
+            });
         }
 
         StringBuilder sb = new StringBuilder();

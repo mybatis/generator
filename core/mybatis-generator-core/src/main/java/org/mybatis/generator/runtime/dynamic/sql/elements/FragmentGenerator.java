@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -248,8 +248,7 @@ public class FragmentGenerator {
         MethodParts.Builder builder = new MethodParts.Builder();
         
         StringBuilder sb = new StringBuilder();
-        IntrospectedColumn introspectedColumn = introspectedTable.getColumn(gk.getColumn());
-        if (introspectedColumn != null) {
+        introspectedTable.getColumn(gk.getColumn()).ifPresent(introspectedColumn -> {
             if (gk.isJdbcStandard()) {
                 builder.withImport(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Options")); //$NON-NLS-1$
                 sb.append("@Options(useGeneratedKeys=true,keyProperty=\"record."); //$NON-NLS-1$
@@ -270,7 +269,7 @@ public class FragmentGenerator {
                 sb.append(".class)"); //$NON-NLS-1$
                 builder.withAnnotation(sb.toString());
             }
-        }
+        });
         
         return builder.build();
     }

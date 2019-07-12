@@ -27,8 +27,6 @@ public class IgnoredColumn {
 
     private boolean isColumnNameDelimited;
 
-    protected String configuredDelimitedColumnName;
-
     public IgnoredColumn(String columnName) {
         super();
         this.columnName = columnName;
@@ -45,7 +43,6 @@ public class IgnoredColumn {
 
     public void setColumnNameDelimited(boolean isColumnNameDelimited) {
         this.isColumnNameDelimited = isColumnNameDelimited;
-        configuredDelimitedColumnName = isColumnNameDelimited ? "true" : "false"; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     @Override

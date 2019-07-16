@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,9 +22,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -50,6 +52,8 @@ import org.xml.sax.SAXException;
  * @author Jeff Butler
  */
 public class XmlFileMergerJaxp {
+    private XmlFileMergerJaxp() {}
+
     private static class NullEntityResolver implements EntityResolver {
         /**
          * returns an empty reader. This is done so that the parser doesn't
@@ -66,27 +70,14 @@ public class XmlFileMergerJaxp {
         }
     }
 
-    /**
-     * Utility class - no instances allowed.
-     */
-    private XmlFileMergerJaxp() {
-        super();
-    }
-
     public static String getMergedSource(GeneratedXmlFile generatedXmlFile,
             File existingFile) throws ShellException {
 
         try {
             return getMergedSource(new InputSource(new StringReader(generatedXmlFile.getFormattedContent())),
-                new InputSource(new InputStreamReader(new FileInputStream(existingFile), "UTF-8")), //$NON-NLS-1$
+                new InputSource(new InputStreamReader(new FileInputStream(existingFile), StandardCharsets.UTF_8)),
                 existingFile.getName());
-        } catch (IOException e) {
-            throw new ShellException(getString("Warning.13", //$NON-NLS-1$
-                    existingFile.getName()), e);
-        } catch (SAXException e) {
-            throw new ShellException(getString("Warning.13", //$NON-NLS-1$
-                    existingFile.getName()), e);
-        } catch (ParserConfigurationException e) {
+        } catch (IOException | SAXException | ParserConfigurationException e) {
             throw new ShellException(getString("Warning.13", //$NON-NLS-1$
                     existingFile.getName()), e);
         }
@@ -99,6 +90,7 @@ public class XmlFileMergerJaxp {
         DocumentBuilderFactory factory = DocumentBuilderFactory
                 .newInstance();
         factory.setExpandEntityReferences(false);
+        factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
         DocumentBuilder builder = factory.newDocumentBuilder();
         builder.setEntityResolver(new NullEntityResolver());
 
@@ -181,55 +173,43 @@ public class XmlFileMergerJaxp {
 
     private static String prettyPrint(Document document) throws ShellException {
         DomWriter dw = new DomWriter();
-        String s = dw.toString(document);
-        return s;
+        return dw.toString(document);
     }
 
     private static boolean isGeneratedNode(Node node) {
-        boolean rc = false;
-
-        if (node != null && node.getNodeType() == Node.ELEMENT_NODE) {
-            Element element = (Element) node;
-            String id = element.getAttribute("id"); //$NON-NLS-1$
-            if (id != null) {
-                for (String prefix : MergeConstants.OLD_XML_ELEMENT_PREFIXES) {
-                    if (id.startsWith(prefix)) {
-                        rc = true;
-                        break;
-                    }
-                }
-            }
-
-            if (rc == false) {
-                // check for new node format - if the first non-whitespace node
-                // is an XML comment, and the comment includes
-                // one of the old element tags,
-                // then it is a generated node
-                NodeList children = node.getChildNodes();
-                int length = children.getLength();
-                for (int i = 0; i < length; i++) {
-                    Node childNode = children.item(i);
-                    if (isWhiteSpace(childNode)) {
-                        continue;
-                    } else if (childNode.getNodeType() == Node.COMMENT_NODE) {
-                        Comment comment = (Comment) childNode;
-                        String commentData = comment.getData();
-                        for (String tag : MergeConstants.OLD_ELEMENT_TAGS) {
-                            if (commentData.contains(tag)) {
-                                rc = true;
-                                break;
-                            }
-                        }
-                    } else {
-                        break;
-                    }
-                }
-            }
-        }
-
-        return rc;
+        return node != null
+                && node.getNodeType() == Node.ELEMENT_NODE
+                && (isOldFormatNode(node) || isNewFormatNode(node));
     }
 
+    private static boolean isOldFormatNode(Node node) {
+        Element element = (Element) node;
+        String id = element.getAttribute("id"); //$NON-NLS-1$
+        if (id != null) {
+            return MergeConstants.idStartsWithPrefix(id);
+        }
+        
+        return false;
+    }
+    
+    private static boolean isNewFormatNode(Node node) {
+        // check for new node format - if the first non-whitespace node
+        // is an XML comment, and the comment includes
+        // one of the old element tags,
+        // then it is a generated node
+        NodeList children = node.getChildNodes();
+        int length = children.getLength();
+        for (int i = 0; i < length; i++) {
+            Node childNode = children.item(i);
+            if (childNode != null && childNode.getNodeType() == Node.COMMENT_NODE) {
+                String commentData = ((Comment) childNode).getData();
+                return MergeConstants.comentContainsTag(commentData);
+            }
+        }
+        
+        return false;
+    }
+    
     private static boolean isWhiteSpace(Node node) {
         boolean rc = false;
 

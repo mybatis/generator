@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -160,7 +160,7 @@ public class EqualsHashCodePlugin extends PluginAdapter {
         sb.append(") that;"); //$NON-NLS-1$
         method.addBodyLine(sb.toString());
 
-        if (useEqualsHashCodeFromRoot && topLevelClass.getSuperClass() != null) {
+        if (useEqualsHashCodeFromRoot && topLevelClass.getSuperClass().isPresent()) {
             method.addBodyLine("if (!super.equals(other)) {"); //$NON-NLS-1$
             method.addBodyLine("return false;"); //$NON-NLS-1$
             method.addBodyLine("}"); //$NON-NLS-1$
@@ -255,7 +255,7 @@ public class EqualsHashCodePlugin extends PluginAdapter {
         method.addBodyLine("final int prime = 31;"); //$NON-NLS-1$
         method.addBodyLine("int result = 1;"); //$NON-NLS-1$
 
-        if (useEqualsHashCodeFromRoot && topLevelClass.getSuperClass() != null) {
+        if (useEqualsHashCodeFromRoot && topLevelClass.getSuperClass().isPresent()) {
             method.addBodyLine("result = prime * result + super.hashCode();"); //$NON-NLS-1$
         }
 
@@ -322,9 +322,6 @@ public class EqualsHashCodePlugin extends PluginAdapter {
                     sb.append(getterMethod);
                     sb.append("();"); //$NON-NLS-1$
                     method.addBodyLine(sb.toString());
-                } else {
-                    // should never happen
-                    continue;
                 }
             } else if (fqjt.isArray()) {
                 // Arrays is already imported by the generateEquals method, we don't need

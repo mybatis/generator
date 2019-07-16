@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -29,6 +29,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -130,7 +131,7 @@ public class DatabaseIntrospector {
         // actually exists in the table
         for (ColumnOverride columnOverride : tableConfiguration
                 .getColumnOverrides()) {
-            if (introspectedTable.getColumn(columnOverride.getColumnName()) == null) {
+            if (!introspectedTable.getColumn(columnOverride.getColumnName()).isPresent()) {
                 warnings.add(getString("Warning.3", //$NON-NLS-1$
                         columnOverride.getColumnName(), table.toString()));
             }
@@ -145,7 +146,7 @@ public class DatabaseIntrospector {
 
         GeneratedKey generatedKey = tableConfiguration.getGeneratedKey();
         if (generatedKey != null
-                && introspectedTable.getColumn(generatedKey.getColumn()) == null) {
+                && !introspectedTable.getColumn(generatedKey.getColumn()).isPresent()) {
             if (generatedKey.isIdentity()) {
                 warnings.add(getString("Warning.5", //$NON-NLS-1$
                         generatedKey.getColumn(), table.toString()));
@@ -181,7 +182,7 @@ public class DatabaseIntrospector {
         if (columns.isEmpty()) {
             warnings.add(getString("Warning.19", tc.getCatalog(), //$NON-NLS-1$
                     tc.getSchema(), tc.getTableName()));
-            return null;
+            return Collections.emptyList();
         }
 
         removeIgnoredColumns(tc, columns);

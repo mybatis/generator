@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -76,8 +76,7 @@ public abstract class AbstractJavaMapperMethodGenerator extends
 
     protected void addGeneratedKeyAnnotation(Method method, GeneratedKey gk) {
         StringBuilder sb = new StringBuilder();
-        IntrospectedColumn introspectedColumn = introspectedTable.getColumn(gk.getColumn());
-        if (introspectedColumn != null) {
+        introspectedTable.getColumn(gk.getColumn()).ifPresent(introspectedColumn -> {
             if (gk.isJdbcStandard()) {
                 sb.append("@Options(useGeneratedKeys=true,keyProperty=\""); //$NON-NLS-1$
                 sb.append(introspectedColumn.getJavaProperty());
@@ -96,12 +95,11 @@ public abstract class AbstractJavaMapperMethodGenerator extends
                 sb.append(".class)"); //$NON-NLS-1$
                 method.addAnnotation(sb.toString());
             }
-        }
+        });
     }
 
     protected void addGeneratedKeyImports(Interface interfaze, GeneratedKey gk) {
-        IntrospectedColumn introspectedColumn = introspectedTable.getColumn(gk.getColumn());
-        if (introspectedColumn != null) {
+        introspectedTable.getColumn(gk.getColumn()).ifPresent(introspectedColumn -> {
             if (gk.isJdbcStandard()) {
                 interfaze.addImportedType(
                         new FullyQualifiedJavaType("org.apache.ibatis.annotations.Options")); //$NON-NLS-1$
@@ -111,6 +109,6 @@ public abstract class AbstractJavaMapperMethodGenerator extends
                 FullyQualifiedJavaType fqjt = introspectedColumn.getFullyQualifiedJavaType();
                 interfaze.addImportedType(fqjt);
             }
-        }
+        });
     }
 }

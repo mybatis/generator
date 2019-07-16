@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -71,11 +71,7 @@ public abstract class BaseRules implements Rules {
      */
     @Override
     public boolean generateInsertSelective() {
-        if (isModelOnly) {
-            return false;
-        }
-
-        return tableConfiguration.isInsertStatementEnabled();
+        return generateInsert();
     }
 
     /**
@@ -120,11 +116,9 @@ public abstract class BaseRules implements Rules {
             return false;
         }
 
-        boolean rc = tableConfiguration.isUpdateByPrimaryKeyStatementEnabled()
+        return tableConfiguration.isUpdateByPrimaryKeyStatementEnabled()
                 && introspectedTable.hasPrimaryKeyColumns()
                 && introspectedTable.hasBaseColumns();
-
-        return rc;
     }
 
     /**
@@ -144,11 +138,10 @@ public abstract class BaseRules implements Rules {
         if (ListUtilities.removeGeneratedAlwaysColumns(introspectedTable.getNonPrimaryKeyColumns()).isEmpty()) {
             return false;
         }
-        boolean rc = tableConfiguration.isUpdateByPrimaryKeyStatementEnabled()
+        
+        return tableConfiguration.isUpdateByPrimaryKeyStatementEnabled()
                 && introspectedTable.hasPrimaryKeyColumns()
                 && introspectedTable.hasBLOBColumns();
-
-        return rc;
     }
 
     /**
@@ -169,12 +162,10 @@ public abstract class BaseRules implements Rules {
             return false;
         }
 
-        boolean rc = tableConfiguration.isUpdateByPrimaryKeyStatementEnabled()
+        return tableConfiguration.isUpdateByPrimaryKeyStatementEnabled()
                 && introspectedTable.hasPrimaryKeyColumns()
                 && (introspectedTable.hasBLOBColumns() || introspectedTable
                         .hasBaseColumns());
-
-        return rc;
     }
 
     /**
@@ -191,10 +182,8 @@ public abstract class BaseRules implements Rules {
             return false;
         }
 
-        boolean rc = tableConfiguration.isDeleteByPrimaryKeyStatementEnabled()
+        return tableConfiguration.isDeleteByPrimaryKeyStatementEnabled()
                 && introspectedTable.hasPrimaryKeyColumns();
-
-        return rc;
     }
 
     /**
@@ -210,9 +199,7 @@ public abstract class BaseRules implements Rules {
             return false;
         }
 
-        boolean rc = tableConfiguration.isDeleteByExampleStatementEnabled();
-
-        return rc;
+        return tableConfiguration.isDeleteByExampleStatementEnabled();
     }
 
     /**
@@ -227,10 +214,8 @@ public abstract class BaseRules implements Rules {
             return true;
         }
 
-        boolean rc = tableConfiguration.isSelectByExampleStatementEnabled()
+        return tableConfiguration.isSelectByExampleStatementEnabled()
                 || tableConfiguration.isSelectByPrimaryKeyStatementEnabled();
-
-        return rc;
     }
 
     /**
@@ -272,11 +257,9 @@ public abstract class BaseRules implements Rules {
             return false;
         }
 
-        boolean rc = tableConfiguration.isSelectByExampleStatementEnabled()
+        return tableConfiguration.isSelectByExampleStatementEnabled()
                 || tableConfiguration.isDeleteByExampleStatementEnabled()
                 || tableConfiguration.isCountByExampleStatementEnabled();
-
-        return rc;
     }
 
     /**
@@ -312,12 +295,10 @@ public abstract class BaseRules implements Rules {
             return false;
         }
 
-        boolean rc = tableConfiguration.isSelectByPrimaryKeyStatementEnabled()
+        return tableConfiguration.isSelectByPrimaryKeyStatementEnabled()
                 && introspectedTable.hasPrimaryKeyColumns()
                 && (introspectedTable.hasBaseColumns() || introspectedTable
                         .hasBLOBColumns());
-
-        return rc;
     }
 
     /**
@@ -350,10 +331,8 @@ public abstract class BaseRules implements Rules {
             return false;
         }
         
-        boolean rc = tableConfiguration.isSelectByExampleStatementEnabled()
+        return tableConfiguration.isSelectByExampleStatementEnabled()
                 && introspectedTable.hasBLOBColumns();
-
-        return rc;
     }
 
     /**
@@ -375,12 +354,10 @@ public abstract class BaseRules implements Rules {
             return false;
         }
 
-        boolean rc = tableConfiguration.isSelectByExampleStatementEnabled()
+        return tableConfiguration.isSelectByExampleStatementEnabled()
                 || tableConfiguration.isDeleteByExampleStatementEnabled()
                 || tableConfiguration.isCountByExampleStatementEnabled()
                 || tableConfiguration.isUpdateByExampleStatementEnabled();
-
-        return rc;
     }
 
     @Override
@@ -389,9 +366,7 @@ public abstract class BaseRules implements Rules {
             return false;
         }
 
-        boolean rc = tableConfiguration.isCountByExampleStatementEnabled();
-
-        return rc;
+        return tableConfiguration.isCountByExampleStatementEnabled();
     }
 
     @Override
@@ -400,9 +375,7 @@ public abstract class BaseRules implements Rules {
             return false;
         }
 
-        boolean rc = tableConfiguration.isUpdateByExampleStatementEnabled();
-
-        return rc;
+        return tableConfiguration.isUpdateByExampleStatementEnabled();
     }
 
     @Override
@@ -411,11 +384,9 @@ public abstract class BaseRules implements Rules {
             return false;
         }
 
-        boolean rc = tableConfiguration.isUpdateByExampleStatementEnabled()
+        return tableConfiguration.isUpdateByExampleStatementEnabled()
                 && (introspectedTable.hasPrimaryKeyColumns() || introspectedTable
                         .hasBaseColumns());
-
-        return rc;
     }
 
     @Override
@@ -424,10 +395,8 @@ public abstract class BaseRules implements Rules {
             return false;
         }
         
-        boolean rc = tableConfiguration.isUpdateByExampleStatementEnabled()
+        return tableConfiguration.isUpdateByExampleStatementEnabled()
                 && introspectedTable.hasBLOBColumns();
-
-        return rc;
     }
 
     @Override

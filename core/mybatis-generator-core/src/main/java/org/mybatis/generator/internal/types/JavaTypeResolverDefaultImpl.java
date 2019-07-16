@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -47,10 +47,6 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
 
     protected Map<Integer, JdbcTypeInformation> typeMap;
     
-    // TODO - remove when we get to JDK 8
-    private static final int TIME_WITH_TIMEZONE = 2013;
-    private static final int TIMESTAMP_WITH_TIMEZONE = 2014;
-
     public JavaTypeResolverDefaultImpl() {
         super();
         properties = new Properties();
@@ -126,9 +122,9 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
         typeMap.put(Types.VARCHAR, new JdbcTypeInformation("VARCHAR", //$NON-NLS-1$
                 new FullyQualifiedJavaType(String.class.getName())));
         // JDK 1.8 types
-        typeMap.put(TIME_WITH_TIMEZONE, new JdbcTypeInformation("TIME_WITH_TIMEZONE", //$NON-NLS-1$
+        typeMap.put(Types.TIME_WITH_TIMEZONE, new JdbcTypeInformation("TIME_WITH_TIMEZONE", //$NON-NLS-1$
                 new FullyQualifiedJavaType("java.time.OffsetTime"))); //$NON-NLS-1$
-        typeMap.put(TIMESTAMP_WITH_TIMEZONE, new JdbcTypeInformation("TIMESTAMP_WITH_TIMEZONE", //$NON-NLS-1$
+        typeMap.put(Types.TIMESTAMP_WITH_TIMEZONE, new JdbcTypeInformation("TIMESTAMP_WITH_TIMEZONE", //$NON-NLS-1$
                 new FullyQualifiedJavaType("java.time.OffsetDateTime"))); //$NON-NLS-1$
     }
 

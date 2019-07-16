@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -176,7 +176,7 @@ public class Context extends PropertyHolder {
             }
         }
 
-        if (tableConfigurations.size() == 0) {
+        if (tableConfigurations.isEmpty()) {
             errors.add(getString("ValidationError.3", id)); //$NON-NLS-1$
         } else {
             for (int i = 0; i < tableConfigurations.size(); i++) {
@@ -382,7 +382,7 @@ public class Context extends PropertyHolder {
                                 .getSchema(), tc.getTableName(), '.');
 
                 if (fullyQualifiedTableNames != null
-                        && fullyQualifiedTableNames.size() > 0
+                        && !fullyQualifiedTableNames.isEmpty()
                         && !fullyQualifiedTableNames.contains(tableName)) {
                     continue;
                 }

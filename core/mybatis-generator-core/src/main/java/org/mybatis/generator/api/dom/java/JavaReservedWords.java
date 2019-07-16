@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ import java.util.Set;
  */
 public class JavaReservedWords {
 
-    private static Set<String> RESERVED_WORDS;
+    private static Set<String> reservedWords;
 
     static {
         String[] words = { "abstract", //$NON-NLS-1$
@@ -81,10 +81,10 @@ public class JavaReservedWords {
                 "while" //$NON-NLS-1$
         };
 
-        RESERVED_WORDS = new HashSet<>(words.length);
+        reservedWords = new HashSet<>(words.length);
 
         for (String word : words) {
-            RESERVED_WORDS.add(word);
+            reservedWords.add(word);
         }
     }
 
@@ -94,7 +94,7 @@ public class JavaReservedWords {
         if (word == null) {
             rc = false;
         } else {
-            rc = RESERVED_WORDS.contains(word);
+            rc = reservedWords.contains(word);
         }
 
         return rc;

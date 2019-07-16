@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -46,7 +46,7 @@ public class InnerInterfaceTest {
         interfaze.addMethod(method);
 
         assertNotNull(interfaze.getMethods());
-        assertEquals(interfaze.getMethods().size(), 1);
+        assertEquals(1, interfaze.getMethods().size());
         assertSame(interfaze.getMethods().get(0), method);
     }
 
@@ -55,7 +55,7 @@ public class InnerInterfaceTest {
 
         InnerInterface innerInterface = new InnerInterface("com.foo.InnerUserInterface");
         assertNotNull(innerInterface.getType());
-        assertEquals(innerInterface.getType().getFullyQualifiedName(), "com.foo.InnerUserInterface");
+        assertEquals("com.foo.InnerUserInterface", innerInterface.getType().getFullyQualifiedName());
     }
 
     @Test
@@ -66,7 +66,7 @@ public class InnerInterfaceTest {
 
         interfaze.addInnerInterface(innerInterfaze);
         assertNotNull(interfaze.getInnerInterfaces());
-        assertEquals(interfaze.getInnerInterfaces().size(), 1);
+        assertEquals(1, interfaze.getInnerInterfaces().size());
         assertSame(interfaze.getInnerInterfaces().get(0), innerInterfaze);
     }
 }

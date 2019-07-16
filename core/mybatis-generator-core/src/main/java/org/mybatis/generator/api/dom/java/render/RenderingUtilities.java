@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -38,6 +38,8 @@ import org.mybatis.generator.api.dom.java.TypeParameter;
 import org.mybatis.generator.internal.util.CustomCollectors;
 
 public class RenderingUtilities {
+    private RenderingUtilities() {}
+    
     public static final String JAVA_INDENT = "    "; //$NON-NLS-1$
     private static TypeParameterRenderer typeParameterRenderer = new TypeParameterRenderer();
     private static FieldRenderer fieldRenderer = new FieldRenderer();
@@ -193,5 +195,13 @@ public class RenderingUtilities {
         }
         
         return JAVA_INDENT + in;
+    }
+    
+    public static List<String> removeLastEmptyLine(List<String> lines) {
+        if (lines.get(lines.size() - 1).isEmpty()) {
+            return lines.subList(0, lines.size() - 1);
+        } else {
+            return lines;
+        }
     }
 }

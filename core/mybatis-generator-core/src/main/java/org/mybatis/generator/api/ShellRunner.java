@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -124,11 +124,8 @@ public class ShellRunner {
             }
 
             return;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return;
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (SQLException | IOException e) {
+            e.printStackTrace(System.out);
             return;
         } catch (InvalidConfigurationException e) {
             writeLine(getString("Progress.16")); //$NON-NLS-1$
@@ -137,14 +134,14 @@ public class ShellRunner {
             }
             return;
         } catch (InterruptedException e) {
-            // ignore (will never happen with the DefaultShellCallback)
+            Thread.currentThread().interrupt();
         }
 
         for (String warning : warnings) {
             writeLine(warning);
         }
 
-        if (warnings.size() == 0) {
+        if (warnings.isEmpty()) {
             writeLine(getString("Progress.4")); //$NON-NLS-1$
         } else {
             writeLine();
@@ -153,12 +150,7 @@ public class ShellRunner {
     }
 
     private static void usage() {
-        String lines = getString("Usage.Lines"); //$NON-NLS-1$
-        int intLines = Integer.parseInt(lines);
-        for (int i = 0; i < intLines; i++) {
-            String key = "Usage." + i; //$NON-NLS-1$
-            writeLine(getString(key));
-        }
+        writeLine(getString("Usage"));
     }
 
     private static void writeLine(String message) {

@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -45,13 +45,7 @@ public class RootClassInfo {
 
     public static RootClassInfo getInstance(String className,
             List<String> warnings) {
-        RootClassInfo classInfo = rootClassInfoMap.get(className);
-        if (classInfo == null) {
-            classInfo = new RootClassInfo(className, warnings);
-            rootClassInfoMap.put(className, classInfo);
-        }
-
-        return classInfo;
+        return rootClassInfoMap.computeIfAbsent(className, k -> new RootClassInfo(k, warnings));
     }
 
     /**
@@ -110,40 +104,58 @@ public class RootClassInfo {
         for (int i = 0; i < propertyDescriptors.length; i++) {
             PropertyDescriptor propertyDescriptor = propertyDescriptors[i];
 
-            if (propertyDescriptor.getName().equals(propertyName)) {
-                // property name is in the rootClass...
-
-                // Is it the proper type?
-                String introspectedPropertyType = propertyDescriptor.getPropertyType().getName();
-                if (genericMode && introspectedPropertyType.equals("java.lang.Object")) { //$NON-NLS-1$
-                    // OK - but add a warning
-                    warnings.add(getString("Warning.28", //$NON-NLS-1$
-                            propertyName, className));
-                } else if (!introspectedPropertyType.equals(propertyType)) {
-                    warnings.add(getString("Warning.21", //$NON-NLS-1$
-                            propertyName, className, propertyType));
-                    break;
-                }
-
-                // Does it have a getter?
-                if (propertyDescriptor.getReadMethod() == null) {
-                    warnings.add(getString("Warning.22", //$NON-NLS-1$
-                            propertyName, className));
-                    break;
-                }
-
-                // Does it have a setter?
-                if (propertyDescriptor.getWriteMethod() == null) {
-                    warnings.add(getString("Warning.23", //$NON-NLS-1$
-                            propertyName, className));
-                    break;
-                }
-
+            if (hasProperty(propertyName, propertyType, propertyDescriptor)) {
                 found = true;
                 break;
             }
         }
 
         return found;
+    }
+    
+    private boolean hasProperty(String propertyName, String propertyType, PropertyDescriptor propertyDescriptor) {
+        return hasCorrectName(propertyName, propertyDescriptor)
+                && isProperType(propertyName, propertyType, propertyDescriptor)
+                && hasGetter(propertyName, propertyDescriptor)
+                && hasSetter(propertyName, propertyDescriptor);
+    }
+    
+    private boolean hasCorrectName(String propertyName, PropertyDescriptor propertyDescriptor) {
+        return propertyDescriptor.getName().equals(propertyName);
+    }
+    
+    private boolean isProperType(String propertyName, String propertyType, PropertyDescriptor propertyDescriptor) {
+        String introspectedPropertyType = propertyDescriptor.getPropertyType().getName();
+        if (genericMode && introspectedPropertyType.equals("java.lang.Object")) { //$NON-NLS-1$
+            // OK - but add a warning
+            warnings.add(getString("Warning.28", //$NON-NLS-1$
+                    propertyName, className));
+        } else if (!introspectedPropertyType.equals(propertyType)) {
+            warnings.add(getString("Warning.21", //$NON-NLS-1$
+                    propertyName, className, propertyType));
+            return false;
+        }
+        
+        return true;
+    }
+
+    private boolean hasGetter(String propertyName, PropertyDescriptor propertyDescriptor) {
+        if (propertyDescriptor.getReadMethod() == null) {
+            warnings.add(getString("Warning.22", //$NON-NLS-1$
+                    propertyName, className));
+            return false;
+        }
+        
+        return true;
+    }
+
+    private boolean hasSetter(String propertyName, PropertyDescriptor propertyDescriptor) {
+        if (propertyDescriptor.getWriteMethod() == null) {
+            warnings.add(getString("Warning.23", //$NON-NLS-1$
+                    propertyName, className));
+            return false;
+        }
+        
+        return true;
     }
 }

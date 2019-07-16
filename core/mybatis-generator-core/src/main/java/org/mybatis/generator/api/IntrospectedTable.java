@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,11 +19,16 @@ import static org.mybatis.generator.internal.util.StringUtility.isTrue;
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Properties;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.GeneratedKey;
@@ -100,11 +105,11 @@ public abstract class IntrospectedTable {
 
     protected Rules rules;
 
-    protected List<IntrospectedColumn> primaryKeyColumns;
+    protected List<IntrospectedColumn> primaryKeyColumns = new ArrayList<>();
 
-    protected List<IntrospectedColumn> baseColumns;
+    protected List<IntrospectedColumn> baseColumns = new ArrayList<>();
 
-    protected List<IntrospectedColumn> blobColumns;
+    protected List<IntrospectedColumn> blobColumns = new ArrayList<>();
 
     protected TargetRuntime targetRuntime;
 
@@ -112,10 +117,10 @@ public abstract class IntrospectedTable {
      * Attributes may be used by plugins to capture table related state between
      * the different plugin calls.
      */
-    protected Map<String, Object> attributes;
+    protected Map<String, Object> attributes = new HashMap<>();
 
     /** Internal attributes are used to store commonly accessed items by all code generators. */
-    protected Map<IntrospectedTable.InternalAttribute, String> internalAttributes;
+    protected Map<IntrospectedTable.InternalAttribute, String> internalAttributes = new EnumMap<>(InternalAttribute.class);
 
     /**
      * Table remarks retrieved from database metadata.
@@ -130,11 +135,6 @@ public abstract class IntrospectedTable {
     public IntrospectedTable(TargetRuntime targetRuntime) {
         super();
         this.targetRuntime = targetRuntime;
-        primaryKeyColumns = new ArrayList<>();
-        baseColumns = new ArrayList<>();
-        blobColumns = new ArrayList<>();
-        attributes = new HashMap<>();
-        internalAttributes = new HashMap<>();
     }
 
     public FullyQualifiedTable getFullyQualifiedTable() {
@@ -153,56 +153,18 @@ public abstract class IntrospectedTable {
         return tableConfiguration.getGeneratedKey();
     }
 
-    public IntrospectedColumn getColumn(String columnName) {
-        if (columnName == null) {
-            return null;
+    public Optional<IntrospectedColumn> getColumn(String columnName) {
+        return Stream.of(primaryKeyColumns.stream(), baseColumns.stream(), blobColumns.stream())
+                .flatMap(Function.identity())
+                .filter(ic -> columnMatches(ic, columnName))
+                .findFirst();
+    }
+    
+    private boolean columnMatches(IntrospectedColumn introspectedColumn, String columnName) {
+        if (introspectedColumn.isColumnNameDelimited()) {
+            return introspectedColumn.getActualColumnName().equals(columnName);
         } else {
-            // search primary key columns
-            for (IntrospectedColumn introspectedColumn : primaryKeyColumns) {
-                if (introspectedColumn.isColumnNameDelimited()) {
-                    if (introspectedColumn.getActualColumnName().equals(
-                            columnName)) {
-                        return introspectedColumn;
-                    }
-                } else {
-                    if (introspectedColumn.getActualColumnName()
-                            .equalsIgnoreCase(columnName)) {
-                        return introspectedColumn;
-                    }
-                }
-            }
-
-            // search base columns
-            for (IntrospectedColumn introspectedColumn : baseColumns) {
-                if (introspectedColumn.isColumnNameDelimited()) {
-                    if (introspectedColumn.getActualColumnName().equals(
-                            columnName)) {
-                        return introspectedColumn;
-                    }
-                } else {
-                    if (introspectedColumn.getActualColumnName()
-                            .equalsIgnoreCase(columnName)) {
-                        return introspectedColumn;
-                    }
-                }
-            }
-
-            // search blob columns
-            for (IntrospectedColumn introspectedColumn : blobColumns) {
-                if (introspectedColumn.isColumnNameDelimited()) {
-                    if (introspectedColumn.getActualColumnName().equals(
-                            columnName)) {
-                        return introspectedColumn;
-                    }
-                } else {
-                    if (introspectedColumn.getActualColumnName()
-                            .equalsIgnoreCase(columnName)) {
-                        return introspectedColumn;
-                    }
-                }
-            }
-
-            return null;
+            return introspectedColumn.getActualColumnName().equalsIgnoreCase(columnName);
         }
     }
 
@@ -213,25 +175,9 @@ public abstract class IntrospectedTable {
      * @return true if the table contains DATE columns
      */
     public boolean hasJDBCDateColumns() {
-        boolean rc = false;
-
-        for (IntrospectedColumn introspectedColumn : primaryKeyColumns) {
-            if (introspectedColumn.isJDBCDateColumn()) {
-                rc = true;
-                break;
-            }
-        }
-
-        if (!rc) {
-            for (IntrospectedColumn introspectedColumn : baseColumns) {
-                if (introspectedColumn.isJDBCDateColumn()) {
-                    rc = true;
-                    break;
-                }
-            }
-        }
-
-        return rc;
+        return Stream.of(primaryKeyColumns.stream(), baseColumns.stream())
+                .flatMap(Function.identity())
+                .anyMatch(IntrospectedColumn::isJDBCDateColumn);
     }
 
     /**
@@ -241,25 +187,9 @@ public abstract class IntrospectedTable {
      * @return true if the table contains TIME columns
      */
     public boolean hasJDBCTimeColumns() {
-        boolean rc = false;
-
-        for (IntrospectedColumn introspectedColumn : primaryKeyColumns) {
-            if (introspectedColumn.isJDBCTimeColumn()) {
-                rc = true;
-                break;
-            }
-        }
-
-        if (!rc) {
-            for (IntrospectedColumn introspectedColumn : baseColumns) {
-                if (introspectedColumn.isJDBCTimeColumn()) {
-                    rc = true;
-                    break;
-                }
-            }
-        }
-
-        return rc;
+        return Stream.of(primaryKeyColumns.stream(), baseColumns.stream())
+                .flatMap(Function.identity())
+                .anyMatch(IntrospectedColumn::isJDBCTimeColumn);
     }
 
     /**
@@ -274,7 +204,7 @@ public abstract class IntrospectedTable {
     }
 
     public boolean hasPrimaryKeyColumns() {
-        return primaryKeyColumns.size() > 0;
+        return !primaryKeyColumns.isEmpty();
     }
 
     public List<IntrospectedColumn> getBaseColumns() {
@@ -288,12 +218,9 @@ public abstract class IntrospectedTable {
      * @return a List of ColumnDefinition objects for all columns in the table
      */
     public List<IntrospectedColumn> getAllColumns() {
-        List<IntrospectedColumn> answer = new ArrayList<>();
-        answer.addAll(primaryKeyColumns);
-        answer.addAll(baseColumns);
-        answer.addAll(blobColumns);
-
-        return answer;
+        return Stream.of(primaryKeyColumns.stream(), baseColumns.stream(), blobColumns.stream())
+                .flatMap(Function.identity())
+                .collect(Collectors.toList());
     }
 
     /**
@@ -302,11 +229,9 @@ public abstract class IntrospectedTable {
      * @return a List of ColumnDefinition objects for columns in the table that are non BLOBs
      */
     public List<IntrospectedColumn> getNonBLOBColumns() {
-        List<IntrospectedColumn> answer = new ArrayList<>();
-        answer.addAll(primaryKeyColumns);
-        answer.addAll(baseColumns);
-
-        return answer;
+        return Stream.of(primaryKeyColumns.stream(), baseColumns.stream())
+                .flatMap(Function.identity())
+                .collect(Collectors.toList());
     }
 
     public int getNonBLOBColumnCount() {
@@ -314,11 +239,9 @@ public abstract class IntrospectedTable {
     }
 
     public List<IntrospectedColumn> getNonPrimaryKeyColumns() {
-        List<IntrospectedColumn> answer = new ArrayList<>();
-        answer.addAll(baseColumns);
-        answer.addAll(blobColumns);
-
-        return answer;
+        return Stream.of(baseColumns.stream(), blobColumns.stream())
+                .flatMap(Function.identity())
+                .collect(Collectors.toList());
     }
 
     public List<IntrospectedColumn> getBLOBColumns() {
@@ -326,11 +249,11 @@ public abstract class IntrospectedTable {
     }
 
     public boolean hasBLOBColumns() {
-        return blobColumns.size() > 0;
+        return !blobColumns.isEmpty();
     }
 
     public boolean hasBaseColumns() {
-        return baseColumns.size() > 0;
+        return !baseColumns.isEmpty();
     }
 
     public Rules getRules() {
@@ -390,8 +313,7 @@ public abstract class IntrospectedTable {
     }
 
     public boolean hasAnyColumns() {
-        return primaryKeyColumns.size() > 0 || baseColumns.size() > 0
-                || blobColumns.size() > 0;
+        return hasPrimaryKeyColumns() || hasBaseColumns() || hasBLOBColumns();
     }
 
     public void setTableConfiguration(TableConfiguration tableConfiguration) {
@@ -438,7 +360,6 @@ public abstract class IntrospectedTable {
                 if (introspectedColumn.getActualColumnName().equals(columnName)) {
                     primaryKeyColumns.add(introspectedColumn);
                     iter.remove();
-                    found = true;
                     break;
                 }
             }

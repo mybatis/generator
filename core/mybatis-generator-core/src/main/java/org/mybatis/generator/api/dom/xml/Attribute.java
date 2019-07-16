@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,16 +15,17 @@
  */
 package org.mybatis.generator.api.dom.xml;
 
-public class Attribute implements Comparable<Attribute> {
+import java.util.Objects;
+
+public class Attribute {
 
     private String name;
 
     private String value;
 
     public Attribute(String name, String value) {
-        super();
-        this.name = name;
-        this.value = value;
+        this.name = Objects.requireNonNull(name);
+        this.value = Objects.requireNonNull(value);
     }
 
     public String getName() {
@@ -33,18 +34,5 @@ public class Attribute implements Comparable<Attribute> {
 
     public String getValue() {
         return value;
-    }
-
-    @Override
-    public int compareTo(Attribute o) {
-        if (this.name == null) {
-            return o.name == null ? 0 : -1;
-        } else {
-            if (o.name == null) {
-                return 0;
-            } else {
-                return this.name.compareTo(o.name);
-            }
-        }
     }
 }

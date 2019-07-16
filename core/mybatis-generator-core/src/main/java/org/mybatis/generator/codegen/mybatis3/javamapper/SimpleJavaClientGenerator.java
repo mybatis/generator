@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.mybatis.generator.api.CommentGenerator;
@@ -140,7 +141,7 @@ public class SimpleJavaClientGenerator extends AbstractJavaClientGenerator {
     }
 
     public List<CompilationUnit> getExtraCompilationUnits() {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override

@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,42 +15,34 @@
  */
 package org.mybatis.generator.codegen.mybatis3;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 
 /**
  * Couple of little utility methods to make dealing with generated always
  * columns easier.  If a column is GENERATED ALWAYS, it should not
- * be references on an insert or update method.
+ * be referenced on an insert or update method.
  * 
  * <p>If a column is identity, it should not be referenced on an insert method.
  *  
- * <p>TODO - Replace this with Lambdas when we get to Java 8
- * 
  * @author Jeff Butler
  *
  */
 public class ListUtilities {
+    
+    private ListUtilities() {}
 
     public static List<IntrospectedColumn> removeGeneratedAlwaysColumns(List<IntrospectedColumn> columns) {
-        List<IntrospectedColumn> filteredList = new ArrayList<>();
-        for (IntrospectedColumn ic : columns) {
-            if (!ic.isGeneratedAlways()) {
-                filteredList.add(ic);
-            }
-        }
-        return filteredList;
+        return columns.stream()
+                .filter(ic -> !ic.isGeneratedAlways())
+                .collect(Collectors.toList());
     }
 
     public static List<IntrospectedColumn> removeIdentityAndGeneratedAlwaysColumns(List<IntrospectedColumn> columns) {
-        List<IntrospectedColumn> filteredList = new ArrayList<>();
-        for (IntrospectedColumn ic : columns) {
-            if (!ic.isGeneratedAlways() && !ic.isIdentity()) {
-                filteredList.add(ic);
-            }
-        }
-        return filteredList;
+        return columns.stream()
+                .filter(ic -> !ic.isGeneratedAlways() && !ic.isIdentity())
+                .collect(Collectors.toList());
     }
 }

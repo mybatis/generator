@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -53,17 +53,13 @@ import org.mybatis.generator.api.PluginAdapter;
  * 
  */
 public class RenameExampleClassPlugin extends PluginAdapter {
-    private String searchString;
     private String replaceString;
     private Pattern pattern;
-
-    public RenameExampleClassPlugin() {
-    }
 
     @Override
     public boolean validate(List<String> warnings) {
 
-        searchString = properties.getProperty("searchString"); //$NON-NLS-1$
+        String searchString = properties.getProperty("searchString"); //$NON-NLS-1$
         replaceString = properties.getProperty("replaceString"); //$NON-NLS-1$
 
         boolean valid = stringHasValue(searchString)

@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -104,7 +104,7 @@ public class FullyQualifiedJavaType implements
             sb.append(baseQualifiedName);
         }
 
-        if (typeArguments.size() > 0) {
+        if (!typeArguments.isEmpty()) {
             boolean first = true;
             sb.append('<');
             for (FullyQualifiedJavaType fqjt : typeArguments) {
@@ -159,7 +159,7 @@ public class FullyQualifiedJavaType implements
     private String calculateActualImport(String name) {
         String answer = name;
         if (this.isArray()) {
-            int index = name.indexOf("["); //$NON-NLS-1$
+            int index = name.indexOf('[');
             if (index != -1) {
                 answer = name.substring(0, index);
             }
@@ -188,7 +188,7 @@ public class FullyQualifiedJavaType implements
             sb.append(baseShortName);
         }
 
-        if (typeArguments.size() > 0) {
+        if (!typeArguments.isEmpty()) {
             boolean first = true;
             sb.append('<');
             for (FullyQualifiedJavaType fqjt : typeArguments) {

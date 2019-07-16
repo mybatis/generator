@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -229,7 +229,7 @@ public class MyBatisGenerator {
 
         // calculate the contexts to run
         List<Context> contextsToRun;
-        if (contextIds == null || contextIds.size() == 0) {
+        if (contextIds == null || contextIds.isEmpty()) {
             contextsToRun = configuration.getContexts();
         } else {
             contextsToRun = new ArrayList<>();
@@ -241,7 +241,7 @@ public class MyBatisGenerator {
         }
 
         // setup custom classloader if required
-        if (configuration.getClassPathEntries().size() > 0) {
+        if (!configuration.getClassPathEntries().isEmpty()) {
             ClassLoader classLoader = getCustomClassloader(configuration.getClassPathEntries());
             ObjectFactory.addExternalClassLoader(classLoader);
         }
@@ -305,7 +305,7 @@ public class MyBatisGenerator {
                 if (shellCallback.isMergeSupported()) {
                     source = shellCallback.mergeJavaFile(gjf
                             .getFormattedContent(), targetFile,
-                            MergeConstants.OLD_ELEMENT_TAGS,
+                            MergeConstants.getOldElementTags(),
                             gjf.getFileEncoding());
                 } else if (shellCallback.isOverwriteEnabled()) {
                     source = gjf.getFormattedContent();
@@ -388,9 +388,9 @@ public class MyBatisGenerator {
             osw = new OutputStreamWriter(fos, fileEncoding);
         }
 
-        BufferedWriter bw = new BufferedWriter(osw);
-        bw.write(content);
-        bw.close();
+        try (BufferedWriter bw = new BufferedWriter(osw)) {
+            bw.write(content);
+        }
     }
 
     /**

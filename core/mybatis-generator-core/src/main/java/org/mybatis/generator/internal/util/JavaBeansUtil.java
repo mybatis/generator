@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -55,10 +55,9 @@ public class JavaBeansUtil {
         StringBuilder sb = new StringBuilder();
 
         sb.append(property);
-        if (Character.isLowerCase(sb.charAt(0))) {
-            if (sb.length() == 1 || !Character.isUpperCase(sb.charAt(1))) {
-                sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
-            }
+        if (Character.isLowerCase(sb.charAt(0))
+                && (sb.length() == 1 || !Character.isUpperCase(sb.charAt(1)))) {
+            sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
         }
 
         if (fullyQualifiedJavaType.equals(FullyQualifiedJavaType
@@ -83,10 +82,9 @@ public class JavaBeansUtil {
         StringBuilder sb = new StringBuilder();
 
         sb.append(property);
-        if (Character.isLowerCase(sb.charAt(0))) {
-            if (sb.length() == 1 || !Character.isUpperCase(sb.charAt(1))) {
-                sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
-            }
+        if (Character.isLowerCase(sb.charAt(0))
+                && (sb.length() == 1 || !Character.isUpperCase(sb.charAt(1)))) {
+            sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
         }
 
         sb.insert(0, "set"); //$NON-NLS-1$
@@ -263,9 +261,8 @@ public class JavaBeansUtil {
     private static boolean isTrimStringsEnabled(Context context) {
         Properties properties = context
                 .getJavaModelGeneratorConfiguration().getProperties();
-        boolean rc = isTrue(properties
+        return isTrue(properties
                 .getProperty(PropertyRegistry.MODEL_GENERATOR_TRIM_STRINGS));
-        return rc;
     }
 
     private static boolean isTrimStringsEnabled(IntrospectedTable table) {

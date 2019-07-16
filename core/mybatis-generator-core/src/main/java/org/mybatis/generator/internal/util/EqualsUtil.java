@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -43,6 +43,7 @@ package org.mybatis.generator.internal.util;
  * <code>Arrays.equals</code> methods should be used for array fields.
  */
 public final class EqualsUtil {
+    private EqualsUtil() {}
 
     public static boolean areEqual(boolean b1, boolean b2) {
         return b1 == b2;

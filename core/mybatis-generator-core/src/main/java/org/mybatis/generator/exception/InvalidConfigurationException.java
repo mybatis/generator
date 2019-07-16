@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,27 +17,11 @@ package org.mybatis.generator.exception;
 
 import java.util.List;
 
-public class InvalidConfigurationException extends Exception {
+public class InvalidConfigurationException extends MultiMessageException {
 
-    static final long serialVersionUID = 4902307610148543411L;
-
-    private List<String> errors;
+    private static final long serialVersionUID = 4854214073644581094L;
 
     public InvalidConfigurationException(List<String> errors) {
-        super();
-        this.errors = errors;
-    }
-
-    public List<String> getErrors() {
-        return errors;
-    }
-
-    @Override
-    public String getMessage() {
-        if (errors != null && errors.size() > 0) {
-            return errors.get(0);
-        }
-
-        return super.getMessage();
+        super(errors);
     }
 }

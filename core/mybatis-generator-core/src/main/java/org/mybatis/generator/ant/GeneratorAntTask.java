@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -90,48 +90,13 @@ public class GeneratorAntTask extends Task {
         super();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.apache.tools.ant.Task#execute()
-     */
     @Override
-    public void execute() throws BuildException {
-        if (!stringHasValue(configfile)) {
-            throw new BuildException(getString("RuntimeError.0")); //$NON-NLS-1$
-        }
+    public void execute() {
+        File configurationFile = calculateConfigurationFile();
+        Set<String> fullyqualifiedTables = calculateTables();
+        Set<String> contexts = calculateContexts();
 
         List<String> warnings = new ArrayList<>();
-
-        File configurationFile = new File(configfile);
-        if (!configurationFile.exists()) {
-            throw new BuildException(getString(
-                    "RuntimeError.1", configfile)); //$NON-NLS-1$
-        }
-
-        Set<String> fullyqualifiedTables = new HashSet<>();
-        if (stringHasValue(fullyQualifiedTableNames)) {
-            StringTokenizer st = new StringTokenizer(fullyQualifiedTableNames,
-                    ","); //$NON-NLS-1$
-            while (st.hasMoreTokens()) {
-                String s = st.nextToken().trim();
-                if (s.length() > 0) {
-                    fullyqualifiedTables.add(s);
-                }
-            }
-        }
-
-        Set<String> contexts = new HashSet<>();
-        if (stringHasValue(contextIds)) {
-            StringTokenizer st = new StringTokenizer(contextIds, ","); //$NON-NLS-1$
-            while (st.hasMoreTokens()) {
-                String s = st.nextToken().trim();
-                if (s.length() > 0) {
-                    contexts.add(s);
-                }
-            }
-        }
-
         try {
             Properties p = propertyset == null ? null : propertyset
                     .getProperties();
@@ -146,24 +111,16 @@ public class GeneratorAntTask extends Task {
             myBatisGenerator.generate(new AntProgressCallback(this, verbose), contexts,
                     fullyqualifiedTables);
 
-        } catch (XMLParserException e) {
+        } catch (XMLParserException | InvalidConfigurationException e) {
             for (String error : e.getErrors()) {
                 log(error, Project.MSG_ERR);
             }
 
             throw new BuildException(e.getMessage());
-        } catch (SQLException e) {
-            throw new BuildException(e.getMessage());
-        } catch (IOException e) {
-            throw new BuildException(e.getMessage());
-        } catch (InvalidConfigurationException e) {
-            for (String error : e.getErrors()) {
-                log(error, Project.MSG_ERR);
-            }
-
+        } catch (SQLException | IOException e) {
             throw new BuildException(e.getMessage());
         } catch (InterruptedException e) {
-            // ignore (will never happen with the DefaultShellCallback)
+            Thread.currentThread().interrupt();
         } catch (Exception e) {
             log(e, Project.MSG_ERR);
             throw new BuildException(e.getMessage());
@@ -172,6 +129,49 @@ public class GeneratorAntTask extends Task {
         for (String error : warnings) {
             log(error, Project.MSG_WARN);
         }
+    }
+
+    private Set<String> calculateContexts() {
+        Set<String> contexts = new HashSet<>();
+        if (stringHasValue(contextIds)) {
+            StringTokenizer st = new StringTokenizer(contextIds, ","); //$NON-NLS-1$
+            while (st.hasMoreTokens()) {
+                String s = st.nextToken().trim();
+                if (s.length() > 0) {
+                    contexts.add(s);
+                }
+            }
+        }
+        return contexts;
+    }
+
+    private Set<String> calculateTables() {
+        Set<String> fullyqualifiedTables = new HashSet<>();
+        if (stringHasValue(fullyQualifiedTableNames)) {
+            StringTokenizer st = new StringTokenizer(fullyQualifiedTableNames,
+                    ","); //$NON-NLS-1$
+            while (st.hasMoreTokens()) {
+                String s = st.nextToken().trim();
+                if (s.length() > 0) {
+                    fullyqualifiedTables.add(s);
+                }
+            }
+        }
+        return fullyqualifiedTables;
+    }
+
+    private File calculateConfigurationFile() {
+        if (!stringHasValue(configfile)) {
+            throw new BuildException(getString("RuntimeError.0")); //$NON-NLS-1$
+        }
+
+
+        File configurationFile = new File(configfile);
+        if (!configurationFile.exists()) {
+            throw new BuildException(getString(
+                    "RuntimeError.1", configfile)); //$NON-NLS-1$
+        }
+        return configurationFile;
     }
 
     public String getConfigfile() {

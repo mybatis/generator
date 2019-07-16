@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 package org.mybatis.generator.api;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
@@ -65,24 +66,24 @@ public abstract class PluginAdapter implements Plugin {
 
     @Override
     public List<GeneratedJavaFile> contextGenerateAdditionalJavaFiles() {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
     public List<GeneratedJavaFile> contextGenerateAdditionalJavaFiles(
             IntrospectedTable introspectedTable) {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
     public List<GeneratedXmlFile> contextGenerateAdditionalXmlFiles() {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
     public List<GeneratedXmlFile> contextGenerateAdditionalXmlFiles(
             IntrospectedTable introspectedTable) {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override

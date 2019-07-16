@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,16 +18,15 @@ package org.mybatis.generator.api.dom.xml;
 import java.util.ArrayList;
 import java.util.List;
 
-public class XmlElement extends Element {
+public class XmlElement implements VisitableElement {
 
     private List<Attribute> attributes = new ArrayList<>();
 
-    private List<Element> elements = new ArrayList<>();
+    private List<VisitableElement> elements = new ArrayList<>();
 
     private String name;
 
     public XmlElement(String name) {
-        super();
         this.name = name;
     }
 
@@ -52,15 +51,15 @@ public class XmlElement extends Element {
         attributes.add(attribute);
     }
 
-    public List<Element> getElements() {
+    public List<VisitableElement> getElements() {
         return elements;
     }
 
-    public void addElement(Element element) {
+    public void addElement(VisitableElement element) {
         elements.add(element);
     }
 
-    public void addElement(int index, Element element) {
+    public void addElement(int index, VisitableElement element) {
         elements.add(index, element);
     }
 
@@ -69,7 +68,7 @@ public class XmlElement extends Element {
     }
     
     public boolean hasChildren() {
-        return elements.size() > 0;
+        return !elements.isEmpty();
     }
 
     public void setName(String name) {

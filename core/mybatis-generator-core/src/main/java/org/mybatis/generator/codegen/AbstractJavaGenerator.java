@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,11 +17,14 @@ package org.mybatis.generator.codegen;
 
 import static org.mybatis.generator.internal.util.JavaBeansUtil.getGetterMethodName;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.Field;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
@@ -70,11 +73,32 @@ public abstract class AbstractJavaGenerator extends AbstractGenerator {
     }
 
     protected Method getDefaultConstructor(TopLevelClass topLevelClass) {
+        Method method = getBasicConstructor(topLevelClass);
+        addGeneratedJavaDoc(method);
+        return method;
+    }
+
+    protected Method getDefaultConstructorWithGeneratedAnnotation(TopLevelClass topLevelClass) {
+        Method method = getBasicConstructor(topLevelClass);
+        addGeneratedAnnotation(method, topLevelClass);
+        return method;
+    }
+
+    private Method getBasicConstructor(TopLevelClass topLevelClass) {
         Method method = new Method(topLevelClass.getType().getShortName());
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setConstructor(true);
         method.addBodyLine("super();"); //$NON-NLS-1$
-        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
         return method;
+    }
+    
+    private void addGeneratedJavaDoc(Method method) {
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
+    }
+
+    private void addGeneratedAnnotation(Method method, TopLevelClass topLevelClass) {
+        Set<FullyQualifiedJavaType> imports = new HashSet<>();
+        context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
+        topLevelClass.addImportedTypes(imports);
     }
 }

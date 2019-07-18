@@ -70,8 +70,7 @@ public class JavaDomUtils {
     
     private static boolean typeIsAlreadyImported(CompilationUnit compilationUnit,
             FullyQualifiedJavaType fullyQualifiedJavaType) {
-        FullyQualifiedJavaType nonGenericType =
-                new FullyQualifiedJavaType(fullyQualifiedJavaType.getFullyQualifiedNameWithoutTypeParameters());
-        return compilationUnit.getImportedTypes().contains(nonGenericType);
+	    String name = fullyQualifiedJavaType.getFullyQualifiedNameWithoutTypeParameters();
+	    return compilationUnit.getImportedTypes().stream().anyMatch(e -> e.getImportList().contains(name));
     }
 }

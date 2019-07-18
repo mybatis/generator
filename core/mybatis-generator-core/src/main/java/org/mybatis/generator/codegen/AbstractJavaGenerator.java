@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -69,12 +69,36 @@ public abstract class AbstractJavaGenerator extends AbstractGenerator {
         topLevelClass.addMethod(getDefaultConstructor(topLevelClass));
     }
 
-    protected Method getDefaultConstructor(TopLevelClass topLevelClass) {
+    protected void addDefaultConstructorWithGeneratedAnnotatoin(TopLevelClass topLevelClass) {
+        topLevelClass.addMethod(getDefaultConstructorWithGeneratedAnnotation(topLevelClass));
+    }
+
+    private Method getDefaultConstructor(TopLevelClass topLevelClass) {
+        Method method = getBasicConstructor(topLevelClass);
+        addGeneratedJavaDoc(method);
+        return method;
+    }
+
+    private Method getDefaultConstructorWithGeneratedAnnotation(TopLevelClass topLevelClass) {
+        Method method = getBasicConstructor(topLevelClass);
+        addGeneratedAnnotation(method, topLevelClass);
+        return method;
+    }
+
+    private Method getBasicConstructor(TopLevelClass topLevelClass) {
         Method method = new Method(topLevelClass.getType().getShortName());
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setConstructor(true);
         method.addBodyLine("super();"); //$NON-NLS-1$
-        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
         return method;
+    }
+    
+    private void addGeneratedJavaDoc(Method method) {
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
+    }
+
+    private void addGeneratedAnnotation(Method method, TopLevelClass topLevelClass) {
+        context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable,
+                topLevelClass.getImportedTypes());
     }
 }

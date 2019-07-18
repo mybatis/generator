@@ -22,6 +22,7 @@ import java.util.Properties;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
@@ -189,6 +190,21 @@ public class JavaBeansUtil {
     public static Method getJavaBeansGetter(IntrospectedColumn introspectedColumn,
             Context context,
             IntrospectedTable introspectedTable) {
+        Method method = getBasicJavaBeansGetter(introspectedColumn, context, introspectedTable);
+        addGeneratedGetterJavaDoc(method, introspectedColumn, context, introspectedTable);
+        return method;
+    }
+
+    public static Method getJavaBeansGetterWithGeneratedAnnotation(IntrospectedColumn introspectedColumn,
+            Context context, IntrospectedTable introspectedTable, CompilationUnit compilationUnit) {
+        Method method = getBasicJavaBeansGetter(introspectedColumn, context, introspectedTable);
+        addGeneratedGetterAnnotation(method, introspectedColumn, context, introspectedTable, compilationUnit);
+        return method;
+    }
+
+    private static Method getBasicJavaBeansGetter(IntrospectedColumn introspectedColumn,
+            Context context,
+            IntrospectedTable introspectedTable) {
         FullyQualifiedJavaType fqjt = introspectedColumn
                 .getFullyQualifiedJavaType();
         String property = introspectedColumn.getJavaProperty();
@@ -196,8 +212,6 @@ public class JavaBeansUtil {
         Method method = new Method(getGetterMethodName(property, fqjt));
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(fqjt);
-        context.getCommentGenerator().addGetterComment(method,
-                introspectedTable, introspectedColumn);
 
         StringBuilder sb = new StringBuilder();
         sb.append("return "); //$NON-NLS-1$
@@ -207,25 +221,75 @@ public class JavaBeansUtil {
 
         return method;
     }
+    
+    private static void addGeneratedGetterJavaDoc(Method method, IntrospectedColumn introspectedColumn, Context context, IntrospectedTable introspectedTable) {
+        context.getCommentGenerator().addGetterComment(method,
+                introspectedTable, introspectedColumn);
+    }
+
+    private static void addGeneratedGetterAnnotation(Method method, IntrospectedColumn introspectedColumn, Context context,
+            IntrospectedTable introspectedTable, CompilationUnit compilationUnit) {
+        context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, introspectedColumn,
+                compilationUnit.getImportedTypes());
+    }
 
     public static Field getJavaBeansField(IntrospectedColumn introspectedColumn,
             Context context,
             IntrospectedTable introspectedTable) {
+        Field field = getBasicJavaBeansField(introspectedColumn);
+        addGeneratedJavaDoc(field, context, introspectedColumn, introspectedTable);
+        return field;
+    }
+
+    public static Field getJavaBeansFieldWithGeneratedAnnotation(IntrospectedColumn introspectedColumn,
+            Context context,
+            IntrospectedTable introspectedTable,
+            CompilationUnit compilationUnit) {
+        Field field = getBasicJavaBeansField(introspectedColumn);
+        addGeneratedAnnotation(field, context, introspectedColumn, introspectedTable, compilationUnit);
+        return field;
+    }
+
+    private static Field getBasicJavaBeansField(IntrospectedColumn introspectedColumn) {
         FullyQualifiedJavaType fqjt = introspectedColumn
                 .getFullyQualifiedJavaType();
         String property = introspectedColumn.getJavaProperty();
 
         Field field = new Field(property, fqjt);
         field.setVisibility(JavaVisibility.PRIVATE);
-        context.getCommentGenerator().addFieldComment(field,
-                introspectedTable, introspectedColumn);
 
         return field;
     }
+    
+    private static void addGeneratedJavaDoc(Field field, Context context, IntrospectedColumn introspectedColumn,
+            IntrospectedTable introspectedTable) {
+        context.getCommentGenerator().addFieldComment(field,
+                introspectedTable, introspectedColumn);
+    }
 
+    private static void addGeneratedAnnotation(Field field, Context context, IntrospectedColumn introspectedColumn,
+            IntrospectedTable introspectedTable, CompilationUnit compilationUnit) {
+        context.getCommentGenerator().addFieldAnnotation(field, introspectedTable, introspectedColumn,
+                compilationUnit.getImportedTypes());
+    }
+    
     public static Method getJavaBeansSetter(IntrospectedColumn introspectedColumn,
             Context context,
             IntrospectedTable introspectedTable) {
+        Method method = getBasicJavaBeansSetter(introspectedColumn);
+        addGeneratedSetterJavaDoc(method, introspectedColumn, context, introspectedTable);
+        return method;
+    }
+
+    public static Method getJavaBeansSetterWithGeneratedAnnotation(IntrospectedColumn introspectedColumn,
+            Context context,
+            IntrospectedTable introspectedTable, CompilationUnit compilationUnit) {
+        Method method = getBasicJavaBeansSetter(introspectedColumn);
+        addGeneratedSetterAnnotation(method, introspectedColumn, context, introspectedTable, compilationUnit);
+        return method;
+    }
+
+    private static Method getBasicJavaBeansSetter(IntrospectedColumn introspectedColumn) {
         FullyQualifiedJavaType fqjt = introspectedColumn
                 .getFullyQualifiedJavaType();
         String property = introspectedColumn.getJavaProperty();
@@ -233,8 +297,6 @@ public class JavaBeansUtil {
         Method method = new Method(getSetterMethodName(property));
         method.setVisibility(JavaVisibility.PUBLIC);
         method.addParameter(new Parameter(fqjt, property));
-        context.getCommentGenerator().addSetterComment(method,
-                introspectedTable, introspectedColumn);
 
         StringBuilder sb = new StringBuilder();
         if (introspectedColumn.isStringColumn() && isTrimStringsEnabled(introspectedColumn)) {
@@ -257,7 +319,19 @@ public class JavaBeansUtil {
 
         return method;
     }
+    
+    private static void addGeneratedSetterJavaDoc(Method method, IntrospectedColumn introspectedColumn, Context context,
+            IntrospectedTable introspectedTable) {
+        context.getCommentGenerator().addSetterComment(method,
+                introspectedTable, introspectedColumn);
+    }
 
+    private static void addGeneratedSetterAnnotation(Method method, IntrospectedColumn introspectedColumn, Context context,
+            IntrospectedTable introspectedTable, CompilationUnit compilationUnit) {
+        context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, introspectedColumn,
+                compilationUnit.getImportedTypes());
+    }
+    
     private static boolean isTrimStringsEnabled(Context context) {
         Properties properties = context
                 .getJavaModelGeneratorConfiguration().getProperties();

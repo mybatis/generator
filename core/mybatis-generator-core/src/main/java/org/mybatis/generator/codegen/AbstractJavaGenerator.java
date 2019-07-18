@@ -97,8 +97,7 @@ public abstract class AbstractJavaGenerator extends AbstractGenerator {
     }
 
     private void addGeneratedAnnotation(Method method, TopLevelClass topLevelClass) {
-        Set<FullyQualifiedJavaType> imports = new HashSet<>();
-        context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
-        topLevelClass.addImportedTypes(imports);
+        context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable,
+                topLevelClass.getImportedTypes());
     }
 }

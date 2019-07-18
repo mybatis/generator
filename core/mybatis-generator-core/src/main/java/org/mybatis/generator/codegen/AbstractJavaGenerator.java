@@ -17,14 +17,11 @@ package org.mybatis.generator.codegen;
 
 import static org.mybatis.generator.internal.util.JavaBeansUtil.getGetterMethodName;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
-import java.util.Set;
 
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.Field;
-import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
@@ -72,13 +69,17 @@ public abstract class AbstractJavaGenerator extends AbstractGenerator {
         topLevelClass.addMethod(getDefaultConstructor(topLevelClass));
     }
 
-    protected Method getDefaultConstructor(TopLevelClass topLevelClass) {
+    protected void addDefaultConstructorWithGeneratedAnnotatoin(TopLevelClass topLevelClass) {
+        topLevelClass.addMethod(getDefaultConstructorWithGeneratedAnnotation(topLevelClass));
+    }
+
+    private Method getDefaultConstructor(TopLevelClass topLevelClass) {
         Method method = getBasicConstructor(topLevelClass);
         addGeneratedJavaDoc(method);
         return method;
     }
 
-    protected Method getDefaultConstructorWithGeneratedAnnotation(TopLevelClass topLevelClass) {
+    private Method getDefaultConstructorWithGeneratedAnnotation(TopLevelClass topLevelClass) {
         Method method = getBasicConstructor(topLevelClass);
         addGeneratedAnnotation(method, topLevelClass);
         return method;

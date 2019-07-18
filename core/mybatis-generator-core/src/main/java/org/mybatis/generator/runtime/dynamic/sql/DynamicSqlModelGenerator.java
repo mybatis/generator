@@ -75,8 +75,7 @@ public class DynamicSqlModelGenerator extends AbstractJavaGenerator {
             addParameterizedConstructor(topLevelClass);
 
             if (!introspectedTable.isImmutable()) {
-                Method method = getDefaultConstructorWithGeneratedAnnotation(topLevelClass);
-                topLevelClass.addMethod(method);
+                addDefaultConstructorWithGeneratedAnnotatoin(topLevelClass);
             }
         }
 

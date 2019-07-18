@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -1369,4 +1369,22 @@ public interface Plugin {
      */
     boolean providerUpdateByPrimaryKeySelectiveMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
+
+    /**
+     * This method is called when the MyBatis Dynamic SQL support class has
+     * been generated in the MyBatis Dynamic SQL runtime.
+     * 
+     * @param supportClass
+     *            the generated MyBatis Dynamic SQL support class
+     *            You can add additional items to the generated class
+     *            if necessary.
+     * @param introspectedTable
+     *            The class containing information about the table as
+     *            introspected from the database
+     * @return true if the class should be generated, false if the generated
+     *         class should be ignored. In the case of multiple plugins, the
+     *         first plugin returning false will disable the calling of further
+     *         plugins.
+     */
+    boolean dynamicSqlSupportGenerated(TopLevelClass supportClass, IntrospectedTable introspectedTable);
 }

@@ -474,4 +474,9 @@ public abstract class PluginAdapter implements Plugin {
             IntrospectedTable introspectedTable) {
         return true;
     }
+
+    @Override
+    public boolean dynamicSqlSupportGenerated(TopLevelClass supportClass, IntrospectedTable introspectedTable) {
+        return true;
+    }
 }

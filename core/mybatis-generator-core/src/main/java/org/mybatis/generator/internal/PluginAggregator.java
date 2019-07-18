@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -1112,6 +1112,20 @@ public final class PluginAggregator implements Plugin {
 
         for (Plugin plugin : plugins) {
             if (!plugin.sqlMapSelectAllElementGenerated(element, introspectedTable)) {
+                rc = false;
+                break;
+            }
+        }
+
+        return rc;
+    }
+
+    @Override
+    public boolean dynamicSqlSupportGenerated(TopLevelClass supportClass, IntrospectedTable introspectedTable) {
+        boolean rc = true;
+
+        for (Plugin plugin : plugins) {
+            if (!plugin.dynamicSqlSupportGenerated(supportClass, introspectedTable)) {
                 rc = false;
                 break;
             }

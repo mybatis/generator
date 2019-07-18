@@ -768,7 +768,7 @@ public abstract class IntrospectedTable {
     /**
      * if property exampleTargetPackage specified for example use the specified value, else
      * use default value (targetPackage)
-     * @return
+     * @return the calculated package
      */
     protected String calculateJavaModelExamplePackage() {
         JavaModelGeneratorConfiguration config = context.getJavaModelGeneratorConfiguration();

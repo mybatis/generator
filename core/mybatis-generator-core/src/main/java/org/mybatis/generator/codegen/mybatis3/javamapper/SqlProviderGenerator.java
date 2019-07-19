@@ -38,11 +38,6 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider.Pr
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider.ProviderUpdateByExampleWithoutBLOBsMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider.ProviderUpdateByPrimaryKeySelectiveMethodGenerator;
 
-/**
- * 
- * @author Jeff Butler
- * 
- */
 public class SqlProviderGenerator extends AbstractJavaGenerator {
 
     private boolean useLegacyBuilder;

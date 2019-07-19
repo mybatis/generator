@@ -17,11 +17,6 @@ package org.mybatis.generator.codegen.mybatis3.xmlmapper;
 
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
-/**
- * 
- * @author Jeff Butler
- *
- */
 public class MixedMapperGenerator extends XMLMapperGenerator {
 
     @Override

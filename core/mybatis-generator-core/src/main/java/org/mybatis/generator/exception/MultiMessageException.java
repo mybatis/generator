@@ -20,9 +20,6 @@ import java.util.List;
 
 public class MultiMessageException extends Exception {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -5358501949588130025L;
     private final List<String> errors = new ArrayList<>();
 

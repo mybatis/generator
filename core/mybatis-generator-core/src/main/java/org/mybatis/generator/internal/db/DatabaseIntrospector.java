@@ -54,9 +54,6 @@ import org.mybatis.generator.internal.ObjectFactory;
 import org.mybatis.generator.logging.Log;
 import org.mybatis.generator.logging.LogFactory;
 
-/**
- * @author Jeff Butler
- */
 public class DatabaseIntrospector {
 
     private DatabaseMetaData databaseMetaData;

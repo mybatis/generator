@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -52,7 +52,8 @@ public class UpdateByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
         method.addParameter(new Parameter(recordType, "record")); //$NON-NLS-1$
 
-        method.addBodyLine("return UpdateDSL.updateWithMapper(this::update, " + tableFieldName + ")"); //$NON-NLS-1$ //$NON-NLS-2$
+        method.addBodyLine("return UpdateDSL.updateWithMapper(this::update, " //$NON-NLS-1$
+                + tableFieldName + ")"); //$NON-NLS-1$
 
         method.addBodyLines(fragmentGenerator.getSetEqualLines(introspectedTable.getNonPrimaryKeyColumns(), false));
         method.addBodyLines(fragmentGenerator.getPrimaryKeyWhereClauseForUpdate());
@@ -66,7 +67,8 @@ public class UpdateByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
 
     @Override
     public boolean callPlugins(Method method, Interface interfaze) {
-        return context.getPlugins().clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(method, interfaze, introspectedTable);
+        return context.getPlugins().clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(method,
+                interfaze, introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder, UpdateByPrimaryKeyMethodGenerator> {

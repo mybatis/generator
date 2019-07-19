@@ -70,7 +70,7 @@ public class JavaDomUtils {
     
     private static boolean typeIsAlreadyImported(CompilationUnit compilationUnit,
             FullyQualifiedJavaType fullyQualifiedJavaType) {
-	    String name = fullyQualifiedJavaType.getFullyQualifiedNameWithoutTypeParameters();
-	    return compilationUnit.getImportedTypes().stream().anyMatch(e -> e.getImportList().contains(name));
+        String name = fullyQualifiedJavaType.getFullyQualifiedNameWithoutTypeParameters();
+        return compilationUnit.getImportedTypes().stream().anyMatch(e -> e.getImportList().contains(name));
     }
 }

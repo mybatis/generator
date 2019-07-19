@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -42,7 +42,8 @@ public class SelectDistinctByExampleMethodGenerator extends AbstractMethodGenera
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
 
         imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.select.QueryExpressionDSL")); //$NON-NLS-1$
-        imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.select.MyBatis3SelectModelAdapter")); //$NON-NLS-1$
+        imports.add(new FullyQualifiedJavaType(
+                "org.mybatis.dynamic.sql.select.MyBatis3SelectModelAdapter")); //$NON-NLS-1$
         imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.select.SelectDSL")); //$NON-NLS-1$
         imports.add(FullyQualifiedJavaType.getNewListInstance());
         imports.add(recordType);
@@ -51,7 +52,8 @@ public class SelectDistinctByExampleMethodGenerator extends AbstractMethodGenera
         method.setDefault(true);
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
         
-        FullyQualifiedJavaType returnType = new FullyQualifiedJavaType("QueryExpressionDSL<MyBatis3SelectModelAdapter<List<" //$NON-NLS-1$
+        FullyQualifiedJavaType returnType =
+                new FullyQualifiedJavaType("QueryExpressionDSL<MyBatis3SelectModelAdapter<List<" //$NON-NLS-1$
                 + recordType.getShortNameWithoutTypeArguments()
                 + ">>>"); //$NON-NLS-1$
         method.setReturnType(returnType);

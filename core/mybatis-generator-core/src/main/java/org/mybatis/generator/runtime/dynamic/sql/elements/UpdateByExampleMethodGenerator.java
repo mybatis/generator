@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -43,18 +43,21 @@ public class UpdateByExampleMethodGenerator extends AbstractMethodGenerator {
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
 
         imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.update.UpdateDSL")); //$NON-NLS-1$
-        imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.update.MyBatis3UpdateModelAdapter")); //$NON-NLS-1$
+        imports.add(new FullyQualifiedJavaType(
+                "org.mybatis.dynamic.sql.update.MyBatis3UpdateModelAdapter")); //$NON-NLS-1$
         imports.add(recordType);
         
         Method method = new Method("updateByExample"); //$NON-NLS-1$
         method.setDefault(true);
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
         
-        FullyQualifiedJavaType returnType = new FullyQualifiedJavaType("UpdateDSL<MyBatis3UpdateModelAdapter<Integer>>"); //$NON-NLS-1$
+        FullyQualifiedJavaType returnType =
+                new FullyQualifiedJavaType("UpdateDSL<MyBatis3UpdateModelAdapter<Integer>>"); //$NON-NLS-1$
         method.setReturnType(returnType);
         method.addParameter(new Parameter(recordType, "record")); //$NON-NLS-1$
 
-        method.addBodyLine("return UpdateDSL.updateWithMapper(this::update, " + tableFieldName + ")"); //$NON-NLS-1$ //$NON-NLS-2$
+        method.addBodyLine("return UpdateDSL.updateWithMapper(this::update, " //$NON-NLS-1$
+                + tableFieldName + ")"); //$NON-NLS-1$
 
         method.addBodyLines(fragmentGenerator.getSetEqualLines(introspectedTable.getAllColumns(), true));
 

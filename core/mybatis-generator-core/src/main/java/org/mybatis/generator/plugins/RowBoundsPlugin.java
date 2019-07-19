@@ -126,15 +126,18 @@ public class RowBoundsPlugin extends PluginAdapter {
         
         interfaze.addImportedType(new FullyQualifiedJavaType("java.util.function.Function")); //$NON-NLS-1$
         
-        FullyQualifiedJavaType returnType = new FullyQualifiedJavaType("Function<SelectStatementProvider, " //$NON-NLS-1$
-                + baseMethodReturnType.get().getShortName() + ">"); //$NON-NLS-1$
+        FullyQualifiedJavaType returnType =
+                new FullyQualifiedJavaType("Function<SelectStatementProvider, " //$NON-NLS-1$
+                        + baseMethodReturnType.get().getShortName() + ">"); //$NON-NLS-1$
         
         Method method = new Method("selectManyWithRowbounds"); //$NON-NLS-1$
         method.setDefault(true);
         method.setReturnType(returnType);
         method.addParameter(new Parameter(rowBounds, "rowBounds")); //$NON-NLS-1$
-        method.addBodyLine("return selectStatement -> selectManyWithRowbounds(selectStatement, rowBounds);"); //$NON-NLS-1$
-        context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, interfaze.getImportedTypes());
+        method.addBodyLine(
+                "return selectStatement -> selectManyWithRowbounds(selectStatement, rowBounds);"); //$NON-NLS-1$
+        context.getCommentGenerator().addGeneralMethodAnnotation(
+                method, introspectedTable, interfaze.getImportedTypes());
         interfaze.addMethod(method);
     }
 
@@ -181,7 +184,8 @@ public class RowBoundsPlugin extends PluginAdapter {
         }
         
         if (resultMapId != null) {
-            interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.ResultMap")); //$NON-NLS-1$
+            interfaze.addImportedType(
+                    new FullyQualifiedJavaType("org.apache.ibatis.annotations.ResultMap")); //$NON-NLS-1$
             annotations.add("@ResultMap(\"" + resultMapId + "\")"); //$NON-NLS-1$ //$NON-NLS-2$
         }
         
@@ -230,7 +234,8 @@ public class RowBoundsPlugin extends PluginAdapter {
             Attribute attribute = iterator.next();
             if ("id".equals(attribute.getName())) { //$NON-NLS-1$
                 iterator.remove();
-                Attribute newAttribute = new Attribute("id", attribute.getValue() + "WithRowbounds"); //$NON-NLS-1$ //$NON-NLS-2$
+                Attribute newAttribute =
+                        new Attribute("id", attribute.getValue() + "WithRowbounds"); //$NON-NLS-1$ //$NON-NLS-2$
                 newElement.addAttribute(newAttribute);
                 break;
             }

@@ -38,10 +38,6 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.UpdateByPrimar
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.SimpleXMLMapperGenerator;
 import org.mybatis.generator.config.PropertyRegistry;
 
-/**
- * @author Jeff Butler
- * 
- */
 public class SimpleJavaClientGenerator extends AbstractJavaClientGenerator {
 
     public SimpleJavaClientGenerator(String project) {

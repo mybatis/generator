@@ -58,7 +58,8 @@ public class FragmentGenerator {
         for (IntrospectedColumn column : introspectedTable.getPrimaryKeyColumns()) {
             String fieldName = AbstractMethodGenerator.calculateFieldName(tableFieldName, column);
             builder.withImport(column.getFullyQualifiedJavaType());
-            builder.withParameter(new Parameter(column.getFullyQualifiedJavaType(), column.getJavaProperty() + "_")); //$NON-NLS-1$
+            builder.withParameter(new Parameter(
+                    column.getFullyQualifiedJavaType(), column.getJavaProperty() + "_")); //$NON-NLS-1$
             if (first) {
                 builder.withBodyLine("        .where(" + fieldName //$NON-NLS-1$
                         + ", isEqualTo(" + column.getJavaProperty() //$NON-NLS-1$
@@ -80,7 +81,8 @@ public class FragmentGenerator {
         boolean first = true;
         for (IntrospectedColumn column : introspectedTable.getPrimaryKeyColumns()) {
             String fieldName = AbstractMethodGenerator.calculateFieldName(tableFieldName, column);
-            String methodName = JavaBeansUtil.getGetterMethodName(column.getJavaProperty(), column.getFullyQualifiedJavaType());
+            String methodName = JavaBeansUtil.getGetterMethodName(
+                    column.getJavaProperty(), column.getFullyQualifiedJavaType());
             if (first) {
                 lines.add("        .where(" + fieldName //$NON-NLS-1$
                         + ", isEqualTo(record::" + methodName //$NON-NLS-1$
@@ -142,7 +144,8 @@ public class FragmentGenerator {
         return builder.build();
     }
 
-    private String getArgAnnotation(Set<FullyQualifiedJavaType> imports, IntrospectedColumn introspectedColumn, boolean idColumn) {
+    private String getArgAnnotation(Set<FullyQualifiedJavaType> imports, IntrospectedColumn introspectedColumn,
+            boolean idColumn) {
         StringBuilder sb = new StringBuilder();
         sb.append("@Arg(column=\""); //$NON-NLS-1$
         sb.append(introspectedColumn.getActualColumnName());
@@ -217,7 +220,8 @@ public class FragmentGenerator {
         return builder.build();
     }
     
-    private String getResultAnnotation(Set<FullyQualifiedJavaType> imports, IntrospectedColumn introspectedColumn, boolean idColumn) {
+    private String getResultAnnotation(Set<FullyQualifiedJavaType> imports, IntrospectedColumn introspectedColumn,
+            boolean idColumn) {
         StringBuilder sb = new StringBuilder();
         sb.append("@Result(column=\""); //$NON-NLS-1$
         sb.append(introspectedColumn.getActualColumnName());
@@ -281,7 +285,8 @@ public class FragmentGenerator {
         while (iter.hasNext()) {
             IntrospectedColumn column = iter.next();
             String fieldName = AbstractMethodGenerator.calculateFieldName(tableFieldName, column);
-            String methodName = JavaBeansUtil.getGetterMethodName(column.getJavaProperty(), column.getFullyQualifiedJavaType());
+            String methodName = JavaBeansUtil.getGetterMethodName(column.getJavaProperty(),
+                    column.getFullyQualifiedJavaType());
             String line = "        .set(" + fieldName //$NON-NLS-1$
                     + ").equalTo(record::" + methodName //$NON-NLS-1$
                     + ")"; //$NON-NLS-1$
@@ -301,7 +306,8 @@ public class FragmentGenerator {
         while (iter.hasNext()) {
             IntrospectedColumn column = iter.next();
             String fieldName = AbstractMethodGenerator.calculateFieldName(tableFieldName, column);
-            String methodName = JavaBeansUtil.getGetterMethodName(column.getJavaProperty(), column.getFullyQualifiedJavaType());
+            String methodName = JavaBeansUtil.getGetterMethodName(column.getJavaProperty(),
+                    column.getFullyQualifiedJavaType());
             String line = "        .set(" + fieldName //$NON-NLS-1$
                     + ").equalToWhenPresent(record::" //$NON-NLS-1$
                     + methodName + ")"; //$NON-NLS-1$

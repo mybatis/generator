@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -30,11 +30,15 @@ public class ConnectionFactoryConfiguration extends TypedPropertyHolder {
     public void validate(List<String> errors) {
         if (getConfigurationType() == null || "DEFAULT".equals(getConfigurationType())) { //$NON-NLS-1$
             if (!StringUtility.stringHasValue(getProperty("driverClass"))) { //$NON-NLS-1$
-                errors.add(getString("ValidationError.18", "connectionFactory", "driverClass")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                errors.add(getString("ValidationError.18", //$NON-NLS-1$
+                        "connectionFactory", //$NON-NLS-1$
+                        "driverClass")); //$NON-NLS-1$
             }
 
             if (!StringUtility.stringHasValue(getProperty("connectionURL"))) { //$NON-NLS-1$
-                errors.add(getString("ValidationError.18", "connectionFactory", "connectionURL")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                errors.add(getString("ValidationError.18", //$NON-NLS-1$
+                        "connectionFactory", //$NON-NLS-1$
+                        "connectionURL")); //$NON-NLS-1$
             }
         }
     }

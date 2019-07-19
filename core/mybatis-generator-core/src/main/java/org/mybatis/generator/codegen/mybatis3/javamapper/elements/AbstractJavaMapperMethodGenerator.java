@@ -25,10 +25,6 @@ import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.codegen.AbstractGenerator;
 import org.mybatis.generator.config.GeneratedKey;
 
-/**
- * 
- * @author Jeff Butler
- */
 public abstract class AbstractJavaMapperMethodGenerator extends
         AbstractGenerator {
     public abstract void addInterfaceElements(Interface interfaze);

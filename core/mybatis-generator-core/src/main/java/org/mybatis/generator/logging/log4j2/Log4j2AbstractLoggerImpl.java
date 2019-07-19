@@ -25,9 +25,6 @@ import org.apache.logging.log4j.spi.ExtendedLoggerWrapper;
 import org.mybatis.generator.logging.Log;
 import org.mybatis.generator.logging.LogFactory;
 
-/**
- * @author Eduardo Macarron
- */
 public class Log4j2AbstractLoggerImpl implements Log {
 
     private static final Marker MARKER = MarkerManager.getMarker(LogFactory.MARKER);

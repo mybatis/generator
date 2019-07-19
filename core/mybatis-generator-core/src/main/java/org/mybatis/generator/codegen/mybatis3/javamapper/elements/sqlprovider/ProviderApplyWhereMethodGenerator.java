@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -160,7 +160,8 @@ public class ProviderApplyWhereMethodGenerator extends
             method.addParameter(new Parameter(NEW_BUILDER_IMPORT, "sql")); //$NON-NLS-1$
         }
         method.addParameter(new Parameter(fqjt, "example")); //$NON-NLS-1$
-        method.addParameter(new Parameter(FullyQualifiedJavaType.getBooleanPrimitiveInstance(), "includeExamplePhrase")); //$NON-NLS-1$
+        method.addParameter(new Parameter(FullyQualifiedJavaType.getBooleanPrimitiveInstance(),
+                "includeExamplePhrase")); //$NON-NLS-1$
         
         context.getCommentGenerator().addGeneralMethodComment(method,
                 introspectedTable);

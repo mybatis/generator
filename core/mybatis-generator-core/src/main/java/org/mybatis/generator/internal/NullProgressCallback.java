@@ -25,9 +25,6 @@ import org.mybatis.generator.api.ProgressCallback;
  */
 public class NullProgressCallback implements ProgressCallback {
 
-    /**
-     * 
-     */
     public NullProgressCallback() {
         super();
     }

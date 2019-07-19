@@ -15,8 +15,6 @@
  */
 package org.mybatis.generator.internal.db;
 
-import static org.mybatis.generator.internal.util.JavaBeansUtil.getCamelCaseString;
-import static org.mybatis.generator.internal.util.JavaBeansUtil.getValidPropertyName;
 import static org.mybatis.generator.internal.util.StringUtility.composeFullyQualifiedTableName;
 import static org.mybatis.generator.internal.util.StringUtility.isTrue;
 import static org.mybatis.generator.internal.util.StringUtility.stringContainsSQLWildcard;
@@ -51,6 +49,7 @@ import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.config.TableConfiguration;
 import org.mybatis.generator.internal.ObjectFactory;
+import org.mybatis.generator.internal.util.JavaBeansUtil;
 import org.mybatis.generator.logging.Log;
 import org.mybatis.generator.logging.LogFactory;
 
@@ -274,19 +273,19 @@ public class DatabaseIntrospector {
                 if (isTrue(tc
                         .getProperty(PropertyRegistry.TABLE_USE_ACTUAL_COLUMN_NAMES))) {
                     introspectedColumn.setJavaProperty(
-                            getValidPropertyName(calculatedColumnName));
+                            JavaBeansUtil.getValidPropertyName(calculatedColumnName));
                 } else if (isTrue(tc
                                 .getProperty(PropertyRegistry.TABLE_USE_COMPOUND_PROPERTY_NAMES))) {
                     sb.setLength(0);
                     sb.append(calculatedColumnName);
                     sb.append('_');
-                    sb.append(getCamelCaseString(
+                    sb.append(JavaBeansUtil.getCamelCaseString(
                             introspectedColumn.getRemarks(), true));
                     introspectedColumn.setJavaProperty(
-                            getValidPropertyName(sb.toString()));
+                            JavaBeansUtil.getValidPropertyName(sb.toString()));
                 } else {
                     introspectedColumn.setJavaProperty(
-                            getCamelCaseString(calculatedColumnName, false));
+                            JavaBeansUtil.getCamelCaseString(calculatedColumnName, false));
                 }
 
                 FullyQualifiedJavaType fullyQualifiedJavaType = javaTypeResolver

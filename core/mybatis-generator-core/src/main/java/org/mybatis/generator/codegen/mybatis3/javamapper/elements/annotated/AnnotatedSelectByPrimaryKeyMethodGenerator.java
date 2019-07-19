@@ -16,9 +16,6 @@
 package org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated;
 
 import static org.mybatis.generator.api.dom.OutputUtilities.javaIndent;
-import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getAliasedEscapedColumnName;
-import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getParameterClause;
-import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getSelectListPhrase;
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 
 import java.util.Iterator;
@@ -27,6 +24,7 @@ import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.SelectByPrimaryKeyMethodGenerator;
 
 public class AnnotatedSelectByPrimaryKeyMethodGenerator extends SelectByPrimaryKeyMethodGenerator {
@@ -53,7 +51,7 @@ public class AnnotatedSelectByPrimaryKeyMethodGenerator extends SelectByPrimaryK
         boolean hasColumns = false;
         Iterator<IntrospectedColumn> iter = introspectedTable.getAllColumns().iterator();
         while (iter.hasNext()) {
-            sb.append(escapeStringForJava(getSelectListPhrase(iter.next())));
+            sb.append(escapeStringForJava(MyBatis3FormattingUtilities.getSelectListPhrase(iter.next())));
             hasColumns = true;
 
             if (iter.hasNext()) {
@@ -97,9 +95,10 @@ public class AnnotatedSelectByPrimaryKeyMethodGenerator extends SelectByPrimaryK
             }
 
             IntrospectedColumn introspectedColumn = iter.next();
-            sb.append(escapeStringForJava(getAliasedEscapedColumnName(introspectedColumn)));
+            sb.append(escapeStringForJava(
+                    MyBatis3FormattingUtilities.getAliasedEscapedColumnName(introspectedColumn)));
             sb.append(" = "); //$NON-NLS-1$
-            sb.append(getParameterClause(introspectedColumn));
+            sb.append(MyBatis3FormattingUtilities.getParameterClause(introspectedColumn));
             sb.append('\"');
             if (iter.hasNext()) {
                 sb.append(',');

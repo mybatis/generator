@@ -67,7 +67,7 @@ import org.mybatis.generator.config.Context;
  */
 public interface Plugin {
     
-    public enum ModelClassType {
+    enum ModelClassType {
         PRIMARY_KEY, 
         BASE_RECORD, 
         RECORD_WITH_BLOBS

@@ -19,7 +19,7 @@ import org.mybatis.generator.logging.Log;
 
 public class NoLoggingImpl implements Log {
 
-    public NoLoggingImpl(Class<?> clazz) {
+    public NoLoggingImpl() {
         // Do Nothing
     }
 

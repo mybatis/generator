@@ -187,21 +187,19 @@ public class JavaBeansUtil {
     public static Method getJavaBeansGetter(IntrospectedColumn introspectedColumn,
             Context context,
             IntrospectedTable introspectedTable) {
-        Method method = getBasicJavaBeansGetter(introspectedColumn, context, introspectedTable);
+        Method method = getBasicJavaBeansGetter(introspectedColumn);
         addGeneratedGetterJavaDoc(method, introspectedColumn, context, introspectedTable);
         return method;
     }
 
     public static Method getJavaBeansGetterWithGeneratedAnnotation(IntrospectedColumn introspectedColumn,
             Context context, IntrospectedTable introspectedTable, CompilationUnit compilationUnit) {
-        Method method = getBasicJavaBeansGetter(introspectedColumn, context, introspectedTable);
+        Method method = getBasicJavaBeansGetter(introspectedColumn);
         addGeneratedGetterAnnotation(method, introspectedColumn, context, introspectedTable, compilationUnit);
         return method;
     }
 
-    private static Method getBasicJavaBeansGetter(IntrospectedColumn introspectedColumn,
-            Context context,
-            IntrospectedTable introspectedTable) {
+    private static Method getBasicJavaBeansGetter(IntrospectedColumn introspectedColumn) {
         FullyQualifiedJavaType fqjt = introspectedColumn
                 .getFullyQualifiedJavaType();
         String property = introspectedColumn.getJavaProperty();

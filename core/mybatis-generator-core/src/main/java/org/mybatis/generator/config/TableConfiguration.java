@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,18 +15,18 @@
  */
 package org.mybatis.generator.config;
 
-import static org.mybatis.generator.internal.util.EqualsUtil.areEqual;
-import static org.mybatis.generator.internal.util.HashCodeUtil.SEED;
-import static org.mybatis.generator.internal.util.HashCodeUtil.hash;
 import static org.mybatis.generator.internal.util.StringUtility.composeFullyQualifiedTableName;
 import static org.mybatis.generator.internal.util.StringUtility.isTrue;
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
-import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.mybatis.generator.internal.util.EqualsUtil;
+import org.mybatis.generator.internal.util.HashCodeUtil;
+import org.mybatis.generator.internal.util.messages.Messages;
 
 public class TableConfiguration extends PropertyHolder {
 
@@ -178,17 +178,17 @@ public class TableConfiguration extends PropertyHolder {
 
         TableConfiguration other = (TableConfiguration) obj;
 
-        return areEqual(this.catalog, other.catalog)
-                && areEqual(this.schema, other.schema)
-                && areEqual(this.tableName, other.tableName);
+        return EqualsUtil.areEqual(this.catalog, other.catalog)
+                && EqualsUtil.areEqual(this.schema, other.schema)
+                && EqualsUtil.areEqual(this.tableName, other.tableName);
     }
 
     @Override
     public int hashCode() {
-        int result = SEED;
-        result = hash(result, catalog);
-        result = hash(result, schema);
-        result = hash(result, tableName);
+        int result = HashCodeUtil.SEED;
+        result = HashCodeUtil.hash(result, catalog);
+        result = HashCodeUtil.hash(result, schema);
+        result = HashCodeUtil.hash(result, tableName);
 
         return result;
     }
@@ -383,7 +383,7 @@ public class TableConfiguration extends PropertyHolder {
 
     public void validate(List<String> errors, int listPosition) {
         if (!stringHasValue(tableName)) {
-            errors.add(getString(
+            errors.add(Messages.getString(
                     "ValidationError.6", Integer.toString(listPosition))); //$NON-NLS-1$
         }
 
@@ -403,7 +403,7 @@ public class TableConfiguration extends PropertyHolder {
             boolean queryId2Set = stringHasValue(selectByPrimaryKeyQueryId);
 
             if (queryId1Set != queryId2Set) {
-                errors.add(getString("ValidationError.13", //$NON-NLS-1$
+                errors.add(Messages.getString("ValidationError.13", //$NON-NLS-1$
                         fqTableName));
             }
         }

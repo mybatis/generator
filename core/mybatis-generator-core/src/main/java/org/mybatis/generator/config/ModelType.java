@@ -29,7 +29,7 @@ public enum ModelType {
 
     private final String type;
 
-    private ModelType(String type) {
+    ModelType(String type) {
         this.type = type;
     }
 

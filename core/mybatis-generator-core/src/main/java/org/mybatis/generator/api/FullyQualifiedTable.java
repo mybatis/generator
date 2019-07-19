@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,11 +15,6 @@
  */
 package org.mybatis.generator.api;
 
-import static org.mybatis.generator.internal.util.EqualsUtil.areEqual;
-import static org.mybatis.generator.internal.util.HashCodeUtil.SEED;
-import static org.mybatis.generator.internal.util.HashCodeUtil.hash;
-import static org.mybatis.generator.internal.util.JavaBeansUtil.getCamelCaseString;
-import static org.mybatis.generator.internal.util.JavaBeansUtil.getFirstCharacterUppercase;
 import static org.mybatis.generator.internal.util.StringUtility.composeFullyQualifiedTableName;
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
@@ -28,6 +23,9 @@ import java.util.regex.Pattern;
 
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.DomainObjectRenamingRule;
+import org.mybatis.generator.internal.util.EqualsUtil;
+import org.mybatis.generator.internal.util.HashCodeUtil;
+import org.mybatis.generator.internal.util.JavaBeansUtil;
 
 public class FullyQualifiedTable {
 
@@ -84,7 +82,8 @@ public class FullyQualifiedTable {
      *            if true, then the table identifiers will be delimited at runtime. The delimiter characters are
      *            obtained from the Context.
      * @param domainObjectRenamingRule
-     *            If domainObjectName is not configured, we'll build the domain object named based on the tableName or runtimeTableName.
+     *            If domainObjectName is not configured, we'll build the domain object named based on the tableName
+     *            or runtimeTableName.
      *            And then we use the domain object renaming rule to generate the final domain object name.
      * @param context
      *            the context
@@ -198,9 +197,9 @@ public class FullyQualifiedTable {
 
         String finalDomainObjectName;
         if (stringHasValue(runtimeTableName)) {
-            finalDomainObjectName =  getCamelCaseString(runtimeTableName, true);
+            finalDomainObjectName = JavaBeansUtil.getCamelCaseString(runtimeTableName, true);
         } else {
-            finalDomainObjectName =  getCamelCaseString(introspectedTableName, true);
+            finalDomainObjectName = JavaBeansUtil.getCamelCaseString(introspectedTableName, true);
         }
 
         if (domainObjectRenamingRule != null) {
@@ -208,7 +207,7 @@ public class FullyQualifiedTable {
             String replaceString = domainObjectRenamingRule.getReplaceString();
             replaceString = replaceString == null ? "" : replaceString; //$NON-NLS-1$
             Matcher matcher = pattern.matcher(finalDomainObjectName);
-            finalDomainObjectName = getFirstCharacterUppercase(matcher.replaceAll(replaceString));
+            finalDomainObjectName = JavaBeansUtil.getFirstCharacterUppercase(matcher.replaceAll(replaceString));
         }
         return finalDomainObjectName;
     }
@@ -225,20 +224,17 @@ public class FullyQualifiedTable {
 
         FullyQualifiedTable other = (FullyQualifiedTable) obj;
 
-        return areEqual(this.introspectedTableName,
-                other.introspectedTableName)
-                && areEqual(this.introspectedCatalog,
-                        other.introspectedCatalog)
-                && areEqual(this.introspectedSchema,
-                        other.introspectedSchema);
+        return EqualsUtil.areEqual(this.introspectedTableName, other.introspectedTableName)
+                && EqualsUtil.areEqual(this.introspectedCatalog, other.introspectedCatalog)
+                && EqualsUtil.areEqual(this.introspectedSchema, other.introspectedSchema);
     }
 
     @Override
     public int hashCode() {
-        int result = SEED;
-        result = hash(result, introspectedTableName);
-        result = hash(result, introspectedCatalog);
-        result = hash(result, introspectedSchema);
+        int result = HashCodeUtil.SEED;
+        result = HashCodeUtil.hash(result, introspectedTableName);
+        result = HashCodeUtil.hash(result, introspectedCatalog);
+        result = HashCodeUtil.hash(result, introspectedSchema);
 
         return result;
     }

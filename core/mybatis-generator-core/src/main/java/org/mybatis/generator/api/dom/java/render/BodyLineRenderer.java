@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -40,8 +40,7 @@ public class BodyLineRenderer {
             sb.append(line);
             lines.add(sb.toString());
 
-            if ((line.endsWith("{") && !line.startsWith("switch")) //$NON-NLS-1$ //$NON-NLS-2$
-                    || line.endsWith(":")) { //$NON-NLS-1$
+            if (isCodeBlockStartExceptSwitchStatement(line) || line.endsWith(":")) { //$NON-NLS-1$
                 indentLevel++;
             }
 
@@ -61,5 +60,9 @@ public class BodyLineRenderer {
         }
 
         return lines;
+    }
+    
+    private boolean isCodeBlockStartExceptSwitchStatement(String line) {
+        return line.endsWith("{") && !line.startsWith("switch"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 }

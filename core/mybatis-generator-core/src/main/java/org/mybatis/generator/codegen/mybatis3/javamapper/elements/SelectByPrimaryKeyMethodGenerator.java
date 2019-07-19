@@ -26,11 +26,6 @@ import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 
-/**
- * 
- * @author Jeff Butler
- * 
- */
 public class SelectByPrimaryKeyMethodGenerator extends
         AbstractJavaMapperMethodGenerator {
 
@@ -43,7 +38,6 @@ public class SelectByPrimaryKeyMethodGenerator extends
 
     @Override
     public void addInterfaceElements(Interface interfaze) {
-        Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
         Method method = new Method(introspectedTable.getSelectByPrimaryKeyStatementId());
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setAbstract(true);
@@ -51,6 +45,8 @@ public class SelectByPrimaryKeyMethodGenerator extends
         FullyQualifiedJavaType returnType = introspectedTable.getRules()
                 .calculateAllFieldsClass();
         method.setReturnType(returnType);
+
+        Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
         importedTypes.add(returnType);
 
         if (!isSimple && introspectedTable.getRules().generatePrimaryKeyClass()) {

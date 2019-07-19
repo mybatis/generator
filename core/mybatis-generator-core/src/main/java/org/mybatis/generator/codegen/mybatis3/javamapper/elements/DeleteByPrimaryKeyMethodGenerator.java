@@ -26,11 +26,6 @@ import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 
-/**
- * 
- * @author Jeff Butler
- * 
- */
 public class DeleteByPrimaryKeyMethodGenerator extends
         AbstractJavaMapperMethodGenerator {
 

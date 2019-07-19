@@ -23,24 +23,12 @@ import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-/**
- * @author Jeff Butler
- */
 public class ParserEntityResolver implements EntityResolver {
 
-    /**
-     *  
-     */
     public ParserEntityResolver() {
         super();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.xml.sax.EntityResolver#resolveEntity(java.lang.String,
-     * java.lang.String)
-     */
     @Override
     public InputSource resolveEntity(String publicId, String systemId)
             throws SAXException, IOException {

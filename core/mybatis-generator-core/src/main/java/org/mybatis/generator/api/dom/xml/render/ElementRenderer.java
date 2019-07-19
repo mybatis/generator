@@ -17,9 +17,9 @@ package org.mybatis.generator.api.dom.xml.render;
 
 import java.util.stream.Stream;
 
-import org.mybatis.generator.api.dom.xml.VisitableElement;
 import org.mybatis.generator.api.dom.xml.ElementVisitor;
 import org.mybatis.generator.api.dom.xml.TextElement;
+import org.mybatis.generator.api.dom.xml.VisitableElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.internal.util.CustomCollectors;
 

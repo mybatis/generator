@@ -52,10 +52,6 @@ import org.mybatis.generator.runtime.dynamic.sql.elements.UpdateByExampleSelecti
 import org.mybatis.generator.runtime.dynamic.sql.elements.UpdateByPrimaryKeyMethodGenerator;
 import org.mybatis.generator.runtime.dynamic.sql.elements.UpdateByPrimaryKeySelectiveMethodGenerator;
 
-/**
- * @author Jeff Butler
- * 
- */
 public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
     // record type for insert, select, update
     private FullyQualifiedJavaType recordType;
@@ -81,7 +77,8 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
         Interface interfaze = createBasicInterface();
 
         TopLevelClass supportClass = getSupportClass();
-        String staticImportString = supportClass.getType().getFullyQualifiedNameWithoutTypeParameters() + ".*"; //$NON-NLS-1$
+        String staticImportString =
+                supportClass.getType().getFullyQualifiedNameWithoutTypeParameters() + ".*"; //$NON-NLS-1$
         interfaze.addStaticImport(staticImportString);
 
         addBasicCountMethod(interfaze);
@@ -356,7 +353,8 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
     }
 
     private TopLevelClass getSupportClass() {
-        return DynamicSqlSupportClassGenerator.of(introspectedTable, context.getCommentGenerator(), warnings).generate();
+        return DynamicSqlSupportClassGenerator.of(
+                introspectedTable, context.getCommentGenerator(), warnings).generate();
     }
 
     private void generate(Interface interfaze, AbstractMethodGenerator generator) {

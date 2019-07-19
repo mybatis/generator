@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -70,7 +70,8 @@ public class DynamicSqlSupportClassGenerator {
     }
     
     private InnerClass buildInnerTableClass(TopLevelClass topLevelClass) {
-        FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getFullyQualifiedTable().getDomainObjectName());
+        FullyQualifiedJavaType fqjt =
+                new FullyQualifiedJavaType(introspectedTable.getFullyQualifiedTable().getDomainObjectName());
         InnerClass innerClass = new InnerClass(fqjt.getShortName());
         innerClass.setVisibility(JavaVisibility.PUBLIC);
         innerClass.setStatic(true);
@@ -91,7 +92,8 @@ public class DynamicSqlSupportClassGenerator {
     }
 
     private Field calculateTableDefinition(TopLevelClass topLevelClass) {
-        FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getFullyQualifiedTable().getDomainObjectName());
+        FullyQualifiedJavaType fqjt =
+                new FullyQualifiedJavaType(introspectedTable.getFullyQualifiedTable().getDomainObjectName());
         String fieldName =
                 JavaBeansUtil.getValidPropertyName(introspectedTable.getFullyQualifiedTable().getDomainObjectName());
         Field field = new Field(fieldName, fqjt);
@@ -107,7 +109,8 @@ public class DynamicSqlSupportClassGenerator {
         return field;
     }
     
-    private void handleColumn(TopLevelClass topLevelClass, InnerClass innerClass, IntrospectedColumn column, String tableFieldName) {
+    private void handleColumn(TopLevelClass topLevelClass, InnerClass innerClass,
+            IntrospectedColumn column, String tableFieldName) {
         topLevelClass.addImportedType(column.getFullyQualifiedJavaType());
         FullyQualifiedJavaType fieldType = calculateFieldType(column);
         String fieldName = column.getJavaProperty();
@@ -162,7 +165,8 @@ public class DynamicSqlSupportClassGenerator {
         return initializationString.toString();
     }
     
-    public static DynamicSqlSupportClassGenerator of(IntrospectedTable introspectedTable, CommentGenerator commentGenerator, List<String> warnings) {
+    public static DynamicSqlSupportClassGenerator of(IntrospectedTable introspectedTable,
+            CommentGenerator commentGenerator, List<String> warnings) {
         DynamicSqlSupportClassGenerator generator = new DynamicSqlSupportClassGenerator();
         generator.introspectedTable = introspectedTable;
         generator.commentGenerator = commentGenerator;

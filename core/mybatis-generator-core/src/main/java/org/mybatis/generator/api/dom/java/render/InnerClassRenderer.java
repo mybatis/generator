@@ -15,14 +15,6 @@
  */
 package org.mybatis.generator.api.dom.java.render;
 
-import static org.mybatis.generator.api.dom.java.render.RenderingUtilities.renderClassOrEnumMethods;
-import static org.mybatis.generator.api.dom.java.render.RenderingUtilities.renderFields;
-import static org.mybatis.generator.api.dom.java.render.RenderingUtilities.renderInitializationBlocks;
-import static org.mybatis.generator.api.dom.java.render.RenderingUtilities.renderInnerClasses;
-import static org.mybatis.generator.api.dom.java.render.RenderingUtilities.renderInnerEnums;
-import static org.mybatis.generator.api.dom.java.render.RenderingUtilities.renderInnerInterfaces;
-import static org.mybatis.generator.api.dom.java.render.RenderingUtilities.renderTypeParameters;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,12 +31,12 @@ public class InnerClassRenderer {
         lines.addAll(innerClass.getJavaDocLines());
         lines.addAll(innerClass.getAnnotations());
         lines.add(renderFirstLine(innerClass, compilationUnit));
-        lines.addAll(renderFields(innerClass.getFields(), compilationUnit));
-        lines.addAll(renderInitializationBlocks(innerClass.getInitializationBlocks()));
-        lines.addAll(renderClassOrEnumMethods(innerClass.getMethods(), compilationUnit));
-        lines.addAll(renderInnerClasses(innerClass.getInnerClasses(), compilationUnit));
-        lines.addAll(renderInnerInterfaces(innerClass.getInnerInterfaces(), compilationUnit));
-        lines.addAll(renderInnerEnums(innerClass.getInnerEnums(), compilationUnit));
+        lines.addAll(RenderingUtilities.renderFields(innerClass.getFields(), compilationUnit));
+        lines.addAll(RenderingUtilities.renderInitializationBlocks(innerClass.getInitializationBlocks()));
+        lines.addAll(RenderingUtilities.renderClassOrEnumMethods(innerClass.getMethods(), compilationUnit));
+        lines.addAll(RenderingUtilities.renderInnerClasses(innerClass.getInnerClasses(), compilationUnit));
+        lines.addAll(RenderingUtilities.renderInnerInterfaces(innerClass.getInnerInterfaces(), compilationUnit));
+        lines.addAll(RenderingUtilities.renderInnerEnums(innerClass.getInnerEnums(), compilationUnit));
 
         lines = RenderingUtilities.removeLastEmptyLine(lines);
 
@@ -72,7 +64,7 @@ public class InnerClassRenderer {
 
         sb.append("class "); //$NON-NLS-1$
         sb.append(innerClass.getType().getShortName());
-        sb.append(renderTypeParameters(innerClass.getTypeParameters(), compilationUnit));
+        sb.append(RenderingUtilities.renderTypeParameters(innerClass.getTypeParameters(), compilationUnit));
         sb.append(renderSuperClass(innerClass, compilationUnit));
         sb.append(renderSuperInterfaces(innerClass, compilationUnit));
         sb.append(" {"); //$NON-NLS-1$

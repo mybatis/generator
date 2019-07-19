@@ -32,9 +32,6 @@ import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.config.TableConfiguration;
 
-/**
- * @author Jeff Butler
- */
 public class JavaBeansUtil {
 
     private JavaBeansUtil() {
@@ -147,8 +144,8 @@ public class JavaBeansUtil {
      * <ol>
      *   <li>If the first character is lower case, then OK</li>
      *   <li>If the first two characters are upper case, then OK</li>
-     *   <li>If the first character is upper case, and the second character is lower case, then the first character should be made
-     *       lower case</li>
+     *   <li>If the first character is upper case, and the second character is lower case, then the first character
+     *       should be made lower case</li>
      * </ol>
      * 
      * <p>For example:
@@ -190,21 +187,19 @@ public class JavaBeansUtil {
     public static Method getJavaBeansGetter(IntrospectedColumn introspectedColumn,
             Context context,
             IntrospectedTable introspectedTable) {
-        Method method = getBasicJavaBeansGetter(introspectedColumn, context, introspectedTable);
+        Method method = getBasicJavaBeansGetter(introspectedColumn);
         addGeneratedGetterJavaDoc(method, introspectedColumn, context, introspectedTable);
         return method;
     }
 
     public static Method getJavaBeansGetterWithGeneratedAnnotation(IntrospectedColumn introspectedColumn,
             Context context, IntrospectedTable introspectedTable, CompilationUnit compilationUnit) {
-        Method method = getBasicJavaBeansGetter(introspectedColumn, context, introspectedTable);
+        Method method = getBasicJavaBeansGetter(introspectedColumn);
         addGeneratedGetterAnnotation(method, introspectedColumn, context, introspectedTable, compilationUnit);
         return method;
     }
 
-    private static Method getBasicJavaBeansGetter(IntrospectedColumn introspectedColumn,
-            Context context,
-            IntrospectedTable introspectedTable) {
+    private static Method getBasicJavaBeansGetter(IntrospectedColumn introspectedColumn) {
         FullyQualifiedJavaType fqjt = introspectedColumn
                 .getFullyQualifiedJavaType();
         String property = introspectedColumn.getJavaProperty();
@@ -222,12 +217,14 @@ public class JavaBeansUtil {
         return method;
     }
     
-    private static void addGeneratedGetterJavaDoc(Method method, IntrospectedColumn introspectedColumn, Context context, IntrospectedTable introspectedTable) {
+    private static void addGeneratedGetterJavaDoc(Method method, IntrospectedColumn introspectedColumn,
+            Context context, IntrospectedTable introspectedTable) {
         context.getCommentGenerator().addGetterComment(method,
                 introspectedTable, introspectedColumn);
     }
 
-    private static void addGeneratedGetterAnnotation(Method method, IntrospectedColumn introspectedColumn, Context context,
+    private static void addGeneratedGetterAnnotation(Method method, IntrospectedColumn introspectedColumn,
+            Context context,
             IntrospectedTable introspectedTable, CompilationUnit compilationUnit) {
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, introspectedColumn,
                 compilationUnit.getImportedTypes());
@@ -326,7 +323,8 @@ public class JavaBeansUtil {
                 introspectedTable, introspectedColumn);
     }
 
-    private static void addGeneratedSetterAnnotation(Method method, IntrospectedColumn introspectedColumn, Context context,
+    private static void addGeneratedSetterAnnotation(Method method, IntrospectedColumn introspectedColumn,
+            Context context,
             IntrospectedTable introspectedTable, CompilationUnit compilationUnit) {
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, introspectedColumn,
                 compilationUnit.getImportedTypes());
@@ -341,7 +339,8 @@ public class JavaBeansUtil {
 
     private static boolean isTrimStringsEnabled(IntrospectedTable table) {
         TableConfiguration tableConfiguration = table.getTableConfiguration();
-        String trimSpaces = tableConfiguration.getProperties().getProperty(PropertyRegistry.MODEL_GENERATOR_TRIM_STRINGS);
+        String trimSpaces = tableConfiguration.getProperties().getProperty(
+                PropertyRegistry.MODEL_GENERATOR_TRIM_STRINGS);
         if (trimSpaces != null) {
             return isTrue(trimSpaces);
         }

@@ -28,9 +28,9 @@ import org.mybatis.generator.config.JDBCConnectionConfiguration;
 
 /**
  * This class assumes that classes are cached elsewhere for performance reasons,
- * but also to make sure that any native libraries are only loaded one time
- * (avoids the dreaded UnsatisfiedLinkError library loaded in another
- * classloader)
+ * but also to make sure that any native libraries are only loaded one time.
+ * This avoids the dreaded UnsatisfiedLinkError library loaded in another
+ * classloader.
  * 
  * @author Jeff Butler
  */

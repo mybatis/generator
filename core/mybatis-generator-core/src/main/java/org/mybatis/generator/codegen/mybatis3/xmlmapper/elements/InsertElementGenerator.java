@@ -28,11 +28,6 @@ import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 import org.mybatis.generator.config.GeneratedKey;
 
-/**
- * 
- * @author Jeff Butler
- * 
- */
 public class InsertElementGenerator extends AbstractXmlElementGenerator {
 
     private boolean isSimple;
@@ -92,7 +87,8 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
         valuesClause.append("values ("); //$NON-NLS-1$
 
         List<String> valuesClauses = new ArrayList<>();
-        List<IntrospectedColumn> columns = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(introspectedTable.getAllColumns());
+        List<IntrospectedColumn> columns =
+                ListUtilities.removeIdentityAndGeneratedAlwaysColumns(introspectedTable.getAllColumns());
         for (int i = 0; i < columns.size(); i++) {
             IntrospectedColumn introspectedColumn = columns.get(i);
 

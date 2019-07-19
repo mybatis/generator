@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,11 +22,6 @@ import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 
-/**
- * 
- * @author Jeff Butler
- * 
- */
 public class ResultMapWithBLOBsElementGenerator extends
         AbstractXmlElementGenerator {
 
@@ -78,9 +73,7 @@ public class ResultMapWithBLOBsElementGenerator extends
                 .getBLOBColumns()) {
             XmlElement resultElement = new XmlElement("result"); //$NON-NLS-1$
 
-            resultElement
-                    .addAttribute(new Attribute(
-                            "column", MyBatis3FormattingUtilities.getRenamedColumnNameForResultMap(introspectedColumn))); //$NON-NLS-1$
+            resultElement.addAttribute(generateColumnAttribute(introspectedColumn));
             resultElement.addAttribute(new Attribute(
                     "property", introspectedColumn.getJavaProperty())); //$NON-NLS-1$
             resultElement.addAttribute(new Attribute(
@@ -103,9 +96,7 @@ public class ResultMapWithBLOBsElementGenerator extends
                 .getPrimaryKeyColumns()) {
             XmlElement resultElement = new XmlElement("idArg"); //$NON-NLS-1$
 
-            resultElement
-                    .addAttribute(new Attribute(
-                            "column", MyBatis3FormattingUtilities.getRenamedColumnNameForResultMap(introspectedColumn))); //$NON-NLS-1$
+            resultElement.addAttribute(generateColumnAttribute(introspectedColumn));
             resultElement.addAttribute(new Attribute(
                     "jdbcType", introspectedColumn.getJdbcTypeName())); //$NON-NLS-1$
             resultElement.addAttribute(new Attribute("javaType", //$NON-NLS-1$
@@ -124,9 +115,7 @@ public class ResultMapWithBLOBsElementGenerator extends
                 .getNonPrimaryKeyColumns()) {
             XmlElement resultElement = new XmlElement("arg"); //$NON-NLS-1$
 
-            resultElement
-                    .addAttribute(new Attribute(
-                            "column", MyBatis3FormattingUtilities.getRenamedColumnNameForResultMap(introspectedColumn))); //$NON-NLS-1$
+            resultElement.addAttribute(generateColumnAttribute(introspectedColumn));
             resultElement.addAttribute(new Attribute(
                     "jdbcType", introspectedColumn.getJdbcTypeName())); //$NON-NLS-1$
 
@@ -158,5 +147,10 @@ public class ResultMapWithBLOBsElementGenerator extends
         }
 
         answer.addElement(constructor);
+    }
+
+    private Attribute generateColumnAttribute(IntrospectedColumn introspectedColumn) {
+        return new Attribute("column", //$NON-NLS-1$
+                MyBatis3FormattingUtilities.getRenamedColumnNameForResultMap(introspectedColumn));
     }
 }

@@ -15,13 +15,6 @@
  */
 package org.mybatis.generator.api.dom.java.render;
 
-import static org.mybatis.generator.api.dom.java.render.RenderingUtilities.renderFields;
-import static org.mybatis.generator.api.dom.java.render.RenderingUtilities.renderInnerClasses;
-import static org.mybatis.generator.api.dom.java.render.RenderingUtilities.renderInnerEnums;
-import static org.mybatis.generator.api.dom.java.render.RenderingUtilities.renderInnerInterfaces;
-import static org.mybatis.generator.api.dom.java.render.RenderingUtilities.renderInterfaceMethods;
-import static org.mybatis.generator.api.dom.java.render.RenderingUtilities.renderTypeParameters;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,11 +31,11 @@ public class InnerInterfaceRenderer {
         lines.addAll(innerInterface.getJavaDocLines());
         lines.addAll(innerInterface.getAnnotations());
         lines.add(renderFirstLine(innerInterface, compilationUnit));
-        lines.addAll(renderFields(innerInterface.getFields(), compilationUnit));
-        lines.addAll(renderInterfaceMethods(innerInterface.getMethods(), compilationUnit));
-        lines.addAll(renderInnerClasses(innerInterface.getInnerClasses(), compilationUnit));
-        lines.addAll(renderInnerInterfaces(innerInterface.getInnerInterfaces(), compilationUnit));
-        lines.addAll(renderInnerEnums(innerInterface.getInnerEnums(), compilationUnit));
+        lines.addAll(RenderingUtilities.renderFields(innerInterface.getFields(), compilationUnit));
+        lines.addAll(RenderingUtilities.renderInterfaceMethods(innerInterface.getMethods(), compilationUnit));
+        lines.addAll(RenderingUtilities.renderInnerClasses(innerInterface.getInnerClasses(), compilationUnit));
+        lines.addAll(RenderingUtilities.renderInnerInterfaces(innerInterface.getInnerInterfaces(), compilationUnit));
+        lines.addAll(RenderingUtilities.renderInnerEnums(innerInterface.getInnerEnums(), compilationUnit));
 
         lines = RenderingUtilities.removeLastEmptyLine(lines);
 
@@ -62,7 +55,7 @@ public class InnerInterfaceRenderer {
 
         sb.append("interface "); //$NON-NLS-1$
         sb.append(innerInterface.getType().getShortName());
-        sb.append(renderTypeParameters(innerInterface.getTypeParameters(), compilationUnit));
+        sb.append(RenderingUtilities.renderTypeParameters(innerInterface.getTypeParameters(), compilationUnit));
         sb.append(renderSuperInterfaces(innerInterface, compilationUnit));
         sb.append(" {"); //$NON-NLS-1$
         

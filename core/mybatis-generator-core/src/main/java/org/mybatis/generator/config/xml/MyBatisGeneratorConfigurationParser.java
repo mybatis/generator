@@ -725,8 +725,8 @@ public class MyBatisGeneratorConfigurationParser {
             int markerEndIndex = s.indexOf(CLOSE, currentIndex);
             int nestedStartIndex = s.indexOf(OPEN, markerStartIndex + OPEN.length());
             while (nestedStartIndex > -1 && markerEndIndex > -1 && nestedStartIndex < markerEndIndex) {
-	            nestedStartIndex = s.indexOf(OPEN, nestedStartIndex + OPEN.length());
-	            markerEndIndex = s.indexOf(CLOSE, markerEndIndex + CLOSE.length());
+                nestedStartIndex = s.indexOf(OPEN, nestedStartIndex + OPEN.length());
+                markerEndIndex = s.indexOf(CLOSE, markerEndIndex + CLOSE.length());
             }
 
             if (markerEndIndex < 0) {

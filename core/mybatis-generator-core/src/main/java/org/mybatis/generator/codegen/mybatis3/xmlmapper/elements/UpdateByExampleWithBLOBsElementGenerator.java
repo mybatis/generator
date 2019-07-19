@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -25,11 +25,6 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 
-/**
- * 
- * @author Jeff Butler
- * 
- */
 public class UpdateByExampleWithBLOBsElementGenerator extends
         AbstractXmlElementGenerator {
 
@@ -57,8 +52,8 @@ public class UpdateByExampleWithBLOBsElementGenerator extends
         sb.setLength(0);
         sb.append("set "); //$NON-NLS-1$
 
-        Iterator<IntrospectedColumn> iter = ListUtilities.removeGeneratedAlwaysColumns(introspectedTable.getAllColumns())
-                .iterator();
+        Iterator<IntrospectedColumn> iter =
+                ListUtilities.removeGeneratedAlwaysColumns(introspectedTable.getAllColumns()).iterator();
         while (iter.hasNext()) {
             IntrospectedColumn introspectedColumn = iter.next();
             

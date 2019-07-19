@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -44,14 +44,19 @@ public class BasicInsertMethodGenerator extends AbstractMethodGenerator {
 
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
         
-        FullyQualifiedJavaType adapter = new FullyQualifiedJavaType("org.mybatis.dynamic.sql.util.SqlProviderAdapter"); //$NON-NLS-1$
-        FullyQualifiedJavaType annotation = new FullyQualifiedJavaType("org.apache.ibatis.annotations.InsertProvider"); //$NON-NLS-1$
+        FullyQualifiedJavaType adapter =
+                new FullyQualifiedJavaType("org.mybatis.dynamic.sql.util.SqlProviderAdapter"); //$NON-NLS-1$
+        FullyQualifiedJavaType annotation =
+                new FullyQualifiedJavaType("org.apache.ibatis.annotations.InsertProvider"); //$NON-NLS-1$
         
-        imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.insert.render.InsertStatementProvider")); //$NON-NLS-1$
+        imports.add(new FullyQualifiedJavaType(
+                "org.mybatis.dynamic.sql.insert.render.InsertStatementProvider")); //$NON-NLS-1$
         imports.add(adapter);
         imports.add(annotation);
         
-        FullyQualifiedJavaType parameterType = new FullyQualifiedJavaType("org.mybatis.dynamic.sql.insert.render.InsertStatementProvider"); //$NON-NLS-1$
+        FullyQualifiedJavaType parameterType =
+                new FullyQualifiedJavaType(
+                        "org.mybatis.dynamic.sql.insert.render.InsertStatementProvider"); //$NON-NLS-1$
         imports.add(recordType);
         parameterType.addTypeArgument(recordType);
         

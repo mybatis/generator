@@ -30,10 +30,6 @@ import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.internal.util.StringUtility;
 
-/**
- * 
- * @author Jeff Butler
- */
 public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
 
     protected List<String> warnings;
@@ -154,7 +150,8 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
         return answer;
     }
     
-    protected FullyQualifiedJavaType overrideDefaultType(IntrospectedColumn column, FullyQualifiedJavaType defaultType) {
+    protected FullyQualifiedJavaType overrideDefaultType(IntrospectedColumn column,
+            FullyQualifiedJavaType defaultType) {
         FullyQualifiedJavaType answer = defaultType;
 
         switch (column.getJdbcType()) {
@@ -205,7 +202,8 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
         return answer;
     }
 
-    protected FullyQualifiedJavaType calculateTimestampType(IntrospectedColumn column, FullyQualifiedJavaType defaultType) {
+    protected FullyQualifiedJavaType calculateTimestampType(IntrospectedColumn column,
+            FullyQualifiedJavaType defaultType) {
         FullyQualifiedJavaType answer;
         
         if (useJSR310Types) {
@@ -217,7 +215,8 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
         return answer;
     }
 
-    protected FullyQualifiedJavaType calculateBitReplacement(IntrospectedColumn column, FullyQualifiedJavaType defaultType) {
+    protected FullyQualifiedJavaType calculateBitReplacement(IntrospectedColumn column,
+            FullyQualifiedJavaType defaultType) {
         FullyQualifiedJavaType answer;
 
         if (column.getLength() > 1) {
@@ -229,7 +228,8 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
         return answer;
     }
     
-    protected FullyQualifiedJavaType calculateBigDecimalReplacement(IntrospectedColumn column, FullyQualifiedJavaType defaultType) {
+    protected FullyQualifiedJavaType calculateBigDecimalReplacement(IntrospectedColumn column,
+            FullyQualifiedJavaType defaultType) {
         FullyQualifiedJavaType answer;
 
         if (column.getScale() > 0 || column.getLength() > 18 || forceBigDecimals) {

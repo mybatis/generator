@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -49,7 +49,8 @@ public class DeleteByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
         
-        method.addBodyLine("return DeleteDSL.deleteFromWithMapper(this::delete, " + tableFieldName + ")"); //$NON-NLS-1$ //$NON-NLS-2$
+        method.addBodyLine("return DeleteDSL.deleteFromWithMapper(this::delete, " //$NON-NLS-1$
+                + tableFieldName + ")"); //$NON-NLS-1$
         
         MethodParts methodParts = fragmentGenerator.getPrimaryKeyWhereClauseAndParameters();
         for (Parameter parameter : methodParts.getParameters()) {

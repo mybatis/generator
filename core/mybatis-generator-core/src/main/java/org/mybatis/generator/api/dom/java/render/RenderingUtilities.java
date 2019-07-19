@@ -115,13 +115,15 @@ public class RenderingUtilities {
                 .map(RenderingUtilities::javaIndent));
     }
     
-    public static List<String> renderInnerInterfaces(List<InnerInterface> innerInterfaces, CompilationUnit compilationUnit) {
+    public static List<String> renderInnerInterfaces(List<InnerInterface> innerInterfaces,
+            CompilationUnit compilationUnit) {
         return innerInterfaces.stream()
                 .flatMap(ii -> renderInnerInterface(ii, compilationUnit))
                 .collect(Collectors.toList());
     }
 
-    public static List<String> renderInnerInterfaceNoIndent(InnerInterface innerInterface, CompilationUnit compilationUnit) {
+    public static List<String> renderInnerInterfaceNoIndent(InnerInterface innerInterface,
+            CompilationUnit compilationUnit) {
         return innerInterfaceRenderer.render(innerInterface, compilationUnit);
     }
     

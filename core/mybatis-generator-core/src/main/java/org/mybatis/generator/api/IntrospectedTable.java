@@ -120,7 +120,8 @@ public abstract class IntrospectedTable {
     protected Map<String, Object> attributes = new HashMap<>();
 
     /** Internal attributes are used to store commonly accessed items by all code generators. */
-    protected Map<IntrospectedTable.InternalAttribute, String> internalAttributes = new EnumMap<>(InternalAttribute.class);
+    protected Map<IntrospectedTable.InternalAttribute, String> internalAttributes =
+            new EnumMap<>(InternalAttribute.class);
 
     /**
      * Table remarks retrieved from database metadata.
@@ -766,8 +767,9 @@ public abstract class IntrospectedTable {
     }
 
     /**
-     * if property exampleTargetPackage specified for example use the specified value, else
-     * use default value (targetPackage)
+     * If property exampleTargetPackage specified for example use the specified value, else
+     * use default value (targetPackage).
+     * 
      * @return the calculated package
      */
     protected String calculateJavaModelExamplePackage() {

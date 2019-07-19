@@ -21,9 +21,6 @@ import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 import org.slf4j.spi.LocationAwareLogger;
 
-/**
- * @author Eduardo Macarron
- */
 class Slf4jLocationAwareLoggerImpl implements Log {
 
     private static final Marker MARKER = MarkerFactory.getMarker(LogFactory.MARKER);

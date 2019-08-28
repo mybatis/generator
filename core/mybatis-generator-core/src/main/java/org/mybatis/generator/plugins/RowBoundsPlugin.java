@@ -33,6 +33,7 @@ import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.api.dom.xml.XmlElement;
+import org.mybatis.generator.internal.util.messages.Messages;
 
 /**
  * This plugin will add selectByExample methods that include rowBounds
@@ -49,6 +50,11 @@ public class RowBoundsPlugin extends PluginAdapter {
 
     @Override
     public boolean validate(List<String> warnings) {
+        if ("MyBatis3DynamicSqlV2".equalsIgnoreCase(context.getTargetRuntime())
+                || "MyBatis3DynamicSql".equalsIgnoreCase(context.getTargetRuntime())) { //$NON-NLS-1$
+            warnings.add(Messages.getString("Warning.30")); //$NON-NLS-1$
+            return false;
+        }
         return true;
     }
 

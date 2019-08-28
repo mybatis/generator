@@ -241,6 +241,43 @@ public interface Plugin {
     boolean clientBasicInsertMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable);
 
     /**
+     * This method is called when the insert multiple method has been generated for the mapper interface.
+     * This method is only called in the MyBatis3DynamicSql runtime.
+     * 
+     * @param method
+     *     the generated insert method
+     * @param interfaze
+     *     the partially generated mapper interfaces 
+     * @param introspectedTable
+     *     The class containing information about the table as introspected from the database
+     * @return true if the method should be generated, false if the generated
+     *         method should be ignored. In the case of multiple plugins, the
+     *         first plugin returning false will disable the calling of further
+     *         plugins.
+     */
+    boolean clientBasicInsertMultipleMethodGenerated(Method method, Interface interfaze,
+            IntrospectedTable introspectedTable);
+
+    /**
+     * This method is called when the insert multiple method helper has been generated for the mapper interface.
+     * The helper method is only created when a multiple row insert has a generated key.
+     * This method is only called in the MyBatis3DynamicSql runtime.
+     * 
+     * @param method
+     *     the generated insert method
+     * @param interfaze
+     *     the partially generated mapper interfaces 
+     * @param introspectedTable
+     *     The class containing information about the table as introspected from the database
+     * @return true if the method should be generated, false if the generated
+     *         method should be ignored. In the case of multiple plugins, the
+     *         first plugin returning false will disable the calling of further
+     *         plugins.
+     */
+    boolean clientBasicInsertMultipleHelperMethodGenerated(Method method, Interface interfaze,
+            IntrospectedTable introspectedTable);
+
+    /**
      * This method is called when the selectMany method has been generated for the mapper interface.
      * This method is only called in the MyBatis3DynamicSql runtime.
      * 
@@ -357,6 +394,82 @@ public interface Plugin {
             Interface interfaze, IntrospectedTable introspectedTable);
 
     /**
+     * Called when the general count method has been generated. This is the replacement for countByExample
+     * in the MyBatis Dynamic SQL V2 runtime.
+     * 
+     * @param method
+     *     the generated general count method
+     * @param interfaze
+     *     the partially generated mapper interfaces 
+     * @param introspectedTable
+     *            The class containing information about the table as
+     *            introspected from the database
+     * @return true if the method should be generated
+     */
+    boolean clientGeneralCountMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable);
+
+    /**
+     * Called when the general delete method has been generated. This is the replacement for deleteByExample
+     * in the MyBatis Dynamic SQL V2 runtime.
+     * 
+     * @param method
+     *     the generated general delete method
+     * @param interfaze
+     *     the partially generated mapper interfaces 
+     * @param introspectedTable
+     *            The class containing information about the table as
+     *            introspected from the database
+     * @return true if the method should be generated
+     */
+    boolean clientGeneralDeleteMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable);
+
+    /**
+     * Called when the general select distinct method has been generated. This is the replacement for
+     * selectDistinctByExample in the MyBatis Dynamic SQL V2 runtime.
+     * 
+     * @param method
+     *     the generated general select distinct method
+     * @param interfaze
+     *     the partially generated mapper interfaces 
+     * @param introspectedTable
+     *            The class containing information about the table as
+     *            introspected from the database
+     * @return true if the method should be generated
+     */
+    boolean clientGeneralSelectDistinctMethodGenerated(Method method, Interface interfaze,
+            IntrospectedTable introspectedTable);
+
+    /**
+     * Called when the general select method has been generated. This is the replacement for
+     * selectByExample in the MyBatis Dynamic SQL V2 runtime.
+     * 
+     * @param method
+     *     the generated general select method
+     * @param interfaze
+     *     the partially generated mapper interfaces 
+     * @param introspectedTable
+     *            The class containing information about the table as
+     *            introspected from the database
+     * @return true if the method should be generated
+     */
+    boolean clientGeneralSelectMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable);
+
+    /**
+     * Called when the general update method has been generated. This is the replacement for
+     * updateByExample in the MyBatis Dynamic SQL V2 runtime.
+     * 
+     * @param method
+     *     the generated general update method
+     * @param interfaze
+     *     the partially generated mapper interfaces 
+     * @param introspectedTable
+     *            The class containing information about the table as
+     *            introspected from the database
+     * @return true if the method should be generated
+     */
+    boolean clientGeneralUpdateMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable);
+
+    /**
      * This method is called when the insert method has been generated in the
      * client interface.
      * 
@@ -375,6 +488,28 @@ public interface Plugin {
      *         plugins.
      */
     boolean clientInsertMethodGenerated(Method method, Interface interfaze,
+            IntrospectedTable introspectedTable);
+
+    /**
+     * This method is called when the insert multiple method has been generated in the
+     * client interface.
+     * This method is only called in the MyBatis3DynamicSql runtime.
+     * 
+     * @param method
+     *            the generated insert multiple method
+     * @param interfaze
+     *            the partially implemented client interface. You can add
+     *            additional imported classes to the interface if
+     *            necessary.
+     * @param introspectedTable
+     *            The class containing information about the table as
+     *            introspected from the database
+     * @return true if the method should be generated, false if the generated
+     *         method should be ignored. In the case of multiple plugins, the
+     *         first plugin returning false will disable the calling of further
+     *         plugins.
+     */
+    boolean clientInsertMultipleMethodGenerated(Method method, Interface interfaze,
             IntrospectedTable introspectedTable);
 
     /**
@@ -462,6 +597,33 @@ public interface Plugin {
             Interface interfaze, IntrospectedTable introspectedTable);
 
     /**
+     * Called when the selectList field is generated in a MyBatis Dynamic SQL V2 runtime.
+     * 
+     * @param field the generated selectList field
+     * @param interfaze
+     *     the partially generated mapper interfaces 
+     * @param introspectedTable
+     *            The class containing information about the table as
+     *            introspected from the database
+     * @return true if the field should be generated
+     */
+    boolean clientSelectListFieldGenerated(Field field, Interface interfaze, IntrospectedTable introspectedTable);
+
+    /**
+     * Called when the selectOne method is generated. This is a new method in the MyBatis Dynamic SQL V2 runtime.
+     * 
+     * @param method
+     *     the generated selectOne method
+     * @param interfaze
+     *     the partially generated mapper interfaces 
+     * @param introspectedTable
+     *            The class containing information about the table as
+     *            introspected from the database
+     * @return true if the method should be generated
+     */
+    boolean clientSelectOneMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable);
+
+    /**
      * This method is called when the updateByExampleSelective method has been
      * generated in the client interface.
      * 
@@ -481,6 +643,36 @@ public interface Plugin {
      */
     boolean clientUpdateByExampleSelectiveMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable);
+
+    /**
+     * Called when the updateAllColumns method is generated. The generated method can be used with the general
+     * update method to mimic the function of the old updateByExample method.
+     * 
+     * @param method
+     *     the generated updateAllColumns method
+     * @param interfaze
+     *     the partially generated mapper interfaces 
+     * @param introspectedTable
+     *            The class containing information about the table as
+     *            introspected from the database
+     * @return true if the method should be generated
+     */
+    boolean clientUpdateAllColumnsMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable);
+
+    /**
+     * Called when the updateSelectiveColumns method is generated. The generated method can be used with the general
+     * update method to mimic the function of the old updateByExampleSelective method.
+     * 
+     * @param method
+     *     the generated updateSelectiveColumns method
+     * @param interfaze
+     *     the partially generated mapper interfaces 
+     * @param introspectedTable
+     *            The class containing information about the table as
+     *            introspected from the database
+     * @return true if the method should be generated
+     */
+    boolean clientUpdateSelectiveColumnsMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable);
 
     /**
      * This method is called when the updateByExampleWithBLOBs method has been

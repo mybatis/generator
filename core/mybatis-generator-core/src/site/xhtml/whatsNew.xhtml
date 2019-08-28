@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2018 the original author or authors.
+       Copyright 2006-2019 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -26,12 +26,44 @@
 <body>
 <h1>What's New in MyBatis Generator</h1>
 <h2>Version 1.4.0</h2>
-<p>This is a fairly major change with these themes:</p>
+<p>This is a major change with these themes:</p>
 <ul>
+  <li>New Runtime for MyBatis Dynamic SQL</li>
   <li>Move to Java 8</li>
   <li>Remove support for iBatis2</li>
   <li>General code cleanup</li>
+  <li>Several minor enhancements and bug fixes. See the GitHub page for milestone 1.4.0 for details. 
+      <a target="_blank" href="https://github.com/mybatis/generator/issues?q=milestone%3A1.4.0">Milestone 1.4.0</a></li>
 </ul>
+
+<h3>New Runtime for MyBatis Dynamic SQL</h3>
+<p>There is a new runtime for MyBatis Dynamic SQL. It uses improved functionality in that library and requires
+version 1.1.3 or later of that library.</p>
+
+<p>To use the new runtime, set <code>targetRuntime=MyBatis3DynamicSqlV2</code> or
+<code>targetRuntime=MyBatis3DynamicSql</code> on a <code>&lt;context&gt;</code>.</p>
+
+<p><b>Important:</b> Setting <code>targetRuntime=MyBatis3DynamicSql</code> will use the new runtime. If you wish to use
+the original runtime, set <code>targetRuntime=MyBatis3DynamicSqlV1</code>. However, note that <b>the V1 runtime is
+deprecated and will be removed in a future version</b> - so please switch to the new runtime.</p>
+
+<p>The new runtime has enhanced capabilities:</p>
+<ul>
+  <li>The *ByExample methods are removed. There is no example class generated in this runtime and the old method names
+  don't make sense anymore. They are replaced
+  by general count/delete/select/update methods that allow a where clause to be added via a lambda</li>
+  <li>There is a new multiple row insert method that leverages recent enhancements in MyBatis and MyBatis Dynamic SQL</li>
+  <li>There is a new selectOne method that allows you to specify a where clause via a lambda. This is convenient
+  when you know that there will only be one record returned from a query - you no longer have to receive a list
+  with one element</li>
+  <li>selectByPrimaryKey and selectOne return Optional&lt;R&gt; rather than an object that may be null</li>
+  <li>The new generated update method is far more flexible than the prior version. It can be used to mimic the old
+   updateByExample and updateByExampleSelective methods, but it can also be used to generate update methods with any
+   combination of update columns. So, for example, you can create an update statement that will insert nulls into some
+   fields and ignore other fields. This has been an ongoing frustration with the prior update methods and is now resolved.</li>
+</ul>
+
+<p>See the <a href="generatedobjects/dynamicSqlV2.html">MyBatis Dynamic SQL V2 Usage Page</a> for further details.</p>
 
 <h3>Breaking API Changes</h3>
 <ul>

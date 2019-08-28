@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -241,6 +241,16 @@ public class FullyQualifiedJavaTypeTest {
     @Test
     public void testStringArray() {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType("java.lang.String[]");
+        assertFalse(fqjt.isPrimitive());
+        assertTrue(fqjt.isArray());
+    }
+
+    @Test
+    public void testStringArray2() {
+        FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType("java.math.BigDecimal[]");
+        assertEquals(1, fqjt.getImportList().size());
+        assertEquals("java.math.BigDecimal", fqjt.getImportList().get(0));
+        assertEquals("BigDecimal[]", fqjt.getShortName());
         assertFalse(fqjt.isPrimitive());
         assertTrue(fqjt.isArray());
     }

@@ -69,7 +69,8 @@
         <item href="generatedobjects/javaclient.html" name="Java Client Objects" />
         <item href="generatedobjects/exampleClassUsage.html" name="Example Class Usage Notes" />
         <item href="generatedobjects/extendingExampleClass.html" name="Extending the Example Classes" />
-        <item href="generatedobjects/dynamicSql.html" name="MyBatis Dynamic SQL Usage Notes" />
+        <item href="generatedobjects/dynamicSqlV2.html" name="MyBatis Dynamic SQL Usage Notes - V2" />
+        <item href="generatedobjects/dynamicSqlV1.html" name="MyBatis Dynamic SQL Usage Notes - V1 (Deprecated)" />
       </item>
       <item href="usage/intro.html" name="Database Specific Information" collapse="true" >
         <item href="usage/db2.html" name="DB2" />

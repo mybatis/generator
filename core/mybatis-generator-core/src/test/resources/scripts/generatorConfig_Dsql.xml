@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2018 the original author or authors.
+       Copyright 2006-2019 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@
  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
-  <context id="dsql" targetRuntime="MyBatis3DynamicSql">
+  <context id="dsql" targetRuntime="MyBatis3DynamicSqlV1">
     <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
     
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
@@ -32,12 +32,12 @@
       <property name="useJSR310Types" value="true"/>
     </javaTypeResolver>
 
-    <javaModelGenerator targetPackage="mbg.test.mb3.generated.dsql.model" targetProject="MAVEN">
+    <javaModelGenerator targetPackage="mbg.test.mb3.generated.dsql.v1.model" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
-    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.dsql.mapper"  targetProject="MAVEN">
+    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.dsql.v1.mapper"  targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
 
@@ -75,7 +75,7 @@
     <table schema="mbgtest" tableName="Ids" domainObjectName="Id"/>
   </context>
 
-  <context id="miscellaneousTests_Annotated" targetRuntime="MyBatis3DynamicSql">
+  <context id="miscellaneousTests_Annotated" targetRuntime="MyBatis3DynamicSqlV1">
     <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
     <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin" />
 
@@ -87,12 +87,12 @@
         connectionURL="jdbc:hsqldb:mem:aname"
         userId="sa" />
 
-    <javaModelGenerator targetPackage="mbg.test.mb3.generated.dsql.miscellaneous.model" targetProject="MAVEN">
+    <javaModelGenerator targetPackage="mbg.test.mb3.generated.dsql.v1.miscellaneous.model" targetProject="MAVEN">
       <property name="trimStrings" value="true" />
       <property name="rootClass" value="mbg.test.common.BaseClass" />
     </javaModelGenerator>
 
-    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.dsql.miscellaneous.mapper"  targetProject="MAVEN">
+    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.dsql.v1.miscellaneous.mapper"  targetProject="MAVEN">
     </javaClientGenerator>
 
     <table tableName="PKFields" domainObjectName="MyObject" alias="A" >
@@ -124,7 +124,7 @@
     </table>
   </context>
 
-  <context id="dsql-modelonly" targetRuntime="MyBatis3DynamicSql">
+  <context id="dsqlv2" targetRuntime="MyBatis3DynamicSqlV2">
     <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
     
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
@@ -135,7 +135,150 @@
       <property name="useJSR310Types" value="true"/>
     </javaTypeResolver>
 
-    <javaModelGenerator targetPackage="mbg.test.mb3.generated.dsql.modelonly" targetProject="MAVEN">
+    <javaModelGenerator targetPackage="mbg.test.mb3.generated.dsql.v2.model" targetProject="MAVEN">
+      <property name="enableSubPackages" value="true" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+
+    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.dsql.v2.mapper"  targetProject="MAVEN">
+      <property name="enableSubPackages" value="true" />
+    </javaClientGenerator>
+
+    <table tableName="FieldsOnly" />
+    <table tableName="PKOnly">
+      <property name="immutable" value="true"/>
+    </table>
+    <table tableName="PKFields" alias="B" >
+      <property name="selectAllOrderByClause" value="ID1, ID2"/>
+      <columnOverride column="wierd$Field" delimitedColumnName="true"/>
+      <columnOverride column="stringBoolean" javaType="boolean" typeHandler="mbg.test.mb3.common.StringBooleanTypeHandler"/>
+    </table>
+    <table tableName="PKBlobs">
+      <property name="constructorBased" value="true"/>
+    </table>
+    <table tableName="PKFieldsBlobs" />
+    <table tableName="FieldsBlobs" />
+    <table tableName="awful table" alias="A">
+      <generatedKey column="CuStOmEr iD" sqlStatement="JDBC" />
+      <columnOverride column="first name" property="firstFirstName" />
+      <columnOverride column="first_name" property="secondFirstName" />
+      <columnOverride column="firstName" property="thirdFirstName" />
+      <columnOverride column="from" delimitedColumnName="true" >
+        <property name="fredswife" value="wilma"/>
+      </columnOverride>
+      <columnOverride column="active" javaType="boolean" />
+      <columnOverride column="_id1" delimitedColumnName="true" />
+      <columnOverride column="$id2" delimitedColumnName="true" />
+      <columnOverride column="id5_" delimitedColumnName="true" />
+      <columnOverride column="id6$" delimitedColumnName="true" />
+      <columnOverride column="id7$$" delimitedColumnName="true" />
+      <columnOverride column="class" property="dbClass" />
+    </table>
+    <table schema="mbgtest" tableName="Translations" domainObjectName="Translation"/>
+    <table schema="mbgtest" tableName="Ids" domainObjectName="Id"/>
+  </context>
+
+  <context id="dsqlv2-readonly" targetRuntime="MyBatis3DynamicSqlV2">
+    <plugin type="org.mybatis.generator.plugins.dsql.ReadOnlyPlugin" />
+    
+    <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
+        connectionURL="jdbc:hsqldb:mem:aname"
+        userId="sa" />
+
+    <javaTypeResolver>
+      <property name="useJSR310Types" value="true"/>
+    </javaTypeResolver>
+
+    <javaModelGenerator targetPackage="mbg.test.mb3.generated.dsql.v2.readonly.model" targetProject="MAVEN">
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+
+    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.dsql.v2.readonly.mapper"
+      targetProject="MAVEN"/>
+
+    <table tableName="PKFields" alias="B" >
+      <columnOverride column="wierd$Field" delimitedColumnName="true"/>
+      <columnOverride column="stringBoolean" javaType="boolean" typeHandler="mbg.test.mb3.common.StringBooleanTypeHandler"/>
+    </table>
+    <table tableName="awful table" alias="A">
+      <generatedKey column="CuStOmEr iD" sqlStatement="JDBC" />
+      <columnOverride column="first name" property="firstFirstName" />
+      <columnOverride column="first_name" property="secondFirstName" />
+      <columnOverride column="firstName" property="thirdFirstName" />
+      <columnOverride column="from" delimitedColumnName="true" >
+        <property name="fredswife" value="wilma"/>
+      </columnOverride>
+      <columnOverride column="active" javaType="boolean" />
+      <columnOverride column="_id1" delimitedColumnName="true" />
+      <columnOverride column="$id2" delimitedColumnName="true" />
+      <columnOverride column="id5_" delimitedColumnName="true" />
+      <columnOverride column="id6$" delimitedColumnName="true" />
+      <columnOverride column="id7$$" delimitedColumnName="true" />
+      <columnOverride column="class" property="dbClass" />
+    </table>
+  </context>
+
+  <context id="miscellaneousTests_Annotatedv2" targetRuntime="MyBatis3DynamicSql">
+    <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
+    <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin" />
+
+    <commentGenerator>
+      <property name="suppressAllComments" value="true"/>
+    </commentGenerator>
+    
+    <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
+        connectionURL="jdbc:hsqldb:mem:aname"
+        userId="sa" />
+
+    <javaModelGenerator targetPackage="mbg.test.mb3.generated.dsql.v2.miscellaneous.model" targetProject="MAVEN">
+      <property name="trimStrings" value="true" />
+      <property name="rootClass" value="mbg.test.common.BaseClass" />
+    </javaModelGenerator>
+
+    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.dsql.v2.miscellaneous.mapper"  targetProject="MAVEN">
+    </javaClientGenerator>
+
+    <table tableName="PKFields" domainObjectName="MyObject" alias="A" >
+      <ignoreColumn column="fred" />
+      <ignoreColumn column="decimal30Field" />
+      <columnOverride column="datefield" property="startDate"/>
+      <columnOverride column="decimal155Field" javaType="java.lang.Double" />
+      <columnOverride column="decimal60Field" javaType="int" />
+      <columnOverride column="firstName" javaType="mbg.test.common.FirstName"
+         typeHandler="mbg.test.mb3.common.FirstNameTypeHandler"/>
+      <columnOverride column="timeField" javaType="mbg.test.common.MyTime"
+         typeHandler="mbg.test.mb3.common.MyTimeTypeHandler"/>
+      <columnOverride column="wierd$Field" delimitedColumnName="true"/>
+    </table>
+    <table tableName="RegexRename">
+      <generatedKey column="CUST_ID" sqlStatement="call next value for TestSequence" />
+      <columnRenamingRule searchString="^CUST" />
+    </table>
+    <table tableName="EnumTest">
+      <columnOverride column="name" javaType="mbg.test.mb3.common.TestEnum"/>
+    </table>
+    <table tableName="GeneratedAlwaysTest" >
+      <columnOverride column="ID_PLUS1" isGeneratedAlways="true" />
+      <columnOverride column="ID_PLUS2" isGeneratedAlways="true" />
+    </table>
+    <table tableName="GeneratedAlwaysTestNoUpdates" >
+      <columnOverride column="ID_PLUS1" isGeneratedAlways="true" />
+      <columnOverride column="ID_PLUS2" isGeneratedAlways="true" />
+    </table>
+  </context>
+
+  <context id="dsql-modelonly" targetRuntime="MyBatis3DynamicSqlV1">
+    <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
+    
+    <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
+        connectionURL="jdbc:hsqldb:mem:aname"
+        userId="sa" />
+
+    <javaTypeResolver>
+      <property name="useJSR310Types" value="true"/>
+    </javaTypeResolver>
+
+    <javaModelGenerator targetPackage="mbg.test.mb3.generated.dsql.v1.modelonly" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
       <property name="trimStrings" value="true" />
     </javaModelGenerator>

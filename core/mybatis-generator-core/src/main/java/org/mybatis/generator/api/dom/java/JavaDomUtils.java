@@ -32,6 +32,15 @@ public class JavaDomUtils {
      */
     public static String calculateTypeName(CompilationUnit compilationUnit, FullyQualifiedJavaType fqjt) {
 
+        if (fqjt.isArray()) {
+            // if array, then calculate the name of the base (non-array) type
+            // then add the array indicators back in
+            String fqn = fqjt.getFullyQualifiedName();
+            String typeName = calculateTypeName(compilationUnit,
+                    new FullyQualifiedJavaType(fqn.substring(0, fqn.indexOf('['))));
+            return typeName + fqn.substring(fqn.indexOf('['));
+        }
+        
         if (!fqjt.getTypeArguments().isEmpty()) {
             return calculateParameterizedTypeName(compilationUnit, fqjt);
         }

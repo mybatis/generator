@@ -38,8 +38,7 @@ public class JavaDomUtils {
             String fqn = fqjt.getFullyQualifiedName();
             String typeName = calculateTypeName(compilationUnit,
                     new FullyQualifiedJavaType(fqn.substring(0, fqn.indexOf('['))));
-            String rc = typeName + fqn.substring(fqn.indexOf('['));
-            return rc;
+            return typeName + fqn.substring(fqn.indexOf('['));
         }
         
         if (!fqjt.getTypeArguments().isEmpty()) {

@@ -46,6 +46,7 @@ public class SelectListGenerator {
         imports.add(fieldType);
         Field field = new Field("selectList", fieldType);
         field.setInitializationString("BasicColumn.columnList(" + fragmentGenerator.getSelectList() + ")");
+        context.getCommentGenerator().addFieldAnnotation(field, introspectedTable, imports);
         
         return FieldAndImports.withField(field)
                 .withImports(imports)

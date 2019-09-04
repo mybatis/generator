@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -31,6 +31,11 @@ public class IntrospectedColumn {
     protected String actualColumnName;
 
     protected int jdbcType;
+
+    /**
+     * The platform specific data type name as reported from DatabaseMetadata.getColumns()
+     */
+    protected String actualTypeName;
 
     protected String jdbcTypeName;
 
@@ -331,5 +336,20 @@ public class IntrospectedColumn {
 
     public void setGeneratedAlways(boolean isGeneratedAlways) {
         this.isGeneratedAlways = isGeneratedAlways;
+    }
+
+    /**
+     * The platform specific type name as reported by the JDBC driver. This value is determined
+     * from the DatabaseMetadata.getColumns() call - specifically ResultSet.getString("TYPE_NAME").
+     * This value is platform dependent.
+     * 
+     * @return the platform specific type name as reported by the JDBC driver
+     */
+    public String getActualTypeName() {
+        return actualTypeName;
+    }
+
+    public void setActualTypeName(String actualTypeName) {
+        this.actualTypeName = actualTypeName;
     }
 }

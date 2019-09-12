@@ -55,7 +55,7 @@ public class GeneralSelectOneMethodGenerator extends AbstractMethodGenerator {
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
         
         method.setReturnType(returnType);
-        method.addBodyLine("return MyBatis3Utils.selectOptional(this::selectOne, selectList, " + //$NON-NLS-1$
+        method.addBodyLine("return MyBatis3Utils.selectOne(this::selectOne, selectList, " + //$NON-NLS-1$
                 tableFieldName + ", completer);"); //$NON-NLS-1$
         
         return MethodAndImports.withMethod(method)

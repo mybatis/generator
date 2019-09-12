@@ -104,7 +104,12 @@ public class GeneratorLaunchConfigurationDelegate extends AbstractJavaLaunchConf
     }
 
     private void modifyAntClasspathIfNecessary(ILaunchConfiguration configuration, AntRunner antRunner) throws CoreException {
-        String[] classpathEntries = getClasspath(configuration);
+        String[][] classpathAndModulePathEntries = getClasspathAndModulepath(configuration);
+        if(classpathAndModulePathEntries == null || classpathAndModulePathEntries.length == 0) {
+            return;
+        }
+        
+        String[] classpathEntries = classpathAndModulePathEntries[0];
         if (classpathEntries == null || classpathEntries.length == 0) {
             return;
         }

@@ -19,8 +19,8 @@
   </modules>
 
   <properties>
-    <tycho-version>1.2.0</tycho-version>
-    <tycho-extras-version>1.2.0</tycho-extras-version>
+    <tycho-version>1.4.0</tycho-version>
+    <tycho-extras-version>1.4.0</tycho-extras-version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <!-- Sonar -->
@@ -33,9 +33,9 @@
 
   <repositories>
     <repository>
-      <id>mars</id>
+      <id>oxygen</id>
       <layout>p2</layout>
-      <url>http://download.eclipse.org/releases/mars</url>
+      <url>http://download.eclipse.org/releases/oxygen</url>
     </repository>
   </repositories>
 
@@ -160,7 +160,7 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.1</version>
+        <version>0.8.4</version>
         <configuration>
           <append>true</append>
         </configuration>

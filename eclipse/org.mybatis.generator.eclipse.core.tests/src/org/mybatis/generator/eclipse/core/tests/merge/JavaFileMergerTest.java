@@ -35,7 +35,7 @@ public class JavaFileMergerTest {
     public void testMergeOnRegularClasses() throws Exception {
         String newJavaSource = simpleClassWithAllGeneratedItems();
         String existingJavaSource = simpleClassWithGeneratedAndCustomItems();
-        JavaFileMerger merger = new JavaFileMerger(newJavaSource, existingJavaSource, MergeConstants.OLD_ELEMENT_TAGS);
+        JavaFileMerger merger = new JavaFileMerger(newJavaSource, existingJavaSource, MergeConstants.getOldElementTags());
         String mergedSource = merger.getMergedSource();
         
         CompilationUnitSummary summary = getCompilationUnitSummaryFromSource(mergedSource);
@@ -63,7 +63,7 @@ public class JavaFileMergerTest {
     public void testMergeOnRegularInterfaces() throws Exception {
         String newJavaSource = simpleInterfaceWithAllGeneratedItems();
         String existingJavaSource = simpleInterfaceWithGeneratedAndCustomItems();
-        JavaFileMerger merger = new JavaFileMerger(newJavaSource, existingJavaSource, MergeConstants.OLD_ELEMENT_TAGS);
+        JavaFileMerger merger = new JavaFileMerger(newJavaSource, existingJavaSource, MergeConstants.getOldElementTags());
         String mergedSource = merger.getMergedSource();
         
         CompilationUnitSummary summary = getCompilationUnitSummaryFromSource(mergedSource);

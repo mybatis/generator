@@ -45,7 +45,7 @@ public class ExistingJavaFileVisitorTest {
         CompilationUnit cu = getCompilationUnitFromSource(source);
                 
         cu.recordModifications();
-        ExistingJavaFileVisitor visitor = new ExistingJavaFileVisitor(MergeConstants.OLD_ELEMENT_TAGS);
+        ExistingJavaFileVisitor visitor = new ExistingJavaFileVisitor(MergeConstants.getOldElementTags());
         
         // delete all the old generated stuff
         cu.accept(visitor);
@@ -73,7 +73,7 @@ public class ExistingJavaFileVisitorTest {
         IDocument document = new Document(source);
         CompilationUnit cu = getCompilationUnitFromSource(source);
         cu.recordModifications();
-        ExistingJavaFileVisitor visitor = new ExistingJavaFileVisitor(MergeConstants.OLD_ELEMENT_TAGS);
+        ExistingJavaFileVisitor visitor = new ExistingJavaFileVisitor(MergeConstants.getOldElementTags());
         
         // delete all the old generated stuff
         cu.accept(visitor);
@@ -103,7 +103,7 @@ public class ExistingJavaFileVisitorTest {
         IDocument document = new Document(source);
         CompilationUnit cu = getCompilationUnitFromSource(source);
         cu.recordModifications();
-        ExistingJavaFileVisitor visitor = new ExistingJavaFileVisitor(MergeConstants.OLD_ELEMENT_TAGS);
+        ExistingJavaFileVisitor visitor = new ExistingJavaFileVisitor(MergeConstants.getOldElementTags());
         
         // delete all the old generated stuff
         cu.accept(visitor);

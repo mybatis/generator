@@ -203,7 +203,7 @@ public class XmlFileMergerJaxp {
             Node childNode = children.item(i);
             if (childNode != null && childNode.getNodeType() == Node.COMMENT_NODE) {
                 String commentData = ((Comment) childNode).getData();
-                return MergeConstants.comentContainsTag(commentData);
+                return MergeConstants.commentContainsTag(commentData);
             }
         }
         

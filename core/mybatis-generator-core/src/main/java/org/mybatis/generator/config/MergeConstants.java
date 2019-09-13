@@ -51,7 +51,7 @@ public class MergeConstants {
                 .anyMatch(id::startsWith);
     }
 
-    public static boolean comentContainsTag(String comment) {
+    public static boolean commentContainsTag(String comment) {
         return Arrays.stream(OLD_ELEMENT_TAGS)
                 .anyMatch(comment::contains);
     }

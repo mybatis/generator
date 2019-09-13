@@ -59,8 +59,8 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <kotlin.version>1.3.50</kotlin.version>
-    <junit.jupiter.version>5.5.1</junit.jupiter.version>
-    <junit.platform.version>1.5.1</junit.platform.version>
+    <junit.jupiter.version>5.5.2</junit.jupiter.version>
+    <junit.platform.version>1.5.2</junit.platform.version>
   </properties>
 
   <build>
@@ -202,7 +202,7 @@
       <dependency>
         <groupId>org.apache.ant</groupId>
         <artifactId>ant</artifactId>
-        <version>1.10.6</version>
+        <version>1.10.7</version>
       </dependency>
       <dependency>
         <groupId>org.junit.jupiter</groupId>
@@ -243,7 +243,7 @@
       <dependency>
         <groupId>org.apache.maven</groupId>
         <artifactId>maven-plugin-api</artifactId>
-        <version>3.6.1</version>
+        <version>3.6.2</version>
       </dependency>
       <dependency>
         <groupId>org.apache.maven.plugin-tools</groupId>
@@ -254,7 +254,7 @@
       <dependency>
         <groupId>org.apache.maven</groupId>
         <artifactId>maven-core</artifactId>
-        <version>3.6.1</version>
+        <version>3.6.2</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
@@ -265,7 +265,7 @@
       <dependency>
         <groupId>com.github.javaparser</groupId>
         <artifactId>javaparser-core</artifactId>
-        <version>3.14.12</version>
+        <version>3.14.13</version>
         <scope>test</scope>
       </dependency>
       <dependency>

@@ -58,7 +58,7 @@ The projects are structured as follows:</p>
     <td>This plug-in holds the Java code for the Eclipse user interface for MBG.  If you
       are experiencing trouble with the plugin specific features (like the integrated Ant task), then
       the code for those features will be found in this plugin.  An Ant script in this plugin 
-      (copyDtds.xml) will copy the DTDs from the coure MBG source tree into a location suitable for
+      (copyDtds.xml) will copy the DTDs from the core MBG source tree into a location suitable for
       packaging in this plugin.
       <p>This plugin also contains a custom Ant builder for the Ant task.  This is required
       because of the way that eclipse accepts contributed Ant tasks - they need to be in a 
@@ -98,9 +98,7 @@ The projects are structured as follows:</p>
 <h2>Eclipse Workspace Setup</h2>
 <p>The following instructions show how to setup an Eclipse workspace for building the MBG feature
 and plug-ins from the latest source in the GitHub repository.  We assume that you are somewhat
-familiar with git and the Eclipse plug-in development environment (PDE).  These instructions
-also assume you are using Eclipse version 4.5.2 (Mars.2) - but this should work on future
-eclipse versions as well.</p>
+familiar with git and the Eclipse plug-in development environment (PDE).</p>
 <ol>
   <li>The authoritative source code for MyBatis Generator is on GitHub at
     <a target="_blank" href="https://github.com/mybatis/generator">https://github.com/mybatis/generator</a>.
@@ -112,12 +110,9 @@ eclipse versions as well.</p>
   </li>
   
   <li>Start Eclipse and make a new workspace</li>
-  <li><b>Important:</b> make sure that a version 8.0 or higher JDK is configured as the default
-     JRE in Eclipse (Window&gt;Preferences&gt;Java&gt;Installed JREs).  A JDK is required - a JRE
+  <li><b>Important:</b> make sure that a version 8.0 or higher JDK is available and visible to Eclipse
+     (Window&gt;Preferences&gt;Java&gt;Installed JREs).  A JDK is required - a JRE
      alone will fail because of JavaDoc generation in the build and Tycho requires JDK 8.0 or above.</li>
-  <li><b>Important:</b> the core MBG project requires log4j to compile.  Some eclipse
-    distributions do not include log4j.  You can get it by adding the WTP XSL Developer Tools from
-    eclipse (Help>Install New Software, etc.)</li>
   <li>Import the projects into the workspace
     <ol type="a">
       <li>Start the Eclipse project import wizard
@@ -131,6 +126,12 @@ eclipse versions as well.</p>
       </li>
       <li>Press "Finish", wait for the workspace to build.</li>
     </ol>
+  </li>
+  <li>The project includes an Eclipse target platform definition file. The purpose is to set the minimum version
+   of Eclipse supported by the feature and to ensure that you do not inadvertently use Eclipse features from later
+   versions. The file is <code>org.mybatis.generator.eclipse.parent/target-platform-definition.target</code>. To activate
+   the target platform, open the file and click on the link that says "Set as active target platform". This action
+   may take a few minutes to complete.
   </li>
   <li>You will likely have workspace errors due to missing source code in the
     <code>org.mybatis.generator.core</code> project.  There are two ways to solve this:

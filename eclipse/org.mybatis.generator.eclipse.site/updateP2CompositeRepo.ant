@@ -46,7 +46,7 @@
     </p2.composite.repository>
 
     <!-- turn the composite loading property back on.  We turned it off initally
-         so we could update the metadat without downloading all the old artifacts -->
+         so we could update the metadata without downloading all the old artifacts -->
     <replaceregexp byline="true">
       <regexp pattern="property name='p2.atomic.composite.loading' value='false'" />
       <substitution expression="property name='p2.atomic.composite.loading' value='true'" />
@@ -54,10 +54,15 @@
         <include name="*.xml" />
       </fileset>
     </replaceregexp>
+  	
+  	<!-- setup the shebang and variables -->
+  	<echo message="#!/bin/bash${line.separator}" file="${p2.repo.base.directory}/bintrayUpload.sh" />
+  	<echo message="USER=xxxx${line.separator}" file="${p2.repo.base.directory}/bintrayUpload.sh" append="true" />
+  	<echo message="API_KEY=xxxx${line.separator}" file="${p2.repo.base.directory}/bintrayUpload.sh" append="true" />
 
     <!-- generate the bintray upload script -->
     <!-- Write curl lines for every file we need to upload -->
-    <apply executable="echo" osfamily="unix" relative="true" output="${p2.repo.base.directory}/bintrayUpload.sh" append="true">
+    <apply executable="echo" relative="true" output="${p2.repo.base.directory}/bintrayUpload.sh" append="true">
       <arg value="curl -X PUT -T" />
       <srcfile />
       <arg value="-u$USER:$API_KEY"/>
@@ -70,13 +75,6 @@
       </fileset>
       <globmapper from="*" to="&quot;https://api.bintray.com/content/${bintray.subject}/${bintray.repo}/*;bt_package=${bintray.package};bt_version=${qualifiedVersion};publish=1&quot;" />
     </apply>
-    
-    <!-- add shebang and environment setup at the beginning of the file -->
-    <exec executable="sed" osfamily="unix">
-      <arg value="-i"/>
-      <arg value="1s/^/#!\/bin\/bash\nUSER=xxxx\nAPI_KEY=xxxx\n/"/>
-      <arg value="${p2.repo.base.directory}/bintrayUpload.sh"/>
-    </exec>
     
     <!-- make it executable -->
     <chmod perm="+x" file="${p2.repo.base.directory}/bintrayUpload.sh"/>

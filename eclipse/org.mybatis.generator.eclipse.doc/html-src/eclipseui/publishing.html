@@ -9,9 +9,8 @@
 <h1>Publishing a New Version</h1>
 <p>The feature is distributed via a P2 composite repository hosted at Bintray (https://bintray.com/).  The build
 includes scripts that automate much of the work involved with publishing a new version to
-Bintray.  However, the scripts and the build for publishing will only execute
-properly in a Linux environment.  So the first thing to know is that you must do this
-on a Linux machine or VM.</p>
+Bintray.  The generated Bintray upload script is a bash script - so the first thing to know is that you must do this
+on a machine that supports bash.</p>
 <p>The publishing build communicates with Bintray during the build - so you must have Internet
 access when running this build.</p>
 <p>Here's how to do it:</p>
@@ -56,6 +55,8 @@ access when running this build.</p>
          <li><code>org.mybatis.generator.eclipse.ui/META-INF/MANIFEST.MF</code></li>
          <li><code>org.mybatis.generator.eclipse.ui/pom.xml</code></li>
        </ul>
+       <p>This can be easily accomplished with the Tycho versions plugin:
+       <code>mvn tycho-versions:set-version -DnewVersion=1.4.1-SNAPSHOT</code></p>
    </li>
 </ul>
 

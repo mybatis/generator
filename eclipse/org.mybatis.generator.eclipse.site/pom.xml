@@ -80,9 +80,9 @@
             <configuration>
               <repositories>
                 <repository>
-                  <id>mars</id>
+                  <id>oxygen</id>
                   <layout>p2</layout>
-                  <url>http://download.eclipse.org/releases/mars</url>
+                  <url>http://download.eclipse.org/releases/oxygen</url>
                 </repository>
               </repositories>
               <dependencies>

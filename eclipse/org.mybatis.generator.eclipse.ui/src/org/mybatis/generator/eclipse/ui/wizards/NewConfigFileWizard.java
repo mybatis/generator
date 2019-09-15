@@ -173,11 +173,6 @@ public class NewConfigFileWizard extends Wizard implements INewWizard {
         javaModelGenerator.addAttribute(new Attribute("targetProject", "???")); //$NON-NLS-1$ //$NON-NLS-2$
         context.addElement(javaModelGenerator);
 
-        XmlElement sqlMapGenerator = new XmlElement("sqlMapGenerator"); //$NON-NLS-1$
-        sqlMapGenerator.addAttribute(new Attribute("targetPackage", "???")); //$NON-NLS-1$ //$NON-NLS-2$
-        sqlMapGenerator.addAttribute(new Attribute("targetProject", "???")); //$NON-NLS-1$ //$NON-NLS-2$
-        context.addElement(sqlMapGenerator);
-
         XmlElement javaClientGenerator = new XmlElement("javaClientGenerator"); //$NON-NLS-1$
         javaClientGenerator.addAttribute(new Attribute("targetPackage", "???")); //$NON-NLS-1$ //$NON-NLS-2$
         javaClientGenerator.addAttribute(new Attribute("targetProject", "???")); //$NON-NLS-1$ //$NON-NLS-2$

@@ -124,7 +124,7 @@
     </table>
   </context>
 
-  <context id="dsqlv2" targetRuntime="MyBatis3DynamicSqlV2">
+  <context id="dsqlv2">
     <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
     
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"

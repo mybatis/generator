@@ -314,7 +314,7 @@ public class ObjectFactory {
     public static IntrospectedTable createIntrospectedTableForValidation(Context context) {
         String type = context.getTargetRuntime();
         if (!stringHasValue(type)) {
-            type = IntrospectedTableMyBatis3Impl.class.getName();
+            type = IntrospectedTableMyBatis3DynamicSqlImplV2.class.getName();
         } else if ("MyBatis3".equalsIgnoreCase(type)) { //$NON-NLS-1$
             type = IntrospectedTableMyBatis3Impl.class.getName();
         } else if ("MyBatis3Simple".equalsIgnoreCase(type)) { //$NON-NLS-1$

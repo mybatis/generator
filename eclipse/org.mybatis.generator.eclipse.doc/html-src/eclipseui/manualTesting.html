@@ -26,7 +26,7 @@ of the Eclipse user interface for MyBatis Generator.</p>
 tests build on items created in previous tests.</p>
 <h3>Installation</h3>
 <ol>
-  <li>Install a fresh version of Eclipse version 4.5 (Mars) or later.</li>
+  <li>Install a fresh version of Eclipse version 4.7.3 (Oxygen 3A) or later.</li>
   <li>Open the fresh Eclipse install, and create a new (empty) workspace</li>
   <li>Configure a local update site to point to the newly generated site
       (Help&gt;Install New Software...)</li>
@@ -53,8 +53,7 @@ tests build on items created in previous tests.</p>
 <ol>
   <li>Open Window&gt;Preferences</li>
   <li>Navigate to XML&gt;XML Catalog</li>
-  <li>Verify that two XML catalog entries are present - one for Ibator and
-      one for MyBatis Generator</li>
+  <li>Verify that an XML catalog entry is present for MyBatis Generator</li>
 </ol>
 
 <h3>New File Wizard</h3>
@@ -92,7 +91,7 @@ tests build on items created in previous tests.</p>
   "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" &gt;
 &lt;generatorConfiguration&gt;
   &lt;context id="context1" targetRuntime="MyBatis3Simple" &gt;
-    &lt;jdbcConnection driverClass="org.hsqldb.jdbcDriver"
+    &lt;jdbcConnection driverClass="${driver}"
       connectionURL="jdbc:hsqldb:mem:aname"
       userId="sa" &gt;
     &lt;/jdbcConnection&gt;
@@ -163,6 +162,8 @@ create table mbgtest.j (id int not null, description varchar(50), primary key(id
         <li>Set "User ID" to "sa"</li>
         <li>Open the "Classpath" tab</li>
         <li>Add a user entry for the HSQLDB Jar</li>
+        <li>Open the environment tab</li>
+        <li>Add an environment variable - set "driver" to "org.hsqldb.jdbcDriver"</li>
       </ul>
     </li>
     <li>Run the launch configuration</li>
@@ -187,21 +188,19 @@ create table mbgtest.j (id int not null, description varchar(50), primary key(id
     in the file (they will have been moved to the bottom of the file)</li>
 </ol>
 
-<h3>Adventures with the Classpath</h3>
+<h3>Adventures with Rootclass</h3>
 <ol>
   <li>Open the configuration file from the last test.</li>
   <li>Uncomment the "rootClass" property line</li>
   <li>Save and close the file</li>
   <li>Right click on the configuration file, and then
       take the option "Run As&gt;Run MyBatis Generator"</li>
-  <li>Verify that <code>gen.model.A</code> now extends <code>BaseModel</code></li>
-  <li>Also verify that there are errors in <code>gen.model.A</code> - the generator
-     should have generated a get and set method that override the final
+  <li>Verify that <code>gen.model.A</code> now extends <code>BaseModel</code>. You should not have needed to
+      alter the launch configuration classpath - the launch configuration automatically adds the project
+      to the classpath of the generator.</li>
+  <li>Also verify that there are no errors in <code>gen.model.A</code> - the generator
+     should not have generated a get and set method that override the final
      methods in the base class</li>
-  <li>Open the launch configuration and add the MBGTest project to the classpath of
-      the launch.  Then run the launch again</li>
-  <li>Verify that there are no more errors and there is no trace
-  of the <code>id</code> field in <code>gen.model.A</code></li>
   <li>Re open the configuration file.</li>
   <li>Re comment the "rootClass" property line</li>
   <li>Save and close the file</li>

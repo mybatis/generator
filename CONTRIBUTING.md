@@ -16,7 +16,7 @@ Please use [the mailing list](http://groups.google.com/group/mybatis-user) inste
   requests or make feature requests for items that can be implemented with a plugin.
 - We also prefer to limit the number of plugins supplied with the generator and added to the code base.  In most cases, plugins are very
   specific to an individual use case.  If you feel that your plugin has wide potential use, feel free to promote it on the mailing list
-  and you can add a description of your plugin on the Generator WIKI (https://github.com/mybatis/generator/wiki/Third-Party-Plugins)
+  and you can add a description of your plugin on the Generator WIKI (https://github.com/mybatis/generator/wiki/Third-Party-Tools)
 
 ## Improving documentation
 

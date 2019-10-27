@@ -44,3 +44,5 @@ Export-Package: org.mybatis.generator.ant,
  org.mybatis.generator.runtime.dynamic.sql.elements.v1,
  org.mybatis.generator.runtime.dynamic.sql.elements.v2
 Automatic-Module-Name: org.mybatis.generator.core
+Import-Package: org.apache.tools.ant;version="1.10.1";resolution:=optional,
+ org.apache.tools.ant.types;version="1.10.1";resolution:=optional

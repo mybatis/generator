@@ -83,8 +83,8 @@ class KotlinTypeTest {
         assertThat(renderedKf).isEqualToNormalizingNewlines("""
             |package examples.kotlin.mybatis3.canonical
             |
-            |import org.mybatis.dynamic.sql.SqlTable
             |import java.sql.JDBCType
+            |import org.mybatis.dynamic.sql.SqlTable
             |
             |object AddressDynamicSqlSupport {
             |    object Address : SqlTable("Address") {
@@ -136,11 +136,11 @@ class KotlinTypeTest {
         assertThat(renderedKf).isEqualToNormalizingNewlines("""
             |package examples.kotlin.mybatis3.canonical
             |
-            |import org.apache.ibatis.annotations.*
-            |import org.apache.ibatis.type.JdbcType
-            |import org.mybatis.dynamic.sql.delete.render.DeleteStatementProvider
-            |import org.mybatis.dynamic.sql.select.render.SelectStatementProvider
             |import org.mybatis.dynamic.sql.util.SqlProviderAdapter
+            |import org.mybatis.dynamic.sql.delete.render.DeleteStatementProvider
+            |import org.apache.ibatis.type.JdbcType
+            |import org.mybatis.dynamic.sql.select.render.SelectStatementProvider
+            |import org.apache.ibatis.annotations.*
             |
             |@Mapper
             |interface PersonMapper {
@@ -187,11 +187,11 @@ class KotlinTypeTest {
         assertThat(renderedKf).isEqualToNormalizingNewlines("""
             |package examples.kotlin.mybatis3.canonical
             |
-            |import org.apache.ibatis.annotations.*
-            |import org.apache.ibatis.type.JdbcType
-            |import org.mybatis.dynamic.sql.delete.render.DeleteStatementProvider
-            |import org.mybatis.dynamic.sql.select.render.SelectStatementProvider
             |import org.mybatis.dynamic.sql.util.SqlProviderAdapter
+            |import org.mybatis.dynamic.sql.delete.render.DeleteStatementProvider
+            |import org.apache.ibatis.type.JdbcType
+            |import org.mybatis.dynamic.sql.select.render.SelectStatementProvider
+            |import org.apache.ibatis.annotations.*
             |
             |fun PersonMapper.count(completer: CountCompleter) =
             |    countFrom(this::count, Person, completer)

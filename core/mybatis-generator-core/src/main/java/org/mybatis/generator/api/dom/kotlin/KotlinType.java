@@ -21,7 +21,7 @@ import java.util.Objects;
 
 public class KotlinType extends KotlinNamedItemContainer {
 
-    private List<KotlinProperty> constructorItems = new ArrayList<>();
+    private List<KotlinProperty> constructorProperties = new ArrayList<>();
     private Type type;
     private List<String> superTypes = new ArrayList<>();
 
@@ -44,12 +44,12 @@ public class KotlinType extends KotlinNamedItemContainer {
     private KotlinType(Builder builder) {
         super(builder);
         this.type = Objects.requireNonNull(builder.type);
-        constructorItems.addAll(builder.constructorItems);
+        constructorProperties.addAll(builder.constructorProperties);
         superTypes.addAll(builder.superTypes);
     }
     
-    public List<KotlinProperty> getConstructorItems() {
-        return constructorItems;
+    public List<KotlinProperty> getConstructorProperties() {
+        return constructorProperties;
     }
 
     public Type getType() {
@@ -58,6 +58,10 @@ public class KotlinType extends KotlinNamedItemContainer {
 
     public List<String> getSuperTypes() {
         return superTypes;
+    }
+    
+    public void addConstructorProperty(KotlinProperty property) {
+        constructorProperties.add(property);
     }
 
     @Override
@@ -79,7 +83,7 @@ public class KotlinType extends KotlinNamedItemContainer {
 
     public static class Builder extends NamedItemContainerBuilder<Builder> {
         private Type type;
-        private List<KotlinProperty> constructorItems = new ArrayList<>();
+        private List<KotlinProperty> constructorProperties = new ArrayList<>();
         private List<String> superTypes = new ArrayList<>();
 
         private Builder(Type type, String name) {
@@ -88,7 +92,7 @@ public class KotlinType extends KotlinNamedItemContainer {
         }
 
         public Builder withConstructorProperty(KotlinProperty kotlinProperty) {
-            constructorItems.add(kotlinProperty);
+            constructorProperties.add(kotlinProperty);
             return this;
         }
 

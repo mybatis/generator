@@ -33,8 +33,16 @@ public class KotlinFunction extends KotlinNamedItem {
         isOneLineFunction = builder.isOneLineFunction;
     }
 
+    public void addArgument(KotlinArg argument) {
+        arguments.add(argument);
+    }
+
     public List<KotlinArg> getArguments() {
         return arguments;
+    }
+
+    public void addCodeLines(List<String> codeLines) {
+        this.codeLines.addAll(codeLines);
     }
 
     public List<String> getCodeLines() {

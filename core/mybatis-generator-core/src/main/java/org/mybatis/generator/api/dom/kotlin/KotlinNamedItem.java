@@ -37,6 +37,10 @@ public abstract class KotlinNamedItem {
         return modifiers;
     }
 
+    public void addAnnotation(String annotation) {
+        annotations.add(annotation);
+    }
+
     public List<String> getAnnotations() {
         return annotations;
     }

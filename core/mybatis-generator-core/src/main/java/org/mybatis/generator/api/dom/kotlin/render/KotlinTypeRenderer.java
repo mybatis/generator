@@ -42,7 +42,7 @@ public class KotlinTypeRenderer {
                 .collect(CustomCollectors.joining(", ", " : ", "")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
         if (kotlinType.getNamedItems().isEmpty()) {
-            if (kotlinType.getConstructorItems().isEmpty()) {
+            if (kotlinType.getConstructorProperties().isEmpty()) {
                 answer.add(line);
             } else {
                 answer.add(line + "("); //$NON-NLS-1$
@@ -50,7 +50,7 @@ public class KotlinTypeRenderer {
                 answer.add(")"); //$NON-NLS-1$
             }
         } else {
-            if (kotlinType.getConstructorItems().isEmpty()) {
+            if (kotlinType.getConstructorProperties().isEmpty()) {
                 answer.add(line + " {");
             } else {
                 answer.add(line + "("); //$NON-NLS-1$
@@ -78,7 +78,7 @@ public class KotlinTypeRenderer {
         List<String> lines = new ArrayList<>();
         KotlinPropertyRenderer renderer = new KotlinPropertyRenderer();
 
-        Iterator<KotlinProperty> iter = kotlinType.getConstructorItems().iterator();
+        Iterator<KotlinProperty> iter = kotlinType.getConstructorProperties().iterator();
         while (iter.hasNext()) {
             lines.addAll(renderer.render(iter.next()).stream().map(KotlinRenderingUtilities::kotlinIndent)
                     .collect(Collectors.toList()));

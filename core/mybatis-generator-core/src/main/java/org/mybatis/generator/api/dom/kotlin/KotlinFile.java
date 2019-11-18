@@ -17,16 +17,16 @@ package org.mybatis.generator.api.dom.kotlin;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class KotlinFile {
     private String fileName;
     private List<String> fileCommentLines = new ArrayList<>();
-    private Set<String> imports = new HashSet<>();
+    private Set<String> imports = new TreeSet<>();
     private String packageDefinition;
     private List<KotlinNamedItem> namedItems = new ArrayList<>();
 

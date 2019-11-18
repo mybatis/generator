@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -37,6 +37,19 @@ public class OutputUtilities {
         for (int i = 0; i < indentLevel; i++) {
             sb.append("    "); //$NON-NLS-1$
         }
+    }
+
+    /**
+     * Utility method that indents the buffer by the default amount for Kotlin
+     * (four spaces per indent level).
+     * 
+     * @param sb
+     *            a StringBuilder to append to
+     * @param indentLevel
+     *            the required indent level
+     */
+    public static void kotlinIndent(StringBuilder sb, int indentLevel) {
+        javaIndent(sb, indentLevel);
     }
 
     /**

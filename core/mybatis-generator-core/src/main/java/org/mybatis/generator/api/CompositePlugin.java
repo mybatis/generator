@@ -102,6 +102,22 @@ public abstract class CompositePlugin implements Plugin {
     }
 
     @Override
+    public List<GeneratedKotlinFile> contextGenerateAdditionalKotlinFiles(IntrospectedTable introspectedTable) {
+        return plugins.stream()
+                .map(p -> p.contextGenerateAdditionalKotlinFiles(introspectedTable))
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<GeneratedKotlinFile> contextGenerateAdditionalKotlinFiles() {
+        return plugins.stream()
+                .map(p -> p.contextGenerateAdditionalKotlinFiles())
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public boolean clientGenerated(Interface interfaze, IntrospectedTable introspectedTable) {
         for (Plugin plugin : plugins) {
             if (!plugin.clientGenerated(interfaze, introspectedTable)) {

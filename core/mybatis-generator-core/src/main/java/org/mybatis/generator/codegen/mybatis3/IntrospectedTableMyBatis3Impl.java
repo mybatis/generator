@@ -19,14 +19,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.mybatis.generator.api.GeneratedJavaFile;
+import org.mybatis.generator.api.GeneratedKotlinFile;
 import org.mybatis.generator.api.GeneratedXmlFile;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
+import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.codegen.AbstractGenerator;
 import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
+import org.mybatis.generator.codegen.AbstractKotlinGenerator;
 import org.mybatis.generator.codegen.AbstractXmlGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.AnnotatedClientGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.JavaMapperGenerator;
@@ -48,6 +51,8 @@ import org.mybatis.generator.internal.util.StringUtility;
 public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
     
     protected List<AbstractJavaGenerator> javaGenerators = new ArrayList<>();
+
+    protected List<AbstractKotlinGenerator> kotlinGenerators = new ArrayList<>();
 
     protected AbstractXmlGenerator xmlMapperGenerator;
 
@@ -179,6 +184,24 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
                                 javaGenerator.getProject(),
                                 context.getProperty(PropertyRegistry.CONTEXT_JAVA_FILE_ENCODING),
                                 context.getJavaFormatter());
+                answer.add(gjf);
+            }
+        }
+
+        return answer;
+    }
+
+    @Override
+    public List<GeneratedKotlinFile> getGeneratedKotlinFiles() {
+        List<GeneratedKotlinFile> answer = new ArrayList<>();
+
+        for (AbstractKotlinGenerator kotlinGenerator : kotlinGenerators) {
+            List<KotlinFile> kotlinFiles = kotlinGenerator.getKotlinFiles();
+            for (KotlinFile kotlinFile : kotlinFiles) {
+                GeneratedKotlinFile gjf = new GeneratedKotlinFile(kotlinFile,
+                                kotlinGenerator.getProject(),
+                                context.getProperty(PropertyRegistry.CONTEXT_KOTLIN_FILE_ENCODING),
+                                context.getKotlinFormatter());
                 answer.add(gjf);
             }
         }

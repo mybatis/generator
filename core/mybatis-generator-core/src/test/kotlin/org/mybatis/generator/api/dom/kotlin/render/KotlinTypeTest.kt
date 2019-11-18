@@ -136,11 +136,11 @@ class KotlinTypeTest {
         assertThat(renderedKf).isEqualToNormalizingNewlines("""
             |package examples.kotlin.mybatis3.canonical
             |
-            |import org.mybatis.dynamic.sql.util.SqlProviderAdapter
-            |import org.mybatis.dynamic.sql.delete.render.DeleteStatementProvider
-            |import org.apache.ibatis.type.JdbcType
-            |import org.mybatis.dynamic.sql.select.render.SelectStatementProvider
             |import org.apache.ibatis.annotations.*
+            |import org.apache.ibatis.type.JdbcType
+            |import org.mybatis.dynamic.sql.delete.render.DeleteStatementProvider
+            |import org.mybatis.dynamic.sql.select.render.SelectStatementProvider
+            |import org.mybatis.dynamic.sql.util.SqlProviderAdapter
             |
             |@Mapper
             |interface PersonMapper {
@@ -187,11 +187,11 @@ class KotlinTypeTest {
         assertThat(renderedKf).isEqualToNormalizingNewlines("""
             |package examples.kotlin.mybatis3.canonical
             |
-            |import org.mybatis.dynamic.sql.util.SqlProviderAdapter
-            |import org.mybatis.dynamic.sql.delete.render.DeleteStatementProvider
-            |import org.apache.ibatis.type.JdbcType
-            |import org.mybatis.dynamic.sql.select.render.SelectStatementProvider
             |import org.apache.ibatis.annotations.*
+            |import org.apache.ibatis.type.JdbcType
+            |import org.mybatis.dynamic.sql.delete.render.DeleteStatementProvider
+            |import org.mybatis.dynamic.sql.select.render.SelectStatementProvider
+            |import org.mybatis.dynamic.sql.util.SqlProviderAdapter
             |
             |fun PersonMapper.count(completer: CountCompleter) =
             |    countFrom(this::count, Person, completer)

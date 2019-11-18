@@ -15,6 +15,8 @@
  */
 package org.mybatis.generator.api.dom.kotlin;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -23,11 +25,13 @@ public class KotlinArg {
     private String name;
     private String dataType;
     private String initializationString;
+    private List<String> annotations = new ArrayList<>();
 
     private KotlinArg(Builder builder) {
         name = Objects.requireNonNull(builder.name);
         dataType = builder.dataType;
         initializationString = builder.initializationString;
+        annotations = builder.annotations;
     }
 
     public String getName() {
@@ -41,6 +45,10 @@ public class KotlinArg {
     public Optional<String> getDataType() {
         return Optional.ofNullable(dataType);
     }
+    
+    public List<String> getAnnotations() {
+        return annotations;
+    }
 
     public static Builder newArg(String name) {
         return new Builder(name);
@@ -50,6 +58,7 @@ public class KotlinArg {
         private String name;
         private String dataType;
         private String initializationString;
+        private List<String> annotations = new ArrayList<>();
 
         private Builder(String name) {
             this.name = name;
@@ -62,6 +71,11 @@ public class KotlinArg {
 
         public Builder withDataType(String dataType) {
             this.dataType = dataType;
+            return this;
+        }
+
+        public Builder withAnnotation(String annotation) {
+            annotations.add(annotation);
             return this;
         }
 

@@ -29,9 +29,11 @@ import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.JavaFormatter;
 import org.mybatis.generator.api.JavaTypeResolver;
+import org.mybatis.generator.api.KotlinFormatter;
 import org.mybatis.generator.api.Plugin;
 import org.mybatis.generator.api.XmlFormatter;
 import org.mybatis.generator.api.dom.DefaultJavaFormatter;
+import org.mybatis.generator.api.dom.DefaultKotlinFormatter;
 import org.mybatis.generator.api.dom.DefaultXmlFormatter;
 import org.mybatis.generator.codegen.mybatis3.IntrospectedTableMyBatis3Impl;
 import org.mybatis.generator.codegen.mybatis3.IntrospectedTableMyBatis3SimpleImpl;
@@ -45,6 +47,7 @@ import org.mybatis.generator.config.TableConfiguration;
 import org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl;
 import org.mybatis.generator.runtime.dynamic.sql.IntrospectedTableMyBatis3DynamicSqlImplV1;
 import org.mybatis.generator.runtime.dynamic.sql.IntrospectedTableMyBatis3DynamicSqlImplV2;
+import org.mybatis.generator.runtime.kotlin.IntrospectedTableKotlinImpl;
 
 /**
  * This class creates the different objects needed by the generator.
@@ -279,6 +282,19 @@ public class ObjectFactory {
         return answer;
     }
 
+    public static KotlinFormatter createKotlinFormatter(Context context) {
+        String type = context.getProperty(PropertyRegistry.CONTEXT_KOTLIN_FORMATTER);
+        if (!stringHasValue(type)) {
+            type = DefaultKotlinFormatter.class.getName();
+        }
+
+        KotlinFormatter answer = (KotlinFormatter) createInternalObject(type);
+
+        answer.setContext(context);
+
+        return answer;
+    }
+
     public static XmlFormatter createXmlFormatter(Context context) {
         String type = context.getProperty(PropertyRegistry.CONTEXT_XML_FORMATTER);
         if (!stringHasValue(type)) {
@@ -325,6 +341,8 @@ public class ObjectFactory {
             type = IntrospectedTableMyBatis3DynamicSqlImplV1.class.getName();
         } else if ("MyBatis3DynamicSqlV2".equalsIgnoreCase(type)) { //$NON-NLS-1$
             type = IntrospectedTableMyBatis3DynamicSqlImplV2.class.getName();
+        } else if ("MyBatis3Kotlin".equalsIgnoreCase(type)) { //$NON-NLS-1$
+            type = IntrospectedTableKotlinImpl.class.getName();
         }
 
         IntrospectedTable answer = (IntrospectedTable) createInternalObject(type);

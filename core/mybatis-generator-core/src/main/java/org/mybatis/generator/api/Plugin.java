@@ -15,6 +15,7 @@
  */
 package org.mybatis.generator.api;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
@@ -22,6 +23,10 @@ import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.api.dom.kotlin.KotlinFile;
+import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
+import org.mybatis.generator.api.dom.kotlin.KotlinProperty;
+import org.mybatis.generator.api.dom.kotlin.KotlinType;
 import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.config.Context;
@@ -1579,4 +1584,156 @@ public interface Plugin {
      *         plugins.
      */
     boolean dynamicSqlSupportGenerated(TopLevelClass supportClass, IntrospectedTable introspectedTable);
+
+    // TODO... functions added for Kotlin. Need to add these to composite plugin
+    
+    default boolean clientBasicCountMethodGenerated(KotlinFunction function, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
+
+    default boolean clientBasicDeleteMethodGenerated(KotlinFunction function, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
+
+    default boolean clientBasicInsertMethodGenerated(KotlinFunction function, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
+
+    default public List<GeneratedKotlinFile> contextGenerateAdditionalKotlinFiles(IntrospectedTable introspectedTable) {
+        return Collections.emptyList();
+    }
+
+    default public List<GeneratedKotlinFile> contextGenerateAdditionalKotlinFiles() {
+        return Collections.emptyList();
+    }
+
+    default boolean mapperExtensionsGenerated(KotlinFile extensionsFile, IntrospectedTable introspectedTable) {
+        return true;
+    }
+
+    default boolean dynamicSqlSupportGenerated(KotlinFile kotlinFile, KotlinType supportClass, IntrospectedTable introspectedTable) {
+        return true;
+    }
+
+    default boolean mapperGenerated(KotlinFile mapperFile, IntrospectedTable introspectedTable) {
+        return true;
+    }
+
+    default boolean kotlinDataClassGenerated(KotlinFile kotlinFile, KotlinType dataClass,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
+
+    default boolean clientBasicInsertMultipleHelperMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
+
+    default boolean clientBasicInsertMultipleMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
+
+    default boolean clientBasicUpdateMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
+
+    default boolean clientBasicSelectManyMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
+
+    default boolean clientBasicSelectOneMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
+
+    default boolean clientGeneralCountMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
+
+    default boolean clientDeleteByPrimaryKeyMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
+
+    default boolean clientGeneralDeleteMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
+
+    default boolean clientColumnListPropertyGenerated(KotlinProperty kotlinProperty, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
+
+    default boolean clientSelectOneMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
+
+    default boolean clientGeneralSelectMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
+
+    default boolean clientGeneralSelectDistinctMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
+
+    default boolean clientSelectByPrimaryKeyMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
+
+    default boolean clientInsertMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
+
+    default boolean clientInsertMultipleMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
+
+    default boolean clientInsertSelectiveMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
+
+    default boolean clientInsertMultipleVarargMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
+
+    default boolean clientUpdateAllColumnsMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
+
+    default boolean clientUpdateSelectiveColumnsMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
+
+    default boolean clientGeneralUpdateMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
+
+    default boolean clientUpdateByPrimaryKeyMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
+
+    default boolean clientUpdateByPrimaryKeySelectiveMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
 }

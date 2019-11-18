@@ -63,4 +63,27 @@ class KotlinFunctionTest {
             |}
             """.trimMargin())
     }
+
+    @Test
+    fun testMultilineFunctionWithAnnotation() {
+        val kf = KotlinFunction.newMultiLineFunction("add")
+                .withArgument(KotlinArg.newArg("a").withDataType("Int").withInitializationString("1")
+                        .withAnnotation("@Param(\"a\")")
+                        .build())
+                .withArgument(KotlinArg.newArg("b").withDataType("Int").withInitializationString(("2")).build())
+                .withExplicitReturnType("Int")
+                .withCodeLine("val answer = a + b")
+                .withCodeLine("return answer")
+                .build()
+
+        val renderedFunction = KotlinFunctionRenderer().render(kf).stream()
+                .collect(Collectors.joining(System.getProperty("line.separator"))); //$NON-NLS-1$
+
+        assertThat(renderedFunction).isEqualToNormalizingNewlines("""
+            |fun add(@Param("a") a: Int = 1, b: Int = 2): Int {
+            |    val answer = a + b
+            |    return answer
+            |}
+            """.trimMargin())
+    }
 }

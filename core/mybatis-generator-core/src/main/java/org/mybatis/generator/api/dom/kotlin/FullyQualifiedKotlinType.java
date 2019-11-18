@@ -46,6 +46,14 @@ public class FullyQualifiedKotlinType {
         parse(Objects.requireNonNull(fullTypeSpecification).trim());
     }
 
+    public String getPackageName() {
+        return packageName;
+    }
+    
+    public String getShortNameWithoutTypeArguments() {
+        return shortNameWithoutTypeArguments;
+    }
+    
     public String getShortNameWithTypeArguments() {
         if (typeArguments.isEmpty()) {
             return shortNameWithoutTypeArguments;

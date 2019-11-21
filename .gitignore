@@ -36,23 +36,18 @@
 /core/mybatis-generator-systests-mybatis3-java8/.settings
 /core/mybatis-generator-systests-mybatis3-java8/target
 
-# /core/mybatis-generator-systests-ibatis2-java2/
-/core/mybatis-generator-systests-ibatis2-java2/.classpath
-/core/mybatis-generator-systests-ibatis2-java2/.project
-/core/mybatis-generator-systests-ibatis2-java2/.settings
-/core/mybatis-generator-systests-ibatis2-java2/target
-
-# /core/mybatis-generator-systests-ibatis2-java5/
-/core/mybatis-generator-systests-ibatis2-java5/.classpath
-/core/mybatis-generator-systests-ibatis2-java5/.project
-/core/mybatis-generator-systests-ibatis2-java5/.settings
-/core/mybatis-generator-systests-ibatis2-java5/target
-
 # /core/mybatis-generator-systests-domtests/
 /core/mybatis-generator-systests-domtests/.classpath
 /core/mybatis-generator-systests-domtests/.project
 /core/mybatis-generator-systests-domtests/.settings
 /core/mybatis-generator-systests-domtests/target
+
+# /core/mybatis-generator-systests-kotlin/
+/core/mybatis-generator-systests-kotlin/.classpath
+/core/mybatis-generator-systests-kotlin/.project
+/core/mybatis-generator-systests-kotlin/.settings
+/core/mybatis-generator-systests-kotlin/target
+
 /.project
 .idea
 *.iml

@@ -51,7 +51,7 @@ public class KotlinTypeRenderer {
             }
         } else {
             if (kotlinType.getConstructorProperties().isEmpty()) {
-                answer.add(line + " {");
+                answer.add(line + " {"); //$NON-NLS-1$
             } else {
                 answer.add(line + "("); //$NON-NLS-1$
                 answer.addAll(renderConstructorItems(kotlinType));

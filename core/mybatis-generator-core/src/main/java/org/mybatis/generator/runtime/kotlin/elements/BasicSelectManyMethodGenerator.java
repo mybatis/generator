@@ -38,10 +38,12 @@ public class BasicSelectManyMethodGenerator extends AbstractKotlinFunctionGenera
         }
 
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
-                KotlinFunction.newOneLineFunction("selectMany")
-                .withExplicitReturnType("List<" + recordType.getShortNameWithTypeArguments() + ">")
-                .withArgument(KotlinArg.newArg("selectStatement")
-                        .withDataType("SelectStatementProvider")
+                KotlinFunction.newOneLineFunction("selectMany") //$NON-NLS-1$
+                .withExplicitReturnType("List<" //$NON-NLS-1$
+                		+ recordType.getShortNameWithTypeArguments()
+                		+ ">") //$NON-NLS-1$
+                .withArgument(KotlinArg.newArg("selectStatement") //$NON-NLS-1$
+                        .withDataType("SelectStatementProvider") //$NON-NLS-1$
                         .build())
                 .withAnnotation("@SelectProvider(type=SqlProviderAdapter::class, method=\"select\")") //$NON-NLS-1$
                 .build())

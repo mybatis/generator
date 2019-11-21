@@ -53,7 +53,7 @@ public class GeneratedKotlinFile extends GeneratedFile {
 
     @Override
     public String getTargetPackage() {
-        return kotlinFile.getPackage().orElse("");
+        return kotlinFile.getPackage().orElse(""); //$NON-NLS-1$
     }
 
     @Override

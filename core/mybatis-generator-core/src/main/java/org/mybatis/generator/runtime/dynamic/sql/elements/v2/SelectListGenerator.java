@@ -42,10 +42,10 @@ public class SelectListGenerator {
     public FieldAndImports generateFieldAndImports() {
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
         
-        FullyQualifiedJavaType fieldType = new FullyQualifiedJavaType("org.mybatis.dynamic.sql.BasicColumn[]");
+        FullyQualifiedJavaType fieldType = new FullyQualifiedJavaType("org.mybatis.dynamic.sql.BasicColumn[]"); //$NON-NLS-1$
         imports.add(fieldType);
-        Field field = new Field("selectList", fieldType);
-        field.setInitializationString("BasicColumn.columnList(" + fragmentGenerator.getSelectList() + ")");
+        Field field = new Field("selectList", fieldType); //$NON-NLS-1$
+        field.setInitializationString("BasicColumn.columnList(" + fragmentGenerator.getSelectList() + ")"); //$NON-NLS-1$ //$NON-NLS-2$
         context.getCommentGenerator().addFieldAnnotation(field, introspectedTable, imports);
         
         return FieldAndImports.withField(field)

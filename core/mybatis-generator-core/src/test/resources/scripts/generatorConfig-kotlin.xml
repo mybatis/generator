@@ -33,12 +33,12 @@
       <property name="useJSR310Types" value="true"/>
     </javaTypeResolver>
 
-    <javaModelGenerator targetPackage="mbg.test.mb3.generated.dsql.v2.model" targetProject="MAVEN">
+    <javaModelGenerator targetPackage="mbg.test.mb3.generated.dsql.kotlin.model" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
-    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.dsql.v2.mapper"  targetProject="MAVEN">
+    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.dsql.kotlin.mapper"  targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
 
@@ -87,11 +87,11 @@
       <property name="useJSR310Types" value="true"/>
     </javaTypeResolver>
 
-    <javaModelGenerator targetPackage="mbg.test.mb3.generated.dsql.v2.readonly.model" targetProject="MAVEN">
+    <javaModelGenerator targetPackage="mbg.test.mb3.generated.dsql.kotlin.readonly.model" targetProject="MAVEN">
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
-    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.dsql.v2.readonly.mapper"
+    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.dsql.kotlin.readonly.mapper"
       targetProject="MAVEN"/>
 
     <table tableName="PKFields" alias="B" >
@@ -128,12 +128,12 @@
         connectionURL="jdbc:hsqldb:mem:aname"
         userId="sa" />
 
-    <javaModelGenerator targetPackage="mbg.test.mb3.generated.dsql.v2.miscellaneous.model" targetProject="MAVEN">
+    <javaModelGenerator targetPackage="mbg.test.mb3.generated.dsql.kotlin.miscellaneous.model" targetProject="MAVEN">
       <property name="trimStrings" value="true" />
       <property name="rootClass" value="mbg.test.common.BaseClass" />
     </javaModelGenerator>
 
-    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.dsql.v2.miscellaneous.mapper"  targetProject="MAVEN">
+    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.dsql.kotlin.miscellaneous.mapper"  targetProject="MAVEN">
     </javaClientGenerator>
 
     <table tableName="PKFields" domainObjectName="MyObject" alias="A" >
@@ -176,7 +176,7 @@
       <property name="useJSR310Types" value="true"/>
     </javaTypeResolver>
 
-    <javaModelGenerator targetPackage="mbg.test.mb3.generated.dsql.v1.modelonly" targetProject="MAVEN">
+    <javaModelGenerator targetPackage="mbg.test.mb3.generated.dsql.kotlin.modelonly" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
       <property name="trimStrings" value="true" />
     </javaModelGenerator>

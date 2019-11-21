@@ -79,7 +79,7 @@ public class StringUtility {
             String token = st.nextToken();
             if ("\"".equals(token)) { //$NON-NLS-1$
                 sb.append("\\\""); //$NON-NLS-1$
-            } else if ("$".equals(token)) {
+            } else if ("$".equals(token)) { //$NON-NLS-1$
                 sb.append("\\$"); //$NON-NLS-1$
             } else {
                 sb.append(token);

@@ -63,8 +63,8 @@ public class KotlinDataClassGenerator extends AbstractKotlinGenerator {
             FullyQualifiedKotlinType kotlinType = JavaToKotlinTypeConverter.convert(introspectedColumn.getFullyQualifiedJavaType());
             
             KotlinProperty kp = KotlinProperty.newVar(introspectedColumn.getJavaProperty())
-                    .withDataType(kotlinType.getShortNameWithTypeArguments() + "?")
-                    .withInitializationString("null")
+                    .withDataType(kotlinType.getShortNameWithTypeArguments() + "?") //$NON-NLS-1$
+                    .withInitializationString("null") //$NON-NLS-1$
                     .build();
             
             dataClass.addConstructorProperty(kp);

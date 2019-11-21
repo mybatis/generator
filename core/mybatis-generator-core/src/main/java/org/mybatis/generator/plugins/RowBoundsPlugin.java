@@ -50,7 +50,7 @@ public class RowBoundsPlugin extends PluginAdapter {
 
     @Override
     public boolean validate(List<String> warnings) {
-        if ("MyBatis3DynamicSqlV2".equalsIgnoreCase(context.getTargetRuntime())
+        if ("MyBatis3DynamicSqlV2".equalsIgnoreCase(context.getTargetRuntime()) //$NON-NLS-1$
                 || "MyBatis3DynamicSql".equalsIgnoreCase(context.getTargetRuntime())) { //$NON-NLS-1$
             warnings.add(Messages.getString("Warning.30")); //$NON-NLS-1$
             return false;

@@ -48,10 +48,12 @@ public class BasicMultipleInsertMethodGenerator extends AbstractKotlinFunctionGe
     private KotlinFunctionAndImports generateMethodWithoutGeneratedKeys() {
         
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
-                KotlinFunction.newOneLineFunction("insertMultiple")
+                KotlinFunction.newOneLineFunction("insertMultiple") //$NON-NLS-1$
                 .withExplicitReturnType("Int") //$NON-NLS-1$
                 .withArgument(KotlinArg.newArg("multipleInsertStatement") //$NON-NLS-1$
-                        .withDataType("MultiRowInsertStatementProvider<" + recordType.getShortNameWithTypeArguments() + ">") //$NON-NLS-1$
+                        .withDataType("MultiRowInsertStatementProvider<" //$NON-NLS-1$
+                        		+ recordType.getShortNameWithTypeArguments()
+                        		+ ">") //$NON-NLS-1$
                         .build())
                 .withAnnotation("@InsertProvider(type=SqlProviderAdapter::class, method=\"insertMultiple\")") //$NON-NLS-1$
                 .build())

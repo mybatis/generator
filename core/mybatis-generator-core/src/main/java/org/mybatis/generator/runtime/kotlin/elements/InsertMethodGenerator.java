@@ -40,7 +40,7 @@ public class InsertMethodGenerator extends AbstractKotlinFunctionGenerator {
     public KotlinFunctionAndImports generateMethodAndImports() {
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
                 KotlinFunction.newOneLineFunction(mapperName + ".insert") //$NON-NLS-1$
-                .withArgument(KotlinArg.newArg("record")
+                .withArgument(KotlinArg.newArg("record") //$NON-NLS-1$
                         .withDataType(recordType.getShortNameWithTypeArguments())
                         .build())
                 .build())

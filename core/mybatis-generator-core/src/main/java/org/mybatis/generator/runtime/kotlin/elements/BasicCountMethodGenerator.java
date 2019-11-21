@@ -33,9 +33,9 @@ public class BasicCountMethodGenerator extends AbstractKotlinFunctionGenerator {
         
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
                 KotlinFunction.newOneLineFunction("count") //$NON-NLS-1$
-                .withExplicitReturnType("Long")
-                .withArgument(KotlinArg.newArg("selectStatement")
-                        .withDataType("SelectStatementProvider")
+                .withExplicitReturnType("Long") //$NON-NLS-1$
+                .withArgument(KotlinArg.newArg("selectStatement") //$NON-NLS-1$
+                        .withDataType("SelectStatementProvider") //$NON-NLS-1$
                         .build())
                 .withAnnotation("@SelectProvider(type=SqlProviderAdapter::class, method=\"select\")") //$NON-NLS-1$
                 .build())

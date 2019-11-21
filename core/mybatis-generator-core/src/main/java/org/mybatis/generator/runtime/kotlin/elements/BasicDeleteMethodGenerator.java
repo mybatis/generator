@@ -34,8 +34,8 @@ public class BasicDeleteMethodGenerator extends AbstractKotlinFunctionGenerator 
         
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
                 KotlinFunction.newOneLineFunction("delete") //$NON-NLS-1$
-                .withExplicitReturnType("Int")
-                .withArgument(KotlinArg.newArg("deleteStatement")
+                .withExplicitReturnType("Int") //$NON-NLS-1$
+                .withArgument(KotlinArg.newArg("deleteStatement") //$NON-NLS-1$
                         .withDataType("DeleteStatementProvider") //$NON-NLS-1$)
                         .build())
                 .withAnnotation("@DeleteProvider(type=SqlProviderAdapter::class, method=\"delete\")") //$NON-NLS-1$

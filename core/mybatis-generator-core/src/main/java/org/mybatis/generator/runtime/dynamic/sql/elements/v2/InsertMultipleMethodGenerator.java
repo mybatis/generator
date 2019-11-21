@@ -58,7 +58,7 @@ public class InsertMultipleMethodGenerator extends AbstractMethodGenerator {
         
         method.addParameter(new Parameter(parameterType, "records")); //$NON-NLS-1$
         
-        method.addBodyLine("return MyBatis3Utils.insertMultiple(this::insertMultiple, records, " +
+        method.addBodyLine("return MyBatis3Utils.insertMultiple(this::insertMultiple, records, " + //$NON-NLS-1$
                 tableFieldName + //$NON-NLS-1$
                 ", c ->"); //$NON-NLS-1$
         

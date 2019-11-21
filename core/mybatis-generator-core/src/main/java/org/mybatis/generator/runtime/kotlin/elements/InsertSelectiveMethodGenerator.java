@@ -40,7 +40,7 @@ public class InsertSelectiveMethodGenerator extends AbstractKotlinFunctionGenera
     public KotlinFunctionAndImports generateMethodAndImports() {
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
                 KotlinFunction.newOneLineFunction(mapperName + ".insertSelective") //$NON-NLS-1$
-                .withArgument(KotlinArg.newArg("record")
+                .withArgument(KotlinArg.newArg("record") //$NON-NLS-1$
                         .withDataType(recordType.getShortNameWithTypeArguments())
                         .build())
                 .build())

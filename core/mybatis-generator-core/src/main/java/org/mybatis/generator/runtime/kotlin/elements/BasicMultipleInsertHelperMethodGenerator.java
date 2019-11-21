@@ -36,13 +36,13 @@ public class BasicMultipleInsertHelperMethodGenerator extends AbstractKotlinFunc
 
     @Override
     public KotlinFunctionAndImports generateMethodAndImports() {
-        if (!Utils.generateMultipleRowInsert(introspectedTable)) {
+        if (!Utils.generateMultipleRowInsertHelper(introspectedTable)) {
             return null;
         }
   
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
-                KotlinFunction.newOneLineFunction(mapperName + ".insertMultiple")
-                .withArgument(KotlinArg.newArg("multipleInsertStatement")
+                KotlinFunction.newOneLineFunction(mapperName + ".insertMultipleHelper") //$NON-NLS-1$
+                .withArgument(KotlinArg.newArg("multipleInsertStatement") //$NON-NLS-1$
                         .withDataType("MultiRowInsertStatementProvider<" + recordType.getShortNameWithTypeArguments() + ">")
                         .build())
                 .withCodeLine("insertMultiple(multipleInsertStatement.insertStatement, multipleInsertStatement.records)") //$NON-NLS-1$

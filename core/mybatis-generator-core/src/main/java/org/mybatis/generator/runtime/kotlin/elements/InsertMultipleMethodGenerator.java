@@ -43,6 +43,11 @@ public class InsertMultipleMethodGenerator extends AbstractKotlinFunctionGenerat
             return null;
         }
         
+        // Kotlin type inference gets lost if we don't name the helper method something different from the
+        // regular mapper method
+        String mapperMethod = Utils.generateMultipleRowInsertHelper(introspectedTable) ?
+                "insertMultipleHelper" : "insertMultiple"; //$NON-NLS-1$ //$NON-NLS-2$
+        
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
                 KotlinFunction.newOneLineFunction(mapperName + ".insertMultiple") //$NON-NLS-1$
                 .withArgument(KotlinArg.newArg("records") //$NON-NLS-1$
@@ -57,8 +62,9 @@ public class InsertMultipleMethodGenerator extends AbstractKotlinFunctionGenerat
         
         KotlinFunction function = functionAndImports.getFunction();
         
-        function.addCodeLine("insertMultiple(this::insertMultiple, records, " + tableFieldName + //$NON-NLS-1$
-                ") {"); //$NON-NLS-1$
+        function.addCodeLine("insertMultiple(this::" + mapperMethod //$NON-NLS-1$
+                + ", records, " + tableFieldName //$NON-NLS-1$
+                + ") {"); //$NON-NLS-1$
         
         List<IntrospectedColumn> columns =
                 ListUtilities.removeIdentityAndGeneratedAlwaysColumns(introspectedTable.getAllColumns());

@@ -58,7 +58,7 @@ public class UpdateByPrimaryKeyMethodGenerator extends AbstractKotlinFunctionGen
         KotlinFunctionParts functionParts = fragmentGenerator.getSetEqualLines(columns);
         acceptParts(functionAndImports, functionParts);
         
-        functionParts = fragmentGenerator.getPrimaryKeyWhereClauseAndParameters();
+        functionParts = fragmentGenerator.getPrimaryKeyWhereClauseForUpdate();
         acceptParts(functionAndImports, functionParts);
         
         return functionAndImports;

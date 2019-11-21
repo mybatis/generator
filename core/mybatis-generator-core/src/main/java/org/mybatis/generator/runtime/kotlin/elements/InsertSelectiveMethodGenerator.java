@@ -61,10 +61,16 @@ public class InsertSelectiveMethodGenerator extends AbstractKotlinFunctionGenera
             String fieldName = column.getJavaProperty();
             functionAndImports.getImports().add(tableFieldImport + "." + fieldName); //$NON-NLS-1$
             
-            function.addCodeLine("    map(" + fieldName //$NON-NLS-1$
-                    + ").toPropertyWhenPresent(\"" + column.getJavaProperty() //$NON-NLS-1$
-                    + "\", record::" //$NON-NLS-1$
-                    + fieldName + ")"); //$NON-NLS-1$
+            if (column.isSequenceColumn()) {
+                function.addCodeLine("    map(" + fieldName //$NON-NLS-1$
+                        + ").toProperty(\"" + column.getJavaProperty() //$NON-NLS-1$
+                        + "\")"); //$NON-NLS-1$
+            } else {
+                function.addCodeLine("    map(" + fieldName //$NON-NLS-1$
+                        + ").toPropertyWhenPresent(\"" + column.getJavaProperty() //$NON-NLS-1$
+                        + "\", record::" //$NON-NLS-1$
+                        + fieldName + ")"); //$NON-NLS-1$
+            }
         }
         
         function.addCodeLine("}"); //$NON-NLS-1$

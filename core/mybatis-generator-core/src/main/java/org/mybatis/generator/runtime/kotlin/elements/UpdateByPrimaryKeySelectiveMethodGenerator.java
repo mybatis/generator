@@ -58,7 +58,7 @@ public class UpdateByPrimaryKeySelectiveMethodGenerator extends AbstractKotlinFu
         KotlinFunctionParts functionParts = fragmentGenerator.getSetEqualWhenPresentLines(columns);
         acceptParts(functionAndImports, functionParts);
         
-        functionParts = fragmentGenerator.getPrimaryKeyWhereClauseAndParameters();
+        functionParts = fragmentGenerator.getPrimaryKeyWhereClauseForUpdate();
         acceptParts(functionAndImports, functionParts);
         
         return functionAndImports;

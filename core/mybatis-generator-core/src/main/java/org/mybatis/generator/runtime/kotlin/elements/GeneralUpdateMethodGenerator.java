@@ -36,7 +36,7 @@ public class GeneralUpdateMethodGenerator extends AbstractKotlinFunctionGenerato
                         .build())
                 .withCodeLine("update(this::update, " + tableFieldName + ", completer)") //$NON-NLS-1$ //$NON-NLS-2$
                 .build())
-                .withImport("org.mybatis.dynamic.sql.util.kotlin.UpdateCompleter") //$NON-NLS-1$
+                .withImport("org.mybatis.dynamic.sql.util.kotlin.*") //$NON-NLS-1$
                 .withImport("org.mybatis.dynamic.sql.util.kotlin.mybatis3.*") //$NON-NLS-1$
                 .build();
 

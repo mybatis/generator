@@ -214,9 +214,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
         addCountByExampleMethod(extensionsFile, mapperName);
         addDeleteByExampleMethod(extensionsFile, mapperName);
         addDeleteByPrimaryKeyMethod(extensionsFile, mapperName);
-        if (introspectedTable.getGeneratedKey() != null) {
-            addBasicInsertMultipleHelperMethod(extensionsFile, mapperName);
-        }
+        addBasicInsertMultipleHelperMethod(extensionsFile, mapperName);
         addInsertOneMethod(extensionsFile, mapperName);
         addInsertMultipleMethod(extensionsFile, mapperName);
         addInsertMultipleVarargMethod(extensionsFile, mapperName);

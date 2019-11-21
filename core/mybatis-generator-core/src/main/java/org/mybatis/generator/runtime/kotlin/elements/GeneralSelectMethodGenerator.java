@@ -37,7 +37,7 @@ public class GeneralSelectMethodGenerator extends AbstractKotlinFunctionGenerato
                 .withCodeLine("selectList(this::selectMany, columnList, " + tableFieldName //$NON-NLS-1$
                         + ", completer)") //$NON-NLS-1$
                 .build())
-                .withImport("org.mybatis.dynamic.sql.util.kotlin.SelectCompleter") //$NON-NLS-1$
+                .withImport("org.mybatis.dynamic.sql.util.kotlin.*") //$NON-NLS-1$
                 .withImport("org.mybatis.dynamic.sql.util.kotlin.mybatis3.*") //$NON-NLS-1$
                 .build();
 

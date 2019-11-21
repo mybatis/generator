@@ -95,9 +95,11 @@ public class KotlinDynamicSqlSupportClassGenerator {
     
     private KotlinType buildInnerObject(KotlinFile kotlinFile) {
         String domainObjectName = introspectedTable.getFullyQualifiedTable().getDomainObjectName();
-        
+
         return KotlinType.newObject(domainObjectName)
-                .withSuperType("SqlTable(\"" + domainObjectName + "\")")
+                .withSuperType("SqlTable(\"" //$NON-NLS-1$
+                        + escapeStringForKotlin(introspectedTable.getFullyQualifiedTableNameAtRuntime())
+                        + "\")") //$NON-NLS-1$
                 .build();
     }
 

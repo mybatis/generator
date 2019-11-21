@@ -36,13 +36,12 @@ public class UpdateAllColumnsMethodGenerator extends AbstractKotlinFunctionGener
     @Override
     public KotlinFunctionAndImports generateMethodAndImports() {
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
-                KotlinFunction.newOneLineFunction("UpdateDSL<UpdateModel>.updateAllColumns") //$NON-NLS-1$
+                KotlinFunction.newOneLineFunction("KotlinUpdateBuilder.updateAllColumns") //$NON-NLS-1$
                 .withArgument(KotlinArg.newArg("record") //$NON-NLS-1$
                         .withDataType(recordType.getShortNameWithTypeArguments())
                         .build())
                 .build())
-                .withImport("org.mybatis.dynamic.sql.update.UpdateDSL") //$NON-NLS-1$
-                .withImport("org.mybatis.dynamic.sql.update.UpdateModel") //$NON-NLS-1$
+                .withImport("org.mybatis.dynamic.sql.util.kotlin.*") //$NON-NLS-1$
                 .withImports(recordType.getImportList())
                 .build();
 

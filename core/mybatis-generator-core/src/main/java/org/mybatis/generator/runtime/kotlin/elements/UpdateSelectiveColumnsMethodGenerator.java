@@ -37,13 +37,12 @@ public class UpdateSelectiveColumnsMethodGenerator extends AbstractKotlinFunctio
     public KotlinFunctionAndImports generateMethodAndImports() {
 
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
-                KotlinFunction.newOneLineFunction("UpdateDSL<UpdateModel>.updateSelectiveColumns") //$NON-NLS-1$
+                KotlinFunction.newOneLineFunction("KotlinUpdateBuilder.updateSelectiveColumns") //$NON-NLS-1$
                 .withArgument(KotlinArg.newArg("record") //$NON-NLS-1$
                         .withDataType(recordType.getShortNameWithTypeArguments())
                         .build())
                 .build())
-                .withImport("org.mybatis.dynamic.sql.update.UpdateDSL") //$NON-NLS-1$
-                .withImport("org.mybatis.dynamic.sql.update.UpdateModel") //$NON-NLS-1$
+                .withImport("org.mybatis.dynamic.sql.util.kotlin.*") //$NON-NLS-1$
                 .withImports(recordType.getImportList())
                 .build();
 

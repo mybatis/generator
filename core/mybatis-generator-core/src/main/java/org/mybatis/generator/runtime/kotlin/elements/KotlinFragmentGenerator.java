@@ -66,9 +66,32 @@ public class KotlinFragmentGenerator {
                         + "))"); //$NON-NLS-1$
                 first = false;
             } else {
-                builder.withImport("org.mybatis.dynamic.sql.util.kotlin.and"); //$NON-NLS-1$
                 builder.withCodeLine("    and(" + fieldName //$NON-NLS-1$
                         + ", isEqualTo(" + argName //$NON-NLS-1$
+                        + "))"); //$NON-NLS-1$
+            }
+        }
+        builder.withCodeLine("}"); //$NON-NLS-1$
+        
+        return builder.build();
+    }
+
+    public KotlinFunctionParts getPrimaryKeyWhereClauseForUpdate() {
+        KotlinFunctionParts.Builder builder = new KotlinFunctionParts.Builder();
+        
+        boolean first = true;
+        for (IntrospectedColumn column : introspectedTable.getPrimaryKeyColumns()) {
+            String fieldName = column.getJavaProperty();
+            
+            builder.withImport(tableFieldImport + "." + fieldName); //$NON-NLS-1$
+            if (first) {
+                builder.withCodeLine("    where(" + fieldName //$NON-NLS-1$
+                        + ", isEqualTo(record::" + fieldName //$NON-NLS-1$
+                        + "))"); //$NON-NLS-1$
+                first = false;
+            } else {
+                builder.withCodeLine("    and(" + fieldName //$NON-NLS-1$
+                        + ", isEqualTo(record::" + fieldName //$NON-NLS-1$
                         + "))"); //$NON-NLS-1$
             }
         }

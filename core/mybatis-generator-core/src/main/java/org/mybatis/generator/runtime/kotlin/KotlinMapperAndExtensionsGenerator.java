@@ -20,7 +20,6 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 import java.util.ArrayList;
 import java.util.List;
 
-//import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinType;
@@ -72,7 +71,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
     }
 
     protected void preCalculate() {
-        supportClassGenerator = new KotlinDynamicSqlSupportClassGenerator(introspectedTable);
+        supportClassGenerator = new KotlinDynamicSqlSupportClassGenerator(context, introspectedTable);
         recordType = new FullyQualifiedKotlinType(introspectedTable.getKotlinRecordType());
         resultMapId = recordType.getShortNameWithoutTypeArguments() + "Result"; //$NON-NLS-1$
         fragmentGenerator = new KotlinFragmentGenerator.Builder()
@@ -98,6 +97,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
         
         KotlinFile kf = new KotlinFile(type.getShortNameWithoutTypeArguments() + "Extensions"); //$NON-NLS-1$
         kf.setPackage(type.getPackageName());
+        context.getCommentGenerator().addFileComment(kf);
         
         return kf;
     }

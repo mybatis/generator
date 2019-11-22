@@ -29,16 +29,19 @@ import org.mybatis.generator.api.dom.kotlin.JavaToKotlinTypeConverter;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinProperty;
 import org.mybatis.generator.api.dom.kotlin.KotlinType;
+import org.mybatis.generator.config.Context;
 import org.mybatis.generator.internal.util.StringUtility;
 
 public class KotlinDynamicSqlSupportClassGenerator {
     private IntrospectedTable introspectedTable;
+    private Context context;
     private KotlinFile kotlinFile;
     private KotlinType innerObject;
     private KotlinType outerObject;
     
-    public KotlinDynamicSqlSupportClassGenerator(IntrospectedTable introspectedTable) {
+    public KotlinDynamicSqlSupportClassGenerator(Context context, IntrospectedTable introspectedTable) {
         this.introspectedTable = Objects.requireNonNull(introspectedTable);
+        this.context = Objects.requireNonNull(context);
         generate();
     }
     
@@ -77,6 +80,7 @@ public class KotlinDynamicSqlSupportClassGenerator {
     private KotlinFile buildBasicFile(FullyQualifiedJavaType type) {
         KotlinFile kf = new KotlinFile(type.getShortNameWithoutTypeArguments());
         kf.setPackage(type.getPackageName());
+        context.getCommentGenerator().addFileComment(kf);
         
         return kf;
     }

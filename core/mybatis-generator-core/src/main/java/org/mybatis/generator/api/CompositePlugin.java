@@ -112,7 +112,7 @@ public abstract class CompositePlugin implements Plugin {
     @Override
     public List<GeneratedKotlinFile> contextGenerateAdditionalKotlinFiles() {
         return plugins.stream()
-                .map(p -> p.contextGenerateAdditionalKotlinFiles())
+        		.map(Plugin::contextGenerateAdditionalKotlinFiles)
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
     }

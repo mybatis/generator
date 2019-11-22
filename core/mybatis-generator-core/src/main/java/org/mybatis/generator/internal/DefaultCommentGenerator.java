@@ -37,6 +37,7 @@ import org.mybatis.generator.api.dom.java.JavaElement;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.config.MergeConstants;
@@ -500,4 +501,19 @@ public class DefaultCommentGenerator implements CommentGenerator {
         buffer.append(')');
         return buffer.toString();
     }
+
+	@Override
+	public void addFileComment(KotlinFile kotlinFile) {
+		if (suppressAllComments) {
+			return;
+		}
+		
+		kotlinFile.addFileCommentLine("/*");
+		kotlinFile.addFileCommentLine(" * Auto-generated file. Created by MyBatis Generator"); //$NON-NLS-1$
+		if (!suppressDate) {
+			kotlinFile.addFileCommentLine(" * Generation date: " //$NON-NLS-1$
+					+ DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(ZonedDateTime.now()));
+		}
+		kotlinFile.addFileCommentLine(" */"); //$NON-NLS-1$
+	}
 }

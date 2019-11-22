@@ -120,10 +120,6 @@
     <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
     <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin" />
 
-    <commentGenerator>
-      <property name="suppressAllComments" value="true"/>
-    </commentGenerator>
-    
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
         connectionURL="jdbc:hsqldb:mem:aname"
         userId="sa" />

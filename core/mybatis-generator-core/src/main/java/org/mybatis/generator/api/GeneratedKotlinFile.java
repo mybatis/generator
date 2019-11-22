@@ -35,12 +35,6 @@ public class GeneratedKotlinFile extends GeneratedFile {
         this.kotlinFormatter = kotlinFormatter;
     }
 
-    public GeneratedKotlinFile(KotlinFile kotlinFile,
-            String targetProject,
-            KotlinFormatter kotlinFormatter) {
-        this(kotlinFile, targetProject, null, kotlinFormatter);
-    }
-
     @Override
     public String getFormattedContent() {
         return kotlinFormatter.getFormattedContent(kotlinFile);

@@ -30,6 +30,7 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
  *
  */
 public class JavaToKotlinTypeConverter {
+    private JavaToKotlinTypeConverter() {}
     
     private static Map<String, String> typeMap = new HashMap<>();
     

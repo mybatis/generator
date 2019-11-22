@@ -1602,11 +1602,11 @@ public interface Plugin {
         return true;
     }
 
-    default public List<GeneratedKotlinFile> contextGenerateAdditionalKotlinFiles(IntrospectedTable introspectedTable) {
+    default List<GeneratedKotlinFile> contextGenerateAdditionalKotlinFiles(IntrospectedTable introspectedTable) {
         return Collections.emptyList();
     }
 
-    default public List<GeneratedKotlinFile> contextGenerateAdditionalKotlinFiles() {
+    default List<GeneratedKotlinFile> contextGenerateAdditionalKotlinFiles() {
         return Collections.emptyList();
     }
 

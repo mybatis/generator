@@ -29,7 +29,7 @@
 <p>This is a major change with these themes:</p>
 <ul>
   <li>New Runtime for Kotlin using MyBatis Dynamic SQL</li>
-  <li>New Runtime for MyBatis Dynamic SQL</li>
+  <li>New Runtime for Java using MyBatis Dynamic SQL</li>
   <li>MyBatis Dynamic SQL is now the default runtime</li>
   <li>Move to Java 8</li>
   <li>Remove support for iBatis2</li>
@@ -93,6 +93,7 @@ deprecated and will be removed in a future version</b> - so please switch to the
   <li>In the Java DOM, removed the default constructors for <code>Method</code> and <code>Field</code></li>
   <li>Removed several methods from <code>CompilationUnit</code> including <code>isJavaInterface</code>,
       <code>isJavaEnumeration</code>, <code>getSuperClass</code>, and <code>getSuperInterfaceTypes</code>.</li>
+  <li>In the XML DOM, element nodes no longer extend the abstract Element class which is removed.</li>   
   <li>Changed return types to Optionals in the DOM methods where appropriate.</li>
   <li>Removed the <code>getFormattedContent</code> method from all Java and XML DOM classes. These methods
       are replaced by a new set of renderer classes. Note that the new renderer classes will produce

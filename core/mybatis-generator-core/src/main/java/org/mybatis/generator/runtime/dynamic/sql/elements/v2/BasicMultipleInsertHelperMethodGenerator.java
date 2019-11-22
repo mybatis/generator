@@ -57,7 +57,8 @@ public class BasicMultipleInsertHelperMethodGenerator extends AbstractMethodGene
         method.addParameter(new Parameter(parameterType, "multipleInsertStatement")); //$NON-NLS-1$
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
         method.addBodyLine(
-                "return insertMultiple(multipleInsertStatement.getInsertStatement(), multipleInsertStatement.getRecords());"); //$NON-NLS-1$
+                "return insertMultiple(multipleInsertStatement.getInsertStatement()," //$NON-NLS-1$
+                + " multipleInsertStatement.getRecords());"); //$NON-NLS-1$
 
         MethodAndImports.Builder builder = MethodAndImports.withMethod(method)
                 .withImports(imports);

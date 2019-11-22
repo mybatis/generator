@@ -41,15 +41,19 @@ public class ProviderApplyWhereMethodGenerator extends
         "if (includeExamplePhrase) {", //$NON-NLS-1$
         "parmPhrase1 = \"%s #{example.oredCriteria[%d].allCriteria[%d].value}\";", //$NON-NLS-1$
         "parmPhrase1_th = \"%s #{example.oredCriteria[%d].allCriteria[%d].value,typeHandler=%s}\";", //$NON-NLS-1$
-        "parmPhrase2 = \"%s #{example.oredCriteria[%d].allCriteria[%d].value} and #{example.oredCriteria[%d].criteria[%d].secondValue}\";", //$NON-NLS-1$
-        "parmPhrase2_th = \"%s #{example.oredCriteria[%d].allCriteria[%d].value,typeHandler=%s} and #{example.oredCriteria[%d].criteria[%d].secondValue,typeHandler=%s}\";", //$NON-NLS-1$
+        "parmPhrase2 = \"%s #{example.oredCriteria[%d].allCriteria[%d].value}" //$NON-NLS-1$
+            + " and #{example.oredCriteria[%d].criteria[%d].secondValue}\";", //$NON-NLS-1$
+        "parmPhrase2_th = \"%s #{example.oredCriteria[%d].allCriteria[%d].value,typeHandler=%s}" //$NON-NLS-1$
+            + " and #{example.oredCriteria[%d].criteria[%d].secondValue,typeHandler=%s}\";", //$NON-NLS-1$
         "parmPhrase3 = \"#{example.oredCriteria[%d].allCriteria[%d].value[%d]}\";", //$NON-NLS-1$
         "parmPhrase3_th = \"#{example.oredCriteria[%d].allCriteria[%d].value[%d],typeHandler=%s}\";", //$NON-NLS-1$
         "} else {", //$NON-NLS-1$
         "parmPhrase1 = \"%s #{oredCriteria[%d].allCriteria[%d].value}\";", //$NON-NLS-1$
         "parmPhrase1_th = \"%s #{oredCriteria[%d].allCriteria[%d].value,typeHandler=%s}\";", //$NON-NLS-1$
-        "parmPhrase2 = \"%s #{oredCriteria[%d].allCriteria[%d].value} and #{oredCriteria[%d].criteria[%d].secondValue}\";", //$NON-NLS-1$
-        "parmPhrase2_th = \"%s #{oredCriteria[%d].allCriteria[%d].value,typeHandler=%s} and #{oredCriteria[%d].criteria[%d].secondValue,typeHandler=%s}\";", //$NON-NLS-1$
+        "parmPhrase2 = \"%s #{oredCriteria[%d].allCriteria[%d].value}" //$NON-NLS-1$
+            + " and #{oredCriteria[%d].criteria[%d].secondValue}\";", //$NON-NLS-1$
+        "parmPhrase2_th = \"%s #{oredCriteria[%d].allCriteria[%d].value,typeHandler=%s}" //$NON-NLS-1$
+            + " and #{oredCriteria[%d].criteria[%d].secondValue,typeHandler=%s}\";", //$NON-NLS-1$
         "parmPhrase3 = \"#{oredCriteria[%d].allCriteria[%d].value[%d]}\";", //$NON-NLS-1$
         "parmPhrase3_th = \"#{oredCriteria[%d].allCriteria[%d].value[%d],typeHandler=%s}\";", //$NON-NLS-1$
         "}", //$NON-NLS-1$
@@ -83,13 +87,15 @@ public class ProviderApplyWhereMethodGenerator extends
         "if (criterion.getTypeHandler() == null) {", //$NON-NLS-1$
         "sb.append(String.format(parmPhrase1, criterion.getCondition(), i, j));", //$NON-NLS-1$
         "} else {", //$NON-NLS-1$
-        "sb.append(String.format(parmPhrase1_th, criterion.getCondition(), i, j,criterion.getTypeHandler()));", //$NON-NLS-1$
+        "sb.append(String.format(parmPhrase1_th, criterion.getCondition()," //$NON-NLS-1$
+            + " i, j,criterion.getTypeHandler()));", //$NON-NLS-1$
         "}", //$NON-NLS-1$
         "} else if (criterion.isBetweenValue()) {", //$NON-NLS-1$
         "if (criterion.getTypeHandler() == null) {", //$NON-NLS-1$
         "sb.append(String.format(parmPhrase2, criterion.getCondition(), i, j, i, j));", //$NON-NLS-1$
         "} else {", //$NON-NLS-1$
-        "sb.append(String.format(parmPhrase2_th, criterion.getCondition(), i, j, criterion.getTypeHandler(), i, j, criterion.getTypeHandler()));", //$NON-NLS-1$
+        "sb.append(String.format(parmPhrase2_th, criterion.getCondition(), i, j," //$NON-NLS-1$
+            + " criterion.getTypeHandler(), i, j, criterion.getTypeHandler()));", //$NON-NLS-1$
         "}", //$NON-NLS-1$
         "} else if (criterion.isListValue()) {", //$NON-NLS-1$
         "sb.append(criterion.getCondition());", //$NON-NLS-1$

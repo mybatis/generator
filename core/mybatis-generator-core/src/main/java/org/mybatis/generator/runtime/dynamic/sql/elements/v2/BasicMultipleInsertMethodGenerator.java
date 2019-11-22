@@ -88,14 +88,14 @@ public class BasicMultipleInsertMethodGenerator extends AbstractMethodGenerator 
         imports.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Insert")); //$NON-NLS-1$
         imports.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param")); //$NON-NLS-1$
 
-        Parameter parm1 = new Parameter(FullyQualifiedJavaType.getStringInstance(), "insertStatement");
+        Parameter parm1 = new Parameter(FullyQualifiedJavaType.getStringInstance(), "insertStatement"); //$NON-NLS-1$
         parm1.addAnnotation("@Param(\"insertStatement\")"); //$NON-NLS-1$
         
         FullyQualifiedJavaType recordListType = FullyQualifiedJavaType.getNewListInstance();
         recordListType.addTypeArgument(recordType);
         imports.add(recordListType);
         
-        Parameter parm2 = new Parameter(recordListType, "records");
+        Parameter parm2 = new Parameter(recordListType, "records"); //$NON-NLS-1$
         parm2.addAnnotation("@Param(\"records\")"); //$NON-NLS-1$
         
         Method method = new Method("insertMultiple"); //$NON-NLS-1$

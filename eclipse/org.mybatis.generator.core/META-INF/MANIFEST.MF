@@ -10,6 +10,8 @@ Export-Package: org.mybatis.generator.ant,
  org.mybatis.generator.api.dom,
  org.mybatis.generator.api.dom.java,
  org.mybatis.generator.api.dom.java.render,
+ org.mybatis.generator.api.dom.kotlin,
+ org.mybatis.generator.api.dom.kotlin.render,
  org.mybatis.generator.api.dom.xml,
  org.mybatis.generator.api.dom.xml.render,
  org.mybatis.generator.codegen,
@@ -42,7 +44,9 @@ Export-Package: org.mybatis.generator.ant,
  org.mybatis.generator.runtime.dynamic.sql,
  org.mybatis.generator.runtime.dynamic.sql.elements,
  org.mybatis.generator.runtime.dynamic.sql.elements.v1,
- org.mybatis.generator.runtime.dynamic.sql.elements.v2
+ org.mybatis.generator.runtime.dynamic.sql.elements.v2,
+ org.mybatis.generator.runtime.kotlin,
+ org.mybatis.generator.runtime.kotlin.elements
 Automatic-Module-Name: org.mybatis.generator.core
 Import-Package: org.apache.tools.ant;version="1.10.1";resolution:=optional,
  org.apache.tools.ant.types;version="1.10.1";resolution:=optional

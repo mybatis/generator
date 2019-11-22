@@ -40,9 +40,9 @@ import org.mybatis.generator.runtime.dynamic.sql.elements.v2.InsertSelectiveMeth
 import org.mybatis.generator.runtime.dynamic.sql.elements.v2.SelectByPrimaryKeyMethodGeneratorV2;
 import org.mybatis.generator.runtime.dynamic.sql.elements.v2.SelectListGenerator;
 import org.mybatis.generator.runtime.dynamic.sql.elements.v2.UpdateAllColumnsMethodGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.v2.UpdateSelectiveColumnsMethodGenerator;
 import org.mybatis.generator.runtime.dynamic.sql.elements.v2.UpdateByPrimaryKeyMethodGeneratorV2;
 import org.mybatis.generator.runtime.dynamic.sql.elements.v2.UpdateByPrimaryKeySelectiveMethodGeneratorV2;
+import org.mybatis.generator.runtime.dynamic.sql.elements.v2.UpdateSelectiveColumnsMethodGenerator;
 
 public class DynamicSqlMapperGeneratorV2 extends AbstractDynamicSqlMapperGenerator {
 

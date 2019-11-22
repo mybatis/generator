@@ -64,12 +64,15 @@
         <item href="configreference/table.html" name="&amp;lt;table&amp;gt;" />
       </item>
       <item href="generatedobjects/results.html" name="Using the Generated Objects" collapse="true" >
-        <item href="generatedobjects/javamodel.html" name="Java Model Objects" />
-        <item href="generatedobjects/sqlmap.html" name="SQL Map Files" />
-        <item href="generatedobjects/javaclient.html" name="Java Client Objects" />
-        <item href="generatedobjects/exampleClassUsage.html" name="Example Class Usage Notes" />
-        <item href="generatedobjects/extendingExampleClass.html" name="Extending the Example Classes" />
         <item href="generatedobjects/dynamicSqlV2.html" name="MyBatis Dynamic SQL Usage Notes - V2" />
+        <item href="generatedobjects/dynamicSqlKotlin.html" name="MyBatis Dynamic SQL with Kotlin Usage Notes" />
+        <item href="generatedobjects/legacy.html" name="Legacy Generators">
+          <item href="generatedobjects/javamodel.html" name="Java Model Objects" />
+          <item href="generatedobjects/sqlmap.html" name="SQL Map Files" />
+          <item href="generatedobjects/javaclient.html" name="Java Client Objects" />
+          <item href="generatedobjects/exampleClassUsage.html" name="Example Class Usage Notes" />
+          <item href="generatedobjects/extendingExampleClass.html" name="Extending the Example Classes" />
+        </item>
         <item href="generatedobjects/dynamicSqlV1.html" name="MyBatis Dynamic SQL Usage Notes - V1 (Deprecated)" />
       </item>
       <item href="usage/intro.html" name="Database Specific Information" collapse="true" >

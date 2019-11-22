@@ -535,7 +535,8 @@ public class ExampleGenerator extends AbstractJavaGenerator {
                     .getStringInstance(), "property")); //$NON-NLS-1$
             method.addBodyLine("if (values == null || values.size() == 0) {"); //$NON-NLS-1$
             method.addBodyLine(
-                    "throw new RuntimeException(\"Value list for \" + property + \" cannot be null or empty\");"); //$NON-NLS-1$
+                    "throw new RuntimeException(\"Value list for \" + property + \"" //$NON-NLS-1$
+                    + " cannot be null or empty\");"); //$NON-NLS-1$
             method.addBodyLine("}"); //$NON-NLS-1$
             if (context.isJava8Targeted()) {
                 method.addBodyLine("List<java.sql.Date> dateList = new ArrayList<>();"); //$NON-NLS-1$
@@ -562,10 +563,12 @@ public class ExampleGenerator extends AbstractJavaGenerator {
                     .getStringInstance(), "property")); //$NON-NLS-1$
             method.addBodyLine("if (value1 == null || value2 == null) {"); //$NON-NLS-1$
             method.addBodyLine(
-                    "throw new RuntimeException(\"Between values for \" + property + \" cannot be null\");"); //$NON-NLS-1$
+                    "throw new RuntimeException(\"Between values for \" + property + \"" //$NON-NLS-1$
+                    + " cannot be null\");"); //$NON-NLS-1$
             method.addBodyLine("}"); //$NON-NLS-1$
             method.addBodyLine(
-                    "addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);"); //$NON-NLS-1$
+                    "addCriterion(condition, new java.sql.Date(value1.getTime())," //$NON-NLS-1$
+                    + " new java.sql.Date(value2.getTime()), property);"); //$NON-NLS-1$
             answer.addMethod(method);
         }
 
@@ -599,7 +602,8 @@ public class ExampleGenerator extends AbstractJavaGenerator {
                     .getStringInstance(), "property")); //$NON-NLS-1$
             method.addBodyLine("if (values == null || values.size() == 0) {"); //$NON-NLS-1$
             method.addBodyLine(
-                    "throw new RuntimeException(\"Value list for \" + property + \" cannot be null or empty\");"); //$NON-NLS-1$
+                    "throw new RuntimeException(\"Value list for \" + property + \"" //$NON-NLS-1$
+                    + " cannot be null or empty\");"); //$NON-NLS-1$
             method.addBodyLine("}"); //$NON-NLS-1$
             if (context.isJava8Targeted()) {
                 method.addBodyLine("List<java.sql.Time> timeList = new ArrayList<>();"); //$NON-NLS-1$
@@ -626,10 +630,12 @@ public class ExampleGenerator extends AbstractJavaGenerator {
                     .getStringInstance(), "property")); //$NON-NLS-1$
             method.addBodyLine("if (value1 == null || value2 == null) {"); //$NON-NLS-1$
             method.addBodyLine(
-                    "throw new RuntimeException(\"Between values for \" + property + \" cannot be null\");"); //$NON-NLS-1$
+                    "throw new RuntimeException(\"Between values for \" + property + \"" //$NON-NLS-1$
+                    + " cannot be null\");"); //$NON-NLS-1$
             method.addBodyLine("}"); //$NON-NLS-1$
             method.addBodyLine(
-                    "addCriterion(condition, new java.sql.Time(value1.getTime()), new java.sql.Time(value2.getTime()), property);"); //$NON-NLS-1$
+                    "addCriterion(condition, new java.sql.Time(value1.getTime())," //$NON-NLS-1$
+                    + " new java.sql.Time(value2.getTime()), property);"); //$NON-NLS-1$
             answer.addMethod(method);
         }
 
@@ -995,7 +1001,8 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         if (!introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {
             method.addBodyLine("if (value1 == null || value2 == null) {"); //$NON-NLS-1$
             method.addBodyLine(
-                    "throw new RuntimeException(\"Between values for \" + property + \" cannot be null\");"); //$NON-NLS-1$
+                    "throw new RuntimeException(\"Between values for \" + property + \"" //$NON-NLS-1$
+                    + " cannot be null\");"); //$NON-NLS-1$
             method.addBodyLine("}"); //$NON-NLS-1$
         }
 

@@ -43,12 +43,15 @@
       <topic href="html/mbgdoc/configreference/table.html" label="&lt;table&gt;"/>
    </topic>
    <topic href="html/mbgdoc/generatedobjects/results.html" label="Using the Generated Objects">
-      <topic href="html/mbgdoc/generatedobjects/javamodel.html" label="Java Model Objects"/>
-      <topic href="html/mbgdoc/generatedobjects/sqlmap.html" label="SQL Map Files"/>
-      <topic href="html/mbgdoc/generatedobjects/javaclient.html" label="Java Client Objects"/>
-      <topic href="html/mbgdoc/generatedobjects/exampleClassUsage.html" label="Example Class Usage Notes"/>
-      <topic href="html/mbgdoc/generatedobjects/extendingExampleClass.html" label="Extending the Example Classes"/>
       <topic href="html/mbgdoc/generatedobjects/dynamicSqlV2.html" label="MyBatis Dynamic SQL Usage Notes - V2"/>
+      <topic href="html/mbgdoc/generatedobjects/dynamicSqlKotlin.html" label="MyBatis Dynamic SQL with Kotlin Usage Notes - V2"/>
+      <topic href="html/mbgdoc/generatedobjects/legacy.html" label="Legacy Generators">
+        <topic href="html/mbgdoc/generatedobjects/javamodel.html" label="Java Model Objects"/>
+        <topic href="html/mbgdoc/generatedobjects/sqlmap.html" label="SQL Map Files"/>
+        <topic href="html/mbgdoc/generatedobjects/javaclient.html" label="Java Client Objects"/>
+        <topic href="html/mbgdoc/generatedobjects/exampleClassUsage.html" label="Example Class Usage Notes"/>
+        <topic href="html/mbgdoc/generatedobjects/extendingExampleClass.html" label="Extending the Example Classes"/>
+      </topic>
       <topic href="html/mbgdoc/generatedobjects/dynamicSqlV1.html" label="MyBatis Dynamic SQL Usage Notes - V1 (Deprecated)"/>
    </topic>
    <topic href="html/mbgdoc/usage/intro.html" label="Database Specific Information">

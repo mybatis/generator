@@ -40,6 +40,8 @@
       <topic href="html/javadoc/org/mybatis/generator/runtime/dynamic/sql/elements/package-summary.html" label="org.mybatis.generator.runtime.dynamic.sql.elements" />
       <topic href="html/javadoc/org/mybatis/generator/runtime/dynamic/sql/elements/v1/package-summary.html" label="org.mybatis.generator.runtime.dynamic.sql.elements.v1" />
       <topic href="html/javadoc/org/mybatis/generator/runtime/dynamic/sql/elements/v2/package-summary.html" label="org.mybatis.generator.runtime.dynamic.sql.elements.v2" />
+      <topic href="html/javadoc/org/mybatis/generator/runtime/kotlin/package-summary.html" label="org.mybatis.generator.runtime.kotlin" />
+      <topic href="html/javadoc/org/mybatis/generator/runtime/kotlin/elements/package-summary.html" label="org.mybatis.generator.runtime.kotlin.elements" />
    </topic>
    
    <topic label="MyBatis Generator Eclipse Plugin Javadoc">

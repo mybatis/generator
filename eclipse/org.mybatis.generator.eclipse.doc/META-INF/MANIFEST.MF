@@ -4,3 +4,4 @@ Bundle-Name: MyBatis Generator Documentation
 Bundle-SymbolicName: org.mybatis.generator.eclipse.doc;singleton:=true
 Bundle-Version: 1.4.0.qualifier
 Bundle-Vendor: mybatis.org
+Automatic-Module-Name: org.mybatis.generator.eclipse.doc

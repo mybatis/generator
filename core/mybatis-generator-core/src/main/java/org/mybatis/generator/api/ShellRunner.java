@@ -150,7 +150,7 @@ public class ShellRunner {
     }
 
     private static void usage() {
-        writeLine(getString("Usage"));
+        writeLine(getString("Usage")); //$NON-NLS-1$
     }
 
     private static void writeLine(String message) {

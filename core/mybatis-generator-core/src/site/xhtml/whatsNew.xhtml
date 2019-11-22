@@ -28,7 +28,8 @@
 <h2>Version 1.4.0</h2>
 <p>This is a major change with these themes:</p>
 <ul>
-  <li>New Runtime for MyBatis Dynamic SQL</li>
+  <li>New Runtime for Kotlin using MyBatis Dynamic SQL</li>
+  <li>New Runtime for Java using MyBatis Dynamic SQL</li>
   <li>MyBatis Dynamic SQL is now the default runtime</li>
   <li>Move to Java 8</li>
   <li>Remove support for iBatis2</li>
@@ -36,6 +37,19 @@
   <li>Several minor enhancements and bug fixes. See the GitHub page for milestone 1.4.0 for details. 
       <a target="_blank" href="https://github.com/mybatis/generator/issues?q=milestone%3A1.4.0">Milestone 1.4.0</a></li>
 </ul>
+
+<h3>New Runtime for Kotlin Using MyBatis Dynamic SQL</h3>
+<p>MyBatis generator supports Kotlin! There is a new simple DOM for generating Kotlin. There is also a new runtime that will
+generate Kotlin code that uses the MyBatis Dynamic SQL library. It has functionality that matches the new Java runtime
+for MyBatis Dynamic SQL (see below) - but it uses a more idiomatic Kotlin style rather than the method chaining style
+of the Java runtime.   
+</p>
+
+<p>As in the new Java runtime, there is no Example class generated and the *ByExample methods are not generated. Rather
+general count, delete, insert, selectOne, selectMany, and update methods are generated that allow where clauses and other
+parts of SQL statements to be supplied via lambdas.</p>
+
+<p>See the <a href="generatedobjects/dynamicSqlKotlin.html">MyBatis Dynamic SQL with Kotlin Usage Page</a> for further details.</p>
 
 <h3>New Runtime for MyBatis Dynamic SQL</h3>
 <p>There is a new runtime for MyBatis Dynamic SQL. It uses improved functionality in that library and requires
@@ -79,6 +93,7 @@ deprecated and will be removed in a future version</b> - so please switch to the
   <li>In the Java DOM, removed the default constructors for <code>Method</code> and <code>Field</code></li>
   <li>Removed several methods from <code>CompilationUnit</code> including <code>isJavaInterface</code>,
       <code>isJavaEnumeration</code>, <code>getSuperClass</code>, and <code>getSuperInterfaceTypes</code>.</li>
+  <li>In the XML DOM, element nodes no longer extend the abstract Element class which is removed.</li>   
   <li>Changed return types to Optionals in the DOM methods where appropriate.</li>
   <li>Removed the <code>getFormattedContent</code> method from all Java and XML DOM classes. These methods
       are replaced by a new set of renderer classes. Note that the new renderer classes will produce

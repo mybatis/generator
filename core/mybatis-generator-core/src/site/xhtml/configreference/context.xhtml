@@ -91,28 +91,6 @@ databases, or with different generation parameters, in the same run of MyBatis G
       The property supports these special values:
       <table>
         <tr>
-          <th valign="top">MyBatis3</th>
-          <td>With the value, MBG will generate objects that are compatible
-            with MyBatis versions 3.0 and higher, and JSE 5.0 and higher (e.g. the
-            Java model and mapper interfaces will use generic types).
-            The "by example" methods in these generated objects support virtually
-            unlimited dynamic where clauses.  Additionally, the Java objects
-            generated with these generators support many JSE 5.0 features including
-            parameterized types and annotations.</td>
-        </tr>
-        <tr>
-          <th valign="top">MyBatis3Simple</th>
-          <td>
-            With the value, MBG will generate objects that are compatible
-            with MyBatis versions 3.0 and higher, and JSE 5.0 and higher (e.g. the
-            Java model and mapper interfaces will use generic types).
-            The mappers generated with this target runtime are very basic
-            CRUD operations only with no "by example" methods and very little
-            dynamic SQL.  The Java objects
-            generated with these generators support many JSE 5.0 features including
-            parameterized types and annotations.</td>
-        </tr>
-        <tr>
           <th valign="top">MyBatis3DynamicSql</th>
           <td><i>This is the default value</i>
             <br/>Synonym for MyBatis3DynamicSqlV2</td>
@@ -138,6 +116,48 @@ databases, or with different generation parameters, in the same run of MyBatis G
                   manner of the other runtimes.  For this reason, configured table aliases are ignored.</li>
             </ul>
           </td>
+        </tr>
+        <tr>
+          <th valign="top">MyBatis3Kotlin</th>
+          <td>
+            With the value, MBG will generate Kotlin objects that are compatible
+            with MyBatis versions 3.4.2 and higher.
+            <p><b>Important:</b> The Kotlin code generated with this target runtime is dependent on the 
+            "MyBatis Dynamic SQL" support library version 1.1.4 or higher.</p>
+            <p>Other important information:</p>
+            <ul>
+              <li>The model objects are generated in the "FLAT" style regardless of what is specified
+                  for the "defaultModelType".  This also means that there are no "with BLOBs" and
+                  "without BLOBs" methods.</li>
+              <li>The mappers are generated as annotated mappers regardless of what is specified
+                  for the "type" of &lt;javaClientGenerator&gt;.</li>
+              <li>No XML will be generated. &lt;sqlMapGenerator&gt; is not required and will be ignored if specified.</li>
+              <li>MyBatis Dynamic SQL supports table aliases in a "per query" manner rather than the "all or nothing"
+                  manner of the other runtimes.  For this reason, configured table aliases are ignored.</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <th valign="top">MyBatis3</th>
+          <td>With the value, MBG will generate objects that are compatible
+            with MyBatis versions 3.0 and higher, and JSE 5.0 and higher (e.g. the
+            Java model and mapper interfaces will use generic types).
+            The "by example" methods in these generated objects support virtually
+            unlimited dynamic where clauses.  Additionally, the Java objects
+            generated with these generators support many JSE 5.0 features including
+            parameterized types and annotations.</td>
+        </tr>
+        <tr>
+          <th valign="top">MyBatis3Simple</th>
+          <td>
+            With the value, MBG will generate objects that are compatible
+            with MyBatis versions 3.0 and higher, and JSE 5.0 and higher (e.g. the
+            Java model and mapper interfaces will use generic types).
+            The mappers generated with this target runtime are very basic
+            CRUD operations only with no "by example" methods and very little
+            dynamic SQL.  The Java objects
+            generated with these generators support many JSE 5.0 features including
+            parameterized types and annotations.</td>
         </tr>
         <tr>
           <th valign="top">MyBatis3DynamicSqlV1</th>
@@ -246,12 +266,11 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
   </tr>
   <tr>
     <td valign="top">javaFormatter</td>
-    <td>Use this property to specify the full class name of a user provided formater for generated
+    <td>Use this property to specify the full class name of a user provided formatter for generated
         Java files.  The class must implement <code>org.mybatis.generator.api.JavaFormatter</code>
         and must have a default (no argument) constructor.  Each context holds a single instance
         of the Java formatter.  The default Java formatter is
-        <code>org.mybatis.generator.api.dom.DefaultJavaFormatter</code>.  The default formatter
-        uses the formatting built into the Java DOM classes.
+        <code>org.mybatis.generator.api.dom.DefaultJavaFormatter</code>.
     </td>
   </tr>
   <tr>
@@ -260,6 +279,24 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
         the diamond operator for collection instantiation.
         <p/>
         <p>Valid values are <code>true</code> or <code>false</code>. The default value is <code>true</code>.</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">kotlinFileEncoding</td>
+    <td>Use this property to specify an encoding to use when working with Kotlin files.
+        Newly generated Kotlin files will be written to the file system in this encoding.
+        If not specified, then the platform default encoding will be used.
+        <p/>
+        <p>See <code>java.nio.charset.Charset</code> for information on valid encodings.</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">kotlinFormatter</td>
+    <td>Use this property to specify the full class name of a user provided formatter for generated
+        Kotlin files.  The class must implement <code>org.mybatis.generator.api.KotlinFormatter</code>
+        and must have a default (no argument) constructor.  Each context holds a single instance
+        of the Kotlin formatter.  The default Kotlin formatter is
+        <code>org.mybatis.generator.api.dom.DefaultKotlinFormatter</code>.
     </td>
   </tr>
   <tr>

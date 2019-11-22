@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -25,6 +25,10 @@ import org.mybatis.generator.api.dom.java.InnerClass;
 import org.mybatis.generator.api.dom.java.InnerEnum;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.api.dom.kotlin.KotlinFile;
+import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
+import org.mybatis.generator.api.dom.kotlin.KotlinProperty;
+import org.mybatis.generator.api.dom.kotlin.KotlinType;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
 /**
@@ -91,6 +95,17 @@ public interface CommentGenerator {
      */
     void addModelClassComment(TopLevelClass topLevelClass,
             IntrospectedTable introspectedTable);
+
+    /**
+     * Adds a comment for a model class.
+     * 
+     * @param modelClass
+     *            the generated KotlinType for the model
+     * @param introspectedTable
+     *            the introspected table
+     */
+    default void addModelClassComment(KotlinType modelClass,
+            IntrospectedTable introspectedTable) {}
 
     /**
      * Adds the inner class comment.
@@ -279,4 +294,21 @@ public interface CommentGenerator {
      */
     void addClassAnnotation(InnerClass innerClass, IntrospectedTable introspectedTable,
             Set<FullyQualifiedJavaType> imports);
+    
+    /**
+     * This method is called to add a file level comment to a generated Kotlin file. This method
+     * could be used to add a general file comment (such as a copyright notice).
+     * 
+     * <p>The default implementation does nothing.
+     *
+     * @param kotlinFile
+     *            the Kotlin file
+     */
+    default void addFileComment(KotlinFile kotlinFile) {}
+
+    default void addGeneralFunctionComment(KotlinFunction kf, IntrospectedTable introspectedTable,
+            Set<String> imports) {}
+
+    default void addGeneralPropertyComment(KotlinProperty property, IntrospectedTable introspectedTable,
+            Set<String> imports) {}
 }

@@ -1,0 +1,73 @@
+/**
+ *    Copyright 2006-2019 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime.kotlin.elements;
+
+import org.mybatis.generator.api.dom.kotlin.KotlinArg;
+import org.mybatis.generator.api.dom.kotlin.KotlinFile;
+import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
+
+public class BasicUpdateMethodGenerator extends AbstractKotlinFunctionGenerator {
+    
+    private BasicUpdateMethodGenerator(Builder builder) {
+        super(builder);
+    }
+
+    @Override
+    public KotlinFunctionAndImports generateMethodAndImports() {
+        if (!introspectedTable.getRules().generateUpdateByExampleSelective()
+                && !introspectedTable.getRules().generateUpdateByExampleWithBLOBs()
+                && !introspectedTable.getRules().generateUpdateByExampleWithoutBLOBs()
+                && !introspectedTable.getRules().generateUpdateByPrimaryKeySelective()
+                && !introspectedTable.getRules().generateUpdateByPrimaryKeyWithBLOBs()
+                && !introspectedTable.getRules().generateUpdateByPrimaryKeyWithoutBLOBs()) {
+            return null;
+        }
+
+        KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
+                KotlinFunction.newOneLineFunction("update") //$NON-NLS-1$
+                .withExplicitReturnType("Int") //$NON-NLS-1$
+                .withArgument(KotlinArg.newArg("updateStatement") //$NON-NLS-1$
+                        .withDataType("UpdateStatementProvider") //$NON-NLS-1$
+                        .build())
+                .withAnnotation("@UpdateProvider(type=SqlProviderAdapter::class, method=\"update\")") //$NON-NLS-1$
+                .build())
+                .withImport("org.mybatis.dynamic.sql.update.render.UpdateStatementProvider") //$NON-NLS-1$
+                .withImport("org.mybatis.dynamic.sql.util.SqlProviderAdapter") //$NON-NLS-1$
+                .withImport("org.apache.ibatis.annotations.UpdateProvider") //$NON-NLS-1$
+                .build();
+        
+        addFunctionComment(functionAndImports);
+        return functionAndImports;
+    }
+
+    @Override
+    public boolean callPlugins(KotlinFunction kotlinFunction, KotlinFile kotlinFile) {
+        return context.getPlugins().clientBasicUpdateMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
+    }
+
+    public static class Builder extends BaseBuilder<Builder, BasicUpdateMethodGenerator> {
+
+        @Override
+        public Builder getThis() {
+            return this;
+        }
+
+        @Override
+        public BasicUpdateMethodGenerator build() {
+            return new BasicUpdateMethodGenerator(this);
+        }
+    }
+}

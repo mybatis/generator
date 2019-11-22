@@ -16,8 +16,8 @@
 package org.mybatis.generator.runtime.kotlin.elements;
 
 import static org.mybatis.generator.api.dom.OutputUtilities.kotlinIndent;
-import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForKotlin;
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -187,7 +187,8 @@ public class KotlinFragmentGenerator {
                 builder.withAnnotation(sb.toString());
             } else {
                 builder.withImport("org.apache.ibatis.annotations.SelectKey"); //$NON-NLS-1$
-                FullyQualifiedKotlinType kt = JavaToKotlinTypeConverter.convert(introspectedColumn.getFullyQualifiedJavaType());
+                FullyQualifiedKotlinType kt =
+                        JavaToKotlinTypeConverter.convert(introspectedColumn.getFullyQualifiedJavaType());
                 
                 sb.append("@SelectKey(statement=[\""); //$NON-NLS-1$
                 sb.append(gk.getRuntimeSqlStatement());

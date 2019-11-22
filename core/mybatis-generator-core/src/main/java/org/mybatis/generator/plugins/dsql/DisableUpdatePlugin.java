@@ -44,7 +44,19 @@ public class DisableUpdatePlugin extends PluginAdapter {
     }
 
     @Override
+    public boolean clientBasicUpdateMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return false;
+    }
+
+    @Override
     public boolean clientGeneralUpdateMethodGenerated(Method method, Interface interfaze,
+            IntrospectedTable introspectedTable) {
+        return false;
+    }
+
+    @Override
+    public boolean clientGeneralUpdateMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
             IntrospectedTable introspectedTable) {
         return false;
     }
@@ -62,7 +74,19 @@ public class DisableUpdatePlugin extends PluginAdapter {
     }
 
     @Override
+    public boolean clientUpdateAllColumnsMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return false;
+    }
+
+    @Override
     public boolean clientUpdateSelectiveColumnsMethodGenerated(Method method, Interface interfaze,
+            IntrospectedTable introspectedTable) {
+        return false;
+    }
+
+    @Override
+    public boolean clientUpdateSelectiveColumnsMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
             IntrospectedTable introspectedTable) {
         return false;
     }
@@ -73,39 +97,15 @@ public class DisableUpdatePlugin extends PluginAdapter {
         return false;
     }
 
-	@Override
-	public boolean clientBasicUpdateMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-			IntrospectedTable introspectedTable) {
+    @Override
+    public boolean clientUpdateByPrimaryKeySelectiveMethodGenerated(KotlinFunction kotlinFunction,
+            KotlinFile kotlinFile, IntrospectedTable introspectedTable) {
         return false;
-	}
+    }
 
-	@Override
-	public boolean clientUpdateAllColumnsMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-			IntrospectedTable introspectedTable) {
+    @Override
+    public boolean clientUpdateByPrimaryKeyMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
         return false;
-	}
-
-	@Override
-	public boolean clientUpdateSelectiveColumnsMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-			IntrospectedTable introspectedTable) {
-        return false;
-	}
-
-	@Override
-	public boolean clientGeneralUpdateMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-			IntrospectedTable introspectedTable) {
-        return false;
-	}
-
-	@Override
-	public boolean clientUpdateByPrimaryKeyMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-			IntrospectedTable introspectedTable) {
-        return false;
-	}
-
-	@Override
-	public boolean clientUpdateByPrimaryKeySelectiveMethodGenerated(KotlinFunction kotlinFunction,
-			KotlinFile kotlinFile, IntrospectedTable introspectedTable) {
-        return false;
-	}
+    }
 }

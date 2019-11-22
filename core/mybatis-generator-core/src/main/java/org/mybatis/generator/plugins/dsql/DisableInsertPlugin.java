@@ -44,7 +44,19 @@ public class DisableInsertPlugin extends PluginAdapter {
     }
 
     @Override
+    public boolean clientBasicInsertMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return false;
+    }
+
+    @Override
     public boolean clientBasicInsertMultipleMethodGenerated(Method method, Interface interfaze,
+            IntrospectedTable introspectedTable) {
+        return false;
+    }
+
+    @Override
+    public boolean clientBasicInsertMultipleMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
             IntrospectedTable introspectedTable) {
         return false;
     }
@@ -56,7 +68,19 @@ public class DisableInsertPlugin extends PluginAdapter {
     }
 
     @Override
+    public boolean clientBasicInsertMultipleHelperMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return false;
+    }
+
+    @Override
     public boolean clientInsertMethodGenerated(Method method, Interface interfaze,
+            IntrospectedTable introspectedTable) {
+        return false;
+    }
+
+    @Override
+    public boolean clientInsertMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
             IntrospectedTable introspectedTable) {
         return false;
     }
@@ -68,50 +92,26 @@ public class DisableInsertPlugin extends PluginAdapter {
     }
 
     @Override
+    public boolean clientInsertMultipleMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return false;
+    }
+
+    @Override
     public boolean clientInsertSelectiveMethodGenerated(Method method, Interface interfaze,
             IntrospectedTable introspectedTable) {
         return false;
     }
 
-	@Override
-	public boolean clientBasicInsertMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-			IntrospectedTable introspectedTable) {
+    @Override
+    public boolean clientInsertSelectiveMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
         return false;
-	}
+    }
 
-	@Override
-	public boolean clientBasicInsertMultipleHelperMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-			IntrospectedTable introspectedTable) {
+    @Override
+    public boolean clientInsertMultipleVarargMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
         return false;
-	}
-
-	@Override
-	public boolean clientBasicInsertMultipleMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-			IntrospectedTable introspectedTable) {
-        return false;
-	}
-
-	@Override
-	public boolean clientInsertMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-			IntrospectedTable introspectedTable) {
-        return false;
-	}
-
-	@Override
-	public boolean clientInsertMultipleMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-			IntrospectedTable introspectedTable) {
-        return false;
-	}
-
-	@Override
-	public boolean clientInsertSelectiveMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-			IntrospectedTable introspectedTable) {
-        return false;
-	}
-
-	@Override
-	public boolean clientInsertMultipleVarargMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-			IntrospectedTable introspectedTable) {
-        return false;
-	}
+    }
 }

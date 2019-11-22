@@ -48,7 +48,7 @@ public class InsertMethodGenerator extends AbstractKotlinFunctionGenerator {
                 .withImports(recordType.getImportList())
                 .build();
 
-        addGeneratedAnnotation(functionAndImports);
+        addFunctionComment(functionAndImports);
         
         KotlinFunction function = functionAndImports.getFunction();
         

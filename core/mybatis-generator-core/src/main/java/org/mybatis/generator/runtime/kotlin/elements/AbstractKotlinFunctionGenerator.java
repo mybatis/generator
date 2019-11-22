@@ -35,7 +35,8 @@ public abstract class AbstractKotlinFunctionGenerator {
         tableFieldImport = builder.tableFieldImport;
     }
 
-    protected void acceptParts(KotlinFile kotlinFile, KotlinFunction kotlinFunction, KotlinFunctionParts functionParts) {
+    protected void acceptParts(KotlinFile kotlinFile, KotlinFunction kotlinFunction,
+            KotlinFunctionParts functionParts) {
         for (KotlinArg argument : functionParts.getArguments()) {
             kotlinFunction.addArgument(argument);
         }
@@ -61,8 +62,8 @@ public abstract class AbstractKotlinFunctionGenerator {
         functionAndImports.getImports().addAll(functionParts.getImports());
     }
     
-    protected void addGeneratedAnnotation(KotlinFunctionAndImports functionAndImports) {
-        context.getCommentGenerator().addGeneralMethodAnnotation(functionAndImports.getFunction(), introspectedTable,
+    protected void addFunctionComment(KotlinFunctionAndImports functionAndImports) {
+        context.getCommentGenerator().addGeneralFunctionComment(functionAndImports.getFunction(), introspectedTable,
                 functionAndImports.getImports());
     }
 

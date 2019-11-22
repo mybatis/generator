@@ -24,7 +24,7 @@ public enum KotlinModifier {
     
     private String value;
     
-    private KotlinModifier(String value) {
+    KotlinModifier(String value) {
         this.value = value;
     }
     

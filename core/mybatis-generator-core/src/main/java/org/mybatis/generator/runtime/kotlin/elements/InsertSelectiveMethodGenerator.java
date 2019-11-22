@@ -48,7 +48,7 @@ public class InsertSelectiveMethodGenerator extends AbstractKotlinFunctionGenera
                 .withImports(recordType.getImportList())
                 .build();
 
-        addGeneratedAnnotation(functionAndImports);
+        addFunctionComment(functionAndImports);
         
         KotlinFunction function = functionAndImports.getFunction();
         

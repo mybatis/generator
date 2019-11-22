@@ -40,20 +40,21 @@ public class InsertMultipleVarargMethodGenerator extends AbstractKotlinFunctionG
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
                 KotlinFunction.newOneLineFunction(mapperName + ".insertMultiple") //$NON-NLS-1$
                 .withArgument(KotlinArg.newArg("vararg records") //$NON-NLS-1$
-                        .withDataType(recordType.getShortNameWithTypeArguments() ) //$NON-NLS-1$ //$NON-NLS-2$
+                        .withDataType(recordType.getShortNameWithTypeArguments()) //$NON-NLS-1$ //$NON-NLS-2$
                         .build())
                 .withCodeLine("insertMultiple(records.toList())") //$NON-NLS-1$
                 .build())
                 .withImports(recordType.getImportList())
                 .build();
 
-        addGeneratedAnnotation(functionAndImports);
+        addFunctionComment(functionAndImports);
         return functionAndImports;
     }
 
     @Override
     public boolean callPlugins(KotlinFunction kotlinFunction, KotlinFile kotlinFile) {
-        return context.getPlugins().clientInsertMultipleVarargMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
+        return context.getPlugins().clientInsertMultipleVarargMethodGenerated(kotlinFunction, kotlinFile,
+                introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder, InsertMultipleVarargMethodGenerator> {

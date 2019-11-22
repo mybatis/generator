@@ -42,7 +42,7 @@ public class SelectByPrimaryKeyMethodGenerator extends AbstractKotlinFunctionGen
                 .withImport("org.mybatis.dynamic.sql.SqlBuilder.isEqualTo") //$NON-NLS-1$
                 .build();
         
-        addGeneratedAnnotation(functionAndImports);
+        addFunctionComment(functionAndImports);
 
         KotlinFunctionParts functionParts = fragmentGenerator.getPrimaryKeyWhereClauseAndParameters();
         acceptParts(functionAndImports, functionParts);
@@ -52,7 +52,8 @@ public class SelectByPrimaryKeyMethodGenerator extends AbstractKotlinFunctionGen
 
     @Override
     public boolean callPlugins(KotlinFunction kotlinFunction, KotlinFile kotlinFile) {
-        return context.getPlugins().clientSelectByPrimaryKeyMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
+        return context.getPlugins().clientSelectByPrimaryKeyMethodGenerated(kotlinFunction, kotlinFile,
+                introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder, SelectByPrimaryKeyMethodGenerator> {

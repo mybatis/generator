@@ -46,7 +46,7 @@ public class UpdateSelectiveColumnsMethodGenerator extends AbstractKotlinFunctio
                 .withImports(recordType.getImportList())
                 .build();
 
-        addGeneratedAnnotation(functionAndImports);
+        addFunctionComment(functionAndImports);
         
         KotlinFunction function = functionAndImports.getFunction();
         
@@ -64,7 +64,8 @@ public class UpdateSelectiveColumnsMethodGenerator extends AbstractKotlinFunctio
 
     @Override
     public boolean callPlugins(KotlinFunction kotlinFunction, KotlinFile kotlinFile) {
-        return context.getPlugins().clientUpdateSelectiveColumnsMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
+        return context.getPlugins().clientUpdateSelectiveColumnsMethodGenerated(kotlinFunction, kotlinFile,
+                introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder, UpdateSelectiveColumnsMethodGenerator> {

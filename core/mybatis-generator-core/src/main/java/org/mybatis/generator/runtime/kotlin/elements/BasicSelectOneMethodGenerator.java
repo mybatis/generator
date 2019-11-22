@@ -49,14 +49,16 @@ public class BasicSelectOneMethodGenerator extends AbstractKotlinFunctionGenerat
                 .withImports(recordType.getImportList())
                 .build();
 
-        addGeneratedAnnotation(functionAndImports);
+        addFunctionComment(functionAndImports);
 
         boolean reuseResultMap = introspectedTable.getRules().generateSelectByExampleWithBLOBs()
                 || introspectedTable.getRules().generateSelectByExampleWithoutBLOBs();
 
         if (reuseResultMap) {
             functionAndImports.getImports().add("org.apache.ibatis.annotations.ResultMap"); //$NON-NLS-1$
-            functionAndImports.getFunction().addAnnotation("@ResultMap(\"" + resultMapId + "\")"); //$NON-NLS-1$ //$NON-NLS-2$
+            functionAndImports.getFunction().addAnnotation("@ResultMap(\"" //$NON-NLS-1$
+                    + resultMapId
+                    + "\")"); //$NON-NLS-1$
         } else {
             KotlinFunctionParts functionParts = fragmentGenerator.getAnnotatedResults();
             acceptParts(functionAndImports, functionParts);

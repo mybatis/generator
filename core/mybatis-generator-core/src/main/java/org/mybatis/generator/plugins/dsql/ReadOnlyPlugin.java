@@ -27,7 +27,7 @@ import org.mybatis.generator.api.CompositePlugin;
  */
 public class ReadOnlyPlugin extends CompositePlugin {
 
-    public ReadOnlyPlugin () {
+    public ReadOnlyPlugin() {
         addPlugin(new DisableDeletePlugin());
         addPlugin(new DisableInsertPlugin());
         addPlugin(new DisableUpdatePlugin());

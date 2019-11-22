@@ -33,6 +33,7 @@ import org.mybatis.generator.runtime.kotlin.elements.BasicMultipleInsertMethodGe
 import org.mybatis.generator.runtime.kotlin.elements.BasicSelectManyMethodGenerator;
 import org.mybatis.generator.runtime.kotlin.elements.BasicSelectOneMethodGenerator;
 import org.mybatis.generator.runtime.kotlin.elements.BasicUpdateMethodGenerator;
+import org.mybatis.generator.runtime.kotlin.elements.ColumnListGenerator;
 import org.mybatis.generator.runtime.kotlin.elements.DeleteByPrimaryKeyMethodGenerator;
 import org.mybatis.generator.runtime.kotlin.elements.GeneralCountMethodGenerator;
 import org.mybatis.generator.runtime.kotlin.elements.GeneralDeleteMethodGenerator;
@@ -48,7 +49,6 @@ import org.mybatis.generator.runtime.kotlin.elements.KotlinFragmentGenerator;
 import org.mybatis.generator.runtime.kotlin.elements.KotlinFunctionAndImports;
 import org.mybatis.generator.runtime.kotlin.elements.KotlinPropertyAndImports;
 import org.mybatis.generator.runtime.kotlin.elements.SelectByPrimaryKeyMethodGenerator;
-import org.mybatis.generator.runtime.kotlin.elements.ColumnListGenerator;
 import org.mybatis.generator.runtime.kotlin.elements.UpdateAllColumnsMethodGenerator;
 import org.mybatis.generator.runtime.kotlin.elements.UpdateByPrimaryKeyMethodGenerator;
 import org.mybatis.generator.runtime.kotlin.elements.UpdateByPrimaryKeySelectiveMethodGenerator;
@@ -195,8 +195,6 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 introspectedTable.getFullyQualifiedTable().toString()));
         preCalculate();
         
-        KotlinFile supportFile = supportClassGenerator.getKotlinFile();
-        
         KotlinFile mapperFile = createMapperInterfaceFile();
         KotlinType mapper = createMapperInterface(mapperFile);
     
@@ -228,6 +226,8 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
         addUpdateSelectiveMethod(extensionsFile);
         addUpdateByPrimaryKeyMethod(extensionsFile, mapperName);
         addUpdateByPrimaryKeySelectiveMethod(extensionsFile, mapperName);
+        
+        KotlinFile supportFile = supportClassGenerator.getKotlinFile();
         
         List<KotlinFile> answer = new ArrayList<>();
         if (context.getPlugins().dynamicSqlSupportGenerated(supportFile, supportClassGenerator.getInnerObject(),

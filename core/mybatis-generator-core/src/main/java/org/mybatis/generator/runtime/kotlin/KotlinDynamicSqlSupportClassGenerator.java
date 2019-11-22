@@ -53,7 +53,7 @@ public class KotlinDynamicSqlSupportClassGenerator {
         
         outerObject = buildOuterObject(kotlinFile, type);
         
-        innerObject = buildInnerObject(kotlinFile);
+        innerObject = buildInnerObject();
         outerObject.addNamedItem(innerObject);
         
         List<IntrospectedColumn> columns = introspectedTable.getAllColumns();
@@ -96,7 +96,7 @@ public class KotlinDynamicSqlSupportClassGenerator {
     }
     
     
-    private KotlinType buildInnerObject(KotlinFile kotlinFile) {
+    private KotlinType buildInnerObject() {
         String domainObjectName = introspectedTable.getFullyQualifiedTable().getDomainObjectName();
 
         return KotlinType.newObject(domainObjectName)

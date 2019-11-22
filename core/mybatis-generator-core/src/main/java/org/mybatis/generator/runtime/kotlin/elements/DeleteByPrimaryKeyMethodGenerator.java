@@ -45,7 +45,7 @@ public class DeleteByPrimaryKeyMethodGenerator extends AbstractKotlinFunctionGen
                 .withImport("org.mybatis.dynamic.sql.SqlBuilder.isEqualTo") //$NON-NLS-1$
                 .build();
         
-        addGeneratedAnnotation(functionAndImports);
+        addFunctionComment(functionAndImports);
 
         KotlinFunctionParts functionParts = fragmentGenerator.getPrimaryKeyWhereClauseAndParameters();
         acceptParts(functionAndImports, functionParts);
@@ -55,7 +55,8 @@ public class DeleteByPrimaryKeyMethodGenerator extends AbstractKotlinFunctionGen
 
     @Override
     public boolean callPlugins(KotlinFunction kotlinFunction, KotlinFile kotlinFile) {
-        return context.getPlugins().clientDeleteByPrimaryKeyMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
+        return context.getPlugins().clientDeleteByPrimaryKeyMethodGenerated(kotlinFunction, kotlinFile,
+                introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder, DeleteByPrimaryKeyMethodGenerator> {

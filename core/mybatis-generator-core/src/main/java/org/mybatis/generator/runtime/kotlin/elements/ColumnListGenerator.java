@@ -47,7 +47,7 @@ public class ColumnListGenerator {
                 .withImports(getImports())
                 .build();
         
-        context.getCommentGenerator().addGeneralPropertyAnnotation(propertyAndImports.getProperty(), introspectedTable,
+        context.getCommentGenerator().addGeneralPropertyComment(propertyAndImports.getProperty(), introspectedTable,
                 propertyAndImports.getImports());
         return propertyAndImports;
     }

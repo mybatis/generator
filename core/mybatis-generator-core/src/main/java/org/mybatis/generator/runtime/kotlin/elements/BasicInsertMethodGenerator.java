@@ -60,7 +60,7 @@ public class BasicInsertMethodGenerator extends AbstractKotlinFunctionGenerator 
                 .build();
 
         
-        addGeneratedAnnotation(functionAndImports);
+        addFunctionComment(functionAndImports);
 
         GeneratedKey gk = introspectedTable.getGeneratedKey();
         if (gk != null) {

@@ -44,7 +44,7 @@ public class BasicCountMethodGenerator extends AbstractKotlinFunctionGenerator {
                 .withImport("org.apache.ibatis.annotations.SelectProvider") //$NON-NLS-1$
                 .build();
         
-        addGeneratedAnnotation(functionAndImports);
+        addFunctionComment(functionAndImports);
         return functionAndImports;
     }
     

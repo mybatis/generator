@@ -52,8 +52,8 @@ public class BasicMultipleInsertMethodGenerator extends AbstractKotlinFunctionGe
                 .withExplicitReturnType("Int") //$NON-NLS-1$
                 .withArgument(KotlinArg.newArg("multipleInsertStatement") //$NON-NLS-1$
                         .withDataType("MultiRowInsertStatementProvider<" //$NON-NLS-1$
-                        		+ recordType.getShortNameWithTypeArguments()
-                        		+ ">") //$NON-NLS-1$
+                                + recordType.getShortNameWithTypeArguments()
+                                + ">") //$NON-NLS-1$
                         .build())
                 .withAnnotation("@InsertProvider(type=SqlProviderAdapter::class, method=\"insertMultiple\")") //$NON-NLS-1$
                 .build())
@@ -63,7 +63,7 @@ public class BasicMultipleInsertMethodGenerator extends AbstractKotlinFunctionGe
                 .withImports(recordType.getImportList())
                 .build();
         
-        addGeneratedAnnotation(functionAndImports);
+        addFunctionComment(functionAndImports);
 
         return functionAndImports;
     }
@@ -82,7 +82,9 @@ public class BasicMultipleInsertMethodGenerator extends AbstractKotlinFunctionGe
                         .build())
                 .withArgument(KotlinArg.newArg("records") //$NON-NLS-1$
                         .withAnnotation("@Param(\"records\")") //$NON-NLS-1$
-                        .withDataType("List<" + recordType.getShortNameWithTypeArguments() + ">") //$NON-NLS-1$ //$NON-NLS-2$
+                        .withDataType("List<" //$NON-NLS-1$
+                                + recordType.getShortNameWithTypeArguments()
+                                + ">") //$NON-NLS-1$
                         .build())
                 .build())
                 .withImport("org.apache.ibatis.annotations.Insert") //$NON-NLS-1$
@@ -90,7 +92,7 @@ public class BasicMultipleInsertMethodGenerator extends AbstractKotlinFunctionGe
                 .withImports(recordType.getImportList())
                 .build();
                 
-        addGeneratedAnnotation(functionAndImports);
+        addFunctionComment(functionAndImports);
                 
                 
         KotlinFunctionParts functionParts = getGeneratedKeyAnnotation(gk);
@@ -119,7 +121,8 @@ public class BasicMultipleInsertMethodGenerator extends AbstractKotlinFunctionGe
 
     @Override
     public boolean callPlugins(KotlinFunction kotlinFunction, KotlinFile kotlinFile) {
-        return context.getPlugins().clientBasicInsertMultipleMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
+        return context.getPlugins().clientBasicInsertMultipleMethodGenerated(kotlinFunction, kotlinFile,
+                introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder, BasicMultipleInsertMethodGenerator> {

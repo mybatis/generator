@@ -41,13 +41,14 @@ public class GeneralSelectDistinctMethodGenerator extends AbstractKotlinFunction
                 .withImport("org.mybatis.dynamic.sql.util.kotlin.mybatis3.*") //$NON-NLS-1$
                 .build();
 
-        addGeneratedAnnotation(functionAndImports);
+        addFunctionComment(functionAndImports);
         return functionAndImports;
     }
 
     @Override
     public boolean callPlugins(KotlinFunction kotlinFunction, KotlinFile kotlinFile) {
-        return context.getPlugins().clientGeneralSelectDistinctMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
+        return context.getPlugins().clientGeneralSelectDistinctMethodGenerated(kotlinFunction, kotlinFile,
+                introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder, GeneralSelectDistinctMethodGenerator> {

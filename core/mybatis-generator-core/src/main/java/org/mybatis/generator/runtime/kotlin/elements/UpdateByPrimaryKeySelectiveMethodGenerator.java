@@ -52,7 +52,7 @@ public class UpdateByPrimaryKeySelectiveMethodGenerator extends AbstractKotlinFu
                 .withImports(recordType.getImportList())
                 .build();
         
-        addGeneratedAnnotation(functionAndImports);
+        addFunctionComment(functionAndImports);
         
         List<IntrospectedColumn> columns = introspectedTable.getNonPrimaryKeyColumns();
         KotlinFunctionParts functionParts = fragmentGenerator.getSetEqualWhenPresentLines(columns);

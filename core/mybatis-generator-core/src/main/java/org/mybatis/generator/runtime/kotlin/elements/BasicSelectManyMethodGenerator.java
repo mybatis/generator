@@ -40,8 +40,8 @@ public class BasicSelectManyMethodGenerator extends AbstractKotlinFunctionGenera
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
                 KotlinFunction.newOneLineFunction("selectMany") //$NON-NLS-1$
                 .withExplicitReturnType("List<" //$NON-NLS-1$
-                		+ recordType.getShortNameWithTypeArguments()
-                		+ ">") //$NON-NLS-1$
+                        + recordType.getShortNameWithTypeArguments()
+                        + ">") //$NON-NLS-1$
                 .withArgument(KotlinArg.newArg("selectStatement") //$NON-NLS-1$
                         .withDataType("SelectStatementProvider") //$NON-NLS-1$
                         .build())
@@ -53,7 +53,7 @@ public class BasicSelectManyMethodGenerator extends AbstractKotlinFunctionGenera
                 .withImports(recordType.getImportList())
                 .build();
         
-        addGeneratedAnnotation(functionAndImports);
+        addFunctionComment(functionAndImports);
         
         KotlinFunctionParts functionParts = fragmentGenerator.getAnnotatedResults();
         acceptParts(functionAndImports, functionParts);

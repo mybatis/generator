@@ -153,6 +153,14 @@ public interface Plugin {
     List<GeneratedJavaFile> contextGenerateAdditionalJavaFiles(
             IntrospectedTable introspectedTable);
 
+    default List<GeneratedKotlinFile> contextGenerateAdditionalKotlinFiles() {
+        return Collections.emptyList();
+    }
+
+    default List<GeneratedKotlinFile> contextGenerateAdditionalKotlinFiles(IntrospectedTable introspectedTable) {
+        return Collections.emptyList();
+    }
+
     /**
      * This method can be used to generate any additional XML file needed by
      * your implementation. This method is called once, after all other XML
@@ -211,6 +219,11 @@ public interface Plugin {
      */
     boolean clientBasicCountMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable);
 
+    default boolean clientBasicCountMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
+
     /**
      * This method is called when the delete method has been generated for the mapper interface.
      * This method is only called in the MyBatis3DynamicSql runtime.
@@ -227,6 +240,11 @@ public interface Plugin {
      *         plugins.
      */
     boolean clientBasicDeleteMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable);
+
+    default boolean clientBasicDeleteMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
 
     /**
      * This method is called when the insert method has been generated for the mapper interface.
@@ -245,6 +263,11 @@ public interface Plugin {
      */
     boolean clientBasicInsertMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable);
 
+    default boolean clientBasicInsertMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
+
     /**
      * This method is called when the insert multiple method has been generated for the mapper interface.
      * This method is only called in the MyBatis3DynamicSql runtime.
@@ -262,6 +285,11 @@ public interface Plugin {
      */
     boolean clientBasicInsertMultipleMethodGenerated(Method method, Interface interfaze,
             IntrospectedTable introspectedTable);
+
+    default boolean clientBasicInsertMultipleMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
 
     /**
      * This method is called when the insert multiple method helper has been generated for the mapper interface.
@@ -282,6 +310,11 @@ public interface Plugin {
     boolean clientBasicInsertMultipleHelperMethodGenerated(Method method, Interface interfaze,
             IntrospectedTable introspectedTable);
 
+    default boolean clientBasicInsertMultipleHelperMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
+
     /**
      * This method is called when the selectMany method has been generated for the mapper interface.
      * This method is only called in the MyBatis3DynamicSql runtime.
@@ -299,6 +332,11 @@ public interface Plugin {
      */
     boolean clientBasicSelectManyMethodGenerated(Method method, Interface interfaze,
             IntrospectedTable introspectedTable);
+
+    default boolean clientBasicSelectManyMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
 
     /**
      * This method is called when the selectOne method has been generated for the mapper interface.
@@ -318,6 +356,11 @@ public interface Plugin {
     boolean clientBasicSelectOneMethodGenerated(Method method, Interface interfaze,
             IntrospectedTable introspectedTable);
 
+    default boolean clientBasicSelectOneMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
+
     /**
      * This method is called when the update method has been generated for the mapper interface.
      * This method is only called in the MyBatis3DynamicSql runtime.
@@ -335,6 +378,11 @@ public interface Plugin {
      */
     boolean clientBasicUpdateMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable);
     
+    default boolean clientBasicUpdateMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
+
     /**
      * This method is called when the countByExample method has been generated
      * in the client interface.
@@ -398,6 +446,11 @@ public interface Plugin {
     boolean clientDeleteByPrimaryKeyMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable);
 
+    default boolean clientDeleteByPrimaryKeyMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
+
     /**
      * Called when the general count method has been generated. This is the replacement for countByExample
      * in the MyBatis Dynamic SQL V2 runtime.
@@ -413,6 +466,11 @@ public interface Plugin {
      */
     boolean clientGeneralCountMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable);
 
+    default boolean clientGeneralCountMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
+
     /**
      * Called when the general delete method has been generated. This is the replacement for deleteByExample
      * in the MyBatis Dynamic SQL V2 runtime.
@@ -427,6 +485,11 @@ public interface Plugin {
      * @return true if the method should be generated
      */
     boolean clientGeneralDeleteMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable);
+
+    default boolean clientGeneralDeleteMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
 
     /**
      * Called when the general select distinct method has been generated. This is the replacement for
@@ -444,6 +507,11 @@ public interface Plugin {
     boolean clientGeneralSelectDistinctMethodGenerated(Method method, Interface interfaze,
             IntrospectedTable introspectedTable);
 
+    default boolean clientGeneralSelectDistinctMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
+
     /**
      * Called when the general select method has been generated. This is the replacement for
      * selectByExample in the MyBatis Dynamic SQL V2 runtime.
@@ -459,6 +527,11 @@ public interface Plugin {
      */
     boolean clientGeneralSelectMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable);
 
+    default boolean clientGeneralSelectMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
+
     /**
      * Called when the general update method has been generated. This is the replacement for
      * updateByExample in the MyBatis Dynamic SQL V2 runtime.
@@ -473,6 +546,11 @@ public interface Plugin {
      * @return true if the method should be generated
      */
     boolean clientGeneralUpdateMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable);
+
+    default boolean clientGeneralUpdateMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
 
     /**
      * This method is called when the insert method has been generated in the
@@ -494,6 +572,11 @@ public interface Plugin {
      */
     boolean clientInsertMethodGenerated(Method method, Interface interfaze,
             IntrospectedTable introspectedTable);
+
+    default boolean clientInsertMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
 
     /**
      * This method is called when the insert multiple method has been generated in the
@@ -517,6 +600,11 @@ public interface Plugin {
     boolean clientInsertMultipleMethodGenerated(Method method, Interface interfaze,
             IntrospectedTable introspectedTable);
 
+    default boolean clientInsertMultipleMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
+
     /**
      * This method is called when the insert selective method has been generated
      * in the client interface.
@@ -537,6 +625,11 @@ public interface Plugin {
      */
     boolean clientInsertSelectiveMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable);
+
+    default boolean clientInsertSelectiveMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
 
     /**
      * This method is called when the selectByExampleWithBLOBs method has been
@@ -601,6 +694,11 @@ public interface Plugin {
     boolean clientSelectByPrimaryKeyMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable);
 
+    default boolean clientSelectByPrimaryKeyMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
+
     /**
      * Called when the selectList field is generated in a MyBatis Dynamic SQL V2 runtime.
      * 
@@ -627,6 +725,11 @@ public interface Plugin {
      * @return true if the method should be generated
      */
     boolean clientSelectOneMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable);
+
+    default boolean clientSelectOneMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
 
     /**
      * This method is called when the updateByExampleSelective method has been
@@ -662,7 +765,13 @@ public interface Plugin {
      *            introspected from the database
      * @return true if the method should be generated
      */
-    boolean clientUpdateAllColumnsMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable);
+    boolean clientUpdateAllColumnsMethodGenerated(Method method, Interface interfaze,
+            IntrospectedTable introspectedTable);
+
+    default boolean clientUpdateAllColumnsMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
 
     /**
      * Called when the updateSelectiveColumns method is generated. The generated method can be used with the general
@@ -677,7 +786,13 @@ public interface Plugin {
      *            introspected from the database
      * @return true if the method should be generated
      */
-    boolean clientUpdateSelectiveColumnsMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable);
+    boolean clientUpdateSelectiveColumnsMethodGenerated(Method method, Interface interfaze,
+            IntrospectedTable introspectedTable);
+
+    default boolean clientUpdateSelectiveColumnsMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return true;
+    }
 
     /**
      * This method is called when the updateByExampleWithBLOBs method has been
@@ -741,6 +856,11 @@ public interface Plugin {
      */
     boolean clientUpdateByPrimaryKeySelectiveMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable);
+
+    default boolean clientUpdateByPrimaryKeySelectiveMethodGenerated(KotlinFunction kotlinFunction,
+            KotlinFile kotlinFile, IntrospectedTable introspectedTable) {
+        return true;
+    }
 
     /**
      * This method is called when the updateByPrimaryKeyWithBLOBs method has
@@ -1585,36 +1705,12 @@ public interface Plugin {
      */
     boolean dynamicSqlSupportGenerated(TopLevelClass supportClass, IntrospectedTable introspectedTable);
 
-    // Functions added for Kotlin.
-    
-    default boolean clientBasicCountMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+    default boolean dynamicSqlSupportGenerated(KotlinFile kotlinFile, KotlinType supportClass,
             IntrospectedTable introspectedTable) {
         return true;
-    }
-
-    default boolean clientBasicDeleteMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-            IntrospectedTable introspectedTable) {
-        return true;
-    }
-
-    default boolean clientBasicInsertMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-            IntrospectedTable introspectedTable) {
-        return true;
-    }
-
-    default List<GeneratedKotlinFile> contextGenerateAdditionalKotlinFiles(IntrospectedTable introspectedTable) {
-        return Collections.emptyList();
-    }
-
-    default List<GeneratedKotlinFile> contextGenerateAdditionalKotlinFiles() {
-        return Collections.emptyList();
     }
 
     default boolean mapperExtensionsGenerated(KotlinFile extensionsFile, IntrospectedTable introspectedTable) {
-        return true;
-    }
-
-    default boolean dynamicSqlSupportGenerated(KotlinFile kotlinFile, KotlinType supportClass, IntrospectedTable introspectedTable) {
         return true;
     }
 
@@ -1626,103 +1722,13 @@ public interface Plugin {
             IntrospectedTable introspectedTable) {
         return true;
     }
-
-    default boolean clientBasicInsertMultipleHelperMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-            IntrospectedTable introspectedTable) {
-        return true;
-    }
-
-    default boolean clientBasicInsertMultipleMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-            IntrospectedTable introspectedTable) {
-        return true;
-    }
-
-    default boolean clientBasicUpdateMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-            IntrospectedTable introspectedTable) {
-        return true;
-    }
-
-    default boolean clientBasicSelectManyMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-            IntrospectedTable introspectedTable) {
-        return true;
-    }
-
-    default boolean clientBasicSelectOneMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-            IntrospectedTable introspectedTable) {
-        return true;
-    }
-
-    default boolean clientGeneralCountMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-            IntrospectedTable introspectedTable) {
-        return true;
-    }
-
-    default boolean clientDeleteByPrimaryKeyMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-            IntrospectedTable introspectedTable) {
-        return true;
-    }
-
-    default boolean clientGeneralDeleteMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-            IntrospectedTable introspectedTable) {
-        return true;
-    }
-
+    
     default boolean clientColumnListPropertyGenerated(KotlinProperty kotlinProperty, KotlinFile kotlinFile,
             IntrospectedTable introspectedTable) {
         return true;
     }
-
-    default boolean clientSelectOneMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-            IntrospectedTable introspectedTable) {
-        return true;
-    }
-
-    default boolean clientGeneralSelectMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-            IntrospectedTable introspectedTable) {
-        return true;
-    }
-
-    default boolean clientGeneralSelectDistinctMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-            IntrospectedTable introspectedTable) {
-        return true;
-    }
-
-    default boolean clientSelectByPrimaryKeyMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-            IntrospectedTable introspectedTable) {
-        return true;
-    }
-
-    default boolean clientInsertMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-            IntrospectedTable introspectedTable) {
-        return true;
-    }
-
-    default boolean clientInsertMultipleMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-            IntrospectedTable introspectedTable) {
-        return true;
-    }
-
-    default boolean clientInsertSelectiveMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-            IntrospectedTable introspectedTable) {
-        return true;
-    }
-
+    
     default boolean clientInsertMultipleVarargMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-            IntrospectedTable introspectedTable) {
-        return true;
-    }
-
-    default boolean clientUpdateAllColumnsMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-            IntrospectedTable introspectedTable) {
-        return true;
-    }
-
-    default boolean clientUpdateSelectiveColumnsMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-            IntrospectedTable introspectedTable) {
-        return true;
-    }
-
-    default boolean clientGeneralUpdateMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
             IntrospectedTable introspectedTable) {
         return true;
     }
@@ -1732,8 +1738,4 @@ public interface Plugin {
         return true;
     }
 
-    default boolean clientUpdateByPrimaryKeySelectiveMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-            IntrospectedTable introspectedTable) {
-        return true;
-    }
 }

@@ -49,7 +49,7 @@ public class BasicUpdateMethodGenerator extends AbstractKotlinFunctionGenerator 
                 .withImport("org.apache.ibatis.annotations.UpdateProvider") //$NON-NLS-1$
                 .build();
         
-        addGeneratedAnnotation(functionAndImports);
+        addFunctionComment(functionAndImports);
         return functionAndImports;
     }
 

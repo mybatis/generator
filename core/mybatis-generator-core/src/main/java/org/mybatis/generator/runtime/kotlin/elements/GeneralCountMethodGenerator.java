@@ -44,7 +44,7 @@ public class GeneralCountMethodGenerator extends AbstractKotlinFunctionGenerator
                 .withImport(tableFieldImport)
                 .build();
 
-        addGeneratedAnnotation(functionAndImports);
+        addFunctionComment(functionAndImports);
         return functionAndImports;
     }
 

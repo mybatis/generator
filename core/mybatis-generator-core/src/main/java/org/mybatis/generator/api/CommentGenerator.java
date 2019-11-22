@@ -97,6 +97,17 @@ public interface CommentGenerator {
             IntrospectedTable introspectedTable);
 
     /**
+     * Adds a comment for a model class.
+     * 
+     * @param modelClass
+     *            the generated KotlinType for the model
+     * @param introspectedTable
+     *            the introspected table
+     */
+    default void addModelClassComment(KotlinType modelClass,
+            IntrospectedTable introspectedTable) {}
+
+    /**
      * Adds the inner class comment.
      *
      * @param innerClass
@@ -284,8 +295,6 @@ public interface CommentGenerator {
     void addClassAnnotation(InnerClass innerClass, IntrospectedTable introspectedTable,
             Set<FullyQualifiedJavaType> imports);
     
-    // TODO... methods added for Kotlin
-
     /**
      * This method is called to add a file level comment to a generated Kotlin file. This method
      * could be used to add a general file comment (such as a copyright notice).
@@ -297,19 +306,9 @@ public interface CommentGenerator {
      */
     default void addFileComment(KotlinFile kotlinFile) {}
 
-    /**
-     * Adds a comment for a model class.
-     * 
-     * @param modelClass
-     *            the generated KotlinType for the model
-     * @param introspectedTable
-     *            the introspected table
-     */
-    default void addModelClassComment(KotlinType modelClass,
-            IntrospectedTable introspectedTable) {}
+    default void addGeneralFunctionComment(KotlinFunction kf, IntrospectedTable introspectedTable,
+            Set<String> imports) {}
 
-    default void addGeneralMethodAnnotation(KotlinFunction kf, IntrospectedTable introspectedTable, Set<String> imports) {}
-
-    default void addGeneralPropertyAnnotation(KotlinProperty property, IntrospectedTable introspectedTable,
+    default void addGeneralPropertyComment(KotlinProperty property, IntrospectedTable introspectedTable,
             Set<String> imports) {}
 }

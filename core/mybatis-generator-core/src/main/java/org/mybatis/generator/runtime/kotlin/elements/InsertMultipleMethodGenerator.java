@@ -45,20 +45,22 @@ public class InsertMultipleMethodGenerator extends AbstractKotlinFunctionGenerat
         
         // Kotlin type inference gets lost if we don't name the helper method something different from the
         // regular mapper method
-        String mapperMethod = Utils.generateMultipleRowInsertHelper(introspectedTable) ?
-                "insertMultipleHelper" : "insertMultiple"; //$NON-NLS-1$ //$NON-NLS-2$
+        String mapperMethod = Utils.generateMultipleRowInsertHelper(introspectedTable)
+                ? "insertMultipleHelper" : "insertMultiple"; //$NON-NLS-1$ //$NON-NLS-2$
         
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
                 KotlinFunction.newOneLineFunction(mapperName + ".insertMultiple") //$NON-NLS-1$
                 .withArgument(KotlinArg.newArg("records") //$NON-NLS-1$
-                        .withDataType("Collection<" + recordType.getShortNameWithTypeArguments() + ">") //$NON-NLS-1$ //$NON-NLS-2$
+                        .withDataType("Collection<" //$NON-NLS-1$
+                                + recordType.getShortNameWithTypeArguments()
+                                + ">") //$NON-NLS-1$
                         .build())
                 .build())
                 .withImport("org.mybatis.dynamic.sql.util.kotlin.mybatis3.*") //$NON-NLS-1$
                 .withImports(recordType.getImportList())
                 .build();
 
-        addGeneratedAnnotation(functionAndImports);
+        addFunctionComment(functionAndImports);
         
         KotlinFunction function = functionAndImports.getFunction();
         

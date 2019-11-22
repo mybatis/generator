@@ -60,7 +60,8 @@ public class FullyQualifiedKotlinType {
         }
 
         return typeArguments.stream().map(FullyQualifiedKotlinType::getShortNameWithTypeArguments)
-                .collect(Collectors.joining(", ", shortNameWithoutTypeArguments + "<", ">")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                .collect(Collectors.joining(", ", shortNameWithoutTypeArguments //$NON-NLS-1$
+                        + "<", ">")); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     public List<FullyQualifiedKotlinType> getTypeArguments() {
@@ -165,8 +166,7 @@ public class FullyQualifiedKotlinType {
     /**
      * Returns the package name of a fully qualified type.
      * 
-     * <p>
-     * This method calculates the package as the part of the fully qualified name up
+     * <p>This method calculates the package as the part of the fully qualified name up
      * to, but not including, the last element. Therefore, it does not support fully
      * qualified inner classes. Not totally fool proof, but correct in most
      * instances.

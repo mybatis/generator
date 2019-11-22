@@ -44,7 +44,19 @@ public class DisableDeletePlugin extends PluginAdapter {
     }
 
     @Override
+    public boolean clientBasicDeleteMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+        return false;
+    }
+
+    @Override
     public boolean clientDeleteByPrimaryKeyMethodGenerated(Method method, Interface interfaze,
+            IntrospectedTable introspectedTable) {
+        return false;
+    }
+
+    @Override
+    public boolean clientDeleteByPrimaryKeyMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
             IntrospectedTable introspectedTable) {
         return false;
     }
@@ -55,21 +67,9 @@ public class DisableDeletePlugin extends PluginAdapter {
         return false;
     }
 
-	@Override
-	public boolean clientBasicDeleteMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-			IntrospectedTable introspectedTable) {
+    @Override
+    public boolean clientGeneralDeleteMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
         return false;
-	}
-
-	@Override
-	public boolean clientDeleteByPrimaryKeyMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-			IntrospectedTable introspectedTable) {
-        return false;
-	}
-
-	@Override
-	public boolean clientGeneralDeleteMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-			IntrospectedTable introspectedTable) {
-        return false;
-	}
+    }
 }

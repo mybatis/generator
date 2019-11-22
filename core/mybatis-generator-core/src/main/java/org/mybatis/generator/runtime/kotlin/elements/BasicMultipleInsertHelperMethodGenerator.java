@@ -44,8 +44,8 @@ public class BasicMultipleInsertHelperMethodGenerator extends AbstractKotlinFunc
                 KotlinFunction.newOneLineFunction(mapperName + ".insertMultipleHelper") //$NON-NLS-1$
                 .withArgument(KotlinArg.newArg("multipleInsertStatement") //$NON-NLS-1$
                         .withDataType("MultiRowInsertStatementProvider<" //$NON-NLS-1$
-                        		+ recordType.getShortNameWithTypeArguments()
-                        		+ ">") //$NON-NLS-1$
+                                + recordType.getShortNameWithTypeArguments()
+                                + ">") //$NON-NLS-1$
                         .build())
                 .withCodeLine("insertMultiple(multipleInsertStatement.insertStatement, multipleInsertStatement.records)") //$NON-NLS-1$
                 .build())
@@ -53,7 +53,7 @@ public class BasicMultipleInsertHelperMethodGenerator extends AbstractKotlinFunc
                 .withImports(recordType.getImportList())
                 .build();
         
-        addGeneratedAnnotation(functionAndImports);
+        addFunctionComment(functionAndImports);
         return functionAndImports;
     }
     

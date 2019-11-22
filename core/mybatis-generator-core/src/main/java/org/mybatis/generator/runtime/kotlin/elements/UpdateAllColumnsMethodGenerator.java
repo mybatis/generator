@@ -45,7 +45,7 @@ public class UpdateAllColumnsMethodGenerator extends AbstractKotlinFunctionGener
                 .withImports(recordType.getImportList())
                 .build();
 
-        addGeneratedAnnotation(functionAndImports);
+        addFunctionComment(functionAndImports);
         
         KotlinFunction function = functionAndImports.getFunction();
         
@@ -63,7 +63,8 @@ public class UpdateAllColumnsMethodGenerator extends AbstractKotlinFunctionGener
 
     @Override
     public boolean callPlugins(KotlinFunction kotlinFunction, KotlinFile kotlinFile) {
-        return context.getPlugins().clientUpdateAllColumnsMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
+        return context.getPlugins().clientUpdateAllColumnsMethodGenerated(kotlinFunction, kotlinFile,
+                introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder, UpdateAllColumnsMethodGenerator> {

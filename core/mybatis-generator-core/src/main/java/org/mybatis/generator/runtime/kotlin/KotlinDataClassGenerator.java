@@ -60,7 +60,8 @@ public class KotlinDataClassGenerator extends AbstractKotlinGenerator {
         List<IntrospectedColumn> introspectedColumns = introspectedTable.getAllColumns();
         
         for (IntrospectedColumn introspectedColumn : introspectedColumns) {
-            FullyQualifiedKotlinType kotlinType = JavaToKotlinTypeConverter.convert(introspectedColumn.getFullyQualifiedJavaType());
+            FullyQualifiedKotlinType kotlinType =
+                    JavaToKotlinTypeConverter.convert(introspectedColumn.getFullyQualifiedJavaType());
             
             KotlinProperty kp = KotlinProperty.newVar(introspectedColumn.getJavaProperty())
                     .withDataType(kotlinType.getShortNameWithTypeArguments() + "?") //$NON-NLS-1$

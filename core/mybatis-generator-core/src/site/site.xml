@@ -71,6 +71,7 @@
         <item href="generatedobjects/extendingExampleClass.html" name="Extending the Example Classes" />
         <item href="generatedobjects/dynamicSqlV2.html" name="MyBatis Dynamic SQL Usage Notes - V2" />
         <item href="generatedobjects/dynamicSqlV1.html" name="MyBatis Dynamic SQL Usage Notes - V1 (Deprecated)" />
+        <item href="generatedobjects/dynamicSqlKotlin.html" name="Kotlin using MyBatis Dynamic SQL Usage Notes" />
       </item>
       <item href="usage/intro.html" name="Database Specific Information" collapse="true" >
         <item href="usage/db2.html" name="DB2" />

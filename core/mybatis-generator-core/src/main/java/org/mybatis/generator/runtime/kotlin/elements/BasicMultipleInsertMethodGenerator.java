@@ -55,7 +55,8 @@ public class BasicMultipleInsertMethodGenerator extends AbstractKotlinFunctionGe
                                 + recordType.getShortNameWithTypeArguments()
                                 + ">") //$NON-NLS-1$
                         .build())
-                .withAnnotation("@InsertProvider(type=SqlProviderAdapter::class, method=\"insertMultiple\")") //$NON-NLS-1$
+                .withAnnotation("@InsertProvider(type=SqlProviderAdapter::class," //$NON-NLS-1$
+                        + " method=\"insertMultiple\")") //$NON-NLS-1$
                 .build())
                 .withImport("org.mybatis.dynamic.sql.util.SqlProviderAdapter") //$NON-NLS-1$
                 .withImport("org.apache.ibatis.annotations.InsertProvider") //$NON-NLS-1$

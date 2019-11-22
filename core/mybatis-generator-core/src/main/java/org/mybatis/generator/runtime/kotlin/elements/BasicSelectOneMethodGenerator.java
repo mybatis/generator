@@ -41,7 +41,8 @@ public class BasicSelectOneMethodGenerator extends AbstractKotlinFunctionGenerat
                         .withArgument(KotlinArg.newArg("selectStatement") //$NON-NLS-1$
                                 .withDataType("SelectStatementProvider") //$NON-NLS-1$
                                 .build())
-                        .withAnnotation("@SelectProvider(type=SqlProviderAdapter::class, method=\"select\")") //$NON-NLS-1$
+                        .withAnnotation("@SelectProvider(type=SqlProviderAdapter::class," //$NON-NLS-1$
+                                + " method=\"select\")") //$NON-NLS-1$
                         .build())
                 .withImport("org.mybatis.dynamic.sql.select.render.SelectStatementProvider") //$NON-NLS-1$
                 .withImport("org.mybatis.dynamic.sql.util.SqlProviderAdapter") //$NON-NLS-1$

@@ -47,7 +47,8 @@ public class BasicMultipleInsertHelperMethodGenerator extends AbstractKotlinFunc
                                 + recordType.getShortNameWithTypeArguments()
                                 + ">") //$NON-NLS-1$
                         .build())
-                .withCodeLine("insertMultiple(multipleInsertStatement.insertStatement, multipleInsertStatement.records)") //$NON-NLS-1$
+                .withCodeLine("insertMultiple(multipleInsertStatement.insertStatement," //$NON-NLS-1$
+                        + " multipleInsertStatement.records)") //$NON-NLS-1$
                 .build())
                 .withImport("org.mybatis.dynamic.sql.insert.render.MultiRowInsertStatementProvider") //$NON-NLS-1$
                 .withImports(recordType.getImportList())

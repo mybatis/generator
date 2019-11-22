@@ -21,6 +21,8 @@ import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.api.dom.kotlin.KotlinFile;
+import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 
 /**
  * Disables all update methods in the MyBatisDynamicSQLV2 runtime.
@@ -70,4 +72,40 @@ public class DisableUpdatePlugin extends PluginAdapter {
             IntrospectedTable introspectedTable) {
         return false;
     }
+
+	@Override
+	public boolean clientBasicUpdateMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+			IntrospectedTable introspectedTable) {
+        return false;
+	}
+
+	@Override
+	public boolean clientUpdateAllColumnsMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+			IntrospectedTable introspectedTable) {
+        return false;
+	}
+
+	@Override
+	public boolean clientUpdateSelectiveColumnsMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+			IntrospectedTable introspectedTable) {
+        return false;
+	}
+
+	@Override
+	public boolean clientGeneralUpdateMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+			IntrospectedTable introspectedTable) {
+        return false;
+	}
+
+	@Override
+	public boolean clientUpdateByPrimaryKeyMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+			IntrospectedTable introspectedTable) {
+        return false;
+	}
+
+	@Override
+	public boolean clientUpdateByPrimaryKeySelectiveMethodGenerated(KotlinFunction kotlinFunction,
+			KotlinFile kotlinFile, IntrospectedTable introspectedTable) {
+        return false;
+	}
 }

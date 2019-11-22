@@ -91,28 +91,6 @@ databases, or with different generation parameters, in the same run of MyBatis G
       The property supports these special values:
       <table>
         <tr>
-          <th valign="top">MyBatis3</th>
-          <td>With the value, MBG will generate objects that are compatible
-            with MyBatis versions 3.0 and higher, and JSE 5.0 and higher (e.g. the
-            Java model and mapper interfaces will use generic types).
-            The "by example" methods in these generated objects support virtually
-            unlimited dynamic where clauses.  Additionally, the Java objects
-            generated with these generators support many JSE 5.0 features including
-            parameterized types and annotations.</td>
-        </tr>
-        <tr>
-          <th valign="top">MyBatis3Simple</th>
-          <td>
-            With the value, MBG will generate objects that are compatible
-            with MyBatis versions 3.0 and higher, and JSE 5.0 and higher (e.g. the
-            Java model and mapper interfaces will use generic types).
-            The mappers generated with this target runtime are very basic
-            CRUD operations only with no "by example" methods and very little
-            dynamic SQL.  The Java objects
-            generated with these generators support many JSE 5.0 features including
-            parameterized types and annotations.</td>
-        </tr>
-        <tr>
           <th valign="top">MyBatis3DynamicSql</th>
           <td><i>This is the default value</i>
             <br/>Synonym for MyBatis3DynamicSqlV2</td>
@@ -140,15 +118,12 @@ databases, or with different generation parameters, in the same run of MyBatis G
           </td>
         </tr>
         <tr>
-          <th valign="top">MyBatis3DynamicSqlV1</th>
+          <th valign="top">MyBatis3Kotlin</th>
           <td>
-            <b>Important:</b> this runtime is deprecated and will be removed in a future version.
-            <p>With the value, MBG will generate objects that are compatible
-            with MyBatis versions 3.4.2 and higher, and Java 8 and higher (e.g. the
-            Java model and mapper interfaces will use generic types and other Java 8
-            features like default methods in interfaces).</p>
-            <p><b>Important:</b> The Java code generated with this target runtime is dependent on the 
-            "MyBatis Dynamic SQL" support library.</p>
+            With the value, MBG will generate Kotlin objects that are compatible
+            with MyBatis versions 3.4.2 and higher.
+            <p><b>Important:</b> The Kotlin code generated with this target runtime is dependent on the 
+            "MyBatis Dynamic SQL" support library version 1.1.4 or higher.</p>
             <p>Other important information:</p>
             <ul>
               <li>The model objects are generated in the "FLAT" style regardless of what is specified
@@ -163,12 +138,37 @@ databases, or with different generation parameters, in the same run of MyBatis G
           </td>
         </tr>
         <tr>
-          <th valign="top">MyBatis3Kotlin</th>
+          <th valign="top">MyBatis3</th>
+          <td>With the value, MBG will generate objects that are compatible
+            with MyBatis versions 3.0 and higher, and JSE 5.0 and higher (e.g. the
+            Java model and mapper interfaces will use generic types).
+            The "by example" methods in these generated objects support virtually
+            unlimited dynamic where clauses.  Additionally, the Java objects
+            generated with these generators support many JSE 5.0 features including
+            parameterized types and annotations.</td>
+        </tr>
+        <tr>
+          <th valign="top">MyBatis3Simple</th>
           <td>
-            With the value, MBG will generate Kotlin objects that are compatible
-            with MyBatis versions 3.4.2 and higher.
-            <p><b>Important:</b> The Kotlin code generated with this target runtime is dependent on the 
-            "MyBatis Dynamic SQL" support library version 1.1.4 or higher.</p>
+            With the value, MBG will generate objects that are compatible
+            with MyBatis versions 3.0 and higher, and JSE 5.0 and higher (e.g. the
+            Java model and mapper interfaces will use generic types).
+            The mappers generated with this target runtime are very basic
+            CRUD operations only with no "by example" methods and very little
+            dynamic SQL.  The Java objects
+            generated with these generators support many JSE 5.0 features including
+            parameterized types and annotations.</td>
+        </tr>
+        <tr>
+          <th valign="top">MyBatis3DynamicSqlV1</th>
+          <td>
+            <b>Important:</b> this runtime is deprecated and will be removed in a future version.
+            <p>With the value, MBG will generate objects that are compatible
+            with MyBatis versions 3.4.2 and higher, and Java 8 and higher (e.g. the
+            Java model and mapper interfaces will use generic types and other Java 8
+            features like default methods in interfaces).</p>
+            <p><b>Important:</b> The Java code generated with this target runtime is dependent on the 
+            "MyBatis Dynamic SQL" support library.</p>
             <p>Other important information:</p>
             <ul>
               <li>The model objects are generated in the "FLAT" style regardless of what is specified

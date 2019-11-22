@@ -1585,19 +1585,19 @@ public interface Plugin {
      */
     boolean dynamicSqlSupportGenerated(TopLevelClass supportClass, IntrospectedTable introspectedTable);
 
-    // TODO... functions added for Kotlin. Need to add these to composite plugin
+    // Functions added for Kotlin.
     
-    default boolean clientBasicCountMethodGenerated(KotlinFunction function, KotlinFile kotlinFile,
+    default boolean clientBasicCountMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
             IntrospectedTable introspectedTable) {
         return true;
     }
 
-    default boolean clientBasicDeleteMethodGenerated(KotlinFunction function, KotlinFile kotlinFile,
+    default boolean clientBasicDeleteMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
             IntrospectedTable introspectedTable) {
         return true;
     }
 
-    default boolean clientBasicInsertMethodGenerated(KotlinFunction function, KotlinFile kotlinFile,
+    default boolean clientBasicInsertMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
             IntrospectedTable introspectedTable) {
         return true;
     }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UpdateByPrimaryKeySelectiveElementGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.codegen.mybatis3.xmlmapper.elements</a> &gt; <span class="el_source">UpdateByPrimaryKeySelectiveElementGenerator.java</span></div><h1>UpdateByPrimaryKeySelectiveElementGenerator.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -22,91 +22,86 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 
-/**
- * 
- * @author Jeff Butler
- * 
- */
 public class UpdateByPrimaryKeySelectiveElementGenerator extends
         AbstractXmlElementGenerator {
 
     public UpdateByPrimaryKeySelectiveElementGenerator() {
-<span class="fc" id="L34">        super();</span>
-<span class="fc" id="L35">    }</span>
+<span class="fc" id="L29">        super();</span>
+<span class="fc" id="L30">    }</span>
 
     @Override
     public void addElements(XmlElement parentElement) {
-<span class="fc" id="L39">        XmlElement answer = new XmlElement(&quot;update&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L34">        XmlElement answer = new XmlElement(&quot;update&quot;); //$NON-NLS-1$</span>
 
-<span class="fc" id="L41">        answer.addAttribute(new Attribute(</span>
-<span class="fc" id="L42">                &quot;id&quot;, introspectedTable.getUpdateByPrimaryKeySelectiveStatementId())); //$NON-NLS-1$</span>
+<span class="fc" id="L36">        answer.addAttribute(new Attribute(</span>
+<span class="fc" id="L37">                &quot;id&quot;, introspectedTable.getUpdateByPrimaryKeySelectiveStatementId())); //$NON-NLS-1$</span>
 
         String parameterType;
 
-<span class="fc bfc" id="L46" title="All 2 branches covered.">        if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {</span>
-<span class="fc" id="L47">            parameterType = introspectedTable.getRecordWithBLOBsType();</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {</span>
+<span class="fc" id="L42">            parameterType = introspectedTable.getRecordWithBLOBsType();</span>
         } else {
-<span class="fc" id="L49">            parameterType = introspectedTable.getBaseRecordType();</span>
+<span class="fc" id="L44">            parameterType = introspectedTable.getBaseRecordType();</span>
         }
 
-<span class="fc" id="L52">        answer.addAttribute(new Attribute(&quot;parameterType&quot;, //$NON-NLS-1$</span>
+<span class="fc" id="L47">        answer.addAttribute(new Attribute(&quot;parameterType&quot;, //$NON-NLS-1$</span>
                 parameterType));
 
-<span class="fc" id="L55">        context.getCommentGenerator().addComment(answer);</span>
+<span class="fc" id="L50">        context.getCommentGenerator().addComment(answer);</span>
 
-<span class="fc" id="L57">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L52">        StringBuilder sb = new StringBuilder();</span>
 
-<span class="fc" id="L59">        sb.append(&quot;update &quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L60">        sb.append(introspectedTable.getFullyQualifiedTableNameAtRuntime());</span>
-<span class="fc" id="L61">        answer.addElement(new TextElement(sb.toString()));</span>
+<span class="fc" id="L54">        sb.append(&quot;update &quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L55">        sb.append(introspectedTable.getFullyQualifiedTableNameAtRuntime());</span>
+<span class="fc" id="L56">        answer.addElement(new TextElement(sb.toString()));</span>
 
-<span class="fc" id="L63">        XmlElement dynamicElement = new XmlElement(&quot;set&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L64">        answer.addElement(dynamicElement);</span>
+<span class="fc" id="L58">        XmlElement dynamicElement = new XmlElement(&quot;set&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L59">        answer.addElement(dynamicElement);</span>
 
-<span class="fc bfc" id="L66" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : ListUtilities.removeGeneratedAlwaysColumns(introspectedTable</span>
-<span class="fc" id="L67">                .getNonPrimaryKeyColumns())) {</span>
-<span class="fc" id="L68">            sb.setLength(0);</span>
-<span class="fc" id="L69">            sb.append(introspectedColumn.getJavaProperty());</span>
-<span class="fc" id="L70">            sb.append(&quot; != null&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L71">            XmlElement isNotNullElement = new XmlElement(&quot;if&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L72">            isNotNullElement.addAttribute(new Attribute(&quot;test&quot;, sb.toString())); //$NON-NLS-1$</span>
-<span class="fc" id="L73">            dynamicElement.addElement(isNotNullElement);</span>
+        for (IntrospectedColumn introspectedColumn :
+<span class="fc bfc" id="L62" title="All 2 branches covered.">                ListUtilities.removeGeneratedAlwaysColumns(introspectedTable.getNonPrimaryKeyColumns())) {</span>
+<span class="fc" id="L63">            sb.setLength(0);</span>
+<span class="fc" id="L64">            sb.append(introspectedColumn.getJavaProperty());</span>
+<span class="fc" id="L65">            sb.append(&quot; != null&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L66">            XmlElement isNotNullElement = new XmlElement(&quot;if&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L67">            isNotNullElement.addAttribute(new Attribute(&quot;test&quot;, sb.toString())); //$NON-NLS-1$</span>
+<span class="fc" id="L68">            dynamicElement.addElement(isNotNullElement);</span>
 
-<span class="fc" id="L75">            sb.setLength(0);</span>
-<span class="fc" id="L76">            sb.append(MyBatis3FormattingUtilities</span>
-<span class="fc" id="L77">                    .getEscapedColumnName(introspectedColumn));</span>
-<span class="fc" id="L78">            sb.append(&quot; = &quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L79">            sb.append(MyBatis3FormattingUtilities</span>
-<span class="fc" id="L80">                    .getParameterClause(introspectedColumn));</span>
-<span class="fc" id="L81">            sb.append(',');</span>
+<span class="fc" id="L70">            sb.setLength(0);</span>
+<span class="fc" id="L71">            sb.append(MyBatis3FormattingUtilities</span>
+<span class="fc" id="L72">                    .getEscapedColumnName(introspectedColumn));</span>
+<span class="fc" id="L73">            sb.append(&quot; = &quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L74">            sb.append(MyBatis3FormattingUtilities</span>
+<span class="fc" id="L75">                    .getParameterClause(introspectedColumn));</span>
+<span class="fc" id="L76">            sb.append(',');</span>
 
-<span class="fc" id="L83">            isNotNullElement.addElement(new TextElement(sb.toString()));</span>
-<span class="fc" id="L84">        }</span>
+<span class="fc" id="L78">            isNotNullElement.addElement(new TextElement(sb.toString()));</span>
+<span class="fc" id="L79">        }</span>
 
-<span class="fc" id="L86">        boolean and = false;</span>
-<span class="fc bfc" id="L87" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable</span>
-<span class="fc" id="L88">                .getPrimaryKeyColumns()) {</span>
-<span class="fc" id="L89">            sb.setLength(0);</span>
-<span class="fc bfc" id="L90" title="All 2 branches covered.">            if (and) {</span>
-<span class="fc" id="L91">                sb.append(&quot;  and &quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L81">        boolean and = false;</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable</span>
+<span class="fc" id="L83">                .getPrimaryKeyColumns()) {</span>
+<span class="fc" id="L84">            sb.setLength(0);</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">            if (and) {</span>
+<span class="fc" id="L86">                sb.append(&quot;  and &quot;); //$NON-NLS-1$</span>
             } else {
-<span class="fc" id="L93">                sb.append(&quot;where &quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L94">                and = true;</span>
+<span class="fc" id="L88">                sb.append(&quot;where &quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L89">                and = true;</span>
             }
 
-<span class="fc" id="L97">            sb.append(MyBatis3FormattingUtilities</span>
-<span class="fc" id="L98">                    .getEscapedColumnName(introspectedColumn));</span>
-<span class="fc" id="L99">            sb.append(&quot; = &quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L100">            sb.append(MyBatis3FormattingUtilities</span>
-<span class="fc" id="L101">                    .getParameterClause(introspectedColumn));</span>
-<span class="fc" id="L102">            answer.addElement(new TextElement(sb.toString()));</span>
-<span class="fc" id="L103">        }</span>
+<span class="fc" id="L92">            sb.append(MyBatis3FormattingUtilities</span>
+<span class="fc" id="L93">                    .getEscapedColumnName(introspectedColumn));</span>
+<span class="fc" id="L94">            sb.append(&quot; = &quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L95">            sb.append(MyBatis3FormattingUtilities</span>
+<span class="fc" id="L96">                    .getParameterClause(introspectedColumn));</span>
+<span class="fc" id="L97">            answer.addElement(new TextElement(sb.toString()));</span>
+<span class="fc" id="L98">        }</span>
 
-<span class="fc" id="L105">        if (context.getPlugins()</span>
-<span class="pc bpc" id="L106" title="1 of 2 branches missed.">                .sqlMapUpdateByPrimaryKeySelectiveElementGenerated(answer,</span>
+<span class="fc" id="L100">        if (context.getPlugins()</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">                .sqlMapUpdateByPrimaryKeySelectiveElementGenerated(answer,</span>
                         introspectedTable)) {
-<span class="fc" id="L108">            parentElement.addElement(answer);</span>
+<span class="fc" id="L103">            parentElement.addElement(answer);</span>
         }
-<span class="fc" id="L110">    }</span>
+<span class="fc" id="L105">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SqlMapGeneratorConfiguration.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.config</a> &gt; <span class="el_source">SqlMapGeneratorConfiguration.java</span></div><h1>SqlMapGeneratorConfiguration.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -20,65 +20,40 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.List;
 
-import org.mybatis.generator.api.dom.xml.Attribute;
-import org.mybatis.generator.api.dom.xml.XmlElement;
-
-/**
- * @author Jeff Butler
- */
 public class SqlMapGeneratorConfiguration extends PropertyHolder {
     private String targetPackage;
 
     private String targetProject;
 
-    /**
-     *  
-     */
     public SqlMapGeneratorConfiguration() {
-<span class="fc" id="L38">        super();</span>
-<span class="fc" id="L39">    }</span>
+<span class="fc" id="L29">        super();</span>
+<span class="fc" id="L30">    }</span>
 
     public String getTargetProject() {
-<span class="fc" id="L42">        return targetProject;</span>
+<span class="fc" id="L33">        return targetProject;</span>
     }
 
     public void setTargetProject(String targetProject) {
-<span class="fc" id="L46">        this.targetProject = targetProject;</span>
-<span class="fc" id="L47">    }</span>
+<span class="fc" id="L37">        this.targetProject = targetProject;</span>
+<span class="fc" id="L38">    }</span>
 
     public String getTargetPackage() {
-<span class="fc" id="L50">        return targetPackage;</span>
+<span class="fc" id="L41">        return targetPackage;</span>
     }
 
     public void setTargetPackage(String targetPackage) {
-<span class="fc" id="L54">        this.targetPackage = targetPackage;</span>
-<span class="fc" id="L55">    }</span>
-
-    public XmlElement toXmlElement() {
-<span class="nc" id="L58">        XmlElement answer = new XmlElement(&quot;sqlMapGenerator&quot;); //$NON-NLS-1$</span>
-
-<span class="nc bnc" id="L60" title="All 2 branches missed.">        if (targetPackage != null) {</span>
-<span class="nc" id="L61">            answer.addAttribute(new Attribute(&quot;targetPackage&quot;, targetPackage)); //$NON-NLS-1$</span>
-        }
-
-<span class="nc bnc" id="L64" title="All 2 branches missed.">        if (targetProject != null) {</span>
-<span class="nc" id="L65">            answer.addAttribute(new Attribute(&quot;targetProject&quot;, targetProject)); //$NON-NLS-1$</span>
-        }
-
-<span class="nc" id="L68">        addPropertyXmlElements(answer);</span>
-
-<span class="nc" id="L70">        return answer;</span>
-    }
+<span class="fc" id="L45">        this.targetPackage = targetPackage;</span>
+<span class="fc" id="L46">    }</span>
 
     public void validate(List&lt;String&gt; errors, String contextId) {
-<span class="pc bpc" id="L74" title="1 of 2 branches missed.">        if (!stringHasValue(targetProject)) {</span>
-<span class="nc" id="L75">            errors.add(getString(&quot;ValidationError.1&quot;, contextId)); //$NON-NLS-1$</span>
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">        if (!stringHasValue(targetProject)) {</span>
+<span class="nc" id="L50">            errors.add(getString(&quot;ValidationError.1&quot;, contextId)); //$NON-NLS-1$</span>
         }
 
-<span class="pc bpc" id="L78" title="1 of 2 branches missed.">        if (!stringHasValue(targetPackage)) {</span>
-<span class="nc" id="L79">            errors.add(getString(&quot;ValidationError.12&quot;, //$NON-NLS-1$</span>
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">        if (!stringHasValue(targetPackage)) {</span>
+<span class="nc" id="L54">            errors.add(getString(&quot;ValidationError.12&quot;, //$NON-NLS-1$</span>
                     &quot;SQLMapGenerator&quot;, contextId)); //$NON-NLS-1$
         }
-<span class="fc" id="L82">    }</span>
+<span class="fc" id="L57">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

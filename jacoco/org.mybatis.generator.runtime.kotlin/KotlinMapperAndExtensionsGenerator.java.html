@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>KotlinMapperAndExtensionsGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.kotlin</a> &gt; <span class="el_source">KotlinMapperAndExtensionsGenerator.java</span></div><h1>KotlinMapperAndExtensionsGenerator.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2019 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime.kotlin;
+
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
+import org.mybatis.generator.api.dom.kotlin.KotlinFile;
+import org.mybatis.generator.api.dom.kotlin.KotlinType;
+import org.mybatis.generator.codegen.AbstractKotlinGenerator;
+import org.mybatis.generator.runtime.kotlin.elements.AbstractKotlinFunctionGenerator;
+import org.mybatis.generator.runtime.kotlin.elements.BasicCountMethodGenerator;
+import org.mybatis.generator.runtime.kotlin.elements.BasicDeleteMethodGenerator;
+import org.mybatis.generator.runtime.kotlin.elements.BasicInsertMethodGenerator;
+import org.mybatis.generator.runtime.kotlin.elements.BasicMultipleInsertHelperMethodGenerator;
+import org.mybatis.generator.runtime.kotlin.elements.BasicMultipleInsertMethodGenerator;
+import org.mybatis.generator.runtime.kotlin.elements.BasicSelectManyMethodGenerator;
+import org.mybatis.generator.runtime.kotlin.elements.BasicSelectOneMethodGenerator;
+import org.mybatis.generator.runtime.kotlin.elements.BasicUpdateMethodGenerator;
+import org.mybatis.generator.runtime.kotlin.elements.ColumnListGenerator;
+import org.mybatis.generator.runtime.kotlin.elements.DeleteByPrimaryKeyMethodGenerator;
+import org.mybatis.generator.runtime.kotlin.elements.GeneralCountMethodGenerator;
+import org.mybatis.generator.runtime.kotlin.elements.GeneralDeleteMethodGenerator;
+import org.mybatis.generator.runtime.kotlin.elements.GeneralSelectDistinctMethodGenerator;
+import org.mybatis.generator.runtime.kotlin.elements.GeneralSelectMethodGenerator;
+import org.mybatis.generator.runtime.kotlin.elements.GeneralSelectOneMethodGenerator;
+import org.mybatis.generator.runtime.kotlin.elements.GeneralUpdateMethodGenerator;
+import org.mybatis.generator.runtime.kotlin.elements.InsertMethodGenerator;
+import org.mybatis.generator.runtime.kotlin.elements.InsertMultipleMethodGenerator;
+import org.mybatis.generator.runtime.kotlin.elements.InsertMultipleVarargMethodGenerator;
+import org.mybatis.generator.runtime.kotlin.elements.InsertSelectiveMethodGenerator;
+import org.mybatis.generator.runtime.kotlin.elements.KotlinFragmentGenerator;
+import org.mybatis.generator.runtime.kotlin.elements.KotlinFunctionAndImports;
+import org.mybatis.generator.runtime.kotlin.elements.KotlinPropertyAndImports;
+import org.mybatis.generator.runtime.kotlin.elements.SelectByPrimaryKeyMethodGenerator;
+import org.mybatis.generator.runtime.kotlin.elements.UpdateAllColumnsMethodGenerator;
+import org.mybatis.generator.runtime.kotlin.elements.UpdateByPrimaryKeyMethodGenerator;
+import org.mybatis.generator.runtime.kotlin.elements.UpdateByPrimaryKeySelectiveMethodGenerator;
+import org.mybatis.generator.runtime.kotlin.elements.UpdateSelectiveColumnsMethodGenerator;
+
+public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator {
+
+    // record type for insert, select, update
+    protected FullyQualifiedKotlinType recordType;
+    
+    // id to use for the common result map
+    protected String resultMapId;
+    
+    protected KotlinFragmentGenerator fragmentGenerator;
+    
+    protected KotlinDynamicSqlSupportClassGenerator supportClassGenerator;
+
+    public KotlinMapperAndExtensionsGenerator(String project) {
+<span class="fc" id="L70">        super(project);</span>
+<span class="fc" id="L71">    }</span>
+
+    protected void preCalculate() {
+<span class="fc" id="L74">        supportClassGenerator = new KotlinDynamicSqlSupportClassGenerator(context, introspectedTable);</span>
+<span class="fc" id="L75">        recordType = new FullyQualifiedKotlinType(introspectedTable.getKotlinRecordType());</span>
+<span class="fc" id="L76">        resultMapId = recordType.getShortNameWithoutTypeArguments() + &quot;Result&quot;; //$NON-NLS-1$</span>
+<span class="fc" id="L77">        fragmentGenerator = new KotlinFragmentGenerator.Builder()</span>
+<span class="fc" id="L78">                .withIntrospectedTable(introspectedTable)</span>
+<span class="fc" id="L79">                .withResultMapId(resultMapId)</span>
+<span class="fc" id="L80">                .withDynamicSqlSupportClassGenerator(supportClassGenerator)</span>
+<span class="fc" id="L81">                .build();</span>
+<span class="fc" id="L82">    }</span>
+
+    protected KotlinFile createMapperInterfaceFile() {
+<span class="fc" id="L85">        FullyQualifiedKotlinType type = new FullyQualifiedKotlinType(</span>
+<span class="fc" id="L86">                introspectedTable.getMyBatis3JavaMapperType());</span>
+        
+<span class="fc" id="L88">        KotlinFile kf = new KotlinFile(type.getShortNameWithoutTypeArguments());</span>
+<span class="fc" id="L89">        kf.setPackage(type.getPackageName());</span>
+        
+<span class="fc" id="L91">        return kf;</span>
+    }
+
+    protected KotlinFile createMapperExtensionsFile() {
+<span class="fc" id="L95">        FullyQualifiedKotlinType type = new FullyQualifiedKotlinType(</span>
+<span class="fc" id="L96">                introspectedTable.getMyBatis3JavaMapperType());</span>
+        
+<span class="fc" id="L98">        KotlinFile kf = new KotlinFile(type.getShortNameWithoutTypeArguments() + &quot;Extensions&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L99">        kf.setPackage(type.getPackageName());</span>
+<span class="fc" id="L100">        context.getCommentGenerator().addFileComment(kf);</span>
+        
+<span class="fc" id="L102">        return kf;</span>
+    }
+
+    protected KotlinType createMapperInterface(KotlinFile kotlinFile) {
+<span class="fc" id="L106">        FullyQualifiedKotlinType type = new FullyQualifiedKotlinType(</span>
+<span class="fc" id="L107">                introspectedTable.getMyBatis3JavaMapperType());</span>
+        
+<span class="fc" id="L109">        KotlinType intf = KotlinType.newInterface(type.getShortNameWithoutTypeArguments())</span>
+<span class="fc" id="L110">                .withAnnotation(&quot;@Mapper&quot;) //$NON-NLS-1$</span>
+<span class="fc" id="L111">                .build();</span>
+        
+<span class="fc" id="L113">        kotlinFile.addImport(&quot;org.apache.ibatis.annotations.Mapper&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L114">        kotlinFile.addNamedItem(intf);</span>
+                
+<span class="fc" id="L116">        context.getCommentGenerator().addFileComment(kotlinFile);</span>
+
+<span class="fc" id="L118">        return intf;</span>
+    }
+
+    protected void addBasicCountMethod(KotlinFile kotlinFile, KotlinType kotlinType) {
+<span class="fc" id="L122">        BasicCountMethodGenerator generator = new BasicCountMethodGenerator.Builder()</span>
+<span class="fc" id="L123">                .withContext(context)</span>
+<span class="fc" id="L124">                .withIntrospectedTable(introspectedTable)</span>
+<span class="fc" id="L125">                .withDynamicSqlSupportClassGenerator(supportClassGenerator)</span>
+<span class="fc" id="L126">                .build();</span>
+        
+<span class="fc" id="L128">        generate(kotlinFile, kotlinType, generator);</span>
+<span class="fc" id="L129">    }</span>
+    
+    protected void addBasicDeleteMethod(KotlinFile kotlinFile, KotlinType kotlinType) {
+<span class="fc" id="L132">        BasicDeleteMethodGenerator generator = new BasicDeleteMethodGenerator.Builder()</span>
+<span class="fc" id="L133">                .withContext(context)</span>
+<span class="fc" id="L134">                .withIntrospectedTable(introspectedTable)</span>
+<span class="fc" id="L135">                .withDynamicSqlSupportClassGenerator(supportClassGenerator)</span>
+<span class="fc" id="L136">                .build();</span>
+        
+<span class="fc" id="L138">        generate(kotlinFile, kotlinType, generator);</span>
+<span class="fc" id="L139">    }</span>
+
+    protected void addBasicInsertMethod(KotlinFile kotlinFile, KotlinType kotlinType) {
+<span class="fc" id="L142">        BasicInsertMethodGenerator generator = new BasicInsertMethodGenerator.Builder()</span>
+<span class="fc" id="L143">                .withContext(context)</span>
+<span class="fc" id="L144">                .withFragmentGenerator(fragmentGenerator)</span>
+<span class="fc" id="L145">                .withIntrospectedTable(introspectedTable)</span>
+<span class="fc" id="L146">                .withDynamicSqlSupportClassGenerator(supportClassGenerator)</span>
+<span class="fc" id="L147">                .withRecordType(recordType)</span>
+<span class="fc" id="L148">                .withKotlinFile(kotlinFile)</span>
+<span class="fc" id="L149">                .build();</span>
+        
+<span class="fc" id="L151">        generate(kotlinFile, kotlinType, generator);</span>
+<span class="fc" id="L152">    }</span>
+
+    protected void addBasicSelectManyMethod(KotlinFile kotlinFile, KotlinType kotlinType) {
+<span class="fc" id="L155">        BasicSelectManyMethodGenerator generator = new BasicSelectManyMethodGenerator.Builder()</span>
+<span class="fc" id="L156">                .withContext(context)</span>
+<span class="fc" id="L157">                .withFragmentGenerator(fragmentGenerator)</span>
+<span class="fc" id="L158">                .withIntrospectedTable(introspectedTable)</span>
+<span class="fc" id="L159">                .withDynamicSqlSupportClassGenerator(supportClassGenerator)</span>
+<span class="fc" id="L160">                .withRecordType(recordType)</span>
+<span class="fc" id="L161">                .build();</span>
+        
+<span class="fc" id="L163">        generate(kotlinFile, kotlinType, generator);</span>
+<span class="fc" id="L164">    }</span>
+    
+    protected void addBasicUpdateMethod(KotlinFile kotlinFile, KotlinType kotlinType) {
+<span class="fc" id="L167">        BasicUpdateMethodGenerator generator = new BasicUpdateMethodGenerator.Builder()</span>
+<span class="fc" id="L168">                .withContext(context)</span>
+<span class="fc" id="L169">                .withIntrospectedTable(introspectedTable)</span>
+<span class="fc" id="L170">                .withDynamicSqlSupportClassGenerator(supportClassGenerator)</span>
+<span class="fc" id="L171">                .build();</span>
+        
+<span class="fc" id="L173">        generate(kotlinFile, kotlinType, generator);</span>
+<span class="fc" id="L174">    }</span>
+
+    protected void generate(KotlinFile kotlinFile, AbstractKotlinFunctionGenerator generator) {
+<span class="fc" id="L177">        KotlinFunctionAndImports mi = generator.generateMethodAndImports();</span>
+<span class="fc bfc" id="L178" title="All 4 branches covered.">        if (mi != null &amp;&amp; generator.callPlugins(mi.getFunction(), kotlinFile)) {</span>
+<span class="fc" id="L179">            kotlinFile.addNamedItem(mi.getFunction());</span>
+<span class="fc" id="L180">            kotlinFile.addImports(mi.getImports());</span>
+        }
+<span class="fc" id="L182">    }</span>
+
+    protected void generate(KotlinFile kotlinFile, KotlinType kotlinType, AbstractKotlinFunctionGenerator generator) {
+<span class="fc" id="L185">        KotlinFunctionAndImports mi = generator.generateMethodAndImports();</span>
+<span class="fc bfc" id="L186" title="All 4 branches covered.">        if (mi != null &amp;&amp; generator.callPlugins(mi.getFunction(), kotlinFile)) {</span>
+<span class="fc" id="L187">            kotlinType.addNamedItem(mi.getFunction());</span>
+<span class="fc" id="L188">            kotlinFile.addImports(mi.getImports());</span>
+        }
+<span class="fc" id="L190">    }</span>
+    
+    @Override
+    public List&lt;KotlinFile&gt; getKotlinFiles() {
+<span class="fc" id="L194">        progressCallback.startTask(getString(&quot;Progress.17&quot;, //$NON-NLS-1$</span>
+<span class="fc" id="L195">                introspectedTable.getFullyQualifiedTable().toString()));</span>
+<span class="fc" id="L196">        preCalculate();</span>
+        
+<span class="fc" id="L198">        KotlinFile mapperFile = createMapperInterfaceFile();</span>
+<span class="fc" id="L199">        KotlinType mapper = createMapperInterface(mapperFile);</span>
+    
+<span class="fc" id="L201">        addBasicCountMethod(mapperFile, mapper);</span>
+<span class="fc" id="L202">        addBasicDeleteMethod(mapperFile, mapper);</span>
+<span class="fc" id="L203">        addBasicInsertMethod(mapperFile, mapper);</span>
+<span class="fc" id="L204">        addBasicInsertMultipleMethod(mapperFile, mapper);</span>
+<span class="fc" id="L205">        addBasicSelectOneMethod(mapperFile, mapper);</span>
+<span class="fc" id="L206">        addBasicSelectManyMethod(mapperFile, mapper);</span>
+<span class="fc" id="L207">        addBasicUpdateMethod(mapperFile, mapper);</span>
+        
+<span class="fc" id="L209">        KotlinFile extensionsFile = createMapperExtensionsFile();</span>
+<span class="fc" id="L210">        String mapperName = mapper.getName();</span>
+
+<span class="fc" id="L212">        addCountByExampleMethod(extensionsFile, mapperName);</span>
+<span class="fc" id="L213">        addDeleteByExampleMethod(extensionsFile, mapperName);</span>
+<span class="fc" id="L214">        addDeleteByPrimaryKeyMethod(extensionsFile, mapperName);</span>
+<span class="fc" id="L215">        addBasicInsertMultipleHelperMethod(extensionsFile, mapperName);</span>
+<span class="fc" id="L216">        addInsertOneMethod(extensionsFile, mapperName);</span>
+<span class="fc" id="L217">        addInsertMultipleMethod(extensionsFile, mapperName);</span>
+<span class="fc" id="L218">        addInsertMultipleVarargMethod(extensionsFile, mapperName);</span>
+<span class="fc" id="L219">        addInsertSelectiveMethod(extensionsFile, mapperName);</span>
+<span class="fc" id="L220">        addColumnListProperty(extensionsFile);</span>
+<span class="fc" id="L221">        addSelectByExampleMethod(extensionsFile, mapperName);</span>
+<span class="fc" id="L222">        addSelectDistinctByExampleMethod(extensionsFile, mapperName);</span>
+<span class="fc" id="L223">        addSelectByPrimaryKeyMethod(extensionsFile, mapperName);</span>
+<span class="fc" id="L224">        addUpdateByExampleMethod(extensionsFile, mapperName);</span>
+<span class="fc" id="L225">        addUpdateAllMethod(extensionsFile);</span>
+<span class="fc" id="L226">        addUpdateSelectiveMethod(extensionsFile);</span>
+<span class="fc" id="L227">        addUpdateByPrimaryKeyMethod(extensionsFile, mapperName);</span>
+<span class="fc" id="L228">        addUpdateByPrimaryKeySelectiveMethod(extensionsFile, mapperName);</span>
+        
+<span class="fc" id="L230">        KotlinFile supportFile = supportClassGenerator.getKotlinFile();</span>
+        
+<span class="fc" id="L232">        List&lt;KotlinFile&gt; answer = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L233" title="1 of 2 branches missed.">        if (context.getPlugins().dynamicSqlSupportGenerated(supportFile, supportClassGenerator.getInnerObject(),</span>
+                introspectedTable)) {
+<span class="fc" id="L235">            answer.add(supportFile);</span>
+        }
+        
+<span class="pc bpc" id="L238" title="1 of 2 branches missed.">        if (context.getPlugins().mapperGenerated(mapperFile, introspectedTable)) {</span>
+<span class="fc" id="L239">            answer.add(mapperFile);</span>
+        }
+    
+<span class="pc bpc" id="L242" title="1 of 2 branches missed.">        if (context.getPlugins().mapperExtensionsGenerated(extensionsFile, introspectedTable)) {</span>
+<span class="fc" id="L243">            answer.add(extensionsFile);</span>
+        }
+    
+<span class="fc" id="L246">        return answer;</span>
+    }
+
+    protected void addInsertOneMethod(KotlinFile kotlinFile, String mapperName) {
+<span class="fc" id="L250">        InsertMethodGenerator generator = new InsertMethodGenerator.Builder()</span>
+<span class="fc" id="L251">                .withContext(context)</span>
+<span class="fc" id="L252">                .withIntrospectedTable(introspectedTable)</span>
+<span class="fc" id="L253">                .withDynamicSqlSupportClassGenerator(supportClassGenerator)</span>
+<span class="fc" id="L254">                .withRecordType(recordType)</span>
+<span class="fc" id="L255">                .withMapperName(mapperName)</span>
+<span class="fc" id="L256">                .withTableFieldImport(supportClassGenerator.getInnerObjectImport())</span>
+<span class="fc" id="L257">                .build();</span>
+        
+<span class="fc" id="L259">        generate(kotlinFile, generator);</span>
+<span class="fc" id="L260">    }</span>
+
+    protected void addBasicInsertMultipleMethod(KotlinFile kotlinFile, KotlinType kotlinType) {
+<span class="fc" id="L263">        BasicMultipleInsertMethodGenerator generator = new BasicMultipleInsertMethodGenerator.Builder()</span>
+<span class="fc" id="L264">                .withContext(context)</span>
+<span class="fc" id="L265">                .withIntrospectedTable(introspectedTable)</span>
+<span class="fc" id="L266">                .withDynamicSqlSupportClassGenerator(supportClassGenerator)</span>
+<span class="fc" id="L267">                .withRecordType(recordType)</span>
+<span class="fc" id="L268">                .build();</span>
+        
+<span class="fc" id="L270">        generate(kotlinFile, kotlinType, generator);</span>
+<span class="fc" id="L271">    }</span>
+
+    protected void addBasicInsertMultipleHelperMethod(KotlinFile kotlinFile, String mapperName) {
+<span class="fc" id="L274">        BasicMultipleInsertHelperMethodGenerator generator = new BasicMultipleInsertHelperMethodGenerator.Builder()</span>
+<span class="fc" id="L275">                .withContext(context)</span>
+<span class="fc" id="L276">                .withIntrospectedTable(introspectedTable)</span>
+<span class="fc" id="L277">                .withDynamicSqlSupportClassGenerator(supportClassGenerator)</span>
+<span class="fc" id="L278">                .withRecordType(recordType)</span>
+<span class="fc" id="L279">                .withMapperName(mapperName)</span>
+<span class="fc" id="L280">                .build();</span>
+        
+<span class="fc" id="L282">        generate(kotlinFile, generator);</span>
+<span class="fc" id="L283">    }</span>
+
+    protected void addInsertMultipleMethod(KotlinFile kotlinFile, String mapperName) {
+<span class="fc" id="L286">        InsertMultipleMethodGenerator generator = new InsertMultipleMethodGenerator.Builder()</span>
+<span class="fc" id="L287">                .withContext(context)</span>
+<span class="fc" id="L288">                .withIntrospectedTable(introspectedTable)</span>
+<span class="fc" id="L289">                .withDynamicSqlSupportClassGenerator(supportClassGenerator)</span>
+<span class="fc" id="L290">                .withRecordType(recordType)</span>
+<span class="fc" id="L291">                .withMapperName(mapperName)</span>
+<span class="fc" id="L292">                .withTableFieldImport(supportClassGenerator.getInnerObjectImport())</span>
+<span class="fc" id="L293">                .build();</span>
+        
+<span class="fc" id="L295">        generate(kotlinFile, generator);</span>
+<span class="fc" id="L296">    }</span>
+
+    protected void addInsertMultipleVarargMethod(KotlinFile kotlinFile, String mapperName) {
+<span class="fc" id="L299">        InsertMultipleVarargMethodGenerator generator = new InsertMultipleVarargMethodGenerator.Builder()</span>
+<span class="fc" id="L300">                .withContext(context)</span>
+<span class="fc" id="L301">                .withIntrospectedTable(introspectedTable)</span>
+<span class="fc" id="L302">                .withDynamicSqlSupportClassGenerator(supportClassGenerator)</span>
+<span class="fc" id="L303">                .withRecordType(recordType)</span>
+<span class="fc" id="L304">                .withMapperName(mapperName)</span>
+<span class="fc" id="L305">                .build();</span>
+        
+<span class="fc" id="L307">        generate(kotlinFile, generator);</span>
+<span class="fc" id="L308">    }</span>
+
+    protected void addCountByExampleMethod(KotlinFile kotlinFile, String mapperName) {
+<span class="fc" id="L311">        GeneralCountMethodGenerator generator = new GeneralCountMethodGenerator.Builder()</span>
+<span class="fc" id="L312">                .withContext(context)</span>
+<span class="fc" id="L313">                .withIntrospectedTable(introspectedTable)</span>
+<span class="fc" id="L314">                .withDynamicSqlSupportClassGenerator(supportClassGenerator)</span>
+<span class="fc" id="L315">                .withMapperName(mapperName)</span>
+<span class="fc" id="L316">                .build();</span>
+        
+<span class="fc" id="L318">        generate(kotlinFile, generator);</span>
+<span class="fc" id="L319">    }</span>
+
+    protected void addDeleteByExampleMethod(KotlinFile kotlinFile, String mapperName) {
+<span class="fc" id="L322">        GeneralDeleteMethodGenerator generator = new GeneralDeleteMethodGenerator.Builder()</span>
+<span class="fc" id="L323">                .withContext(context)</span>
+<span class="fc" id="L324">                .withIntrospectedTable(introspectedTable)</span>
+<span class="fc" id="L325">                .withDynamicSqlSupportClassGenerator(supportClassGenerator)</span>
+<span class="fc" id="L326">                .withMapperName(mapperName)</span>
+<span class="fc" id="L327">                .build();</span>
+        
+<span class="fc" id="L329">        generate(kotlinFile, generator);</span>
+<span class="fc" id="L330">    }</span>
+
+    protected void addColumnListProperty(KotlinFile kotlinFile) {
+<span class="fc" id="L333">        ColumnListGenerator generator = new ColumnListGenerator.Builder()</span>
+<span class="fc" id="L334">                .withContext(context)</span>
+<span class="fc" id="L335">                .withIntrospectedTable(introspectedTable)</span>
+<span class="fc" id="L336">                .withTableFieldImport(supportClassGenerator.getInnerObjectImport())</span>
+<span class="fc" id="L337">                .build();</span>
+        
+<span class="fc" id="L339">        KotlinPropertyAndImports propertyAndImports = generator.generatePropertyAndImports();</span>
+    
+<span class="pc bpc" id="L341" title="2 of 4 branches missed.">        if (propertyAndImports != null &amp;&amp; generator.callPlugins(propertyAndImports.getProperty(), kotlinFile)) {</span>
+<span class="fc" id="L342">            kotlinFile.addNamedItem(propertyAndImports.getProperty());</span>
+<span class="fc" id="L343">            kotlinFile.addImports(propertyAndImports.getImports());</span>
+        }
+<span class="fc" id="L345">    }</span>
+
+    protected void addSelectByExampleMethod(KotlinFile kotlinFile, String mapperName) {
+<span class="fc" id="L348">        addGeneralSelectOneMethod(kotlinFile, mapperName);</span>
+<span class="fc" id="L349">        GeneralSelectMethodGenerator generator = new GeneralSelectMethodGenerator.Builder()</span>
+<span class="fc" id="L350">                .withContext(context)</span>
+<span class="fc" id="L351">                .withIntrospectedTable(introspectedTable)</span>
+<span class="fc" id="L352">                .withDynamicSqlSupportClassGenerator(supportClassGenerator)</span>
+<span class="fc" id="L353">                .withMapperName(mapperName)</span>
+<span class="fc" id="L354">                .build();</span>
+        
+<span class="fc" id="L356">        generate(kotlinFile, generator);</span>
+<span class="fc" id="L357">    }</span>
+
+    protected void addSelectDistinctByExampleMethod(KotlinFile kotlinFile, String mapperName) {
+<span class="fc" id="L360">        GeneralSelectDistinctMethodGenerator generator = new GeneralSelectDistinctMethodGenerator.Builder()</span>
+<span class="fc" id="L361">                .withContext(context)</span>
+<span class="fc" id="L362">                .withIntrospectedTable(introspectedTable)</span>
+<span class="fc" id="L363">                .withDynamicSqlSupportClassGenerator(supportClassGenerator)</span>
+<span class="fc" id="L364">                .withMapperName(mapperName)</span>
+<span class="fc" id="L365">                .build();</span>
+        
+<span class="fc" id="L367">        generate(kotlinFile, generator);</span>
+<span class="fc" id="L368">    }</span>
+
+    protected void addGeneralSelectOneMethod(KotlinFile kotlinFile, String mapperName) {
+<span class="fc" id="L371">        GeneralSelectOneMethodGenerator generator = new GeneralSelectOneMethodGenerator.Builder()</span>
+<span class="fc" id="L372">                .withContext(context)</span>
+<span class="fc" id="L373">                .withIntrospectedTable(introspectedTable)</span>
+<span class="fc" id="L374">                .withDynamicSqlSupportClassGenerator(supportClassGenerator)</span>
+<span class="fc" id="L375">                .withMapperName(mapperName)</span>
+<span class="fc" id="L376">                .build();</span>
+        
+<span class="fc" id="L378">        generate(kotlinFile, generator);</span>
+<span class="fc" id="L379">    }</span>
+
+    protected void addUpdateByExampleMethod(KotlinFile kotlinFile, String mapperName) {
+<span class="fc" id="L382">        GeneralUpdateMethodGenerator generator = new GeneralUpdateMethodGenerator.Builder()</span>
+<span class="fc" id="L383">                .withContext(context)</span>
+<span class="fc" id="L384">                .withIntrospectedTable(introspectedTable)</span>
+<span class="fc" id="L385">                .withDynamicSqlSupportClassGenerator(supportClassGenerator)</span>
+<span class="fc" id="L386">                .withMapperName(mapperName)</span>
+<span class="fc" id="L387">                .build();</span>
+        
+<span class="fc" id="L389">        generate(kotlinFile, generator);</span>
+<span class="fc" id="L390">    }</span>
+
+    protected void addUpdateAllMethod(KotlinFile kotlinFile) {
+<span class="fc" id="L393">        UpdateAllColumnsMethodGenerator generator = new UpdateAllColumnsMethodGenerator.Builder()</span>
+<span class="fc" id="L394">                .withContext(context)</span>
+<span class="fc" id="L395">                .withIntrospectedTable(introspectedTable)</span>
+<span class="fc" id="L396">                .withDynamicSqlSupportClassGenerator(supportClassGenerator)</span>
+<span class="fc" id="L397">                .withFragmentGenerator(fragmentGenerator)</span>
+<span class="fc" id="L398">                .withRecordType(recordType)</span>
+<span class="fc" id="L399">                .build();</span>
+        
+<span class="fc" id="L401">        generate(kotlinFile, generator);</span>
+<span class="fc" id="L402">    }</span>
+
+    protected void addUpdateSelectiveMethod(KotlinFile kotlinFile) {
+<span class="fc" id="L405">        UpdateSelectiveColumnsMethodGenerator generator = new UpdateSelectiveColumnsMethodGenerator.Builder()</span>
+<span class="fc" id="L406">                .withContext(context)</span>
+<span class="fc" id="L407">                .withIntrospectedTable(introspectedTable)</span>
+<span class="fc" id="L408">                .withDynamicSqlSupportClassGenerator(supportClassGenerator)</span>
+<span class="fc" id="L409">                .withFragmentGenerator(fragmentGenerator)</span>
+<span class="fc" id="L410">                .withRecordType(recordType)</span>
+<span class="fc" id="L411">                .build();</span>
+        
+<span class="fc" id="L413">        generate(kotlinFile, generator);</span>
+<span class="fc" id="L414">    }</span>
+
+    protected void addBasicSelectOneMethod(KotlinFile kotlinFile, KotlinType kotlinType) {
+<span class="fc" id="L417">        BasicSelectOneMethodGenerator generator = new BasicSelectOneMethodGenerator.Builder()</span>
+<span class="fc" id="L418">                .withContext(context)</span>
+<span class="fc" id="L419">                .withFragmentGenerator(fragmentGenerator)</span>
+<span class="fc" id="L420">                .withIntrospectedTable(introspectedTable)</span>
+<span class="fc" id="L421">                .withDynamicSqlSupportClassGenerator(supportClassGenerator)</span>
+<span class="fc" id="L422">                .withRecordType(recordType)</span>
+<span class="fc" id="L423">                .withResultMapId(resultMapId)</span>
+<span class="fc" id="L424">                .build();</span>
+        
+<span class="fc" id="L426">        generate(kotlinFile, kotlinType, generator);</span>
+<span class="fc" id="L427">    }</span>
+
+    protected void addDeleteByPrimaryKeyMethod(KotlinFile kotlinFile, String mapperName) {
+<span class="fc" id="L430">        DeleteByPrimaryKeyMethodGenerator generator = new DeleteByPrimaryKeyMethodGenerator.Builder()</span>
+<span class="fc" id="L431">                .withContext(context)</span>
+<span class="fc" id="L432">                .withIntrospectedTable(introspectedTable)</span>
+<span class="fc" id="L433">                .withFragmentGenerator(fragmentGenerator)</span>
+<span class="fc" id="L434">                .withDynamicSqlSupportClassGenerator(supportClassGenerator)</span>
+<span class="fc" id="L435">                .withMapperName(mapperName)</span>
+<span class="fc" id="L436">                .build();</span>
+        
+<span class="fc" id="L438">        generate(kotlinFile, generator);</span>
+<span class="fc" id="L439">    }</span>
+
+    protected void addInsertSelectiveMethod(KotlinFile kotlinFile, String mapperName) {
+<span class="fc" id="L442">        InsertSelectiveMethodGenerator generator = new InsertSelectiveMethodGenerator.Builder()</span>
+<span class="fc" id="L443">                .withContext(context)</span>
+<span class="fc" id="L444">                .withIntrospectedTable(introspectedTable)</span>
+<span class="fc" id="L445">                .withDynamicSqlSupportClassGenerator(supportClassGenerator)</span>
+<span class="fc" id="L446">                .withRecordType(recordType)</span>
+<span class="fc" id="L447">                .withMapperName(mapperName)</span>
+<span class="fc" id="L448">                .withTableFieldImport(supportClassGenerator.getInnerObjectImport())</span>
+<span class="fc" id="L449">                .build();</span>
+        
+<span class="fc" id="L451">        generate(kotlinFile, generator);</span>
+<span class="fc" id="L452">    }</span>
+
+    protected void addSelectByPrimaryKeyMethod(KotlinFile kotlinFile, String mapperName) {
+<span class="fc" id="L455">        SelectByPrimaryKeyMethodGenerator generator = new SelectByPrimaryKeyMethodGenerator.Builder()</span>
+<span class="fc" id="L456">                .withContext(context)</span>
+<span class="fc" id="L457">                .withFragmentGenerator(fragmentGenerator)</span>
+<span class="fc" id="L458">                .withIntrospectedTable(introspectedTable)</span>
+<span class="fc" id="L459">                .withDynamicSqlSupportClassGenerator(supportClassGenerator)</span>
+<span class="fc" id="L460">                .withMapperName(mapperName)</span>
+<span class="fc" id="L461">                .build();</span>
+        
+<span class="fc" id="L463">        generate(kotlinFile, generator);</span>
+<span class="fc" id="L464">    }</span>
+
+    protected void addUpdateByPrimaryKeyMethod(KotlinFile kotlinFile, String mapperName) {
+<span class="fc" id="L467">        UpdateByPrimaryKeyMethodGenerator generator = new UpdateByPrimaryKeyMethodGenerator.Builder()</span>
+<span class="fc" id="L468">                .withContext(context)</span>
+<span class="fc" id="L469">                .withFragmentGenerator(fragmentGenerator)</span>
+<span class="fc" id="L470">                .withIntrospectedTable(introspectedTable)</span>
+<span class="fc" id="L471">                .withDynamicSqlSupportClassGenerator(supportClassGenerator)</span>
+<span class="fc" id="L472">                .withRecordType(recordType)</span>
+<span class="fc" id="L473">                .withMapperName(mapperName)</span>
+<span class="fc" id="L474">                .build();</span>
+        
+<span class="fc" id="L476">        generate(kotlinFile, generator);</span>
+<span class="fc" id="L477">    }</span>
+
+    protected void addUpdateByPrimaryKeySelectiveMethod(KotlinFile kotlinFile, String mapperName) {
+<span class="fc" id="L480">        UpdateByPrimaryKeySelectiveMethodGenerator generator =</span>
+                new UpdateByPrimaryKeySelectiveMethodGenerator.Builder()
+<span class="fc" id="L482">                .withContext(context)</span>
+<span class="fc" id="L483">                .withFragmentGenerator(fragmentGenerator)</span>
+<span class="fc" id="L484">                .withIntrospectedTable(introspectedTable)</span>
+<span class="fc" id="L485">                .withDynamicSqlSupportClassGenerator(supportClassGenerator)</span>
+<span class="fc" id="L486">                .withRecordType(recordType)</span>
+<span class="fc" id="L487">                .withMapperName(mapperName)</span>
+<span class="fc" id="L488">                .build();</span>
+        
+<span class="fc" id="L490">        generate(kotlinFile, generator);</span>
+<span class="fc" id="L491">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BodyLineRenderer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api.dom.java.render</a> &gt; <span class="el_source">BodyLineRenderer.java</span></div><h1>BodyLineRenderer.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2019 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.api.dom.java.render;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
+
+import org.mybatis.generator.api.dom.OutputUtilities;
+
+<span class="fc" id="L24">public class BodyLineRenderer {</span>
+
+    public List&lt;String&gt; render(List&lt;String&gt; bodyLines) {
+<span class="fc" id="L27">        List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L28">        int indentLevel = 1;</span>
+<span class="fc" id="L29">        StringBuilder sb = new StringBuilder();</span>
+
+<span class="fc" id="L31">        ListIterator&lt;String&gt; listIter = bodyLines.listIterator();</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">        while (listIter.hasNext()) {</span>
+<span class="fc" id="L33">            sb.setLength(0);</span>
+<span class="fc" id="L34">            String line = listIter.next();</span>
+<span class="fc bfc" id="L35" title="All 2 branches covered.">            if (line.startsWith(&quot;}&quot;)) { //$NON-NLS-1$</span>
+<span class="fc" id="L36">                indentLevel--;</span>
+            }
+
+<span class="fc" id="L39">            OutputUtilities.javaIndent(sb, indentLevel);</span>
+<span class="fc" id="L40">            sb.append(line);</span>
+<span class="fc" id="L41">            lines.add(sb.toString());</span>
+
+<span class="fc bfc" id="L43" title="All 4 branches covered.">            if (isCodeBlockStartExceptSwitchStatement(line) || line.endsWith(&quot;:&quot;)) { //$NON-NLS-1$</span>
+<span class="fc" id="L44">                indentLevel++;</span>
+            }
+
+<span class="fc bfc" id="L47" title="All 2 branches covered.">            if (line.startsWith(&quot;break&quot;)) { //$NON-NLS-1$</span>
+                // if the next line is '}', then don't outdent
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">                if (listIter.hasNext()) {</span>
+<span class="fc" id="L50">                    String nextLine = listIter.next();</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">                    if (nextLine.startsWith(&quot;}&quot;)) { //$NON-NLS-1$</span>
+<span class="fc" id="L52">                        indentLevel++;</span>
+                    }
+
+                    // set back to the previous element
+<span class="fc" id="L56">                    listIter.previous();</span>
+                }
+<span class="fc" id="L58">                indentLevel--;</span>
+            }
+<span class="fc" id="L60">        }</span>
+
+<span class="fc" id="L62">        return lines;</span>
+    }
+    
+    private boolean isCodeBlockStartExceptSwitchStatement(String line) {
+<span class="fc bfc" id="L66" title="All 4 branches covered.">        return line.endsWith(&quot;{&quot;) &amp;&amp; !line.startsWith(&quot;switch&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

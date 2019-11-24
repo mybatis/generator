@@ -24,24 +24,24 @@ import org.mybatis.generator.api.PluginAdapter;
 /**
  * This plugin marks generated XML mapper files as unmergeable.  This will cause the generator to either
  * overwrite the files, or save the files under a new name depending on how the overwrite setting is configured.
- *   
- * This can be useful when comments are disabled so the normal XML merge won't work. 
+ *  
+ * &lt;p&gt;This can be useful when comments are disabled so the normal XML merge won't work. 
  * 
  * @author Jeff Butler
  * 
  */
-<span class="nc" id="L33">public class UnmergeableXmlMappersPlugin extends PluginAdapter {</span>
+<span class="fc" id="L33">public class UnmergeableXmlMappersPlugin extends PluginAdapter {</span>
 
     @Override
     public boolean validate(List&lt;String&gt; warnings) {
-<span class="nc" id="L37">        return true;</span>
+<span class="fc" id="L37">        return true;</span>
     }
 
     @Override
     public boolean sqlMapGenerated(GeneratedXmlFile sqlMap,
             IntrospectedTable introspectedTable) {
-<span class="nc" id="L43">        sqlMap.setMergeable(false);</span>
-<span class="nc" id="L44">        return true;</span>
+<span class="fc" id="L43">        sqlMap.setMergeable(false);</span>
+<span class="fc" id="L44">        return true;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

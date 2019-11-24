@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MyBatisGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api</a> &gt; <span class="el_source">MyBatisGenerator.java</span></div><h1>MyBatisGenerator.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -55,23 +55,19 @@ import org.mybatis.generator.internal.XmlFileMergerJaxp;
  */
 public class MyBatisGenerator {
 
-    /** The configuration. */
     private Configuration configuration;
 
-    /** The shell callback. */
     private ShellCallback shellCallback;
 
-    /** The generated java files. */
-    private List&lt;GeneratedJavaFile&gt; generatedJavaFiles;
+<span class="fc" id="L62">    private List&lt;GeneratedJavaFile&gt; generatedJavaFiles = new ArrayList&lt;&gt;();</span>
 
-    /** The generated xml files. */
-    private List&lt;GeneratedXmlFile&gt; generatedXmlFiles;
+<span class="fc" id="L64">    private List&lt;GeneratedXmlFile&gt; generatedXmlFiles = new ArrayList&lt;&gt;();</span>
 
-    /** The warnings. */
+<span class="fc" id="L66">    private List&lt;GeneratedKotlinFile&gt; generatedKotlinFiles = new ArrayList&lt;&gt;();</span>
+    
     private List&lt;String&gt; warnings;
 
-    /** The projects. */
-    private Set&lt;String&gt; projects;
+<span class="fc" id="L70">    private Set&lt;String&gt; projects = new HashSet&lt;&gt;();</span>
 
     /**
      * Constructs a MyBatisGenerator object.
@@ -94,30 +90,27 @@ public class MyBatisGenerator {
      */
     public MyBatisGenerator(Configuration configuration, ShellCallback shellCallback,
             List&lt;String&gt; warnings) throws InvalidConfigurationException {
-<span class="fc" id="L97">        super();</span>
-<span class="pc bpc" id="L98" title="1 of 2 branches missed.">        if (configuration == null) {</span>
-<span class="nc" id="L99">            throw new IllegalArgumentException(getString(&quot;RuntimeError.2&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L93">        super();</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">        if (configuration == null) {</span>
+<span class="nc" id="L95">            throw new IllegalArgumentException(getString(&quot;RuntimeError.2&quot;)); //$NON-NLS-1$</span>
         } else {
-<span class="fc" id="L101">            this.configuration = configuration;</span>
+<span class="fc" id="L97">            this.configuration = configuration;</span>
         }
 
-<span class="pc bpc" id="L104" title="1 of 2 branches missed.">        if (shellCallback == null) {</span>
-<span class="nc" id="L105">            this.shellCallback = new DefaultShellCallback(false);</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">        if (shellCallback == null) {</span>
+<span class="nc" id="L101">            this.shellCallback = new DefaultShellCallback(false);</span>
         } else {
-<span class="fc" id="L107">            this.shellCallback = shellCallback;</span>
+<span class="fc" id="L103">            this.shellCallback = shellCallback;</span>
         }
 
-<span class="pc bpc" id="L110" title="1 of 2 branches missed.">        if (warnings == null) {</span>
-<span class="nc" id="L111">            this.warnings = new ArrayList&lt;String&gt;();</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">        if (warnings == null) {</span>
+<span class="nc" id="L107">            this.warnings = new ArrayList&lt;&gt;();</span>
         } else {
-<span class="fc" id="L113">            this.warnings = warnings;</span>
+<span class="fc" id="L109">            this.warnings = warnings;</span>
         }
-<span class="fc" id="L115">        generatedJavaFiles = new ArrayList&lt;GeneratedJavaFile&gt;();</span>
-<span class="fc" id="L116">        generatedXmlFiles = new ArrayList&lt;GeneratedXmlFile&gt;();</span>
-<span class="fc" id="L117">        projects = new HashSet&lt;String&gt;();</span>
 
-<span class="fc" id="L119">        this.configuration.validate();</span>
-<span class="fc" id="L120">    }</span>
+<span class="fc" id="L112">        this.configuration.validate();</span>
+<span class="fc" id="L113">    }</span>
 
     /**
      * This is the main method for generating code. This method is long running, but progress can be provided and the
@@ -136,8 +129,8 @@ public class MyBatisGenerator {
      */
     public void generate(ProgressCallback callback) throws SQLException,
             IOException, InterruptedException {
-<span class="nc" id="L139">        generate(callback, null, null, true);</span>
-<span class="nc" id="L140">    }</span>
+<span class="nc" id="L132">        generate(callback, null, null, true);</span>
+<span class="nc" id="L133">    }</span>
 
     /**
      * This is the main method for generating code. This method is long running, but progress can be provided and the
@@ -158,8 +151,8 @@ public class MyBatisGenerator {
      */
     public void generate(ProgressCallback callback, Set&lt;String&gt; contextIds)
             throws SQLException, IOException, InterruptedException {
-<span class="nc" id="L161">        generate(callback, contextIds, null, true);</span>
-<span class="nc" id="L162">    }</span>
+<span class="nc" id="L154">        generate(callback, contextIds, null, true);</span>
+<span class="nc" id="L155">    }</span>
 
     /**
      * This is the main method for generating code. This method is long running, but progress can be provided and the
@@ -186,8 +179,8 @@ public class MyBatisGenerator {
     public void generate(ProgressCallback callback, Set&lt;String&gt; contextIds,
             Set&lt;String&gt; fullyQualifiedTableNames) throws SQLException,
             IOException, InterruptedException {
-<span class="nc" id="L189">        generate(callback, contextIds, fullyQualifiedTableNames, true);</span>
-<span class="nc" id="L190">    }</span>
+<span class="nc" id="L182">        generate(callback, contextIds, fullyQualifiedTableNames, true);</span>
+<span class="nc" id="L183">    }</span>
 
     /**
      * This is the main method for generating code. This method is long running, but progress can be provided and the
@@ -218,154 +211,192 @@ public class MyBatisGenerator {
             Set&lt;String&gt; fullyQualifiedTableNames, boolean writeFiles) throws SQLException,
             IOException, InterruptedException {
 
-<span class="pc bpc" id="L221" title="1 of 2 branches missed.">        if (callback == null) {</span>
-<span class="fc" id="L222">            callback = new NullProgressCallback();</span>
+<span class="pc bpc" id="L214" title="1 of 2 branches missed.">        if (callback == null) {</span>
+<span class="fc" id="L215">            callback = new NullProgressCallback();</span>
         }
 
-<span class="fc" id="L225">        generatedJavaFiles.clear();</span>
-<span class="fc" id="L226">        generatedXmlFiles.clear();</span>
-<span class="fc" id="L227">        ObjectFactory.reset();</span>
-<span class="fc" id="L228">        RootClassInfo.reset();</span>
+<span class="fc" id="L218">        generatedJavaFiles.clear();</span>
+<span class="fc" id="L219">        generatedXmlFiles.clear();</span>
+<span class="fc" id="L220">        ObjectFactory.reset();</span>
+<span class="fc" id="L221">        RootClassInfo.reset();</span>
 
         // calculate the contexts to run
         List&lt;Context&gt; contextsToRun;
-<span class="pc bpc" id="L232" title="3 of 4 branches missed.">        if (contextIds == null || contextIds.size() == 0) {</span>
-<span class="fc" id="L233">            contextsToRun = configuration.getContexts();</span>
+<span class="pc bpc" id="L225" title="3 of 4 branches missed.">        if (contextIds == null || contextIds.isEmpty()) {</span>
+<span class="fc" id="L226">            contextsToRun = configuration.getContexts();</span>
         } else {
-<span class="nc" id="L235">            contextsToRun = new ArrayList&lt;Context&gt;();</span>
-<span class="nc bnc" id="L236" title="All 2 branches missed.">            for (Context context : configuration.getContexts()) {</span>
-<span class="nc bnc" id="L237" title="All 2 branches missed.">                if (contextIds.contains(context.getId())) {</span>
-<span class="nc" id="L238">                    contextsToRun.add(context);</span>
+<span class="nc" id="L228">            contextsToRun = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L229" title="All 2 branches missed.">            for (Context context : configuration.getContexts()) {</span>
+<span class="nc bnc" id="L230" title="All 2 branches missed.">                if (contextIds.contains(context.getId())) {</span>
+<span class="nc" id="L231">                    contextsToRun.add(context);</span>
                 }
-<span class="nc" id="L240">            }</span>
+<span class="nc" id="L233">            }</span>
         }
 
         // setup custom classloader if required
-<span class="pc bpc" id="L244" title="1 of 2 branches missed.">        if (configuration.getClassPathEntries().size() &gt; 0) {</span>
-<span class="nc" id="L245">            ClassLoader classLoader = getCustomClassloader(configuration.getClassPathEntries());</span>
-<span class="nc" id="L246">            ObjectFactory.addExternalClassLoader(classLoader);</span>
+<span class="pc bpc" id="L237" title="1 of 2 branches missed.">        if (!configuration.getClassPathEntries().isEmpty()) {</span>
+<span class="nc" id="L238">            ClassLoader classLoader = getCustomClassloader(configuration.getClassPathEntries());</span>
+<span class="nc" id="L239">            ObjectFactory.addExternalClassLoader(classLoader);</span>
         }
 
         // now run the introspections...
-<span class="fc" id="L250">        int totalSteps = 0;</span>
-<span class="fc bfc" id="L251" title="All 2 branches covered.">        for (Context context : contextsToRun) {</span>
-<span class="fc" id="L252">            totalSteps += context.getIntrospectionSteps();</span>
-<span class="fc" id="L253">        }</span>
-<span class="fc" id="L254">        callback.introspectionStarted(totalSteps);</span>
+<span class="fc" id="L243">        int totalSteps = 0;</span>
+<span class="fc bfc" id="L244" title="All 2 branches covered.">        for (Context context : contextsToRun) {</span>
+<span class="fc" id="L245">            totalSteps += context.getIntrospectionSteps();</span>
+<span class="fc" id="L246">        }</span>
+<span class="fc" id="L247">        callback.introspectionStarted(totalSteps);</span>
 
-<span class="fc bfc" id="L256" title="All 2 branches covered.">        for (Context context : contextsToRun) {</span>
-<span class="fc" id="L257">            context.introspectTables(callback, warnings,</span>
+<span class="fc bfc" id="L249" title="All 2 branches covered.">        for (Context context : contextsToRun) {</span>
+<span class="fc" id="L250">            context.introspectTables(callback, warnings,</span>
                     fullyQualifiedTableNames);
-<span class="fc" id="L259">        }</span>
+<span class="fc" id="L252">        }</span>
 
         // now run the generates
-<span class="fc" id="L262">        totalSteps = 0;</span>
-<span class="fc bfc" id="L263" title="All 2 branches covered.">        for (Context context : contextsToRun) {</span>
-<span class="fc" id="L264">            totalSteps += context.getGenerationSteps();</span>
-<span class="fc" id="L265">        }</span>
-<span class="fc" id="L266">        callback.generationStarted(totalSteps);</span>
+<span class="fc" id="L255">        totalSteps = 0;</span>
+<span class="fc bfc" id="L256" title="All 2 branches covered.">        for (Context context : contextsToRun) {</span>
+<span class="fc" id="L257">            totalSteps += context.getGenerationSteps();</span>
+<span class="fc" id="L258">        }</span>
+<span class="fc" id="L259">        callback.generationStarted(totalSteps);</span>
 
-<span class="fc bfc" id="L268" title="All 2 branches covered.">        for (Context context : contextsToRun) {</span>
-<span class="fc" id="L269">            context.generateFiles(callback, generatedJavaFiles,</span>
-                    generatedXmlFiles, warnings);
-<span class="fc" id="L271">        }</span>
+<span class="fc bfc" id="L261" title="All 2 branches covered.">        for (Context context : contextsToRun) {</span>
+<span class="fc" id="L262">            context.generateFiles(callback, generatedJavaFiles,</span>
+                    generatedXmlFiles, generatedKotlinFiles, warnings);
+<span class="fc" id="L264">        }</span>
 
         // now save the files
-<span class="pc bpc" id="L274" title="1 of 2 branches missed.">        if (writeFiles) {</span>
-<span class="nc" id="L275">            callback.saveStarted(generatedXmlFiles.size()</span>
-<span class="nc" id="L276">                    + generatedJavaFiles.size());</span>
+<span class="pc bpc" id="L267" title="1 of 2 branches missed.">        if (writeFiles) {</span>
+<span class="nc" id="L268">            callback.saveStarted(generatedXmlFiles.size()</span>
+<span class="nc" id="L269">                    + generatedJavaFiles.size());</span>
 
-<span class="nc bnc" id="L278" title="All 2 branches missed.">            for (GeneratedXmlFile gxf : generatedXmlFiles) {</span>
-<span class="nc" id="L279">                projects.add(gxf.getTargetProject());</span>
-<span class="nc" id="L280">                writeGeneratedXmlFile(gxf, callback);</span>
-<span class="nc" id="L281">            }</span>
+<span class="nc bnc" id="L271" title="All 2 branches missed.">            for (GeneratedXmlFile gxf : generatedXmlFiles) {</span>
+<span class="nc" id="L272">                projects.add(gxf.getTargetProject());</span>
+<span class="nc" id="L273">                writeGeneratedXmlFile(gxf, callback);</span>
+<span class="nc" id="L274">            }</span>
 
-<span class="nc bnc" id="L283" title="All 2 branches missed.">            for (GeneratedJavaFile gjf : generatedJavaFiles) {</span>
-<span class="nc" id="L284">                projects.add(gjf.getTargetProject());</span>
-<span class="nc" id="L285">                writeGeneratedJavaFile(gjf, callback);</span>
-<span class="nc" id="L286">            }</span>
+<span class="nc bnc" id="L276" title="All 2 branches missed.">            for (GeneratedJavaFile gjf : generatedJavaFiles) {</span>
+<span class="nc" id="L277">                projects.add(gjf.getTargetProject());</span>
+<span class="nc" id="L278">                writeGeneratedJavaFile(gjf, callback);</span>
+<span class="nc" id="L279">            }</span>
 
-<span class="nc bnc" id="L288" title="All 2 branches missed.">            for (String project : projects) {</span>
-<span class="nc" id="L289">                shellCallback.refreshProject(project);</span>
-<span class="nc" id="L290">            }</span>
+<span class="nc bnc" id="L281" title="All 2 branches missed.">            for (GeneratedKotlinFile gkf : generatedKotlinFiles) {</span>
+<span class="nc" id="L282">                projects.add(gkf.getTargetProject());</span>
+<span class="nc" id="L283">                writeGeneratedKotlinFile(gkf, callback);</span>
+<span class="nc" id="L284">            }</span>
+
+<span class="nc bnc" id="L286" title="All 2 branches missed.">            for (String project : projects) {</span>
+<span class="nc" id="L287">                shellCallback.refreshProject(project);</span>
+<span class="nc" id="L288">            }</span>
         }
 
-<span class="fc" id="L293">        callback.done();</span>
-<span class="fc" id="L294">    }</span>
+<span class="fc" id="L291">        callback.done();</span>
+<span class="fc" id="L292">    }</span>
 
     private void writeGeneratedJavaFile(GeneratedJavaFile gjf, ProgressCallback callback)
             throws InterruptedException, IOException {
         File targetFile;
         String source;
         try {
-<span class="nc" id="L301">            File directory = shellCallback.getDirectory(gjf</span>
-<span class="nc" id="L302">                    .getTargetProject(), gjf.getTargetPackage());</span>
-<span class="nc" id="L303">            targetFile = new File(directory, gjf.getFileName());</span>
-<span class="nc bnc" id="L304" title="All 2 branches missed.">            if (targetFile.exists()) {</span>
-<span class="nc bnc" id="L305" title="All 2 branches missed.">                if (shellCallback.isMergeSupported()) {</span>
-<span class="nc" id="L306">                    source = shellCallback.mergeJavaFile(gjf</span>
-<span class="nc" id="L307">                            .getFormattedContent(), targetFile,</span>
-                            MergeConstants.OLD_ELEMENT_TAGS,
-<span class="nc" id="L309">                            gjf.getFileEncoding());</span>
-<span class="nc bnc" id="L310" title="All 2 branches missed.">                } else if (shellCallback.isOverwriteEnabled()) {</span>
-<span class="nc" id="L311">                    source = gjf.getFormattedContent();</span>
-<span class="nc" id="L312">                    warnings.add(getString(&quot;Warning.11&quot;, //$NON-NLS-1$</span>
-<span class="nc" id="L313">                            targetFile.getAbsolutePath()));</span>
+<span class="nc" id="L299">            File directory = shellCallback.getDirectory(gjf</span>
+<span class="nc" id="L300">                    .getTargetProject(), gjf.getTargetPackage());</span>
+<span class="nc" id="L301">            targetFile = new File(directory, gjf.getFileName());</span>
+<span class="nc bnc" id="L302" title="All 2 branches missed.">            if (targetFile.exists()) {</span>
+<span class="nc bnc" id="L303" title="All 2 branches missed.">                if (shellCallback.isMergeSupported()) {</span>
+<span class="nc" id="L304">                    source = shellCallback.mergeJavaFile(gjf</span>
+<span class="nc" id="L305">                            .getFormattedContent(), targetFile,</span>
+<span class="nc" id="L306">                            MergeConstants.getOldElementTags(),</span>
+<span class="nc" id="L307">                            gjf.getFileEncoding());</span>
+<span class="nc bnc" id="L308" title="All 2 branches missed.">                } else if (shellCallback.isOverwriteEnabled()) {</span>
+<span class="nc" id="L309">                    source = gjf.getFormattedContent();</span>
+<span class="nc" id="L310">                    warnings.add(getString(&quot;Warning.11&quot;, //$NON-NLS-1$</span>
+<span class="nc" id="L311">                            targetFile.getAbsolutePath()));</span>
                 } else {
-<span class="nc" id="L315">                    source = gjf.getFormattedContent();</span>
-<span class="nc" id="L316">                    targetFile = getUniqueFileName(directory, gjf</span>
-<span class="nc" id="L317">                            .getFileName());</span>
-<span class="nc" id="L318">                    warnings.add(getString(</span>
-<span class="nc" id="L319">                            &quot;Warning.2&quot;, targetFile.getAbsolutePath())); //$NON-NLS-1$</span>
+<span class="nc" id="L313">                    source = gjf.getFormattedContent();</span>
+<span class="nc" id="L314">                    targetFile = getUniqueFileName(directory, gjf</span>
+<span class="nc" id="L315">                            .getFileName());</span>
+<span class="nc" id="L316">                    warnings.add(getString(</span>
+<span class="nc" id="L317">                            &quot;Warning.2&quot;, targetFile.getAbsolutePath())); //$NON-NLS-1$</span>
                 }
             } else {
-<span class="nc" id="L322">                source = gjf.getFormattedContent();</span>
+<span class="nc" id="L320">                source = gjf.getFormattedContent();</span>
             }
 
-<span class="nc" id="L325">            callback.checkCancel();</span>
-<span class="nc" id="L326">            callback.startTask(getString(</span>
-<span class="nc" id="L327">                    &quot;Progress.15&quot;, targetFile.getName())); //$NON-NLS-1$</span>
-<span class="nc" id="L328">            writeFile(targetFile, source, gjf.getFileEncoding());</span>
-<span class="nc" id="L329">        } catch (ShellException e) {</span>
-<span class="nc" id="L330">            warnings.add(e.getMessage());</span>
-<span class="nc" id="L331">        }</span>
-<span class="nc" id="L332">    }</span>
+<span class="nc" id="L323">            callback.checkCancel();</span>
+<span class="nc" id="L324">            callback.startTask(getString(</span>
+<span class="nc" id="L325">                    &quot;Progress.15&quot;, targetFile.getName())); //$NON-NLS-1$</span>
+<span class="nc" id="L326">            writeFile(targetFile, source, gjf.getFileEncoding());</span>
+<span class="nc" id="L327">        } catch (ShellException e) {</span>
+<span class="nc" id="L328">            warnings.add(e.getMessage());</span>
+<span class="nc" id="L329">        }</span>
+<span class="nc" id="L330">    }</span>
+
+    private void writeGeneratedKotlinFile(GeneratedKotlinFile gkf, ProgressCallback callback)
+            throws InterruptedException, IOException {
+        File targetFile;
+        String source;
+        try {
+<span class="nc" id="L337">            File directory = shellCallback.getDirectory(gkf</span>
+<span class="nc" id="L338">                    .getTargetProject(), gkf.getTargetPackage());</span>
+<span class="nc" id="L339">            targetFile = new File(directory, gkf.getFileName());</span>
+<span class="nc bnc" id="L340" title="All 2 branches missed.">            if (targetFile.exists()) {</span>
+<span class="nc bnc" id="L341" title="All 2 branches missed.">                if (shellCallback.isOverwriteEnabled()) {</span>
+<span class="nc" id="L342">                    source = gkf.getFormattedContent();</span>
+<span class="nc" id="L343">                    warnings.add(getString(&quot;Warning.11&quot;, //$NON-NLS-1$</span>
+<span class="nc" id="L344">                            targetFile.getAbsolutePath()));</span>
+                } else {
+<span class="nc" id="L346">                    source = gkf.getFormattedContent();</span>
+<span class="nc" id="L347">                    targetFile = getUniqueFileName(directory, gkf</span>
+<span class="nc" id="L348">                            .getFileName());</span>
+<span class="nc" id="L349">                    warnings.add(getString(</span>
+<span class="nc" id="L350">                            &quot;Warning.2&quot;, targetFile.getAbsolutePath())); //$NON-NLS-1$</span>
+                }
+            } else {
+<span class="nc" id="L353">                source = gkf.getFormattedContent();</span>
+            }
+
+<span class="nc" id="L356">            callback.checkCancel();</span>
+<span class="nc" id="L357">            callback.startTask(getString(</span>
+<span class="nc" id="L358">                    &quot;Progress.15&quot;, targetFile.getName())); //$NON-NLS-1$</span>
+<span class="nc" id="L359">            writeFile(targetFile, source, gkf.getFileEncoding());</span>
+<span class="nc" id="L360">        } catch (ShellException e) {</span>
+<span class="nc" id="L361">            warnings.add(e.getMessage());</span>
+<span class="nc" id="L362">        }</span>
+<span class="nc" id="L363">    }</span>
 
     private void writeGeneratedXmlFile(GeneratedXmlFile gxf, ProgressCallback callback)
             throws InterruptedException, IOException {
         File targetFile;
         String source;
         try {
-<span class="nc" id="L339">            File directory = shellCallback.getDirectory(gxf</span>
-<span class="nc" id="L340">                    .getTargetProject(), gxf.getTargetPackage());</span>
-<span class="nc" id="L341">            targetFile = new File(directory, gxf.getFileName());</span>
-<span class="nc bnc" id="L342" title="All 2 branches missed.">            if (targetFile.exists()) {</span>
-<span class="nc bnc" id="L343" title="All 2 branches missed.">                if (gxf.isMergeable()) {</span>
-<span class="nc" id="L344">                    source = XmlFileMergerJaxp.getMergedSource(gxf,</span>
+<span class="nc" id="L370">            File directory = shellCallback.getDirectory(gxf</span>
+<span class="nc" id="L371">                    .getTargetProject(), gxf.getTargetPackage());</span>
+<span class="nc" id="L372">            targetFile = new File(directory, gxf.getFileName());</span>
+<span class="nc bnc" id="L373" title="All 2 branches missed.">            if (targetFile.exists()) {</span>
+<span class="nc bnc" id="L374" title="All 2 branches missed.">                if (gxf.isMergeable()) {</span>
+<span class="nc" id="L375">                    source = XmlFileMergerJaxp.getMergedSource(gxf,</span>
                             targetFile);
-<span class="nc bnc" id="L346" title="All 2 branches missed.">                } else if (shellCallback.isOverwriteEnabled()) {</span>
-<span class="nc" id="L347">                    source = gxf.getFormattedContent();</span>
-<span class="nc" id="L348">                    warnings.add(getString(&quot;Warning.11&quot;, //$NON-NLS-1$</span>
-<span class="nc" id="L349">                            targetFile.getAbsolutePath()));</span>
+<span class="nc bnc" id="L377" title="All 2 branches missed.">                } else if (shellCallback.isOverwriteEnabled()) {</span>
+<span class="nc" id="L378">                    source = gxf.getFormattedContent();</span>
+<span class="nc" id="L379">                    warnings.add(getString(&quot;Warning.11&quot;, //$NON-NLS-1$</span>
+<span class="nc" id="L380">                            targetFile.getAbsolutePath()));</span>
                 } else {
-<span class="nc" id="L351">                    source = gxf.getFormattedContent();</span>
-<span class="nc" id="L352">                    targetFile = getUniqueFileName(directory, gxf</span>
-<span class="nc" id="L353">                            .getFileName());</span>
-<span class="nc" id="L354">                    warnings.add(getString(</span>
-<span class="nc" id="L355">                            &quot;Warning.2&quot;, targetFile.getAbsolutePath())); //$NON-NLS-1$</span>
+<span class="nc" id="L382">                    source = gxf.getFormattedContent();</span>
+<span class="nc" id="L383">                    targetFile = getUniqueFileName(directory, gxf</span>
+<span class="nc" id="L384">                            .getFileName());</span>
+<span class="nc" id="L385">                    warnings.add(getString(</span>
+<span class="nc" id="L386">                            &quot;Warning.2&quot;, targetFile.getAbsolutePath())); //$NON-NLS-1$</span>
                 }
             } else {
-<span class="nc" id="L358">                source = gxf.getFormattedContent();</span>
+<span class="nc" id="L389">                source = gxf.getFormattedContent();</span>
             }
 
-<span class="nc" id="L361">            callback.checkCancel();</span>
-<span class="nc" id="L362">            callback.startTask(getString(</span>
-<span class="nc" id="L363">                    &quot;Progress.15&quot;, targetFile.getName())); //$NON-NLS-1$</span>
-<span class="nc" id="L364">            writeFile(targetFile, source, &quot;UTF-8&quot;); //$NON-NLS-1$</span>
-<span class="nc" id="L365">        } catch (ShellException e) {</span>
-<span class="nc" id="L366">            warnings.add(e.getMessage());</span>
-<span class="nc" id="L367">        }</span>
-<span class="nc" id="L368">    }</span>
+<span class="nc" id="L392">            callback.checkCancel();</span>
+<span class="nc" id="L393">            callback.startTask(getString(</span>
+<span class="nc" id="L394">                    &quot;Progress.15&quot;, targetFile.getName())); //$NON-NLS-1$</span>
+<span class="nc" id="L395">            writeFile(targetFile, source, &quot;UTF-8&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L396">        } catch (ShellException e) {</span>
+<span class="nc" id="L397">            warnings.add(e.getMessage());</span>
+<span class="nc" id="L398">        }</span>
+<span class="nc" id="L399">    }</span>
 
     /**
      * Writes, or overwrites, the contents of the specified file.
@@ -380,18 +411,18 @@ public class MyBatisGenerator {
      *             Signals that an I/O exception has occurred.
      */
     private void writeFile(File file, String content, String fileEncoding) throws IOException {
-<span class="nc" id="L383">        FileOutputStream fos = new FileOutputStream(file, false);</span>
+<span class="nc" id="L414">        FileOutputStream fos = new FileOutputStream(file, false);</span>
         OutputStreamWriter osw;
-<span class="nc bnc" id="L385" title="All 2 branches missed.">        if (fileEncoding == null) {</span>
-<span class="nc" id="L386">            osw = new OutputStreamWriter(fos);</span>
+<span class="nc bnc" id="L416" title="All 2 branches missed.">        if (fileEncoding == null) {</span>
+<span class="nc" id="L417">            osw = new OutputStreamWriter(fos);</span>
         } else {
-<span class="nc" id="L388">            osw = new OutputStreamWriter(fos, fileEncoding);</span>
+<span class="nc" id="L419">            osw = new OutputStreamWriter(fos, fileEncoding);</span>
         }
 
-<span class="nc" id="L391">        BufferedWriter bw = new BufferedWriter(osw);</span>
-<span class="nc" id="L392">        bw.write(content);</span>
-<span class="nc" id="L393">        bw.close();</span>
-<span class="nc" id="L394">    }</span>
+<span class="nc" id="L422">        try (BufferedWriter bw = new BufferedWriter(osw)) {</span>
+<span class="nc" id="L423">            bw.write(content);</span>
+        }
+<span class="nc" id="L425">    }</span>
 
     /**
      * Gets the unique file name.
@@ -403,29 +434,29 @@ public class MyBatisGenerator {
      * @return the unique file name
      */
     private File getUniqueFileName(File directory, String fileName) {
-<span class="nc" id="L406">        File answer = null;</span>
+<span class="nc" id="L437">        File answer = null;</span>
 
         // try up to 1000 times to generate a unique file name
-<span class="nc" id="L409">        StringBuilder sb = new StringBuilder();</span>
-<span class="nc bnc" id="L410" title="All 2 branches missed.">        for (int i = 1; i &lt; 1000; i++) {</span>
-<span class="nc" id="L411">            sb.setLength(0);</span>
-<span class="nc" id="L412">            sb.append(fileName);</span>
-<span class="nc" id="L413">            sb.append('.');</span>
-<span class="nc" id="L414">            sb.append(i);</span>
+<span class="nc" id="L440">        StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L441" title="All 2 branches missed.">        for (int i = 1; i &lt; 1000; i++) {</span>
+<span class="nc" id="L442">            sb.setLength(0);</span>
+<span class="nc" id="L443">            sb.append(fileName);</span>
+<span class="nc" id="L444">            sb.append('.');</span>
+<span class="nc" id="L445">            sb.append(i);</span>
 
-<span class="nc" id="L416">            File testFile = new File(directory, sb.toString());</span>
-<span class="nc bnc" id="L417" title="All 2 branches missed.">            if (!testFile.exists()) {</span>
-<span class="nc" id="L418">                answer = testFile;</span>
-<span class="nc" id="L419">                break;</span>
+<span class="nc" id="L447">            File testFile = new File(directory, sb.toString());</span>
+<span class="nc bnc" id="L448" title="All 2 branches missed.">            if (!testFile.exists()) {</span>
+<span class="nc" id="L449">                answer = testFile;</span>
+<span class="nc" id="L450">                break;</span>
             }
         }
 
-<span class="nc bnc" id="L423" title="All 2 branches missed.">        if (answer == null) {</span>
-<span class="nc" id="L424">            throw new RuntimeException(getString(</span>
-<span class="nc" id="L425">                    &quot;RuntimeError.3&quot;, directory.getAbsolutePath())); //$NON-NLS-1$</span>
+<span class="nc bnc" id="L454" title="All 2 branches missed.">        if (answer == null) {</span>
+<span class="nc" id="L455">            throw new RuntimeException(getString(</span>
+<span class="nc" id="L456">                    &quot;RuntimeError.3&quot;, directory.getAbsolutePath())); //$NON-NLS-1$</span>
         }
 
-<span class="nc" id="L428">        return answer;</span>
+<span class="nc" id="L459">        return answer;</span>
     }
 
     /**
@@ -436,7 +467,18 @@ public class MyBatisGenerator {
      * @return the list of generated Java files
      */
     public List&lt;GeneratedJavaFile&gt; getGeneratedJavaFiles() {
-<span class="fc" id="L439">        return generatedJavaFiles;</span>
+<span class="fc" id="L470">        return generatedJavaFiles;</span>
+    }
+
+    /**
+     * Returns the list of generated Kotlin files after a call to one of the generate methods.
+     * This is useful if you prefer to process the generated files yourself and do not want
+     * the generator to write them to disk.
+     *  
+     * @return the list of generated Kotlin files
+     */
+    public List&lt;GeneratedKotlinFile&gt; getGeneratedKotlinFiles() {
+<span class="fc" id="L481">        return generatedKotlinFiles;</span>
     }
 
     /**
@@ -447,7 +489,7 @@ public class MyBatisGenerator {
      * @return the list of generated XML files
      */
     public List&lt;GeneratedXmlFile&gt; getGeneratedXmlFiles() {
-<span class="fc" id="L450">        return generatedXmlFiles;</span>
+<span class="fc" id="L492">        return generatedXmlFiles;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

@@ -13,7 +13,7 @@
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_javadoccomment"> *    you may not use this file except in compliance with the License.</em>
 <a class="jxr_linenumber" name="L6" href="#L6">6</a>   <em class="jxr_javadoccomment"> *    You may obtain a copy of the License at</em>
 <a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_javadoccomment"> *       <a href="http://www.apache.org/licenses/LICENSE-2." target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.</a>0</em>
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_javadoccomment"> *       <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a></em>
 <a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_javadoccomment"> *    Unless required by applicable law or agreed to in writing, software</em>
 <a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_javadoccomment"> *    distributed under the License is distributed on an "AS IS" BASIS,</em>
@@ -48,11 +48,11 @@
 <a class="jxr_linenumber" name="L40" href="#L40">40</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;This plugin accepts three properties:</em>
 <a class="jxr_linenumber" name="L41" href="#L41">41</a>  <em class="jxr_javadoccomment"> * </em>
 <a class="jxr_linenumber" name="L42" href="#L42">42</a>  <em class="jxr_javadoccomment"> * &lt;ul&gt;</em>
-<a class="jxr_linenumber" name="L43" href="#L43">43</a>  <em class="jxr_javadoccomment"> * &lt;li&gt;&lt;tt&gt;fileName&lt;/tt&gt; (optional) the name of the generated file. this</em>
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>  <em class="jxr_javadoccomment"> * &lt;li&gt;&lt;code&gt;fileName&lt;/code&gt; (optional) the name of the generated file. this</em>
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>  <em class="jxr_javadoccomment"> * defaults to "SqlMapConfig.xml" if not specified.&lt;/li&gt;</em>
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>  <em class="jxr_javadoccomment"> * &lt;li&gt;&lt;tt&gt;targetPackage&lt;/tt&gt; (required) the name of the package where the file</em>
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>  <em class="jxr_javadoccomment"> * &lt;li&gt;&lt;code&gt;targetPackage&lt;/code&gt; (required) the name of the package where the file</em>
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>  <em class="jxr_javadoccomment"> * should be placed. Specified like "com.mycompany.sql".&lt;/li&gt;</em>
-<a class="jxr_linenumber" name="L47" href="#L47">47</a>  <em class="jxr_javadoccomment"> * &lt;li&gt;&lt;tt&gt;targetProject&lt;/tt&gt; (required) the name of the project where the file</em>
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>  <em class="jxr_javadoccomment"> * &lt;li&gt;&lt;code&gt;targetProject&lt;/code&gt; (required) the name of the project where the file</em>
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>  <em class="jxr_javadoccomment"> * should be placed.&lt;/li&gt;</em>
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>  <em class="jxr_javadoccomment"> * &lt;/ul&gt;</em>
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>  <em class="jxr_javadoccomment"> * </em>
@@ -63,9 +63,9 @@
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>  <em class="jxr_javadoccomment"> * @author Jeff Butler</em>
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>  <em class="jxr_javadoccomment"> * </em>
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../org/mybatis/generator/plugins/MapperConfigPlugin.html">MapperConfigPlugin</a> <strong class="jxr_keyword">extends</strong> <a href="../../../../org/mybatis/generator/api/PluginAdapter.html">PluginAdapter</a> {
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="MapperConfigPlugin" href="../../../../org/mybatis/generator/plugins/MapperConfigPlugin.html#MapperConfigPlugin">MapperConfigPlugin</a> <strong class="jxr_keyword">extends</strong> <a name="PluginAdapter" href="../../../../org/mybatis/generator/api/PluginAdapter.html#PluginAdapter">PluginAdapter</a> {
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>  
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>      <strong class="jxr_keyword">private</strong> List&lt;String&gt; mapperFiles = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>      <strong class="jxr_keyword">private</strong> List&lt;String&gt; mapperFiles = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>  
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>      @Override
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> validate(List&lt;String&gt; warnings) {
@@ -92,7 +92,7 @@
 <a class="jxr_linenumber" name="L84" href="#L84">84</a>  
 <a class="jxr_linenumber" name="L85" href="#L85">85</a>      @Override
 <a class="jxr_linenumber" name="L86" href="#L86">86</a>      <strong class="jxr_keyword">public</strong> List&lt;GeneratedXmlFile&gt; contextGenerateAdditionalXmlFiles() {
-<a class="jxr_linenumber" name="L87" href="#L87">87</a>          <a href="../../../../org/mybatis/generator/api/dom/xml/Document.html">Document</a> document = <strong class="jxr_keyword">new</strong> <a href="../../../../org/mybatis/generator/api/dom/xml/Document.html">Document</a>(
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>          <a name="Document" href="../../../../org/mybatis/generator/ap<a name="Document" href="../../../../org/mybatis/generator/api/dom/xml/Document.html#Document">Document</a>l/Document.html#Document">Document</a> document = <strong class="jxr_keyword">new</strong> <a name="Document" href="../../../../org/mybatis/generator/api/dom/xml/Document.html#Document">Document</a>(
 <a class="jxr_linenumber" name="L88" href="#L88">88</a>                  XmlConstants.MYBATIS3_MAPPER_CONFIG_PUBLIC_ID,
 <a class="jxr_linenumber" name="L89" href="#L89">89</a>                  XmlConstants.MYBATIS3_MAPPER_CONFIG_SYSTEM_ID);
 <a class="jxr_linenumber" name="L90" href="#L90">90</a>  
@@ -100,42 +100,42 @@
 <a class="jxr_linenumber" name="L92" href="#L92">92</a>              <strong class="jxr_keyword">return</strong> Collections.emptyList();
 <a class="jxr_linenumber" name="L93" href="#L93">93</a>          }
 <a class="jxr_linenumber" name="L94" href="#L94">94</a>          
-<a class="jxr_linenumber" name="L95" href="#L95">95</a>          <a href="../../../../org/mybatis/generator/api/dom/xml/XmlElement.html">XmlElement</a> root = <strong class="jxr_keyword">new</strong> <a href="../../../../org/mybatis/generator/api/dom/xml/XmlElement.html">XmlElement</a>(<span class="jxr_string">"configuration"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L95" href="#L95">95</a>          <a name="XmlElement" href="../../../../org/mybatis/generato<a name="XmlElement" href="../../../../org/mybatis/generator/api/dom/xml/XmlElement.html#XmlElement">XmlElement</a>xml/XmlElement.html#XmlElement">XmlElement</a> root = <strong class="jxr_keyword">new</strong> <a name="XmlElement" href="../../../../org/mybatis/generator/api/dom/xml/XmlElement.html#XmlElement">XmlElement</a>(<span class="jxr_string">"configuration"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L96" href="#L96">96</a>          document.setRootElement(root);
 <a class="jxr_linenumber" name="L97" href="#L97">97</a>  
-<a class="jxr_linenumber" name="L98" href="#L98">98</a>          root.addElement(<strong class="jxr_keyword">new</strong> <a href="../../../../org/mybatis/generator/api/dom/xml/TextElement.html">TextElement</a>(<span class="jxr_string">"&lt;!--"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L99" href="#L99">99</a>          root.addElement(<strong class="jxr_keyword">new</strong> <a href="../../../../org/mybatis/generator/api/dom/xml/TextElement.html">TextElement</a>(
+<a class="jxr_linenumber" name="L98" href="#L98">98</a>          root.addElement(<strong class="jxr_keyword">new</strong> <a name="TextElement" href="../../../../org/mybatis/generator/api/dom/xml/TextElement.html#TextElement">TextElement</a>(<span class="jxr_string">"&lt;!--"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L99" href="#L99">99</a>          root.addElement(<strong class="jxr_keyword">new</strong> <a name="TextElement" href="../../../../org/mybatis/generator/api/dom/xml/TextElement.html#TextElement">TextElement</a>(
 <a class="jxr_linenumber" name="L100" href="#L100">100</a>                 <span class="jxr_string">"  This file is generated by MyBatis Generator."</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L101" href="#L101">101</a>         root.addElement(<strong class="jxr_keyword">new</strong> <a href="../../../../org/mybatis/generator/api/dom/xml/TextElement.html">TextElement</a>(
+<a class="jxr_linenumber" name="L101" href="#L101">101</a>         root.addElement(<strong class="jxr_keyword">new</strong> <a name="TextElement" href="../../../../org/mybatis/generator/api/dom/xml/TextElement.html#TextElement">TextElement</a>(
 <a class="jxr_linenumber" name="L102" href="#L102">102</a>                 <span class="jxr_string">"  This file is the shell of a Mapper Config file - in many cases you will need to add"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L103" href="#L103">103</a>         root.addElement(<strong class="jxr_keyword">new</strong> <a href="../../../../org/mybatis/generator/api/dom/xml/TextElement.html">TextElement</a>(
+<a class="jxr_linenumber" name="L103" href="#L103">103</a>         root.addElement(<strong class="jxr_keyword">new</strong> <a name="TextElement" href="../../../../org/mybatis/generator/api/dom/xml/TextElement.html#TextElement">TextElement</a>(
 <a class="jxr_linenumber" name="L104" href="#L104">104</a>                 <span class="jxr_string">"    to this file before it is usable by MyBatis."</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L105" href="#L105">105</a> 
 <a class="jxr_linenumber" name="L106" href="#L106">106</a>         StringBuilder sb = <strong class="jxr_keyword">new</strong> StringBuilder();
 <a class="jxr_linenumber" name="L107" href="#L107">107</a>         sb.append(<span class="jxr_string">"  This file was generated on "</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L108" href="#L108">108</a>         sb.append(<strong class="jxr_keyword">new</strong> Date());
 <a class="jxr_linenumber" name="L109" href="#L109">109</a>         sb.append('.');
-<a class="jxr_linenumber" name="L110" href="#L110">110</a>         root.addElement(<strong class="jxr_keyword">new</strong> <a href="../../../../org/mybatis/generator/api/dom/xml/TextElement.html">TextElement</a>(sb.toString()));
+<a class="jxr_linenumber" name="L110" href="#L110">110</a>         root.addElement(<strong class="jxr_keyword">new</strong> <a name="TextElement" href="../../../../org/mybatis/generator/api/dom/xml/TextElement.html#TextElement">TextElement</a>(sb.toString()));
 <a class="jxr_linenumber" name="L111" href="#L111">111</a> 
-<a class="jxr_linenumber" name="L112" href="#L112">112</a>         root.addElement(<strong class="jxr_keyword">new</strong> <a href="../../../../org/mybatis/generator/api/dom/xml/TextElement.html">TextElement</a>(<span class="jxr_string">"--&gt;"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L112" href="#L112">112</a>         root.addElement(<strong class="jxr_keyword">new</strong> <a name="TextElement" href="../../../../org/mybatis/generator/api/dom/xml/TextElement.html#TextElement">TextElement</a>(<span class="jxr_string">"--&gt;"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L113" href="#L113">113</a> 
-<a class="jxr_linenumber" name="L114" href="#L114">114</a>         <a href="../../../../org/mybatis/generator/api/dom/xml/XmlElement.html">XmlElement</a> mappers = <strong class="jxr_keyword">new</strong> <a href="../../../../org/mybatis/generator/api/dom/xml/XmlElement.html">XmlElement</a>(<span class="jxr_string">"mappers"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L114" href="#L114">114</a>         <a name="XmlElement" href="../../../../org/mybatis/generator/a<a name="XmlElement" href="../../../../org/mybatis/generator/api/dom/xml/XmlElement.html#XmlElement">XmlElement</a>/XmlElement.html#XmlElement">XmlElement</a> mappers = <strong class="jxr_keyword">new</strong> <a name="XmlElement" href="../../../../org/mybatis/generator/api/dom/xml/XmlElement.html#XmlElement">XmlElement</a>(<span class="jxr_string">"mappers"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L115" href="#L115">115</a>         root.addElement(mappers);
 <a class="jxr_linenumber" name="L116" href="#L116">116</a> 
-<a class="jxr_linenumber" name="L117" href="#L117">117</a>         <a href="../../../../org/mybatis/generator/api/dom/xml/XmlElement.html">XmlElement</a> mapper;
+<a class="jxr_linenumber" name="L117" href="#L117">117</a>         <a name="XmlElement" href="../../../../org/mybatis/generator/api/dom/xml/XmlElement.html#XmlElement">XmlElement</a> mapper;
 <a class="jxr_linenumber" name="L118" href="#L118">118</a>         <strong class="jxr_keyword">for</strong> (String mapperFile : mapperFiles) {
-<a class="jxr_linenumber" name="L119" href="#L119">119</a>             mapper = <strong class="jxr_keyword">new</strong> <a href="../../../../org/mybatis/generator/api/dom/xml/XmlElement.html">XmlElement</a>(<span class="jxr_string">"mapper"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L120" href="#L120">120</a>             mapper.addAttribute(<strong class="jxr_keyword">new</strong> <a href="../../../../org/mybatis/generator/api/dom/xml/Attribute.html">Attribute</a>(<span class="jxr_string">"resource"</span>, mapperFile)); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L119" href="#L119">119</a>             mapper = <strong class="jxr_keyword">new</strong> <a name="XmlElement" href="../../../../org/mybatis/generator/api/dom/xml/XmlElement.html#XmlElement">XmlElement</a>(<span class="jxr_string">"mapper"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L120" href="#L120">120</a>             mapper.addAttribute(<strong class="jxr_keyword">new</strong> <a name="Attribute" href="../../../../org/mybatis/generator/api/dom/xml/Attribute.html#Attribute">Attribute</a>(<span class="jxr_string">"resource"</span>, mapperFile)); <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L121" href="#L121">121</a>             mappers.addElement(mapper);
 <a class="jxr_linenumber" name="L122" href="#L122">122</a>         }
 <a class="jxr_linenumber" name="L123" href="#L123">123</a> 
-<a class="jxr_linenumber" name="L124" href="#L124">124</a>         <a href="../../../../org/mybatis/generator/api/GeneratedXmlFile.html">GeneratedXmlFile</a> gxf = <strong class="jxr_keyword">new</strong> <a href="../../../../org/mybatis/generator/api/GeneratedXmlFile.html">GeneratedXmlFile</a>(document, properties
+<a class="jxr_linenumber" name="L124" href="#L124">124</a>         <a name="GeneratedXmlFile" href="../../../../org/mybatis/generat<a name="GeneratedXmlFile" href="../../../../org/mybatis/generator/api/GeneratedXmlFile.html#GeneratedXmlFile">GeneratedXmlFile</a>XmlFile.html#GeneratedXmlFile">GeneratedXmlFile</a> gxf = <strong class="jxr_keyword">new</strong> <a name="GeneratedXmlFile" href="../../../../org/mybatis/generator/api/GeneratedXmlFile.html#GeneratedXmlFile">GeneratedXmlFile</a>(document, properties
 <a class="jxr_linenumber" name="L125" href="#L125">125</a>                 .getProperty(<span class="jxr_string">"fileName"</span>, <span class="jxr_string">"MapperConfig.xml"</span>), <em class="jxr_comment">//$NON-NLS-1$ //$NON-NLS-2$</em>
 <a class="jxr_linenumber" name="L126" href="#L126">126</a>                 properties.getProperty(<span class="jxr_string">"targetPackage"</span>), <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L127" href="#L127">127</a>                 properties.getProperty(<span class="jxr_string">"targetProject"</span>), <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L128" href="#L128">128</a>                 false, context.getXmlFormatter());
 <a class="jxr_linenumber" name="L129" href="#L129">129</a> 
-<a class="jxr_linenumber" name="L130" href="#L130">130</a>         List&lt;GeneratedXmlFile&gt; answer = <strong class="jxr_keyword">new</strong> ArrayList&lt;GeneratedXmlFile&gt;(1);
+<a class="jxr_linenumber" name="L130" href="#L130">130</a>         List&lt;GeneratedXmlFile&gt; answer = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;(1);
 <a class="jxr_linenumber" name="L131" href="#L131">131</a>         answer.add(gxf);
 <a class="jxr_linenumber" name="L132" href="#L132">132</a> 
 <a class="jxr_linenumber" name="L133" href="#L133">133</a>         <strong class="jxr_keyword">return</strong> answer;
@@ -146,8 +146,8 @@
 <a class="jxr_linenumber" name="L138" href="#L138">138</a> <em class="jxr_comment">     * this context.</em>
 <a class="jxr_linenumber" name="L139" href="#L139">139</a> <em class="jxr_comment">     */</em>
 <a class="jxr_linenumber" name="L140" href="#L140">140</a>     @Override
-<a class="jxr_linenumber" name="L141" href="#L141">141</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> sqlMapGenerated(<a href="../../../../org/mybatis/generator/api/GeneratedXmlFile.html">GeneratedXmlFile</a> sqlMap,
-<a class="jxr_linenumber" name="L142" href="#L142">142</a>             <a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable) {
+<a class="jxr_linenumber" name="L141" href="#L141">141</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> sqlMapGenerated(<a name="GeneratedXmlFile" href="../../../../org/mybatis/generator/api/GeneratedXmlFile.html#GeneratedXmlFile">GeneratedXmlFile</a> sqlMap,
+<a class="jxr_linenumber" name="L142" href="#L142">142</a>             <a name="IntrospectedTable" href="../../../../org/mybatis/generator/api/IntrospectedTable.html#IntrospectedTable">IntrospectedTable</a> introspectedTable) {
 <a class="jxr_linenumber" name="L143" href="#L143">143</a>         StringBuilder sb = <strong class="jxr_keyword">new</strong> StringBuilder();
 <a class="jxr_linenumber" name="L144" href="#L144">144</a>         sb.append(sqlMap.getTargetPackage());
 <a class="jxr_linenumber" name="L145" href="#L145">145</a>         sb.append('.');
@@ -162,6 +162,6 @@
 <a class="jxr_linenumber" name="L154" href="#L154">154</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2006&#x2013;2018 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2006&#x2013;2019 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
 </body>
 </html>

@@ -40,11 +40,11 @@ import org.mybatis.generator.codegen.XmlConstants;
  * &lt;p&gt;This plugin accepts three properties:
  * 
  * &lt;ul&gt;
- * &lt;li&gt;&lt;tt&gt;fileName&lt;/tt&gt; (optional) the name of the generated file. this
+ * &lt;li&gt;&lt;code&gt;fileName&lt;/code&gt; (optional) the name of the generated file. this
  * defaults to &quot;SqlMapConfig.xml&quot; if not specified.&lt;/li&gt;
- * &lt;li&gt;&lt;tt&gt;targetPackage&lt;/tt&gt; (required) the name of the package where the file
+ * &lt;li&gt;&lt;code&gt;targetPackage&lt;/code&gt; (required) the name of the package where the file
  * should be placed. Specified like &quot;com.mycompany.sql&quot;.&lt;/li&gt;
- * &lt;li&gt;&lt;tt&gt;targetProject&lt;/tt&gt; (required) the name of the project where the file
+ * &lt;li&gt;&lt;code&gt;targetProject&lt;/code&gt; (required) the name of the project where the file
  * should be placed.&lt;/li&gt;
  * &lt;/ul&gt;
  * 
@@ -57,7 +57,7 @@ import org.mybatis.generator.codegen.XmlConstants;
  */
 <span class="nc" id="L58">public class MapperConfigPlugin extends PluginAdapter {</span>
 
-<span class="nc" id="L60">    private List&lt;String&gt; mapperFiles = new ArrayList&lt;String&gt;();</span>
+<span class="nc" id="L60">    private List&lt;String&gt; mapperFiles = new ArrayList&lt;&gt;();</span>
 
     @Override
     public boolean validate(List&lt;String&gt; warnings) {
@@ -127,7 +127,7 @@ import org.mybatis.generator.codegen.XmlConstants;
 <span class="nc" id="L127">                properties.getProperty(&quot;targetProject&quot;), //$NON-NLS-1$</span>
 <span class="nc" id="L128">                false, context.getXmlFormatter());</span>
 
-<span class="nc" id="L130">        List&lt;GeneratedXmlFile&gt; answer = new ArrayList&lt;GeneratedXmlFile&gt;(1);</span>
+<span class="nc" id="L130">        List&lt;GeneratedXmlFile&gt; answer = new ArrayList&lt;&gt;(1);</span>
 <span class="nc" id="L131">        answer.add(gxf);</span>
 
 <span class="nc" id="L133">        return answer;</span>
@@ -152,4 +152,4 @@ import org.mybatis.generator.codegen.XmlConstants;
 <span class="nc" id="L152">        return true;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

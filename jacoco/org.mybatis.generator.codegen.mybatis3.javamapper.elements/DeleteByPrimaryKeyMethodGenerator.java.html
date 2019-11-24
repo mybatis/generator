@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DeleteByPrimaryKeyMethodGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.codegen.mybatis3.javamapper.elements</a> &gt; <span class="el_source">DeleteByPrimaryKeyMethodGenerator.java</span></div><h1>DeleteByPrimaryKeyMethodGenerator.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -26,81 +26,78 @@ import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 
-/**
- * 
- * @author Jeff Butler
- * 
- */
 public class DeleteByPrimaryKeyMethodGenerator extends
         AbstractJavaMapperMethodGenerator {
 
     private boolean isSimple;
 
     public DeleteByPrimaryKeyMethodGenerator(boolean isSimple) {
-<span class="fc" id="L40">        super();</span>
-<span class="fc" id="L41">        this.isSimple = isSimple;</span>
-<span class="fc" id="L42">    }</span>
+<span class="fc" id="L35">        super();</span>
+<span class="fc" id="L36">        this.isSimple = isSimple;</span>
+<span class="fc" id="L37">    }</span>
 
     @Override
     public void addInterfaceElements(Interface interfaze) {
-<span class="fc" id="L46">        Set&lt;FullyQualifiedJavaType&gt; importedTypes = new TreeSet&lt;FullyQualifiedJavaType&gt;();</span>
-<span class="fc" id="L47">        Method method = new Method();</span>
-<span class="fc" id="L48">        method.setVisibility(JavaVisibility.PUBLIC);</span>
-<span class="fc" id="L49">        method.setReturnType(FullyQualifiedJavaType.getIntInstance());</span>
-<span class="fc" id="L50">        method.setName(introspectedTable.getDeleteByPrimaryKeyStatementId());</span>
+<span class="fc" id="L41">        Set&lt;FullyQualifiedJavaType&gt; importedTypes = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L42">        Method method = new Method(introspectedTable.getDeleteByPrimaryKeyStatementId());</span>
+<span class="fc" id="L43">        method.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L44">        method.setAbstract(true);</span>
+<span class="fc" id="L45">        method.setReturnType(FullyQualifiedJavaType.getIntInstance());</span>
 
-<span class="fc bfc" id="L52" title="All 4 branches covered.">        if (!isSimple &amp;&amp; introspectedTable.getRules().generatePrimaryKeyClass()) {</span>
-<span class="fc" id="L53">            FullyQualifiedJavaType type = new FullyQualifiedJavaType(</span>
-<span class="fc" id="L54">                    introspectedTable.getPrimaryKeyType());</span>
-<span class="fc" id="L55">            importedTypes.add(type);</span>
-<span class="fc" id="L56">            method.addParameter(new Parameter(type, &quot;key&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L57">        } else {</span>
+<span class="fc bfc" id="L47" title="All 4 branches covered.">        if (!isSimple &amp;&amp; introspectedTable.getRules().generatePrimaryKeyClass()) {</span>
+<span class="fc" id="L48">            FullyQualifiedJavaType type = new FullyQualifiedJavaType(</span>
+<span class="fc" id="L49">                    introspectedTable.getPrimaryKeyType());</span>
+<span class="fc" id="L50">            importedTypes.add(type);</span>
+<span class="fc" id="L51">            method.addParameter(new Parameter(type, &quot;key&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L52">        } else {</span>
             // no primary key class - fields are in the base class
             // if more than one PK field, then we need to annotate the
             // parameters
             // for MyBatis
-<span class="fc" id="L62">            List&lt;IntrospectedColumn&gt; introspectedColumns = introspectedTable</span>
-<span class="fc" id="L63">                    .getPrimaryKeyColumns();</span>
-<span class="fc bfc" id="L64" title="All 2 branches covered.">            boolean annotate = introspectedColumns.size() &gt; 1;</span>
-<span class="fc bfc" id="L65" title="All 2 branches covered.">            if (annotate) {</span>
-<span class="fc" id="L66">                importedTypes.add(new FullyQualifiedJavaType(</span>
+<span class="fc" id="L57">            List&lt;IntrospectedColumn&gt; introspectedColumns = introspectedTable</span>
+<span class="fc" id="L58">                    .getPrimaryKeyColumns();</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">            boolean annotate = introspectedColumns.size() &gt; 1;</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">            if (annotate) {</span>
+<span class="fc" id="L61">                importedTypes.add(new FullyQualifiedJavaType(</span>
                         &quot;org.apache.ibatis.annotations.Param&quot;)); //$NON-NLS-1$
             }
-<span class="fc" id="L69">            StringBuilder sb = new StringBuilder();</span>
-<span class="fc bfc" id="L70" title="All 2 branches covered.">            for (IntrospectedColumn introspectedColumn : introspectedColumns) {</span>
-<span class="fc" id="L71">                FullyQualifiedJavaType type = introspectedColumn</span>
-<span class="fc" id="L72">                        .getFullyQualifiedJavaType();</span>
-<span class="fc" id="L73">                importedTypes.add(type);</span>
-<span class="fc" id="L74">                Parameter parameter = new Parameter(type, introspectedColumn</span>
-<span class="fc" id="L75">                        .getJavaProperty());</span>
-<span class="fc bfc" id="L76" title="All 2 branches covered.">                if (annotate) {</span>
-<span class="fc" id="L77">                    sb.setLength(0);</span>
-<span class="fc" id="L78">                    sb.append(&quot;@Param(\&quot;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L79">                    sb.append(introspectedColumn.getJavaProperty());</span>
-<span class="fc" id="L80">                    sb.append(&quot;\&quot;)&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L81">                    parameter.addAnnotation(sb.toString());</span>
+<span class="fc" id="L64">            StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">            for (IntrospectedColumn introspectedColumn : introspectedColumns) {</span>
+<span class="fc" id="L66">                FullyQualifiedJavaType type = introspectedColumn</span>
+<span class="fc" id="L67">                        .getFullyQualifiedJavaType();</span>
+<span class="fc" id="L68">                importedTypes.add(type);</span>
+<span class="fc" id="L69">                Parameter parameter = new Parameter(type, introspectedColumn</span>
+<span class="fc" id="L70">                        .getJavaProperty());</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">                if (annotate) {</span>
+<span class="fc" id="L72">                    sb.setLength(0);</span>
+<span class="fc" id="L73">                    sb.append(&quot;@Param(\&quot;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L74">                    sb.append(introspectedColumn.getJavaProperty());</span>
+<span class="fc" id="L75">                    sb.append(&quot;\&quot;)&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L76">                    parameter.addAnnotation(sb.toString());</span>
                 }
-<span class="fc" id="L83">                method.addParameter(parameter);</span>
-<span class="fc" id="L84">            }</span>
+<span class="fc" id="L78">                method.addParameter(parameter);</span>
+<span class="fc" id="L79">            }</span>
         }
 
-<span class="fc" id="L87">        context.getCommentGenerator().addGeneralMethodComment(method,</span>
+<span class="fc" id="L82">        context.getCommentGenerator().addGeneralMethodComment(method,</span>
                 introspectedTable);
 
-<span class="fc" id="L90">        addMapperAnnotations(method);</span>
+<span class="fc" id="L85">        addMapperAnnotations(method);</span>
         
-<span class="pc bpc" id="L92" title="1 of 2 branches missed.">        if (context.getPlugins().clientDeleteByPrimaryKeyMethodGenerated(</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">        if (context.getPlugins().clientDeleteByPrimaryKeyMethodGenerated(</span>
                 method, interfaze, introspectedTable)) {
-<span class="fc" id="L94">            addExtraImports(interfaze);</span>
-<span class="fc" id="L95">            interfaze.addImportedTypes(importedTypes);</span>
-<span class="fc" id="L96">            interfaze.addMethod(method);</span>
+<span class="fc" id="L89">            addExtraImports(interfaze);</span>
+<span class="fc" id="L90">            interfaze.addImportedTypes(importedTypes);</span>
+<span class="fc" id="L91">            interfaze.addMethod(method);</span>
         }
-<span class="fc" id="L98">    }</span>
+<span class="fc" id="L93">    }</span>
 
     public void addMapperAnnotations(Method method) {
-<span class="fc" id="L101">    }</span>
+        // extension point for subclasses
+<span class="fc" id="L97">    }</span>
 
     public void addExtraImports(Interface interfaze) {
-<span class="fc" id="L104">    }</span>
+        // extension point for subclasses
+<span class="fc" id="L101">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

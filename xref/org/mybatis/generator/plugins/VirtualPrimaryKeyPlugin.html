@@ -13,7 +13,7 @@
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_javadoccomment"> *    you may not use this file except in compliance with the License.</em>
 <a class="jxr_linenumber" name="L6" href="#L6">6</a>   <em class="jxr_javadoccomment"> *    You may obtain a copy of the License at</em>
 <a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_javadoccomment"> *       <a href="http://www.apache.org/licenses/LICENSE-2." target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.</a>0</em>
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_javadoccomment"> *       <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a></em>
 <a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_javadoccomment"> *    Unless required by applicable law or agreed to in writing, software</em>
 <a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_javadoccomment"> *    distributed under the License is distributed on an "AS IS" BASIS,</em>
@@ -41,7 +41,7 @@
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>  <em class="jxr_javadoccomment"> * @author Jeff Butler</em>
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>  <em class="jxr_javadoccomment"> * </em>
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L36" href="#L36">36</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../org/mybatis/generator/plugins/VirtualPrimaryKeyPlugin.html">VirtualPrimaryKeyPlugin</a> <strong class="jxr_keyword">extends</strong> <a href="../../../../org/mybatis/generator/api/PluginAdapter.html">PluginAdapter</a> {
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="VirtualPrimaryKeyPlugin" href="../../../../org/mybatis/generator/plugins/VirtualPrimaryKeyPlugin.html#VirtualPrimaryKeyPlugin">VirtualPrimaryKeyPlugin</a> <strong class="jxr_keyword">extends</strong> <a name="PluginAdapter" href="../../../../org/mybatis/generator/api/PluginAdapter.html#PluginAdapter">PluginAdapter</a> {
 <a class="jxr_linenumber" name="L37" href="#L37">37</a>  
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>      <em class="jxr_comment">/* (non-Javadoc)</em>
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>  <em class="jxr_comment">     * @see org.mybatis.generator.api.Plugin#validate(java.util.List)</em>
@@ -55,7 +55,7 @@
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>  <em class="jxr_comment">     * @see org.mybatis.generator.api.PluginAdapter#initialized(org.mybatis.generator.api.IntrospectedTable)</em>
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>  <em class="jxr_comment">     */</em>
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>      @Override
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> initialized(<a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable) {
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> initialized(<a name="IntrospectedTable" href="../../../../org/mybatis/generator/api/IntrospectedTable.html#IntrospectedTable">IntrospectedTable</a> introspectedTable) {
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>          String virtualKey = introspectedTable.getTableConfiguration()
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>                  .getProperty(<span class="jxr_string">"virtualKeyColumns"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>  
@@ -70,6 +70,6 @@
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>  }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2006&#x2013;2018 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2006&#x2013;2019 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
 </body>
 </html>

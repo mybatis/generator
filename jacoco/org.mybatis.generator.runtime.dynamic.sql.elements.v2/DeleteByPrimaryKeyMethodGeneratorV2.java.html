@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DeleteByPrimaryKeyMethodGeneratorV2.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.dynamic.sql.elements.v2</a> &gt; <span class="el_source">DeleteByPrimaryKeyMethodGeneratorV2.java</span></div><h1>DeleteByPrimaryKeyMethodGeneratorV2.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2019 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime.dynamic.sql.elements.v2;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.Interface;
+import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.runtime.dynamic.sql.elements.AbstractMethodGenerator;
+import org.mybatis.generator.runtime.dynamic.sql.elements.FragmentGenerator;
+import org.mybatis.generator.runtime.dynamic.sql.elements.MethodAndImports;
+import org.mybatis.generator.runtime.dynamic.sql.elements.MethodParts;
+
+public class DeleteByPrimaryKeyMethodGeneratorV2 extends AbstractMethodGenerator {
+    
+    private FragmentGenerator fragmentGenerator;
+    
+    private DeleteByPrimaryKeyMethodGeneratorV2(Builder builder) {
+<span class="fc" id="L35">        super(builder);</span>
+<span class="fc" id="L36">        fragmentGenerator = builder.fragmentGenerator;</span>
+<span class="fc" id="L37">    }</span>
+
+    @Override
+    public MethodAndImports generateMethodAndImports() {
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        if (!Utils.generateDeleteByPrimaryKey(introspectedTable)) {</span>
+<span class="fc" id="L42">            return null;</span>
+        }
+        
+<span class="fc" id="L45">        Set&lt;FullyQualifiedJavaType&gt; imports = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L46">        Set&lt;String&gt; staticImports = new HashSet&lt;&gt;();</span>
+        
+<span class="fc" id="L48">        staticImports.add(&quot;org.mybatis.dynamic.sql.SqlBuilder.*&quot;); //$NON-NLS-1$</span>
+        
+<span class="fc" id="L50">        Method method = new Method(&quot;deleteByPrimaryKey&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L51">        method.setDefault(true);</span>
+<span class="fc" id="L52">        context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);</span>
+<span class="fc" id="L53">        method.setReturnType(FullyQualifiedJavaType.getIntInstance());</span>
+        
+<span class="fc" id="L55">        method.addBodyLine(&quot;return delete(c -&gt; &quot;); //$NON-NLS-1$</span>
+        
+<span class="fc" id="L57">        MethodParts methodParts = fragmentGenerator.getPrimaryKeyWhereClauseAndParametersV2();</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        for (Parameter parameter : methodParts.getParameters()) {</span>
+<span class="fc" id="L59">            method.addParameter(parameter);</span>
+<span class="fc" id="L60">        }</span>
+<span class="fc" id="L61">        method.addBodyLines(methodParts.getBodyLines());</span>
+<span class="fc" id="L62">        imports.addAll(methodParts.getImports());</span>
+        
+<span class="fc" id="L64">        return MethodAndImports.withMethod(method)</span>
+<span class="fc" id="L65">                .withImports(imports)</span>
+<span class="fc" id="L66">                .withStaticImports(staticImports)</span>
+<span class="fc" id="L67">                .build();</span>
+    }
+
+    @Override
+    public boolean callPlugins(Method method, Interface interfaze) {
+<span class="fc" id="L72">        return context.getPlugins().clientDeleteByPrimaryKeyMethodGenerated(method, interfaze, introspectedTable);</span>
+    }
+
+<span class="fc" id="L75">    public static class Builder extends BaseBuilder&lt;Builder, DeleteByPrimaryKeyMethodGeneratorV2&gt; {</span>
+        
+        private FragmentGenerator fragmentGenerator;
+        
+        public Builder withFragmentGenerator(FragmentGenerator fragmentGenerator) {
+<span class="fc" id="L80">            this.fragmentGenerator = fragmentGenerator;</span>
+<span class="fc" id="L81">            return this;</span>
+        }
+
+        @Override
+        public Builder getThis() {
+<span class="fc" id="L86">            return this;</span>
+        }
+
+        @Override
+        public DeleteByPrimaryKeyMethodGeneratorV2 build() {
+<span class="fc" id="L91">            return new DeleteByPrimaryKeyMethodGeneratorV2(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

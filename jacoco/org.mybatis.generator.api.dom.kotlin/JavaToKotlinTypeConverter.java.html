@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JavaToKotlinTypeConverter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api.dom.kotlin</a> &gt; <span class="el_source">JavaToKotlinTypeConverter.java</span></div><h1>JavaToKotlinTypeConverter.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2019 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.api.dom.kotlin;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+
+/**
+ * This class converts Java types to Kotlin types. It is not meant to cover all cases.
+ * The main purpose is to convert type calculated by the database introspector into appropriate
+ * types for Kotlin - which means that it covers Java primitives, Strings, and primitive wrapper
+ * classes as those Java types have replacements in Kotlin.
+ *  
+ * @author Jeff Butler
+ *
+ */
+public class JavaToKotlinTypeConverter {
+    private JavaToKotlinTypeConverter() {}
+    
+<span class="fc" id="L35">    private static Map&lt;String, String&gt; typeMap = new HashMap&lt;&gt;();</span>
+    
+    static {
+        // string
+<span class="fc" id="L39">        typeMap.put(&quot;java.lang.String&quot;, &quot;kotlin.String&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L40">        typeMap.put(&quot;java.lang.String[]&quot;, &quot;kotlin.Array&lt;kotlin.String&gt;&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+
+        // primitives
+<span class="fc" id="L43">        typeMap.put(&quot;byte&quot;, &quot;kotlin.Byte&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L44">        typeMap.put(&quot;char&quot;, &quot;kotlin.Char&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L45">        typeMap.put(&quot;short&quot;, &quot;kotlin.Short&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L46">        typeMap.put(&quot;int&quot;, &quot;kotlin.Int&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L47">        typeMap.put(&quot;long&quot;, &quot;kotlin.Long&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L48">        typeMap.put(&quot;float&quot;, &quot;kotlin.Float&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L49">        typeMap.put(&quot;double&quot;, &quot;kotlin.Double&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L50">        typeMap.put(&quot;boolean&quot;, &quot;kotlin.Boolean&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+
+        // primitive arrays
+<span class="fc" id="L53">        typeMap.put(&quot;byte[]&quot;, &quot;kotlin.ByteArray&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L54">        typeMap.put(&quot;char[]&quot;, &quot;kotlin.CharArray&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L55">        typeMap.put(&quot;short[]&quot;, &quot;kotlin.ShortArray&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L56">        typeMap.put(&quot;int[]&quot;, &quot;kotlin.IntArray&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L57">        typeMap.put(&quot;long[]&quot;, &quot;kotlin.LongArray&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L58">        typeMap.put(&quot;float[]&quot;, &quot;kotlin.FloatArray&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L59">        typeMap.put(&quot;double[]&quot;, &quot;kotlin.DoubleArray&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L60">        typeMap.put(&quot;boolean[]&quot;, &quot;kotlin.BooleanArray&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+
+        // primitive wrappers
+<span class="fc" id="L63">        typeMap.put(&quot;java.lang.Byte&quot;, &quot;kotlin.Byte&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L64">        typeMap.put(&quot;java.lang.Character&quot;, &quot;kotlin.Char&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L65">        typeMap.put(&quot;java.lang.Short&quot;, &quot;kotlin.Short&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L66">        typeMap.put(&quot;java.lang.Integer&quot;, &quot;kotlin.Int&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L67">        typeMap.put(&quot;java.lang.Long&quot;, &quot;kotlin.Long&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L68">        typeMap.put(&quot;java.lang.Float&quot;, &quot;kotlin.Float&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L69">        typeMap.put(&quot;java.lang.Double&quot;, &quot;kotlin.Double&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L70">        typeMap.put(&quot;java.lang.Boolean&quot;, &quot;kotlin.Boolean&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+
+        // primitive wrapper arrays
+<span class="fc" id="L73">        typeMap.put(&quot;java.lang.Byte[]&quot;, &quot;kotlin.Array&lt;kotlin.Byte&gt;&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L74">        typeMap.put(&quot;java.lang.Character[]&quot;, &quot;kotlin.Array&lt;kotlin.Char&gt;&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L75">        typeMap.put(&quot;java.lang.Short[]&quot;, &quot;kotlin.Array&lt;kotlin.Short&gt;&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L76">        typeMap.put(&quot;java.lang.Integer[]&quot;, &quot;kotlin.Array&lt;kotlin.Int&gt;&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L77">        typeMap.put(&quot;java.lang.Long[]&quot;, &quot;kotlin.Array&lt;kotlin.Long&gt;&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L78">        typeMap.put(&quot;java.lang.Float[]&quot;, &quot;kotlin.Array&lt;kotlin.Float.&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L79">        typeMap.put(&quot;java.lang.Double[]&quot;, &quot;kotlin.Array&lt;kotlin.Double&gt;&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L80">        typeMap.put(&quot;java.lang.Boolean[]&quot;, &quot;kotlin.Array&lt;kotlin.Boolean&gt;&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L81">    }</span>
+
+    public static FullyQualifiedKotlinType convert(FullyQualifiedJavaType javaType) {
+<span class="fc" id="L84">        FullyQualifiedKotlinType kotlinType = convertBaseType(javaType);</span>
+        
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        for (FullyQualifiedJavaType argument : javaType.getTypeArguments()) {</span>
+<span class="fc" id="L87">            kotlinType.addTypeArgument(convert(argument));</span>
+<span class="fc" id="L88">        }</span>
+        
+<span class="fc" id="L90">        return kotlinType;</span>
+    }
+    
+    private static FullyQualifiedKotlinType convertBaseType(FullyQualifiedJavaType javaType) {
+<span class="fc" id="L94">        String typeName = javaType.getFullyQualifiedNameWithoutTypeParameters();</span>
+<span class="fc" id="L95">        return new FullyQualifiedKotlinType(typeMap.getOrDefault(typeName, typeName));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

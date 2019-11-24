@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ToStringPlugin.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.plugins</a> &gt; <span class="el_source">ToStringPlugin.java</span></div><h1>ToStringPlugin.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -67,44 +67,41 @@ import org.mybatis.generator.api.dom.java.TopLevelClass;
 
     private void generateToString(IntrospectedTable introspectedTable,
             TopLevelClass topLevelClass) {
-<span class="fc" id="L70">        Method method = new Method();</span>
+<span class="fc" id="L70">        Method method = new Method(&quot;toString&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L71">        method.setVisibility(JavaVisibility.PUBLIC);</span>
 <span class="fc" id="L72">        method.setReturnType(FullyQualifiedJavaType.getStringInstance());</span>
-<span class="fc" id="L73">        method.setName(&quot;toString&quot;); //$NON-NLS-1$</span>
-<span class="pc bpc" id="L74" title="1 of 2 branches missed.">        if (introspectedTable.isJava5Targeted()) {</span>
-<span class="fc" id="L75">            method.addAnnotation(&quot;@Override&quot;); //$NON-NLS-1$</span>
-        }
+<span class="fc" id="L73">        method.addAnnotation(&quot;@Override&quot;); //$NON-NLS-1$</span>
 
-<span class="pc bpc" id="L78" title="1 of 2 branches missed.">        if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3_DSQL) {</span>
-<span class="nc" id="L79">            context.getCommentGenerator().addGeneralMethodAnnotation(method,</span>
-<span class="nc" id="L80">                    introspectedTable, topLevelClass.getImportedTypes());</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">        if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3_DSQL) {</span>
+<span class="nc" id="L76">            context.getCommentGenerator().addGeneralMethodAnnotation(method,</span>
+<span class="nc" id="L77">                    introspectedTable, topLevelClass.getImportedTypes());</span>
         } else {
-<span class="fc" id="L82">            context.getCommentGenerator().addGeneralMethodComment(method,</span>
+<span class="fc" id="L79">            context.getCommentGenerator().addGeneralMethodComment(method,</span>
                     introspectedTable);
         }
 
-<span class="fc" id="L86">        method.addBodyLine(&quot;StringBuilder sb = new StringBuilder();&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L87">        method.addBodyLine(&quot;sb.append(getClass().getSimpleName());&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L88">        method.addBodyLine(&quot;sb.append(\&quot; [\&quot;);&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L89">        method.addBodyLine(&quot;sb.append(\&quot;Hash = \&quot;).append(hashCode());&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L90">        StringBuilder sb = new StringBuilder();</span>
-<span class="fc bfc" id="L91" title="All 2 branches covered.">        for (Field field : topLevelClass.getFields()) {</span>
-<span class="fc" id="L92">            String property = field.getName();</span>
-<span class="fc" id="L93">            sb.setLength(0);</span>
-<span class="fc" id="L94">            sb.append(&quot;sb.append(\&quot;&quot;).append(&quot;, &quot;).append(property) //$NON-NLS-1$ //$NON-NLS-2$</span>
-<span class="fc" id="L95">                    .append(&quot;=\&quot;)&quot;).append(&quot;.append(&quot;).append(property) //$NON-NLS-1$ //$NON-NLS-2$</span>
-<span class="fc" id="L96">                    .append(&quot;);&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L97">            method.addBodyLine(sb.toString());</span>
-<span class="fc" id="L98">        }</span>
+<span class="fc" id="L83">        method.addBodyLine(&quot;StringBuilder sb = new StringBuilder();&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L84">        method.addBodyLine(&quot;sb.append(getClass().getSimpleName());&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L85">        method.addBodyLine(&quot;sb.append(\&quot; [\&quot;);&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L86">        method.addBodyLine(&quot;sb.append(\&quot;Hash = \&quot;).append(hashCode());&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L87">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">        for (Field field : topLevelClass.getFields()) {</span>
+<span class="fc" id="L89">            String property = field.getName();</span>
+<span class="fc" id="L90">            sb.setLength(0);</span>
+<span class="fc" id="L91">            sb.append(&quot;sb.append(\&quot;&quot;).append(&quot;, &quot;).append(property) //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L92">                    .append(&quot;=\&quot;)&quot;).append(&quot;.append(&quot;).append(property) //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L93">                    .append(&quot;);&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L94">            method.addBodyLine(sb.toString());</span>
+<span class="fc" id="L95">        }</span>
 
-<span class="fc" id="L100">        method.addBodyLine(&quot;sb.append(\&quot;]\&quot;);&quot;); //$NON-NLS-1$</span>
-<span class="pc bpc" id="L101" title="3 of 4 branches missed.">        if (useToStringFromRoot &amp;&amp; topLevelClass.getSuperClass() != null) {</span>
-<span class="nc" id="L102">            method.addBodyLine(&quot;sb.append(\&quot;, from super class \&quot;);&quot;); //$NON-NLS-1$</span>
-<span class="nc" id="L103">            method.addBodyLine(&quot;sb.append(super.toString());&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L97">        method.addBodyLine(&quot;sb.append(\&quot;]\&quot;);&quot;); //$NON-NLS-1$</span>
+<span class="pc bpc" id="L98" title="3 of 4 branches missed.">        if (useToStringFromRoot &amp;&amp; topLevelClass.getSuperClass().isPresent()) {</span>
+<span class="nc" id="L99">            method.addBodyLine(&quot;sb.append(\&quot;, from super class \&quot;);&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L100">            method.addBodyLine(&quot;sb.append(super.toString());&quot;); //$NON-NLS-1$</span>
         }
-<span class="fc" id="L105">        method.addBodyLine(&quot;return sb.toString();&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L102">        method.addBodyLine(&quot;return sb.toString();&quot;); //$NON-NLS-1$</span>
 
-<span class="fc" id="L107">        topLevelClass.addMethod(method);</span>
-<span class="fc" id="L108">    }</span>
+<span class="fc" id="L104">        topLevelClass.addMethod(method);</span>
+<span class="fc" id="L105">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

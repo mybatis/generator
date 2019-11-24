@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConfigurationParser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.config.xml</a> &gt; <span class="el_source">ConfigurationParser.java</span></div><h1>ConfigurationParser.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -12,19 +12,6 @@
  *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
- */
-/*
- *  Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
  */
 package org.mybatis.generator.config.xml;
 
@@ -39,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -61,8 +49,8 @@ public class ConfigurationParser {
     private Properties extraProperties;
 
     public ConfigurationParser(List&lt;String&gt; warnings) {
-<span class="fc" id="L64">        this(null, warnings);</span>
-<span class="fc" id="L65">    }</span>
+<span class="fc" id="L52">        this(null, warnings);</span>
+<span class="fc" id="L53">    }</span>
 
     /**
      * This constructor accepts a properties object which may be used to specify
@@ -85,111 +73,101 @@ public class ConfigurationParser {
      * @param warnings any warnings are added to this array
      */
     public ConfigurationParser(Properties extraProperties, List&lt;String&gt; warnings) {
-<span class="fc" id="L88">        super();</span>
-<span class="fc" id="L89">        this.extraProperties = extraProperties;</span>
+<span class="fc" id="L76">        super();</span>
+<span class="fc" id="L77">        this.extraProperties = extraProperties;</span>
 
-<span class="pc bpc" id="L91" title="1 of 2 branches missed.">        if (warnings == null) {</span>
-<span class="nc" id="L92">            this.warnings = new ArrayList&lt;String&gt;();</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">        if (warnings == null) {</span>
+<span class="nc" id="L80">            this.warnings = new ArrayList&lt;&gt;();</span>
         } else {
-<span class="fc" id="L94">            this.warnings = warnings;</span>
+<span class="fc" id="L82">            this.warnings = warnings;</span>
         }
 
-<span class="fc" id="L97">        parseErrors = new ArrayList&lt;String&gt;();</span>
-<span class="fc" id="L98">    }</span>
+<span class="fc" id="L85">        parseErrors = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L86">    }</span>
 
     public Configuration parseConfiguration(File inputFile) throws IOException,
             XMLParserException {
 
-<span class="nc" id="L103">        FileReader fr = new FileReader(inputFile);</span>
+<span class="nc" id="L91">        FileReader fr = new FileReader(inputFile);</span>
 
-<span class="nc" id="L105">        return parseConfiguration(fr);</span>
+<span class="nc" id="L93">        return parseConfiguration(fr);</span>
     }
 
     public Configuration parseConfiguration(Reader reader) throws IOException,
             XMLParserException {
 
-<span class="nc" id="L111">        InputSource is = new InputSource(reader);</span>
+<span class="nc" id="L99">        InputSource is = new InputSource(reader);</span>
 
-<span class="nc" id="L113">        return parseConfiguration(is);</span>
+<span class="nc" id="L101">        return parseConfiguration(is);</span>
     }
 
     public Configuration parseConfiguration(InputStream inputStream)
             throws IOException, XMLParserException {
 
-<span class="fc" id="L119">        InputSource is = new InputSource(inputStream);</span>
+<span class="fc" id="L107">        InputSource is = new InputSource(inputStream);</span>
 
-<span class="fc" id="L121">        return parseConfiguration(is);</span>
+<span class="fc" id="L109">        return parseConfiguration(is);</span>
     }
 
     private Configuration parseConfiguration(InputSource inputSource)
             throws IOException, XMLParserException {
-<span class="fc" id="L126">        parseErrors.clear();</span>
-<span class="fc" id="L127">        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();</span>
-<span class="fc" id="L128">        factory.setValidating(true);</span>
+<span class="fc" id="L114">        parseErrors.clear();</span>
+<span class="fc" id="L115">        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();</span>
+<span class="fc" id="L116">        factory.setValidating(true);</span>
 
         try {
-<span class="fc" id="L131">            DocumentBuilder builder = factory.newDocumentBuilder();</span>
-<span class="fc" id="L132">            builder.setEntityResolver(new ParserEntityResolver());</span>
+<span class="fc" id="L119">            factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);</span>
+<span class="fc" id="L120">            DocumentBuilder builder = factory.newDocumentBuilder();</span>
+<span class="fc" id="L121">            builder.setEntityResolver(new ParserEntityResolver());</span>
 
-<span class="fc" id="L134">            ParserErrorHandler handler = new ParserErrorHandler(warnings,</span>
+<span class="fc" id="L123">            ParserErrorHandler handler = new ParserErrorHandler(warnings,</span>
                     parseErrors);
-<span class="fc" id="L136">            builder.setErrorHandler(handler);</span>
+<span class="fc" id="L125">            builder.setErrorHandler(handler);</span>
 
-<span class="fc" id="L138">            Document document = null;</span>
+<span class="fc" id="L127">            Document document = null;</span>
             try {
-<span class="fc" id="L140">                document = builder.parse(inputSource);</span>
-<span class="nc" id="L141">            } catch (SAXParseException e) {</span>
-<span class="nc" id="L142">                throw new XMLParserException(parseErrors);</span>
-<span class="nc" id="L143">            } catch (SAXException e) {</span>
-<span class="nc bnc" id="L144" title="All 2 branches missed.">                if (e.getException() == null) {</span>
-<span class="nc" id="L145">                    parseErrors.add(e.getMessage());</span>
+<span class="fc" id="L129">                document = builder.parse(inputSource);</span>
+<span class="nc" id="L130">            } catch (SAXParseException e) {</span>
+<span class="nc" id="L131">                throw new XMLParserException(parseErrors);</span>
+<span class="nc" id="L132">            } catch (SAXException e) {</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">                if (e.getException() == null) {</span>
+<span class="nc" id="L134">                    parseErrors.add(e.getMessage());</span>
                 } else {
-<span class="nc" id="L147">                    parseErrors.add(e.getException().getMessage());</span>
+<span class="nc" id="L136">                    parseErrors.add(e.getException().getMessage());</span>
                 }
-<span class="fc" id="L149">            }</span>
+<span class="fc" id="L138">            }</span>
 
-<span class="pc bpc" id="L151" title="1 of 2 branches missed.">            if (parseErrors.size() &gt; 0) {</span>
-<span class="nc" id="L152">                throw new XMLParserException(parseErrors);</span>
+<span class="pc bpc" id="L140" title="2 of 4 branches missed.">            if (document == null || !parseErrors.isEmpty()) {</span>
+<span class="nc" id="L141">                throw new XMLParserException(parseErrors);</span>
             }
 
             Configuration config;
-<span class="fc" id="L156">            Element rootNode = document.getDocumentElement();</span>
-<span class="fc" id="L157">            DocumentType docType = document.getDoctype();</span>
-<span class="pc bpc" id="L158" title="1 of 2 branches missed.">            if (rootNode.getNodeType() == Node.ELEMENT_NODE</span>
-<span class="fc bfc" id="L159" title="All 2 branches covered.">                    &amp;&amp; docType.getPublicId().equals(</span>
-                            XmlConstants.IBATOR_CONFIG_PUBLIC_ID)) {
-<span class="fc" id="L161">                config = parseIbatorConfiguration(rootNode);</span>
-<span class="pc bpc" id="L162" title="1 of 2 branches missed.">            } else if (rootNode.getNodeType() == Node.ELEMENT_NODE</span>
-<span class="pc bpc" id="L163" title="1 of 2 branches missed.">                    &amp;&amp; docType.getPublicId().equals(</span>
+<span class="fc" id="L145">            Element rootNode = document.getDocumentElement();</span>
+<span class="fc" id="L146">            DocumentType docType = document.getDoctype();</span>
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">            if (rootNode.getNodeType() == Node.ELEMENT_NODE</span>
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">                    &amp;&amp; docType.getPublicId().equals(</span>
                             XmlConstants.MYBATIS_GENERATOR_CONFIG_PUBLIC_ID)) {
-<span class="fc" id="L165">                config = parseMyBatisGeneratorConfiguration(rootNode);</span>
+<span class="fc" id="L150">                config = parseMyBatisGeneratorConfiguration(rootNode);</span>
             } else {
-<span class="nc" id="L167">                throw new XMLParserException(getString(&quot;RuntimeError.5&quot;)); //$NON-NLS-1$</span>
+<span class="nc" id="L152">                throw new XMLParserException(getString(&quot;RuntimeError.5&quot;)); //$NON-NLS-1$</span>
             }
 
-<span class="pc bpc" id="L170" title="1 of 2 branches missed.">            if (parseErrors.size() &gt; 0) {</span>
-<span class="nc" id="L171">                throw new XMLParserException(parseErrors);</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">            if (!parseErrors.isEmpty()) {</span>
+<span class="nc" id="L156">                throw new XMLParserException(parseErrors);</span>
             }
 
-<span class="fc" id="L174">            return config;</span>
-<span class="nc" id="L175">        } catch (ParserConfigurationException e) {</span>
-<span class="nc" id="L176">            parseErrors.add(e.getMessage());</span>
-<span class="nc" id="L177">            throw new XMLParserException(parseErrors);</span>
+<span class="fc" id="L159">            return config;</span>
+<span class="nc" id="L160">        } catch (ParserConfigurationException e) {</span>
+<span class="nc" id="L161">            parseErrors.add(e.getMessage());</span>
+<span class="nc" id="L162">            throw new XMLParserException(parseErrors);</span>
         }
-    }
-
-    private Configuration parseIbatorConfiguration(Element rootNode)
-            throws XMLParserException {
-<span class="fc" id="L183">        IbatorConfigurationParser parser = new IbatorConfigurationParser(</span>
-                extraProperties);
-<span class="fc" id="L185">        return parser.parseIbatorConfiguration(rootNode);</span>
     }
 
     private Configuration parseMyBatisGeneratorConfiguration(Element rootNode)
             throws XMLParserException {
-<span class="fc" id="L190">        MyBatisGeneratorConfigurationParser parser = new MyBatisGeneratorConfigurationParser(</span>
+<span class="fc" id="L168">        MyBatisGeneratorConfigurationParser parser = new MyBatisGeneratorConfigurationParser(</span>
                 extraProperties);
-<span class="fc" id="L192">        return parser.parseConfiguration(rootNode);</span>
+<span class="fc" id="L170">        return parser.parseConfiguration(rootNode);</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

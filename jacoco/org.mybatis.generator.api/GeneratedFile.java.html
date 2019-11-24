@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GeneratedFile.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api</a> &gt; <span class="el_source">GeneratedFile.java</span></div><h1>GeneratedFile.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -22,19 +22,12 @@ package org.mybatis.generator.api;
  */
 public abstract class GeneratedFile {
 
-    /** The target project. */
     protected String targetProject;
 
-    /**
-     * Instantiates a new generated file.
-     *
-     * @param targetProject
-     *            the target project
-     */
     public GeneratedFile(String targetProject) {
-<span class="fc" id="L35">        super();</span>
-<span class="fc" id="L36">        this.targetProject = targetProject;</span>
-<span class="fc" id="L37">    }</span>
+<span class="fc" id="L28">        super();</span>
+<span class="fc" id="L29">        this.targetProject = targetProject;</span>
+<span class="fc" id="L30">    }</span>
 
     /**
      * Returns the entire contents of the generated file. Clients
@@ -62,7 +55,7 @@ public abstract class GeneratedFile {
      * @return the target project
      */
     public String getTargetProject() {
-<span class="nc" id="L65">        return targetProject;</span>
+<span class="nc" id="L58">        return targetProject;</span>
     }
 
     /**
@@ -78,7 +71,7 @@ public abstract class GeneratedFile {
      */
     @Override
     public String toString() {
-<span class="nc" id="L81">        return getFormattedContent();</span>
+<span class="fc" id="L74">        return getFileName();</span>
     }
 
     /**
@@ -88,4 +81,4 @@ public abstract class GeneratedFile {
      */
     public abstract boolean isMergeable();
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

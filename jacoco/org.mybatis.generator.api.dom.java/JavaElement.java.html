@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JavaElement.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api.dom.java</a> &gt; <span class="el_source">JavaElement.java</span></div><h1>JavaElement.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -18,186 +18,61 @@ package org.mybatis.generator.api.dom.java;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.mybatis.generator.api.dom.OutputUtilities;
-
-/**
- * The Class JavaElement.
- *
- * @author Jeff Butler
- */
 public abstract class JavaElement {
 
-    /** The java doc lines. */
-    private List&lt;String&gt; javaDocLines;
+<span class="fc" id="L23">    private List&lt;String&gt; javaDocLines = new ArrayList&lt;&gt;();</span>
 
-    /** The visibility. */
-<span class="fc" id="L34">    private JavaVisibility visibility = JavaVisibility.DEFAULT;</span>
+<span class="fc" id="L25">    private JavaVisibility visibility = JavaVisibility.DEFAULT;</span>
 
-    /** The is static. */
     private boolean isStatic;
 
-    /** The is final. */
-    private boolean isFinal;
+<span class="fc" id="L29">    private List&lt;String&gt; annotations = new ArrayList&lt;&gt;();</span>
 
-    /** The annotations. */
-    private List&lt;String&gt; annotations;
-
-    /**
-     * Instantiates a new java element.
-     */
     public JavaElement() {
-<span class="fc" id="L49">        super();</span>
-<span class="fc" id="L50">        javaDocLines = new ArrayList&lt;String&gt;();</span>
-<span class="fc" id="L51">        annotations = new ArrayList&lt;String&gt;();</span>
-<span class="fc" id="L52">    }</span>
+<span class="fc" id="L32">        super();</span>
+<span class="fc" id="L33">    }</span>
 
-    /**
-     * Copy Constructor.
-     *
-     * @param original
-     *            the original
-     */
-    public JavaElement(JavaElement original) {
-<span class="fc" id="L61">        this();</span>
-<span class="fc" id="L62">        this.annotations.addAll(original.annotations);</span>
-<span class="fc" id="L63">        this.isFinal = original.isFinal;</span>
-<span class="fc" id="L64">        this.isStatic = original.isStatic;</span>
-<span class="fc" id="L65">        this.javaDocLines.addAll(original.javaDocLines);</span>
-<span class="fc" id="L66">        this.visibility = original.visibility;</span>
-<span class="fc" id="L67">    }</span>
+<span class="fc" id="L35">    public JavaElement(JavaElement original) {</span>
+<span class="fc" id="L36">        this.annotations.addAll(original.annotations);</span>
+<span class="fc" id="L37">        this.isStatic = original.isStatic;</span>
+<span class="fc" id="L38">        this.javaDocLines.addAll(original.javaDocLines);</span>
+<span class="fc" id="L39">        this.visibility = original.visibility;</span>
+<span class="fc" id="L40">    }</span>
 
-    /**
-     * Gets the java doc lines.
-     *
-     * @return Returns the javaDocLines.
-     */
     public List&lt;String&gt; getJavaDocLines() {
-<span class="fc" id="L75">        return javaDocLines;</span>
+<span class="fc" id="L43">        return javaDocLines;</span>
     }
 
-    /**
-     * Adds the java doc line.
-     *
-     * @param javaDocLine
-     *            the java doc line
-     */
     public void addJavaDocLine(String javaDocLine) {
-<span class="fc" id="L85">        javaDocLines.add(javaDocLine);</span>
-<span class="fc" id="L86">    }</span>
+<span class="fc" id="L47">        javaDocLines.add(javaDocLine);</span>
+<span class="fc" id="L48">    }</span>
 
-    /**
-     * Gets the annotations.
-     *
-     * @return the annotations
-     */
     public List&lt;String&gt; getAnnotations() {
-<span class="fc" id="L94">        return annotations;</span>
+<span class="fc" id="L51">        return annotations;</span>
     }
 
-    /**
-     * Adds the annotation.
-     *
-     * @param annotation
-     *            the annotation
-     */
     public void addAnnotation(String annotation) {
-<span class="fc" id="L104">        annotations.add(annotation);</span>
-<span class="fc" id="L105">    }</span>
+<span class="fc" id="L55">        annotations.add(annotation);</span>
+<span class="fc" id="L56">    }</span>
 
-    /**
-     * Gets the visibility.
-     *
-     * @return Returns the visibility.
-     */
     public JavaVisibility getVisibility() {
-<span class="fc" id="L113">        return visibility;</span>
+<span class="fc" id="L59">        return visibility;</span>
     }
 
-    /**
-     * Sets the visibility.
-     *
-     * @param visibility
-     *            The visibility to set.
-     */
     public void setVisibility(JavaVisibility visibility) {
-<span class="fc" id="L123">        this.visibility = visibility;</span>
-<span class="fc" id="L124">    }</span>
+<span class="fc" id="L63">        this.visibility = visibility;</span>
+<span class="fc" id="L64">    }</span>
 
-    /**
-     * Adds the suppress type warnings annotation.
-     */
     public void addSuppressTypeWarningsAnnotation() {
-<span class="fc" id="L130">        addAnnotation(&quot;@SuppressWarnings(\&quot;unchecked\&quot;)&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L131">    }</span>
+<span class="nc" id="L67">        addAnnotation(&quot;@SuppressWarnings(\&quot;unchecked\&quot;)&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L68">    }</span>
 
-    /**
-     * Adds the formatted javadoc.
-     *
-     * @param sb
-     *            the sb
-     * @param indentLevel
-     *            the indent level
-     */
-    public void addFormattedJavadoc(StringBuilder sb, int indentLevel) {
-<span class="fc bfc" id="L142" title="All 2 branches covered.">        for (String javaDocLine : javaDocLines) {</span>
-<span class="fc" id="L143">            OutputUtilities.javaIndent(sb, indentLevel);</span>
-<span class="fc" id="L144">            sb.append(javaDocLine);</span>
-<span class="fc" id="L145">            OutputUtilities.newLine(sb);</span>
-<span class="fc" id="L146">        }</span>
-<span class="fc" id="L147">    }</span>
-
-    /**
-     * Adds the formatted annotations.
-     *
-     * @param sb
-     *            the sb
-     * @param indentLevel
-     *            the indent level
-     */
-    public void addFormattedAnnotations(StringBuilder sb, int indentLevel) {
-<span class="fc bfc" id="L158" title="All 2 branches covered.">        for (String annotation : annotations) {</span>
-<span class="fc" id="L159">            OutputUtilities.javaIndent(sb, indentLevel);</span>
-<span class="fc" id="L160">            sb.append(annotation);</span>
-<span class="fc" id="L161">            OutputUtilities.newLine(sb);</span>
-<span class="fc" id="L162">        }</span>
-<span class="fc" id="L163">    }</span>
-
-    /**
-     * Checks if is final.
-     *
-     * @return true, if is final
-     */
-    public boolean isFinal() {
-<span class="fc" id="L171">        return isFinal;</span>
-    }
-
-    /**
-     * Sets the final.
-     *
-     * @param isFinal
-     *            the new final
-     */
-    public void setFinal(boolean isFinal) {
-<span class="fc" id="L181">        this.isFinal = isFinal;</span>
-<span class="fc" id="L182">    }</span>
-
-    /**
-     * Checks if is static.
-     *
-     * @return true, if is static
-     */
     public boolean isStatic() {
-<span class="fc" id="L190">        return isStatic;</span>
+<span class="fc" id="L71">        return isStatic;</span>
     }
 
-    /**
-     * Sets the static.
-     *
-     * @param isStatic
-     *            the new static
-     */
     public void setStatic(boolean isStatic) {
-<span class="fc" id="L200">        this.isStatic = isStatic;</span>
-<span class="fc" id="L201">    }</span>
+<span class="fc" id="L75">        this.isStatic = isStatic;</span>
+<span class="fc" id="L76">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Plugin.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api</a> &gt; <span class="el_source">Plugin.java</span></div><h1>Plugin.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 package org.mybatis.generator.api;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
@@ -22,6 +23,10 @@ import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.api.dom.kotlin.KotlinFile;
+import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
+import org.mybatis.generator.api.dom.kotlin.KotlinProperty;
+import org.mybatis.generator.api.dom.kotlin.KotlinType;
 import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.config.Context;
@@ -67,10 +72,10 @@ import org.mybatis.generator.config.Context;
  */
 public interface Plugin {
     
-<span class="pc" id="L70">    public enum ModelClassType {</span>
-<span class="fc" id="L71">        PRIMARY_KEY, </span>
-<span class="fc" id="L72">        BASE_RECORD, </span>
-<span class="fc" id="L73">        RECORD_WITH_BLOBS</span>
+<span class="fc" id="L75">    enum ModelClassType {</span>
+<span class="fc" id="L76">        PRIMARY_KEY, </span>
+<span class="fc" id="L77">        BASE_RECORD, </span>
+<span class="fc" id="L78">        RECORD_WITH_BLOBS</span>
     }
 
     /**
@@ -148,6 +153,14 @@ public interface Plugin {
     List&lt;GeneratedJavaFile&gt; contextGenerateAdditionalJavaFiles(
             IntrospectedTable introspectedTable);
 
+    default List&lt;GeneratedKotlinFile&gt; contextGenerateAdditionalKotlinFiles() {
+<span class="fc" id="L157">        return Collections.emptyList();</span>
+    }
+
+    default List&lt;GeneratedKotlinFile&gt; contextGenerateAdditionalKotlinFiles(IntrospectedTable introspectedTable) {
+<span class="fc" id="L161">        return Collections.emptyList();</span>
+    }
+
     /**
      * This method can be used to generate any additional XML file needed by
      * your implementation. This method is called once, after all other XML
@@ -179,8 +192,6 @@ public interface Plugin {
      * 
      * @param interfaze
      *            the generated interface if any, may be null
-     * @param topLevelClass
-     *            the generated implementation class if any, may be null
      * @param introspectedTable
      *            The class containing information about the table as
      *            introspected from the database
@@ -189,8 +200,7 @@ public interface Plugin {
      *         first plugin returning false will disable the calling of further
      *         plugins.
      */
-    boolean clientGenerated(Interface interfaze, TopLevelClass topLevelClass,
-            IntrospectedTable introspectedTable);
+    boolean clientGenerated(Interface interfaze, IntrospectedTable introspectedTable);
 
     /**
      * This method is called when the count method has been generated for the mapper interface.
@@ -209,6 +219,11 @@ public interface Plugin {
      */
     boolean clientBasicCountMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable);
 
+    default boolean clientBasicCountMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L224">        return true;</span>
+    }
+
     /**
      * This method is called when the delete method has been generated for the mapper interface.
      * This method is only called in the MyBatis3DynamicSql runtime.
@@ -226,6 +241,11 @@ public interface Plugin {
      */
     boolean clientBasicDeleteMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable);
 
+    default boolean clientBasicDeleteMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L246">        return true;</span>
+    }
+
     /**
      * This method is called when the insert method has been generated for the mapper interface.
      * This method is only called in the MyBatis3DynamicSql runtime.
@@ -242,6 +262,58 @@ public interface Plugin {
      *         plugins.
      */
     boolean clientBasicInsertMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable);
+
+    default boolean clientBasicInsertMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L268">        return true;</span>
+    }
+
+    /**
+     * This method is called when the insert multiple method has been generated for the mapper interface.
+     * This method is only called in the MyBatis3DynamicSql runtime.
+     * 
+     * @param method
+     *     the generated insert method
+     * @param interfaze
+     *     the partially generated mapper interfaces 
+     * @param introspectedTable
+     *     The class containing information about the table as introspected from the database
+     * @return true if the method should be generated, false if the generated
+     *         method should be ignored. In the case of multiple plugins, the
+     *         first plugin returning false will disable the calling of further
+     *         plugins.
+     */
+    boolean clientBasicInsertMultipleMethodGenerated(Method method, Interface interfaze,
+            IntrospectedTable introspectedTable);
+
+    default boolean clientBasicInsertMultipleMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L291">        return true;</span>
+    }
+
+    /**
+     * This method is called when the insert multiple method helper has been generated for the mapper interface.
+     * The helper method is only created when a multiple row insert has a generated key.
+     * This method is only called in the MyBatis3DynamicSql runtime.
+     * 
+     * @param method
+     *     the generated insert method
+     * @param interfaze
+     *     the partially generated mapper interfaces 
+     * @param introspectedTable
+     *     The class containing information about the table as introspected from the database
+     * @return true if the method should be generated, false if the generated
+     *         method should be ignored. In the case of multiple plugins, the
+     *         first plugin returning false will disable the calling of further
+     *         plugins.
+     */
+    boolean clientBasicInsertMultipleHelperMethodGenerated(Method method, Interface interfaze,
+            IntrospectedTable introspectedTable);
+
+    default boolean clientBasicInsertMultipleHelperMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L315">        return true;</span>
+    }
 
     /**
      * This method is called when the selectMany method has been generated for the mapper interface.
@@ -261,6 +333,11 @@ public interface Plugin {
     boolean clientBasicSelectManyMethodGenerated(Method method, Interface interfaze,
             IntrospectedTable introspectedTable);
 
+    default boolean clientBasicSelectManyMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L338">        return true;</span>
+    }
+
     /**
      * This method is called when the selectOne method has been generated for the mapper interface.
      * This method is only called in the MyBatis3DynamicSql runtime.
@@ -279,6 +356,11 @@ public interface Plugin {
     boolean clientBasicSelectOneMethodGenerated(Method method, Interface interfaze,
             IntrospectedTable introspectedTable);
 
+    default boolean clientBasicSelectOneMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L361">        return true;</span>
+    }
+
     /**
      * This method is called when the update method has been generated for the mapper interface.
      * This method is only called in the MyBatis3DynamicSql runtime.
@@ -296,26 +378,10 @@ public interface Plugin {
      */
     boolean clientBasicUpdateMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable);
     
-    /**
-     * This method is called when the countByExample method has been generated
-     * in the client implementation class.
-     * 
-     * @param method
-     *            the generated countByExample method
-     * @param topLevelClass
-     *            the partially implemented client implementation class. You can
-     *            add additional imported classes to the implementation class if
-     *            necessary.
-     * @param introspectedTable
-     *            The class containing information about the table as
-     *            introspected from the database
-     * @return true if the method should be generated, false if the generated
-     *         method should be ignored. In the case of multiple plugins, the
-     *         first plugin returning false will disable the calling of further
-     *         plugins.
-     */
-    boolean clientCountByExampleMethodGenerated(Method method,
-            TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
+    default boolean clientBasicUpdateMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L383">        return true;</span>
+    }
 
     /**
      * This method is called when the countByExample method has been generated
@@ -337,27 +403,6 @@ public interface Plugin {
      */
     boolean clientCountByExampleMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable);
-
-    /**
-     * This method is called when the deleteByExample method has been generated
-     * in the client implementation class.
-     * 
-     * @param method
-     *            the generated deleteByExample method
-     * @param topLevelClass
-     *            the partially implemented client implementation class. You can
-     *            add additional imported classes to the implementation class if
-     *            necessary.
-     * @param introspectedTable
-     *            The class containing information about the table as
-     *            introspected from the database
-     * @return true if the method should be generated, false if the generated
-     *         method should be ignored. In the case of multiple plugins, the
-     *         first plugin returning false will disable the calling of further
-     *         plugins.
-     */
-    boolean clientDeleteByExampleMethodGenerated(Method method,
-            TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
 
     /**
      * This method is called when the deleteByExample method has been generated
@@ -401,26 +446,111 @@ public interface Plugin {
     boolean clientDeleteByPrimaryKeyMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable);
 
+    default boolean clientDeleteByPrimaryKeyMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L451">        return true;</span>
+    }
+
     /**
-     * This method is called when the deleteByPrimaryKey method has been
-     * generated in the client implementation class.
+     * Called when the general count method has been generated. This is the replacement for countByExample
+     * in the MyBatis Dynamic SQL V2 runtime.
      * 
      * @param method
-     *            the generated deleteByPrimaryKey method
-     * @param topLevelClass
-     *            the partially implemented client implementation class. You can
-     *            add additional imported classes to the implementation class if
-     *            necessary.
+     *     the generated general count method
+     * @param interfaze
+     *     the partially generated mapper interfaces 
      * @param introspectedTable
      *            The class containing information about the table as
      *            introspected from the database
-     * @return true if the method should be generated, false if the generated
-     *         method should be ignored. In the case of multiple plugins, the
-     *         first plugin returning false will disable the calling of further
-     *         plugins.
+     * @return true if the method should be generated
      */
-    boolean clientDeleteByPrimaryKeyMethodGenerated(Method method,
-            TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
+    boolean clientGeneralCountMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable);
+
+    default boolean clientGeneralCountMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L471">        return true;</span>
+    }
+
+    /**
+     * Called when the general delete method has been generated. This is the replacement for deleteByExample
+     * in the MyBatis Dynamic SQL V2 runtime.
+     * 
+     * @param method
+     *     the generated general delete method
+     * @param interfaze
+     *     the partially generated mapper interfaces 
+     * @param introspectedTable
+     *            The class containing information about the table as
+     *            introspected from the database
+     * @return true if the method should be generated
+     */
+    boolean clientGeneralDeleteMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable);
+
+    default boolean clientGeneralDeleteMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L491">        return true;</span>
+    }
+
+    /**
+     * Called when the general select distinct method has been generated. This is the replacement for
+     * selectDistinctByExample in the MyBatis Dynamic SQL V2 runtime.
+     * 
+     * @param method
+     *     the generated general select distinct method
+     * @param interfaze
+     *     the partially generated mapper interfaces 
+     * @param introspectedTable
+     *            The class containing information about the table as
+     *            introspected from the database
+     * @return true if the method should be generated
+     */
+    boolean clientGeneralSelectDistinctMethodGenerated(Method method, Interface interfaze,
+            IntrospectedTable introspectedTable);
+
+    default boolean clientGeneralSelectDistinctMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L512">        return true;</span>
+    }
+
+    /**
+     * Called when the general select method has been generated. This is the replacement for
+     * selectByExample in the MyBatis Dynamic SQL V2 runtime.
+     * 
+     * @param method
+     *     the generated general select method
+     * @param interfaze
+     *     the partially generated mapper interfaces 
+     * @param introspectedTable
+     *            The class containing information about the table as
+     *            introspected from the database
+     * @return true if the method should be generated
+     */
+    boolean clientGeneralSelectMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable);
+
+    default boolean clientGeneralSelectMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L532">        return true;</span>
+    }
+
+    /**
+     * Called when the general update method has been generated. This is the replacement for
+     * updateByExample in the MyBatis Dynamic SQL V2 runtime.
+     * 
+     * @param method
+     *     the generated general update method
+     * @param interfaze
+     *     the partially generated mapper interfaces 
+     * @param introspectedTable
+     *            The class containing information about the table as
+     *            introspected from the database
+     * @return true if the method should be generated
+     */
+    boolean clientGeneralUpdateMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable);
+
+    default boolean clientGeneralUpdateMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L552">        return true;</span>
+    }
 
     /**
      * This method is called when the insert method has been generated in the
@@ -443,15 +573,21 @@ public interface Plugin {
     boolean clientInsertMethodGenerated(Method method, Interface interfaze,
             IntrospectedTable introspectedTable);
 
+    default boolean clientInsertMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L578">        return true;</span>
+    }
+
     /**
-     * This method is called when the insert method has been generated in the
-     * client implementation class.
+     * This method is called when the insert multiple method has been generated in the
+     * client interface.
+     * This method is only called in the MyBatis3DynamicSql runtime.
      * 
      * @param method
-     *            the generated insert method
-     * @param topLevelClass
-     *            the partially implemented client implementation class. You can
-     *            add additional imported classes to the implementation class if
+     *            the generated insert multiple method
+     * @param interfaze
+     *            the partially implemented client interface. You can add
+     *            additional imported classes to the interface if
      *            necessary.
      * @param introspectedTable
      *            The class containing information about the table as
@@ -461,8 +597,13 @@ public interface Plugin {
      *         first plugin returning false will disable the calling of further
      *         plugins.
      */
-    boolean clientInsertMethodGenerated(Method method,
-            TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
+    boolean clientInsertMultipleMethodGenerated(Method method, Interface interfaze,
+            IntrospectedTable introspectedTable);
+
+    default boolean clientInsertMultipleMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L605">        return true;</span>
+    }
 
     /**
      * This method is called when the insert selective method has been generated
@@ -485,26 +626,10 @@ public interface Plugin {
     boolean clientInsertSelectiveMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable);
 
-    /**
-     * This method is called when the insert selective method has been generated
-     * in the client implementation class.
-     * 
-     * @param method
-     *            the generated insert method
-     * @param topLevelClass
-     *            the partially implemented client implementation class. You can
-     *            add additional imported classes to the implementation class if
-     *            necessary.
-     * @param introspectedTable
-     *            The class containing information about the table as
-     *            introspected from the database
-     * @return true if the method should be generated, false if the generated
-     *         method should be ignored. In the case of multiple plugins, the
-     *         first plugin returning false will disable the calling of further
-     *         plugins.
-     */
-    boolean clientInsertSelectiveMethodGenerated(Method method,
-            TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
+    default boolean clientInsertSelectiveMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L631">        return true;</span>
+    }
 
     /**
      * This method is called when the selectByExampleWithBLOBs method has been
@@ -528,27 +653,6 @@ public interface Plugin {
             Interface interfaze, IntrospectedTable introspectedTable);
 
     /**
-     * This method is called when the selectByExampleWithBLOBs method has been
-     * generated in the client implementation class.
-     * 
-     * @param method
-     *            the generated selectByExampleWithBLOBs method
-     * @param topLevelClass
-     *            the partially implemented client implementation class. You can
-     *            add additional imported classes to the implementation class if
-     *            necessary.
-     * @param introspectedTable
-     *            The class containing information about the table as
-     *            introspected from the database
-     * @return true if the method should be generated, false if the generated
-     *         method should be ignored. In the case of multiple plugins, the
-     *         first plugin returning false will disable the calling of further
-     *         plugins.
-     */
-    boolean clientSelectByExampleWithBLOBsMethodGenerated(Method method,
-            TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
-
-    /**
      * This method is called when the selectByExampleWithoutBLOBs method has
      * been generated in the client interface.
      * 
@@ -568,27 +672,6 @@ public interface Plugin {
      */
     boolean clientSelectByExampleWithoutBLOBsMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable);
-
-    /**
-     * This method is called when the selectByExampleWithoutBLOBs method has
-     * been generated in the client implementation class.
-     * 
-     * @param method
-     *            the generated selectByExampleWithoutBLOBs method
-     * @param topLevelClass
-     *            the partially implemented client implementation class. You can
-     *            add additional imported classes to the implementation class if
-     *            necessary.
-     * @param introspectedTable
-     *            The class containing information about the table as
-     *            introspected from the database
-     * @return true if the method should be generated, false if the generated
-     *         method should be ignored. In the case of multiple plugins, the
-     *         first plugin returning false will disable the calling of further
-     *         plugins.
-     */
-    boolean clientSelectByExampleWithoutBLOBsMethodGenerated(Method method,
-            TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
 
     /**
      * This method is called when the selectByPrimaryKey method has been
@@ -611,26 +694,42 @@ public interface Plugin {
     boolean clientSelectByPrimaryKeyMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable);
 
+    default boolean clientSelectByPrimaryKeyMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L699">        return true;</span>
+    }
+
     /**
-     * This method is called when the selectByPrimaryKey method has been
-     * generated in the client implementation class.
+     * Called when the selectList field is generated in a MyBatis Dynamic SQL V2 runtime.
      * 
-     * @param method
-     *            the generated selectByPrimaryKey method
-     * @param topLevelClass
-     *            the partially implemented client implementation class. You can
-     *            add additional imported classes to the implementation class if
-     *            necessary.
+     * @param field the generated selectList field
+     * @param interfaze
+     *     the partially generated mapper interfaces 
      * @param introspectedTable
      *            The class containing information about the table as
      *            introspected from the database
-     * @return true if the method should be generated, false if the generated
-     *         method should be ignored. In the case of multiple plugins, the
-     *         first plugin returning false will disable the calling of further
-     *         plugins.
+     * @return true if the field should be generated
      */
-    boolean clientSelectByPrimaryKeyMethodGenerated(Method method,
-            TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
+    boolean clientSelectListFieldGenerated(Field field, Interface interfaze, IntrospectedTable introspectedTable);
+
+    /**
+     * Called when the selectOne method is generated. This is a new method in the MyBatis Dynamic SQL V2 runtime.
+     * 
+     * @param method
+     *     the generated selectOne method
+     * @param interfaze
+     *     the partially generated mapper interfaces 
+     * @param introspectedTable
+     *            The class containing information about the table as
+     *            introspected from the database
+     * @return true if the method should be generated
+     */
+    boolean clientSelectOneMethodGenerated(Method method, Interface interfaze, IntrospectedTable introspectedTable);
+
+    default boolean clientSelectOneMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L731">        return true;</span>
+    }
 
     /**
      * This method is called when the updateByExampleSelective method has been
@@ -654,25 +753,46 @@ public interface Plugin {
             Interface interfaze, IntrospectedTable introspectedTable);
 
     /**
-     * This method is called when the updateByExampleSelective method has been
-     * generated in the client implementation class.
+     * Called when the updateAllColumns method is generated. The generated method can be used with the general
+     * update method to mimic the function of the old updateByExample method.
      * 
      * @param method
-     *            the generated updateByExampleSelective method
-     * @param topLevelClass
-     *            the partially implemented client implementation class. You can
-     *            add additional imported classes to the implementation class if
-     *            necessary.
+     *     the generated updateAllColumns method
+     * @param interfaze
+     *     the partially generated mapper interfaces 
      * @param introspectedTable
      *            The class containing information about the table as
      *            introspected from the database
-     * @return true if the method should be generated, false if the generated
-     *         method should be ignored. In the case of multiple plugins, the
-     *         first plugin returning false will disable the calling of further
-     *         plugins.
+     * @return true if the method should be generated
      */
-    boolean clientUpdateByExampleSelectiveMethodGenerated(Method method,
-            TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
+    boolean clientUpdateAllColumnsMethodGenerated(Method method, Interface interfaze,
+            IntrospectedTable introspectedTable);
+
+    default boolean clientUpdateAllColumnsMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L773">        return true;</span>
+    }
+
+    /**
+     * Called when the updateSelectiveColumns method is generated. The generated method can be used with the general
+     * update method to mimic the function of the old updateByExampleSelective method.
+     * 
+     * @param method
+     *     the generated updateSelectiveColumns method
+     * @param interfaze
+     *     the partially generated mapper interfaces 
+     * @param introspectedTable
+     *            The class containing information about the table as
+     *            introspected from the database
+     * @return true if the method should be generated
+     */
+    boolean clientUpdateSelectiveColumnsMethodGenerated(Method method, Interface interfaze,
+            IntrospectedTable introspectedTable);
+
+    default boolean clientUpdateSelectiveColumnsMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L794">        return true;</span>
+    }
 
     /**
      * This method is called when the updateByExampleWithBLOBs method has been
@@ -696,27 +816,6 @@ public interface Plugin {
             Interface interfaze, IntrospectedTable introspectedTable);
 
     /**
-     * This method is called when the updateByExampleWithBLOBs method has been
-     * generated in the client implementation class.
-     * 
-     * @param method
-     *            the generated updateByExampleWithBLOBs method
-     * @param topLevelClass
-     *            the partially implemented client implementation class. You can
-     *            add additional imported classes to the implementation class if
-     *            necessary.
-     * @param introspectedTable
-     *            The class containing information about the table as
-     *            introspected from the database
-     * @return true if the method should be generated, false if the generated
-     *         method should be ignored. In the case of multiple plugins, the
-     *         first plugin returning false will disable the calling of further
-     *         plugins.
-     */
-    boolean clientUpdateByExampleWithBLOBsMethodGenerated(Method method,
-            TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
-
-    /**
      * This method is called when the updateByExampleWithoutBLOBs method has
      * been generated in the client interface.
      * 
@@ -736,27 +835,6 @@ public interface Plugin {
      */
     boolean clientUpdateByExampleWithoutBLOBsMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable);
-
-    /**
-     * This method is called when the updateByExampleWithoutBLOBs method has
-     * been generated in the client implementation class.
-     * 
-     * @param method
-     *            the generated updateByExampleWithoutBLOBs method
-     * @param topLevelClass
-     *            the partially implemented client implementation class. You can
-     *            add additional imported classes to the implementation class if
-     *            necessary.
-     * @param introspectedTable
-     *            The class containing information about the table as
-     *            introspected from the database
-     * @return true if the method should be generated, false if the generated
-     *         method should be ignored. In the case of multiple plugins, the
-     *         first plugin returning false will disable the calling of further
-     *         plugins.
-     */
-    boolean clientUpdateByExampleWithoutBLOBsMethodGenerated(Method method,
-            TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
 
     /**
      * This method is called when the updateByPrimaryKeySelective method has
@@ -779,26 +857,10 @@ public interface Plugin {
     boolean clientUpdateByPrimaryKeySelectiveMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable);
 
-    /**
-     * This method is called when the updateByPrimaryKeySelective method has
-     * been generated in the client implementation class.
-     * 
-     * @param method
-     *            the generated updateByPrimaryKeySelective method
-     * @param topLevelClass
-     *            the partially implemented client implementation class. You can
-     *            add additional imported classes to the implementation class if
-     *            necessary.
-     * @param introspectedTable
-     *            The class containing information about the table as
-     *            introspected from the database
-     * @return true if the method should be generated, false if the generated
-     *         method should be ignored. In the case of multiple plugins, the
-     *         first plugin returning false will disable the calling of further
-     *         plugins.
-     */
-    boolean clientUpdateByPrimaryKeySelectiveMethodGenerated(Method method,
-            TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
+    default boolean clientUpdateByPrimaryKeySelectiveMethodGenerated(KotlinFunction kotlinFunction,
+            KotlinFile kotlinFile, IntrospectedTable introspectedTable) {
+<span class="fc" id="L862">        return true;</span>
+    }
 
     /**
      * This method is called when the updateByPrimaryKeyWithBLOBs method has
@@ -820,48 +882,6 @@ public interface Plugin {
      */
     boolean clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable);
-
-    /**
-     * This method is called when the updateByPrimaryKeyWithBLOBs method has
-     * been generated in the client implementation class.
-     * 
-     * @param method
-     *            the generated updateByPrimaryKeyWithBLOBs method
-     * @param topLevelClass
-     *            the partially implemented client implementation class. You can
-     *            add additional imported classes to the implementation class if
-     *            necessary.
-     * @param introspectedTable
-     *            The class containing information about the table as
-     *            introspected from the database
-     * @return true if the method should be generated, false if the generated
-     *         method should be ignored. In the case of multiple plugins, the
-     *         first plugin returning false will disable the calling of further
-     *         plugins.
-     */
-    boolean clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(Method method,
-            TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
-
-    /**
-     * This method is called when the updateByPrimaryKeyWithoutBLOBs method has
-     * been generated in the client implementation class.
-     * 
-     * @param method
-     *            the generated updateByPrimaryKeyWithBLOBs method
-     * @param topLevelClass
-     *            the partially implemented client implementation class. You can
-     *            add additional imported classes to the implementation class if
-     *            necessary.
-     * @param introspectedTable
-     *            The class containing information about the table as
-     *            introspected from the database
-     * @return true if the method should be generated, false if the generated
-     *         method should be ignored. In the case of multiple plugins, the
-     *         first plugin returning false will disable the calling of further
-     *         plugins.
-     */
-    boolean clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(Method method,
-            TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
 
     /**
      * This method is called when the updateByPrimaryKeyWithoutBLOBs method has
@@ -906,27 +926,6 @@ public interface Plugin {
     boolean clientSelectAllMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable);
 
-    /**
-     * This method is called when the selectAll method has been
-     * generated in the client implementation class.
-     * 
-     * @param method
-     *            the generated selectAll method
-     * @param topLevelClass
-     *            the partially implemented client implementation class. You can
-     *            add additional imported classes to the implementation class if
-     *            necessary.
-     * @param introspectedTable
-     *            The class containing information about the table as
-     *            introspected from the database
-     * @return true if the method should be generated, false if the generated
-     *         method should be ignored. In the case of multiple plugins, the
-     *         first plugin returning false will disable the calling of further
-     *         plugins.
-     */
-    boolean clientSelectAllMethodGenerated(Method method,
-            TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
-    
     /**
      * This method is called after the field is generated for a specific column
      * in a table.
@@ -1127,7 +1126,7 @@ public interface Plugin {
      *         document should be ignored. In the case of multiple plugins, the
      *         first plugin returning false will disable the calling of further
      *         plugins. Also, if any plugin returns false, then the
-     *         &lt;tt&gt;sqlMapGenerated&lt;/tt&gt; method will not be called.
+     *         &lt;code&gt;sqlMapGenerated&lt;/code&gt; method will not be called.
      */
     boolean sqlMapDocumentGenerated(Document document,
             IntrospectedTable introspectedTable);
@@ -1687,5 +1686,57 @@ public interface Plugin {
      */
     boolean providerUpdateByPrimaryKeySelectiveMethodGenerated(Method method,
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable);
+
+    /**
+     * This method is called when the MyBatis Dynamic SQL support class has
+     * been generated in the MyBatis Dynamic SQL runtime.
+     * 
+     * @param supportClass
+     *            the generated MyBatis Dynamic SQL support class
+     *            You can add additional items to the generated class
+     *            if necessary.
+     * @param introspectedTable
+     *            The class containing information about the table as
+     *            introspected from the database
+     * @return true if the class should be generated, false if the generated
+     *         class should be ignored. In the case of multiple plugins, the
+     *         first plugin returning false will disable the calling of further
+     *         plugins.
+     */
+    boolean dynamicSqlSupportGenerated(TopLevelClass supportClass, IntrospectedTable introspectedTable);
+
+    default boolean dynamicSqlSupportGenerated(KotlinFile kotlinFile, KotlinType supportClass,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L1710">        return true;</span>
+    }
+
+    default boolean mapperExtensionsGenerated(KotlinFile extensionsFile, IntrospectedTable introspectedTable) {
+<span class="fc" id="L1714">        return true;</span>
+    }
+
+    default boolean mapperGenerated(KotlinFile mapperFile, IntrospectedTable introspectedTable) {
+<span class="fc" id="L1718">        return true;</span>
+    }
+
+    default boolean kotlinDataClassGenerated(KotlinFile kotlinFile, KotlinType dataClass,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L1723">        return true;</span>
+    }
+    
+    default boolean clientColumnListPropertyGenerated(KotlinProperty kotlinProperty, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L1728">        return true;</span>
+    }
+    
+    default boolean clientInsertMultipleVarargMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L1733">        return true;</span>
+    }
+
+    default boolean clientUpdateByPrimaryKeyMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
+            IntrospectedTable introspectedTable) {
+<span class="fc" id="L1738">        return true;</span>
+    }
+
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

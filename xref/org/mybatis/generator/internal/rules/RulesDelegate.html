@@ -7,13 +7,13 @@
 <body>
 <div id="overview"><a href="../../../../../../apidocs/org/mybatis/generator/internal/rules/RulesDelegate.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_javadoccomment"> *    Copyright 2006-2017 the original author or authors.</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_javadoccomment"> *    Copyright 2006-2019 the original author or authors.</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_javadoccomment"> *    Licensed under the Apache License, Version 2.0 (the "License");</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_javadoccomment"> *    you may not use this file except in compliance with the License.</em>
 <a class="jxr_linenumber" name="L6" href="#L6">6</a>   <em class="jxr_javadoccomment"> *    You may obtain a copy of the License at</em>
 <a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_javadoccomment"> *       <a href="http://www.apache.org/licenses/LICENSE-2." target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.</a>0</em>
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_javadoccomment"> *       <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a></em>
 <a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_javadoccomment"> *    Unless required by applicable law or agreed to in writing, software</em>
 <a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_javadoccomment"> *    distributed under the License is distributed on an "AS IS" BASIS,</em>
@@ -65,15 +65,15 @@
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>  <em class="jxr_javadoccomment"> * @author Jeff Butler</em>
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>  <em class="jxr_javadoccomment"> * </em>
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../org/mybatis/generator/internal/rules/RulesDelegate.html">RulesDelegate</a> <strong class="jxr_keyword">implements</strong> <a href="../../../../../org/mybatis/generator/internal/rules/Rules.html">Rules</a> {
-<a class="jxr_linenumber" name="L61" href="#L61">61</a>      <strong class="jxr_keyword">protected</strong> <a href="../../../../../org/mybatis/generator/internal/rules/Rules.html">Rules</a> rules;
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="RulesDelegate" href="../../../../../org/mybatis/generator/internal/rules/RulesDelegate.html#RulesDelegate">RulesDelegate</a> <strong class="jxr_keyword">implements</strong> <a name="Rules" href="../../../../../org/mybatis/generator/internal/rules/Rules.html#Rules">Rules</a> {
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>      <strong class="jxr_keyword">protected</strong> <a name="Rules" href="../../../../../org/mybatis/generator/internal/rules/Rules.html#Rules">Rules</a> rules;
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>  
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../../org/mybatis/generator/internal/rules/RulesDelegate.html">RulesDelegate</a>(<a href="../../../../../org/mybatis/generator/internal/rules/Rules.html">Rules</a> rules) {
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>      <strong class="jxr_keyword">public</strong> <a name="RulesDelegate" href="../../../../../org/mybatis/generator/internal/rules/RulesDelegate.html#RulesDelegate">RulesDelegate</a>(<a name="Rules" href="../../../../../org/mybatis/generator/internal/rules/Rules.html#Rules">Rules</a> rules) {
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>          <strong class="jxr_keyword">this</strong>.rules = rules;
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>      }
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>  
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>      @Override
-<a class="jxr_linenumber" name="L68" href="#L68">68</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a> calculateAllFieldsClass() {
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>      <strong class="jxr_keyword">public</strong> <a name="FullyQualifiedJavaType" href="../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html#FullyQualifiedJavaType">FullyQualifiedJavaType</a> calculateAllFieldsClass() {
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>          <strong class="jxr_keyword">return</strong> rules.calculateAllFieldsClass();
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>      }
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>  
@@ -188,7 +188,7 @@
 <a class="jxr_linenumber" name="L180" href="#L180">180</a>     }
 <a class="jxr_linenumber" name="L181" href="#L181">181</a> 
 <a class="jxr_linenumber" name="L182" href="#L182">182</a>     @Override
-<a class="jxr_linenumber" name="L183" href="#L183">183</a>     <strong class="jxr_keyword">public</strong> <a href="../../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> getIntrospectedTable() {
+<a class="jxr_linenumber" name="L183" href="#L183">183</a>     <strong class="jxr_keyword">public</strong> <a name="IntrospectedTable" href="../../../../../org/mybatis/generator/api/IntrospectedTable.html#IntrospectedTable">IntrospectedTable</a> getIntrospectedTable() {
 <a class="jxr_linenumber" name="L184" href="#L184">184</a>         <strong class="jxr_keyword">return</strong> rules.getIntrospectedTable();
 <a class="jxr_linenumber" name="L185" href="#L185">185</a>     }
 <a class="jxr_linenumber" name="L186" href="#L186">186</a> 
@@ -209,6 +209,6 @@
 <a class="jxr_linenumber" name="L201" href="#L201">201</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2006&#x2013;2018 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2006&#x2013;2019 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RootClassInfo.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.codegen</a> &gt; <span class="el_source">RootClassInfo.java</span></div><h1>RootClassInfo.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -45,13 +45,7 @@ public class RootClassInfo {
 
     public static RootClassInfo getInstance(String className,
             List&lt;String&gt; warnings) {
-<span class="fc" id="L48">        RootClassInfo classInfo = rootClassInfoMap.get(className);</span>
-<span class="fc bfc" id="L49" title="All 2 branches covered.">        if (classInfo == null) {</span>
-<span class="fc" id="L50">            classInfo = new RootClassInfo(className, warnings);</span>
-<span class="fc" id="L51">            rootClassInfoMap.put(className, classInfo);</span>
-        }
-
-<span class="fc" id="L54">        return classInfo;</span>
+<span class="fc" id="L48">        return rootClassInfoMap.computeIfAbsent(className, k -&gt; new RootClassInfo(k, warnings));</span>
     }
 
     /**
@@ -62,89 +56,107 @@ public class RootClassInfo {
      * 
      */
     public static void reset() {
-<span class="fc" id="L65">        rootClassInfoMap.clear();</span>
-<span class="fc" id="L66">    }</span>
+<span class="fc" id="L59">        rootClassInfoMap.clear();</span>
+<span class="fc" id="L60">    }</span>
 
     private PropertyDescriptor[] propertyDescriptors;
     private String className;
     private List&lt;String&gt; warnings;
-<span class="fc" id="L71">    private boolean genericMode = false;</span>
+<span class="fc" id="L65">    private boolean genericMode = false;</span>
 
     private RootClassInfo(String className, List&lt;String&gt; warnings) {
-<span class="fc" id="L74">        super();</span>
-<span class="fc" id="L75">        this.className = className;</span>
-<span class="fc" id="L76">        this.warnings = warnings;</span>
+<span class="fc" id="L68">        super();</span>
+<span class="fc" id="L69">        this.className = className;</span>
+<span class="fc" id="L70">        this.warnings = warnings;</span>
 
-<span class="fc bfc" id="L78" title="All 2 branches covered.">        if (className == null) {</span>
-<span class="fc" id="L79">            return;</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">        if (className == null) {</span>
+<span class="fc" id="L73">            return;</span>
         }
 
-<span class="fc" id="L82">        FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(className);</span>
-<span class="fc" id="L83">        String nameWithoutGenerics = fqjt.getFullyQualifiedNameWithoutTypeParameters();</span>
-<span class="pc bpc" id="L84" title="1 of 2 branches missed.">        if (!nameWithoutGenerics.equals(className)) {</span>
-<span class="nc" id="L85">            genericMode = true;</span>
+<span class="fc" id="L76">        FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(className);</span>
+<span class="fc" id="L77">        String nameWithoutGenerics = fqjt.getFullyQualifiedNameWithoutTypeParameters();</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">        if (!nameWithoutGenerics.equals(className)) {</span>
+<span class="nc" id="L79">            genericMode = true;</span>
         }
 
         try {
-<span class="nc" id="L89">            Class&lt;?&gt; clazz = ObjectFactory.externalClassForName(nameWithoutGenerics);</span>
-<span class="nc" id="L90">            BeanInfo bi = Introspector.getBeanInfo(clazz);</span>
-<span class="nc" id="L91">            propertyDescriptors = bi.getPropertyDescriptors();</span>
-<span class="fc" id="L92">        } catch (Exception e) {</span>
-<span class="fc" id="L93">            propertyDescriptors = null;</span>
-<span class="fc" id="L94">            warnings.add(getString(&quot;Warning.20&quot;, className)); //$NON-NLS-1$</span>
-<span class="nc" id="L95">        }</span>
-<span class="fc" id="L96">    }</span>
+<span class="nc" id="L83">            Class&lt;?&gt; clazz = ObjectFactory.externalClassForName(nameWithoutGenerics);</span>
+<span class="nc" id="L84">            BeanInfo bi = Introspector.getBeanInfo(clazz);</span>
+<span class="nc" id="L85">            propertyDescriptors = bi.getPropertyDescriptors();</span>
+<span class="fc" id="L86">        } catch (Exception e) {</span>
+<span class="fc" id="L87">            propertyDescriptors = null;</span>
+<span class="fc" id="L88">            warnings.add(getString(&quot;Warning.20&quot;, className)); //$NON-NLS-1$</span>
+<span class="nc" id="L89">        }</span>
+<span class="fc" id="L90">    }</span>
 
     public boolean containsProperty(IntrospectedColumn introspectedColumn) {
-<span class="pc bpc" id="L99" title="1 of 2 branches missed.">        if (propertyDescriptors == null) {</span>
-<span class="fc" id="L100">            return false;</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">        if (propertyDescriptors == null) {</span>
+<span class="fc" id="L94">            return false;</span>
         }
 
-<span class="nc" id="L103">        boolean found = false;</span>
-<span class="nc" id="L104">        String propertyName = introspectedColumn.getJavaProperty();</span>
-<span class="nc" id="L105">        String propertyType = introspectedColumn.getFullyQualifiedJavaType()</span>
-<span class="nc" id="L106">                .getFullyQualifiedName();</span>
+<span class="nc" id="L97">        boolean found = false;</span>
+<span class="nc" id="L98">        String propertyName = introspectedColumn.getJavaProperty();</span>
+<span class="nc" id="L99">        String propertyType = introspectedColumn.getFullyQualifiedJavaType()</span>
+<span class="nc" id="L100">                .getFullyQualifiedName();</span>
 
         // get method names from class and check against this column definition.
         // better yet, have a map of method Names. check against it.
-<span class="nc bnc" id="L110" title="All 2 branches missed.">        for (int i = 0; i &lt; propertyDescriptors.length; i++) {</span>
-<span class="nc" id="L111">            PropertyDescriptor propertyDescriptor = propertyDescriptors[i];</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">        for (int i = 0; i &lt; propertyDescriptors.length; i++) {</span>
+<span class="nc" id="L105">            PropertyDescriptor propertyDescriptor = propertyDescriptors[i];</span>
 
-<span class="nc bnc" id="L113" title="All 2 branches missed.">            if (propertyDescriptor.getName().equals(propertyName)) {</span>
-                // property name is in the rootClass...
-
-                // Is it the proper type?
-<span class="nc" id="L117">                String introspectedPropertyType = propertyDescriptor.getPropertyType().getName();</span>
-<span class="nc bnc" id="L118" title="All 4 branches missed.">                if (genericMode &amp;&amp; introspectedPropertyType.equals(&quot;java.lang.Object&quot;)) { //$NON-NLS-1$</span>
-                    // OK - but add a warning
-<span class="nc" id="L120">                    warnings.add(getString(&quot;Warning.28&quot;, //$NON-NLS-1$</span>
-                            propertyName, className));
-<span class="nc bnc" id="L122" title="All 2 branches missed.">                } else if (!introspectedPropertyType.equals(propertyType)) {</span>
-<span class="nc" id="L123">                    warnings.add(getString(&quot;Warning.21&quot;, //$NON-NLS-1$</span>
-                            propertyName, className, propertyType));
-<span class="nc" id="L125">                    break;</span>
-                }
-
-                // Does it have a getter?
-<span class="nc bnc" id="L129" title="All 2 branches missed.">                if (propertyDescriptor.getReadMethod() == null) {</span>
-<span class="nc" id="L130">                    warnings.add(getString(&quot;Warning.22&quot;, //$NON-NLS-1$</span>
-                            propertyName, className));
-<span class="nc" id="L132">                    break;</span>
-                }
-
-                // Does it have a setter?
-<span class="nc bnc" id="L136" title="All 2 branches missed.">                if (propertyDescriptor.getWriteMethod() == null) {</span>
-<span class="nc" id="L137">                    warnings.add(getString(&quot;Warning.23&quot;, //$NON-NLS-1$</span>
-                            propertyName, className));
-<span class="nc" id="L139">                    break;</span>
-                }
-
-<span class="nc" id="L142">                found = true;</span>
-<span class="nc" id="L143">                break;</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">            if (hasProperty(propertyName, propertyType, propertyDescriptor)) {</span>
+<span class="nc" id="L108">                found = true;</span>
+<span class="nc" id="L109">                break;</span>
             }
         }
 
-<span class="nc" id="L147">        return found;</span>
+<span class="nc" id="L113">        return found;</span>
+    }
+    
+    private boolean hasProperty(String propertyName, String propertyType, PropertyDescriptor propertyDescriptor) {
+<span class="nc bnc" id="L117" title="All 2 branches missed.">        return hasCorrectName(propertyName, propertyDescriptor)</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">                &amp;&amp; isProperType(propertyName, propertyType, propertyDescriptor)</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">                &amp;&amp; hasGetter(propertyName, propertyDescriptor)</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">                &amp;&amp; hasSetter(propertyName, propertyDescriptor);</span>
+    }
+    
+    private boolean hasCorrectName(String propertyName, PropertyDescriptor propertyDescriptor) {
+<span class="nc" id="L124">        return propertyDescriptor.getName().equals(propertyName);</span>
+    }
+    
+    private boolean isProperType(String propertyName, String propertyType, PropertyDescriptor propertyDescriptor) {
+<span class="nc" id="L128">        String introspectedPropertyType = propertyDescriptor.getPropertyType().getName();</span>
+<span class="nc bnc" id="L129" title="All 4 branches missed.">        if (genericMode &amp;&amp; introspectedPropertyType.equals(&quot;java.lang.Object&quot;)) { //$NON-NLS-1$</span>
+            // OK - but add a warning
+<span class="nc" id="L131">            warnings.add(getString(&quot;Warning.28&quot;, //$NON-NLS-1$</span>
+                    propertyName, className));
+<span class="nc bnc" id="L133" title="All 2 branches missed.">        } else if (!introspectedPropertyType.equals(propertyType)) {</span>
+<span class="nc" id="L134">            warnings.add(getString(&quot;Warning.21&quot;, //$NON-NLS-1$</span>
+                    propertyName, className, propertyType));
+<span class="nc" id="L136">            return false;</span>
+        }
+        
+<span class="nc" id="L139">        return true;</span>
+    }
+
+    private boolean hasGetter(String propertyName, PropertyDescriptor propertyDescriptor) {
+<span class="nc bnc" id="L143" title="All 2 branches missed.">        if (propertyDescriptor.getReadMethod() == null) {</span>
+<span class="nc" id="L144">            warnings.add(getString(&quot;Warning.22&quot;, //$NON-NLS-1$</span>
+                    propertyName, className));
+<span class="nc" id="L146">            return false;</span>
+        }
+        
+<span class="nc" id="L149">        return true;</span>
+    }
+
+    private boolean hasSetter(String propertyName, PropertyDescriptor propertyDescriptor) {
+<span class="nc bnc" id="L153" title="All 2 branches missed.">        if (propertyDescriptor.getWriteMethod() == null) {</span>
+<span class="nc" id="L154">            warnings.add(getString(&quot;Warning.23&quot;, //$NON-NLS-1$</span>
+                    propertyName, className));
+<span class="nc" id="L156">            return false;</span>
+        }
+        
+<span class="nc" id="L159">        return true;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

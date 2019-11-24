@@ -54,10 +54,10 @@ public class MethodParts {
     }
     
 <span class="fc" id="L56">    public static class Builder {</span>
-<span class="fc" id="L57">        private List&lt;String&gt; bodyLines = new ArrayList&lt;String&gt;();</span>
-<span class="fc" id="L58">        private Set&lt;FullyQualifiedJavaType&gt; imports = new HashSet&lt;FullyQualifiedJavaType&gt;();</span>
-<span class="fc" id="L59">        private List&lt;Parameter&gt; parameters = new ArrayList&lt;Parameter&gt;();</span>
-<span class="fc" id="L60">        private List&lt;String&gt; annotations = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L57">        private List&lt;String&gt; bodyLines = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L58">        private Set&lt;FullyQualifiedJavaType&gt; imports = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L59">        private List&lt;Parameter&gt; parameters = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L60">        private List&lt;String&gt; annotations = new ArrayList&lt;&gt;();</span>
         
         public Builder withAnnotation(String annotation) {
 <span class="fc" id="L63">            annotations.add(annotation);</span>
@@ -94,4 +94,4 @@ public class MethodParts {
         }
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

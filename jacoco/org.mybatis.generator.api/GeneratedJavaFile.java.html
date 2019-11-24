@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GeneratedJavaFile.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api</a> &gt; <span class="el_source">GeneratedJavaFile.java</span></div><h1>GeneratedJavaFile.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -17,82 +17,43 @@ package org.mybatis.generator.api;
 
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 
-/**
- * The Class GeneratedJavaFile.
- *
- * @author Jeff Butler
- */
 public class GeneratedJavaFile extends GeneratedFile {
 
-    /** The compilation unit. */
     private CompilationUnit compilationUnit;
 
-    /** The file encoding. */
     private String fileEncoding;
 
-    /** The java formatter. */
     private JavaFormatter javaFormatter;
 
-    /**
-     * Default constructor.
-     *
-     * @param compilationUnit
-     *            the compilation unit
-     * @param targetProject
-     *            the target project
-     * @param fileEncoding
-     *            the file encoding
-     * @param javaFormatter
-     *            the java formatter
-     */
     public GeneratedJavaFile(CompilationUnit compilationUnit,
             String targetProject,
             String fileEncoding,
             JavaFormatter javaFormatter) {
-<span class="fc" id="L52">        super(targetProject);</span>
-<span class="fc" id="L53">        this.compilationUnit = compilationUnit;</span>
-<span class="fc" id="L54">        this.fileEncoding = fileEncoding;</span>
-<span class="fc" id="L55">        this.javaFormatter = javaFormatter;</span>
-<span class="fc" id="L56">    }</span>
+<span class="fc" id="L32">        super(targetProject);</span>
+<span class="fc" id="L33">        this.compilationUnit = compilationUnit;</span>
+<span class="fc" id="L34">        this.fileEncoding = fileEncoding;</span>
+<span class="fc" id="L35">        this.javaFormatter = javaFormatter;</span>
+<span class="fc" id="L36">    }</span>
 
-    /**
-     * Instantiates a new generated java file.
-     *
-     * @param compilationUnit
-     *            the compilation unit
-     * @param targetProject
-     *            the target project
-     * @param javaFormatter
-     *            the java formatter
-     */
     public GeneratedJavaFile(CompilationUnit compilationUnit,
             String targetProject,
             JavaFormatter javaFormatter) {
-<span class="fc" id="L71">        this(compilationUnit, targetProject, null, javaFormatter);</span>
-<span class="fc" id="L72">    }</span>
+<span class="fc" id="L41">        this(compilationUnit, targetProject, null, javaFormatter);</span>
+<span class="fc" id="L42">    }</span>
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.GeneratedFile#getFormattedContent()
-     */
     @Override
     public String getFormattedContent() {
-<span class="nc" id="L79">        return javaFormatter.getFormattedContent(compilationUnit);</span>
+<span class="nc" id="L46">        return javaFormatter.getFormattedContent(compilationUnit);</span>
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.GeneratedFile#getFileName()
-     */
     @Override
     public String getFileName() {
-<span class="fc" id="L87">        return compilationUnit.getType().getShortNameWithoutTypeArguments() + &quot;.java&quot;; //$NON-NLS-1$</span>
+<span class="fc" id="L51">        return compilationUnit.getType().getShortNameWithoutTypeArguments() + &quot;.java&quot;; //$NON-NLS-1$</span>
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.GeneratedFile#getTargetPackage()
-     */
     @Override
     public String getTargetPackage() {
-<span class="fc" id="L95">        return compilationUnit.getType().getPackageName();</span>
+<span class="fc" id="L56">        return compilationUnit.getType().getPackageName();</span>
     }
 
     /**
@@ -104,7 +65,7 @@ public class GeneratedJavaFile extends GeneratedFile {
      *         file is not mergeable.
      */
     public CompilationUnit getCompilationUnit() {
-<span class="fc" id="L107">        return compilationUnit;</span>
+<span class="fc" id="L68">        return compilationUnit;</span>
     }
 
     /**
@@ -114,16 +75,11 @@ public class GeneratedJavaFile extends GeneratedFile {
      */
     @Override
     public boolean isMergeable() {
-<span class="nc" id="L117">        return true;</span>
+<span class="nc" id="L78">        return true;</span>
     }
 
-    /**
-     * Gets the file encoding.
-     *
-     * @return the file encoding
-     */
     public String getFileEncoding() {
-<span class="nc" id="L126">        return fileEncoding;</span>
+<span class="nc" id="L82">        return fileEncoding;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

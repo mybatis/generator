@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FragmentGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.dynamic.sql.elements</a> &gt; <span class="el_source">FragmentGenerator.java</span></div><h1>FragmentGenerator.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
@@ -36,303 +37,404 @@ public class FragmentGenerator {
 
     private IntrospectedTable introspectedTable;
     private String resultMapId;
+    private String tableFieldName;
     
-<span class="fc" id="L40">    private FragmentGenerator(Builder builder) {</span>
-<span class="fc" id="L41">        this.introspectedTable = builder.introspectedTable;</span>
-<span class="fc" id="L42">        this.resultMapId = builder.resultMapId;</span>
-<span class="fc" id="L43">    }</span>
+<span class="fc" id="L42">    private FragmentGenerator(Builder builder) {</span>
+<span class="fc" id="L43">        this.introspectedTable = builder.introspectedTable;</span>
+<span class="fc" id="L44">        this.resultMapId = builder.resultMapId;</span>
+<span class="fc" id="L45">        tableFieldName = builder.tableFieldName;</span>
+<span class="fc" id="L46">    }</span>
     
     public String getSelectList() {
-<span class="fc" id="L46">        StringBuilder sb = new StringBuilder();</span>
-<span class="fc" id="L47">        boolean first = true;</span>
-<span class="fc bfc" id="L48" title="All 2 branches covered.">        for (IntrospectedColumn column : introspectedTable.getAllColumns()) {</span>
-<span class="fc bfc" id="L49" title="All 2 branches covered.">            if (first) {</span>
-<span class="fc" id="L50">                first = false;</span>
-            } else {
-<span class="fc" id="L52">                sb.append(&quot;, &quot;); //$NON-NLS-1$</span>
-            }
-<span class="fc" id="L54">            sb.append(column.getJavaProperty());</span>
-<span class="fc" id="L55">        }</span>
-        
-<span class="fc" id="L57">        return sb.toString();</span>
+<span class="fc" id="L49">        return introspectedTable.getAllColumns().stream()</span>
+<span class="fc" id="L50">                .map(c -&gt; AbstractMethodGenerator.calculateFieldName(tableFieldName, c))</span>
+<span class="fc" id="L51">                .collect(Collectors.joining(&quot;, &quot;)); //$NON-NLS-1$</span>
     }
     
     public MethodParts getPrimaryKeyWhereClauseAndParameters() {
-<span class="fc" id="L61">        MethodParts.Builder builder = new MethodParts.Builder();</span>
+<span class="fc" id="L55">        MethodParts.Builder builder = new MethodParts.Builder();</span>
         
-<span class="fc" id="L63">        boolean first = true;</span>
-<span class="fc bfc" id="L64" title="All 2 branches covered.">        for (IntrospectedColumn column : introspectedTable.getPrimaryKeyColumns()) {</span>
-<span class="fc" id="L65">            builder.withImport(column.getFullyQualifiedJavaType());</span>
-<span class="fc" id="L66">            builder.withParameter(new Parameter(column.getFullyQualifiedJavaType(), column.getJavaProperty() + &quot;_&quot;)); //$NON-NLS-1$</span>
-<span class="fc bfc" id="L67" title="All 2 branches covered.">            if (first) {</span>
-<span class="fc" id="L68">                builder.withBodyLine(&quot;        .where(&quot; + column.getJavaProperty() //$NON-NLS-1$</span>
-<span class="fc" id="L69">                        + &quot;, isEqualTo(&quot; + column.getJavaProperty() //$NON-NLS-1$</span>
+<span class="fc" id="L57">        boolean first = true;</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        for (IntrospectedColumn column : introspectedTable.getPrimaryKeyColumns()) {</span>
+<span class="fc" id="L59">            String fieldName = AbstractMethodGenerator.calculateFieldName(tableFieldName, column);</span>
+<span class="fc" id="L60">            builder.withImport(column.getFullyQualifiedJavaType());</span>
+<span class="fc" id="L61">            builder.withParameter(new Parameter(</span>
+<span class="fc" id="L62">                    column.getFullyQualifiedJavaType(), column.getJavaProperty() + &quot;_&quot;)); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">            if (first) {</span>
+<span class="fc" id="L64">                builder.withBodyLine(&quot;        .where(&quot; + fieldName //$NON-NLS-1$</span>
+<span class="fc" id="L65">                        + &quot;, isEqualTo(&quot; + column.getJavaProperty() //$NON-NLS-1$</span>
                         + &quot;_))&quot;); //$NON-NLS-1$
-<span class="fc" id="L71">                first = false;</span>
+<span class="fc" id="L67">                first = false;</span>
             } else {
-<span class="fc" id="L73">                builder.withBodyLine(&quot;        .and(&quot; + column.getJavaProperty() //$NON-NLS-1$</span>
-<span class="fc" id="L74">                        + &quot;, isEqualTo(&quot; + column.getJavaProperty() //$NON-NLS-1$</span>
+<span class="fc" id="L69">                builder.withBodyLine(&quot;        .and(&quot; + fieldName //$NON-NLS-1$</span>
+<span class="fc" id="L70">                        + &quot;, isEqualTo(&quot; + column.getJavaProperty() //$NON-NLS-1$</span>
                         + &quot;_))&quot;); //$NON-NLS-1$
             }
-<span class="fc" id="L77">        }</span>
+<span class="fc" id="L73">        }</span>
         
-<span class="fc" id="L79">        return builder.build();</span>
+<span class="fc" id="L75">        return builder.build();</span>
     }
 
-    public List&lt;String&gt; getPrimaryKeyWhereClauseForUpdate() {
-<span class="fc" id="L83">        List&lt;String&gt; lines = new ArrayList&lt;String&gt;();</span>
+    public MethodParts getPrimaryKeyWhereClauseAndParametersV2() {
+<span class="fc" id="L79">        MethodParts.Builder builder = new MethodParts.Builder();</span>
         
-<span class="fc" id="L85">        boolean first = true;</span>
-<span class="fc bfc" id="L86" title="All 2 branches covered.">        for (IntrospectedColumn column : introspectedTable.getPrimaryKeyColumns()) {</span>
-<span class="fc" id="L87">            String methodName = JavaBeansUtil.getGetterMethodName(column.getJavaProperty(), column.getFullyQualifiedJavaType());</span>
-<span class="fc bfc" id="L88" title="All 2 branches covered.">            if (first) {</span>
-<span class="fc" id="L89">                lines.add(&quot;        .where(&quot; + column.getJavaProperty() //$NON-NLS-1$</span>
+<span class="fc" id="L81">        boolean first = true;</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        for (IntrospectedColumn column : introspectedTable.getPrimaryKeyColumns()) {</span>
+<span class="fc" id="L83">            String fieldName = AbstractMethodGenerator.calculateFieldName(tableFieldName, column);</span>
+<span class="fc" id="L84">            builder.withImport(column.getFullyQualifiedJavaType());</span>
+<span class="fc" id="L85">            builder.withParameter(new Parameter(</span>
+<span class="fc" id="L86">                    column.getFullyQualifiedJavaType(), column.getJavaProperty() + &quot;_&quot;)); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">            if (first) {</span>
+<span class="fc" id="L88">                builder.withBodyLine(&quot;    c.where(&quot; + fieldName //$NON-NLS-1$</span>
+<span class="fc" id="L89">                        + &quot;, isEqualTo(&quot; + column.getJavaProperty() //$NON-NLS-1$</span>
+                        + &quot;_))&quot;); //$NON-NLS-1$
+<span class="fc" id="L91">                first = false;</span>
+            } else {
+<span class="fc" id="L93">                builder.withBodyLine(&quot;    .and(&quot; + fieldName //$NON-NLS-1$</span>
+<span class="fc" id="L94">                        + &quot;, isEqualTo(&quot; + column.getJavaProperty() //$NON-NLS-1$</span>
+                        + &quot;_))&quot;); //$NON-NLS-1$
+            }
+<span class="fc" id="L97">        }</span>
+<span class="fc" id="L98">        builder.withBodyLine(&quot;);&quot;); //$NON-NLS-1$</span>
+        
+<span class="fc" id="L100">        return builder.build();</span>
+    }
+
+    public List&lt;String&gt; getPrimaryKeyWhereClauseForUpdate(String prefix) {
+<span class="fc" id="L104">        List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
+        
+<span class="fc" id="L106">        boolean first = true;</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">        for (IntrospectedColumn column : introspectedTable.getPrimaryKeyColumns()) {</span>
+<span class="fc" id="L108">            String fieldName = AbstractMethodGenerator.calculateFieldName(tableFieldName, column);</span>
+<span class="fc" id="L109">            String methodName = JavaBeansUtil.getGetterMethodName(</span>
+<span class="fc" id="L110">                    column.getJavaProperty(), column.getFullyQualifiedJavaType());</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">            if (first) {</span>
+<span class="fc" id="L112">                lines.add(prefix + &quot;.where(&quot; + fieldName //$NON-NLS-1$</span>
                         + &quot;, isEqualTo(record::&quot; + methodName //$NON-NLS-1$
                         + &quot;))&quot;); //$NON-NLS-1$
-<span class="fc" id="L92">                first = false;</span>
+<span class="fc" id="L115">                first = false;</span>
             } else {
-<span class="fc" id="L94">                lines.add(&quot;        .and(&quot; + column.getJavaProperty() //$NON-NLS-1$</span>
+<span class="fc" id="L117">                lines.add(prefix + &quot;.and(&quot; + fieldName //$NON-NLS-1$</span>
                         + &quot;, isEqualTo(record::&quot; + methodName //$NON-NLS-1$
                         + &quot;))&quot;); //$NON-NLS-1$
             }
-<span class="fc" id="L98">        }</span>
+<span class="fc" id="L121">        }</span>
         
-<span class="fc" id="L100">        return lines;</span>
+<span class="fc" id="L123">        return lines;</span>
     }
     
     public MethodParts getAnnotatedConstructorArgs() {
-<span class="fc" id="L104">        MethodParts.Builder builder = new MethodParts.Builder();</span>
+<span class="fc" id="L127">        MethodParts.Builder builder = new MethodParts.Builder();</span>
 
-<span class="fc" id="L106">        builder.withImport(new FullyQualifiedJavaType(&quot;org.apache.ibatis.type.JdbcType&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L107">        builder.withImport(new FullyQualifiedJavaType(&quot;org.apache.ibatis.annotations.ConstructorArgs&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L108">        builder.withImport(new FullyQualifiedJavaType(&quot;org.apache.ibatis.annotations.Arg&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L129">        builder.withImport(new FullyQualifiedJavaType(&quot;org.apache.ibatis.type.JdbcType&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L130">        builder.withImport(new FullyQualifiedJavaType(&quot;org.apache.ibatis.annotations.ConstructorArgs&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L131">        builder.withImport(new FullyQualifiedJavaType(&quot;org.apache.ibatis.annotations.Arg&quot;)); //$NON-NLS-1$</span>
 
-<span class="fc" id="L110">        builder.withAnnotation(&quot;@ConstructorArgs({&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L133">        builder.withAnnotation(&quot;@ConstructorArgs({&quot;); //$NON-NLS-1$</span>
 
-<span class="fc" id="L112">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L135">        StringBuilder sb = new StringBuilder();</span>
 
-<span class="fc" id="L114">        Set&lt;FullyQualifiedJavaType&gt; imports = new HashSet&lt;FullyQualifiedJavaType&gt;();</span>
-<span class="fc" id="L115">        Iterator&lt;IntrospectedColumn&gt; iterPk = introspectedTable.getPrimaryKeyColumns().iterator();</span>
-<span class="fc" id="L116">        Iterator&lt;IntrospectedColumn&gt; iterNonPk = introspectedTable.getNonPrimaryKeyColumns().iterator();</span>
-<span class="fc bfc" id="L117" title="All 2 branches covered.">        while (iterPk.hasNext()) {</span>
-<span class="fc" id="L118">            IntrospectedColumn introspectedColumn = iterPk.next();</span>
-<span class="fc" id="L119">            sb.setLength(0);</span>
-<span class="fc" id="L120">            javaIndent(sb, 1);</span>
-<span class="fc" id="L121">            sb.append(getArgAnnotation(imports, introspectedColumn, true));</span>
+<span class="fc" id="L137">        Set&lt;FullyQualifiedJavaType&gt; imports = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L138">        Iterator&lt;IntrospectedColumn&gt; iterPk = introspectedTable.getPrimaryKeyColumns().iterator();</span>
+<span class="fc" id="L139">        Iterator&lt;IntrospectedColumn&gt; iterNonPk = introspectedTable.getNonPrimaryKeyColumns().iterator();</span>
+<span class="fc bfc" id="L140" title="All 2 branches covered.">        while (iterPk.hasNext()) {</span>
+<span class="fc" id="L141">            IntrospectedColumn introspectedColumn = iterPk.next();</span>
+<span class="fc" id="L142">            sb.setLength(0);</span>
+<span class="fc" id="L143">            javaIndent(sb, 1);</span>
+<span class="fc" id="L144">            sb.append(getArgAnnotation(imports, introspectedColumn, true));</span>
             
-<span class="fc bfc" id="L123" title="All 4 branches covered.">            if (iterPk.hasNext() || iterNonPk.hasNext()) {</span>
-<span class="fc" id="L124">                sb.append(',');</span>
+<span class="fc bfc" id="L146" title="All 4 branches covered.">            if (iterPk.hasNext() || iterNonPk.hasNext()) {</span>
+<span class="fc" id="L147">                sb.append(',');</span>
             }
 
-<span class="fc" id="L127">            builder.withAnnotation(sb.toString());</span>
-<span class="fc" id="L128">        }</span>
+<span class="fc" id="L150">            builder.withAnnotation(sb.toString());</span>
+<span class="fc" id="L151">        }</span>
 
-<span class="fc bfc" id="L130" title="All 2 branches covered.">        while (iterNonPk.hasNext()) {</span>
-<span class="fc" id="L131">            IntrospectedColumn introspectedColumn = iterNonPk.next();</span>
-<span class="fc" id="L132">            sb.setLength(0);</span>
-<span class="fc" id="L133">            javaIndent(sb, 1);</span>
-<span class="fc" id="L134">            sb.append(getArgAnnotation(imports, introspectedColumn, false));</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">        while (iterNonPk.hasNext()) {</span>
+<span class="fc" id="L154">            IntrospectedColumn introspectedColumn = iterNonPk.next();</span>
+<span class="fc" id="L155">            sb.setLength(0);</span>
+<span class="fc" id="L156">            javaIndent(sb, 1);</span>
+<span class="fc" id="L157">            sb.append(getArgAnnotation(imports, introspectedColumn, false));</span>
             
-<span class="fc bfc" id="L136" title="All 2 branches covered.">            if (iterNonPk.hasNext()) {</span>
-<span class="fc" id="L137">                sb.append(',');</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">            if (iterNonPk.hasNext()) {</span>
+<span class="fc" id="L160">                sb.append(',');</span>
             }
 
-<span class="fc" id="L140">            builder.withAnnotation(sb.toString());</span>
-<span class="fc" id="L141">        }</span>
+<span class="fc" id="L163">            builder.withAnnotation(sb.toString());</span>
+<span class="fc" id="L164">        }</span>
 
-<span class="fc" id="L143">        builder.withAnnotation(&quot;})&quot;) //$NON-NLS-1$</span>
-<span class="fc" id="L144">            .withImports(imports);</span>
+<span class="fc" id="L166">        builder.withAnnotation(&quot;})&quot;) //$NON-NLS-1$</span>
+<span class="fc" id="L167">            .withImports(imports);</span>
         
-<span class="fc" id="L146">        return builder.build();</span>
+<span class="fc" id="L169">        return builder.build();</span>
     }
 
-    private String getArgAnnotation(Set&lt;FullyQualifiedJavaType&gt; imports, IntrospectedColumn introspectedColumn, boolean idColumn) {
-<span class="fc" id="L150">        StringBuilder sb = new StringBuilder();</span>
-<span class="fc" id="L151">        sb.append(&quot;@Arg(column=\&quot;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L152">        sb.append(introspectedColumn.getActualColumnName());</span>
+    private String getArgAnnotation(Set&lt;FullyQualifiedJavaType&gt; imports, IntrospectedColumn introspectedColumn,
+            boolean idColumn) {
+<span class="fc" id="L174">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L175">        sb.append(&quot;@Arg(column=\&quot;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L176">        sb.append(introspectedColumn.getActualColumnName());</span>
         
-<span class="fc" id="L154">        imports.add(introspectedColumn.getFullyQualifiedJavaType());</span>
-<span class="fc" id="L155">        sb.append(&quot;\&quot;, javaType=&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L156">        sb.append(introspectedColumn.getFullyQualifiedJavaType().getShortName());</span>
-<span class="fc" id="L157">        sb.append(&quot;.class&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L178">        imports.add(introspectedColumn.getFullyQualifiedJavaType());</span>
+<span class="fc" id="L179">        sb.append(&quot;\&quot;, javaType=&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L180">        sb.append(introspectedColumn.getFullyQualifiedJavaType().getShortName());</span>
+<span class="fc" id="L181">        sb.append(&quot;.class&quot;); //$NON-NLS-1$</span>
 
-<span class="pc bpc" id="L159" title="1 of 2 branches missed.">        if (stringHasValue(introspectedColumn.getTypeHandler())) {</span>
-<span class="nc" id="L160">            FullyQualifiedJavaType fqjt =</span>
-<span class="nc" id="L161">                    new FullyQualifiedJavaType(introspectedColumn.getTypeHandler());</span>
-<span class="nc" id="L162">            imports.add(fqjt);</span>
-<span class="nc" id="L163">            sb.append(&quot;, typeHandler=&quot;); //$NON-NLS-1$</span>
-<span class="nc" id="L164">            sb.append(fqjt.getShortName());</span>
-<span class="nc" id="L165">            sb.append(&quot;.class&quot;); //$NON-NLS-1$</span>
+<span class="pc bpc" id="L183" title="1 of 2 branches missed.">        if (stringHasValue(introspectedColumn.getTypeHandler())) {</span>
+<span class="nc" id="L184">            FullyQualifiedJavaType fqjt =</span>
+<span class="nc" id="L185">                    new FullyQualifiedJavaType(introspectedColumn.getTypeHandler());</span>
+<span class="nc" id="L186">            imports.add(fqjt);</span>
+<span class="nc" id="L187">            sb.append(&quot;, typeHandler=&quot;); //$NON-NLS-1$</span>
+<span class="nc" id="L188">            sb.append(fqjt.getShortName());</span>
+<span class="nc" id="L189">            sb.append(&quot;.class&quot;); //$NON-NLS-1$</span>
         }
 
-<span class="fc" id="L168">        sb.append(&quot;, jdbcType=JdbcType.&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L169">        sb.append(introspectedColumn.getJdbcTypeName());</span>
-<span class="fc bfc" id="L170" title="All 2 branches covered.">        if (idColumn) {</span>
-<span class="fc" id="L171">            sb.append(&quot;, id=true&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L192">        sb.append(&quot;, jdbcType=JdbcType.&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L193">        sb.append(introspectedColumn.getJdbcTypeName());</span>
+<span class="fc bfc" id="L194" title="All 2 branches covered.">        if (idColumn) {</span>
+<span class="fc" id="L195">            sb.append(&quot;, id=true&quot;); //$NON-NLS-1$</span>
         }
-<span class="fc" id="L173">        sb.append(')');</span>
+<span class="fc" id="L197">        sb.append(')');</span>
 
-<span class="fc" id="L175">        return sb.toString();</span>
+<span class="fc" id="L199">        return sb.toString();</span>
     }
 
     public MethodParts getAnnotatedResults() {
-<span class="fc" id="L179">        MethodParts.Builder builder = new MethodParts.Builder();</span>
+<span class="fc" id="L203">        MethodParts.Builder builder = new MethodParts.Builder();</span>
 
-<span class="fc" id="L181">        builder.withImport(new FullyQualifiedJavaType(&quot;org.apache.ibatis.type.JdbcType&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L182">        builder.withImport(new FullyQualifiedJavaType(&quot;org.apache.ibatis.annotations.Result&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L183">        builder.withImport(new FullyQualifiedJavaType(&quot;org.apache.ibatis.annotations.Results&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L205">        builder.withImport(new FullyQualifiedJavaType(&quot;org.apache.ibatis.type.JdbcType&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L206">        builder.withImport(new FullyQualifiedJavaType(&quot;org.apache.ibatis.annotations.Result&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L207">        builder.withImport(new FullyQualifiedJavaType(&quot;org.apache.ibatis.annotations.Results&quot;)); //$NON-NLS-1$</span>
 
-<span class="fc" id="L185">        builder.withAnnotation(&quot;@Results(id=\&quot;&quot; + resultMapId + &quot;\&quot;, value = {&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L209">        builder.withAnnotation(&quot;@Results(id=\&quot;&quot; + resultMapId + &quot;\&quot;, value = {&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
 
-<span class="fc" id="L187">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L211">        StringBuilder sb = new StringBuilder();</span>
 
-<span class="fc" id="L189">        Set&lt;FullyQualifiedJavaType&gt; imports = new HashSet&lt;FullyQualifiedJavaType&gt;();</span>
-<span class="fc" id="L190">        Iterator&lt;IntrospectedColumn&gt; iterPk = introspectedTable.getPrimaryKeyColumns().iterator();</span>
-<span class="fc" id="L191">        Iterator&lt;IntrospectedColumn&gt; iterNonPk = introspectedTable.getNonPrimaryKeyColumns().iterator();</span>
-<span class="fc bfc" id="L192" title="All 2 branches covered.">        while (iterPk.hasNext()) {</span>
-<span class="fc" id="L193">            IntrospectedColumn introspectedColumn = iterPk.next();</span>
-<span class="fc" id="L194">            sb.setLength(0);</span>
-<span class="fc" id="L195">            javaIndent(sb, 1);</span>
-<span class="fc" id="L196">            sb.append(getResultAnnotation(imports, introspectedColumn, true));</span>
+<span class="fc" id="L213">        Set&lt;FullyQualifiedJavaType&gt; imports = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L214">        Iterator&lt;IntrospectedColumn&gt; iterPk = introspectedTable.getPrimaryKeyColumns().iterator();</span>
+<span class="fc" id="L215">        Iterator&lt;IntrospectedColumn&gt; iterNonPk = introspectedTable.getNonPrimaryKeyColumns().iterator();</span>
+<span class="fc bfc" id="L216" title="All 2 branches covered.">        while (iterPk.hasNext()) {</span>
+<span class="fc" id="L217">            IntrospectedColumn introspectedColumn = iterPk.next();</span>
+<span class="fc" id="L218">            sb.setLength(0);</span>
+<span class="fc" id="L219">            javaIndent(sb, 1);</span>
+<span class="fc" id="L220">            sb.append(getResultAnnotation(imports, introspectedColumn, true));</span>
             
-<span class="pc bpc" id="L198" title="1 of 4 branches missed.">            if (iterPk.hasNext() || iterNonPk.hasNext()) {</span>
-<span class="fc" id="L199">                sb.append(',');</span>
+<span class="pc bpc" id="L222" title="1 of 4 branches missed.">            if (iterPk.hasNext() || iterNonPk.hasNext()) {</span>
+<span class="fc" id="L223">                sb.append(',');</span>
             }
 
-<span class="fc" id="L202">            builder.withAnnotation(sb.toString());</span>
-<span class="fc" id="L203">        }</span>
+<span class="fc" id="L226">            builder.withAnnotation(sb.toString());</span>
+<span class="fc" id="L227">        }</span>
 
-<span class="fc bfc" id="L205" title="All 2 branches covered.">        while (iterNonPk.hasNext()) {</span>
-<span class="fc" id="L206">            IntrospectedColumn introspectedColumn = iterNonPk.next();</span>
-<span class="fc" id="L207">            sb.setLength(0);</span>
-<span class="fc" id="L208">            javaIndent(sb, 1);</span>
-<span class="fc" id="L209">            sb.append(getResultAnnotation(imports, introspectedColumn, false));</span>
+<span class="fc bfc" id="L229" title="All 2 branches covered.">        while (iterNonPk.hasNext()) {</span>
+<span class="fc" id="L230">            IntrospectedColumn introspectedColumn = iterNonPk.next();</span>
+<span class="fc" id="L231">            sb.setLength(0);</span>
+<span class="fc" id="L232">            javaIndent(sb, 1);</span>
+<span class="fc" id="L233">            sb.append(getResultAnnotation(imports, introspectedColumn, false));</span>
             
-<span class="fc bfc" id="L211" title="All 2 branches covered.">            if (iterNonPk.hasNext()) {</span>
-<span class="fc" id="L212">                sb.append(',');</span>
+<span class="fc bfc" id="L235" title="All 2 branches covered.">            if (iterNonPk.hasNext()) {</span>
+<span class="fc" id="L236">                sb.append(',');</span>
             }
 
-<span class="fc" id="L215">            builder.withAnnotation(sb.toString());</span>
-<span class="fc" id="L216">        }</span>
+<span class="fc" id="L239">            builder.withAnnotation(sb.toString());</span>
+<span class="fc" id="L240">        }</span>
 
-<span class="fc" id="L218">        builder.withAnnotation(&quot;})&quot;) //$NON-NLS-1$</span>
-<span class="fc" id="L219">            .withImports(imports);</span>
+<span class="fc" id="L242">        builder.withAnnotation(&quot;})&quot;) //$NON-NLS-1$</span>
+<span class="fc" id="L243">            .withImports(imports);</span>
         
-<span class="fc" id="L221">        return builder.build();</span>
+<span class="fc" id="L245">        return builder.build();</span>
     }
     
-    private String getResultAnnotation(Set&lt;FullyQualifiedJavaType&gt; imports, IntrospectedColumn introspectedColumn, boolean idColumn) {
-<span class="fc" id="L225">        StringBuilder sb = new StringBuilder();</span>
-<span class="fc" id="L226">        sb.append(&quot;@Result(column=\&quot;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L227">        sb.append(introspectedColumn.getActualColumnName());</span>
-<span class="fc" id="L228">        sb.append(&quot;\&quot;, property=\&quot;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L229">        sb.append(introspectedColumn.getJavaProperty());</span>
-<span class="fc" id="L230">        sb.append('\&quot;');</span>
+    private String getResultAnnotation(Set&lt;FullyQualifiedJavaType&gt; imports, IntrospectedColumn introspectedColumn,
+            boolean idColumn) {
+<span class="fc" id="L250">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L251">        sb.append(&quot;@Result(column=\&quot;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L252">        sb.append(introspectedColumn.getActualColumnName());</span>
+<span class="fc" id="L253">        sb.append(&quot;\&quot;, property=\&quot;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L254">        sb.append(introspectedColumn.getJavaProperty());</span>
+<span class="fc" id="L255">        sb.append('\&quot;');</span>
 
-<span class="fc bfc" id="L232" title="All 2 branches covered.">        if (stringHasValue(introspectedColumn.getTypeHandler())) {</span>
-<span class="fc" id="L233">            FullyQualifiedJavaType fqjt =</span>
-<span class="fc" id="L234">                    new FullyQualifiedJavaType(introspectedColumn.getTypeHandler());</span>
-<span class="fc" id="L235">            imports.add(fqjt);</span>
-<span class="fc" id="L236">            sb.append(&quot;, typeHandler=&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L237">            sb.append(fqjt.getShortName());</span>
-<span class="fc" id="L238">            sb.append(&quot;.class&quot;); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L257" title="All 2 branches covered.">        if (stringHasValue(introspectedColumn.getTypeHandler())) {</span>
+<span class="fc" id="L258">            FullyQualifiedJavaType fqjt =</span>
+<span class="fc" id="L259">                    new FullyQualifiedJavaType(introspectedColumn.getTypeHandler());</span>
+<span class="fc" id="L260">            imports.add(fqjt);</span>
+<span class="fc" id="L261">            sb.append(&quot;, typeHandler=&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L262">            sb.append(fqjt.getShortName());</span>
+<span class="fc" id="L263">            sb.append(&quot;.class&quot;); //$NON-NLS-1$</span>
         }
 
-<span class="fc" id="L241">        sb.append(&quot;, jdbcType=JdbcType.&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L242">        sb.append(introspectedColumn.getJdbcTypeName());</span>
-<span class="fc bfc" id="L243" title="All 2 branches covered.">        if (idColumn) {</span>
-<span class="fc" id="L244">            sb.append(&quot;, id=true&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L266">        sb.append(&quot;, jdbcType=JdbcType.&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L267">        sb.append(introspectedColumn.getJdbcTypeName());</span>
+<span class="fc bfc" id="L268" title="All 2 branches covered.">        if (idColumn) {</span>
+<span class="fc" id="L269">            sb.append(&quot;, id=true&quot;); //$NON-NLS-1$</span>
         }
-<span class="fc" id="L246">        sb.append(')');</span>
+<span class="fc" id="L271">        sb.append(')');</span>
 
-<span class="fc" id="L248">        return sb.toString();</span>
+<span class="fc" id="L273">        return sb.toString();</span>
     }
     
     public MethodParts getGeneratedKeyAnnotation(GeneratedKey gk) {
-<span class="fc" id="L252">        MethodParts.Builder builder = new MethodParts.Builder();</span>
+<span class="fc" id="L277">        MethodParts.Builder builder = new MethodParts.Builder();</span>
         
-<span class="fc" id="L254">        StringBuilder sb = new StringBuilder();</span>
-<span class="fc" id="L255">        IntrospectedColumn introspectedColumn = introspectedTable.getColumn(gk.getColumn());</span>
-<span class="pc bpc" id="L256" title="1 of 2 branches missed.">        if (introspectedColumn != null) {</span>
-<span class="fc bfc" id="L257" title="All 2 branches covered.">            if (gk.isJdbcStandard()) {</span>
-<span class="fc" id="L258">                builder.withImport(new FullyQualifiedJavaType(&quot;org.apache.ibatis.annotations.Options&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L259">                sb.append(&quot;@Options(useGeneratedKeys=true,keyProperty=\&quot;record.&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L260">                sb.append(introspectedColumn.getJavaProperty());</span>
-<span class="fc" id="L261">                sb.append(&quot;\&quot;)&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L262">                builder.withAnnotation(sb.toString());</span>
+<span class="fc" id="L279">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L280">        introspectedTable.getColumn(gk.getColumn()).ifPresent(introspectedColumn -&gt; {</span>
+<span class="fc bfc" id="L281" title="All 2 branches covered.">            if (gk.isJdbcStandard()) {</span>
+<span class="fc" id="L282">                builder.withImport(new FullyQualifiedJavaType(&quot;org.apache.ibatis.annotations.Options&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L283">                sb.append(&quot;@Options(useGeneratedKeys=true,keyProperty=\&quot;record.&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L284">                sb.append(introspectedColumn.getJavaProperty());</span>
+<span class="fc" id="L285">                sb.append(&quot;\&quot;)&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L286">                builder.withAnnotation(sb.toString());</span>
             } else {
-<span class="fc" id="L264">                builder.withImport(new FullyQualifiedJavaType(&quot;org.apache.ibatis.annotations.SelectKey&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L265">                FullyQualifiedJavaType fqjt = introspectedColumn.getFullyQualifiedJavaType();</span>
-<span class="fc" id="L266">                sb.append(&quot;@SelectKey(statement=\&quot;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L267">                sb.append(gk.getRuntimeSqlStatement());</span>
-<span class="fc" id="L268">                sb.append(&quot;\&quot;, keyProperty=\&quot;record.&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L269">                sb.append(introspectedColumn.getJavaProperty());</span>
-<span class="fc" id="L270">                sb.append(&quot;\&quot;, before=&quot;); //$NON-NLS-1$</span>
-<span class="pc bpc" id="L271" title="1 of 2 branches missed.">                sb.append(gk.isIdentity() ? &quot;false&quot; : &quot;true&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
-<span class="fc" id="L272">                sb.append(&quot;, resultType=&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L273">                sb.append(fqjt.getShortName());</span>
-<span class="fc" id="L274">                sb.append(&quot;.class)&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L275">                builder.withAnnotation(sb.toString());</span>
+<span class="fc" id="L288">                builder.withImport(new FullyQualifiedJavaType(&quot;org.apache.ibatis.annotations.SelectKey&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L289">                FullyQualifiedJavaType fqjt = introspectedColumn.getFullyQualifiedJavaType();</span>
+<span class="fc" id="L290">                sb.append(&quot;@SelectKey(statement=\&quot;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L291">                sb.append(gk.getRuntimeSqlStatement());</span>
+<span class="fc" id="L292">                sb.append(&quot;\&quot;, keyProperty=\&quot;record.&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L293">                sb.append(introspectedColumn.getJavaProperty());</span>
+<span class="fc" id="L294">                sb.append(&quot;\&quot;, before=&quot;); //$NON-NLS-1$</span>
+<span class="pc bpc" id="L295" title="1 of 2 branches missed.">                sb.append(gk.isIdentity() ? &quot;false&quot; : &quot;true&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L296">                sb.append(&quot;, resultType=&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L297">                sb.append(fqjt.getShortName());</span>
+<span class="fc" id="L298">                sb.append(&quot;.class)&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L299">                builder.withAnnotation(sb.toString());</span>
             }
-        }
+<span class="fc" id="L301">        });</span>
         
-<span class="fc" id="L279">        return builder.build();</span>
+<span class="fc" id="L303">        return builder.build();</span>
     }
     
     public List&lt;String&gt; getSetEqualLines(List&lt;IntrospectedColumn&gt; columnList, boolean terminate) {
-<span class="fc" id="L283">        List&lt;String&gt; lines = new ArrayList&lt;String&gt;();</span>
-<span class="fc" id="L284">        List&lt;IntrospectedColumn&gt; columns = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(columnList);</span>
-<span class="fc" id="L285">        Iterator&lt;IntrospectedColumn&gt; iter = columns.iterator();</span>
-<span class="fc bfc" id="L286" title="All 2 branches covered.">        while (iter.hasNext()) {</span>
-<span class="fc" id="L287">            IntrospectedColumn column = iter.next();</span>
-<span class="fc" id="L288">            String methodName = JavaBeansUtil.getGetterMethodName(column.getJavaProperty(), column.getFullyQualifiedJavaType());</span>
-<span class="fc" id="L289">            String line = &quot;        .set(&quot; + column.getJavaProperty() //$NON-NLS-1$</span>
+<span class="fc" id="L307">        List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L308">        List&lt;IntrospectedColumn&gt; columns = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(columnList);</span>
+<span class="fc" id="L309">        Iterator&lt;IntrospectedColumn&gt; iter = columns.iterator();</span>
+<span class="fc bfc" id="L310" title="All 2 branches covered.">        while (iter.hasNext()) {</span>
+<span class="fc" id="L311">            IntrospectedColumn column = iter.next();</span>
+<span class="fc" id="L312">            String fieldName = AbstractMethodGenerator.calculateFieldName(tableFieldName, column);</span>
+<span class="fc" id="L313">            String methodName = JavaBeansUtil.getGetterMethodName(column.getJavaProperty(),</span>
+<span class="fc" id="L314">                    column.getFullyQualifiedJavaType());</span>
+<span class="fc" id="L315">            String line = &quot;        .set(&quot; + fieldName //$NON-NLS-1$</span>
                     + &quot;).equalTo(record::&quot; + methodName //$NON-NLS-1$
                     + &quot;)&quot;; //$NON-NLS-1$
-<span class="fc bfc" id="L292" title="All 4 branches covered.">            if (terminate &amp;&amp; !iter.hasNext()) {</span>
-<span class="fc" id="L293">                line += &quot;;&quot;; //$NON-NLS-1$</span>
+<span class="fc bfc" id="L318" title="All 4 branches covered.">            if (terminate &amp;&amp; !iter.hasNext()) {</span>
+<span class="fc" id="L319">                line += &quot;;&quot;; //$NON-NLS-1$</span>
             }
-<span class="fc" id="L295">            lines.add(line);</span>
-<span class="fc" id="L296">        }</span>
+<span class="fc" id="L321">            lines.add(line);</span>
+<span class="fc" id="L322">        }</span>
         
-<span class="fc" id="L298">        return lines;</span>
+<span class="fc" id="L324">        return lines;</span>
+    }
+    
+    public List&lt;String&gt; getSetEqualLinesV2(List&lt;IntrospectedColumn&gt; columnList, String firstLinePrefix,
+            String subsequentLinePrefix, boolean terminate) {
+<span class="fc" id="L329">        List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L330">        List&lt;IntrospectedColumn&gt; columns = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(columnList);</span>
+<span class="fc" id="L331">        Iterator&lt;IntrospectedColumn&gt; iter = columns.iterator();</span>
+<span class="fc" id="L332">        boolean first = true;</span>
+<span class="fc bfc" id="L333" title="All 2 branches covered.">        while (iter.hasNext()) {</span>
+<span class="fc" id="L334">            IntrospectedColumn column = iter.next();</span>
+<span class="fc" id="L335">            String fieldName = AbstractMethodGenerator.calculateFieldName(tableFieldName, column);</span>
+<span class="fc" id="L336">            String methodName = JavaBeansUtil.getGetterMethodName(column.getJavaProperty(),</span>
+<span class="fc" id="L337">                    column.getFullyQualifiedJavaType());</span>
+            
+            String start;
+<span class="fc bfc" id="L340" title="All 2 branches covered.">            if (first) {</span>
+<span class="fc" id="L341">                start = firstLinePrefix;</span>
+<span class="fc" id="L342">                first = false;</span>
+            } else {
+<span class="fc" id="L344">                start = subsequentLinePrefix;</span>
+            }
+            
+<span class="fc" id="L347">            String line = start + &quot;.set(&quot; + fieldName //$NON-NLS-1$</span>
+                    + &quot;).equalTo(record::&quot; + methodName //$NON-NLS-1$
+                    + &quot;)&quot;; //$NON-NLS-1$
+            
+<span class="fc bfc" id="L351" title="All 4 branches covered.">            if (terminate &amp;&amp; !iter.hasNext()) {</span>
+<span class="fc" id="L352">                line += &quot;;&quot;; //$NON-NLS-1$</span>
+            }
+            
+<span class="fc" id="L355">            lines.add(line);</span>
+<span class="fc" id="L356">        }</span>
+        
+<span class="fc" id="L358">        return lines;</span>
     }
     
     public List&lt;String&gt; getSetEqualWhenPresentLines(List&lt;IntrospectedColumn&gt; columnList, boolean terminate) {
-<span class="fc" id="L302">        List&lt;String&gt; lines = new ArrayList&lt;String&gt;();</span>
-<span class="fc" id="L303">        List&lt;IntrospectedColumn&gt; columns = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(columnList);</span>
-<span class="fc" id="L304">        Iterator&lt;IntrospectedColumn&gt; iter = columns.iterator();</span>
-<span class="fc bfc" id="L305" title="All 2 branches covered.">        while (iter.hasNext()) {</span>
-<span class="fc" id="L306">            IntrospectedColumn column = iter.next();</span>
-<span class="fc" id="L307">            String methodName = JavaBeansUtil.getGetterMethodName(column.getJavaProperty(), column.getFullyQualifiedJavaType());</span>
-<span class="fc" id="L308">            String line = &quot;        .set(&quot; + column.getJavaProperty() //$NON-NLS-1$</span>
+<span class="fc" id="L362">        List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L363">        List&lt;IntrospectedColumn&gt; columns = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(columnList);</span>
+<span class="fc" id="L364">        Iterator&lt;IntrospectedColumn&gt; iter = columns.iterator();</span>
+<span class="fc bfc" id="L365" title="All 2 branches covered.">        while (iter.hasNext()) {</span>
+<span class="fc" id="L366">            IntrospectedColumn column = iter.next();</span>
+<span class="fc" id="L367">            String fieldName = AbstractMethodGenerator.calculateFieldName(tableFieldName, column);</span>
+<span class="fc" id="L368">            String methodName = JavaBeansUtil.getGetterMethodName(column.getJavaProperty(),</span>
+<span class="fc" id="L369">                    column.getFullyQualifiedJavaType());</span>
+<span class="fc" id="L370">            String line = &quot;        .set(&quot; + fieldName //$NON-NLS-1$</span>
                     + &quot;).equalToWhenPresent(record::&quot; //$NON-NLS-1$
                     + methodName + &quot;)&quot;; //$NON-NLS-1$
-<span class="fc bfc" id="L311" title="All 4 branches covered.">            if (terminate &amp;&amp; !iter.hasNext()) {</span>
-<span class="fc" id="L312">                line += &quot;;&quot;; //$NON-NLS-1$</span>
+<span class="fc bfc" id="L373" title="All 4 branches covered.">            if (terminate &amp;&amp; !iter.hasNext()) {</span>
+<span class="fc" id="L374">                line += &quot;;&quot;; //$NON-NLS-1$</span>
             }
-<span class="fc" id="L314">            lines.add(line);</span>
-<span class="fc" id="L315">        }</span>
-<span class="fc" id="L316">        return lines;</span>
+<span class="fc" id="L376">            lines.add(line);</span>
+<span class="fc" id="L377">        }</span>
+<span class="fc" id="L378">        return lines;</span>
     }
 
-<span class="fc" id="L319">    public static class Builder {</span>
+    public List&lt;String&gt; getSetEqualWhenPresentLinesV2(List&lt;IntrospectedColumn&gt; columnList, String firstLinePrefix,
+            String subsequentLinePrefix, boolean terminate) {
+<span class="fc" id="L383">        List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L384">        List&lt;IntrospectedColumn&gt; columns = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(columnList);</span>
+<span class="fc" id="L385">        Iterator&lt;IntrospectedColumn&gt; iter = columns.iterator();</span>
+<span class="fc" id="L386">        boolean first = true;</span>
+<span class="fc bfc" id="L387" title="All 2 branches covered.">        while (iter.hasNext()) {</span>
+<span class="fc" id="L388">            IntrospectedColumn column = iter.next();</span>
+<span class="fc" id="L389">            String fieldName = AbstractMethodGenerator.calculateFieldName(tableFieldName, column);</span>
+<span class="fc" id="L390">            String methodName = JavaBeansUtil.getGetterMethodName(column.getJavaProperty(),</span>
+<span class="fc" id="L391">                    column.getFullyQualifiedJavaType());</span>
+            
+            String start;
+<span class="fc bfc" id="L394" title="All 2 branches covered.">            if (first) {</span>
+<span class="fc" id="L395">                start = firstLinePrefix;</span>
+<span class="fc" id="L396">                first = false;</span>
+            } else {
+<span class="fc" id="L398">                start = subsequentLinePrefix;</span>
+            }
+            
+<span class="fc" id="L401">            String line = start + &quot;.set(&quot; + fieldName //$NON-NLS-1$</span>
+                    + &quot;).equalToWhenPresent(record::&quot; + methodName //$NON-NLS-1$
+                    + &quot;)&quot;; //$NON-NLS-1$
+            
+<span class="fc bfc" id="L405" title="All 4 branches covered.">            if (terminate &amp;&amp; !iter.hasNext()) {</span>
+<span class="fc" id="L406">                line += &quot;;&quot;; //$NON-NLS-1$</span>
+            }
+            
+<span class="fc" id="L409">            lines.add(line);</span>
+<span class="fc" id="L410">        }</span>
+        
+<span class="fc" id="L412">        return lines;</span>
+    }
+    
+<span class="fc" id="L415">    public static class Builder {</span>
         private IntrospectedTable introspectedTable;
         private String resultMapId;
+        private String tableFieldName;
         
         public Builder withIntrospectedTable(IntrospectedTable introspectedTable) {
-<span class="fc" id="L324">            this.introspectedTable = introspectedTable;</span>
-<span class="fc" id="L325">            return this;</span>
+<span class="fc" id="L421">            this.introspectedTable = introspectedTable;</span>
+<span class="fc" id="L422">            return this;</span>
         }
         
         public Builder withResultMapId(String resultMapId) {
-<span class="fc" id="L329">            this.resultMapId = resultMapId;</span>
-<span class="fc" id="L330">            return this;</span>
+<span class="fc" id="L426">            this.resultMapId = resultMapId;</span>
+<span class="fc" id="L427">            return this;</span>
+        }
+        
+        public Builder withTableFieldName(String tableFieldName) {
+<span class="fc" id="L431">            this.tableFieldName = tableFieldName;</span>
+<span class="fc" id="L432">            return this;</span>
         }
         
         public FragmentGenerator build() {
-<span class="fc" id="L334">            return new FragmentGenerator(this);</span>
+<span class="fc" id="L436">            return new FragmentGenerator(this);</span>
         }
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

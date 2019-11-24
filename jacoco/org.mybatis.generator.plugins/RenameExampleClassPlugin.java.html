@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RenameExampleClassPlugin.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.plugins</a> &gt; <span class="el_source">RenameExampleClassPlugin.java</span></div><h1>RenameExampleClassPlugin.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -33,9 +33,9 @@ import org.mybatis.generator.api.PluginAdapter;
  * &lt;p&gt;This plugin accepts two properties:
  * 
  * &lt;ul&gt;
- * &lt;li&gt;&lt;tt&gt;searchString&lt;/tt&gt; (required) the regular expression of the name
+ * &lt;li&gt;&lt;code&gt;searchString&lt;/code&gt; (required) the regular expression of the name
  * search.&lt;/li&gt;
- * &lt;li&gt;&lt;tt&gt;replaceString&lt;/tt&gt; (required) the replacement String.&lt;/li&gt;
+ * &lt;li&gt;&lt;code&gt;replaceString&lt;/code&gt; (required) the replacement String.&lt;/li&gt;
  * &lt;/ul&gt;
  * 
  * &lt;p&gt;For example, to change the name of the generated Example classes from
@@ -52,48 +52,44 @@ import org.mybatis.generator.api.PluginAdapter;
  * @author Jeff Butler
  * 
  */
-public class RenameExampleClassPlugin extends PluginAdapter {
-    private String searchString;
+<span class="fc" id="L55">public class RenameExampleClassPlugin extends PluginAdapter {</span>
     private String replaceString;
     private Pattern pattern;
-
-<span class="fc" id="L60">    public RenameExampleClassPlugin() {</span>
-<span class="fc" id="L61">    }</span>
 
     @Override
     public boolean validate(List&lt;String&gt; warnings) {
 
-<span class="fc" id="L66">        searchString = properties.getProperty(&quot;searchString&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L67">        replaceString = properties.getProperty(&quot;replaceString&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L62">        String searchString = properties.getProperty(&quot;searchString&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L63">        replaceString = properties.getProperty(&quot;replaceString&quot;); //$NON-NLS-1$</span>
 
-<span class="pc bpc" id="L69" title="1 of 2 branches missed.">        boolean valid = stringHasValue(searchString)</span>
-<span class="pc bpc" id="L70" title="1 of 2 branches missed.">                &amp;&amp; stringHasValue(replaceString);</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">        boolean valid = stringHasValue(searchString)</span>
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">                &amp;&amp; stringHasValue(replaceString);</span>
 
-<span class="pc bpc" id="L72" title="1 of 2 branches missed.">        if (valid) {</span>
-<span class="fc" id="L73">            pattern = Pattern.compile(searchString);</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">        if (valid) {</span>
+<span class="fc" id="L69">            pattern = Pattern.compile(searchString);</span>
         } else {
-<span class="nc bnc" id="L75" title="All 2 branches missed.">            if (!stringHasValue(searchString)) {</span>
-<span class="nc" id="L76">                warnings.add(getString(&quot;ValidationError.18&quot;, //$NON-NLS-1$</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">            if (!stringHasValue(searchString)) {</span>
+<span class="nc" id="L72">                warnings.add(getString(&quot;ValidationError.18&quot;, //$NON-NLS-1$</span>
                         &quot;RenameExampleClassPlugin&quot;, //$NON-NLS-1$
                         &quot;searchString&quot;)); //$NON-NLS-1$
             }
-<span class="nc bnc" id="L80" title="All 2 branches missed.">            if (!stringHasValue(replaceString)) {</span>
-<span class="nc" id="L81">                warnings.add(getString(&quot;ValidationError.18&quot;, //$NON-NLS-1$</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">            if (!stringHasValue(replaceString)) {</span>
+<span class="nc" id="L77">                warnings.add(getString(&quot;ValidationError.18&quot;, //$NON-NLS-1$</span>
                         &quot;RenameExampleClassPlugin&quot;, //$NON-NLS-1$
                         &quot;replaceString&quot;)); //$NON-NLS-1$
             }
         }
 
-<span class="fc" id="L87">        return valid;</span>
+<span class="fc" id="L83">        return valid;</span>
     }
 
     @Override
     public void initialized(IntrospectedTable introspectedTable) {
-<span class="fc" id="L92">        String oldType = introspectedTable.getExampleType();</span>
-<span class="fc" id="L93">        Matcher matcher = pattern.matcher(oldType);</span>
-<span class="fc" id="L94">        oldType = matcher.replaceAll(replaceString);</span>
+<span class="fc" id="L88">        String oldType = introspectedTable.getExampleType();</span>
+<span class="fc" id="L89">        Matcher matcher = pattern.matcher(oldType);</span>
+<span class="fc" id="L90">        oldType = matcher.replaceAll(replaceString);</span>
 
-<span class="fc" id="L96">        introspectedTable.setExampleType(oldType);</span>
-<span class="fc" id="L97">    }</span>
+<span class="fc" id="L92">        introspectedTable.setExampleType(oldType);</span>
+<span class="fc" id="L93">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

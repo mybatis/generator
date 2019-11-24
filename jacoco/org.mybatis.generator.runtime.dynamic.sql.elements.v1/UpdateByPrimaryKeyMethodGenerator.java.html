@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UpdateByPrimaryKeyMethodGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.dynamic.sql.elements.v1</a> &gt; <span class="el_source">UpdateByPrimaryKeyMethodGenerator.java</span></div><h1>UpdateByPrimaryKeyMethodGenerator.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2019 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime.dynamic.sql.elements.v1;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.Interface;
+import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.runtime.dynamic.sql.elements.AbstractMethodGenerator;
+import org.mybatis.generator.runtime.dynamic.sql.elements.FragmentGenerator;
+import org.mybatis.generator.runtime.dynamic.sql.elements.MethodAndImports;
+
+public class UpdateByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
+    private FullyQualifiedJavaType recordType;
+    private FragmentGenerator fragmentGenerator;
+    
+    private UpdateByPrimaryKeyMethodGenerator(Builder builder) {
+<span class="fc" id="L34">        super(builder);</span>
+<span class="fc" id="L35">        recordType = builder.recordType;</span>
+<span class="fc" id="L36">        fragmentGenerator = builder.fragmentGenerator;</span>
+<span class="fc" id="L37">    }</span>
+
+    @Override
+    public MethodAndImports generateMethodAndImports() {
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        if (!introspectedTable.getRules().generateUpdateByPrimaryKeyWithBLOBs()</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">                &amp;&amp; !introspectedTable.getRules().generateUpdateByPrimaryKeyWithoutBLOBs()) {</span>
+<span class="fc" id="L43">            return null;</span>
+        }
+
+<span class="fc" id="L46">        Set&lt;FullyQualifiedJavaType&gt; imports = new HashSet&lt;&gt;();</span>
+
+<span class="fc" id="L48">        imports.add(new FullyQualifiedJavaType(&quot;org.mybatis.dynamic.sql.update.UpdateDSL&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L49">        imports.add(recordType);</span>
+        
+<span class="fc" id="L51">        Method method = new Method(&quot;updateByPrimaryKey&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L52">        method.setDefault(true);</span>
+<span class="fc" id="L53">        context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);</span>
+        
+<span class="fc" id="L55">        method.setReturnType(FullyQualifiedJavaType.getIntInstance());</span>
+<span class="fc" id="L56">        method.addParameter(new Parameter(recordType, &quot;record&quot;)); //$NON-NLS-1$</span>
+
+<span class="fc" id="L58">        method.addBodyLine(&quot;return UpdateDSL.updateWithMapper(this::update, &quot; //$NON-NLS-1$</span>
+                + tableFieldName + &quot;)&quot;); //$NON-NLS-1$
+
+<span class="fc" id="L61">        method.addBodyLines(fragmentGenerator.getSetEqualLines(introspectedTable.getNonPrimaryKeyColumns(), false));</span>
+<span class="fc" id="L62">        method.addBodyLines(fragmentGenerator.getPrimaryKeyWhereClauseForUpdate(&quot;        &quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L63">        method.addBodyLine(&quot;        .build()&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L64">        method.addBodyLine(&quot;        .execute();&quot;); //$NON-NLS-1$</span>
+
+<span class="fc" id="L66">        return MethodAndImports.withMethod(method)</span>
+<span class="fc" id="L67">                .withImports(imports)</span>
+<span class="fc" id="L68">                .build();</span>
+    }
+
+    @Override
+    public boolean callPlugins(Method method, Interface interfaze) {
+<span class="fc" id="L73">        return context.getPlugins().clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(method,</span>
+                interfaze, introspectedTable);
+    }
+
+<span class="fc" id="L77">    public static class Builder extends BaseBuilder&lt;Builder, UpdateByPrimaryKeyMethodGenerator&gt; {</span>
+        private FullyQualifiedJavaType recordType;
+        private FragmentGenerator fragmentGenerator;
+        
+        public Builder withRecordType(FullyQualifiedJavaType recordType) {
+<span class="fc" id="L82">            this.recordType = recordType;</span>
+<span class="fc" id="L83">            return this;</span>
+        }
+        
+        public Builder withFragmentGenerator(FragmentGenerator fragmentGenerator) {
+<span class="fc" id="L87">            this.fragmentGenerator = fragmentGenerator;</span>
+<span class="fc" id="L88">            return this;</span>
+        }
+
+        @Override
+        public Builder getThis() {
+<span class="fc" id="L93">            return this;</span>
+        }
+
+        @Override
+        public UpdateByPrimaryKeyMethodGenerator build() {
+<span class="fc" id="L98">            return new UpdateByPrimaryKeyMethodGenerator(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

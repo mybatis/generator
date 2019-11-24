@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UpdateAllColumnsMethodGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.kotlin.elements</a> &gt; <span class="el_source">UpdateAllColumnsMethodGenerator.java</span></div><h1>UpdateAllColumnsMethodGenerator.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2019 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime.kotlin.elements;
+
+import java.util.List;
+
+import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
+import org.mybatis.generator.api.dom.kotlin.KotlinArg;
+import org.mybatis.generator.api.dom.kotlin.KotlinFile;
+import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
+
+public class UpdateAllColumnsMethodGenerator extends AbstractKotlinFunctionGenerator {
+    private FullyQualifiedKotlinType recordType;
+    private KotlinFragmentGenerator fragmentGenerator;
+    
+    private UpdateAllColumnsMethodGenerator(Builder builder) {
+<span class="fc" id="L31">        super(builder);</span>
+<span class="fc" id="L32">        recordType = builder.recordType;</span>
+<span class="fc" id="L33">        fragmentGenerator = builder.fragmentGenerator;</span>
+<span class="fc" id="L34">    }</span>
+
+    @Override
+    public KotlinFunctionAndImports generateMethodAndImports() {
+<span class="fc" id="L38">        KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(</span>
+<span class="fc" id="L39">                KotlinFunction.newOneLineFunction(&quot;KotlinUpdateBuilder.updateAllColumns&quot;) //$NON-NLS-1$</span>
+<span class="fc" id="L40">                .withArgument(KotlinArg.newArg(&quot;record&quot;) //$NON-NLS-1$</span>
+<span class="fc" id="L41">                        .withDataType(recordType.getShortNameWithTypeArguments())</span>
+<span class="fc" id="L42">                        .build())</span>
+<span class="fc" id="L43">                .build())</span>
+<span class="fc" id="L44">                .withImport(&quot;org.mybatis.dynamic.sql.util.kotlin.*&quot;) //$NON-NLS-1$</span>
+<span class="fc" id="L45">                .withImports(recordType.getImportList())</span>
+<span class="fc" id="L46">                .build();</span>
+
+<span class="fc" id="L48">        addFunctionComment(functionAndImports);</span>
+        
+<span class="fc" id="L50">        KotlinFunction function = functionAndImports.getFunction();</span>
+        
+<span class="fc" id="L52">        function.addCodeLine(&quot;apply {&quot;); //$NON-NLS-1$</span>
+        
+<span class="fc" id="L54">        List&lt;IntrospectedColumn&gt; columns = introspectedTable.getAllColumns();</span>
+<span class="fc" id="L55">        KotlinFunctionParts functionParts = fragmentGenerator.getSetEqualLines(columns);</span>
+        
+<span class="fc" id="L57">        acceptParts(functionAndImports, functionParts);</span>
+        
+<span class="fc" id="L59">        function.addCodeLine(&quot;}&quot;); //$NON-NLS-1$</span>
+        
+<span class="fc" id="L61">        return functionAndImports;</span>
+    }
+
+    @Override
+    public boolean callPlugins(KotlinFunction kotlinFunction, KotlinFile kotlinFile) {
+<span class="fc" id="L66">        return context.getPlugins().clientUpdateAllColumnsMethodGenerated(kotlinFunction, kotlinFile,</span>
+                introspectedTable);
+    }
+
+<span class="fc" id="L70">    public static class Builder extends BaseBuilder&lt;Builder, UpdateAllColumnsMethodGenerator&gt; {</span>
+        private FullyQualifiedKotlinType recordType;
+        private KotlinFragmentGenerator fragmentGenerator;
+        
+        public Builder withRecordType(FullyQualifiedKotlinType recordType) {
+<span class="fc" id="L75">            this.recordType = recordType;</span>
+<span class="fc" id="L76">            return this;</span>
+        }
+        
+        public Builder withFragmentGenerator(KotlinFragmentGenerator fragmentGenerator) {
+<span class="fc" id="L80">            this.fragmentGenerator = fragmentGenerator;</span>
+<span class="fc" id="L81">            return this;</span>
+        }
+
+        @Override
+        public Builder getThis() {
+<span class="fc" id="L86">            return this;</span>
+        }
+
+        @Override
+        public UpdateAllColumnsMethodGenerator build() {
+<span class="fc" id="L91">            return new UpdateAllColumnsMethodGenerator(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

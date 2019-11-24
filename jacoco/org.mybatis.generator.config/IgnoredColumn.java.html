@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>IgnoredColumn.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.config</a> &gt; <span class="el_source">IgnoredColumn.java</span></div><h1>IgnoredColumn.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -21,124 +21,57 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.List;
 
-import org.mybatis.generator.api.dom.xml.Attribute;
-import org.mybatis.generator.api.dom.xml.XmlElement;
-
-/**
- * The Class IgnoredColumn.
- *
- * @author Jeff Butler
- */
 public class IgnoredColumn {
 
-    /** The column name. */
     protected String columnName;
 
-    /** The is column name delimited. */
     private boolean isColumnNameDelimited;
 
-    /** The configured delimited column name. */
-    protected String configuredDelimitedColumnName;
-
-    /**
-     * Instantiates a new ignored column.
-     *
-     * @param columnName
-     *            the column name
-     */
     public IgnoredColumn(String columnName) {
-<span class="fc" id="L50">        super();</span>
-<span class="fc" id="L51">        this.columnName = columnName;</span>
-<span class="fc" id="L52">        isColumnNameDelimited = stringContainsSpace(columnName);</span>
-<span class="fc" id="L53">    }</span>
+<span class="fc" id="L31">        super();</span>
+<span class="fc" id="L32">        this.columnName = columnName;</span>
+<span class="fc" id="L33">        isColumnNameDelimited = stringContainsSpace(columnName);</span>
+<span class="fc" id="L34">    }</span>
 
-    /**
-     * Gets the column name.
-     *
-     * @return the column name
-     */
     public String getColumnName() {
-<span class="fc" id="L61">        return columnName;</span>
+<span class="fc" id="L37">        return columnName;</span>
     }
 
-    /**
-     * Checks if is column name delimited.
-     *
-     * @return true, if is column name delimited
-     */
     public boolean isColumnNameDelimited() {
-<span class="nc" id="L70">        return isColumnNameDelimited;</span>
+<span class="nc" id="L41">        return isColumnNameDelimited;</span>
     }
 
-    /**
-     * Sets the column name delimited.
-     *
-     * @param isColumnNameDelimited
-     *            the new column name delimited
-     */
     public void setColumnNameDelimited(boolean isColumnNameDelimited) {
-<span class="nc" id="L80">        this.isColumnNameDelimited = isColumnNameDelimited;</span>
-<span class="nc bnc" id="L81" title="All 2 branches missed.">        configuredDelimitedColumnName = isColumnNameDelimited ? &quot;true&quot; : &quot;false&quot;; //$NON-NLS-1$ //$NON-NLS-2$</span>
-<span class="nc" id="L82">    }</span>
+<span class="nc" id="L45">        this.isColumnNameDelimited = isColumnNameDelimited;</span>
+<span class="nc" id="L46">    }</span>
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
     @Override
     public boolean equals(Object obj) {
-<span class="nc bnc" id="L89" title="All 4 branches missed.">        if (obj == null || !(obj instanceof IgnoredColumn)) {</span>
-<span class="nc" id="L90">            return false;</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">        if (!(obj instanceof IgnoredColumn)) {</span>
+<span class="nc" id="L51">            return false;</span>
         }
 
-<span class="nc" id="L93">        return columnName.equals(((IgnoredColumn) obj).getColumnName());</span>
+<span class="nc" id="L54">        return columnName.equals(((IgnoredColumn) obj).getColumnName());</span>
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
     @Override
     public int hashCode() {
-<span class="fc" id="L101">        return columnName.hashCode();</span>
+<span class="fc" id="L59">        return columnName.hashCode();</span>
     }
 
-    /**
-     * To xml element.
-     *
-     * @return the xml element
-     */
-    public XmlElement toXmlElement() {
-<span class="nc" id="L110">        XmlElement xmlElement = new XmlElement(&quot;ignoreColumn&quot;); //$NON-NLS-1$</span>
-<span class="nc" id="L111">        xmlElement.addAttribute(new Attribute(&quot;column&quot;, columnName)); //$NON-NLS-1$</span>
-
-<span class="nc bnc" id="L113" title="All 2 branches missed.">        if (stringHasValue(configuredDelimitedColumnName)) {</span>
-<span class="nc" id="L114">            xmlElement.addAttribute(new Attribute(</span>
-                    &quot;delimitedColumnName&quot;, configuredDelimitedColumnName)); //$NON-NLS-1$
-        }
-
-<span class="nc" id="L118">        return xmlElement;</span>
-    }
-
-    /**
-     * Validate.
-     *
-     * @param errors
-     *            the errors
-     * @param tableName
-     *            the table name
-     */
     public void validate(List&lt;String&gt; errors, String tableName) {
-<span class="pc bpc" id="L130" title="1 of 2 branches missed.">        if (!stringHasValue(columnName)) {</span>
-<span class="nc" id="L131">            errors.add(getString(&quot;ValidationError.21&quot;, //$NON-NLS-1$</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">        if (!stringHasValue(columnName)) {</span>
+<span class="nc" id="L64">            errors.add(getString(&quot;ValidationError.21&quot;, //$NON-NLS-1$</span>
                     tableName));
         }
-<span class="fc" id="L134">    }</span>
+<span class="fc" id="L67">    }</span>
 
     public boolean matches(String columnName) {
-<span class="pc bpc" id="L137" title="1 of 2 branches missed.">        if (isColumnNameDelimited) {</span>
-<span class="nc" id="L138">            return this.columnName.equals(columnName);</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">        if (isColumnNameDelimited) {</span>
+<span class="nc" id="L71">            return this.columnName.equals(columnName);</span>
         } else {
-<span class="fc" id="L140">            return this.columnName.equalsIgnoreCase(columnName);</span>
+<span class="fc" id="L73">            return this.columnName.equalsIgnoreCase(columnName);</span>
         }
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

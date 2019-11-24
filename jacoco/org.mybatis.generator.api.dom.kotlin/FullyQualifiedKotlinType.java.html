@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FullyQualifiedKotlinType.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api.dom.kotlin</a> &gt; <span class="el_source">FullyQualifiedKotlinType.java</span></div><h1>FullyQualifiedKotlinType.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2019 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.api.dom.kotlin;
+
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.StringTokenizer;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+public class FullyQualifiedKotlinType {
+
+<span class="fc" id="L33">    private static final Set&lt;String&gt; AUTOMATIC_KOTLIN_PACKAGES = new HashSet&lt;&gt;();</span>
+
+    static {
+<span class="fc" id="L36">        AUTOMATIC_KOTLIN_PACKAGES.add(&quot;kotlin&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L37">        AUTOMATIC_KOTLIN_PACKAGES.add(&quot;kotlin.collections&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L38">    }</span>
+
+    private String packageName;
+<span class="fc" id="L41">    private List&lt;FullyQualifiedKotlinType&gt; typeArguments = new ArrayList&lt;&gt;();</span>
+    private String shortNameWithoutTypeArguments;
+    private boolean isExplicitlyImported;
+
+<span class="fc" id="L45">    public FullyQualifiedKotlinType(String fullTypeSpecification) {</span>
+<span class="fc" id="L46">        parse(Objects.requireNonNull(fullTypeSpecification).trim());</span>
+<span class="fc" id="L47">    }</span>
+
+    public String getPackageName() {
+<span class="fc" id="L50">        return packageName;</span>
+    }
+    
+    public String getShortNameWithoutTypeArguments() {
+<span class="fc" id="L54">        return shortNameWithoutTypeArguments;</span>
+    }
+    
+    public String getShortNameWithTypeArguments() {
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        if (typeArguments.isEmpty()) {</span>
+<span class="fc" id="L59">            return shortNameWithoutTypeArguments;</span>
+        }
+
+<span class="fc" id="L62">        return typeArguments.stream().map(FullyQualifiedKotlinType::getShortNameWithTypeArguments)</span>
+<span class="fc" id="L63">                .collect(Collectors.joining(&quot;, &quot;, shortNameWithoutTypeArguments //$NON-NLS-1$</span>
+                        + &quot;&lt;&quot;, &quot;&gt;&quot;)); //$NON-NLS-1$ //$NON-NLS-2$
+    }
+
+    public List&lt;FullyQualifiedKotlinType&gt; getTypeArguments() {
+<span class="nc" id="L68">        return typeArguments;</span>
+    }
+    
+    public void addTypeArgument(FullyQualifiedKotlinType typeArgument) {
+<span class="fc" id="L72">        typeArguments.add(typeArgument);</span>
+<span class="fc" id="L73">    }</span>
+
+    /**
+     * Returns a list of Strings that are the fully qualified names of this type,
+     * and any generic type argument associated with this type.
+     *
+     * @return the import list
+     */
+    public Set&lt;String&gt; getImportList() {
+        Stream&lt;String&gt; thisImport;
+<span class="fc bfc" id="L83" title="All 2 branches covered.">        if (isExplicitlyImported) {</span>
+<span class="fc" id="L84">            thisImport = Stream.of(packageName + &quot;.&quot; + shortNameWithoutTypeArguments); //$NON-NLS-1$</span>
+        } else {
+<span class="fc" id="L86">            thisImport = Stream.empty();</span>
+        }
+
+<span class="fc" id="L89">        Stream&lt;String&gt; ss = typeArguments.stream()</span>
+<span class="fc" id="L90">                .map(FullyQualifiedKotlinType::getImportList)</span>
+<span class="fc" id="L91">                .flatMap(Set::stream);</span>
+
+<span class="fc" id="L93">        return Stream.of(thisImport, ss)</span>
+<span class="fc" id="L94">                .flatMap(Function.identity())</span>
+<span class="fc" id="L95">                .collect(Collectors.toSet());</span>
+    }
+
+    private void parse(String fullTypeSpecification) {
+<span class="fc" id="L99">        int index = fullTypeSpecification.indexOf('&lt;');</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">        if (index == -1) {</span>
+<span class="fc" id="L101">            simpleParse(fullTypeSpecification);</span>
+        } else {
+<span class="fc" id="L103">            simpleParse(fullTypeSpecification.substring(0, index));</span>
+<span class="fc" id="L104">            int endIndex = fullTypeSpecification.lastIndexOf('&gt;');</span>
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">            if (endIndex == -1) {</span>
+<span class="nc" id="L106">                throw new RuntimeException(getString(&quot;RuntimeError.22&quot;, fullTypeSpecification)); //$NON-NLS-1$</span>
+            }
+<span class="fc" id="L108">            genericParse(fullTypeSpecification.substring(index, endIndex + 1));</span>
+        }
+<span class="fc" id="L110">    }</span>
+
+    private void simpleParse(String typeSpecification) {
+<span class="fc" id="L113">        String baseQualifiedName = typeSpecification.trim();</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">        if (baseQualifiedName.contains(&quot;.&quot;)) { //$NON-NLS-1$</span>
+<span class="fc" id="L115">            packageName = getPackage(baseQualifiedName);</span>
+<span class="fc" id="L116">            shortNameWithoutTypeArguments = baseQualifiedName.substring(packageName.length() + 1);</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">            isExplicitlyImported = !AUTOMATIC_KOTLIN_PACKAGES.contains(packageName);</span>
+        } else {
+<span class="fc" id="L119">            shortNameWithoutTypeArguments = baseQualifiedName;</span>
+<span class="fc" id="L120">            isExplicitlyImported = false;</span>
+<span class="fc" id="L121">            packageName = &quot;&quot;; //$NON-NLS-1$</span>
+        }
+<span class="fc" id="L123">    }</span>
+
+    private void genericParse(String genericSpecification) {
+<span class="fc" id="L126">        int lastIndex = genericSpecification.lastIndexOf('&gt;');</span>
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">        if (lastIndex == -1) {</span>
+            // shouldn't happen - should be caught already, but just in case...
+<span class="nc" id="L129">            throw new RuntimeException(getString(&quot;RuntimeError.22&quot;, genericSpecification)); //$NON-NLS-1$</span>
+        }
+<span class="fc" id="L131">        String argumentString = genericSpecification.substring(1, lastIndex);</span>
+        // need to find &quot;,&quot; outside of a &lt;&gt; bounds
+<span class="fc" id="L133">        StringTokenizer st = new StringTokenizer(argumentString, &quot;,&lt;&gt;&quot;, true); //$NON-NLS-1$</span>
+<span class="fc" id="L134">        int openCount = 0;</span>
+<span class="fc" id="L135">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">        while (st.hasMoreTokens()) {</span>
+<span class="fc" id="L137">            String token = st.nextToken();</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">            if (&quot;&lt;&quot;.equals(token)) { //$NON-NLS-1$</span>
+<span class="fc" id="L139">                sb.append(token);</span>
+<span class="fc" id="L140">                openCount++;</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">            } else if (&quot;&gt;&quot;.equals(token)) { //$NON-NLS-1$</span>
+<span class="fc" id="L142">                sb.append(token);</span>
+<span class="fc" id="L143">                openCount--;</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">            } else if (&quot;,&quot;.equals(token)) { //$NON-NLS-1$</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">                if (openCount == 0) {</span>
+<span class="fc" id="L146">                    typeArguments.add(new FullyQualifiedKotlinType(sb.toString()));</span>
+<span class="fc" id="L147">                    sb.setLength(0);</span>
+                } else {
+<span class="fc" id="L149">                    sb.append(token);</span>
+                }
+            } else {
+<span class="fc" id="L152">                sb.append(token);</span>
+            }
+<span class="fc" id="L154">        }</span>
+
+<span class="pc bpc" id="L156" title="1 of 2 branches missed.">        if (openCount != 0) {</span>
+<span class="nc" id="L157">            throw new RuntimeException(getString(&quot;RuntimeError.22&quot;, genericSpecification)); //$NON-NLS-1$</span>
+        }
+
+<span class="fc" id="L160">        String finalType = sb.toString();</span>
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">        if (stringHasValue(finalType)) {</span>
+<span class="fc" id="L162">            typeArguments.add(new FullyQualifiedKotlinType(finalType));</span>
+        }
+<span class="fc" id="L164">    }</span>
+
+    /**
+     * Returns the package name of a fully qualified type.
+     * 
+     * &lt;p&gt;This method calculates the package as the part of the fully qualified name up
+     * to, but not including, the last element. Therefore, it does not support fully
+     * qualified inner classes. Not totally fool proof, but correct in most
+     * instances.
+     *
+     * @param baseQualifiedName the base qualified name
+     * @return the package
+     */
+    private static String getPackage(String baseQualifiedName) {
+<span class="fc" id="L178">        int index = baseQualifiedName.lastIndexOf('.');</span>
+<span class="fc" id="L179">        return baseQualifiedName.substring(0, index);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

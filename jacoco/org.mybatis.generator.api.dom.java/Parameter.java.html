@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Parameter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api.dom.java</a> &gt; <span class="el_source">Parameter.java</span></div><h1>Parameter.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -18,19 +18,19 @@ package org.mybatis.generator.api.dom.java;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.mybatis.generator.api.dom.java.render.ParameterRenderer;
+
 public class Parameter {
     private String name;
     private FullyQualifiedJavaType type;
     private boolean isVarargs;
 
-    private List&lt;String&gt; annotations;
+<span class="fc" id="L28">    private List&lt;String&gt; annotations = new ArrayList&lt;&gt;();</span>
 
-    public Parameter(FullyQualifiedJavaType type, String name, boolean isVarargs) {
-<span class="fc" id="L29">        super();</span>
-<span class="fc" id="L30">        this.name = name;</span>
-<span class="fc" id="L31">        this.type = type;</span>
-<span class="fc" id="L32">        this.isVarargs = isVarargs;</span>
-<span class="fc" id="L33">        annotations = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L30">    public Parameter(FullyQualifiedJavaType type, String name, boolean isVarargs) {</span>
+<span class="fc" id="L31">        this.name = name;</span>
+<span class="fc" id="L32">        this.type = type;</span>
+<span class="fc" id="L33">        this.isVarargs = isVarargs;</span>
 <span class="fc" id="L34">    }</span>
 
     public Parameter(FullyQualifiedJavaType type, String name) {
@@ -47,54 +47,29 @@ public class Parameter {
 <span class="nc" id="L47">        addAnnotation(annotation);</span>
 <span class="nc" id="L48">    }</span>
 
-    /**
-     * @return Returns the name.
-     */
     public String getName() {
-<span class="fc" id="L54">        return name;</span>
+<span class="fc" id="L51">        return name;</span>
     }
 
-    /**
-     * @return Returns the type.
-     */
     public FullyQualifiedJavaType getType() {
-<span class="fc" id="L61">        return type;</span>
+<span class="fc" id="L55">        return type;</span>
     }
 
     public List&lt;String&gt; getAnnotations() {
-<span class="nc" id="L65">        return annotations;</span>
+<span class="fc" id="L59">        return annotations;</span>
     }
 
     public void addAnnotation(String annotation) {
-<span class="fc" id="L69">        annotations.add(annotation);</span>
-<span class="fc" id="L70">    }</span>
-
-    public String getFormattedContent(CompilationUnit compilationUnit) {
-<span class="fc" id="L73">        StringBuilder sb = new StringBuilder();</span>
-
-<span class="fc bfc" id="L75" title="All 2 branches covered.">        for (String annotation : annotations) {</span>
-<span class="fc" id="L76">            sb.append(annotation);</span>
-<span class="fc" id="L77">            sb.append(' ');</span>
-<span class="fc" id="L78">        }</span>
-
-<span class="fc" id="L80">        sb.append(JavaDomUtils.calculateTypeName(compilationUnit, type));</span>
-
-<span class="fc" id="L82">        sb.append(' ');</span>
-<span class="pc bpc" id="L83" title="1 of 2 branches missed.">        if (isVarargs) {</span>
-<span class="nc" id="L84">            sb.append(&quot;... &quot;); //$NON-NLS-1$</span>
-        }
-<span class="fc" id="L86">        sb.append(name);</span>
-
-<span class="fc" id="L88">        return sb.toString();</span>
-    }
+<span class="fc" id="L63">        annotations.add(annotation);</span>
+<span class="fc" id="L64">    }</span>
 
     @Override
     public String toString() {
-<span class="nc" id="L93">        return getFormattedContent(null);</span>
+<span class="nc" id="L68">        return new ParameterRenderer().render(this, null);</span>
     }
 
     public boolean isVarargs() {
-<span class="nc" id="L97">        return isVarargs;</span>
+<span class="fc" id="L72">        return isVarargs;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

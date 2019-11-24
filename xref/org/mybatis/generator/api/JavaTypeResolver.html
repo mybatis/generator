@@ -13,7 +13,7 @@
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_javadoccomment"> *    you may not use this file except in compliance with the License.</em>
 <a class="jxr_linenumber" name="L6" href="#L6">6</a>   <em class="jxr_javadoccomment"> *    You may obtain a copy of the License at</em>
 <a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_javadoccomment"> *       <a href="http://www.apache.org/licenses/LICENSE-2." target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.</a>0</em>
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_javadoccomment"> *       <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a></em>
 <a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_javadoccomment"> *    Unless required by applicable law or agreed to in writing, software</em>
 <a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_javadoccomment"> *    distributed under the License is distributed on an "AS IS" BASIS,</em>
@@ -36,7 +36,7 @@
 <a class="jxr_linenumber" name="L28" href="#L28">28</a>  <em class="jxr_javadoccomment"> * </em>
 <a class="jxr_linenumber" name="L29" href="#L29">29</a>  <em class="jxr_javadoccomment"> * @author Jeff Butler</em>
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">interface</strong> <a href="../../../../org/mybatis/generator/api/JavaTypeResolver.html">JavaTypeResolver</a> {
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">interface</strong> <a name="JavaTypeResolver" href="../../../../org/mybatis/generator/api/JavaTypeResolver.html#JavaTypeResolver">JavaTypeResolver</a> {
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>  <em class="jxr_javadoccomment">     * Adds properties for this instance from any properties configured in the</em>
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>  <em class="jxr_javadoccomment">     * JavaTypeResolverConfiguration.</em>
@@ -56,7 +56,7 @@
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>  <em class="jxr_javadoccomment">     * @param context</em>
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>  <em class="jxr_javadoccomment">     *            The current Context</em>
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>      <strong class="jxr_keyword">void</strong> setContext(<a href="../../../../org/mybatis/generator/config/Context.html">Context</a> context);
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>      <strong class="jxr_keyword">void</strong> setContext(<a name="Context" href="../../../../org/mybatis/generator/config/Context.html#Context">Context</a> context);
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>  
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>  <em class="jxr_javadoccomment">     * The generator will supply a list to this method. The implementation class may add strings to the list that will</em>
@@ -78,8 +78,8 @@
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>  <em class="jxr_javadoccomment">     *         is returned, we will set the type to Object and issue a</em>
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>  <em class="jxr_javadoccomment">     *         warning unless the column is ignored or otherwise overridden</em>
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L73" href="#L73">73</a>      <a href="../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html">FullyQualifiedJavaType</a> calculateJavaType(
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>              <a href="../../../../org/mybatis/generator/api/IntrospectedColumn.html">IntrospectedColumn</a> introspectedColumn);
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>      <a name="FullyQualifiedJavaType" href="../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html#FullyQualifiedJavaType">FullyQualifiedJavaType</a> calculateJavaType(
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>              <a name="IntrospectedColumn" href="../../../../org/mybatis/generator/api/IntrospectedColumn.html#IntrospectedColumn">IntrospectedColumn</a> introspectedColumn);
 <a class="jxr_linenumber" name="L75" href="#L75">75</a>  
 <a class="jxr_linenumber" name="L76" href="#L76">76</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L77" href="#L77">77</a>  <em class="jxr_javadoccomment">     * Calculates and returns the JDBC type name that should be associated with</em>
@@ -91,10 +91,10 @@
 <a class="jxr_linenumber" name="L83" href="#L83">83</a>  <em class="jxr_javadoccomment">     *         null is returned, we will set the type to OTHER and issue a</em>
 <a class="jxr_linenumber" name="L84" href="#L84">84</a>  <em class="jxr_javadoccomment">     *         warning unless the column is ignored or otherwise overridden</em>
 <a class="jxr_linenumber" name="L85" href="#L85">85</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L86" href="#L86">86</a>      String calculateJdbcTypeName(<a href="../../../../org/mybatis/generator/api/IntrospectedColumn.html">IntrospectedColumn</a> introspectedColumn);
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>      String calculateJdbcTypeName(<a name="IntrospectedColumn" href="../../../../org/mybatis/generator/api/IntrospectedColumn.html#IntrospectedColumn">IntrospectedColumn</a> introspectedColumn);
 <a class="jxr_linenumber" name="L87" href="#L87">87</a>  }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2006&#x2013;2018 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2006&#x2013;2019 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
 </body>
 </html>

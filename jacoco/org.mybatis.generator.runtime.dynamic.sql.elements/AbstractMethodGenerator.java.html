@@ -15,6 +15,7 @@
  */
 package org.mybatis.generator.runtime.dynamic.sql.elements;
 
+import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
@@ -24,41 +25,62 @@ import org.mybatis.generator.config.Context;
 public abstract class AbstractMethodGenerator {
     protected Context context;
     protected IntrospectedTable introspectedTable;
+    protected String tableFieldName;
     
-<span class="fc" id="L28">    protected AbstractMethodGenerator(BaseBuilder&lt;?, ?&gt; builder) {</span>
-<span class="fc" id="L29">        context = builder.context;</span>
-<span class="fc" id="L30">        introspectedTable = builder.introspectedTable;</span>
-<span class="fc" id="L31">    }</span>
+<span class="fc" id="L30">    protected AbstractMethodGenerator(BaseBuilder&lt;?, ?&gt; builder) {</span>
+<span class="fc" id="L31">        context = builder.context;</span>
+<span class="fc" id="L32">        introspectedTable = builder.introspectedTable;</span>
+<span class="fc" id="L33">        tableFieldName = builder.tableFieldName;</span>
+<span class="fc" id="L34">    }</span>
+
+    protected String calculateFieldName(IntrospectedColumn column) {
+<span class="fc" id="L37">        return calculateFieldName(tableFieldName, column);</span>
+    }
+    
+    public static String calculateFieldName(String tableFieldName, IntrospectedColumn column) {
+<span class="fc" id="L41">        String fieldName = column.getJavaProperty();</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">        if (fieldName.equals(tableFieldName)) {</span>
+            // name collision, no shortcut generated
+<span class="fc" id="L44">            fieldName = tableFieldName + &quot;.&quot; + fieldName; //$NON-NLS-1$</span>
+        }
+<span class="fc" id="L46">        return fieldName;</span>
+    }
     
     protected void acceptParts(MethodAndImports.Builder builder, Method method, MethodParts methodParts) {
-<span class="fc bfc" id="L34" title="All 2 branches covered.">        for (Parameter parameter : methodParts.getParameters()) {</span>
-<span class="fc" id="L35">            method.addParameter(parameter);</span>
-<span class="fc" id="L36">        }</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">        for (Parameter parameter : methodParts.getParameters()) {</span>
+<span class="fc" id="L51">            method.addParameter(parameter);</span>
+<span class="fc" id="L52">        }</span>
         
-<span class="fc bfc" id="L38" title="All 2 branches covered.">        for (String annotation : methodParts.getAnnotations()) {</span>
-<span class="fc" id="L39">            method.addAnnotation(annotation);</span>
-<span class="fc" id="L40">        }</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">        for (String annotation : methodParts.getAnnotations()) {</span>
+<span class="fc" id="L55">            method.addAnnotation(annotation);</span>
+<span class="fc" id="L56">        }</span>
         
-<span class="fc" id="L42">        method.addBodyLines(methodParts.getBodyLines());</span>
-<span class="fc" id="L43">        builder.withImports(methodParts.getImports());</span>
-<span class="fc" id="L44">    }</span>
+<span class="fc" id="L58">        method.addBodyLines(methodParts.getBodyLines());</span>
+<span class="fc" id="L59">        builder.withImports(methodParts.getImports());</span>
+<span class="fc" id="L60">    }</span>
 
     public abstract MethodAndImports generateMethodAndImports();
     
     public abstract boolean callPlugins(Method method, Interface interfaze);
     
-<span class="fc" id="L50">    public abstract static class BaseBuilder&lt;T extends BaseBuilder&lt;T, R&gt;, R&gt; {</span>
+<span class="fc" id="L66">    public abstract static class BaseBuilder&lt;T extends BaseBuilder&lt;T, R&gt;, R&gt; {</span>
         private Context context;
         private IntrospectedTable introspectedTable;
+        private String tableFieldName;
         
         public T withContext(Context context) {
-<span class="fc" id="L55">            this.context = context;</span>
-<span class="fc" id="L56">            return getThis();</span>
+<span class="fc" id="L72">            this.context = context;</span>
+<span class="fc" id="L73">            return getThis();</span>
         }
         
         public T withIntrospectedTable(IntrospectedTable introspectedTable) {
-<span class="fc" id="L60">            this.introspectedTable = introspectedTable;</span>
-<span class="fc" id="L61">            return getThis();</span>
+<span class="fc" id="L77">            this.introspectedTable = introspectedTable;</span>
+<span class="fc" id="L78">            return getThis();</span>
+        }
+
+        public T withTableFieldName(String tableFieldName) {
+<span class="fc" id="L82">            this.tableFieldName = tableFieldName;</span>
+<span class="fc" id="L83">            return getThis();</span>
         }
 
         public abstract T getThis();
@@ -66,4 +88,4 @@ public abstract class AbstractMethodGenerator {
         public abstract R build();
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

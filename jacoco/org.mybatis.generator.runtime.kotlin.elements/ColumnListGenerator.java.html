@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ColumnListGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.kotlin.elements</a> &gt; <span class="el_source">ColumnListGenerator.java</span></div><h1>ColumnListGenerator.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2019 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime.kotlin.elements;
+
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.dom.kotlin.KotlinFile;
+import org.mybatis.generator.api.dom.kotlin.KotlinModifier;
+import org.mybatis.generator.api.dom.kotlin.KotlinProperty;
+import org.mybatis.generator.config.Context;
+
+public class ColumnListGenerator {
+
+    private Context context;
+    private IntrospectedTable introspectedTable;
+    private String tableFieldImport;
+    
+<span class="fc" id="L35">    private ColumnListGenerator(Builder builder) {</span>
+<span class="fc" id="L36">        this.context = Objects.requireNonNull(builder.context);</span>
+<span class="fc" id="L37">        this.introspectedTable = Objects.requireNonNull(builder.introspectedTable);</span>
+<span class="fc" id="L38">        this.tableFieldImport = Objects.requireNonNull(builder.tableFieldImport);</span>
+<span class="fc" id="L39">    }</span>
+    
+    public KotlinPropertyAndImports generatePropertyAndImports() {
+<span class="fc" id="L42">        KotlinPropertyAndImports propertyAndImports = KotlinPropertyAndImports.withProperty(</span>
+<span class="fc" id="L43">                KotlinProperty.newVal(&quot;columnList&quot;) //$NON-NLS-1$</span>
+<span class="fc" id="L44">                .withModifier(KotlinModifier.PRIVATE)</span>
+<span class="fc" id="L45">                .withInitializationString(getInitializationString())</span>
+<span class="fc" id="L46">                .build())</span>
+<span class="fc" id="L47">                .withImports(getImports())</span>
+<span class="fc" id="L48">                .build();</span>
+        
+<span class="fc" id="L50">        context.getCommentGenerator().addGeneralPropertyComment(propertyAndImports.getProperty(), introspectedTable,</span>
+<span class="fc" id="L51">                propertyAndImports.getImports());</span>
+<span class="fc" id="L52">        return propertyAndImports;</span>
+    }
+
+    private String getInitializationString() {
+<span class="fc" id="L56">        return introspectedTable.getAllColumns().stream()</span>
+<span class="fc" id="L57">                .map(IntrospectedColumn::getJavaProperty)</span>
+<span class="fc" id="L58">                .collect(Collectors.joining(&quot;, &quot;, &quot;listOf(&quot;, &quot;)&quot;)); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$</span>
+    }
+    
+    private Set&lt;String&gt; getImports() {
+<span class="fc" id="L62">        return introspectedTable.getAllColumns().stream()</span>
+<span class="fc" id="L63">                .map(c -&gt; tableFieldImport + &quot;.&quot; + c.getJavaProperty())//$NON-NLS-1$</span>
+<span class="fc" id="L64">                .collect(Collectors.toSet());</span>
+    }
+    
+    public boolean callPlugins(KotlinProperty kotlinProperty, KotlinFile kotlinFile) {
+<span class="fc" id="L68">        return context.getPlugins().clientColumnListPropertyGenerated(kotlinProperty, kotlinFile, introspectedTable);</span>
+    }
+    
+<span class="fc" id="L71">    public static class Builder {</span>
+        private Context context;
+        private IntrospectedTable introspectedTable;
+        private String tableFieldImport;
+
+        public Builder withTableFieldImport(String tableFieldImport) {
+<span class="fc" id="L77">            this.tableFieldImport = tableFieldImport;</span>
+<span class="fc" id="L78">            return this;</span>
+        }
+        
+        public Builder withContext(Context context) {
+<span class="fc" id="L82">            this.context = context;</span>
+<span class="fc" id="L83">            return this;</span>
+        }
+        
+        public Builder withIntrospectedTable(IntrospectedTable introspectedTable) {
+<span class="fc" id="L87">            this.introspectedTable = introspectedTable;</span>
+<span class="fc" id="L88">            return this;</span>
+        }
+        
+        public ColumnListGenerator build() {
+<span class="fc" id="L92">            return new ColumnListGenerator(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

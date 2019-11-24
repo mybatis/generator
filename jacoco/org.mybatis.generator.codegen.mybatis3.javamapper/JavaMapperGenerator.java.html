@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JavaMapperGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.codegen.mybatis3.javamapper</a> &gt; <span class="el_source">JavaMapperGenerator.java</span></div><h1>JavaMapperGenerator.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.mybatis.generator.api.CommentGenerator;
@@ -46,191 +47,186 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.UpdateByPrimar
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.XMLMapperGenerator;
 import org.mybatis.generator.config.PropertyRegistry;
 
-/**
- * @author Jeff Butler
- * 
- */
 public class JavaMapperGenerator extends AbstractJavaClientGenerator {
 
-    public JavaMapperGenerator() {
-<span class="fc" id="L56">        super(true);</span>
-<span class="fc" id="L57">    }</span>
+    public JavaMapperGenerator(String project) {
+<span class="fc" id="L53">        this(project, true);</span>
+<span class="fc" id="L54">    }</span>
 
-    public JavaMapperGenerator(boolean requiresMatchedXMLGenerator) {
-<span class="fc" id="L60">        super(requiresMatchedXMLGenerator);</span>
-<span class="fc" id="L61">    }</span>
+    public JavaMapperGenerator(String project, boolean requiresMatchedXMLGenerator) {
+<span class="fc" id="L57">        super(project, requiresMatchedXMLGenerator);</span>
+<span class="fc" id="L58">    }</span>
 
     @Override
     public List&lt;CompilationUnit&gt; getCompilationUnits() {
-<span class="fc" id="L65">        progressCallback.startTask(getString(&quot;Progress.17&quot;, //$NON-NLS-1$</span>
-<span class="fc" id="L66">                introspectedTable.getFullyQualifiedTable().toString()));</span>
-<span class="fc" id="L67">        CommentGenerator commentGenerator = context.getCommentGenerator();</span>
+<span class="fc" id="L62">        progressCallback.startTask(getString(&quot;Progress.17&quot;, //$NON-NLS-1$</span>
+<span class="fc" id="L63">                introspectedTable.getFullyQualifiedTable().toString()));</span>
+<span class="fc" id="L64">        CommentGenerator commentGenerator = context.getCommentGenerator();</span>
 
-<span class="fc" id="L69">        FullyQualifiedJavaType type = new FullyQualifiedJavaType(</span>
-<span class="fc" id="L70">                introspectedTable.getMyBatis3JavaMapperType());</span>
-<span class="fc" id="L71">        Interface interfaze = new Interface(type);</span>
-<span class="fc" id="L72">        interfaze.setVisibility(JavaVisibility.PUBLIC);</span>
-<span class="fc" id="L73">        commentGenerator.addJavaFileComment(interfaze);</span>
+<span class="fc" id="L66">        FullyQualifiedJavaType type = new FullyQualifiedJavaType(</span>
+<span class="fc" id="L67">                introspectedTable.getMyBatis3JavaMapperType());</span>
+<span class="fc" id="L68">        Interface interfaze = new Interface(type);</span>
+<span class="fc" id="L69">        interfaze.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L70">        commentGenerator.addJavaFileComment(interfaze);</span>
 
-<span class="fc" id="L75">        String rootInterface = introspectedTable</span>
-<span class="fc" id="L76">                .getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_INTERFACE);</span>
-<span class="pc bpc" id="L77" title="1 of 2 branches missed.">        if (!stringHasValue(rootInterface)) {</span>
-<span class="fc" id="L78">            rootInterface = context.getJavaClientGeneratorConfiguration()</span>
-<span class="fc" id="L79">                    .getProperty(PropertyRegistry.ANY_ROOT_INTERFACE);</span>
+<span class="fc" id="L72">        String rootInterface = introspectedTable</span>
+<span class="fc" id="L73">                .getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_INTERFACE);</span>
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">        if (!stringHasValue(rootInterface)) {</span>
+<span class="fc" id="L75">            rootInterface = context.getJavaClientGeneratorConfiguration()</span>
+<span class="fc" id="L76">                    .getProperty(PropertyRegistry.ANY_ROOT_INTERFACE);</span>
         }
 
-<span class="fc bfc" id="L82" title="All 2 branches covered.">        if (stringHasValue(rootInterface)) {</span>
-<span class="fc" id="L83">            FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">        if (stringHasValue(rootInterface)) {</span>
+<span class="fc" id="L80">            FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(</span>
                     rootInterface);
-<span class="fc" id="L85">            interfaze.addSuperInterface(fqjt);</span>
-<span class="fc" id="L86">            interfaze.addImportedType(fqjt);</span>
+<span class="fc" id="L82">            interfaze.addSuperInterface(fqjt);</span>
+<span class="fc" id="L83">            interfaze.addImportedType(fqjt);</span>
         }
 
-<span class="fc" id="L89">        addCountByExampleMethod(interfaze);</span>
-<span class="fc" id="L90">        addDeleteByExampleMethod(interfaze);</span>
-<span class="fc" id="L91">        addDeleteByPrimaryKeyMethod(interfaze);</span>
-<span class="fc" id="L92">        addInsertMethod(interfaze);</span>
-<span class="fc" id="L93">        addInsertSelectiveMethod(interfaze);</span>
-<span class="fc" id="L94">        addSelectByExampleWithBLOBsMethod(interfaze);</span>
-<span class="fc" id="L95">        addSelectByExampleWithoutBLOBsMethod(interfaze);</span>
-<span class="fc" id="L96">        addSelectByPrimaryKeyMethod(interfaze);</span>
-<span class="fc" id="L97">        addUpdateByExampleSelectiveMethod(interfaze);</span>
-<span class="fc" id="L98">        addUpdateByExampleWithBLOBsMethod(interfaze);</span>
-<span class="fc" id="L99">        addUpdateByExampleWithoutBLOBsMethod(interfaze);</span>
-<span class="fc" id="L100">        addUpdateByPrimaryKeySelectiveMethod(interfaze);</span>
-<span class="fc" id="L101">        addUpdateByPrimaryKeyWithBLOBsMethod(interfaze);</span>
-<span class="fc" id="L102">        addUpdateByPrimaryKeyWithoutBLOBsMethod(interfaze);</span>
+<span class="fc" id="L86">        addCountByExampleMethod(interfaze);</span>
+<span class="fc" id="L87">        addDeleteByExampleMethod(interfaze);</span>
+<span class="fc" id="L88">        addDeleteByPrimaryKeyMethod(interfaze);</span>
+<span class="fc" id="L89">        addInsertMethod(interfaze);</span>
+<span class="fc" id="L90">        addInsertSelectiveMethod(interfaze);</span>
+<span class="fc" id="L91">        addSelectByExampleWithBLOBsMethod(interfaze);</span>
+<span class="fc" id="L92">        addSelectByExampleWithoutBLOBsMethod(interfaze);</span>
+<span class="fc" id="L93">        addSelectByPrimaryKeyMethod(interfaze);</span>
+<span class="fc" id="L94">        addUpdateByExampleSelectiveMethod(interfaze);</span>
+<span class="fc" id="L95">        addUpdateByExampleWithBLOBsMethod(interfaze);</span>
+<span class="fc" id="L96">        addUpdateByExampleWithoutBLOBsMethod(interfaze);</span>
+<span class="fc" id="L97">        addUpdateByPrimaryKeySelectiveMethod(interfaze);</span>
+<span class="fc" id="L98">        addUpdateByPrimaryKeyWithBLOBsMethod(interfaze);</span>
+<span class="fc" id="L99">        addUpdateByPrimaryKeyWithoutBLOBsMethod(interfaze);</span>
 
-<span class="fc" id="L104">        List&lt;CompilationUnit&gt; answer = new ArrayList&lt;CompilationUnit&gt;();</span>
-<span class="pc bpc" id="L105" title="1 of 2 branches missed.">        if (context.getPlugins().clientGenerated(interfaze, null,</span>
-                introspectedTable)) {
-<span class="fc" id="L107">            answer.add(interfaze);</span>
+<span class="fc" id="L101">        List&lt;CompilationUnit&gt; answer = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">        if (context.getPlugins().clientGenerated(interfaze, introspectedTable)) {</span>
+<span class="fc" id="L103">            answer.add(interfaze);</span>
         }
 
-<span class="fc" id="L110">        List&lt;CompilationUnit&gt; extraCompilationUnits = getExtraCompilationUnits();</span>
-<span class="fc bfc" id="L111" title="All 2 branches covered.">        if (extraCompilationUnits != null) {</span>
-<span class="fc" id="L112">            answer.addAll(extraCompilationUnits);</span>
+<span class="fc" id="L106">        List&lt;CompilationUnit&gt; extraCompilationUnits = getExtraCompilationUnits();</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">        if (extraCompilationUnits != null) {</span>
+<span class="fc" id="L108">            answer.addAll(extraCompilationUnits);</span>
         }
 
-<span class="fc" id="L115">        return answer;</span>
+<span class="fc" id="L111">        return answer;</span>
     }
 
     protected void addCountByExampleMethod(Interface interfaze) {
-<span class="pc bpc" id="L119" title="1 of 2 branches missed.">        if (introspectedTable.getRules().generateCountByExample()) {</span>
-<span class="fc" id="L120">            AbstractJavaMapperMethodGenerator methodGenerator = new CountByExampleMethodGenerator();</span>
-<span class="fc" id="L121">            initializeAndExecuteGenerator(methodGenerator, interfaze);</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">        if (introspectedTable.getRules().generateCountByExample()) {</span>
+<span class="fc" id="L116">            AbstractJavaMapperMethodGenerator methodGenerator = new CountByExampleMethodGenerator();</span>
+<span class="fc" id="L117">            initializeAndExecuteGenerator(methodGenerator, interfaze);</span>
         }
-<span class="fc" id="L123">    }</span>
+<span class="fc" id="L119">    }</span>
 
     protected void addDeleteByExampleMethod(Interface interfaze) {
-<span class="pc bpc" id="L126" title="1 of 2 branches missed.">        if (introspectedTable.getRules().generateDeleteByExample()) {</span>
-<span class="fc" id="L127">            AbstractJavaMapperMethodGenerator methodGenerator = new DeleteByExampleMethodGenerator();</span>
-<span class="fc" id="L128">            initializeAndExecuteGenerator(methodGenerator, interfaze);</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">        if (introspectedTable.getRules().generateDeleteByExample()) {</span>
+<span class="fc" id="L123">            AbstractJavaMapperMethodGenerator methodGenerator = new DeleteByExampleMethodGenerator();</span>
+<span class="fc" id="L124">            initializeAndExecuteGenerator(methodGenerator, interfaze);</span>
         }
-<span class="fc" id="L130">    }</span>
+<span class="fc" id="L126">    }</span>
 
     protected void addDeleteByPrimaryKeyMethod(Interface interfaze) {
-<span class="fc bfc" id="L133" title="All 2 branches covered.">        if (introspectedTable.getRules().generateDeleteByPrimaryKey()) {</span>
-<span class="fc" id="L134">            AbstractJavaMapperMethodGenerator methodGenerator = new DeleteByPrimaryKeyMethodGenerator(false);</span>
-<span class="fc" id="L135">            initializeAndExecuteGenerator(methodGenerator, interfaze);</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">        if (introspectedTable.getRules().generateDeleteByPrimaryKey()) {</span>
+<span class="fc" id="L130">            AbstractJavaMapperMethodGenerator methodGenerator = new DeleteByPrimaryKeyMethodGenerator(false);</span>
+<span class="fc" id="L131">            initializeAndExecuteGenerator(methodGenerator, interfaze);</span>
         }
-<span class="fc" id="L137">    }</span>
+<span class="fc" id="L133">    }</span>
 
     protected void addInsertMethod(Interface interfaze) {
-<span class="pc bpc" id="L140" title="1 of 2 branches missed.">        if (introspectedTable.getRules().generateInsert()) {</span>
-<span class="fc" id="L141">            AbstractJavaMapperMethodGenerator methodGenerator = new InsertMethodGenerator(false);</span>
-<span class="fc" id="L142">            initializeAndExecuteGenerator(methodGenerator, interfaze);</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">        if (introspectedTable.getRules().generateInsert()) {</span>
+<span class="fc" id="L137">            AbstractJavaMapperMethodGenerator methodGenerator = new InsertMethodGenerator(false);</span>
+<span class="fc" id="L138">            initializeAndExecuteGenerator(methodGenerator, interfaze);</span>
         }
-<span class="fc" id="L144">    }</span>
+<span class="fc" id="L140">    }</span>
 
     protected void addInsertSelectiveMethod(Interface interfaze) {
-<span class="pc bpc" id="L147" title="1 of 2 branches missed.">        if (introspectedTable.getRules().generateInsertSelective()) {</span>
-<span class="fc" id="L148">            AbstractJavaMapperMethodGenerator methodGenerator = new InsertSelectiveMethodGenerator();</span>
-<span class="fc" id="L149">            initializeAndExecuteGenerator(methodGenerator, interfaze);</span>
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">        if (introspectedTable.getRules().generateInsertSelective()) {</span>
+<span class="fc" id="L144">            AbstractJavaMapperMethodGenerator methodGenerator = new InsertSelectiveMethodGenerator();</span>
+<span class="fc" id="L145">            initializeAndExecuteGenerator(methodGenerator, interfaze);</span>
         }
-<span class="fc" id="L151">    }</span>
+<span class="fc" id="L147">    }</span>
 
     protected void addSelectByExampleWithBLOBsMethod(Interface interfaze) {
-<span class="fc bfc" id="L154" title="All 2 branches covered.">        if (introspectedTable.getRules().generateSelectByExampleWithBLOBs()) {</span>
-<span class="fc" id="L155">            AbstractJavaMapperMethodGenerator methodGenerator = new SelectByExampleWithBLOBsMethodGenerator();</span>
-<span class="fc" id="L156">            initializeAndExecuteGenerator(methodGenerator, interfaze);</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">        if (introspectedTable.getRules().generateSelectByExampleWithBLOBs()) {</span>
+<span class="fc" id="L151">            AbstractJavaMapperMethodGenerator methodGenerator = new SelectByExampleWithBLOBsMethodGenerator();</span>
+<span class="fc" id="L152">            initializeAndExecuteGenerator(methodGenerator, interfaze);</span>
         }
-<span class="fc" id="L158">    }</span>
+<span class="fc" id="L154">    }</span>
 
     protected void addSelectByExampleWithoutBLOBsMethod(Interface interfaze) {
-<span class="pc bpc" id="L161" title="1 of 2 branches missed.">        if (introspectedTable.getRules().generateSelectByExampleWithoutBLOBs()) {</span>
-<span class="fc" id="L162">            AbstractJavaMapperMethodGenerator methodGenerator = new SelectByExampleWithoutBLOBsMethodGenerator();</span>
-<span class="fc" id="L163">            initializeAndExecuteGenerator(methodGenerator, interfaze);</span>
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">        if (introspectedTable.getRules().generateSelectByExampleWithoutBLOBs()) {</span>
+<span class="fc" id="L158">            AbstractJavaMapperMethodGenerator methodGenerator = new SelectByExampleWithoutBLOBsMethodGenerator();</span>
+<span class="fc" id="L159">            initializeAndExecuteGenerator(methodGenerator, interfaze);</span>
         }
-<span class="fc" id="L165">    }</span>
+<span class="fc" id="L161">    }</span>
 
     protected void addSelectByPrimaryKeyMethod(Interface interfaze) {
-<span class="fc bfc" id="L168" title="All 2 branches covered.">        if (introspectedTable.getRules().generateSelectByPrimaryKey()) {</span>
-<span class="fc" id="L169">            AbstractJavaMapperMethodGenerator methodGenerator = new SelectByPrimaryKeyMethodGenerator(false);</span>
-<span class="fc" id="L170">            initializeAndExecuteGenerator(methodGenerator, interfaze);</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">        if (introspectedTable.getRules().generateSelectByPrimaryKey()) {</span>
+<span class="fc" id="L165">            AbstractJavaMapperMethodGenerator methodGenerator = new SelectByPrimaryKeyMethodGenerator(false);</span>
+<span class="fc" id="L166">            initializeAndExecuteGenerator(methodGenerator, interfaze);</span>
         }
-<span class="fc" id="L172">    }</span>
+<span class="fc" id="L168">    }</span>
 
     protected void addUpdateByExampleSelectiveMethod(Interface interfaze) {
-<span class="pc bpc" id="L175" title="1 of 2 branches missed.">        if (introspectedTable.getRules().generateUpdateByExampleSelective()) {</span>
-<span class="fc" id="L176">            AbstractJavaMapperMethodGenerator methodGenerator = new UpdateByExampleSelectiveMethodGenerator();</span>
-<span class="fc" id="L177">            initializeAndExecuteGenerator(methodGenerator, interfaze);</span>
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">        if (introspectedTable.getRules().generateUpdateByExampleSelective()) {</span>
+<span class="fc" id="L172">            AbstractJavaMapperMethodGenerator methodGenerator = new UpdateByExampleSelectiveMethodGenerator();</span>
+<span class="fc" id="L173">            initializeAndExecuteGenerator(methodGenerator, interfaze);</span>
         }
-<span class="fc" id="L179">    }</span>
+<span class="fc" id="L175">    }</span>
 
     protected void addUpdateByExampleWithBLOBsMethod(Interface interfaze) {
-<span class="fc bfc" id="L182" title="All 2 branches covered.">        if (introspectedTable.getRules().generateUpdateByExampleWithBLOBs()) {</span>
-<span class="fc" id="L183">            AbstractJavaMapperMethodGenerator methodGenerator = new UpdateByExampleWithBLOBsMethodGenerator();</span>
-<span class="fc" id="L184">            initializeAndExecuteGenerator(methodGenerator, interfaze);</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">        if (introspectedTable.getRules().generateUpdateByExampleWithBLOBs()) {</span>
+<span class="fc" id="L179">            AbstractJavaMapperMethodGenerator methodGenerator = new UpdateByExampleWithBLOBsMethodGenerator();</span>
+<span class="fc" id="L180">            initializeAndExecuteGenerator(methodGenerator, interfaze);</span>
         }
-<span class="fc" id="L186">    }</span>
+<span class="fc" id="L182">    }</span>
 
     protected void addUpdateByExampleWithoutBLOBsMethod(Interface interfaze) {
-<span class="pc bpc" id="L189" title="1 of 2 branches missed.">        if (introspectedTable.getRules().generateUpdateByExampleWithoutBLOBs()) {</span>
-<span class="fc" id="L190">            AbstractJavaMapperMethodGenerator methodGenerator = new UpdateByExampleWithoutBLOBsMethodGenerator();</span>
-<span class="fc" id="L191">            initializeAndExecuteGenerator(methodGenerator, interfaze);</span>
+<span class="pc bpc" id="L185" title="1 of 2 branches missed.">        if (introspectedTable.getRules().generateUpdateByExampleWithoutBLOBs()) {</span>
+<span class="fc" id="L186">            AbstractJavaMapperMethodGenerator methodGenerator = new UpdateByExampleWithoutBLOBsMethodGenerator();</span>
+<span class="fc" id="L187">            initializeAndExecuteGenerator(methodGenerator, interfaze);</span>
         }
-<span class="fc" id="L193">    }</span>
+<span class="fc" id="L189">    }</span>
 
     protected void addUpdateByPrimaryKeySelectiveMethod(Interface interfaze) {
-<span class="fc bfc" id="L196" title="All 2 branches covered.">        if (introspectedTable.getRules().generateUpdateByPrimaryKeySelective()) {</span>
-<span class="fc" id="L197">            AbstractJavaMapperMethodGenerator methodGenerator = new UpdateByPrimaryKeySelectiveMethodGenerator();</span>
-<span class="fc" id="L198">            initializeAndExecuteGenerator(methodGenerator, interfaze);</span>
+<span class="fc bfc" id="L192" title="All 2 branches covered.">        if (introspectedTable.getRules().generateUpdateByPrimaryKeySelective()) {</span>
+<span class="fc" id="L193">            AbstractJavaMapperMethodGenerator methodGenerator = new UpdateByPrimaryKeySelectiveMethodGenerator();</span>
+<span class="fc" id="L194">            initializeAndExecuteGenerator(methodGenerator, interfaze);</span>
         }
-<span class="fc" id="L200">    }</span>
+<span class="fc" id="L196">    }</span>
 
     protected void addUpdateByPrimaryKeyWithBLOBsMethod(Interface interfaze) {
-<span class="fc bfc" id="L203" title="All 2 branches covered.">        if (introspectedTable.getRules().generateUpdateByPrimaryKeyWithBLOBs()) {</span>
-<span class="fc" id="L204">            AbstractJavaMapperMethodGenerator methodGenerator = new UpdateByPrimaryKeyWithBLOBsMethodGenerator();</span>
-<span class="fc" id="L205">            initializeAndExecuteGenerator(methodGenerator, interfaze);</span>
+<span class="fc bfc" id="L199" title="All 2 branches covered.">        if (introspectedTable.getRules().generateUpdateByPrimaryKeyWithBLOBs()) {</span>
+<span class="fc" id="L200">            AbstractJavaMapperMethodGenerator methodGenerator = new UpdateByPrimaryKeyWithBLOBsMethodGenerator();</span>
+<span class="fc" id="L201">            initializeAndExecuteGenerator(methodGenerator, interfaze);</span>
         }
-<span class="fc" id="L207">    }</span>
+<span class="fc" id="L203">    }</span>
 
     protected void addUpdateByPrimaryKeyWithoutBLOBsMethod(Interface interfaze) {
-<span class="fc" id="L210">        if (introspectedTable.getRules()</span>
-<span class="fc bfc" id="L211" title="All 2 branches covered.">                .generateUpdateByPrimaryKeyWithoutBLOBs()) {</span>
-<span class="fc" id="L212">            AbstractJavaMapperMethodGenerator methodGenerator = new UpdateByPrimaryKeyWithoutBLOBsMethodGenerator();</span>
-<span class="fc" id="L213">            initializeAndExecuteGenerator(methodGenerator, interfaze);</span>
+<span class="fc" id="L206">        if (introspectedTable.getRules()</span>
+<span class="fc bfc" id="L207" title="All 2 branches covered.">                .generateUpdateByPrimaryKeyWithoutBLOBs()) {</span>
+<span class="fc" id="L208">            AbstractJavaMapperMethodGenerator methodGenerator = new UpdateByPrimaryKeyWithoutBLOBsMethodGenerator();</span>
+<span class="fc" id="L209">            initializeAndExecuteGenerator(methodGenerator, interfaze);</span>
         }
-<span class="fc" id="L215">    }</span>
+<span class="fc" id="L211">    }</span>
 
     protected void initializeAndExecuteGenerator(
             AbstractJavaMapperMethodGenerator methodGenerator,
             Interface interfaze) {
-<span class="fc" id="L220">        methodGenerator.setContext(context);</span>
-<span class="fc" id="L221">        methodGenerator.setIntrospectedTable(introspectedTable);</span>
-<span class="fc" id="L222">        methodGenerator.setProgressCallback(progressCallback);</span>
-<span class="fc" id="L223">        methodGenerator.setWarnings(warnings);</span>
-<span class="fc" id="L224">        methodGenerator.addInterfaceElements(interfaze);</span>
-<span class="fc" id="L225">    }</span>
+<span class="fc" id="L216">        methodGenerator.setContext(context);</span>
+<span class="fc" id="L217">        methodGenerator.setIntrospectedTable(introspectedTable);</span>
+<span class="fc" id="L218">        methodGenerator.setProgressCallback(progressCallback);</span>
+<span class="fc" id="L219">        methodGenerator.setWarnings(warnings);</span>
+<span class="fc" id="L220">        methodGenerator.addInterfaceElements(interfaze);</span>
+<span class="fc" id="L221">    }</span>
 
     public List&lt;CompilationUnit&gt; getExtraCompilationUnits() {
-<span class="fc" id="L228">        return null;</span>
+<span class="fc" id="L224">        return Collections.emptyList();</span>
     }
 
     @Override
     public AbstractXmlGenerator getMatchedXMLGenerator() {
-<span class="fc" id="L233">        return new XMLMapperGenerator();</span>
+<span class="fc" id="L229">        return new XMLMapperGenerator();</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

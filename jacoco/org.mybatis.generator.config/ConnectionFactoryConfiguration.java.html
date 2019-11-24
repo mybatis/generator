@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConnectionFactoryConfiguration.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.config</a> &gt; <span class="el_source">ConnectionFactoryConfiguration.java</span></div><h1>ConnectionFactoryConfiguration.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -15,43 +15,32 @@
  */
 package org.mybatis.generator.config;
 
-import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.List;
 
-import org.mybatis.generator.api.dom.xml.Attribute;
-import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.internal.util.StringUtility;
 
 public class ConnectionFactoryConfiguration extends TypedPropertyHolder {
 
     public ConnectionFactoryConfiguration() {
-<span class="fc" id="L30">        super();</span>
-<span class="fc" id="L31">    }</span>
+<span class="fc" id="L27">        super();</span>
+<span class="fc" id="L28">    }</span>
 
     public void validate(List&lt;String&gt; errors) {
-<span class="pc bpc" id="L34" title="3 of 4 branches missed.">        if (getConfigurationType() == null || &quot;DEFAULT&quot;.equals(getConfigurationType())) { //$NON-NLS-1$</span>
-<span class="pc bpc" id="L35" title="1 of 2 branches missed.">            if (!StringUtility.stringHasValue(getProperty(&quot;driverClass&quot;))) { //$NON-NLS-1$</span>
-<span class="nc" id="L36">                errors.add(getString(&quot;ValidationError.18&quot;, &quot;connectionFactory&quot;, &quot;driverClass&quot;)); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$</span>
+<span class="pc bpc" id="L31" title="3 of 4 branches missed.">        if (getConfigurationType() == null || &quot;DEFAULT&quot;.equals(getConfigurationType())) { //$NON-NLS-1$</span>
+<span class="pc bpc" id="L32" title="1 of 2 branches missed.">            if (!StringUtility.stringHasValue(getProperty(&quot;driverClass&quot;))) { //$NON-NLS-1$</span>
+<span class="nc" id="L33">                errors.add(getString(&quot;ValidationError.18&quot;, //$NON-NLS-1$</span>
+                        &quot;connectionFactory&quot;, //$NON-NLS-1$
+                        &quot;driverClass&quot;)); //$NON-NLS-1$
             }
 
-<span class="pc bpc" id="L39" title="1 of 2 branches missed.">            if (!StringUtility.stringHasValue(getProperty(&quot;connectionURL&quot;))) { //$NON-NLS-1$</span>
-<span class="nc" id="L40">                errors.add(getString(&quot;ValidationError.18&quot;, &quot;connectionFactory&quot;, &quot;connectionURL&quot;)); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$</span>
+<span class="pc bpc" id="L38" title="1 of 2 branches missed.">            if (!StringUtility.stringHasValue(getProperty(&quot;connectionURL&quot;))) { //$NON-NLS-1$</span>
+<span class="nc" id="L39">                errors.add(getString(&quot;ValidationError.18&quot;, //$NON-NLS-1$</span>
+                        &quot;connectionFactory&quot;, //$NON-NLS-1$
+                        &quot;connectionURL&quot;)); //$NON-NLS-1$
             }
         }
-<span class="fc" id="L43">    }</span>
-
-    public XmlElement toXmlElement() {
-<span class="nc" id="L46">        XmlElement xmlElement = new XmlElement(&quot;connectionFactory&quot;); //$NON-NLS-1$</span>
-
-<span class="nc bnc" id="L48" title="All 2 branches missed.">        if (stringHasValue(getConfigurationType())) {</span>
-<span class="nc" id="L49">            xmlElement.addAttribute(new Attribute(&quot;type&quot;, getConfigurationType())); //$NON-NLS-1$</span>
-        }
-
-<span class="nc" id="L52">        addPropertyXmlElements(xmlElement);</span>
-
-<span class="nc" id="L54">        return xmlElement;</span>
-    }
+<span class="fc" id="L44">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

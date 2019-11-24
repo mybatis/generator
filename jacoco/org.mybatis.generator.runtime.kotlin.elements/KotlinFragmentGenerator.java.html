@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>KotlinFragmentGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.kotlin.elements</a> &gt; <span class="el_source">KotlinFragmentGenerator.java</span></div><h1>KotlinFragmentGenerator.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2019 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime.kotlin.elements;
+
+import static org.mybatis.generator.api.dom.OutputUtilities.kotlinIndent;
+import static org.mybatis.generator.internal.util.StringUtility.escapeStringForKotlin;
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
+import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
+import org.mybatis.generator.api.dom.kotlin.JavaToKotlinTypeConverter;
+import org.mybatis.generator.api.dom.kotlin.KotlinArg;
+import org.mybatis.generator.codegen.mybatis3.ListUtilities;
+import org.mybatis.generator.config.GeneratedKey;
+import org.mybatis.generator.runtime.kotlin.KotlinDynamicSqlSupportClassGenerator;
+
+public class KotlinFragmentGenerator {
+
+    private IntrospectedTable introspectedTable;
+    private String resultMapId;
+    private String tableFieldImport;
+    
+<span class="fc" id="L42">    private KotlinFragmentGenerator(Builder builder) {</span>
+<span class="fc" id="L43">        this.introspectedTable = builder.introspectedTable;</span>
+<span class="fc" id="L44">        this.resultMapId = builder.resultMapId;</span>
+<span class="fc" id="L45">        tableFieldImport = builder.tableFieldImport;</span>
+<span class="fc" id="L46">    }</span>
+    
+    public KotlinFunctionParts getPrimaryKeyWhereClauseAndParameters() {
+<span class="fc" id="L49">        KotlinFunctionParts.Builder builder = new KotlinFunctionParts.Builder();</span>
+        
+<span class="fc" id="L51">        boolean first = true;</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        for (IntrospectedColumn column : introspectedTable.getPrimaryKeyColumns()) {</span>
+<span class="fc" id="L53">            FullyQualifiedKotlinType kt = JavaToKotlinTypeConverter.convert(column.getFullyQualifiedJavaType());</span>
+            
+<span class="fc" id="L55">            String fieldName = column.getJavaProperty();</span>
+<span class="fc" id="L56">            String argName = column.getJavaProperty() + &quot;_&quot;; //$NON-NLS-1$</span>
+            
+<span class="fc" id="L58">            builder.withImport(tableFieldImport + &quot;.&quot; + fieldName); //$NON-NLS-1$</span>
+<span class="fc" id="L59">            builder.withImports(kt.getImportList());</span>
+<span class="fc" id="L60">            builder.withArgument(KotlinArg.newArg(argName)</span>
+<span class="fc" id="L61">                    .withDataType(kt.getShortNameWithTypeArguments())</span>
+<span class="fc" id="L62">                    .build());</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">            if (first) {</span>
+<span class="fc" id="L64">                builder.withCodeLine(&quot;    where(&quot; + fieldName //$NON-NLS-1$</span>
+                        + &quot;, isEqualTo(&quot; + argName //$NON-NLS-1$
+                        + &quot;))&quot;); //$NON-NLS-1$
+<span class="fc" id="L67">                first = false;</span>
+            } else {
+<span class="fc" id="L69">                builder.withCodeLine(&quot;    and(&quot; + fieldName //$NON-NLS-1$</span>
+                        + &quot;, isEqualTo(&quot; + argName //$NON-NLS-1$
+                        + &quot;))&quot;); //$NON-NLS-1$
+            }
+<span class="fc" id="L73">        }</span>
+<span class="fc" id="L74">        builder.withCodeLine(&quot;}&quot;); //$NON-NLS-1$</span>
+        
+<span class="fc" id="L76">        return builder.build();</span>
+    }
+
+    public KotlinFunctionParts getPrimaryKeyWhereClauseForUpdate() {
+<span class="fc" id="L80">        KotlinFunctionParts.Builder builder = new KotlinFunctionParts.Builder();</span>
+        
+<span class="fc" id="L82">        boolean first = true;</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">        for (IntrospectedColumn column : introspectedTable.getPrimaryKeyColumns()) {</span>
+<span class="fc" id="L84">            String fieldName = column.getJavaProperty();</span>
+            
+<span class="fc" id="L86">            builder.withImport(tableFieldImport + &quot;.&quot; + fieldName); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">            if (first) {</span>
+<span class="fc" id="L88">                builder.withCodeLine(&quot;    where(&quot; + fieldName //$NON-NLS-1$</span>
+                        + &quot;, isEqualTo(record::&quot; + fieldName //$NON-NLS-1$
+                        + &quot;))&quot;); //$NON-NLS-1$
+<span class="fc" id="L91">                first = false;</span>
+            } else {
+<span class="fc" id="L93">                builder.withCodeLine(&quot;    and(&quot; + fieldName //$NON-NLS-1$</span>
+                        + &quot;, isEqualTo(record::&quot; + fieldName //$NON-NLS-1$
+                        + &quot;))&quot;); //$NON-NLS-1$
+            }
+<span class="fc" id="L97">        }</span>
+<span class="fc" id="L98">        builder.withCodeLine(&quot;}&quot;); //$NON-NLS-1$</span>
+        
+<span class="fc" id="L100">        return builder.build();</span>
+    }
+
+    public KotlinFunctionParts getAnnotatedResults() {
+<span class="fc" id="L104">        KotlinFunctionParts.Builder builder = new KotlinFunctionParts.Builder();</span>
+
+<span class="fc" id="L106">        builder.withImport(&quot;org.apache.ibatis.type.JdbcType&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L107">        builder.withImport(&quot;org.apache.ibatis.annotations.Result&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L108">        builder.withImport(&quot;org.apache.ibatis.annotations.Results&quot;); //$NON-NLS-1$</span>
+
+<span class="fc" id="L110">        builder.withAnnotation(&quot;@Results(id=\&quot;&quot; + resultMapId + &quot;\&quot;, value = [&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+
+<span class="fc" id="L112">        StringBuilder sb = new StringBuilder();</span>
+
+<span class="fc" id="L114">        Set&lt;String&gt; imports = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L115">        Iterator&lt;IntrospectedColumn&gt; iterPk = introspectedTable.getPrimaryKeyColumns().iterator();</span>
+<span class="fc" id="L116">        Iterator&lt;IntrospectedColumn&gt; iterNonPk = introspectedTable.getNonPrimaryKeyColumns().iterator();</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">        while (iterPk.hasNext()) {</span>
+<span class="fc" id="L118">            IntrospectedColumn introspectedColumn = iterPk.next();</span>
+<span class="fc" id="L119">            sb.setLength(0);</span>
+<span class="fc" id="L120">            kotlinIndent(sb, 1);</span>
+<span class="fc" id="L121">            sb.append(getResultAnnotation(imports, introspectedColumn, true));</span>
+            
+<span class="fc bfc" id="L123" title="All 4 branches covered.">            if (iterPk.hasNext() || iterNonPk.hasNext()) {</span>
+<span class="fc" id="L124">                sb.append(',');</span>
+            }
+
+<span class="fc" id="L127">            builder.withAnnotation(sb.toString());</span>
+<span class="fc" id="L128">        }</span>
+
+<span class="fc bfc" id="L130" title="All 2 branches covered.">        while (iterNonPk.hasNext()) {</span>
+<span class="fc" id="L131">            IntrospectedColumn introspectedColumn = iterNonPk.next();</span>
+<span class="fc" id="L132">            sb.setLength(0);</span>
+<span class="fc" id="L133">            kotlinIndent(sb, 1);</span>
+<span class="fc" id="L134">            sb.append(getResultAnnotation(imports, introspectedColumn, false));</span>
+            
+<span class="fc bfc" id="L136" title="All 2 branches covered.">            if (iterNonPk.hasNext()) {</span>
+<span class="fc" id="L137">                sb.append(',');</span>
+            }
+
+<span class="fc" id="L140">            builder.withAnnotation(sb.toString());</span>
+<span class="fc" id="L141">        }</span>
+
+<span class="fc" id="L143">        builder.withAnnotation(&quot;])&quot;) //$NON-NLS-1$</span>
+<span class="fc" id="L144">            .withImports(imports);</span>
+        
+<span class="fc" id="L146">        return builder.build();</span>
+    }
+    
+    private String getResultAnnotation(Set&lt;String&gt; imports, IntrospectedColumn introspectedColumn,
+            boolean idColumn) {
+<span class="fc" id="L151">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L152">        sb.append(&quot;Result(column=\&quot;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L153">        sb.append(escapeStringForKotlin(introspectedColumn.getActualColumnName()));</span>
+<span class="fc" id="L154">        sb.append(&quot;\&quot;, property=\&quot;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L155">        sb.append(introspectedColumn.getJavaProperty());</span>
+<span class="fc" id="L156">        sb.append('\&quot;');</span>
+
+<span class="fc bfc" id="L158" title="All 2 branches covered.">        if (stringHasValue(introspectedColumn.getTypeHandler())) {</span>
+<span class="fc" id="L159">            FullyQualifiedKotlinType fqjt =</span>
+<span class="fc" id="L160">                    new FullyQualifiedKotlinType(introspectedColumn.getTypeHandler());</span>
+<span class="fc" id="L161">            imports.add(introspectedColumn.getTypeHandler());</span>
+<span class="fc" id="L162">            sb.append(&quot;, typeHandler=&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L163">            sb.append(fqjt.getShortNameWithoutTypeArguments());</span>
+<span class="fc" id="L164">            sb.append(&quot;::class&quot;); //$NON-NLS-1$</span>
+        }
+
+<span class="fc" id="L167">        sb.append(&quot;, jdbcType=JdbcType.&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L168">        sb.append(introspectedColumn.getJdbcTypeName());</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">        if (idColumn) {</span>
+<span class="fc" id="L170">            sb.append(&quot;, id=true&quot;); //$NON-NLS-1$</span>
+        }
+<span class="fc" id="L172">        sb.append(')');</span>
+
+<span class="fc" id="L174">        return sb.toString();</span>
+    }
+    
+    public KotlinFunctionParts getGeneratedKeyAnnotation(GeneratedKey gk) {
+<span class="fc" id="L178">        KotlinFunctionParts.Builder builder = new KotlinFunctionParts.Builder();</span>
+        
+<span class="fc" id="L180">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L181">        introspectedTable.getColumn(gk.getColumn()).ifPresent(introspectedColumn -&gt; {</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">            if (gk.isJdbcStandard()) {</span>
+<span class="fc" id="L183">                builder.withImport(&quot;org.apache.ibatis.annotations.Options&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L184">                sb.append(&quot;@Options(useGeneratedKeys=true,keyProperty=\&quot;record.&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L185">                sb.append(introspectedColumn.getJavaProperty());</span>
+<span class="fc" id="L186">                sb.append(&quot;\&quot;)&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L187">                builder.withAnnotation(sb.toString());</span>
+            } else {
+<span class="fc" id="L189">                builder.withImport(&quot;org.apache.ibatis.annotations.SelectKey&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L190">                FullyQualifiedKotlinType kt =</span>
+<span class="fc" id="L191">                        JavaToKotlinTypeConverter.convert(introspectedColumn.getFullyQualifiedJavaType());</span>
+                
+<span class="fc" id="L193">                sb.append(&quot;@SelectKey(statement=[\&quot;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L194">                sb.append(gk.getRuntimeSqlStatement());</span>
+<span class="fc" id="L195">                sb.append(&quot;\&quot;], keyProperty=\&quot;record.&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L196">                sb.append(introspectedColumn.getJavaProperty());</span>
+<span class="fc" id="L197">                sb.append(&quot;\&quot;, before=&quot;); //$NON-NLS-1$</span>
+<span class="pc bpc" id="L198" title="1 of 2 branches missed.">                sb.append(gk.isIdentity() ? &quot;false&quot; : &quot;true&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L199">                sb.append(&quot;, resultType=&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L200">                sb.append(kt.getShortNameWithoutTypeArguments());</span>
+<span class="fc" id="L201">                sb.append(&quot;::class)&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L202">                builder.withAnnotation(sb.toString());</span>
+            }
+<span class="fc" id="L204">        });</span>
+        
+<span class="fc" id="L206">        return builder.build();</span>
+    }
+
+    public KotlinFunctionParts getSetEqualLines(List&lt;IntrospectedColumn&gt; columnList) {
+        
+<span class="fc" id="L211">        KotlinFunctionParts.Builder builder = new KotlinFunctionParts.Builder();</span>
+        
+<span class="fc" id="L213">        List&lt;IntrospectedColumn&gt; columns = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(columnList);</span>
+<span class="fc bfc" id="L214" title="All 2 branches covered.">        for (IntrospectedColumn column : columns) {</span>
+<span class="fc" id="L215">            String fieldName = column.getJavaProperty();</span>
+<span class="fc" id="L216">            builder.withImport(tableFieldImport + &quot;.&quot; + fieldName); //$NON-NLS-1$</span>
+            
+<span class="fc" id="L218">            builder.withCodeLine(&quot;    set(&quot; + fieldName //$NON-NLS-1$</span>
+<span class="fc" id="L219">                    + &quot;).equalTo(record::&quot; + column.getJavaProperty() //$NON-NLS-1$</span>
+                    + &quot;)&quot;); //$NON-NLS-1$
+<span class="fc" id="L221">        }</span>
+
+<span class="fc" id="L223">        return builder.build();</span>
+    }
+    
+    public KotlinFunctionParts getSetEqualWhenPresentLines(List&lt;IntrospectedColumn&gt; columnList) {
+        
+<span class="fc" id="L228">        KotlinFunctionParts.Builder builder = new KotlinFunctionParts.Builder();</span>
+        
+<span class="fc" id="L230">        List&lt;IntrospectedColumn&gt; columns = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(columnList);</span>
+<span class="fc bfc" id="L231" title="All 2 branches covered.">        for (IntrospectedColumn column : columns) {</span>
+<span class="fc" id="L232">            String fieldName = column.getJavaProperty();</span>
+<span class="fc" id="L233">            builder.withImport(tableFieldImport + &quot;.&quot; + fieldName); //$NON-NLS-1$</span>
+            
+<span class="fc" id="L235">            builder.withCodeLine(&quot;    set(&quot; + fieldName //$NON-NLS-1$</span>
+<span class="fc" id="L236">                    + &quot;).equalToWhenPresent(record::&quot; + column.getJavaProperty() //$NON-NLS-1$</span>
+                    + &quot;)&quot;); //$NON-NLS-1$
+<span class="fc" id="L238">        }</span>
+
+<span class="fc" id="L240">        return builder.build();</span>
+    }
+
+<span class="fc" id="L243">    public static class Builder {</span>
+        private IntrospectedTable introspectedTable;
+        private String resultMapId;
+        private String tableFieldImport;
+        
+        public Builder withIntrospectedTable(IntrospectedTable introspectedTable) {
+<span class="fc" id="L249">            this.introspectedTable = introspectedTable;</span>
+<span class="fc" id="L250">            return this;</span>
+        }
+        
+        public Builder withResultMapId(String resultMapId) {
+<span class="fc" id="L254">            this.resultMapId = resultMapId;</span>
+<span class="fc" id="L255">            return this;</span>
+        }
+        
+        public Builder withDynamicSqlSupportClassGenerator(KotlinDynamicSqlSupportClassGenerator generator) {
+<span class="fc" id="L259">            tableFieldImport = generator.getInnerObjectImport();</span>
+<span class="fc" id="L260">            return this;</span>
+        }
+        
+        public KotlinFragmentGenerator build() {
+<span class="fc" id="L264">            return new KotlinFragmentGenerator(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

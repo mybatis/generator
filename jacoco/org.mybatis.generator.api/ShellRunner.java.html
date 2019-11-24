@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ShellRunner.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api</a> &gt; <span class="el_source">ShellRunner.java</span></div><h1>ShellRunner.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -70,7 +70,7 @@ import org.mybatis.generator.logging.LogFactory;
 <span class="nc" id="L70">            return;</span>
         }
 
-<span class="nc" id="L73">        List&lt;String&gt; warnings = new ArrayList&lt;String&gt;();</span>
+<span class="nc" id="L73">        List&lt;String&gt; warnings = new ArrayList&lt;&gt;();</span>
 
 <span class="nc" id="L75">        String configfile = arguments.get(CONFIG_FILE);</span>
 <span class="nc" id="L76">        File configurationFile = new File(configfile);</span>
@@ -79,7 +79,7 @@ import org.mybatis.generator.logging.LogFactory;
 <span class="nc" id="L79">            return;</span>
         }
 
-<span class="nc" id="L82">        Set&lt;String&gt; fullyqualifiedTables = new HashSet&lt;String&gt;();</span>
+<span class="nc" id="L82">        Set&lt;String&gt; fullyqualifiedTables = new HashSet&lt;&gt;();</span>
 <span class="nc bnc" id="L83" title="All 2 branches missed.">        if (arguments.containsKey(TABLES)) {</span>
 <span class="nc" id="L84">            StringTokenizer st = new StringTokenizer(arguments.get(TABLES), &quot;,&quot;); //$NON-NLS-1$</span>
 <span class="nc bnc" id="L85" title="All 2 branches missed.">            while (st.hasMoreTokens()) {</span>
@@ -90,7 +90,7 @@ import org.mybatis.generator.logging.LogFactory;
 <span class="nc" id="L90">            }</span>
         }
 
-<span class="nc" id="L93">        Set&lt;String&gt; contexts = new HashSet&lt;String&gt;();</span>
+<span class="nc" id="L93">        Set&lt;String&gt; contexts = new HashSet&lt;&gt;();</span>
 <span class="nc bnc" id="L94" title="All 2 branches missed.">        if (arguments.containsKey(CONTEXT_IDS)) {</span>
 <span class="nc" id="L95">            StringTokenizer st = new StringTokenizer(</span>
 <span class="nc" id="L96">                    arguments.get(CONTEXT_IDS), &quot;,&quot;); //$NON-NLS-1$</span>
@@ -124,105 +124,97 @@ import org.mybatis.generator.logging.LogFactory;
 <span class="nc" id="L124">            }</span>
 
 <span class="nc" id="L126">            return;</span>
-<span class="nc" id="L127">        } catch (SQLException e) {</span>
-<span class="nc" id="L128">            e.printStackTrace();</span>
+<span class="nc" id="L127">        } catch (SQLException | IOException e) {</span>
+<span class="nc" id="L128">            e.printStackTrace(System.out);</span>
 <span class="nc" id="L129">            return;</span>
-<span class="nc" id="L130">        } catch (IOException e) {</span>
-<span class="nc" id="L131">            e.printStackTrace();</span>
-<span class="nc" id="L132">            return;</span>
-<span class="nc" id="L133">        } catch (InvalidConfigurationException e) {</span>
-<span class="nc" id="L134">            writeLine(getString(&quot;Progress.16&quot;)); //$NON-NLS-1$</span>
-<span class="nc bnc" id="L135" title="All 2 branches missed.">            for (String error : e.getErrors()) {</span>
-<span class="nc" id="L136">                writeLine(error);</span>
-<span class="nc" id="L137">            }</span>
-<span class="nc" id="L138">            return;</span>
-<span class="nc" id="L139">        } catch (InterruptedException e) {</span>
-            // ignore (will never happen with the DefaultShellCallback)
-<span class="nc" id="L141">        }</span>
+<span class="nc" id="L130">        } catch (InvalidConfigurationException e) {</span>
+<span class="nc" id="L131">            writeLine(getString(&quot;Progress.16&quot;)); //$NON-NLS-1$</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">            for (String error : e.getErrors()) {</span>
+<span class="nc" id="L133">                writeLine(error);</span>
+<span class="nc" id="L134">            }</span>
+<span class="nc" id="L135">            return;</span>
+<span class="nc" id="L136">        } catch (InterruptedException e) {</span>
+<span class="nc" id="L137">            Thread.currentThread().interrupt();</span>
+<span class="nc" id="L138">        }</span>
 
-<span class="nc bnc" id="L143" title="All 2 branches missed.">        for (String warning : warnings) {</span>
-<span class="nc" id="L144">            writeLine(warning);</span>
-<span class="nc" id="L145">        }</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">        for (String warning : warnings) {</span>
+<span class="nc" id="L141">            writeLine(warning);</span>
+<span class="nc" id="L142">        }</span>
 
-<span class="nc bnc" id="L147" title="All 2 branches missed.">        if (warnings.size() == 0) {</span>
-<span class="nc" id="L148">            writeLine(getString(&quot;Progress.4&quot;)); //$NON-NLS-1$</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">        if (warnings.isEmpty()) {</span>
+<span class="nc" id="L145">            writeLine(getString(&quot;Progress.4&quot;)); //$NON-NLS-1$</span>
         } else {
-<span class="nc" id="L150">            writeLine();</span>
-<span class="nc" id="L151">            writeLine(getString(&quot;Progress.5&quot;)); //$NON-NLS-1$</span>
+<span class="nc" id="L147">            writeLine();</span>
+<span class="nc" id="L148">            writeLine(getString(&quot;Progress.5&quot;)); //$NON-NLS-1$</span>
         }
-<span class="nc" id="L153">    }</span>
+<span class="nc" id="L150">    }</span>
 
     private static void usage() {
-<span class="nc" id="L156">        String lines = getString(&quot;Usage.Lines&quot;); //$NON-NLS-1$</span>
-<span class="nc" id="L157">        int intLines = Integer.parseInt(lines);</span>
-<span class="nc bnc" id="L158" title="All 2 branches missed.">        for (int i = 0; i &lt; intLines; i++) {</span>
-<span class="nc" id="L159">            String key = &quot;Usage.&quot; + i; //$NON-NLS-1$</span>
-<span class="nc" id="L160">            writeLine(getString(key));</span>
-        }
-<span class="nc" id="L162">    }</span>
+<span class="nc" id="L153">        writeLine(getString(&quot;Usage&quot;)); //$NON-NLS-1$</span>
+<span class="nc" id="L154">    }</span>
 
     private static void writeLine(String message) {
-<span class="nc" id="L165">        System.out.println(message);</span>
-<span class="nc" id="L166">    }</span>
+<span class="nc" id="L157">        System.out.println(message);</span>
+<span class="nc" id="L158">    }</span>
 
     private static void writeLine() {
-<span class="nc" id="L169">        System.out.println();</span>
-<span class="nc" id="L170">    }</span>
+<span class="nc" id="L161">        System.out.println();</span>
+<span class="nc" id="L162">    }</span>
 
     private static Map&lt;String, String&gt; parseCommandLine(String[] args) {
-<span class="nc" id="L173">        List&lt;String&gt; errors = new ArrayList&lt;String&gt;();</span>
-<span class="nc" id="L174">        Map&lt;String, String&gt; arguments = new HashMap&lt;String, String&gt;();</span>
+<span class="nc" id="L165">        List&lt;String&gt; errors = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L166">        Map&lt;String, String&gt; arguments = new HashMap&lt;&gt;();</span>
 
-<span class="nc bnc" id="L176" title="All 2 branches missed.">        for (int i = 0; i &lt; args.length; i++) {</span>
-<span class="nc bnc" id="L177" title="All 2 branches missed.">            if (CONFIG_FILE.equalsIgnoreCase(args[i])) {</span>
-<span class="nc bnc" id="L178" title="All 2 branches missed.">                if ((i + 1) &lt; args.length) {</span>
-<span class="nc" id="L179">                    arguments.put(CONFIG_FILE, args[i + 1]);</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">        for (int i = 0; i &lt; args.length; i++) {</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">            if (CONFIG_FILE.equalsIgnoreCase(args[i])) {</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">                if ((i + 1) &lt; args.length) {</span>
+<span class="nc" id="L171">                    arguments.put(CONFIG_FILE, args[i + 1]);</span>
                 } else {
-<span class="nc" id="L181">                    errors.add(getString(</span>
+<span class="nc" id="L173">                    errors.add(getString(</span>
                             &quot;RuntimeError.19&quot;, CONFIG_FILE)); //$NON-NLS-1$
                 }
-<span class="nc" id="L184">                i++;</span>
-<span class="nc bnc" id="L185" title="All 2 branches missed.">            } else if (OVERWRITE.equalsIgnoreCase(args[i])) {</span>
-<span class="nc" id="L186">                arguments.put(OVERWRITE, &quot;Y&quot;); //$NON-NLS-1$</span>
-<span class="nc bnc" id="L187" title="All 2 branches missed.">            } else if (VERBOSE.equalsIgnoreCase(args[i])) {</span>
-<span class="nc" id="L188">                arguments.put(VERBOSE, &quot;Y&quot;); //$NON-NLS-1$</span>
-<span class="nc bnc" id="L189" title="All 2 branches missed.">            } else if (HELP_1.equalsIgnoreCase(args[i])) {</span>
-<span class="nc" id="L190">                arguments.put(HELP_1, &quot;Y&quot;); //$NON-NLS-1$</span>
-<span class="nc bnc" id="L191" title="All 2 branches missed.">            } else if (HELP_2.equalsIgnoreCase(args[i])) {</span>
+<span class="nc" id="L176">                i++;</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">            } else if (OVERWRITE.equalsIgnoreCase(args[i])) {</span>
+<span class="nc" id="L178">                arguments.put(OVERWRITE, &quot;Y&quot;); //$NON-NLS-1$</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">            } else if (VERBOSE.equalsIgnoreCase(args[i])) {</span>
+<span class="nc" id="L180">                arguments.put(VERBOSE, &quot;Y&quot;); //$NON-NLS-1$</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">            } else if (HELP_1.equalsIgnoreCase(args[i])) {</span>
+<span class="nc" id="L182">                arguments.put(HELP_1, &quot;Y&quot;); //$NON-NLS-1$</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">            } else if (HELP_2.equalsIgnoreCase(args[i])) {</span>
                 // put HELP_1 in the map here too - so we only
                 // have to check for one entry in the mainline
-<span class="nc" id="L194">                arguments.put(HELP_1, &quot;Y&quot;); //$NON-NLS-1$</span>
-<span class="nc bnc" id="L195" title="All 2 branches missed.">            } else if (FORCE_JAVA_LOGGING.equalsIgnoreCase(args[i])) {</span>
-<span class="nc" id="L196">                LogFactory.forceJavaLogging();</span>
-<span class="nc bnc" id="L197" title="All 2 branches missed.">            } else if (CONTEXT_IDS.equalsIgnoreCase(args[i])) {</span>
-<span class="nc bnc" id="L198" title="All 2 branches missed.">                if ((i + 1) &lt; args.length) {</span>
-<span class="nc" id="L199">                    arguments.put(CONTEXT_IDS, args[i + 1]);</span>
+<span class="nc" id="L186">                arguments.put(HELP_1, &quot;Y&quot;); //$NON-NLS-1$</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">            } else if (FORCE_JAVA_LOGGING.equalsIgnoreCase(args[i])) {</span>
+<span class="nc" id="L188">                LogFactory.forceJavaLogging();</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">            } else if (CONTEXT_IDS.equalsIgnoreCase(args[i])) {</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">                if ((i + 1) &lt; args.length) {</span>
+<span class="nc" id="L191">                    arguments.put(CONTEXT_IDS, args[i + 1]);</span>
                 } else {
-<span class="nc" id="L201">                    errors.add(getString(</span>
+<span class="nc" id="L193">                    errors.add(getString(</span>
                             &quot;RuntimeError.19&quot;, CONTEXT_IDS)); //$NON-NLS-1$
                 }
-<span class="nc" id="L204">                i++;</span>
-<span class="nc bnc" id="L205" title="All 2 branches missed.">            } else if (TABLES.equalsIgnoreCase(args[i])) {</span>
-<span class="nc bnc" id="L206" title="All 2 branches missed.">                if ((i + 1) &lt; args.length) {</span>
-<span class="nc" id="L207">                    arguments.put(TABLES, args[i + 1]);</span>
+<span class="nc" id="L196">                i++;</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">            } else if (TABLES.equalsIgnoreCase(args[i])) {</span>
+<span class="nc bnc" id="L198" title="All 2 branches missed.">                if ((i + 1) &lt; args.length) {</span>
+<span class="nc" id="L199">                    arguments.put(TABLES, args[i + 1]);</span>
                 } else {
-<span class="nc" id="L209">                    errors.add(getString(&quot;RuntimeError.19&quot;, TABLES)); //$NON-NLS-1$</span>
+<span class="nc" id="L201">                    errors.add(getString(&quot;RuntimeError.19&quot;, TABLES)); //$NON-NLS-1$</span>
                 }
-<span class="nc" id="L211">                i++;</span>
+<span class="nc" id="L203">                i++;</span>
             } else {
-<span class="nc" id="L213">                errors.add(getString(&quot;RuntimeError.20&quot;, args[i])); //$NON-NLS-1$</span>
+<span class="nc" id="L205">                errors.add(getString(&quot;RuntimeError.20&quot;, args[i])); //$NON-NLS-1$</span>
             }
         }
 
-<span class="nc bnc" id="L217" title="All 2 branches missed.">        if (!errors.isEmpty()) {</span>
-<span class="nc bnc" id="L218" title="All 2 branches missed.">            for (String error : errors) {</span>
-<span class="nc" id="L219">                writeLine(error);</span>
-<span class="nc" id="L220">            }</span>
+<span class="nc bnc" id="L209" title="All 2 branches missed.">        if (!errors.isEmpty()) {</span>
+<span class="nc bnc" id="L210" title="All 2 branches missed.">            for (String error : errors) {</span>
+<span class="nc" id="L211">                writeLine(error);</span>
+<span class="nc" id="L212">            }</span>
 
-<span class="nc" id="L222">            System.exit(-1);</span>
+<span class="nc" id="L214">            System.exit(-1);</span>
         }
 
-<span class="nc" id="L225">        return arguments;</span>
+<span class="nc" id="L217">        return arguments;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

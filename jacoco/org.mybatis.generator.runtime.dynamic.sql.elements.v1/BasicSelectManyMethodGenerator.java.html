@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BasicSelectManyMethodGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.dynamic.sql.elements.v1</a> &gt; <span class="el_source">BasicSelectManyMethodGenerator.java</span></div><h1>BasicSelectManyMethodGenerator.java</h1><pre class="source lang-java linenums">/**
+ *    Copyright 2006-2019 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime.dynamic.sql.elements.v1;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.Interface;
+import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.runtime.dynamic.sql.elements.AbstractMethodGenerator;
+import org.mybatis.generator.runtime.dynamic.sql.elements.FragmentGenerator;
+import org.mybatis.generator.runtime.dynamic.sql.elements.MethodAndImports;
+import org.mybatis.generator.runtime.dynamic.sql.elements.MethodParts;
+
+public class BasicSelectManyMethodGenerator extends AbstractMethodGenerator {
+    private FullyQualifiedJavaType recordType;
+    private FragmentGenerator fragmentGenerator;
+    
+    private BasicSelectManyMethodGenerator(Builder builder) {
+<span class="fc" id="L35">        super(builder);</span>
+<span class="fc" id="L36">        recordType = builder.recordType;</span>
+<span class="fc" id="L37">        fragmentGenerator = builder.fragmentGenerator;</span>
+<span class="fc" id="L38">    }</span>
+
+    @Override
+    public MethodAndImports generateMethodAndImports() {
+<span class="fc bfc" id="L42" title="All 2 branches covered.">        if (!introspectedTable.getRules().generateSelectByExampleWithBLOBs()</span>
+<span class="pc bpc" id="L43" title="1 of 2 branches missed.">                &amp;&amp; !introspectedTable.getRules().generateSelectByExampleWithoutBLOBs()) {</span>
+<span class="nc" id="L44">            return null;</span>
+        }
+        
+<span class="fc" id="L47">        Set&lt;FullyQualifiedJavaType&gt; imports = new HashSet&lt;&gt;();</span>
+        
+<span class="fc" id="L49">        FullyQualifiedJavaType parameterType =</span>
+                new FullyQualifiedJavaType(
+                        &quot;org.mybatis.dynamic.sql.select.render.SelectStatementProvider&quot;); //$NON-NLS-1$
+<span class="fc" id="L52">        FullyQualifiedJavaType adapter =</span>
+                new FullyQualifiedJavaType(&quot;org.mybatis.dynamic.sql.util.SqlProviderAdapter&quot;); //$NON-NLS-1$
+<span class="fc" id="L54">        FullyQualifiedJavaType annotation =</span>
+                new FullyQualifiedJavaType(&quot;org.apache.ibatis.annotations.SelectProvider&quot;); //$NON-NLS-1$
+        
+<span class="fc" id="L57">        imports.add(parameterType);</span>
+<span class="fc" id="L58">        imports.add(adapter);</span>
+<span class="fc" id="L59">        imports.add(annotation);</span>
+        
+<span class="fc" id="L61">        imports.add(FullyQualifiedJavaType.getNewListInstance());</span>
+        
+<span class="fc" id="L63">        imports.add(recordType);</span>
+<span class="fc" id="L64">        FullyQualifiedJavaType returnType = FullyQualifiedJavaType.getNewListInstance();</span>
+<span class="fc" id="L65">        returnType.addTypeArgument(recordType);</span>
+<span class="fc" id="L66">        Method method = new Method(&quot;selectMany&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L67">        method.setAbstract(true);</span>
+<span class="fc" id="L68">        method.setReturnType(returnType);</span>
+<span class="fc" id="L69">        method.addParameter(new Parameter(parameterType, &quot;selectStatement&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L70">        context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);</span>
+<span class="fc" id="L71">        method.addAnnotation(&quot;@SelectProvider(type=SqlProviderAdapter.class, method=\&quot;select\&quot;)&quot;); //$NON-NLS-1$</span>
+
+<span class="fc" id="L73">        MethodAndImports.Builder builder = MethodAndImports.withMethod(method)</span>
+<span class="fc" id="L74">                .withImports(imports);</span>
+
+        MethodParts methodParts;
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        if (introspectedTable.isConstructorBased()) {</span>
+<span class="fc" id="L78">            methodParts = fragmentGenerator.getAnnotatedConstructorArgs();</span>
+        } else {
+<span class="fc" id="L80">            methodParts = fragmentGenerator.getAnnotatedResults();</span>
+        }
+<span class="fc" id="L82">        acceptParts(builder, method, methodParts);</span>
+        
+<span class="fc" id="L84">        return builder.build();</span>
+    }
+
+    @Override
+    public boolean callPlugins(Method method, Interface interfaze) {
+<span class="fc" id="L89">        return context.getPlugins().clientBasicSelectManyMethodGenerated(method, interfaze, introspectedTable);</span>
+    }
+
+<span class="fc" id="L92">    public static class Builder extends BaseBuilder&lt;Builder, BasicSelectManyMethodGenerator&gt; {</span>
+        private FullyQualifiedJavaType recordType;
+        private FragmentGenerator fragmentGenerator;
+        
+        public Builder withRecordType(FullyQualifiedJavaType recordType) {
+<span class="fc" id="L97">            this.recordType = recordType;</span>
+<span class="fc" id="L98">            return this;</span>
+        }
+        
+        public Builder withFragmentGenerator(FragmentGenerator fragmentGenerator) {
+<span class="fc" id="L102">            this.fragmentGenerator = fragmentGenerator;</span>
+<span class="fc" id="L103">            return this;</span>
+        }
+
+        @Override
+        public Builder getThis() {
+<span class="fc" id="L108">            return this;</span>
+        }
+
+        @Override
+        public BasicSelectManyMethodGenerator build() {
+<span class="fc" id="L113">            return new BasicSelectManyMethodGenerator(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

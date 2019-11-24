@@ -23,11 +23,11 @@ under the License.
     <link>http://www.mybatis.org/mybatis-generator/mybatis-generator-core/</link>
     <description>MyBatis Generator Core - Checkstyle report</description>
     <language>en-us</language>
-    <copyright>&#169;2006 - 2018 MyBatis.org</copyright>
+    <copyright>&#169;2006 - 2019 MyBatis.org</copyright>
     <item>
-      <title>File: 310,
+      <title>File: 370,
              Errors: 0,
-             Warnings: 323,
+             Warnings: 0,
              Infos: 0
       </title>
             <link>http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html</link>
@@ -46,7 +46,7 @@ under the License.
           <tbody>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.internal.rules.Rules.java">org/mybatis/generator/internal/rules/Rules.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v2.BasicDeleteMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/v2/BasicDeleteMethodGenerator.java</a>
                 </td>
                 <td>
                   0
@@ -60,7 +60,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.dao.elements.UpdateByExampleWithoutBLOBsMethodGenerator.java">org/mybatis/generator/codegen/ibatis2/dao/elements/UpdateByExampleWithoutBLOBsMethodGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.internal.rules.Rules.java">org/mybatis/generator/internal/rules/Rules.java</a>
                 </td>
                 <td>
                   0
@@ -80,7 +80,35 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.kotlin.elements.InsertMultipleMethodGenerator.java">org/mybatis/generator/runtime/kotlin/elements/InsertMultipleMethodGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.xml.render.ElementRenderer.java">org/mybatis/generator/api/dom/xml/render/ElementRenderer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -94,7 +122,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -130,27 +158,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.sqlmap.elements.SelectByPrimaryKeyElementGenerator.java">org/mybatis/generator/codegen/ibatis2/sqlmap/elements/SelectByPrimaryKeyElementGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.xml.SystemDocType.java">org/mybatis/generator/api/dom/xml/SystemDocType.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  1
-                </td>
-                <td>
                   0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.DeleteByPrimaryKeyMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/DeleteByPrimaryKeyMethodGenerator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
                 </td>
                 <td>
                   0
@@ -158,7 +172,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.IntrospectedTableIbatis2Java2Impl.java">org/mybatis/generator/codegen/ibatis2/IntrospectedTableIbatis2Java2Impl.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.kotlin.elements.AbstractKotlinFunctionGenerator.java">org/mybatis/generator/runtime/kotlin/elements/AbstractKotlinFunctionGenerator.java</a>
                 </td>
                 <td>
                   0
@@ -178,7 +192,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  2
+                  0
                 </td>
                 <td>
                   0
@@ -186,7 +200,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.dao.elements.SelectByPrimaryKeyMethodGenerator.java">org/mybatis/generator/codegen/ibatis2/dao/elements/SelectByPrimaryKeyMethodGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.kotlin.elements.DeleteByPrimaryKeyMethodGenerator.java">org/mybatis/generator/runtime/kotlin/elements/DeleteByPrimaryKeyMethodGenerator.java</a>
                 </td>
                 <td>
                   0
@@ -220,34 +234,6 @@ under the License.
                   0
                 </td>
                 <td>
-                  2
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.dao.elements.SelectByExampleWithoutBLOBsMethodGenerator.java">org/mybatis/generator/codegen/ibatis2/dao/elements/SelectByExampleWithoutBLOBsMethodGenerator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.dao.elements.SelectByExampleWithBLOBsMethodGenerator.java">org/mybatis/generator/codegen/ibatis2/dao/elements/SelectByExampleWithBLOBsMethodGenerator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
                   0
                 </td>
                 <td>
@@ -276,7 +262,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -312,7 +298,21 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.dao.elements.UpdateByExampleWithBLOBsMethodGenerator.java">org/mybatis/generator/codegen/ibatis2/dao/elements/UpdateByExampleWithBLOBsMethodGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v2.SelectByPrimaryKeyMethodGeneratorV2.java">org/mybatis/generator/runtime/dynamic/sql/elements/v2/SelectByPrimaryKeyMethodGeneratorV2.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.kotlin.elements.InsertSelectiveMethodGenerator.java">org/mybatis/generator/runtime/kotlin/elements/InsertSelectiveMethodGenerator.java</a>
                 </td>
                 <td>
                   0
@@ -340,13 +340,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.CountByExampleMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/CountByExampleMethodGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v1.BasicSelectOneMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/v1/BasicSelectOneMethodGenerator.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  2
+                  0
                 </td>
                 <td>
                   0
@@ -388,7 +388,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -402,7 +402,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  5
+                  0
                 </td>
                 <td>
                   0
@@ -416,21 +416,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
-                </td>
-                <td>
                   0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.sqlmap.elements.DeleteByExampleElementGenerator.java">org/mybatis/generator/codegen/ibatis2/sqlmap/elements/DeleteByExampleElementGenerator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
                 </td>
                 <td>
                   0
@@ -500,7 +486,21 @@ under the License.
                   0
                 </td>
                 <td>
-                  2
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v2.GeneralSelectOneMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/v2/GeneralSelectOneMethodGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -514,7 +514,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -528,7 +528,21 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.java.render.InitializationBlockRenderer.java">org/mybatis/generator/api/dom/java/render/InitializationBlockRenderer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -542,7 +556,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -556,7 +570,21 @@ under the License.
                   0
                 </td>
                 <td>
-                  16
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.kotlin.elements.BasicMultipleInsertHelperMethodGenerator.java">org/mybatis/generator/runtime/kotlin/elements/BasicMultipleInsertHelperMethodGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -570,7 +598,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -584,7 +612,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -606,13 +634,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.sqlmap.elements.UpdateByExampleWithBLOBsElementGenerator.java">org/mybatis/generator/codegen/ibatis2/sqlmap/elements/UpdateByExampleWithBLOBsElementGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.internal.util.CustomCollectors.java">org/mybatis/generator/internal/util/CustomCollectors.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -634,13 +662,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.BasicDeleteMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/BasicDeleteMethodGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.kotlin.elements.KotlinFunctionAndImports.java">org/mybatis/generator/runtime/kotlin/elements/KotlinFunctionAndImports.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  3
+                  0
                 </td>
                 <td>
                   0
@@ -668,7 +696,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  2
+                  0
                 </td>
                 <td>
                   0
@@ -677,20 +705,6 @@ under the License.
                           <tr>
                 <td>
                   <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.mybatis3.javamapper.elements.SelectByExampleWithoutBLOBsMethodGenerator.java">org/mybatis/generator/codegen/mybatis3/javamapper/elements/SelectByExampleWithoutBLOBsMethodGenerator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.dao.elements.UpdateByPrimaryKeyWithBLOBsMethodGenerator.java">org/mybatis/generator/codegen/ibatis2/dao/elements/UpdateByPrimaryKeyWithBLOBsMethodGenerator.java</a>
                 </td>
                 <td>
                   0
@@ -710,7 +724,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -738,7 +752,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  2
+                  0
                 </td>
                 <td>
                   0
@@ -752,7 +766,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -780,21 +794,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
-                </td>
-                <td>
                   0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.internal.types.JdbcTypeNameTranslator.java">org/mybatis/generator/internal/types/JdbcTypeNameTranslator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  2
                 </td>
                 <td>
                   0
@@ -808,7 +808,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  4
+                  0
                 </td>
                 <td>
                   0
@@ -830,13 +830,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.internal.ExtendedDAOMethodNameCalculator.java">org/mybatis/generator/internal/ExtendedDAOMethodNameCalculator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.SelectByExampleWithBLOBsElementGenerator.java">org/mybatis/generator/codegen/mybatis3/xmlmapper/elements/SelectByExampleWithBLOBsElementGenerator.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  2
+                  0
                 </td>
                 <td>
                   0
@@ -844,13 +844,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.SelectByExampleWithBLOBsElementGenerator.java">org/mybatis/generator/codegen/mybatis3/xmlmapper/elements/SelectByExampleWithBLOBsElementGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.java.render.TopLevelEnumerationRenderer.java">org/mybatis/generator/api/dom/java/render/TopLevelEnumerationRenderer.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -864,21 +864,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
-                </td>
-                <td>
                   0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.DynamicSqlMapperGenerator.java">org/mybatis/generator/runtime/dynamic/sql/DynamicSqlMapperGenerator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  2
                 </td>
                 <td>
                   0
@@ -906,7 +892,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -914,13 +900,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.sqlmap.elements.UpdateByExampleSelectiveElementGenerator.java">org/mybatis/generator/codegen/ibatis2/sqlmap/elements/UpdateByExampleSelectiveElementGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.IntrospectedTableMyBatis3DynamicSqlImplV1.java">org/mybatis/generator/runtime/dynamic/sql/IntrospectedTableMyBatis3DynamicSqlImplV1.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -934,7 +920,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -948,7 +934,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -956,13 +942,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.sqlmap.elements.UpdateByPrimaryKeyWithBLOBsElementGenerator.java">org/mybatis/generator/codegen/ibatis2/sqlmap/elements/UpdateByPrimaryKeyWithBLOBsElementGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.kotlin.elements.GeneralSelectMethodGenerator.java">org/mybatis/generator/runtime/kotlin/elements/GeneralSelectMethodGenerator.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -990,7 +976,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -1004,7 +990,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -1018,7 +1004,21 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.kotlin.elements.BasicSelectManyMethodGenerator.java">org/mybatis/generator/runtime/kotlin/elements/BasicSelectManyMethodGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -1046,7 +1046,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -1054,13 +1054,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.UpdateByExampleSelectiveMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/UpdateByExampleSelectiveMethodGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.kotlin.elements.BasicDeleteMethodGenerator.java">org/mybatis/generator/runtime/kotlin/elements/BasicDeleteMethodGenerator.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  3
+                  0
                 </td>
                 <td>
                   0
@@ -1096,13 +1096,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider.ProviderCountByExampleMethodGenerator.java">org/mybatis/generator/codegen/mybatis3/javamapper/elements/sqlprovider/ProviderCountByExampleMethodGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.kotlin.elements.GeneralSelectOneMethodGenerator.java">org/mybatis/generator/runtime/kotlin/elements/GeneralSelectOneMethodGenerator.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -1110,7 +1110,35 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.dao.elements.UpdateByPrimaryKeyWithoutBLOBsMethodGenerator.java">org/mybatis/generator/codegen/ibatis2/dao/elements/UpdateByPrimaryKeyWithoutBLOBsMethodGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.kotlin.JavaToKotlinTypeConverter.java">org/mybatis/generator/api/dom/kotlin/JavaToKotlinTypeConverter.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider.ProviderCountByExampleMethodGenerator.java">org/mybatis/generator/codegen/mybatis3/javamapper/elements/sqlprovider/ProviderCountByExampleMethodGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.kotlin.elements.InsertMethodGenerator.java">org/mybatis/generator/runtime/kotlin/elements/InsertMethodGenerator.java</a>
                 </td>
                 <td>
                   0
@@ -1144,7 +1172,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -1158,7 +1186,21 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.xml.render.DocumentRenderer.java">org/mybatis/generator/api/dom/xml/render/DocumentRenderer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -1180,41 +1222,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.InsertSelectiveMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/InsertSelectiveMethodGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v2.DeleteByPrimaryKeyMethodGeneratorV2.java">org/mybatis/generator/runtime/dynamic/sql/elements/v2/DeleteByPrimaryKeyMethodGeneratorV2.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  2
-                </td>
-                <td>
                   0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.dao.templates.GenericCIDAOTemplate.java">org/mybatis/generator/codegen/ibatis2/dao/templates/GenericCIDAOTemplate.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.sqlmap.elements.SelectByExampleWithBLOBsElementGenerator.java">org/mybatis/generator/codegen/ibatis2/sqlmap/elements/SelectByExampleWithBLOBsElementGenerator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
                 </td>
                 <td>
                   0
@@ -1228,7 +1242,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -1236,13 +1250,27 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.config.xml.IbatorConfigurationParser.java">org/mybatis/generator/config/xml/IbatorConfigurationParser.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.xml.VisitableElement.java">org/mybatis/generator/api/dom/xml/VisitableElement.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  1
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.kotlin.elements.UpdateByPrimaryKeySelectiveMethodGenerator.java">org/mybatis/generator/runtime/kotlin/elements/UpdateByPrimaryKeySelectiveMethodGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -1270,7 +1298,49 @@ under the License.
                   0
                 </td>
                 <td>
-                  2
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.kotlin.KotlinFunction.java">org/mybatis/generator/api/dom/kotlin/KotlinFunction.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.KotlinFormatter.java">org/mybatis/generator/api/KotlinFormatter.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.kotlin.KotlinNamedItemContainer.java">org/mybatis/generator/api/dom/kotlin/KotlinNamedItemContainer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -1298,7 +1368,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  2
+                  0
                 </td>
                 <td>
                   0
@@ -1307,20 +1377,6 @@ under the License.
                           <tr>
                 <td>
                   <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider.ProviderSelectByExampleWithoutBLOBsMethodGenerator.java">org/mybatis/generator/codegen/mybatis3/javamapper/elements/sqlprovider/ProviderSelectByExampleWithoutBLOBsMethodGenerator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.dao.DAOGenerator.java">org/mybatis/generator/codegen/ibatis2/dao/DAOGenerator.java</a>
                 </td>
                 <td>
                   0
@@ -1348,7 +1404,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.dao.elements.UpdateByPrimaryKeySelectiveMethodGenerator.java">org/mybatis/generator/codegen/ibatis2/dao/elements/UpdateByPrimaryKeySelectiveMethodGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v2.SelectListGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/v2/SelectListGenerator.java</a>
                 </td>
                 <td>
                   0
@@ -1368,7 +1424,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  5
+                  0
                 </td>
                 <td>
                   0
@@ -1382,7 +1438,21 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.kotlin.elements.BasicCountMethodGenerator.java">org/mybatis/generator/runtime/kotlin/elements/BasicCountMethodGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -1410,21 +1480,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
-                </td>
-                <td>
                   0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.BasicSelectOneMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/BasicSelectOneMethodGenerator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  4
                 </td>
                 <td>
                   0
@@ -1438,7 +1494,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -1452,7 +1508,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -1494,7 +1550,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -1508,7 +1564,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  2
+                  0
                 </td>
                 <td>
                   0
@@ -1522,7 +1578,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -1536,7 +1592,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  2
+                  0
                 </td>
                 <td>
                   0
@@ -1564,7 +1620,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -1573,20 +1629,6 @@ under the License.
                           <tr>
                 <td>
                   <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.mybatis3.javamapper.JavaMapperGenerator.java">org/mybatis/generator/codegen/mybatis3/javamapper/JavaMapperGenerator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.IntrospectedTableIbatis2Java5Impl.java">org/mybatis/generator/codegen/ibatis2/IntrospectedTableIbatis2Java5Impl.java</a>
                 </td>
                 <td>
                   0
@@ -1614,13 +1656,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.mybatis3.javamapper.SimpleAnnotatedClientGenerator.java">org/mybatis/generator/codegen/mybatis3/javamapper/SimpleAnnotatedClientGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v2.GeneralSelectMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/v2/GeneralSelectMethodGenerator.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  2
+                  0
                 </td>
                 <td>
                   0
@@ -1628,7 +1670,35 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.plugins.SqlMapConfigPlugin.java">org/mybatis/generator/plugins/SqlMapConfigPlugin.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.kotlin.KotlinDynamicSqlSupportClassGenerator.java">org/mybatis/generator/runtime/kotlin/KotlinDynamicSqlSupportClassGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.mybatis3.javamapper.SimpleAnnotatedClientGenerator.java">org/mybatis/generator/codegen/mybatis3/javamapper/SimpleAnnotatedClientGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.kotlin.KotlinModifier.java">org/mybatis/generator/api/dom/kotlin/KotlinModifier.java</a>
                 </td>
                 <td>
                   0
@@ -1648,7 +1718,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  4
+                  0
                 </td>
                 <td>
                   0
@@ -1684,13 +1754,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.SimpleSelectByPrimaryKeyElementGenerator.java">org/mybatis/generator/codegen/mybatis3/xmlmapper/elements/SimpleSelectByPrimaryKeyElementGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v2.GeneralDeleteMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/v2/GeneralDeleteMethodGenerator.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -1698,13 +1768,27 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.BasicInsertMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/BasicInsertMethodGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.IntrospectedTableMyBatis3DynamicSqlImplV2.java">org/mybatis/generator/runtime/dynamic/sql/IntrospectedTableMyBatis3DynamicSqlImplV2.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  4
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.SimpleSelectByPrimaryKeyElementGenerator.java">org/mybatis/generator/codegen/mybatis3/xmlmapper/elements/SimpleSelectByPrimaryKeyElementGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -1760,7 +1844,49 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v1.UpdateByPrimaryKeyMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/v1/UpdateByPrimaryKeyMethodGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v1.InsertMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/v1/InsertMethodGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v1.DeleteByExampleMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/v1/DeleteByExampleMethodGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -1774,7 +1900,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  2
+                  0
                 </td>
                 <td>
                   0
@@ -1788,7 +1914,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  4
+                  0
                 </td>
                 <td>
                   0
@@ -1796,13 +1922,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.sqlmap.elements.BlobColumnListElementGenerator.java">org/mybatis/generator/codegen/ibatis2/sqlmap/elements/BlobColumnListElementGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.DefaultKotlinFormatter.java">org/mybatis/generator/api/dom/DefaultKotlinFormatter.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -1810,13 +1936,27 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.sqlmap.SqlMapGenerator.java">org/mybatis/generator/codegen/ibatis2/sqlmap/SqlMapGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.kotlin.KotlinDataClassGenerator.java">org/mybatis/generator/runtime/kotlin/KotlinDataClassGenerator.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  1
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.kotlin.elements.KotlinPropertyAndImports.java">org/mybatis/generator/runtime/kotlin/elements/KotlinPropertyAndImports.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -1830,7 +1970,21 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v1.CountByExampleMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/v1/CountByExampleMethodGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -1839,6 +1993,20 @@ under the License.
                           <tr>
                 <td>
                   <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.VerboseProgressCallback.java">org/mybatis/generator/api/VerboseProgressCallback.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v2.UpdateByPrimaryKeySelectiveMethodGeneratorV2.java">org/mybatis/generator/runtime/dynamic/sql/elements/v2/UpdateByPrimaryKeySelectiveMethodGeneratorV2.java</a>
                 </td>
                 <td>
                   0
@@ -1866,13 +2034,27 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.kotlin.render.KotlinPropertyRenderer.java">org/mybatis/generator/api/dom/kotlin/render/KotlinPropertyRenderer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.UpdateByPrimaryKeySelectiveElementGenerator.java">org/mybatis/generator/codegen/mybatis3/xmlmapper/elements/UpdateByPrimaryKeySelectiveElementGenerator.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -1887,20 +2069,6 @@ under the License.
                 </td>
                 <td>
                   0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.IntrospectedTableMyBatis3DynamicSqlImpl.java">org/mybatis/generator/runtime/dynamic/sql/IntrospectedTableMyBatis3DynamicSqlImpl.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
                 </td>
                 <td>
                   0
@@ -1942,7 +2110,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -1956,20 +2124,6 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.dao.elements.CountByExampleMethodGenerator.java">org/mybatis/generator/codegen/ibatis2/dao/elements/CountByExampleMethodGenerator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
                   0
                 </td>
                 <td>
@@ -1978,7 +2132,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.dao.templates.IbatisDAOTemplate.java">org/mybatis/generator/codegen/ibatis2/dao/templates/IbatisDAOTemplate.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v2.Utils.java">org/mybatis/generator/runtime/dynamic/sql/elements/v2/Utils.java</a>
                 </td>
                 <td>
                   0
@@ -2020,6 +2174,20 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.xml.PublicDocType.java">org/mybatis/generator/api/dom/xml/PublicDocType.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.plugins.VirtualPrimaryKeyPlugin.java">org/mybatis/generator/plugins/VirtualPrimaryKeyPlugin.java</a>
                 </td>
                 <td>
@@ -2040,21 +2208,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  4
-                </td>
-                <td>
                   0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.BasicUpdateMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/BasicUpdateMethodGenerator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  3
                 </td>
                 <td>
                   0
@@ -2068,7 +2222,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -2096,7 +2250,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -2110,7 +2264,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -2124,7 +2278,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -2146,13 +2300,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.UpdateByPrimaryKeyMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/UpdateByPrimaryKeyMethodGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.plugins.dsql.DisableInsertPlugin.java">org/mybatis/generator/plugins/dsql/DisableInsertPlugin.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  2
+                  0
                 </td>
                 <td>
                   0
@@ -2166,21 +2320,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  8
-                </td>
-                <td>
                   0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.BasicCountMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/BasicCountMethodGenerator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  3
                 </td>
                 <td>
                   0
@@ -2194,7 +2334,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  2
+                  0
                 </td>
                 <td>
                   0
@@ -2216,13 +2356,27 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.BasicSelectManyMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/BasicSelectManyMethodGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.kotlin.elements.GeneralDeleteMethodGenerator.java">org/mybatis/generator/runtime/kotlin/elements/GeneralDeleteMethodGenerator.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  3
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.java.render.InnerClassRenderer.java">org/mybatis/generator/api/dom/java/render/InnerClassRenderer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -2236,7 +2390,21 @@ under the License.
                   0
                 </td>
                 <td>
-                  2
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v1.BasicSelectManyMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/v1/BasicSelectManyMethodGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -2272,13 +2440,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.sqlmap.elements.UpdateByExampleWithoutBLOBsElementGenerator.java">org/mybatis/generator/codegen/ibatis2/sqlmap/elements/UpdateByExampleWithoutBLOBsElementGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v1.BasicDeleteMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/v1/BasicDeleteMethodGenerator.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -2286,13 +2454,27 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.model.RecordWithBLOBsGenerator.java">org/mybatis/generator/codegen/ibatis2/model/RecordWithBLOBsGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v2.InsertMethodGeneratorV2.java">org/mybatis/generator/runtime/dynamic/sql/elements/v2/InsertMethodGeneratorV2.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  1
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v2.UpdateByPrimaryKeyMethodGeneratorV2.java">org/mybatis/generator/runtime/dynamic/sql/elements/v2/UpdateByPrimaryKeyMethodGeneratorV2.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -2306,21 +2488,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
-                </td>
-                <td>
                   0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.sqlmap.elements.SelectByExampleWithoutBLOBsElementGenerator.java">org/mybatis/generator/codegen/ibatis2/sqlmap/elements/SelectByExampleWithoutBLOBsElementGenerator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
                 </td>
                 <td>
                   0
@@ -2342,13 +2510,27 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.DynamicSqlMapperGeneratorV1.java">org/mybatis/generator/runtime/dynamic/sql/DynamicSqlMapperGeneratorV1.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.SimpleSelectAllElementGenerator.java">org/mybatis/generator/codegen/mybatis3/xmlmapper/elements/SimpleSelectAllElementGenerator.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  2
+                  0
                 </td>
                 <td>
                   0
@@ -2362,7 +2544,35 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.kotlin.render.KotlinNamedItemRenderer.java">org/mybatis/generator/api/dom/kotlin/render/KotlinNamedItemRenderer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.kotlin.KotlinNamedItem.java">org/mybatis/generator/api/dom/kotlin/KotlinNamedItem.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -2376,7 +2586,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -2384,7 +2594,35 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.dao.templates.AbstractDAOTemplate.java">org/mybatis/generator/codegen/ibatis2/dao/templates/AbstractDAOTemplate.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.java.AbstractJavaType.java">org/mybatis/generator/api/dom/java/AbstractJavaType.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.java.render.ParameterRenderer.java">org/mybatis/generator/api/dom/java/render/ParameterRenderer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v2.BasicMultipleInsertHelperMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/v2/BasicMultipleInsertHelperMethodGenerator.java</a>
                 </td>
                 <td>
                   0
@@ -2404,21 +2642,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  2
-                </td>
-                <td>
                   0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.DeleteByExampleMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/DeleteByExampleMethodGenerator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  3
                 </td>
                 <td>
                   0
@@ -2460,7 +2684,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  2
+                  0
                 </td>
                 <td>
                   0
@@ -2468,7 +2692,21 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.dao.elements.DeleteByPrimaryKeyMethodGenerator.java">org/mybatis/generator/codegen/ibatis2/dao/elements/DeleteByPrimaryKeyMethodGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.kotlin.elements.BasicInsertMethodGenerator.java">org/mybatis/generator/runtime/kotlin/elements/BasicInsertMethodGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.kotlin.KotlinType.java">org/mybatis/generator/api/dom/kotlin/KotlinType.java</a>
                 </td>
                 <td>
                   0
@@ -2488,7 +2726,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  2
+                  0
                 </td>
                 <td>
                   0
@@ -2502,7 +2740,21 @@ under the License.
                   0
                 </td>
                 <td>
-                  2
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.kotlin.render.KotlinFileRenderer.java">org/mybatis/generator/api/dom/kotlin/render/KotlinFileRenderer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -2516,7 +2768,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  2
+                  0
                 </td>
                 <td>
                   0
@@ -2544,7 +2796,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  2
+                  0
                 </td>
                 <td>
                   0
@@ -2552,13 +2804,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.SelectDistinctByExampleMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/SelectDistinctByExampleMethodGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.kotlin.elements.UpdateSelectiveColumnsMethodGenerator.java">org/mybatis/generator/runtime/kotlin/elements/UpdateSelectiveColumnsMethodGenerator.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  2
+                  0
                 </td>
                 <td>
                   0
@@ -2572,20 +2824,6 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.dao.elements.InsertMethodGenerator.java">org/mybatis/generator/codegen/ibatis2/dao/elements/InsertMethodGenerator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
                   0
                 </td>
                 <td>
@@ -2594,13 +2832,27 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.sqlmap.elements.BaseColumnListElementGenerator.java">org/mybatis/generator/codegen/ibatis2/sqlmap/elements/BaseColumnListElementGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v1.SelectDistinctByExampleMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/v1/SelectDistinctByExampleMethodGenerator.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  1
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.java.render.MethodRenderer.java">org/mybatis/generator/api/dom/java/render/MethodRenderer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -2609,6 +2861,20 @@ under the License.
                           <tr>
                 <td>
                   <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.Plugin.java">org/mybatis/generator/api/Plugin.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.plugins.dsql.ReadOnlyPlugin.java">org/mybatis/generator/plugins/dsql/ReadOnlyPlugin.java</a>
                 </td>
                 <td>
                   0
@@ -2636,13 +2902,55 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.kotlin.elements.UpdateAllColumnsMethodGenerator.java">org/mybatis/generator/runtime/kotlin/elements/UpdateAllColumnsMethodGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated.AnnotatedSelectByExampleWithoutBLOBsMethodGenerator.java">org/mybatis/generator/codegen/mybatis3/javamapper/elements/annotated/AnnotatedSelectByExampleWithoutBLOBsMethodGenerator.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  4
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.xml.render.AttributeRenderer.java">org/mybatis/generator/api/dom/xml/render/AttributeRenderer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.kotlin.IntrospectedTableKotlinImpl.java">org/mybatis/generator/runtime/kotlin/IntrospectedTableKotlinImpl.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -2664,13 +2972,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.sqlmap.elements.UpdateByPrimaryKeyWithoutBLOBsElementGenerator.java">org/mybatis/generator/codegen/ibatis2/sqlmap/elements/UpdateByPrimaryKeyWithoutBLOBsElementGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.kotlin.elements.BasicSelectOneMethodGenerator.java">org/mybatis/generator/runtime/kotlin/elements/BasicSelectOneMethodGenerator.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -2678,7 +2986,49 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.SelectByPrimaryKeyMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/SelectByPrimaryKeyMethodGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.GeneratedKotlinFile.java">org/mybatis/generator/api/GeneratedKotlinFile.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.DynamicSqlMapperGeneratorV2.java">org/mybatis/generator/runtime/dynamic/sql/DynamicSqlMapperGeneratorV2.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v2.UpdateAllColumnsMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/v2/UpdateAllColumnsMethodGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v2.InsertMultipleMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/v2/InsertMultipleMethodGenerator.java</a>
                 </td>
                 <td>
                   0
@@ -2698,20 +3048,6 @@ under the License.
                   0
                 </td>
                 <td>
-                  2
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.dao.elements.AbstractDAOElementGenerator.java">org/mybatis/generator/codegen/ibatis2/dao/elements/AbstractDAOElementGenerator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
                   0
                 </td>
                 <td>
@@ -2726,7 +3062,21 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v2.BasicInsertMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/v2/BasicInsertMethodGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -2740,7 +3090,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  3
+                  0
                 </td>
                 <td>
                   0
@@ -2749,6 +3099,34 @@ under the License.
                           <tr>
                 <td>
                   <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.IntrospectedTable.java">org/mybatis/generator/api/IntrospectedTable.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.kotlin.elements.SelectByPrimaryKeyMethodGenerator.java">org/mybatis/generator/runtime/kotlin/elements/SelectByPrimaryKeyMethodGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.kotlin.elements.InsertMultipleVarargMethodGenerator.java">org/mybatis/generator/runtime/kotlin/elements/InsertMultipleVarargMethodGenerator.java</a>
                 </td>
                 <td>
                   0
@@ -2776,13 +3154,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.SelectByExampleMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/SelectByExampleMethodGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.xml.ElementVisitor.java">org/mybatis/generator/api/dom/xml/ElementVisitor.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  2
+                  0
                 </td>
                 <td>
                   0
@@ -2796,7 +3174,21 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v1.InsertSelectiveMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/v1/InsertSelectiveMethodGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -2810,7 +3202,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  4
+                  0
                 </td>
                 <td>
                   0
@@ -2824,7 +3216,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -2838,7 +3230,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  6
+                  0
                 </td>
                 <td>
                   0
@@ -2852,7 +3244,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -2880,7 +3272,49 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v1.UpdateByExampleMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/v1/UpdateByExampleMethodGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.kotlin.elements.ColumnListGenerator.java">org/mybatis/generator/runtime/kotlin/elements/ColumnListGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.java.render.TypeParameterRenderer.java">org/mybatis/generator/api/dom/java/render/TypeParameterRenderer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -2894,7 +3328,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -2922,7 +3356,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -2930,13 +3364,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.UpdateByPrimaryKeySelectiveMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/UpdateByPrimaryKeySelectiveMethodGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v2.UpdateSelectiveColumnsMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/v2/UpdateSelectiveColumnsMethodGenerator.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  3
+                  0
                 </td>
                 <td>
                   0
@@ -2972,13 +3406,27 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.kotlin.KotlinArg.java">org/mybatis/generator/api/dom/kotlin/KotlinArg.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.mybatis3.javamapper.elements.InsertMethodGenerator.java">org/mybatis/generator/codegen/mybatis3/javamapper/elements/InsertMethodGenerator.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -3000,7 +3448,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.dao.elements.UpdateByExampleParmsInnerclassGenerator.java">org/mybatis/generator/codegen/ibatis2/dao/elements/UpdateByExampleParmsInnerclassGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider.ProviderUpdateByExampleWithBLOBsMethodGenerator.java">org/mybatis/generator/codegen/mybatis3/javamapper/elements/sqlprovider/ProviderUpdateByExampleWithBLOBsMethodGenerator.java</a>
                 </td>
                 <td>
                   0
@@ -3014,13 +3462,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider.ProviderUpdateByExampleWithBLOBsMethodGenerator.java">org/mybatis/generator/codegen/mybatis3/javamapper/elements/sqlprovider/ProviderUpdateByExampleWithBLOBsMethodGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.xml.DocTypeVisitor.java">org/mybatis/generator/api/dom/xml/DocTypeVisitor.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -3034,7 +3482,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -3048,7 +3496,35 @@ under the License.
                   0
                 </td>
                 <td>
-                  7
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType.java">org/mybatis/generator/api/dom/kotlin/FullyQualifiedKotlinType.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.java.render.TopLevelClassRenderer.java">org/mybatis/generator/api/dom/java/render/TopLevelClassRenderer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -3070,13 +3546,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.mybatis3.javamapper.elements.UpdateByPrimaryKeyWithoutBLOBsMethodGenerator.java">org/mybatis/generator/codegen/mybatis3/javamapper/elements/UpdateByPrimaryKeyWithoutBLOBsMethodGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.java.render.InnerInterfaceRenderer.java">org/mybatis/generator/api/dom/java/render/InnerInterfaceRenderer.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -3084,13 +3560,27 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.sqlmap.elements.ResultMapWithoutBLOBsElementGenerator.java">org/mybatis/generator/codegen/ibatis2/sqlmap/elements/ResultMapWithoutBLOBsElementGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.kotlin.elements.GeneralSelectDistinctMethodGenerator.java">org/mybatis/generator/runtime/kotlin/elements/GeneralSelectDistinctMethodGenerator.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  1
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.mybatis3.javamapper.elements.UpdateByPrimaryKeyWithoutBLOBsMethodGenerator.java">org/mybatis/generator/codegen/mybatis3/javamapper/elements/UpdateByPrimaryKeyWithoutBLOBsMethodGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -3099,34 +3589,6 @@ under the License.
                           <tr>
                 <td>
                   <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.logging.LogException.java">org/mybatis/generator/logging/LogException.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.sqlmap.elements.InsertElementGenerator.java">org/mybatis/generator/codegen/ibatis2/sqlmap/elements/InsertElementGenerator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.dao.templates.SpringDAOTemplate.java">org/mybatis/generator/codegen/ibatis2/dao/templates/SpringDAOTemplate.java</a>
                 </td>
                 <td>
                   0
@@ -3154,13 +3616,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.InsertElementGenerator.java">org/mybatis/generator/codegen/mybatis3/xmlmapper/elements/InsertElementGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.kotlin.render.KotlinArgRenderer.java">org/mybatis/generator/api/dom/kotlin/render/KotlinArgRenderer.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  2
+                  0
                 </td>
                 <td>
                   0
@@ -3168,13 +3630,55 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.sqlmap.elements.DeleteByPrimaryKeyElementGenerator.java">org/mybatis/generator/codegen/ibatis2/sqlmap/elements/DeleteByPrimaryKeyElementGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.kotlin.KotlinNamedItemVisitor.java">org/mybatis/generator/api/dom/kotlin/KotlinNamedItemVisitor.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  1
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.InsertElementGenerator.java">org/mybatis/generator/codegen/mybatis3/xmlmapper/elements/InsertElementGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.kotlin.elements.BasicUpdateMethodGenerator.java">org/mybatis/generator/runtime/kotlin/elements/BasicUpdateMethodGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.kotlin.render.KotlinRenderingUtilities.java">org/mybatis/generator/api/dom/kotlin/render/KotlinRenderingUtilities.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -3202,7 +3706,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -3224,13 +3728,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated.AnnotatedSelectByPrimaryKeyMethodGenerator.java">org/mybatis/generator/codegen/mybatis3/javamapper/elements/annotated/AnnotatedSelectByPrimaryKeyMethodGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.AbstractKotlinGenerator.java">org/mybatis/generator/codegen/AbstractKotlinGenerator.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -3238,7 +3742,35 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.dao.elements.UpdateByExampleSelectiveMethodGenerator.java">org/mybatis/generator/codegen/ibatis2/dao/elements/UpdateByExampleSelectiveMethodGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated.AnnotatedSelectByPrimaryKeyMethodGenerator.java">org/mybatis/generator/codegen/mybatis3/javamapper/elements/annotated/AnnotatedSelectByPrimaryKeyMethodGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v1.SelectByExampleMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/v1/SelectByExampleMethodGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.kotlin.KotlinProperty.java">org/mybatis/generator/api/dom/kotlin/KotlinProperty.java</a>
                 </td>
                 <td>
                   0
@@ -3272,7 +3804,21 @@ under the License.
                   0
                 </td>
                 <td>
-                  4
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.kotlin.KotlinFile.java">org/mybatis/generator/api/dom/kotlin/KotlinFile.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -3281,6 +3827,20 @@ under the License.
                           <tr>
                 <td>
                   <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.plugins.MapperAnnotationPlugin.java">org/mybatis/generator/plugins/MapperAnnotationPlugin.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.kotlin.elements.GeneralCountMethodGenerator.java">org/mybatis/generator/runtime/kotlin/elements/GeneralCountMethodGenerator.java</a>
                 </td>
                 <td>
                   0
@@ -3314,7 +3874,21 @@ under the License.
                   0
                 </td>
                 <td>
-                  2
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v2.GeneralUpdateMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/v2/GeneralUpdateMethodGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -3328,7 +3902,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -3342,21 +3916,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
-                </td>
-                <td>
                   0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.dao.templates.GenericSIDAOTemplate.java">org/mybatis/generator/codegen/ibatis2/dao/templates/GenericSIDAOTemplate.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
                 </td>
                 <td>
                   0
@@ -3370,7 +3930,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -3378,27 +3938,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.model.PrimaryKeyGenerator.java">org/mybatis/generator/codegen/ibatis2/model/PrimaryKeyGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.CompositePlugin.java">org/mybatis/generator/api/CompositePlugin.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  1
-                </td>
-                <td>
                   0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.sqlmap.elements.ExampleWhereClauseElementGenerator.java">org/mybatis/generator/codegen/ibatis2/sqlmap/elements/ExampleWhereClauseElementGenerator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  10
                 </td>
                 <td>
                   0
@@ -3448,7 +3994,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.dao.elements.InsertSelectiveMethodGenerator.java">org/mybatis/generator/codegen/ibatis2/dao/elements/InsertSelectiveMethodGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.mybatis3.IntrospectedTableMyBatis3Impl.java">org/mybatis/generator/codegen/mybatis3/IntrospectedTableMyBatis3Impl.java</a>
                 </td>
                 <td>
                   0
@@ -3462,13 +4008,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.mybatis3.IntrospectedTableMyBatis3Impl.java">org/mybatis/generator/codegen/mybatis3/IntrospectedTableMyBatis3Impl.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v1.UpdateByExampleSelectiveMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/v1/UpdateByExampleSelectiveMethodGenerator.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -3482,7 +4028,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -3496,7 +4042,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  2
+                  0
                 </td>
                 <td>
                   0
@@ -3524,7 +4070,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -3532,13 +4078,41 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.sqlmap.elements.AbstractXmlElementGenerator.java">org/mybatis/generator/codegen/ibatis2/sqlmap/elements/AbstractXmlElementGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v2.BasicSelectManyMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/v2/BasicSelectManyMethodGenerator.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  1
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.kotlin.KotlinMapperAndExtensionsGenerator.java">org/mybatis/generator/runtime/kotlin/KotlinMapperAndExtensionsGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v1.SelectByPrimaryKeyMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/v1/SelectByPrimaryKeyMethodGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -3580,7 +4154,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -3594,7 +4168,35 @@ under the License.
                   0
                 </td>
                 <td>
-                  2
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v2.InsertSelectiveMethodGeneratorV2.java">org/mybatis/generator/runtime/dynamic/sql/elements/v2/InsertSelectiveMethodGeneratorV2.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.kotlin.elements.KotlinFragmentGenerator.java">org/mybatis/generator/runtime/kotlin/elements/KotlinFragmentGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -3603,6 +4205,20 @@ under the License.
                           <tr>
                 <td>
                   <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.internal.ObjectFactory.java">org/mybatis/generator/internal/ObjectFactory.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.java.render.FieldRenderer.java">org/mybatis/generator/api/dom/java/render/FieldRenderer.java</a>
                 </td>
                 <td>
                   0
@@ -3630,7 +4246,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.DAOMethodNameCalculator.java">org/mybatis/generator/api/DAOMethodNameCalculator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.internal.DomWriter.java">org/mybatis/generator/internal/DomWriter.java</a>
                 </td>
                 <td>
                   0
@@ -3644,7 +4260,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.internal.DomWriter.java">org/mybatis/generator/internal/DomWriter.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v2.BasicCountMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/v2/BasicCountMethodGenerator.java</a>
                 </td>
                 <td>
                   0
@@ -3664,7 +4280,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -3678,7 +4294,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -3720,7 +4336,21 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v2.BasicSelectOneMethodGeneratorV2.java">org/mybatis/generator/runtime/dynamic/sql/elements/v2/BasicSelectOneMethodGeneratorV2.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -3734,7 +4364,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -3762,7 +4392,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -3776,7 +4406,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  2
+                  0
                 </td>
                 <td>
                   0
@@ -3784,13 +4414,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.internal.DefaultDAOMethodNameCalculator.java">org/mybatis/generator/internal/DefaultDAOMethodNameCalculator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v2.BasicUpdateMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/v2/BasicUpdateMethodGenerator.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  2
+                  0
                 </td>
                 <td>
                   0
@@ -3798,13 +4428,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.InsertMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/InsertMethodGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.xml.render.DocTypeRenderer.java">org/mybatis/generator/api/dom/xml/render/DocTypeRenderer.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -3818,7 +4448,35 @@ under the License.
                   0
                 </td>
                 <td>
-                  3
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.kotlin.elements.GeneralUpdateMethodGenerator.java">org/mybatis/generator/runtime/kotlin/elements/GeneralUpdateMethodGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v1.DeleteByPrimaryKeyMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/v1/DeleteByPrimaryKeyMethodGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -3840,27 +4498,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.sqlmap.elements.ResultMapWithBLOBsElementGenerator.java">org/mybatis/generator/codegen/ibatis2/sqlmap/elements/ResultMapWithBLOBsElementGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.java.CompilationUnitVisitor.java">org/mybatis/generator/api/dom/java/CompilationUnitVisitor.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  1
-                </td>
-                <td>
                   0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.sqlmap.elements.UpdateByPrimaryKeySelectiveElementGenerator.java">org/mybatis/generator/codegen/ibatis2/sqlmap/elements/UpdateByPrimaryKeySelectiveElementGenerator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
                 </td>
                 <td>
                   0
@@ -3868,21 +4512,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.model.ExampleGenerator.java">org/mybatis/generator/codegen/ibatis2/model/ExampleGenerator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  10
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.Ibatis2FormattingUtilities.java">org/mybatis/generator/codegen/ibatis2/Ibatis2FormattingUtilities.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.java.render.TopLevelInterfaceRenderer.java">org/mybatis/generator/api/dom/java/render/TopLevelInterfaceRenderer.java</a>
                 </td>
                 <td>
                   0
@@ -3902,7 +4532,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -3916,7 +4546,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -3958,7 +4588,35 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.plugins.dsql.DisableUpdatePlugin.java">org/mybatis/generator/plugins/dsql/DisableUpdatePlugin.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.exception.MultiMessageException.java">org/mybatis/generator/exception/MultiMessageException.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -3972,7 +4630,63 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.java.render.InnerEnumRenderer.java">org/mybatis/generator/api/dom/java/render/InnerEnumRenderer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v1.BasicUpdateMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/v1/BasicUpdateMethodGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.java.render.RenderingUtilities.java">org/mybatis/generator/api/dom/java/render/RenderingUtilities.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.java.render.BodyLineRenderer.java">org/mybatis/generator/api/dom/java/render/BodyLineRenderer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -4022,13 +4736,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.internal.JDBCConnectionFactory.java">org/mybatis/generator/internal/JDBCConnectionFactory.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.kotlin.elements.KotlinFunctionParts.java">org/mybatis/generator/runtime/kotlin/elements/KotlinFunctionParts.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -4036,7 +4750,21 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.xml.Element.java">org/mybatis/generator/api/dom/xml/Element.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v1.UpdateByPrimaryKeySelectiveMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/v1/UpdateByPrimaryKeySelectiveMethodGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.internal.JDBCConnectionFactory.java">org/mybatis/generator/internal/JDBCConnectionFactory.java</a>
                 </td>
                 <td>
                   0
@@ -4064,13 +4792,27 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.UpdateByExampleMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/UpdateByExampleMethodGenerator.java</a>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v1.BasicCountMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/v1/BasicCountMethodGenerator.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  3
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v2.BasicMultipleInsertMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/v2/BasicMultipleInsertMethodGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -4079,6 +4821,34 @@ under the License.
                           <tr>
                 <td>
                   <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.mybatis3.javamapper.AnnotatedClientGenerator.java">org/mybatis/generator/codegen/mybatis3/javamapper/AnnotatedClientGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v2.GeneralCountMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/v2/GeneralCountMethodGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.xml.DocType.java">org/mybatis/generator/api/dom/xml/DocType.java</a>
                 </td>
                 <td>
                   0
@@ -4120,13 +4890,69 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.plugins.dsql.DisableDeletePlugin.java">org/mybatis/generator/plugins/dsql/DisableDeletePlugin.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.kotlin.elements.BasicMultipleInsertMethodGenerator.java">org/mybatis/generator/runtime/kotlin/elements/BasicMultipleInsertMethodGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.kotlin.render.KotlinTypeRenderer.java">org/mybatis/generator/api/dom/kotlin/render/KotlinTypeRenderer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.logging.log4j2.Log4j2LoggerImpl.java">org/mybatis/generator/logging/log4j2/Log4j2LoggerImpl.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  1
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v2.GeneralSelectDistinctMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/v2/GeneralSelectDistinctMethodGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -4148,55 +4974,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.model.BaseRecordGenerator.java">org/mybatis/generator/codegen/ibatis2/model/BaseRecordGenerator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.sqlmap.elements.CountByExampleElementGenerator.java">org/mybatis/generator/codegen/ibatis2/sqlmap/elements/CountByExampleElementGenerator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.dao.elements.DeleteByExampleMethodGenerator.java">org/mybatis/generator/codegen/ibatis2/dao/elements/DeleteByExampleMethodGenerator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated.AnnotatedUpdateByExampleSelectiveMethodGenerator.java">org/mybatis/generator/codegen/mybatis3/javamapper/elements/annotated/AnnotatedUpdateByExampleSelectiveMethodGenerator.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  2
+                  0
                 </td>
                 <td>
                   0
@@ -4210,7 +4994,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -4252,7 +5036,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -4274,13 +5058,27 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.FieldAndImports.java">org/mybatis/generator/runtime/dynamic/sql/elements/FieldAndImports.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.internal.util.JavaBeansUtil.java">org/mybatis/generator/internal/util/JavaBeansUtil.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  3
+                  0
                 </td>
                 <td>
                   0
@@ -4294,7 +5092,35 @@ under the License.
                   0
                 </td>
                 <td>
-                  2
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.kotlin.elements.UpdateByPrimaryKeyMethodGenerator.java">org/mybatis/generator/runtime/kotlin/elements/UpdateByPrimaryKeyMethodGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.kotlin.render.KotlinFunctionRenderer.java">org/mybatis/generator/api/dom/kotlin/render/KotlinFunctionRenderer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -4308,21 +5134,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
-                </td>
-                <td>
                   0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.codegen.ibatis2.sqlmap.elements.InsertSelectiveElementGenerator.java">org/mybatis/generator/codegen/ibatis2/sqlmap/elements/InsertSelectiveElementGenerator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  1
                 </td>
                 <td>
                   0
@@ -4364,7 +5176,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  1
+                  0
                 </td>
                 <td>
                   0
@@ -4373,6 +5185,34 @@ under the License.
                           <tr>
                 <td>
                   <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.api.dom.java.Interface.java">org/mybatis/generator/api/dom/java/Interface.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.AbstractDynamicSqlMapperGenerator.java">org/mybatis/generator/runtime/dynamic/sql/AbstractDynamicSqlMapperGenerator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://www.mybatis.org/mybatis-generator/mybatis-generator-core//checkstyle.html#org.mybatis.generator.runtime.dynamic.sql.elements.v1.BasicInsertMethodGenerator.java">org/mybatis/generator/runtime/dynamic/sql/elements/v1/BasicInsertMethodGenerator.java</a>
                 </td>
                 <td>
                   0

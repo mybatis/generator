@@ -7,13 +7,13 @@
 <body>
 <div id="overview"><a href="../../../../../apidocs/org/mybatis/generator/plugins/CaseInsensitiveLikePlugin.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_javadoccomment"> *    Copyright 2006-2017 the original author or authors.</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_javadoccomment"> *    Copyright 2006-2019 the original author or authors.</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_javadoccomment"> *    Licensed under the Apache License, Version 2.0 (the "License");</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_javadoccomment"> *    you may not use this file except in compliance with the License.</em>
 <a class="jxr_linenumber" name="L6" href="#L6">6</a>   <em class="jxr_javadoccomment"> *    You may obtain a copy of the License at</em>
 <a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_javadoccomment"> *       <a href="http://www.apache.org/licenses/LICENSE-2." target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.</a>0</em>
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_javadoccomment"> *       <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a></em>
 <a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_javadoccomment"> *    Unless required by applicable law or agreed to in writing, software</em>
 <a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_javadoccomment"> *    distributed under the License is distributed on an "AS IS" BASIS,</em>
@@ -34,7 +34,7 @@
 <a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.api.dom.java.Method;
 <a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.api.dom.java.Parameter;
 <a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.api.dom.java.TopLevelClass;
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.codegen.ibatis2.Ibatis2FormattingUtilities;
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>  
 <a class="jxr_linenumber" name="L31" href="#L31">31</a>  <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>  <em class="jxr_javadoccomment"> * This plugin demonstrates adding methods to the example class to enable</em>
@@ -47,9 +47,9 @@
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>  <em class="jxr_javadoccomment"> * @author Jeff Butler</em>
 <a class="jxr_linenumber" name="L40" href="#L40">40</a>  <em class="jxr_javadoccomment"> * </em>
 <a class="jxr_linenumber" name="L41" href="#L41">41</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L42" href="#L42">42</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../org/mybatis/generator/plugins/CaseInsensitiveLikePlugin.html">CaseInsensitiveLikePlugin</a> <strong class="jxr_keyword">extends</strong> <a href="../../../../org/mybatis/generator/api/PluginAdapter.html">PluginAdapter</a> {
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="CaseInsensitiveLikePlugin" href="../../../../org/mybatis/generator/plugins/CaseInsensitiveLikePlugin.html#CaseInsensitiveLikePlugin">CaseInsensitiveLikePlugin</a> <strong class="jxr_keyword">extends</strong> <a name="PluginAdapter" href="../../../../org/mybatis/generator/api/PluginAdapter.html#PluginAdapter">PluginAdapter</a> {
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>  
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../org/mybatis/generator/plugins/CaseInsensitiveLikePlugin.html">CaseInsensitiveLikePlugin</a>() {
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>      <strong class="jxr_keyword">public</strong> <a name="CaseInsensitiveLikePlugin" href="../../../../org/mybatis/generator/plugins/CaseInsensitiveLikePlugin.html#CaseInsensitiveLikePlugin">CaseInsensitiveLikePlugin</a>() {
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>          <strong class="jxr_keyword">super</strong>();
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>      }
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>  
@@ -59,61 +59,60 @@
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>      }
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>  
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>      @Override
-<a class="jxr_linenumber" name="L54" href="#L54">54</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> modelExampleClassGenerated(<a href="../../../../org/mybatis/generator/api/dom/java/TopLevelClass.html">TopLevelClass</a> topLevelClass,
-<a class="jxr_linenumber" name="L55" href="#L55">55</a>              <a href="../../../../org/mybatis/generator/api/IntrospectedTable.html">IntrospectedTable</a> introspectedTable) {
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> modelExampleClassGenerated(<a name="TopLevelClass" href="../../../../org/mybatis/generator/api/dom/java/TopLevelClass.html#TopLevelClass">TopLevelClass</a> topLevelClass,
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>              <a name="IntrospectedTable" href="../../../../org/mybatis/generator/api/IntrospectedTable.html#IntrospectedTable">IntrospectedTable</a> introspectedTable) {
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>  
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>          <a href="../../../../org/mybatis/generator/api/dom/java/InnerClass.html">InnerClass</a> criteria = <strong class="jxr_keyword">null</strong>;
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>          <em class="jxr_comment">// first, find the Criteria inner class</em>
-<a class="jxr_linenumber" name="L59" href="#L59">59</a>          <strong class="jxr_keyword">for</strong> (InnerClass innerClass : topLevelClass.getInnerClasses()) {
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>              <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"GeneratedCriteria"</span>.equals(innerClass.getType().getShortName())) { <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L61" href="#L61">61</a>                  criteria = innerClass;
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>                  <strong class="jxr_keyword">break</strong>;
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>              }
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>          }
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>  
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>          <strong class="jxr_keyword">if</strong> (criteria == <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>              <em class="jxr_comment">// can't find the inner class for some reason, bail out.</em>
-<a class="jxr_linenumber" name="L68" href="#L68">68</a>              <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>          }
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>  
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>          <strong class="jxr_keyword">for</strong> (IntrospectedColumn introspectedColumn : introspectedTable
-<a class="jxr_linenumber" name="L72" href="#L72">72</a>                  .getNonBLOBColumns()) {
-<a class="jxr_linenumber" name="L73" href="#L73">73</a>              <strong class="jxr_keyword">if</strong> (!introspectedColumn.isJdbcCharacterColumn()
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>                      || !introspectedColumn.isStringColumn()) {
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>                  <strong class="jxr_keyword">continue</strong>;
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>              }
-<a class="jxr_linenumber" name="L77" href="#L77">77</a>  
-<a class="jxr_linenumber" name="L78" href="#L78">78</a>              <a href="../../../../org/mybatis/generator/api/dom/java/Method.html">Method</a> method = <strong class="jxr_keyword">new</strong> <a href="../../../../org/mybatis/generator/api/dom/java/Method.html">Method</a>();
-<a class="jxr_linenumber" name="L79" href="#L79">79</a>              method.setVisibility(JavaVisibility.PUBLIC);
-<a class="jxr_linenumber" name="L80" href="#L80">80</a>              method.addParameter(<strong class="jxr_keyword">new</strong> <a href="../../../../org/mybatis/generator/api/dom/java/Parameter.html">Parameter</a>(introspectedColumn
-<a class="jxr_linenumber" name="L81" href="#L81">81</a>                      .getFullyQualifiedJavaType(), <span class="jxr_string">"value"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L82" href="#L82">82</a>  
-<a class="jxr_linenumber" name="L83" href="#L83">83</a>              StringBuilder sb = <strong class="jxr_keyword">new</strong> StringBuilder();
-<a class="jxr_linenumber" name="L84" href="#L84">84</a>              sb.append(introspectedColumn.getJavaProperty());
-<a class="jxr_linenumber" name="L85" href="#L85">85</a>              sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
-<a class="jxr_linenumber" name="L86" href="#L86">86</a>              sb.insert(0, <span class="jxr_string">"and"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L87" href="#L87">87</a>              sb.append(<span class="jxr_string">"LikeInsensitive"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L88" href="#L88">88</a>              method.setName(sb.toString());
-<a class="jxr_linenumber" name="L89" href="#L89">89</a>              method.setReturnType(FullyQualifiedJavaType.getCriteriaInstance());
-<a class="jxr_linenumber" name="L90" href="#L90">90</a>  
-<a class="jxr_linenumber" name="L91" href="#L91">91</a>              sb.setLength(0);
-<a class="jxr_linenumber" name="L92" href="#L92">92</a>              sb.append(<span class="jxr_string">"addCriterion(\&quot;upper("</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L93" href="#L93">93</a>              sb.append(<a href="../../../../org/mybatis/generator/codegen/ibatis2/Ibatis2FormattingUtilities.html">Ibatis2FormattingUtilities</a>
-<a class="jxr_linenumber" name="L94" href="#L94">94</a>                      .getAliasedActualColumnName(introspectedColumn));
-<a class="jxr_linenumber" name="L95" href="#L95">95</a>              sb.append(<span class="jxr_string">") like\&quot;, value.toUpperCase(), \&quot;"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L96" href="#L96">96</a>              sb.append(introspectedColumn.getJavaProperty());
-<a class="jxr_linenumber" name="L97" href="#L97">97</a>              sb.append(<span class="jxr_string">"\&quot;);"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L98" href="#L98">98</a>              method.addBodyLine(sb.toString());
-<a class="jxr_linenumber" name="L99" href="#L99">99</a>              method.addBodyLine(<span class="jxr_string">"return (Criteria) this;"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L100" href="#L100">100</a> 
-<a class="jxr_linenumber" name="L101" href="#L101">101</a>             criteria.addMethod(method);
-<a class="jxr_linenumber" name="L102" href="#L102">102</a>         }
-<a class="jxr_linenumber" name="L103" href="#L103">103</a> 
-<a class="jxr_linenumber" name="L104" href="#L104">104</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
-<a class="jxr_linenumber" name="L105" href="#L105">105</a>     }
-<a class="jxr_linenumber" name="L106" href="#L106">106</a> }
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>          topLevelClass.getInnerClasses().stream()
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>          .filter(<strong class="jxr_keyword">this</strong>::isGeneratedCriteria)
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>          .findFirst()
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>          .ifPresent(c -&gt; addMethods(introspectedTable, c));
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>  
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>      }
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>      
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> isGeneratedCriteria(<a name="InnerClass" href="../../../../org/mybatis/generator/api/dom/java/InnerClass.html#InnerClass">InnerClass</a> innerClass) {
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>          <strong class="jxr_keyword">return</strong> <span class="jxr_string">"GeneratedCriteria"</span>.equals(innerClass.getType().getShortName()); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>      }
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>      
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> addMethods(<a name="IntrospectedTable" href="../../../../org/mybatis/generator/api/IntrospectedTable.html#IntrospectedTable">IntrospectedTable</a> introspectedTable, <a name="InnerClass" href="../../../../org/mybatis/generator/api/dom/java/InnerClass.html#InnerClass">InnerClass</a> criteria) {
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>          introspectedTable.getNonBLOBColumns().stream()
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>          .filter(<strong class="jxr_keyword">this</strong>::isEligibleColumn)
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>          .map(<strong class="jxr_keyword">this</strong>::toMethod)
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>          .forEach(criteria::addMethod);
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>      }
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>      
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> isEligibleColumn(<a name="IntrospectedColumn" href="../../../../org/mybatis/generator/api/IntrospectedColumn.html#IntrospectedColumn">IntrospectedColumn</a> introspectedColumn) {
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>          <strong class="jxr_keyword">return</strong> introspectedColumn.isJdbcCharacterColumn()
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>                  &amp;&amp; introspectedColumn.isStringColumn();
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>      }
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>  
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>      <strong class="jxr_keyword">private</strong> <a name="Method" href="../../../../org/mybatis/generator/api/dom/java/Method.html#Method">Method</a> toMethod(<a name="IntrospectedColumn" href="../../../../org/mybatis/generator/api/IntrospectedColumn.html#IntrospectedColumn">IntrospectedColumn</a> introspectedColumn) {
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>          StringBuilder sb = <strong class="jxr_keyword">new</strong> StringBuilder();
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>          sb.append(introspectedColumn.getJavaProperty());
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>          sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>          sb.insert(0, <span class="jxr_string">"and"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>          sb.append(<span class="jxr_string">"LikeInsensitive"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>          <a name="Method" href="../../../../org/mybatis/generator/<a name="Method" href="../../../../org/mybatis/generator/api/dom/java/Method.html#Method">Method</a>m/java/Method.html#Method">Method</a> method = <strong class="jxr_keyword">new</strong> <a name="Method" href="../../../../org/mybatis/generator/api/dom/java/Method.html#Method">Method</a>(sb.toString());
+<a class="jxr_linenumber" name="L88" href="#L88">88</a>          method.setVisibility(JavaVisibility.PUBLIC);
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>          method.addParameter(<strong class="jxr_keyword">new</strong> <a name="Parameter" href="../../../../org/mybatis/generator/api/dom/java/Parameter.html#Parameter">Parameter</a>(introspectedColumn
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>                  .getFullyQualifiedJavaType(), <span class="jxr_string">"value"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>  
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>          method.setReturnType(FullyQualifiedJavaType.getCriteriaInstance());
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>  
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>          sb.setLength(0);
+<a class="jxr_linenumber" name="L95" href="#L95">95</a>          sb.append(<span class="jxr_string">"addCriterion(\&quot;upper("</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L96" href="#L96">96</a>          sb.append(<a name="MyBatis3FormattingUtilities" href="../../../../org/mybatis/generator/codegen/mybatis3/MyBatis3FormattingUtilities.html#MyBatis3FormattingUtilities">MyBatis3FormattingUtilities</a>
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>                  .getAliasedActualColumnName(introspectedColumn));
+<a class="jxr_linenumber" name="L98" href="#L98">98</a>          sb.append(<span class="jxr_string">") like\&quot;, value.toUpperCase(), \&quot;"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L99" href="#L99">99</a>          sb.append(introspectedColumn.getJavaProperty());
+<a class="jxr_linenumber" name="L100" href="#L100">100</a>         sb.append(<span class="jxr_string">"\&quot;);"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L101" href="#L101">101</a>         method.addBodyLine(sb.toString());
+<a class="jxr_linenumber" name="L102" href="#L102">102</a>         method.addBodyLine(<span class="jxr_string">"return (Criteria) this;"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L103" href="#L103">103</a>         <strong class="jxr_keyword">return</strong> method;
+<a class="jxr_linenumber" name="L104" href="#L104">104</a>     }
+<a class="jxr_linenumber" name="L105" href="#L105">105</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2006&#x2013;2018 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2006&#x2013;2019 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
 </body>
 </html>

@@ -18,68 +18,37 @@ package org.mybatis.generator.api.dom.java;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.ListIterator;
+import java.util.Optional;
 
-import org.mybatis.generator.api.dom.OutputUtilities;
-
-/**
- * The Class Method.
- *
- * @author Jeff Butler
- */
 public class Method extends JavaElement {
 
-    /** The body lines. */
-    private List&lt;String&gt; bodyLines;
+<span class="fc" id="L25">    private List&lt;String&gt; bodyLines = new ArrayList&lt;&gt;();</span>
 
-    /** The constructor. */
     private boolean constructor;
 
-    /** The return type. */
     private FullyQualifiedJavaType returnType;
 
-    /** The name. */
     private String name;
 
-    /** The type parameters. */
-    private List&lt;TypeParameter&gt; typeParameters;
+<span class="fc" id="L33">    private List&lt;TypeParameter&gt; typeParameters = new ArrayList&lt;&gt;();</span>
 
-    /** The parameters. */
-    private List&lt;Parameter&gt; parameters;
+<span class="fc" id="L35">    private List&lt;Parameter&gt; parameters = new ArrayList&lt;&gt;();</span>
 
-    /** The exceptions. */
-    private List&lt;FullyQualifiedJavaType&gt; exceptions;
+<span class="fc" id="L37">    private List&lt;FullyQualifiedJavaType&gt; exceptions = new ArrayList&lt;&gt;();</span>
 
-    /** The is synchronized. */
     private boolean isSynchronized;
 
-    /** The is native. */
     private boolean isNative;
 
     private boolean isDefault;
 
-    /**
-     * Instantiates a new method.
-     */
-    public Method() {
-        // use a default name to avoid malformed code
-<span class="fc" id="L66">        this(&quot;bar&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L67">    }</span>
-
-    /**
-     * Instantiates a new method.
-     *
-     * @param name
-     *            the name
-     */
-    public Method(String name) {
-<span class="fc" id="L76">        super();</span>
-<span class="fc" id="L77">        bodyLines = new ArrayList&lt;String&gt;();</span>
-<span class="fc" id="L78">        typeParameters = new ArrayList&lt;TypeParameter&gt;();</span>
-<span class="fc" id="L79">        parameters = new ArrayList&lt;Parameter&gt;();</span>
-<span class="fc" id="L80">        exceptions = new ArrayList&lt;FullyQualifiedJavaType&gt;();</span>
-<span class="fc" id="L81">        this.name = name;</span>
-<span class="fc" id="L82">    }</span>
+    private boolean isAbstract;
+    
+    private boolean isFinal;
+    
+<span class="fc" id="L49">    public Method(String name) {</span>
+<span class="fc" id="L50">        this.name = name;</span>
+<span class="fc" id="L51">    }</span>
 
     /**
      * Copy constructor. Not a truly deep copy, but close enough for most purposes.
@@ -88,405 +57,135 @@ public class Method extends JavaElement {
      *            the original
      */
     public Method(Method original) {
-<span class="fc" id="L91">        super(original);</span>
-<span class="fc" id="L92">        bodyLines = new ArrayList&lt;String&gt;();</span>
-<span class="fc" id="L93">        typeParameters = new ArrayList&lt;TypeParameter&gt;();</span>
-<span class="fc" id="L94">        parameters = new ArrayList&lt;Parameter&gt;();</span>
-<span class="fc" id="L95">        exceptions = new ArrayList&lt;FullyQualifiedJavaType&gt;();</span>
-<span class="fc" id="L96">        this.bodyLines.addAll(original.bodyLines);</span>
-<span class="fc" id="L97">        this.constructor = original.constructor;</span>
-<span class="fc" id="L98">        this.exceptions.addAll(original.exceptions);</span>
-<span class="fc" id="L99">        this.name = original.name;</span>
-<span class="fc" id="L100">        this.typeParameters.addAll(original.typeParameters);</span>
-<span class="fc" id="L101">        this.parameters.addAll(original.parameters);</span>
-<span class="fc" id="L102">        this.returnType = original.returnType;</span>
-<span class="fc" id="L103">        this.isNative = original.isNative;</span>
-<span class="fc" id="L104">        this.isSynchronized = original.isSynchronized;</span>
-<span class="fc" id="L105">        this.isDefault = original.isDefault;</span>
-<span class="fc" id="L106">    }</span>
+<span class="fc" id="L60">        super(original);</span>
+<span class="fc" id="L61">        this.bodyLines.addAll(original.bodyLines);</span>
+<span class="fc" id="L62">        this.constructor = original.constructor;</span>
+<span class="fc" id="L63">        this.exceptions.addAll(original.exceptions);</span>
+<span class="fc" id="L64">        this.name = original.name;</span>
+<span class="fc" id="L65">        this.typeParameters.addAll(original.typeParameters);</span>
+<span class="fc" id="L66">        this.parameters.addAll(original.parameters);</span>
+<span class="fc" id="L67">        this.returnType = original.returnType;</span>
+<span class="fc" id="L68">        this.isNative = original.isNative;</span>
+<span class="fc" id="L69">        this.isSynchronized = original.isSynchronized;</span>
+<span class="fc" id="L70">        this.isDefault = original.isDefault;</span>
+<span class="fc" id="L71">        this.isAbstract = original.isAbstract;</span>
+<span class="fc" id="L72">        this.isFinal = original.isFinal;</span>
+<span class="fc" id="L73">    }</span>
 
-    /**
-     * Gets the body lines.
-     *
-     * @return Returns the bodyLines.
-     */
     public List&lt;String&gt; getBodyLines() {
-<span class="fc" id="L114">        return bodyLines;</span>
+<span class="fc" id="L76">        return bodyLines;</span>
     }
 
-    /**
-     * Adds the body line.
-     *
-     * @param line
-     *            the line
-     */
     public void addBodyLine(String line) {
-<span class="fc" id="L124">        bodyLines.add(line);</span>
-<span class="fc" id="L125">    }</span>
+<span class="fc" id="L80">        bodyLines.add(line);</span>
+<span class="fc" id="L81">    }</span>
 
-    /**
-     * Adds the body line.
-     *
-     * @param index
-     *            the index
-     * @param line
-     *            the line
-     */
     public void addBodyLine(int index, String line) {
-<span class="fc" id="L136">        bodyLines.add(index, line);</span>
-<span class="fc" id="L137">    }</span>
+<span class="fc" id="L84">        bodyLines.add(index, line);</span>
+<span class="fc" id="L85">    }</span>
 
-    /**
-     * Adds the body lines.
-     *
-     * @param lines
-     *            the lines
-     */
     public void addBodyLines(Collection&lt;String&gt; lines) {
-<span class="fc" id="L146">        bodyLines.addAll(lines);</span>
-<span class="fc" id="L147">    }</span>
+<span class="fc" id="L88">        bodyLines.addAll(lines);</span>
+<span class="fc" id="L89">    }</span>
 
-    /**
-     * Adds the body lines.
-     *
-     * @param index
-     *            the index
-     * @param lines
-     *            the lines
-     */
     public void addBodyLines(int index, Collection&lt;String&gt; lines) {
-<span class="fc" id="L158">        bodyLines.addAll(index, lines);</span>
-<span class="fc" id="L159">    }</span>
+<span class="fc" id="L92">        bodyLines.addAll(index, lines);</span>
+<span class="fc" id="L93">    }</span>
 
-    /**
-     * Gets the formatted content.
-     *
-     * @param indentLevel
-     *            the indent level
-     * @param interfaceMethod
-     *            the interface method
-     * @param compilationUnit the compilation unit
-     * @return the formatted content
-     */
-    public String getFormattedContent(int indentLevel, boolean interfaceMethod, CompilationUnit compilationUnit) {
-<span class="fc" id="L172">        StringBuilder sb = new StringBuilder();</span>
-
-<span class="fc" id="L174">        addFormattedJavadoc(sb, indentLevel);</span>
-<span class="fc" id="L175">        addFormattedAnnotations(sb, indentLevel);</span>
-
-<span class="fc" id="L177">        OutputUtilities.javaIndent(sb, indentLevel);</span>
-
-<span class="fc bfc" id="L179" title="All 2 branches covered.">        if (interfaceMethod) {</span>
-<span class="pc bpc" id="L180" title="1 of 2 branches missed.">            if (isStatic()) {</span>
-<span class="nc" id="L181">                sb.append(&quot;static &quot;); //$NON-NLS-1$</span>
-<span class="fc bfc" id="L182" title="All 2 branches covered.">            } else if (isDefault()) {</span>
-<span class="fc" id="L183">                sb.append(&quot;default &quot;); //$NON-NLS-1$</span>
-            }
-        } else {
-<span class="fc" id="L186">            sb.append(getVisibility().getValue());</span>
-
-<span class="fc bfc" id="L188" title="All 2 branches covered.">            if (isStatic()) {</span>
-<span class="fc" id="L189">                sb.append(&quot;static &quot;); //$NON-NLS-1$</span>
-            }
-
-<span class="fc bfc" id="L192" title="All 2 branches covered.">            if (isFinal()) {</span>
-<span class="fc" id="L193">                sb.append(&quot;final &quot;); //$NON-NLS-1$</span>
-            }
-
-<span class="fc bfc" id="L196" title="All 2 branches covered.">            if (isSynchronized()) {</span>
-<span class="fc" id="L197">                sb.append(&quot;synchronized &quot;); //$NON-NLS-1$</span>
-            }
-
-<span class="pc bpc" id="L200" title="1 of 2 branches missed.">            if (isNative()) {</span>
-<span class="nc" id="L201">                sb.append(&quot;native &quot;); //$NON-NLS-1$</span>
-<span class="fc bfc" id="L202" title="All 2 branches covered.">            } else if (bodyLines.size() == 0) {</span>
-<span class="fc" id="L203">                sb.append(&quot;abstract &quot;); //$NON-NLS-1$</span>
-            }
-        }
-
-<span class="fc bfc" id="L207" title="All 2 branches covered.">        if (!getTypeParameters().isEmpty()) {</span>
-<span class="fc" id="L208">            sb.append(&quot;&lt;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L209">            boolean comma = false;</span>
-<span class="fc bfc" id="L210" title="All 2 branches covered.">            for (TypeParameter typeParameter : getTypeParameters()) {</span>
-<span class="fc bfc" id="L211" title="All 2 branches covered.">                if (comma) {</span>
-<span class="fc" id="L212">                    sb.append(&quot;, &quot;); //$NON-NLS-1$</span>
-                } else {
-<span class="fc" id="L214">                    comma = true;</span>
-                }
-
-<span class="fc" id="L217">                sb.append(typeParameter.getFormattedContent(compilationUnit));</span>
-<span class="fc" id="L218">            }</span>
-<span class="fc" id="L219">            sb.append(&quot;&gt; &quot;); //$NON-NLS-1$</span>
-        }
-
-<span class="fc bfc" id="L222" title="All 2 branches covered.">        if (!constructor) {</span>
-<span class="fc bfc" id="L223" title="All 2 branches covered.">            if (getReturnType() == null) {</span>
-<span class="fc" id="L224">                sb.append(&quot;void&quot;); //$NON-NLS-1$</span>
-            } else {
-<span class="fc" id="L226">                sb.append(JavaDomUtils.calculateTypeName(compilationUnit, getReturnType()));</span>
-            }
-<span class="fc" id="L228">            sb.append(' ');</span>
-        }
-
-<span class="fc" id="L231">        sb.append(getName());</span>
-<span class="fc" id="L232">        sb.append('(');</span>
-
-<span class="fc" id="L234">        boolean comma = false;</span>
-<span class="fc bfc" id="L235" title="All 2 branches covered.">        for (Parameter parameter : getParameters()) {</span>
-<span class="fc bfc" id="L236" title="All 2 branches covered.">            if (comma) {</span>
-<span class="fc" id="L237">                sb.append(&quot;, &quot;); //$NON-NLS-1$</span>
-            } else {
-<span class="fc" id="L239">                comma = true;</span>
-            }
-
-<span class="fc" id="L242">            sb.append(parameter.getFormattedContent(compilationUnit));</span>
-<span class="fc" id="L243">        }</span>
-
-<span class="fc" id="L245">        sb.append(')');</span>
-
-<span class="fc bfc" id="L247" title="All 2 branches covered.">        if (getExceptions().size() &gt; 0) {</span>
-<span class="fc" id="L248">            sb.append(&quot; throws &quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L249">            comma = false;</span>
-<span class="fc bfc" id="L250" title="All 2 branches covered.">            for (FullyQualifiedJavaType fqjt : getExceptions()) {</span>
-<span class="pc bpc" id="L251" title="1 of 2 branches missed.">                if (comma) {</span>
-<span class="nc" id="L252">                    sb.append(&quot;, &quot;); //$NON-NLS-1$</span>
-                } else {
-<span class="fc" id="L254">                    comma = true;</span>
-                }
-
-<span class="fc" id="L257">                sb.append(JavaDomUtils.calculateTypeName(compilationUnit, fqjt));</span>
-<span class="fc" id="L258">            }</span>
-        }
-
-        // if no body lines, then this is an abstract method
-<span class="pc bpc" id="L262" title="1 of 4 branches missed.">        if (bodyLines.size() == 0 || isNative()) {</span>
-<span class="fc" id="L263">            sb.append(';');</span>
-        } else {
-<span class="fc" id="L265">            sb.append(&quot; {&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L266">            indentLevel++;</span>
-
-<span class="fc" id="L268">            ListIterator&lt;String&gt; listIter = bodyLines.listIterator();</span>
-<span class="fc bfc" id="L269" title="All 2 branches covered.">            while (listIter.hasNext()) {</span>
-<span class="fc" id="L270">                String line = listIter.next();</span>
-<span class="fc bfc" id="L271" title="All 2 branches covered.">                if (line.startsWith(&quot;}&quot;)) { //$NON-NLS-1$</span>
-<span class="fc" id="L272">                    indentLevel--;</span>
-                }
-
-<span class="fc" id="L275">                OutputUtilities.newLine(sb);</span>
-<span class="fc" id="L276">                OutputUtilities.javaIndent(sb, indentLevel);</span>
-<span class="fc" id="L277">                sb.append(line);</span>
-
-<span class="pc bpc" id="L279" title="1 of 4 branches missed.">                if ((line.endsWith(&quot;{&quot;) &amp;&amp; !line.startsWith(&quot;switch&quot;)) //$NON-NLS-1$ //$NON-NLS-2$</span>
-<span class="pc bpc" id="L280" title="1 of 2 branches missed.">                        || line.endsWith(&quot;:&quot;)) { //$NON-NLS-1$</span>
-<span class="fc" id="L281">                    indentLevel++;</span>
-                }
-
-<span class="pc bpc" id="L284" title="1 of 2 branches missed.">                if (line.startsWith(&quot;break&quot;)) { //$NON-NLS-1$</span>
-                    // if the next line is '}', then don't outdent
-<span class="nc bnc" id="L286" title="All 2 branches missed.">                    if (listIter.hasNext()) {</span>
-<span class="nc" id="L287">                        String nextLine = listIter.next();</span>
-<span class="nc bnc" id="L288" title="All 2 branches missed.">                        if (nextLine.startsWith(&quot;}&quot;)) { //$NON-NLS-1$</span>
-<span class="nc" id="L289">                            indentLevel++;</span>
-                        }
-
-                        // set back to the previous element
-<span class="nc" id="L293">                        listIter.previous();</span>
-                    }
-<span class="nc" id="L295">                    indentLevel--;</span>
-                }
-<span class="fc" id="L297">            }</span>
-
-<span class="fc" id="L299">            indentLevel--;</span>
-<span class="fc" id="L300">            OutputUtilities.newLine(sb);</span>
-<span class="fc" id="L301">            OutputUtilities.javaIndent(sb, indentLevel);</span>
-<span class="fc" id="L302">            sb.append('}');</span>
-        }
-
-<span class="fc" id="L305">        return sb.toString();</span>
-    }
-
-    /**
-     * Checks if is constructor.
-     *
-     * @return Returns the constructor.
-     */
     public boolean isConstructor() {
-<span class="fc" id="L314">        return constructor;</span>
+<span class="fc" id="L96">        return constructor;</span>
     }
 
-    /**
-     * Sets the constructor.
-     *
-     * @param constructor
-     *            The constructor to set.
-     */
     public void setConstructor(boolean constructor) {
-<span class="fc" id="L324">        this.constructor = constructor;</span>
-<span class="fc" id="L325">    }</span>
+<span class="fc" id="L100">        this.constructor = constructor;</span>
+<span class="fc" id="L101">    }</span>
 
-    /**
-     * Gets the name.
-     *
-     * @return Returns the name.
-     */
     public String getName() {
-<span class="fc" id="L333">        return name;</span>
+<span class="fc" id="L104">        return name;</span>
     }
 
-    /**
-     * Sets the name.
-     *
-     * @param name
-     *            The name to set.
-     */
     public void setName(String name) {
-<span class="fc" id="L343">        this.name = name;</span>
-<span class="fc" id="L344">    }</span>
+<span class="fc" id="L108">        this.name = name;</span>
+<span class="fc" id="L109">    }</span>
 
-    /**
-     * Gets the type parameters.
-     *
-     * @return the type parameters
-     */
     public List&lt;TypeParameter&gt; getTypeParameters() {
-<span class="fc" id="L352">        return typeParameters;</span>
+<span class="fc" id="L112">        return typeParameters;</span>
     }
 
-    /**
-     * Adds the type parameter.
-     *
-     * @param typeParameter
-     *            the type parameter
-     */
     public void addTypeParameter(TypeParameter typeParameter) {
-<span class="fc" id="L362">        typeParameters.add(typeParameter);</span>
-<span class="fc" id="L363">    }</span>
+<span class="fc" id="L116">        typeParameters.add(typeParameter);</span>
+<span class="fc" id="L117">    }</span>
 
-    /**
-     * Adds the parameter.
-     *
-     * @param index
-     *            the index
-     * @param typeParameter
-     *            the type parameter
-     */
     public void addTypeParameter(int index, TypeParameter typeParameter) {
-<span class="fc" id="L374">        typeParameters.add(index, typeParameter);</span>
-<span class="fc" id="L375">    }</span>
+<span class="fc" id="L120">        typeParameters.add(index, typeParameter);</span>
+<span class="fc" id="L121">    }</span>
 
-    /**
-     * Gets the parameters.
-     *
-     * @return the parameters
-     */
     public List&lt;Parameter&gt; getParameters() {
-<span class="fc" id="L383">        return parameters;</span>
+<span class="fc" id="L124">        return parameters;</span>
     }
 
-    /**
-     * Adds the parameter.
-     *
-     * @param parameter
-     *            the parameter
-     */
     public void addParameter(Parameter parameter) {
-<span class="fc" id="L393">        parameters.add(parameter);</span>
-<span class="fc" id="L394">    }</span>
+<span class="fc" id="L128">        parameters.add(parameter);</span>
+<span class="fc" id="L129">    }</span>
 
-    /**
-     * Adds the parameter.
-     *
-     * @param index
-     *            the index
-     * @param parameter
-     *            the parameter
-     */
     public void addParameter(int index, Parameter parameter) {
-<span class="fc" id="L405">        parameters.add(index, parameter);</span>
-<span class="fc" id="L406">    }</span>
+<span class="fc" id="L132">        parameters.add(index, parameter);</span>
+<span class="fc" id="L133">    }</span>
 
-    /**
-     * Gets the return type.
-     *
-     * @return Returns the returnType.
-     */
-    public FullyQualifiedJavaType getReturnType() {
-<span class="fc" id="L414">        return returnType;</span>
+    public Optional&lt;FullyQualifiedJavaType&gt; getReturnType() {
+<span class="fc" id="L136">        return Optional.ofNullable(returnType);</span>
     }
 
-    /**
-     * Sets the return type.
-     *
-     * @param returnType
-     *            The returnType to set.
-     */
     public void setReturnType(FullyQualifiedJavaType returnType) {
-<span class="fc" id="L424">        this.returnType = returnType;</span>
-<span class="fc" id="L425">    }</span>
+<span class="fc" id="L140">        this.returnType = returnType;</span>
+<span class="fc" id="L141">    }</span>
 
-    /**
-     * Gets the exceptions.
-     *
-     * @return Returns the exceptions.
-     */
     public List&lt;FullyQualifiedJavaType&gt; getExceptions() {
-<span class="fc" id="L433">        return exceptions;</span>
+<span class="fc" id="L144">        return exceptions;</span>
     }
 
-    /**
-     * Adds the exception.
-     *
-     * @param exception
-     *            the exception
-     */
     public void addException(FullyQualifiedJavaType exception) {
-<span class="fc" id="L443">        exceptions.add(exception);</span>
-<span class="fc" id="L444">    }</span>
+<span class="fc" id="L148">        exceptions.add(exception);</span>
+<span class="fc" id="L149">    }</span>
 
-    /**
-     * Checks if is synchronized.
-     *
-     * @return true, if is synchronized
-     */
     public boolean isSynchronized() {
-<span class="fc" id="L452">        return isSynchronized;</span>
+<span class="fc" id="L152">        return isSynchronized;</span>
     }
 
-    /**
-     * Sets the synchronized.
-     *
-     * @param isSynchronized
-     *            the new synchronized
-     */
     public void setSynchronized(boolean isSynchronized) {
-<span class="fc" id="L462">        this.isSynchronized = isSynchronized;</span>
-<span class="fc" id="L463">    }</span>
+<span class="fc" id="L156">        this.isSynchronized = isSynchronized;</span>
+<span class="fc" id="L157">    }</span>
 
-    /**
-     * Checks if is native.
-     *
-     * @return true, if is native
-     */
     public boolean isNative() {
-<span class="fc" id="L471">        return isNative;</span>
+<span class="fc" id="L160">        return isNative;</span>
     }
 
-    /**
-     * Sets the native.
-     *
-     * @param isNative
-     *            the new native
-     */
     public void setNative(boolean isNative) {
-<span class="fc" id="L481">        this.isNative = isNative;</span>
-<span class="fc" id="L482">    }</span>
+<span class="fc" id="L164">        this.isNative = isNative;</span>
+<span class="fc" id="L165">    }</span>
 
     public boolean isDefault() {
-<span class="fc" id="L485">        return isDefault;</span>
+<span class="fc" id="L168">        return isDefault;</span>
     }
 
     public void setDefault(boolean isDefault) {
-<span class="fc" id="L489">        this.isDefault = isDefault;</span>
-<span class="fc" id="L490">    }</span>
+<span class="fc" id="L172">        this.isDefault = isDefault;</span>
+<span class="fc" id="L173">    }</span>
+
+    public boolean isAbstract() {
+<span class="fc" id="L176">        return isAbstract;</span>
+    }
+
+    public void setAbstract(boolean isAbstract) {
+<span class="fc" id="L180">        this.isAbstract = isAbstract;</span>
+<span class="fc" id="L181">    }</span>
+
+    public boolean isFinal() {
+<span class="fc" id="L184">        return isFinal;</span>
+    }
+
+    public void setFinal(boolean isFinal) {
+<span class="fc" id="L188">        this.isFinal = isFinal;</span>
+<span class="fc" id="L189">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

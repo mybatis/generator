@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PrimitiveTypeWrapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api.dom.java</a> &gt; <span class="el_source">PrimitiveTypeWrapper.java</span></div><h1>PrimitiveTypeWrapper.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -46,76 +46,96 @@ public class PrimitiveTypeWrapper extends FullyQualifiedJavaType {
 <span class="nc" id="L46">        return toPrimitiveMethod;</span>
     }
 
+    @Override
+    public boolean equals(Object obj) {
+<span class="nc bnc" id="L51" title="All 2 branches missed.">        if (this == obj) {</span>
+<span class="nc" id="L52">            return true;</span>
+        }
+
+<span class="nc bnc" id="L55" title="All 2 branches missed.">        if (!(obj instanceof PrimitiveTypeWrapper)) {</span>
+<span class="nc" id="L56">            return false;</span>
+        }
+
+<span class="nc" id="L59">        PrimitiveTypeWrapper other = (PrimitiveTypeWrapper) obj;</span>
+
+<span class="nc" id="L61">        return getFullyQualifiedName().equals(other.getFullyQualifiedName());</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L66">        return getFullyQualifiedName().hashCode();</span>
+    }
+
     public static PrimitiveTypeWrapper getBooleanInstance() {
-<span class="fc bfc" id="L50" title="All 2 branches covered.">        if (booleanInstance == null) {</span>
-<span class="fc" id="L51">            booleanInstance = new PrimitiveTypeWrapper(&quot;java.lang.Boolean&quot;, //$NON-NLS-1$</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        if (booleanInstance == null) {</span>
+<span class="fc" id="L71">            booleanInstance = new PrimitiveTypeWrapper(&quot;java.lang.Boolean&quot;, //$NON-NLS-1$</span>
                     &quot;booleanValue()&quot;); //$NON-NLS-1$
         }
 
-<span class="fc" id="L55">        return booleanInstance;</span>
+<span class="fc" id="L75">        return booleanInstance;</span>
     }
 
     public static PrimitiveTypeWrapper getByteInstance() {
-<span class="nc bnc" id="L59" title="All 2 branches missed.">        if (byteInstance == null) {</span>
-<span class="nc" id="L60">            byteInstance = new PrimitiveTypeWrapper(&quot;java.lang.Byte&quot;, //$NON-NLS-1$</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">        if (byteInstance == null) {</span>
+<span class="fc" id="L80">            byteInstance = new PrimitiveTypeWrapper(&quot;java.lang.Byte&quot;, //$NON-NLS-1$</span>
                     &quot;byteValue()&quot;); //$NON-NLS-1$
         }
 
-<span class="nc" id="L64">        return byteInstance;</span>
+<span class="fc" id="L84">        return byteInstance;</span>
     }
 
     public static PrimitiveTypeWrapper getCharacterInstance() {
-<span class="nc bnc" id="L68" title="All 2 branches missed.">        if (characterInstance == null) {</span>
-<span class="nc" id="L69">            characterInstance = new PrimitiveTypeWrapper(&quot;java.lang.Character&quot;, //$NON-NLS-1$</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">        if (characterInstance == null) {</span>
+<span class="nc" id="L89">            characterInstance = new PrimitiveTypeWrapper(&quot;java.lang.Character&quot;, //$NON-NLS-1$</span>
                     &quot;charValue()&quot;); //$NON-NLS-1$
         }
 
-<span class="nc" id="L73">        return characterInstance;</span>
+<span class="nc" id="L93">        return characterInstance;</span>
     }
 
     public static PrimitiveTypeWrapper getDoubleInstance() {
-<span class="nc bnc" id="L77" title="All 2 branches missed.">        if (doubleInstance == null) {</span>
-<span class="nc" id="L78">            doubleInstance = new PrimitiveTypeWrapper(&quot;java.lang.Double&quot;, //$NON-NLS-1$</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">        if (doubleInstance == null) {</span>
+<span class="nc" id="L98">            doubleInstance = new PrimitiveTypeWrapper(&quot;java.lang.Double&quot;, //$NON-NLS-1$</span>
                     &quot;doubleValue()&quot;); //$NON-NLS-1$
         }
 
-<span class="nc" id="L82">        return doubleInstance;</span>
+<span class="nc" id="L102">        return doubleInstance;</span>
     }
 
     public static PrimitiveTypeWrapper getFloatInstance() {
-<span class="nc bnc" id="L86" title="All 2 branches missed.">        if (floatInstance == null) {</span>
-<span class="nc" id="L87">            floatInstance = new PrimitiveTypeWrapper(&quot;java.lang.Float&quot;, //$NON-NLS-1$</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">        if (floatInstance == null) {</span>
+<span class="nc" id="L107">            floatInstance = new PrimitiveTypeWrapper(&quot;java.lang.Float&quot;, //$NON-NLS-1$</span>
                     &quot;floatValue()&quot;); //$NON-NLS-1$
         }
 
-<span class="nc" id="L91">        return floatInstance;</span>
+<span class="nc" id="L111">        return floatInstance;</span>
     }
 
     public static PrimitiveTypeWrapper getIntegerInstance() {
-<span class="fc bfc" id="L95" title="All 2 branches covered.">        if (integerInstance == null) {</span>
-<span class="fc" id="L96">            integerInstance = new PrimitiveTypeWrapper(&quot;java.lang.Integer&quot;, //$NON-NLS-1$</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">        if (integerInstance == null) {</span>
+<span class="fc" id="L116">            integerInstance = new PrimitiveTypeWrapper(&quot;java.lang.Integer&quot;, //$NON-NLS-1$</span>
                     &quot;intValue()&quot;); //$NON-NLS-1$
         }
 
-<span class="fc" id="L100">        return integerInstance;</span>
+<span class="fc" id="L120">        return integerInstance;</span>
     }
 
     public static PrimitiveTypeWrapper getLongInstance() {
-<span class="fc bfc" id="L104" title="All 2 branches covered.">        if (longInstance == null) {</span>
-<span class="fc" id="L105">            longInstance = new PrimitiveTypeWrapper(&quot;java.lang.Long&quot;, //$NON-NLS-1$</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">        if (longInstance == null) {</span>
+<span class="fc" id="L125">            longInstance = new PrimitiveTypeWrapper(&quot;java.lang.Long&quot;, //$NON-NLS-1$</span>
                     &quot;longValue()&quot;); //$NON-NLS-1$
         }
 
-<span class="fc" id="L109">        return longInstance;</span>
+<span class="fc" id="L129">        return longInstance;</span>
     }
 
     public static PrimitiveTypeWrapper getShortInstance() {
-<span class="nc bnc" id="L113" title="All 2 branches missed.">        if (shortInstance == null) {</span>
-<span class="nc" id="L114">            shortInstance = new PrimitiveTypeWrapper(&quot;java.lang.Short&quot;, //$NON-NLS-1$</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">        if (shortInstance == null) {</span>
+<span class="nc" id="L134">            shortInstance = new PrimitiveTypeWrapper(&quot;java.lang.Short&quot;, //$NON-NLS-1$</span>
                     &quot;shortValue()&quot;); //$NON-NLS-1$
         }
 
-<span class="nc" id="L118">        return shortInstance;</span>
+<span class="nc" id="L138">        return shortInstance;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

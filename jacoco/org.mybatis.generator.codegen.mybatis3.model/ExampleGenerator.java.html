@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExampleGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.codegen.mybatis3.model</a> &gt; <span class="el_source">ExampleGenerator.java</span></div><h1>ExampleGenerator.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -38,766 +38,731 @@ import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 
-/**
- * 
- * @author Jeff Butler
- * 
- */
 public class ExampleGenerator extends AbstractJavaGenerator {
 
-    public ExampleGenerator() {
-<span class="fc" id="L49">        super();</span>
-<span class="fc" id="L50">    }</span>
+    public ExampleGenerator(String project) {
+<span class="fc" id="L44">        super(project);</span>
+<span class="fc" id="L45">    }</span>
 
     @Override
     public List&lt;CompilationUnit&gt; getCompilationUnits() {
-<span class="fc" id="L54">        FullyQualifiedTable table = introspectedTable.getFullyQualifiedTable();</span>
-<span class="fc" id="L55">        progressCallback.startTask(getString(</span>
-<span class="fc" id="L56">                &quot;Progress.6&quot;, table.toString())); //$NON-NLS-1$</span>
-<span class="fc" id="L57">        CommentGenerator commentGenerator = context.getCommentGenerator();</span>
+<span class="fc" id="L49">        FullyQualifiedTable table = introspectedTable.getFullyQualifiedTable();</span>
+<span class="fc" id="L50">        progressCallback.startTask(getString(</span>
+<span class="fc" id="L51">                &quot;Progress.6&quot;, table.toString())); //$NON-NLS-1$</span>
+<span class="fc" id="L52">        CommentGenerator commentGenerator = context.getCommentGenerator();</span>
 
-<span class="fc" id="L59">        FullyQualifiedJavaType type = new FullyQualifiedJavaType(</span>
-<span class="fc" id="L60">                introspectedTable.getExampleType());</span>
-<span class="fc" id="L61">        TopLevelClass topLevelClass = new TopLevelClass(type);</span>
-<span class="fc" id="L62">        topLevelClass.setVisibility(JavaVisibility.PUBLIC);</span>
-<span class="fc" id="L63">        commentGenerator.addJavaFileComment(topLevelClass);</span>
+<span class="fc" id="L54">        FullyQualifiedJavaType type = new FullyQualifiedJavaType(</span>
+<span class="fc" id="L55">                introspectedTable.getExampleType());</span>
+<span class="fc" id="L56">        TopLevelClass topLevelClass = new TopLevelClass(type);</span>
+<span class="fc" id="L57">        topLevelClass.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L58">        commentGenerator.addJavaFileComment(topLevelClass);</span>
 
         // add default constructor
-<span class="fc" id="L66">        Method method = new Method();</span>
-<span class="fc" id="L67">        method.setVisibility(JavaVisibility.PUBLIC);</span>
-<span class="fc" id="L68">        method.setConstructor(true);</span>
-<span class="fc" id="L69">        method.setName(type.getShortName());</span>
-<span class="fc" id="L70">        method.addBodyLine(&quot;oredCriteria = new ArrayList&lt;Criteria&gt;();&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L61">        Method method = new Method(type.getShortName());</span>
+<span class="fc" id="L62">        method.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L63">        method.setConstructor(true);</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">        if (context.isJava8Targeted()) {</span>
+<span class="fc" id="L65">            method.addBodyLine(&quot;oredCriteria = new ArrayList&lt;&gt;();&quot;); //$NON-NLS-1$</span>
+        } else {
+<span class="nc" id="L67">            method.addBodyLine(&quot;oredCriteria = new ArrayList&lt;Criteria&gt;();&quot;); //$NON-NLS-1$</span>
+        }
 
-<span class="fc" id="L72">        commentGenerator.addGeneralMethodComment(method, introspectedTable);</span>
-<span class="fc" id="L73">        topLevelClass.addMethod(method);</span>
+<span class="fc" id="L70">        commentGenerator.addGeneralMethodComment(method, introspectedTable);</span>
+<span class="fc" id="L71">        topLevelClass.addMethod(method);</span>
 
         // add field, getter, setter for orderby clause
-<span class="fc" id="L76">        Field field = new Field();</span>
-<span class="fc" id="L77">        field.setVisibility(JavaVisibility.PROTECTED);</span>
-<span class="fc" id="L78">        field.setType(FullyQualifiedJavaType.getStringInstance());</span>
-<span class="fc" id="L79">        field.setName(&quot;orderByClause&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L80">        commentGenerator.addFieldComment(field, introspectedTable);</span>
-<span class="fc" id="L81">        topLevelClass.addField(field);</span>
+<span class="fc" id="L74">        Field field = new Field(&quot;orderByClause&quot;, FullyQualifiedJavaType.getStringInstance()); //$NON-NLS-1$</span>
+<span class="fc" id="L75">        field.setVisibility(JavaVisibility.PROTECTED);</span>
+<span class="fc" id="L76">        commentGenerator.addFieldComment(field, introspectedTable);</span>
+<span class="fc" id="L77">        topLevelClass.addField(field);</span>
 
-<span class="fc" id="L83">        method = new Method();</span>
-<span class="fc" id="L84">        method.setVisibility(JavaVisibility.PUBLIC);</span>
-<span class="fc" id="L85">        method.setName(&quot;setOrderByClause&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L86">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L87">                .getStringInstance(), &quot;orderByClause&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L88">        method.addBodyLine(&quot;this.orderByClause = orderByClause;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L89">        commentGenerator.addGeneralMethodComment(method, introspectedTable);</span>
-<span class="fc" id="L90">        topLevelClass.addMethod(method);</span>
+<span class="fc" id="L79">        method = new Method(&quot;setOrderByClause&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L80">        method.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L81">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L82">                .getStringInstance(), &quot;orderByClause&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L83">        method.addBodyLine(&quot;this.orderByClause = orderByClause;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L84">        commentGenerator.addGeneralMethodComment(method, introspectedTable);</span>
+<span class="fc" id="L85">        topLevelClass.addMethod(method);</span>
 
-<span class="fc" id="L92">        method = new Method();</span>
-<span class="fc" id="L93">        method.setVisibility(JavaVisibility.PUBLIC);</span>
-<span class="fc" id="L94">        method.setReturnType(FullyQualifiedJavaType.getStringInstance());</span>
-<span class="fc" id="L95">        method.setName(&quot;getOrderByClause&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L96">        method.addBodyLine(&quot;return orderByClause;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L97">        commentGenerator.addGeneralMethodComment(method, introspectedTable);</span>
-<span class="fc" id="L98">        topLevelClass.addMethod(method);</span>
+<span class="fc" id="L87">        method = new Method(&quot;getOrderByClause&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L88">        method.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L89">        method.setReturnType(FullyQualifiedJavaType.getStringInstance());</span>
+<span class="fc" id="L90">        method.addBodyLine(&quot;return orderByClause;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L91">        commentGenerator.addGeneralMethodComment(method, introspectedTable);</span>
+<span class="fc" id="L92">        topLevelClass.addMethod(method);</span>
 
         // add field, getter, setter for distinct
-<span class="fc" id="L101">        field = new Field();</span>
-<span class="fc" id="L102">        field.setVisibility(JavaVisibility.PROTECTED);</span>
-<span class="fc" id="L103">        field.setType(FullyQualifiedJavaType.getBooleanPrimitiveInstance());</span>
-<span class="fc" id="L104">        field.setName(&quot;distinct&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L105">        commentGenerator.addFieldComment(field, introspectedTable);</span>
-<span class="fc" id="L106">        topLevelClass.addField(field);</span>
+<span class="fc" id="L95">        field = new Field(&quot;distinct&quot;, FullyQualifiedJavaType.getBooleanPrimitiveInstance()); //$NON-NLS-1$</span>
+<span class="fc" id="L96">        field.setVisibility(JavaVisibility.PROTECTED);</span>
+<span class="fc" id="L97">        commentGenerator.addFieldComment(field, introspectedTable);</span>
+<span class="fc" id="L98">        topLevelClass.addField(field);</span>
 
-<span class="fc" id="L108">        method = new Method();</span>
+<span class="fc" id="L100">        method = new Method(&quot;setDistinct&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L101">        method.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L102">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L103">                .getBooleanPrimitiveInstance(), &quot;distinct&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L104">        method.addBodyLine(&quot;this.distinct = distinct;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L105">        commentGenerator.addGeneralMethodComment(method, introspectedTable);</span>
+<span class="fc" id="L106">        topLevelClass.addMethod(method);</span>
+
+<span class="fc" id="L108">        method = new Method(&quot;isDistinct&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L109">        method.setVisibility(JavaVisibility.PUBLIC);</span>
-<span class="fc" id="L110">        method.setName(&quot;setDistinct&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L111">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L112">                .getBooleanPrimitiveInstance(), &quot;distinct&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L113">        method.addBodyLine(&quot;this.distinct = distinct;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L114">        commentGenerator.addGeneralMethodComment(method, introspectedTable);</span>
-<span class="fc" id="L115">        topLevelClass.addMethod(method);</span>
-
-<span class="fc" id="L117">        method = new Method();</span>
-<span class="fc" id="L118">        method.setVisibility(JavaVisibility.PUBLIC);</span>
-<span class="fc" id="L119">        method.setReturnType(FullyQualifiedJavaType</span>
-<span class="fc" id="L120">                .getBooleanPrimitiveInstance());</span>
-<span class="fc" id="L121">        method.setName(&quot;isDistinct&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L122">        method.addBodyLine(&quot;return distinct;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L123">        commentGenerator.addGeneralMethodComment(method, introspectedTable);</span>
-<span class="fc" id="L124">        topLevelClass.addMethod(method);</span>
+<span class="fc" id="L110">        method.setReturnType(FullyQualifiedJavaType</span>
+<span class="fc" id="L111">                .getBooleanPrimitiveInstance());</span>
+<span class="fc" id="L112">        method.addBodyLine(&quot;return distinct;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L113">        commentGenerator.addGeneralMethodComment(method, introspectedTable);</span>
+<span class="fc" id="L114">        topLevelClass.addMethod(method);</span>
 
         // add field and methods for the list of ored criteria
-<span class="fc" id="L127">        field = new Field();</span>
-<span class="fc" id="L128">        field.setVisibility(JavaVisibility.PROTECTED);</span>
-
-<span class="fc" id="L130">        FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(</span>
+<span class="fc" id="L117">        FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(</span>
                 &quot;java.util.List&lt;Criteria&gt;&quot;); //$NON-NLS-1$
-<span class="fc" id="L132">        field.setType(fqjt);</span>
-<span class="fc" id="L133">        field.setName(&quot;oredCriteria&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L134">        commentGenerator.addFieldComment(field, introspectedTable);</span>
-<span class="fc" id="L135">        topLevelClass.addField(field);</span>
+<span class="fc" id="L119">        field = new Field(&quot;oredCriteria&quot;, fqjt); //$NON-NLS-1$</span>
+<span class="fc" id="L120">        field.setVisibility(JavaVisibility.PROTECTED);</span>
 
-<span class="fc" id="L137">        method = new Method();</span>
-<span class="fc" id="L138">        method.setVisibility(JavaVisibility.PUBLIC);</span>
-<span class="fc" id="L139">        method.setReturnType(fqjt);</span>
-<span class="fc" id="L140">        method.setName(&quot;getOredCriteria&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L141">        method.addBodyLine(&quot;return oredCriteria;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L142">        commentGenerator.addGeneralMethodComment(method, introspectedTable);</span>
-<span class="fc" id="L143">        topLevelClass.addMethod(method);</span>
+<span class="fc" id="L122">        commentGenerator.addFieldComment(field, introspectedTable);</span>
+<span class="fc" id="L123">        topLevelClass.addField(field);</span>
 
-<span class="fc" id="L145">        method = new Method();</span>
-<span class="fc" id="L146">        method.setVisibility(JavaVisibility.PUBLIC);</span>
-<span class="fc" id="L147">        method.setName(&quot;or&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L148">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L149">                .getCriteriaInstance(), &quot;criteria&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L150">        method.addBodyLine(&quot;oredCriteria.add(criteria);&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L151">        commentGenerator.addGeneralMethodComment(method, introspectedTable);</span>
-<span class="fc" id="L152">        topLevelClass.addMethod(method);</span>
+<span class="fc" id="L125">        method = new Method(&quot;getOredCriteria&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L126">        method.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L127">        method.setReturnType(fqjt);</span>
+<span class="fc" id="L128">        method.addBodyLine(&quot;return oredCriteria;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L129">        commentGenerator.addGeneralMethodComment(method, introspectedTable);</span>
+<span class="fc" id="L130">        topLevelClass.addMethod(method);</span>
 
-<span class="fc" id="L154">        method = new Method();</span>
-<span class="fc" id="L155">        method.setVisibility(JavaVisibility.PUBLIC);</span>
-<span class="fc" id="L156">        method.setName(&quot;or&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L157">        method.setReturnType(FullyQualifiedJavaType.getCriteriaInstance());</span>
-<span class="fc" id="L158">        method.addBodyLine(&quot;Criteria criteria = createCriteriaInternal();&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L159">        method.addBodyLine(&quot;oredCriteria.add(criteria);&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L160">        method.addBodyLine(&quot;return criteria;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L161">        commentGenerator.addGeneralMethodComment(method, introspectedTable);</span>
-<span class="fc" id="L162">        topLevelClass.addMethod(method);</span>
+<span class="fc" id="L132">        method = new Method(&quot;or&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L133">        method.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L134">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L135">                .getCriteriaInstance(), &quot;criteria&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L136">        method.addBodyLine(&quot;oredCriteria.add(criteria);&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L137">        commentGenerator.addGeneralMethodComment(method, introspectedTable);</span>
+<span class="fc" id="L138">        topLevelClass.addMethod(method);</span>
 
-<span class="fc" id="L164">        method = new Method();</span>
-<span class="fc" id="L165">        method.setVisibility(JavaVisibility.PUBLIC);</span>
-<span class="fc" id="L166">        method.setName(&quot;createCriteria&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L167">        method.setReturnType(FullyQualifiedJavaType.getCriteriaInstance());</span>
-<span class="fc" id="L168">        method.addBodyLine(&quot;Criteria criteria = createCriteriaInternal();&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L169">        method.addBodyLine(&quot;if (oredCriteria.size() == 0) {&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L170">        method.addBodyLine(&quot;oredCriteria.add(criteria);&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L171">        method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L172">        method.addBodyLine(&quot;return criteria;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L140">        method = new Method(&quot;or&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L141">        method.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L142">        method.setReturnType(FullyQualifiedJavaType.getCriteriaInstance());</span>
+<span class="fc" id="L143">        method.addBodyLine(&quot;Criteria criteria = createCriteriaInternal();&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L144">        method.addBodyLine(&quot;oredCriteria.add(criteria);&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L145">        method.addBodyLine(&quot;return criteria;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L146">        commentGenerator.addGeneralMethodComment(method, introspectedTable);</span>
+<span class="fc" id="L147">        topLevelClass.addMethod(method);</span>
+
+<span class="fc" id="L149">        method = new Method(&quot;createCriteria&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L150">        method.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L151">        method.setReturnType(FullyQualifiedJavaType.getCriteriaInstance());</span>
+<span class="fc" id="L152">        method.addBodyLine(&quot;Criteria criteria = createCriteriaInternal();&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L153">        method.addBodyLine(&quot;if (oredCriteria.size() == 0) {&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L154">        method.addBodyLine(&quot;oredCriteria.add(criteria);&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L155">        method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L156">        method.addBodyLine(&quot;return criteria;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L157">        commentGenerator.addGeneralMethodComment(method, introspectedTable);</span>
+<span class="fc" id="L158">        topLevelClass.addMethod(method);</span>
+
+<span class="fc" id="L160">        method = new Method(&quot;createCriteriaInternal&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L161">        method.setVisibility(JavaVisibility.PROTECTED);</span>
+<span class="fc" id="L162">        method.setReturnType(FullyQualifiedJavaType.getCriteriaInstance());</span>
+<span class="fc" id="L163">        method.addBodyLine(&quot;Criteria criteria = new Criteria();&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L164">        method.addBodyLine(&quot;return criteria;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L165">        commentGenerator.addGeneralMethodComment(method, introspectedTable);</span>
+<span class="fc" id="L166">        topLevelClass.addMethod(method);</span>
+
+<span class="fc" id="L168">        method = new Method(&quot;clear&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L169">        method.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L170">        method.addBodyLine(&quot;oredCriteria.clear();&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L171">        method.addBodyLine(&quot;orderByClause = null;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L172">        method.addBodyLine(&quot;distinct = false;&quot;); //$NON-NLS-1$</span>
 <span class="fc" id="L173">        commentGenerator.addGeneralMethodComment(method, introspectedTable);</span>
 <span class="fc" id="L174">        topLevelClass.addMethod(method);</span>
 
-<span class="fc" id="L176">        method = new Method();</span>
-<span class="fc" id="L177">        method.setVisibility(JavaVisibility.PROTECTED);</span>
-<span class="fc" id="L178">        method.setName(&quot;createCriteriaInternal&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L179">        method.setReturnType(FullyQualifiedJavaType.getCriteriaInstance());</span>
-<span class="fc" id="L180">        method.addBodyLine(&quot;Criteria criteria = new Criteria();&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L181">        method.addBodyLine(&quot;return criteria;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L182">        commentGenerator.addGeneralMethodComment(method, introspectedTable);</span>
-<span class="fc" id="L183">        topLevelClass.addMethod(method);</span>
-
-<span class="fc" id="L185">        method = new Method();</span>
-<span class="fc" id="L186">        method.setVisibility(JavaVisibility.PUBLIC);</span>
-<span class="fc" id="L187">        method.setName(&quot;clear&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L188">        method.addBodyLine(&quot;oredCriteria.clear();&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L189">        method.addBodyLine(&quot;orderByClause = null;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L190">        method.addBodyLine(&quot;distinct = false;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L191">        commentGenerator.addGeneralMethodComment(method, introspectedTable);</span>
-<span class="fc" id="L192">        topLevelClass.addMethod(method);</span>
-
         // now generate the inner class that holds the AND conditions
-<span class="fc" id="L195">        topLevelClass</span>
-<span class="fc" id="L196">                .addInnerClass(getGeneratedCriteriaInnerClass(topLevelClass));</span>
+<span class="fc" id="L177">        topLevelClass</span>
+<span class="fc" id="L178">                .addInnerClass(getGeneratedCriteriaInnerClass(topLevelClass));</span>
 
-<span class="fc" id="L198">        topLevelClass.addInnerClass(getCriteriaInnerClass());</span>
+<span class="fc" id="L180">        topLevelClass.addInnerClass(getCriteriaInnerClass());</span>
 
-<span class="fc" id="L200">        topLevelClass.addInnerClass(getCriterionInnerClass());</span>
+<span class="fc" id="L182">        topLevelClass.addInnerClass(getCriterionInnerClass());</span>
 
-<span class="fc" id="L202">        List&lt;CompilationUnit&gt; answer = new ArrayList&lt;CompilationUnit&gt;();</span>
-<span class="pc bpc" id="L203" title="1 of 2 branches missed.">        if (context.getPlugins().modelExampleClassGenerated(</span>
+<span class="fc" id="L184">        List&lt;CompilationUnit&gt; answer = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L185" title="1 of 2 branches missed.">        if (context.getPlugins().modelExampleClassGenerated(</span>
                 topLevelClass, introspectedTable)) {
-<span class="fc" id="L205">            answer.add(topLevelClass);</span>
+<span class="fc" id="L187">            answer.add(topLevelClass);</span>
         }
-<span class="fc" id="L207">        return answer;</span>
+<span class="fc" id="L189">        return answer;</span>
     }
 
     private InnerClass getCriterionInnerClass() {
-<span class="fc" id="L211">        InnerClass answer = new InnerClass(new FullyQualifiedJavaType(</span>
+<span class="fc" id="L193">        InnerClass answer = new InnerClass(new FullyQualifiedJavaType(</span>
                 &quot;Criterion&quot;)); //$NON-NLS-1$
-<span class="fc" id="L213">        answer.setVisibility(JavaVisibility.PUBLIC);</span>
-<span class="fc" id="L214">        answer.setStatic(true);</span>
-<span class="fc" id="L215">        context.getCommentGenerator().addClassComment(answer,</span>
+<span class="fc" id="L195">        answer.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L196">        answer.setStatic(true);</span>
+<span class="fc" id="L197">        context.getCommentGenerator().addClassComment(answer,</span>
                 introspectedTable);
 
-<span class="fc" id="L218">        Field field = new Field();</span>
-<span class="fc" id="L219">        field.setName(&quot;condition&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L220">        field.setType(FullyQualifiedJavaType.getStringInstance());</span>
+<span class="fc" id="L200">        Field field = new Field(&quot;condition&quot;, FullyQualifiedJavaType.getStringInstance()); //$NON-NLS-1$</span>
+<span class="fc" id="L201">        field.setVisibility(JavaVisibility.PRIVATE);</span>
+<span class="fc" id="L202">        answer.addField(field);</span>
+<span class="fc" id="L203">        answer.addMethod(getGetter(field));</span>
+
+<span class="fc" id="L205">        field = new Field(&quot;value&quot;, FullyQualifiedJavaType.getObjectInstance()); //$NON-NLS-1$</span>
+<span class="fc" id="L206">        field.setVisibility(JavaVisibility.PRIVATE);</span>
+<span class="fc" id="L207">        answer.addField(field);</span>
+<span class="fc" id="L208">        answer.addMethod(getGetter(field));</span>
+
+<span class="fc" id="L210">        field = new Field(&quot;secondValue&quot;, FullyQualifiedJavaType.getObjectInstance()); //$NON-NLS-1$</span>
+<span class="fc" id="L211">        field.setVisibility(JavaVisibility.PRIVATE);</span>
+<span class="fc" id="L212">        answer.addField(field);</span>
+<span class="fc" id="L213">        answer.addMethod(getGetter(field));</span>
+
+<span class="fc" id="L215">        field = new Field(&quot;noValue&quot;, FullyQualifiedJavaType.getBooleanPrimitiveInstance()); //$NON-NLS-1$</span>
+<span class="fc" id="L216">        field.setVisibility(JavaVisibility.PRIVATE);</span>
+<span class="fc" id="L217">        answer.addField(field);</span>
+<span class="fc" id="L218">        answer.addMethod(getGetter(field));</span>
+
+<span class="fc" id="L220">        field = new Field(&quot;singleValue&quot;, FullyQualifiedJavaType.getBooleanPrimitiveInstance()); //$NON-NLS-1$</span>
 <span class="fc" id="L221">        field.setVisibility(JavaVisibility.PRIVATE);</span>
 <span class="fc" id="L222">        answer.addField(field);</span>
 <span class="fc" id="L223">        answer.addMethod(getGetter(field));</span>
 
-<span class="fc" id="L225">        field = new Field();</span>
-<span class="fc" id="L226">        field.setName(&quot;value&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L227">        field.setType(FullyQualifiedJavaType.getObjectInstance());</span>
-<span class="fc" id="L228">        field.setVisibility(JavaVisibility.PRIVATE);</span>
-<span class="fc" id="L229">        answer.addField(field);</span>
-<span class="fc" id="L230">        answer.addMethod(getGetter(field));</span>
+<span class="fc" id="L225">        field = new Field(&quot;betweenValue&quot;, FullyQualifiedJavaType.getBooleanPrimitiveInstance()); //$NON-NLS-1$</span>
+<span class="fc" id="L226">        field.setVisibility(JavaVisibility.PRIVATE);</span>
+<span class="fc" id="L227">        answer.addField(field);</span>
+<span class="fc" id="L228">        answer.addMethod(getGetter(field));</span>
 
-<span class="fc" id="L232">        field = new Field();</span>
-<span class="fc" id="L233">        field.setName(&quot;secondValue&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L234">        field.setType(FullyQualifiedJavaType.getObjectInstance());</span>
-<span class="fc" id="L235">        field.setVisibility(JavaVisibility.PRIVATE);</span>
-<span class="fc" id="L236">        answer.addField(field);</span>
-<span class="fc" id="L237">        answer.addMethod(getGetter(field));</span>
+<span class="fc" id="L230">        field = new Field(&quot;listValue&quot;, FullyQualifiedJavaType.getBooleanPrimitiveInstance()); //$NON-NLS-1$</span>
+<span class="fc" id="L231">        field.setVisibility(JavaVisibility.PRIVATE);</span>
+<span class="fc" id="L232">        answer.addField(field);</span>
+<span class="fc" id="L233">        answer.addMethod(getGetter(field));</span>
 
-<span class="fc" id="L239">        field = new Field();</span>
-<span class="fc" id="L240">        field.setName(&quot;noValue&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L241">        field.setType(FullyQualifiedJavaType.getBooleanPrimitiveInstance());</span>
-<span class="fc" id="L242">        field.setVisibility(JavaVisibility.PRIVATE);</span>
-<span class="fc" id="L243">        answer.addField(field);</span>
-<span class="fc" id="L244">        answer.addMethod(getGetter(field));</span>
+<span class="fc" id="L235">        field = new Field(&quot;typeHandler&quot;, FullyQualifiedJavaType.getStringInstance()); //$NON-NLS-1$</span>
+<span class="fc" id="L236">        field.setVisibility(JavaVisibility.PRIVATE);</span>
+<span class="fc" id="L237">        answer.addField(field);</span>
+<span class="fc" id="L238">        answer.addMethod(getGetter(field));</span>
 
-<span class="fc" id="L246">        field = new Field();</span>
-<span class="fc" id="L247">        field.setName(&quot;singleValue&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L248">        field.setType(FullyQualifiedJavaType.getBooleanPrimitiveInstance());</span>
-<span class="fc" id="L249">        field.setVisibility(JavaVisibility.PRIVATE);</span>
-<span class="fc" id="L250">        answer.addField(field);</span>
-<span class="fc" id="L251">        answer.addMethod(getGetter(field));</span>
+<span class="fc" id="L240">        Method method = new Method(&quot;Criterion&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L241">        method.setVisibility(JavaVisibility.PROTECTED);</span>
+<span class="fc" id="L242">        method.setConstructor(true);</span>
+<span class="fc" id="L243">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L244">                .getStringInstance(), &quot;condition&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L245">        method.addBodyLine(&quot;super();&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L246">        method.addBodyLine(&quot;this.condition = condition;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L247">        method.addBodyLine(&quot;this.typeHandler = null;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L248">        method.addBodyLine(&quot;this.noValue = true;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L249">        answer.addMethod(method);</span>
 
-<span class="fc" id="L253">        field = new Field();</span>
-<span class="fc" id="L254">        field.setName(&quot;betweenValue&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L255">        field.setType(FullyQualifiedJavaType.getBooleanPrimitiveInstance());</span>
-<span class="fc" id="L256">        field.setVisibility(JavaVisibility.PRIVATE);</span>
-<span class="fc" id="L257">        answer.addField(field);</span>
-<span class="fc" id="L258">        answer.addMethod(getGetter(field));</span>
+<span class="fc" id="L251">        method = new Method(&quot;Criterion&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L252">        method.setVisibility(JavaVisibility.PROTECTED);</span>
+<span class="fc" id="L253">        method.setConstructor(true);</span>
+<span class="fc" id="L254">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L255">                .getStringInstance(), &quot;condition&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L256">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L257">                .getObjectInstance(), &quot;value&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L258">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L259">                .getStringInstance(), &quot;typeHandler&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L260">        method.addBodyLine(&quot;super();&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L261">        method.addBodyLine(&quot;this.condition = condition;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L262">        method.addBodyLine(&quot;this.value = value;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L263">        method.addBodyLine(&quot;this.typeHandler = typeHandler;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L264">        method.addBodyLine(&quot;if (value instanceof List&lt;?&gt;) {&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L265">        method.addBodyLine(&quot;this.listValue = true;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L266">        method.addBodyLine(&quot;} else {&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L267">        method.addBodyLine(&quot;this.singleValue = true;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L268">        method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L269">        answer.addMethod(method);</span>
 
-<span class="fc" id="L260">        field = new Field();</span>
-<span class="fc" id="L261">        field.setName(&quot;listValue&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L262">        field.setType(FullyQualifiedJavaType.getBooleanPrimitiveInstance());</span>
-<span class="fc" id="L263">        field.setVisibility(JavaVisibility.PRIVATE);</span>
-<span class="fc" id="L264">        answer.addField(field);</span>
-<span class="fc" id="L265">        answer.addMethod(getGetter(field));</span>
+<span class="fc" id="L271">        method = new Method(&quot;Criterion&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L272">        method.setVisibility(JavaVisibility.PROTECTED);</span>
+<span class="fc" id="L273">        method.setConstructor(true);</span>
+<span class="fc" id="L274">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L275">                .getStringInstance(), &quot;condition&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L276">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L277">                .getObjectInstance(), &quot;value&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L278">        method.addBodyLine(&quot;this(condition, value, null);&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L279">        answer.addMethod(method);</span>
 
-<span class="fc" id="L267">        field = new Field();</span>
-<span class="fc" id="L268">        field.setName(&quot;typeHandler&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L269">        field.setType(FullyQualifiedJavaType.getStringInstance());</span>
-<span class="fc" id="L270">        field.setVisibility(JavaVisibility.PRIVATE);</span>
-<span class="fc" id="L271">        answer.addField(field);</span>
-<span class="fc" id="L272">        answer.addMethod(getGetter(field));</span>
-
-<span class="fc" id="L274">        Method method = new Method();</span>
-<span class="fc" id="L275">        method.setVisibility(JavaVisibility.PROTECTED);</span>
-<span class="fc" id="L276">        method.setName(&quot;Criterion&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L277">        method.setConstructor(true);</span>
-<span class="fc" id="L278">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L279">                .getStringInstance(), &quot;condition&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L280">        method.addBodyLine(&quot;super();&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L281">        method.addBodyLine(&quot;this.condition = condition;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L282">        method.addBodyLine(&quot;this.typeHandler = null;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L283">        method.addBodyLine(&quot;this.noValue = true;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L284">        answer.addMethod(method);</span>
-
-<span class="fc" id="L286">        method = new Method();</span>
-<span class="fc" id="L287">        method.setVisibility(JavaVisibility.PROTECTED);</span>
-<span class="fc" id="L288">        method.setName(&quot;Criterion&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L289">        method.setConstructor(true);</span>
+<span class="fc" id="L281">        method = new Method(&quot;Criterion&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L282">        method.setVisibility(JavaVisibility.PROTECTED);</span>
+<span class="fc" id="L283">        method.setConstructor(true);</span>
+<span class="fc" id="L284">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L285">                .getStringInstance(), &quot;condition&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L286">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L287">                .getObjectInstance(), &quot;value&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L288">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L289">                .getObjectInstance(), &quot;secondValue&quot;)); //$NON-NLS-1$</span>
 <span class="fc" id="L290">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L291">                .getStringInstance(), &quot;condition&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L292">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L293">                .getObjectInstance(), &quot;value&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L294">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L295">                .getStringInstance(), &quot;typeHandler&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L296">        method.addBodyLine(&quot;super();&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L297">        method.addBodyLine(&quot;this.condition = condition;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L298">        method.addBodyLine(&quot;this.value = value;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L299">        method.addBodyLine(&quot;this.typeHandler = typeHandler;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L300">        method.addBodyLine(&quot;if (value instanceof List&lt;?&gt;) {&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L301">        method.addBodyLine(&quot;this.listValue = true;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L302">        method.addBodyLine(&quot;} else {&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L303">        method.addBodyLine(&quot;this.singleValue = true;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L304">        method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L305">        answer.addMethod(method);</span>
+<span class="fc" id="L291">                .getStringInstance(), &quot;typeHandler&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L292">        method.addBodyLine(&quot;super();&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L293">        method.addBodyLine(&quot;this.condition = condition;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L294">        method.addBodyLine(&quot;this.value = value;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L295">        method.addBodyLine(&quot;this.secondValue = secondValue;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L296">        method.addBodyLine(&quot;this.typeHandler = typeHandler;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L297">        method.addBodyLine(&quot;this.betweenValue = true;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L298">        answer.addMethod(method);</span>
 
-<span class="fc" id="L307">        method = new Method();</span>
-<span class="fc" id="L308">        method.setVisibility(JavaVisibility.PROTECTED);</span>
-<span class="fc" id="L309">        method.setName(&quot;Criterion&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L310">        method.setConstructor(true);</span>
-<span class="fc" id="L311">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L312">                .getStringInstance(), &quot;condition&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L313">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L314">                .getObjectInstance(), &quot;value&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L315">        method.addBodyLine(&quot;this(condition, value, null);&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L316">        answer.addMethod(method);</span>
+<span class="fc" id="L300">        method = new Method(&quot;Criterion&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L301">        method.setVisibility(JavaVisibility.PROTECTED);</span>
+<span class="fc" id="L302">        method.setConstructor(true);</span>
+<span class="fc" id="L303">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L304">                .getStringInstance(), &quot;condition&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L305">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L306">                .getObjectInstance(), &quot;value&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L307">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L308">                .getObjectInstance(), &quot;secondValue&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L309">        method.addBodyLine(&quot;this(condition, value, secondValue, null);&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L310">        answer.addMethod(method);</span>
 
-<span class="fc" id="L318">        method = new Method();</span>
-<span class="fc" id="L319">        method.setVisibility(JavaVisibility.PROTECTED);</span>
-<span class="fc" id="L320">        method.setName(&quot;Criterion&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L321">        method.setConstructor(true);</span>
-<span class="fc" id="L322">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L323">                .getStringInstance(), &quot;condition&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L324">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L325">                .getObjectInstance(), &quot;value&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L326">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L327">                .getObjectInstance(), &quot;secondValue&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L328">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L329">                .getStringInstance(), &quot;typeHandler&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L330">        method.addBodyLine(&quot;super();&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L331">        method.addBodyLine(&quot;this.condition = condition;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L332">        method.addBodyLine(&quot;this.value = value;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L333">        method.addBodyLine(&quot;this.secondValue = secondValue;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L334">        method.addBodyLine(&quot;this.typeHandler = typeHandler;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L335">        method.addBodyLine(&quot;this.betweenValue = true;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L336">        answer.addMethod(method);</span>
-
-<span class="fc" id="L338">        method = new Method();</span>
-<span class="fc" id="L339">        method.setVisibility(JavaVisibility.PROTECTED);</span>
-<span class="fc" id="L340">        method.setName(&quot;Criterion&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L341">        method.setConstructor(true);</span>
-<span class="fc" id="L342">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L343">                .getStringInstance(), &quot;condition&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L344">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L345">                .getObjectInstance(), &quot;value&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L346">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L347">                .getObjectInstance(), &quot;secondValue&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L348">        method.addBodyLine(&quot;this(condition, value, secondValue, null);&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L349">        answer.addMethod(method);</span>
-
-<span class="fc" id="L351">        return answer;</span>
+<span class="fc" id="L312">        return answer;</span>
     }
 
     private InnerClass getCriteriaInnerClass() {
-<span class="fc" id="L355">        InnerClass answer = new InnerClass(FullyQualifiedJavaType</span>
-<span class="fc" id="L356">                .getCriteriaInstance());</span>
+<span class="fc" id="L316">        InnerClass answer = new InnerClass(FullyQualifiedJavaType</span>
+<span class="fc" id="L317">                .getCriteriaInstance());</span>
 
-<span class="fc" id="L358">        answer.setVisibility(JavaVisibility.PUBLIC);</span>
-<span class="fc" id="L359">        answer.setStatic(true);</span>
-<span class="fc" id="L360">        answer.setSuperClass(FullyQualifiedJavaType</span>
-<span class="fc" id="L361">                .getGeneratedCriteriaInstance());</span>
+<span class="fc" id="L319">        answer.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L320">        answer.setStatic(true);</span>
+<span class="fc" id="L321">        answer.setSuperClass(FullyQualifiedJavaType</span>
+<span class="fc" id="L322">                .getGeneratedCriteriaInstance());</span>
 
-<span class="fc" id="L363">        context.getCommentGenerator().addClassComment(answer,</span>
+<span class="fc" id="L324">        context.getCommentGenerator().addClassComment(answer,</span>
                 introspectedTable, true);
 
-<span class="fc" id="L366">        Method method = new Method();</span>
-<span class="fc" id="L367">        method.setVisibility(JavaVisibility.PROTECTED);</span>
-<span class="fc" id="L368">        method.setName(&quot;Criteria&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L369">        method.setConstructor(true);</span>
-<span class="fc" id="L370">        method.addBodyLine(&quot;super();&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L371">        answer.addMethod(method);</span>
+<span class="fc" id="L327">        Method method = new Method(&quot;Criteria&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L328">        method.setVisibility(JavaVisibility.PROTECTED);</span>
+<span class="fc" id="L329">        method.setConstructor(true);</span>
+<span class="fc" id="L330">        method.addBodyLine(&quot;super();&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L331">        answer.addMethod(method);</span>
 
-<span class="fc" id="L373">        return answer;</span>
+<span class="fc" id="L333">        return answer;</span>
     }
 
     private InnerClass getGeneratedCriteriaInnerClass(
             TopLevelClass topLevelClass) {
         Field field;
 
-<span class="fc" id="L380">        InnerClass answer = new InnerClass(FullyQualifiedJavaType</span>
-<span class="fc" id="L381">                .getGeneratedCriteriaInstance());</span>
+<span class="fc" id="L340">        InnerClass answer = new InnerClass(FullyQualifiedJavaType</span>
+<span class="fc" id="L341">                .getGeneratedCriteriaInstance());</span>
 
-<span class="fc" id="L383">        answer.setVisibility(JavaVisibility.PROTECTED);</span>
-<span class="fc" id="L384">        answer.setStatic(true);</span>
-<span class="fc" id="L385">        answer.setAbstract(true);</span>
-<span class="fc" id="L386">        context.getCommentGenerator().addClassComment(answer,</span>
+<span class="fc" id="L343">        answer.setVisibility(JavaVisibility.PROTECTED);</span>
+<span class="fc" id="L344">        answer.setStatic(true);</span>
+<span class="fc" id="L345">        answer.setAbstract(true);</span>
+<span class="fc" id="L346">        context.getCommentGenerator().addClassComment(answer,</span>
                 introspectedTable);
 
-<span class="fc" id="L389">        Method method = new Method();</span>
-<span class="fc" id="L390">        method.setVisibility(JavaVisibility.PROTECTED);</span>
-<span class="fc" id="L391">        method.setName(&quot;GeneratedCriteria&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L392">        method.setConstructor(true);</span>
-<span class="fc" id="L393">        method.addBodyLine(&quot;super();&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L394">        method.addBodyLine(&quot;criteria = new ArrayList&lt;Criterion&gt;();&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L395">        answer.addMethod(method);</span>
+<span class="fc" id="L349">        Method method = new Method(&quot;GeneratedCriteria&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L350">        method.setVisibility(JavaVisibility.PROTECTED);</span>
+<span class="fc" id="L351">        method.setConstructor(true);</span>
+<span class="fc" id="L352">        method.addBodyLine(&quot;super();&quot;); //$NON-NLS-1$</span>
+<span class="pc bpc" id="L353" title="1 of 2 branches missed.">        if (context.isJava8Targeted()) {</span>
+<span class="fc" id="L354">            method.addBodyLine(&quot;criteria = new ArrayList&lt;&gt;();&quot;); //$NON-NLS-1$</span>
+        } else {
+<span class="nc" id="L356">            method.addBodyLine(&quot;criteria = new ArrayList&lt;Criterion&gt;();&quot;); //$NON-NLS-1$</span>
+        }
+<span class="fc" id="L358">        answer.addMethod(method);</span>
 
-<span class="fc" id="L397">        List&lt;String&gt; criteriaLists = new ArrayList&lt;String&gt;();</span>
-<span class="fc" id="L398">        criteriaLists.add(&quot;criteria&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L360">        List&lt;String&gt; criteriaLists = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L361">        criteriaLists.add(&quot;criteria&quot;); //$NON-NLS-1$</span>
 
-<span class="fc bfc" id="L400" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable</span>
-<span class="fc" id="L401">                .getNonBLOBColumns()) {</span>
-<span class="fc bfc" id="L402" title="All 2 branches covered.">            if (stringHasValue(introspectedColumn</span>
-<span class="fc" id="L403">                    .getTypeHandler())) {</span>
-<span class="fc" id="L404">                String name = addtypeHandledObjectsAndMethods(</span>
+<span class="fc bfc" id="L363" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable</span>
+<span class="fc" id="L364">                .getNonBLOBColumns()) {</span>
+<span class="fc bfc" id="L365" title="All 2 branches covered.">            if (stringHasValue(introspectedColumn</span>
+<span class="fc" id="L366">                    .getTypeHandler())) {</span>
+<span class="fc" id="L367">                String name = addtypeHandledObjectsAndMethods(</span>
                         introspectedColumn, method, answer);
-<span class="fc" id="L406">                criteriaLists.add(name);</span>
+<span class="fc" id="L369">                criteriaLists.add(name);</span>
             }
-<span class="fc" id="L408">        }</span>
+<span class="fc" id="L371">        }</span>
 
         // now generate the isValid method
-<span class="fc" id="L411">        method = new Method();</span>
-<span class="fc" id="L412">        method.setVisibility(JavaVisibility.PUBLIC);</span>
-<span class="fc" id="L413">        method.setName(&quot;isValid&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L414">        method.setReturnType(FullyQualifiedJavaType</span>
-<span class="fc" id="L415">                .getBooleanPrimitiveInstance());</span>
-<span class="fc" id="L416">        StringBuilder sb = new StringBuilder();</span>
-<span class="fc" id="L417">        Iterator&lt;String&gt; strIter = criteriaLists.iterator();</span>
-<span class="fc" id="L418">        sb.append(&quot;return &quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L419">        sb.append(strIter.next());</span>
-<span class="fc" id="L420">        sb.append(&quot;.size() &gt; 0&quot;); //$NON-NLS-1$</span>
-<span class="fc bfc" id="L421" title="All 2 branches covered.">        if (!strIter.hasNext()) {</span>
-<span class="fc" id="L422">            sb.append(';');</span>
+<span class="fc" id="L374">        method = new Method(&quot;isValid&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L375">        method.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L376">        method.setReturnType(FullyQualifiedJavaType</span>
+<span class="fc" id="L377">                .getBooleanPrimitiveInstance());</span>
+<span class="fc" id="L378">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L379">        Iterator&lt;String&gt; strIter = criteriaLists.iterator();</span>
+<span class="fc" id="L380">        sb.append(&quot;return &quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L381">        sb.append(strIter.next());</span>
+<span class="fc" id="L382">        sb.append(&quot;.size() &gt; 0&quot;); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L383" title="All 2 branches covered.">        if (!strIter.hasNext()) {</span>
+<span class="fc" id="L384">            sb.append(';');</span>
         }
-<span class="fc" id="L424">        method.addBodyLine(sb.toString());</span>
-<span class="fc bfc" id="L425" title="All 2 branches covered.">        while (strIter.hasNext()) {</span>
-<span class="fc" id="L426">            sb.setLength(0);</span>
-<span class="fc" id="L427">            OutputUtilities.javaIndent(sb, 1);</span>
-<span class="fc" id="L428">            sb.append(&quot;|| &quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L429">            sb.append(strIter.next());</span>
-<span class="fc" id="L430">            sb.append(&quot;.size() &gt; 0&quot;); //$NON-NLS-1$</span>
-<span class="fc bfc" id="L431" title="All 2 branches covered.">            if (!strIter.hasNext()) {</span>
-<span class="fc" id="L432">                sb.append(';');</span>
+<span class="fc" id="L386">        method.addBodyLine(sb.toString());</span>
+<span class="fc bfc" id="L387" title="All 2 branches covered.">        while (strIter.hasNext()) {</span>
+<span class="fc" id="L388">            sb.setLength(0);</span>
+<span class="fc" id="L389">            OutputUtilities.javaIndent(sb, 1);</span>
+<span class="fc" id="L390">            sb.append(&quot;|| &quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L391">            sb.append(strIter.next());</span>
+<span class="fc" id="L392">            sb.append(&quot;.size() &gt; 0&quot;); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L393" title="All 2 branches covered.">            if (!strIter.hasNext()) {</span>
+<span class="fc" id="L394">                sb.append(';');</span>
             }
-<span class="fc" id="L434">            method.addBodyLine(sb.toString());</span>
+<span class="fc" id="L396">            method.addBodyLine(sb.toString());</span>
         }
-<span class="fc" id="L436">        answer.addMethod(method);</span>
+<span class="fc" id="L398">        answer.addMethod(method);</span>
 
         // now generate the getAllCriteria method
-<span class="fc bfc" id="L439" title="All 2 branches covered.">        if (criteriaLists.size() &gt; 1) {</span>
-<span class="fc" id="L440">            field = new Field();</span>
-<span class="fc" id="L441">            field.setName(&quot;allCriteria&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L442">            field.setType(new FullyQualifiedJavaType(&quot;List&lt;Criterion&gt;&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L443">            field.setVisibility(JavaVisibility.PROTECTED);</span>
-<span class="fc" id="L444">            answer.addField(field);</span>
+<span class="fc bfc" id="L401" title="All 2 branches covered.">        if (criteriaLists.size() &gt; 1) {</span>
+<span class="fc" id="L402">            field = new Field(&quot;allCriteria&quot;, //$NON-NLS-1$</span>
+                    new FullyQualifiedJavaType(&quot;List&lt;Criterion&gt;&quot;)); //$NON-NLS-1$                    
+<span class="fc" id="L404">            field.setVisibility(JavaVisibility.PROTECTED);</span>
+<span class="fc" id="L405">            answer.addField(field);</span>
         }
         
-<span class="fc" id="L447">        method = new Method();</span>
-<span class="fc" id="L448">        method.setVisibility(JavaVisibility.PUBLIC);</span>
-<span class="fc" id="L449">        method.setName(&quot;getAllCriteria&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L450">        method.setReturnType(new FullyQualifiedJavaType(&quot;List&lt;Criterion&gt;&quot;)); //$NON-NLS-1$</span>
-<span class="fc bfc" id="L451" title="All 2 branches covered.">        if (criteriaLists.size() &lt; 2) {</span>
-<span class="fc" id="L452">            method.addBodyLine(&quot;return criteria;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L408">        method = new Method(&quot;getAllCriteria&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L409">        method.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L410">        method.setReturnType(new FullyQualifiedJavaType(&quot;List&lt;Criterion&gt;&quot;)); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L411" title="All 2 branches covered.">        if (criteriaLists.size() &lt; 2) {</span>
+<span class="fc" id="L412">            method.addBodyLine(&quot;return criteria;&quot;); //$NON-NLS-1$</span>
         } else {
-<span class="fc" id="L454">            method.addBodyLine(&quot;if (allCriteria == null) {&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L455">            method.addBodyLine(&quot;allCriteria = new ArrayList&lt;Criterion&gt;();&quot;); //$NON-NLS-1$</span>
-
-<span class="fc" id="L457">            strIter = criteriaLists.iterator();</span>
-<span class="fc bfc" id="L458" title="All 2 branches covered.">            while (strIter.hasNext()) {</span>
-<span class="fc" id="L459">                method.addBodyLine(String.format(&quot;allCriteria.addAll(%s);&quot;, strIter.next())); //$NON-NLS-1$</span>
+<span class="fc" id="L414">            method.addBodyLine(&quot;if (allCriteria == null) {&quot;); //$NON-NLS-1$</span>
+<span class="pc bpc" id="L415" title="1 of 2 branches missed.">            if (context.isJava8Targeted()) {</span>
+<span class="fc" id="L416">                method.addBodyLine(&quot;allCriteria = new ArrayList&lt;&gt;();&quot;); //$NON-NLS-1$</span>
+            } else {
+<span class="nc" id="L418">                method.addBodyLine(&quot;allCriteria = new ArrayList&lt;Criterion&gt;();&quot;); //$NON-NLS-1$</span>
             }
 
-<span class="fc" id="L462">            method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L463">            method.addBodyLine(&quot;return allCriteria;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L421">            strIter = criteriaLists.iterator();</span>
+<span class="fc bfc" id="L422" title="All 2 branches covered.">            while (strIter.hasNext()) {</span>
+<span class="fc" id="L423">                method.addBodyLine(String.format(&quot;allCriteria.addAll(%s);&quot;, strIter.next())); //$NON-NLS-1$</span>
+            }
+
+<span class="fc" id="L426">            method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L427">            method.addBodyLine(&quot;return allCriteria;&quot;); //$NON-NLS-1$</span>
         }
-<span class="fc" id="L465">        answer.addMethod(method);</span>
+<span class="fc" id="L429">        answer.addMethod(method);</span>
 
         // now we need to generate the methods that will be used in the SqlMap
         // to generate the dynamic where clause
-<span class="fc" id="L469">        topLevelClass.addImportedType(FullyQualifiedJavaType</span>
-<span class="fc" id="L470">                .getNewListInstance());</span>
-<span class="fc" id="L471">        topLevelClass.addImportedType(FullyQualifiedJavaType</span>
-<span class="fc" id="L472">                .getNewArrayListInstance());</span>
+<span class="fc" id="L433">        topLevelClass.addImportedType(FullyQualifiedJavaType</span>
+<span class="fc" id="L434">                .getNewListInstance());</span>
+<span class="fc" id="L435">        topLevelClass.addImportedType(FullyQualifiedJavaType</span>
+<span class="fc" id="L436">                .getNewArrayListInstance());</span>
 
-<span class="fc" id="L474">        field = new Field();</span>
-<span class="fc" id="L475">        field.setVisibility(JavaVisibility.PROTECTED);</span>
-<span class="fc" id="L476">        FullyQualifiedJavaType listOfCriterion = new FullyQualifiedJavaType(</span>
+<span class="fc" id="L438">        FullyQualifiedJavaType listOfCriterion = new FullyQualifiedJavaType(</span>
                 &quot;java.util.List&lt;Criterion&gt;&quot;); //$NON-NLS-1$
-<span class="fc" id="L478">        field.setType(listOfCriterion);</span>
-<span class="fc" id="L479">        field.setName(&quot;criteria&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L480">        answer.addField(field);</span>
+<span class="fc" id="L440">        field = new Field(&quot;criteria&quot;, listOfCriterion); //$NON-NLS-1$</span>
+<span class="fc" id="L441">        field.setVisibility(JavaVisibility.PROTECTED);</span>
+<span class="fc" id="L442">        answer.addField(field);</span>
 
-<span class="fc" id="L482">        method = new Method();</span>
-<span class="fc" id="L483">        method.setVisibility(JavaVisibility.PUBLIC);</span>
-<span class="fc" id="L484">        method.setReturnType(field.getType());</span>
-<span class="fc" id="L485">        method.setName(getGetterMethodName(field.getName(), field</span>
-<span class="fc" id="L486">                .getType()));</span>
-<span class="fc" id="L487">        method.addBodyLine(&quot;return criteria;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L488">        answer.addMethod(method);</span>
+<span class="fc" id="L444">        method = new Method(getGetterMethodName(field.getName(), field</span>
+<span class="fc" id="L445">                .getType()));</span>
+<span class="fc" id="L446">        method.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L447">        method.setReturnType(field.getType());</span>
+<span class="fc" id="L448">        method.addBodyLine(&quot;return criteria;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L449">        answer.addMethod(method);</span>
 
         // now add the methods for simplifying the individual field set methods
-<span class="fc" id="L491">        method = new Method();</span>
-<span class="fc" id="L492">        method.setVisibility(JavaVisibility.PROTECTED);</span>
-<span class="fc" id="L493">        method.setName(&quot;addCriterion&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L494">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L495">                .getStringInstance(), &quot;condition&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L496">        method.addBodyLine(&quot;if (condition == null) {&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L497">        method</span>
-<span class="fc" id="L498">                .addBodyLine(&quot;throw new RuntimeException(\&quot;Value for condition cannot be null\&quot;);&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L499">        method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L500">        method.addBodyLine(&quot;criteria.add(new Criterion(condition));&quot;); //$NON-NLS-1$</span>
-<span class="fc bfc" id="L501" title="All 2 branches covered.">        if (criteriaLists.size() &gt; 1) {</span>
-<span class="fc" id="L502">            method.addBodyLine(&quot;allCriteria = null;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L452">        method = new Method(&quot;addCriterion&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L453">        method.setVisibility(JavaVisibility.PROTECTED);</span>
+<span class="fc" id="L454">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L455">                .getStringInstance(), &quot;condition&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L456">        method.addBodyLine(&quot;if (condition == null) {&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L457">        method</span>
+<span class="fc" id="L458">                .addBodyLine(&quot;throw new RuntimeException(\&quot;Value for condition cannot be null\&quot;);&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L459">        method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L460">        method.addBodyLine(&quot;criteria.add(new Criterion(condition));&quot;); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L461" title="All 2 branches covered.">        if (criteriaLists.size() &gt; 1) {</span>
+<span class="fc" id="L462">            method.addBodyLine(&quot;allCriteria = null;&quot;); //$NON-NLS-1$</span>
         }
-<span class="fc" id="L504">        answer.addMethod(method);</span>
+<span class="fc" id="L464">        answer.addMethod(method);</span>
 
-<span class="fc" id="L506">        method = new Method();</span>
-<span class="fc" id="L507">        method.setVisibility(JavaVisibility.PROTECTED);</span>
-<span class="fc" id="L508">        method.setName(&quot;addCriterion&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L509">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L510">                .getStringInstance(), &quot;condition&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L511">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L512">                .getObjectInstance(), &quot;value&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L513">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L514">                .getStringInstance(), &quot;property&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L515">        method.addBodyLine(&quot;if (value == null) {&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L516">        method</span>
-<span class="fc" id="L517">                .addBodyLine(&quot;throw new RuntimeException(\&quot;Value for \&quot; + property + \&quot; cannot be null\&quot;);&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L518">        method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L519">        method.addBodyLine(&quot;criteria.add(new Criterion(condition, value));&quot;); //$NON-NLS-1$</span>
-<span class="fc bfc" id="L520" title="All 2 branches covered.">        if (criteriaLists.size() &gt; 1) {</span>
-<span class="fc" id="L521">            method.addBodyLine(&quot;allCriteria = null;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L466">        method = new Method(&quot;addCriterion&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L467">        method.setVisibility(JavaVisibility.PROTECTED);</span>
+<span class="fc" id="L468">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L469">                .getStringInstance(), &quot;condition&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L470">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L471">                .getObjectInstance(), &quot;value&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L472">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L473">                .getStringInstance(), &quot;property&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L474">        method.addBodyLine(&quot;if (value == null) {&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L475">        method.addBodyLine(</span>
+                &quot;throw new RuntimeException(\&quot;Value for \&quot; + property + \&quot; cannot be null\&quot;);&quot;); //$NON-NLS-1$
+<span class="fc" id="L477">        method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L478">        method.addBodyLine(&quot;criteria.add(new Criterion(condition, value));&quot;); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L479" title="All 2 branches covered.">        if (criteriaLists.size() &gt; 1) {</span>
+<span class="fc" id="L480">            method.addBodyLine(&quot;allCriteria = null;&quot;); //$NON-NLS-1$</span>
         }
-<span class="fc" id="L523">        answer.addMethod(method);</span>
+<span class="fc" id="L482">        answer.addMethod(method);</span>
 
-<span class="fc" id="L525">        method = new Method();</span>
-<span class="fc" id="L526">        method.setVisibility(JavaVisibility.PROTECTED);</span>
-<span class="fc" id="L527">        method.setName(&quot;addCriterion&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L528">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L529">                .getStringInstance(), &quot;condition&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L530">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L531">                .getObjectInstance(), &quot;value1&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L532">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L533">                .getObjectInstance(), &quot;value2&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L534">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L535">                .getStringInstance(), &quot;property&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L536">        method.addBodyLine(&quot;if (value1 == null || value2 == null) {&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L537">        method</span>
-<span class="fc" id="L538">                .addBodyLine(&quot;throw new RuntimeException(\&quot;Between values for \&quot; + property + \&quot; cannot be null\&quot;);&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L539">        method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L540">        method</span>
-<span class="fc" id="L541">                .addBodyLine(&quot;criteria.add(new Criterion(condition, value1, value2));&quot;); //$NON-NLS-1$</span>
-<span class="fc bfc" id="L542" title="All 2 branches covered.">        if (criteriaLists.size() &gt; 1) {</span>
-<span class="fc" id="L543">            method.addBodyLine(&quot;allCriteria = null;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L484">        method = new Method(&quot;addCriterion&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L485">        method.setVisibility(JavaVisibility.PROTECTED);</span>
+<span class="fc" id="L486">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L487">                .getStringInstance(), &quot;condition&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L488">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L489">                .getObjectInstance(), &quot;value1&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L490">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L491">                .getObjectInstance(), &quot;value2&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L492">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L493">                .getStringInstance(), &quot;property&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L494">        method.addBodyLine(&quot;if (value1 == null || value2 == null) {&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L495">        method.addBodyLine(</span>
+                &quot;throw new RuntimeException(\&quot;Between values for \&quot; + property + \&quot; cannot be null\&quot;);&quot;); //$NON-NLS-1$
+<span class="fc" id="L497">        method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L498">        method</span>
+<span class="fc" id="L499">                .addBodyLine(&quot;criteria.add(new Criterion(condition, value1, value2));&quot;); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L500" title="All 2 branches covered.">        if (criteriaLists.size() &gt; 1) {</span>
+<span class="fc" id="L501">            method.addBodyLine(&quot;allCriteria = null;&quot;); //$NON-NLS-1$</span>
         }
-<span class="fc" id="L545">        answer.addMethod(method);</span>
+<span class="fc" id="L503">        answer.addMethod(method);</span>
 
-<span class="fc" id="L547">        FullyQualifiedJavaType listOfDates = new FullyQualifiedJavaType(</span>
+<span class="fc" id="L505">        FullyQualifiedJavaType listOfDates = new FullyQualifiedJavaType(</span>
                 &quot;java.util.List&lt;java.util.Date&gt;&quot;); //$NON-NLS-1$
 
-<span class="fc bfc" id="L550" title="All 2 branches covered.">        if (introspectedTable.hasJDBCDateColumns()) {</span>
-<span class="fc" id="L551">            topLevelClass.addImportedType(FullyQualifiedJavaType</span>
-<span class="fc" id="L552">                    .getDateInstance());</span>
-<span class="fc" id="L553">            topLevelClass.addImportedType(FullyQualifiedJavaType</span>
-<span class="fc" id="L554">                    .getNewIteratorInstance());</span>
-<span class="fc" id="L555">            method = new Method();</span>
-<span class="fc" id="L556">            method.setVisibility(JavaVisibility.PROTECTED);</span>
-<span class="fc" id="L557">            method.setName(&quot;addCriterionForJDBCDate&quot;); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L508" title="All 2 branches covered.">        if (introspectedTable.hasJDBCDateColumns()) {</span>
+<span class="fc" id="L509">            topLevelClass.addImportedType(FullyQualifiedJavaType</span>
+<span class="fc" id="L510">                    .getDateInstance());</span>
+<span class="fc" id="L511">            topLevelClass.addImportedType(FullyQualifiedJavaType</span>
+<span class="fc" id="L512">                    .getNewIteratorInstance());</span>
+<span class="fc" id="L513">            method = new Method(&quot;addCriterionForJDBCDate&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L514">            method.setVisibility(JavaVisibility.PROTECTED);</span>
+<span class="fc" id="L515">            method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L516">                    .getStringInstance(), &quot;condition&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L517">            method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L518">                    .getDateInstance(), &quot;value&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L519">            method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L520">                    .getStringInstance(), &quot;property&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L521">            method.addBodyLine(&quot;if (value == null) {&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L522">            method.addBodyLine(</span>
+                    &quot;throw new RuntimeException(\&quot;Value for \&quot; + property + \&quot; cannot be null\&quot;);&quot;); //$NON-NLS-1$
+<span class="fc" id="L524">            method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L525">            method.addBodyLine(</span>
+                    &quot;addCriterion(condition, new java.sql.Date(value.getTime()), property);&quot;); //$NON-NLS-1$
+<span class="fc" id="L527">            answer.addMethod(method);</span>
+
+<span class="fc" id="L529">            method = new Method(&quot;addCriterionForJDBCDate&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L530">            method.setVisibility(JavaVisibility.PROTECTED);</span>
+<span class="fc" id="L531">            method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L532">                    .getStringInstance(), &quot;condition&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L533">            method.addParameter(new Parameter(listOfDates, &quot;values&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L534">            method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L535">                    .getStringInstance(), &quot;property&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L536">            method.addBodyLine(&quot;if (values == null || values.size() == 0) {&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L537">            method.addBodyLine(</span>
+                    &quot;throw new RuntimeException(\&quot;Value list for \&quot; + property + \&quot;&quot; //$NON-NLS-1$
+                    + &quot; cannot be null or empty\&quot;);&quot;); //$NON-NLS-1$
+<span class="fc" id="L540">            method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>
+<span class="pc bpc" id="L541" title="1 of 2 branches missed.">            if (context.isJava8Targeted()) {</span>
+<span class="fc" id="L542">                method.addBodyLine(&quot;List&lt;java.sql.Date&gt; dateList = new ArrayList&lt;&gt;();&quot;); //$NON-NLS-1$</span>
+            } else {
+<span class="nc" id="L544">                method.addBodyLine(&quot;List&lt;java.sql.Date&gt; dateList = new ArrayList&lt;java.sql.Date&gt;();&quot;); //$NON-NLS-1$</span>
+            }
+<span class="fc" id="L546">            method.addBodyLine(&quot;Iterator&lt;Date&gt; iter = values.iterator();&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L547">            method.addBodyLine(&quot;while (iter.hasNext()) {&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L548">            method</span>
+<span class="fc" id="L549">                    .addBodyLine(&quot;dateList.add(new java.sql.Date(iter.next().getTime()));&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L550">            method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L551">            method.addBodyLine(&quot;addCriterion(condition, dateList, property);&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L552">            answer.addMethod(method);</span>
+
+<span class="fc" id="L554">            method = new Method(&quot;addCriterionForJDBCDate&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L555">            method.setVisibility(JavaVisibility.PROTECTED);</span>
+<span class="fc" id="L556">            method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L557">                    .getStringInstance(), &quot;condition&quot;)); //$NON-NLS-1$</span>
 <span class="fc" id="L558">            method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L559">                    .getStringInstance(), &quot;condition&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L559">                    .getDateInstance(), &quot;value1&quot;)); //$NON-NLS-1$</span>
 <span class="fc" id="L560">            method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L561">                    .getDateInstance(), &quot;value&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L561">                    .getDateInstance(), &quot;value2&quot;)); //$NON-NLS-1$</span>
 <span class="fc" id="L562">            method.addParameter(new Parameter(FullyQualifiedJavaType</span>
 <span class="fc" id="L563">                    .getStringInstance(), &quot;property&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L564">            method.addBodyLine(&quot;if (value == null) {&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L565">            method</span>
-<span class="fc" id="L566">                    .addBodyLine(&quot;throw new RuntimeException(\&quot;Value for \&quot; + property + \&quot; cannot be null\&quot;);&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L567">            method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L568">            method</span>
-<span class="fc" id="L569">                    .addBodyLine(&quot;addCriterion(condition, new java.sql.Date(value.getTime()), property);&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L570">            answer.addMethod(method);</span>
+<span class="fc" id="L564">            method.addBodyLine(&quot;if (value1 == null || value2 == null) {&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L565">            method.addBodyLine(</span>
+                    &quot;throw new RuntimeException(\&quot;Between values for \&quot; + property + \&quot;&quot; //$NON-NLS-1$
+                    + &quot; cannot be null\&quot;);&quot;); //$NON-NLS-1$
+<span class="fc" id="L568">            method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L569">            method.addBodyLine(</span>
+                    &quot;addCriterion(condition, new java.sql.Date(value1.getTime()),&quot; //$NON-NLS-1$
+                    + &quot; new java.sql.Date(value2.getTime()), property);&quot;); //$NON-NLS-1$
+<span class="fc" id="L572">            answer.addMethod(method);</span>
+        }
 
-<span class="fc" id="L572">            method = new Method();</span>
-<span class="fc" id="L573">            method.setVisibility(JavaVisibility.PROTECTED);</span>
-<span class="fc" id="L574">            method.setName(&quot;addCriterionForJDBCDate&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L575">            method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L576">                    .getStringInstance(), &quot;condition&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L577">            method.addParameter(new Parameter(listOfDates, &quot;values&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L578">            method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L579">                    .getStringInstance(), &quot;property&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L580">            method.addBodyLine(&quot;if (values == null || values.size() == 0) {&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L581">            method</span>
-<span class="fc" id="L582">                    .addBodyLine(&quot;throw new RuntimeException(\&quot;Value list for \&quot; + property + \&quot; cannot be null or empty\&quot;);&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L583">            method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L584">            method</span>
-<span class="fc" id="L585">                    .addBodyLine(&quot;List&lt;java.sql.Date&gt; dateList = new ArrayList&lt;java.sql.Date&gt;();&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L586">            method.addBodyLine(&quot;Iterator&lt;Date&gt; iter = values.iterator();&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L587">            method.addBodyLine(&quot;while (iter.hasNext()) {&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L588">            method</span>
-<span class="fc" id="L589">                    .addBodyLine(&quot;dateList.add(new java.sql.Date(iter.next().getTime()));&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L590">            method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L591">            method.addBodyLine(&quot;addCriterion(condition, dateList, property);&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L592">            answer.addMethod(method);</span>
+<span class="fc bfc" id="L575" title="All 2 branches covered.">        if (introspectedTable.hasJDBCTimeColumns()) {</span>
+<span class="fc" id="L576">            topLevelClass.addImportedType(FullyQualifiedJavaType</span>
+<span class="fc" id="L577">                    .getDateInstance());</span>
+<span class="fc" id="L578">            topLevelClass.addImportedType(FullyQualifiedJavaType</span>
+<span class="fc" id="L579">                    .getNewIteratorInstance());</span>
+<span class="fc" id="L580">            method = new Method(&quot;addCriterionForJDBCTime&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L581">            method.setVisibility(JavaVisibility.PROTECTED);</span>
+<span class="fc" id="L582">            method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L583">                    .getStringInstance(), &quot;condition&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L584">            method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L585">                    .getDateInstance(), &quot;value&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L586">            method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L587">                    .getStringInstance(), &quot;property&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L588">            method.addBodyLine(&quot;if (value == null) {&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L589">            method.addBodyLine(</span>
+                    &quot;throw new RuntimeException(\&quot;Value for \&quot; + property + \&quot; cannot be null\&quot;);&quot;); //$NON-NLS-1$
+<span class="fc" id="L591">            method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L592">            method.addBodyLine(</span>
+                    &quot;addCriterion(condition, new java.sql.Time(value.getTime()), property);&quot;); //$NON-NLS-1$
+<span class="fc" id="L594">            answer.addMethod(method);</span>
 
-<span class="fc" id="L594">            method = new Method();</span>
-<span class="fc" id="L595">            method.setVisibility(JavaVisibility.PROTECTED);</span>
-<span class="fc" id="L596">            method.setName(&quot;addCriterionForJDBCDate&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L597">            method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L598">                    .getStringInstance(), &quot;condition&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L599">            method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L600">                    .getDateInstance(), &quot;value1&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L596">            method = new Method(&quot;addCriterionForJDBCTime&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L597">            method.setVisibility(JavaVisibility.PROTECTED);</span>
+<span class="fc" id="L598">            method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L599">                    .getStringInstance(), &quot;condition&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L600">            method.addParameter(new Parameter(listOfDates, &quot;values&quot;)); //$NON-NLS-1$</span>
 <span class="fc" id="L601">            method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L602">                    .getDateInstance(), &quot;value2&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L603">            method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L604">                    .getStringInstance(), &quot;property&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L605">            method.addBodyLine(&quot;if (value1 == null || value2 == null) {&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L606">            method</span>
-<span class="fc" id="L607">                    .addBodyLine(&quot;throw new RuntimeException(\&quot;Between values for \&quot; + property + \&quot; cannot be null\&quot;);&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L608">            method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L609">            method</span>
-<span class="fc" id="L610">                    .addBodyLine(&quot;addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L611">            answer.addMethod(method);</span>
+<span class="fc" id="L602">                    .getStringInstance(), &quot;property&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L603">            method.addBodyLine(&quot;if (values == null || values.size() == 0) {&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L604">            method.addBodyLine(</span>
+                    &quot;throw new RuntimeException(\&quot;Value list for \&quot; + property + \&quot;&quot; //$NON-NLS-1$
+                    + &quot; cannot be null or empty\&quot;);&quot;); //$NON-NLS-1$
+<span class="fc" id="L607">            method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>
+<span class="pc bpc" id="L608" title="1 of 2 branches missed.">            if (context.isJava8Targeted()) {</span>
+<span class="fc" id="L609">                method.addBodyLine(&quot;List&lt;java.sql.Time&gt; timeList = new ArrayList&lt;&gt;();&quot;); //$NON-NLS-1$</span>
+            } else {
+<span class="nc" id="L611">                method.addBodyLine(&quot;List&lt;java.sql.Time&gt; timeList = new ArrayList&lt;java.sql.Time&gt;();&quot;); //$NON-NLS-1$</span>
+            }
+<span class="fc" id="L613">            method.addBodyLine(&quot;Iterator&lt;Date&gt; iter = values.iterator();&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L614">            method.addBodyLine(&quot;while (iter.hasNext()) {&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L615">            method</span>
+<span class="fc" id="L616">                    .addBodyLine(&quot;timeList.add(new java.sql.Time(iter.next().getTime()));&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L617">            method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L618">            method.addBodyLine(&quot;addCriterion(condition, timeList, property);&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L619">            answer.addMethod(method);</span>
+
+<span class="fc" id="L621">            method = new Method(&quot;addCriterionForJDBCTime&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L622">            method.setVisibility(JavaVisibility.PROTECTED);</span>
+<span class="fc" id="L623">            method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L624">                    .getStringInstance(), &quot;condition&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L625">            method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L626">                    .getDateInstance(), &quot;value1&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L627">            method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L628">                    .getDateInstance(), &quot;value2&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L629">            method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L630">                    .getStringInstance(), &quot;property&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L631">            method.addBodyLine(&quot;if (value1 == null || value2 == null) {&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L632">            method.addBodyLine(</span>
+                    &quot;throw new RuntimeException(\&quot;Between values for \&quot; + property + \&quot;&quot; //$NON-NLS-1$
+                    + &quot; cannot be null\&quot;);&quot;); //$NON-NLS-1$
+<span class="fc" id="L635">            method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L636">            method.addBodyLine(</span>
+                    &quot;addCriterion(condition, new java.sql.Time(value1.getTime()),&quot; //$NON-NLS-1$
+                    + &quot; new java.sql.Time(value2.getTime()), property);&quot;); //$NON-NLS-1$
+<span class="fc" id="L639">            answer.addMethod(method);</span>
         }
 
-<span class="fc bfc" id="L614" title="All 2 branches covered.">        if (introspectedTable.hasJDBCTimeColumns()) {</span>
-<span class="fc" id="L615">            topLevelClass.addImportedType(FullyQualifiedJavaType</span>
-<span class="fc" id="L616">                    .getDateInstance());</span>
-<span class="fc" id="L617">            topLevelClass.addImportedType(FullyQualifiedJavaType</span>
-<span class="fc" id="L618">                    .getNewIteratorInstance());</span>
-<span class="fc" id="L619">            method = new Method();</span>
-<span class="fc" id="L620">            method.setVisibility(JavaVisibility.PROTECTED);</span>
-<span class="fc" id="L621">            method.setName(&quot;addCriterionForJDBCTime&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L622">            method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L623">                    .getStringInstance(), &quot;condition&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L624">            method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L625">                    .getDateInstance(), &quot;value&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L626">            method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L627">                    .getStringInstance(), &quot;property&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L628">            method.addBodyLine(&quot;if (value == null) {&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L629">            method</span>
-<span class="fc" id="L630">                    .addBodyLine(&quot;throw new RuntimeException(\&quot;Value for \&quot; + property + \&quot; cannot be null\&quot;);&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L631">            method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L632">            method</span>
-<span class="fc" id="L633">                    .addBodyLine(&quot;addCriterion(condition, new java.sql.Time(value.getTime()), property);&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L634">            answer.addMethod(method);</span>
-
-<span class="fc" id="L636">            method = new Method();</span>
-<span class="fc" id="L637">            method.setVisibility(JavaVisibility.PROTECTED);</span>
-<span class="fc" id="L638">            method.setName(&quot;addCriterionForJDBCTime&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L639">            method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L640">                    .getStringInstance(), &quot;condition&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L641">            method.addParameter(new Parameter(listOfDates, &quot;values&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L642">            method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L643">                    .getStringInstance(), &quot;property&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L644">            method.addBodyLine(&quot;if (values == null || values.size() == 0) {&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L645">            method</span>
-<span class="fc" id="L646">                    .addBodyLine(&quot;throw new RuntimeException(\&quot;Value list for \&quot; + property + \&quot; cannot be null or empty\&quot;);&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L647">            method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L648">            method</span>
-<span class="fc" id="L649">                    .addBodyLine(&quot;List&lt;java.sql.Time&gt; timeList = new ArrayList&lt;java.sql.Time&gt;();&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L650">            method.addBodyLine(&quot;Iterator&lt;Date&gt; iter = values.iterator();&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L651">            method.addBodyLine(&quot;while (iter.hasNext()) {&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L652">            method</span>
-<span class="fc" id="L653">                    .addBodyLine(&quot;timeList.add(new java.sql.Time(iter.next().getTime()));&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L654">            method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L655">            method.addBodyLine(&quot;addCriterion(condition, timeList, property);&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L656">            answer.addMethod(method);</span>
-
-<span class="fc" id="L658">            method = new Method();</span>
-<span class="fc" id="L659">            method.setVisibility(JavaVisibility.PROTECTED);</span>
-<span class="fc" id="L660">            method.setName(&quot;addCriterionForJDBCTime&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L661">            method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L662">                    .getStringInstance(), &quot;condition&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L663">            method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L664">                    .getDateInstance(), &quot;value1&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L665">            method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L666">                    .getDateInstance(), &quot;value2&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L667">            method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L668">                    .getStringInstance(), &quot;property&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L669">            method.addBodyLine(&quot;if (value1 == null || value2 == null) {&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L670">            method</span>
-<span class="fc" id="L671">                    .addBodyLine(&quot;throw new RuntimeException(\&quot;Between values for \&quot; + property + \&quot; cannot be null\&quot;);&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L672">            method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L673">            method</span>
-<span class="fc" id="L674">                    .addBodyLine(&quot;addCriterion(condition, new java.sql.Time(value1.getTime()), new java.sql.Time(value2.getTime()), property);&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L675">            answer.addMethod(method);</span>
-        }
-
-<span class="fc bfc" id="L678" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable</span>
-<span class="fc" id="L679">                .getNonBLOBColumns()) {</span>
-<span class="fc" id="L680">            topLevelClass.addImportedType(introspectedColumn</span>
-<span class="fc" id="L681">                    .getFullyQualifiedJavaType());</span>
+<span class="fc bfc" id="L642" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable</span>
+<span class="fc" id="L643">                .getNonBLOBColumns()) {</span>
+<span class="fc" id="L644">            topLevelClass.addImportedType(introspectedColumn</span>
+<span class="fc" id="L645">                    .getFullyQualifiedJavaType());</span>
 
             // here we need to add the individual methods for setting the
             // conditions for a field
-<span class="fc" id="L685">            answer.addMethod(getSetNullMethod(introspectedColumn));</span>
-<span class="fc" id="L686">            answer.addMethod(getSetNotNullMethod(introspectedColumn));</span>
-<span class="fc" id="L687">            answer.addMethod(getSetEqualMethod(introspectedColumn));</span>
-<span class="fc" id="L688">            answer.addMethod(getSetNotEqualMethod(introspectedColumn));</span>
-<span class="fc" id="L689">            answer.addMethod(getSetGreaterThanMethod(introspectedColumn));</span>
-<span class="fc" id="L690">            answer</span>
-<span class="fc" id="L691">                    .addMethod(getSetGreaterThenOrEqualMethod(introspectedColumn));</span>
-<span class="fc" id="L692">            answer.addMethod(getSetLessThanMethod(introspectedColumn));</span>
-<span class="fc" id="L693">            answer.addMethod(getSetLessThanOrEqualMethod(introspectedColumn));</span>
+<span class="fc" id="L649">            answer.addMethod(getSetNullMethod(introspectedColumn));</span>
+<span class="fc" id="L650">            answer.addMethod(getSetNotNullMethod(introspectedColumn));</span>
+<span class="fc" id="L651">            answer.addMethod(getSetEqualMethod(introspectedColumn));</span>
+<span class="fc" id="L652">            answer.addMethod(getSetNotEqualMethod(introspectedColumn));</span>
+<span class="fc" id="L653">            answer.addMethod(getSetGreaterThanMethod(introspectedColumn));</span>
+<span class="fc" id="L654">            answer</span>
+<span class="fc" id="L655">                    .addMethod(getSetGreaterThenOrEqualMethod(introspectedColumn));</span>
+<span class="fc" id="L656">            answer.addMethod(getSetLessThanMethod(introspectedColumn));</span>
+<span class="fc" id="L657">            answer.addMethod(getSetLessThanOrEqualMethod(introspectedColumn));</span>
 
-<span class="fc bfc" id="L695" title="All 2 branches covered.">            if (introspectedColumn.isJdbcCharacterColumn()) {</span>
-<span class="fc" id="L696">                answer.addMethod(getSetLikeMethod(introspectedColumn));</span>
-<span class="fc" id="L697">                answer.addMethod(getSetNotLikeMethod(introspectedColumn));</span>
+<span class="fc bfc" id="L659" title="All 2 branches covered.">            if (introspectedColumn.isJdbcCharacterColumn()) {</span>
+<span class="fc" id="L660">                answer.addMethod(getSetLikeMethod(introspectedColumn));</span>
+<span class="fc" id="L661">                answer.addMethod(getSetNotLikeMethod(introspectedColumn));</span>
             }
 
-<span class="fc" id="L700">            answer.addMethod(getSetInOrNotInMethod(introspectedColumn, true));</span>
-<span class="fc" id="L701">            answer.addMethod(getSetInOrNotInMethod(introspectedColumn, false));</span>
-<span class="fc" id="L702">            answer.addMethod(getSetBetweenOrNotBetweenMethod(</span>
+<span class="fc" id="L664">            answer.addMethod(getSetInOrNotInMethod(introspectedColumn, true));</span>
+<span class="fc" id="L665">            answer.addMethod(getSetInOrNotInMethod(introspectedColumn, false));</span>
+<span class="fc" id="L666">            answer.addMethod(getSetBetweenOrNotBetweenMethod(</span>
                     introspectedColumn, true));
-<span class="fc" id="L704">            answer.addMethod(getSetBetweenOrNotBetweenMethod(</span>
+<span class="fc" id="L668">            answer.addMethod(getSetBetweenOrNotBetweenMethod(</span>
                     introspectedColumn, false));
-<span class="fc" id="L706">        }</span>
+<span class="fc" id="L670">        }</span>
 
-<span class="fc" id="L708">        return answer;</span>
+<span class="fc" id="L672">        return answer;</span>
     }
 
     private Method getSetNullMethod(IntrospectedColumn introspectedColumn) {
-<span class="fc" id="L712">        return getNoValueMethod(introspectedColumn, &quot;IsNull&quot;, &quot;is null&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L676">        return getNoValueMethod(introspectedColumn, &quot;IsNull&quot;, &quot;is null&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
     }
 
     private Method getSetNotNullMethod(IntrospectedColumn introspectedColumn) {
-<span class="fc" id="L716">        return getNoValueMethod(introspectedColumn, &quot;IsNotNull&quot;, &quot;is not null&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L680">        return getNoValueMethod(introspectedColumn, &quot;IsNotNull&quot;, &quot;is not null&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
     }
 
     private Method getSetEqualMethod(IntrospectedColumn introspectedColumn) {
-<span class="fc" id="L720">        return getSingleValueMethod(introspectedColumn, &quot;EqualTo&quot;, &quot;=&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L684">        return getSingleValueMethod(introspectedColumn, &quot;EqualTo&quot;, &quot;=&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
     }
 
     private Method getSetNotEqualMethod(IntrospectedColumn introspectedColumn) {
-<span class="fc" id="L724">        return getSingleValueMethod(introspectedColumn, &quot;NotEqualTo&quot;, &quot;&lt;&gt;&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L688">        return getSingleValueMethod(introspectedColumn, &quot;NotEqualTo&quot;, &quot;&lt;&gt;&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
     }
 
     private Method getSetGreaterThanMethod(IntrospectedColumn introspectedColumn) {
-<span class="fc" id="L728">        return getSingleValueMethod(introspectedColumn, &quot;GreaterThan&quot;, &quot;&gt;&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L692">        return getSingleValueMethod(introspectedColumn, &quot;GreaterThan&quot;, &quot;&gt;&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
     }
 
     private Method getSetGreaterThenOrEqualMethod(
             IntrospectedColumn introspectedColumn) {
-<span class="fc" id="L733">        return getSingleValueMethod(introspectedColumn,</span>
+<span class="fc" id="L697">        return getSingleValueMethod(introspectedColumn,</span>
                 &quot;GreaterThanOrEqualTo&quot;, &quot;&gt;=&quot;); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     private Method getSetLessThanMethod(IntrospectedColumn introspectedColumn) {
-<span class="fc" id="L738">        return getSingleValueMethod(introspectedColumn, &quot;LessThan&quot;, &quot;&lt;&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L702">        return getSingleValueMethod(introspectedColumn, &quot;LessThan&quot;, &quot;&lt;&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
     }
 
     private Method getSetLessThanOrEqualMethod(
             IntrospectedColumn introspectedColumn) {
-<span class="fc" id="L743">        return getSingleValueMethod(introspectedColumn,</span>
+<span class="fc" id="L707">        return getSingleValueMethod(introspectedColumn,</span>
                 &quot;LessThanOrEqualTo&quot;, &quot;&lt;=&quot;); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     private Method getSetLikeMethod(IntrospectedColumn introspectedColumn) {
-<span class="fc" id="L748">        return getSingleValueMethod(introspectedColumn, &quot;Like&quot;, &quot;like&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L712">        return getSingleValueMethod(introspectedColumn, &quot;Like&quot;, &quot;like&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
     }
 
     private Method getSetNotLikeMethod(IntrospectedColumn introspectedColumn) {
-<span class="fc" id="L752">        return getSingleValueMethod(introspectedColumn, &quot;NotLike&quot;, &quot;not like&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L716">        return getSingleValueMethod(introspectedColumn, &quot;NotLike&quot;, &quot;not like&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
     }
 
     private Method getSingleValueMethod(IntrospectedColumn introspectedColumn,
             String nameFragment, String operator) {
-<span class="fc" id="L757">        Method method = new Method();</span>
-<span class="fc" id="L758">        method.setVisibility(JavaVisibility.PUBLIC);</span>
-<span class="fc" id="L759">        method.addParameter(new Parameter(introspectedColumn</span>
-<span class="fc" id="L760">                .getFullyQualifiedJavaType(), &quot;value&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L761">        StringBuilder sb = new StringBuilder();</span>
-<span class="fc" id="L762">        sb.append(introspectedColumn.getJavaProperty());</span>
-<span class="fc" id="L763">        sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));</span>
-<span class="fc" id="L764">        sb.insert(0, &quot;and&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L765">        sb.append(nameFragment);</span>
-<span class="fc" id="L766">        method.setName(sb.toString());</span>
-<span class="fc" id="L767">        method.setReturnType(FullyQualifiedJavaType.getCriteriaInstance());</span>
-<span class="fc" id="L768">        sb.setLength(0);</span>
+        
+<span class="fc" id="L722">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L723">        sb.append(introspectedColumn.getJavaProperty());</span>
+<span class="fc" id="L724">        sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));</span>
+<span class="fc" id="L725">        sb.insert(0, &quot;and&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L726">        sb.append(nameFragment);</span>
 
-<span class="fc bfc" id="L770" title="All 2 branches covered.">        if (introspectedColumn.isJDBCDateColumn()) {</span>
-<span class="fc" id="L771">            sb.append(&quot;addCriterionForJDBCDate(\&quot;&quot;); //$NON-NLS-1$</span>
-<span class="fc bfc" id="L772" title="All 2 branches covered.">        } else if (introspectedColumn.isJDBCTimeColumn()) {</span>
-<span class="fc" id="L773">            sb.append(&quot;addCriterionForJDBCTime(\&quot;&quot;); //$NON-NLS-1$</span>
-<span class="fc bfc" id="L774" title="All 2 branches covered.">        } else if (stringHasValue(introspectedColumn</span>
-<span class="fc" id="L775">                .getTypeHandler())) {</span>
-<span class="fc" id="L776">            sb.append(&quot;add&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L777">            sb.append(introspectedColumn.getJavaProperty());</span>
-<span class="fc" id="L778">            sb.setCharAt(3, Character.toUpperCase(sb.charAt(3)));</span>
-<span class="fc" id="L779">            sb.append(&quot;Criterion(\&quot;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L728">        Method method = new Method(sb.toString());</span>
+<span class="fc" id="L729">        method.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L730">        method.addParameter(new Parameter(introspectedColumn</span>
+<span class="fc" id="L731">                .getFullyQualifiedJavaType(), &quot;value&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L732">        method.setReturnType(FullyQualifiedJavaType.getCriteriaInstance());</span>
+<span class="fc" id="L733">        sb.setLength(0);</span>
+
+<span class="fc bfc" id="L735" title="All 2 branches covered.">        if (introspectedColumn.isJDBCDateColumn()) {</span>
+<span class="fc" id="L736">            sb.append(&quot;addCriterionForJDBCDate(\&quot;&quot;); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L737" title="All 2 branches covered.">        } else if (introspectedColumn.isJDBCTimeColumn()) {</span>
+<span class="fc" id="L738">            sb.append(&quot;addCriterionForJDBCTime(\&quot;&quot;); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L739" title="All 2 branches covered.">        } else if (stringHasValue(introspectedColumn</span>
+<span class="fc" id="L740">                .getTypeHandler())) {</span>
+<span class="fc" id="L741">            sb.append(&quot;add&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L742">            sb.append(introspectedColumn.getJavaProperty());</span>
+<span class="fc" id="L743">            sb.setCharAt(3, Character.toUpperCase(sb.charAt(3)));</span>
+<span class="fc" id="L744">            sb.append(&quot;Criterion(\&quot;&quot;); //$NON-NLS-1$</span>
         } else {
-<span class="fc" id="L781">            sb.append(&quot;addCriterion(\&quot;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L746">            sb.append(&quot;addCriterion(\&quot;&quot;); //$NON-NLS-1$</span>
         }
 
-<span class="fc" id="L784">        sb.append(MyBatis3FormattingUtilities</span>
-<span class="fc" id="L785">                .getAliasedActualColumnName(introspectedColumn));</span>
-<span class="fc" id="L786">        sb.append(' ');</span>
-<span class="fc" id="L787">        sb.append(operator);</span>
-<span class="fc" id="L788">        sb.append(&quot;\&quot;, &quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L789">        sb.append(&quot;value&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L790">        sb.append(&quot;, \&quot;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L791">        sb.append(introspectedColumn.getJavaProperty());</span>
-<span class="fc" id="L792">        sb.append(&quot;\&quot;);&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L793">        method.addBodyLine(sb.toString());</span>
-<span class="fc" id="L794">        method.addBodyLine(&quot;return (Criteria) this;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L749">        sb.append(MyBatis3FormattingUtilities</span>
+<span class="fc" id="L750">                .getAliasedActualColumnName(introspectedColumn));</span>
+<span class="fc" id="L751">        sb.append(' ');</span>
+<span class="fc" id="L752">        sb.append(operator);</span>
+<span class="fc" id="L753">        sb.append(&quot;\&quot;, &quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L754">        sb.append(&quot;value&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L755">        sb.append(&quot;, \&quot;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L756">        sb.append(introspectedColumn.getJavaProperty());</span>
+<span class="fc" id="L757">        sb.append(&quot;\&quot;);&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L758">        method.addBodyLine(sb.toString());</span>
+<span class="fc" id="L759">        method.addBodyLine(&quot;return (Criteria) this;&quot;); //$NON-NLS-1$</span>
 
-<span class="fc" id="L796">        return method;</span>
+<span class="fc" id="L761">        return method;</span>
     }
 
     /**
-     * Generates methods that set between and not between conditions
+     * Generates methods that set between and not between conditions.
      * 
      * @param introspectedColumn the introspected column
      * @param betweenMethod true if between, else not between
@@ -805,56 +770,56 @@ public class ExampleGenerator extends AbstractJavaGenerator {
      */
     private Method getSetBetweenOrNotBetweenMethod(
             IntrospectedColumn introspectedColumn, boolean betweenMethod) {
-<span class="fc" id="L808">        Method method = new Method();</span>
-<span class="fc" id="L809">        method.setVisibility(JavaVisibility.PUBLIC);</span>
-<span class="fc" id="L810">        FullyQualifiedJavaType type = introspectedColumn</span>
-<span class="fc" id="L811">                .getFullyQualifiedJavaType();</span>
-
-<span class="fc" id="L813">        method.addParameter(new Parameter(type, &quot;value1&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L814">        method.addParameter(new Parameter(type, &quot;value2&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L815">        StringBuilder sb = new StringBuilder();</span>
-<span class="fc" id="L816">        sb.append(introspectedColumn.getJavaProperty());</span>
-<span class="fc" id="L817">        sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));</span>
-<span class="fc" id="L818">        sb.insert(0, &quot;and&quot;); //$NON-NLS-1$</span>
-<span class="fc bfc" id="L819" title="All 2 branches covered.">        if (betweenMethod) {</span>
-<span class="fc" id="L820">            sb.append(&quot;Between&quot;); //$NON-NLS-1$</span>
+        
+<span class="fc" id="L774">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L775">        sb.append(introspectedColumn.getJavaProperty());</span>
+<span class="fc" id="L776">        sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));</span>
+<span class="fc" id="L777">        sb.insert(0, &quot;and&quot;); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L778" title="All 2 branches covered.">        if (betweenMethod) {</span>
+<span class="fc" id="L779">            sb.append(&quot;Between&quot;); //$NON-NLS-1$</span>
         } else {
-<span class="fc" id="L822">            sb.append(&quot;NotBetween&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L781">            sb.append(&quot;NotBetween&quot;); //$NON-NLS-1$</span>
         }
-<span class="fc" id="L824">        method.setName(sb.toString());</span>
-<span class="fc" id="L825">        method.setReturnType(FullyQualifiedJavaType.getCriteriaInstance());</span>
-<span class="fc" id="L826">        sb.setLength(0);</span>
+<span class="fc" id="L783">        Method method = new Method(sb.toString());</span>
+<span class="fc" id="L784">        method.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L785">        FullyQualifiedJavaType type = introspectedColumn</span>
+<span class="fc" id="L786">                .getFullyQualifiedJavaType();</span>
 
-<span class="fc bfc" id="L828" title="All 2 branches covered.">        if (introspectedColumn.isJDBCDateColumn()) {</span>
-<span class="fc" id="L829">            sb.append(&quot;addCriterionForJDBCDate(\&quot;&quot;); //$NON-NLS-1$</span>
-<span class="fc bfc" id="L830" title="All 2 branches covered.">        } else if (introspectedColumn.isJDBCTimeColumn()) {</span>
-<span class="fc" id="L831">            sb.append(&quot;addCriterionForJDBCTime(\&quot;&quot;); //$NON-NLS-1$</span>
-<span class="fc bfc" id="L832" title="All 2 branches covered.">        } else if (stringHasValue(introspectedColumn</span>
-<span class="fc" id="L833">                .getTypeHandler())) {</span>
-<span class="fc" id="L834">            sb.append(&quot;add&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L835">            sb.append(introspectedColumn.getJavaProperty());</span>
-<span class="fc" id="L836">            sb.setCharAt(3, Character.toUpperCase(sb.charAt(3)));</span>
-<span class="fc" id="L837">            sb.append(&quot;Criterion(\&quot;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L788">        method.addParameter(new Parameter(type, &quot;value1&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L789">        method.addParameter(new Parameter(type, &quot;value2&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L790">        method.setReturnType(FullyQualifiedJavaType.getCriteriaInstance());</span>
+
+<span class="fc" id="L792">        sb.setLength(0);</span>
+<span class="fc bfc" id="L793" title="All 2 branches covered.">        if (introspectedColumn.isJDBCDateColumn()) {</span>
+<span class="fc" id="L794">            sb.append(&quot;addCriterionForJDBCDate(\&quot;&quot;); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L795" title="All 2 branches covered.">        } else if (introspectedColumn.isJDBCTimeColumn()) {</span>
+<span class="fc" id="L796">            sb.append(&quot;addCriterionForJDBCTime(\&quot;&quot;); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L797" title="All 2 branches covered.">        } else if (stringHasValue(introspectedColumn</span>
+<span class="fc" id="L798">                .getTypeHandler())) {</span>
+<span class="fc" id="L799">            sb.append(&quot;add&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L800">            sb.append(introspectedColumn.getJavaProperty());</span>
+<span class="fc" id="L801">            sb.setCharAt(3, Character.toUpperCase(sb.charAt(3)));</span>
+<span class="fc" id="L802">            sb.append(&quot;Criterion(\&quot;&quot;); //$NON-NLS-1$</span>
         } else {
-<span class="fc" id="L839">            sb.append(&quot;addCriterion(\&quot;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L804">            sb.append(&quot;addCriterion(\&quot;&quot;); //$NON-NLS-1$</span>
         }
 
-<span class="fc" id="L842">        sb.append(MyBatis3FormattingUtilities</span>
-<span class="fc" id="L843">                .getAliasedActualColumnName(introspectedColumn));</span>
-<span class="fc bfc" id="L844" title="All 2 branches covered.">        if (betweenMethod) {</span>
-<span class="fc" id="L845">            sb.append(&quot; between&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L807">        sb.append(MyBatis3FormattingUtilities</span>
+<span class="fc" id="L808">                .getAliasedActualColumnName(introspectedColumn));</span>
+<span class="fc bfc" id="L809" title="All 2 branches covered.">        if (betweenMethod) {</span>
+<span class="fc" id="L810">            sb.append(&quot; between&quot;); //$NON-NLS-1$</span>
         } else {
-<span class="fc" id="L847">            sb.append(&quot; not between&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L812">            sb.append(&quot; not between&quot;); //$NON-NLS-1$</span>
         }
-<span class="fc" id="L849">        sb.append(&quot;\&quot;, &quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L850">        sb.append(&quot;value1, value2&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L851">        sb.append(&quot;, \&quot;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L852">        sb.append(introspectedColumn.getJavaProperty());</span>
-<span class="fc" id="L853">        sb.append(&quot;\&quot;);&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L854">        method.addBodyLine(sb.toString());</span>
-<span class="fc" id="L855">        method.addBodyLine(&quot;return (Criteria) this;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L814">        sb.append(&quot;\&quot;, &quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L815">        sb.append(&quot;value1, value2&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L816">        sb.append(&quot;, \&quot;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L817">        sb.append(introspectedColumn.getJavaProperty());</span>
+<span class="fc" id="L818">        sb.append(&quot;\&quot;);&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L819">        method.addBodyLine(sb.toString());</span>
+<span class="fc" id="L820">        method.addBodyLine(&quot;return (Criteria) this;&quot;); //$NON-NLS-1$</span>
 
-<span class="fc" id="L857">        return method;</span>
+<span class="fc" id="L822">        return method;</span>
     }
 
     /**
@@ -868,85 +833,85 @@ public class ExampleGenerator extends AbstractJavaGenerator {
      */
     private Method getSetInOrNotInMethod(IntrospectedColumn introspectedColumn,
             boolean inMethod) {
-<span class="fc" id="L871">        Method method = new Method();</span>
-<span class="fc" id="L872">        method.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L836">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L837">        sb.append(introspectedColumn.getJavaProperty());</span>
+<span class="fc" id="L838">        sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));</span>
+<span class="fc" id="L839">        sb.insert(0, &quot;and&quot;); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L840" title="All 2 branches covered.">        if (inMethod) {</span>
+<span class="fc" id="L841">            sb.append(&quot;In&quot;); //$NON-NLS-1$</span>
+        } else {
+<span class="fc" id="L843">            sb.append(&quot;NotIn&quot;); //$NON-NLS-1$</span>
+        }
+<span class="fc" id="L845">        Method method = new Method(sb.toString());</span>
+<span class="fc" id="L846">        method.setVisibility(JavaVisibility.PUBLIC);</span>
         FullyQualifiedJavaType type = FullyQualifiedJavaType
-<span class="fc" id="L874">                .getNewListInstance();</span>
-<span class="fc bfc" id="L875" title="All 2 branches covered.">        if (introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {</span>
-<span class="fc" id="L876">            type.addTypeArgument(introspectedColumn.getFullyQualifiedJavaType()</span>
-<span class="fc" id="L877">                    .getPrimitiveTypeWrapper());</span>
+<span class="fc" id="L848">                .getNewListInstance();</span>
+<span class="fc bfc" id="L849" title="All 2 branches covered.">        if (introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {</span>
+<span class="fc" id="L850">            type.addTypeArgument(introspectedColumn.getFullyQualifiedJavaType()</span>
+<span class="fc" id="L851">                    .getPrimitiveTypeWrapper());</span>
         } else {
-<span class="fc" id="L879">            type</span>
-<span class="fc" id="L880">                    .addTypeArgument(introspectedColumn</span>
-<span class="fc" id="L881">                            .getFullyQualifiedJavaType());</span>
+<span class="fc" id="L853">            type</span>
+<span class="fc" id="L854">                    .addTypeArgument(introspectedColumn</span>
+<span class="fc" id="L855">                            .getFullyQualifiedJavaType());</span>
         }
 
-<span class="fc" id="L884">        method.addParameter(new Parameter(type, &quot;values&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L885">        StringBuilder sb = new StringBuilder();</span>
-<span class="fc" id="L886">        sb.append(introspectedColumn.getJavaProperty());</span>
-<span class="fc" id="L887">        sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));</span>
-<span class="fc" id="L888">        sb.insert(0, &quot;and&quot;); //$NON-NLS-1$</span>
-<span class="fc bfc" id="L889" title="All 2 branches covered.">        if (inMethod) {</span>
-<span class="fc" id="L890">            sb.append(&quot;In&quot;); //$NON-NLS-1$</span>
-        } else {
-<span class="fc" id="L892">            sb.append(&quot;NotIn&quot;); //$NON-NLS-1$</span>
-        }
-<span class="fc" id="L894">        method.setName(sb.toString());</span>
-<span class="fc" id="L895">        method.setReturnType(FullyQualifiedJavaType.getCriteriaInstance());</span>
-<span class="fc" id="L896">        sb.setLength(0);</span>
+<span class="fc" id="L858">        method.addParameter(new Parameter(type, &quot;values&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L859">        method.setReturnType(FullyQualifiedJavaType.getCriteriaInstance());</span>
 
-<span class="fc bfc" id="L898" title="All 2 branches covered.">        if (introspectedColumn.isJDBCDateColumn()) {</span>
-<span class="fc" id="L899">            sb.append(&quot;addCriterionForJDBCDate(\&quot;&quot;); //$NON-NLS-1$</span>
-<span class="fc bfc" id="L900" title="All 2 branches covered.">        } else if (introspectedColumn.isJDBCTimeColumn()) {</span>
-<span class="fc" id="L901">            sb.append(&quot;addCriterionForJDBCTime(\&quot;&quot;); //$NON-NLS-1$</span>
-<span class="fc bfc" id="L902" title="All 2 branches covered.">        } else if (stringHasValue(introspectedColumn</span>
-<span class="fc" id="L903">                .getTypeHandler())) {</span>
-<span class="fc" id="L904">            sb.append(&quot;add&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L905">            sb.append(introspectedColumn.getJavaProperty());</span>
-<span class="fc" id="L906">            sb.setCharAt(3, Character.toUpperCase(sb.charAt(3)));</span>
-<span class="fc" id="L907">            sb.append(&quot;Criterion(\&quot;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L861">        sb.setLength(0);</span>
+<span class="fc bfc" id="L862" title="All 2 branches covered.">        if (introspectedColumn.isJDBCDateColumn()) {</span>
+<span class="fc" id="L863">            sb.append(&quot;addCriterionForJDBCDate(\&quot;&quot;); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L864" title="All 2 branches covered.">        } else if (introspectedColumn.isJDBCTimeColumn()) {</span>
+<span class="fc" id="L865">            sb.append(&quot;addCriterionForJDBCTime(\&quot;&quot;); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L866" title="All 2 branches covered.">        } else if (stringHasValue(introspectedColumn</span>
+<span class="fc" id="L867">                .getTypeHandler())) {</span>
+<span class="fc" id="L868">            sb.append(&quot;add&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L869">            sb.append(introspectedColumn.getJavaProperty());</span>
+<span class="fc" id="L870">            sb.setCharAt(3, Character.toUpperCase(sb.charAt(3)));</span>
+<span class="fc" id="L871">            sb.append(&quot;Criterion(\&quot;&quot;); //$NON-NLS-1$</span>
         } else {
-<span class="fc" id="L909">            sb.append(&quot;addCriterion(\&quot;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L873">            sb.append(&quot;addCriterion(\&quot;&quot;); //$NON-NLS-1$</span>
         }
 
-<span class="fc" id="L912">        sb.append(MyBatis3FormattingUtilities</span>
-<span class="fc" id="L913">                .getAliasedActualColumnName(introspectedColumn));</span>
-<span class="fc bfc" id="L914" title="All 2 branches covered.">        if (inMethod) {</span>
-<span class="fc" id="L915">            sb.append(&quot; in&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L876">        sb.append(MyBatis3FormattingUtilities</span>
+<span class="fc" id="L877">                .getAliasedActualColumnName(introspectedColumn));</span>
+<span class="fc bfc" id="L878" title="All 2 branches covered.">        if (inMethod) {</span>
+<span class="fc" id="L879">            sb.append(&quot; in&quot;); //$NON-NLS-1$</span>
         } else {
-<span class="fc" id="L917">            sb.append(&quot; not in&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L881">            sb.append(&quot; not in&quot;); //$NON-NLS-1$</span>
         }
-<span class="fc" id="L919">        sb.append(&quot;\&quot;, values, \&quot;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L920">        sb.append(introspectedColumn.getJavaProperty());</span>
-<span class="fc" id="L921">        sb.append(&quot;\&quot;);&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L922">        method.addBodyLine(sb.toString());</span>
-<span class="fc" id="L923">        method.addBodyLine(&quot;return (Criteria) this;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L883">        sb.append(&quot;\&quot;, values, \&quot;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L884">        sb.append(introspectedColumn.getJavaProperty());</span>
+<span class="fc" id="L885">        sb.append(&quot;\&quot;);&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L886">        method.addBodyLine(sb.toString());</span>
+<span class="fc" id="L887">        method.addBodyLine(&quot;return (Criteria) this;&quot;); //$NON-NLS-1$</span>
 
-<span class="fc" id="L925">        return method;</span>
+<span class="fc" id="L889">        return method;</span>
     }
 
     private Method getNoValueMethod(IntrospectedColumn introspectedColumn,
             String nameFragment, String operator) {
-<span class="fc" id="L930">        Method method = new Method();</span>
-<span class="fc" id="L931">        method.setVisibility(JavaVisibility.PUBLIC);</span>
-<span class="fc" id="L932">        StringBuilder sb = new StringBuilder();</span>
-<span class="fc" id="L933">        sb.append(introspectedColumn.getJavaProperty());</span>
-<span class="fc" id="L934">        sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));</span>
-<span class="fc" id="L935">        sb.insert(0, &quot;and&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L936">        sb.append(nameFragment);</span>
-<span class="fc" id="L937">        method.setName(sb.toString());</span>
-<span class="fc" id="L938">        method.setReturnType(FullyQualifiedJavaType.getCriteriaInstance());</span>
-<span class="fc" id="L939">        sb.setLength(0);</span>
-<span class="fc" id="L940">        sb.append(&quot;addCriterion(\&quot;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L941">        sb.append(MyBatis3FormattingUtilities</span>
-<span class="fc" id="L942">                .getAliasedActualColumnName(introspectedColumn));</span>
-<span class="fc" id="L943">        sb.append(' ');</span>
-<span class="fc" id="L944">        sb.append(operator);</span>
-<span class="fc" id="L945">        sb.append(&quot;\&quot;);&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L946">        method.addBodyLine(sb.toString());</span>
-<span class="fc" id="L947">        method.addBodyLine(&quot;return (Criteria) this;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L894">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L895">        sb.append(introspectedColumn.getJavaProperty());</span>
+<span class="fc" id="L896">        sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));</span>
+<span class="fc" id="L897">        sb.insert(0, &quot;and&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L898">        sb.append(nameFragment);</span>
+<span class="fc" id="L899">        Method method = new Method(sb.toString());</span>
+        
+<span class="fc" id="L901">        method.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L902">        method.setReturnType(FullyQualifiedJavaType.getCriteriaInstance());</span>
+        
+<span class="fc" id="L904">        sb.setLength(0);</span>
+<span class="fc" id="L905">        sb.append(&quot;addCriterion(\&quot;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L906">        sb.append(MyBatis3FormattingUtilities</span>
+<span class="fc" id="L907">                .getAliasedActualColumnName(introspectedColumn));</span>
+<span class="fc" id="L908">        sb.append(' ');</span>
+<span class="fc" id="L909">        sb.append(operator);</span>
+<span class="fc" id="L910">        sb.append(&quot;\&quot;);&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L911">        method.addBodyLine(sb.toString());</span>
+<span class="fc" id="L912">        method.addBodyLine(&quot;return (Criteria) this;&quot;); //$NON-NLS-1$</span>
 
-<span class="fc" id="L949">        return method;</span>
+<span class="fc" id="L914">        return method;</span>
     }
 
     /**
@@ -961,95 +926,94 @@ public class ExampleGenerator extends AbstractJavaGenerator {
     private String addtypeHandledObjectsAndMethods(
             IntrospectedColumn introspectedColumn, Method constructor,
             InnerClass innerClass) {
-<span class="fc" id="L964">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L929">        StringBuilder sb = new StringBuilder();</span>
 
         // add new private field and public accessor in the class
-<span class="fc" id="L967">        sb.setLength(0);</span>
-<span class="fc" id="L968">        sb.append(introspectedColumn.getJavaProperty());</span>
-<span class="fc" id="L969">        sb.append(&quot;Criteria&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L970">        String answer = sb.toString();</span>
+<span class="fc" id="L932">        sb.setLength(0);</span>
+<span class="fc" id="L933">        sb.append(introspectedColumn.getJavaProperty());</span>
+<span class="fc" id="L934">        sb.append(&quot;Criteria&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L935">        String answer = sb.toString();</span>
 
-<span class="fc" id="L972">        Field field = new Field();</span>
-<span class="fc" id="L973">        field.setVisibility(JavaVisibility.PROTECTED);</span>
-<span class="fc" id="L974">        field.setType(new FullyQualifiedJavaType(&quot;java.util.List&lt;Criterion&gt;&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L975">        field.setName(answer);</span>
-<span class="fc" id="L976">        innerClass.addField(field);</span>
+<span class="fc" id="L937">        Field field = new Field(answer, new FullyQualifiedJavaType(&quot;java.util.List&lt;Criterion&gt;&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L938">        field.setVisibility(JavaVisibility.PROTECTED);</span>
+<span class="fc" id="L939">        innerClass.addField(field);</span>
 
-<span class="fc" id="L978">        Method method = new Method();</span>
-<span class="fc" id="L979">        method.setVisibility(JavaVisibility.PUBLIC);</span>
-<span class="fc" id="L980">        method.setReturnType(field.getType());</span>
-<span class="fc" id="L981">        method.setName(getGetterMethodName(field.getName(), field</span>
-<span class="fc" id="L982">                .getType()));</span>
-<span class="fc" id="L983">        sb.insert(0, &quot;return &quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L984">        sb.append(';');</span>
-<span class="fc" id="L985">        method.addBodyLine(sb.toString());</span>
-<span class="fc" id="L986">        innerClass.addMethod(method);</span>
+<span class="fc" id="L941">        Method method = new Method(getGetterMethodName(field.getName(), field</span>
+<span class="fc" id="L942">                .getType()));</span>
+<span class="fc" id="L943">        method.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L944">        method.setReturnType(field.getType());</span>
+<span class="fc" id="L945">        sb.insert(0, &quot;return &quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L946">        sb.append(';');</span>
+<span class="fc" id="L947">        method.addBodyLine(sb.toString());</span>
+<span class="fc" id="L948">        innerClass.addMethod(method);</span>
 
         // add constructor initialization
-<span class="fc" id="L989">        sb.setLength(0);</span>
-<span class="fc" id="L990">        sb.append(field.getName());</span>
-<span class="fc" id="L991">        sb.append(&quot; = new ArrayList&lt;Criterion&gt;();&quot;); //$NON-NLS-1$;</span>
-<span class="fc" id="L992">        constructor.addBodyLine(sb.toString());</span>
+<span class="fc" id="L951">        sb.setLength(0);</span>
+<span class="fc" id="L952">        sb.append(field.getName());</span>
+<span class="pc bpc" id="L953" title="1 of 2 branches missed.">        if (context.isJava8Targeted()) {</span>
+<span class="fc" id="L954">            sb.append(&quot; = new ArrayList&lt;&gt;();&quot;); //$NON-NLS-1$</span>
+        } else {
+<span class="nc" id="L956">            sb.append(&quot; = new ArrayList&lt;Criterion&gt;();&quot;); //$NON-NLS-1$</span>
+        }
+<span class="fc" id="L958">        constructor.addBodyLine(sb.toString());</span>
 
         // now add the methods for simplifying the individual field set methods
-<span class="fc" id="L995">        method = new Method();</span>
-<span class="fc" id="L996">        method.setVisibility(JavaVisibility.PROTECTED);</span>
-<span class="fc" id="L997">        sb.setLength(0);</span>
-<span class="fc" id="L998">        sb.append(&quot;add&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L999">        sb.append(introspectedColumn.getJavaProperty());</span>
-<span class="fc" id="L1000">        sb.setCharAt(3, Character.toUpperCase(sb.charAt(3)));</span>
-<span class="fc" id="L1001">        sb.append(&quot;Criterion&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L961">        sb.setLength(0);</span>
+<span class="fc" id="L962">        sb.append(&quot;add&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L963">        sb.append(introspectedColumn.getJavaProperty());</span>
+<span class="fc" id="L964">        sb.setCharAt(3, Character.toUpperCase(sb.charAt(3)));</span>
+<span class="fc" id="L965">        sb.append(&quot;Criterion&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L966">        method = new Method(sb.toString());</span>
+<span class="fc" id="L967">        method.setVisibility(JavaVisibility.PROTECTED);</span>
+<span class="fc" id="L968">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L969">                .getStringInstance(), &quot;condition&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L970">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L971">                .getObjectInstance(), &quot;value&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L972">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L973">                .getStringInstance(), &quot;property&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L974">        method.addBodyLine(&quot;if (value == null) {&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L975">        method.addBodyLine(</span>
+                &quot;throw new RuntimeException(\&quot;Value for \&quot; + property + \&quot; cannot be null\&quot;);&quot;); //$NON-NLS-1$
+<span class="fc" id="L977">        method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>
 
-<span class="fc" id="L1003">        method.setName(sb.toString());</span>
-<span class="fc" id="L1004">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L1005">                .getStringInstance(), &quot;condition&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L1006">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L1007">                .getObjectInstance(), &quot;value&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L1008">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L1009">                .getStringInstance(), &quot;property&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L1010">        method.addBodyLine(&quot;if (value == null) {&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L1011">        method</span>
-<span class="fc" id="L1012">                .addBodyLine(&quot;throw new RuntimeException(\&quot;Value for \&quot; + property + \&quot; cannot be null\&quot;);&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L1013">        method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L979">        method.addBodyLine(</span>
+<span class="fc" id="L980">                String.format(&quot;%s.add(new Criterion(condition, value, \&quot;%s\&quot;));&quot;, //$NON-NLS-1$</span>
+<span class="fc" id="L981">                        field.getName(), introspectedColumn.getTypeHandler()));</span>
+<span class="fc" id="L982">        method.addBodyLine(&quot;allCriteria = null;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L983">        innerClass.addMethod(method);</span>
 
-<span class="fc" id="L1015">        method.addBodyLine(</span>
-<span class="fc" id="L1016">                String.format(&quot;%s.add(new Criterion(condition, value, \&quot;%s\&quot;));&quot;, //$NON-NLS-1$</span>
-<span class="fc" id="L1017">                        field.getName(), introspectedColumn.getTypeHandler()));</span>
-<span class="fc" id="L1018">        method.addBodyLine(&quot;allCriteria = null;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L1019">        innerClass.addMethod(method);</span>
+<span class="fc" id="L985">        sb.setLength(0);</span>
+<span class="fc" id="L986">        sb.append(&quot;add&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L987">        sb.append(introspectedColumn.getJavaProperty());</span>
+<span class="fc" id="L988">        sb.setCharAt(3, Character.toUpperCase(sb.charAt(3)));</span>
+<span class="fc" id="L989">        sb.append(&quot;Criterion&quot;); //$NON-NLS-1$</span>
 
-<span class="fc" id="L1021">        sb.setLength(0);</span>
-<span class="fc" id="L1022">        sb.append(&quot;add&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L1023">        sb.append(introspectedColumn.getJavaProperty());</span>
-<span class="fc" id="L1024">        sb.setCharAt(3, Character.toUpperCase(sb.charAt(3)));</span>
-<span class="fc" id="L1025">        sb.append(&quot;Criterion&quot;); //$NON-NLS-1$</span>
-
-<span class="fc" id="L1027">        method = new Method();</span>
-<span class="fc" id="L1028">        method.setVisibility(JavaVisibility.PROTECTED);</span>
-<span class="fc" id="L1029">        method.setName(sb.toString());</span>
-<span class="fc" id="L1030">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L1031">                .getStringInstance(), &quot;condition&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L1032">        method.addParameter(new Parameter(introspectedColumn</span>
-<span class="fc" id="L1033">                .getFullyQualifiedJavaType(), &quot;value1&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L1034">        method.addParameter(new Parameter(introspectedColumn</span>
-<span class="fc" id="L1035">                .getFullyQualifiedJavaType(), &quot;value2&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L1036">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
-<span class="fc" id="L1037">                .getStringInstance(), &quot;property&quot;)); //$NON-NLS-1$</span>
-<span class="fc bfc" id="L1038" title="All 2 branches covered.">        if (!introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {</span>
-<span class="fc" id="L1039">            method.addBodyLine(&quot;if (value1 == null || value2 == null) {&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L1040">            method</span>
-<span class="fc" id="L1041">                .addBodyLine(&quot;throw new RuntimeException(\&quot;Between values for \&quot; + property + \&quot; cannot be null\&quot;);&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L1042">            method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L991">        method = new Method(sb.toString());</span>
+<span class="fc" id="L992">        method.setVisibility(JavaVisibility.PROTECTED);</span>
+<span class="fc" id="L993">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L994">                .getStringInstance(), &quot;condition&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L995">        method.addParameter(new Parameter(introspectedColumn</span>
+<span class="fc" id="L996">                .getFullyQualifiedJavaType(), &quot;value1&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L997">        method.addParameter(new Parameter(introspectedColumn</span>
+<span class="fc" id="L998">                .getFullyQualifiedJavaType(), &quot;value2&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L999">        method.addParameter(new Parameter(FullyQualifiedJavaType</span>
+<span class="fc" id="L1000">                .getStringInstance(), &quot;property&quot;)); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L1001" title="All 2 branches covered.">        if (!introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {</span>
+<span class="fc" id="L1002">            method.addBodyLine(&quot;if (value1 == null || value2 == null) {&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L1003">            method.addBodyLine(</span>
+                    &quot;throw new RuntimeException(\&quot;Between values for \&quot; + property + \&quot;&quot; //$NON-NLS-1$
+                    + &quot; cannot be null\&quot;);&quot;); //$NON-NLS-1$
+<span class="fc" id="L1006">            method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>
         }
 
-<span class="fc" id="L1045">        method.addBodyLine(</span>
-<span class="fc" id="L1046">                String.format(&quot;%s.add(new Criterion(condition, value1, value2, \&quot;%s\&quot;));&quot;, //$NON-NLS-1$</span>
-<span class="fc" id="L1047">                        field.getName(), introspectedColumn.getTypeHandler()));</span>
+<span class="fc" id="L1009">        method.addBodyLine(</span>
+<span class="fc" id="L1010">                String.format(&quot;%s.add(new Criterion(condition, value1, value2, \&quot;%s\&quot;));&quot;, //$NON-NLS-1$</span>
+<span class="fc" id="L1011">                        field.getName(), introspectedColumn.getTypeHandler()));</span>
         
-<span class="fc" id="L1049">        method.addBodyLine(&quot;allCriteria = null;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L1050">        innerClass.addMethod(method);</span>
+<span class="fc" id="L1013">        method.addBodyLine(&quot;allCriteria = null;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L1014">        innerClass.addMethod(method);</span>
 
-<span class="fc" id="L1052">        return answer;</span>
+<span class="fc" id="L1016">        return answer;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

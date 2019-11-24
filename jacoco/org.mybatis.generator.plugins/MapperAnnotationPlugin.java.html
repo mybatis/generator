@@ -22,26 +22,24 @@ import org.mybatis.generator.api.IntrospectedTable.TargetRuntime;
 import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
-import org.mybatis.generator.api.dom.java.TopLevelClass;
 
-<span class="fc" id="L27">public class MapperAnnotationPlugin extends PluginAdapter {</span>
+<span class="fc" id="L26">public class MapperAnnotationPlugin extends PluginAdapter {</span>
 
     @Override
     public boolean validate(List&lt;String&gt; warnings) {
-<span class="fc" id="L31">        return true;</span>
+<span class="fc" id="L30">        return true;</span>
     }
 
     @Override
-    public boolean clientGenerated(Interface interfaze, TopLevelClass topLevelClass,
-            IntrospectedTable introspectedTable) {
+    public boolean clientGenerated(Interface interfaze, IntrospectedTable introspectedTable) {
 
-<span class="pc bpc" id="L38" title="1 of 2 branches missed.">        if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3) {</span>
+<span class="pc bpc" id="L36" title="1 of 2 branches missed.">        if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3) {</span>
             // don't need to do this for MYBATIS3_DSQL as that runtime already adds this annotation 
-<span class="fc" id="L40">            interfaze.addImportedType(</span>
+<span class="fc" id="L38">            interfaze.addImportedType(</span>
                     new FullyQualifiedJavaType(&quot;org.apache.ibatis.annotations.Mapper&quot;)); //$NON-NLS-1$
-<span class="fc" id="L42">            interfaze.addAnnotation(&quot;@Mapper&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L40">            interfaze.addAnnotation(&quot;@Mapper&quot;); //$NON-NLS-1$</span>
         }
-<span class="fc" id="L44">        return true;</span>
+<span class="fc" id="L42">        return true;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

@@ -7,13 +7,13 @@
 <body>
 <div id="overview"><a href="../../../../../../apidocs/org/mybatis/generator/internal/db/SqlReservedWords.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_javadoccomment"> *    Copyright 2006-2017 the original author or authors.</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_javadoccomment"> *    Copyright 2006-2019 the original author or authors.</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_javadoccomment"> *    Licensed under the Apache License, Version 2.0 (the "License");</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_javadoccomment"> *    you may not use this file except in compliance with the License.</em>
 <a class="jxr_linenumber" name="L6" href="#L6">6</a>   <em class="jxr_javadoccomment"> *    You may obtain a copy of the License at</em>
 <a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_javadoccomment"> *       <a href="http://www.apache.org/licenses/LICENSE-2." target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.</a>0</em>
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_javadoccomment"> *       <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a></em>
 <a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_javadoccomment"> *    Unless required by applicable law or agreed to in writing, software</em>
 <a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_javadoccomment"> *    distributed under the License is distributed on an "AS IS" BASIS,</em>
@@ -38,9 +38,9 @@
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>  <em class="jxr_javadoccomment"> * @author Jeff Butler</em>
 <a class="jxr_linenumber" name="L31" href="#L31">31</a>  <em class="jxr_javadoccomment"> * </em>
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../org/mybatis/generator/internal/db/SqlReservedWords.html">SqlReservedWords</a> {
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="SqlReservedWords" href="../../../../../org/mybatis/generator/internal/db/SqlReservedWords.html#SqlReservedWords">SqlReservedWords</a> {
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>  
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> Set&lt;String&gt; RESERVED_WORDS;
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> Set&lt;String&gt; reservedWords;
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>  
 <a class="jxr_linenumber" name="L37" href="#L37">37</a>      <strong class="jxr_keyword">static</strong> {
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>          String[] words = { <span class="jxr_string">"A"</span>, <em class="jxr_comment">//$NON-NLS-1$</em>
@@ -958,10 +958,10 @@
 <a class="jxr_linenumber" name="L950" href="#L950">950</a>                 <span class="jxr_string">"ZONE"</span> <em class="jxr_comment">//$NON-NLS-1$</em>
 <a class="jxr_linenumber" name="L951" href="#L951">951</a>         };
 <a class="jxr_linenumber" name="L952" href="#L952">952</a> 
-<a class="jxr_linenumber" name="L953" href="#L953">953</a>         RESERVED_WORDS = <strong class="jxr_keyword">new</strong> HashSet&lt;String&gt;(words.length);
+<a class="jxr_linenumber" name="L953" href="#L953">953</a>         reservedWords = <strong class="jxr_keyword">new</strong> HashSet&lt;&gt;(words.length);
 <a class="jxr_linenumber" name="L954" href="#L954">954</a> 
 <a class="jxr_linenumber" name="L955" href="#L955">955</a>         <strong class="jxr_keyword">for</strong> (String word : words) {
-<a class="jxr_linenumber" name="L956" href="#L956">956</a>             RESERVED_WORDS.add(word);
+<a class="jxr_linenumber" name="L956" href="#L956">956</a>             reservedWords.add(word);
 <a class="jxr_linenumber" name="L957" href="#L957">957</a>         }
 <a class="jxr_linenumber" name="L958" href="#L958">958</a>     }
 <a class="jxr_linenumber" name="L959" href="#L959">959</a> 
@@ -971,7 +971,7 @@
 <a class="jxr_linenumber" name="L963" href="#L963">963</a>         <strong class="jxr_keyword">if</strong> (word == <strong class="jxr_keyword">null</strong>) {
 <a class="jxr_linenumber" name="L964" href="#L964">964</a>             rc = false;
 <a class="jxr_linenumber" name="L965" href="#L965">965</a>         } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L966" href="#L966">966</a>             rc = RESERVED_WORDS.contains(word.toUpperCase());
+<a class="jxr_linenumber" name="L966" href="#L966">966</a>             rc = reservedWords.contains(word.toUpperCase());
 <a class="jxr_linenumber" name="L967" href="#L967">967</a>         }
 <a class="jxr_linenumber" name="L968" href="#L968">968</a> 
 <a class="jxr_linenumber" name="L969" href="#L969">969</a>         <strong class="jxr_keyword">return</strong> rc;
@@ -980,11 +980,11 @@
 <a class="jxr_linenumber" name="L972" href="#L972">972</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L973" href="#L973">973</a> <em class="jxr_javadoccomment">     * Utility class - no instances allowed.</em>
 <a class="jxr_linenumber" name="L974" href="#L974">974</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L975" href="#L975">975</a>     <strong class="jxr_keyword">private</strong> <a href="../../../../../org/mybatis/generator/internal/db/SqlReservedWords.html">SqlReservedWords</a>() {
+<a class="jxr_linenumber" name="L975" href="#L975">975</a>     <strong class="jxr_keyword">private</strong> <a name="SqlReservedWords" href="../../../../../org/mybatis/generator/internal/db/SqlReservedWords.html#SqlReservedWords">SqlReservedWords</a>() {
 <a class="jxr_linenumber" name="L976" href="#L976">976</a>     }
 <a class="jxr_linenumber" name="L977" href="#L977">977</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2006&#x2013;2018 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2006&#x2013;2019 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
 </body>
 </html>

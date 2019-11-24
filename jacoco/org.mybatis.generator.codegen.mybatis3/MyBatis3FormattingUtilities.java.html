@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MyBatis3FormattingUtilities.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.codegen.mybatis3</a> &gt; <span class="el_source">MyBatis3FormattingUtilities.java</span></div><h1>MyBatis3FormattingUtilities.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -20,58 +20,34 @@ import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 
-/**
- * The Class MyBatis3FormattingUtilities.
- *
- * @author Jeff Butler
- */
 public class MyBatis3FormattingUtilities {
 
-    /**
-     * Utility class - no instances.
-     */
     private MyBatis3FormattingUtilities() {
-<span class="nc" id="L34">        super();</span>
-<span class="nc" id="L35">    }</span>
-
-    /**
-     * Gets the parameter clause.
-     *
-     * @param introspectedColumn
-     *            the introspected column
-     * @return the parameter clause
-     */
-    public static String getParameterClause(
-            IntrospectedColumn introspectedColumn) {
-<span class="fc" id="L46">        return getParameterClause(introspectedColumn, null);</span>
+        super();
     }
 
-    /**
-     * Gets the parameter clause.
-     *
-     * @param introspectedColumn
-     *            the introspected column
-     * @param prefix
-     *            the prefix
-     * @return the parameter clause
-     */
+    public static String getParameterClause(
+            IntrospectedColumn introspectedColumn) {
+<span class="fc" id="L31">        return getParameterClause(introspectedColumn, null);</span>
+    }
+
     public static String getParameterClause(
             IntrospectedColumn introspectedColumn, String prefix) {
-<span class="fc" id="L60">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L36">        StringBuilder sb = new StringBuilder();</span>
 
-<span class="fc" id="L62">        sb.append(&quot;#{&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L63">        sb.append(introspectedColumn.getJavaProperty(prefix));</span>
-<span class="fc" id="L64">        sb.append(&quot;,jdbcType=&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L65">        sb.append(introspectedColumn.getJdbcTypeName());</span>
+<span class="fc" id="L38">        sb.append(&quot;#{&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L39">        sb.append(introspectedColumn.getJavaProperty(prefix));</span>
+<span class="fc" id="L40">        sb.append(&quot;,jdbcType=&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L41">        sb.append(introspectedColumn.getJdbcTypeName());</span>
 
-<span class="fc bfc" id="L67" title="All 2 branches covered.">        if (stringHasValue(introspectedColumn.getTypeHandler())) {</span>
-<span class="fc" id="L68">            sb.append(&quot;,typeHandler=&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L69">            sb.append(introspectedColumn.getTypeHandler());</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        if (stringHasValue(introspectedColumn.getTypeHandler())) {</span>
+<span class="fc" id="L44">            sb.append(&quot;,typeHandler=&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L45">            sb.append(introspectedColumn.getTypeHandler());</span>
         }
 
-<span class="fc" id="L72">        sb.append('}');</span>
+<span class="fc" id="L48">        sb.append('}');</span>
 
-<span class="fc" id="L74">        return sb.toString();</span>
+<span class="fc" id="L50">        return sb.toString();</span>
     }
 
     /**
@@ -84,68 +60,52 @@ public class MyBatis3FormattingUtilities {
      */
     public static String getSelectListPhrase(
             IntrospectedColumn introspectedColumn) {
-<span class="fc bfc" id="L87" title="All 2 branches covered.">        if (stringHasValue(introspectedColumn.getTableAlias())) {</span>
-<span class="fc" id="L88">            StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">        if (stringHasValue(introspectedColumn.getTableAlias())) {</span>
+<span class="fc" id="L64">            StringBuilder sb = new StringBuilder();</span>
 
-<span class="fc" id="L90">            sb.append(getAliasedEscapedColumnName(introspectedColumn));</span>
-<span class="fc" id="L91">            sb.append(&quot; as &quot;); //$NON-NLS-1$</span>
-<span class="fc bfc" id="L92" title="All 2 branches covered.">            if (introspectedColumn.isColumnNameDelimited()) {</span>
-<span class="fc" id="L93">                sb.append(introspectedColumn.getContext()</span>
-<span class="fc" id="L94">                        .getBeginningDelimiter());</span>
+<span class="fc" id="L66">            sb.append(getAliasedEscapedColumnName(introspectedColumn));</span>
+<span class="fc" id="L67">            sb.append(&quot; as &quot;); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">            if (introspectedColumn.isColumnNameDelimited()) {</span>
+<span class="fc" id="L69">                sb.append(introspectedColumn.getContext()</span>
+<span class="fc" id="L70">                        .getBeginningDelimiter());</span>
             }
-<span class="fc" id="L96">            sb.append(introspectedColumn.getTableAlias());</span>
-<span class="fc" id="L97">            sb.append('_');</span>
-<span class="fc" id="L98">            sb.append(escapeStringForMyBatis3(introspectedColumn</span>
-<span class="fc" id="L99">                    .getActualColumnName()));</span>
-<span class="fc bfc" id="L100" title="All 2 branches covered.">            if (introspectedColumn.isColumnNameDelimited()) {</span>
-<span class="fc" id="L101">                sb.append(introspectedColumn.getContext().getEndingDelimiter());</span>
+<span class="fc" id="L72">            sb.append(introspectedColumn.getTableAlias());</span>
+<span class="fc" id="L73">            sb.append('_');</span>
+<span class="fc" id="L74">            sb.append(introspectedColumn.getActualColumnName());</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">            if (introspectedColumn.isColumnNameDelimited()) {</span>
+<span class="fc" id="L76">                sb.append(introspectedColumn.getContext().getEndingDelimiter());</span>
             }
-<span class="fc" id="L103">            return sb.toString();</span>
+<span class="fc" id="L78">            return sb.toString();</span>
         } else {
-<span class="fc" id="L105">            return getEscapedColumnName(introspectedColumn);</span>
+<span class="fc" id="L80">            return getEscapedColumnName(introspectedColumn);</span>
         }
     }
 
-    /**
-     * Gets the escaped column name.
-     *
-     * @param introspectedColumn
-     *            the introspected column
-     * @return the escaped column name
-     */
     public static String getEscapedColumnName(
             IntrospectedColumn introspectedColumn) {
-<span class="fc" id="L118">        StringBuilder sb = new StringBuilder();</span>
-<span class="fc" id="L119">        sb.append(escapeStringForMyBatis3(introspectedColumn</span>
-<span class="fc" id="L120">                .getActualColumnName()));</span>
+<span class="fc" id="L86">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L87">        sb.append(introspectedColumn.getActualColumnName());</span>
 
-<span class="fc bfc" id="L122" title="All 2 branches covered.">        if (introspectedColumn.isColumnNameDelimited()) {</span>
-<span class="fc" id="L123">            sb.insert(0, introspectedColumn.getContext()</span>
-<span class="fc" id="L124">                    .getBeginningDelimiter());</span>
-<span class="fc" id="L125">            sb.append(introspectedColumn.getContext().getEndingDelimiter());</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">        if (introspectedColumn.isColumnNameDelimited()) {</span>
+<span class="fc" id="L90">            sb.insert(0, introspectedColumn.getContext()</span>
+<span class="fc" id="L91">                    .getBeginningDelimiter());</span>
+<span class="fc" id="L92">            sb.append(introspectedColumn.getContext().getEndingDelimiter());</span>
         }
 
-<span class="fc" id="L128">        return sb.toString();</span>
+<span class="fc" id="L95">        return sb.toString();</span>
     }
 
-    /**
-     * Calculates the string to use in select phrases in SqlMaps.
-     *
-     * @param introspectedColumn
-     *            the introspected column
-     * @return the aliased escaped column name
-     */
     public static String getAliasedEscapedColumnName(
             IntrospectedColumn introspectedColumn) {
-<span class="fc bfc" id="L140" title="All 2 branches covered.">        if (stringHasValue(introspectedColumn.getTableAlias())) {</span>
-<span class="fc" id="L141">            StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">        if (stringHasValue(introspectedColumn.getTableAlias())) {</span>
+<span class="fc" id="L101">            StringBuilder sb = new StringBuilder();</span>
 
-<span class="fc" id="L143">            sb.append(introspectedColumn.getTableAlias());</span>
-<span class="fc" id="L144">            sb.append('.');</span>
-<span class="fc" id="L145">            sb.append(getEscapedColumnName(introspectedColumn));</span>
-<span class="fc" id="L146">            return sb.toString();</span>
+<span class="fc" id="L103">            sb.append(introspectedColumn.getTableAlias());</span>
+<span class="fc" id="L104">            sb.append('.');</span>
+<span class="fc" id="L105">            sb.append(getEscapedColumnName(introspectedColumn));</span>
+<span class="fc" id="L106">            return sb.toString();</span>
         } else {
-<span class="fc" id="L148">            return getEscapedColumnName(introspectedColumn);</span>
+<span class="fc" id="L108">            return getEscapedColumnName(introspectedColumn);</span>
         }
     }
 
@@ -154,8 +114,8 @@ public class MyBatis3FormattingUtilities {
      * selects in SqlMaps because the column is not escaped for MyBatis. If there is a table alias, the value will be
      * alias.columnName.
      * 
-     * &lt;p&gt;This method is used in the Example classes and the returned value will be in a Java string. So we need to escape
-     * double quotes if they are the delimiters.
+     * &lt;p&gt;This method is used in the Example classes and the returned value will be in a Java string.
+     * So we need to escape double quotes if they are the delimiters.
      *
      * @param introspectedColumn
      *            the introspected column
@@ -163,25 +123,25 @@ public class MyBatis3FormattingUtilities {
      */
     public static String getAliasedActualColumnName(
             IntrospectedColumn introspectedColumn) {
-<span class="fc" id="L166">        StringBuilder sb = new StringBuilder();</span>
-<span class="fc bfc" id="L167" title="All 2 branches covered.">        if (stringHasValue(introspectedColumn.getTableAlias())) {</span>
-<span class="fc" id="L168">            sb.append(introspectedColumn.getTableAlias());</span>
-<span class="fc" id="L169">            sb.append('.');</span>
+<span class="fc" id="L126">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">        if (stringHasValue(introspectedColumn.getTableAlias())) {</span>
+<span class="fc" id="L128">            sb.append(introspectedColumn.getTableAlias());</span>
+<span class="fc" id="L129">            sb.append('.');</span>
         }
 
-<span class="fc bfc" id="L172" title="All 2 branches covered.">        if (introspectedColumn.isColumnNameDelimited()) {</span>
-<span class="fc" id="L173">            sb.append(escapeStringForJava(introspectedColumn</span>
-<span class="fc" id="L174">                    .getContext().getBeginningDelimiter()));</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">        if (introspectedColumn.isColumnNameDelimited()) {</span>
+<span class="fc" id="L133">            sb.append(escapeStringForJava(introspectedColumn</span>
+<span class="fc" id="L134">                    .getContext().getBeginningDelimiter()));</span>
         }
 
-<span class="fc" id="L177">        sb.append(introspectedColumn.getActualColumnName());</span>
+<span class="fc" id="L137">        sb.append(introspectedColumn.getActualColumnName());</span>
 
-<span class="fc bfc" id="L179" title="All 2 branches covered.">        if (introspectedColumn.isColumnNameDelimited()) {</span>
-<span class="fc" id="L180">            sb.append(escapeStringForJava(introspectedColumn</span>
-<span class="fc" id="L181">                    .getContext().getEndingDelimiter()));</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">        if (introspectedColumn.isColumnNameDelimited()) {</span>
+<span class="fc" id="L140">            sb.append(escapeStringForJava(introspectedColumn</span>
+<span class="fc" id="L141">                    .getContext().getEndingDelimiter()));</span>
         }
 
-<span class="fc" id="L184">        return sb.toString();</span>
+<span class="fc" id="L144">        return sb.toString();</span>
     }
 
     /**
@@ -194,28 +154,16 @@ public class MyBatis3FormattingUtilities {
      */
     public static String getRenamedColumnNameForResultMap(
             IntrospectedColumn introspectedColumn) {
-<span class="fc bfc" id="L197" title="All 2 branches covered.">        if (stringHasValue(introspectedColumn.getTableAlias())) {</span>
-<span class="fc" id="L198">            StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">        if (stringHasValue(introspectedColumn.getTableAlias())) {</span>
+<span class="fc" id="L158">            StringBuilder sb = new StringBuilder();</span>
 
-<span class="fc" id="L200">            sb.append(introspectedColumn.getTableAlias());</span>
-<span class="fc" id="L201">            sb.append('_');</span>
-<span class="fc" id="L202">            sb.append(introspectedColumn.getActualColumnName());</span>
-<span class="fc" id="L203">            return sb.toString();</span>
+<span class="fc" id="L160">            sb.append(introspectedColumn.getTableAlias());</span>
+<span class="fc" id="L161">            sb.append('_');</span>
+<span class="fc" id="L162">            sb.append(introspectedColumn.getActualColumnName());</span>
+<span class="fc" id="L163">            return sb.toString();</span>
         } else {
-<span class="fc" id="L205">            return introspectedColumn.getActualColumnName();</span>
+<span class="fc" id="L165">            return introspectedColumn.getActualColumnName();</span>
         }
     }
-
-    /**
-     * Escape string for my batis3.
-     *
-     * @param s
-     *            the s
-     * @return the string
-     */
-    public static String escapeStringForMyBatis3(String s) {
-        // nothing to do for MyBatis3 so far
-<span class="fc" id="L218">        return s;</span>
-    }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

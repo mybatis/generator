@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EqualsUtil.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.internal.util</a> &gt; <span class="el_source">EqualsUtil.java</span></div><h1>EqualsUtil.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -42,14 +42,15 @@ package org.mybatis.generator.internal.util;
  * &lt;em&gt;Arrays are not handled by this class&lt;/em&gt;. This is because the
  * &lt;code&gt;Arrays.equals&lt;/code&gt; methods should be used for array fields.
  */
-<span class="nc" id="L45">public final class EqualsUtil {</span>
+public final class EqualsUtil {
+    private EqualsUtil() {}
 
     public static boolean areEqual(boolean b1, boolean b2) {
-<span class="nc bnc" id="L48" title="All 2 branches missed.">        return b1 == b2;</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">        return b1 == b2;</span>
     }
 
     public static boolean areEqual(char c1, char c2) {
-<span class="nc bnc" id="L52" title="All 2 branches missed.">        return c1 == c2;</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">        return c1 == c2;</span>
     }
 
     public static boolean areEqual(long l1, long l2) {
@@ -57,15 +58,15 @@ package org.mybatis.generator.internal.util;
          * Implementation Note Note that byte, short, and int are handled by
          * this method, through implicit conversion.
          */
-<span class="nc bnc" id="L60" title="All 2 branches missed.">        return l1 == l2;</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">        return l1 == l2;</span>
     }
 
     public static boolean areEqual(float f1, float f2) {
-<span class="nc bnc" id="L64" title="All 2 branches missed.">        return Float.floatToIntBits(f1) == Float.floatToIntBits(f2);</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">        return Float.floatToIntBits(f1) == Float.floatToIntBits(f2);</span>
     }
 
     public static boolean areEqual(double d1, double d2) {
-<span class="nc bnc" id="L68" title="All 2 branches missed.">        return Double.doubleToLongBits(d1) == Double.doubleToLongBits(d2);</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        return Double.doubleToLongBits(d1) == Double.doubleToLongBits(d2);</span>
     }
 
     /**
@@ -80,7 +81,7 @@ package org.mybatis.generator.internal.util;
      * @return true, if the objects are equals (meaning that the equals() method returns true)
      */
     public static boolean areEqual(Object o1, Object o2) {
-<span class="nc bnc" id="L83" title="All 4 branches missed.">        return o1 == null ? o2 == null : o1.equals(o2);</span>
+<span class="nc bnc" id="L84" title="All 4 branches missed.">        return o1 == null ? o2 == null : o1.equals(o2);</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

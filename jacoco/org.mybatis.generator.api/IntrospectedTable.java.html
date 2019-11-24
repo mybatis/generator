@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>IntrospectedTable.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api</a> &gt; <span class="el_source">IntrospectedTable.java</span></div><h1>IntrospectedTable.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2019 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -19,11 +19,16 @@ import static org.mybatis.generator.internal.util.StringUtility.isTrue;
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Properties;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.GeneratedKey;
@@ -49,53 +54,48 @@ import org.mybatis.generator.internal.rules.Rules;
  */
 public abstract class IntrospectedTable {
 
-<span class="pc" id="L52">    public enum TargetRuntime {</span>
-<span class="fc" id="L53">        IBATIS2, </span>
-<span class="fc" id="L54">        MYBATIS3,</span>
-<span class="fc" id="L55">        MYBATIS3_DSQL</span>
+<span class="fc" id="L57">    public enum TargetRuntime {</span>
+<span class="fc" id="L58">        MYBATIS3,</span>
+<span class="fc" id="L59">        MYBATIS3_DSQL</span>
     }
 
-<span class="pc" id="L58">    protected enum InternalAttribute {</span>
-<span class="fc" id="L59">        ATTR_DAO_IMPLEMENTATION_TYPE,</span>
-<span class="fc" id="L60">        ATTR_DAO_INTERFACE_TYPE,</span>
-<span class="fc" id="L61">        ATTR_PRIMARY_KEY_TYPE,</span>
-<span class="fc" id="L62">        ATTR_BASE_RECORD_TYPE,</span>
-<span class="fc" id="L63">        ATTR_RECORD_WITH_BLOBS_TYPE,</span>
-<span class="fc" id="L64">        ATTR_EXAMPLE_TYPE,</span>
-<span class="fc" id="L65">        ATTR_IBATIS2_SQL_MAP_PACKAGE,</span>
-<span class="fc" id="L66">        ATTR_IBATIS2_SQL_MAP_FILE_NAME,</span>
-<span class="fc" id="L67">        ATTR_IBATIS2_SQL_MAP_NAMESPACE,</span>
-<span class="fc" id="L68">        ATTR_MYBATIS3_XML_MAPPER_PACKAGE,</span>
-<span class="fc" id="L69">        ATTR_MYBATIS3_XML_MAPPER_FILE_NAME,</span>
+<span class="fc" id="L62">    protected enum InternalAttribute {</span>
+<span class="fc" id="L63">        ATTR_PRIMARY_KEY_TYPE,</span>
+<span class="fc" id="L64">        ATTR_BASE_RECORD_TYPE,</span>
+<span class="fc" id="L65">        ATTR_RECORD_WITH_BLOBS_TYPE,</span>
+<span class="fc" id="L66">        ATTR_EXAMPLE_TYPE,</span>
+<span class="fc" id="L67">        ATTR_MYBATIS3_XML_MAPPER_PACKAGE,</span>
+<span class="fc" id="L68">        ATTR_MYBATIS3_XML_MAPPER_FILE_NAME,</span>
         /** also used as XML Mapper namespace if a Java mapper is generated. */
-<span class="fc" id="L71">        ATTR_MYBATIS3_JAVA_MAPPER_TYPE,</span>
+<span class="fc" id="L70">        ATTR_MYBATIS3_JAVA_MAPPER_TYPE,</span>
         /** used as XML Mapper namespace if no client is generated. */
-<span class="fc" id="L73">        ATTR_MYBATIS3_FALLBACK_SQL_MAP_NAMESPACE,</span>
-<span class="fc" id="L74">        ATTR_FULLY_QUALIFIED_TABLE_NAME_AT_RUNTIME,</span>
-<span class="fc" id="L75">        ATTR_ALIASED_FULLY_QUALIFIED_TABLE_NAME_AT_RUNTIME,</span>
-<span class="fc" id="L76">        ATTR_COUNT_BY_EXAMPLE_STATEMENT_ID,</span>
-<span class="fc" id="L77">        ATTR_DELETE_BY_EXAMPLE_STATEMENT_ID,</span>
-<span class="fc" id="L78">        ATTR_DELETE_BY_PRIMARY_KEY_STATEMENT_ID,</span>
-<span class="fc" id="L79">        ATTR_INSERT_STATEMENT_ID,</span>
-<span class="fc" id="L80">        ATTR_INSERT_SELECTIVE_STATEMENT_ID,</span>
-<span class="fc" id="L81">        ATTR_SELECT_ALL_STATEMENT_ID,</span>
-<span class="fc" id="L82">        ATTR_SELECT_BY_EXAMPLE_STATEMENT_ID,</span>
-<span class="fc" id="L83">        ATTR_SELECT_BY_EXAMPLE_WITH_BLOBS_STATEMENT_ID,</span>
-<span class="fc" id="L84">        ATTR_SELECT_BY_PRIMARY_KEY_STATEMENT_ID,</span>
-<span class="fc" id="L85">        ATTR_UPDATE_BY_EXAMPLE_STATEMENT_ID,</span>
-<span class="fc" id="L86">        ATTR_UPDATE_BY_EXAMPLE_SELECTIVE_STATEMENT_ID,</span>
-<span class="fc" id="L87">        ATTR_UPDATE_BY_EXAMPLE_WITH_BLOBS_STATEMENT_ID,</span>
-<span class="fc" id="L88">        ATTR_UPDATE_BY_PRIMARY_KEY_STATEMENT_ID,</span>
-<span class="fc" id="L89">        ATTR_UPDATE_BY_PRIMARY_KEY_SELECTIVE_STATEMENT_ID,</span>
-<span class="fc" id="L90">        ATTR_UPDATE_BY_PRIMARY_KEY_WITH_BLOBS_STATEMENT_ID,</span>
-<span class="fc" id="L91">        ATTR_BASE_RESULT_MAP_ID,</span>
-<span class="fc" id="L92">        ATTR_RESULT_MAP_WITH_BLOBS_ID,</span>
-<span class="fc" id="L93">        ATTR_EXAMPLE_WHERE_CLAUSE_ID,</span>
-<span class="fc" id="L94">        ATTR_BASE_COLUMN_LIST_ID,</span>
-<span class="fc" id="L95">        ATTR_BLOB_COLUMN_LIST_ID,</span>
-<span class="fc" id="L96">        ATTR_MYBATIS3_UPDATE_BY_EXAMPLE_WHERE_CLAUSE_ID,</span>
-<span class="fc" id="L97">        ATTR_MYBATIS3_SQL_PROVIDER_TYPE,</span>
-<span class="fc" id="L98">        ATTR_MYBATIS_DYNAMIC_SQL_SUPPORT_TYPE</span>
+<span class="fc" id="L72">        ATTR_MYBATIS3_FALLBACK_SQL_MAP_NAMESPACE,</span>
+<span class="fc" id="L73">        ATTR_FULLY_QUALIFIED_TABLE_NAME_AT_RUNTIME,</span>
+<span class="fc" id="L74">        ATTR_ALIASED_FULLY_QUALIFIED_TABLE_NAME_AT_RUNTIME,</span>
+<span class="fc" id="L75">        ATTR_COUNT_BY_EXAMPLE_STATEMENT_ID,</span>
+<span class="fc" id="L76">        ATTR_DELETE_BY_EXAMPLE_STATEMENT_ID,</span>
+<span class="fc" id="L77">        ATTR_DELETE_BY_PRIMARY_KEY_STATEMENT_ID,</span>
+<span class="fc" id="L78">        ATTR_INSERT_STATEMENT_ID,</span>
+<span class="fc" id="L79">        ATTR_INSERT_SELECTIVE_STATEMENT_ID,</span>
+<span class="fc" id="L80">        ATTR_SELECT_ALL_STATEMENT_ID,</span>
+<span class="fc" id="L81">        ATTR_SELECT_BY_EXAMPLE_STATEMENT_ID,</span>
+<span class="fc" id="L82">        ATTR_SELECT_BY_EXAMPLE_WITH_BLOBS_STATEMENT_ID,</span>
+<span class="fc" id="L83">        ATTR_SELECT_BY_PRIMARY_KEY_STATEMENT_ID,</span>
+<span class="fc" id="L84">        ATTR_UPDATE_BY_EXAMPLE_STATEMENT_ID,</span>
+<span class="fc" id="L85">        ATTR_UPDATE_BY_EXAMPLE_SELECTIVE_STATEMENT_ID,</span>
+<span class="fc" id="L86">        ATTR_UPDATE_BY_EXAMPLE_WITH_BLOBS_STATEMENT_ID,</span>
+<span class="fc" id="L87">        ATTR_UPDATE_BY_PRIMARY_KEY_STATEMENT_ID,</span>
+<span class="fc" id="L88">        ATTR_UPDATE_BY_PRIMARY_KEY_SELECTIVE_STATEMENT_ID,</span>
+<span class="fc" id="L89">        ATTR_UPDATE_BY_PRIMARY_KEY_WITH_BLOBS_STATEMENT_ID,</span>
+<span class="fc" id="L90">        ATTR_BASE_RESULT_MAP_ID,</span>
+<span class="fc" id="L91">        ATTR_RESULT_MAP_WITH_BLOBS_ID,</span>
+<span class="fc" id="L92">        ATTR_EXAMPLE_WHERE_CLAUSE_ID,</span>
+<span class="fc" id="L93">        ATTR_BASE_COLUMN_LIST_ID,</span>
+<span class="fc" id="L94">        ATTR_BLOB_COLUMN_LIST_ID,</span>
+<span class="fc" id="L95">        ATTR_MYBATIS3_UPDATE_BY_EXAMPLE_WHERE_CLAUSE_ID,</span>
+<span class="fc" id="L96">        ATTR_MYBATIS3_SQL_PROVIDER_TYPE,</span>
+<span class="fc" id="L97">        ATTR_MYBATIS_DYNAMIC_SQL_SUPPORT_TYPE,</span>
+<span class="fc" id="L98">        ATTR_KOTLIN_RECORD_TYPE</span>
     }
 
     protected TableConfiguration tableConfiguration;
@@ -106,11 +106,11 @@ public abstract class IntrospectedTable {
 
     protected Rules rules;
 
-    protected List&lt;IntrospectedColumn&gt; primaryKeyColumns;
+<span class="fc" id="L109">    protected List&lt;IntrospectedColumn&gt; primaryKeyColumns = new ArrayList&lt;&gt;();</span>
 
-    protected List&lt;IntrospectedColumn&gt; baseColumns;
+<span class="fc" id="L111">    protected List&lt;IntrospectedColumn&gt; baseColumns = new ArrayList&lt;&gt;();</span>
 
-    protected List&lt;IntrospectedColumn&gt; blobColumns;
+<span class="fc" id="L113">    protected List&lt;IntrospectedColumn&gt; blobColumns = new ArrayList&lt;&gt;();</span>
 
     protected TargetRuntime targetRuntime;
 
@@ -118,10 +118,11 @@ public abstract class IntrospectedTable {
      * Attributes may be used by plugins to capture table related state between
      * the different plugin calls.
      */
-    protected Map&lt;String, Object&gt; attributes;
+<span class="fc" id="L121">    protected Map&lt;String, Object&gt; attributes = new HashMap&lt;&gt;();</span>
 
     /** Internal attributes are used to store commonly accessed items by all code generators. */
-    protected Map&lt;IntrospectedTable.InternalAttribute, String&gt; internalAttributes;
+<span class="fc" id="L124">    protected Map&lt;IntrospectedTable.InternalAttribute, String&gt; internalAttributes =</span>
+            new EnumMap&lt;&gt;(InternalAttribute.class);
 
     /**
      * Table remarks retrieved from database metadata.
@@ -134,81 +135,38 @@ public abstract class IntrospectedTable {
     protected String tableType;
 
     public IntrospectedTable(TargetRuntime targetRuntime) {
-<span class="fc" id="L137">        super();</span>
-<span class="fc" id="L138">        this.targetRuntime = targetRuntime;</span>
-<span class="fc" id="L139">        primaryKeyColumns = new ArrayList&lt;IntrospectedColumn&gt;();</span>
-<span class="fc" id="L140">        baseColumns = new ArrayList&lt;IntrospectedColumn&gt;();</span>
-<span class="fc" id="L141">        blobColumns = new ArrayList&lt;IntrospectedColumn&gt;();</span>
-<span class="fc" id="L142">        attributes = new HashMap&lt;String, Object&gt;();</span>
-<span class="fc" id="L143">        internalAttributes = new HashMap&lt;IntrospectedTable.InternalAttribute, String&gt;();</span>
-<span class="fc" id="L144">    }</span>
+<span class="fc" id="L138">        super();</span>
+<span class="fc" id="L139">        this.targetRuntime = targetRuntime;</span>
+<span class="fc" id="L140">    }</span>
 
     public FullyQualifiedTable getFullyQualifiedTable() {
-<span class="fc" id="L147">        return fullyQualifiedTable;</span>
+<span class="fc" id="L143">        return fullyQualifiedTable;</span>
     }
 
     public String getSelectByExampleQueryId() {
-<span class="fc" id="L151">        return tableConfiguration.getSelectByExampleQueryId();</span>
+<span class="fc" id="L147">        return tableConfiguration.getSelectByExampleQueryId();</span>
     }
 
     public String getSelectByPrimaryKeyQueryId() {
-<span class="fc" id="L155">        return tableConfiguration.getSelectByPrimaryKeyQueryId();</span>
+<span class="fc" id="L151">        return tableConfiguration.getSelectByPrimaryKeyQueryId();</span>
     }
 
     public GeneratedKey getGeneratedKey() {
-<span class="fc" id="L159">        return tableConfiguration.getGeneratedKey();</span>
+<span class="fc" id="L155">        return tableConfiguration.getGeneratedKey();</span>
     }
 
-    public IntrospectedColumn getColumn(String columnName) {
-<span class="pc bpc" id="L163" title="1 of 2 branches missed.">        if (columnName == null) {</span>
-<span class="nc" id="L164">            return null;</span>
+    public Optional&lt;IntrospectedColumn&gt; getColumn(String columnName) {
+<span class="fc" id="L159">        return Stream.of(primaryKeyColumns.stream(), baseColumns.stream(), blobColumns.stream())</span>
+<span class="fc" id="L160">                .flatMap(Function.identity())</span>
+<span class="fc" id="L161">                .filter(ic -&gt; columnMatches(ic, columnName))</span>
+<span class="fc" id="L162">                .findFirst();</span>
+    }
+    
+    private boolean columnMatches(IntrospectedColumn introspectedColumn, String columnName) {
+<span class="fc bfc" id="L166" title="All 2 branches covered.">        if (introspectedColumn.isColumnNameDelimited()) {</span>
+<span class="fc" id="L167">            return introspectedColumn.getActualColumnName().equals(columnName);</span>
         } else {
-            // search primary key columns
-<span class="fc bfc" id="L167" title="All 2 branches covered.">            for (IntrospectedColumn introspectedColumn : primaryKeyColumns) {</span>
-<span class="fc bfc" id="L168" title="All 2 branches covered.">                if (introspectedColumn.isColumnNameDelimited()) {</span>
-<span class="fc bfc" id="L169" title="All 2 branches covered.">                    if (introspectedColumn.getActualColumnName().equals(</span>
-                            columnName)) {
-<span class="fc" id="L171">                        return introspectedColumn;</span>
-                    }
-                } else {
-<span class="fc" id="L174">                    if (introspectedColumn.getActualColumnName()</span>
-<span class="fc bfc" id="L175" title="All 2 branches covered.">                            .equalsIgnoreCase(columnName)) {</span>
-<span class="fc" id="L176">                        return introspectedColumn;</span>
-                    }
-                }
-<span class="fc" id="L179">            }</span>
-
-            // search base columns
-<span class="pc bpc" id="L182" title="1 of 2 branches missed.">            for (IntrospectedColumn introspectedColumn : baseColumns) {</span>
-<span class="fc bfc" id="L183" title="All 2 branches covered.">                if (introspectedColumn.isColumnNameDelimited()) {</span>
-<span class="fc bfc" id="L184" title="All 2 branches covered.">                    if (introspectedColumn.getActualColumnName().equals(</span>
-                            columnName)) {
-<span class="fc" id="L186">                        return introspectedColumn;</span>
-                    }
-                } else {
-<span class="fc" id="L189">                    if (introspectedColumn.getActualColumnName()</span>
-<span class="fc bfc" id="L190" title="All 2 branches covered.">                            .equalsIgnoreCase(columnName)) {</span>
-<span class="fc" id="L191">                        return introspectedColumn;</span>
-                    }
-                }
-<span class="fc" id="L194">            }</span>
-
-            // search blob columns
-<span class="nc bnc" id="L197" title="All 2 branches missed.">            for (IntrospectedColumn introspectedColumn : blobColumns) {</span>
-<span class="nc bnc" id="L198" title="All 2 branches missed.">                if (introspectedColumn.isColumnNameDelimited()) {</span>
-<span class="nc bnc" id="L199" title="All 2 branches missed.">                    if (introspectedColumn.getActualColumnName().equals(</span>
-                            columnName)) {
-<span class="nc" id="L201">                        return introspectedColumn;</span>
-                    }
-                } else {
-<span class="nc" id="L204">                    if (introspectedColumn.getActualColumnName()</span>
-<span class="nc bnc" id="L205" title="All 2 branches missed.">                            .equalsIgnoreCase(columnName)) {</span>
-<span class="nc" id="L206">                        return introspectedColumn;</span>
-                    }
-                }
-<span class="nc" id="L209">            }</span>
-
-<span class="nc" id="L211">            return null;</span>
+<span class="fc" id="L169">            return introspectedColumn.getActualColumnName().equalsIgnoreCase(columnName);</span>
         }
     }
 
@@ -219,25 +177,9 @@ public abstract class IntrospectedTable {
      * @return true if the table contains DATE columns
      */
     public boolean hasJDBCDateColumns() {
-<span class="fc" id="L222">        boolean rc = false;</span>
-
-<span class="fc bfc" id="L224" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : primaryKeyColumns) {</span>
-<span class="fc bfc" id="L225" title="All 2 branches covered.">            if (introspectedColumn.isJDBCDateColumn()) {</span>
-<span class="fc" id="L226">                rc = true;</span>
-<span class="fc" id="L227">                break;</span>
-            }
-<span class="fc" id="L229">        }</span>
-
-<span class="fc bfc" id="L231" title="All 2 branches covered.">        if (!rc) {</span>
-<span class="fc bfc" id="L232" title="All 2 branches covered.">            for (IntrospectedColumn introspectedColumn : baseColumns) {</span>
-<span class="fc bfc" id="L233" title="All 2 branches covered.">                if (introspectedColumn.isJDBCDateColumn()) {</span>
-<span class="fc" id="L234">                    rc = true;</span>
-<span class="fc" id="L235">                    break;</span>
-                }
-<span class="fc" id="L237">            }</span>
-        }
-
-<span class="fc" id="L240">        return rc;</span>
+<span class="fc" id="L180">        return Stream.of(primaryKeyColumns.stream(), baseColumns.stream())</span>
+<span class="fc" id="L181">                .flatMap(Function.identity())</span>
+<span class="fc" id="L182">                .anyMatch(IntrospectedColumn::isJDBCDateColumn);</span>
     }
 
     /**
@@ -247,25 +189,9 @@ public abstract class IntrospectedTable {
      * @return true if the table contains TIME columns
      */
     public boolean hasJDBCTimeColumns() {
-<span class="fc" id="L250">        boolean rc = false;</span>
-
-<span class="fc bfc" id="L252" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : primaryKeyColumns) {</span>
-<span class="pc bpc" id="L253" title="1 of 2 branches missed.">            if (introspectedColumn.isJDBCTimeColumn()) {</span>
-<span class="nc" id="L254">                rc = true;</span>
-<span class="nc" id="L255">                break;</span>
-            }
-<span class="fc" id="L257">        }</span>
-
-<span class="pc bpc" id="L259" title="1 of 2 branches missed.">        if (!rc) {</span>
-<span class="fc bfc" id="L260" title="All 2 branches covered.">            for (IntrospectedColumn introspectedColumn : baseColumns) {</span>
-<span class="fc bfc" id="L261" title="All 2 branches covered.">                if (introspectedColumn.isJDBCTimeColumn()) {</span>
-<span class="fc" id="L262">                    rc = true;</span>
-<span class="fc" id="L263">                    break;</span>
-                }
-<span class="fc" id="L265">            }</span>
-        }
-
-<span class="fc" id="L268">        return rc;</span>
+<span class="fc" id="L192">        return Stream.of(primaryKeyColumns.stream(), baseColumns.stream())</span>
+<span class="fc" id="L193">                .flatMap(Function.identity())</span>
+<span class="fc" id="L194">                .anyMatch(IntrospectedColumn::isJDBCTimeColumn);</span>
     }
 
     /**
@@ -276,15 +202,15 @@ public abstract class IntrospectedTable {
      * @return a List of ColumnDefinition objects for columns in the primary key
      */
     public List&lt;IntrospectedColumn&gt; getPrimaryKeyColumns() {
-<span class="fc" id="L279">        return primaryKeyColumns;</span>
+<span class="fc" id="L205">        return primaryKeyColumns;</span>
     }
 
     public boolean hasPrimaryKeyColumns() {
-<span class="fc bfc" id="L283" title="All 2 branches covered.">        return primaryKeyColumns.size() &gt; 0;</span>
+<span class="fc bfc" id="L209" title="All 2 branches covered.">        return !primaryKeyColumns.isEmpty();</span>
     }
 
     public List&lt;IntrospectedColumn&gt; getBaseColumns() {
-<span class="fc" id="L287">        return baseColumns;</span>
+<span class="fc" id="L213">        return baseColumns;</span>
     }
 
     /**
@@ -294,12 +220,9 @@ public abstract class IntrospectedTable {
      * @return a List of ColumnDefinition objects for all columns in the table
      */
     public List&lt;IntrospectedColumn&gt; getAllColumns() {
-<span class="fc" id="L297">        List&lt;IntrospectedColumn&gt; answer = new ArrayList&lt;IntrospectedColumn&gt;();</span>
-<span class="fc" id="L298">        answer.addAll(primaryKeyColumns);</span>
-<span class="fc" id="L299">        answer.addAll(baseColumns);</span>
-<span class="fc" id="L300">        answer.addAll(blobColumns);</span>
-
-<span class="fc" id="L302">        return answer;</span>
+<span class="fc" id="L223">        return Stream.of(primaryKeyColumns.stream(), baseColumns.stream(), blobColumns.stream())</span>
+<span class="fc" id="L224">                .flatMap(Function.identity())</span>
+<span class="fc" id="L225">                .collect(Collectors.toList());</span>
     }
 
     /**
@@ -308,47 +231,43 @@ public abstract class IntrospectedTable {
      * @return a List of ColumnDefinition objects for columns in the table that are non BLOBs
      */
     public List&lt;IntrospectedColumn&gt; getNonBLOBColumns() {
-<span class="fc" id="L311">        List&lt;IntrospectedColumn&gt; answer = new ArrayList&lt;IntrospectedColumn&gt;();</span>
-<span class="fc" id="L312">        answer.addAll(primaryKeyColumns);</span>
-<span class="fc" id="L313">        answer.addAll(baseColumns);</span>
-
-<span class="fc" id="L315">        return answer;</span>
+<span class="fc" id="L234">        return Stream.of(primaryKeyColumns.stream(), baseColumns.stream())</span>
+<span class="fc" id="L235">                .flatMap(Function.identity())</span>
+<span class="fc" id="L236">                .collect(Collectors.toList());</span>
     }
 
     public int getNonBLOBColumnCount() {
-<span class="fc" id="L319">        return primaryKeyColumns.size() + baseColumns.size();</span>
+<span class="nc" id="L240">        return primaryKeyColumns.size() + baseColumns.size();</span>
     }
 
     public List&lt;IntrospectedColumn&gt; getNonPrimaryKeyColumns() {
-<span class="fc" id="L323">        List&lt;IntrospectedColumn&gt; answer = new ArrayList&lt;IntrospectedColumn&gt;();</span>
-<span class="fc" id="L324">        answer.addAll(baseColumns);</span>
-<span class="fc" id="L325">        answer.addAll(blobColumns);</span>
-
-<span class="fc" id="L327">        return answer;</span>
+<span class="fc" id="L244">        return Stream.of(baseColumns.stream(), blobColumns.stream())</span>
+<span class="fc" id="L245">                .flatMap(Function.identity())</span>
+<span class="fc" id="L246">                .collect(Collectors.toList());</span>
     }
 
     public List&lt;IntrospectedColumn&gt; getBLOBColumns() {
-<span class="fc" id="L331">        return blobColumns;</span>
+<span class="fc" id="L250">        return blobColumns;</span>
     }
 
     public boolean hasBLOBColumns() {
-<span class="fc bfc" id="L335" title="All 2 branches covered.">        return blobColumns.size() &gt; 0;</span>
+<span class="fc bfc" id="L254" title="All 2 branches covered.">        return !blobColumns.isEmpty();</span>
     }
 
     public boolean hasBaseColumns() {
-<span class="fc bfc" id="L339" title="All 2 branches covered.">        return baseColumns.size() &gt; 0;</span>
+<span class="fc bfc" id="L258" title="All 2 branches covered.">        return !baseColumns.isEmpty();</span>
     }
 
     public Rules getRules() {
-<span class="fc" id="L343">        return rules;</span>
+<span class="fc" id="L262">        return rules;</span>
     }
 
     public String getTableConfigurationProperty(String property) {
-<span class="fc" id="L347">        return tableConfiguration.getProperty(property);</span>
+<span class="fc" id="L266">        return tableConfiguration.getProperty(property);</span>
     }
 
     public String getPrimaryKeyType() {
-<span class="fc" id="L351">        return internalAttributes.get(InternalAttribute.ATTR_PRIMARY_KEY_TYPE);</span>
+<span class="fc" id="L270">        return internalAttributes.get(InternalAttribute.ATTR_PRIMARY_KEY_TYPE);</span>
     }
 
     /**
@@ -358,7 +277,11 @@ public abstract class IntrospectedTable {
      *         will be calculated regardless of whether the table has these columns or not.
      */
     public String getBaseRecordType() {
-<span class="fc" id="L361">        return internalAttributes.get(InternalAttribute.ATTR_BASE_RECORD_TYPE);</span>
+<span class="fc" id="L280">        return internalAttributes.get(InternalAttribute.ATTR_BASE_RECORD_TYPE);</span>
+    }
+
+    public String getKotlinRecordType() {
+<span class="fc" id="L284">        return internalAttributes.get(InternalAttribute.ATTR_KOTLIN_RECORD_TYPE);</span>
     }
 
     /**
@@ -367,7 +290,7 @@ public abstract class IntrospectedTable {
      * @return the type for the example class.
      */
     public String getExampleType() {
-<span class="fc" id="L370">        return internalAttributes.get(InternalAttribute.ATTR_EXAMPLE_TYPE);</span>
+<span class="fc" id="L293">        return internalAttributes.get(InternalAttribute.ATTR_EXAMPLE_TYPE);</span>
     }
 
     /**
@@ -377,613 +300,554 @@ public abstract class IntrospectedTable {
      *         the table has BLOB columns or not.
      */
     public String getRecordWithBLOBsType() {
-<span class="fc" id="L380">        return internalAttributes</span>
-<span class="fc" id="L381">                .get(InternalAttribute.ATTR_RECORD_WITH_BLOBS_TYPE);</span>
-    }
-
-    /**
-     * Calculates an SQL Map file name for the table. Typically the name is
-     * &quot;XXXX_SqlMap.xml&quot; where XXXX is the fully qualified table name (delimited
-     * with underscores).
-     * 
-     * @return the name of the SqlMap file
-     */
-    public String getIbatis2SqlMapFileName() {
-<span class="fc" id="L392">        return internalAttributes</span>
-<span class="fc" id="L393">                .get(InternalAttribute.ATTR_IBATIS2_SQL_MAP_FILE_NAME);</span>
-    }
-
-    public String getIbatis2SqlMapNamespace() {
-<span class="fc" id="L397">        return internalAttributes</span>
-<span class="fc" id="L398">                .get(InternalAttribute.ATTR_IBATIS2_SQL_MAP_NAMESPACE);</span>
+<span class="fc" id="L303">        return internalAttributes</span>
+<span class="fc" id="L304">                .get(InternalAttribute.ATTR_RECORD_WITH_BLOBS_TYPE);</span>
     }
 
     public String getMyBatis3SqlMapNamespace() {
-<span class="fc" id="L402">        String namespace = getMyBatis3JavaMapperType();</span>
-<span class="fc bfc" id="L403" title="All 2 branches covered.">        if (namespace == null) {</span>
-<span class="fc" id="L404">            namespace = getMyBatis3FallbackSqlMapNamespace();</span>
+<span class="fc" id="L308">        String namespace = getMyBatis3JavaMapperType();</span>
+<span class="fc bfc" id="L309" title="All 2 branches covered.">        if (namespace == null) {</span>
+<span class="fc" id="L310">            namespace = getMyBatis3FallbackSqlMapNamespace();</span>
         }
 
-<span class="fc" id="L407">        return namespace;</span>
+<span class="fc" id="L313">        return namespace;</span>
     }
 
     public String getMyBatis3FallbackSqlMapNamespace() {
-<span class="fc" id="L411">        return internalAttributes</span>
-<span class="fc" id="L412">                .get(InternalAttribute.ATTR_MYBATIS3_FALLBACK_SQL_MAP_NAMESPACE);</span>
-    }
-
-    /**
-     * Calculates the package for the current table.
-     * 
-     * @return the package for the SqlMap for the current table
-     */
-    public String getIbatis2SqlMapPackage() {
-<span class="fc" id="L421">        return internalAttributes</span>
-<span class="fc" id="L422">                .get(InternalAttribute.ATTR_IBATIS2_SQL_MAP_PACKAGE);</span>
-    }
-
-    public String getDAOImplementationType() {
-<span class="fc" id="L426">        return internalAttributes</span>
-<span class="fc" id="L427">                .get(InternalAttribute.ATTR_DAO_IMPLEMENTATION_TYPE);</span>
-    }
-
-    public String getDAOInterfaceType() {
-<span class="fc" id="L431">        return internalAttributes</span>
-<span class="fc" id="L432">                .get(InternalAttribute.ATTR_DAO_INTERFACE_TYPE);</span>
+<span class="fc" id="L317">        return internalAttributes</span>
+<span class="fc" id="L318">                .get(InternalAttribute.ATTR_MYBATIS3_FALLBACK_SQL_MAP_NAMESPACE);</span>
     }
 
     public boolean hasAnyColumns() {
-<span class="fc bfc" id="L436" title="All 4 branches covered.">        return primaryKeyColumns.size() &gt; 0 || baseColumns.size() &gt; 0</span>
-<span class="pc bpc" id="L437" title="1 of 2 branches missed.">                || blobColumns.size() &gt; 0;</span>
+<span class="pc bpc" id="L322" title="1 of 6 branches missed.">        return hasPrimaryKeyColumns() || hasBaseColumns() || hasBLOBColumns();</span>
     }
 
     public void setTableConfiguration(TableConfiguration tableConfiguration) {
-<span class="fc" id="L441">        this.tableConfiguration = tableConfiguration;</span>
-<span class="fc" id="L442">    }</span>
+<span class="fc" id="L326">        this.tableConfiguration = tableConfiguration;</span>
+<span class="fc" id="L327">    }</span>
 
     public void setFullyQualifiedTable(FullyQualifiedTable fullyQualifiedTable) {
-<span class="fc" id="L445">        this.fullyQualifiedTable = fullyQualifiedTable;</span>
-<span class="fc" id="L446">    }</span>
+<span class="fc" id="L330">        this.fullyQualifiedTable = fullyQualifiedTable;</span>
+<span class="fc" id="L331">    }</span>
 
     public void setContext(Context context) {
-<span class="fc" id="L449">        this.context = context;</span>
-<span class="fc" id="L450">    }</span>
+<span class="fc" id="L334">        this.context = context;</span>
+<span class="fc" id="L335">    }</span>
 
     public void addColumn(IntrospectedColumn introspectedColumn) {
-<span class="fc bfc" id="L453" title="All 2 branches covered.">        if (introspectedColumn.isBLOBColumn()) {</span>
-<span class="fc" id="L454">            blobColumns.add(introspectedColumn);</span>
+<span class="fc bfc" id="L338" title="All 2 branches covered.">        if (introspectedColumn.isBLOBColumn()) {</span>
+<span class="fc" id="L339">            blobColumns.add(introspectedColumn);</span>
         } else {
-<span class="fc" id="L456">            baseColumns.add(introspectedColumn);</span>
+<span class="fc" id="L341">            baseColumns.add(introspectedColumn);</span>
         }
 
-<span class="fc" id="L459">        introspectedColumn.setIntrospectedTable(this);</span>
-<span class="fc" id="L460">    }</span>
+<span class="fc" id="L344">        introspectedColumn.setIntrospectedTable(this);</span>
+<span class="fc" id="L345">    }</span>
 
     public void addPrimaryKeyColumn(String columnName) {
-<span class="fc" id="L463">        boolean found = false;</span>
+<span class="fc" id="L348">        boolean found = false;</span>
         // first search base columns
-<span class="fc" id="L465">        Iterator&lt;IntrospectedColumn&gt; iter = baseColumns.iterator();</span>
-<span class="pc bpc" id="L466" title="1 of 2 branches missed.">        while (iter.hasNext()) {</span>
-<span class="fc" id="L467">            IntrospectedColumn introspectedColumn = iter.next();</span>
-<span class="fc bfc" id="L468" title="All 2 branches covered.">            if (introspectedColumn.getActualColumnName().equals(columnName)) {</span>
-<span class="fc" id="L469">                primaryKeyColumns.add(introspectedColumn);</span>
-<span class="fc" id="L470">                iter.remove();</span>
-<span class="fc" id="L471">                found = true;</span>
-<span class="fc" id="L472">                break;</span>
+<span class="fc" id="L350">        Iterator&lt;IntrospectedColumn&gt; iter = baseColumns.iterator();</span>
+<span class="pc bpc" id="L351" title="1 of 2 branches missed.">        while (iter.hasNext()) {</span>
+<span class="fc" id="L352">            IntrospectedColumn introspectedColumn = iter.next();</span>
+<span class="fc bfc" id="L353" title="All 2 branches covered.">            if (introspectedColumn.getActualColumnName().equals(columnName)) {</span>
+<span class="fc" id="L354">                primaryKeyColumns.add(introspectedColumn);</span>
+<span class="fc" id="L355">                iter.remove();</span>
+<span class="fc" id="L356">                found = true;</span>
+<span class="fc" id="L357">                break;</span>
             }
-<span class="fc" id="L474">        }</span>
+<span class="fc" id="L359">        }</span>
 
         // search blob columns in the weird event that a blob is the primary key
-<span class="pc bpc" id="L477" title="1 of 2 branches missed.">        if (!found) {</span>
-<span class="nc" id="L478">            iter = blobColumns.iterator();</span>
-<span class="nc bnc" id="L479" title="All 2 branches missed.">            while (iter.hasNext()) {</span>
-<span class="nc" id="L480">                IntrospectedColumn introspectedColumn = iter.next();</span>
-<span class="nc bnc" id="L481" title="All 2 branches missed.">                if (introspectedColumn.getActualColumnName().equals(columnName)) {</span>
-<span class="nc" id="L482">                    primaryKeyColumns.add(introspectedColumn);</span>
-<span class="nc" id="L483">                    iter.remove();</span>
-<span class="nc" id="L484">                    found = true;</span>
-<span class="nc" id="L485">                    break;</span>
+<span class="pc bpc" id="L362" title="1 of 2 branches missed.">        if (!found) {</span>
+<span class="nc" id="L363">            iter = blobColumns.iterator();</span>
+<span class="nc bnc" id="L364" title="All 2 branches missed.">            while (iter.hasNext()) {</span>
+<span class="nc" id="L365">                IntrospectedColumn introspectedColumn = iter.next();</span>
+<span class="nc bnc" id="L366" title="All 2 branches missed.">                if (introspectedColumn.getActualColumnName().equals(columnName)) {</span>
+<span class="nc" id="L367">                    primaryKeyColumns.add(introspectedColumn);</span>
+<span class="nc" id="L368">                    iter.remove();</span>
+<span class="nc" id="L369">                    break;</span>
                 }
-<span class="nc" id="L487">            }</span>
+<span class="nc" id="L371">            }</span>
         }
-<span class="fc" id="L489">    }</span>
+<span class="fc" id="L373">    }</span>
 
     public Object getAttribute(String name) {
-<span class="nc" id="L492">        return attributes.get(name);</span>
+<span class="nc" id="L376">        return attributes.get(name);</span>
     }
 
     public void removeAttribute(String name) {
-<span class="nc" id="L496">        attributes.remove(name);</span>
-<span class="nc" id="L497">    }</span>
+<span class="nc" id="L380">        attributes.remove(name);</span>
+<span class="nc" id="L381">    }</span>
 
     public void setAttribute(String name, Object value) {
-<span class="nc" id="L500">        attributes.put(name, value);</span>
-<span class="nc" id="L501">    }</span>
+<span class="nc" id="L384">        attributes.put(name, value);</span>
+<span class="nc" id="L385">    }</span>
 
     public void initialize() {
-<span class="fc" id="L504">        calculateJavaClientAttributes();</span>
-<span class="fc" id="L505">        calculateModelAttributes();</span>
-<span class="fc" id="L506">        calculateXmlAttributes();</span>
+<span class="fc" id="L388">        calculateJavaClientAttributes();</span>
+<span class="fc" id="L389">        calculateModelAttributes();</span>
+<span class="fc" id="L390">        calculateXmlAttributes();</span>
 
-<span class="fc bfc" id="L508" title="All 2 branches covered.">        if (tableConfiguration.getModelType() == ModelType.HIERARCHICAL) {</span>
-<span class="fc" id="L509">            rules = new HierarchicalModelRules(this);</span>
-<span class="fc bfc" id="L510" title="All 2 branches covered.">        } else if (tableConfiguration.getModelType() == ModelType.FLAT) {</span>
-<span class="fc" id="L511">            rules = new FlatModelRules(this);</span>
+<span class="fc bfc" id="L392" title="All 2 branches covered.">        if (tableConfiguration.getModelType() == ModelType.HIERARCHICAL) {</span>
+<span class="fc" id="L393">            rules = new HierarchicalModelRules(this);</span>
+<span class="fc bfc" id="L394" title="All 2 branches covered.">        } else if (tableConfiguration.getModelType() == ModelType.FLAT) {</span>
+<span class="fc" id="L395">            rules = new FlatModelRules(this);</span>
         } else {
-<span class="fc" id="L513">            rules = new ConditionalModelRules(this);</span>
+<span class="fc" id="L397">            rules = new ConditionalModelRules(this);</span>
         }
 
-<span class="fc" id="L516">        context.getPlugins().initialized(this);</span>
-<span class="fc" id="L517">    }</span>
+<span class="fc" id="L400">        context.getPlugins().initialized(this);</span>
+<span class="fc" id="L401">    }</span>
 
     protected void calculateXmlAttributes() {
-<span class="fc" id="L520">        setIbatis2SqlMapPackage(calculateSqlMapPackage());</span>
-<span class="fc" id="L521">        setIbatis2SqlMapFileName(calculateIbatis2SqlMapFileName());</span>
-<span class="fc" id="L522">        setMyBatis3XmlMapperFileName(calculateMyBatis3XmlMapperFileName());</span>
-<span class="fc" id="L523">        setMyBatis3XmlMapperPackage(calculateSqlMapPackage());</span>
+<span class="fc" id="L404">        setMyBatis3XmlMapperFileName(calculateMyBatis3XmlMapperFileName());</span>
+<span class="fc" id="L405">        setMyBatis3XmlMapperPackage(calculateSqlMapPackage());</span>
 
-<span class="fc" id="L525">        setIbatis2SqlMapNamespace(calculateIbatis2SqlMapNamespace());</span>
-<span class="fc" id="L526">        setMyBatis3FallbackSqlMapNamespace(calculateMyBatis3FallbackSqlMapNamespace());</span>
+<span class="fc" id="L407">        setMyBatis3FallbackSqlMapNamespace(calculateMyBatis3FallbackSqlMapNamespace());</span>
 
-<span class="fc" id="L528">        setSqlMapFullyQualifiedRuntimeTableName(calculateSqlMapFullyQualifiedRuntimeTableName());</span>
-<span class="fc" id="L529">        setSqlMapAliasedFullyQualifiedRuntimeTableName(calculateSqlMapAliasedFullyQualifiedRuntimeTableName());</span>
+<span class="fc" id="L409">        setSqlMapFullyQualifiedRuntimeTableName(calculateSqlMapFullyQualifiedRuntimeTableName());</span>
+<span class="fc" id="L410">        setSqlMapAliasedFullyQualifiedRuntimeTableName(calculateSqlMapAliasedFullyQualifiedRuntimeTableName());</span>
 
-<span class="fc" id="L531">        setCountByExampleStatementId(&quot;countByExample&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L532">        setDeleteByExampleStatementId(&quot;deleteByExample&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L533">        setDeleteByPrimaryKeyStatementId(&quot;deleteByPrimaryKey&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L534">        setInsertStatementId(&quot;insert&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L535">        setInsertSelectiveStatementId(&quot;insertSelective&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L536">        setSelectAllStatementId(&quot;selectAll&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L537">        setSelectByExampleStatementId(&quot;selectByExample&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L538">        setSelectByExampleWithBLOBsStatementId(&quot;selectByExampleWithBLOBs&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L539">        setSelectByPrimaryKeyStatementId(&quot;selectByPrimaryKey&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L540">        setUpdateByExampleStatementId(&quot;updateByExample&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L541">        setUpdateByExampleSelectiveStatementId(&quot;updateByExampleSelective&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L542">        setUpdateByExampleWithBLOBsStatementId(&quot;updateByExampleWithBLOBs&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L543">        setUpdateByPrimaryKeyStatementId(&quot;updateByPrimaryKey&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L544">        setUpdateByPrimaryKeySelectiveStatementId(&quot;updateByPrimaryKeySelective&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L545">        setUpdateByPrimaryKeyWithBLOBsStatementId(&quot;updateByPrimaryKeyWithBLOBs&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L546">        setBaseResultMapId(&quot;BaseResultMap&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L547">        setResultMapWithBLOBsId(&quot;ResultMapWithBLOBs&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L548">        setExampleWhereClauseId(&quot;Example_Where_Clause&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L549">        setBaseColumnListId(&quot;Base_Column_List&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L550">        setBlobColumnListId(&quot;Blob_Column_List&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L551">        setMyBatis3UpdateByExampleWhereClauseId(&quot;Update_By_Example_Where_Clause&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L552">    }</span>
+<span class="fc" id="L412">        setCountByExampleStatementId(&quot;countByExample&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L413">        setDeleteByExampleStatementId(&quot;deleteByExample&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L414">        setDeleteByPrimaryKeyStatementId(&quot;deleteByPrimaryKey&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L415">        setInsertStatementId(&quot;insert&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L416">        setInsertSelectiveStatementId(&quot;insertSelective&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L417">        setSelectAllStatementId(&quot;selectAll&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L418">        setSelectByExampleStatementId(&quot;selectByExample&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L419">        setSelectByExampleWithBLOBsStatementId(&quot;selectByExampleWithBLOBs&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L420">        setSelectByPrimaryKeyStatementId(&quot;selectByPrimaryKey&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L421">        setUpdateByExampleStatementId(&quot;updateByExample&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L422">        setUpdateByExampleSelectiveStatementId(&quot;updateByExampleSelective&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L423">        setUpdateByExampleWithBLOBsStatementId(&quot;updateByExampleWithBLOBs&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L424">        setUpdateByPrimaryKeyStatementId(&quot;updateByPrimaryKey&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L425">        setUpdateByPrimaryKeySelectiveStatementId(&quot;updateByPrimaryKeySelective&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L426">        setUpdateByPrimaryKeyWithBLOBsStatementId(&quot;updateByPrimaryKeyWithBLOBs&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L427">        setBaseResultMapId(&quot;BaseResultMap&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L428">        setResultMapWithBLOBsId(&quot;ResultMapWithBLOBs&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L429">        setExampleWhereClauseId(&quot;Example_Where_Clause&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L430">        setBaseColumnListId(&quot;Base_Column_List&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L431">        setBlobColumnListId(&quot;Blob_Column_List&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L432">        setMyBatis3UpdateByExampleWhereClauseId(&quot;Update_By_Example_Where_Clause&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L433">    }</span>
 
     public void setBlobColumnListId(String s) {
-<span class="fc" id="L555">        internalAttributes.put(InternalAttribute.ATTR_BLOB_COLUMN_LIST_ID, s);</span>
-<span class="fc" id="L556">    }</span>
+<span class="fc" id="L436">        internalAttributes.put(InternalAttribute.ATTR_BLOB_COLUMN_LIST_ID, s);</span>
+<span class="fc" id="L437">    }</span>
 
     public void setBaseColumnListId(String s) {
-<span class="fc" id="L559">        internalAttributes.put(InternalAttribute.ATTR_BASE_COLUMN_LIST_ID, s);</span>
-<span class="fc" id="L560">    }</span>
+<span class="fc" id="L440">        internalAttributes.put(InternalAttribute.ATTR_BASE_COLUMN_LIST_ID, s);</span>
+<span class="fc" id="L441">    }</span>
 
     public void setExampleWhereClauseId(String s) {
-<span class="fc" id="L563">        internalAttributes.put(InternalAttribute.ATTR_EXAMPLE_WHERE_CLAUSE_ID,</span>
+<span class="fc" id="L444">        internalAttributes.put(InternalAttribute.ATTR_EXAMPLE_WHERE_CLAUSE_ID,</span>
                 s);
-<span class="fc" id="L565">    }</span>
+<span class="fc" id="L446">    }</span>
 
     public void setMyBatis3UpdateByExampleWhereClauseId(String s) {
-<span class="fc" id="L568">        internalAttributes.put(</span>
+<span class="fc" id="L449">        internalAttributes.put(</span>
                 InternalAttribute.ATTR_MYBATIS3_UPDATE_BY_EXAMPLE_WHERE_CLAUSE_ID,
                 s);
-<span class="fc" id="L571">    }</span>
+<span class="fc" id="L452">    }</span>
 
     public void setResultMapWithBLOBsId(String s) {
-<span class="fc" id="L574">        internalAttributes.put(InternalAttribute.ATTR_RESULT_MAP_WITH_BLOBS_ID,</span>
+<span class="fc" id="L455">        internalAttributes.put(InternalAttribute.ATTR_RESULT_MAP_WITH_BLOBS_ID,</span>
                 s);
-<span class="fc" id="L576">    }</span>
+<span class="fc" id="L457">    }</span>
 
     public void setBaseResultMapId(String s) {
-<span class="fc" id="L579">        internalAttributes.put(InternalAttribute.ATTR_BASE_RESULT_MAP_ID, s);</span>
-<span class="fc" id="L580">    }</span>
+<span class="fc" id="L460">        internalAttributes.put(InternalAttribute.ATTR_BASE_RESULT_MAP_ID, s);</span>
+<span class="fc" id="L461">    }</span>
 
     public void setUpdateByPrimaryKeyWithBLOBsStatementId(String s) {
-<span class="fc" id="L583">        internalAttributes.put(</span>
+<span class="fc" id="L464">        internalAttributes.put(</span>
                 InternalAttribute.ATTR_UPDATE_BY_PRIMARY_KEY_WITH_BLOBS_STATEMENT_ID,
                 s);
-<span class="fc" id="L586">    }</span>
+<span class="fc" id="L467">    }</span>
 
     public void setUpdateByPrimaryKeySelectiveStatementId(String s) {
-<span class="fc" id="L589">        internalAttributes</span>
-<span class="fc" id="L590">                .put(</span>
+<span class="fc" id="L470">        internalAttributes</span>
+<span class="fc" id="L471">                .put(</span>
                         InternalAttribute.ATTR_UPDATE_BY_PRIMARY_KEY_SELECTIVE_STATEMENT_ID,
                         s);
-<span class="fc" id="L593">    }</span>
+<span class="fc" id="L474">    }</span>
 
     public void setUpdateByPrimaryKeyStatementId(String s) {
-<span class="fc" id="L596">        internalAttributes.put(</span>
+<span class="fc" id="L477">        internalAttributes.put(</span>
                 InternalAttribute.ATTR_UPDATE_BY_PRIMARY_KEY_STATEMENT_ID, s);
-<span class="fc" id="L598">    }</span>
+<span class="fc" id="L479">    }</span>
 
     public void setUpdateByExampleWithBLOBsStatementId(String s) {
-<span class="fc" id="L601">        internalAttributes.put(</span>
+<span class="fc" id="L482">        internalAttributes.put(</span>
                 InternalAttribute.ATTR_UPDATE_BY_EXAMPLE_WITH_BLOBS_STATEMENT_ID,
                 s);
-<span class="fc" id="L604">    }</span>
+<span class="fc" id="L485">    }</span>
 
     public void setUpdateByExampleSelectiveStatementId(String s) {
-<span class="fc" id="L607">        internalAttributes</span>
-<span class="fc" id="L608">                .put(</span>
+<span class="fc" id="L488">        internalAttributes</span>
+<span class="fc" id="L489">                .put(</span>
                         InternalAttribute.ATTR_UPDATE_BY_EXAMPLE_SELECTIVE_STATEMENT_ID,
                         s);
-<span class="fc" id="L611">    }</span>
+<span class="fc" id="L492">    }</span>
 
     public void setUpdateByExampleStatementId(String s) {
-<span class="fc" id="L614">        internalAttributes.put(</span>
+<span class="fc" id="L495">        internalAttributes.put(</span>
                 InternalAttribute.ATTR_UPDATE_BY_EXAMPLE_STATEMENT_ID, s);
-<span class="fc" id="L616">    }</span>
+<span class="fc" id="L497">    }</span>
 
     public void setSelectByPrimaryKeyStatementId(String s) {
-<span class="fc" id="L619">        internalAttributes.put(</span>
+<span class="fc" id="L500">        internalAttributes.put(</span>
                 InternalAttribute.ATTR_SELECT_BY_PRIMARY_KEY_STATEMENT_ID, s);
-<span class="fc" id="L621">    }</span>
+<span class="fc" id="L502">    }</span>
 
     public void setSelectByExampleWithBLOBsStatementId(String s) {
-<span class="fc" id="L624">        internalAttributes</span>
-<span class="fc" id="L625">                .put(</span>
+<span class="fc" id="L505">        internalAttributes</span>
+<span class="fc" id="L506">                .put(</span>
                         InternalAttribute.ATTR_SELECT_BY_EXAMPLE_WITH_BLOBS_STATEMENT_ID,
                         s);
-<span class="fc" id="L628">    }</span>
+<span class="fc" id="L509">    }</span>
 
     public void setSelectAllStatementId(String s) {
-<span class="fc" id="L631">        internalAttributes.put(</span>
+<span class="fc" id="L512">        internalAttributes.put(</span>
                 InternalAttribute.ATTR_SELECT_ALL_STATEMENT_ID, s);
-<span class="fc" id="L633">    }</span>
+<span class="fc" id="L514">    }</span>
 
     public void setSelectByExampleStatementId(String s) {
-<span class="fc" id="L636">        internalAttributes.put(</span>
+<span class="fc" id="L517">        internalAttributes.put(</span>
                 InternalAttribute.ATTR_SELECT_BY_EXAMPLE_STATEMENT_ID, s);
-<span class="fc" id="L638">    }</span>
+<span class="fc" id="L519">    }</span>
 
     public void setInsertSelectiveStatementId(String s) {
-<span class="fc" id="L641">        internalAttributes.put(</span>
+<span class="fc" id="L522">        internalAttributes.put(</span>
                 InternalAttribute.ATTR_INSERT_SELECTIVE_STATEMENT_ID, s);
-<span class="fc" id="L643">    }</span>
+<span class="fc" id="L524">    }</span>
 
     public void setInsertStatementId(String s) {
-<span class="fc" id="L646">        internalAttributes.put(InternalAttribute.ATTR_INSERT_STATEMENT_ID, s);</span>
-<span class="fc" id="L647">    }</span>
+<span class="fc" id="L527">        internalAttributes.put(InternalAttribute.ATTR_INSERT_STATEMENT_ID, s);</span>
+<span class="fc" id="L528">    }</span>
 
     public void setDeleteByPrimaryKeyStatementId(String s) {
-<span class="fc" id="L650">        internalAttributes.put(</span>
+<span class="fc" id="L531">        internalAttributes.put(</span>
                 InternalAttribute.ATTR_DELETE_BY_PRIMARY_KEY_STATEMENT_ID, s);
-<span class="fc" id="L652">    }</span>
+<span class="fc" id="L533">    }</span>
 
     public void setDeleteByExampleStatementId(String s) {
-<span class="fc" id="L655">        internalAttributes.put(</span>
+<span class="fc" id="L536">        internalAttributes.put(</span>
                 InternalAttribute.ATTR_DELETE_BY_EXAMPLE_STATEMENT_ID, s);
-<span class="fc" id="L657">    }</span>
+<span class="fc" id="L538">    }</span>
 
     public void setCountByExampleStatementId(String s) {
-<span class="fc" id="L660">        internalAttributes.put(</span>
+<span class="fc" id="L541">        internalAttributes.put(</span>
                 InternalAttribute.ATTR_COUNT_BY_EXAMPLE_STATEMENT_ID, s);
-<span class="fc" id="L662">    }</span>
+<span class="fc" id="L543">    }</span>
 
     public String getBlobColumnListId() {
-<span class="fc" id="L665">        return internalAttributes</span>
-<span class="fc" id="L666">                .get(InternalAttribute.ATTR_BLOB_COLUMN_LIST_ID);</span>
+<span class="fc" id="L546">        return internalAttributes</span>
+<span class="fc" id="L547">                .get(InternalAttribute.ATTR_BLOB_COLUMN_LIST_ID);</span>
     }
 
     public String getBaseColumnListId() {
-<span class="fc" id="L670">        return internalAttributes</span>
-<span class="fc" id="L671">                .get(InternalAttribute.ATTR_BASE_COLUMN_LIST_ID);</span>
+<span class="fc" id="L551">        return internalAttributes</span>
+<span class="fc" id="L552">                .get(InternalAttribute.ATTR_BASE_COLUMN_LIST_ID);</span>
     }
 
     public String getExampleWhereClauseId() {
-<span class="fc" id="L675">        return internalAttributes</span>
-<span class="fc" id="L676">                .get(InternalAttribute.ATTR_EXAMPLE_WHERE_CLAUSE_ID);</span>
+<span class="fc" id="L556">        return internalAttributes</span>
+<span class="fc" id="L557">                .get(InternalAttribute.ATTR_EXAMPLE_WHERE_CLAUSE_ID);</span>
     }
 
     public String getMyBatis3UpdateByExampleWhereClauseId() {
-<span class="fc" id="L680">        return internalAttributes</span>
-<span class="fc" id="L681">                .get(InternalAttribute.ATTR_MYBATIS3_UPDATE_BY_EXAMPLE_WHERE_CLAUSE_ID);</span>
+<span class="fc" id="L561">        return internalAttributes</span>
+<span class="fc" id="L562">                .get(InternalAttribute.ATTR_MYBATIS3_UPDATE_BY_EXAMPLE_WHERE_CLAUSE_ID);</span>
     }
 
     public String getResultMapWithBLOBsId() {
-<span class="fc" id="L685">        return internalAttributes</span>
-<span class="fc" id="L686">                .get(InternalAttribute.ATTR_RESULT_MAP_WITH_BLOBS_ID);</span>
+<span class="fc" id="L566">        return internalAttributes</span>
+<span class="fc" id="L567">                .get(InternalAttribute.ATTR_RESULT_MAP_WITH_BLOBS_ID);</span>
     }
 
     public String getBaseResultMapId() {
-<span class="fc" id="L690">        return internalAttributes</span>
-<span class="fc" id="L691">                .get(InternalAttribute.ATTR_BASE_RESULT_MAP_ID);</span>
+<span class="fc" id="L571">        return internalAttributes</span>
+<span class="fc" id="L572">                .get(InternalAttribute.ATTR_BASE_RESULT_MAP_ID);</span>
     }
 
     public String getUpdateByPrimaryKeyWithBLOBsStatementId() {
-<span class="fc" id="L695">        return internalAttributes</span>
-<span class="fc" id="L696">                .get(InternalAttribute.ATTR_UPDATE_BY_PRIMARY_KEY_WITH_BLOBS_STATEMENT_ID);</span>
+<span class="fc" id="L576">        return internalAttributes</span>
+<span class="fc" id="L577">                .get(InternalAttribute.ATTR_UPDATE_BY_PRIMARY_KEY_WITH_BLOBS_STATEMENT_ID);</span>
     }
 
     public String getUpdateByPrimaryKeySelectiveStatementId() {
-<span class="fc" id="L700">        return internalAttributes</span>
-<span class="fc" id="L701">                .get(InternalAttribute.ATTR_UPDATE_BY_PRIMARY_KEY_SELECTIVE_STATEMENT_ID);</span>
+<span class="fc" id="L581">        return internalAttributes</span>
+<span class="fc" id="L582">                .get(InternalAttribute.ATTR_UPDATE_BY_PRIMARY_KEY_SELECTIVE_STATEMENT_ID);</span>
     }
 
     public String getUpdateByPrimaryKeyStatementId() {
-<span class="fc" id="L705">        return internalAttributes</span>
-<span class="fc" id="L706">                .get(InternalAttribute.ATTR_UPDATE_BY_PRIMARY_KEY_STATEMENT_ID);</span>
+<span class="fc" id="L586">        return internalAttributes</span>
+<span class="fc" id="L587">                .get(InternalAttribute.ATTR_UPDATE_BY_PRIMARY_KEY_STATEMENT_ID);</span>
     }
 
     public String getUpdateByExampleWithBLOBsStatementId() {
-<span class="fc" id="L710">        return internalAttributes</span>
-<span class="fc" id="L711">                .get(InternalAttribute.ATTR_UPDATE_BY_EXAMPLE_WITH_BLOBS_STATEMENT_ID);</span>
+<span class="fc" id="L591">        return internalAttributes</span>
+<span class="fc" id="L592">                .get(InternalAttribute.ATTR_UPDATE_BY_EXAMPLE_WITH_BLOBS_STATEMENT_ID);</span>
     }
 
     public String getUpdateByExampleSelectiveStatementId() {
-<span class="fc" id="L715">        return internalAttributes</span>
-<span class="fc" id="L716">                .get(InternalAttribute.ATTR_UPDATE_BY_EXAMPLE_SELECTIVE_STATEMENT_ID);</span>
+<span class="fc" id="L596">        return internalAttributes</span>
+<span class="fc" id="L597">                .get(InternalAttribute.ATTR_UPDATE_BY_EXAMPLE_SELECTIVE_STATEMENT_ID);</span>
     }
 
     public String getUpdateByExampleStatementId() {
-<span class="fc" id="L720">        return internalAttributes</span>
-<span class="fc" id="L721">                .get(InternalAttribute.ATTR_UPDATE_BY_EXAMPLE_STATEMENT_ID);</span>
+<span class="fc" id="L601">        return internalAttributes</span>
+<span class="fc" id="L602">                .get(InternalAttribute.ATTR_UPDATE_BY_EXAMPLE_STATEMENT_ID);</span>
     }
 
     public String getSelectByPrimaryKeyStatementId() {
-<span class="fc" id="L725">        return internalAttributes</span>
-<span class="fc" id="L726">                .get(InternalAttribute.ATTR_SELECT_BY_PRIMARY_KEY_STATEMENT_ID);</span>
+<span class="fc" id="L606">        return internalAttributes</span>
+<span class="fc" id="L607">                .get(InternalAttribute.ATTR_SELECT_BY_PRIMARY_KEY_STATEMENT_ID);</span>
     }
 
     public String getSelectByExampleWithBLOBsStatementId() {
-<span class="fc" id="L730">        return internalAttributes</span>
-<span class="fc" id="L731">                .get(InternalAttribute.ATTR_SELECT_BY_EXAMPLE_WITH_BLOBS_STATEMENT_ID);</span>
+<span class="fc" id="L611">        return internalAttributes</span>
+<span class="fc" id="L612">                .get(InternalAttribute.ATTR_SELECT_BY_EXAMPLE_WITH_BLOBS_STATEMENT_ID);</span>
     }
 
     public String getSelectAllStatementId() {
-<span class="fc" id="L735">        return internalAttributes</span>
-<span class="fc" id="L736">                .get(InternalAttribute.ATTR_SELECT_ALL_STATEMENT_ID);</span>
+<span class="fc" id="L616">        return internalAttributes</span>
+<span class="fc" id="L617">                .get(InternalAttribute.ATTR_SELECT_ALL_STATEMENT_ID);</span>
     }
 
     public String getSelectByExampleStatementId() {
-<span class="fc" id="L740">        return internalAttributes</span>
-<span class="fc" id="L741">                .get(InternalAttribute.ATTR_SELECT_BY_EXAMPLE_STATEMENT_ID);</span>
+<span class="fc" id="L621">        return internalAttributes</span>
+<span class="fc" id="L622">                .get(InternalAttribute.ATTR_SELECT_BY_EXAMPLE_STATEMENT_ID);</span>
     }
 
     public String getInsertSelectiveStatementId() {
-<span class="fc" id="L745">        return internalAttributes</span>
-<span class="fc" id="L746">                .get(InternalAttribute.ATTR_INSERT_SELECTIVE_STATEMENT_ID);</span>
+<span class="fc" id="L626">        return internalAttributes</span>
+<span class="fc" id="L627">                .get(InternalAttribute.ATTR_INSERT_SELECTIVE_STATEMENT_ID);</span>
     }
 
     public String getInsertStatementId() {
-<span class="fc" id="L750">        return internalAttributes</span>
-<span class="fc" id="L751">                .get(InternalAttribute.ATTR_INSERT_STATEMENT_ID);</span>
+<span class="fc" id="L631">        return internalAttributes</span>
+<span class="fc" id="L632">                .get(InternalAttribute.ATTR_INSERT_STATEMENT_ID);</span>
     }
 
     public String getDeleteByPrimaryKeyStatementId() {
-<span class="fc" id="L755">        return internalAttributes</span>
-<span class="fc" id="L756">                .get(InternalAttribute.ATTR_DELETE_BY_PRIMARY_KEY_STATEMENT_ID);</span>
+<span class="fc" id="L636">        return internalAttributes</span>
+<span class="fc" id="L637">                .get(InternalAttribute.ATTR_DELETE_BY_PRIMARY_KEY_STATEMENT_ID);</span>
     }
 
     public String getDeleteByExampleStatementId() {
-<span class="fc" id="L760">        return internalAttributes</span>
-<span class="fc" id="L761">                .get(InternalAttribute.ATTR_DELETE_BY_EXAMPLE_STATEMENT_ID);</span>
+<span class="fc" id="L641">        return internalAttributes</span>
+<span class="fc" id="L642">                .get(InternalAttribute.ATTR_DELETE_BY_EXAMPLE_STATEMENT_ID);</span>
     }
 
     public String getCountByExampleStatementId() {
-<span class="fc" id="L765">        return internalAttributes</span>
-<span class="fc" id="L766">                .get(InternalAttribute.ATTR_COUNT_BY_EXAMPLE_STATEMENT_ID);</span>
-    }
-
-    protected String calculateJavaClientImplementationPackage() {
-<span class="fc" id="L770">        JavaClientGeneratorConfiguration config = context</span>
-<span class="fc" id="L771">                .getJavaClientGeneratorConfiguration();</span>
-<span class="pc bpc" id="L772" title="1 of 2 branches missed.">        if (config == null) {</span>
-<span class="nc" id="L773">            return null;</span>
-        }
-
-<span class="fc" id="L776">        StringBuilder sb = new StringBuilder();</span>
-<span class="fc bfc" id="L777" title="All 2 branches covered.">        if (stringHasValue(config.getImplementationPackage())) {</span>
-<span class="fc" id="L778">            sb.append(config.getImplementationPackage());</span>
-        } else {
-<span class="fc" id="L780">            sb.append(config.getTargetPackage());</span>
-        }
-
-<span class="fc" id="L783">        sb.append(fullyQualifiedTable.getSubPackageForClientOrSqlMap(isSubPackagesEnabled(config)));</span>
-
-<span class="fc" id="L785">        return sb.toString();</span>
+<span class="fc" id="L646">        return internalAttributes</span>
+<span class="fc" id="L647">                .get(InternalAttribute.ATTR_COUNT_BY_EXAMPLE_STATEMENT_ID);</span>
     }
 
     private boolean isSubPackagesEnabled(PropertyHolder propertyHolder) {
-<span class="fc" id="L789">        return isTrue(propertyHolder.getProperty(PropertyRegistry.ANY_ENABLE_SUB_PACKAGES));</span>
+<span class="fc" id="L651">        return isTrue(propertyHolder.getProperty(PropertyRegistry.ANY_ENABLE_SUB_PACKAGES));</span>
     }
 
     protected String calculateJavaClientInterfacePackage() {
-<span class="fc" id="L793">        JavaClientGeneratorConfiguration config = context</span>
-<span class="fc" id="L794">                .getJavaClientGeneratorConfiguration();</span>
-<span class="pc bpc" id="L795" title="1 of 2 branches missed.">        if (config == null) {</span>
-<span class="nc" id="L796">            return null;</span>
+<span class="fc" id="L655">        JavaClientGeneratorConfiguration config = context</span>
+<span class="fc" id="L656">                .getJavaClientGeneratorConfiguration();</span>
+<span class="pc bpc" id="L657" title="1 of 2 branches missed.">        if (config == null) {</span>
+<span class="nc" id="L658">            return null;</span>
         }
 
-<span class="fc" id="L799">        StringBuilder sb = new StringBuilder();</span>
-<span class="fc" id="L800">        sb.append(config.getTargetPackage());</span>
+<span class="fc" id="L661">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L662">        sb.append(config.getTargetPackage());</span>
 
-<span class="fc" id="L802">        sb.append(fullyQualifiedTable.getSubPackageForClientOrSqlMap(isSubPackagesEnabled(config)));</span>
+<span class="fc" id="L664">        sb.append(fullyQualifiedTable.getSubPackageForClientOrSqlMap(isSubPackagesEnabled(config)));</span>
 
-<span class="fc" id="L804">        return sb.toString();</span>
+<span class="fc" id="L666">        return sb.toString();</span>
     }
 
     protected void calculateJavaClientAttributes() {
-<span class="fc bfc" id="L808" title="All 2 branches covered.">        if (context.getJavaClientGeneratorConfiguration() == null) {</span>
-<span class="fc" id="L809">            return;</span>
+<span class="fc bfc" id="L670" title="All 2 branches covered.">        if (context.getJavaClientGeneratorConfiguration() == null) {</span>
+<span class="fc" id="L671">            return;</span>
         }
 
-<span class="fc" id="L812">        StringBuilder sb = new StringBuilder();</span>
-<span class="fc" id="L813">        sb.append(calculateJavaClientImplementationPackage());</span>
-<span class="fc" id="L814">        sb.append('.');</span>
-<span class="fc" id="L815">        sb.append(fullyQualifiedTable.getDomainObjectName());</span>
-<span class="fc" id="L816">        sb.append(&quot;DAOImpl&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L817">        setDAOImplementationType(sb.toString());</span>
-
-<span class="fc" id="L819">        sb.setLength(0);</span>
-<span class="fc" id="L820">        sb.append(calculateJavaClientInterfacePackage());</span>
-<span class="fc" id="L821">        sb.append('.');</span>
-<span class="fc" id="L822">        sb.append(fullyQualifiedTable.getDomainObjectName());</span>
-<span class="fc" id="L823">        sb.append(&quot;DAO&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L824">        setDAOInterfaceType(sb.toString());</span>
-
-<span class="fc" id="L826">        sb.setLength(0);</span>
-<span class="fc" id="L827">        sb.append(calculateJavaClientInterfacePackage());</span>
-<span class="fc" id="L828">        sb.append('.');</span>
-<span class="fc bfc" id="L829" title="All 2 branches covered.">        if (stringHasValue(tableConfiguration.getMapperName())) {</span>
-<span class="fc" id="L830">            sb.append(tableConfiguration.getMapperName());</span>
+<span class="fc" id="L674">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L675">        sb.append(calculateJavaClientInterfacePackage());</span>
+<span class="fc" id="L676">        sb.append('.');</span>
+<span class="fc bfc" id="L677" title="All 2 branches covered.">        if (stringHasValue(tableConfiguration.getMapperName())) {</span>
+<span class="fc" id="L678">            sb.append(tableConfiguration.getMapperName());</span>
         } else {
-<span class="fc bfc" id="L832" title="All 2 branches covered.">            if (stringHasValue(fullyQualifiedTable.getDomainObjectSubPackage())) {</span>
-<span class="fc" id="L833">                sb.append(fullyQualifiedTable.getDomainObjectSubPackage());</span>
-<span class="fc" id="L834">                sb.append('.');</span>
+<span class="fc bfc" id="L680" title="All 2 branches covered.">            if (stringHasValue(fullyQualifiedTable.getDomainObjectSubPackage())) {</span>
+<span class="fc" id="L681">                sb.append(fullyQualifiedTable.getDomainObjectSubPackage());</span>
+<span class="fc" id="L682">                sb.append('.');</span>
             }
-<span class="fc" id="L836">            sb.append(fullyQualifiedTable.getDomainObjectName());</span>
-<span class="fc" id="L837">            sb.append(&quot;Mapper&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L684">            sb.append(fullyQualifiedTable.getDomainObjectName());</span>
+<span class="fc" id="L685">            sb.append(&quot;Mapper&quot;); //$NON-NLS-1$</span>
         }
-<span class="fc" id="L839">        setMyBatis3JavaMapperType(sb.toString());</span>
+<span class="fc" id="L687">        setMyBatis3JavaMapperType(sb.toString());</span>
 
-<span class="fc" id="L841">        sb.setLength(0);</span>
-<span class="fc" id="L842">        sb.append(calculateJavaClientInterfacePackage());</span>
-<span class="fc" id="L843">        sb.append('.');</span>
-<span class="pc bpc" id="L844" title="1 of 2 branches missed.">        if (stringHasValue(tableConfiguration.getSqlProviderName())) {</span>
-<span class="nc" id="L845">            sb.append(tableConfiguration.getSqlProviderName());</span>
+<span class="fc" id="L689">        sb.setLength(0);</span>
+<span class="fc" id="L690">        sb.append(calculateJavaClientInterfacePackage());</span>
+<span class="fc" id="L691">        sb.append('.');</span>
+<span class="pc bpc" id="L692" title="1 of 2 branches missed.">        if (stringHasValue(tableConfiguration.getSqlProviderName())) {</span>
+<span class="nc" id="L693">            sb.append(tableConfiguration.getSqlProviderName());</span>
         } else {
-<span class="fc bfc" id="L847" title="All 2 branches covered.">            if (stringHasValue(fullyQualifiedTable.getDomainObjectSubPackage())) {</span>
-<span class="fc" id="L848">                sb.append(fullyQualifiedTable.getDomainObjectSubPackage());</span>
-<span class="fc" id="L849">                sb.append('.');</span>
+<span class="fc bfc" id="L695" title="All 2 branches covered.">            if (stringHasValue(fullyQualifiedTable.getDomainObjectSubPackage())) {</span>
+<span class="fc" id="L696">                sb.append(fullyQualifiedTable.getDomainObjectSubPackage());</span>
+<span class="fc" id="L697">                sb.append('.');</span>
             }
-<span class="fc" id="L851">            sb.append(fullyQualifiedTable.getDomainObjectName());</span>
-<span class="fc" id="L852">            sb.append(&quot;SqlProvider&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L699">            sb.append(fullyQualifiedTable.getDomainObjectName());</span>
+<span class="fc" id="L700">            sb.append(&quot;SqlProvider&quot;); //$NON-NLS-1$</span>
         }
-<span class="fc" id="L854">        setMyBatis3SqlProviderType(sb.toString());</span>
+<span class="fc" id="L702">        setMyBatis3SqlProviderType(sb.toString());</span>
         
-<span class="fc" id="L856">        sb.setLength(0);</span>
-<span class="fc" id="L857">        sb.append(calculateJavaClientInterfacePackage());</span>
-<span class="fc" id="L858">        sb.append('.');</span>
-<span class="fc" id="L859">        sb.append(fullyQualifiedTable.getDomainObjectName());</span>
-<span class="fc" id="L860">        sb.append(&quot;DynamicSqlSupport&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L861">        setMyBatisDynamicSqlSupportType(sb.toString());</span>
-<span class="fc" id="L862">    }</span>
+<span class="fc" id="L704">        sb.setLength(0);</span>
+<span class="fc" id="L705">        sb.append(calculateJavaClientInterfacePackage());</span>
+<span class="fc" id="L706">        sb.append('.');</span>
+<span class="fc" id="L707">        sb.append(fullyQualifiedTable.getDomainObjectName());</span>
+<span class="fc" id="L708">        sb.append(&quot;DynamicSqlSupport&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L709">        setMyBatisDynamicSqlSupportType(sb.toString());</span>
+<span class="fc" id="L710">    }</span>
 
     protected String calculateJavaModelPackage() {
-<span class="fc" id="L865">        JavaModelGeneratorConfiguration config = context</span>
-<span class="fc" id="L866">                .getJavaModelGeneratorConfiguration();</span>
+<span class="fc" id="L713">        JavaModelGeneratorConfiguration config = context</span>
+<span class="fc" id="L714">                .getJavaModelGeneratorConfiguration();</span>
 
-<span class="fc" id="L868">        StringBuilder sb = new StringBuilder();</span>
-<span class="fc" id="L869">        sb.append(config.getTargetPackage());</span>
-<span class="fc" id="L870">        sb.append(fullyQualifiedTable.getSubPackageForModel(isSubPackagesEnabled(config)));</span>
+<span class="fc" id="L716">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L717">        sb.append(config.getTargetPackage());</span>
+<span class="fc" id="L718">        sb.append(fullyQualifiedTable.getSubPackageForModel(isSubPackagesEnabled(config)));</span>
 
-<span class="fc" id="L872">        return sb.toString();</span>
+<span class="fc" id="L720">        return sb.toString();</span>
     }
 
     protected void calculateModelAttributes() {
-<span class="fc" id="L876">        String pakkage = calculateJavaModelPackage();</span>
+<span class="fc" id="L724">        String pakkage = calculateJavaModelPackage();</span>
 
-<span class="fc" id="L878">        StringBuilder sb = new StringBuilder();</span>
-<span class="fc" id="L879">        sb.append(pakkage);</span>
-<span class="fc" id="L880">        sb.append('.');</span>
-<span class="fc" id="L881">        sb.append(fullyQualifiedTable.getDomainObjectName());</span>
-<span class="fc" id="L882">        sb.append(&quot;Key&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L883">        setPrimaryKeyType(sb.toString());</span>
+<span class="fc" id="L726">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L727">        sb.append(pakkage);</span>
+<span class="fc" id="L728">        sb.append('.');</span>
+<span class="fc" id="L729">        sb.append(fullyQualifiedTable.getDomainObjectName());</span>
+<span class="fc" id="L730">        sb.append(&quot;Key&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L731">        setPrimaryKeyType(sb.toString());</span>
 
-<span class="fc" id="L885">        sb.setLength(0);</span>
-<span class="fc" id="L886">        sb.append(pakkage);</span>
-<span class="fc" id="L887">        sb.append('.');</span>
-<span class="fc" id="L888">        sb.append(fullyQualifiedTable.getDomainObjectName());</span>
-<span class="fc" id="L889">        setBaseRecordType(sb.toString());</span>
+<span class="fc" id="L733">        sb.setLength(0);</span>
+<span class="fc" id="L734">        sb.append(pakkage);</span>
+<span class="fc" id="L735">        sb.append('.');</span>
+<span class="fc" id="L736">        sb.append(fullyQualifiedTable.getDomainObjectName());</span>
+<span class="fc" id="L737">        setBaseRecordType(sb.toString());</span>
 
-<span class="fc" id="L891">        sb.setLength(0);</span>
-<span class="fc" id="L892">        sb.append(pakkage);</span>
-<span class="fc" id="L893">        sb.append('.');</span>
-<span class="fc" id="L894">        sb.append(fullyQualifiedTable.getDomainObjectName());</span>
-<span class="fc" id="L895">        sb.append(&quot;WithBLOBs&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L896">        setRecordWithBLOBsType(sb.toString());</span>
+<span class="fc" id="L739">        sb.setLength(0);</span>
+<span class="fc" id="L740">        sb.append(pakkage);</span>
+<span class="fc" id="L741">        sb.append('.');</span>
+<span class="fc" id="L742">        sb.append(fullyQualifiedTable.getDomainObjectName());</span>
+<span class="fc" id="L743">        sb.append(&quot;Record&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L744">        setKotlinRecordType(sb.toString());</span>
 
-<span class="fc" id="L898">        sb.setLength(0);</span>
-<span class="fc" id="L899">        sb.append(pakkage);</span>
-<span class="fc" id="L900">        sb.append('.');</span>
-<span class="fc" id="L901">        sb.append(fullyQualifiedTable.getDomainObjectName());</span>
-<span class="fc" id="L902">        sb.append(&quot;Example&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L903">        setExampleType(sb.toString());</span>
-<span class="fc" id="L904">    }</span>
+<span class="fc" id="L746">        sb.setLength(0);</span>
+<span class="fc" id="L747">        sb.append(pakkage);</span>
+<span class="fc" id="L748">        sb.append('.');</span>
+<span class="fc" id="L749">        sb.append(fullyQualifiedTable.getDomainObjectName());</span>
+<span class="fc" id="L750">        sb.append(&quot;WithBLOBs&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L751">        setRecordWithBLOBsType(sb.toString());</span>
+
+<span class="fc" id="L753">        String exampleTargetPackage = calculateJavaModelExamplePackage();</span>
+<span class="fc" id="L754">        sb.setLength(0);</span>
+<span class="fc" id="L755">        sb.append(exampleTargetPackage);</span>
+<span class="fc" id="L756">        sb.append('.');</span>
+<span class="fc" id="L757">        sb.append(fullyQualifiedTable.getDomainObjectName());</span>
+<span class="fc" id="L758">        sb.append(&quot;Example&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L759">        setExampleType(sb.toString());</span>
+<span class="fc" id="L760">    }</span>
+
+    /**
+     * If property exampleTargetPackage specified for example use the specified value, else
+     * use default value (targetPackage).
+     * 
+     * @return the calculated package
+     */
+    protected String calculateJavaModelExamplePackage() {
+<span class="fc" id="L769">        JavaModelGeneratorConfiguration config = context.getJavaModelGeneratorConfiguration();</span>
+<span class="fc" id="L770">        String exampleTargetPackage = config.getProperty(PropertyRegistry.MODEL_GENERATOR_EXAMPLE_PACKAGE);</span>
+<span class="fc bfc" id="L771" title="All 2 branches covered.">        if (!stringHasValue(exampleTargetPackage)) {</span>
+<span class="fc" id="L772">            return calculateJavaModelPackage();</span>
+        }
+        
+<span class="fc" id="L775">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L776">        sb.append(exampleTargetPackage);</span>
+<span class="fc" id="L777">        sb.append(fullyQualifiedTable.getSubPackageForModel(isSubPackagesEnabled(config)));</span>
+<span class="fc" id="L778">        return sb.toString();</span>
+    }
 
     protected String calculateSqlMapPackage() {
-<span class="fc" id="L907">        StringBuilder sb = new StringBuilder();</span>
-<span class="fc" id="L908">        SqlMapGeneratorConfiguration config = context</span>
-<span class="fc" id="L909">                .getSqlMapGeneratorConfiguration();</span>
+<span class="fc" id="L782">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L783">        SqlMapGeneratorConfiguration config = context</span>
+<span class="fc" id="L784">                .getSqlMapGeneratorConfiguration();</span>
         
         // config can be null if the Java client does not require XML
-<span class="fc bfc" id="L912" title="All 2 branches covered.">        if (config != null) {</span>
-<span class="fc" id="L913">            sb.append(config.getTargetPackage());</span>
-<span class="fc" id="L914">            sb.append(fullyQualifiedTable.getSubPackageForClientOrSqlMap(isSubPackagesEnabled(config)));</span>
-<span class="fc bfc" id="L915" title="All 2 branches covered.">            if (stringHasValue(tableConfiguration.getMapperName())) {</span>
-<span class="fc" id="L916">                String mapperName = tableConfiguration.getMapperName();</span>
-<span class="fc" id="L917">                int ind = mapperName.lastIndexOf('.');</span>
-<span class="fc bfc" id="L918" title="All 2 branches covered.">                if (ind != -1) {</span>
-<span class="fc" id="L919">                    sb.append('.').append(mapperName.substring(0, ind));</span>
+<span class="fc bfc" id="L787" title="All 2 branches covered.">        if (config != null) {</span>
+<span class="fc" id="L788">            sb.append(config.getTargetPackage());</span>
+<span class="fc" id="L789">            sb.append(fullyQualifiedTable.getSubPackageForClientOrSqlMap(isSubPackagesEnabled(config)));</span>
+<span class="fc bfc" id="L790" title="All 2 branches covered.">            if (stringHasValue(tableConfiguration.getMapperName())) {</span>
+<span class="fc" id="L791">                String mapperName = tableConfiguration.getMapperName();</span>
+<span class="fc" id="L792">                int ind = mapperName.lastIndexOf('.');</span>
+<span class="fc bfc" id="L793" title="All 2 branches covered.">                if (ind != -1) {</span>
+<span class="fc" id="L794">                    sb.append('.').append(mapperName.substring(0, ind));</span>
                 }
-<span class="fc bfc" id="L921" title="All 2 branches covered.">            } else if (stringHasValue(fullyQualifiedTable.getDomainObjectSubPackage())) {</span>
-<span class="fc" id="L922">                sb.append('.').append(fullyQualifiedTable.getDomainObjectSubPackage());</span>
+<span class="fc bfc" id="L796" title="All 2 branches covered.">            } else if (stringHasValue(fullyQualifiedTable.getDomainObjectSubPackage())) {</span>
+<span class="fc" id="L797">                sb.append('.').append(fullyQualifiedTable.getDomainObjectSubPackage());</span>
             }
         }
 
-<span class="fc" id="L926">        return sb.toString();</span>
-    }
-
-    protected String calculateIbatis2SqlMapFileName() {
-<span class="fc" id="L930">        StringBuilder sb = new StringBuilder();</span>
-<span class="fc" id="L931">        sb.append(fullyQualifiedTable.getIbatis2SqlMapNamespace());</span>
-<span class="fc" id="L932">        sb.append(&quot;_SqlMap.xml&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L933">        return sb.toString();</span>
+<span class="fc" id="L801">        return sb.toString();</span>
     }
 
     protected String calculateMyBatis3XmlMapperFileName() {
-<span class="fc" id="L937">        StringBuilder sb = new StringBuilder();</span>
-<span class="fc bfc" id="L938" title="All 2 branches covered.">        if (stringHasValue(tableConfiguration.getMapperName())) {</span>
-<span class="fc" id="L939">            String mapperName = tableConfiguration.getMapperName();</span>
-<span class="fc" id="L940">            int ind = mapperName.lastIndexOf('.');</span>
-<span class="fc bfc" id="L941" title="All 2 branches covered.">            if (ind == -1) {</span>
-<span class="fc" id="L942">                sb.append(mapperName);</span>
+<span class="fc" id="L805">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L806" title="All 2 branches covered.">        if (stringHasValue(tableConfiguration.getMapperName())) {</span>
+<span class="fc" id="L807">            String mapperName = tableConfiguration.getMapperName();</span>
+<span class="fc" id="L808">            int ind = mapperName.lastIndexOf('.');</span>
+<span class="fc bfc" id="L809" title="All 2 branches covered.">            if (ind == -1) {</span>
+<span class="fc" id="L810">                sb.append(mapperName);</span>
             } else {
-<span class="fc" id="L944">                sb.append(mapperName.substring(ind + 1));</span>
+<span class="fc" id="L812">                sb.append(mapperName.substring(ind + 1));</span>
             }
-<span class="fc" id="L946">            sb.append(&quot;.xml&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L947">        } else {</span>
-<span class="fc" id="L948">            sb.append(fullyQualifiedTable.getDomainObjectName());</span>
-<span class="fc" id="L949">            sb.append(&quot;Mapper.xml&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L814">            sb.append(&quot;.xml&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L815">        } else {</span>
+<span class="fc" id="L816">            sb.append(fullyQualifiedTable.getDomainObjectName());</span>
+<span class="fc" id="L817">            sb.append(&quot;Mapper.xml&quot;); //$NON-NLS-1$</span>
         }
-<span class="fc" id="L951">        return sb.toString();</span>
-    }
-
-    protected String calculateIbatis2SqlMapNamespace() {
-<span class="fc" id="L955">        return fullyQualifiedTable.getIbatis2SqlMapNamespace();</span>
+<span class="fc" id="L819">        return sb.toString();</span>
     }
 
     protected String calculateMyBatis3FallbackSqlMapNamespace() {
-<span class="fc" id="L959">        StringBuilder sb = new StringBuilder();</span>
-<span class="fc" id="L960">        sb.append(calculateSqlMapPackage());</span>
-<span class="fc" id="L961">        sb.append('.');</span>
-<span class="fc bfc" id="L962" title="All 2 branches covered.">        if (stringHasValue(tableConfiguration.getMapperName())) {</span>
-<span class="fc" id="L963">            sb.append(tableConfiguration.getMapperName());</span>
+<span class="fc" id="L823">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L824">        sb.append(calculateSqlMapPackage());</span>
+<span class="fc" id="L825">        sb.append('.');</span>
+<span class="fc bfc" id="L826" title="All 2 branches covered.">        if (stringHasValue(tableConfiguration.getMapperName())) {</span>
+<span class="fc" id="L827">            sb.append(tableConfiguration.getMapperName());</span>
         } else {
-<span class="fc" id="L965">            sb.append(fullyQualifiedTable.getDomainObjectName());</span>
-<span class="fc" id="L966">            sb.append(&quot;Mapper&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L829">            sb.append(fullyQualifiedTable.getDomainObjectName());</span>
+<span class="fc" id="L830">            sb.append(&quot;Mapper&quot;); //$NON-NLS-1$</span>
         }
-<span class="fc" id="L968">        return sb.toString();</span>
+<span class="fc" id="L832">        return sb.toString();</span>
     }
 
     protected String calculateSqlMapFullyQualifiedRuntimeTableName() {
-<span class="fc" id="L972">        return fullyQualifiedTable.getFullyQualifiedTableNameAtRuntime();</span>
+<span class="fc" id="L836">        return fullyQualifiedTable.getFullyQualifiedTableNameAtRuntime();</span>
     }
 
     protected String calculateSqlMapAliasedFullyQualifiedRuntimeTableName() {
-<span class="fc" id="L976">        return fullyQualifiedTable.getAliasedFullyQualifiedTableNameAtRuntime();</span>
+<span class="fc" id="L840">        return fullyQualifiedTable.getAliasedFullyQualifiedTableNameAtRuntime();</span>
     }
 
     public String getFullyQualifiedTableNameAtRuntime() {
-<span class="fc" id="L980">        return internalAttributes</span>
-<span class="fc" id="L981">                .get(InternalAttribute.ATTR_FULLY_QUALIFIED_TABLE_NAME_AT_RUNTIME);</span>
+<span class="fc" id="L844">        return internalAttributes</span>
+<span class="fc" id="L845">                .get(InternalAttribute.ATTR_FULLY_QUALIFIED_TABLE_NAME_AT_RUNTIME);</span>
     }
 
     public String getAliasedFullyQualifiedTableNameAtRuntime() {
-<span class="fc" id="L985">        return internalAttributes</span>
-<span class="fc" id="L986">                .get(InternalAttribute.ATTR_ALIASED_FULLY_QUALIFIED_TABLE_NAME_AT_RUNTIME);</span>
+<span class="fc" id="L849">        return internalAttributes</span>
+<span class="fc" id="L850">                .get(InternalAttribute.ATTR_ALIASED_FULLY_QUALIFIED_TABLE_NAME_AT_RUNTIME);</span>
     }
 
     /**
@@ -1017,14 +881,14 @@ public abstract class IntrospectedTable {
      * @return the list of generated XML files for this table
      */
     public abstract List&lt;GeneratedXmlFile&gt; getGeneratedXmlFiles();
-
+    
     /**
-     * Denotes whether generated code is targeted for Java version 5.0 or
-     * higher.
+     * This method should return a list of generated Kotlin files related to this
+     * table. This list could include a data classes, a mapper interface, extension methods, etc.
      * 
-     * @return true if the generated code makes use of Java5 features
+     * @return the list of generated Kotlin files for this table
      */
-    public abstract boolean isJava5Targeted();
+    public abstract List&lt;GeneratedKotlinFile&gt; getGeneratedKotlinFiles();
 
     /**
      * This method should return the number of progress messages that will be
@@ -1041,163 +905,141 @@ public abstract class IntrospectedTable {
      *            the new rules
      */
     public void setRules(Rules rules) {
-<span class="nc" id="L1044">        this.rules = rules;</span>
-<span class="nc" id="L1045">    }</span>
+<span class="nc" id="L908">        this.rules = rules;</span>
+<span class="nc" id="L909">    }</span>
 
     public TableConfiguration getTableConfiguration() {
-<span class="fc" id="L1048">        return tableConfiguration;</span>
+<span class="fc" id="L912">        return tableConfiguration;</span>
     }
 
-    public void setDAOImplementationType(String daoImplementationType) {
-<span class="fc" id="L1052">        internalAttributes.put(InternalAttribute.ATTR_DAO_IMPLEMENTATION_TYPE,</span>
-                daoImplementationType);
-<span class="fc" id="L1054">    }</span>
-
-    public void setDAOInterfaceType(String daoInterfaceType) {
-<span class="fc" id="L1057">        internalAttributes.put(InternalAttribute.ATTR_DAO_INTERFACE_TYPE,</span>
-                daoInterfaceType);
-<span class="fc" id="L1059">    }</span>
-
     public void setPrimaryKeyType(String primaryKeyType) {
-<span class="fc" id="L1062">        internalAttributes.put(InternalAttribute.ATTR_PRIMARY_KEY_TYPE,</span>
+<span class="fc" id="L916">        internalAttributes.put(InternalAttribute.ATTR_PRIMARY_KEY_TYPE,</span>
                 primaryKeyType);
-<span class="fc" id="L1064">    }</span>
+<span class="fc" id="L918">    }</span>
 
     public void setBaseRecordType(String baseRecordType) {
-<span class="fc" id="L1067">        internalAttributes.put(InternalAttribute.ATTR_BASE_RECORD_TYPE,</span>
+<span class="fc" id="L921">        internalAttributes.put(InternalAttribute.ATTR_BASE_RECORD_TYPE,</span>
                 baseRecordType);
-<span class="fc" id="L1069">    }</span>
+<span class="fc" id="L923">    }</span>
+
+    public void setKotlinRecordType(String kotlinRecordType) {
+<span class="fc" id="L926">        internalAttributes.put(InternalAttribute.ATTR_KOTLIN_RECORD_TYPE,</span>
+                kotlinRecordType);
+<span class="fc" id="L928">    }</span>
 
     public void setRecordWithBLOBsType(String recordWithBLOBsType) {
-<span class="fc" id="L1072">        internalAttributes.put(InternalAttribute.ATTR_RECORD_WITH_BLOBS_TYPE,</span>
+<span class="fc" id="L931">        internalAttributes.put(InternalAttribute.ATTR_RECORD_WITH_BLOBS_TYPE,</span>
                 recordWithBLOBsType);
-<span class="fc" id="L1074">    }</span>
+<span class="fc" id="L933">    }</span>
 
     public void setExampleType(String exampleType) {
-<span class="fc" id="L1077">        internalAttributes</span>
-<span class="fc" id="L1078">                .put(InternalAttribute.ATTR_EXAMPLE_TYPE, exampleType);</span>
-<span class="fc" id="L1079">    }</span>
-
-    public void setIbatis2SqlMapPackage(String sqlMapPackage) {
-<span class="fc" id="L1082">        internalAttributes.put(InternalAttribute.ATTR_IBATIS2_SQL_MAP_PACKAGE,</span>
-                sqlMapPackage);
-<span class="fc" id="L1084">    }</span>
-
-    public void setIbatis2SqlMapFileName(String sqlMapFileName) {
-<span class="fc" id="L1087">        internalAttributes.put(</span>
-                InternalAttribute.ATTR_IBATIS2_SQL_MAP_FILE_NAME,
-                sqlMapFileName);
-<span class="fc" id="L1090">    }</span>
-
-    public void setIbatis2SqlMapNamespace(String sqlMapNamespace) {
-<span class="fc" id="L1093">        internalAttributes.put(</span>
-                InternalAttribute.ATTR_IBATIS2_SQL_MAP_NAMESPACE,
-                sqlMapNamespace);
-<span class="fc" id="L1096">    }</span>
+<span class="fc" id="L936">        internalAttributes</span>
+<span class="fc" id="L937">                .put(InternalAttribute.ATTR_EXAMPLE_TYPE, exampleType);</span>
+<span class="fc" id="L938">    }</span>
 
     public void setMyBatis3FallbackSqlMapNamespace(String sqlMapNamespace) {
-<span class="fc" id="L1099">        internalAttributes.put(</span>
+<span class="fc" id="L941">        internalAttributes.put(</span>
                 InternalAttribute.ATTR_MYBATIS3_FALLBACK_SQL_MAP_NAMESPACE,
                 sqlMapNamespace);
-<span class="fc" id="L1102">    }</span>
+<span class="fc" id="L944">    }</span>
 
     public void setSqlMapFullyQualifiedRuntimeTableName(
             String fullyQualifiedRuntimeTableName) {
-<span class="fc" id="L1106">        internalAttributes.put(</span>
+<span class="fc" id="L948">        internalAttributes.put(</span>
                 InternalAttribute.ATTR_FULLY_QUALIFIED_TABLE_NAME_AT_RUNTIME,
                 fullyQualifiedRuntimeTableName);
-<span class="fc" id="L1109">    }</span>
+<span class="fc" id="L951">    }</span>
 
     public void setSqlMapAliasedFullyQualifiedRuntimeTableName(
             String aliasedFullyQualifiedRuntimeTableName) {
-<span class="fc" id="L1113">        internalAttributes</span>
-<span class="fc" id="L1114">                .put(</span>
+<span class="fc" id="L955">        internalAttributes</span>
+<span class="fc" id="L956">                .put(</span>
                         InternalAttribute.ATTR_ALIASED_FULLY_QUALIFIED_TABLE_NAME_AT_RUNTIME,
                         aliasedFullyQualifiedRuntimeTableName);
-<span class="fc" id="L1117">    }</span>
+<span class="fc" id="L959">    }</span>
 
     public String getMyBatis3XmlMapperPackage() {
-<span class="fc" id="L1120">        return internalAttributes</span>
-<span class="fc" id="L1121">                .get(InternalAttribute.ATTR_MYBATIS3_XML_MAPPER_PACKAGE);</span>
+<span class="fc" id="L962">        return internalAttributes</span>
+<span class="fc" id="L963">                .get(InternalAttribute.ATTR_MYBATIS3_XML_MAPPER_PACKAGE);</span>
     }
 
     public void setMyBatis3XmlMapperPackage(String mybatis3XmlMapperPackage) {
-<span class="fc" id="L1125">        internalAttributes.put(</span>
+<span class="fc" id="L967">        internalAttributes.put(</span>
                 InternalAttribute.ATTR_MYBATIS3_XML_MAPPER_PACKAGE,
                 mybatis3XmlMapperPackage);
-<span class="fc" id="L1128">    }</span>
+<span class="fc" id="L970">    }</span>
 
     public String getMyBatis3XmlMapperFileName() {
-<span class="fc" id="L1131">        return internalAttributes</span>
-<span class="fc" id="L1132">                .get(InternalAttribute.ATTR_MYBATIS3_XML_MAPPER_FILE_NAME);</span>
+<span class="fc" id="L973">        return internalAttributes</span>
+<span class="fc" id="L974">                .get(InternalAttribute.ATTR_MYBATIS3_XML_MAPPER_FILE_NAME);</span>
     }
 
     public void setMyBatis3XmlMapperFileName(String mybatis3XmlMapperFileName) {
-<span class="fc" id="L1136">        internalAttributes.put(</span>
+<span class="fc" id="L978">        internalAttributes.put(</span>
                 InternalAttribute.ATTR_MYBATIS3_XML_MAPPER_FILE_NAME,
                 mybatis3XmlMapperFileName);
-<span class="fc" id="L1139">    }</span>
+<span class="fc" id="L981">    }</span>
 
     public String getMyBatis3JavaMapperType() {
-<span class="fc" id="L1142">        return internalAttributes</span>
-<span class="fc" id="L1143">                .get(InternalAttribute.ATTR_MYBATIS3_JAVA_MAPPER_TYPE);</span>
+<span class="fc" id="L984">        return internalAttributes</span>
+<span class="fc" id="L985">                .get(InternalAttribute.ATTR_MYBATIS3_JAVA_MAPPER_TYPE);</span>
     }
 
     public void setMyBatis3JavaMapperType(String mybatis3JavaMapperType) {
-<span class="fc" id="L1147">        internalAttributes.put(</span>
+<span class="fc" id="L989">        internalAttributes.put(</span>
                 InternalAttribute.ATTR_MYBATIS3_JAVA_MAPPER_TYPE,
                 mybatis3JavaMapperType);
-<span class="fc" id="L1150">    }</span>
+<span class="fc" id="L992">    }</span>
 
     public String getMyBatis3SqlProviderType() {
-<span class="fc" id="L1153">        return internalAttributes</span>
-<span class="fc" id="L1154">                .get(InternalAttribute.ATTR_MYBATIS3_SQL_PROVIDER_TYPE);</span>
+<span class="fc" id="L995">        return internalAttributes</span>
+<span class="fc" id="L996">                .get(InternalAttribute.ATTR_MYBATIS3_SQL_PROVIDER_TYPE);</span>
     }
 
     public void setMyBatis3SqlProviderType(String mybatis3SqlProviderType) {
-<span class="fc" id="L1158">        internalAttributes.put(</span>
+<span class="fc" id="L1000">        internalAttributes.put(</span>
                 InternalAttribute.ATTR_MYBATIS3_SQL_PROVIDER_TYPE,
                 mybatis3SqlProviderType);
-<span class="fc" id="L1161">    }</span>
+<span class="fc" id="L1003">    }</span>
     
     public String getMyBatisDynamicSqlSupportType() {
-<span class="fc" id="L1164">        return internalAttributes.get(InternalAttribute.ATTR_MYBATIS_DYNAMIC_SQL_SUPPORT_TYPE);</span>
+<span class="fc" id="L1006">        return internalAttributes.get(InternalAttribute.ATTR_MYBATIS_DYNAMIC_SQL_SUPPORT_TYPE);</span>
     }
     
     public void setMyBatisDynamicSqlSupportType(String s) {
-<span class="fc" id="L1168">        internalAttributes.put(InternalAttribute.ATTR_MYBATIS_DYNAMIC_SQL_SUPPORT_TYPE, s);</span>
-<span class="fc" id="L1169">    }</span>
+<span class="fc" id="L1010">        internalAttributes.put(InternalAttribute.ATTR_MYBATIS_DYNAMIC_SQL_SUPPORT_TYPE, s);</span>
+<span class="fc" id="L1011">    }</span>
     
     public TargetRuntime getTargetRuntime() {
-<span class="fc" id="L1172">        return targetRuntime;</span>
+<span class="fc" id="L1014">        return targetRuntime;</span>
     }
     
     public boolean isImmutable() {
         Properties properties;
 
-<span class="fc bfc" id="L1178" title="All 2 branches covered.">        if (tableConfiguration.getProperties().containsKey(PropertyRegistry.ANY_IMMUTABLE)) {</span>
-<span class="fc" id="L1179">            properties = tableConfiguration.getProperties();</span>
+<span class="fc bfc" id="L1020" title="All 2 branches covered.">        if (tableConfiguration.getProperties().containsKey(PropertyRegistry.ANY_IMMUTABLE)) {</span>
+<span class="fc" id="L1021">            properties = tableConfiguration.getProperties();</span>
         } else {
-<span class="fc" id="L1181">            properties = context.getJavaModelGeneratorConfiguration().getProperties();</span>
+<span class="fc" id="L1023">            properties = context.getJavaModelGeneratorConfiguration().getProperties();</span>
         }
 
-<span class="fc" id="L1184">        return isTrue(properties.getProperty(PropertyRegistry.ANY_IMMUTABLE));</span>
+<span class="fc" id="L1026">        return isTrue(properties.getProperty(PropertyRegistry.ANY_IMMUTABLE));</span>
     }
 
     public boolean isConstructorBased() {
-<span class="fc bfc" id="L1188" title="All 2 branches covered.">        if (isImmutable()) {</span>
-<span class="fc" id="L1189">            return true;</span>
+<span class="fc bfc" id="L1030" title="All 2 branches covered.">        if (isImmutable()) {</span>
+<span class="fc" id="L1031">            return true;</span>
         }
 
         Properties properties;
 
-<span class="fc bfc" id="L1194" title="All 2 branches covered.">        if (tableConfiguration.getProperties().containsKey(PropertyRegistry.ANY_CONSTRUCTOR_BASED)) {</span>
-<span class="fc" id="L1195">            properties = tableConfiguration.getProperties();</span>
+<span class="fc bfc" id="L1036" title="All 2 branches covered.">        if (tableConfiguration.getProperties().containsKey(PropertyRegistry.ANY_CONSTRUCTOR_BASED)) {</span>
+<span class="fc" id="L1037">            properties = tableConfiguration.getProperties();</span>
         } else {
-<span class="fc" id="L1197">            properties = context.getJavaModelGeneratorConfiguration().getProperties();</span>
+<span class="fc" id="L1039">            properties = context.getJavaModelGeneratorConfiguration().getProperties();</span>
         }
 
-<span class="fc" id="L1200">        return isTrue(properties.getProperty(PropertyRegistry.ANY_CONSTRUCTOR_BASED));</span>
+<span class="fc" id="L1042">        return isTrue(properties.getProperty(PropertyRegistry.ANY_CONSTRUCTOR_BASED));</span>
     }
 
     /**
@@ -1210,23 +1052,23 @@ public abstract class IntrospectedTable {
     public abstract boolean requiresXMLGenerator();
 
     public Context getContext() {
-<span class="fc" id="L1213">        return context;</span>
+<span class="fc" id="L1055">        return context;</span>
     }
 
     public String getRemarks() {
-<span class="fc" id="L1217">        return remarks;</span>
+<span class="fc" id="L1059">        return remarks;</span>
     }
 
     public void setRemarks(String remarks) {
-<span class="fc" id="L1221">        this.remarks = remarks;</span>
-<span class="fc" id="L1222">    }</span>
+<span class="fc" id="L1063">        this.remarks = remarks;</span>
+<span class="fc" id="L1064">    }</span>
 
     public String getTableType() {
-<span class="nc" id="L1225">        return tableType;</span>
+<span class="nc" id="L1067">        return tableType;</span>
     }
 
     public void setTableType(String tableType) {
-<span class="fc" id="L1229">        this.tableType = tableType;</span>
-<span class="fc" id="L1230">    }</span>
+<span class="fc" id="L1071">        this.tableType = tableType;</span>
+<span class="fc" id="L1072">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

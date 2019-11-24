@@ -26,11 +26,6 @@ import org.mybatis.generator.codegen.AbstractXmlGenerator;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
 import org.mybatis.generator.runtime.dynamic.sql.elements.AbstractMethodGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.BasicCountMethodGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.BasicDeleteMethodGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.BasicInsertMethodGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.BasicSelectManyMethodGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.BasicUpdateMethodGenerator;
 import org.mybatis.generator.runtime.dynamic.sql.elements.FragmentGenerator;
 import org.mybatis.generator.runtime.dynamic.sql.elements.MethodAndImports;
 
@@ -85,59 +80,6 @@ public abstract class AbstractDynamicSqlMapperGenerator extends AbstractJavaClie
             interfaze.addImportedType(fqjt);
         }
         return interfaze;
-    }
-
-    protected void addBasicCountMethod(Interface interfaze) {
-        BasicCountMethodGenerator generator = new BasicCountMethodGenerator.Builder()
-                .withContext(context)
-                .withIntrospectedTable(introspectedTable)
-                .build();
-        
-        generate(interfaze, generator);
-    }
-    
-    protected void addBasicDeleteMethod(Interface interfaze) {
-        BasicDeleteMethodGenerator generator = new BasicDeleteMethodGenerator.Builder()
-                .withContext(context)
-                .withIntrospectedTable(introspectedTable)
-                .withTableFieldName(tableFieldName)
-                .build();
-        
-        generate(interfaze, generator);
-    }
-
-    protected void addBasicInsertMethod(Interface interfaze) {
-        BasicInsertMethodGenerator generator = new BasicInsertMethodGenerator.Builder()
-                .withContext(context)
-                .withFragmentGenerator(fragmentGenerator)
-                .withIntrospectedTable(introspectedTable)
-                .withTableFieldName(tableFieldName)
-                .withRecordType(recordType)
-                .build();
-        
-        generate(interfaze, generator);
-    }
-
-    protected void addBasicSelectManyMethod(Interface interfaze) {
-        BasicSelectManyMethodGenerator generator = new BasicSelectManyMethodGenerator.Builder()
-                .withContext(context)
-                .withFragmentGenerator(fragmentGenerator)
-                .withIntrospectedTable(introspectedTable)
-                .withTableFieldName(tableFieldName)
-                .withRecordType(recordType)
-                .build();
-        
-        generate(interfaze, generator);
-    }
-    
-    protected void addBasicUpdateMethod(Interface interfaze) {
-        BasicUpdateMethodGenerator generator = new BasicUpdateMethodGenerator.Builder()
-                .withContext(context)
-                .withIntrospectedTable(introspectedTable)
-                .withTableFieldName(tableFieldName)
-                .build();
-        
-        generate(interfaze, generator);
     }
 
     protected TopLevelClass getSupportClass() {

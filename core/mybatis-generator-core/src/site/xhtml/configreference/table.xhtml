@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2018 the original author or authors.
+       Copyright 2006-2019 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -113,7 +113,8 @@ identifiers in upper case.  In this instance, you should specify the attribute
   </tr>
   <tr>
     <td valign="top">alias</td>
-    <td>If specified, this value will be used to alias the table and all column names in
+    <td><i>This attribute is ignored is the target runtime is "MyBatis3DynamicSql" or "MyBatis3Kotlin"</i><br/>
+        If specified, this value will be used to alias the table and all column names in
         any generated SQL select statement.  Column names will be aliased with the pattern
         alias_actualColumnName.</td>
   </tr>
@@ -144,7 +145,8 @@ identifiers in upper case.  In this instance, you should specify the attribute
   </tr>
   <tr>
     <td valign="top">sqlProviderName</td>
-    <td>The name of the MyBatis3 generated SQL provider class (which may or may not be generated
+    <td><i>This attribute is ignored is the target runtime is "MyBatis3DynamicSql" or "MyBatis3Kotlin"</i><br/>
+        The name of the MyBatis3 generated SQL provider class (which may or may not be generated
         based on the configuration).
         If not specified, the name will be whatever the domain object name is, plus the
         word &quot;SqlProvider&quot;.
@@ -157,52 +159,60 @@ identifiers in upper case.  In this instance, you should specify the attribute
   </tr>
   <tr>
     <td valign="top">enableInsert</td>
-    <td>Signifies whether an insert statement should be generated.
+    <td><i>This attribute is ignored is the target runtime is "MyBatis3DynamicSql" or "MyBatis3Kotlin"</i><br/>
+       Signifies whether an insert statement should be generated.
     <p>The default is <i>true</i>.</p></td>
   </tr>
   <tr>
     <td valign="top">enableSelectByPrimaryKey</td>
-    <td>Signifies whether a select by primary key statement should be generated.
+    <td><i>This attribute is ignored is the target runtime is "MyBatis3DynamicSql" or "MyBatis3Kotlin"</i><br/>
+        Signifies whether a select by primary key statement should be generated.
         Regardless of this setting, the statement will not be generated if the
         table does not have a primary key.
         <p>The default is <i>true</i>.</p></td>
   </tr>
   <tr>
     <td valign="top">enableSelectByExample</td>
-    <td>Signifies whether a select by example statement should be generated.
+    <td><i>This attribute is ignored is the target runtime is "MyBatis3DynamicSql" or "MyBatis3Kotlin"</i><br/>
+        Signifies whether a select by example statement should be generated.
         This statement enables many different dynamic queries to be generated at run time.
         <p>The default is <i>true</i>.</p></td>
   </tr>
   <tr>
     <td valign="top">enableUpdateByPrimaryKey</td>
-    <td>Signifies whether an update by primary key statement should be generated.
+    <td><i>This attribute is ignored is the target runtime is "MyBatis3DynamicSql" or "MyBatis3Kotlin"</i><br/>
+        Signifies whether an update by primary key statement should be generated.
         Regardless of this setting, the statement will not be generated if the
         table does not have a primary key.
         <p>The default is <i>true</i>.</p></td>
   </tr>
   <tr>
     <td valign="top">enableDeleteByPrimaryKey</td>
-    <td>Signifies whether an delete by primary key statement should be generated.
+    <td><i>This attribute is ignored is the target runtime is "MyBatis3DynamicSql" or "MyBatis3Kotlin"</i><br/>
+        Signifies whether an delete by primary key statement should be generated.
         Regardless of this setting, the statement will not be generated if the
         table does not have a primary key.
         <p>The default is <i>true</i>.</p></td>
   </tr>
   <tr>
     <td valign="top">enableDeleteByExample</td>
-    <td>Signifies whether a delete by example statement should be generated.
+    <td><i>This attribute is ignored is the target runtime is "MyBatis3DynamicSql" or "MyBatis3Kotlin"</i><br/>
+        Signifies whether a delete by example statement should be generated.
         This statement enables many different dynamic deletes to be generated at run time.
         <p>The default is <i>true</i>.</p></td>
   </tr>
   <tr>
     <td valign="top">enableCountByExample</td>
-    <td>Signifies whether a count by example statement should be generated.
+    <td><i>This attribute is ignored is the target runtime is "MyBatis3DynamicSql" or "MyBatis3Kotlin"</i><br/>
+        Signifies whether a count by example statement should be generated.
         This statement will return the number of rows in a table that match
         an example.
         <p>The default is <i>true</i>.</p></td>
   </tr>
   <tr>
     <td valign="top">enableUpdateByExample</td>
-    <td>Signifies whether an update by example statement should be generated.
+    <td><i>This attribute is ignored is the target runtime is "MyBatis3DynamicSql" or "MyBatis3Kotlin"</i><br/>
+        Signifies whether an update by example statement should be generated.
         This statement will update rows in a table that match
         an example.
         If true, an update by example "selective" statement will also be generated.
@@ -212,7 +222,8 @@ identifiers in upper case.  In this instance, you should specify the attribute
   </tr>
   <tr>
     <td valign="top">selectByPrimaryKeyQueryId</td>
-    <td>This value will be added to the select list of the select by primary key statement
+    <td><i>This attribute is ignored is the target runtime is "MyBatis3DynamicSql" or "MyBatis3Kotlin"</i><br/>
+        This value will be added to the select list of the select by primary key statement
         in this form: "'&lt;value&gt;' as QUERYID".
         This can be useful for identifying queries in DBA tracing tools at run time.
         If you use thus value, you should specify a unique id for every different query
@@ -220,7 +231,8 @@ identifiers in upper case.  In this instance, you should specify the attribute
   </tr>
   <tr>
     <td valign="top">selectByExampleQueryId</td>
-    <td>This value will be added to the select list of the select by example statement
+    <td><i>This attribute is ignored is the target runtime is "MyBatis3DynamicSql" or "MyBatis3Kotlin"</i><br/>
+        This value will be added to the select list of the select by example statement
         in this form: "'&lt;value&gt;' as QUERYID".
         This can be useful for identifying queries in DBA tracing tools at run time.
         If you use thus value, you should specify a unique id for every different query
@@ -229,7 +241,8 @@ identifiers in upper case.  In this instance, you should specify the attribute
   <tr>
     <td valign="top">modelType</td>
     <td>
-      This property is used to override the default model type if you desire
+      <i>This attribute is ignored is the target runtime is "MyBatis3DynamicSql" or "MyBatis3Kotlin"</i><br/>
+      This attribute is used to override the default model type if you desire
       to do so for this table.  If not specified, MBG will generate domain
       objects based on the context default model type.
       The model type defines how MBG will generate domain classes.  With some
@@ -311,7 +324,7 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
   </tr>
   <tr>
     <td valign="top">constructorBased</td>
-    <td>
+    <td><i>This property is ignored is the target runtime is "MyBatis3Kotlin"</i><br/>
       This property is used to select whether MyBatis Generator will generate a constructor
       for the class that accepts a value for each field in the class.  Also, the SQL result map
       will be built to use the constructor rather than the "setter" for each field.
@@ -330,7 +343,7 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
   </tr>
   <tr>
     <td valign="top">immutable</td>
-    <td>
+    <td><i>This property is ignored is the target runtime is "MyBatis3Kotlin"</i><br/>
       This property is used to select whether MBG will generate immutable
       model classes - this means that the classes will not have "setter" methods and
       the constructor will accept values for each field in the class.
@@ -353,7 +366,8 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
   </tr>
   <tr>
     <td valign="top">rootClass</td>
-    <td>This property can be used to specify a root class for all generated
+    <td><i>This attribute is ignored is the target runtime is "MyBatis3Kotlin"</i><br/>
+      This property can be used to specify a root class for all generated
       Java model objects.  MBG will specify this value as the super class
       of the primary key object, if the table has a primary key, or the
       record object otherwise.  The value specified in this property will override
@@ -374,7 +388,8 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
   </tr>
   <tr>
     <td valign="top">rootInterface</td>
-    <td>This property can be used to specify a super interface for all generated
+    <td><i>This property is ignored is the target runtime is "MyBatis3DynamicSql" or "MyBatis3Kotlin"</i><br/>
+      This property can be used to specify a super interface for all generated
       DAO interface objects. The value specified in this property will override
       the <code>rootInterface</code> property set on the DAO Generator
       configuration if any is set.
@@ -421,7 +436,7 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
   </tr>
   <tr>
     <td valign="top">trimStrings</td>
-    <td>
+    <td><i>This attribute is ignored is the target runtime is "MyBatis3Kotlin"</i><br/>
       <p>This property is used to select whether MyBatis Generator adds code to trim
       the white space from character fields returned from the database.
       This can be useful if your database stores data in CHAR fields rather than
@@ -454,7 +469,8 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
   </tr>
   <tr>
     <td valign="top">useColumnIndexes</td>
-    <td>If true, then MBG will generate resultMaps that use column index rather than
+    <td><i>This property is ignored is the target runtime is "MyBatis3DynamicSql" or "MyBatis3Kotlin"</i><br/>
+        If true, then MBG will generate resultMaps that use column index rather than
         column name in the result mappings.  This is useful when a table has column names
         differentiated only by the case of the name (e.g. "first name" and "First Name").
         There is a slight performance benefit with this support also.<p/>

@@ -36,11 +36,6 @@ public class BasicInsertMethodGenerator extends AbstractKotlinFunctionGenerator 
 
     @Override
     public KotlinFunctionAndImports generateMethodAndImports() {
-        if (!introspectedTable.getRules().generateInsert()
-                && !introspectedTable.getRules().generateInsertSelective()) {
-            return null;
-        }
-
         String parameterType = "InsertStatementProvider<" //$NON-NLS-1$
                 + recordType.getShortNameWithTypeArguments()
                 + ">"; //$NON-NLS-1$

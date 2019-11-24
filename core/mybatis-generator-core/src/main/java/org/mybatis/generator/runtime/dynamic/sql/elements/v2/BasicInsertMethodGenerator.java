@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.generator.runtime.dynamic.sql.elements;
+package org.mybatis.generator.runtime.dynamic.sql.elements.v2;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,12 +22,18 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.config.GeneratedKey;
+import org.mybatis.generator.runtime.dynamic.sql.elements.AbstractMethodGenerator;
+import org.mybatis.generator.runtime.dynamic.sql.elements.FragmentGenerator;
+import org.mybatis.generator.runtime.dynamic.sql.elements.MethodAndImports;
+import org.mybatis.generator.runtime.dynamic.sql.elements.MethodParts;
 
-public class BasicSelectManyMethodGenerator extends AbstractMethodGenerator {
+public class BasicInsertMethodGenerator extends AbstractMethodGenerator {
+    
     private FullyQualifiedJavaType recordType;
     private FragmentGenerator fragmentGenerator;
     
-    private BasicSelectManyMethodGenerator(Builder builder) {
+    private BasicInsertMethodGenerator(Builder builder) {
         super(builder);
         recordType = builder.recordType;
         fragmentGenerator = builder.fragmentGenerator;
@@ -35,57 +41,50 @@ public class BasicSelectManyMethodGenerator extends AbstractMethodGenerator {
 
     @Override
     public MethodAndImports generateMethodAndImports() {
-        if (!introspectedTable.getRules().generateSelectByExampleWithBLOBs()
-                && !introspectedTable.getRules().generateSelectByExampleWithoutBLOBs()) {
-            return null;
-        }
-        
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
         
-        FullyQualifiedJavaType parameterType =
-                new FullyQualifiedJavaType(
-                        "org.mybatis.dynamic.sql.select.render.SelectStatementProvider"); //$NON-NLS-1$
         FullyQualifiedJavaType adapter =
                 new FullyQualifiedJavaType("org.mybatis.dynamic.sql.util.SqlProviderAdapter"); //$NON-NLS-1$
         FullyQualifiedJavaType annotation =
-                new FullyQualifiedJavaType("org.apache.ibatis.annotations.SelectProvider"); //$NON-NLS-1$
+                new FullyQualifiedJavaType("org.apache.ibatis.annotations.InsertProvider"); //$NON-NLS-1$
         
-        imports.add(parameterType);
+        imports.add(new FullyQualifiedJavaType(
+                "org.mybatis.dynamic.sql.insert.render.InsertStatementProvider")); //$NON-NLS-1$
         imports.add(adapter);
         imports.add(annotation);
         
-        imports.add(FullyQualifiedJavaType.getNewListInstance());
-        
+        FullyQualifiedJavaType parameterType =
+                new FullyQualifiedJavaType(
+                        "org.mybatis.dynamic.sql.insert.render.InsertStatementProvider"); //$NON-NLS-1$
         imports.add(recordType);
-        FullyQualifiedJavaType returnType = FullyQualifiedJavaType.getNewListInstance();
-        returnType.addTypeArgument(recordType);
-        Method method = new Method("selectMany"); //$NON-NLS-1$
+        parameterType.addTypeArgument(recordType);
+        
+        Method method = new Method("insert"); //$NON-NLS-1$
         method.setAbstract(true);
-        method.setReturnType(returnType);
-        method.addParameter(new Parameter(parameterType, "selectStatement")); //$NON-NLS-1$
+        method.setReturnType(FullyQualifiedJavaType.getIntInstance());
+        method.addParameter(new Parameter(parameterType, "insertStatement")); //$NON-NLS-1$
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
-        method.addAnnotation("@SelectProvider(type=SqlProviderAdapter.class, method=\"select\")"); //$NON-NLS-1$
+        method.addAnnotation("@InsertProvider(type=SqlProviderAdapter.class, method=\"insert\")"); //$NON-NLS-1$
 
         MethodAndImports.Builder builder = MethodAndImports.withMethod(method)
                 .withImports(imports);
-
-        MethodParts methodParts;
-        if (introspectedTable.isConstructorBased()) {
-            methodParts = fragmentGenerator.getAnnotatedConstructorArgs();
-        } else {
-            methodParts = fragmentGenerator.getAnnotatedResults();
+      
+        GeneratedKey gk = introspectedTable.getGeneratedKey();
+        if (gk != null) {
+            MethodParts methodParts = fragmentGenerator.getGeneratedKeyAnnotation(gk);
+            acceptParts(builder, method, methodParts);
         }
-        acceptParts(builder, method, methodParts);
-        
+
         return builder.build();
     }
 
     @Override
     public boolean callPlugins(Method method, Interface interfaze) {
-        return context.getPlugins().clientBasicSelectManyMethodGenerated(method, interfaze, introspectedTable);
+        return context.getPlugins().clientBasicInsertMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, BasicSelectManyMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder, BasicInsertMethodGenerator> {
+
         private FullyQualifiedJavaType recordType;
         private FragmentGenerator fragmentGenerator;
         
@@ -98,15 +97,15 @@ public class BasicSelectManyMethodGenerator extends AbstractMethodGenerator {
             this.fragmentGenerator = fragmentGenerator;
             return this;
         }
-
+        
         @Override
         public Builder getThis() {
             return this;
         }
 
         @Override
-        public BasicSelectManyMethodGenerator build() {
-            return new BasicSelectManyMethodGenerator(this);
+        public BasicInsertMethodGenerator build() {
+            return new BasicInsertMethodGenerator(this);
         }
     }
 }

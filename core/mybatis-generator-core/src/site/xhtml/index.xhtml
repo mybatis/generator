@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2018 the original author or authors.
+       Copyright 2006-2019 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -34,9 +34,12 @@
  percentage of database operations that are simple CRUD (Create, Retrieve, Update, Delete).  You will
  still need to hand code SQL and objects for join queries, or stored procedures.
 </p>
-<p>MyBatis Generator will generate:</p>
+<p>MBG generates code in different styles, and for different languages, depending on how it is configured. For example,
+MBG can generate Java or Kotlin code. And MBG can generate MyBatis3 compatible XML - althought that is now considered
+a legacy use of MBG. The newer styles of generated code do not require XML.</p>
+<p>Depending on how it is configured, MyBatis Generator may generate:</p>
 <ul>
-  <li>Java POJOs that match the table structure.  This may include:
+  <li>Java or Kotlin classes that match the table structure.  This may include:
     <ul>
       <li>a class to match the primary key of the table (if there is a primary key)</li>
       <li>a class to match the non-primary key fields of the table (except BLOB fields)</li>
@@ -48,7 +51,7 @@
        for example, you may choose to generate a single domain object for each table if you so
        desire.</p>
   </li>
-  <li>MyBatis Compatible SQL Map XML Files.  MBG generates SQL for simple
+  <li>In some cases, MBG will generate MyBatis3 Compatible SQL Map XML Files. MBG generates SQL for simple
    CRUD functions on each table in a configuration.  The generated SQL
    statements include:
     <ul>
@@ -65,8 +68,8 @@
    structure of the table (for example, if the table doesn't have a primary key,
    then MBG will not generate an update by primary key function).</p>
   </li>
-  <li>Java client classes that make appropriate use of the
-    above objects.  The generation of Java client classes is optional.
+  <li>Java or Kotlin client classes, interfaces, and Kotlin extension methods that make appropriate use of the
+    above objects.  The generation of client classes is optional.
     MBG will generate a mapper interface that works with the MyBatis 3.x mapper infrastructure</li>
 </ul>
 
@@ -88,6 +91,10 @@
       merge the changes by hand.  When run as an
       <a target="_blank" href="http://www.eclipse.org">Eclipse</a>
       plugin, then MBG can automatically merge Java files.</li>
+  <li>MBG will <b>not</b> merge Kotlin files, it can either overwrite existing files
+      or save newly generated files with a different unique name.  If you make changes
+      to the generated Kotlin files and run MBG iteratively you will have to
+      merge the changes by hand.</li>
 </ol>
 
 <h2>Running with Eclipse</h2>

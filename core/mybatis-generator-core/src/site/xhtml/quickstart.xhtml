@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2018 the original author or authors.
+       Copyright 2006-2019 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -25,25 +25,13 @@
 </head>
 <body>
 <h1>MyBatis Generator Quick Start Guide</h1>
+<p>MyBatis Generator (MBG) generates code in different styles depending on how it is configured. This is controlled
+by specifying the <code>targetRuntime</code> attribute on a <code>&lt;context&gt;</code> configuration element. The
+table below summarizes the different options.</p>
+
 <p>To get up and running quickly with MyBatis Generator (MBG), follow these steps:</p>
 <ol>
-  <li>Create and fill out a configuration file appropriately.
-      At a minimum, you must specify:
-    <ol type="a">
-      <li>A <code>&lt;jdbcConnection&gt;</code> element to specify how to connect to
-          the target database</li>
-      <li>A <code>&lt;javaModelGenerator&gt;</code> element to specify target package
-          and target project for generated Java model objects</li>
-      <li>A <code>&lt;sqlMapGenerator&gt;</code> element to specify target package
-          and target project for generated SQL map files</li>
-      <li>(Optionally) A <code>&lt;javaClientGenerator&gt;</code> element to specify target package
-           and target project for generated client interfaces and classes (you may
-          omit the <code>&lt;javaClientGenerator&gt;</code> element if you don't wish to generate Java client code)</li>
-      <li>At least one database <code>&lt;table&gt;</code> element</li>
-    </ol>
-    <p>See the <a href="configreference/xmlconfig.html">XML Configuration File Reference</a>
-       page for an example of a configuration file.</p>
-  </li>
+  <li>Create and fill out a configuration file appropriately (see below for samples)</li>
   <li>Save the file in some convenient location (like \temp\generatorConfig.xml)</li>
   <li>Run MBG from the command line with a command like this:
     <pre>
@@ -51,14 +39,165 @@
       java -jar mybatis-generator-core-x.x.x.jar -configfile \temp\generatorConfig.xml -overwrite
     </pre>
     <p>This will tell MBG to run using your configuration file.  It will also tell MBG
-    to overwrite any existing Java files with the same name.  If you want to save any existing
-    Java files, then omit the <code>-overwrite</code> parameter.  If there is a conflict, MBG
+    to overwrite any existing Java or Kotlin files with the same name.  If you want to save any existing
+    files, then omit the <code>-overwrite</code> parameter.  If there is a conflict, MBG
     will save the newly generated file with a unique name (e.g. MyClass.java.1).</p>
   </li>
   <li>After running MBG, you will need to create or modify the standard MyBatis
-      configuration files to make use of your newly generated code.  See the
+      configuration make use of your newly generated code.  See the
       <a href="afterRunning.html">Tasks After Running MyBatis Generator</a> page for more
       information.</li>
 </ol>
+
+<h2>Target Runtime Information and Samples</h2>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>Target Runtime</th>
+    <th>Comments</th>
+    <th>Sample Configuration</th>
+  </tr>
+  <tr>
+    <td valign="top">MyBatis3DynamicSql</td>
+    <td><i>This is the default value</i>
+      <ul>
+        <li>Generates Java code</li>
+        <li>Does not generate XML - MyBatis3 annotations are used exclusively</li>
+        <li>The generated model objects are "flat" - there is no separate primary key object</li>
+        <li>The generated code is dependent on the MyBatis Dynamic SQL Library</li>
+        <li>The amount of generated code is relatively small</li>
+        <li>The generated code allows tremendous flexibility in query construction</li>
+      </ul>
+    </td>
+    <td><a href="#MyBatis3DynamicSql">Sample Configuration</a></td>
+  </tr>
+  <tr>
+    <td valign="top">MyBatis3Kotlin</td>
+    <td>
+      <ul>
+        <li>Generates Kotlin code</li>
+        <li>Does not generate XML - MyBatis3 annotations are used exclusively</li>
+        <li>The generated model objects are "flat" - there is no separate primary key object</li>
+        <li>The generated code is dependent on the MyBatis Dynamic SQL Library</li>
+        <li>The amount of generated code is relatively small</li>
+        <li>The generated code allows tremendous flexibility in query construction</li>
+      </ul>
+    </td>
+    <td><a href="#MyBatis3Kotlin">Sample Configuration</a></td>
+  </tr>
+  <tr>
+    <td valign="top">MyBatis3</td>
+    <td>This is the original runtime. Before version 1.3.6 of MBG, most usages of MBG used this style of code.
+      <ul>
+        <li>Generates Java code</li>
+        <li>Generates MyBatis3 compatible XML and SQL or MyBatis3 compatible annotated interfaces with no XML</li>
+        <li>The generated model objects may have a hierarchy with separate primary key objects and/or
+        separate object with BLOB fields</li>
+        <li>The generated code has no external dependencies</li>
+        <li>The amount of generated code is very large</li>
+        <li>The generated code has limited capabilities for query construction and is difficult to extend</li>
+      </ul>
+    </td>
+    <td><a href="#MyBatis3">Sample Configuration</a></td>
+  </tr>
+  <tr>
+    <td valign="top">MyBatis3Simple</td>
+    <td>This is a simplified version of the MyBatis3 runtime.
+      <ul>
+        <li>Generates Java code</li>
+        <li>Generates MyBatis3 compatible XML and SQL or MyBatis3 compatible annotated interfaces with no XML</li>
+        <li>The generated model objects are "flat" - there is no separate primary key object</li>
+        <li>The generated code has no external dependencies</li>
+        <li>The amount of generated code is relatively small</li>
+        <li>No "by example" or "selective" methods are generated</li>
+        <li>The generated code does not include methods for dynamic query construction and is difficult to extend</li>
+      </ul>
+    </td>
+    <td><a href="#MyBatis3Simple">Sample Configuration</a></td>
+  </tr>
+</table>
+
+<a name="MyBatis3DynamicSql"/>
+<h3>Sample Configuration for MyBatis3DynamicSql</h3>
+<pre>
+&lt;!DOCTYPE generatorConfiguration PUBLIC
+ "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+ "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd"&gt;
+&lt;generatorConfiguration&gt;
+  &lt;context id="dsql" targetRuntime="MyBatis3DynamicSql"&gt;
+    &lt;jdbcConnection driverClass="org.hsqldb.jdbcDriver"
+        connectionURL="jdbc:hsqldb:mem:aname" /&gt;
+
+    &lt;javaModelGenerator targetPackage="example.model" targetProject="src/main/java"/&gt;
+
+    &lt;javaClientGenerator targetPackage="example.mapper" targetProject="src/main/java"/&gt;
+
+    &lt;table tableName="FooTable" /&gt;
+  &lt;/context&gt;
+&lt;/generatorConfiguration&gt;
+</pre>
+
+<a name="MyBatis3Kotlin"/>
+<h3>Sample Configuration for MyBatis3Kotlin</h3>
+<pre>
+&lt;!DOCTYPE generatorConfiguration PUBLIC
+ "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+ "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd"&gt;
+&lt;generatorConfiguration&gt;
+  &lt;context id="kotlin" targetRuntime="MyBatis3Kotlin"&gt;
+    &lt;jdbcConnection driverClass="org.hsqldb.jdbcDriver"
+        connectionURL="jdbc:hsqldb:mem:aname" /&gt;
+
+    &lt;javaModelGenerator targetPackage="example.model" targetProject="src/main/kotlin"/&gt;
+
+    &lt;javaClientGenerator targetPackage="example.mapper" targetProject="src/main/kotlin"/&gt;
+
+    &lt;table tableName="FooTable" /&gt;
+  &lt;/context&gt;
+&lt;/generatorConfiguration&gt;
+</pre>
+
+<a name="MyBatis3"/>
+<h3>Sample Configuration for MyBatis3</h3>
+<pre>
+&lt;!DOCTYPE generatorConfiguration PUBLIC
+ "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+ "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd"&gt;
+&lt;generatorConfiguration&gt;
+  &lt;context id="simple" targetRuntime="MyBatis3Simple"&gt;
+    &lt;jdbcConnection driverClass="org.hsqldb.jdbcDriver"
+        connectionURL="jdbc:hsqldb:mem:aname" /&gt;
+
+    &lt;javaModelGenerator targetPackage="example.model" targetProject="src/main/java"/&gt;
+
+    &lt;sqlMapGenerator targetPackage="example.mapper" targetProject="src/main/resources"/&gt;
+
+    &lt;javaClientGenerator type="XMLMAPPER" targetPackage="example.mapper" targetProject="src/main/java"/&gt;
+
+    &lt;table tableName="FooTable" /&gt;
+  &lt;/context&gt;
+&lt;/generatorConfiguration&gt;
+</pre>
+
+<a name="MyBatis3Simple"/>
+<h3>Sample Configuration for MyBatis3Simple</h3>
+<pre>
+&lt;!DOCTYPE generatorConfiguration PUBLIC
+ "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+ "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd"&gt;
+&lt;generatorConfiguration&gt;
+  &lt;context id="simple" targetRuntime="MyBatis3Simple"&gt;
+    &lt;jdbcConnection driverClass="org.hsqldb.jdbcDriver"
+        connectionURL="jdbc:hsqldb:mem:aname" /&gt;
+
+    &lt;javaModelGenerator targetPackage="example.model" targetProject="src/main/java"/&gt;
+
+    &lt;javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="example.mapper" targetProject="src/main/java"/&gt;
+
+    &lt;table tableName="FooTable" /&gt;
+  &lt;/context&gt;
+&lt;/generatorConfiguration&gt;
+</pre>
+
+
 </body>
 </html>

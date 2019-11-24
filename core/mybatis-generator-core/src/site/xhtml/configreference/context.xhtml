@@ -55,7 +55,9 @@ databases, or with different generation parameters, in the same run of MyBatis G
   <tr>
     <td valign="top">defaultModelType</td>
     <td>
-      This property is used to set the default for generated model types.
+      <i>This attribute is ignored if the target runtime is "MyBatis3Simple", "MyBatis3DynamicSql",
+       or "MyBatis3Kotlin"</i><br/>
+      This attribute is used to set the default for generated model types.
       The model type defines how MBG will generate domain classes.  With some
       model types MBG will generate a single domain class for each table,
       with others MBG may generate different classes depending on the structure
@@ -92,12 +94,7 @@ databases, or with different generation parameters, in the same run of MyBatis G
       <table>
         <tr>
           <th valign="top">MyBatis3DynamicSql</th>
-          <td><i>This is the default value</i>
-            <br/>Synonym for MyBatis3DynamicSqlV2</td>
-        </tr>
-        <tr>
-          <th valign="top">MyBatis3DynamicSqlV2</th>
-          <td>
+          <td><i>This is the default value</i><br/>
             With the value, MBG will generate objects that are compatible
             with MyBatis versions 3.4.2 and higher, and Java 8 and higher (e.g. the
             Java model and mapper interfaces will use generic types and other Java 8

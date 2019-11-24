@@ -326,6 +326,7 @@ public class DynamicSqlMapperGeneratorV2 extends AbstractDynamicSqlMapperGenerat
         
         generate(interfaze, generator);
     }
+    
     protected void addBasicCountMethod(Interface interfaze) {
         BasicCountMethodGenerator generator = new BasicCountMethodGenerator.Builder()
                 .withContext(context)

@@ -43,8 +43,8 @@
       <topic href="html/mbgdoc/configreference/table.html" label="&lt;table&gt;"/>
    </topic>
    <topic href="html/mbgdoc/generatedobjects/results.html" label="Using the Generated Objects">
-      <topic href="html/mbgdoc/generatedobjects/dynamicSqlV2.html" label="MyBatis Dynamic SQL Usage Notes - V2"/>
-      <topic href="html/mbgdoc/generatedobjects/dynamicSqlKotlin.html" label="MyBatis Dynamic SQL with Kotlin Usage Notes - V2"/>
+      <topic href="html/mbgdoc/generatedobjects/dynamicSqlV2.html" label="MyBatis Dynamic SQL Usage Notes"/>
+      <topic href="html/mbgdoc/generatedobjects/dynamicSqlKotlin.html" label="MyBatis Dynamic SQL with Kotlin Usage Notes"/>
       <topic href="html/mbgdoc/generatedobjects/legacy.html" label="Legacy Generators">
         <topic href="html/mbgdoc/generatedobjects/javamodel.html" label="Java Model Objects"/>
         <topic href="html/mbgdoc/generatedobjects/sqlmap.html" label="SQL Map Files"/>

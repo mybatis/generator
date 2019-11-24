@@ -64,7 +64,7 @@
         <item href="configreference/table.html" name="&amp;lt;table&amp;gt;" />
       </item>
       <item href="generatedobjects/results.html" name="Using the Generated Objects" collapse="true" >
-        <item href="generatedobjects/dynamicSqlV2.html" name="MyBatis Dynamic SQL Usage Notes - V2" />
+        <item href="generatedobjects/dynamicSqlV2.html" name="MyBatis Dynamic SQL Usage Notes" />
         <item href="generatedobjects/dynamicSqlKotlin.html" name="MyBatis Dynamic SQL with Kotlin Usage Notes" />
         <item href="generatedobjects/legacy.html" name="Legacy Generators">
           <item href="generatedobjects/javamodel.html" name="Java Model Objects" />

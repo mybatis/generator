@@ -86,7 +86,8 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
          is set "true".</p>
       <p>This property can be overridden by the corresponding property in a
       <a href="table.html">&lt;table&gt;</a> element.</p>
-      <p><i>The default value is false.</i></p></td>
+      <p><i>The default value is false.</i></p>
+      <p><i>This property is ignored if the target runtime is "MyBatis3Kotlin"</i></p></td>
   </tr>
   <tr>
     <td valign="top">enableSubPackages</td>
@@ -105,7 +106,7 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
     <td>
       This property is used to specify a different package for the generated example objects. If not specified,
       the example objects will be generated in the same package as other model objects.
-      <p>Note: this property is ignored in the MyBatis Dynamic SQL runtime.</p>
+      <p>Note: this property is ignored in the MyBatis Dynamic SQL based runtimes.</p>
     </td>
   </tr>
   <tr>
@@ -113,7 +114,7 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
     <td>
       This property is used to specify a different project for the generated example objects. If not specified,
       the example objects will be generated in the same project as other model objects.
-      <p>Note: this property is ignored in the MyBatis Dynamic SQL runtime.</p>
+      <p>Note: this property is ignored in the MyBatis Dynamic SQL based runtimes.</p>
     </td>
   </tr>
   <tr>
@@ -126,7 +127,8 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
          regardless of the value of the "constructorBased" property.</p>
       <p>This property can be overridden by the corresponding property in a
       <a href="table.html">&lt;table&gt;</a> element.</p>
-      <p><i>The default value is false.</i></p></td>
+      <p><i>The default value is false.</i></p>
+      <p><i>This property is ignored if the target runtime is "MyBatis3Kotlin"</i></p></td>
   </tr>
   <tr>
     <td valign="top">rootClass</td>
@@ -146,7 +148,8 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
          <li>Property has a "setter" method</li>
        </ul>
       <p>If specified, the value of this property should be a fully qualified
-       class name (like com.mycompany.MyRootClass).</p></td>
+       class name (like com.mycompany.MyRootClass).</p>
+       <p><i>This property is ignored if the target runtime is "MyBatis3Kotlin"</i></p></td>
   </tr>
   <tr>
     <td valign="top">trimStrings</td>
@@ -158,7 +161,8 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
       Can be overridden with the <code>trimStrings</code> property in a 
       <a href="table.html">&lt;table&gt;</a> or 
       <a href="columnOverride.html">&lt;columnOverride&gt;</a> element.
-      <p><i>The default value is false.</i></p></td>
+      <p><i>The default value is false.</i></p>
+      <p><i>This property is ignored if the target runtime is "MyBatis3Kotlin"</i></p></td>
   </tr>
 </table>
 

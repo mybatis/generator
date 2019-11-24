@@ -30,7 +30,8 @@ generator.  The SQL Map Generator builds a MyBatis formatted SQL map XML file
 for each introspected table.</p>
 <p>This element is a required child element
 of the <a href="context.html">&lt;context&gt;</a> element only if your chosen
-javaClientGenerator requires XML.</p>
+javaClientGenerator requires XML. The runtimes based on MyBatis Dynamic SQL do not generate XML and will
+ignore this element if it is specified.</p>
 <p>If you do not specify a javaClientGenerator, then
 the following rules apply:</p>
 <ul>

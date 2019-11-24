@@ -647,25 +647,6 @@ public abstract class IntrospectedTable {
                 .get(InternalAttribute.ATTR_COUNT_BY_EXAMPLE_STATEMENT_ID);
     }
 
-    protected String calculateJavaClientImplementationPackage() {
-        JavaClientGeneratorConfiguration config = context
-                .getJavaClientGeneratorConfiguration();
-        if (config == null) {
-            return null;
-        }
-
-        StringBuilder sb = new StringBuilder();
-        if (stringHasValue(config.getImplementationPackage())) {
-            sb.append(config.getImplementationPackage());
-        } else {
-            sb.append(config.getTargetPackage());
-        }
-
-        sb.append(fullyQualifiedTable.getSubPackageForClientOrSqlMap(isSubPackagesEnabled(config)));
-
-        return sb.toString();
-    }
-
     private boolean isSubPackagesEnabled(PropertyHolder propertyHolder) {
         return isTrue(propertyHolder.getProperty(PropertyRegistry.ANY_ENABLE_SUB_PACKAGES));
     }

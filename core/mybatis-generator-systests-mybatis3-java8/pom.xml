@@ -20,7 +20,7 @@
   <parent>
     <groupId>org.mybatis.generator</groupId>
     <artifactId>mybatis-generator</artifactId>
-    <version>1.4.0-SNAPSHOT</version>
+    <version>1.4.0</version>
   </parent>
   <artifactId>mybatis-generator-systests-mybatis3-java8</artifactId>
   <description>Tests for the MyBatis3 code generator using Java8 Features.</description>

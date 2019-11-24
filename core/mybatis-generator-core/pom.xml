@@ -22,7 +22,7 @@
   <parent>
     <groupId>org.mybatis.generator</groupId>
     <artifactId>mybatis-generator</artifactId>
-    <version>1.4.0-SNAPSHOT</version>
+    <version>1.4.0</version>
   </parent>
 
   <artifactId>mybatis-generator-core</artifactId>
@@ -237,6 +237,6 @@
   <description>MyBatis Generator - a code generator for MyBatis.</description>
   <scm>
     <url>https://github.com/mybatis/generator</url>
-    <tag>HEAD</tag>
+    <tag>mybatis-generator-1.4.0</tag>
   </scm>
 </project>

@@ -41,11 +41,14 @@
 <h3>New Runtime for Kotlin Using MyBatis Dynamic SQL</h3>
 <p>MyBatis generator supports Kotlin! There is a new simple DOM for generating Kotlin. There is also a new runtime that will
 generate Kotlin code that uses the MyBatis Dynamic SQL library. It has functionality that matches the new Java runtime
-for MyBatis Dynamic SQL (see below) - but it uses a more idiomatic Kotlin style rather than the method chaining style
-of the Java runtime.   
+for MyBatis Dynamic SQL (see below) - but it uses a more idiomatic Kotlin style with receiver functions rather than the
+method chaining style of the Java runtime.   
 </p>
 
-<p>As in the new Java runtime, there is no Example class generated and the *ByExample methods are not generated. Rather
+<p>To use the new runtime, set <code>targetRuntime=MyBatis3Kotlin</code> on a <code>&lt;context&gt;</code>.</p>
+
+<p>As in the Java runtime for MyBatis Dynamic SQL, there is no Example class generated and the *ByExample methods are not
+generated. Rather
 general count, delete, insert, selectOne, selectMany, and update methods are generated that allow where clauses and other
 parts of SQL statements to be supplied via lambdas.</p>
 

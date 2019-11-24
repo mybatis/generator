@@ -32,11 +32,6 @@ public class BasicSelectManyMethodGenerator extends AbstractKotlinFunctionGenera
 
     @Override
     public KotlinFunctionAndImports generateMethodAndImports() {
-        if (!introspectedTable.getRules().generateSelectByExampleWithBLOBs()
-                && !introspectedTable.getRules().generateSelectByExampleWithoutBLOBs()) {
-            return null;
-        }
-
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
                 KotlinFunction.newOneLineFunction("selectMany") //$NON-NLS-1$
                 .withExplicitReturnType("List<" //$NON-NLS-1$

@@ -27,10 +27,6 @@ public class BasicCountMethodGenerator extends AbstractKotlinFunctionGenerator {
 
     @Override
     public KotlinFunctionAndImports generateMethodAndImports() {
-        if (!introspectedTable.getRules().generateCountByExample()) {
-            return null;
-        }
-        
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
                 KotlinFunction.newOneLineFunction("count") //$NON-NLS-1$
                 .withExplicitReturnType("Long") //$NON-NLS-1$

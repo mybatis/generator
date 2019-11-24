@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.generator.runtime.dynamic.sql.elements;
+package org.mybatis.generator.runtime.dynamic.sql.elements.v2;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,6 +22,8 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.runtime.dynamic.sql.elements.AbstractMethodGenerator;
+import org.mybatis.generator.runtime.dynamic.sql.elements.MethodAndImports;
 
 public class BasicCountMethodGenerator extends AbstractMethodGenerator {
     
@@ -31,10 +33,6 @@ public class BasicCountMethodGenerator extends AbstractMethodGenerator {
 
     @Override
     public MethodAndImports generateMethodAndImports() {
-        if (!introspectedTable.getRules().generateCountByExample()) {
-            return null;
-        }
-        
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
         
         FullyQualifiedJavaType parameterType =

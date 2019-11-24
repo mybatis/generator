@@ -27,15 +27,6 @@ public class BasicUpdateMethodGenerator extends AbstractKotlinFunctionGenerator 
 
     @Override
     public KotlinFunctionAndImports generateMethodAndImports() {
-        if (!introspectedTable.getRules().generateUpdateByExampleSelective()
-                && !introspectedTable.getRules().generateUpdateByExampleWithBLOBs()
-                && !introspectedTable.getRules().generateUpdateByExampleWithoutBLOBs()
-                && !introspectedTable.getRules().generateUpdateByPrimaryKeySelective()
-                && !introspectedTable.getRules().generateUpdateByPrimaryKeyWithBLOBs()
-                && !introspectedTable.getRules().generateUpdateByPrimaryKeyWithoutBLOBs()) {
-            return null;
-        }
-
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
                 KotlinFunction.newOneLineFunction("update") //$NON-NLS-1$
                 .withExplicitReturnType("Int") //$NON-NLS-1$

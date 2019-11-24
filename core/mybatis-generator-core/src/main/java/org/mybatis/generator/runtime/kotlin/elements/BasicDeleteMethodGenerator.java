@@ -27,11 +27,6 @@ public class BasicDeleteMethodGenerator extends AbstractKotlinFunctionGenerator 
 
     @Override
     public KotlinFunctionAndImports generateMethodAndImports() {
-        if (!introspectedTable.getRules().generateDeleteByExample()
-                && !introspectedTable.getRules().generateDeleteByPrimaryKey()) {
-            return null;
-        }
-        
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
                 KotlinFunction.newOneLineFunction("delete") //$NON-NLS-1$
                 .withExplicitReturnType("Int") //$NON-NLS-1$

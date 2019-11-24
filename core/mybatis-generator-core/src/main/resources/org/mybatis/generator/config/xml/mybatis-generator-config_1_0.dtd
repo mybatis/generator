@@ -141,7 +141,7 @@
 -->
 <!ELEMENT javaClientGenerator (property*)>
 <!ATTLIST javaClientGenerator
-  type CDATA #REQUIRED
+  type CDATA #IMPLIED
   targetPackage CDATA #REQUIRED
   targetProject CDATA #REQUIRED>
 

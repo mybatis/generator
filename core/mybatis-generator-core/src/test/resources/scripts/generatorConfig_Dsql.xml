@@ -37,7 +37,7 @@
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
-    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.dsql.v1.mapper"  targetProject="MAVEN">
+    <javaClientGenerator targetPackage="mbg.test.mb3.generated.dsql.v1.mapper"  targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
 
@@ -92,7 +92,7 @@
       <property name="rootClass" value="mbg.test.common.BaseClass" />
     </javaModelGenerator>
 
-    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.dsql.v1.miscellaneous.mapper"  targetProject="MAVEN">
+    <javaClientGenerator targetPackage="mbg.test.mb3.generated.dsql.v1.miscellaneous.mapper"  targetProject="MAVEN">
     </javaClientGenerator>
 
     <table tableName="PKFields" domainObjectName="MyObject" alias="A" >
@@ -140,7 +140,7 @@
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
-    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.dsql.v2.mapper"  targetProject="MAVEN">
+    <javaClientGenerator targetPackage="mbg.test.mb3.generated.dsql.v2.mapper"  targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
 
@@ -193,7 +193,7 @@
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
-    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.dsql.v2.readonly.mapper"
+    <javaClientGenerator targetPackage="mbg.test.mb3.generated.dsql.v2.readonly.mapper"
       targetProject="MAVEN"/>
 
     <table tableName="PKFields" alias="B" >
@@ -235,7 +235,7 @@
       <property name="rootClass" value="mbg.test.common.BaseClass" />
     </javaModelGenerator>
 
-    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.dsql.v2.miscellaneous.mapper"  targetProject="MAVEN">
+    <javaClientGenerator targetPackage="mbg.test.mb3.generated.dsql.v2.miscellaneous.mapper"  targetProject="MAVEN">
     </javaClientGenerator>
 
     <table tableName="PKFields" domainObjectName="MyObject" alias="A" >

@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -156,6 +156,59 @@ public class UpdateByExampleTest extends AbstractAnnotatedHierarchicalTest {
             List<Fieldsonly> answer = mapper.selectByExample(example);
             assertEquals(1, answer.size());
             record = answer.get(0);
+            assertNull(record.getDoublefield());
+            assertNull(record.getFloatfield());
+            assertEquals(record.getIntegerfield().intValue(), 22);
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+    @Test
+    public void testFieldsOnlyUpdateAllRows() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        try {
+            FieldsonlyMapper mapper = sqlSession.getMapper(FieldsonlyMapper.class);
+            Fieldsonly record = new Fieldsonly();
+            record.setDoublefield(11.22);
+            record.setFloatfield(33.44);
+            record.setIntegerfield(5);
+            mapper.insert(record);
+
+            record = new Fieldsonly();
+            record.setDoublefield(44.55);
+            record.setFloatfield(66.77);
+            record.setIntegerfield(8);
+            mapper.insert(record);
+
+            record = new Fieldsonly();
+            record.setDoublefield(88.99);
+            record.setFloatfield(100.111);
+            record.setIntegerfield(9);
+            mapper.insert(record);
+
+            record = new Fieldsonly();
+            record.setIntegerfield(22);
+            
+            int rows = mapper.updateByExample(record, null);
+            assertEquals(3, rows);
+
+            FieldsonlyExample example = new FieldsonlyExample();
+            example.createCriteria().andIntegerfieldEqualTo(22);
+            List<Fieldsonly> answer = mapper.selectByExample(example);
+            assertEquals(3, answer.size());
+            record = answer.get(0);
+            assertNull(record.getDoublefield());
+            assertNull(record.getFloatfield());
+            assertEquals(record.getIntegerfield().intValue(), 22);
+
+            record = answer.get(1);
+            assertNull(record.getDoublefield());
+            assertNull(record.getFloatfield());
+            assertEquals(record.getIntegerfield().intValue(), 22);
+
+            record = answer.get(2);
             assertNull(record.getDoublefield());
             assertNull(record.getFloatfield());
             assertEquals(record.getIntegerfield().intValue(), 22);
@@ -338,6 +391,44 @@ public class UpdateByExampleTest extends AbstractAnnotatedHierarchicalTest {
     
             long returnedRows = mapper.countByExample(example);
             assertEquals(1, returnedRows);
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+    @Test
+    public void testPKFieldsUpdateAllRows() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+    
+        try {
+            PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
+            Pkfields record = new Pkfields();
+            record.setFirstname("Jeff");
+            record.setLastname("Smith");
+            record.setId1(1);
+            record.setId2(2);
+            mapper.insert(record);
+    
+            record = new Pkfields();
+            record.setFirstname("Bob");
+            record.setLastname("Jones");
+            record.setId1(3);
+            record.setId2(4);
+    
+            mapper.insert(record);
+
+            record = new Pkfields();
+            record.setLastname("Cooper");
+            
+            int rows = mapper.updateByExampleSelective(record, null);
+            assertEquals(2, rows);
+            
+            PkfieldsExample example = new PkfieldsExample();
+            example.createCriteria()
+                .andLastnameEqualTo("Cooper");
+    
+            long returnedRows = mapper.countByExample(example);
+            assertEquals(2, returnedRows);
         } finally {
             sqlSession.close();
         }

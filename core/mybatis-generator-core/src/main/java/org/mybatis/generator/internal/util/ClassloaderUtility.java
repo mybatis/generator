@@ -15,6 +15,9 @@
  */
 package org.mybatis.generator.internal.util;
 
+import org.mybatis.generator.logging.Log;
+import org.mybatis.generator.logging.LogFactory;
+
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.io.File;
@@ -33,6 +36,7 @@ import java.util.List;
  */
 public class ClassloaderUtility {
 
+    private static final Log LOG = LogFactory.getLog(ClassloaderUtility.class);
     /**
      * Utility Class - No Instances.
      */
@@ -47,8 +51,8 @@ public class ClassloaderUtility {
             for (String classPathEntry : entries) {
                 file = new File(classPathEntry);
                 if (!file.exists()) {
-                    throw new RuntimeException(getString(
-                            "RuntimeError.9", classPathEntry)); //$NON-NLS-1$
+                    LOG.warn("classPathEntry " + classPathEntry + " not exists!" );
+                    continue;
                 }
 
                 try {

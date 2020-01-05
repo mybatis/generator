@@ -51,7 +51,7 @@ public class ClassloaderUtility {
             for (String classPathEntry : entries) {
                 file = new File(classPathEntry);
                 if (!file.exists()) {
-                    LOG.warn("classPathEntry " + classPathEntry + " not exists!" );
+                    LOG.warn(getString("Warning.31", classPathEntry));
                     continue;
                 }
 

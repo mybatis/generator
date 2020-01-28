@@ -465,7 +465,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
 
         if (!suppressDate && !suppressAllComments) {
             buffer.append(", date=\""); //$NON-NLS-1$
-            buffer.append(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(ZonedDateTime.now()));
+            buffer.append(getDateString());
             buffer.append('\"');
         }
 
@@ -489,7 +489,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
         kotlinFile.addFileCommentLine(" * Auto-generated file. Created by MyBatis Generator"); //$NON-NLS-1$
         if (!suppressDate) {
             kotlinFile.addFileCommentLine(" * Generation date: " //$NON-NLS-1$
-                    + DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(ZonedDateTime.now()));
+                    + getDateString());
         }
         kotlinFile.addFileCommentLine(" */"); //$NON-NLS-1$
     }

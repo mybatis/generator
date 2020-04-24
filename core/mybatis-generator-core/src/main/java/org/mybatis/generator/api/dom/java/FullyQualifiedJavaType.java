@@ -24,7 +24,7 @@ import java.util.StringTokenizer;
 
 public class FullyQualifiedJavaType implements
         Comparable<FullyQualifiedJavaType> {
-    
+
     private static final String JAVA_LANG = "java.lang"; //$NON-NLS-1$
 
     private static FullyQualifiedJavaType intInstance = null;
@@ -261,6 +261,11 @@ public class FullyQualifiedJavaType implements
         return new FullyQualifiedJavaType("java.util.List"); //$NON-NLS-1$
     }
 
+    public static final FullyQualifiedJavaType getNewCollectionInstance() {
+        // always return a new instance because the type may be parameterized
+        return new FullyQualifiedJavaType("java.util.Collection"); //$NON-NLS-1$
+    }
+
     public static final FullyQualifiedJavaType getNewHashMapInstance() {
         // always return a new instance because the type may be parameterized
         return new FullyQualifiedJavaType("java.util.HashMap"); //$NON-NLS-1$
@@ -475,7 +480,7 @@ public class FullyQualifiedJavaType implements
 
     /**
      * Returns the package name of a fully qualified type.
-     * 
+     *
      * <p>This method calculates the package as the part of the fully qualified name up to, but not including, the last
      * element. Therefore, it does not support fully qualified inner classes. Not totally fool proof, but correct in
      * most instances.

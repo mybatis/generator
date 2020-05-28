@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2019 the original author or authors.
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -332,7 +332,19 @@ public class Context extends PropertyHolder {
     // 4. generateFiles()
     //
 
-    private List<IntrospectedTable> introspectedTables;
+    private List<IntrospectedTable> introspectedTables = new ArrayList<>();
+    
+    /**
+     * This method could be useful for users that use the library for introspection only
+     * and not for code generation.
+     * 
+     * @return a list containing the results of table introspection. The list will be empty
+     *     if this method is called before introspectTables(), or if no tables are found that
+     *     match the configuration
+     */
+    public List<IntrospectedTable> getIntrospectedTables() {
+        return introspectedTables;
+    }
 
     public int getIntrospectionSteps() {
         int steps = 0;
@@ -376,7 +388,7 @@ public class Context extends PropertyHolder {
             List<String> warnings, Set<String> fullyQualifiedTableNames)
             throws SQLException, InterruptedException {
 
-        introspectedTables = new ArrayList<>();
+        introspectedTables.clear();
         JavaTypeResolver javaTypeResolver = ObjectFactory
                 .createJavaTypeResolver(this, warnings);
 
@@ -422,10 +434,8 @@ public class Context extends PropertyHolder {
     public int getGenerationSteps() {
         int steps = 0;
 
-        if (introspectedTables != null) {
-            for (IntrospectedTable introspectedTable : introspectedTables) {
-                steps += introspectedTable.getGenerationSteps();
-            }
+        for (IntrospectedTable introspectedTable : introspectedTables) {
+            steps += introspectedTable.getGenerationSteps();
         }
 
         return steps;
@@ -450,26 +460,24 @@ public class Context extends PropertyHolder {
             }
         }
 
-        if (introspectedTables != null) {
-            for (IntrospectedTable introspectedTable : introspectedTables) {
-                callback.checkCancel();
+        for (IntrospectedTable introspectedTable : introspectedTables) {
+            callback.checkCancel();
 
-                introspectedTable.initialize();
-                introspectedTable.calculateGenerators(warnings, callback);
-                generatedJavaFiles.addAll(introspectedTable
-                        .getGeneratedJavaFiles());
-                generatedXmlFiles.addAll(introspectedTable
-                        .getGeneratedXmlFiles());
-                generatedKotlinFiles.addAll(introspectedTable
-                        .getGeneratedKotlinFiles());
+            introspectedTable.initialize();
+            introspectedTable.calculateGenerators(warnings, callback);
+            generatedJavaFiles.addAll(introspectedTable
+                    .getGeneratedJavaFiles());
+            generatedXmlFiles.addAll(introspectedTable
+                    .getGeneratedXmlFiles());
+            generatedKotlinFiles.addAll(introspectedTable
+                    .getGeneratedKotlinFiles());
 
-                generatedJavaFiles.addAll(pluginAggregator
-                        .contextGenerateAdditionalJavaFiles(introspectedTable));
-                generatedXmlFiles.addAll(pluginAggregator
-                        .contextGenerateAdditionalXmlFiles(introspectedTable));
-                generatedKotlinFiles.addAll(pluginAggregator
-                        .contextGenerateAdditionalKotlinFiles(introspectedTable));
-            }
+            generatedJavaFiles.addAll(pluginAggregator
+                    .contextGenerateAdditionalJavaFiles(introspectedTable));
+            generatedXmlFiles.addAll(pluginAggregator
+                    .contextGenerateAdditionalXmlFiles(introspectedTable));
+            generatedKotlinFiles.addAll(pluginAggregator
+                    .contextGenerateAdditionalKotlinFiles(introspectedTable));
         }
 
         generatedJavaFiles.addAll(pluginAggregator

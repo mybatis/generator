@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,6 +18,8 @@ package org.mybatis.generator.internal;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.StringTokenizer;
 
 import org.mybatis.generator.api.ShellCallback;
@@ -26,6 +28,7 @@ import org.mybatis.generator.exception.ShellException;
 public class DefaultShellCallback implements ShellCallback {
 
     private boolean overwrite;
+    private JavaFileMerger fileMerger = new JavaFileMerger();
 
     public DefaultShellCallback(boolean overwrite) {
         super();
@@ -74,7 +77,7 @@ public class DefaultShellCallback implements ShellCallback {
 
     @Override
     public boolean isMergeSupported() {
-        return false;
+        return true;
     }
 
     @Override
@@ -84,8 +87,14 @@ public class DefaultShellCallback implements ShellCallback {
 
     @Override
     public String mergeJavaFile(String newFileSource,
-            File existingFile, String[] javadocTags, String fileEncoding)
+                                File existingFile, String[] javadocTags, String fileEncoding)
             throws ShellException {
-        throw new UnsupportedOperationException();
+        String fileName = existingFile.getName();
+        String publicClassName = fileName.substring(0, fileName.length() - ".java".length());
+        try {
+            return fileMerger.mergeJavaFile(newFileSource, new FileInputStream(existingFile), publicClassName, fileEncoding);
+        } catch (FileNotFoundException e) {
+            throw new ShellException(e.getCause());
+        }
     }
 }

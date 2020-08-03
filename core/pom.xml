@@ -41,6 +41,7 @@
   <modules>
     <module>mybatis-generator-core</module>
     <module>mybatis-generator-systests-domtests</module>
+    <module>mybatis-generator-java-merger</module>
     <module>mybatis-generator-maven-plugin</module>
     <module>mybatis-generator-systests-common</module>
     <module>mybatis-generator-systests-mybatis3</module>

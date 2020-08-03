@@ -32,8 +32,8 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
+import org.mybatis.generator.api.JavaFileMerger;
 import org.mybatis.generator.api.MyBatisGenerator;
-import org.mybatis.generator.api.ShellCallback;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.exception.InvalidConfigurationException;
@@ -152,6 +152,17 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
     @Parameter(property = "mybatis.generator.includeAllDependencies", defaultValue = "false")
     private boolean includeAllDependencies;
 
+    /**
+     * The fully qualified class name of a class that implements the
+     * org.mybatis.generator.api.JavaFileMerger interface. This class will be used to
+     * merge Java files if newly generated files match existing files. The implementing
+     * class must be on the classpath. A runtime error will be generated if the class
+     * is missing or the specified class does not implement the interface.
+     *
+     */
+    @Parameter(property = "mybatis.generator.javaFileMerger", defaultValue = "")
+    private String javaFileMerger;
+
     @Override
     public void execute() throws MojoExecutionException {
         if (skip) {
@@ -195,7 +206,11 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
             ConfigurationParser cp = new ConfigurationParser(project.getProperties(), warnings);
             Configuration config = cp.parseConfiguration(configurationFile);
 
-            ShellCallback callback = new MavenShellCallback(this, overwrite);
+            MavenShellCallback callback = new MavenShellCallback(this, overwrite);
+            if (StringUtility.stringHasValue(javaFileMerger)) {
+                JavaFileMerger merger = ObjectFactory.createJavaFileMerger(javaFileMerger);
+                callback.setJavaFileMerger(merger);
+            }
 
             MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
 

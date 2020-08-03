@@ -21,18 +21,25 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Objects;
 import java.util.StringTokenizer;
 
+import org.mybatis.generator.api.JavaFileMerger;
 import org.mybatis.generator.api.ShellCallback;
 import org.mybatis.generator.exception.ShellException;
 
 public class DefaultShellCallback implements ShellCallback {
 
     private final boolean overwrite;
+    private JavaFileMerger javaFileMerger;
 
     public DefaultShellCallback(boolean overwrite) {
         super();
         this.overwrite = overwrite;
+    }
+
+    public void setJavaFileMerger(JavaFileMerger javaFileMerger) {
+        this.javaFileMerger = Objects.requireNonNull(javaFileMerger);
     }
 
     @Override
@@ -70,7 +77,23 @@ public class DefaultShellCallback implements ShellCallback {
     }
 
     @Override
+    public boolean isMergeSupported() {
+        return javaFileMerger != null;
+    }
+
+    @Override
     public boolean isOverwriteEnabled() {
         return overwrite;
+    }
+
+    @Override
+    public String mergeJavaFile(String newFileSource,
+            File existingFile, String[] javadocTags, String fileEncoding)
+            throws ShellException {
+        if (javaFileMerger == null) {
+            throw new UnsupportedOperationException();
+        } else {
+            return javaFileMerger.mergeJavaFile(newFileSource, existingFile, javadocTags, fileEncoding);
+        }
     }
 }

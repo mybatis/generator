@@ -27,6 +27,7 @@ import org.mybatis.generator.api.ConnectionFactory;
 import org.mybatis.generator.api.FullyQualifiedTable;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.JavaFileMerger;
 import org.mybatis.generator.api.JavaFormatter;
 import org.mybatis.generator.api.JavaTypeResolver;
 import org.mybatis.generator.api.KotlinFormatter;
@@ -304,6 +305,11 @@ public class ObjectFactory {
 
         answer.setContext(context);
 
+        return answer;
+    }
+
+    public static JavaFileMerger createJavaFileMerger(String type) {
+        JavaFileMerger answer = (JavaFileMerger) createInternalObject(type);
         return answer;
     }
 

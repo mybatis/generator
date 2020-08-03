@@ -32,6 +32,7 @@ import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.exception.XMLParserException;
 import org.mybatis.generator.internal.DefaultShellCallback;
+import org.mybatis.generator.internal.ObjectFactory;
 import org.mybatis.generator.internal.util.StringUtility;
 import org.mybatis.generator.logging.LogFactory;
 
@@ -49,6 +50,7 @@ public class ShellRunner {
     private static final String FORCE_JAVA_LOGGING = "-forceJavaLogging"; //$NON-NLS-1$
     private static final String HELP_1 = "-?"; //$NON-NLS-1$
     private static final String HELP_2 = "-h"; //$NON-NLS-1$
+    private static final String JAVA_FILE_MERGER = "-javaFileMerger"; //$NON-NLS-1$
 
     public static void main(String[] args) {
         if (args.length == 0) {
@@ -88,6 +90,10 @@ public class ShellRunner {
             Configuration config = cp.parseConfiguration(configurationFile.toFile());
 
             DefaultShellCallback shellCallback = new DefaultShellCallback(arguments.containsKey(OVERWRITE));
+            if (arguments.containsKey(JAVA_FILE_MERGER)) {
+                JavaFileMerger javaFileMerger = ObjectFactory.createJavaFileMerger(arguments.get(JAVA_FILE_MERGER));
+                shellCallback.setJavaFileMerger(javaFileMerger);
+            }
 
             MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, shellCallback, warnings);
 
@@ -179,6 +185,13 @@ public class ShellRunner {
                     arguments.put(TABLES, args[i + 1]);
                 } else {
                     errors.add(getString("RuntimeError.19", TABLES)); //$NON-NLS-1$
+                }
+                i++;
+            } else if (JAVA_FILE_MERGER.equalsIgnoreCase(args[i])) {
+                if ((i + 1) < args.length) {
+                    arguments.put(JAVA_FILE_MERGER, args[i + 1]);
+                } else {
+                    errors.add(getString("RuntimeError.19", JAVA_FILE_MERGER)); //$NON-NLS-1$
                 }
                 i++;
             } else {

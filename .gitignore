@@ -48,6 +48,12 @@
 /core/mybatis-generator-systests-kotlin/.settings
 /core/mybatis-generator-systests-kotlin/target
 
+# /core/mybatis-generator-java-merger/
+/core/mybatis-generator-java-merger/.classpath
+/core/mybatis-generator-java-merger/.project
+/core/mybatis-generator-java-merger/.settings
+/core/mybatis-generator-java-merger/target
+
 /.project
 .idea
 *.iml

@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,18 +18,25 @@ package org.mybatis.generator.internal;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.io.File;
+import java.util.Objects;
 import java.util.StringTokenizer;
 
+import org.mybatis.generator.api.JavaFileMerger;
 import org.mybatis.generator.api.ShellCallback;
 import org.mybatis.generator.exception.ShellException;
 
 public class DefaultShellCallback implements ShellCallback {
 
     private boolean overwrite;
+    private JavaFileMerger javaFileMerger;
 
     public DefaultShellCallback(boolean overwrite) {
         super();
         this.overwrite = overwrite;
+    }
+    
+    public void setJavaFileMerger(JavaFileMerger javaFileMerger) {
+        this.javaFileMerger = Objects.requireNonNull(javaFileMerger);
     }
 
     @Override
@@ -74,7 +81,7 @@ public class DefaultShellCallback implements ShellCallback {
 
     @Override
     public boolean isMergeSupported() {
-        return false;
+        return javaFileMerger != null;
     }
 
     @Override
@@ -86,6 +93,10 @@ public class DefaultShellCallback implements ShellCallback {
     public String mergeJavaFile(String newFileSource,
             File existingFile, String[] javadocTags, String fileEncoding)
             throws ShellException {
-        throw new UnsupportedOperationException();
+        if (javaFileMerger == null) {
+            throw new UnsupportedOperationException();
+        } else {
+            return javaFileMerger.mergeJavaFile(newFileSource, existingFile, javadocTags, fileEncoding);
+        }
     }
 }

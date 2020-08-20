@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2019 the original author or authors.
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -29,33 +29,31 @@ import org.mybatis.generator.internal.util.CustomCollectors;
 public class KotlinTypeRenderer {
 
     public List<String> render(KotlinType kotlinType) {
-        List<String> answer = new ArrayList<>();
         KotlinNamedItemRenderer renderer = new KotlinNamedItemRenderer();
 
-        answer.addAll(kotlinType.getAnnotations());
+        List<String> answer = new ArrayList<>(kotlinType.getAnnotations());
 
-        String line = KotlinRenderingUtilities.renderModifiers(kotlinType.getModifiers())
+        String renderedModifiersAndName = KotlinRenderingUtilities.renderModifiers(kotlinType.getModifiers())
                 + kotlinType.getType().getValue() + " " //$NON-NLS-1$
                 + kotlinType.getName();
-
-        line += kotlinType.getSuperTypes().stream()
+        String renderedSuperTypes = kotlinType.getSuperTypes().stream()
                 .collect(CustomCollectors.joining(", ", " : ", "")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
         if (kotlinType.getNamedItems().isEmpty()) {
             if (kotlinType.getConstructorProperties().isEmpty()) {
-                answer.add(line);
+                answer.add(renderedModifiersAndName + renderedSuperTypes);
             } else {
-                answer.add(line + "("); //$NON-NLS-1$
+                answer.add(renderedModifiersAndName + "("); //$NON-NLS-1$
                 answer.addAll(renderConstructorItems(kotlinType));
-                answer.add(")"); //$NON-NLS-1$
+                answer.add(")" + renderedSuperTypes); //$NON-NLS-1$
             }
         } else {
             if (kotlinType.getConstructorProperties().isEmpty()) {
-                answer.add(line + " {"); //$NON-NLS-1$
+                answer.add(renderedModifiersAndName + renderedSuperTypes + " {"); //$NON-NLS-1$
             } else {
-                answer.add(line + "("); //$NON-NLS-1$
+                answer.add(renderedModifiersAndName + "("); //$NON-NLS-1$
                 answer.addAll(renderConstructorItems(kotlinType));
-                answer.add(") {"); //$NON-NLS-1$
+                answer.add(")" + renderedSuperTypes + " {"); //$NON-NLS-1$ //$NON-NLS-2$
             }
         }
 

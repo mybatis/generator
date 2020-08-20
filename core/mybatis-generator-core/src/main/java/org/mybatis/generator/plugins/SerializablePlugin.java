@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -25,6 +25,8 @@ import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.api.dom.kotlin.KotlinFile;
+import org.mybatis.generator.api.dom.kotlin.KotlinType;
 
 /**
  * This plugin adds the java.io.Serializable marker interface to all generated
@@ -113,5 +115,13 @@ public class SerializablePlugin extends PluginAdapter {
 
             topLevelClass.addField(field);
         }
+    }
+
+    @Override
+    public boolean kotlinDataClassGenerated(KotlinFile kotlinFile, KotlinType dataClass,
+            IntrospectedTable introspectedTable) {
+        kotlinFile.addImport("java.io.Serializable"); //$NON-NLS-1$
+        dataClass.addSuperType("Serializable"); //$NON-NLS-1$
+        return true;
     }
 }

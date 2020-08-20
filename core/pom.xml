@@ -278,7 +278,7 @@
       <dependency>
         <groupId>org.mybatis.dynamic-sql</groupId>
         <artifactId>mybatis-dynamic-sql</artifactId>
-        <version>1.1.4</version>
+        <version>1.2.0</version>
       </dependency>
       <dependency>
         <groupId>org.jetbrains.kotlin</groupId>

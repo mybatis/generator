@@ -224,7 +224,7 @@ public interface CommentGenerator {
      * @param introspectedTable
      *            the introspected table
      * @param imports
-     *   the comment generator may add a required imported type to this list
+     *     the comment generator may add a required imported type to this list
      *
      * @since 1.3.6
      */
@@ -241,7 +241,7 @@ public interface CommentGenerator {
      * @param introspectedColumn
      *     thr introspected column
      * @param imports
-     *   the comment generator may add a required imported type to this list
+     *     the comment generator may add a required imported type to this list
      *
      * @since 1.3.6
      */
@@ -256,7 +256,7 @@ public interface CommentGenerator {
      * @param introspectedTable
      *            the introspected table
      * @param imports
-     *   the comment generator may add a required imported type to this list
+     *     the comment generator may add a required imported type to this list
      *
      * @since 1.3.6
      */
@@ -273,7 +273,7 @@ public interface CommentGenerator {
      * @param introspectedColumn
      *            the introspected column
      * @param imports
-     *   the comment generator may add a required imported type to this list
+     *     the comment generator may add a required imported type to this list
      *
      * @since 1.3.6
      */
@@ -288,7 +288,7 @@ public interface CommentGenerator {
      * @param introspectedTable
      *            the introspected table
      * @param imports
-     *   the comment generator may add a required imported type to this list
+     *     the comment generator may add a required imported type to this list
      *
      * @since 1.3.6
      */

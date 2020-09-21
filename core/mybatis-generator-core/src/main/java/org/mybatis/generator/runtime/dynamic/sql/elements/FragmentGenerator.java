@@ -164,7 +164,7 @@ public class FragmentGenerator {
         }
 
         builder.withAnnotation("})") //$NON-NLS-1$
-            .withImports(imports);
+                .withImports(imports);
 
         return builder.build();
     }
@@ -240,7 +240,7 @@ public class FragmentGenerator {
         }
 
         builder.withAnnotation("})") //$NON-NLS-1$
-            .withImports(imports);
+                .withImports(imports);
 
         return builder.build();
     }

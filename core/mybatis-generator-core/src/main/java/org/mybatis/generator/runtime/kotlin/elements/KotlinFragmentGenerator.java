@@ -141,7 +141,7 @@ public class KotlinFragmentGenerator {
         }
 
         builder.withAnnotation("])") //$NON-NLS-1$
-            .withImports(imports);
+                .withImports(imports);
 
         return builder.build();
     }

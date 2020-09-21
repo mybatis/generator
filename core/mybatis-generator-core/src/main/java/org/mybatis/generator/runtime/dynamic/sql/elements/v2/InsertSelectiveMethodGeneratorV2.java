@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ import org.mybatis.generator.runtime.dynamic.sql.elements.MethodAndImports;
 
 public class InsertSelectiveMethodGeneratorV2 extends AbstractMethodGenerator {
     private FullyQualifiedJavaType recordType;
-    
+
     private InsertSelectiveMethodGeneratorV2(Builder builder) {
         super(builder);
         recordType = builder.recordType;
@@ -40,19 +40,19 @@ public class InsertSelectiveMethodGeneratorV2 extends AbstractMethodGenerator {
     @Override
     public MethodAndImports generateMethodAndImports() {
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
-        
+
         imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils")); //$NON-NLS-1$
         imports.add(recordType);
-        
+
         Method method = new Method("insertSelective"); //$NON-NLS-1$
         method.setDefault(true);
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
         method.addParameter(new Parameter(recordType, "record")); //$NON-NLS-1$
-        
+
         method.addBodyLine("return MyBatis3Utils.insert(this::insert, record, " + tableFieldName + //$NON-NLS-1$
                 ", c ->"); //$NON-NLS-1$
-        
+
         List<IntrospectedColumn> columns = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(
                 introspectedTable.getAllColumns());
         boolean first = true;
@@ -87,9 +87,9 @@ public class InsertSelectiveMethodGeneratorV2 extends AbstractMethodGenerator {
                 }
             }
         }
-        
+
         method.addBodyLine(");"); //$NON-NLS-1$
-        
+
         return MethodAndImports.withMethod(method)
                 .withImports(imports)
                 .build();
@@ -102,12 +102,12 @@ public class InsertSelectiveMethodGeneratorV2 extends AbstractMethodGenerator {
 
     public static class Builder extends BaseBuilder<Builder, InsertSelectiveMethodGeneratorV2> {
         private FullyQualifiedJavaType recordType;
-        
+
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
             this.recordType = recordType;
             return this;
         }
-        
+
         @Override
         public Builder getThis() {
             return this;

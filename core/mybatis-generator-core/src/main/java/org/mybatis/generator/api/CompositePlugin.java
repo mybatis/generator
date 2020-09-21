@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -37,17 +37,17 @@ import org.mybatis.generator.config.Context;
  * current context and is used to aggregate plugins together. This class
  * implements the rule that if any plugin returns "false" from a method, then no
  * subsequent plugin is called.
- * 
+ *
  * @author Jeff Butler
- * 
+ *
  */
 public abstract class CompositePlugin implements Plugin {
     private List<Plugin> plugins = new ArrayList<>();
-    
+
     protected CompositePlugin() {
         super();
     }
-    
+
     public void addPlugin(Plugin plugin) {
         plugins.add(plugin);
     }
@@ -128,7 +128,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -140,7 +140,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -152,7 +152,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -164,7 +164,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -176,7 +176,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -188,7 +188,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -200,7 +200,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -212,7 +212,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -224,7 +224,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -236,7 +236,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -248,7 +248,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -260,7 +260,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -272,7 +272,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -284,7 +284,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -296,7 +296,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -308,7 +308,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -320,7 +320,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -332,7 +332,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -344,7 +344,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -356,7 +356,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -368,7 +368,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -380,7 +380,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -392,7 +392,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -404,7 +404,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -416,7 +416,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -428,7 +428,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -440,7 +440,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -452,7 +452,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -464,7 +464,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -476,7 +476,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -488,7 +488,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -500,7 +500,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -512,7 +512,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -524,7 +524,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -536,7 +536,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -548,7 +548,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -560,7 +560,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -572,7 +572,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -584,7 +584,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -596,7 +596,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -608,7 +608,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -620,7 +620,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -632,7 +632,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -644,7 +644,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -656,7 +656,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -668,7 +668,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -680,7 +680,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -692,7 +692,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -704,7 +704,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -716,7 +716,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -728,7 +728,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -740,7 +740,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -753,7 +753,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -765,7 +765,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -777,7 +777,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -789,7 +789,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -803,7 +803,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -817,7 +817,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -831,7 +831,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -842,7 +842,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -853,7 +853,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -865,7 +865,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -876,7 +876,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -887,7 +887,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -898,7 +898,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -910,7 +910,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -921,7 +921,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -932,7 +932,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -943,7 +943,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -954,7 +954,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -965,7 +965,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -976,7 +976,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -987,7 +987,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -998,7 +998,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -1009,7 +1009,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -1020,7 +1020,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -1031,7 +1031,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -1043,7 +1043,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -1055,7 +1055,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -1067,7 +1067,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -1079,7 +1079,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -1091,7 +1091,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -1103,7 +1103,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -1115,7 +1115,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -1127,7 +1127,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -1138,7 +1138,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -1150,7 +1150,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -1162,7 +1162,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -1174,7 +1174,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -1186,7 +1186,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -1198,7 +1198,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -1210,7 +1210,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -1222,7 +1222,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -1234,7 +1234,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -1246,7 +1246,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -1258,7 +1258,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -1269,10 +1269,10 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
-    
+
     @Override
     public boolean dynamicSqlSupportGenerated(KotlinFile kotlinFile, KotlinType supportClass,
             IntrospectedTable introspectedTable) {
@@ -1281,7 +1281,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -1292,7 +1292,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -1303,7 +1303,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -1315,7 +1315,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -1327,7 +1327,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -1339,7 +1339,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -1351,7 +1351,7 @@ public abstract class CompositePlugin implements Plugin {
                 return false;
             }
         }
-        
+
         return true;
     }
 }

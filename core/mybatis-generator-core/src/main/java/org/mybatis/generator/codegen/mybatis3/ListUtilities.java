@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -24,14 +24,14 @@ import org.mybatis.generator.api.IntrospectedColumn;
  * Couple of little utility methods to make dealing with generated always
  * columns easier.  If a column is GENERATED ALWAYS, it should not
  * be referenced on an insert or update method.
- * 
+ *
  * <p>If a column is identity, it should not be referenced on an insert method.
- *  
+ *
  * @author Jeff Butler
  *
  */
 public class ListUtilities {
-    
+
     private ListUtilities() {}
 
     public static List<IntrospectedColumn> removeGeneratedAlwaysColumns(List<IntrospectedColumn> columns) {

@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ public class JavaToKotlinTypeConverterTest {
     public void testPrimitiveByte() {
         FullyQualifiedJavaType jt = new FullyQualifiedJavaType("byte");
         FullyQualifiedKotlinType kt = JavaToKotlinTypeConverter.convert(jt);
-        
+
         assertThat(kt.getShortNameWithTypeArguments()).isEqualTo("Byte");
         assertThat(kt.getImportList()).isEmpty();
     }
@@ -35,7 +35,7 @@ public class JavaToKotlinTypeConverterTest {
     public void testPrimitiveByteArray() {
         FullyQualifiedJavaType jt = new FullyQualifiedJavaType("byte[]");
         FullyQualifiedKotlinType kt = JavaToKotlinTypeConverter.convert(jt);
-        
+
         assertThat(kt.getShortNameWithTypeArguments()).isEqualTo("ByteArray");
         assertThat(kt.getImportList()).isEmpty();
     }
@@ -44,7 +44,7 @@ public class JavaToKotlinTypeConverterTest {
     public void testByteWrapper() {
         FullyQualifiedJavaType jt = new FullyQualifiedJavaType("java.lang.Byte");
         FullyQualifiedKotlinType kt = JavaToKotlinTypeConverter.convert(jt);
-        
+
         assertThat(kt.getShortNameWithTypeArguments()).isEqualTo("Byte");
         assertThat(kt.getImportList()).isEmpty();
     }
@@ -53,26 +53,26 @@ public class JavaToKotlinTypeConverterTest {
     public void testByteWrapperArray() {
         FullyQualifiedJavaType jt = new FullyQualifiedJavaType("java.lang.Byte[]");
         FullyQualifiedKotlinType kt = JavaToKotlinTypeConverter.convert(jt);
-        
+
         assertThat(kt.getShortNameWithTypeArguments()).isEqualTo("Array<Byte>");
         assertThat(kt.getImportList()).isEmpty();
     }
-    
+
     @Test
     public void testUnmappedType() {
         FullyQualifiedJavaType jt = new FullyQualifiedJavaType("java.math.BigDecimal");
         FullyQualifiedKotlinType kt = JavaToKotlinTypeConverter.convert(jt);
-        
+
         assertThat(kt.getShortNameWithTypeArguments()).isEqualTo("BigDecimal");
         assertThat(kt.getImportList()).hasSize(1);
         assertThat(kt.getImportList()).contains("java.math.BigDecimal");
     }
-    
+
     @Test
     public void testGenericType() {
         FullyQualifiedJavaType jt = new FullyQualifiedJavaType("java.util.List<java.math.BigDecimal>");
         FullyQualifiedKotlinType kt = JavaToKotlinTypeConverter.convert(jt);
-        
+
         assertThat(kt.getShortNameWithTypeArguments()).isEqualTo("List<BigDecimal>");
         assertThat(kt.getImportList()).hasSize(2);
         assertThat(kt.getImportList()).contains("java.math.BigDecimal", "java.util.List");

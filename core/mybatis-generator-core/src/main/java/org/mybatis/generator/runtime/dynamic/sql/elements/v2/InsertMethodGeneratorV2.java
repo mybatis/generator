@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ import org.mybatis.generator.runtime.dynamic.sql.elements.MethodAndImports;
 
 public class InsertMethodGeneratorV2 extends AbstractMethodGenerator {
     private FullyQualifiedJavaType recordType;
-    
+
     private InsertMethodGeneratorV2(Builder builder) {
         super(builder);
         recordType = builder.recordType;
@@ -42,22 +42,22 @@ public class InsertMethodGeneratorV2 extends AbstractMethodGenerator {
 
         imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils")); //$NON-NLS-1$
         imports.add(recordType);
-        
+
         Method method = new Method("insert"); //$NON-NLS-1$
         method.setDefault(true);
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
         method.addParameter(new Parameter(recordType, "record")); //$NON-NLS-1$
-        
+
         method.addBodyLine("return MyBatis3Utils.insert(this::insert, record, " + tableFieldName + //$NON-NLS-1$
                 ", c ->"); //$NON-NLS-1$
-        
+
         List<IntrospectedColumn> columns =
                 ListUtilities.removeIdentityAndGeneratedAlwaysColumns(introspectedTable.getAllColumns());
         boolean first = true;
         for (IntrospectedColumn column : columns) {
             String fieldName = calculateFieldName(column);
-            
+
             if (first) {
                 method.addBodyLine("    c.map(" + fieldName //$NON-NLS-1$
                         + ").toProperty(\"" + column.getJavaProperty() //$NON-NLS-1$
@@ -69,9 +69,9 @@ public class InsertMethodGeneratorV2 extends AbstractMethodGenerator {
                         + "\")"); //$NON-NLS-1$
             }
         }
-        
+
         method.addBodyLine(");"); //$NON-NLS-1$
-        
+
         return MethodAndImports.withMethod(method)
                 .withImports(imports)
                 .build();
@@ -84,12 +84,12 @@ public class InsertMethodGeneratorV2 extends AbstractMethodGenerator {
 
     public static class Builder extends BaseBuilder<Builder, InsertMethodGeneratorV2> {
         private FullyQualifiedJavaType recordType;
-        
+
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
             this.recordType = recordType;
             return this;
         }
-        
+
         @Override
         public Builder getThis() {
             return this;

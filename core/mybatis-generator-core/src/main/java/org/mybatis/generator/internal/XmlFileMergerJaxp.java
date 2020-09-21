@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -25,7 +25,6 @@ import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -48,7 +47,7 @@ import org.xml.sax.SAXException;
 
 /**
  * This class handles the task of merging changes into an existing XML file.
- * 
+ *
  * @author Jeff Butler
  */
 public class XmlFileMergerJaxp {
@@ -82,7 +81,7 @@ public class XmlFileMergerJaxp {
                     existingFile.getName()), e);
         }
     }
-    
+
     public static String getMergedSource(InputSource newFile,
             InputSource existingFile, String existingFileName) throws IOException, SAXException,
             ParserConfigurationException, ShellException {
@@ -188,10 +187,10 @@ public class XmlFileMergerJaxp {
         if (id != null) {
             return MergeConstants.idStartsWithPrefix(id);
         }
-        
+
         return false;
     }
-    
+
     private static boolean isNewFormatNode(Node node) {
         // check for new node format - if the first non-whitespace node
         // is an XML comment, and the comment includes
@@ -206,10 +205,10 @@ public class XmlFileMergerJaxp {
                 return MergeConstants.commentContainsTag(commentData);
             }
         }
-        
+
         return false;
     }
-    
+
     private static boolean isWhiteSpace(Node node) {
         boolean rc = false;
 

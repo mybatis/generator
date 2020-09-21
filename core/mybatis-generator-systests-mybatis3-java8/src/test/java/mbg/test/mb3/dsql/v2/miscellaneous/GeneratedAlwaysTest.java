@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@ public class GeneratedAlwaysTest extends AbstractAnnotatedMiscellaneousTest {
     public void testInsert() {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             GeneratedalwaystestMapper mapper = sqlSession.getMapper(GeneratedalwaystestMapper.class);
-            
+
             Generatedalwaystest gaTest = new Generatedalwaystest();
             gaTest.setId(1);
             gaTest.setName("fred");
@@ -44,10 +44,10 @@ public class GeneratedAlwaysTest extends AbstractAnnotatedMiscellaneousTest {
             gaTest.setBlob1(TestUtilities.generateRandomBlob());
             int rows = mapper.insert(gaTest);
             assertEquals(1, rows);
-            
+
             List<Generatedalwaystest> returnedRecords = mapper.select(SelectDSLCompleter.allRows());
             assertEquals(1, returnedRecords.size());
-            
+
             Generatedalwaystest returnedRecord = returnedRecords.get(0);
             assertEquals(1, returnedRecord.getId().intValue());
             assertEquals(2, returnedRecord.getIdPlus1().intValue());
@@ -61,7 +61,7 @@ public class GeneratedAlwaysTest extends AbstractAnnotatedMiscellaneousTest {
     public void testInsertSelective() {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             GeneratedalwaystestMapper mapper = sqlSession.getMapper(GeneratedalwaystestMapper.class);
-            
+
             Generatedalwaystest gaTest = new Generatedalwaystest();
             gaTest.setId(1);
             gaTest.setName("fred");
@@ -69,10 +69,10 @@ public class GeneratedAlwaysTest extends AbstractAnnotatedMiscellaneousTest {
             gaTest.setIdPlus2(66);
             int rows = mapper.insert(gaTest);
             assertEquals(1, rows);
-            
+
             List<Generatedalwaystest> returnedRecords = mapper.select(SelectDSLCompleter.allRows());
             assertEquals(1, returnedRecords.size());
-            
+
             Generatedalwaystest returnedRecord = returnedRecords.get(0);
             assertEquals(1, returnedRecord.getId().intValue());
             assertEquals(2, returnedRecord.getIdPlus1().intValue());
@@ -86,7 +86,7 @@ public class GeneratedAlwaysTest extends AbstractAnnotatedMiscellaneousTest {
     public void testUpdateByExample() {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             GeneratedalwaystestMapper mapper = sqlSession.getMapper(GeneratedalwaystestMapper.class);
-            
+
             Generatedalwaystest gaTest = new Generatedalwaystest();
             gaTest.setId(1);
             gaTest.setName("fred");
@@ -95,23 +95,23 @@ public class GeneratedAlwaysTest extends AbstractAnnotatedMiscellaneousTest {
             gaTest.setBlob1(TestUtilities.generateRandomBlob());
             int rows = mapper.insert(gaTest);
             assertEquals(1, rows);
-            
+
             gaTest.setName("barney");
             gaTest.setIdPlus1(77); // should be ignored
             gaTest.setIdPlus2(88); // should be ignored
             gaTest.setBlob1(TestUtilities.generateRandomBlob());
-            
+
             rows = mapper.update(dsl ->
                 GeneratedalwaystestMapper.updateAllColumns(gaTest, dsl)
                 .where(idPlus1, isEqualTo(2))
                 .and(idPlus2, isEqualTo(3)));
             assertEquals(1, rows);
-            
+
             List<Generatedalwaystest> returnedRecords = mapper.select(dsl ->
                     dsl.where(idPlus1, isEqualTo(2))
                     .and(idPlus2, isEqualTo(3)));
             assertEquals(1, returnedRecords.size());
-            
+
             Generatedalwaystest returnedRecord = returnedRecords.get(0);
             assertEquals(1, returnedRecord.getId().intValue());
             assertEquals(2, returnedRecord.getIdPlus1().intValue());
@@ -126,7 +126,7 @@ public class GeneratedAlwaysTest extends AbstractAnnotatedMiscellaneousTest {
     public void testUpdateByExampleSelective() {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             GeneratedalwaystestMapper mapper = sqlSession.getMapper(GeneratedalwaystestMapper.class);
-            
+
             Generatedalwaystest gaTest = new Generatedalwaystest();
             gaTest.setId(1);
             gaTest.setName("fred");
@@ -135,7 +135,7 @@ public class GeneratedAlwaysTest extends AbstractAnnotatedMiscellaneousTest {
             gaTest.setBlob1(TestUtilities.generateRandomBlob());
             int rows = mapper.insert(gaTest);
             assertEquals(1, rows);
-            
+
             gaTest.setName(null);
             gaTest.setIdPlus1(77); // should be ignored
             gaTest.setIdPlus2(88); // should be ignored
@@ -146,12 +146,12 @@ public class GeneratedAlwaysTest extends AbstractAnnotatedMiscellaneousTest {
                 .where(idPlus1, isEqualTo(2))
                 .and(idPlus2, isEqualTo(3)));
             assertEquals(1, rows);
-            
+
             List<Generatedalwaystest> returnedRecords = mapper.select(dsl ->
                     dsl.where(idPlus1, isEqualTo(2))
                     .and(idPlus2, isEqualTo(3)));
             assertEquals(1, returnedRecords.size());
-            
+
             Generatedalwaystest returnedRecord = returnedRecords.get(0);
             assertEquals(1, returnedRecord.getId().intValue());
             assertEquals(2, returnedRecord.getIdPlus1().intValue());
@@ -165,7 +165,7 @@ public class GeneratedAlwaysTest extends AbstractAnnotatedMiscellaneousTest {
     public void testUpdateByExampleWithBlobs() {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             GeneratedalwaystestMapper mapper = sqlSession.getMapper(GeneratedalwaystestMapper.class);
-            
+
             Generatedalwaystest gaTest = new Generatedalwaystest();
             gaTest.setId(1);
             gaTest.setName("fred");
@@ -174,7 +174,7 @@ public class GeneratedAlwaysTest extends AbstractAnnotatedMiscellaneousTest {
             gaTest.setBlob1(TestUtilities.generateRandomBlob());
             int rows = mapper.insert(gaTest);
             assertEquals(1, rows);
-            
+
             gaTest.setName("barney");
             gaTest.setIdPlus1(77); // should be ignored
             gaTest.setIdPlus2(88); // should be ignored
@@ -185,12 +185,12 @@ public class GeneratedAlwaysTest extends AbstractAnnotatedMiscellaneousTest {
                 .where(idPlus1, isEqualTo(2))
                 .and(idPlus2, isEqualTo(3)));
             assertEquals(1, rows);
-            
+
             List<Generatedalwaystest> returnedRecords = mapper.select(dsl ->
                     dsl.where(idPlus1, isEqualTo(2))
                     .and(idPlus2, isEqualTo(3)));
             assertEquals(1, returnedRecords.size());
-            
+
             Generatedalwaystest returnedRecord = returnedRecords.get(0);
             assertEquals(1, returnedRecord.getId().intValue());
             assertEquals(2, returnedRecord.getIdPlus1().intValue());
@@ -204,7 +204,7 @@ public class GeneratedAlwaysTest extends AbstractAnnotatedMiscellaneousTest {
     public void testUpdateByPrimaryKey() {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             GeneratedalwaystestMapper mapper = sqlSession.getMapper(GeneratedalwaystestMapper.class);
-            
+
             Generatedalwaystest gaTest = new Generatedalwaystest();
             gaTest.setId(1);
             gaTest.setName("fred");
@@ -213,17 +213,17 @@ public class GeneratedAlwaysTest extends AbstractAnnotatedMiscellaneousTest {
             gaTest.setBlob1(TestUtilities.generateRandomBlob());
             int rows = mapper.insert(gaTest);
             assertEquals(1, rows);
-            
+
             gaTest.setName("barney");
             gaTest.setIdPlus1(77); // should be ignored
             gaTest.setIdPlus2(88); // should be ignored
             gaTest.setBlob1(TestUtilities.generateRandomBlob());
             rows = mapper.updateByPrimaryKey(gaTest);
             assertEquals(1, rows);
-            
+
             List<Generatedalwaystest> returnedRecords = mapper.select(SelectDSLCompleter.allRows());
             assertEquals(1, returnedRecords.size());
-            
+
             Generatedalwaystest returnedRecord = returnedRecords.get(0);
             assertEquals(1, returnedRecord.getId().intValue());
             assertEquals(2, returnedRecord.getIdPlus1().intValue());
@@ -237,7 +237,7 @@ public class GeneratedAlwaysTest extends AbstractAnnotatedMiscellaneousTest {
     public void testUpdateByPrimaryKeySelective() {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             GeneratedalwaystestMapper mapper = sqlSession.getMapper(GeneratedalwaystestMapper.class);
-            
+
             Generatedalwaystest gaTest = new Generatedalwaystest();
             gaTest.setId(1);
             gaTest.setName("fred");
@@ -246,17 +246,17 @@ public class GeneratedAlwaysTest extends AbstractAnnotatedMiscellaneousTest {
             gaTest.setBlob1(TestUtilities.generateRandomBlob());
             int rows = mapper.insert(gaTest);
             assertEquals(1, rows);
-            
+
             gaTest.setName(null);
             gaTest.setIdPlus1(77); // should be ignored
             gaTest.setIdPlus2(88); // should be ignored
             gaTest.setBlob1(TestUtilities.generateRandomBlob());
             rows = mapper.updateByPrimaryKeySelective(gaTest);
             assertEquals(1, rows);
-            
+
             List<Generatedalwaystest> returnedRecords = mapper.select(SelectDSLCompleter.allRows());
             assertEquals(1, returnedRecords.size());
-            
+
             Generatedalwaystest returnedRecord = returnedRecords.get(0);
             assertEquals(1, returnedRecord.getId().intValue());
             assertEquals(2, returnedRecord.getIdPlus1().intValue());
@@ -270,7 +270,7 @@ public class GeneratedAlwaysTest extends AbstractAnnotatedMiscellaneousTest {
     public void testUpdateByPrimaryKeyWithBlobs() {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             GeneratedalwaystestMapper mapper = sqlSession.getMapper(GeneratedalwaystestMapper.class);
-            
+
             Generatedalwaystest gaTest = new Generatedalwaystest();
             gaTest.setId(1);
             gaTest.setName("fred");
@@ -279,17 +279,17 @@ public class GeneratedAlwaysTest extends AbstractAnnotatedMiscellaneousTest {
             gaTest.setBlob1(TestUtilities.generateRandomBlob());
             int rows = mapper.insert(gaTest);
             assertEquals(1, rows);
-            
+
             gaTest.setName("barney");
             gaTest.setIdPlus1(77); // should be ignored
             gaTest.setIdPlus2(88); // should be ignored
             gaTest.setBlob1(TestUtilities.generateRandomBlob());
             rows = mapper.updateByPrimaryKey(gaTest);
             assertEquals(1, rows);
-            
+
             List<Generatedalwaystest> returnedRecords = mapper.select(SelectDSLCompleter.allRows());
             assertEquals(1, returnedRecords.size());
-            
+
             Generatedalwaystest returnedRecord = returnedRecords.get(0);
             assertEquals(1, returnedRecord.getId().intValue());
             assertEquals(2, returnedRecord.getIdPlus1().intValue());

@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import org.mybatis.generator.api.ProgressCallback;
 /**
  * This class implements a progress callback that does nothing. It is used when
  * the client passes in a null for the ProgressCallback.
- * 
+ *
  * @author Jeff Butler
  */
 public class NullProgressCallback implements ProgressCallback {

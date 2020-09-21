@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,9 +20,9 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 
 public class GeneralDeleteMethodGenerator extends AbstractKotlinFunctionGenerator {
-    
+
     private String mapperName;
-    
+
     private GeneralDeleteMethodGenerator(Builder builder) {
         super(builder);
         mapperName = builder.mapperName;
@@ -52,7 +52,7 @@ public class GeneralDeleteMethodGenerator extends AbstractKotlinFunctionGenerato
 
     public static class Builder extends BaseBuilder<Builder, GeneralDeleteMethodGenerator> {
         private String mapperName;
-        
+
         public Builder withMapperName(String mapperName) {
             this.mapperName = mapperName;
             return this;

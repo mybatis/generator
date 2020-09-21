@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -42,7 +42,7 @@ import org.mybatis.generator.internal.DefaultShellCallback;
 /**
  * This is an Ant task that will run the generator. The following is a sample
  * Ant script that shows how to run the generator from Ant:
- * 
+ *
  * <pre>
  *  &lt;project default="genfiles" basedir="."&gt;
  *    &lt;property name="generated.source.dir" value="${basedir}" /&gt;
@@ -58,10 +58,10 @@ import org.mybatis.generator.internal.DefaultShellCallback;
  *    &lt;/target&gt;
  *  &lt;/project&gt;
  * </pre>
- * 
+ *
  * <p>The task requires that the attribute "configFile" be set to an existing XML
  * configuration file.
- * 
+ *
  * <p>The task supports these optional attributes:
  * <ul>
  * <li>"overwrite" - if true, then existing Java files will be overwritten. if
@@ -73,8 +73,8 @@ import org.mybatis.generator.internal.DefaultShellCallback;
  * <li>"fullyQualifiedTableNames" - a comma delimited list of fully qualified
  * table names to use for this run</li>
  * </ul>
- * 
- * 
+ *
+ *
  * @author Jeff Butler
  */
 public class GeneratorAntTask extends Task {

@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -38,23 +38,23 @@ public class KotlinFragmentGenerator {
     private IntrospectedTable introspectedTable;
     private String resultMapId;
     private String tableFieldImport;
-    
+
     private KotlinFragmentGenerator(Builder builder) {
         this.introspectedTable = builder.introspectedTable;
         this.resultMapId = builder.resultMapId;
         tableFieldImport = builder.tableFieldImport;
     }
-    
+
     public KotlinFunctionParts getPrimaryKeyWhereClauseAndParameters() {
         KotlinFunctionParts.Builder builder = new KotlinFunctionParts.Builder();
-        
+
         boolean first = true;
         for (IntrospectedColumn column : introspectedTable.getPrimaryKeyColumns()) {
             FullyQualifiedKotlinType kt = JavaToKotlinTypeConverter.convert(column.getFullyQualifiedJavaType());
-            
+
             String fieldName = column.getJavaProperty();
             String argName = column.getJavaProperty() + "_"; //$NON-NLS-1$
-            
+
             builder.withImport(tableFieldImport + "." + fieldName); //$NON-NLS-1$
             builder.withImports(kt.getImportList());
             builder.withArgument(KotlinArg.newArg(argName)
@@ -72,17 +72,17 @@ public class KotlinFragmentGenerator {
             }
         }
         builder.withCodeLine("}"); //$NON-NLS-1$
-        
+
         return builder.build();
     }
 
     public KotlinFunctionParts getPrimaryKeyWhereClauseForUpdate() {
         KotlinFunctionParts.Builder builder = new KotlinFunctionParts.Builder();
-        
+
         boolean first = true;
         for (IntrospectedColumn column : introspectedTable.getPrimaryKeyColumns()) {
             String fieldName = column.getJavaProperty();
-            
+
             builder.withImport(tableFieldImport + "." + fieldName); //$NON-NLS-1$
             if (first) {
                 builder.withCodeLine("    where(" + fieldName //$NON-NLS-1$
@@ -96,7 +96,7 @@ public class KotlinFragmentGenerator {
             }
         }
         builder.withCodeLine("}"); //$NON-NLS-1$
-        
+
         return builder.build();
     }
 
@@ -119,7 +119,7 @@ public class KotlinFragmentGenerator {
             sb.setLength(0);
             kotlinIndent(sb, 1);
             sb.append(getResultAnnotation(imports, introspectedColumn, true));
-            
+
             if (iterPk.hasNext() || iterNonPk.hasNext()) {
                 sb.append(',');
             }
@@ -132,7 +132,7 @@ public class KotlinFragmentGenerator {
             sb.setLength(0);
             kotlinIndent(sb, 1);
             sb.append(getResultAnnotation(imports, introspectedColumn, false));
-            
+
             if (iterNonPk.hasNext()) {
                 sb.append(',');
             }
@@ -141,11 +141,11 @@ public class KotlinFragmentGenerator {
         }
 
         builder.withAnnotation("])") //$NON-NLS-1$
-            .withImports(imports);
-        
+                .withImports(imports);
+
         return builder.build();
     }
-    
+
     private String getResultAnnotation(Set<String> imports, IntrospectedColumn introspectedColumn,
             boolean idColumn) {
         StringBuilder sb = new StringBuilder();
@@ -173,10 +173,10 @@ public class KotlinFragmentGenerator {
 
         return sb.toString();
     }
-    
+
     public KotlinFunctionParts getGeneratedKeyAnnotation(GeneratedKey gk) {
         KotlinFunctionParts.Builder builder = new KotlinFunctionParts.Builder();
-        
+
         StringBuilder sb = new StringBuilder();
         introspectedTable.getColumn(gk.getColumn()).ifPresent(introspectedColumn -> {
             if (gk.isJdbcStandard()) {
@@ -189,7 +189,7 @@ public class KotlinFragmentGenerator {
                 builder.withImport("org.apache.ibatis.annotations.SelectKey"); //$NON-NLS-1$
                 FullyQualifiedKotlinType kt =
                         JavaToKotlinTypeConverter.convert(introspectedColumn.getFullyQualifiedJavaType());
-                
+
                 sb.append("@SelectKey(statement=[\""); //$NON-NLS-1$
                 sb.append(gk.getRuntimeSqlStatement());
                 sb.append("\"], keyProperty=\"record."); //$NON-NLS-1$
@@ -202,19 +202,19 @@ public class KotlinFragmentGenerator {
                 builder.withAnnotation(sb.toString());
             }
         });
-        
+
         return builder.build();
     }
 
     public KotlinFunctionParts getSetEqualLines(List<IntrospectedColumn> columnList) {
-        
+
         KotlinFunctionParts.Builder builder = new KotlinFunctionParts.Builder();
-        
+
         List<IntrospectedColumn> columns = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(columnList);
         for (IntrospectedColumn column : columns) {
             String fieldName = column.getJavaProperty();
             builder.withImport(tableFieldImport + "." + fieldName); //$NON-NLS-1$
-            
+
             builder.withCodeLine("    set(" + fieldName //$NON-NLS-1$
                     + ").equalTo(record::" + column.getJavaProperty() //$NON-NLS-1$
                     + ")"); //$NON-NLS-1$
@@ -222,16 +222,16 @@ public class KotlinFragmentGenerator {
 
         return builder.build();
     }
-    
+
     public KotlinFunctionParts getSetEqualWhenPresentLines(List<IntrospectedColumn> columnList) {
-        
+
         KotlinFunctionParts.Builder builder = new KotlinFunctionParts.Builder();
-        
+
         List<IntrospectedColumn> columns = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(columnList);
         for (IntrospectedColumn column : columns) {
             String fieldName = column.getJavaProperty();
             builder.withImport(tableFieldImport + "." + fieldName); //$NON-NLS-1$
-            
+
             builder.withCodeLine("    set(" + fieldName //$NON-NLS-1$
                     + ").equalToWhenPresent(record::" + column.getJavaProperty() //$NON-NLS-1$
                     + ")"); //$NON-NLS-1$
@@ -244,22 +244,22 @@ public class KotlinFragmentGenerator {
         private IntrospectedTable introspectedTable;
         private String resultMapId;
         private String tableFieldImport;
-        
+
         public Builder withIntrospectedTable(IntrospectedTable introspectedTable) {
             this.introspectedTable = introspectedTable;
             return this;
         }
-        
+
         public Builder withResultMapId(String resultMapId) {
             this.resultMapId = resultMapId;
             return this;
         }
-        
+
         public Builder withDynamicSqlSupportClassGenerator(KotlinDynamicSqlSupportClassGenerator generator) {
             tableFieldImport = generator.getInnerObjectImport();
             return this;
         }
-        
+
         public KotlinFragmentGenerator build() {
             return new KotlinFragmentGenerator(this);
         }

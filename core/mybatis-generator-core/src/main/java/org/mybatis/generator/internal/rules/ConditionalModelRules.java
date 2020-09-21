@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2018 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,9 +21,9 @@ import org.mybatis.generator.api.IntrospectedTable;
  * This class encapsulates all the code generation rules for a table using the
  * conditional model. In this model we do not generate primary key or record
  * with BLOBs classes if the class would only hold one field.
- * 
+ *
  * @author Jeff Butler
- * 
+ *
  */
 public class ConditionalModelRules extends BaseRules {
 
@@ -39,7 +39,7 @@ public class ConditionalModelRules extends BaseRules {
 
     /**
      * We generate a primary key if there is more than one primary key field.
-     * 
+     *
      * @return true if the primary key should be generated
      */
     @Override
@@ -52,7 +52,7 @@ public class ConditionalModelRules extends BaseRules {
      * one primary key coulmn (in which case we will not generate a primary key
      * class), or if there is only one BLOB column (in which case we will not
      * generate a record with BLOBs class).
-     * 
+     *
      * @return true if the class should be generated
      */
     @Override
@@ -64,7 +64,7 @@ public class ConditionalModelRules extends BaseRules {
 
     /**
      * Blobs will be in the base record class if there is only one blob column.
-     * 
+     *
      * @return true if there are blobs but they are in the base record class
      */
     private boolean blobsAreInBaseRecord() {
@@ -75,7 +75,7 @@ public class ConditionalModelRules extends BaseRules {
      * We generate a record with BLOBs class if there is more than one BLOB
      * column. Do not generate a BLOBs class if any other super class would only
      * contain one field
-     * 
+     *
      * @return true if the record with BLOBs class should be generated
      */
     @Override

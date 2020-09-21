@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -26,49 +26,49 @@ public class FieldAndImports {
     private Field field;
     private Set<FullyQualifiedJavaType> imports;
     private Set<String> staticImports;
-    
+
     private FieldAndImports(Builder builder) {
         field = builder.field;
         imports = builder.imports;
         staticImports = builder.staticImports;
     }
-    
+
     public Field getField() {
         return field;
     }
-    
+
     public Set<FullyQualifiedJavaType> getImports() {
         return imports;
     }
-    
+
     public Set<String> getStaticImports() {
         return staticImports;
     }
-    
+
     public static Builder withField(Field field) {
         return new Builder().withField(field);
     }
-    
+
     public static class Builder {
         private Field field;
         private Set<FullyQualifiedJavaType> imports = new HashSet<>();
         private Set<String> staticImports = new HashSet<>();
-        
+
         public Builder withField(Field field) {
             this.field = field;
             return this;
         }
-        
+
         public Builder withImport(FullyQualifiedJavaType importedType) {
             this.imports.add(importedType);
             return this;
         }
-        
+
         public Builder withImports(Set<FullyQualifiedJavaType> imports) {
             this.imports.addAll(imports);
             return this;
         }
-        
+
         public Builder withStaticImport(String staticImport) {
             this.staticImports.add(staticImport);
             return this;

@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,13 +19,13 @@ import java.lang.reflect.Array;
 
 /**
  * This class is from javapractices.com:
- * 
+ *
  * <p>http://www.javapractices.com/Topic28.cjp
- * 
+ *
  * <p>Collected methods which allow easy implementation of <code>hashCode</code>.
- * 
+ *
  * <p>Example use case:
- * 
+ *
  * <pre>
  * public int hashCode() {
  *     int result = HashCodeUtil.SEED;
@@ -78,7 +78,7 @@ public final class HashCodeUtil {
 
     /**
      * <code>aObject</code> is a possibly-null object field, and possibly an array.
-     * 
+     *
      * <p>If <code>aObject</code> is an array, then each element may be a primitive or a possibly-null object.
      *
      * @param seed

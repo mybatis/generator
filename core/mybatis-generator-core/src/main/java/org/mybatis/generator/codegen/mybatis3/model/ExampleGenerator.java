@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -400,11 +400,11 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         // now generate the getAllCriteria method
         if (criteriaLists.size() > 1) {
             field = new Field("allCriteria", //$NON-NLS-1$
-                    new FullyQualifiedJavaType("List<Criterion>")); //$NON-NLS-1$                    
+                    new FullyQualifiedJavaType("List<Criterion>")); //$NON-NLS-1$
             field.setVisibility(JavaVisibility.PROTECTED);
             answer.addField(field);
         }
-        
+
         method = new Method("getAllCriteria"); //$NON-NLS-1$
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(new FullyQualifiedJavaType("List<Criterion>")); //$NON-NLS-1$
@@ -718,7 +718,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 
     private Method getSingleValueMethod(IntrospectedColumn introspectedColumn,
             String nameFragment, String operator) {
-        
+
         StringBuilder sb = new StringBuilder();
         sb.append(introspectedColumn.getJavaProperty());
         sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
@@ -763,14 +763,14 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 
     /**
      * Generates methods that set between and not between conditions.
-     * 
+     *
      * @param introspectedColumn the introspected column
      * @param betweenMethod true if between, else not between
      * @return a generated method for the between or not between method
      */
     private Method getSetBetweenOrNotBetweenMethod(
             IntrospectedColumn introspectedColumn, boolean betweenMethod) {
-        
+
         StringBuilder sb = new StringBuilder();
         sb.append(introspectedColumn.getJavaProperty());
         sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
@@ -824,7 +824,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 
     /**
      * Generates an In or NotIn method.
-     * 
+     *
      * @param introspectedColumn the introspected column
      * @param inMethod
      *            if true generates an "in" method, else generates a "not in"
@@ -897,10 +897,10 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         sb.insert(0, "and"); //$NON-NLS-1$
         sb.append(nameFragment);
         Method method = new Method(sb.toString());
-        
+
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(FullyQualifiedJavaType.getCriteriaInstance());
-        
+
         sb.setLength(0);
         sb.append("addCriterion(\""); //$NON-NLS-1$
         sb.append(MyBatis3FormattingUtilities
@@ -917,7 +917,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
     /**
      * This method adds all the extra methods and fields required to support a
      * user defined type handler on some column.
-     * 
+     *
      * @param introspectedColumn the introspected column
      * @param constructor the constructor
      * @param innerClass the enclosing class
@@ -1009,7 +1009,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         method.addBodyLine(
                 String.format("%s.add(new Criterion(condition, value1, value2, \"%s\"));", //$NON-NLS-1$
                         field.getName(), introspectedColumn.getTypeHandler()));
-        
+
         method.addBodyLine("allCriteria = null;"); //$NON-NLS-1$
         innerClass.addMethod(method);
 

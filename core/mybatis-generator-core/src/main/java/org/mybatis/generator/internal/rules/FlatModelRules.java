@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2017 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,9 +20,9 @@ import org.mybatis.generator.api.IntrospectedTable;
 /**
  * This class encapsulates all the code generation rules for a table using the
  * flat model.
- * 
+ *
  * @author Jeff Butler
- * 
+ *
  */
 public class FlatModelRules extends BaseRules {
 
@@ -38,7 +38,7 @@ public class FlatModelRules extends BaseRules {
 
     /**
      * We never generate a primary key in the flat model.
-     * 
+     *
      * @return true if the primary key should be generated
      */
     @Override
@@ -48,7 +48,7 @@ public class FlatModelRules extends BaseRules {
 
     /**
      * We always generate a base record in the flat model.
-     * 
+     *
      * @return true if the class should be generated
      */
     @Override
@@ -58,7 +58,7 @@ public class FlatModelRules extends BaseRules {
 
     /**
      * We never generate a record with BLOBs class in the flat model.
-     * 
+     *
      * @return true if the record with BLOBs class should be generated
      */
     @Override

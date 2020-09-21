@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2018 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -168,7 +168,7 @@ public class InnerClassTest {
         innerClass.addTypeParameter(new TypeParameter("U"));
         innerClass.addInitializationBlock(new InitializationBlock(false));
         innerClass.addSuperInterface(new FullyQualifiedJavaType("com.hoge.UserInterface"));
-        
+
         Method method = new Method("method1");
         method.setAbstract(true);
         innerClass.addMethod(method);

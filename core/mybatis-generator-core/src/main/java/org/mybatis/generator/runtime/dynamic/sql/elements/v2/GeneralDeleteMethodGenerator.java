@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ import org.mybatis.generator.runtime.dynamic.sql.elements.AbstractMethodGenerato
 import org.mybatis.generator.runtime.dynamic.sql.elements.MethodAndImports;
 
 public class GeneralDeleteMethodGenerator extends AbstractMethodGenerator {
-    
+
     private GeneralDeleteMethodGenerator(Builder builder) {
         super(builder);
     }
@@ -39,17 +39,17 @@ public class GeneralDeleteMethodGenerator extends AbstractMethodGenerator {
                 "org.mybatis.dynamic.sql.delete.DeleteDSLCompleter"); //$NON-NLS-1$
         imports.add(parameterType);
         imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils")); //$NON-NLS-1$
-        
+
         Method method = new Method("delete"); //$NON-NLS-1$
         method.setDefault(true);
         method.addParameter(new Parameter(parameterType, "completer")); //$NON-NLS-1$
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
-        
+
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
         method.addBodyLine(
                 "return MyBatis3Utils.deleteFrom(this::delete, " + tableFieldName + //$NON-NLS-1$
                         ", completer);"); //$NON-NLS-1$
-        
+
         return MethodAndImports.withMethod(method)
                 .withImports(imports)
                 .build();

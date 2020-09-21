@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2016 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
  * Add this annotation to a generator class to ignore the class.  This aids in
  * developing tests for new features so we don't break the build when working on
  * the test first.
- * 
+ *
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})

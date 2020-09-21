@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,11 +22,11 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 import org.mybatis.generator.config.GeneratedKey;
 
 public class BasicInsertMethodGenerator extends AbstractKotlinFunctionGenerator {
-    
+
     private FullyQualifiedKotlinType recordType;
     private KotlinFragmentGenerator fragmentGenerator;
     private KotlinFile kotlinFile;
-    
+
     private BasicInsertMethodGenerator(Builder builder) {
         super(builder);
         recordType = builder.recordType;
@@ -54,7 +54,7 @@ public class BasicInsertMethodGenerator extends AbstractKotlinFunctionGenerator 
                 .withImports(recordType.getImportList())
                 .build();
 
-        
+
         addFunctionComment(functionAndImports);
 
         GeneratedKey gk = introspectedTable.getGeneratedKey();
@@ -76,22 +76,22 @@ public class BasicInsertMethodGenerator extends AbstractKotlinFunctionGenerator 
         private FullyQualifiedKotlinType recordType;
         private KotlinFragmentGenerator fragmentGenerator;
         private KotlinFile kotlinFile;
-        
+
         public Builder withRecordType(FullyQualifiedKotlinType recordType) {
             this.recordType = recordType;
             return this;
         }
-        
+
         public Builder withFragmentGenerator(KotlinFragmentGenerator fragmentGenerator) {
             this.fragmentGenerator = fragmentGenerator;
             return this;
         }
-        
+
         public Builder withKotlinFile(KotlinFile kotlinFile) {
             this.kotlinFile = kotlinFile;
             return this;
         }
-        
+
         @Override
         public Builder getThis() {
             return this;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2019 the original author or authors.
+       Copyright 2006-2020 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@
 <generatorConfiguration>
   <context id="dsql" targetRuntime="MyBatis3DynamicSqlV1">
     <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
-    
+
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
         connectionURL="jdbc:hsqldb:mem:aname"
         userId="sa" />
@@ -82,7 +82,7 @@
     <commentGenerator>
       <property name="suppressAllComments" value="true"/>
     </commentGenerator>
-    
+
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
         connectionURL="jdbc:hsqldb:mem:aname"
         userId="sa" />
@@ -126,7 +126,7 @@
 
   <context id="dsqlv2">
     <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
-    
+
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
         connectionURL="jdbc:hsqldb:mem:aname"
         userId="sa" />
@@ -180,7 +180,7 @@
 
   <context id="dsqlv2-readonly" targetRuntime="MyBatis3DynamicSqlV2">
     <plugin type="org.mybatis.generator.plugins.dsql.ReadOnlyPlugin" />
-    
+
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
         connectionURL="jdbc:hsqldb:mem:aname"
         userId="sa" />
@@ -225,7 +225,7 @@
     <commentGenerator>
       <property name="suppressAllComments" value="true"/>
     </commentGenerator>
-    
+
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
         connectionURL="jdbc:hsqldb:mem:aname"
         userId="sa" />
@@ -269,7 +269,7 @@
 
   <context id="dsql-modelonly" targetRuntime="MyBatis3DynamicSqlV1">
     <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
-    
+
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
         connectionURL="jdbc:hsqldb:mem:aname"
         userId="sa" />

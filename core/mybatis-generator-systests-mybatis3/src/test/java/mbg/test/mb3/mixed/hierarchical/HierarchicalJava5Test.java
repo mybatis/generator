@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2018 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -59,7 +59,7 @@ import mbg.test.mb3.generated.mixed.hierarchical.model.PkonlyKey;
 
 /**
  * @author Jeff Butler
- * 
+ *
  */
 public class HierarchicalJava5Test extends AbstractMixedHierarchicalTest {
 
@@ -2106,7 +2106,7 @@ public class HierarchicalJava5Test extends AbstractMixedHierarchicalTest {
 
             int count = mapper.insert(record);
             assertEquals(1, count);
-            
+
             Integer generatedCustomerId = record.getCustomerId();
             assertEquals(57, generatedCustomerId.intValue());
 
@@ -2156,10 +2156,10 @@ public class HierarchicalJava5Test extends AbstractMixedHierarchicalTest {
 
             int count = mapper.insertSelective(record);
             assertEquals(1, count);
-            
+
             Integer generatedCustomerId = record.getCustomerId();
             assertEquals(57, generatedCustomerId.intValue());
-            
+
             AwfulTableKey key = new AwfulTableKey();
             key.setCustomerId(generatedCustomerId);
             AwfulTable returnedRecord = mapper.selectByPrimaryKey(key);
@@ -2183,7 +2183,7 @@ public class HierarchicalJava5Test extends AbstractMixedHierarchicalTest {
             sqlSession.close();
         }
     }
-    
+
     @Test
     public void testAwfulTableUpdateByPrimaryKey() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -2660,7 +2660,7 @@ public class HierarchicalJava5Test extends AbstractMixedHierarchicalTest {
             sqlSession.close();
         }
     }
-    
+
     @Test
     public void testAwfulTableSelectByExampleComplexLike() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -2866,7 +2866,7 @@ public class HierarchicalJava5Test extends AbstractMixedHierarchicalTest {
             example.createCriteria().andId1In(ids);
             example.setOrderByClause("\"A_CuStOmEr iD\"");
             List<AwfulTable> answer = mapper.selectByExample(example);
-            
+
             assertEquals(2, answer.size());
             AwfulTable returnedRecord = answer.get(0);
             assertEquals(1, returnedRecord.getId1().intValue());
@@ -3071,7 +3071,7 @@ public class HierarchicalJava5Test extends AbstractMixedHierarchicalTest {
             AwfulTableExample example = new AwfulTableExample();
             example.createCriteria();
             example.setOrderByClause("\"A_CuStOmEr iD\" desc");
-            
+
             List<AwfulTable> answer = mapper.selectByExample(example);
             assertEquals(6, answer.size());
             AwfulTable returnedRecord = answer.get(0);

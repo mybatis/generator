@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -316,7 +316,7 @@ public class TableConfiguration extends PropertyHolder {
      * Returns a List of Strings. The values are the columns
      * that were specified to be ignored in the table, but do not exist in the
      * table.
-     * 
+     *
      * @return a List of Strings - the columns that were improperly configured
      *         as ignored columns
      */

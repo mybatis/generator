@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ public class BasicDeleteMethodGenerator extends AbstractMethodGenerator {
     @Override
     public MethodAndImports generateMethodAndImports() {
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
-        
+
         FullyQualifiedJavaType parameterType =
                 new FullyQualifiedJavaType(
                         "org.mybatis.dynamic.sql.delete.render.DeleteStatementProvider"); //$NON-NLS-1$
@@ -46,7 +46,7 @@ public class BasicDeleteMethodGenerator extends AbstractMethodGenerator {
         imports.add(parameterType);
         imports.add(adapter);
         imports.add(annotation);
-        
+
         Method method = new Method("delete"); //$NON-NLS-1$
         method.setAbstract(true);
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());

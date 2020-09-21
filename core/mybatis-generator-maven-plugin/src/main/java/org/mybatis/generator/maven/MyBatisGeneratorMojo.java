@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2018 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -51,7 +51,7 @@ import org.mybatis.generator.logging.LogFactory;
 @Mojo(name = "generate", defaultPhase = LifecyclePhase.GENERATE_SOURCES,
         requiresDependencyResolution = ResolutionScope.TEST)
 public class MyBatisGeneratorMojo extends AbstractMojo {
-    
+
     private ThreadLocal<ClassLoader> savedClassloader = new ThreadLocal<>();
 
     /**
@@ -138,7 +138,7 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
      */
     @Parameter(property = "mybatis.generator.skip", defaultValue = "false")
     private boolean skip;
-    
+
     /**
      * If true, then dependencies in scope compile, provided, and system scopes will be
      * added to the classpath of the generator.  These dependencies will be searched for
@@ -154,7 +154,7 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
      */
     @Parameter(property = "mybatis.generator.includeAllDependencies", defaultValue = "false")
     private boolean includeAllDependencies;
-    
+
     @Override
     public void execute() throws MojoExecutionException {
         if (skip) {
@@ -163,7 +163,7 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
         }
 
         saveClassLoader();
-        
+
         LogFactory.setLogFactory(new MavenLogFactory(this));
 
         calculateClassPath();
@@ -262,7 +262,7 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
             resource.addInclude("**/*.xml");
             project.addResource(resource);
         }
-        
+
         restoreClassLoader();
     }
 
@@ -277,11 +277,11 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
                 if (includeCompileDependencies) {
                     entries.addAll(project.getCompileClasspathElements());
                 }
-                
+
                 if (includeAllDependencies) {
                     entries.addAll(project.getTestClasspathElements());
                 }
-                
+
                 // remove the output directories (target/classes and target/test-classes)
                 // because this mojo runs in the generate-sources phase and
                 // those directories have not been created yet (typically)
@@ -295,7 +295,7 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
             }
         }
     }
-    
+
     private void runScriptIfNecessary() throws MojoExecutionException {
         if (sqlScript == null) {
             return;
@@ -310,7 +310,7 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
     public File getOutputDirectory() {
         return outputDirectory;
     }
-    
+
     private void saveClassLoader() {
         savedClassloader.set(Thread.currentThread().getContextClassLoader());
     }

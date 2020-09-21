@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2017 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ import org.mybatis.generator.internal.util.messages.Messages;
  * run if necessary.  Note that this class mainly exists to support the
  * MyBatis Generator build.  It is intentionally not documented and not
  * supported.
- * 
+ *
  * @author Jeff Butler
  */
 public class SqlScriptRunner {
@@ -53,19 +53,19 @@ public class SqlScriptRunner {
 
     public SqlScriptRunner(String sourceFile, String driver, String url,
             String userId, String password) throws MojoExecutionException {
-        
+
         if (!StringUtility.stringHasValue(sourceFile)) {
             throw new MojoExecutionException("SQL script file is required");
         }
-        
+
         if (!StringUtility.stringHasValue(driver)) {
             throw new MojoExecutionException("JDBC Driver is required");
         }
-        
+
         if (!StringUtility.stringHasValue(url)) {
             throw new MojoExecutionException("JDBC URL is required");
         }
-        
+
         this.sourceFile = sourceFile;
         this.driver = driver;
         this.url = url;
@@ -80,16 +80,16 @@ public class SqlScriptRunner {
         try {
             Class<?> driverClass = ObjectFactory.externalClassForName(driver);
             Driver theDriver = (Driver) driverClass.newInstance();
-            
+
             Properties properties = new Properties();
             if (userid != null) {
                 properties.setProperty("user", userid);
             }
-            
+
             if (password != null) {
                 properties.setProperty("password", password);
             }
-            
+
             connection = theDriver.connect(url, properties);
             connection.setAutoCommit(false);
 
@@ -195,10 +195,10 @@ public class SqlScriptRunner {
     public void setLog(Log log) {
         this.log = log;
     }
-    
+
     private BufferedReader getScriptReader() throws MojoExecutionException, IOException {
         BufferedReader answer;
-        
+
         if (sourceFile.startsWith("classpath:")) {
             String resource = sourceFile.substring("classpath:".length());
             URL url = ObjectFactory.getResource(resource);
@@ -214,7 +214,7 @@ public class SqlScriptRunner {
             }
             answer = new BufferedReader(new FileReader(file));
         }
-        
+
         return answer;
     }
 }

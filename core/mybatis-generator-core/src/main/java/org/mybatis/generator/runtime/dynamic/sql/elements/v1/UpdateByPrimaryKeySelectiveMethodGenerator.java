@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ import org.mybatis.generator.runtime.dynamic.sql.elements.MethodAndImports;
 public class UpdateByPrimaryKeySelectiveMethodGenerator extends AbstractMethodGenerator {
     private FullyQualifiedJavaType recordType;
     private FragmentGenerator fragmentGenerator;
-    
+
     private UpdateByPrimaryKeySelectiveMethodGenerator(Builder builder) {
         super(builder);
         recordType = builder.recordType;
@@ -46,11 +46,11 @@ public class UpdateByPrimaryKeySelectiveMethodGenerator extends AbstractMethodGe
 
         imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.update.UpdateDSL")); //$NON-NLS-1$
         imports.add(recordType);
-        
+
         Method method = new Method("updateByPrimaryKeySelective"); //$NON-NLS-1$
         method.setDefault(true);
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
-        
+
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
         method.addParameter(new Parameter(recordType, "record")); //$NON-NLS-1$
 
@@ -77,12 +77,12 @@ public class UpdateByPrimaryKeySelectiveMethodGenerator extends AbstractMethodGe
     public static class Builder extends BaseBuilder<Builder, UpdateByPrimaryKeySelectiveMethodGenerator> {
         private FullyQualifiedJavaType recordType;
         private FragmentGenerator fragmentGenerator;
-        
+
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
             this.recordType = recordType;
             return this;
         }
-        
+
         public Builder withFragmentGenerator(FragmentGenerator fragmentGenerator) {
             this.fragmentGenerator = fragmentGenerator;
             return this;

@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2018 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -36,9 +36,9 @@ public class GenerateTestSourceFiles {
         if (args.length < 1 || !StringUtility.stringHasValue(args[0])) {
             throw new RuntimeException("This class requres one argument which is the location of the output directory");
         }
-        
+
         String outputDirectory = args[0];
-        
+
         GenerateTestSourceFiles app = new GenerateTestSourceFiles();
 
         try {
@@ -47,11 +47,11 @@ public class GenerateTestSourceFiles {
             throw new RuntimeException("Exception creating test classes", e);
         }
     }
-    
+
     private void gatherGenerators(List<CompilationUnitGenerator> generators) throws InstantiationException, IllegalAccessException {
         Reflections reflections = new Reflections("mbg.domtest.generators");
         Set<Class<? extends CompilationUnitGenerator>> classes = reflections.getSubTypesOf(CompilationUnitGenerator.class);
-        
+
         for (Class<? extends CompilationUnitGenerator> clazz : classes) {
             if (clazz.getAnnotation(IgnoreDomTest.class) == null) {
                 generators.add(clazz.newInstance());
@@ -63,16 +63,16 @@ public class GenerateTestSourceFiles {
 
     private void run(File outputDirectory) throws IOException, InstantiationException, IllegalAccessException {
         setupOutputDirectry(outputDirectory);
-        
+
         List<CompilationUnitGenerator> generators = new ArrayList<>();
         gatherGenerators(generators);
-        
+
         List<CompilationUnit> cus = new ArrayList<>();
-        
+
         for (CompilationUnitGenerator generator : generators) {
             cus.addAll(generator.generate());
         }
-        
+
         for (CompilationUnit cu: cus) {
             writeCompilationUnit(outputDirectory, cu);
         }
@@ -82,22 +82,22 @@ public class GenerateTestSourceFiles {
         if (!outputDirectory.exists()) {
             outputDirectory.mkdirs();
         }
-        
+
         if (!outputDirectory.isDirectory()) {
             throw new IOException("can't create output directory");
         }
     }
-    
+
     private void writeCompilationUnit(File rootDirectory, CompilationUnit cu) throws IOException {
         String _package = cu.getType().getPackageName();
-        
+
         StringBuilder sb = new StringBuilder();
         StringTokenizer st = new StringTokenizer(_package, ".");
         while (st.hasMoreTokens()) {
             sb.append(st.nextToken());
             sb.append(File.separatorChar);
         }
-        
+
         File directory = new File(rootDirectory, sb.toString());
 
         if (!directory.isDirectory()) {
@@ -106,7 +106,7 @@ public class GenerateTestSourceFiles {
                 throw new IOException("can't create package directory");
             }
         }
-        
+
         String fileName = cu.getType().getShortName() + ".java";
         File targetFile = new File(directory, fileName);
 
@@ -117,7 +117,7 @@ public class GenerateTestSourceFiles {
     private void writeFile(File file, String content) throws IOException {
         FileOutputStream fos = new FileOutputStream(file, false);
         OutputStreamWriter osw = new OutputStreamWriter(fos);
-        
+
         BufferedWriter bw = new BufferedWriter(osw);
         bw.write(content);
         bw.close();

@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -26,12 +26,12 @@ import org.mybatis.generator.config.Context;
  * current context and is used to aggregate plugins together. This class
  * implements the rule that if any plugin returns "false" from a method, then no
  * subsequent plugin is called.
- * 
+ *
  * <p>This class does not follow the normal plugin lifecycle and should not be
  * subclassed by clients.
- * 
+ *
  * @author Jeff Butler
- * 
+ *
  */
 public final class PluginAggregator extends CompositePlugin {
 

@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2018 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -25,30 +25,30 @@ import java.util.List;
  * If domainObjectName is not configured, we'll build the domain object named
  * based on the tableName or runtimeTableName. And then we use the domain object
  * renaming rule to generate the final domain object name.
- * 
+ *
  * <p>For example, if some tables are named:
- * 
+ *
  * <ul>
  * <li>SYS_USER</li>
  * <li>SYS_ROLE</li>
  * <li>SYS_FUNCTIONS</li>
  * </ul>
- * 
+ *
  * <p>it might be annoying to have the generated domain name all containing the SYS
  * prefix. This class can be used to remove the prefix by specifying
- * 
+ *
  * <ul>
  * <li>searchString="^Sys"</li>
  * <li>replaceString=""</li>
  * </ul>
- * 
+ *
  * <p>Note that internally, the generator uses the
  * <code>java.util.regex.Matcher.replaceAll</code> method for this function. See
  * the documentation of that method for example of the regular expression
  * language used in Java.
- * 
+ *
  * @author liuzh
- * 
+ *
  */
 public class DomainObjectRenamingRule {
     private String searchString;

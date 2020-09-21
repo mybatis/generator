@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2017 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -29,12 +29,12 @@ import org.apache.ibatis.type.TypeHandler;
 
 /**
  * @author Jeff Butler
- * 
+ *
  */
 public class MyTimeTypeHandler implements TypeHandler<MyTime> {
 
     /**
-     * 
+     *
      */
     public MyTimeTypeHandler() {
         super();
@@ -55,7 +55,7 @@ public class MyTimeTypeHandler implements TypeHandler<MyTime> {
             answer.setMinutes(c.get(Calendar.MINUTE));
             answer.setSeconds(c.get(Calendar.SECOND));
         }
-        
+
         return answer;
     }
 
@@ -74,7 +74,7 @@ public class MyTimeTypeHandler implements TypeHandler<MyTime> {
             answer.setMinutes(c.get(Calendar.MINUTE));
             answer.setSeconds(c.get(Calendar.SECOND));
         }
-        
+
         return answer;
     }
 
@@ -93,7 +93,7 @@ public class MyTimeTypeHandler implements TypeHandler<MyTime> {
             answer.setMinutes(c.get(Calendar.MINUTE));
             answer.setSeconds(c.get(Calendar.SECOND));
         }
-        
+
         return answer;
     }
 

@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import org.mybatis.generator.internal.util.StringUtility;
 
 /**
  * This class holds information about an introspected column.
- * 
+ *
  * @author Jeff Butler
  */
 public class IntrospectedColumn {
@@ -168,9 +168,9 @@ public class IntrospectedColumn {
         String typeName = getJdbcTypeName();
 
         return "BINARY".equals(typeName) || "BLOB".equals(typeName) //$NON-NLS-1$ //$NON-NLS-2$
-                || "CLOB".equals(typeName) || "LONGNVARCHAR".equals(typeName) //$NON-NLS-1$ //$NON-NLS-2$ 
+                || "CLOB".equals(typeName) || "LONGNVARCHAR".equals(typeName) //$NON-NLS-1$ //$NON-NLS-2$
                 || "LONGVARBINARY".equals(typeName) || "LONGVARCHAR".equals(typeName) //$NON-NLS-1$ //$NON-NLS-2$
-                || "NCLOB".equals(typeName) || "VARBINARY".equals(typeName); //$NON-NLS-1$ //$NON-NLS-2$ 
+                || "NCLOB".equals(typeName) || "VARBINARY".equals(typeName); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     public boolean isStringColumn() {
@@ -342,7 +342,7 @@ public class IntrospectedColumn {
      * The platform specific type name as reported by the JDBC driver. This value is determined
      * from the DatabaseMetadata.getColumns() call - specifically ResultSet.getString("TYPE_NAME").
      * This value is platform dependent.
-     * 
+     *
      * @return the platform specific type name as reported by the JDBC driver
      */
     public String getActualTypeName() {

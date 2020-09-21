@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,15 +19,15 @@ import java.util.Arrays;
 
 /**
  * This class holds constants useful in the XML and Java merging operations.
- * 
+ *
  * @author Jeff Butler
- * 
+ *
  */
 public class MergeConstants {
 
     /**
      * Utility class - no instances.
-     * 
+     *
      */
     private MergeConstants() {
     }
@@ -41,7 +41,7 @@ public class MergeConstants {
             "@abatorgenerated", //$NON-NLS-1$
             "@mbggenerated", //$NON-NLS-1$
             NEW_ELEMENT_TAG };
-    
+
     public static String[] getOldElementTags() {
         return OLD_ELEMENT_TAGS;
     }

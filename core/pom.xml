@@ -21,7 +21,7 @@
   <parent>
     <groupId>org.mybatis</groupId>
     <artifactId>mybatis-parent</artifactId>
-    <version>31</version>
+    <version>32</version>
     <relativePath />
   </parent>
 
@@ -104,6 +104,16 @@
           <artifactId>kotlin-maven-plugin</artifactId>
           <groupId>org.jetbrains.kotlin</groupId>
           <version>${kotlin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>com.mycila</groupId>
+          <artifactId>license-maven-plugin</artifactId>
+          <configuration>
+            <mapping>
+              <java>SLASHSTAR_STYLE</java>
+              <kt>SLASHSTAR_STYLE</kt>
+            </mapping>
+          </configuration>
         </plugin>
       </plugins>
     </pluginManagement>

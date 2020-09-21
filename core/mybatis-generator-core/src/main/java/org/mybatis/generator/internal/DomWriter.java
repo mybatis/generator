@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ import org.w3c.dom.Text;
  * This class is used to generate a String representation of an XML document. It
  * is very much based on the class dom.Writer from the Apache Xerces examples,
  * but I've simplified and updated it.
- * 
+ *
  * @author Andy Clark, IBM (Original work)
  * @author Jeff Butler (derivation)
  */

@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -69,7 +69,7 @@ public class ProviderApplyWhereMethodGenerator extends
         "} else {", //$NON-NLS-1$
         "sb.append(\" or \");", //$NON-NLS-1$
         "}", //$NON-NLS-1$
-        "", //$NON-NLS-1$        
+        "", //$NON-NLS-1$
         "sb.append('(');", //$NON-NLS-1$
         "List<Criterion> criterions = criteria.getAllCriteria();", //$NON-NLS-1$
         "boolean firstCriterion = true;", //$NON-NLS-1$
@@ -134,7 +134,7 @@ public class ProviderApplyWhereMethodGenerator extends
         "sql.WHERE(sb.toString());", //$NON-NLS-1$
         "}" //$NON-NLS-1$
     };
-    
+
     public ProviderApplyWhereMethodGenerator(boolean useLegacyBuilder) {
         super(useLegacyBuilder);
     }
@@ -149,10 +149,10 @@ public class ProviderApplyWhereMethodGenerator extends
         } else {
             importedTypes.add(NEW_BUILDER_IMPORT);
         }
-        
+
         importedTypes.add(new FullyQualifiedJavaType(
                 "java.util.List")); //$NON-NLS-1$
-        
+
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getExampleType());
         importedTypes.add(fqjt);
         importedTypes.add(new FullyQualifiedJavaType(
@@ -168,10 +168,10 @@ public class ProviderApplyWhereMethodGenerator extends
         method.addParameter(new Parameter(fqjt, "example")); //$NON-NLS-1$
         method.addParameter(new Parameter(FullyQualifiedJavaType.getBooleanPrimitiveInstance(),
                 "includeExamplePhrase")); //$NON-NLS-1$
-        
+
         context.getCommentGenerator().addGeneralMethodComment(method,
                 introspectedTable);
-        
+
         for (String methodLine : BEGINNING_METHOD_LINES) {
             method.addBodyLine(methodLine);
         }

@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 public class UpdateSelectiveColumnsMethodGenerator extends AbstractKotlinFunctionGenerator {
     private FullyQualifiedKotlinType recordType;
     private KotlinFragmentGenerator fragmentGenerator;
-    
+
     private UpdateSelectiveColumnsMethodGenerator(Builder builder) {
         super(builder);
         recordType = builder.recordType;
@@ -47,18 +47,18 @@ public class UpdateSelectiveColumnsMethodGenerator extends AbstractKotlinFunctio
                 .build();
 
         addFunctionComment(functionAndImports);
-        
+
         KotlinFunction function = functionAndImports.getFunction();
-        
+
         function.addCodeLine("apply {"); //$NON-NLS-1$
-        
+
         List<IntrospectedColumn> columns = introspectedTable.getAllColumns();
         KotlinFunctionParts functionParts = fragmentGenerator.getSetEqualWhenPresentLines(columns);
-        
+
         acceptParts(functionAndImports, functionParts);
-        
+
         function.addCodeLine("}"); //$NON-NLS-1$
-        
+
         return functionAndImports;
     }
 
@@ -71,12 +71,12 @@ public class UpdateSelectiveColumnsMethodGenerator extends AbstractKotlinFunctio
     public static class Builder extends BaseBuilder<Builder, UpdateSelectiveColumnsMethodGenerator> {
         private FullyQualifiedKotlinType recordType;
         private KotlinFragmentGenerator fragmentGenerator;
-        
+
         public Builder withRecordType(FullyQualifiedKotlinType recordType) {
             this.recordType = recordType;
             return this;
         }
-        
+
         public Builder withFragmentGenerator(KotlinFragmentGenerator fragmentGenerator) {
             this.fragmentGenerator = fragmentGenerator;
             return this;

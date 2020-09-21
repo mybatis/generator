@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -33,17 +33,17 @@ public class GeneratedAlwaysNoUpdatesTest extends AbstractAnnotatedMiscellaneous
     public void testInsert() {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             GeneratedalwaystestnoupdatesMapper mapper = sqlSession.getMapper(GeneratedalwaystestnoupdatesMapper.class);
-            
+
             Generatedalwaystestnoupdates gaTest = new Generatedalwaystestnoupdates();
             gaTest.setId(1);
             gaTest.setIdPlus1(55);
             gaTest.setIdPlus2(66);
             int rows = mapper.insert(gaTest);
             assertEquals(1, rows);
-            
+
             List<Generatedalwaystestnoupdates> returnedRecords = mapper.select(SelectDSLCompleter.allRows());
             assertEquals(1, returnedRecords.size());
-            
+
             Generatedalwaystestnoupdates returnedRecord = returnedRecords.get(0);
             assertEquals(1, returnedRecord.getId().intValue());
             assertEquals(2, returnedRecord.getIdPlus1().intValue());
@@ -55,15 +55,15 @@ public class GeneratedAlwaysNoUpdatesTest extends AbstractAnnotatedMiscellaneous
     public void testInsertSelective() {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             GeneratedalwaystestnoupdatesMapper mapper = sqlSession.getMapper(GeneratedalwaystestnoupdatesMapper.class);
-            
+
             Generatedalwaystestnoupdates gaTest = new Generatedalwaystestnoupdates();
             gaTest.setId(1);
             int rows = mapper.insertSelective(gaTest);
             assertEquals(1, rows);
-            
+
             List<Generatedalwaystestnoupdates> returnedRecords = mapper.select(SelectDSLCompleter.allRows());
             assertEquals(1, returnedRecords.size());
-            
+
             Generatedalwaystestnoupdates returnedRecord = returnedRecords.get(0);
             assertEquals(1, returnedRecord.getId().intValue());
             assertEquals(2, returnedRecord.getIdPlus1().intValue());

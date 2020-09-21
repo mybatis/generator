@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -32,38 +32,38 @@ public class KotlinFile {
 
     public KotlinFile(String fileName) {
         Objects.requireNonNull(fileName);
-        
+
         if (fileName.endsWith(".kt")) { //$NON-NLS-1$
             this.fileName = fileName;
         } else {
             this.fileName = fileName + ".kt"; //$NON-NLS-1$
         }
     }
- 
+
     public String getFileName() {
         return fileName;
     }
-    
+
     public List<String> getFileCommentLines() {
         return fileCommentLines;
     }
-    
+
     public void addFileCommentLine(String fileComentLine) {
         fileCommentLines.add(fileComentLine);
     }
-    
+
     public Set<String> getImports() {
         return imports;
     }
-    
+
     public void addImport(String i) {
         imports.add(i);
     }
-    
+
     public void addImports(Collection<String> imports) {
         this.imports.addAll(imports);
     }
-    
+
     public Optional<String> getPackage() {
         return Optional.ofNullable(packageDefinition);
     }
@@ -71,11 +71,11 @@ public class KotlinFile {
     public void setPackage(String p) {
         this.packageDefinition = p;
     }
-    
+
     public void addNamedItem(KotlinNamedItem namedItem) {
         namedItems.add(namedItem);
     }
-    
+
     public List<KotlinNamedItem> getNamedItems() {
         return namedItems;
     }

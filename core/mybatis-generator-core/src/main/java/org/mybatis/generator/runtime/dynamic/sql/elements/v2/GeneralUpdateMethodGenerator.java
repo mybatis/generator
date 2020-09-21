@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ import org.mybatis.generator.runtime.dynamic.sql.elements.AbstractMethodGenerato
 import org.mybatis.generator.runtime.dynamic.sql.elements.MethodAndImports;
 
 public class GeneralUpdateMethodGenerator extends AbstractMethodGenerator {
-    
+
     private GeneralUpdateMethodGenerator(Builder builder) {
         super(builder);
     }
@@ -34,27 +34,27 @@ public class GeneralUpdateMethodGenerator extends AbstractMethodGenerator {
     @Override
     public MethodAndImports generateMethodAndImports() {
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
-        
+
         FullyQualifiedJavaType parameterType = new FullyQualifiedJavaType(
                 "org.mybatis.dynamic.sql.update.UpdateDSLCompleter"); //$NON-NLS-1$
 
         imports.add(parameterType);
         imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils")); //$NON-NLS-1$
-        
+
         FullyQualifiedJavaType returnType = FullyQualifiedJavaType.getIntInstance();
-        
+
         imports.add(returnType);
-        
+
         Method method = new Method("update"); //$NON-NLS-1$
         method.setDefault(true);
         method.addParameter(new Parameter(parameterType, "completer")); //$NON-NLS-1$
-        
+
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
-        
+
         method.setReturnType(returnType);
         method.addBodyLine("return MyBatis3Utils.update(this::update, " + //$NON-NLS-1$
                 tableFieldName + ", completer);"); //$NON-NLS-1$
-        
+
         return MethodAndImports.withMethod(method)
                 .withImports(imports)
                 .build();

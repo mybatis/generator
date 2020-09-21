@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2017 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@ package org.mybatis.generator.api;
 
 /**
  * This interface can be implemented to return progress information from the file generation process.
- * 
+ *
  * <p>During the execution of code generation, there are three main operations:
  * database introspection, code generation based on the results of
  * introspection, and then merging/saving generated files. Methods
@@ -31,13 +31,13 @@ package org.mybatis.generator.api;
  * <li>(Repeatedly) startTask(String)</li>
  * <li>done()</li>
  * </ol>
- * 
+ *
  * <p>Periodically, the <code>checkCancel()</code> method will be called to see if the
  * method should be canceled.
- * 
+ *
  * <p>For planning purposes, the most common use case will have a ratio of 20%
  * introspection tasks, 40% generation tasks, and 40% save tasks.
- * 
+ *
  * @author Jeff Butler
  */
 public interface ProgressCallback {
@@ -45,7 +45,7 @@ public interface ProgressCallback {
      * Called to note the start of the introspection phase, and to note the
      * maximum number of startTask messages that will be sent for the
      * introspection phase.
-     * 
+     *
      * @param totalTasks
      *            the maximum number of times startTask will be called for the
      *            introspection phase.
@@ -55,7 +55,7 @@ public interface ProgressCallback {
     /**
      * Called to note the start of the generation phase, and to note the maximum
      * number of startTask messages that will be sent for the generation phase.
-     * 
+     *
      * @param totalTasks
      *            the maximum number of times startTask will be called for the
      *            generation phase.
@@ -66,7 +66,7 @@ public interface ProgressCallback {
      * Called to note the start of the file saving phase, and to note the
      * maximum number of startTask messages that will be sent for the file
      * saving phase phase.
-     * 
+     *
      * @param totalTasks
      *            the maximum number of times startTask will be called for the
      *            file saving phase.
@@ -75,7 +75,7 @@ public interface ProgressCallback {
 
     /**
      * Called to denote the beginning of a save task.
-     * 
+     *
      * @param taskName
      *            a descriptive name of the current work step
      */
@@ -91,7 +91,7 @@ public interface ProgressCallback {
      * If the the implementation throws <code>InterruptedException</code> then
      * the method will be canceled. Any files that have already been saved will
      * remain on the file system.
-     * 
+     *
      * @throws InterruptedException
      *             if the operation should be halted
      */

@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -60,7 +60,7 @@ public class ProviderUpdateByExampleWithoutBLOBsMethodGenerator extends
         method.addParameter(new Parameter(
                 new FullyQualifiedJavaType("java.util.Map<java.lang.String, java.lang.Object>"), //$NON-NLS-1$
                 "parameter")); //$NON-NLS-1$
-        
+
         context.getCommentGenerator().addGeneralMethodComment(method,
                 introspectedTable);
 
@@ -87,7 +87,7 @@ public class ProviderUpdateByExampleWithoutBLOBsMethodGenerator extends
         }
 
         method.addBodyLine(""); //$NON-NLS-1$
-        
+
         FullyQualifiedJavaType example =
                 new FullyQualifiedJavaType(introspectedTable.getExampleType());
         importedTypes.add(example);

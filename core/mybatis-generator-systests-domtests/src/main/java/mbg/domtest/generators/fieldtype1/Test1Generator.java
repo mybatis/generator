@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2018 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -32,36 +32,36 @@ import mbg.domtest.CompilationUnitGenerator;
  * This class generates a hierarchy with multiple classes that have the same name in
  * different packages.  It tests the ability of the generator to use fully qualified names
  * in code generation when the type is not explicitly imported.
- * 
+ *
  */
 //@IgnoreDomTest("Ignore until changes for issue #63 are committed")
 public class Test1Generator implements CompilationUnitGenerator {
-    
+
     private static final String BASE_PACKAGE = "mbg.domtest.generators.fieldtype1.output";
 
     @Override
     public List<CompilationUnit> generate() {
         FullyQualifiedJavaType cls = new FullyQualifiedJavaType(BASE_PACKAGE + ".SomeClass");
-        
+
         List<CompilationUnit> answer = new ArrayList<>();
         TopLevelClass tlcMain = generateFieldTypeMain();
         TopLevelClass tlcSub1 = generateFieldTypeSub1();
         TopLevelClass tlcTcSub1 = generateTestClassSub1();
         TopLevelClass tlcSub2 = generateFieldTypeSub2();
-        
+
         answer.add(tlcMain);
         answer.add(tlcSub1);
         answer.add(tlcTcSub1);
         answer.add(tlcSub2);
-        
+
         TopLevelClass topLvlClass = new TopLevelClass(cls);
         topLvlClass.setVisibility(JavaVisibility.PUBLIC);
         topLvlClass.addImportedType(tlcTcSub1.getType());
-        
+
         Field field = new Field("main", tlcMain.getType());
         field.setVisibility(JavaVisibility.PRIVATE);
         topLvlClass.addField(field);
-        
+
         field = new Field("tcSub1", tlcTcSub1.getType());
         field.setVisibility(JavaVisibility.PRIVATE);
         topLvlClass.addField(field);
@@ -73,18 +73,18 @@ public class Test1Generator implements CompilationUnitGenerator {
         field = new Field("sub2", tlcSub2.getType());
         field.setVisibility(JavaVisibility.PRIVATE);
         topLvlClass.addField(field);
-        
+
         Method m = new Method("executeMain");
         m.setVisibility(JavaVisibility.PUBLIC);
         m.addBodyLine("main.mainMethod();");
         topLvlClass.addMethod(m);
-        
+
         m = new Method("setMain");
         m.setVisibility(JavaVisibility.PUBLIC);
         m.addParameter(new Parameter(tlcMain.getType(), "main"));
         m.addBodyLine("this.main = main;");
         topLvlClass.addMethod(m);
-        
+
         m = new Method("getMain");
         m.setVisibility(JavaVisibility.PUBLIC);
         m.setReturnType(tlcMain.getType());
@@ -101,7 +101,7 @@ public class Test1Generator implements CompilationUnitGenerator {
         m.addParameter(new Parameter(tlcSub1.getType(), "sub1"));
         m.addBodyLine("this.sub1 = sub1;");
         topLvlClass.addMethod(m);
-        
+
         m = new Method("getSub1");
         m.setVisibility(JavaVisibility.PUBLIC);
         m.setReturnType(tlcSub1.getType());
@@ -112,13 +112,13 @@ public class Test1Generator implements CompilationUnitGenerator {
         m.setVisibility(JavaVisibility.PUBLIC);
         m.addBodyLine("sub2.sub2Method();");
         topLvlClass.addMethod(m);
-        
+
         m = new Method("setSub2");
         m.setVisibility(JavaVisibility.PUBLIC);
         m.addParameter(new Parameter(tlcSub2.getType(), "sub2"));
         m.addBodyLine("this.sub2 = sub2;");
         topLvlClass.addMethod(m);
-        
+
         m = new Method("getSub2");
         m.setVisibility(JavaVisibility.PUBLIC);
         m.setReturnType(tlcSub2.getType());
@@ -126,20 +126,20 @@ public class Test1Generator implements CompilationUnitGenerator {
         topLvlClass.addMethod(m);
 
         answer.add(topLvlClass);
-        
+
         return answer;
     }
-    
+
     private TopLevelClass generateFieldTypeMain() {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(BASE_PACKAGE + ".FieldType");
         TopLevelClass tlc = new TopLevelClass(fqjt);
         tlc.setVisibility(JavaVisibility.PUBLIC);
-        
+
         Method m = new Method("mainMethod");
         m.setVisibility(JavaVisibility.PUBLIC);
         m.addBodyLine("System.out.println(\"main method\");");
         tlc.addMethod(m);
-        
+
         return tlc;
     }
 
@@ -147,12 +147,12 @@ public class Test1Generator implements CompilationUnitGenerator {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(BASE_PACKAGE + ".sub1.FieldType");
         TopLevelClass tlc = new TopLevelClass(fqjt);
         tlc.setVisibility(JavaVisibility.PUBLIC);
-        
+
         Method m = new Method("sub1Method");
         m.setVisibility(JavaVisibility.PUBLIC);
         m.addBodyLine("System.out.println(\"sub1 method\");");
         tlc.addMethod(m);
-        
+
         return tlc;
     }
 
@@ -160,12 +160,12 @@ public class Test1Generator implements CompilationUnitGenerator {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(BASE_PACKAGE + ".sub1.SomeClass");
         TopLevelClass tlc = new TopLevelClass(fqjt);
         tlc.setVisibility(JavaVisibility.PUBLIC);
-        
+
         Method m = new Method("testClassMethod");
         m.setVisibility(JavaVisibility.PUBLIC);
         m.addBodyLine("System.out.println(\"testClass sub1 method\");");
         tlc.addMethod(m);
-        
+
         return tlc;
     }
 
@@ -173,12 +173,12 @@ public class Test1Generator implements CompilationUnitGenerator {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(BASE_PACKAGE + ".sub2.FieldType");
         TopLevelClass tlc = new TopLevelClass(fqjt);
         tlc.setVisibility(JavaVisibility.PUBLIC);
-        
+
         Method m = new Method("sub2Method");
         m.setVisibility(JavaVisibility.PUBLIC);
         m.addBodyLine("System.out.println(\"sub2 method\");");
         tlc.addMethod(m);
-        
+
         return tlc;
     }
 }

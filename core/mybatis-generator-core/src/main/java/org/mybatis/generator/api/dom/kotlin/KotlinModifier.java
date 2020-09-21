@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,13 +21,13 @@ public enum KotlinModifier {
     PRIVATE("private"), //$NON-NLS-1$
     DATA("data"), //$NON-NLS-1$
     LATE_INIT("lateinit"); //$NON-NLS-1$
-    
+
     private String value;
-    
+
     KotlinModifier(String value) {
         this.value = value;
     }
-    
+
     public String getValue() {
         return value;
     }

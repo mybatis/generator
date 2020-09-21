@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2018 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -29,15 +29,15 @@ import mbg.domtest.CompilationUnitGenerator;
 public class SupersGenerator implements CompilationUnitGenerator {
 
     private static final String BASE_PACKAGE = "mbg.domtest.generators.supers";
-    
+
     @Override
     public List<CompilationUnit> generate() {
         List<CompilationUnit> answer = new ArrayList<>();
-        
+
         TopLevelClass baseClass = getBaseClass();
         TopLevelClass superClass = getSuperClass();
         baseClass.setSuperClass(superClass.getType());
-        
+
         Interface baseInterface = getBaseInterface();
         Interface superInterface = getSuperInterface();
         baseInterface.addSuperInterface(superInterface.getType());
@@ -47,31 +47,31 @@ public class SupersGenerator implements CompilationUnitGenerator {
         answer.add(superClass);
         answer.add(baseInterface);
         answer.add(superInterface);
-        
+
         return answer;
     }
-    
+
     private TopLevelClass getSuperClass() {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(BASE_PACKAGE + ".sub.SuperClass");
         TopLevelClass tlc = new TopLevelClass(fqjt);
         tlc.setVisibility(JavaVisibility.PUBLIC);
-        
+
         return tlc;
     }
-    
+
     private Interface getSuperInterface() {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(BASE_PACKAGE + ".sub.SuperInterface");
         Interface ifc = new Interface(fqjt);
         ifc.setVisibility(JavaVisibility.PUBLIC);
-        
+
         return ifc;
     }
-    
+
     private TopLevelClass getBaseClass() {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(BASE_PACKAGE + ".BaseClass");
         TopLevelClass tlc = new TopLevelClass(fqjt);
         tlc.setVisibility(JavaVisibility.PUBLIC);
-        
+
         return tlc;
     }
 
@@ -79,8 +79,8 @@ public class SupersGenerator implements CompilationUnitGenerator {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(BASE_PACKAGE + ".BaseInterface");
         Interface ifc = new Interface(fqjt);
         ifc.setVisibility(JavaVisibility.PUBLIC);
-        
+
         return ifc;
     }
-    
+
 }

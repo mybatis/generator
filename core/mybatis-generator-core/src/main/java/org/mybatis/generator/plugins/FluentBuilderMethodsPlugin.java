@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2018 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -29,9 +29,9 @@ import org.mybatis.generator.api.dom.java.TopLevelClass;
  * This plugin adds fluent builder methods to the generated model classes.
  *
  * <p>Example:
- * 
+ *
  * <p>Given the domain class <code>MyDomainClass</code> with setter-method <code>setValue(Object v)</code>
- * 
+ *
  * <p>The plugin will create the additional Method <code>public MyDomainClass withValue(Object v)</code>
  *
  *
@@ -49,12 +49,12 @@ public class FluentBuilderMethodsPlugin extends PluginAdapter {
             TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn,
             IntrospectedTable introspectedTable,
             ModelClassType modelClassType) {
-        
+
         Method fluentMethod = new Method("with" + method.getName().substring(3)); //$NON-NLS-1$
         fluentMethod.setVisibility(JavaVisibility.PUBLIC);
         fluentMethod.setReturnType(topLevelClass.getType());
         fluentMethod.getParameters().addAll(method.getParameters());
-         
+
         if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3_DSQL) {
             context.getCommentGenerator().addGeneralMethodAnnotation(fluentMethod,
                     introspectedTable, topLevelClass.getImportedTypes());
@@ -62,7 +62,7 @@ public class FluentBuilderMethodsPlugin extends PluginAdapter {
             context.getCommentGenerator().addGeneralMethodComment(fluentMethod,
                     introspectedTable);
         }
-        
+
         StringBuilder sb = new StringBuilder()
                 .append("this.") //$NON-NLS-1$
                 .append(method.getName())

@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2017 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -24,12 +24,12 @@ import org.mybatis.generator.exception.ShellException;
  * the generator
  * to work. A "shell" is defined as the execution environment (i.e. an
  * Eclipse plugin, and Ant task, a NetBeans plugin, etc.)
- * 
+ *
  * <p>The default ShellCallback that is very low function and does
- * not support the merging of Java files. The default shell callback is 
+ * not support the merging of Java files. The default shell callback is
  * appropriate for use in well controlled environments where no changes
  * made to generated Java files.
- * 
+ *
  * @author Jeff Butler
  */
 public interface ShellCallback {
@@ -38,13 +38,13 @@ public interface ShellCallback {
      * This method is called to ask the shell to resolve a project/package combination into a directory on the file
      * system. This method is called repeatedly (once for each generated file), so it would be wise for an implementing
      * class to cache results.
-     * 
+     *
      * <p>The returned <code>java.io.File</code> object:
      * <ul>
      * <li>Must be a directory</li>
      * <li>Must exist</li>
      * </ul>
-     * 
+     *
      * <p>The default shell callback interprets both values as directories and simply concatenates the two values to
      * generate the default directory.
      *
@@ -66,7 +66,7 @@ public interface ShellCallback {
      * overwrite an existing file. This method should return the merged source
      * (formatted). The generator will write the merged source as-is to the file
      * system.
-     * 
+     *
      * <p>A merge typically follows these steps:
      * <ol>
      * <li>Delete any methods/fields in the existing file that have the
@@ -80,10 +80,10 @@ public interface ShellCallback {
      * <li>Add all methods and fields from the new file into the existing file</li>
      * <li>Format the resulting source string</li>
      * </ol>
-     * 
+     *
      * <p>This method is called only if you return <code>true</code> from
      * <code>isMergeSupported()</code>.
-     * 
+     *
      * @param newFileSource
      *            the source of the newly generated Java file
      * @param existingFile
@@ -110,10 +110,10 @@ public interface ShellCallback {
      * After all files are saved to the file system, this method is called
      * once for each unique project that was affected by the generation
      * run. This method is useful if your IDE needs to be informed that file
-     * system objects have been created or updated. If you are running 
+     * system objects have been created or updated. If you are running
      * outside of an IDE, your implementation need not do anything in this
      * method.
-     * 
+     *
      * @param project
      *            the project to be refreshed
      */
@@ -123,7 +123,7 @@ public interface ShellCallback {
      * Return true if the callback supports Java merging, otherwise false.
      * The <code>mergeJavaFile()</code> method will be called only if this
      * method returns <code>true</code>.
-     * 
+     *
      * @return a boolean specifying whether Java merge is supported or not
      */
     boolean isMergeSupported();
@@ -134,7 +134,7 @@ public interface ShellCallback {
      * returns <code>false</code> and a file exists that would be overwritten by
      * a generated file. If you return <code>true</code>, then we will log a
      * warning specifying what file was overwritten.
-     * 
+     *
      * @return true if you want to overwrite existing files
      */
     boolean isOverwriteEnabled();

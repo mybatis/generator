@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -33,13 +33,13 @@ public abstract class AbstractDynamicSqlMapperGenerator extends AbstractJavaClie
 
     // record type for insert, select, update
     protected FullyQualifiedJavaType recordType;
-    
+
     // id to use for the common result map
     protected String resultMapId;
-    
+
     // name of the field containing the table in the support class
     protected String tableFieldName;
-    
+
     protected FragmentGenerator fragmentGenerator;
 
     public AbstractDynamicSqlMapperGenerator(String project) {

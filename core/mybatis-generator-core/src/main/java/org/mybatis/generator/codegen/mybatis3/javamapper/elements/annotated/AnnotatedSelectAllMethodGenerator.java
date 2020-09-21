@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.internal.util.StringUtility;
 
 public class AnnotatedSelectAllMethodGenerator extends SelectAllMethodGenerator {
-    
+
     public AnnotatedSelectAllMethodGenerator() {
         super();
     }
@@ -44,7 +44,7 @@ public class AnnotatedSelectAllMethodGenerator extends SelectAllMethodGenerator 
         javaIndent(sb, 1);
         sb.append("\"select\","); //$NON-NLS-1$
         method.addAnnotation(sb.toString());
-        
+
         sb.setLength(0);
         javaIndent(sb, 1);
         sb.append('"');
@@ -73,7 +73,7 @@ public class AnnotatedSelectAllMethodGenerator extends SelectAllMethodGenerator 
             sb.append("\","); //$NON-NLS-1$
             method.addAnnotation(sb.toString());
         }
-        
+
         sb.setLength(0);
         javaIndent(sb, 1);
         sb.append("\"from "); //$NON-NLS-1$
@@ -121,7 +121,7 @@ public class AnnotatedSelectAllMethodGenerator extends SelectAllMethodGenerator 
             javaIndent(sb, 1);
             sb.append(getResultAnnotation(interfaze, introspectedColumn, true,
                     introspectedTable.isConstructorBased()));
-            
+
             if (iterPk.hasNext() || iterNonPk.hasNext()) {
                 sb.append(',');
             }
@@ -135,7 +135,7 @@ public class AnnotatedSelectAllMethodGenerator extends SelectAllMethodGenerator 
             javaIndent(sb, 1);
             sb.append(getResultAnnotation(interfaze, introspectedColumn, false,
                     introspectedTable.isConstructorBased()));
-            
+
             if (iterNonPk.hasNext()) {
                 sb.append(',');
             }

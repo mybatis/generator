@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2017 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ import org.mybatis.generator.internal.util.StringUtility;
  * This plugin adds a cache element to generated sqlMaps.  This plugin
  * is for MyBatis3 targeted runtimes only.  The plugin accepts the
  * following properties (all are optional):
- * 
+ *
  * <ul>
  *   <li>cache_eviction</li>
  *   <li>cache_flushInterval</li>
@@ -36,13 +36,13 @@ import org.mybatis.generator.internal.util.StringUtility;
  *   <li>cache_readOnly</li>
  *   <li>cache_type</li>
  * </ul>
- * 
+ *
  * <p>All properties correspond to properties of the MyBatis cache element and
  * are passed "as is" to the corresponding properties of the generated cache
  * element.  All properties can be specified at the table level, or on the
  * plugin element.  The property on the table element will override any
  * property on the plugin element.
- * 
+ *
  * @author Jason Bennett
  * @author Jeff Butler
  */

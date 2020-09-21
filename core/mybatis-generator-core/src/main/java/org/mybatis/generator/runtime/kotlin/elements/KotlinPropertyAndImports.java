@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -24,43 +24,43 @@ public class KotlinPropertyAndImports {
 
     private KotlinProperty property;
     private Set<String> imports;
-    
+
     private KotlinPropertyAndImports(Builder builder) {
         property = builder.property;
         imports = builder.imports;
     }
-    
+
     public KotlinProperty getProperty() {
         return property;
     }
-    
+
     public Set<String> getImports() {
         return imports;
     }
-    
+
     public static Builder withProperty(KotlinProperty property) {
         return new Builder().withProperty(property);
     }
-    
+
     public static class Builder {
         private KotlinProperty property;
         private Set<String> imports = new HashSet<>();
-        
+
         public Builder withProperty(KotlinProperty property) {
             this.property = property;
             return this;
         }
-        
+
         public Builder withImport(String im) {
             this.imports.add(im);
             return this;
         }
-        
+
         public Builder withImports(Set<String> imports) {
             this.imports.addAll(imports);
             return this;
         }
-        
+
         public KotlinPropertyAndImports build() {
             return new KotlinPropertyAndImports(this);
         }

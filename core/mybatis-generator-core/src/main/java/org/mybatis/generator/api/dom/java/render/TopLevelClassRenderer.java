@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2018 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -30,14 +30,14 @@ public class TopLevelClassRenderer {
 
     public String render(TopLevelClass topLevelClass) {
         List<String> lines = new ArrayList<>();
-        
+
         lines.addAll(topLevelClass.getFileCommentLines());
         lines.addAll(renderPackage(topLevelClass));
         lines.addAll(renderStaticImports(topLevelClass));
         lines.addAll(renderImports(topLevelClass));
         lines.addAll(renderInnerClassNoIndent(topLevelClass, topLevelClass));
-        
+
         return lines.stream()
                 .collect(Collectors.joining(System.getProperty("line.separator"))); //$NON-NLS-1$
-    }    
+    }
 }

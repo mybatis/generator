@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ public class KotlinArgRenderer {
                 + kotlinArg.getDataType().map(dt -> ": " + dt).orElse("") //$NON-NLS-1$ //$NON-NLS-2$
                 + kotlinArg.getInitializationString().map(s -> " = " + s).orElse(""); //$NON-NLS-1$ //$NON-NLS-2$
     }
-    
+
     private String renderAnnotations(KotlinArg kotlinArg) {
         return kotlinArg.getAnnotations().stream()
                 .collect(CustomCollectors.joining(" ", "", " ")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$

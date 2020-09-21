@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -44,35 +44,35 @@ public class KotlinDataClassGenerator extends AbstractKotlinGenerator {
         CommentGenerator commentGenerator = context.getCommentGenerator();
         FullyQualifiedKotlinType type = new FullyQualifiedKotlinType(
                 introspectedTable.getKotlinRecordType());
-        
+
         KotlinFile kf = new KotlinFile(type.getShortNameWithoutTypeArguments());
         kf.setPackage(type.getPackageName());
-        
+
         KotlinType dataClass = KotlinType.newClass(type.getShortNameWithoutTypeArguments())
                 .withModifier(KotlinModifier.DATA)
                 .build();
         kf.addNamedItem(dataClass);
-        
+
         commentGenerator.addFileComment(kf);
 
         commentGenerator.addModelClassComment(dataClass, introspectedTable);
 
         List<IntrospectedColumn> introspectedColumns = introspectedTable.getAllColumns();
-        
+
         for (IntrospectedColumn introspectedColumn : introspectedColumns) {
             FullyQualifiedKotlinType kotlinType =
                     JavaToKotlinTypeConverter.convert(introspectedColumn.getFullyQualifiedJavaType());
-            
+
             KotlinProperty kp = KotlinProperty.newVar(introspectedColumn.getJavaProperty())
                     .withDataType(kotlinType.getShortNameWithTypeArguments() + "?") //$NON-NLS-1$
                     .withInitializationString("null") //$NON-NLS-1$
                     .build();
-            
+
             dataClass.addConstructorProperty(kp);
-            
+
             kf.addImports(kotlinType.getImportList());
         }
-        
+
         if (context.getPlugins().kotlinDataClassGenerated(kf, dataClass, introspectedTable)) {
             return listOf(kf);
         } else {

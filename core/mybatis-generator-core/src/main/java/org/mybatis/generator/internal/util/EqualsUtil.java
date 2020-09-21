@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,13 +17,13 @@ package org.mybatis.generator.internal.util;
 
 /**
  * This class is from javapractices.com:
- * 
+ *
  * <p>http://www.javapractices.com/Topic17.cjp
- * 
+ *
  * <p>Collected methods which allow easy implementation of <code>equals</code>.
- * 
+ *
  * <p>Example use case in a class called Car:
- * 
+ *
  * <pre>
  * public boolean equals(Object that) {
  *     if (this == that)
@@ -38,7 +38,7 @@ package org.mybatis.generator.internal.util;
  *             &amp;&amp; Arrays.equals(this.fMaintenanceChecks, that.fMaintenanceChecks); //array!
  * }
  * </pre>
- * 
+ *
  * <em>Arrays are not handled by this class</em>. This is because the
  * <code>Arrays.equals</code> methods should be used for array fields.
  */
@@ -71,7 +71,7 @@ public final class EqualsUtil {
 
     /**
      * Possibly-null object field.
-     * 
+     *
      * <p>Includes type-safe enumerations and collections, but does not include arrays. See class comment.
      *
      * @param o1

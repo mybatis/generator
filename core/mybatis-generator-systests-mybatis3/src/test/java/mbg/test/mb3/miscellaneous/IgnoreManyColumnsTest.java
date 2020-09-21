@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2018 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -124,16 +124,16 @@ public class IgnoreManyColumnsTest extends AbstractMiscellaneousTest {
 
         try {
             IgnoremanycolumnsMapper mapper = sqlSession.getMapper(IgnoremanycolumnsMapper.class);
-            
+
             Ignoremanycolumns imc = new Ignoremanycolumns();
             imc.setCol01(22);
             imc.setCol13(33);
             int rows = mapper.insert(imc);
             assertEquals(1, rows);
-            
+
             List<Ignoremanycolumns> returnedRecords = mapper.selectByExample(null);
             assertEquals(1, returnedRecords.size());
-            
+
             Ignoremanycolumns returnedRecord = returnedRecords.get(0);
             assertEquals(22, returnedRecord.getCol01().intValue());
             assertEquals(33, returnedRecord.getCol13().intValue());

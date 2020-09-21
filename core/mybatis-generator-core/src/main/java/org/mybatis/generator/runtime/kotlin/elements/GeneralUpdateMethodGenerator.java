@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 
 public class GeneralUpdateMethodGenerator extends AbstractKotlinFunctionGenerator {
     private String mapperName;
-    
+
     private GeneralUpdateMethodGenerator(Builder builder) {
         super(builder);
         this.mapperName = builder.mapperName;
@@ -56,7 +56,7 @@ public class GeneralUpdateMethodGenerator extends AbstractKotlinFunctionGenerato
             this.mapperName = mapperName;
             return this;
         }
-        
+
         @Override
         public Builder getThis() {
             return this;

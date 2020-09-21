@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ public class GeneralCountMethodGenerator extends AbstractMethodGenerator {
     private GeneralCountMethodGenerator(Builder builder) {
         super(builder);
     }
-    
+
     @Override
     public MethodAndImports generateMethodAndImports() {
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
@@ -39,17 +39,17 @@ public class GeneralCountMethodGenerator extends AbstractMethodGenerator {
                 "org.mybatis.dynamic.sql.select.CountDSLCompleter"); //$NON-NLS-1$
         imports.add(parameterType);
         imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils")); //$NON-NLS-1$
-        
+
         Method method = new Method("count"); //$NON-NLS-1$
         method.setDefault(true);
         method.addParameter(new Parameter(parameterType, "completer")); //$NON-NLS-1$
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
-        
+
         method.setReturnType(new FullyQualifiedJavaType("long")); //$NON-NLS-1$
 
         method.addBodyLine("return MyBatis3Utils.countFrom(this::count, " + tableFieldName + //$NON-NLS-1$
                 ", completer);"); //$NON-NLS-1$
-        
+
         return MethodAndImports.withMethod(method)
                 .withImports(imports)
                 .build();

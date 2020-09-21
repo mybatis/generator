@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -58,10 +58,10 @@ public class ProviderSelectByExampleWithoutBLOBsMethodGenerator extends Abstract
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(FullyQualifiedJavaType.getStringInstance());
         method.addParameter(new Parameter(fqjt, "example")); //$NON-NLS-1$
-        
+
         context.getCommentGenerator().addGeneralMethodComment(method,
                 introspectedTable);
-        
+
         if (useLegacyBuilder) {
             method.addBodyLine("BEGIN();"); //$NON-NLS-1$
         } else {

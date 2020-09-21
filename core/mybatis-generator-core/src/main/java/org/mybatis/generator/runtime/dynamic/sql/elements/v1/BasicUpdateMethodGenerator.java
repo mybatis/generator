@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ import org.mybatis.generator.runtime.dynamic.sql.elements.AbstractMethodGenerato
 import org.mybatis.generator.runtime.dynamic.sql.elements.MethodAndImports;
 
 public class BasicUpdateMethodGenerator extends AbstractMethodGenerator {
-    
+
     private BasicUpdateMethodGenerator(Builder builder) {
         super(builder);
     }
@@ -41,9 +41,9 @@ public class BasicUpdateMethodGenerator extends AbstractMethodGenerator {
                 && !introspectedTable.getRules().generateUpdateByPrimaryKeyWithoutBLOBs()) {
             return null;
         }
-        
+
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
-        
+
         FullyQualifiedJavaType parameterType =
                 new FullyQualifiedJavaType(
                         "org.mybatis.dynamic.sql.update.render.UpdateStatementProvider"); //$NON-NLS-1$
@@ -51,11 +51,11 @@ public class BasicUpdateMethodGenerator extends AbstractMethodGenerator {
                 new FullyQualifiedJavaType("org.mybatis.dynamic.sql.util.SqlProviderAdapter"); //$NON-NLS-1$
         FullyQualifiedJavaType annotation =
                 new FullyQualifiedJavaType("org.apache.ibatis.annotations.UpdateProvider"); //$NON-NLS-1$
-        
+
         imports.add(parameterType);
         imports.add(adapter);
         imports.add(annotation);
-        
+
         Method method = new Method("update"); //$NON-NLS-1$
         method.setAbstract(true);
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());

@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2016 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ import java.sql.Statement;
  * run if necessary.  Note that this class mainly exists to support the
  * MyBatis generator build.  It is intentionally not documented and not
  * supported.
- * 
+ *
  * @author Jeff Butler
  */
 public class SqlScriptRunner {
@@ -43,19 +43,19 @@ public class SqlScriptRunner {
 
     public SqlScriptRunner(String sourceFile, String driver, String url,
             String userId, String password) throws Exception {
-        
+
         if (sourceFile == null || sourceFile.length() == 0) {
             throw new Exception("SQL script file is required");
         }
-        
+
         if (driver == null || driver.length() == 0) {
             throw new Exception("JDBC Driver is required");
         }
-        
+
         if (url == null || url.length() == 0) {
             throw new Exception("JDBC URL is required");
         }
-        
+
         this.sourceFile = sourceFile;
         this.driver = driver;
         this.url = url;
@@ -154,13 +154,13 @@ public class SqlScriptRunner {
 
         return s.length() > 0 ? s : null;
     }
-    
+
     private BufferedReader getScriptReader() throws Exception {
         BufferedReader answer;
-        
+
         if (sourceFile.startsWith("classpath:")) {
             String resource = sourceFile.substring("classpath:".length());
-            InputStream is = 
+            InputStream is =
                 Thread.currentThread().getContextClassLoader().getResourceAsStream(resource);
             if (is == null) {
                 throw new Exception("SQL script file does not exist: " + resource);
@@ -173,7 +173,7 @@ public class SqlScriptRunner {
             }
             answer = new BufferedReader(new FileReader(file));
         }
-        
+
         return answer;
     }
 }

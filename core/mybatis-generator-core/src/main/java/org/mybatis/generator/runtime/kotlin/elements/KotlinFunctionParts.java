@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -28,46 +28,46 @@ public class KotlinFunctionParts {
     private List<String> codeLines;
     private Set<String> imports;
     private List<KotlinArg> arguments;
-    
+
     private KotlinFunctionParts(Builder builder) {
         imports = builder.imports;
         codeLines = builder.codeLines;
         arguments = builder.arguments;
         annotations = builder.annotations;
     }
-    
+
     public Set<String> getImports() {
         return imports;
     }
-    
+
     public List<String> getAnnotations() {
         return annotations;
     }
-    
+
     public List<String> getCodeLines() {
         return codeLines;
     }
-    
+
     public List<KotlinArg> getArguments() {
         return arguments;
     }
-    
+
     public static class Builder {
         private List<String> codeLines = new ArrayList<>();
         private Set<String> imports = new HashSet<>();
         private List<KotlinArg> arguments = new ArrayList<>();
         private List<String> annotations = new ArrayList<>();
-        
+
         public Builder withAnnotation(String annotation) {
             annotations.add(annotation);
             return this;
         }
-        
+
         public Builder withCodeLine(String codeLine) {
             this.codeLines.add(codeLine);
             return this;
         }
-        
+
         public Builder withBodyLines(List<String> codeLines) {
             this.codeLines.addAll(codeLines);
             return this;
@@ -77,17 +77,17 @@ public class KotlinFunctionParts {
             this.imports.add(im);
             return this;
         }
-        
+
         public Builder withImports(Set<String> imports) {
             this.imports.addAll(imports);
             return this;
         }
-        
+
         public Builder withArgument(KotlinArg argument) {
             arguments.add(argument);
             return this;
         }
-        
+
         public KotlinFunctionParts build() {
             return new KotlinFunctionParts(this);
         }

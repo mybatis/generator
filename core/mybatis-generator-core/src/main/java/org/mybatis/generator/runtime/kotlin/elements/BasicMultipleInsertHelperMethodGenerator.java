@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -24,10 +24,10 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 import org.mybatis.generator.runtime.dynamic.sql.elements.v2.Utils;
 
 public class BasicMultipleInsertHelperMethodGenerator extends AbstractKotlinFunctionGenerator {
-    
+
     private FullyQualifiedKotlinType recordType;
     private String mapperName;
-    
+
     private BasicMultipleInsertHelperMethodGenerator(Builder builder) {
         super(builder);
         recordType = builder.recordType;
@@ -39,7 +39,7 @@ public class BasicMultipleInsertHelperMethodGenerator extends AbstractKotlinFunc
         if (!Utils.generateMultipleRowInsertHelper(introspectedTable)) {
             return null;
         }
-  
+
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
                 KotlinFunction.newOneLineFunction(mapperName + ".insertMultipleHelper") //$NON-NLS-1$
                 .withArgument(KotlinArg.newArg("multipleInsertStatement") //$NON-NLS-1$
@@ -53,11 +53,11 @@ public class BasicMultipleInsertHelperMethodGenerator extends AbstractKotlinFunc
                 .withImport("org.mybatis.dynamic.sql.insert.render.MultiRowInsertStatementProvider") //$NON-NLS-1$
                 .withImports(recordType.getImportList())
                 .build();
-        
+
         addFunctionComment(functionAndImports);
         return functionAndImports;
     }
-    
+
     @Override
     public boolean callPlugins(KotlinFunction kotlinFunction, KotlinFile kotlinFile) {
         return context.getPlugins().clientBasicInsertMultipleHelperMethodGenerated(kotlinFunction, kotlinFile,
@@ -68,17 +68,17 @@ public class BasicMultipleInsertHelperMethodGenerator extends AbstractKotlinFunc
 
         private FullyQualifiedKotlinType recordType;
         private String mapperName;
-        
+
         public Builder withRecordType(FullyQualifiedKotlinType recordType) {
             this.recordType = recordType;
             return this;
         }
-        
+
         public Builder withMapperName(String mapperName) {
             this.mapperName = mapperName;
             return this;
         }
-        
+
         @Override
         public Builder getThis() {
             return this;

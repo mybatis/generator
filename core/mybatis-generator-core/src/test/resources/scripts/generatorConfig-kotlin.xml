@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2019 the original author or authors.
+       Copyright 2006-2020 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@
 
   <context id="kotlin" targetRuntime="MyBatis3Kotlin">
     <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
-    
+
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
         connectionURL="jdbc:hsqldb:mem:aname"
         userId="sa" />
@@ -78,7 +78,7 @@
 
   <context id="kotlin-readonly" targetRuntime="MyBatis3Kotlin">
     <plugin type="org.mybatis.generator.plugins.dsql.ReadOnlyPlugin" />
-    
+
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
         connectionURL="jdbc:hsqldb:mem:aname"
         userId="sa" />
@@ -123,7 +123,7 @@
     <commentGenerator>
       <property name="suppressAllComments" value="true"/>
     </commentGenerator>
-    
+
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
         connectionURL="jdbc:hsqldb:mem:aname"
         userId="sa" />
@@ -167,7 +167,7 @@
 
   <context id="kotlin-modelonly" targetRuntime="MyBatis3Kotlin">
     <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
-    
+
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
         connectionURL="jdbc:hsqldb:mem:aname"
         userId="sa" />

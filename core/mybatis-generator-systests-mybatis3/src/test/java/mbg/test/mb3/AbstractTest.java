@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2018 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ import org.junit.jupiter.api.BeforeEach;
 
 /**
  * @author Jeff Butler
- * 
+ *
  */
 public abstract class AbstractTest {
 
@@ -41,6 +41,6 @@ public abstract class AbstractTest {
         sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         reader.close();
     }
-    
+
     public abstract String getMyBatisConfigFile();
 }

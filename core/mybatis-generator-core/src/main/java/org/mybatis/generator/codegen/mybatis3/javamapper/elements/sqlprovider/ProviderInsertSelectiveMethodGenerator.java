@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -60,7 +60,7 @@ public class ProviderInsertSelectiveMethodGenerator extends AbstractJavaProvider
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(FullyQualifiedJavaType.getStringInstance());
         method.addParameter(new Parameter(fqjt, "record")); //$NON-NLS-1$
-        
+
         context.getCommentGenerator().addGeneralMethodComment(method,
                 introspectedTable);
 
@@ -76,7 +76,7 @@ public class ProviderInsertSelectiveMethodGenerator extends AbstractJavaProvider
 
         for (IntrospectedColumn introspectedColumn :
                 ListUtilities.removeIdentityAndGeneratedAlwaysColumns(introspectedTable.getAllColumns())) {
-            
+
             method.addBodyLine(""); //$NON-NLS-1$
             if (!introspectedColumn.getFullyQualifiedJavaType().isPrimitive()
                     && !introspectedColumn.isSequenceColumn()) {
@@ -101,7 +101,7 @@ public class ProviderInsertSelectiveMethodGenerator extends AbstractJavaProvider
         } else {
             method.addBodyLine("return sql.toString();"); //$NON-NLS-1$
         }
-        
+
         if (context.getPlugins().providerInsertSelectiveMethodGenerated(method, topLevelClass,
                 introspectedTable)) {
             topLevelClass.addStaticImports(staticImports);

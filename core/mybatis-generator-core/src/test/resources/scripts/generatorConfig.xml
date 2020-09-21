@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2019 the original author or authors.
+       Copyright 2006-2020 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@
       <property name="connectionURL" value="${database.url}"/>
       <property name="userId" value="sa"/>
     </connectionFactory>
-    
+
     <javaModelGenerator targetPackage="mbg.test.mb3.generated.flat.model" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
       <property name="trimStrings" value="true" />
@@ -248,10 +248,10 @@
       <domainObjectRenamingRule searchString="^Suffix" replaceString=""/>
     </table>
   </context>
-  
+
   <context id="miscellaneousTests_NoClient" targetRuntime="MyBatis3">
     <property name="autoDelimitKeywords" value="true" />
-    
+
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
         connectionURL="jdbc:hsqldb:mem:aname"
         userId="sa" />
@@ -271,7 +271,7 @@
 
   <context id="miscellaneousTests_ModelOnly1" targetRuntime="MyBatis3">
     <property name="autoDelimitKeywords" value="true" />
-    
+
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
         connectionURL="jdbc:hsqldb:mem:aname"
         userId="sa" />
@@ -285,7 +285,7 @@
 
   <context id="miscellaneousTests_ModelOnly2" targetRuntime="MyBatis3">
     <property name="autoDelimitKeywords" value="true" />
-    
+
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
         connectionURL="jdbc:hsqldb:mem:aname"
         userId="sa" />
@@ -295,11 +295,11 @@
 
     <sqlMapGenerator targetPackage="mbg.test.mb3.generated.miscellaneous.modelonly2.xml" targetProject="MAVEN">
     </sqlMapGenerator>
-    
+
     <!-- this should, effectively, be ignored as this is model only -->
     <javaClientGenerator type="XMLMAPPER" targetPackage="mbg.test.mb3.generated.miscellaneous.modelonly2.mapper" targetProject="MAVEN">
     </javaClientGenerator>
-    
+
     <table tableName="FieldsOnly" />
     <table tableName="PKFields" >
       <property name="modelOnly" value="true" />
@@ -511,7 +511,7 @@
     <commentGenerator>
       <property name="suppressDate" value="true"/>
     </commentGenerator>
-    
+
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
         connectionURL="jdbc:hsqldb:mem:aname"
         userId="sa" />
@@ -555,7 +555,7 @@
       <columnOverride column="ID_PLUS2" isGeneratedAlways="true" />
     </table>
   </context>
-  
+
   <context id="miscellaneousTests_immutable_Annotated" targetRuntime="MyBatis3" defaultModelType="hierarchical">
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
         connectionURL="jdbc:hsqldb:mem:aname"
@@ -597,7 +597,7 @@
     <sqlMapGenerator targetPackage="mbg.test.mb3.generated.mixed.flat.xml"  targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
-    
+
     <javaClientGenerator type="MIXEDMAPPER" targetPackage="mbg.test.mb3.generated.mixed.flat.mapper"  targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
@@ -733,7 +733,7 @@
     <commentGenerator>
       <property name="suppressAllComments" value="true"/>
     </commentGenerator>
-    
+
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
         connectionURL="jdbc:hsqldb:mem:aname"
         userId="sa" />
@@ -746,7 +746,7 @@
     <sqlMapGenerator targetPackage="mbg.test.mb3.generated.mixed.miscellaneous.xml"  targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
-    
+
     <javaClientGenerator type="MIXEDMAPPER" targetPackage="mbg.test.mb3.generated.mixed.miscellaneous.mapper"  targetProject="MAVEN">
       <property name="rootInterface" value="mbg.test.common.BaseInterface" />
     </javaClientGenerator>
@@ -773,7 +773,7 @@
       <columnOverride column="name" javaType="mbg.test.mb3.common.TestEnum"/>
     </table>
   </context>
-  
+
   <context id="miscellaneousTests_immutable_Mixed" targetRuntime="MyBatis3" defaultModelType="hierarchical">
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
         connectionURL="jdbc:hsqldb:mem:aname"
@@ -787,7 +787,7 @@
     <sqlMapGenerator targetPackage="mbg.test.mb3.generated.mixed.hierarchical.Immutable.XML"  targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
-    
+
     <javaClientGenerator type="MIXEDMAPPER" targetPackage="mbg.test.mb3.generated.mixed.hierarchical.Immutable.Mapper"  targetProject="MAVEN">
     </javaClientGenerator>
 

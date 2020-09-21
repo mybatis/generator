@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@ public class JavaBeansUtil {
     /**
      * Computes a getter method name.  Warning - does not check to see that the property is a valid
      * property.  Call getValidPropertyName first.
-     * 
+     *
      * @param property
      *            the property
      * @param fullyQualifiedJavaType
@@ -138,18 +138,18 @@ public class JavaBeansUtil {
 
     /**
      * This method ensures that the specified input string is a valid Java property name.
-     * 
+     *
      * <p>The rules are as follows:
-     * 
+     *
      * <ol>
      *   <li>If the first character is lower case, then OK</li>
      *   <li>If the first two characters are upper case, then OK</li>
      *   <li>If the first character is upper case, and the second character is lower case, then the first character
      *       should be made lower case</li>
      * </ol>
-     * 
+     *
      * <p>For example:
-     * 
+     *
      * <ul>
      *   <li>eMail &gt; eMail</li>
      *   <li>firstName &gt; firstName</li>
@@ -216,7 +216,7 @@ public class JavaBeansUtil {
 
         return method;
     }
-    
+
     private static void addGeneratedGetterJavaDoc(Method method, IntrospectedColumn introspectedColumn,
             Context context, IntrospectedTable introspectedTable) {
         context.getCommentGenerator().addGetterComment(method,
@@ -257,7 +257,7 @@ public class JavaBeansUtil {
 
         return field;
     }
-    
+
     private static void addGeneratedJavaDoc(Field field, Context context, IntrospectedColumn introspectedColumn,
             IntrospectedTable introspectedTable) {
         context.getCommentGenerator().addFieldComment(field,
@@ -269,7 +269,7 @@ public class JavaBeansUtil {
         context.getCommentGenerator().addFieldAnnotation(field, introspectedTable, introspectedColumn,
                 compilationUnit.getImportedTypes());
     }
-    
+
     public static Method getJavaBeansSetter(IntrospectedColumn introspectedColumn,
             Context context,
             IntrospectedTable introspectedTable) {
@@ -316,7 +316,7 @@ public class JavaBeansUtil {
 
         return method;
     }
-    
+
     private static void addGeneratedSetterJavaDoc(Method method, IntrospectedColumn introspectedColumn, Context context,
             IntrospectedTable introspectedTable) {
         context.getCommentGenerator().addSetterComment(method,
@@ -329,7 +329,7 @@ public class JavaBeansUtil {
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, introspectedColumn,
                 compilationUnit.getImportedTypes());
     }
-    
+
     private static boolean isTrimStringsEnabled(Context context) {
         Properties properties = context
                 .getJavaModelGeneratorConfiguration().getProperties();

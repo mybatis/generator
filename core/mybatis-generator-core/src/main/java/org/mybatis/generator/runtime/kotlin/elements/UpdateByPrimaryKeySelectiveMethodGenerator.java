@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ public class UpdateByPrimaryKeySelectiveMethodGenerator extends AbstractKotlinFu
     private FullyQualifiedKotlinType recordType;
     private KotlinFragmentGenerator fragmentGenerator;
     private String mapperName;
-    
+
     private UpdateByPrimaryKeySelectiveMethodGenerator(Builder builder) {
         super(builder);
         recordType = builder.recordType;
@@ -41,7 +41,7 @@ public class UpdateByPrimaryKeySelectiveMethodGenerator extends AbstractKotlinFu
         if (!Utils.generateUpdateByPrimaryKey(introspectedTable)) {
             return null;
         }
-        
+
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
                 KotlinFunction.newOneLineFunction(mapperName + ".updateByPrimaryKeySelective") //$NON-NLS-1$
                 .withArgument(KotlinArg.newArg("record") //$NON-NLS-1$
@@ -51,16 +51,16 @@ public class UpdateByPrimaryKeySelectiveMethodGenerator extends AbstractKotlinFu
                 .build())
                 .withImports(recordType.getImportList())
                 .build();
-        
+
         addFunctionComment(functionAndImports);
-        
+
         List<IntrospectedColumn> columns = introspectedTable.getNonPrimaryKeyColumns();
         KotlinFunctionParts functionParts = fragmentGenerator.getSetEqualWhenPresentLines(columns);
         acceptParts(functionAndImports, functionParts);
-        
+
         functionParts = fragmentGenerator.getPrimaryKeyWhereClauseForUpdate();
         acceptParts(functionAndImports, functionParts);
-        
+
         return functionAndImports;
     }
 
@@ -74,17 +74,17 @@ public class UpdateByPrimaryKeySelectiveMethodGenerator extends AbstractKotlinFu
         private FullyQualifiedKotlinType recordType;
         private KotlinFragmentGenerator fragmentGenerator;
         private String mapperName;
-        
+
         public Builder withRecordType(FullyQualifiedKotlinType recordType) {
             this.recordType = recordType;
             return this;
         }
-        
+
         public Builder withFragmentGenerator(KotlinFragmentGenerator fragmentGenerator) {
             this.fragmentGenerator = fragmentGenerator;
             return this;
         }
-        
+
         public Builder withMapperName(String mapperName) {
             this.mapperName = mapperName;
             return this;

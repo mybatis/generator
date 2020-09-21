@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ public class InsertMethodGenerator extends AbstractKotlinFunctionGenerator {
     private FullyQualifiedKotlinType recordType;
     private String mapperName;
     private String tableFieldImport;
-    
+
     private InsertMethodGenerator(Builder builder) {
         super(builder);
         recordType = builder.recordType;
@@ -49,25 +49,25 @@ public class InsertMethodGenerator extends AbstractKotlinFunctionGenerator {
                 .build();
 
         addFunctionComment(functionAndImports);
-        
+
         KotlinFunction function = functionAndImports.getFunction();
-        
+
         function.addCodeLine("insert(this::insert, record, " + tableFieldName + //$NON-NLS-1$
                 ") {"); //$NON-NLS-1$
-        
+
         List<IntrospectedColumn> columns =
                 ListUtilities.removeIdentityAndGeneratedAlwaysColumns(introspectedTable.getAllColumns());
         for (IntrospectedColumn column : columns) {
             String fieldName = column.getJavaProperty();
             functionAndImports.getImports().add(tableFieldImport + "." + fieldName); //$NON-NLS-1$
-            
+
             function.addCodeLine("    map(" + fieldName //$NON-NLS-1$
                     + ").toProperty(\"" + column.getJavaProperty() //$NON-NLS-1$
                     + "\")"); //$NON-NLS-1$
         }
-        
+
         function.addCodeLine("}"); //$NON-NLS-1$
-        
+
         return functionAndImports;
     }
 
@@ -90,12 +90,12 @@ public class InsertMethodGenerator extends AbstractKotlinFunctionGenerator {
             this.mapperName = mapperName;
             return this;
         }
-        
+
         public Builder withTableFieldImport(String tableFieldImport) {
             this.tableFieldImport = tableFieldImport;
             return this;
         }
-        
+
         @Override
         public Builder getThis() {
             return this;

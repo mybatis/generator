@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -153,7 +153,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
      * Returns a formated date string to include in the Javadoc tag and XML
      * comments. You may return null if you do not want the date in these
      * documentation elements.
-     * 
+     *
      * @return a string representing the current timestamp, or null
      */
     protected String getDateString() {

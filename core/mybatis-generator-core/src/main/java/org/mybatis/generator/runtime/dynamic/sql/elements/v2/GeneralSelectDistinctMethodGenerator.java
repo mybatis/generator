@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ import org.mybatis.generator.runtime.dynamic.sql.elements.MethodAndImports;
 
 public class GeneralSelectDistinctMethodGenerator extends AbstractMethodGenerator {
     private FullyQualifiedJavaType recordType;
-    
+
     private GeneralSelectDistinctMethodGenerator(Builder builder) {
         super(builder);
         recordType = builder.recordType;
@@ -36,28 +36,28 @@ public class GeneralSelectDistinctMethodGenerator extends AbstractMethodGenerato
     @Override
     public MethodAndImports generateMethodAndImports() {
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
-        
+
         FullyQualifiedJavaType parameterType = new FullyQualifiedJavaType(
                 "org.mybatis.dynamic.sql.select.SelectDSLCompleter"); //$NON-NLS-1$
 
         imports.add(parameterType);
         imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils")); //$NON-NLS-1$
-        
+
         FullyQualifiedJavaType returnType = FullyQualifiedJavaType.getNewListInstance();
         returnType.addTypeArgument(recordType);
-        
+
         imports.add(returnType);
-        
+
         Method method = new Method("selectDistinct"); //$NON-NLS-1$
         method.setDefault(true);
         method.addParameter(new Parameter(parameterType, "completer")); //$NON-NLS-1$
-        
+
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
-        
+
         method.setReturnType(returnType);
         method.addBodyLine("return MyBatis3Utils.selectDistinct(this::selectMany, selectList, " + //$NON-NLS-1$
                 tableFieldName + ", completer);"); //$NON-NLS-1$
-        
+
         return MethodAndImports.withMethod(method)
                 .withImports(imports)
                 .build();
@@ -70,12 +70,12 @@ public class GeneralSelectDistinctMethodGenerator extends AbstractMethodGenerato
 
     public static class Builder extends BaseBuilder<Builder, GeneralSelectDistinctMethodGenerator> {
         private FullyQualifiedJavaType recordType;
-        
+
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
             this.recordType = recordType;
             return this;
         }
-        
+
         @Override
         public Builder getThis() {
             return this;

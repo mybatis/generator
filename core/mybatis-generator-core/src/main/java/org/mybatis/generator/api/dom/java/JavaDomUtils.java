@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,13 +19,13 @@ import java.util.stream.Collectors;
 
 public class JavaDomUtils {
     private JavaDomUtils() {}
-    
+
     /**
      * Calculates type names for writing into generated Java.  We try to
      * use short names wherever possible.  If the type requires an import,
      * but has not been imported, then we need to use the fully qualified
      * type name.
-     * 
+     *
      * @param compilationUnit the compilation unit being written
      * @param fqjt the type in question
      * @return the full type name
@@ -40,14 +40,14 @@ public class JavaDomUtils {
                     new FullyQualifiedJavaType(fqn.substring(0, fqn.indexOf('['))));
             return typeName + fqn.substring(fqn.indexOf('['));
         }
-        
+
         if (!fqjt.getTypeArguments().isEmpty()) {
             return calculateParameterizedTypeName(compilationUnit, fqjt);
         }
-        
+
         if (compilationUnit == null
                 || typeDoesNotRequireImport(fqjt)
-                || typeIsInSamePackage(compilationUnit, fqjt) 
+                || typeIsInSamePackage(compilationUnit, fqjt)
                 || typeIsAlreadyImported(compilationUnit, fqjt)) {
             return fqjt.getShortName();
         } else {
@@ -69,14 +69,14 @@ public class JavaDomUtils {
         return fullyQualifiedJavaType.isPrimitive()
                 || !fullyQualifiedJavaType.isExplicitlyImported();
     }
-    
+
     private static boolean typeIsInSamePackage(CompilationUnit compilationUnit,
             FullyQualifiedJavaType fullyQualifiedJavaType) {
         return fullyQualifiedJavaType
                 .getPackageName()
                 .equals(compilationUnit.getType().getPackageName());
     }
-    
+
     private static boolean typeIsAlreadyImported(CompilationUnit compilationUnit,
             FullyQualifiedJavaType fullyQualifiedJavaType) {
         String name = fullyQualifiedJavaType.getFullyQualifiedNameWithoutTypeParameters();

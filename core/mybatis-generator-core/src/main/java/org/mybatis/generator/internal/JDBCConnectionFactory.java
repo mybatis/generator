@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ import org.mybatis.generator.config.JDBCConnectionConfiguration;
  * but also to make sure that any native libraries are only loaded one time.
  * This avoids the dreaded UnsatisfiedLinkError library loaded in another
  * classloader.
- * 
+ *
  * @author Jeff Butler
  */
 public class JDBCConnectionFactory implements ConnectionFactory {
@@ -45,7 +45,7 @@ public class JDBCConnectionFactory implements ConnectionFactory {
     /**
      * This constructor is called when there is a JDBCConnectionConfiguration
      * specified in the configuration.
-     * 
+     *
      * @param config the configuration
      */
     public JDBCConnectionFactory(JDBCConnectionConfiguration config) {
@@ -58,8 +58,8 @@ public class JDBCConnectionFactory implements ConnectionFactory {
     }
 
     /**
-     * This constructor is called when this connection factory is specified 
-     * as the type in a ConnectionFactory configuration element. 
+     * This constructor is called when this connection factory is specified
+     * as the type in a ConnectionFactory configuration element.
      */
     public JDBCConnectionFactory() {
         super();

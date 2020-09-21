@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -28,11 +28,11 @@ import org.mybatis.generator.runtime.dynamic.sql.elements.MethodAndImports;
 import org.mybatis.generator.runtime.dynamic.sql.elements.MethodParts;
 
 public class BasicSelectOneMethodGeneratorV2 extends AbstractMethodGenerator {
-    
+
     private FullyQualifiedJavaType recordType;
     private String resultMapId;
     private FragmentGenerator fragmentGenerator;
-    
+
     private BasicSelectOneMethodGeneratorV2(Builder builder) {
         super(builder);
         recordType = builder.recordType;
@@ -43,10 +43,10 @@ public class BasicSelectOneMethodGeneratorV2 extends AbstractMethodGenerator {
     @Override
     public MethodAndImports generateMethodAndImports() {
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
-        
+
         boolean reuseResultMap = introspectedTable.getRules().generateSelectByExampleWithBLOBs()
                 || introspectedTable.getRules().generateSelectByExampleWithoutBLOBs();
-                
+
         FullyQualifiedJavaType parameterType =
                 new FullyQualifiedJavaType(
                         "org.mybatis.dynamic.sql.select.render.SelectStatementProvider"); //$NON-NLS-1$
@@ -62,9 +62,9 @@ public class BasicSelectOneMethodGeneratorV2 extends AbstractMethodGenerator {
 
         FullyQualifiedJavaType returnType = new FullyQualifiedJavaType("java.util.Optional"); //$NON-NLS-1$
         returnType.addTypeArgument(recordType);
-        
+
         imports.add(returnType);
-        
+
         Method method = new Method("selectOne"); //$NON-NLS-1$
         method.setAbstract(true);
 
@@ -73,7 +73,7 @@ public class BasicSelectOneMethodGeneratorV2 extends AbstractMethodGenerator {
         method.addParameter(new Parameter(parameterType, "selectStatement")); //$NON-NLS-1$
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
         method.addAnnotation("@SelectProvider(type=SqlProviderAdapter.class, method=\"select\")"); //$NON-NLS-1$
-        
+
         MethodAndImports.Builder builder = MethodAndImports.withMethod(method)
                 .withImports(imports);
 
@@ -105,22 +105,22 @@ public class BasicSelectOneMethodGeneratorV2 extends AbstractMethodGenerator {
         private FullyQualifiedJavaType recordType;
         private String resultMapId;
         private FragmentGenerator fragmentGenerator;
-        
+
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
             this.recordType = recordType;
             return this;
         }
-        
+
         public Builder withResultMapId(String resultMapId) {
             this.resultMapId = resultMapId;
             return this;
         }
-        
+
         public Builder withFragmentGenerator(FragmentGenerator fragmentGenerator) {
             this.fragmentGenerator = fragmentGenerator;
             return this;
         }
-        
+
         @Override
         public Builder getThis() {
             return this;

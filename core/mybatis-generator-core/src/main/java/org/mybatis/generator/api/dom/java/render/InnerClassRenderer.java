@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -24,10 +24,10 @@ import org.mybatis.generator.api.dom.java.JavaDomUtils;
 import org.mybatis.generator.internal.util.CustomCollectors;
 
 public class InnerClassRenderer {
-    
+
     public List<String> render(InnerClass innerClass, CompilationUnit compilationUnit) {
         List<String> lines = new ArrayList<>();
-        
+
         lines.addAll(innerClass.getJavaDocLines());
         lines.addAll(innerClass.getAnnotations());
         lines.add(renderFirstLine(innerClass, compilationUnit));
@@ -68,14 +68,14 @@ public class InnerClassRenderer {
         sb.append(renderSuperClass(innerClass, compilationUnit));
         sb.append(renderSuperInterfaces(innerClass, compilationUnit));
         sb.append(" {"); //$NON-NLS-1$
-        
+
         return sb.toString();
     }
 
     private String renderSuperClass(InnerClass innerClass, CompilationUnit compilationUnit) {
         return innerClass.getSuperClass()
                 .map(sc -> " extends " + JavaDomUtils.calculateTypeName(compilationUnit, sc)) //$NON-NLS-1$
-                .orElse(""); //$NON-NLS-1$        
+                .orElse(""); //$NON-NLS-1$
     }
 
     // should return an empty string if no super interfaces

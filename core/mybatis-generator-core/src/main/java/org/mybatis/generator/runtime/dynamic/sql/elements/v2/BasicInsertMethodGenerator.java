@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -29,10 +29,10 @@ import org.mybatis.generator.runtime.dynamic.sql.elements.MethodAndImports;
 import org.mybatis.generator.runtime.dynamic.sql.elements.MethodParts;
 
 public class BasicInsertMethodGenerator extends AbstractMethodGenerator {
-    
+
     private FullyQualifiedJavaType recordType;
     private FragmentGenerator fragmentGenerator;
-    
+
     private BasicInsertMethodGenerator(Builder builder) {
         super(builder);
         recordType = builder.recordType;
@@ -42,23 +42,23 @@ public class BasicInsertMethodGenerator extends AbstractMethodGenerator {
     @Override
     public MethodAndImports generateMethodAndImports() {
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
-        
+
         FullyQualifiedJavaType adapter =
                 new FullyQualifiedJavaType("org.mybatis.dynamic.sql.util.SqlProviderAdapter"); //$NON-NLS-1$
         FullyQualifiedJavaType annotation =
                 new FullyQualifiedJavaType("org.apache.ibatis.annotations.InsertProvider"); //$NON-NLS-1$
-        
+
         imports.add(new FullyQualifiedJavaType(
                 "org.mybatis.dynamic.sql.insert.render.InsertStatementProvider")); //$NON-NLS-1$
         imports.add(adapter);
         imports.add(annotation);
-        
+
         FullyQualifiedJavaType parameterType =
                 new FullyQualifiedJavaType(
                         "org.mybatis.dynamic.sql.insert.render.InsertStatementProvider"); //$NON-NLS-1$
         imports.add(recordType);
         parameterType.addTypeArgument(recordType);
-        
+
         Method method = new Method("insert"); //$NON-NLS-1$
         method.setAbstract(true);
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
@@ -68,7 +68,7 @@ public class BasicInsertMethodGenerator extends AbstractMethodGenerator {
 
         MethodAndImports.Builder builder = MethodAndImports.withMethod(method)
                 .withImports(imports);
-      
+
         GeneratedKey gk = introspectedTable.getGeneratedKey();
         if (gk != null) {
             MethodParts methodParts = fragmentGenerator.getGeneratedKeyAnnotation(gk);
@@ -87,17 +87,17 @@ public class BasicInsertMethodGenerator extends AbstractMethodGenerator {
 
         private FullyQualifiedJavaType recordType;
         private FragmentGenerator fragmentGenerator;
-        
+
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
             this.recordType = recordType;
             return this;
         }
-        
+
         public Builder withFragmentGenerator(FragmentGenerator fragmentGenerator) {
             this.fragmentGenerator = fragmentGenerator;
             return this;
         }
-        
+
         @Override
         public Builder getThis() {
             return this;

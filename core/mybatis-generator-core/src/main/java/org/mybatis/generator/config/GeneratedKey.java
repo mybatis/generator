@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2018 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ import org.mybatis.generator.internal.db.DatabaseDialects;
 /**
  * This class specifies that a key is auto-generated, either as an identity
  * column (post insert), or as some other query like a sequences (pre insert).
- * 
+ *
  * @author Jeff Butler
  */
 public class GeneratedKey {

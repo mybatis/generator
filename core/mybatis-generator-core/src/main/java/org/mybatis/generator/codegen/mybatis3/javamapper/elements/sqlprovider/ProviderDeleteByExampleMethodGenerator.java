@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -53,7 +53,7 @@ public class ProviderDeleteByExampleMethodGenerator extends AbstractJavaProvider
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(FullyQualifiedJavaType.getStringInstance());
         method.addParameter(new Parameter(fqjt, "example")); //$NON-NLS-1$
-        
+
         context.getCommentGenerator().addGeneralMethodComment(method,
                 introspectedTable);
 
@@ -70,7 +70,7 @@ public class ProviderDeleteByExampleMethodGenerator extends AbstractJavaProvider
             method.addBodyLine("applyWhere(sql, example, false);"); //$NON-NLS-1$
             method.addBodyLine("return sql.toString();"); //$NON-NLS-1$
         }
-        
+
         if (context.getPlugins().providerDeleteByExampleMethodGenerated(method, topLevelClass,
                 introspectedTable)) {
             topLevelClass.addStaticImports(staticImports);

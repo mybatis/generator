@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2018 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -54,7 +54,7 @@ import mbg.test.mb3.generated.annotated.flat.model.subpackage.FieldsonlyExample;
 
 /**
  * @author Jeff Butler
- * 
+ *
  */
 public class FlatJava5Test extends AbstractAnnotatedFlatTest {
 
@@ -1080,7 +1080,7 @@ public class FlatJava5Test extends AbstractAnnotatedFlatTest {
             sqlSession.close();
         }
     }
-    
+
     @Test
     public void testPKFieldsSelectByExampleNoCriteria() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -2121,7 +2121,7 @@ public class FlatJava5Test extends AbstractAnnotatedFlatTest {
             record.setId7(7);
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
-            
+
             record.setActive(true);
             record.setActive1(Boolean.FALSE);
             record.setActive2(new byte[]{-128, 127});
@@ -2155,7 +2155,7 @@ public class FlatJava5Test extends AbstractAnnotatedFlatTest {
             assertEquals(-128, returnedRecord.getActive2()[0]);
             assertEquals(127, returnedRecord.getActive2()[1]);
             assertEquals(0, returnedRecord.getActive2()[2]);
-            
+
         } finally {
             sqlSession.close();
         }
@@ -2206,7 +2206,7 @@ public class FlatJava5Test extends AbstractAnnotatedFlatTest {
             sqlSession.close();
         }
     }
-    
+
     @Test
     public void testAwfulTableUpdateByPrimaryKey() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -2675,7 +2675,7 @@ public class FlatJava5Test extends AbstractAnnotatedFlatTest {
             sqlSession.close();
         }
     }
-    
+
     @Test
     public void testAwfulTableSelectByExampleComplexLike() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -2881,7 +2881,7 @@ public class FlatJava5Test extends AbstractAnnotatedFlatTest {
             example.createCriteria().andId1In(ids);
             example.setOrderByClause("\"A_CuStOmEr iD\"");
             List<AwfulTable> answer = mapper.selectByExample(example);
-            
+
             assertEquals(2, answer.size());
             AwfulTable returnedRecord = answer.get(0);
             assertEquals(1, returnedRecord.getId1().intValue());
@@ -3086,7 +3086,7 @@ public class FlatJava5Test extends AbstractAnnotatedFlatTest {
             AwfulTableExample example = new AwfulTableExample();
             example.createCriteria();
             example.setOrderByClause("\"A_CuStOmEr iD\" desc");
-            
+
             List<AwfulTable> answer = mapper.selectByExample(example);
             assertEquals(6, answer.size());
             AwfulTable returnedRecord = answer.get(0);
@@ -3154,39 +3154,39 @@ public class FlatJava5Test extends AbstractAnnotatedFlatTest {
             sqlSession.close();
         }
     }
-    
+
     @Test
     public void testEquals1() {
         Pkfields pkfields1 = new Pkfields();
         assertFalse(pkfields1.equals(null));
     }
-    
+
     @Test
     public void testEquals2() {
         Pkfields pkfields1 = new Pkfields();
         Pkfields pkfields2 = new Pkfields();
         assertTrue(pkfields1.equals(pkfields2));
     }
-    
+
     @Test
     public void testEquals3() {
         Pkfields pkfields1 = new Pkfields();
         pkfields1.setId1(2);
-        
+
         Pkfields pkfields2 = new Pkfields();
         pkfields2.setId1(2);
-        
+
         assertTrue(pkfields1.equals(pkfields2));
     }
-    
+
     @Test
     public void testEquals4() {
         Pkfields pkfields1 = new Pkfields();
         pkfields1.setId1(2);
-        
+
         Pkfields pkfields2 = new Pkfields();
         pkfields2.setId1(3);
-        
+
         assertFalse(pkfields1.equals(pkfields2));
     }
 
@@ -3223,9 +3223,9 @@ public class FlatJava5Test extends AbstractAnnotatedFlatTest {
         awfulTable2.setLastName("Rubble");
         awfulTable2.setSecondFirstName("Bamm Bamm");
         awfulTable2.setThirdFirstName("Pebbles");
-        
+
         assertTrue(awfulTable1.equals(awfulTable2));
-        
+
         awfulTable2.setActive(true);
         assertFalse(awfulTable1.equals(awfulTable2));
     }
@@ -3236,15 +3236,15 @@ public class FlatJava5Test extends AbstractAnnotatedFlatTest {
         Pkfields pkfields2 = new Pkfields();
         assertTrue(pkfields1.hashCode() == pkfields2.hashCode());
     }
-    
+
     @Test
     public void testHashCode2() {
         Pkfields pkfields1 = new Pkfields();
         pkfields1.setId1(2);
-        
+
         Pkfields pkfields2 = new Pkfields();
         pkfields2.setId1(2);
-        
+
         assertTrue(pkfields1.hashCode() == pkfields2.hashCode());
     }
 
@@ -3281,7 +3281,7 @@ public class FlatJava5Test extends AbstractAnnotatedFlatTest {
         awfulTable2.setLastName("Rubble");
         awfulTable2.setSecondFirstName("Bamm Bamm");
         awfulTable2.setThirdFirstName("Pebbles");
-        
+
         assertTrue(awfulTable1.hashCode() == awfulTable2.hashCode());
     }
 }

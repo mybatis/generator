@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -31,12 +31,12 @@ import org.mybatis.generator.config.Context;
  * This class includes no-operation methods for almost every method in the
  * Plugin interface. Clients may extend this class to implement some or all of
  * the methods in a plugin.
- * 
+ *
  * <p>This adapter does not implement the <code>validate</code> method - all plugins
  * must perform validation.
- * 
+ *
  * @author Jeff Butler
- * 
+ *
  */
 public abstract class PluginAdapter implements Plugin {
     protected Context context;

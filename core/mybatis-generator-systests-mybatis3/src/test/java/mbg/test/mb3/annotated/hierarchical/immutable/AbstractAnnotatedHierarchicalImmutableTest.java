@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2018 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ public abstract class AbstractAnnotatedHierarchicalImmutableTest extends Abstrac
         sqlSessionFactory.getConfiguration().addMapper(PkfieldsMapper.class);
         sqlSessionFactory.getConfiguration().addMapper(PkonlyMapper.class);
     }
-    
+
     @Override
     public String getMyBatisConfigFile() {
         return "mbg/test/mb3/annotated/MapperConfig.xml";

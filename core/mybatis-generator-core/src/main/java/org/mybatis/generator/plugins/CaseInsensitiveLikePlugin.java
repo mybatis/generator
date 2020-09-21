@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -32,12 +32,12 @@ import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
  * This plugin demonstrates adding methods to the example class to enable
  * case-insensitive LIKE searches. It shows hows to construct new methods and
  * add them to an existing class.
- * 
+ *
  * <p>This plugin only adds methods for String fields mapped to a JDBC character
  * type (CHAR, VARCHAR, etc.)
- * 
+ *
  * @author Jeff Butler
- * 
+ *
  */
 public class CaseInsensitiveLikePlugin extends PluginAdapter {
 
@@ -61,18 +61,18 @@ public class CaseInsensitiveLikePlugin extends PluginAdapter {
 
         return true;
     }
-    
+
     private boolean isGeneratedCriteria(InnerClass innerClass) {
         return "GeneratedCriteria".equals(innerClass.getType().getShortName()); //$NON-NLS-1$
     }
-    
+
     private void addMethods(IntrospectedTable introspectedTable, InnerClass criteria) {
         introspectedTable.getNonBLOBColumns().stream()
         .filter(this::isEligibleColumn)
         .map(this::toMethod)
         .forEach(criteria::addMethod);
     }
-    
+
     private boolean isEligibleColumn(IntrospectedColumn introspectedColumn) {
         return introspectedColumn.isJdbcCharacterColumn()
                 && introspectedColumn.isStringColumn();

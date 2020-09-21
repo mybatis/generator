@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
  * something is disabled by the default rules, or is disabled by some other
  * plugin, it should not be re-enabled. Therefore, the following pattern of use
  * is recommended:
- * 
+ *
  * <pre>
  * public class MyPlugin extends PluginAdapter {
  *   &#64;Override
@@ -34,12 +34,12 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
  *     introspectedTable.setRules(myRules);
  *   }
  * }
- * 
+ *
  * public class MyRules extends RulesDelegate (
  *   public MyRules(Rules rules) {
  *     super(rules);
  *   }
- *   
+ *
  *   &#64;Override
  *   public boolean generateInsert() {
  *     boolean rc = super.generateInsert();
@@ -48,14 +48,14 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
  *       // of the insert method.  We can decide to disable it here
  *       // if needed.
  *     }
- *     
+ *
  *     return rc;
  *   }
  * </pre>
- * 
- * 
+ *
+ *
  * @author Jeff Butler
- * 
+ *
  */
 public class RulesDelegate implements Rules {
     protected Rules rules;

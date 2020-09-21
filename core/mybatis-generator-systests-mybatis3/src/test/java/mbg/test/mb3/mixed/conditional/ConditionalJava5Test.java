@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2018 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -57,14 +57,14 @@ import mbg.test.mb3.generated.mixed.conditional.model.PkonlyKey;
 
 /**
  * @author Jeff Butler
- * 
+ *
  */
 public class ConditionalJava5Test extends AbstractMixedConditionalTest {
 
     @Test
     public void testFieldsOnlyInsert() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
-        
+
         try {
             FieldsonlyMapper mapper = sqlSession.getMapper(FieldsonlyMapper.class);
             Fieldsonly record = new Fieldsonly();
@@ -1197,12 +1197,12 @@ public class ConditionalJava5Test extends AbstractMixedConditionalTest {
             example.setOrderByClause("ID1, ID2");
             List<Pkfields> answer = mapper.selectByExample(example);
             assertEquals(1, answer.size());
-            
+
             example.clear();
             example.createCriteria().andDatefieldLessThan(calendar.getTime());
             answer = mapper.selectByExample(example);
             assertEquals(5, answer.size());
-            
+
             calendar.set(Calendar.MINUTE, 12);
             example.clear();
             example.createCriteria().andTimefieldEqualTo(calendar.getTime());
@@ -1217,7 +1217,7 @@ public class ConditionalJava5Test extends AbstractMixedConditionalTest {
             sqlSession.close();
         }
     }
-    
+
     @Test
     public void testPKFieldsCountByExample() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -1977,7 +1977,7 @@ public class ConditionalJava5Test extends AbstractMixedConditionalTest {
             record.setBlob1(generateRandomBlob());
             record.setBlob2(generateRandomBlob());
             mapper.insert(record);
-            
+
             FieldsblobsExample example = new FieldsblobsExample();
             example.createCriteria().andFirstnameEqualTo("Bob");
             List<FieldsblobsWithBLOBs> answer = mapper.selectByExampleWithBLOBs(example);
@@ -2258,7 +2258,7 @@ public class ConditionalJava5Test extends AbstractMixedConditionalTest {
             sqlSession.close();
         }
     }
-    
+
     @Test
     public void testAwfulTableUpdateByPrimaryKey() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -2735,7 +2735,7 @@ public class ConditionalJava5Test extends AbstractMixedConditionalTest {
             sqlSession.close();
         }
     }
-    
+
     @Test
     public void testAwfulTableSelectByExampleComplexLike() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -2941,7 +2941,7 @@ public class ConditionalJava5Test extends AbstractMixedConditionalTest {
             example.createCriteria().andId1In(ids);
             example.setOrderByClause("\"A_CuStOmEr iD\"");
             List<AwfulTable> answer = mapper.selectByExample(example);
-            
+
             assertEquals(2, answer.size());
             AwfulTable returnedRecord = answer.get(0);
             assertEquals(1, returnedRecord.getId1().intValue());
@@ -3146,7 +3146,7 @@ public class ConditionalJava5Test extends AbstractMixedConditionalTest {
             AwfulTableExample example = new AwfulTableExample();
             example.createCriteria();
             example.setOrderByClause("\"A_CuStOmEr iD\" desc");
-            
+
             List<AwfulTable> answer = mapper.selectByExample(example);
             assertEquals(6, answer.size());
             AwfulTable returnedRecord = answer.get(0);

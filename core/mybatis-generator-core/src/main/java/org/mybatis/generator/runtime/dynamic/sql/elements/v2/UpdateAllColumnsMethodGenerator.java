@@ -1,5 +1,5 @@
-/**
- *    Copyright 2006-2019 the original author or authors.
+/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ import org.mybatis.generator.runtime.dynamic.sql.elements.MethodAndImports;
 public class UpdateAllColumnsMethodGenerator extends AbstractMethodGenerator {
     private FullyQualifiedJavaType recordType;
     private FragmentGenerator fragmentGenerator;
-    
+
     private UpdateAllColumnsMethodGenerator(Builder builder) {
         super(builder);
         recordType = builder.recordType;
@@ -47,11 +47,11 @@ public class UpdateAllColumnsMethodGenerator extends AbstractMethodGenerator {
         imports.add(parameterAndReturnType);
 
         imports.add(recordType);
-        
+
         Method method = new Method("updateAllColumns"); //$NON-NLS-1$
         method.setStatic(true);
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
-        
+
         method.setReturnType(parameterAndReturnType);
         method.addParameter(new Parameter(recordType, "record")); //$NON-NLS-1$
         method.addParameter(new Parameter(parameterAndReturnType, "dsl")); //$NON-NLS-1$
@@ -72,12 +72,12 @@ public class UpdateAllColumnsMethodGenerator extends AbstractMethodGenerator {
     public static class Builder extends BaseBuilder<Builder, UpdateAllColumnsMethodGenerator> {
         private FullyQualifiedJavaType recordType;
         private FragmentGenerator fragmentGenerator;
-        
+
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
             this.recordType = recordType;
             return this;
         }
-        
+
         public Builder withFragmentGenerator(FragmentGenerator fragmentGenerator) {
             this.fragmentGenerator = fragmentGenerator;
             return this;

@@ -23,7 +23,7 @@ import org.mybatis.generator.api.dom.java.InitializationBlock;
 public class InitializationBlockRenderer {
 
     private BodyLineRenderer bodyLineRenderer = new BodyLineRenderer();
-    
+
     public List<String> render(InitializationBlock initializationBlock) {
         List<String> lines = new ArrayList<>();
 
@@ -31,10 +31,10 @@ public class InitializationBlockRenderer {
         lines.add(renderFirstLine(initializationBlock));
         lines.addAll(bodyLineRenderer.render(initializationBlock.getBodyLines()));
         lines.add("}"); //$NON-NLS-1$
-        
+
         return lines;
     }
-    
+
     private String renderFirstLine(InitializationBlock initializationBlock) {
         if (initializationBlock.isStatic()) {
             return "static {"; //$NON-NLS-1$

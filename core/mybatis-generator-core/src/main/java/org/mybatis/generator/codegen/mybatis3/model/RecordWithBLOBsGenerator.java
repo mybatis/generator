@@ -70,7 +70,7 @@ public class RecordWithBLOBsGenerator extends AbstractJavaGenerator {
                 addDefaultConstructor(topLevelClass);
             }
         }
-        
+
         for (IntrospectedColumn introspectedColumn : introspectedTable
                 .getBLOBColumns()) {
             if (RootClassInfo.getInstance(rootClass, warnings)
@@ -116,7 +116,7 @@ public class RecordWithBLOBsGenerator extends AbstractJavaGenerator {
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setConstructor(true);
         context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
-        
+
         for (IntrospectedColumn introspectedColumn : introspectedTable
                 .getAllColumns()) {
             method.addParameter(new Parameter(introspectedColumn.getFullyQualifiedJavaType(),
@@ -138,7 +138,7 @@ public class RecordWithBLOBsGenerator extends AbstractJavaGenerator {
         }
         sb.append(");"); //$NON-NLS-1$
         method.addBodyLine(sb.toString());
-        
+
         for (IntrospectedColumn introspectedColumn : introspectedTable
                 .getBLOBColumns()) {
             sb.setLength(0);

@@ -25,7 +25,7 @@ public interface ConnectionFactory {
      * Should return a connection to the database in use for this context.
      * The generator will call this method only one time for each context.
      * The generator will close the connection.
-     * 
+     *
      * @return the connection
      * @throws SQLException if there is some error obtaining the connection
      */
@@ -34,9 +34,9 @@ public interface ConnectionFactory {
     /**
      * Adds properties for this instance from any properties configured in the
      * ConnectionFactory.
-     * 
+     *
      * <p>This method will be called before any of the get methods.
-     * 
+     *
      * @param properties
      *            All properties from the configuration
      */

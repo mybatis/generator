@@ -25,15 +25,15 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
  * The main purpose is to convert type calculated by the database introspector into appropriate
  * types for Kotlin - which means that it covers Java primitives, Strings, and primitive wrapper
  * classes as those Java types have replacements in Kotlin.
- *  
+ *
  * @author Jeff Butler
  *
  */
 public class JavaToKotlinTypeConverter {
     private JavaToKotlinTypeConverter() {}
-    
+
     private static Map<String, String> typeMap = new HashMap<>();
-    
+
     static {
         // string
         typeMap.put("java.lang.String", "kotlin.String"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -82,14 +82,14 @@ public class JavaToKotlinTypeConverter {
 
     public static FullyQualifiedKotlinType convert(FullyQualifiedJavaType javaType) {
         FullyQualifiedKotlinType kotlinType = convertBaseType(javaType);
-        
+
         for (FullyQualifiedJavaType argument : javaType.getTypeArguments()) {
             kotlinType.addTypeArgument(convert(argument));
         }
-        
+
         return kotlinType;
     }
-    
+
     private static FullyQualifiedKotlinType convertBaseType(FullyQualifiedJavaType javaType) {
         String typeName = javaType.getFullyQualifiedNameWithoutTypeParameters();
         return new FullyQualifiedKotlinType(typeMap.getOrDefault(typeName, typeName));

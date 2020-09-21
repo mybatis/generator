@@ -28,7 +28,7 @@ public class UpdateByPrimaryKeyMethodGenerator extends AbstractKotlinFunctionGen
     private FullyQualifiedKotlinType recordType;
     private KotlinFragmentGenerator fragmentGenerator;
     private String mapperName;
-    
+
     private UpdateByPrimaryKeyMethodGenerator(Builder builder) {
         super(builder);
         recordType = builder.recordType;
@@ -41,7 +41,7 @@ public class UpdateByPrimaryKeyMethodGenerator extends AbstractKotlinFunctionGen
         if (!Utils.generateUpdateByPrimaryKey(introspectedTable)) {
             return null;
         }
-        
+
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
                 KotlinFunction.newOneLineFunction(mapperName + ".updateByPrimaryKey") //$NON-NLS-1$
                 .withArgument(KotlinArg.newArg("record") //$NON-NLS-1$
@@ -51,16 +51,16 @@ public class UpdateByPrimaryKeyMethodGenerator extends AbstractKotlinFunctionGen
                 .build())
                 .withImports(recordType.getImportList())
                 .build();
-        
+
         addFunctionComment(functionAndImports);
-        
+
         List<IntrospectedColumn> columns = introspectedTable.getNonPrimaryKeyColumns();
         KotlinFunctionParts functionParts = fragmentGenerator.getSetEqualLines(columns);
         acceptParts(functionAndImports, functionParts);
-        
+
         functionParts = fragmentGenerator.getPrimaryKeyWhereClauseForUpdate();
         acceptParts(functionAndImports, functionParts);
-        
+
         return functionAndImports;
     }
 
@@ -74,12 +74,12 @@ public class UpdateByPrimaryKeyMethodGenerator extends AbstractKotlinFunctionGen
         private FullyQualifiedKotlinType recordType;
         private KotlinFragmentGenerator fragmentGenerator;
         private String mapperName;
-        
+
         public Builder withRecordType(FullyQualifiedKotlinType recordType) {
             this.recordType = recordType;
             return this;
         }
-        
+
         public Builder withFragmentGenerator(KotlinFragmentGenerator fragmentGenerator) {
             this.fragmentGenerator = fragmentGenerator;
             return this;

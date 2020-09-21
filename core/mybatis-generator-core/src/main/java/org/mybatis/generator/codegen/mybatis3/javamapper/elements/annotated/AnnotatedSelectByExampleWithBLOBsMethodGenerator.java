@@ -58,7 +58,7 @@ public class AnnotatedSelectByExampleWithBLOBsMethodGenerator extends SelectByEx
             javaIndent(sb, 1);
             sb.append(getResultAnnotation(interfaze, introspectedColumn, true,
                     introspectedTable.isConstructorBased()));
-            
+
             if (iterPk.hasNext() || iterNonPk.hasNext()) {
                 sb.append(',');
             }
@@ -72,7 +72,7 @@ public class AnnotatedSelectByExampleWithBLOBsMethodGenerator extends SelectByEx
             javaIndent(sb, 1);
             sb.append(getResultAnnotation(interfaze, introspectedColumn, false,
                     introspectedTable.isConstructorBased()));
-            
+
             if (iterNonPk.hasNext()) {
                 sb.append(',');
             }

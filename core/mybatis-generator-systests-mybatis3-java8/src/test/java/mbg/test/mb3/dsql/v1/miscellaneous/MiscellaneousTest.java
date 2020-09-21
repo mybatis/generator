@@ -41,7 +41,7 @@ import mbg.test.mb3.generated.dsql.v1.miscellaneous.model.Regexrename;
 
 /**
  * @author Jeff Butler
- * 
+ *
  */
 public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
 
@@ -247,7 +247,7 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
                     .where(myObject.lastname, isLike("J%"))
                     .build()
                     .execute();
-            
+
             assertEquals(1, rows);
 
             answer = mapper.selectByExample()
@@ -357,13 +357,13 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
 
             fn = new FirstName();
             fn.setValue("B%");
-            
+
             List<MyObject> answer = mapper.selectByExample()
                     .where(myObject.firstname, isLike(fn))
                     .orderBy(myObject.id1, myObject.id2)
                     .build()
                     .execute();
-            
+
             assertEquals(3, answer.size());
             MyObject returnedRecord = answer.get(0);
             assertEquals(2, returnedRecord.getId1().intValue());
@@ -441,13 +441,13 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
 
             fn = new FirstName();
             fn.setValue("B%");
-            
+
             List<MyObject> answer = mapper.selectByExample()
                     .where(myObject.firstname, isNotLike(fn))
                     .orderBy(myObject.id1, myObject.id2)
                     .build()
                     .execute();
-            
+
             assertEquals(3, answer.size());
             MyObject returnedRecord = answer.get(0);
             assertEquals(1, returnedRecord.getId1().intValue());
@@ -534,8 +534,8 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
                     .orderBy(myObject.id1, myObject.id2)
                     .build()
                     .execute();
-            
-            
+
+
             assertEquals(2, answer.size());
             MyObject returnedRecord = answer.get(0);
             assertEquals(1, returnedRecord.getId1().intValue());
@@ -622,17 +622,17 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
             assertEquals(1, returnedRecord.getId1().intValue());
             assertEquals(1, returnedRecord.getId2().intValue());
             assertEquals("Flintstone", returnedRecord.getLastname());
-            
+
             returnedRecord = answer.get(1);
             assertEquals(1, returnedRecord.getId1().intValue());
             assertEquals(3, returnedRecord.getId2().intValue());
             assertEquals("Flintstone", returnedRecord.getLastname());
-            
+
             returnedRecord = answer.get(2);
             assertEquals(2, returnedRecord.getId1().intValue());
             assertEquals(1, returnedRecord.getId2().intValue());
             assertEquals("Rubble", returnedRecord.getLastname());
-            
+
             returnedRecord = answer.get(3);
             assertEquals(2, returnedRecord.getId1().intValue());
             assertEquals(3, returnedRecord.getId2().intValue());
@@ -801,10 +801,10 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
 
             MyObject newRecord = new MyObject();
             newRecord.setLastname("Barker");
-            
+
             fn = new FirstName();
             fn.setValue("B%");
-            
+
             int rows = mapper.updateByExampleSelective(newRecord)
                     .where(myObject.firstname, isLike(fn))
                     .build()
@@ -816,9 +816,9 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
                     .build()
                     .execute();
             assertEquals(1, answer.size());
-            
+
             MyObject returnedRecord = answer.get(0);
-            
+
             assertEquals(newRecord.getLastname(), returnedRecord.getLastname());
             assertEquals(record.getFirstname(), returnedRecord.getFirstname());
             assertEquals(record.getId1(), returnedRecord.getId1());
@@ -857,12 +857,12 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
             newRecord.setLastname("Barker");
             newRecord.setId1(3);
             newRecord.setId2(4);
-            
+
             int rows = mapper.updateByExample(newRecord)
                     .where(myObject.id1, isEqualTo(3), and(myObject.id2, isEqualTo(4)))
                     .build()
                     .execute();
-                            
+
             assertEquals(1, rows);
 
             List<MyObject> answer = mapper.selectByExample()
@@ -870,9 +870,9 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
                     .build()
                     .execute();
             assertEquals(1, answer.size());
-            
+
             MyObject returnedRecord = answer.get(0);
-            
+
             assertEquals(newRecord.getLastname(), returnedRecord.getLastname());
             assertNull(returnedRecord.getFirstname());
             assertEquals(newRecord.getId1(), returnedRecord.getId1());
@@ -881,22 +881,22 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
             sqlSession.close();
         }
     }
-    
+
     @Test
     public void testRegexRenameInsert() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
-        
+
         try {
             RegexrenameMapper mapper = sqlSession.getMapper(RegexrenameMapper.class);
             Regexrename record = new Regexrename();
             record.setAddress("123 Main Street");
             record.setName("Fred");
             record.setZipCode("99999");
-            
+
             mapper.insert(record);
-            
+
             Regexrename returnedRecord = mapper.selectByPrimaryKey(1);
-            
+
             assertEquals(record.getAddress(), returnedRecord.getAddress());
             assertEquals(1, returnedRecord.getId().intValue());
             assertEquals(record.getName(), returnedRecord.getName());
@@ -905,11 +905,11 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
             sqlSession.close();
         }
     }
-    
+
     @Test
     public void testRegexRenameRowbounds() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
-        
+
         try {
             RegexrenameMapper mapper = sqlSession.getMapper(RegexrenameMapper.class);
             Regexrename record = new Regexrename();
@@ -918,34 +918,34 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
             record.setName("Fred");
             record.setZipCode("99999");
             mapper.insert(record);
-            
+
             record = new Regexrename();
             record.setId(2);
             record.setAddress("234 Elm Street");
             record.setName("Barney");
             record.setZipCode("99999");
             mapper.insert(record);
-            
+
             record = new Regexrename();
             record.setId(3);
             record.setAddress("345 Maple Street");
             record.setName("Wilma");
             record.setZipCode("99999");
             mapper.insert(record);
-            
+
             record = new Regexrename();
             record.setId(4);
             record.setAddress("456 Oak Street");
             record.setName("Betty");
             record.setZipCode("99999");
             mapper.insert(record);
-            
+
             RowBounds rowBounds = new RowBounds(0, 2);
             List<Regexrename> records = mapper.selectByExample(rowBounds)
                     .orderBy(regexrename.id)
                     .build()
                     .execute();
-            
+
             assertEquals(2, records.size());
             assertEquals(records.get(0).getId().intValue(), 1);
             assertEquals(records.get(1).getId().intValue(), 2);
@@ -955,7 +955,7 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
                     .orderBy(regexrename.id)
                     .build()
                     .execute();
-            
+
             assertEquals(2, records.size());
             assertEquals(records.get(0).getId().intValue(), 3);
             assertEquals(records.get(1).getId().intValue(), 4);
@@ -963,22 +963,22 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
             sqlSession.close();
         }
     }
-    
+
     @Test
     public void testRegexRenameInsertSelective() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
-        
+
         try {
             RegexrenameMapper mapper = sqlSession.getMapper(RegexrenameMapper.class);
             Regexrename record = new Regexrename();
             record.setZipCode("99999");
-            
+
             mapper.insertSelective(record);
             Integer key = 1;
             assertEquals(key, record.getId());
-            
+
             Regexrename returnedRecord = mapper.selectByPrimaryKey(key);
-            
+
             assertNull(returnedRecord.getAddress());
             assertEquals(record.getId(), returnedRecord.getId());
             assertNull(record.getName(), returnedRecord.getName());
@@ -987,7 +987,7 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
             sqlSession.close();
         }
     }
-    
+
     @Test
     public void testMyObjectSelectByExampleLikeInsensitive() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -1054,13 +1054,13 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
                     .build()
                     .execute();
             assertEquals(0, answer.size());
-            
+
             answer = mapper.selectByExample()
                     .where(myObject.lastname, isLikeCaseInsensitive("RU%"))
                     .build()
                     .execute();
             assertEquals(3, answer.size());
-            
+
             MyObject returnedRecord = answer.get(0);
             assertEquals(2, returnedRecord.getId1().intValue());
             assertEquals(1, returnedRecord.getId2().intValue());
@@ -1074,25 +1074,25 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
             sqlSession.close();
         }
     }
-    
+
     @Test
     public void testEnum() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
         try {
             EnumtestMapper mapper = sqlSession.getMapper(EnumtestMapper.class);
-            
+
             Enumtest enumTest = new Enumtest();
             enumTest.setId(1);
             enumTest.setName(TestEnum.FRED);
             int rows = mapper.insert(enumTest);
             assertEquals(1, rows);
-            
+
             List<Enumtest> returnedRecords = mapper.selectByExample()
                     .build()
                     .execute();
             assertEquals(1, returnedRecords.size());
-            
+
             Enumtest returnedRecord = returnedRecords.get(0);
             assertEquals(1, returnedRecord.getId().intValue());
             assertEquals(TestEnum.FRED, returnedRecord.getName());

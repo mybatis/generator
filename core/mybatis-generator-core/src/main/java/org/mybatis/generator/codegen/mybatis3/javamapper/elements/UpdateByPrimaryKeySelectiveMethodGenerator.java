@@ -57,7 +57,7 @@ public class UpdateByPrimaryKeySelectiveMethodGenerator extends
                 introspectedTable);
 
         addMapperAnnotations(method);
-        
+
         if (context.getPlugins()
                 .clientUpdateByPrimaryKeySelectiveMethodGenerated(method,
                         interfaze, introspectedTable)) {

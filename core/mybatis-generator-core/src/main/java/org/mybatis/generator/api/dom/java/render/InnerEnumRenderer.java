@@ -25,10 +25,10 @@ import org.mybatis.generator.api.dom.java.JavaDomUtils;
 import org.mybatis.generator.internal.util.CustomCollectors;
 
 public class InnerEnumRenderer {
-    
+
     public List<String> render(InnerEnum innerEnum, CompilationUnit compilationUnit) {
         List<String> lines = new ArrayList<>();
-        
+
         lines.addAll(innerEnum.getJavaDocLines());
         lines.addAll(innerEnum.getAnnotations());
         lines.add(renderFirstLine(innerEnum, compilationUnit));
@@ -60,13 +60,13 @@ public class InnerEnumRenderer {
         sb.append(innerEnum.getType().getShortName());
         sb.append(renderSuperInterfaces(innerEnum, compilationUnit));
         sb.append(" {"); //$NON-NLS-1$
-        
+
         return sb.toString();
     }
-    
+
     private List<String> renderEnumConstants(InnerEnum innerEnum) {
         List<String> answer = new ArrayList<>();
-        
+
         Iterator<String> iter = innerEnum.getEnumConstants().iterator();
         while (iter.hasNext()) {
             String enumConstant = iter.next();
@@ -77,7 +77,7 @@ public class InnerEnumRenderer {
                 answer.add(RenderingUtilities.JAVA_INDENT + enumConstant + ";"); //$NON-NLS-1$
             }
         }
-        
+
         answer.add(""); //$NON-NLS-1$
         return answer;
     }

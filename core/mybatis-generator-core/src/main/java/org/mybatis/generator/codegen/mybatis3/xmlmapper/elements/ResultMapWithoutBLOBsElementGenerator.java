@@ -159,7 +159,7 @@ public class ResultMapWithoutBLOBsElementGenerator extends
 
         answer.addElement(constructor);
     }
-    
+
     private Attribute generateColumnAttribute(IntrospectedColumn introspectedColumn) {
         return new Attribute("column", //$NON-NLS-1$
                 MyBatis3FormattingUtilities.getRenamedColumnNameForResultMap(introspectedColumn));

@@ -71,7 +71,7 @@
       <property name="enableSubPackages" value="true" />
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
-    
+
     <javaClientGenerator type="XMLMAPPER" targetPackage="ibatortest.generated.flat.java5.client"
         targetProject="target/generated-sources/mybatis-generator/mybatis3">
     </javaClientGenerator>
@@ -113,7 +113,7 @@
       <property name="enableSubPackages" value="true" />
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
-    
+
     <javaClientGenerator type="MIXEDMAPPER" targetPackage="ibatortest.generated.flat.java5.client"
         targetProject="target/generated-sources/mybatis-generator/mybatis3">
     </javaClientGenerator>
@@ -155,7 +155,7 @@
       <property name="enableSubPackages" value="true" />
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
-    
+
     <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="ibatortest.generated.flat.java5.client"
         targetProject="target/generated-sources/mybatis-generator/mybatis3">
     </javaClientGenerator>

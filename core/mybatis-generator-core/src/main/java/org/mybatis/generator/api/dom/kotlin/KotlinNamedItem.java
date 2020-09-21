@@ -28,7 +28,7 @@ public abstract class KotlinNamedItem {
         modifiers.addAll(builder.modifiers);
         annotations.addAll(builder.annotations);
     }
-    
+
     public String getName() {
         return name;
     }

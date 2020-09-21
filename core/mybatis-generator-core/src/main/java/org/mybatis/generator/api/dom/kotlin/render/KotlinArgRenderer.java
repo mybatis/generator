@@ -25,7 +25,7 @@ public class KotlinArgRenderer {
                 + kotlinArg.getDataType().map(dt -> ": " + dt).orElse("") //$NON-NLS-1$ //$NON-NLS-2$
                 + kotlinArg.getInitializationString().map(s -> " = " + s).orElse(""); //$NON-NLS-1$ //$NON-NLS-2$
     }
-    
+
     private String renderAnnotations(KotlinArg kotlinArg) {
         return kotlinArg.getAnnotations().stream()
                 .collect(CustomCollectors.joining(" ", "", " ")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$

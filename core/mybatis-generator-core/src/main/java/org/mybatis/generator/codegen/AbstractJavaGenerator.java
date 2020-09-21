@@ -29,13 +29,13 @@ import org.mybatis.generator.config.PropertyRegistry;
 
 public abstract class AbstractJavaGenerator extends AbstractGenerator {
     public abstract List<CompilationUnit> getCompilationUnits();
-    
+
     private String project;
-    
+
     public AbstractJavaGenerator(String project) {
         this.project = project;
     }
-    
+
     public String getProject() {
         return project;
     }
@@ -92,7 +92,7 @@ public abstract class AbstractJavaGenerator extends AbstractGenerator {
         method.addBodyLine("super();"); //$NON-NLS-1$
         return method;
     }
-    
+
     private void addGeneratedJavaDoc(Method method) {
         context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
     }

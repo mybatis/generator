@@ -21,7 +21,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class Interface extends InnerInterface implements CompilationUnit {
-    
+
     private Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
 
     private Set<String> staticImports = new TreeSet<>();

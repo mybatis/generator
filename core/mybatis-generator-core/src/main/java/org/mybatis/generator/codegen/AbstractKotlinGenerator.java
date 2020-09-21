@@ -22,17 +22,17 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 
 public abstract class AbstractKotlinGenerator extends AbstractGenerator {
     public abstract List<KotlinFile> getKotlinFiles();
-    
+
     private String project;
-    
+
     public AbstractKotlinGenerator(String project) {
         this.project = project;
     }
-    
+
     public String getProject() {
         return project;
     }
-    
+
     public List<KotlinFile> listOf(KotlinFile...kotlinFiles) {
         return Arrays.asList(kotlinFiles);
     }

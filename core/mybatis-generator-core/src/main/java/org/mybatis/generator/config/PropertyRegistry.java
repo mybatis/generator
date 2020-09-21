@@ -19,13 +19,13 @@ package org.mybatis.generator.config;
  * This class holds constants for all properties recognized by the different
  * configuration elements. This helps document and maintain the different
  * properties, and helps to avoid spelling errors.
- * 
+ *
  * @author Jeff Butler
- * 
+ *
  */
 public class PropertyRegistry {
     private PropertyRegistry() {}
-    
+
     public static final String ANY_ENABLE_SUB_PACKAGES = "enableSubPackages"; //$NON-NLS-1$
 
     /**
@@ -61,7 +61,7 @@ public class PropertyRegistry {
     public static final String CONTEXT_KOTLIN_FILE_ENCODING = "kotlinFileEncoding"; //$NON-NLS-1$
 
     public static final String CLIENT_USE_LEGACY_BUILDER = "useLegacyBuilder"; //$NON-NLS-1$
-    
+
     public static final String TYPE_RESOLVER_FORCE_BIG_DECIMALS = "forceBigDecimals"; //$NON-NLS-1$
     public static final String TYPE_RESOLVER_USE_JSR310_TYPES = "useJSR310Types"; //$NON-NLS-1$
 

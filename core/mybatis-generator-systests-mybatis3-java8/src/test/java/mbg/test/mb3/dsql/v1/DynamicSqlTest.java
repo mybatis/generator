@@ -60,7 +60,7 @@ import mbg.test.mb3.generated.dsql.v1.model.mbgtest.Translation;
 
 /**
  * @author Jeff Butler
- * 
+ *
  */
 public class DynamicSqlTest extends AbstractTest {
 
@@ -416,7 +416,7 @@ public class DynamicSqlTest extends AbstractTest {
                     .orderBy(pkonly.id)
                     .build()
                     .render(RenderingStrategy.MYBATIS3);
-                    
+
             List<Pkonly> answer = mapper.selectMany(selectStatement);
             assertEquals(2, answer.size());
             assertEquals(5, answer.get(0).getId().intValue());
@@ -449,7 +449,7 @@ public class DynamicSqlTest extends AbstractTest {
                     .orderBy(pkonly.id)
                     .build()
                     .render(RenderingStrategy.MYBATIS3);
-            
+
             List<Pkonly> answer = mapper.selectMany(selectStatement);
             assertEquals(2, answer.size());
             assertEquals(5, answer.get(0).getId().intValue());
@@ -934,7 +934,7 @@ public class DynamicSqlTest extends AbstractTest {
                     .orderBy(pkfields.id1, pkfields.id2)
                     .build()
                     .execute();
-                    
+
             assertEquals(2, answer.size());
             Pkfields returnedRecord = answer.get(0);
             assertEquals(1, returnedRecord.getId1().intValue());
@@ -1200,7 +1200,7 @@ public class DynamicSqlTest extends AbstractTest {
                     .orderBy(pkfields.id1, pkfields.id2)
                     .build()
                     .execute();
-                            
+
             assertEquals(2, answer.size());
         } finally {
             sqlSession.close();
@@ -1231,7 +1231,7 @@ public class DynamicSqlTest extends AbstractTest {
                     .where(pkfields.lastname, isLike("J%"))
                     .build()
                     .execute();
-            
+
             assertEquals(1, rows);
 
             rows = mapper.countByExample()
@@ -1258,7 +1258,7 @@ public class DynamicSqlTest extends AbstractTest {
             List<Pkblobs> answer = mapper.selectByExample()
                     .build()
                     .execute();
-            
+
             assertEquals(1, answer.size());
 
             Pkblobs returnedRecord = answer.get(0);
@@ -1974,7 +1974,7 @@ public class DynamicSqlTest extends AbstractTest {
             record.setId7(7);
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
-            
+
             record.setActive(true);
             record.setActive1(Boolean.FALSE);
             record.setActive2(new byte[]{-128, 127});
@@ -2008,7 +2008,7 @@ public class DynamicSqlTest extends AbstractTest {
             assertEquals(-128, returnedRecord.getActive2()[0]);
             assertEquals(127, returnedRecord.getActive2()[1]);
             assertEquals(0, returnedRecord.getActive2()[2]);
-            
+
         } finally {
             sqlSession.close();
         }
@@ -2059,7 +2059,7 @@ public class DynamicSqlTest extends AbstractTest {
             sqlSession.close();
         }
     }
-    
+
     @Test
     public void testAwfulTableUpdateByPrimaryKey() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -2534,7 +2534,7 @@ public class DynamicSqlTest extends AbstractTest {
             sqlSession.close();
         }
     }
-    
+
     @Test
     public void testAwfulTableSelectByExampleComplexLike() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -2631,7 +2631,7 @@ public class DynamicSqlTest extends AbstractTest {
                     .orderBy(awfulTable.customerId)
                     .build()
                     .execute();
-                            
+
             assertEquals(2, answer.size());
             AwfulTable returnedRecord = answer.get(0);
             assertEquals(11, returnedRecord.getId1().intValue());
@@ -2739,7 +2739,7 @@ public class DynamicSqlTest extends AbstractTest {
                     .orderBy(awfulTable.customerId)
                     .build()
                     .execute();
-            
+
             assertEquals(2, answer.size());
             AwfulTable returnedRecord = answer.get(0);
             assertEquals(1, returnedRecord.getId1().intValue());
@@ -3014,99 +3014,99 @@ public class DynamicSqlTest extends AbstractTest {
             sqlSession.close();
         }
     }
-    
+
     @Test
     public void testTranslationTable() {
         try(SqlSession sqlSession = sqlSessionFactory.openSession()) {
             TranslationMapper mapper = sqlSession.getMapper(TranslationMapper.class);
-            
+
             Translation t = new Translation();
             t.setId(1);
             t.setTranslation("Spanish");
             mapper.insert(t);
-            
+
             t = new Translation();
             t.setId(2);
             t.setTranslation("French");
             mapper.insert(t);
-            
+
             Translation returnedRecord = mapper.selectByPrimaryKey(2);
-            
+
             assertEquals(t.getId(), returnedRecord.getId());
             assertEquals(t.getTranslation(), returnedRecord.getTranslation());
-            
+
             t.setTranslation("Italian");
             mapper.updateByPrimaryKey(t);
-            
+
             returnedRecord = mapper.selectByPrimaryKey(2);
-            
+
             assertEquals(t.getId(), returnedRecord.getId());
             assertEquals(t.getTranslation(), returnedRecord.getTranslation());
         }
     }
-    
+
     @Test
     public void testIdTable() {
         try(SqlSession sqlSession = sqlSessionFactory.openSession()) {
             IdMapper mapper = sqlSession.getMapper(IdMapper.class);
-            
+
             Id id = new Id();
             id.setId(1);
             id.setDescription("Spanish");
             mapper.insert(id);
-            
+
             id = new Id();
             id.setId(2);
             id.setDescription("French");
             mapper.insert(id);
-            
+
             Id returnedRecord = mapper.selectByPrimaryKey(2);
-            
+
             assertEquals(id.getId(), returnedRecord.getId());
             assertEquals(id.getDescription(), returnedRecord.getDescription());
-            
+
             id.setDescription("Italian");
             mapper.updateByPrimaryKey(id);
-            
+
             returnedRecord = mapper.selectByPrimaryKey(2);
-            
+
             assertEquals(id.getId(), returnedRecord.getId());
             assertEquals(id.getDescription(), returnedRecord.getDescription());
         }
     }
-    
+
     @Test
     public void testEquals1() {
         Pkfields pkfields1 = new Pkfields();
         assertFalse(pkfields1.equals(null));
     }
-    
+
     @Test
     public void testEquals2() {
         Pkfields pkfields1 = new Pkfields();
         Pkfields pkfields2 = new Pkfields();
         assertTrue(pkfields1.equals(pkfields2));
     }
-    
+
     @Test
     public void testEquals3() {
         Pkfields pkfields1 = new Pkfields();
         pkfields1.setId1(2);
-        
+
         Pkfields pkfields2 = new Pkfields();
         pkfields2.setId1(2);
-        
+
         assertTrue(pkfields1.equals(pkfields2));
     }
-    
+
     @Test
     public void testEquals4() {
         Pkfields pkfields1 = new Pkfields();
         pkfields1.setId1(2);
-        
+
         Pkfields pkfields2 = new Pkfields();
         pkfields2.setId1(3);
-        
+
         assertFalse(pkfields1.equals(pkfields2));
     }
 
@@ -3143,9 +3143,9 @@ public class DynamicSqlTest extends AbstractTest {
         awfulTable2.setLastName("Rubble");
         awfulTable2.setSecondFirstName("Bamm Bamm");
         awfulTable2.setThirdFirstName("Pebbles");
-        
+
         assertTrue(awfulTable1.equals(awfulTable2));
-        
+
         awfulTable2.setActive(true);
         assertFalse(awfulTable1.equals(awfulTable2));
     }
@@ -3156,15 +3156,15 @@ public class DynamicSqlTest extends AbstractTest {
         Pkfields pkfields2 = new Pkfields();
         assertTrue(pkfields1.hashCode() == pkfields2.hashCode());
     }
-    
+
     @Test
     public void testHashCode2() {
         Pkfields pkfields1 = new Pkfields();
         pkfields1.setId1(2);
-        
+
         Pkfields pkfields2 = new Pkfields();
         pkfields2.setId1(2);
-        
+
         assertTrue(pkfields1.hashCode() == pkfields2.hashCode());
     }
 
@@ -3201,7 +3201,7 @@ public class DynamicSqlTest extends AbstractTest {
         awfulTable2.setLastName("Rubble");
         awfulTable2.setSecondFirstName("Bamm Bamm");
         awfulTable2.setThirdFirstName("Pebbles");
-        
+
         assertTrue(awfulTable1.hashCode() == awfulTable2.hashCode());
     }
 }

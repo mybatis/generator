@@ -24,10 +24,10 @@ import org.mybatis.generator.api.dom.java.JavaDomUtils;
 import org.mybatis.generator.internal.util.CustomCollectors;
 
 public class InnerInterfaceRenderer {
-    
+
     public List<String> render(InnerInterface innerInterface, CompilationUnit compilationUnit) {
         List<String> lines = new ArrayList<>();
-        
+
         lines.addAll(innerInterface.getJavaDocLines());
         lines.addAll(innerInterface.getAnnotations());
         lines.add(renderFirstLine(innerInterface, compilationUnit));
@@ -58,7 +58,7 @@ public class InnerInterfaceRenderer {
         sb.append(RenderingUtilities.renderTypeParameters(innerInterface.getTypeParameters(), compilationUnit));
         sb.append(renderSuperInterfaces(innerInterface, compilationUnit));
         sb.append(" {"); //$NON-NLS-1$
-        
+
         return sb.toString();
     }
 

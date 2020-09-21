@@ -22,7 +22,7 @@ import org.mybatis.generator.runtime.dynamic.sql.elements.v2.Utils;
 public class SelectByPrimaryKeyMethodGenerator extends AbstractKotlinFunctionGenerator {
     private String mapperName;
     private KotlinFragmentGenerator fragmentGenerator;
-    
+
     private SelectByPrimaryKeyMethodGenerator(Builder builder) {
         super(builder);
         mapperName = builder.mapperName;
@@ -41,12 +41,12 @@ public class SelectByPrimaryKeyMethodGenerator extends AbstractKotlinFunctionGen
                 .build())
                 .withImport("org.mybatis.dynamic.sql.SqlBuilder.isEqualTo") //$NON-NLS-1$
                 .build();
-        
+
         addFunctionComment(functionAndImports);
 
         KotlinFunctionParts functionParts = fragmentGenerator.getPrimaryKeyWhereClauseAndParameters();
         acceptParts(functionAndImports, functionParts);
-        
+
         return functionAndImports;
     }
 
@@ -59,12 +59,12 @@ public class SelectByPrimaryKeyMethodGenerator extends AbstractKotlinFunctionGen
     public static class Builder extends BaseBuilder<Builder, SelectByPrimaryKeyMethodGenerator> {
         private String mapperName;
         private KotlinFragmentGenerator fragmentGenerator;
-        
+
         public Builder withMapperName(String mapperName) {
             this.mapperName = mapperName;
             return this;
         }
-        
+
         public Builder withFragmentGenerator(KotlinFragmentGenerator fragmentGenerator) {
             this.fragmentGenerator = fragmentGenerator;
             return this;

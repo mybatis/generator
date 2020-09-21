@@ -38,18 +38,18 @@ public class KotlinProperty extends KotlinNamedItem {
             return value;
         }
     }
-    
+
     private KotlinProperty(Builder builder) {
         super(builder);
         dataType = builder.dataType;
         initializationString = builder.initializationString;
         type = Objects.requireNonNull(builder.type);
     }
-    
+
     public Optional<String> getInitializationString() {
         return Optional.ofNullable(initializationString);
     }
-    
+
     public Optional<String> getDataType() {
         return Optional.ofNullable(dataType);
     }

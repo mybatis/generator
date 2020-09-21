@@ -32,7 +32,7 @@ import org.apache.ibatis.type.TypeHandler;
 public class FirstNameTypeHandler implements TypeHandler<FirstName> {
 
     /**
-     * 
+     *
      */
     public FirstNameTypeHandler() {
         super();
@@ -47,7 +47,7 @@ public class FirstNameTypeHandler implements TypeHandler<FirstName> {
             answer = new FirstName();
             answer.setValue(string);
         }
-        
+
         return answer;
     }
 
@@ -60,7 +60,7 @@ public class FirstNameTypeHandler implements TypeHandler<FirstName> {
             answer = new FirstName();
             answer.setValue(string);
         }
-        
+
         return answer;
     }
 
@@ -73,7 +73,7 @@ public class FirstNameTypeHandler implements TypeHandler<FirstName> {
             answer = new FirstName();
             answer.setValue(string);
         }
-        
+
         return answer;
     }
 

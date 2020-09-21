@@ -34,7 +34,7 @@ import mbg.test.mb3.generated.dsql.v2.miscellaneous.mapper.RegexrenameMapper;
 public abstract class AbstractAnnotatedMiscellaneousTest {
 
     private static final String JDBC_URL = "jdbc:hsqldb:mem:aname";
-    private static final String JDBC_DRIVER = "org.hsqldb.jdbcDriver"; 
+    private static final String JDBC_DRIVER = "org.hsqldb.jdbcDriver";
 
     protected SqlSessionFactory sqlSessionFactory;
 

@@ -35,7 +35,7 @@ public class IntrospectedTableKotlinImpl extends IntrospectedTableMyBatis3Impl {
             calculateKotlinMapperAndExtensionsGenerator(warnings, progressCallback);
         }
     }
-    
+
     private boolean contextHasClientConfiguration() {
         return context.getJavaClientGeneratorConfiguration() != null;
     }

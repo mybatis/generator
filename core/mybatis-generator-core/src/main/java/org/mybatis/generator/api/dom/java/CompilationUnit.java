@@ -21,7 +21,7 @@ import java.util.Set;
 /**
  * This interface describes methods common to all Java compilation units (Java
  * classes, interfaces, and enums).
- * 
+ *
  * @author Jeff Butler
  */
 public interface CompilationUnit {
@@ -42,7 +42,7 @@ public interface CompilationUnit {
 
     /**
      * Comments will be written at the top of the file as is, we do not append any start or end comment characters.
-     * 
+     *
      * <p>Note that in the Eclipse plugin, file comments will not be merged.
      *
      * @param commentLine
@@ -51,6 +51,6 @@ public interface CompilationUnit {
     void addFileCommentLine(String commentLine);
 
     List<String> getFileCommentLines();
-    
+
     <R> R accept(CompilationUnitVisitor<R> visitor);
 }

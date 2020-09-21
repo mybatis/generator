@@ -29,7 +29,7 @@ import org.mybatis.generator.runtime.dynamic.sql.elements.MethodAndImports;
 public class UpdateByExampleMethodGenerator extends AbstractMethodGenerator {
     private FullyQualifiedJavaType recordType;
     private FragmentGenerator fragmentGenerator;
-    
+
     private UpdateByExampleMethodGenerator(Builder builder) {
         super(builder);
         recordType = builder.recordType;
@@ -49,11 +49,11 @@ public class UpdateByExampleMethodGenerator extends AbstractMethodGenerator {
         imports.add(new FullyQualifiedJavaType(
                 "org.mybatis.dynamic.sql.update.MyBatis3UpdateModelAdapter")); //$NON-NLS-1$
         imports.add(recordType);
-        
+
         Method method = new Method("updateByExample"); //$NON-NLS-1$
         method.setDefault(true);
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
-        
+
         FullyQualifiedJavaType returnType =
                 new FullyQualifiedJavaType("UpdateDSL<MyBatis3UpdateModelAdapter<Integer>>"); //$NON-NLS-1$
         method.setReturnType(returnType);
@@ -77,12 +77,12 @@ public class UpdateByExampleMethodGenerator extends AbstractMethodGenerator {
     public static class Builder extends BaseBuilder<Builder, UpdateByExampleMethodGenerator> {
         private FullyQualifiedJavaType recordType;
         private FragmentGenerator fragmentGenerator;
-        
+
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
             this.recordType = recordType;
             return this;
         }
-        
+
         public Builder withFragmentGenerator(FragmentGenerator fragmentGenerator) {
             this.fragmentGenerator = fragmentGenerator;
             return this;

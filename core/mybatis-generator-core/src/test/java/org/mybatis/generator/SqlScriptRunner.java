@@ -29,7 +29,7 @@ import java.sql.Statement;
 /**
  * This class is used to execute an SQL script before a code generation
  * run.
- * 
+ *
  * @author Jeff Butler
  */
 public class SqlScriptRunner {
@@ -41,7 +41,7 @@ public class SqlScriptRunner {
 
     public SqlScriptRunner(InputStream sourceFile, String driver, String url,
             String userId, String password) throws Exception {
-        
+
         if (!stringHasValue(driver)) {
             throw new Exception("JDBC Driver is required");
         }

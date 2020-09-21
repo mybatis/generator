@@ -58,12 +58,12 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
 
     // record type for insert, select, update
     protected FullyQualifiedKotlinType recordType;
-    
+
     // id to use for the common result map
     protected String resultMapId;
-    
+
     protected KotlinFragmentGenerator fragmentGenerator;
-    
+
     protected KotlinDynamicSqlSupportClassGenerator supportClassGenerator;
 
     public KotlinMapperAndExtensionsGenerator(String project) {
@@ -84,35 +84,35 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
     protected KotlinFile createMapperInterfaceFile() {
         FullyQualifiedKotlinType type = new FullyQualifiedKotlinType(
                 introspectedTable.getMyBatis3JavaMapperType());
-        
+
         KotlinFile kf = new KotlinFile(type.getShortNameWithoutTypeArguments());
         kf.setPackage(type.getPackageName());
-        
+
         return kf;
     }
 
     protected KotlinFile createMapperExtensionsFile() {
         FullyQualifiedKotlinType type = new FullyQualifiedKotlinType(
                 introspectedTable.getMyBatis3JavaMapperType());
-        
+
         KotlinFile kf = new KotlinFile(type.getShortNameWithoutTypeArguments() + "Extensions"); //$NON-NLS-1$
         kf.setPackage(type.getPackageName());
         context.getCommentGenerator().addFileComment(kf);
-        
+
         return kf;
     }
 
     protected KotlinType createMapperInterface(KotlinFile kotlinFile) {
         FullyQualifiedKotlinType type = new FullyQualifiedKotlinType(
                 introspectedTable.getMyBatis3JavaMapperType());
-        
+
         KotlinType intf = KotlinType.newInterface(type.getShortNameWithoutTypeArguments())
                 .withAnnotation("@Mapper") //$NON-NLS-1$
                 .build();
-        
+
         kotlinFile.addImport("org.apache.ibatis.annotations.Mapper"); //$NON-NLS-1$
         kotlinFile.addNamedItem(intf);
-                
+
         context.getCommentGenerator().addFileComment(kotlinFile);
 
         return intf;
@@ -124,17 +124,17 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .withIntrospectedTable(introspectedTable)
                 .withDynamicSqlSupportClassGenerator(supportClassGenerator)
                 .build();
-        
+
         generate(kotlinFile, kotlinType, generator);
     }
-    
+
     protected void addBasicDeleteMethod(KotlinFile kotlinFile, KotlinType kotlinType) {
         BasicDeleteMethodGenerator generator = new BasicDeleteMethodGenerator.Builder()
                 .withContext(context)
                 .withIntrospectedTable(introspectedTable)
                 .withDynamicSqlSupportClassGenerator(supportClassGenerator)
                 .build();
-        
+
         generate(kotlinFile, kotlinType, generator);
     }
 
@@ -147,7 +147,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .withRecordType(recordType)
                 .withKotlinFile(kotlinFile)
                 .build();
-        
+
         generate(kotlinFile, kotlinType, generator);
     }
 
@@ -159,17 +159,17 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .withDynamicSqlSupportClassGenerator(supportClassGenerator)
                 .withRecordType(recordType)
                 .build();
-        
+
         generate(kotlinFile, kotlinType, generator);
     }
-    
+
     protected void addBasicUpdateMethod(KotlinFile kotlinFile, KotlinType kotlinType) {
         BasicUpdateMethodGenerator generator = new BasicUpdateMethodGenerator.Builder()
                 .withContext(context)
                 .withIntrospectedTable(introspectedTable)
                 .withDynamicSqlSupportClassGenerator(supportClassGenerator)
                 .build();
-        
+
         generate(kotlinFile, kotlinType, generator);
     }
 
@@ -188,16 +188,16 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
             kotlinFile.addImports(mi.getImports());
         }
     }
-    
+
     @Override
     public List<KotlinFile> getKotlinFiles() {
         progressCallback.startTask(getString("Progress.17", //$NON-NLS-1$
                 introspectedTable.getFullyQualifiedTable().toString()));
         preCalculate();
-        
+
         KotlinFile mapperFile = createMapperInterfaceFile();
         KotlinType mapper = createMapperInterface(mapperFile);
-    
+
         addBasicCountMethod(mapperFile, mapper);
         addBasicDeleteMethod(mapperFile, mapper);
         addBasicInsertMethod(mapperFile, mapper);
@@ -205,7 +205,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
         addBasicSelectOneMethod(mapperFile, mapper);
         addBasicSelectManyMethod(mapperFile, mapper);
         addBasicUpdateMethod(mapperFile, mapper);
-        
+
         KotlinFile extensionsFile = createMapperExtensionsFile();
         String mapperName = mapper.getName();
 
@@ -226,23 +226,23 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
         addUpdateSelectiveMethod(extensionsFile);
         addUpdateByPrimaryKeyMethod(extensionsFile, mapperName);
         addUpdateByPrimaryKeySelectiveMethod(extensionsFile, mapperName);
-        
+
         KotlinFile supportFile = supportClassGenerator.getKotlinFile();
-        
+
         List<KotlinFile> answer = new ArrayList<>();
         if (context.getPlugins().dynamicSqlSupportGenerated(supportFile, supportClassGenerator.getInnerObject(),
                 introspectedTable)) {
             answer.add(supportFile);
         }
-        
+
         if (context.getPlugins().mapperGenerated(mapperFile, introspectedTable)) {
             answer.add(mapperFile);
         }
-    
+
         if (context.getPlugins().mapperExtensionsGenerated(extensionsFile, introspectedTable)) {
             answer.add(extensionsFile);
         }
-    
+
         return answer;
     }
 
@@ -255,7 +255,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .withMapperName(mapperName)
                 .withTableFieldImport(supportClassGenerator.getInnerObjectImport())
                 .build();
-        
+
         generate(kotlinFile, generator);
     }
 
@@ -266,7 +266,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .withDynamicSqlSupportClassGenerator(supportClassGenerator)
                 .withRecordType(recordType)
                 .build();
-        
+
         generate(kotlinFile, kotlinType, generator);
     }
 
@@ -278,7 +278,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .withRecordType(recordType)
                 .withMapperName(mapperName)
                 .build();
-        
+
         generate(kotlinFile, generator);
     }
 
@@ -291,7 +291,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .withMapperName(mapperName)
                 .withTableFieldImport(supportClassGenerator.getInnerObjectImport())
                 .build();
-        
+
         generate(kotlinFile, generator);
     }
 
@@ -303,7 +303,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .withRecordType(recordType)
                 .withMapperName(mapperName)
                 .build();
-        
+
         generate(kotlinFile, generator);
     }
 
@@ -314,7 +314,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .withDynamicSqlSupportClassGenerator(supportClassGenerator)
                 .withMapperName(mapperName)
                 .build();
-        
+
         generate(kotlinFile, generator);
     }
 
@@ -325,7 +325,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .withDynamicSqlSupportClassGenerator(supportClassGenerator)
                 .withMapperName(mapperName)
                 .build();
-        
+
         generate(kotlinFile, generator);
     }
 
@@ -335,9 +335,9 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .withIntrospectedTable(introspectedTable)
                 .withTableFieldImport(supportClassGenerator.getInnerObjectImport())
                 .build();
-        
+
         KotlinPropertyAndImports propertyAndImports = generator.generatePropertyAndImports();
-    
+
         if (propertyAndImports != null && generator.callPlugins(propertyAndImports.getProperty(), kotlinFile)) {
             kotlinFile.addNamedItem(propertyAndImports.getProperty());
             kotlinFile.addImports(propertyAndImports.getImports());
@@ -352,7 +352,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .withDynamicSqlSupportClassGenerator(supportClassGenerator)
                 .withMapperName(mapperName)
                 .build();
-        
+
         generate(kotlinFile, generator);
     }
 
@@ -363,7 +363,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .withDynamicSqlSupportClassGenerator(supportClassGenerator)
                 .withMapperName(mapperName)
                 .build();
-        
+
         generate(kotlinFile, generator);
     }
 
@@ -374,7 +374,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .withDynamicSqlSupportClassGenerator(supportClassGenerator)
                 .withMapperName(mapperName)
                 .build();
-        
+
         generate(kotlinFile, generator);
     }
 
@@ -385,7 +385,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .withDynamicSqlSupportClassGenerator(supportClassGenerator)
                 .withMapperName(mapperName)
                 .build();
-        
+
         generate(kotlinFile, generator);
     }
 
@@ -397,7 +397,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .withFragmentGenerator(fragmentGenerator)
                 .withRecordType(recordType)
                 .build();
-        
+
         generate(kotlinFile, generator);
     }
 
@@ -409,7 +409,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .withFragmentGenerator(fragmentGenerator)
                 .withRecordType(recordType)
                 .build();
-        
+
         generate(kotlinFile, generator);
     }
 
@@ -422,7 +422,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .withRecordType(recordType)
                 .withResultMapId(resultMapId)
                 .build();
-        
+
         generate(kotlinFile, kotlinType, generator);
     }
 
@@ -434,7 +434,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .withDynamicSqlSupportClassGenerator(supportClassGenerator)
                 .withMapperName(mapperName)
                 .build();
-        
+
         generate(kotlinFile, generator);
     }
 
@@ -447,7 +447,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .withMapperName(mapperName)
                 .withTableFieldImport(supportClassGenerator.getInnerObjectImport())
                 .build();
-        
+
         generate(kotlinFile, generator);
     }
 
@@ -459,7 +459,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .withDynamicSqlSupportClassGenerator(supportClassGenerator)
                 .withMapperName(mapperName)
                 .build();
-        
+
         generate(kotlinFile, generator);
     }
 
@@ -472,7 +472,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .withRecordType(recordType)
                 .withMapperName(mapperName)
                 .build();
-        
+
         generate(kotlinFile, generator);
     }
 
@@ -486,7 +486,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .withRecordType(recordType)
                 .withMapperName(mapperName)
                 .build();
-        
+
         generate(kotlinFile, generator);
     }
 }

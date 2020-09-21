@@ -61,7 +61,7 @@ public class BodyLineRenderer {
 
         return lines;
     }
-    
+
     private boolean isCodeBlockStartExceptSwitchStatement(String line) {
         return line.endsWith("{") && !line.startsWith("switch"); //$NON-NLS-1$ //$NON-NLS-2$
     }

@@ -74,7 +74,7 @@ import mbg.test.mb3.generated.dsql.v2.model.mbgtest.Translation;
 
 /**
  * @author Jeff Butler
- * 
+ *
  */
 public class DynamicSqlTest extends AbstractTest {
 
@@ -126,7 +126,7 @@ public class DynamicSqlTest extends AbstractTest {
             List<Fieldsonly> answer = mapper.select(dsl ->
                     dsl.where(fieldsonly.integerfield, isGreaterThan(5)));
             assertThat(answer.size()).isEqualTo(2);
-            
+
             answer = mapper.select(SelectDSLCompleter.allRows());
             assertThat(answer.size()).isEqualTo(3);
         }
@@ -137,7 +137,7 @@ public class DynamicSqlTest extends AbstractTest {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
 
             FieldsonlyMapper mapper = sqlSession.getMapper(FieldsonlyMapper.class);
-            
+
             Fieldsonly record1 = new Fieldsonly();
             record1.setDoublefield(11.22);
             record1.setFloatfield(33.44);
@@ -154,7 +154,7 @@ public class DynamicSqlTest extends AbstractTest {
             record3.setIntegerfield(9);
 
             mapper.insertMultiple(Arrays.asList(record1, record2, record3));
-            
+
             List<Fieldsonly> answer = mapper.select(dsl ->
                     dsl.where(fieldsonly.integerfield, isGreaterThan(5)));
             assertThat(answer.size()).isEqualTo(2);
@@ -386,7 +386,7 @@ public class DynamicSqlTest extends AbstractTest {
             PkonlyMapper mapper = sqlSession.getMapper(PkonlyMapper.class);
 
             mapper.insertMultiple(Arrays.asList(new Pkonly(1,3), new Pkonly(5, 6), new Pkonly(7, 8)));
-            
+
             List<Pkonly> answer = mapper.select(dsl ->
                     dsl.where(pkonly.id, isGreaterThan(4))
                     .orderBy(pkonly.id));
@@ -514,7 +514,7 @@ public class DynamicSqlTest extends AbstractTest {
             mapper.insert(record);
 
             Optional<Pkfields> returnedRecord = mapper.selectByPrimaryKey(2, 1);
-            
+
             assertThat(returnedRecord).hasValueSatisfying(rr -> {
                 assertEquals(record.getDatefield(), rr.getDatefield());
                 assertEquals(record.getDecimal100field(), rr.getDecimal100field());
@@ -863,7 +863,7 @@ public class DynamicSqlTest extends AbstractTest {
                     dsl.where(pkfields.firstname, isLike("B%"), and(pkfields.id2, isEqualTo(3)))
                     .or(pkfields.firstname, isLike("Wi%"))
                     .orderBy(pkfields.id1, pkfields.id2));
-                    
+
             assertEquals(2, answer.size());
             Pkfields returnedRecord = answer.get(0);
             assertEquals(1, returnedRecord.getId1().intValue());
@@ -1053,9 +1053,9 @@ public class DynamicSqlTest extends AbstractTest {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
 
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
-            
+
             Collection<Pkfields> records = new ArrayList<>();
-            
+
             Pkfields record = new Pkfields();
             record.setFirstname("Fred");
             record.setLastname("Flintstone");
@@ -1099,9 +1099,9 @@ public class DynamicSqlTest extends AbstractTest {
             records.add(record);
 
             int rowsInserted = mapper.insertMultiple(records);
-            
+
             assertEquals(6, rowsInserted);
-            
+
             List<Pkfields> answer = mapper.select(
                     SelectDSLCompleter.allRowsOrderedBy(pkfields.id1, pkfields.id2));
 
@@ -1170,7 +1170,7 @@ public class DynamicSqlTest extends AbstractTest {
                     DSL.where(pkfields.wierdField, isLessThan(40))
                     .and(pkfields.wierdField, isIn(11, 22))
                     .orderBy(pkfields.id1, pkfields.id2));
-                            
+
             assertEquals(2, answer.size());
         }
     }
@@ -1196,7 +1196,7 @@ public class DynamicSqlTest extends AbstractTest {
 
             long rows = mapper.count(dsl ->
                     dsl.where(pkfields.lastname, isLike("J%")));
-            
+
             assertEquals(1, rows);
 
             rows = mapper.count(dsl -> dsl);
@@ -1246,7 +1246,7 @@ public class DynamicSqlTest extends AbstractTest {
             assertEquals(1, rows);
 
             Optional<Pkblobs> newRecord = mapper.selectByPrimaryKey(3);
-            
+
             assertThat(newRecord).hasValueSatisfying(nr -> {
                 assertEquals(record1.getId(), nr.getId());
                 assertTrue(blobsAreEqual(record1.getBlob1(), nr.getBlob1()));
@@ -1272,7 +1272,7 @@ public class DynamicSqlTest extends AbstractTest {
             mapper.updateByPrimaryKeySelective(newRecord);
 
             Optional<Pkblobs> returnedRecord = mapper.selectByPrimaryKey(3);
-            
+
             assertThat(returnedRecord).hasValueSatisfying(rr -> {
                 assertEquals(record.getId(), rr.getId());
                 assertTrue(blobsAreEqual(record.getBlob1(), rr.getBlob1()));
@@ -1350,7 +1350,7 @@ public class DynamicSqlTest extends AbstractTest {
             mapper.insert(record1);
 
             Optional<Pkblobs> newRecord = mapper.selectByPrimaryKey(6);
-            
+
             assertThat(newRecord).hasValueSatisfying(nr -> {
                 assertEquals(record1.getId(), nr.getId());
                 assertTrue(blobsAreEqual(record1.getBlob1(), nr.getBlob1()));
@@ -1394,7 +1394,7 @@ public class DynamicSqlTest extends AbstractTest {
 
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
             Collection<Pkblobs> records = new ArrayList<>();
-            
+
             Pkblobs record = new Pkblobs();
             record.setId(3);
             record.setBlob1(generateRandomBlob());
@@ -1409,7 +1409,7 @@ public class DynamicSqlTest extends AbstractTest {
 
             int recordsInserted = mapper.insertMultiple(records);
             assertEquals(2, recordsInserted);
-            
+
             List<Pkblobs> answer = mapper.select(dsl ->
                     dsl.where(pkblobs.id, isGreaterThan(4)));
 
@@ -1498,7 +1498,7 @@ public class DynamicSqlTest extends AbstractTest {
             assertEquals(1, rows);
 
             Optional<Pkfieldsblobs> newRecord = mapper.selectByPrimaryKey(3, 4);
-            
+
             assertThat(newRecord).hasValueSatisfying(nr -> {
                 assertEquals(updateRecord.getFirstname(), nr.getFirstname());
                 assertEquals(updateRecord.getLastname(), nr.getLastname());
@@ -1531,7 +1531,7 @@ public class DynamicSqlTest extends AbstractTest {
             assertEquals(1, rows);
 
             Optional<Pkfieldsblobs> returnedRecord = mapper.selectByPrimaryKey(3, 4);
-            
+
             assertThat(returnedRecord).hasValueSatisfying(rr -> {
                 assertEquals(record.getFirstname(), rr.getFirstname());
                 assertEquals(updateRecord.getLastname(), rr.getLastname());
@@ -1632,7 +1632,7 @@ public class DynamicSqlTest extends AbstractTest {
             assertEquals(2, answer.size());
 
             Optional<Pkfieldsblobs> newRecord = mapper.selectByPrimaryKey(5, 6);
-            
+
             assertThat(newRecord).hasValueSatisfying(nr -> {
                 assertEquals(record1.getId1(), nr.getId1());
                 assertEquals(record1.getId2(), nr.getId2());
@@ -1683,7 +1683,7 @@ public class DynamicSqlTest extends AbstractTest {
 
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
             Collection<Pkfieldsblobs> records = new ArrayList<>();
-            
+
             Pkfieldsblobs record = new Pkfieldsblobs();
             record.setId1(3);
             record.setId2(4);
@@ -1702,7 +1702,7 @@ public class DynamicSqlTest extends AbstractTest {
 
             int rowsInserted = mapper.insertMultiple(records);
             assertEquals(2, rowsInserted);
-            
+
             List<Pkfieldsblobs> answer = mapper.select(dsl ->
                     dsl.where(pkfieldsblobs.id2, isEqualTo(6)));
             assertEquals(1, answer.size());
@@ -1835,7 +1835,7 @@ public class DynamicSqlTest extends AbstractTest {
 
             FieldsblobsMapper mapper = sqlSession.getMapper(FieldsblobsMapper.class);
             Collection<Fieldsblobs> records = new ArrayList<>();
-            
+
             Fieldsblobs record = new Fieldsblobs();
             record.setFirstname("Jeff");
             record.setLastname("Smith");
@@ -1852,7 +1852,7 @@ public class DynamicSqlTest extends AbstractTest {
 
             int rowsInserted = mapper.insertMultiple(records);
             assertEquals(2, rowsInserted);
-            
+
             List<Fieldsblobs> answer = mapper.select(dsl ->
                     dsl.where(fieldsblobs.firstname, isLike("S%")));
             assertEquals(1, answer.size());
@@ -1936,7 +1936,7 @@ public class DynamicSqlTest extends AbstractTest {
             record.setId7(7);
             record.setSecondFirstName("fred2");
             record.setThirdFirstName("fred3");
-            
+
             record.setActive(true);
             record.setActive1(Boolean.FALSE);
             record.setActive2(new byte[]{-128, 127});
@@ -2012,7 +2012,7 @@ public class DynamicSqlTest extends AbstractTest {
             });
         }
     }
-    
+
     @Test
     public void testAwfulTableUpdateByPrimaryKey() {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
@@ -2089,7 +2089,7 @@ public class DynamicSqlTest extends AbstractTest {
             assertEquals(1, rows);
 
             Optional<AwfulTable> returnedRecord = mapper.selectByPrimaryKey(generatedCustomerId);
-            
+
             assertThat(returnedRecord).hasValueSatisfying(rr -> {
                 assertEquals(generatedCustomerId, rr.getCustomerId());
                 assertEquals(record.geteMail(), rr.geteMail());
@@ -2340,7 +2340,7 @@ public class DynamicSqlTest extends AbstractTest {
             assertEquals(11111, returnedRecord.getId1().intValue());
             assertEquals(22222, returnedRecord.getId2().intValue());
             assertEquals(61, returnedRecord.getCustomerId());
-            
+
             returnedRecord = answer.get(2);
             assertEquals(111111, returnedRecord.getId1().intValue());
             assertEquals(222222, returnedRecord.getId2().intValue());
@@ -2354,7 +2354,7 @@ public class DynamicSqlTest extends AbstractTest {
 
             AwfulTableMapper mapper = sqlSession.getMapper(AwfulTableMapper.class);
             List<AwfulTable> records = new ArrayList<>();
-            
+
             AwfulTable record = new AwfulTable();
             record.seteMail("fred@fred.com");
             record.setEmailaddress("alsofred@fred.com");
@@ -2441,7 +2441,7 @@ public class DynamicSqlTest extends AbstractTest {
 
             int rowsInserted = mapper.insertMultiple(records);
             assertEquals(6, rowsInserted);
-            
+
             // check generated keys
             assertEquals(57, records.get(0).getCustomerId());
             assertEquals(58, records.get(1).getCustomerId());
@@ -2449,7 +2449,7 @@ public class DynamicSqlTest extends AbstractTest {
             assertEquals(60, records.get(3).getCustomerId());
             assertEquals(61, records.get(4).getCustomerId());
             assertEquals(62, records.get(5).getCustomerId());
-            
+
             List<AwfulTable> answer = mapper.select(dsl ->
                     dsl.where(awfulTable.firstFirstName, isLike("b%"))
                     .orderBy(awfulTable.customerId));
@@ -2463,7 +2463,7 @@ public class DynamicSqlTest extends AbstractTest {
             assertEquals(11111, returnedRecord.getId1().intValue());
             assertEquals(22222, returnedRecord.getId2().intValue());
             assertEquals(61, returnedRecord.getCustomerId());
-            
+
             returnedRecord = answer.get(2);
             assertEquals(111111, returnedRecord.getId1().intValue());
             assertEquals(222222, returnedRecord.getId2().intValue());
@@ -2575,7 +2575,7 @@ public class DynamicSqlTest extends AbstractTest {
             assertEquals(222, returnedRecord.getId2().intValue());
         }
     }
-    
+
     @Test
     public void testAwfulTableSelectByExampleComplexLike() {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
@@ -2669,7 +2669,7 @@ public class DynamicSqlTest extends AbstractTest {
                     dsl.where(awfulTable.firstFirstName, isLike("b%"), and(awfulTable.id2, isEqualTo(222222)))
                     .or(awfulTable.firstFirstName, isLike("wi%"))
                     .orderBy(awfulTable.customerId));
-                            
+
             assertEquals(2, answer.size());
             AwfulTable returnedRecord = answer.get(0);
             assertEquals(11, returnedRecord.getId1().intValue());
@@ -2772,7 +2772,7 @@ public class DynamicSqlTest extends AbstractTest {
             List<AwfulTable> answer = mapper.select(dsl ->
                     dsl.where(awfulTable.id1, isIn(1, 11))
                     .orderBy(awfulTable.customerId));
-            
+
             assertEquals(2, answer.size());
             AwfulTable returnedRecord = answer.get(0);
             assertEquals(1, returnedRecord.getId1().intValue());
@@ -3026,107 +3026,107 @@ public class DynamicSqlTest extends AbstractTest {
             assertEquals(2, rows);
         }
     }
-    
+
     @Test
     public void testTranslationTable() {
         try(SqlSession sqlSession = sqlSessionFactory.openSession()) {
             TranslationMapper mapper = sqlSession.getMapper(TranslationMapper.class);
-            
+
             Translation t = new Translation();
             t.setId(1);
             t.setTranslation("Spanish");
             mapper.insert(t);
-            
+
             Translation t1 = new Translation();
             t1.setId(2);
             t1.setTranslation("French");
             mapper.insert(t1);
-            
+
             Optional<Translation> returnedRecord = mapper.selectByPrimaryKey(2);
-            
+
             assertThat(returnedRecord).hasValueSatisfying(rr -> {
                 assertEquals(t1.getId(), rr.getId());
                 assertEquals(t1.getTranslation(), rr.getTranslation());
             });
-            
+
             t1.setTranslation("Italian");
             mapper.updateByPrimaryKey(t1);
-            
+
             returnedRecord = mapper.selectByPrimaryKey(2);
-            
+
             assertThat(returnedRecord).hasValueSatisfying(rr -> {
                 assertEquals(t1.getId(), rr.getId());
                 assertEquals(t1.getTranslation(), rr.getTranslation());
             });
         }
     }
-    
+
     @Test
     public void testIdTable() {
         try(SqlSession sqlSession = sqlSessionFactory.openSession()) {
             IdMapper mapper = sqlSession.getMapper(IdMapper.class);
-            
+
             Id id = new Id();
             id.setId(1);
             id.setDescription("Spanish");
             mapper.insert(id);
-            
+
             Id id1 = new Id();
             id1.setId(2);
             id1.setDescription("French");
             mapper.insert(id1);
-            
+
             Optional<Id> returnedRecord = mapper.selectByPrimaryKey(2);
-            
+
             assertThat(returnedRecord).hasValueSatisfying(rr -> {
                 assertEquals(id1.getId(), rr.getId());
                 assertEquals(id1.getDescription(), rr.getDescription());
             });
-            
+
             id1.setDescription("Italian");
             mapper.updateByPrimaryKey(id1);
-            
+
             returnedRecord = mapper.selectByPrimaryKey(2);
-            
+
             assertThat(returnedRecord).hasValueSatisfying(rr -> {
                 assertEquals(id1.getId(), rr.getId());
                 assertEquals(id1.getDescription(), rr.getDescription());
             });
         }
     }
-    
+
     @Test
     public void testEquals1() {
         Pkfields pkfields1 = new Pkfields();
         assertFalse(pkfields1.equals(null));
     }
-    
+
     @Test
     public void testEquals2() {
         Pkfields pkfields1 = new Pkfields();
         Pkfields pkfields2 = new Pkfields();
         assertTrue(pkfields1.equals(pkfields2));
     }
-    
+
     @Test
     public void testEquals3() {
         Pkfields pkfields1 = new Pkfields();
         pkfields1.setId1(2);
-        
+
         Pkfields pkfields2 = new Pkfields();
         pkfields2.setId1(2);
-        
+
         assertTrue(pkfields1.equals(pkfields2));
     }
-    
+
     @Test
     public void testEquals4() {
         Pkfields pkfields1 = new Pkfields();
         pkfields1.setId1(2);
-        
+
         Pkfields pkfields2 = new Pkfields();
         pkfields2.setId1(3);
-        
+
         assertFalse(pkfields1.equals(pkfields2));
     }
 
@@ -3163,9 +3163,9 @@ public class DynamicSqlTest extends AbstractTest {
         awfulTable2.setLastName("Rubble");
         awfulTable2.setSecondFirstName("Bamm Bamm");
         awfulTable2.setThirdFirstName("Pebbles");
-        
+
         assertTrue(awfulTable1.equals(awfulTable2));
-        
+
         awfulTable2.setActive(true);
         assertFalse(awfulTable1.equals(awfulTable2));
     }
@@ -3176,15 +3176,15 @@ public class DynamicSqlTest extends AbstractTest {
         Pkfields pkfields2 = new Pkfields();
         assertTrue(pkfields1.hashCode() == pkfields2.hashCode());
     }
-    
+
     @Test
     public void testHashCode2() {
         Pkfields pkfields1 = new Pkfields();
         pkfields1.setId1(2);
-        
+
         Pkfields pkfields2 = new Pkfields();
         pkfields2.setId1(2);
-        
+
         assertTrue(pkfields1.hashCode() == pkfields2.hashCode());
     }
 
@@ -3221,7 +3221,7 @@ public class DynamicSqlTest extends AbstractTest {
         awfulTable2.setLastName("Rubble");
         awfulTable2.setSecondFirstName("Bamm Bamm");
         awfulTable2.setThirdFirstName("Pebbles");
-        
+
         assertTrue(awfulTable1.hashCode() == awfulTable2.hashCode());
     }
 }

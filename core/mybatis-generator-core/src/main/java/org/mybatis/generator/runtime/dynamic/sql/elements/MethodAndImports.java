@@ -26,49 +26,49 @@ public class MethodAndImports {
     private Method method;
     private Set<FullyQualifiedJavaType> imports;
     private Set<String> staticImports;
-    
+
     private MethodAndImports(Builder builder) {
         method = builder.method;
         imports = builder.imports;
         staticImports = builder.staticImports;
     }
-    
+
     public Method getMethod() {
         return method;
     }
-    
+
     public Set<FullyQualifiedJavaType> getImports() {
         return imports;
     }
-    
+
     public Set<String> getStaticImports() {
         return staticImports;
     }
-    
+
     public static Builder withMethod(Method method) {
         return new Builder().withMethod(method);
     }
-    
+
     public static class Builder {
         private Method method;
         private Set<FullyQualifiedJavaType> imports = new HashSet<>();
         private Set<String> staticImports = new HashSet<>();
-        
+
         public Builder withMethod(Method method) {
             this.method = method;
             return this;
         }
-        
+
         public Builder withImport(FullyQualifiedJavaType importedType) {
             this.imports.add(importedType);
             return this;
         }
-        
+
         public Builder withImports(Set<FullyQualifiedJavaType> imports) {
             this.imports.addAll(imports);
             return this;
         }
-        
+
         public Builder withStaticImport(String staticImport) {
             this.staticImports.add(staticImport);
             return this;

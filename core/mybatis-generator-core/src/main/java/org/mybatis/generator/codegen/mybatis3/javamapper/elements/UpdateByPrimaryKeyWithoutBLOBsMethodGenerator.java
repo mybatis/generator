@@ -48,7 +48,7 @@ public class UpdateByPrimaryKeyWithoutBLOBsMethodGenerator extends
                 introspectedTable);
 
         addMapperAnnotations(method);
-        
+
         if (context.getPlugins()
                 .clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(method,
                         interfaze, introspectedTable)) {

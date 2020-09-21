@@ -48,7 +48,7 @@ import org.xml.sax.SAXException;
 
 /**
  * This class handles the task of merging changes into an existing XML file.
- * 
+ *
  * @author Jeff Butler
  */
 public class XmlFileMergerJaxp {
@@ -82,7 +82,7 @@ public class XmlFileMergerJaxp {
                     existingFile.getName()), e);
         }
     }
-    
+
     public static String getMergedSource(InputSource newFile,
             InputSource existingFile, String existingFileName) throws IOException, SAXException,
             ParserConfigurationException, ShellException {
@@ -188,10 +188,10 @@ public class XmlFileMergerJaxp {
         if (id != null) {
             return MergeConstants.idStartsWithPrefix(id);
         }
-        
+
         return false;
     }
-    
+
     private static boolean isNewFormatNode(Node node) {
         // check for new node format - if the first non-whitespace node
         // is an XML comment, and the comment includes
@@ -206,10 +206,10 @@ public class XmlFileMergerJaxp {
                 return MergeConstants.commentContainsTag(commentData);
             }
         }
-        
+
         return false;
     }
-    
+
     private static boolean isWhiteSpace(Node node) {
         boolean rc = false;
 

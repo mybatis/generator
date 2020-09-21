@@ -83,7 +83,7 @@ public class DeleteByPrimaryKeyMethodGenerator extends
                 introspectedTable);
 
         addMapperAnnotations(method);
-        
+
         if (context.getPlugins().clientDeleteByPrimaryKeyMethodGenerated(
                 method, interfaze, introspectedTable)) {
             addExtraImports(interfaze);

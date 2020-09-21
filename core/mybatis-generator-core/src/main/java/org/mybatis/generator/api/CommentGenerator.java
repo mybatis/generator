@@ -34,7 +34,7 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
 /**
  * Implementations of this interface are used to generate comments for the
  * various artifacts.
- * 
+ *
  * @author Jeff Butler
  */
 public interface CommentGenerator {
@@ -42,9 +42,9 @@ public interface CommentGenerator {
     /**
      * Adds properties for this instance from any properties configured in the
      * CommentGenerator configuration.
-     * 
+     *
      * <p>This method will be called before any of the other methods.
-     * 
+     *
      * @param properties
      *            All properties from the configuration
      */
@@ -53,7 +53,7 @@ public interface CommentGenerator {
     /**
      * This method should add a Javadoc comment to the specified field. The field is related to the
      * specified table and is used to hold the value of the specified column.
-     * 
+     *
      * <p><b>Important:</b> This method should add a the nonstandard JavaDoc tag "@mbg.generated" to
      * the comment. Without this tag, the Eclipse based Java merge feature will fail.
      *
@@ -81,9 +81,9 @@ public interface CommentGenerator {
     /**
      * Adds a comment for a model class.  The Java code merger should
      * be notified not to delete the entire class in case any manual
-     * changes have been made.  So this method will always use the 
+     * changes have been made.  So this method will always use the
      * "do not delete" annotation.
-     * 
+     *
      * <p>Because of difficulties with the Java file merger, the default implementation
      * of this method should NOT add comments.  Comments should only be added if
      * specifically requested by the user (for example, by enabling table remark comments).
@@ -98,7 +98,7 @@ public interface CommentGenerator {
 
     /**
      * Adds a comment for a model class.
-     * 
+     *
      * @param modelClass
      *            the generated KotlinType for the model
      * @param introspectedTable
@@ -186,7 +186,7 @@ public interface CommentGenerator {
      * could be used to add a general file comment (such as a copyright notice). However, note
      * that the Java file merge function in Eclipse does not deal with this comment. If you run
      * the generator repeatedly, you will only retain the comment from the initial run.
-     * 
+     *
      * <p>The default implementation does nothing.
      *
      * @param compilationUnit
@@ -208,7 +208,7 @@ public interface CommentGenerator {
      * could be used to add a general file comment (such as a copyright notice). However, note
      * that the XML file merge function does not deal with this comment. If you run the generator
      * repeatedly, you will only retain the comment from the initial run.
-     * 
+     *
      * <p>The default implementation does nothing.
      *
      * @param rootElement
@@ -225,7 +225,7 @@ public interface CommentGenerator {
      *            the introspected table
      * @param imports
      *   the comment generator may add a required imported type to this list
-     * 
+     *
      * @since 1.3.6
      */
     void addGeneralMethodAnnotation(Method method, IntrospectedTable introspectedTable,
@@ -242,12 +242,12 @@ public interface CommentGenerator {
      *     thr introspected column
      * @param imports
      *   the comment generator may add a required imported type to this list
-     * 
+     *
      * @since 1.3.6
      */
     void addGeneralMethodAnnotation(Method method, IntrospectedTable introspectedTable,
             IntrospectedColumn introspectedColumn, Set<FullyQualifiedJavaType> imports);
-    
+
     /**
      * Adds a @Generated annotation to a field.
      *
@@ -257,7 +257,7 @@ public interface CommentGenerator {
      *            the introspected table
      * @param imports
      *   the comment generator may add a required imported type to this list
-     * 
+     *
      * @since 1.3.6
      */
     void addFieldAnnotation(Field field, IntrospectedTable introspectedTable,
@@ -274,7 +274,7 @@ public interface CommentGenerator {
      *            the introspected column
      * @param imports
      *   the comment generator may add a required imported type to this list
-     * 
+     *
      * @since 1.3.6
      */
     void addFieldAnnotation(Field field, IntrospectedTable introspectedTable,
@@ -289,16 +289,16 @@ public interface CommentGenerator {
      *            the introspected table
      * @param imports
      *   the comment generator may add a required imported type to this list
-     * 
+     *
      * @since 1.3.6
      */
     void addClassAnnotation(InnerClass innerClass, IntrospectedTable introspectedTable,
             Set<FullyQualifiedJavaType> imports);
-    
+
     /**
      * This method is called to add a file level comment to a generated Kotlin file. This method
      * could be used to add a general file comment (such as a copyright notice).
-     * 
+     *
      * <p>The default implementation does nothing.
      *
      * @param kotlinFile

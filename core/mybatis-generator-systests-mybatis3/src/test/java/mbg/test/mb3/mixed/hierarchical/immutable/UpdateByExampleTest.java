@@ -47,9 +47,9 @@ import mbg.test.mb3.generated.mixed.hierarchical.Immutable.Model.PkonlyExample;
 import mbg.test.mb3.generated.mixed.hierarchical.Immutable.Model.PkonlyKey;
 
 /**
- * 
+ *
  * @author Jeff Butler
- * 
+ *
  */
 public class UpdateByExampleTest extends AbstractMixedHierarchicalImmutableTest {
 

@@ -26,7 +26,7 @@ import org.junit.jupiter.api.BeforeEach;
 
 /**
  * @author Jeff Butler
- * 
+ *
  */
 public abstract class AbstractTest {
 
@@ -41,6 +41,6 @@ public abstract class AbstractTest {
         sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         reader.close();
     }
-    
+
     public abstract String getMyBatisConfigFile();
 }

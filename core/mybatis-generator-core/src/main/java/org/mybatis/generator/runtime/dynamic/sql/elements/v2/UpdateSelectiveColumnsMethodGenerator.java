@@ -29,7 +29,7 @@ import org.mybatis.generator.runtime.dynamic.sql.elements.MethodAndImports;
 public class UpdateSelectiveColumnsMethodGenerator extends AbstractMethodGenerator {
     private FullyQualifiedJavaType recordType;
     private FragmentGenerator fragmentGenerator;
-    
+
     private UpdateSelectiveColumnsMethodGenerator(Builder builder) {
         super(builder);
         recordType = builder.recordType;
@@ -47,11 +47,11 @@ public class UpdateSelectiveColumnsMethodGenerator extends AbstractMethodGenerat
         imports.add(parameterAndReturnType);
 
         imports.add(recordType);
-        
+
         Method method = new Method("updateSelectiveColumns"); //$NON-NLS-1$
         method.setStatic(true);
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
-        
+
         method.setReturnType(parameterAndReturnType);
         method.addParameter(new Parameter(recordType, "record")); //$NON-NLS-1$
         method.addParameter(new Parameter(parameterAndReturnType, "dsl")); //$NON-NLS-1$
@@ -72,12 +72,12 @@ public class UpdateSelectiveColumnsMethodGenerator extends AbstractMethodGenerat
     public static class Builder extends BaseBuilder<Builder, UpdateSelectiveColumnsMethodGenerator> {
         private FullyQualifiedJavaType recordType;
         private FragmentGenerator fragmentGenerator;
-        
+
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
             this.recordType = recordType;
             return this;
         }
-        
+
         public Builder withFragmentGenerator(FragmentGenerator fragmentGenerator) {
             this.fragmentGenerator = fragmentGenerator;
             return this;

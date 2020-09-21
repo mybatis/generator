@@ -29,14 +29,14 @@ public class MethodRenderer {
     private TypeParameterRenderer typeParameterRenderer = new TypeParameterRenderer();
     private ParameterRenderer parameterRenderer = new ParameterRenderer();
     private BodyLineRenderer bodyLineRenderer = new BodyLineRenderer();
-    
+
     public List<String> render(Method method, boolean inInterface, CompilationUnit compilationUnit) {
         List<String> lines = new ArrayList<>();
 
         lines.addAll(method.getJavaDocLines());
         lines.addAll(method.getAnnotations());
         lines.add(getFirstLine(method, inInterface, compilationUnit));
-        
+
         if (!method.isAbstract() && !method.isNative()) {
             lines.addAll(bodyLineRenderer.render(method.getBodyLines()));
             lines.add("}"); //$NON-NLS-1$
@@ -75,21 +75,21 @@ public class MethodRenderer {
         }
 
         sb.append(renderTypeParameters(method, compilationUnit));
-        
+
         if (!method.isConstructor()) {
             sb.append(method.getReturnType()
                     .map(t -> JavaDomUtils.calculateTypeName(compilationUnit, t))
                     .orElse("void")); //$NON-NLS-1$
-            
+
             sb.append(' ');
         }
 
         sb.append(method.getName());
-        
+
         sb.append(renderParameters(method, compilationUnit));
-        
+
         sb.append(renderExceptions(method, compilationUnit));
-        
+
         if (method.isAbstract() || method.isNative()) {
             sb.append(';');
         } else {
@@ -103,10 +103,10 @@ public class MethodRenderer {
         if (inInterface && method.getVisibility() == JavaVisibility.PUBLIC) {
             return ""; //$NON-NLS-1$
         }
-        
+
         return method.getVisibility().getValue();
     }
-    
+
     // should return an empty string if no type parameters
     private String renderTypeParameters(Method method, CompilationUnit compilationUnit) {
         return method.getTypeParameters().stream()

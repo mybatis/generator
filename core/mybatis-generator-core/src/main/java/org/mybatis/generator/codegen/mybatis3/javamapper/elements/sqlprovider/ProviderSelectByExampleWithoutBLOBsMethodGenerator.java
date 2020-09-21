@@ -58,10 +58,10 @@ public class ProviderSelectByExampleWithoutBLOBsMethodGenerator extends Abstract
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(FullyQualifiedJavaType.getStringInstance());
         method.addParameter(new Parameter(fqjt, "example")); //$NON-NLS-1$
-        
+
         context.getCommentGenerator().addGeneralMethodComment(method,
                 introspectedTable);
-        
+
         if (useLegacyBuilder) {
             method.addBodyLine("BEGIN();"); //$NON-NLS-1$
         } else {

@@ -40,9 +40,9 @@ import org.mybatis.generator.codegen.RootClassInfo;
 /**
  * This model generator builds a flat model with default constructor and getters/setters.
  * It does not support the immutable model, or constructor based attributes.
- * 
+ *
  * @author Jeff Butler
- * 
+ *
  */
 public class DynamicSqlModelGenerator extends AbstractJavaGenerator {
 
@@ -90,7 +90,7 @@ public class DynamicSqlModelGenerator extends AbstractJavaGenerator {
 
             Field field = getJavaBeansFieldWithGeneratedAnnotation(introspectedColumn, context, introspectedTable,
                     topLevelClass);
-            
+
             if (plugins.modelFieldGenerated(field, topLevelClass,
                     introspectedColumn, introspectedTable,
                     Plugin.ModelClassType.BASE_RECORD)) {

@@ -39,7 +39,7 @@ public class BasicDeleteMethodGenerator extends AbstractKotlinFunctionGenerator 
                 .withImport("org.mybatis.dynamic.sql.util.SqlProviderAdapter") //$NON-NLS-1$
                 .withImport("org.apache.ibatis.annotations.DeleteProvider") //$NON-NLS-1$
                 .build();
-        
+
         addFunctionComment(functionAndImports);
         return functionAndImports;
     }

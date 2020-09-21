@@ -32,7 +32,7 @@ public abstract class AbstractJavaMapperMethodGenerator extends
     public AbstractJavaMapperMethodGenerator() {
         super();
     }
-    
+
     protected String getResultAnnotation(Interface interfaze, IntrospectedColumn introspectedColumn,
             boolean idColumn, boolean constructorBased) {
         StringBuilder sb = new StringBuilder();

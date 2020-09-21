@@ -29,7 +29,7 @@ public class ParameterRenderer {
                 + (parameter.isVarargs() ? "... " : "") //$NON-NLS-1$ //$NON-NLS-2$
                 + parameter.getName();
     }
-    
+
     // should return empty string if no annotations
     private String renderAnnotations(Parameter parameter) {
         return parameter.getAnnotations().stream()

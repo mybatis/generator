@@ -20,9 +20,9 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 
 public class GeneralDeleteMethodGenerator extends AbstractKotlinFunctionGenerator {
-    
+
     private String mapperName;
-    
+
     private GeneralDeleteMethodGenerator(Builder builder) {
         super(builder);
         mapperName = builder.mapperName;
@@ -52,7 +52,7 @@ public class GeneralDeleteMethodGenerator extends AbstractKotlinFunctionGenerato
 
     public static class Builder extends BaseBuilder<Builder, GeneralDeleteMethodGenerator> {
         private String mapperName;
-        
+
         public Builder withMapperName(String mapperName) {
             this.mapperName = mapperName;
             return this;

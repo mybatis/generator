@@ -20,7 +20,7 @@ import org.mybatis.generator.api.ProgressCallback;
 /**
  * This class implements a progress callback that does nothing. It is used when
  * the client passes in a null for the ProgressCallback.
- * 
+ *
  * @author Jeff Butler
  */
 public class NullProgressCallback implements ProgressCallback {

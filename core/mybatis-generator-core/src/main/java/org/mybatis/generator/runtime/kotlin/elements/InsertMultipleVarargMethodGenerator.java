@@ -24,7 +24,7 @@ import org.mybatis.generator.runtime.dynamic.sql.elements.v2.Utils;
 public class InsertMultipleVarargMethodGenerator extends AbstractKotlinFunctionGenerator {
     private FullyQualifiedKotlinType recordType;
     private String mapperName;
-    
+
     private InsertMultipleVarargMethodGenerator(Builder builder) {
         super(builder);
         recordType = builder.recordType;
@@ -36,7 +36,7 @@ public class InsertMultipleVarargMethodGenerator extends AbstractKotlinFunctionG
         if (!Utils.generateMultipleRowInsert(introspectedTable)) {
             return null;
         }
-        
+
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
                 KotlinFunction.newOneLineFunction(mapperName + ".insertMultiple") //$NON-NLS-1$
                 .withArgument(KotlinArg.newArg("vararg records") //$NON-NLS-1$
@@ -60,17 +60,17 @@ public class InsertMultipleVarargMethodGenerator extends AbstractKotlinFunctionG
     public static class Builder extends BaseBuilder<Builder, InsertMultipleVarargMethodGenerator> {
         private FullyQualifiedKotlinType recordType;
         private String mapperName;
-        
+
         public Builder withRecordType(FullyQualifiedKotlinType recordType) {
             this.recordType = recordType;
             return this;
         }
-        
+
         public Builder withMapperName(String mapperName) {
             this.mapperName = mapperName;
             return this;
         }
-        
+
         @Override
         public Builder getThis() {
             return this;

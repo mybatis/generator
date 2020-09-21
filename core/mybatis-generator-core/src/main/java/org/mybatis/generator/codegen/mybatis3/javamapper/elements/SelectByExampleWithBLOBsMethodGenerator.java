@@ -65,7 +65,7 @@ public class SelectByExampleWithBLOBsMethodGenerator extends
                 introspectedTable);
 
         addMapperAnnotations(interfaze, method);
-        
+
         if (context.getPlugins()
                 .clientSelectByExampleWithBLOBsMethodGenerated(method, interfaze,
                         introspectedTable)) {

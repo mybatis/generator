@@ -56,7 +56,7 @@ public class UpdateByExampleSelectiveMethodGenerator extends
                 introspectedTable);
 
         addMapperAnnotations(method);
-        
+
         if (context.getPlugins()
                 .clientUpdateByExampleSelectiveMethodGenerated(method, interfaze,
                         introspectedTable)) {

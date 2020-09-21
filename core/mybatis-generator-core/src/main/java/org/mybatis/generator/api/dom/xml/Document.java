@@ -42,7 +42,7 @@ public class Document {
     public void setRootElement(XmlElement rootElement) {
         this.rootElement = rootElement;
     }
-    
+
     public Optional<DocType> getDocType() {
         return Optional.ofNullable(docType);
     }

@@ -28,7 +28,7 @@ import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.SelectByPrimaryKeyMethodGenerator;
 
 public class AnnotatedSelectByPrimaryKeyMethodGenerator extends SelectByPrimaryKeyMethodGenerator {
-    
+
     private boolean useResultMapIfAvailable;
 
     public AnnotatedSelectByPrimaryKeyMethodGenerator(boolean useResultMapIfAvailable, boolean isSimple) {
@@ -44,7 +44,7 @@ public class AnnotatedSelectByPrimaryKeyMethodGenerator extends SelectByPrimaryK
         javaIndent(sb, 1);
         sb.append("\"select\","); //$NON-NLS-1$
         method.addAnnotation(sb.toString());
-        
+
         sb.setLength(0);
         javaIndent(sb, 1);
         sb.append('"');
@@ -147,7 +147,7 @@ public class AnnotatedSelectByPrimaryKeyMethodGenerator extends SelectByPrimaryK
             javaIndent(sb, 1);
             sb.append(getResultAnnotation(interfaze, introspectedColumn, true,
                     introspectedTable.isConstructorBased()));
-            
+
             if (iterPk.hasNext() || iterNonPk.hasNext()) {
                 sb.append(',');
             }
@@ -161,7 +161,7 @@ public class AnnotatedSelectByPrimaryKeyMethodGenerator extends SelectByPrimaryK
             javaIndent(sb, 1);
             sb.append(getResultAnnotation(interfaze, introspectedColumn, false,
                     introspectedTable.isConstructorBased()));
-            
+
             if (iterNonPk.hasNext()) {
                 sb.append(',');
             }

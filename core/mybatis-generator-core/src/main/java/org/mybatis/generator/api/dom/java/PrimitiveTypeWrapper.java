@@ -30,7 +30,7 @@ public class PrimitiveTypeWrapper extends FullyQualifiedJavaType {
     /**
      * Use the static getXXXInstance methods to gain access to one of the type
      * wrappers.
-     * 
+     *
      * @param fullyQualifiedName
      *            fully qualified name of the wrapper type
      * @param toPrimitiveMethod

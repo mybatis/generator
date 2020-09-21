@@ -59,7 +59,7 @@ public class ProviderUpdateByPrimaryKeySelectiveMethodGenerator extends Abstract
         method.setReturnType(FullyQualifiedJavaType.getStringInstance());
         method.setVisibility(JavaVisibility.PUBLIC);
         method.addParameter(new Parameter(fqjt, "record")); //$NON-NLS-1$
-        
+
         context.getCommentGenerator().addGeneralMethodComment(method,
                 introspectedTable);
 
@@ -73,7 +73,7 @@ public class ProviderUpdateByPrimaryKeySelectiveMethodGenerator extends Abstract
                 builderPrefix,
                 escapeStringForJava(introspectedTable.getFullyQualifiedTableNameAtRuntime())));
         method.addBodyLine(""); //$NON-NLS-1$
-        
+
         for (IntrospectedColumn introspectedColumn :
                 ListUtilities.removeGeneratedAlwaysColumns(introspectedTable.getNonPrimaryKeyColumns())) {
             if (!introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {

@@ -66,7 +66,7 @@ public class XmlElement implements VisitableElement {
     public String getName() {
         return name;
     }
-    
+
     public boolean hasChildren() {
         return !elements.isEmpty();
     }

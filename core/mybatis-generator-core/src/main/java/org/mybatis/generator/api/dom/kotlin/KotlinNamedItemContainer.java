@@ -29,7 +29,7 @@ public abstract class KotlinNamedItemContainer extends KotlinNamedItem {
     public void addNamedItem(KotlinNamedItem namedItem) {
         namedItems.add(namedItem);
     }
-    
+
     public List<KotlinNamedItem> getNamedItems() {
         return namedItems;
     }

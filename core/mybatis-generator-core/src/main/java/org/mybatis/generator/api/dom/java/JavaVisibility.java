@@ -17,7 +17,7 @@ package org.mybatis.generator.api.dom.java;
 
 /**
  * Typesafe enum of possible Java visibility settings.
- * 
+ *
  * @author Jeff Butler
  */
 public enum JavaVisibility {

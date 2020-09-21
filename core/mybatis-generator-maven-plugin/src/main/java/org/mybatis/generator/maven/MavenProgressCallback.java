@@ -20,7 +20,7 @@ import org.mybatis.generator.internal.NullProgressCallback;
 
 /**
  * This callback logs progress messages with the Maven logger.
- * 
+ *
  * @author Jeff Butler
  *
  */

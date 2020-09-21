@@ -26,7 +26,7 @@ public abstract class AbstractMethodGenerator {
     protected Context context;
     protected IntrospectedTable introspectedTable;
     protected String tableFieldName;
-    
+
     protected AbstractMethodGenerator(BaseBuilder<?, ?> builder) {
         context = builder.context;
         introspectedTable = builder.introspectedTable;
@@ -36,7 +36,7 @@ public abstract class AbstractMethodGenerator {
     protected String calculateFieldName(IntrospectedColumn column) {
         return calculateFieldName(tableFieldName, column);
     }
-    
+
     public static String calculateFieldName(String tableFieldName, IntrospectedColumn column) {
         String fieldName = column.getJavaProperty();
         if (fieldName.equals(tableFieldName)) {
@@ -45,34 +45,34 @@ public abstract class AbstractMethodGenerator {
         }
         return fieldName;
     }
-    
+
     protected void acceptParts(MethodAndImports.Builder builder, Method method, MethodParts methodParts) {
         for (Parameter parameter : methodParts.getParameters()) {
             method.addParameter(parameter);
         }
-        
+
         for (String annotation : methodParts.getAnnotations()) {
             method.addAnnotation(annotation);
         }
-        
+
         method.addBodyLines(methodParts.getBodyLines());
         builder.withImports(methodParts.getImports());
     }
 
     public abstract MethodAndImports generateMethodAndImports();
-    
+
     public abstract boolean callPlugins(Method method, Interface interfaze);
-    
+
     public abstract static class BaseBuilder<T extends BaseBuilder<T, R>, R> {
         private Context context;
         private IntrospectedTable introspectedTable;
         private String tableFieldName;
-        
+
         public T withContext(Context context) {
             this.context = context;
             return getThis();
         }
-        
+
         public T withIntrospectedTable(IntrospectedTable introspectedTable) {
             this.introspectedTable = introspectedTable;
             return getThis();
@@ -84,7 +84,7 @@ public abstract class AbstractMethodGenerator {
         }
 
         public abstract T getThis();
-        
+
         public abstract R build();
     }
 }

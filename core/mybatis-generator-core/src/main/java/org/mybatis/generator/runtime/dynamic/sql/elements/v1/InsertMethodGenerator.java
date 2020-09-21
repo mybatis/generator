@@ -30,7 +30,7 @@ import org.mybatis.generator.runtime.dynamic.sql.elements.MethodAndImports;
 
 public class InsertMethodGenerator extends AbstractMethodGenerator {
     private FullyQualifiedJavaType recordType;
-    
+
     private InsertMethodGenerator(Builder builder) {
         super(builder);
         recordType = builder.recordType;
@@ -41,35 +41,35 @@ public class InsertMethodGenerator extends AbstractMethodGenerator {
         if (!introspectedTable.getRules().generateInsert()) {
             return null;
         }
-        
+
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
 
         imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.SqlBuilder")); //$NON-NLS-1$
         imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.render.RenderingStrategy")); //$NON-NLS-1$
         imports.add(recordType);
-        
+
         Method method = new Method("insert"); //$NON-NLS-1$
         method.setDefault(true);
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
         method.addParameter(new Parameter(recordType, "record")); //$NON-NLS-1$
-        
+
         method.addBodyLine("return insert(SqlBuilder.insert(record)"); //$NON-NLS-1$
         method.addBodyLine("        .into(" + tableFieldName + ")"); //$NON-NLS-1$ //$NON-NLS-2$
-        
+
         List<IntrospectedColumn> columns =
                 ListUtilities.removeIdentityAndGeneratedAlwaysColumns(introspectedTable.getAllColumns());
         for (IntrospectedColumn column : columns) {
             String fieldName = calculateFieldName(column);
-            
+
             method.addBodyLine("        .map(" + fieldName //$NON-NLS-1$
                     + ").toProperty(\"" + column.getJavaProperty() //$NON-NLS-1$
                     + "\")"); //$NON-NLS-1$
         }
-        
+
         method.addBodyLine("        .build()"); //$NON-NLS-1$
         method.addBodyLine("        .render(RenderingStrategy.MYBATIS3));"); //$NON-NLS-1$
-        
+
         return MethodAndImports.withMethod(method)
                 .withImports(imports)
                 .build();
@@ -82,12 +82,12 @@ public class InsertMethodGenerator extends AbstractMethodGenerator {
 
     public static class Builder extends BaseBuilder<Builder, InsertMethodGenerator> {
         private FullyQualifiedJavaType recordType;
-        
+
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
             this.recordType = recordType;
             return this;
         }
-        
+
         @Override
         public Builder getThis() {
             return this;

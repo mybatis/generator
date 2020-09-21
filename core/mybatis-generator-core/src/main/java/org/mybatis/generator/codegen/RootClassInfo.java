@@ -32,7 +32,7 @@ import org.mybatis.generator.internal.ObjectFactory;
 /**
  * Holds information about a class (uses the JavaBeans Introspector to find properties).
  * @author Jeff Butler
- * 
+ *
  */
 public class RootClassInfo {
 
@@ -53,7 +53,7 @@ public class RootClassInfo {
      * a generation run to clear the cached root class info in case there has been a change.
      * For example, when using the eclipse launcher, the cache would be kept until eclipse
      * was restarted.
-     * 
+     *
      */
     public static void reset() {
         rootClassInfoMap.clear();
@@ -112,18 +112,18 @@ public class RootClassInfo {
 
         return found;
     }
-    
+
     private boolean hasProperty(String propertyName, String propertyType, PropertyDescriptor propertyDescriptor) {
         return hasCorrectName(propertyName, propertyDescriptor)
                 && isProperType(propertyName, propertyType, propertyDescriptor)
                 && hasGetter(propertyName, propertyDescriptor)
                 && hasSetter(propertyName, propertyDescriptor);
     }
-    
+
     private boolean hasCorrectName(String propertyName, PropertyDescriptor propertyDescriptor) {
         return propertyDescriptor.getName().equals(propertyName);
     }
-    
+
     private boolean isProperType(String propertyName, String propertyType, PropertyDescriptor propertyDescriptor) {
         String introspectedPropertyType = propertyDescriptor.getPropertyType().getName();
         if (genericMode && introspectedPropertyType.equals("java.lang.Object")) { //$NON-NLS-1$
@@ -135,7 +135,7 @@ public class RootClassInfo {
                     propertyName, className, propertyType));
             return false;
         }
-        
+
         return true;
     }
 
@@ -145,7 +145,7 @@ public class RootClassInfo {
                     propertyName, className));
             return false;
         }
-        
+
         return true;
     }
 
@@ -155,7 +155,7 @@ public class RootClassInfo {
                     propertyName, className));
             return false;
         }
-        
+
         return true;
     }
 }

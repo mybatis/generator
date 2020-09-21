@@ -37,9 +37,9 @@ public class BasicDeleteMethodGenerator extends AbstractMethodGenerator {
                 && !introspectedTable.getRules().generateDeleteByPrimaryKey()) {
             return null;
         }
-        
+
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
-        
+
         FullyQualifiedJavaType parameterType =
                 new FullyQualifiedJavaType(
                         "org.mybatis.dynamic.sql.delete.render.DeleteStatementProvider"); //$NON-NLS-1$
@@ -51,7 +51,7 @@ public class BasicDeleteMethodGenerator extends AbstractMethodGenerator {
         imports.add(parameterType);
         imports.add(adapter);
         imports.add(annotation);
-        
+
         Method method = new Method("delete"); //$NON-NLS-1$
         method.setAbstract(true);
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());

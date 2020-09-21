@@ -50,7 +50,7 @@ public class InsertSelectiveMethodGenerator extends
                 introspectedTable);
 
         addMapperAnnotations(method);
-        
+
         if (context.getPlugins().clientInsertSelectiveMethodGenerated(
                 method, interfaze, introspectedTable)) {
             addExtraImports(interfaze);

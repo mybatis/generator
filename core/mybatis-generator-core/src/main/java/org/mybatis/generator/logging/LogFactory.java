@@ -26,9 +26,9 @@ import org.mybatis.generator.logging.slf4j.Slf4jLoggingLogFactory;
 
 /**
  * Factory for creating loggers.
- * 
+ *
  * @author Jeff Butler
- * 
+ *
  */
 public class LogFactory {
     private static AbstractLogFactory theFactory;

@@ -43,9 +43,9 @@ public class Method extends JavaElement {
     private boolean isDefault;
 
     private boolean isAbstract;
-    
+
     private boolean isFinal;
-    
+
     public Method(String name) {
         this.name = name;
     }

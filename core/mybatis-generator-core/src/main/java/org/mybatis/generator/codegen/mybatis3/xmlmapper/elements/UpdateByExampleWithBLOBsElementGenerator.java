@@ -56,7 +56,7 @@ public class UpdateByExampleWithBLOBsElementGenerator extends
                 ListUtilities.removeGeneratedAlwaysColumns(introspectedTable.getAllColumns()).iterator();
         while (iter.hasNext()) {
             IntrospectedColumn introspectedColumn = iter.next();
-            
+
             sb.append(MyBatis3FormattingUtilities
                     .getAliasedEscapedColumnName(introspectedColumn));
             sb.append(" = "); //$NON-NLS-1$

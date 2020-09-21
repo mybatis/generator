@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * This class encapsulates the idea of an inner enum - it has methods that make
  * it easy to generate inner enum.
- * 
+ *
  * @author Jeff Butler
  */
 public class InnerEnum extends AbstractJavaType {
@@ -29,7 +29,7 @@ public class InnerEnum extends AbstractJavaType {
     private List<String> enumConstants = new ArrayList<>();
 
     private List<InitializationBlock> initializationBlocks = new ArrayList<>();
-    
+
     public InnerEnum(FullyQualifiedJavaType type) {
         super(type);
     }

@@ -17,7 +17,7 @@ package org.mybatis.generator.codegen;
 
 /**
  * Constants for MyBatis XML IDs.
- * 
+ *
  * @author Jeff Butler
  */
 public class XmlConstants {

@@ -25,7 +25,7 @@ import org.mybatis.generator.internal.db.DatabaseDialects;
 /**
  * This class specifies that a key is auto-generated, either as an identity
  * column (post insert), or as some other query like a sequences (pre insert).
- * 
+ *
  * @author Jeff Butler
  */
 public class GeneratedKey {

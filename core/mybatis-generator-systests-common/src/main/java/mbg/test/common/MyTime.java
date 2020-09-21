@@ -25,7 +25,7 @@ public class MyTime {
     private int seconds;
 
     /**
-     * 
+     *
      */
     public MyTime() {
         super();
@@ -60,9 +60,9 @@ public class MyTime {
         if (arg0 == null) {
             return false;
         }
-        
+
         MyTime other = (MyTime) arg0;
-        
+
         return this.hours == other.hours
             && this.minutes == other.minutes
             && this.seconds == other.seconds;

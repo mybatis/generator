@@ -38,7 +38,7 @@ public abstract class AbstractAnnotatedHierarchicalImmutableTest extends Abstrac
         sqlSessionFactory.getConfiguration().addMapper(PkfieldsMapper.class);
         sqlSessionFactory.getConfiguration().addMapper(PkonlyMapper.class);
     }
-    
+
     @Override
     public String getMyBatisConfigFile() {
         return "mbg/test/mb3/annotated/MapperConfig.xml";

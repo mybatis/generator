@@ -30,7 +30,7 @@ public abstract class TypedPropertyHolder extends PropertyHolder {
     /**
      * Sets the value of the type specified in the configuration. If the special
      * value DEFAULT is specified, then the value will be ignored.
-     * 
+     *
      * @param configurationType
      *            the type specified in the configuration
      */

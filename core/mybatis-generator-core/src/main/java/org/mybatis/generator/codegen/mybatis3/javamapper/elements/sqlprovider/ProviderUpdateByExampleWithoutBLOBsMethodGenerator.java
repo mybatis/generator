@@ -60,7 +60,7 @@ public class ProviderUpdateByExampleWithoutBLOBsMethodGenerator extends
         method.addParameter(new Parameter(
                 new FullyQualifiedJavaType("java.util.Map<java.lang.String, java.lang.Object>"), //$NON-NLS-1$
                 "parameter")); //$NON-NLS-1$
-        
+
         context.getCommentGenerator().addGeneralMethodComment(method,
                 introspectedTable);
 
@@ -87,7 +87,7 @@ public class ProviderUpdateByExampleWithoutBLOBsMethodGenerator extends
         }
 
         method.addBodyLine(""); //$NON-NLS-1$
-        
+
         FullyQualifiedJavaType example =
                 new FullyQualifiedJavaType(introspectedTable.getExampleType());
         importedTypes.add(example);

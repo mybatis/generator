@@ -74,7 +74,7 @@ public class ObjectFactory {
      * a generation run so that and change to the classloading configuration
      * will be reflected.  For example, if the eclipse launcher changes configuration
      * it might not be updated if eclipse hasn't been restarted.
-     * 
+     *
      */
     public static void reset() {
         externalClassLoaders.clear();
@@ -321,7 +321,7 @@ public class ObjectFactory {
 
     /**
      * Creates an introspected table implementation that is only usable for validation .
-     * 
+     *
      *
      * @param context
      *            the context

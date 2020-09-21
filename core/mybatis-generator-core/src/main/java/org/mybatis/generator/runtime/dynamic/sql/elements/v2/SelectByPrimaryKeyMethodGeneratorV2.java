@@ -29,7 +29,7 @@ import org.mybatis.generator.runtime.dynamic.sql.elements.MethodParts;
 public class SelectByPrimaryKeyMethodGeneratorV2 extends AbstractMethodGenerator {
     private FullyQualifiedJavaType recordType;
     private FragmentGenerator fragmentGenerator;
-    
+
     private SelectByPrimaryKeyMethodGeneratorV2(Builder builder) {
         super(builder);
         recordType = builder.recordType;
@@ -47,21 +47,21 @@ public class SelectByPrimaryKeyMethodGeneratorV2 extends AbstractMethodGenerator
         FullyQualifiedJavaType returnType = new FullyQualifiedJavaType("java.util.Optional"); //$NON-NLS-1$
         returnType.addTypeArgument(recordType);
         imports.add(returnType);
-        
+
         Method method = new Method("selectByPrimaryKey"); //$NON-NLS-1$
         method.setDefault(true);
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
         method.setReturnType(returnType);
-        
+
         method.addBodyLine("return selectOne(c ->"); //$NON-NLS-1$
-        
+
         MethodAndImports.Builder builder = MethodAndImports.withMethod(method)
                 .withStaticImport("org.mybatis.dynamic.sql.SqlBuilder.*") //$NON-NLS-1$
                 .withImports(imports);
-        
+
         MethodParts methodParts = fragmentGenerator.getPrimaryKeyWhereClauseAndParametersV2();
         acceptParts(builder, method, methodParts);
-        
+
         return builder.build();
     }
 
@@ -73,12 +73,12 @@ public class SelectByPrimaryKeyMethodGeneratorV2 extends AbstractMethodGenerator
     public static class Builder extends BaseBuilder<Builder, SelectByPrimaryKeyMethodGeneratorV2> {
         private FullyQualifiedJavaType recordType;
         private FragmentGenerator fragmentGenerator;
-        
+
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
             this.recordType = recordType;
             return this;
         }
-        
+
         public Builder withFragmentGenerator(FragmentGenerator fragmentGenerator) {
             this.fragmentGenerator = fragmentGenerator;
             return this;

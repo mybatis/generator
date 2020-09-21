@@ -26,7 +26,7 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 
 /**
  * Disables all insert methods in the MyBatisDynamicSQLV2 runtime.
- * 
+ *
  * @author Jeff Butler
  *
  */

@@ -22,9 +22,9 @@ package mbg.test.common;
 public class FirstName {
 
     private String value;
-    
+
     /**
-     * 
+     *
      */
     public FirstName() {
         super();
@@ -43,7 +43,7 @@ public class FirstName {
         if (arg0 == null) {
             return false;
         }
-        
+
         return value.equals(((FirstName)arg0).getValue());
     }
 

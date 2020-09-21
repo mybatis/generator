@@ -20,7 +20,7 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 
 public class BasicCountMethodGenerator extends AbstractKotlinFunctionGenerator {
-    
+
     private BasicCountMethodGenerator(Builder builder) {
         super(builder);
     }
@@ -39,22 +39,22 @@ public class BasicCountMethodGenerator extends AbstractKotlinFunctionGenerator {
                 .withImport("org.mybatis.dynamic.sql.util.SqlProviderAdapter") //$NON-NLS-1$
                 .withImport("org.apache.ibatis.annotations.SelectProvider") //$NON-NLS-1$
                 .build();
-        
+
         addFunctionComment(functionAndImports);
         return functionAndImports;
     }
-    
+
     @Override
     public boolean callPlugins(KotlinFunction function, KotlinFile kotlinFile) {
         return context.getPlugins().clientBasicCountMethodGenerated(function, kotlinFile, introspectedTable);
     }
-    
+
     public static class Builder extends BaseBuilder<Builder, BasicCountMethodGenerator> {
         @Override
         public Builder getThis() {
             return this;
         }
-        
+
         @Override
         public BasicCountMethodGenerator build() {
             return new BasicCountMethodGenerator(this);

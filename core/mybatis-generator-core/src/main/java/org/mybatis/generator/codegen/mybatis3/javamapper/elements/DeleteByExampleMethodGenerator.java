@@ -48,7 +48,7 @@ public class DeleteByExampleMethodGenerator extends
                 introspectedTable);
 
         addMapperAnnotations(method);
-        
+
         if (context.getPlugins().clientDeleteByExampleMethodGenerated(
                 method, interfaze, introspectedTable)) {
             addExtraImports(interfaze);

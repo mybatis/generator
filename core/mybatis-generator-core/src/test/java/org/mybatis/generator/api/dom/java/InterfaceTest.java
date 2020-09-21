@@ -113,7 +113,7 @@ public class InterfaceTest {
         field = new Field("ONE", FullyQualifiedJavaType.getStringInstance());
         field.setInitializationString("\"one\"");
         interfaze.addField(field);
-        
+
         String expected = "package foo;" + System.getProperty("line.separator")
             + System.getProperty("line.separator")
             + "public interface Bar {" + System.getProperty("line.separator")

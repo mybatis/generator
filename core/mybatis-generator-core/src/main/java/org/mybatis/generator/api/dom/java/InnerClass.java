@@ -22,7 +22,7 @@ import java.util.Optional;
 /**
  * This class encapsulates the idea of an inner class - it has methods that make
  * it easy to generate inner classes.
- * 
+ *
  * @author Jeff Butler
  */
 public class InnerClass extends AbstractJavaType {
@@ -34,7 +34,7 @@ public class InnerClass extends AbstractJavaType {
     private boolean isAbstract;
 
     private List<InitializationBlock> initializationBlocks = new ArrayList<>();
-    
+
     private boolean isFinal;
 
     public InnerClass(FullyQualifiedJavaType type) {

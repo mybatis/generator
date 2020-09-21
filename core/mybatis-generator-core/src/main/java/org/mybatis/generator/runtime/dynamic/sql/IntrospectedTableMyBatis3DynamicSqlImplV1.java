@@ -29,7 +29,7 @@ public class IntrospectedTableMyBatis3DynamicSqlImplV1 extends IntrospectedTable
     }
 
     @Override
-    protected void calculateXmlMapperGenerator(AbstractJavaClientGenerator javaClientGenerator, 
+    protected void calculateXmlMapperGenerator(AbstractJavaClientGenerator javaClientGenerator,
             List<String> warnings,
             ProgressCallback progressCallback) {
         // no XML with dynamic SQL support

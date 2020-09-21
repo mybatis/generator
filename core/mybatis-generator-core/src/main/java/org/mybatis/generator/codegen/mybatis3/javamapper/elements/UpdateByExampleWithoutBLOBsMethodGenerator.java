@@ -65,7 +65,7 @@ public class UpdateByExampleWithoutBLOBsMethodGenerator extends
                 introspectedTable);
 
         addMapperAnnotations(method);
-        
+
         if (context.getPlugins()
                 .clientUpdateByExampleWithoutBLOBsMethodGenerated(method,
                         interfaze, introspectedTable)) {

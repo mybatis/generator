@@ -35,7 +35,7 @@ public abstract class AbstractJavaType extends JavaElement {
     private List<Field> fields = new ArrayList<>();
 
     private List<Method> methods = new ArrayList<>();
-    
+
     public AbstractJavaType(FullyQualifiedJavaType type) {
         this.type = type;
     }

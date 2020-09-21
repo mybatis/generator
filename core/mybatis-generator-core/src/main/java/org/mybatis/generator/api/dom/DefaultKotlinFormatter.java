@@ -23,7 +23,7 @@ import org.mybatis.generator.config.Context;
 /**
  * This class is the default formatter for generated Kotlin.  This class will use the
  * built in DOM renderers.
- * 
+ *
  * @author Jeff Butler
  *
  */

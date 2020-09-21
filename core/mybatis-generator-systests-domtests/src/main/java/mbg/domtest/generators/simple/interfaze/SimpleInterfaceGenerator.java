@@ -28,23 +28,23 @@ import mbg.domtest.CompilationUnitGenerator;
 
 /**
  * This generator generates a simple interface and implementing class in different packages.
- * 
+ *
  */
 public class SimpleInterfaceGenerator implements CompilationUnitGenerator {
-    
+
     private static final String BASE_PACKAGE = "mbg.domtest.generators.simple.interfaze.output";
 
     @Override
     public List<CompilationUnit> generate() {
         List<CompilationUnit> answer = new ArrayList<>();
-        
+
         Interface interfaze = generateInterface();
         answer.add(interfaze);
         answer.add(generateClass(interfaze));
 
         return answer;
     }
-    
+
     private Interface generateInterface() {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(BASE_PACKAGE + ".sub1.SimpleInterface");
         Interface interfaze = new Interface(fqjt);

@@ -48,7 +48,7 @@ public class CountByExampleMethodGenerator extends
                 introspectedTable);
 
         addMapperAnnotations(method);
-        
+
         if (context.getPlugins().clientCountByExampleMethodGenerated(method,
                 interfaze, introspectedTable)) {
             addExtraImports(interfaze);

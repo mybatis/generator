@@ -19,7 +19,7 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 /**
  * Typesafe enum of different model types.
- * 
+ *
  * @author Jeff Butler
  */
 public enum ModelType {

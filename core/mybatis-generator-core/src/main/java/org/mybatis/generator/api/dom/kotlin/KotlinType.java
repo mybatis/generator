@@ -47,7 +47,7 @@ public class KotlinType extends KotlinNamedItemContainer {
         constructorProperties.addAll(builder.constructorProperties);
         superTypes.addAll(builder.superTypes);
     }
-    
+
     public List<KotlinProperty> getConstructorProperties() {
         return constructorProperties;
     }
@@ -59,7 +59,7 @@ public class KotlinType extends KotlinNamedItemContainer {
     public List<String> getSuperTypes() {
         return superTypes;
     }
-    
+
     public void addConstructorProperty(KotlinProperty property) {
         constructorProperties.add(property);
     }

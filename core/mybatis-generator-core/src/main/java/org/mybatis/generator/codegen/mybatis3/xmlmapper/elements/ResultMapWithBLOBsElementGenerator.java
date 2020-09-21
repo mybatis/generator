@@ -91,7 +91,7 @@ public class ResultMapWithBLOBsElementGenerator extends
 
     private void addResultMapConstructorElements(XmlElement answer) {
         XmlElement constructor = new XmlElement("constructor"); //$NON-NLS-1$
-        
+
         for (IntrospectedColumn introspectedColumn : introspectedTable
                 .getPrimaryKeyColumns()) {
             XmlElement resultElement = new XmlElement("idArg"); //$NON-NLS-1$
@@ -110,7 +110,7 @@ public class ResultMapWithBLOBsElementGenerator extends
 
             constructor.addElement(resultElement);
         }
-        
+
         for (IntrospectedColumn introspectedColumn : introspectedTable
                 .getNonPrimaryKeyColumns()) {
             XmlElement resultElement = new XmlElement("arg"); //$NON-NLS-1$
@@ -136,7 +136,7 @@ public class ResultMapWithBLOBsElementGenerator extends
                 resultElement.addAttribute(new Attribute("javaType", //$NON-NLS-1$
                         introspectedColumn.getFullyQualifiedJavaType().getFullyQualifiedName()));
             }
-            
+
             if (stringHasValue(introspectedColumn
                     .getTypeHandler())) {
                 resultElement.addAttribute(new Attribute(

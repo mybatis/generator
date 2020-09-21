@@ -37,12 +37,12 @@ import mbg.test.mb3.generated.dsql.v1.mapper.mbgtest.TranslationMapper;
 
 /**
  * @author Jeff Butler
- * 
+ *
  */
 public abstract class AbstractTest {
 
     private static final String JDBC_URL = "jdbc:hsqldb:mem:aname";
-    private static final String JDBC_DRIVER = "org.hsqldb.jdbcDriver"; 
+    private static final String JDBC_DRIVER = "org.hsqldb.jdbcDriver";
 
     protected SqlSessionFactory sqlSessionFactory;
 

@@ -37,7 +37,7 @@ import org.mybatis.generator.logging.LogFactory;
 
 /**
  * This class allows the code generator to be run from the command line.
- * 
+ *
  * @author Jeff Butler
  */
 public class ShellRunner {

@@ -31,15 +31,15 @@ import org.mybatis.generator.api.dom.kotlin.KotlinType;
 /**
  * This plugin adds the java.io.Serializable marker interface to all generated
  * model objects.
- * 
+ *
  * <p>This plugin demonstrates adding capabilities to generated Java artifacts, and
  * shows the proper way to add imports to a compilation unit.
- * 
+ *
  * <p>Important: This is a simplistic implementation of serializable and does not
  * attempt to do any versioning of classes.
- * 
+ *
  * @author Jeff Butler
- * 
+ *
  */
 public class SerializablePlugin extends PluginAdapter {
 
@@ -105,7 +105,7 @@ public class SerializablePlugin extends PluginAdapter {
             field.setInitializationString("1L"); //$NON-NLS-1$
             field.setStatic(true);
             field.setVisibility(JavaVisibility.PRIVATE);
-            
+
             if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3_DSQL) {
                 context.getCommentGenerator().addFieldAnnotation(field, introspectedTable,
                         topLevelClass.getImportedTypes());

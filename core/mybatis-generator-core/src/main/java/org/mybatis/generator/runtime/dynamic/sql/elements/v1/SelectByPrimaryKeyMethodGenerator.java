@@ -29,7 +29,7 @@ import org.mybatis.generator.runtime.dynamic.sql.elements.MethodParts;
 public class SelectByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
     private FullyQualifiedJavaType recordType;
     private FragmentGenerator fragmentGenerator;
-    
+
     private SelectByPrimaryKeyMethodGenerator(Builder builder) {
         super(builder);
         recordType = builder.recordType;
@@ -41,35 +41,35 @@ public class SelectByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
         if (!introspectedTable.getRules().generateSelectByPrimaryKey()) {
             return null;
         }
-        
+
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
-        
+
         imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.select.SelectDSL")); //$NON-NLS-1$
         imports.add(recordType);
-        
+
         Method method = new Method("selectByPrimaryKey"); //$NON-NLS-1$
         method.setDefault(true);
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
         method.setReturnType(recordType);
-        
+
         StringBuilder sb = new StringBuilder();
         sb.append("return SelectDSL.selectWithMapper(this::selectOne, "); //$NON-NLS-1$
         sb.append(fragmentGenerator.getSelectList());
         sb.append(')');
         method.addBodyLine(sb.toString());
-        
+
         method.addBodyLine("        .from(" + tableFieldName + ")"); //$NON-NLS-1$ //$NON-NLS-2$
-        
+
         MethodAndImports.Builder builder = MethodAndImports.withMethod(method)
                 .withStaticImport("org.mybatis.dynamic.sql.SqlBuilder.*") //$NON-NLS-1$
                 .withImports(imports);
-        
+
         MethodParts methodParts = fragmentGenerator.getPrimaryKeyWhereClauseAndParameters();
         acceptParts(builder, method, methodParts);
-        
+
         method.addBodyLine("        .build()"); //$NON-NLS-1$
         method.addBodyLine("        .execute();"); //$NON-NLS-1$
-        
+
         return builder.build();
     }
 
@@ -81,12 +81,12 @@ public class SelectByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
     public static class Builder extends BaseBuilder<Builder, SelectByPrimaryKeyMethodGenerator> {
         private FullyQualifiedJavaType recordType;
         private FragmentGenerator fragmentGenerator;
-        
+
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
             this.recordType = recordType;
             return this;
         }
-        
+
         public Builder withFragmentGenerator(FragmentGenerator fragmentGenerator) {
             this.fragmentGenerator = fragmentGenerator;
             return this;

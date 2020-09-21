@@ -29,46 +29,46 @@ public class MethodParts {
     private List<String> bodyLines;
     private Set<FullyQualifiedJavaType> imports;
     private List<Parameter> parameters;
-    
+
     private MethodParts(Builder builder) {
         imports = builder.imports;
         bodyLines = builder.bodyLines;
         parameters = builder.parameters;
         annotations = builder.annotations;
     }
-    
+
     public Set<FullyQualifiedJavaType> getImports() {
         return imports;
     }
-    
+
     public List<String> getAnnotations() {
         return annotations;
     }
-    
+
     public List<String> getBodyLines() {
         return bodyLines;
     }
-    
+
     public List<Parameter> getParameters() {
         return parameters;
     }
-    
+
     public static class Builder {
         private List<String> bodyLines = new ArrayList<>();
         private Set<FullyQualifiedJavaType> imports = new HashSet<>();
         private List<Parameter> parameters = new ArrayList<>();
         private List<String> annotations = new ArrayList<>();
-        
+
         public Builder withAnnotation(String annotation) {
             annotations.add(annotation);
             return this;
         }
-        
+
         public Builder withBodyLine(String bodyLine) {
             this.bodyLines.add(bodyLine);
             return this;
         }
-        
+
         public Builder withBodyLines(List<String> bodyLines) {
             this.bodyLines.addAll(bodyLines);
             return this;
@@ -78,17 +78,17 @@ public class MethodParts {
             this.imports.add(importedType);
             return this;
         }
-        
+
         public Builder withImports(Set<FullyQualifiedJavaType> imports) {
             this.imports.addAll(imports);
             return this;
         }
-        
+
         public Builder withParameter(Parameter parameter) {
             parameters.add(parameter);
             return this;
         }
-        
+
         public MethodParts build() {
             return new MethodParts(this);
         }

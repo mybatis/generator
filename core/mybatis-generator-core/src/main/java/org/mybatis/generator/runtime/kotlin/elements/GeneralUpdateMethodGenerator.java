@@ -21,7 +21,7 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 
 public class GeneralUpdateMethodGenerator extends AbstractKotlinFunctionGenerator {
     private String mapperName;
-    
+
     private GeneralUpdateMethodGenerator(Builder builder) {
         super(builder);
         this.mapperName = builder.mapperName;
@@ -56,7 +56,7 @@ public class GeneralUpdateMethodGenerator extends AbstractKotlinFunctionGenerato
             this.mapperName = mapperName;
             return this;
         }
-        
+
         @Override
         public Builder getThis() {
             return this;

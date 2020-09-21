@@ -45,9 +45,9 @@ import mbg.test.mb3.generated.conditional.immutable.model.PkonlyExample;
 import mbg.test.mb3.generated.conditional.immutable.model.PkonlyKey;
 
 /**
- * 
+ *
  * @author Jeff Butler
- * 
+ *
  */
 public class UpdateByExampleTest extends AbstractConditionalImmutableTest {
 

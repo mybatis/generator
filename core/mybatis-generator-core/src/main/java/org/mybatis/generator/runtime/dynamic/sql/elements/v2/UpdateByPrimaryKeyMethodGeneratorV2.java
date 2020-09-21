@@ -29,7 +29,7 @@ import org.mybatis.generator.runtime.dynamic.sql.elements.MethodAndImports;
 public class UpdateByPrimaryKeyMethodGeneratorV2 extends AbstractMethodGenerator {
     private FullyQualifiedJavaType recordType;
     private FragmentGenerator fragmentGenerator;
-    
+
     private UpdateByPrimaryKeyMethodGeneratorV2(Builder builder) {
         super(builder);
         recordType = builder.recordType;
@@ -41,15 +41,15 @@ public class UpdateByPrimaryKeyMethodGeneratorV2 extends AbstractMethodGenerator
         if (!Utils.generateUpdateByPrimaryKey(introspectedTable)) {
             return null;
         }
-        
+
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
 
         imports.add(recordType);
-        
+
         Method method = new Method("updateByPrimaryKey"); //$NON-NLS-1$
         method.setDefault(true);
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
-        
+
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
         method.addParameter(new Parameter(recordType, "record")); //$NON-NLS-1$
 
@@ -74,12 +74,12 @@ public class UpdateByPrimaryKeyMethodGeneratorV2 extends AbstractMethodGenerator
     public static class Builder extends BaseBuilder<Builder, UpdateByPrimaryKeyMethodGeneratorV2> {
         private FullyQualifiedJavaType recordType;
         private FragmentGenerator fragmentGenerator;
-        
+
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
             this.recordType = recordType;
             return this;
         }
-        
+
         public Builder withFragmentGenerator(FragmentGenerator fragmentGenerator) {
             this.fragmentGenerator = fragmentGenerator;
             return this;

@@ -22,7 +22,7 @@ import org.mybatis.generator.api.dom.xml.*;
 import org.mybatis.generator.internal.util.CustomCollectors;
 
 public class ElementRenderer implements ElementVisitor<Stream<String>> {
-    
+
     private AttributeRenderer attributeRenderer = new AttributeRenderer();
 
     @Override

@@ -70,7 +70,7 @@ public class SimpleSelectAllElementGenerator extends
         sb.append(introspectedTable
                 .getAliasedFullyQualifiedTableNameAtRuntime());
         answer.addElement(new TextElement(sb.toString()));
-        
+
         String orderByClause = introspectedTable.getTableConfigurationProperty(
                 PropertyRegistry.TABLE_SELECT_ALL_ORDER_BY_CLAUSE);
         boolean hasOrderBy = StringUtility.stringHasValue(orderByClause);

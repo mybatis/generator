@@ -26,9 +26,9 @@ import org.mybatis.generator.runtime.dynamic.sql.elements.AbstractMethodGenerato
 import org.mybatis.generator.runtime.dynamic.sql.elements.MethodAndImports;
 
 public class BasicMultipleInsertHelperMethodGenerator extends AbstractMethodGenerator {
-    
+
     private FullyQualifiedJavaType recordType;
-    
+
     private BasicMultipleInsertHelperMethodGenerator(Builder builder) {
         super(builder);
         recordType = builder.recordType;
@@ -39,18 +39,18 @@ public class BasicMultipleInsertHelperMethodGenerator extends AbstractMethodGene
         if (!Utils.generateMultipleRowInsert(introspectedTable)) {
             return null;
         }
-        
+
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
-        
+
         imports.add(new FullyQualifiedJavaType(
                 "org.mybatis.dynamic.sql.insert.render.MultiRowInsertStatementProvider")); //$NON-NLS-1$
-        
+
         FullyQualifiedJavaType parameterType =
                 new FullyQualifiedJavaType(
                         "org.mybatis.dynamic.sql.insert.render.MultiRowInsertStatementProvider"); //$NON-NLS-1$
         imports.add(recordType);
         parameterType.addTypeArgument(recordType);
-        
+
         Method method = new Method("insertMultiple"); //$NON-NLS-1$
         method.setDefault(true);
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
@@ -62,10 +62,10 @@ public class BasicMultipleInsertHelperMethodGenerator extends AbstractMethodGene
 
         MethodAndImports.Builder builder = MethodAndImports.withMethod(method)
                 .withImports(imports);
-      
+
         return builder.build();
     }
-    
+
     @Override
     public boolean callPlugins(Method method, Interface interfaze) {
         return context.getPlugins().clientBasicInsertMultipleHelperMethodGenerated(method, interfaze,
@@ -75,12 +75,12 @@ public class BasicMultipleInsertHelperMethodGenerator extends AbstractMethodGene
     public static class Builder extends BaseBuilder<Builder, BasicMultipleInsertHelperMethodGenerator> {
 
         private FullyQualifiedJavaType recordType;
-        
+
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
             this.recordType = recordType;
             return this;
         }
-        
+
         @Override
         public Builder getThis() {
             return this;

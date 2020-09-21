@@ -70,7 +70,7 @@ public class FullyQualifiedKotlinTypeTest {
         assertThat(fqjt.getShortNameWithTypeArguments()).isEqualTo("List<String>"); //$NON-NLS-1$
         assertThat(fqjt.getImportList()).isEmpty();;
     }
-    
+
     @Test
     public void testGenericType3() {
         FullyQualifiedKotlinType fqjt =

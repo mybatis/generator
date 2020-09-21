@@ -168,7 +168,7 @@ public class InnerClassTest {
         innerClass.addTypeParameter(new TypeParameter("U"));
         innerClass.addInitializationBlock(new InitializationBlock(false));
         innerClass.addSuperInterface(new FullyQualifiedJavaType("com.hoge.UserInterface"));
-        
+
         Method method = new Method("method1");
         method.setAbstract(true);
         innerClass.addMethod(method);

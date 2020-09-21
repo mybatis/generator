@@ -60,7 +60,7 @@ public class GeneratedJavaFile extends GeneratedFile {
      * This method is required by the Eclipse Java merger. If you are not
      * running in Eclipse, or some other system that implements the Java merge
      * function, you may return null from this method.
-     * 
+     *
      * @return the CompilationUnit associated with this file, or null if the
      *         file is not mergeable.
      */

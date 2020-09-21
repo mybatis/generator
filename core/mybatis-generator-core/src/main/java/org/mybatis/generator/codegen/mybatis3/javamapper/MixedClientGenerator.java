@@ -28,7 +28,7 @@ import org.mybatis.generator.codegen.mybatis3.xmlmapper.MixedMapperGenerator;
 /**
  * This class overrides the base mapper to provide annotated methods for the
  * methods that don't require SQL provider support.
- * 
+ *
  * @author Jeff Butler
  *
  */

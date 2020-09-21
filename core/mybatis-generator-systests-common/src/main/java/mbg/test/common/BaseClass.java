@@ -20,9 +20,9 @@ package mbg.test.common;
  */
 public class BaseClass {
     private String lastname;
-    
+
     /**
-     * 
+     *
      */
     public BaseClass() {
         super();
@@ -35,7 +35,7 @@ public class BaseClass {
     public final String getLastname() {
         return lastname;
     }
-    
+
     public final void setLastname(String lastname) {
         this.lastname = lastname;
     }

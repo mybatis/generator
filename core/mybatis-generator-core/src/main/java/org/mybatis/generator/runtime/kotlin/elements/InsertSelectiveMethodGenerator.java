@@ -28,7 +28,7 @@ public class InsertSelectiveMethodGenerator extends AbstractKotlinFunctionGenera
     private FullyQualifiedKotlinType recordType;
     private String mapperName;
     private String tableFieldImport;
-    
+
     private InsertSelectiveMethodGenerator(Builder builder) {
         super(builder);
         recordType = builder.recordType;
@@ -49,18 +49,18 @@ public class InsertSelectiveMethodGenerator extends AbstractKotlinFunctionGenera
                 .build();
 
         addFunctionComment(functionAndImports);
-        
+
         KotlinFunction function = functionAndImports.getFunction();
-        
+
         function.addCodeLine("insert(this::insert, record, " + tableFieldName + //$NON-NLS-1$
                 ") {"); //$NON-NLS-1$
-        
+
         List<IntrospectedColumn> columns =
                 ListUtilities.removeIdentityAndGeneratedAlwaysColumns(introspectedTable.getAllColumns());
         for (IntrospectedColumn column : columns) {
             String fieldName = column.getJavaProperty();
             functionAndImports.getImports().add(tableFieldImport + "." + fieldName); //$NON-NLS-1$
-            
+
             if (column.isSequenceColumn()) {
                 function.addCodeLine("    map(" + fieldName //$NON-NLS-1$
                         + ").toProperty(\"" + column.getJavaProperty() //$NON-NLS-1$
@@ -72,9 +72,9 @@ public class InsertSelectiveMethodGenerator extends AbstractKotlinFunctionGenera
                         + fieldName + ")"); //$NON-NLS-1$
             }
         }
-        
+
         function.addCodeLine("}"); //$NON-NLS-1$
-        
+
         return functionAndImports;
     }
 
@@ -87,22 +87,22 @@ public class InsertSelectiveMethodGenerator extends AbstractKotlinFunctionGenera
         private FullyQualifiedKotlinType recordType;
         private String mapperName;
         private String tableFieldImport;
-        
+
         public Builder withRecordType(FullyQualifiedKotlinType recordType) {
             this.recordType = recordType;
             return this;
         }
-        
+
         public Builder withMapperName(String mapperName) {
             this.mapperName = mapperName;
             return this;
         }
-        
+
         public Builder withTableFieldImport(String tableFieldImport) {
             this.tableFieldImport = tableFieldImport;
             return this;
         }
-        
+
         @Override
         public Builder getThis() {
             return this;

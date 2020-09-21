@@ -36,9 +36,9 @@ import org.mybatis.generator.codegen.XmlConstants;
  * This plugin generates a MapperConfig file containing mapper entries for SQL
  * maps generated for MyBatis3. This demonstrates hooking into the code
  * generation lifecycle and generating additional XML files.
- * 
+ *
  * <p>This plugin accepts three properties:
- * 
+ *
  * <ul>
  * <li><code>fileName</code> (optional) the name of the generated file. this
  * defaults to "SqlMapConfig.xml" if not specified.</li>
@@ -47,13 +47,13 @@ import org.mybatis.generator.codegen.XmlConstants;
  * <li><code>targetProject</code> (required) the name of the project where the file
  * should be placed.</li>
  * </ul>
- * 
+ *
  * <p>Note: targetPackage and targetProject follow the same rules as the
  * targetPackage and targetProject values on the sqlMapGenerator configuration
  * element.
- * 
+ *
  * @author Jeff Butler
- * 
+ *
  */
 public class MapperConfigPlugin extends PluginAdapter {
 
@@ -91,7 +91,7 @@ public class MapperConfigPlugin extends PluginAdapter {
         if (mapperFiles.isEmpty()) {
             return Collections.emptyList();
         }
-        
+
         XmlElement root = new XmlElement("configuration"); //$NON-NLS-1$
         document.setRootElement(root);
 

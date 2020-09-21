@@ -153,7 +153,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
      * Returns a formated date string to include in the Javadoc tag and XML
      * comments. You may return null if you do not want the date in these
      * documentation elements.
-     * 
+     *
      * @return a string representing the current timestamp, or null
      */
     protected String getDateString() {

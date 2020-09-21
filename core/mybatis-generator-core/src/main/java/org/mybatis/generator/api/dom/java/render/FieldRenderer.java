@@ -30,10 +30,10 @@ public class FieldRenderer {
         lines.addAll(field.getJavaDocLines());
         lines.addAll(field.getAnnotations());
         lines.add(renderField(field, compilationUnit));
-        
+
         return lines;
     }
-    
+
     private String renderField(Field field, CompilationUnit compilationUnit) {
         StringBuilder sb = new StringBuilder();
         sb.append(field.getVisibility().getValue());
@@ -62,7 +62,7 @@ public class FieldRenderer {
 
         return sb.toString();
     }
-    
+
     private String renderInitializationString(Field field) {
         return field.getInitializationString()
                 .map(is -> " = " + is) //$NON-NLS-1$

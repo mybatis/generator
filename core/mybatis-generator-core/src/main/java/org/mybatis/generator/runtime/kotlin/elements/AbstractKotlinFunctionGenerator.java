@@ -27,7 +27,7 @@ public abstract class AbstractKotlinFunctionGenerator {
     protected IntrospectedTable introspectedTable;
     protected String tableFieldName;
     protected String tableFieldImport;
-    
+
     protected AbstractKotlinFunctionGenerator(BaseBuilder<?, ?> builder) {
         context = builder.context;
         introspectedTable = builder.introspectedTable;
@@ -40,11 +40,11 @@ public abstract class AbstractKotlinFunctionGenerator {
         for (KotlinArg argument : functionParts.getArguments()) {
             kotlinFunction.addArgument(argument);
         }
-        
+
         for (String annotation : functionParts.getAnnotations()) {
             kotlinFunction.addAnnotation(annotation);
         }
-        
+
         kotlinFunction.addCodeLines(functionParts.getCodeLines());
         kotlinFile.addImports(functionParts.getImports());
     }
@@ -53,48 +53,48 @@ public abstract class AbstractKotlinFunctionGenerator {
         for (KotlinArg argument : functionParts.getArguments()) {
             functionAndImports.getFunction().addArgument(argument);
         }
-        
+
         for (String annotation : functionParts.getAnnotations()) {
             functionAndImports.getFunction().addAnnotation(annotation);
         }
-        
+
         functionAndImports.getFunction().addCodeLines(functionParts.getCodeLines());
         functionAndImports.getImports().addAll(functionParts.getImports());
     }
-    
+
     protected void addFunctionComment(KotlinFunctionAndImports functionAndImports) {
         context.getCommentGenerator().addGeneralFunctionComment(functionAndImports.getFunction(), introspectedTable,
                 functionAndImports.getImports());
     }
 
     public abstract KotlinFunctionAndImports generateMethodAndImports();
-    
+
     public abstract boolean callPlugins(KotlinFunction method, KotlinFile kotlinFile);
-    
+
     public abstract static class BaseBuilder<T extends BaseBuilder<T, R>, R> {
         private Context context;
         private IntrospectedTable introspectedTable;
         private String tableFieldName;
         private String tableFieldImport;
-        
+
         public T withContext(Context context) {
             this.context = context;
             return getThis();
         }
-        
+
         public T withDynamicSqlSupportClassGenerator(KotlinDynamicSqlSupportClassGenerator generator) {
             tableFieldName = generator.getInnerObject().getName();
             tableFieldImport = generator.getInnerObjectImport();
             return getThis();
         }
-        
+
         public T withIntrospectedTable(IntrospectedTable introspectedTable) {
             this.introspectedTable = introspectedTable;
             return getThis();
         }
 
         public abstract T getThis();
-        
+
         public abstract R build();
     }
 }

@@ -26,7 +26,7 @@ import org.mybatis.generator.runtime.dynamic.sql.elements.AbstractMethodGenerato
 import org.mybatis.generator.runtime.dynamic.sql.elements.MethodAndImports;
 
 public class BasicUpdateMethodGenerator extends AbstractMethodGenerator {
-    
+
     private BasicUpdateMethodGenerator(Builder builder) {
         super(builder);
     }
@@ -34,7 +34,7 @@ public class BasicUpdateMethodGenerator extends AbstractMethodGenerator {
     @Override
     public MethodAndImports generateMethodAndImports() {
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
-        
+
         FullyQualifiedJavaType parameterType =
                 new FullyQualifiedJavaType(
                         "org.mybatis.dynamic.sql.update.render.UpdateStatementProvider"); //$NON-NLS-1$
@@ -42,11 +42,11 @@ public class BasicUpdateMethodGenerator extends AbstractMethodGenerator {
                 new FullyQualifiedJavaType("org.mybatis.dynamic.sql.util.SqlProviderAdapter"); //$NON-NLS-1$
         FullyQualifiedJavaType annotation =
                 new FullyQualifiedJavaType("org.apache.ibatis.annotations.UpdateProvider"); //$NON-NLS-1$
-        
+
         imports.add(parameterType);
         imports.add(adapter);
         imports.add(annotation);
-        
+
         Method method = new Method("update"); //$NON-NLS-1$
         method.setAbstract(true);
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());

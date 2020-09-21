@@ -37,11 +37,11 @@ public class DynamicSqlSupportClassGenerator {
     private IntrospectedTable introspectedTable;
     private CommentGenerator commentGenerator;
     private List<String> warnings;
-    
+
     private DynamicSqlSupportClassGenerator() {
         super();
     }
-    
+
     public TopLevelClass generate() {
         TopLevelClass topLevelClass = buildBasicClass();
         Field tableField = calculateTableDefinition(topLevelClass);
@@ -68,7 +68,7 @@ public class DynamicSqlSupportClassGenerator {
         topLevelClass.addImportedType(new FullyQualifiedJavaType("java.sql.JDBCType")); //$NON-NLS-1$
         return topLevelClass;
     }
-    
+
     private InnerClass buildInnerTableClass(TopLevelClass topLevelClass) {
         FullyQualifiedJavaType fqjt =
                 new FullyQualifiedJavaType(introspectedTable.getFullyQualifiedTable().getDomainObjectName());
@@ -77,7 +77,7 @@ public class DynamicSqlSupportClassGenerator {
         innerClass.setStatic(true);
         innerClass.setFinal(true);
         innerClass.setSuperClass(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.SqlTable")); //$NON-NLS-1$
-        
+
         Method method = new Method(fqjt.getShortName());
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setConstructor(true);
@@ -85,9 +85,9 @@ public class DynamicSqlSupportClassGenerator {
                 + escapeStringForJava(introspectedTable.getFullyQualifiedTableNameAtRuntime())
                 + "\");"); //$NON-NLS-1$
         innerClass.addMethod(method);
-        
+
         commentGenerator.addClassAnnotation(innerClass, introspectedTable, topLevelClass.getImportedTypes());
-        
+
         return innerClass;
     }
 
@@ -101,20 +101,20 @@ public class DynamicSqlSupportClassGenerator {
         field.setVisibility(JavaVisibility.PUBLIC);
         field.setStatic(true);
         field.setFinal(true);
-        
+
         StringBuilder initializationString = new StringBuilder();
         initializationString.append(String.format("new %s()", //$NON-NLS-1$
                 escapeStringForJava(introspectedTable.getFullyQualifiedTable().getDomainObjectName())));
         field.setInitializationString(initializationString.toString());
         return field;
     }
-    
+
     private void handleColumn(TopLevelClass topLevelClass, InnerClass innerClass,
             IntrospectedColumn column, String tableFieldName) {
         topLevelClass.addImportedType(column.getFullyQualifiedJavaType());
         FullyQualifiedJavaType fieldType = calculateFieldType(column);
         String fieldName = column.getJavaProperty();
-        
+
         if (fieldName.equals(tableFieldName)) {
             // name collision, skip the shortcut field
             warnings.add(
@@ -130,7 +130,7 @@ public class DynamicSqlSupportClassGenerator {
             commentGenerator.addFieldAnnotation(field, introspectedTable, column, topLevelClass.getImportedTypes());
             topLevelClass.addField(field);
         }
-        
+
         // inner class field
         Field field = new Field(fieldName, fieldType);
         field.setVisibility(JavaVisibility.PUBLIC);
@@ -151,20 +151,20 @@ public class DynamicSqlSupportClassGenerator {
 
     private String calculateInnerInitializationString(IntrospectedColumn column) {
         StringBuilder initializationString = new StringBuilder();
-        
+
         initializationString.append(String.format("column(\"%s\", JDBCType.%s", //$NON-NLS-1$ //$NON-NLS-2$
                 escapeStringForJava(getEscapedColumnName(column)),
                 column.getJdbcTypeName()));
-        
+
         if (StringUtility.stringHasValue(column.getTypeHandler())) {
             initializationString.append(String.format(", \"%s\")", column.getTypeHandler())); //$NON-NLS-1$
         } else {
             initializationString.append(')');
         }
-        
+
         return initializationString.toString();
     }
-    
+
     public static DynamicSqlSupportClassGenerator of(IntrospectedTable introspectedTable,
             CommentGenerator commentGenerator, List<String> warnings) {
         DynamicSqlSupportClassGenerator generator = new DynamicSqlSupportClassGenerator();

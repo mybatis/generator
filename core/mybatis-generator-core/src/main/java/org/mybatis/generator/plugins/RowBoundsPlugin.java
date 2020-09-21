@@ -39,7 +39,7 @@ import org.mybatis.generator.internal.util.messages.Messages;
  * This plugin will add selectByExample methods that include rowBounds
  * parameters to the generated mapper interface.  This plugin is only
  * valid for MyBatis3.
- * 
+ *
  * @author Jeff Butler
  */
 public class RowBoundsPlugin extends PluginAdapter {
@@ -118,7 +118,7 @@ public class RowBoundsPlugin extends PluginAdapter {
     public boolean clientBasicSelectManyMethodGenerated(Method method, Interface interfaze,
             IntrospectedTable introspectedTable) {
         copyAndAddSelectManyMethod(method, interfaze);
-        
+
         addNewComposedFunction(interfaze, introspectedTable, method.getReturnType());
         return true;
     }
@@ -129,13 +129,13 @@ public class RowBoundsPlugin extends PluginAdapter {
             // shouldn't happen, but just in case...
             return;
         }
-        
+
         interfaze.addImportedType(new FullyQualifiedJavaType("java.util.function.Function")); //$NON-NLS-1$
-        
+
         FullyQualifiedJavaType returnType =
                 new FullyQualifiedJavaType("Function<SelectStatementProvider, " //$NON-NLS-1$
                         + baseMethodReturnType.get().getShortName() + ">"); //$NON-NLS-1$
-        
+
         Method method = new Method("selectManyWithRowbounds"); //$NON-NLS-1$
         method.setDefault(true);
         method.setReturnType(returnType);
@@ -150,7 +150,7 @@ public class RowBoundsPlugin extends PluginAdapter {
     /**
      * Use the method copy constructor to create a new method, then
      * add the rowBounds parameter.
-     * 
+     *
      * @param fullyQualifiedTable the table
      * @param method the method
      */
@@ -164,7 +164,7 @@ public class RowBoundsPlugin extends PluginAdapter {
 
     private void copyAndAddSelectManyMethod(Method method, Interface interfaze) {
         List<String> annotations = new ArrayList<>(method.getAnnotations());
-        
+
         // remove the @Results annotation and replace it with @ResultMap
         boolean inResultsAnnotation = false;
         String resultMapId = null;
@@ -180,7 +180,7 @@ public class RowBoundsPlugin extends PluginAdapter {
             } else if (annotation.startsWith("@Results(")) { //$NON-NLS-1$
                 inResultsAnnotation = true;
                 iter.remove();
-                
+
                 // now find the ID
                 int index = annotation.indexOf("id=\""); //$NON-NLS-1$
                 int startIndex = index + "id=\"".length(); //$NON-NLS-1$
@@ -188,35 +188,35 @@ public class RowBoundsPlugin extends PluginAdapter {
                 resultMapId = annotation.substring(startIndex, endIndex);
             }
         }
-        
+
         if (resultMapId != null) {
             interfaze.addImportedType(
                     new FullyQualifiedJavaType("org.apache.ibatis.annotations.ResultMap")); //$NON-NLS-1$
             annotations.add("@ResultMap(\"" + resultMapId + "\")"); //$NON-NLS-1$ //$NON-NLS-2$
         }
-        
+
         Method newMethod = new Method(method);
         newMethod.getAnnotations().clear();
         for (String annotation : annotations) {
             newMethod.addAnnotation(annotation);
         }
-        
+
         newMethod.setName(method.getName() + "WithRowbounds"); //$NON-NLS-1$
         newMethod.addParameter(new Parameter(rowBounds, "rowBounds")); //$NON-NLS-1$
         interfaze.addMethod(newMethod);
         interfaze.addImportedType(rowBounds);
     }
-    
+
     private void copyAndAddSelectByExampleMethodForDSQL(Method method, Interface interfaze) {
         Method newMethod = new Method(method);
         newMethod.addParameter(new Parameter(rowBounds, "rowBounds")); //$NON-NLS-1$
         interfaze.addMethod(newMethod);
         interfaze.addImportedType(rowBounds);
-        
+
         // replace the call to selectMany with the new call to selectManyWithRowbounds
         for (int i = 0; i < newMethod.getBodyLines().size(); i++) {
             String bodyLine = newMethod.getBodyLines().get(i);
-            
+
             if (bodyLine.contains("this::selectMany")) { //$NON-NLS-1$
                 bodyLine = bodyLine.replace("this::selectMany", //$NON-NLS-1$
                         "selectManyWithRowbounds(rowBounds)"); //$NON-NLS-1$
@@ -225,10 +225,10 @@ public class RowBoundsPlugin extends PluginAdapter {
             }
         }
     }
-    
+
     /**
      * Use the method copy constructor to create a new element.
-     * 
+     *
      * @param fullyQualifiedTable the table
      * @param method the method
      */

@@ -22,10 +22,10 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 import org.mybatis.generator.runtime.dynamic.sql.elements.v2.Utils;
 
 public class DeleteByPrimaryKeyMethodGenerator extends AbstractKotlinFunctionGenerator {
-    
+
     private KotlinFragmentGenerator fragmentGenerator;
     private String mapperName;
-    
+
     private DeleteByPrimaryKeyMethodGenerator(Builder builder) {
         super(builder);
         fragmentGenerator = builder.fragmentGenerator;
@@ -37,19 +37,19 @@ public class DeleteByPrimaryKeyMethodGenerator extends AbstractKotlinFunctionGen
         if (!Utils.generateDeleteByPrimaryKey(introspectedTable)) {
             return null;
         }
-        
+
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
                 KotlinFunction.newOneLineFunction(mapperName + ".deleteByPrimaryKey") //$NON-NLS-1$
                 .withCodeLine("delete {") //$NON-NLS-1$
                 .build())
                 .withImport("org.mybatis.dynamic.sql.SqlBuilder.isEqualTo") //$NON-NLS-1$
                 .build();
-        
+
         addFunctionComment(functionAndImports);
 
         KotlinFunctionParts functionParts = fragmentGenerator.getPrimaryKeyWhereClauseAndParameters();
         acceptParts(functionAndImports, functionParts);
-        
+
         return functionAndImports;
     }
 
@@ -60,10 +60,10 @@ public class DeleteByPrimaryKeyMethodGenerator extends AbstractKotlinFunctionGen
     }
 
     public static class Builder extends BaseBuilder<Builder, DeleteByPrimaryKeyMethodGenerator> {
-        
+
         private KotlinFragmentGenerator fragmentGenerator;
         private String mapperName;
-        
+
         public Builder withFragmentGenerator(KotlinFragmentGenerator fragmentGenerator) {
             this.fragmentGenerator = fragmentGenerator;
             return this;
@@ -73,7 +73,7 @@ public class DeleteByPrimaryKeyMethodGenerator extends AbstractKotlinFunctionGen
             this.mapperName = mapperName;
             return this;
         }
-        
+
         @Override
         public Builder getThis() {
             return this;

@@ -38,10 +38,10 @@ public class MyBatisGeneratorTest {
         List<String> warnings = new ArrayList<>();
         ConfigurationParser cp = new ConfigurationParser(warnings);
         Configuration config = cp.parseConfiguration(this.getClass().getClassLoader().getResourceAsStream("generatorConfigMyBatis3_badConfig.xml"));
-            
+
         DefaultShellCallback shellCallback = new DefaultShellCallback(true);
 
-        InvalidConfigurationException e = 
+        InvalidConfigurationException e =
                 assertThrows(InvalidConfigurationException.class, () -> {
                     MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, shellCallback, warnings);
                     myBatisGenerator.generate(null, null, null, false);

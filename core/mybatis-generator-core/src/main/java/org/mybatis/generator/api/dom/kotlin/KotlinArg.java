@@ -37,15 +37,15 @@ public class KotlinArg {
     public String getName() {
         return name;
     }
-    
+
     public Optional<String> getInitializationString() {
         return Optional.ofNullable(initializationString);
     }
-    
+
     public Optional<String> getDataType() {
         return Optional.ofNullable(dataType);
     }
-    
+
     public List<String> getAnnotations() {
         return annotations;
     }

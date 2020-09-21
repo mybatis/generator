@@ -86,7 +86,7 @@ public class Context extends PropertyHolder {
     private KotlinFormatter kotlinFormatter;
 
     private XmlFormatter xmlFormatter;
-    
+
     private boolean isJava8Targeted = true;
 
     public Context(ModelType defaultModelType) {
@@ -333,11 +333,11 @@ public class Context extends PropertyHolder {
     //
 
     private List<IntrospectedTable> introspectedTables = new ArrayList<>();
-    
+
     /**
      * This method could be useful for users that use the library for introspection only
      * and not for code generation.
-     * 
+     *
      * @return a list containing the results of table introspection. The list will be empty
      *     if this method is called before introspectTables(), or if no tables are found that
      *     match the configuration
@@ -363,7 +363,7 @@ public class Context extends PropertyHolder {
     /**
      * Introspect tables based on the configuration specified in the
      * constructor. This method is long running.
-     * 
+     *
      * @param callback
      *            a progress callback if progress information is desired, or
      *            <code>null</code>
@@ -377,7 +377,7 @@ public class Context extends PropertyHolder {
      *            "bar", then the fully qualified table name is "foo.bar". If
      *            the Set is null or empty, then all tables in the configuration
      *            will be used for code generation.
-     * 
+     *
      * @throws SQLException
      *             if some error arises while introspecting the specified
      *             database tables.

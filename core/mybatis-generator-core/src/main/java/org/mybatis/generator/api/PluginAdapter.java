@@ -31,12 +31,12 @@ import org.mybatis.generator.config.Context;
  * This class includes no-operation methods for almost every method in the
  * Plugin interface. Clients may extend this class to implement some or all of
  * the methods in a plugin.
- * 
+ *
  * <p>This adapter does not implement the <code>validate</code> method - all plugins
  * must perform validation.
- * 
+ *
  * @author Jeff Butler
- * 
+ *
  */
 public abstract class PluginAdapter implements Plugin {
     protected Context context;

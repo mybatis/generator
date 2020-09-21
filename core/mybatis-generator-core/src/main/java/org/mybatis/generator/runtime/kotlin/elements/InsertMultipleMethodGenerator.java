@@ -29,7 +29,7 @@ public class InsertMultipleMethodGenerator extends AbstractKotlinFunctionGenerat
     private FullyQualifiedKotlinType recordType;
     private String mapperName;
     private String tableFieldImport;
-    
+
     private InsertMultipleMethodGenerator(Builder builder) {
         super(builder);
         recordType = builder.recordType;
@@ -42,12 +42,12 @@ public class InsertMultipleMethodGenerator extends AbstractKotlinFunctionGenerat
         if (!Utils.generateMultipleRowInsert(introspectedTable)) {
             return null;
         }
-        
+
         // Kotlin type inference gets lost if we don't name the helper method something different from the
         // regular mapper method
         String mapperMethod = Utils.generateMultipleRowInsertHelper(introspectedTable)
                 ? "insertMultipleHelper" : "insertMultiple"; //$NON-NLS-1$ //$NON-NLS-2$
-        
+
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
                 KotlinFunction.newOneLineFunction(mapperName + ".insertMultiple") //$NON-NLS-1$
                 .withArgument(KotlinArg.newArg("records") //$NON-NLS-1$
@@ -61,26 +61,26 @@ public class InsertMultipleMethodGenerator extends AbstractKotlinFunctionGenerat
                 .build();
 
         addFunctionComment(functionAndImports);
-        
+
         KotlinFunction function = functionAndImports.getFunction();
-        
+
         function.addCodeLine("insertMultiple(this::" + mapperMethod //$NON-NLS-1$
                 + ", records, " + tableFieldName //$NON-NLS-1$
                 + ") {"); //$NON-NLS-1$
-        
+
         List<IntrospectedColumn> columns =
                 ListUtilities.removeIdentityAndGeneratedAlwaysColumns(introspectedTable.getAllColumns());
         for (IntrospectedColumn column : columns) {
             String fieldName = column.getJavaProperty();
             functionAndImports.getImports().add(tableFieldImport + "." + fieldName); //$NON-NLS-1$
-            
+
             function.addCodeLine("    map(" + fieldName //$NON-NLS-1$
                     + ").toProperty(\"" + column.getJavaProperty() //$NON-NLS-1$
                     + "\")"); //$NON-NLS-1$
         }
-        
+
         function.addCodeLine("}"); //$NON-NLS-1$
-        
+
         return functionAndImports;
     }
 
@@ -93,22 +93,22 @@ public class InsertMultipleMethodGenerator extends AbstractKotlinFunctionGenerat
         private FullyQualifiedKotlinType recordType;
         private String mapperName;
         private String tableFieldImport;
-        
+
         public Builder withRecordType(FullyQualifiedKotlinType recordType) {
             this.recordType = recordType;
             return this;
         }
-        
+
         public Builder withMapperName(String mapperName) {
             this.mapperName = mapperName;
             return this;
         }
-        
+
         public Builder withTableFieldImport(String tableFieldImport) {
             this.tableFieldImport = tableFieldImport;
             return this;
         }
-        
+
         @Override
         public Builder getThis() {
             return this;

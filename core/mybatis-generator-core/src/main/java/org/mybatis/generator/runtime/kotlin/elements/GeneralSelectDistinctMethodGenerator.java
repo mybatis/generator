@@ -21,7 +21,7 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 
 public class GeneralSelectDistinctMethodGenerator extends AbstractKotlinFunctionGenerator {
     private String mapperName;
-    
+
     private GeneralSelectDistinctMethodGenerator(Builder builder) {
         super(builder);
         mapperName = builder.mapperName;
@@ -53,12 +53,12 @@ public class GeneralSelectDistinctMethodGenerator extends AbstractKotlinFunction
 
     public static class Builder extends BaseBuilder<Builder, GeneralSelectDistinctMethodGenerator> {
         private String mapperName;
-        
+
         public Builder withMapperName(String mapperName) {
             this.mapperName = mapperName;
             return this;
         }
-        
+
         @Override
         public Builder getThis() {
             return this;

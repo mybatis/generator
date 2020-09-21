@@ -253,7 +253,7 @@ public class FullyQualifiedTable {
     /**
      * Calculates a Java package fragment based on the table catalog and schema.
      * If qualifiers are ignored, then this method will return an empty string.
-     * 
+     *
      * <p>This method is used for determining the sub package for Java client and
      * SQL map (XML) objects.  It ignores any sub-package added to the
      * domain object name in the table configuration.
@@ -289,7 +289,7 @@ public class FullyQualifiedTable {
     /**
      * Calculates a Java package fragment based on the table catalog and schema.
      * If qualifiers are ignored, then this method will return an empty string.
-     * 
+     *
      * <p>This method is used for determining the sub package for Java model objects only.
      * It takes into account the possibility that a sub-package was added to the
      * domain object name in the table configuration.

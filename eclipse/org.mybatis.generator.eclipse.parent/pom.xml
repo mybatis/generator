@@ -28,7 +28,7 @@
          in the parent pom and in each module pom. Then JaCoCo will add up information in
          the same report, so that, it will give the cross-module code coverage. -->
     <sonar.jacoco.itReportPath>${project.basedir}/../org.mybatis.generator.eclipse.parent/target/jacoco-it.exec</sonar.jacoco.itReportPath>
-    <sonar.language>java</sonar.language>    
+    <sonar.language>java</sonar.language>
   </properties>
 
   <repositories>

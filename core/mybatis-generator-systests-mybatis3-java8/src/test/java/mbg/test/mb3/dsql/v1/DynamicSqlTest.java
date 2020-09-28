@@ -36,8 +36,6 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledForJreRange;
-import org.junit.jupiter.api.condition.JRE;
 import org.mybatis.dynamic.sql.render.RenderingStrategy;
 import org.mybatis.dynamic.sql.select.render.SelectStatementProvider;
 
@@ -517,10 +515,7 @@ public class DynamicSqlTest extends AbstractTest {
         }
     }
 
-    // TODO JWL 9/27/2020 Differences in timestamps need addressed to run on jdk 15/16 (testing known to work up through
-    // jdk 11)
     @Test
-    @EnabledForJreRange(min = JRE.JAVA_8, max = JRE.JAVA_11)
     public void testPKFieldsInsert() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 

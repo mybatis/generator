@@ -30,16 +30,16 @@ import mbg.test.mb3.generated.dsql.kotlin.model.*
 import mbg.test.mb3.generated.dsql.kotlin.model.mbgtest.IdRecord
 import mbg.test.mb3.generated.dsql.kotlin.model.mbgtest.TranslationRecord
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.within
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.condition.EnabledForJreRange
-import org.junit.jupiter.api.condition.JRE
 import org.mybatis.dynamic.sql.SqlBuilder.*
 import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.temporal.ChronoUnit
 
 /**
  * @author Jeff Butler
@@ -351,10 +351,7 @@ class DynamicSqlTest : AbstractTest() {
         }
     }
 
-    // TODO JWL 9/27/2020 Differences in timestamps need addressed to run on jdk 15/16 (testing known to work up through
-    // jdk 11)
     @Test
-    @EnabledForJreRange(min = JRE.JAVA_8, max = JRE.JAVA_11)
     fun testPKFieldsInsert() {
         openSession().use { sqlSession ->
             val mapper = sqlSession.getMapper(PkfieldsMapper::class.java)
@@ -377,7 +374,8 @@ class DynamicSqlTest : AbstractTest() {
             val returnedRecord = mapper.selectByPrimaryKey(2, 1)
 
             assertThat(returnedRecord).isNotNull()
-            assertThat(returnedRecord).isEqualToComparingFieldByField(record)
+            assertThat(returnedRecord).usingRecursiveComparison().ignoringFields("timestampfield").isEqualTo(record)
+            assertThat(returnedRecord?.timestampfield).isCloseTo(record.timestampfield, within(1, ChronoUnit.MILLIS))
         }
     }
 
@@ -1503,7 +1501,7 @@ class DynamicSqlTest : AbstractTest() {
             val returnedRecord = mapper.selectByPrimaryKey(generatedCustomerId)
 
             assertThat(returnedRecord).isNotNull()
-            assertThat(returnedRecord).isEqualToComparingFieldByField(record)
+            assertThat(returnedRecord).usingRecursiveComparison().isEqualTo(record)
         }
     }
 

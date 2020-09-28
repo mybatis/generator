@@ -24,6 +24,8 @@ import static mbg.test.mb3.generated.dsql.v1.mapper.PkblobsDynamicSqlSupport.pkb
 import static mbg.test.mb3.generated.dsql.v1.mapper.PkfieldsDynamicSqlSupport.pkfields;
 import static mbg.test.mb3.generated.dsql.v1.mapper.PkfieldsblobsDynamicSqlSupport.pkfieldsblobs;
 import static mbg.test.mb3.generated.dsql.v1.mapper.PkonlyDynamicSqlSupport.pkonly;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.within;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mybatis.dynamic.sql.SqlBuilder.*;
 
@@ -31,13 +33,12 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledForJreRange;
-import org.junit.jupiter.api.condition.JRE;
 import org.mybatis.dynamic.sql.render.RenderingStrategy;
 import org.mybatis.dynamic.sql.select.render.SelectStatementProvider;
 
@@ -517,10 +518,7 @@ public class DynamicSqlTest extends AbstractTest {
         }
     }
 
-    // TODO JWL 9/27/2020 Differences in timestamps need addressed to run on jdk 15/16 (testing known to work up through
-    // jdk 11)
     @Test
-    @EnabledForJreRange(min = JRE.JAVA_8, max = JRE.JAVA_11)
     public void testPKFieldsInsert() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
@@ -561,8 +559,7 @@ public class DynamicSqlTest extends AbstractTest {
             assertEquals(record.getLastname(), returnedRecord.getLastname());
             assertEquals(record.getTimefield(), returnedRecord
                     .getTimefield());
-            assertEquals(record.getTimestampfield(), returnedRecord
-                    .getTimestampfield());
+            assertThat(record.getTimestampfield()).isCloseTo(returnedRecord.getTimestampfield(), within(1, ChronoUnit.MILLIS));
             assertEquals(record.isStringboolean(), returnedRecord.isStringboolean());
         } finally {
             sqlSession.close();

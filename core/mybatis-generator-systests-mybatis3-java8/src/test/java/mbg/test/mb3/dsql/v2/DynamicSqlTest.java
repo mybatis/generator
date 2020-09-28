@@ -25,6 +25,7 @@ import static mbg.test.mb3.generated.dsql.v2.mapper.PkfieldsDynamicSqlSupport.pk
 import static mbg.test.mb3.generated.dsql.v2.mapper.PkfieldsblobsDynamicSqlSupport.pkfieldsblobs;
 import static mbg.test.mb3.generated.dsql.v2.mapper.PkonlyDynamicSqlSupport.pkonly;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.within;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -42,6 +43,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -49,9 +51,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.ibatis.session.SqlSession;
+import org.assertj.core.data.TemporalOffset;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledForJreRange;
-import org.junit.jupiter.api.condition.JRE;
 import org.mybatis.dynamic.sql.select.CountDSLCompleter;
 import org.mybatis.dynamic.sql.select.SelectDSLCompleter;
 
@@ -494,10 +495,7 @@ public class DynamicSqlTest extends AbstractTest {
         }
     }
 
-    // TODO JWL 9/27/2020 Differences in timestamps need addressed to run on jdk 15/16 (testing known to work up through
-    // jdk 11)
     @Test
-    @EnabledForJreRange(min = JRE.JAVA_8, max = JRE.JAVA_11)
     public void testPKFieldsInsert() {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
 
@@ -531,7 +529,7 @@ public class DynamicSqlTest extends AbstractTest {
                 assertEquals(record.getId2(), rr.getId2());
                 assertEquals(record.getLastname(), rr.getLastname());
                 assertEquals(record.getTimefield(), rr.getTimefield());
-                assertEquals(record.getTimestampfield(), rr.getTimestampfield());
+                assertThat(record.getTimestampfield()).isCloseTo(rr.getTimestampfield(), within(1, ChronoUnit.MILLIS));
                 assertEquals(record.isStringboolean(), rr.isStringboolean());
             });
         }

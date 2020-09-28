@@ -530,7 +530,6 @@ public class DynamicSqlTest extends AbstractTest {
                 assertEquals(record.getLastname(), rr.getLastname());
                 assertEquals(record.getTimefield(), rr.getTimefield());
                 assertThat(record.getTimestampfield()).isCloseTo(rr.getTimestampfield(), within(1, ChronoUnit.MILLIS));
-                assertEquals(record.getTimestampfield(), rr.getTimestampfield());
                 assertEquals(record.isStringboolean(), rr.isStringboolean());
             });
         }

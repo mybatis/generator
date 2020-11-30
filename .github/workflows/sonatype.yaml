@@ -14,10 +14,29 @@
 #    limitations under the License.
 #
 
-version: 2
-updates:
-- package-ecosystem: maven
-  directory: "/core"
-  schedule:
-    interval: daily
-  open-pull-requests-limit: 10
+name: Sonatype
+
+defaults:
+  run:
+    working-directory: core
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    if: github.repository_owner == 'mybatis'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Deploy to Sonatype
+        run: ./mvnw deploy -DskipTests -B --settings ./.mvn/settings.xml -Dlicense.skip=true
+        env:
+          CI_DEPLOY_USERNAME: ${{ secrets.CI_DEPLOY_USERNAME }}
+          CI_DEPLOY_PASSWORD: ${{ secrets.CI_DEPLOY_PASSWORD }}

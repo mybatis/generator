@@ -149,7 +149,7 @@
                 </goals>
                 <configuration>
                   <sources>
-                    <source>target/generated-sources/mybatis-generator</source>
+                    <source>${project.build.directory}/generated-sources/mybatis-generator</source>
                   </sources>
                 </configuration>
               </execution>

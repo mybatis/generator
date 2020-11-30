@@ -105,6 +105,7 @@
           <groupId>org.jetbrains.kotlin</groupId>
           <version>${kotlin.version}</version>
         </plugin>
+        <!-- TODO: Items fixed in 4.x license-maven-plugin.  Java is released / kotlin is pending, remove this once updated. -->
         <plugin>
           <groupId>com.mycila</groupId>
           <artifactId>license-maven-plugin</artifactId>
@@ -356,7 +357,7 @@
                       <pluginExecutionFilter>
                         <groupId>org.mybatis.generator</groupId>
                         <artifactId>mybatis-generator-maven-plugin</artifactId>
-                        <versionRange>[1.4.0-SNAPSHOT,)</versionRange>
+                        <versionRange>[${project.version},)</versionRange>
                         <goals>
                           <goal>generate</goal>
                         </goals>
@@ -369,7 +370,7 @@
                       <pluginExecutionFilter>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-plugin-plugin</artifactId>
-                        <versionRange>[3.5.2,)</versionRange>
+                        <versionRange>[3.6.0,)</versionRange>
                         <goals>
                           <goal>descriptor</goal>
                           <goal>helpmojo</goal>
@@ -383,7 +384,7 @@
                       <pluginExecutionFilter>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>exec-maven-plugin</artifactId>
-                        <versionRange>[1.6.0,)</versionRange>
+                        <versionRange>[3.0.0,)</versionRange>
                         <goals>
                           <goal>java</goal>
                         </goals>

@@ -87,13 +87,15 @@ public abstract class AbstractDynamicSqlMapperGenerator extends AbstractJavaClie
                 introspectedTable, context.getCommentGenerator(), warnings).generate();
     }
 
-    protected void generate(Interface interfaze, AbstractMethodGenerator generator) {
+    protected boolean generate(Interface interfaze, AbstractMethodGenerator generator) {
         MethodAndImports mi = generator.generateMethodAndImports();
         if (mi != null && generator.callPlugins(mi.getMethod(), interfaze)) {
             interfaze.addMethod(mi.getMethod());
             interfaze.addImportedTypes(mi.getImports());
             interfaze.addStaticImports(mi.getStaticImports());
+            return true;
         }
+        return false;
     }
 
     @Override

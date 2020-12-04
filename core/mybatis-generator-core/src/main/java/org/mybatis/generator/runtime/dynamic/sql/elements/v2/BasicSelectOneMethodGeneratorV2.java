@@ -32,20 +32,19 @@ public class BasicSelectOneMethodGeneratorV2 extends AbstractMethodGenerator {
     private FullyQualifiedJavaType recordType;
     private String resultMapId;
     private FragmentGenerator fragmentGenerator;
+    private final boolean reuseResultMap;
 
     private BasicSelectOneMethodGeneratorV2(Builder builder) {
         super(builder);
         recordType = builder.recordType;
         resultMapId = builder.resultMapId;
         fragmentGenerator = builder.fragmentGenerator;
+        reuseResultMap = builder.reuseResultMap;
     }
 
     @Override
     public MethodAndImports generateMethodAndImports() {
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
-
-        boolean reuseResultMap = introspectedTable.getRules().generateSelectByExampleWithBLOBs()
-                || introspectedTable.getRules().generateSelectByExampleWithoutBLOBs();
 
         FullyQualifiedJavaType parameterType =
                 new FullyQualifiedJavaType(
@@ -105,6 +104,7 @@ public class BasicSelectOneMethodGeneratorV2 extends AbstractMethodGenerator {
         private FullyQualifiedJavaType recordType;
         private String resultMapId;
         private FragmentGenerator fragmentGenerator;
+        private boolean reuseResultMap;
 
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
             this.recordType = recordType;
@@ -118,6 +118,11 @@ public class BasicSelectOneMethodGeneratorV2 extends AbstractMethodGenerator {
 
         public Builder withFragmentGenerator(FragmentGenerator fragmentGenerator) {
             this.fragmentGenerator = fragmentGenerator;
+            return this;
+        }
+
+        public Builder withReuseResultMap(boolean reuseResultMap) {
+            this.reuseResultMap = reuseResultMap;
             return this;
         }
 

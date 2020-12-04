@@ -45,7 +45,6 @@ import org.mybatis.generator.config.PluginConfiguration;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.config.TableConfiguration;
 import org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl;
-import org.mybatis.generator.runtime.dynamic.sql.IntrospectedTableMyBatis3DynamicSqlImplV1;
 import org.mybatis.generator.runtime.dynamic.sql.IntrospectedTableMyBatis3DynamicSqlImplV2;
 import org.mybatis.generator.runtime.kotlin.IntrospectedTableKotlinImpl;
 
@@ -336,10 +335,6 @@ public class ObjectFactory {
         } else if ("MyBatis3Simple".equalsIgnoreCase(type)) { //$NON-NLS-1$
             type = IntrospectedTableMyBatis3SimpleImpl.class.getName();
         } else if ("MyBatis3DynamicSql".equalsIgnoreCase(type)) { //$NON-NLS-1$
-            type = IntrospectedTableMyBatis3DynamicSqlImplV2.class.getName();
-        } else if ("MyBatis3DynamicSqlV1".equalsIgnoreCase(type)) { //$NON-NLS-1$
-            type = IntrospectedTableMyBatis3DynamicSqlImplV1.class.getName();
-        } else if ("MyBatis3DynamicSqlV2".equalsIgnoreCase(type)) { //$NON-NLS-1$
             type = IntrospectedTableMyBatis3DynamicSqlImplV2.class.getName();
         } else if ("MyBatis3Kotlin".equalsIgnoreCase(type)) { //$NON-NLS-1$
             type = IntrospectedTableKotlinImpl.class.getName();

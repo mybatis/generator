@@ -51,7 +51,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.ibatis.session.SqlSession;
-import org.assertj.core.data.TemporalOffset;
 import org.junit.jupiter.api.Test;
 import org.mybatis.dynamic.sql.select.CountDSLCompleter;
 import org.mybatis.dynamic.sql.select.SelectDSLCompleter;

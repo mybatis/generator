@@ -15,9 +15,26 @@
  */
 package org.mybatis.generator.runtime.dynamic.sql;
 
-import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
+import java.util.List;
 
-public class IntrospectedTableMyBatis3DynamicSqlImplV2 extends IntrospectedTableMyBatis3DynamicSqlImplV1 {
+import org.mybatis.generator.api.ProgressCallback;
+import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
+import org.mybatis.generator.codegen.AbstractJavaGenerator;
+import org.mybatis.generator.codegen.mybatis3.IntrospectedTableMyBatis3Impl;
+
+public class IntrospectedTableMyBatis3DynamicSqlImplV2 extends IntrospectedTableMyBatis3Impl {
+
+    public IntrospectedTableMyBatis3DynamicSqlImplV2() {
+        targetRuntime = TargetRuntime.MYBATIS3_DSQL;
+    }
+
+    @Override
+    protected void calculateXmlMapperGenerator(AbstractJavaClientGenerator javaClientGenerator,
+            List<String> warnings,
+            ProgressCallback progressCallback) {
+        // no XML with dynamic SQL support
+        xmlMapperGenerator = null;
+    }
 
     @Override
     protected AbstractJavaClientGenerator createJavaClientGenerator() {
@@ -26,5 +43,20 @@ public class IntrospectedTableMyBatis3DynamicSqlImplV2 extends IntrospectedTable
         }
 
         return new DynamicSqlMapperGeneratorV2(getClientProject());
+    }
+
+    @Override
+    protected void calculateJavaModelGenerators(List<String> warnings,
+            ProgressCallback progressCallback) {
+
+        AbstractJavaGenerator javaGenerator = new DynamicSqlModelGenerator(getModelProject());
+        initializeAbstractGenerator(javaGenerator, warnings,
+                progressCallback);
+        javaGenerators.add(javaGenerator);
+    }
+
+    @Override
+    public boolean requiresXMLGenerator() {
+        return false;
     }
 }

@@ -16,7 +16,7 @@
 package mbg.test.mb3.dsql.v2.miscellaneous;
 
 import static mbg.test.common.util.TestUtilities.datesAreEqual;
-import static mbg.test.mb3.generated.dsql.v2.miscellaneous.mapper.MyObjectDynamicSqlSupport.myObject;
+import static mbg.test.mb3.generated.dsql.miscellaneous.mapper.MyObjectDynamicSqlSupport.myObject;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mybatis.dynamic.sql.SqlBuilder.*;
@@ -37,12 +37,12 @@ import org.mybatis.dynamic.sql.select.render.SelectStatementProvider;
 import mbg.test.common.FirstName;
 import mbg.test.common.MyTime;
 import mbg.test.mb3.common.TestEnum;
-import mbg.test.mb3.generated.dsql.v2.miscellaneous.mapper.EnumtestMapper;
-import mbg.test.mb3.generated.dsql.v2.miscellaneous.mapper.MyObjectMapper;
-import mbg.test.mb3.generated.dsql.v2.miscellaneous.mapper.RegexrenameMapper;
-import mbg.test.mb3.generated.dsql.v2.miscellaneous.model.Enumtest;
-import mbg.test.mb3.generated.dsql.v2.miscellaneous.model.MyObject;
-import mbg.test.mb3.generated.dsql.v2.miscellaneous.model.Regexrename;
+import mbg.test.mb3.generated.dsql.miscellaneous.mapper.EnumtestMapper;
+import mbg.test.mb3.generated.dsql.miscellaneous.mapper.MyObjectMapper;
+import mbg.test.mb3.generated.dsql.miscellaneous.mapper.RegexrenameMapper;
+import mbg.test.mb3.generated.dsql.miscellaneous.model.Enumtest;
+import mbg.test.mb3.generated.dsql.miscellaneous.model.MyObject;
+import mbg.test.mb3.generated.dsql.miscellaneous.model.Regexrename;
 
 /**
  * @author Jeff Butler

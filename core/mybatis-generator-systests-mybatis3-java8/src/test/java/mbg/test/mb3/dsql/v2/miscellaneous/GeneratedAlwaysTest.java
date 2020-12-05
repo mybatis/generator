@@ -15,7 +15,7 @@
  */
 package mbg.test.mb3.dsql.v2.miscellaneous;
 
-import static mbg.test.mb3.generated.dsql.v2.miscellaneous.mapper.GeneratedalwaystestDynamicSqlSupport.*;
+import static mbg.test.mb3.generated.dsql.miscellaneous.mapper.GeneratedalwaystestDynamicSqlSupport.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mybatis.dynamic.sql.SqlBuilder.*;
 
@@ -26,8 +26,8 @@ import org.junit.jupiter.api.Test;
 import org.mybatis.dynamic.sql.select.SelectDSLCompleter;
 
 import mbg.test.common.util.TestUtilities;
-import mbg.test.mb3.generated.dsql.v2.miscellaneous.mapper.GeneratedalwaystestMapper;
-import mbg.test.mb3.generated.dsql.v2.miscellaneous.model.Generatedalwaystest;
+import mbg.test.mb3.generated.dsql.miscellaneous.mapper.GeneratedalwaystestMapper;
+import mbg.test.mb3.generated.dsql.miscellaneous.model.Generatedalwaystest;
 
 public class GeneratedAlwaysTest extends AbstractAnnotatedMiscellaneousTest {
 

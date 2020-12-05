@@ -17,13 +17,13 @@ package mbg.test.mb3.dsql.v2;
 
 import static mbg.test.common.util.TestUtilities.blobsAreEqual;
 import static mbg.test.common.util.TestUtilities.generateRandomBlob;
-import static mbg.test.mb3.generated.dsql.v2.mapper.AwfulTableDynamicSqlSupport.awfulTable;
-import static mbg.test.mb3.generated.dsql.v2.mapper.FieldsblobsDynamicSqlSupport.fieldsblobs;
-import static mbg.test.mb3.generated.dsql.v2.mapper.FieldsonlyDynamicSqlSupport.fieldsonly;
-import static mbg.test.mb3.generated.dsql.v2.mapper.PkblobsDynamicSqlSupport.pkblobs;
-import static mbg.test.mb3.generated.dsql.v2.mapper.PkfieldsDynamicSqlSupport.pkfields;
-import static mbg.test.mb3.generated.dsql.v2.mapper.PkfieldsblobsDynamicSqlSupport.pkfieldsblobs;
-import static mbg.test.mb3.generated.dsql.v2.mapper.PkonlyDynamicSqlSupport.pkonly;
+import static mbg.test.mb3.generated.dsql.mapper.AwfulTableDynamicSqlSupport.awfulTable;
+import static mbg.test.mb3.generated.dsql.mapper.FieldsblobsDynamicSqlSupport.fieldsblobs;
+import static mbg.test.mb3.generated.dsql.mapper.FieldsonlyDynamicSqlSupport.fieldsonly;
+import static mbg.test.mb3.generated.dsql.mapper.PkblobsDynamicSqlSupport.pkblobs;
+import static mbg.test.mb3.generated.dsql.mapper.PkfieldsDynamicSqlSupport.pkfields;
+import static mbg.test.mb3.generated.dsql.mapper.PkfieldsblobsDynamicSqlSupport.pkfieldsblobs;
+import static mbg.test.mb3.generated.dsql.mapper.PkonlyDynamicSqlSupport.pkonly;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mybatis.dynamic.sql.SqlBuilder.*;
 
@@ -32,20 +32,20 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.Test;
 
-import mbg.test.mb3.generated.dsql.v2.mapper.AwfulTableMapper;
-import mbg.test.mb3.generated.dsql.v2.mapper.FieldsblobsMapper;
-import mbg.test.mb3.generated.dsql.v2.mapper.FieldsonlyMapper;
-import mbg.test.mb3.generated.dsql.v2.mapper.PkblobsMapper;
-import mbg.test.mb3.generated.dsql.v2.mapper.PkfieldsMapper;
-import mbg.test.mb3.generated.dsql.v2.mapper.PkfieldsblobsMapper;
-import mbg.test.mb3.generated.dsql.v2.mapper.PkonlyMapper;
-import mbg.test.mb3.generated.dsql.v2.model.AwfulTable;
-import mbg.test.mb3.generated.dsql.v2.model.Fieldsblobs;
-import mbg.test.mb3.generated.dsql.v2.model.Fieldsonly;
-import mbg.test.mb3.generated.dsql.v2.model.Pkblobs;
-import mbg.test.mb3.generated.dsql.v2.model.Pkfields;
-import mbg.test.mb3.generated.dsql.v2.model.Pkfieldsblobs;
-import mbg.test.mb3.generated.dsql.v2.model.Pkonly;
+import mbg.test.mb3.generated.dsql.mapper.AwfulTableMapper;
+import mbg.test.mb3.generated.dsql.mapper.FieldsblobsMapper;
+import mbg.test.mb3.generated.dsql.mapper.FieldsonlyMapper;
+import mbg.test.mb3.generated.dsql.mapper.PkblobsMapper;
+import mbg.test.mb3.generated.dsql.mapper.PkfieldsMapper;
+import mbg.test.mb3.generated.dsql.mapper.PkfieldsblobsMapper;
+import mbg.test.mb3.generated.dsql.mapper.PkonlyMapper;
+import mbg.test.mb3.generated.dsql.model.AwfulTable;
+import mbg.test.mb3.generated.dsql.model.Fieldsblobs;
+import mbg.test.mb3.generated.dsql.model.Fieldsonly;
+import mbg.test.mb3.generated.dsql.model.Pkblobs;
+import mbg.test.mb3.generated.dsql.model.Pkfields;
+import mbg.test.mb3.generated.dsql.model.Pkfieldsblobs;
+import mbg.test.mb3.generated.dsql.model.Pkonly;
 
 /**
  *

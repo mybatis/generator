@@ -24,8 +24,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.Test;
 import org.mybatis.dynamic.sql.select.SelectDSLCompleter;
 
-import mbg.test.mb3.generated.dsql.v2.miscellaneous.mapper.GeneratedalwaystestnoupdatesMapper;
-import mbg.test.mb3.generated.dsql.v2.miscellaneous.model.Generatedalwaystestnoupdates;
+import mbg.test.mb3.generated.dsql.miscellaneous.mapper.GeneratedalwaystestnoupdatesMapper;
+import mbg.test.mb3.generated.dsql.miscellaneous.model.Generatedalwaystestnoupdates;
 
 public class GeneratedAlwaysNoUpdatesTest extends AbstractAnnotatedMiscellaneousTest {
 

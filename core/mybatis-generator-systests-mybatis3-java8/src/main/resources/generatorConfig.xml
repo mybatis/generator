@@ -21,7 +21,7 @@
  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
-  <context id="dsqlv2">
+  <context id="dsql">
     <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
 
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
@@ -32,12 +32,12 @@
       <property name="useJSR310Types" value="true"/>
     </javaTypeResolver>
 
-    <javaModelGenerator targetPackage="mbg.test.mb3.generated.dsql.v2.model" targetProject="MAVEN">
+    <javaModelGenerator targetPackage="mbg.test.mb3.generated.dsql.model" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
-    <javaClientGenerator targetPackage="mbg.test.mb3.generated.dsql.v2.mapper"  targetProject="MAVEN">
+    <javaClientGenerator targetPackage="mbg.test.mb3.generated.dsql.mapper"  targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
 
@@ -75,7 +75,7 @@
     <table schema="mbgtest" tableName="Ids" domainObjectName="Id"/>
   </context>
 
-  <context id="dsqlv2-readonly" targetRuntime="MyBatis3DynamicSql">
+  <context id="dsql-readonly" targetRuntime="MyBatis3DynamicSql">
     <plugin type="org.mybatis.generator.plugins.dsql.ReadOnlyPlugin" />
 
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
@@ -86,11 +86,11 @@
       <property name="useJSR310Types" value="true"/>
     </javaTypeResolver>
 
-    <javaModelGenerator targetPackage="mbg.test.mb3.generated.dsql.v2.readonly.model" targetProject="MAVEN">
+    <javaModelGenerator targetPackage="mbg.test.mb3.generated.dsql.readonly.model" targetProject="MAVEN">
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
-    <javaClientGenerator targetPackage="mbg.test.mb3.generated.dsql.v2.readonly.mapper"
+    <javaClientGenerator targetPackage="mbg.test.mb3.generated.dsql.readonly.mapper"
       targetProject="MAVEN"/>
 
     <table tableName="PKFields" alias="B" >
@@ -115,7 +115,7 @@
     </table>
   </context>
 
-  <context id="miscellaneousTests_Annotatedv2" targetRuntime="MyBatis3DynamicSql">
+  <context id="miscellaneousTests_Annotated" targetRuntime="MyBatis3DynamicSql">
     <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
     <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin" />
 
@@ -127,12 +127,12 @@
         connectionURL="jdbc:hsqldb:mem:aname"
         userId="sa" />
 
-    <javaModelGenerator targetPackage="mbg.test.mb3.generated.dsql.v2.miscellaneous.model" targetProject="MAVEN">
+    <javaModelGenerator targetPackage="mbg.test.mb3.generated.dsql.miscellaneous.model" targetProject="MAVEN">
       <property name="trimStrings" value="true" />
       <property name="rootClass" value="mbg.test.common.BaseClass" />
     </javaModelGenerator>
 
-    <javaClientGenerator targetPackage="mbg.test.mb3.generated.dsql.v2.miscellaneous.mapper"  targetProject="MAVEN">
+    <javaClientGenerator targetPackage="mbg.test.mb3.generated.dsql.miscellaneous.mapper"  targetProject="MAVEN">
     </javaClientGenerator>
 
     <table tableName="PKFields" domainObjectName="MyObject" alias="A" >
@@ -175,7 +175,7 @@
       <property name="useJSR310Types" value="true"/>
     </javaTypeResolver>
 
-    <javaModelGenerator targetPackage="mbg.test.mb3.generated.dsql.v2.modelonly" targetProject="MAVEN">
+    <javaModelGenerator targetPackage="mbg.test.mb3.generated.dsql.modelonly" targetProject="MAVEN">
       <property name="enableSubPackages" value="true" />
       <property name="trimStrings" value="true" />
     </javaModelGenerator>

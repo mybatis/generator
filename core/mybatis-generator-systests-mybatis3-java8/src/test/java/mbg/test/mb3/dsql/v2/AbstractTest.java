@@ -25,15 +25,15 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.junit.jupiter.api.BeforeEach;
 
-import mbg.test.mb3.generated.dsql.v2.mapper.AwfulTableMapper;
-import mbg.test.mb3.generated.dsql.v2.mapper.FieldsblobsMapper;
-import mbg.test.mb3.generated.dsql.v2.mapper.FieldsonlyMapper;
-import mbg.test.mb3.generated.dsql.v2.mapper.PkblobsMapper;
-import mbg.test.mb3.generated.dsql.v2.mapper.PkfieldsMapper;
-import mbg.test.mb3.generated.dsql.v2.mapper.PkfieldsblobsMapper;
-import mbg.test.mb3.generated.dsql.v2.mapper.PkonlyMapper;
-import mbg.test.mb3.generated.dsql.v2.mapper.mbgtest.IdMapper;
-import mbg.test.mb3.generated.dsql.v2.mapper.mbgtest.TranslationMapper;
+import mbg.test.mb3.generated.dsql.mapper.AwfulTableMapper;
+import mbg.test.mb3.generated.dsql.mapper.FieldsblobsMapper;
+import mbg.test.mb3.generated.dsql.mapper.FieldsonlyMapper;
+import mbg.test.mb3.generated.dsql.mapper.PkblobsMapper;
+import mbg.test.mb3.generated.dsql.mapper.PkfieldsMapper;
+import mbg.test.mb3.generated.dsql.mapper.PkfieldsblobsMapper;
+import mbg.test.mb3.generated.dsql.mapper.PkonlyMapper;
+import mbg.test.mb3.generated.dsql.mapper.mbgtest.IdMapper;
+import mbg.test.mb3.generated.dsql.mapper.mbgtest.TranslationMapper;
 
 /**
  * @author Jeff Butler

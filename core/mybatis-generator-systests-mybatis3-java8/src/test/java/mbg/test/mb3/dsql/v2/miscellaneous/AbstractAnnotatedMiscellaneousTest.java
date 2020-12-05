@@ -25,11 +25,11 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.junit.jupiter.api.BeforeEach;
 
-import mbg.test.mb3.generated.dsql.v2.miscellaneous.mapper.EnumtestMapper;
-import mbg.test.mb3.generated.dsql.v2.miscellaneous.mapper.GeneratedalwaystestMapper;
-import mbg.test.mb3.generated.dsql.v2.miscellaneous.mapper.GeneratedalwaystestnoupdatesMapper;
-import mbg.test.mb3.generated.dsql.v2.miscellaneous.mapper.MyObjectMapper;
-import mbg.test.mb3.generated.dsql.v2.miscellaneous.mapper.RegexrenameMapper;
+import mbg.test.mb3.generated.dsql.miscellaneous.mapper.EnumtestMapper;
+import mbg.test.mb3.generated.dsql.miscellaneous.mapper.GeneratedalwaystestMapper;
+import mbg.test.mb3.generated.dsql.miscellaneous.mapper.GeneratedalwaystestnoupdatesMapper;
+import mbg.test.mb3.generated.dsql.miscellaneous.mapper.MyObjectMapper;
+import mbg.test.mb3.generated.dsql.miscellaneous.mapper.RegexrenameMapper;
 
 public abstract class AbstractAnnotatedMiscellaneousTest {
 

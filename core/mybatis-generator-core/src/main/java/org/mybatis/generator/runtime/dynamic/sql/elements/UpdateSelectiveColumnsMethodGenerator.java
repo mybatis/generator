@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.generator.runtime.dynamic.sql.elements.v2;
+package org.mybatis.generator.runtime.dynamic.sql.elements;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,15 +22,12 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
-import org.mybatis.generator.runtime.dynamic.sql.elements.AbstractMethodGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.FragmentGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.MethodAndImports;
 
-public class UpdateByPrimaryKeySelectiveMethodGeneratorV2 extends AbstractMethodGenerator {
+public class UpdateSelectiveColumnsMethodGenerator extends AbstractMethodGenerator {
     private final FullyQualifiedJavaType recordType;
     private final FragmentGenerator fragmentGenerator;
 
-    private UpdateByPrimaryKeySelectiveMethodGeneratorV2(Builder builder) {
+    private UpdateSelectiveColumnsMethodGenerator(Builder builder) {
         super(builder);
         recordType = builder.recordType;
         fragmentGenerator = builder.fragmentGenerator;
@@ -38,29 +35,27 @@ public class UpdateByPrimaryKeySelectiveMethodGeneratorV2 extends AbstractMethod
 
     @Override
     public MethodAndImports generateMethodAndImports() {
-        if (!Utils.generateUpdateByPrimaryKey(introspectedTable)) {
-            return null;
-        }
-
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
+
+        FullyQualifiedJavaType parameterAndReturnType = new FullyQualifiedJavaType(
+                "org.mybatis.dynamic.sql.update.UpdateDSL"); //$NON-NLS-1$
+        parameterAndReturnType.addTypeArgument(new FullyQualifiedJavaType(
+                "org.mybatis.dynamic.sql.update.UpdateModel")); //$NON-NLS-1$
+        imports.add(parameterAndReturnType);
 
         imports.add(recordType);
 
-        Method method = new Method("updateByPrimaryKeySelective"); //$NON-NLS-1$
-        method.setDefault(true);
+        Method method = new Method("updateSelectiveColumns"); //$NON-NLS-1$
+        method.setStatic(true);
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
 
-        method.setReturnType(FullyQualifiedJavaType.getIntInstance());
+        method.setReturnType(parameterAndReturnType);
         method.addParameter(new Parameter(recordType, "record")); //$NON-NLS-1$
+        method.addParameter(new Parameter(parameterAndReturnType, "dsl")); //$NON-NLS-1$
 
-        method.addBodyLine("return update(c ->"); //$NON-NLS-1$
+        method.addBodyLines(fragmentGenerator.getSetEqualWhenPresentLines(introspectedTable.getAllColumns(),
+                "return dsl", "        ", true)); //$NON-NLS-1$ //$NON-NLS-2$
 
-        method.addBodyLines(
-                fragmentGenerator.getSetEqualWhenPresentLines(introspectedTable.getNonPrimaryKeyColumns(),
-                        "    c", "    ", false)); //$NON-NLS-1$ //$NON-NLS-2$
-        method.addBodyLines(fragmentGenerator.getPrimaryKeyWhereClauseForUpdate("    ")); //$NON-NLS-1$
-
-        method.addBodyLine(");"); //$NON-NLS-1$
         return MethodAndImports.withMethod(method)
                 .withImports(imports)
                 .build();
@@ -68,11 +63,10 @@ public class UpdateByPrimaryKeySelectiveMethodGeneratorV2 extends AbstractMethod
 
     @Override
     public boolean callPlugins(Method method, Interface interfaze) {
-        return context.getPlugins()
-                .clientUpdateByPrimaryKeySelectiveMethodGenerated(method, interfaze, introspectedTable);
+        return context.getPlugins().clientUpdateSelectiveColumnsMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, UpdateByPrimaryKeySelectiveMethodGeneratorV2> {
+    public static class Builder extends BaseBuilder<Builder, UpdateSelectiveColumnsMethodGenerator> {
         private FullyQualifiedJavaType recordType;
         private FragmentGenerator fragmentGenerator;
 
@@ -92,8 +86,8 @@ public class UpdateByPrimaryKeySelectiveMethodGeneratorV2 extends AbstractMethod
         }
 
         @Override
-        public UpdateByPrimaryKeySelectiveMethodGeneratorV2 build() {
-            return new UpdateByPrimaryKeySelectiveMethodGeneratorV2(this);
+        public UpdateSelectiveColumnsMethodGenerator build() {
+            return new UpdateSelectiveColumnsMethodGenerator(this);
         }
     }
 }

@@ -25,10 +25,10 @@ import org.mybatis.generator.api.dom.java.Parameter;
 
 public class MethodParts {
 
-    private List<String> annotations;
-    private List<String> bodyLines;
-    private Set<FullyQualifiedJavaType> imports;
-    private List<Parameter> parameters;
+    private final List<String> annotations;
+    private final List<String> bodyLines;
+    private final Set<FullyQualifiedJavaType> imports;
+    private final List<Parameter> parameters;
 
     private MethodParts(Builder builder) {
         imports = builder.imports;
@@ -54,10 +54,10 @@ public class MethodParts {
     }
 
     public static class Builder {
-        private List<String> bodyLines = new ArrayList<>();
-        private Set<FullyQualifiedJavaType> imports = new HashSet<>();
-        private List<Parameter> parameters = new ArrayList<>();
-        private List<String> annotations = new ArrayList<>();
+        private final List<String> bodyLines = new ArrayList<>();
+        private final Set<FullyQualifiedJavaType> imports = new HashSet<>();
+        private final List<Parameter> parameters = new ArrayList<>();
+        private final List<String> annotations = new ArrayList<>();
 
         public Builder withAnnotation(String annotation) {
             annotations.add(annotation);

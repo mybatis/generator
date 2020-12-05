@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.generator.runtime.dynamic.sql.elements.v2;
+package org.mybatis.generator.runtime.dynamic.sql.elements;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,12 +22,10 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
-import org.mybatis.generator.runtime.dynamic.sql.elements.AbstractMethodGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.MethodAndImports;
 
-public class BasicUpdateMethodGenerator extends AbstractMethodGenerator {
+public class GeneralUpdateMethodGenerator extends AbstractMethodGenerator {
 
-    private BasicUpdateMethodGenerator(Builder builder) {
+    private GeneralUpdateMethodGenerator(Builder builder) {
         super(builder);
     }
 
@@ -35,24 +33,25 @@ public class BasicUpdateMethodGenerator extends AbstractMethodGenerator {
     public MethodAndImports generateMethodAndImports() {
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
 
-        FullyQualifiedJavaType parameterType =
-                new FullyQualifiedJavaType(
-                        "org.mybatis.dynamic.sql.update.render.UpdateStatementProvider"); //$NON-NLS-1$
-        FullyQualifiedJavaType adapter =
-                new FullyQualifiedJavaType("org.mybatis.dynamic.sql.util.SqlProviderAdapter"); //$NON-NLS-1$
-        FullyQualifiedJavaType annotation =
-                new FullyQualifiedJavaType("org.apache.ibatis.annotations.UpdateProvider"); //$NON-NLS-1$
+        FullyQualifiedJavaType parameterType = new FullyQualifiedJavaType(
+                "org.mybatis.dynamic.sql.update.UpdateDSLCompleter"); //$NON-NLS-1$
 
         imports.add(parameterType);
-        imports.add(adapter);
-        imports.add(annotation);
+        imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils")); //$NON-NLS-1$
+
+        FullyQualifiedJavaType returnType = FullyQualifiedJavaType.getIntInstance();
+
+        imports.add(returnType);
 
         Method method = new Method("update"); //$NON-NLS-1$
-        method.setAbstract(true);
-        method.setReturnType(FullyQualifiedJavaType.getIntInstance());
-        method.addParameter(new Parameter(parameterType, "updateStatement")); //$NON-NLS-1$
+        method.setDefault(true);
+        method.addParameter(new Parameter(parameterType, "completer")); //$NON-NLS-1$
+
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
-        method.addAnnotation("@UpdateProvider(type=SqlProviderAdapter.class, method=\"update\")"); //$NON-NLS-1$
+
+        method.setReturnType(returnType);
+        method.addBodyLine("return MyBatis3Utils.update(this::update, " + //$NON-NLS-1$
+                tableFieldName + ", completer);"); //$NON-NLS-1$
 
         return MethodAndImports.withMethod(method)
                 .withImports(imports)
@@ -61,19 +60,18 @@ public class BasicUpdateMethodGenerator extends AbstractMethodGenerator {
 
     @Override
     public boolean callPlugins(Method method, Interface interfaze) {
-        return context.getPlugins().clientBasicUpdateMethodGenerated(method, interfaze, introspectedTable);
+        return context.getPlugins().clientGeneralUpdateMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, BasicUpdateMethodGenerator> {
-
+    public static class Builder extends BaseBuilder<Builder, GeneralUpdateMethodGenerator> {
         @Override
         public Builder getThis() {
             return this;
         }
 
         @Override
-        public BasicUpdateMethodGenerator build() {
-            return new BasicUpdateMethodGenerator(this);
+        public GeneralUpdateMethodGenerator build() {
+            return new GeneralUpdateMethodGenerator(this);
         }
     }
 }

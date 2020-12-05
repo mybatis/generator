@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.generator.runtime.dynamic.sql.elements.v2;
+package org.mybatis.generator.runtime.dynamic.sql.elements;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -24,14 +24,12 @@ import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.config.Context;
-import org.mybatis.generator.runtime.dynamic.sql.elements.FieldAndImports;
-import org.mybatis.generator.runtime.dynamic.sql.elements.FragmentGenerator;
 
 public class SelectListGenerator {
 
-    private FragmentGenerator fragmentGenerator;
-    private Context context;
-    private IntrospectedTable introspectedTable;
+    private final FragmentGenerator fragmentGenerator;
+    private final Context context;
+    private final IntrospectedTable introspectedTable;
 
     private SelectListGenerator(Builder builder) {
         this.fragmentGenerator = Objects.requireNonNull(builder.fragmentGenerator);

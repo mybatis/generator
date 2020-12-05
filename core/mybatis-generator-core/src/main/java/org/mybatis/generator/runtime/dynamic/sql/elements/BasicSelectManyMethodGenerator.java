@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.generator.runtime.dynamic.sql.elements.v2;
+package org.mybatis.generator.runtime.dynamic.sql.elements;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,24 +22,15 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
-import org.mybatis.generator.runtime.dynamic.sql.elements.AbstractMethodGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.FragmentGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.MethodAndImports;
-import org.mybatis.generator.runtime.dynamic.sql.elements.MethodParts;
 
-public class BasicSelectOneMethodGeneratorV2 extends AbstractMethodGenerator {
+public class BasicSelectManyMethodGenerator extends AbstractMethodGenerator {
+    private final FullyQualifiedJavaType recordType;
+    private final FragmentGenerator fragmentGenerator;
 
-    private FullyQualifiedJavaType recordType;
-    private String resultMapId;
-    private FragmentGenerator fragmentGenerator;
-    private final boolean reuseResultMap;
-
-    private BasicSelectOneMethodGeneratorV2(Builder builder) {
+    private BasicSelectManyMethodGenerator(Builder builder) {
         super(builder);
         recordType = builder.recordType;
-        resultMapId = builder.resultMapId;
         fragmentGenerator = builder.fragmentGenerator;
-        reuseResultMap = builder.reuseResultMap;
     }
 
     @Override
@@ -49,25 +40,22 @@ public class BasicSelectOneMethodGeneratorV2 extends AbstractMethodGenerator {
         FullyQualifiedJavaType parameterType =
                 new FullyQualifiedJavaType(
                         "org.mybatis.dynamic.sql.select.render.SelectStatementProvider"); //$NON-NLS-1$
-        imports.add(parameterType);
-
         FullyQualifiedJavaType adapter =
                 new FullyQualifiedJavaType("org.mybatis.dynamic.sql.util.SqlProviderAdapter"); //$NON-NLS-1$
-        imports.add(adapter);
-
         FullyQualifiedJavaType annotation =
                 new FullyQualifiedJavaType("org.apache.ibatis.annotations.SelectProvider"); //$NON-NLS-1$
+
+        imports.add(parameterType);
+        imports.add(adapter);
         imports.add(annotation);
 
-        FullyQualifiedJavaType returnType = new FullyQualifiedJavaType("java.util.Optional"); //$NON-NLS-1$
-        returnType.addTypeArgument(recordType);
-
-        imports.add(returnType);
-
-        Method method = new Method("selectOne"); //$NON-NLS-1$
-        method.setAbstract(true);
+        imports.add(FullyQualifiedJavaType.getNewListInstance());
 
         imports.add(recordType);
+        FullyQualifiedJavaType returnType = FullyQualifiedJavaType.getNewListInstance();
+        returnType.addTypeArgument(recordType);
+        Method method = new Method("selectMany"); //$NON-NLS-1$
+        method.setAbstract(true);
         method.setReturnType(returnType);
         method.addParameter(new Parameter(parameterType, "selectStatement")); //$NON-NLS-1$
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
@@ -76,53 +64,33 @@ public class BasicSelectOneMethodGeneratorV2 extends AbstractMethodGenerator {
         MethodAndImports.Builder builder = MethodAndImports.withMethod(method)
                 .withImports(imports);
 
+        MethodParts methodParts;
         if (introspectedTable.isConstructorBased()) {
-            MethodParts methodParts = fragmentGenerator.getAnnotatedConstructorArgs();
-            acceptParts(builder, method, methodParts);
+            methodParts = fragmentGenerator.getAnnotatedConstructorArgs();
         } else {
-            if (reuseResultMap) {
-                FullyQualifiedJavaType rmAnnotation =
-                        new FullyQualifiedJavaType("org.apache.ibatis.annotations.ResultMap"); //$NON-NLS-1$
-                builder.withImport(rmAnnotation);
-                method.addAnnotation("@ResultMap(\"" + resultMapId + "\")"); //$NON-NLS-1$ //$NON-NLS-2$
-            } else {
-                MethodParts methodParts = fragmentGenerator.getAnnotatedResults();
-                acceptParts(builder, method, methodParts);
-            }
+            methodParts = fragmentGenerator.getAnnotatedResults();
         }
+        acceptParts(builder, method, methodParts);
 
         return builder.build();
     }
 
     @Override
     public boolean callPlugins(Method method, Interface interfaze) {
-        return context.getPlugins().clientBasicSelectOneMethodGenerated(method, interfaze, introspectedTable);
+        return context.getPlugins().clientBasicSelectManyMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, BasicSelectOneMethodGeneratorV2> {
-
+    public static class Builder extends BaseBuilder<Builder, BasicSelectManyMethodGenerator> {
         private FullyQualifiedJavaType recordType;
-        private String resultMapId;
         private FragmentGenerator fragmentGenerator;
-        private boolean reuseResultMap;
 
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
             this.recordType = recordType;
             return this;
         }
 
-        public Builder withResultMapId(String resultMapId) {
-            this.resultMapId = resultMapId;
-            return this;
-        }
-
         public Builder withFragmentGenerator(FragmentGenerator fragmentGenerator) {
             this.fragmentGenerator = fragmentGenerator;
-            return this;
-        }
-
-        public Builder withReuseResultMap(boolean reuseResultMap) {
-            this.reuseResultMap = reuseResultMap;
             return this;
         }
 
@@ -132,8 +100,8 @@ public class BasicSelectOneMethodGeneratorV2 extends AbstractMethodGenerator {
         }
 
         @Override
-        public BasicSelectOneMethodGeneratorV2 build() {
-            return new BasicSelectOneMethodGeneratorV2(this);
+        public BasicSelectManyMethodGenerator build() {
+            return new BasicSelectManyMethodGenerator(this);
         }
     }
 }

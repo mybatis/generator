@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.generator.runtime.dynamic.sql.elements.v2;
+package org.mybatis.generator.runtime.dynamic.sql.elements;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,13 +23,10 @@ import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.config.GeneratedKey;
-import org.mybatis.generator.runtime.dynamic.sql.elements.AbstractMethodGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.MethodAndImports;
-import org.mybatis.generator.runtime.dynamic.sql.elements.MethodParts;
 
 public class BasicMultipleInsertMethodGenerator extends AbstractMethodGenerator {
 
-    private FullyQualifiedJavaType recordType;
+    private final FullyQualifiedJavaType recordType;
 
     private BasicMultipleInsertMethodGenerator(Builder builder) {
         super(builder);

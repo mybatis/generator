@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.generator.runtime.dynamic.sql.elements.v2;
+package org.mybatis.generator.runtime.dynamic.sql.elements;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,12 +22,10 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
-import org.mybatis.generator.runtime.dynamic.sql.elements.AbstractMethodGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.MethodAndImports;
 
-public class GeneralCountMethodGenerator extends AbstractMethodGenerator {
+public class BasicDeleteMethodGenerator extends AbstractMethodGenerator {
 
-    private GeneralCountMethodGenerator(Builder builder) {
+    private BasicDeleteMethodGenerator(Builder builder) {
         super(builder);
     }
 
@@ -35,20 +33,24 @@ public class GeneralCountMethodGenerator extends AbstractMethodGenerator {
     public MethodAndImports generateMethodAndImports() {
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
 
-        FullyQualifiedJavaType parameterType = new FullyQualifiedJavaType(
-                "org.mybatis.dynamic.sql.select.CountDSLCompleter"); //$NON-NLS-1$
+        FullyQualifiedJavaType parameterType =
+                new FullyQualifiedJavaType(
+                        "org.mybatis.dynamic.sql.delete.render.DeleteStatementProvider"); //$NON-NLS-1$
+        FullyQualifiedJavaType adapter =
+                new FullyQualifiedJavaType("org.mybatis.dynamic.sql.util.SqlProviderAdapter"); //$NON-NLS-1$
+        FullyQualifiedJavaType annotation =
+                new FullyQualifiedJavaType("org.apache.ibatis.annotations.DeleteProvider"); //$NON-NLS-1$
+
         imports.add(parameterType);
-        imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils")); //$NON-NLS-1$
+        imports.add(adapter);
+        imports.add(annotation);
 
-        Method method = new Method("count"); //$NON-NLS-1$
-        method.setDefault(true);
-        method.addParameter(new Parameter(parameterType, "completer")); //$NON-NLS-1$
+        Method method = new Method("delete"); //$NON-NLS-1$
+        method.setAbstract(true);
+        method.setReturnType(FullyQualifiedJavaType.getIntInstance());
+        method.addParameter(new Parameter(parameterType, "deleteStatement")); //$NON-NLS-1$
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
-
-        method.setReturnType(new FullyQualifiedJavaType("long")); //$NON-NLS-1$
-
-        method.addBodyLine("return MyBatis3Utils.countFrom(this::count, " + tableFieldName + //$NON-NLS-1$
-                ", completer);"); //$NON-NLS-1$
+        method.addAnnotation("@DeleteProvider(type=SqlProviderAdapter.class, method=\"delete\")"); //$NON-NLS-1$
 
         return MethodAndImports.withMethod(method)
                 .withImports(imports)
@@ -57,18 +59,19 @@ public class GeneralCountMethodGenerator extends AbstractMethodGenerator {
 
     @Override
     public boolean callPlugins(Method method, Interface interfaze) {
-        return context.getPlugins().clientGeneralCountMethodGenerated(method, interfaze, introspectedTable);
+        return context.getPlugins().clientBasicDeleteMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, GeneralCountMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder, BasicDeleteMethodGenerator> {
+
         @Override
         public Builder getThis() {
             return this;
         }
 
         @Override
-        public GeneralCountMethodGenerator build() {
-            return new GeneralCountMethodGenerator(this);
+        public BasicDeleteMethodGenerator build() {
+            return new BasicDeleteMethodGenerator(this);
         }
     }
 }

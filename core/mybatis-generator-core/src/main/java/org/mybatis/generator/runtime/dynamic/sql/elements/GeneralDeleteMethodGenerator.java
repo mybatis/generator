@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.generator.runtime.dynamic.sql.elements.v2;
+package org.mybatis.generator.runtime.dynamic.sql.elements;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,15 +22,11 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
-import org.mybatis.generator.runtime.dynamic.sql.elements.AbstractMethodGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.MethodAndImports;
 
-public class GeneralSelectDistinctMethodGenerator extends AbstractMethodGenerator {
-    private FullyQualifiedJavaType recordType;
+public class GeneralDeleteMethodGenerator extends AbstractMethodGenerator {
 
-    private GeneralSelectDistinctMethodGenerator(Builder builder) {
+    private GeneralDeleteMethodGenerator(Builder builder) {
         super(builder);
-        recordType = builder.recordType;
     }
 
     @Override
@@ -38,25 +34,19 @@ public class GeneralSelectDistinctMethodGenerator extends AbstractMethodGenerato
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
 
         FullyQualifiedJavaType parameterType = new FullyQualifiedJavaType(
-                "org.mybatis.dynamic.sql.select.SelectDSLCompleter"); //$NON-NLS-1$
-
+                "org.mybatis.dynamic.sql.delete.DeleteDSLCompleter"); //$NON-NLS-1$
         imports.add(parameterType);
         imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils")); //$NON-NLS-1$
 
-        FullyQualifiedJavaType returnType = FullyQualifiedJavaType.getNewListInstance();
-        returnType.addTypeArgument(recordType);
-
-        imports.add(returnType);
-
-        Method method = new Method("selectDistinct"); //$NON-NLS-1$
+        Method method = new Method("delete"); //$NON-NLS-1$
         method.setDefault(true);
         method.addParameter(new Parameter(parameterType, "completer")); //$NON-NLS-1$
-
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
 
-        method.setReturnType(returnType);
-        method.addBodyLine("return MyBatis3Utils.selectDistinct(this::selectMany, selectList, " + //$NON-NLS-1$
-                tableFieldName + ", completer);"); //$NON-NLS-1$
+        method.setReturnType(FullyQualifiedJavaType.getIntInstance());
+        method.addBodyLine(
+                "return MyBatis3Utils.deleteFrom(this::delete, " + tableFieldName + //$NON-NLS-1$
+                        ", completer);"); //$NON-NLS-1$
 
         return MethodAndImports.withMethod(method)
                 .withImports(imports)
@@ -65,16 +55,10 @@ public class GeneralSelectDistinctMethodGenerator extends AbstractMethodGenerato
 
     @Override
     public boolean callPlugins(Method method, Interface interfaze) {
-        return context.getPlugins().clientGeneralSelectDistinctMethodGenerated(method, interfaze, introspectedTable);
+        return context.getPlugins().clientGeneralDeleteMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, GeneralSelectDistinctMethodGenerator> {
-        private FullyQualifiedJavaType recordType;
-
-        public Builder withRecordType(FullyQualifiedJavaType recordType) {
-            this.recordType = recordType;
-            return this;
-        }
+    public static class Builder extends BaseBuilder<Builder, GeneralDeleteMethodGenerator> {
 
         @Override
         public Builder getThis() {
@@ -82,8 +66,8 @@ public class GeneralSelectDistinctMethodGenerator extends AbstractMethodGenerato
         }
 
         @Override
-        public GeneralSelectDistinctMethodGenerator build() {
-            return new GeneralSelectDistinctMethodGenerator(this);
+        public GeneralDeleteMethodGenerator build() {
+            return new GeneralDeleteMethodGenerator(this);
         }
     }
 }

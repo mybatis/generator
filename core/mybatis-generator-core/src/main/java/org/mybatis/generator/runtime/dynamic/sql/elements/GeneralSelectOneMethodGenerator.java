@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.generator.runtime.dynamic.sql.elements.v2;
+package org.mybatis.generator.runtime.dynamic.sql.elements;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,13 +22,11 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
-import org.mybatis.generator.runtime.dynamic.sql.elements.AbstractMethodGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.MethodAndImports;
 
-public class GeneralSelectMethodGenerator extends AbstractMethodGenerator {
+public class GeneralSelectOneMethodGenerator extends AbstractMethodGenerator {
     private FullyQualifiedJavaType recordType;
 
-    private GeneralSelectMethodGenerator(Builder builder) {
+    private GeneralSelectOneMethodGenerator(Builder builder) {
         super(builder);
         recordType = builder.recordType;
     }
@@ -43,19 +41,19 @@ public class GeneralSelectMethodGenerator extends AbstractMethodGenerator {
         imports.add(parameterType);
         imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils")); //$NON-NLS-1$
 
-        FullyQualifiedJavaType returnType = FullyQualifiedJavaType.getNewListInstance();
+        FullyQualifiedJavaType returnType = new FullyQualifiedJavaType("java.util.Optional"); //$NON-NLS-1$
         returnType.addTypeArgument(recordType);
 
         imports.add(returnType);
 
-        Method method = new Method("select"); //$NON-NLS-1$
+        Method method = new Method("selectOne"); //$NON-NLS-1$
         method.setDefault(true);
         method.addParameter(new Parameter(parameterType, "completer")); //$NON-NLS-1$
 
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
 
         method.setReturnType(returnType);
-        method.addBodyLine("return MyBatis3Utils.selectList(this::selectMany, selectList, " + //$NON-NLS-1$
+        method.addBodyLine("return MyBatis3Utils.selectOne(this::selectOne, selectList, " + //$NON-NLS-1$
                 tableFieldName + ", completer);"); //$NON-NLS-1$
 
         return MethodAndImports.withMethod(method)
@@ -65,10 +63,10 @@ public class GeneralSelectMethodGenerator extends AbstractMethodGenerator {
 
     @Override
     public boolean callPlugins(Method method, Interface interfaze) {
-        return context.getPlugins().clientGeneralSelectMethodGenerated(method, interfaze, introspectedTable);
+        return context.getPlugins().clientSelectOneMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, GeneralSelectMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder, GeneralSelectOneMethodGenerator> {
         private FullyQualifiedJavaType recordType;
 
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
@@ -82,8 +80,8 @@ public class GeneralSelectMethodGenerator extends AbstractMethodGenerator {
         }
 
         @Override
-        public GeneralSelectMethodGenerator build() {
-            return new GeneralSelectMethodGenerator(this);
+        public GeneralSelectOneMethodGenerator build() {
+            return new GeneralSelectOneMethodGenerator(this);
         }
     }
 }

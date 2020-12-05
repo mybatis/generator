@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.generator.runtime.dynamic.sql.elements.v2;
+package org.mybatis.generator.runtime.dynamic.sql.elements;
 
 import java.util.HashSet;
 import java.util.List;
@@ -26,13 +26,11 @@ import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
-import org.mybatis.generator.runtime.dynamic.sql.elements.AbstractMethodGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.MethodAndImports;
 
-public class InsertSelectiveMethodGeneratorV2 extends AbstractMethodGenerator {
-    private FullyQualifiedJavaType recordType;
+public class InsertSelectiveMethodGenerator extends AbstractMethodGenerator {
+    private final FullyQualifiedJavaType recordType;
 
-    private InsertSelectiveMethodGeneratorV2(Builder builder) {
+    private InsertSelectiveMethodGenerator(Builder builder) {
         super(builder);
         recordType = builder.recordType;
     }
@@ -100,7 +98,7 @@ public class InsertSelectiveMethodGeneratorV2 extends AbstractMethodGenerator {
         return context.getPlugins().clientInsertSelectiveMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, InsertSelectiveMethodGeneratorV2> {
+    public static class Builder extends BaseBuilder<Builder, InsertSelectiveMethodGenerator> {
         private FullyQualifiedJavaType recordType;
 
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
@@ -114,8 +112,8 @@ public class InsertSelectiveMethodGeneratorV2 extends AbstractMethodGenerator {
         }
 
         @Override
-        public InsertSelectiveMethodGeneratorV2 build() {
-            return new InsertSelectiveMethodGeneratorV2(this);
+        public InsertSelectiveMethodGenerator build() {
+            return new InsertSelectiveMethodGenerator(this);
         }
     }
 }

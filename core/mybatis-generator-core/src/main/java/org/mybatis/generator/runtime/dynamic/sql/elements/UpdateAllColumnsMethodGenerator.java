@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.generator.runtime.dynamic.sql.elements.v2;
+package org.mybatis.generator.runtime.dynamic.sql.elements;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,59 +22,58 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
-import org.mybatis.generator.runtime.dynamic.sql.elements.AbstractMethodGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.FragmentGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.MethodAndImports;
-import org.mybatis.generator.runtime.dynamic.sql.elements.MethodParts;
 
-public class DeleteByPrimaryKeyMethodGeneratorV2 extends AbstractMethodGenerator {
-
+public class UpdateAllColumnsMethodGenerator extends AbstractMethodGenerator {
+    private final FullyQualifiedJavaType recordType;
     private final FragmentGenerator fragmentGenerator;
 
-    private DeleteByPrimaryKeyMethodGeneratorV2(Builder builder) {
+    private UpdateAllColumnsMethodGenerator(Builder builder) {
         super(builder);
+        recordType = builder.recordType;
         fragmentGenerator = builder.fragmentGenerator;
     }
 
     @Override
     public MethodAndImports generateMethodAndImports() {
-        if (!Utils.generateDeleteByPrimaryKey(introspectedTable)) {
-            return null;
-        }
-
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
-        Set<String> staticImports = new HashSet<>();
 
-        staticImports.add("org.mybatis.dynamic.sql.SqlBuilder.*"); //$NON-NLS-1$
+        FullyQualifiedJavaType parameterAndReturnType = new FullyQualifiedJavaType(
+                "org.mybatis.dynamic.sql.update.UpdateDSL"); //$NON-NLS-1$
+        parameterAndReturnType.addTypeArgument(new FullyQualifiedJavaType(
+                "org.mybatis.dynamic.sql.update.UpdateModel")); //$NON-NLS-1$
+        imports.add(parameterAndReturnType);
 
-        Method method = new Method("deleteByPrimaryKey"); //$NON-NLS-1$
-        method.setDefault(true);
+        imports.add(recordType);
+
+        Method method = new Method("updateAllColumns"); //$NON-NLS-1$
+        method.setStatic(true);
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
-        method.setReturnType(FullyQualifiedJavaType.getIntInstance());
 
-        method.addBodyLine("return delete(c -> "); //$NON-NLS-1$
+        method.setReturnType(parameterAndReturnType);
+        method.addParameter(new Parameter(recordType, "record")); //$NON-NLS-1$
+        method.addParameter(new Parameter(parameterAndReturnType, "dsl")); //$NON-NLS-1$
 
-        MethodParts methodParts = fragmentGenerator.getPrimaryKeyWhereClauseAndParameters();
-        for (Parameter parameter : methodParts.getParameters()) {
-            method.addParameter(parameter);
-        }
-        method.addBodyLines(methodParts.getBodyLines());
-        imports.addAll(methodParts.getImports());
+        method.addBodyLines(fragmentGenerator.getSetEqualLines(introspectedTable.getAllColumns(),
+                "return dsl", "        ", true)); //$NON-NLS-1$ //$NON-NLS-2$
 
         return MethodAndImports.withMethod(method)
                 .withImports(imports)
-                .withStaticImports(staticImports)
                 .build();
     }
 
     @Override
     public boolean callPlugins(Method method, Interface interfaze) {
-        return context.getPlugins().clientDeleteByPrimaryKeyMethodGenerated(method, interfaze, introspectedTable);
+        return context.getPlugins().clientUpdateAllColumnsMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, DeleteByPrimaryKeyMethodGeneratorV2> {
-
+    public static class Builder extends BaseBuilder<Builder, UpdateAllColumnsMethodGenerator> {
+        private FullyQualifiedJavaType recordType;
         private FragmentGenerator fragmentGenerator;
+
+        public Builder withRecordType(FullyQualifiedJavaType recordType) {
+            this.recordType = recordType;
+            return this;
+        }
 
         public Builder withFragmentGenerator(FragmentGenerator fragmentGenerator) {
             this.fragmentGenerator = fragmentGenerator;
@@ -87,8 +86,8 @@ public class DeleteByPrimaryKeyMethodGeneratorV2 extends AbstractMethodGenerator
         }
 
         @Override
-        public DeleteByPrimaryKeyMethodGeneratorV2 build() {
-            return new DeleteByPrimaryKeyMethodGeneratorV2(this);
+        public UpdateAllColumnsMethodGenerator build() {
+            return new UpdateAllColumnsMethodGenerator(this);
         }
     }
 }

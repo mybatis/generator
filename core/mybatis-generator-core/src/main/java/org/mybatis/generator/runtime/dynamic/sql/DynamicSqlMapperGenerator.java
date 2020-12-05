@@ -24,30 +24,30 @@ import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.runtime.dynamic.sql.elements.FieldAndImports;
-import org.mybatis.generator.runtime.dynamic.sql.elements.v2.BasicCountMethodGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.v2.BasicDeleteMethodGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.v2.BasicInsertMethodGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.v2.BasicMultipleInsertHelperMethodGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.v2.BasicMultipleInsertMethodGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.v2.BasicSelectManyMethodGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.v2.BasicSelectOneMethodGeneratorV2;
-import org.mybatis.generator.runtime.dynamic.sql.elements.v2.BasicUpdateMethodGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.v2.DeleteByPrimaryKeyMethodGeneratorV2;
-import org.mybatis.generator.runtime.dynamic.sql.elements.v2.GeneralCountMethodGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.v2.GeneralDeleteMethodGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.v2.GeneralSelectDistinctMethodGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.v2.GeneralSelectMethodGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.v2.GeneralSelectOneMethodGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.v2.GeneralUpdateMethodGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.v2.InsertMethodGeneratorV2;
-import org.mybatis.generator.runtime.dynamic.sql.elements.v2.InsertMultipleMethodGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.v2.InsertSelectiveMethodGeneratorV2;
-import org.mybatis.generator.runtime.dynamic.sql.elements.v2.SelectByPrimaryKeyMethodGeneratorV2;
-import org.mybatis.generator.runtime.dynamic.sql.elements.v2.SelectListGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.v2.UpdateAllColumnsMethodGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.v2.UpdateByPrimaryKeyMethodGeneratorV2;
-import org.mybatis.generator.runtime.dynamic.sql.elements.v2.UpdateByPrimaryKeySelectiveMethodGeneratorV2;
-import org.mybatis.generator.runtime.dynamic.sql.elements.v2.UpdateSelectiveColumnsMethodGenerator;
+import org.mybatis.generator.runtime.dynamic.sql.elements.BasicCountMethodGenerator;
+import org.mybatis.generator.runtime.dynamic.sql.elements.BasicDeleteMethodGenerator;
+import org.mybatis.generator.runtime.dynamic.sql.elements.BasicInsertMethodGenerator;
+import org.mybatis.generator.runtime.dynamic.sql.elements.BasicMultipleInsertHelperMethodGenerator;
+import org.mybatis.generator.runtime.dynamic.sql.elements.BasicMultipleInsertMethodGenerator;
+import org.mybatis.generator.runtime.dynamic.sql.elements.BasicSelectManyMethodGenerator;
+import org.mybatis.generator.runtime.dynamic.sql.elements.BasicSelectOneMethodGenerator;
+import org.mybatis.generator.runtime.dynamic.sql.elements.BasicUpdateMethodGenerator;
+import org.mybatis.generator.runtime.dynamic.sql.elements.DeleteByPrimaryKeyMethodGenerator;
+import org.mybatis.generator.runtime.dynamic.sql.elements.GeneralCountMethodGenerator;
+import org.mybatis.generator.runtime.dynamic.sql.elements.GeneralDeleteMethodGenerator;
+import org.mybatis.generator.runtime.dynamic.sql.elements.GeneralSelectDistinctMethodGenerator;
+import org.mybatis.generator.runtime.dynamic.sql.elements.GeneralSelectMethodGenerator;
+import org.mybatis.generator.runtime.dynamic.sql.elements.GeneralSelectOneMethodGenerator;
+import org.mybatis.generator.runtime.dynamic.sql.elements.GeneralUpdateMethodGenerator;
+import org.mybatis.generator.runtime.dynamic.sql.elements.InsertMethodGenerator;
+import org.mybatis.generator.runtime.dynamic.sql.elements.InsertMultipleMethodGenerator;
+import org.mybatis.generator.runtime.dynamic.sql.elements.InsertSelectiveMethodGenerator;
+import org.mybatis.generator.runtime.dynamic.sql.elements.SelectByPrimaryKeyMethodGenerator;
+import org.mybatis.generator.runtime.dynamic.sql.elements.SelectListGenerator;
+import org.mybatis.generator.runtime.dynamic.sql.elements.UpdateAllColumnsMethodGenerator;
+import org.mybatis.generator.runtime.dynamic.sql.elements.UpdateByPrimaryKeyMethodGenerator;
+import org.mybatis.generator.runtime.dynamic.sql.elements.UpdateByPrimaryKeySelectiveMethodGenerator;
+import org.mybatis.generator.runtime.dynamic.sql.elements.UpdateSelectiveColumnsMethodGenerator;
 
 public class DynamicSqlMapperGenerator extends AbstractDynamicSqlMapperGenerator {
 
@@ -110,7 +110,7 @@ public class DynamicSqlMapperGenerator extends AbstractDynamicSqlMapperGenerator
     }
 
     protected void addInsertOneMethod(Interface interfaze) {
-        InsertMethodGeneratorV2 generator = new InsertMethodGeneratorV2.Builder()
+        InsertMethodGenerator generator = new InsertMethodGenerator.Builder()
                 .withContext(context)
                 .withIntrospectedTable(introspectedTable)
                 .withTableFieldName(tableFieldName)
@@ -258,7 +258,7 @@ public class DynamicSqlMapperGenerator extends AbstractDynamicSqlMapperGenerator
     }
 
     protected void addBasicSelectOneMethod(Interface interfaze, boolean reuseResultMap) {
-        BasicSelectOneMethodGeneratorV2 generator = new BasicSelectOneMethodGeneratorV2.Builder()
+        BasicSelectOneMethodGenerator generator = new BasicSelectOneMethodGenerator.Builder()
                 .withContext(context)
                 .withFragmentGenerator(fragmentGenerator)
                 .withIntrospectedTable(introspectedTable)
@@ -272,7 +272,7 @@ public class DynamicSqlMapperGenerator extends AbstractDynamicSqlMapperGenerator
     }
 
     protected void addDeleteByPrimaryKeyMethod(Interface interfaze) {
-        DeleteByPrimaryKeyMethodGeneratorV2 generator = new DeleteByPrimaryKeyMethodGeneratorV2.Builder()
+        DeleteByPrimaryKeyMethodGenerator generator = new DeleteByPrimaryKeyMethodGenerator.Builder()
                 .withContext(context)
                 .withIntrospectedTable(introspectedTable)
                 .withFragmentGenerator(fragmentGenerator)
@@ -283,7 +283,7 @@ public class DynamicSqlMapperGenerator extends AbstractDynamicSqlMapperGenerator
     }
 
     protected void addInsertSelectiveMethod(Interface interfaze) {
-        InsertSelectiveMethodGeneratorV2 generator = new InsertSelectiveMethodGeneratorV2.Builder()
+        InsertSelectiveMethodGenerator generator = new InsertSelectiveMethodGenerator.Builder()
                 .withContext(context)
                 .withIntrospectedTable(introspectedTable)
                 .withTableFieldName(tableFieldName)
@@ -294,7 +294,7 @@ public class DynamicSqlMapperGenerator extends AbstractDynamicSqlMapperGenerator
     }
 
     protected void addSelectByPrimaryKeyMethod(Interface interfaze) {
-        SelectByPrimaryKeyMethodGeneratorV2 generator = new SelectByPrimaryKeyMethodGeneratorV2.Builder()
+        SelectByPrimaryKeyMethodGenerator generator = new SelectByPrimaryKeyMethodGenerator.Builder()
                 .withContext(context)
                 .withFragmentGenerator(fragmentGenerator)
                 .withIntrospectedTable(introspectedTable)
@@ -306,7 +306,7 @@ public class DynamicSqlMapperGenerator extends AbstractDynamicSqlMapperGenerator
     }
 
     protected void addUpdateByPrimaryKeyMethod(Interface interfaze) {
-        UpdateByPrimaryKeyMethodGeneratorV2 generator = new UpdateByPrimaryKeyMethodGeneratorV2.Builder()
+        UpdateByPrimaryKeyMethodGenerator generator = new UpdateByPrimaryKeyMethodGenerator.Builder()
                 .withContext(context)
                 .withFragmentGenerator(fragmentGenerator)
                 .withIntrospectedTable(introspectedTable)
@@ -318,8 +318,8 @@ public class DynamicSqlMapperGenerator extends AbstractDynamicSqlMapperGenerator
     }
 
     protected void addUpdateByPrimaryKeySelectiveMethod(Interface interfaze) {
-        UpdateByPrimaryKeySelectiveMethodGeneratorV2 generator =
-                new UpdateByPrimaryKeySelectiveMethodGeneratorV2.Builder()
+        UpdateByPrimaryKeySelectiveMethodGenerator generator =
+                new UpdateByPrimaryKeySelectiveMethodGenerator.Builder()
                 .withContext(context)
                 .withFragmentGenerator(fragmentGenerator)
                 .withIntrospectedTable(introspectedTable)

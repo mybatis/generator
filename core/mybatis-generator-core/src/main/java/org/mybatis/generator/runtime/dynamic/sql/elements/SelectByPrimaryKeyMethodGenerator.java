@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.generator.runtime.dynamic.sql.elements.v2;
+package org.mybatis.generator.runtime.dynamic.sql.elements;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -21,16 +21,12 @@ import java.util.Set;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
-import org.mybatis.generator.api.dom.java.Parameter;
-import org.mybatis.generator.runtime.dynamic.sql.elements.AbstractMethodGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.FragmentGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.MethodAndImports;
 
-public class UpdateByPrimaryKeyMethodGeneratorV2 extends AbstractMethodGenerator {
+public class SelectByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
     private final FullyQualifiedJavaType recordType;
     private final FragmentGenerator fragmentGenerator;
 
-    private UpdateByPrimaryKeyMethodGeneratorV2(Builder builder) {
+    private SelectByPrimaryKeyMethodGenerator(Builder builder) {
         super(builder);
         recordType = builder.recordType;
         fragmentGenerator = builder.fragmentGenerator;
@@ -38,40 +34,39 @@ public class UpdateByPrimaryKeyMethodGeneratorV2 extends AbstractMethodGenerator
 
     @Override
     public MethodAndImports generateMethodAndImports() {
-        if (!Utils.generateUpdateByPrimaryKey(introspectedTable)) {
+        if (!Utils.generateSelectByPrimaryKey(introspectedTable)) {
             return null;
         }
 
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
 
-        imports.add(recordType);
+        FullyQualifiedJavaType returnType = new FullyQualifiedJavaType("java.util.Optional"); //$NON-NLS-1$
+        returnType.addTypeArgument(recordType);
+        imports.add(returnType);
 
-        Method method = new Method("updateByPrimaryKey"); //$NON-NLS-1$
+        Method method = new Method("selectByPrimaryKey"); //$NON-NLS-1$
         method.setDefault(true);
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
+        method.setReturnType(returnType);
 
-        method.setReturnType(FullyQualifiedJavaType.getIntInstance());
-        method.addParameter(new Parameter(recordType, "record")); //$NON-NLS-1$
+        method.addBodyLine("return selectOne(c ->"); //$NON-NLS-1$
 
-        method.addBodyLine("return update(c ->"); //$NON-NLS-1$
+        MethodAndImports.Builder builder = MethodAndImports.withMethod(method)
+                .withStaticImport("org.mybatis.dynamic.sql.SqlBuilder.*") //$NON-NLS-1$
+                .withImports(imports);
 
-        method.addBodyLines(fragmentGenerator.getSetEqualLines(introspectedTable.getNonPrimaryKeyColumns(),
-                "    c", "    ", false)); //$NON-NLS-1$ //$NON-NLS-2$
-        method.addBodyLines(fragmentGenerator.getPrimaryKeyWhereClauseForUpdate("    ")); //$NON-NLS-1$
+        MethodParts methodParts = fragmentGenerator.getPrimaryKeyWhereClauseAndParameters();
+        acceptParts(builder, method, methodParts);
 
-        method.addBodyLine(");"); //$NON-NLS-1$
-        return MethodAndImports.withMethod(method)
-                .withImports(imports)
-                .build();
+        return builder.build();
     }
 
     @Override
     public boolean callPlugins(Method method, Interface interfaze) {
-        return context.getPlugins().clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(method,
-                interfaze, introspectedTable);
+        return context.getPlugins().clientSelectByPrimaryKeyMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, UpdateByPrimaryKeyMethodGeneratorV2> {
+    public static class Builder extends BaseBuilder<Builder, SelectByPrimaryKeyMethodGenerator> {
         private FullyQualifiedJavaType recordType;
         private FragmentGenerator fragmentGenerator;
 
@@ -91,8 +86,8 @@ public class UpdateByPrimaryKeyMethodGeneratorV2 extends AbstractMethodGenerator
         }
 
         @Override
-        public UpdateByPrimaryKeyMethodGeneratorV2 build() {
-            return new UpdateByPrimaryKeyMethodGeneratorV2(this);
+        public SelectByPrimaryKeyMethodGenerator build() {
+            return new SelectByPrimaryKeyMethodGenerator(this);
         }
     }
 }

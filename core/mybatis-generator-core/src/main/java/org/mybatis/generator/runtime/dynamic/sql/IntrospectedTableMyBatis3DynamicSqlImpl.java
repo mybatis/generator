@@ -22,9 +22,9 @@ import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.codegen.mybatis3.IntrospectedTableMyBatis3Impl;
 
-public class IntrospectedTableMyBatis3DynamicSqlImplV2 extends IntrospectedTableMyBatis3Impl {
+public class IntrospectedTableMyBatis3DynamicSqlImpl extends IntrospectedTableMyBatis3Impl {
 
-    public IntrospectedTableMyBatis3DynamicSqlImplV2() {
+    public IntrospectedTableMyBatis3DynamicSqlImpl() {
         targetRuntime = TargetRuntime.MYBATIS3_DSQL;
     }
 
@@ -42,7 +42,7 @@ public class IntrospectedTableMyBatis3DynamicSqlImplV2 extends IntrospectedTable
             return null;
         }
 
-        return new DynamicSqlMapperGeneratorV2(getClientProject());
+        return new DynamicSqlMapperGenerator(getClientProject());
     }
 
     @Override

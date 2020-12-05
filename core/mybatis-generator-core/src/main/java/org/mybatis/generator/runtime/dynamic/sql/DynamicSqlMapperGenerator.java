@@ -49,9 +49,9 @@ import org.mybatis.generator.runtime.dynamic.sql.elements.v2.UpdateByPrimaryKeyM
 import org.mybatis.generator.runtime.dynamic.sql.elements.v2.UpdateByPrimaryKeySelectiveMethodGeneratorV2;
 import org.mybatis.generator.runtime.dynamic.sql.elements.v2.UpdateSelectiveColumnsMethodGenerator;
 
-public class DynamicSqlMapperGeneratorV2 extends AbstractDynamicSqlMapperGenerator {
+public class DynamicSqlMapperGenerator extends AbstractDynamicSqlMapperGenerator {
 
-    public DynamicSqlMapperGeneratorV2(String project) {
+    public DynamicSqlMapperGenerator(String project) {
         super(project);
     }
 

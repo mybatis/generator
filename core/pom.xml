@@ -314,6 +314,14 @@
     <module>mybatis-generator-systests-kotlin</module>
   </modules>
 
+  <repositories>
+    <repository>
+      <id>sonatype-oss-snapshots</id>
+      <name>Sonatype OSS Snapshots Repository</name>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </repository>
+  </repositories>
+
   <profiles>
     <profile>
       <id>javadocVersion</id>

@@ -97,7 +97,7 @@
                 <dependency>
                   <artifactId>org.eclipse.equinox.p2.repository.tools</artifactId>
                   <type>eclipse-plugin</type>
-                </dependency>            
+                </dependency>
                 <dependency>
                   <artifactId>org.eclipse.equinox.p2.core.feature</artifactId>
                   <type>eclipse-feature</type>

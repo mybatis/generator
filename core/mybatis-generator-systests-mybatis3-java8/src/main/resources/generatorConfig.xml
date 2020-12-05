@@ -41,7 +41,7 @@
       <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
 
-    <table tableName="FieldsOnly" />
+    <table tableName="FieldsOnly" enableSelectByExample="false"/>
     <table tableName="PKOnly">
       <property name="immutable" value="true"/>
     </table>

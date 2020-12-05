@@ -75,8 +75,13 @@ public class DynamicSqlMapperGeneratorV2 extends AbstractDynamicSqlMapperGenerat
         if (introspectedTable.getGeneratedKey() != null) {
             addBasicInsertMultipleHelperMethod(interfaze);
         }
-        addBasicSelectOneMethod(interfaze);
-        addBasicSelectManyMethod(interfaze);
+
+        if (addBasicSelectManyMethod(interfaze)) {
+            addBasicSelectOneMethod(interfaze, true);
+        } else {
+            addBasicSelectOneMethod(interfaze, false);
+        }
+
         addBasicUpdateMethod(interfaze);
 
         addCountByExampleMethod(interfaze);
@@ -255,7 +260,7 @@ public class DynamicSqlMapperGeneratorV2 extends AbstractDynamicSqlMapperGenerat
         generate(interfaze, generator);
     }
 
-    protected void addBasicSelectOneMethod(Interface interfaze) {
+    protected void addBasicSelectOneMethod(Interface interfaze, boolean reuseResultMap) {
         BasicSelectOneMethodGeneratorV2 generator = new BasicSelectOneMethodGeneratorV2.Builder()
                 .withContext(context)
                 .withFragmentGenerator(fragmentGenerator)
@@ -263,6 +268,7 @@ public class DynamicSqlMapperGeneratorV2 extends AbstractDynamicSqlMapperGenerat
                 .withTableFieldName(tableFieldName)
                 .withRecordType(recordType)
                 .withResultMapId(resultMapId)
+                .withReuseResultMap(reuseResultMap)
                 .build();
 
         generate(interfaze, generator);
@@ -358,7 +364,7 @@ public class DynamicSqlMapperGeneratorV2 extends AbstractDynamicSqlMapperGenerat
         generate(interfaze, generator);
     }
 
-    protected void addBasicSelectManyMethod(Interface interfaze) {
+    protected boolean addBasicSelectManyMethod(Interface interfaze) {
         BasicSelectManyMethodGenerator generator = new BasicSelectManyMethodGenerator.Builder()
                 .withContext(context)
                 .withFragmentGenerator(fragmentGenerator)
@@ -367,7 +373,7 @@ public class DynamicSqlMapperGeneratorV2 extends AbstractDynamicSqlMapperGenerat
                 .withRecordType(recordType)
                 .build();
 
-        generate(interfaze, generator);
+        return generate(interfaze, generator);
     }
 
     protected void addBasicUpdateMethod(Interface interfaze) {

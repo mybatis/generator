@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.mybatis.generator.api.FullyQualifiedTable;
 import org.mybatis.generator.api.IntrospectedTable;
@@ -111,40 +110,6 @@ public class RowBoundsPlugin extends PluginAdapter {
         return true;
     }
 
-    @Override
-    public boolean clientBasicSelectManyMethodGenerated(Method method, Interface interfaze,
-            IntrospectedTable introspectedTable) {
-        copyAndAddSelectManyMethod(method, interfaze);
-
-        addNewComposedFunction(interfaze, introspectedTable, method);
-        return true;
-    }
-
-    private void addNewComposedFunction(Interface interfaze, IntrospectedTable introspectedTable,
-                                        Method baseMethod) {
-        Optional<FullyQualifiedJavaType> methodReturnType = baseMethod.getReturnType();
-        if (!methodReturnType.isPresent()) {
-            // shouldn't happen, but just in case...
-            return;
-        }
-
-        interfaze.addImportedType(new FullyQualifiedJavaType("java.util.function.Function")); //$NON-NLS-1$
-
-        FullyQualifiedJavaType returnType =
-                new FullyQualifiedJavaType("Function<SelectStatementProvider, " //$NON-NLS-1$
-                        + methodReturnType.get().getShortName() + ">"); //$NON-NLS-1$
-
-        Method method = new Method("selectManyWithRowbounds"); //$NON-NLS-1$
-        method.setDefault(true);
-        method.setReturnType(returnType);
-        method.addParameter(new Parameter(rowBounds, "rowBounds")); //$NON-NLS-1$
-        method.addBodyLine(
-                "return selectStatement -> selectManyWithRowbounds(selectStatement, rowBounds);"); //$NON-NLS-1$
-        context.getCommentGenerator().addGeneralMethodAnnotation(
-                method, introspectedTable, interfaze.getImportedTypes());
-        interfaze.addMethod(method);
-    }
-
     /**
      * Use the method copy constructor to create a new method, then
      * add the rowBounds parameter.
@@ -154,51 +119,6 @@ public class RowBoundsPlugin extends PluginAdapter {
      */
     private void copyAndAddMethod(Method method, Interface interfaze) {
         Method newMethod = new Method(method);
-        newMethod.setName(method.getName() + "WithRowbounds"); //$NON-NLS-1$
-        newMethod.addParameter(new Parameter(rowBounds, "rowBounds")); //$NON-NLS-1$
-        interfaze.addMethod(newMethod);
-        interfaze.addImportedType(rowBounds);
-    }
-
-    private void copyAndAddSelectManyMethod(Method method, Interface interfaze) {
-        List<String> annotations = new ArrayList<>(method.getAnnotations());
-
-        // remove the @Results annotation and replace it with @ResultMap
-        boolean inResultsAnnotation = false;
-        String resultMapId = null;
-        Iterator<String> iter = annotations.iterator();
-        while (iter.hasNext()) {
-            String annotation = iter.next();
-
-            if (inResultsAnnotation) {
-                if (annotation.equals("})")) { //$NON-NLS-1$
-                    inResultsAnnotation = false;
-                }
-                iter.remove();
-            } else if (annotation.startsWith("@Results(")) { //$NON-NLS-1$
-                inResultsAnnotation = true;
-                iter.remove();
-
-                // now find the ID
-                int index = annotation.indexOf("id=\""); //$NON-NLS-1$
-                int startIndex = index + "id=\"".length(); //$NON-NLS-1$
-                int endIndex = annotation.indexOf('\"', startIndex + 1); //$NON-NLS-1$
-                resultMapId = annotation.substring(startIndex, endIndex);
-            }
-        }
-
-        if (resultMapId != null) {
-            interfaze.addImportedType(
-                    new FullyQualifiedJavaType("org.apache.ibatis.annotations.ResultMap")); //$NON-NLS-1$
-            annotations.add("@ResultMap(\"" + resultMapId + "\")"); //$NON-NLS-1$ //$NON-NLS-2$
-        }
-
-        Method newMethod = new Method(method);
-        newMethod.getAnnotations().clear();
-        for (String annotation : annotations) {
-            newMethod.addAnnotation(annotation);
-        }
-
         newMethod.setName(method.getName() + "WithRowbounds"); //$NON-NLS-1$
         newMethod.addParameter(new Parameter(rowBounds, "rowBounds")); //$NON-NLS-1$
         interfaze.addMethod(newMethod);

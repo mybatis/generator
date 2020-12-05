@@ -76,11 +76,8 @@ public class DynamicSqlMapperGeneratorV2 extends AbstractDynamicSqlMapperGenerat
             addBasicInsertMultipleHelperMethod(interfaze);
         }
 
-        if (addBasicSelectManyMethod(interfaze)) {
-            addBasicSelectOneMethod(interfaze, true);
-        } else {
-            addBasicSelectOneMethod(interfaze, false);
-        }
+        boolean reuseResultMap = addBasicSelectManyMethod(interfaze);
+        addBasicSelectOneMethod(interfaze, reuseResultMap);
 
         addBasicUpdateMethod(interfaze);
 

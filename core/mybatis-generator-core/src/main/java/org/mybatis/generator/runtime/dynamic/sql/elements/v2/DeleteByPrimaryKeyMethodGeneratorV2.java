@@ -29,7 +29,7 @@ import org.mybatis.generator.runtime.dynamic.sql.elements.MethodParts;
 
 public class DeleteByPrimaryKeyMethodGeneratorV2 extends AbstractMethodGenerator {
 
-    private FragmentGenerator fragmentGenerator;
+    private final FragmentGenerator fragmentGenerator;
 
     private DeleteByPrimaryKeyMethodGeneratorV2(Builder builder) {
         super(builder);
@@ -54,7 +54,7 @@ public class DeleteByPrimaryKeyMethodGeneratorV2 extends AbstractMethodGenerator
 
         method.addBodyLine("return delete(c -> "); //$NON-NLS-1$
 
-        MethodParts methodParts = fragmentGenerator.getPrimaryKeyWhereClauseAndParametersV2();
+        MethodParts methodParts = fragmentGenerator.getPrimaryKeyWhereClauseAndParameters();
         for (Parameter parameter : methodParts.getParameters()) {
             method.addParameter(parameter);
         }

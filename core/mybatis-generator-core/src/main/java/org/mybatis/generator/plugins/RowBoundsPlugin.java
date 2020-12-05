@@ -44,14 +44,13 @@ import org.mybatis.generator.internal.util.messages.Messages;
  */
 public class RowBoundsPlugin extends PluginAdapter {
 
-    private FullyQualifiedJavaType rowBounds =
+    private final FullyQualifiedJavaType rowBounds =
             new FullyQualifiedJavaType("org.apache.ibatis.session.RowBounds"); //$NON-NLS-1$
-    private Map<FullyQualifiedTable, List<XmlElement>> elementsToAdd = new HashMap<>();
+    private final Map<FullyQualifiedTable, List<XmlElement>> elementsToAdd = new HashMap<>();
 
     @Override
     public boolean validate(List<String> warnings) {
-        if ("MyBatis3DynamicSqlV2".equalsIgnoreCase(context.getTargetRuntime()) //$NON-NLS-1$
-                || "MyBatis3DynamicSql".equalsIgnoreCase(context.getTargetRuntime())) { //$NON-NLS-1$
+        if ("MyBatis3DynamicSql".equalsIgnoreCase(context.getTargetRuntime())) { //$NON-NLS-1$
             warnings.add(Messages.getString("Warning.30")); //$NON-NLS-1$
             return false;
         }
@@ -63,8 +62,6 @@ public class RowBoundsPlugin extends PluginAdapter {
             Interface interfaze, IntrospectedTable introspectedTable) {
         if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3) {
             copyAndAddMethod(method, interfaze);
-        } else if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3_DSQL) {
-            copyAndAddSelectByExampleMethodForDSQL(method, interfaze);
         }
         return true;
     }
@@ -119,13 +116,14 @@ public class RowBoundsPlugin extends PluginAdapter {
             IntrospectedTable introspectedTable) {
         copyAndAddSelectManyMethod(method, interfaze);
 
-        addNewComposedFunction(interfaze, introspectedTable, method.getReturnType());
+        addNewComposedFunction(interfaze, introspectedTable, method);
         return true;
     }
 
     private void addNewComposedFunction(Interface interfaze, IntrospectedTable introspectedTable,
-            Optional<FullyQualifiedJavaType> baseMethodReturnType) {
-        if (!baseMethodReturnType.isPresent()) {
+                                        Method baseMethod) {
+        Optional<FullyQualifiedJavaType> methodReturnType = baseMethod.getReturnType();
+        if (!methodReturnType.isPresent()) {
             // shouldn't happen, but just in case...
             return;
         }
@@ -134,7 +132,7 @@ public class RowBoundsPlugin extends PluginAdapter {
 
         FullyQualifiedJavaType returnType =
                 new FullyQualifiedJavaType("Function<SelectStatementProvider, " //$NON-NLS-1$
-                        + baseMethodReturnType.get().getShortName() + ">"); //$NON-NLS-1$
+                        + methodReturnType.get().getShortName() + ">"); //$NON-NLS-1$
 
         Method method = new Method("selectManyWithRowbounds"); //$NON-NLS-1$
         method.setDefault(true);
@@ -151,8 +149,8 @@ public class RowBoundsPlugin extends PluginAdapter {
      * Use the method copy constructor to create a new method, then
      * add the rowBounds parameter.
      *
-     * @param fullyQualifiedTable the table
      * @param method the method
+     * @param interfaze the interface
      */
     private void copyAndAddMethod(Method method, Interface interfaze) {
         Method newMethod = new Method(method);
@@ -207,30 +205,11 @@ public class RowBoundsPlugin extends PluginAdapter {
         interfaze.addImportedType(rowBounds);
     }
 
-    private void copyAndAddSelectByExampleMethodForDSQL(Method method, Interface interfaze) {
-        Method newMethod = new Method(method);
-        newMethod.addParameter(new Parameter(rowBounds, "rowBounds")); //$NON-NLS-1$
-        interfaze.addMethod(newMethod);
-        interfaze.addImportedType(rowBounds);
-
-        // replace the call to selectMany with the new call to selectManyWithRowbounds
-        for (int i = 0; i < newMethod.getBodyLines().size(); i++) {
-            String bodyLine = newMethod.getBodyLines().get(i);
-
-            if (bodyLine.contains("this::selectMany")) { //$NON-NLS-1$
-                bodyLine = bodyLine.replace("this::selectMany", //$NON-NLS-1$
-                        "selectManyWithRowbounds(rowBounds)"); //$NON-NLS-1$
-                newMethod.getBodyLines().set(i, bodyLine);
-                break;
-            }
-        }
-    }
-
     /**
      * Use the method copy constructor to create a new element.
      *
-     * @param fullyQualifiedTable the table
-     * @param method the method
+     * @param element the base element
+     * @param fqt the fully qualified type
      */
     private void copyAndSaveElement(XmlElement element, FullyQualifiedTable fqt) {
         XmlElement newElement = new XmlElement(element);

@@ -27,8 +27,8 @@ import org.mybatis.generator.runtime.dynamic.sql.elements.FragmentGenerator;
 import org.mybatis.generator.runtime.dynamic.sql.elements.MethodAndImports;
 
 public class UpdateByPrimaryKeyMethodGeneratorV2 extends AbstractMethodGenerator {
-    private FullyQualifiedJavaType recordType;
-    private FragmentGenerator fragmentGenerator;
+    private final FullyQualifiedJavaType recordType;
+    private final FragmentGenerator fragmentGenerator;
 
     private UpdateByPrimaryKeyMethodGeneratorV2(Builder builder) {
         super(builder);
@@ -55,7 +55,7 @@ public class UpdateByPrimaryKeyMethodGeneratorV2 extends AbstractMethodGenerator
 
         method.addBodyLine("return update(c ->"); //$NON-NLS-1$
 
-        method.addBodyLines(fragmentGenerator.getSetEqualLinesV2(introspectedTable.getNonPrimaryKeyColumns(),
+        method.addBodyLines(fragmentGenerator.getSetEqualLines(introspectedTable.getNonPrimaryKeyColumns(),
                 "    c", "    ", false)); //$NON-NLS-1$ //$NON-NLS-2$
         method.addBodyLines(fragmentGenerator.getPrimaryKeyWhereClauseForUpdate("    ")); //$NON-NLS-1$
 

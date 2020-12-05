@@ -27,8 +27,8 @@ import org.mybatis.generator.runtime.dynamic.sql.elements.MethodAndImports;
 import org.mybatis.generator.runtime.dynamic.sql.elements.MethodParts;
 
 public class SelectByPrimaryKeyMethodGeneratorV2 extends AbstractMethodGenerator {
-    private FullyQualifiedJavaType recordType;
-    private FragmentGenerator fragmentGenerator;
+    private final FullyQualifiedJavaType recordType;
+    private final FragmentGenerator fragmentGenerator;
 
     private SelectByPrimaryKeyMethodGeneratorV2(Builder builder) {
         super(builder);
@@ -59,7 +59,7 @@ public class SelectByPrimaryKeyMethodGeneratorV2 extends AbstractMethodGenerator
                 .withStaticImport("org.mybatis.dynamic.sql.SqlBuilder.*") //$NON-NLS-1$
                 .withImports(imports);
 
-        MethodParts methodParts = fragmentGenerator.getPrimaryKeyWhereClauseAndParametersV2();
+        MethodParts methodParts = fragmentGenerator.getPrimaryKeyWhereClauseAndParameters();
         acceptParts(builder, method, methodParts);
 
         return builder.build();

@@ -27,8 +27,8 @@ import org.mybatis.generator.runtime.dynamic.sql.elements.FragmentGenerator;
 import org.mybatis.generator.runtime.dynamic.sql.elements.MethodAndImports;
 
 public class UpdateSelectiveColumnsMethodGenerator extends AbstractMethodGenerator {
-    private FullyQualifiedJavaType recordType;
-    private FragmentGenerator fragmentGenerator;
+    private final FullyQualifiedJavaType recordType;
+    private final FragmentGenerator fragmentGenerator;
 
     private UpdateSelectiveColumnsMethodGenerator(Builder builder) {
         super(builder);
@@ -56,7 +56,7 @@ public class UpdateSelectiveColumnsMethodGenerator extends AbstractMethodGenerat
         method.addParameter(new Parameter(recordType, "record")); //$NON-NLS-1$
         method.addParameter(new Parameter(parameterAndReturnType, "dsl")); //$NON-NLS-1$
 
-        method.addBodyLines(fragmentGenerator.getSetEqualWhenPresentLinesV2(introspectedTable.getAllColumns(),
+        method.addBodyLines(fragmentGenerator.getSetEqualWhenPresentLines(introspectedTable.getAllColumns(),
                 "return dsl", "        ", true)); //$NON-NLS-1$ //$NON-NLS-2$
 
         return MethodAndImports.withMethod(method)

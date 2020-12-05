@@ -135,7 +135,8 @@ public class RowBoundsPlugin extends PluginAdapter {
         XmlElement newElement = new XmlElement(element);
 
         // remove old id attribute and add a new one with the new name
-        for (Iterator<Attribute> iterator = newElement.getAttributes().iterator(); iterator.hasNext();) {
+        Iterator<Attribute> iterator = newElement.getAttributes().iterator();
+        while (iterator.hasNext()) {
             Attribute attribute = iterator.next();
             if ("id".equals(attribute.getName())) { //$NON-NLS-1$
                 iterator.remove();

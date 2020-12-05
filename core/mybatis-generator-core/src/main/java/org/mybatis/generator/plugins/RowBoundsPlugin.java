@@ -143,6 +143,7 @@ public class RowBoundsPlugin extends PluginAdapter {
                 Attribute newAttribute =
                         new Attribute("id", attribute.getValue() + "WithRowbounds"); //$NON-NLS-1$ //$NON-NLS-2$
                 newElement.addAttribute(newAttribute);
+                break;
             }
         }
 

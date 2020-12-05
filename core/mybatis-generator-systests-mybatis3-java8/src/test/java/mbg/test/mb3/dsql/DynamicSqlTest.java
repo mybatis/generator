@@ -26,18 +26,8 @@ import static mbg.test.mb3.generated.dsql.mapper.PkfieldsblobsDynamicSqlSupport.
 import static mbg.test.mb3.generated.dsql.mapper.PkonlyDynamicSqlSupport.pkonly;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.within;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mybatis.dynamic.sql.SqlBuilder.and;
-import static org.mybatis.dynamic.sql.SqlBuilder.isBetween;
-import static org.mybatis.dynamic.sql.SqlBuilder.isEqualTo;
-import static org.mybatis.dynamic.sql.SqlBuilder.isGreaterThan;
-import static org.mybatis.dynamic.sql.SqlBuilder.isIn;
-import static org.mybatis.dynamic.sql.SqlBuilder.isLessThan;
-import static org.mybatis.dynamic.sql.SqlBuilder.isLike;
-import static org.mybatis.dynamic.sql.SqlBuilder.isNotEqualTo;
-import static org.mybatis.dynamic.sql.SqlBuilder.isNotLike;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mybatis.dynamic.sql.SqlBuilder.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -319,9 +309,11 @@ public class DynamicSqlTest extends AbstractTest {
             PkonlyMapper mapper = sqlSession.getMapper(PkonlyMapper.class);
             Pkonly key = new Pkonly(1, 3);
             int rows = mapper.insert(key);
+            assertThat(rows).isEqualTo(1);
 
             key = new Pkonly(5, 6);
             rows = mapper.insert(key);
+            assertThat(rows).isEqualTo(1);
 
             List<Pkonly> answer = mapper.select(SelectDSLCompleter.allRows());
             assertThat(answer.size()).isEqualTo(2);
@@ -1164,10 +1156,6 @@ public class DynamicSqlTest extends AbstractTest {
             record.setWierdField(66);
             mapper.insert(record);
 
-            List<Integer> values = new ArrayList<>();
-            values.add(11);
-            values.add(22);
-
             List<Pkfields> answer = mapper.select(DSL ->
                     DSL.where(pkfields.wierdField, isLessThan(40))
                     .and(pkfields.wierdField, isIn(11, 22))
@@ -1964,7 +1952,7 @@ public class DynamicSqlTest extends AbstractTest {
                 assertEquals(record.getSecondFirstName(), rr.getSecondFirstName());
                 assertEquals(record.getThirdFirstName(), rr.getThirdFirstName());
                 assertTrue(rr.isActive());
-                assertFalse(rr.getActive1().booleanValue());
+                assertFalse(rr.getActive1());
                 assertEquals(3, rr.getActive2().length);
                 assertEquals(-128, rr.getActive2()[0]);
                 assertEquals(127, rr.getActive2()[1]);
@@ -3100,14 +3088,14 @@ public class DynamicSqlTest extends AbstractTest {
     @Test
     public void testEquals1() {
         Pkfields pkfields1 = new Pkfields();
-        assertFalse(pkfields1.equals(null));
+        assertNotEquals(pkfields1, null);
     }
 
     @Test
     public void testEquals2() {
         Pkfields pkfields1 = new Pkfields();
         Pkfields pkfields2 = new Pkfields();
-        assertTrue(pkfields1.equals(pkfields2));
+        assertEquals(pkfields2, pkfields1);
     }
 
     @Test
@@ -3118,7 +3106,7 @@ public class DynamicSqlTest extends AbstractTest {
         Pkfields pkfields2 = new Pkfields();
         pkfields2.setId1(2);
 
-        assertTrue(pkfields1.equals(pkfields2));
+        assertEquals(pkfields2, pkfields1);
     }
 
     @Test
@@ -3129,7 +3117,7 @@ public class DynamicSqlTest extends AbstractTest {
         Pkfields pkfields2 = new Pkfields();
         pkfields2.setId1(3);
 
-        assertFalse(pkfields1.equals(pkfields2));
+        assertNotEquals(pkfields2, pkfields1);
     }
 
     @Test
@@ -3166,17 +3154,17 @@ public class DynamicSqlTest extends AbstractTest {
         awfulTable2.setSecondFirstName("Bamm Bamm");
         awfulTable2.setThirdFirstName("Pebbles");
 
-        assertTrue(awfulTable1.equals(awfulTable2));
+        assertEquals(awfulTable2, awfulTable1);
 
         awfulTable2.setActive(true);
-        assertFalse(awfulTable1.equals(awfulTable2));
+        assertNotEquals(awfulTable2, awfulTable1);
     }
 
     @Test
     public void testHashCode1() {
         Pkfields pkfields1 = new Pkfields();
         Pkfields pkfields2 = new Pkfields();
-        assertTrue(pkfields1.hashCode() == pkfields2.hashCode());
+        assertEquals(pkfields2.hashCode(), pkfields1.hashCode());
     }
 
     @Test
@@ -3187,7 +3175,7 @@ public class DynamicSqlTest extends AbstractTest {
         Pkfields pkfields2 = new Pkfields();
         pkfields2.setId1(2);
 
-        assertTrue(pkfields1.hashCode() == pkfields2.hashCode());
+        assertEquals(pkfields2.hashCode(), pkfields1.hashCode());
     }
 
     @Test
@@ -3224,6 +3212,6 @@ public class DynamicSqlTest extends AbstractTest {
         awfulTable2.setSecondFirstName("Bamm Bamm");
         awfulTable2.setThirdFirstName("Pebbles");
 
-        assertTrue(awfulTable1.hashCode() == awfulTable2.hashCode());
+        assertEquals(awfulTable2.hashCode(), awfulTable1.hashCode());
     }
 }

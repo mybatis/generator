@@ -69,7 +69,7 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
             MyTime myTime = new MyTime();
             myTime.setHours(12);
             myTime.setMinutes(34);
-            myTime.setSeconds(05);
+            myTime.setSeconds(5);
             record.setTimefield(myTime);
             record.setTimestampfield(new Date());
 
@@ -670,7 +670,7 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
             MyTime myTime = new MyTime();
             myTime.setHours(12);
             myTime.setMinutes(34);
-            myTime.setSeconds(05);
+            myTime.setSeconds(5);
             record.setTimefield(myTime);
             record.setTimestampfield(new Date());
 
@@ -701,9 +701,7 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
 
     @Test
     public void testFieldIgnored() {
-        assertThrows(NoSuchFieldException.class, () -> {
-            MyObject.class.getDeclaredField("decimal30field");
-        });
+        assertThrows(NoSuchFieldException.class, () -> MyObject.class.getDeclaredField("decimal30field"));
     }
 
     @Test
@@ -803,37 +801,30 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
     public void testThatMultiRowInsertMethodsAreNotGenerated() {
         // regex rename has a generated key, but it is not JDBC. So it should be
         // ignored by the generator
-        assertThrows(NoSuchMethodException.class, () -> {
-            RegexrenameMapper.class.getMethod("insertMultiple", Collection.class);
-        });
+        assertThrows(NoSuchMethodException.class, () ->
+                RegexrenameMapper.class.getMethod("insertMultiple", Collection.class));
 
-        assertThrows(NoSuchMethodException.class, () -> {
-            RegexrenameMapper.class.getMethod("insertMultiple", MultiRowInsertStatementProvider.class);
-        });
+        assertThrows(NoSuchMethodException.class, () ->
+                RegexrenameMapper.class.getMethod("insertMultiple", MultiRowInsertStatementProvider.class));
 
-        assertThrows(NoSuchMethodException.class, () -> {
-            RegexrenameMapper.class.getMethod("insertMultiple", String.class, List.class);
-        });
+        assertThrows(NoSuchMethodException.class, () ->
+                RegexrenameMapper.class.getMethod("insertMultiple", String.class, List.class));
     }
 
     @Test
     public void testThatRowBoundsMethodsAreNotGenerated() {
         // regex rename has the rowbounds plugin, but that plugin is disabled for MyBatisDynamicSQLV2
-        assertThrows(NoSuchMethodException.class, () -> {
-            RegexrenameMapper.class.getMethod("selectManyWithRowbounds", SelectStatementProvider.class, RowBounds.class);
-        });
+        assertThrows(NoSuchMethodException.class, () ->
+                RegexrenameMapper.class.getMethod("selectManyWithRowbounds", SelectStatementProvider.class, RowBounds.class));
 
-        assertThrows(NoSuchMethodException.class, () -> {
-            RegexrenameMapper.class.getMethod("selectManyWithRowbounds", RowBounds.class);
-        });
+        assertThrows(NoSuchMethodException.class, () ->
+                RegexrenameMapper.class.getMethod("selectManyWithRowbounds", RowBounds.class));
 
-        assertThrows(NoSuchMethodException.class, () -> {
-            RegexrenameMapper.class.getMethod("selectByExample", RowBounds.class);
-        });
+        assertThrows(NoSuchMethodException.class, () ->
+                RegexrenameMapper.class.getMethod("selectByExample", RowBounds.class));
 
-        assertThrows(NoSuchMethodException.class, () -> {
-            RegexrenameMapper.class.getMethod("selectDistinctByExample", RowBounds.class);
-        });
+        assertThrows(NoSuchMethodException.class, () ->
+                RegexrenameMapper.class.getMethod("selectDistinctByExample", RowBounds.class));
     }
 
     @Test

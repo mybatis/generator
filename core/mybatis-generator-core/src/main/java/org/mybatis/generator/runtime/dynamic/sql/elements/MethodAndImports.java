@@ -23,9 +23,9 @@ import org.mybatis.generator.api.dom.java.Method;
 
 public class MethodAndImports {
 
-    private Method method;
-    private Set<FullyQualifiedJavaType> imports;
-    private Set<String> staticImports;
+    private final Method method;
+    private final Set<FullyQualifiedJavaType> imports;
+    private final Set<String> staticImports;
 
     private MethodAndImports(Builder builder) {
         method = builder.method;
@@ -51,8 +51,8 @@ public class MethodAndImports {
 
     public static class Builder {
         private Method method;
-        private Set<FullyQualifiedJavaType> imports = new HashSet<>();
-        private Set<String> staticImports = new HashSet<>();
+        private final Set<FullyQualifiedJavaType> imports = new HashSet<>();
+        private final Set<String> staticImports = new HashSet<>();
 
         public Builder withMethod(Method method) {
             this.method = method;

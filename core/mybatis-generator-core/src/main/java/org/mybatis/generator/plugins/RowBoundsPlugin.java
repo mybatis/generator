@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.mybatis.generator.api.FullyQualifiedTable;
 import org.mybatis.generator.api.IntrospectedTable;
@@ -44,14 +43,13 @@ import org.mybatis.generator.internal.util.messages.Messages;
  */
 public class RowBoundsPlugin extends PluginAdapter {
 
-    private FullyQualifiedJavaType rowBounds =
+    private final FullyQualifiedJavaType rowBounds =
             new FullyQualifiedJavaType("org.apache.ibatis.session.RowBounds"); //$NON-NLS-1$
-    private Map<FullyQualifiedTable, List<XmlElement>> elementsToAdd = new HashMap<>();
+    private final Map<FullyQualifiedTable, List<XmlElement>> elementsToAdd = new HashMap<>();
 
     @Override
     public boolean validate(List<String> warnings) {
-        if ("MyBatis3DynamicSqlV2".equalsIgnoreCase(context.getTargetRuntime()) //$NON-NLS-1$
-                || "MyBatis3DynamicSql".equalsIgnoreCase(context.getTargetRuntime())) { //$NON-NLS-1$
+        if ("MyBatis3DynamicSql".equalsIgnoreCase(context.getTargetRuntime())) { //$NON-NLS-1$
             warnings.add(Messages.getString("Warning.30")); //$NON-NLS-1$
             return false;
         }
@@ -63,8 +61,6 @@ public class RowBoundsPlugin extends PluginAdapter {
             Interface interfaze, IntrospectedTable introspectedTable) {
         if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3) {
             copyAndAddMethod(method, interfaze);
-        } else if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3_DSQL) {
-            copyAndAddSelectByExampleMethodForDSQL(method, interfaze);
         }
         return true;
     }
@@ -114,45 +110,12 @@ public class RowBoundsPlugin extends PluginAdapter {
         return true;
     }
 
-    @Override
-    public boolean clientBasicSelectManyMethodGenerated(Method method, Interface interfaze,
-            IntrospectedTable introspectedTable) {
-        copyAndAddSelectManyMethod(method, interfaze);
-
-        addNewComposedFunction(interfaze, introspectedTable, method.getReturnType());
-        return true;
-    }
-
-    private void addNewComposedFunction(Interface interfaze, IntrospectedTable introspectedTable,
-            Optional<FullyQualifiedJavaType> baseMethodReturnType) {
-        if (!baseMethodReturnType.isPresent()) {
-            // shouldn't happen, but just in case...
-            return;
-        }
-
-        interfaze.addImportedType(new FullyQualifiedJavaType("java.util.function.Function")); //$NON-NLS-1$
-
-        FullyQualifiedJavaType returnType =
-                new FullyQualifiedJavaType("Function<SelectStatementProvider, " //$NON-NLS-1$
-                        + baseMethodReturnType.get().getShortName() + ">"); //$NON-NLS-1$
-
-        Method method = new Method("selectManyWithRowbounds"); //$NON-NLS-1$
-        method.setDefault(true);
-        method.setReturnType(returnType);
-        method.addParameter(new Parameter(rowBounds, "rowBounds")); //$NON-NLS-1$
-        method.addBodyLine(
-                "return selectStatement -> selectManyWithRowbounds(selectStatement, rowBounds);"); //$NON-NLS-1$
-        context.getCommentGenerator().addGeneralMethodAnnotation(
-                method, introspectedTable, interfaze.getImportedTypes());
-        interfaze.addMethod(method);
-    }
-
     /**
      * Use the method copy constructor to create a new method, then
      * add the rowBounds parameter.
      *
-     * @param fullyQualifiedTable the table
      * @param method the method
+     * @param interfaze the interface
      */
     private void copyAndAddMethod(Method method, Interface interfaze) {
         Method newMethod = new Method(method);
@@ -162,81 +125,18 @@ public class RowBoundsPlugin extends PluginAdapter {
         interfaze.addImportedType(rowBounds);
     }
 
-    private void copyAndAddSelectManyMethod(Method method, Interface interfaze) {
-        List<String> annotations = new ArrayList<>(method.getAnnotations());
-
-        // remove the @Results annotation and replace it with @ResultMap
-        boolean inResultsAnnotation = false;
-        String resultMapId = null;
-        Iterator<String> iter = annotations.iterator();
-        while (iter.hasNext()) {
-            String annotation = iter.next();
-
-            if (inResultsAnnotation) {
-                if (annotation.equals("})")) { //$NON-NLS-1$
-                    inResultsAnnotation = false;
-                }
-                iter.remove();
-            } else if (annotation.startsWith("@Results(")) { //$NON-NLS-1$
-                inResultsAnnotation = true;
-                iter.remove();
-
-                // now find the ID
-                int index = annotation.indexOf("id=\""); //$NON-NLS-1$
-                int startIndex = index + "id=\"".length(); //$NON-NLS-1$
-                int endIndex = annotation.indexOf('\"', startIndex + 1); //$NON-NLS-1$
-                resultMapId = annotation.substring(startIndex, endIndex);
-            }
-        }
-
-        if (resultMapId != null) {
-            interfaze.addImportedType(
-                    new FullyQualifiedJavaType("org.apache.ibatis.annotations.ResultMap")); //$NON-NLS-1$
-            annotations.add("@ResultMap(\"" + resultMapId + "\")"); //$NON-NLS-1$ //$NON-NLS-2$
-        }
-
-        Method newMethod = new Method(method);
-        newMethod.getAnnotations().clear();
-        for (String annotation : annotations) {
-            newMethod.addAnnotation(annotation);
-        }
-
-        newMethod.setName(method.getName() + "WithRowbounds"); //$NON-NLS-1$
-        newMethod.addParameter(new Parameter(rowBounds, "rowBounds")); //$NON-NLS-1$
-        interfaze.addMethod(newMethod);
-        interfaze.addImportedType(rowBounds);
-    }
-
-    private void copyAndAddSelectByExampleMethodForDSQL(Method method, Interface interfaze) {
-        Method newMethod = new Method(method);
-        newMethod.addParameter(new Parameter(rowBounds, "rowBounds")); //$NON-NLS-1$
-        interfaze.addMethod(newMethod);
-        interfaze.addImportedType(rowBounds);
-
-        // replace the call to selectMany with the new call to selectManyWithRowbounds
-        for (int i = 0; i < newMethod.getBodyLines().size(); i++) {
-            String bodyLine = newMethod.getBodyLines().get(i);
-
-            if (bodyLine.contains("this::selectMany")) { //$NON-NLS-1$
-                bodyLine = bodyLine.replace("this::selectMany", //$NON-NLS-1$
-                        "selectManyWithRowbounds(rowBounds)"); //$NON-NLS-1$
-                newMethod.getBodyLines().set(i, bodyLine);
-                break;
-            }
-        }
-    }
-
     /**
      * Use the method copy constructor to create a new element.
      *
-     * @param fullyQualifiedTable the table
-     * @param method the method
+     * @param element the base element
+     * @param fqt the fully qualified type
      */
     private void copyAndSaveElement(XmlElement element, FullyQualifiedTable fqt) {
         XmlElement newElement = new XmlElement(element);
 
         // remove old id attribute and add a new one with the new name
-        for (Iterator<Attribute> iterator = newElement.getAttributes().iterator(); iterator.hasNext();) {
+        Iterator<Attribute> iterator = newElement.getAttributes().iterator();
+        while (iterator.hasNext()) {
             Attribute attribute = iterator.next();
             if ("id".equals(attribute.getName())) { //$NON-NLS-1$
                 iterator.remove();

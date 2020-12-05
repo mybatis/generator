@@ -17,7 +17,7 @@ package org.mybatis.generator.runtime.kotlin.elements;
 
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
-import org.mybatis.generator.runtime.dynamic.sql.elements.v2.Utils;
+import org.mybatis.generator.runtime.dynamic.sql.elements.Utils;
 
 public class SelectByPrimaryKeyMethodGenerator extends AbstractKotlinFunctionGenerator {
     private String mapperName;

@@ -23,9 +23,9 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 
 public class FieldAndImports {
 
-    private Field field;
-    private Set<FullyQualifiedJavaType> imports;
-    private Set<String> staticImports;
+    private final Field field;
+    private final Set<FullyQualifiedJavaType> imports;
+    private final Set<String> staticImports;
 
     private FieldAndImports(Builder builder) {
         field = builder.field;
@@ -51,8 +51,8 @@ public class FieldAndImports {
 
     public static class Builder {
         private Field field;
-        private Set<FullyQualifiedJavaType> imports = new HashSet<>();
-        private Set<String> staticImports = new HashSet<>();
+        private final Set<FullyQualifiedJavaType> imports = new HashSet<>();
+        private final Set<String> staticImports = new HashSet<>();
 
         public Builder withField(Field field) {
             this.field = field;

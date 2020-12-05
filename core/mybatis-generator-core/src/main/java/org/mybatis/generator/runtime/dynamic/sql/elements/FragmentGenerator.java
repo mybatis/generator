@@ -35,9 +35,9 @@ import org.mybatis.generator.internal.util.JavaBeansUtil;
 
 public class FragmentGenerator {
 
-    private IntrospectedTable introspectedTable;
-    private String resultMapId;
-    private String tableFieldName;
+    private final IntrospectedTable introspectedTable;
+    private final String resultMapId;
+    private final String tableFieldName;
 
     private FragmentGenerator(Builder builder) {
         this.introspectedTable = builder.introspectedTable;
@@ -52,30 +52,6 @@ public class FragmentGenerator {
     }
 
     public MethodParts getPrimaryKeyWhereClauseAndParameters() {
-        MethodParts.Builder builder = new MethodParts.Builder();
-
-        boolean first = true;
-        for (IntrospectedColumn column : introspectedTable.getPrimaryKeyColumns()) {
-            String fieldName = AbstractMethodGenerator.calculateFieldName(tableFieldName, column);
-            builder.withImport(column.getFullyQualifiedJavaType());
-            builder.withParameter(new Parameter(
-                    column.getFullyQualifiedJavaType(), column.getJavaProperty() + "_")); //$NON-NLS-1$
-            if (first) {
-                builder.withBodyLine("        .where(" + fieldName //$NON-NLS-1$
-                        + ", isEqualTo(" + column.getJavaProperty() //$NON-NLS-1$
-                        + "_))"); //$NON-NLS-1$
-                first = false;
-            } else {
-                builder.withBodyLine("        .and(" + fieldName //$NON-NLS-1$
-                        + ", isEqualTo(" + column.getJavaProperty() //$NON-NLS-1$
-                        + "_))"); //$NON-NLS-1$
-            }
-        }
-
-        return builder.build();
-    }
-
-    public MethodParts getPrimaryKeyWhereClauseAndParametersV2() {
         MethodParts.Builder builder = new MethodParts.Builder();
 
         boolean first = true;
@@ -169,36 +145,6 @@ public class FragmentGenerator {
         return builder.build();
     }
 
-    private String getArgAnnotation(Set<FullyQualifiedJavaType> imports, IntrospectedColumn introspectedColumn,
-            boolean idColumn) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("@Arg(column=\""); //$NON-NLS-1$
-        sb.append(introspectedColumn.getActualColumnName());
-
-        imports.add(introspectedColumn.getFullyQualifiedJavaType());
-        sb.append("\", javaType="); //$NON-NLS-1$
-        sb.append(introspectedColumn.getFullyQualifiedJavaType().getShortName());
-        sb.append(".class"); //$NON-NLS-1$
-
-        if (stringHasValue(introspectedColumn.getTypeHandler())) {
-            FullyQualifiedJavaType fqjt =
-                    new FullyQualifiedJavaType(introspectedColumn.getTypeHandler());
-            imports.add(fqjt);
-            sb.append(", typeHandler="); //$NON-NLS-1$
-            sb.append(fqjt.getShortName());
-            sb.append(".class"); //$NON-NLS-1$
-        }
-
-        sb.append(", jdbcType=JdbcType."); //$NON-NLS-1$
-        sb.append(introspectedColumn.getJdbcTypeName());
-        if (idColumn) {
-            sb.append(", id=true"); //$NON-NLS-1$
-        }
-        sb.append(')');
-
-        return sb.toString();
-    }
-
     public MethodParts getAnnotatedResults() {
         MethodParts.Builder builder = new MethodParts.Builder();
 
@@ -245,14 +191,33 @@ public class FragmentGenerator {
         return builder.build();
     }
 
+    private String getArgAnnotation(Set<FullyQualifiedJavaType> imports, IntrospectedColumn introspectedColumn,
+                                    boolean idColumn) {
+        imports.add(introspectedColumn.getFullyQualifiedJavaType());
+
+        return "@Arg(column=\"" //$NON-NLS-1$
+                + introspectedColumn.getActualColumnName()
+                + "\", javaType=" //$NON-NLS-1$
+                + introspectedColumn.getFullyQualifiedJavaType().getShortName()
+                + ".class" //$NON-NLS-1$
+                + generateAdditionalItems(imports, introspectedColumn, idColumn)
+                + ')';//$NON-NLS-1$
+    }
+
     private String getResultAnnotation(Set<FullyQualifiedJavaType> imports, IntrospectedColumn introspectedColumn,
             boolean idColumn) {
+        return "@Result(column=\"" //$NON-NLS-1$
+                + introspectedColumn.getActualColumnName()
+                + "\", property=\"" //$NON-NLS-1$
+                + introspectedColumn.getJavaProperty()
+                + '\"'
+                + generateAdditionalItems(imports, introspectedColumn, idColumn)
+                + ')'; //$NON-NLS-1$
+    }
+
+    private String generateAdditionalItems(Set<FullyQualifiedJavaType> imports, IntrospectedColumn introspectedColumn,
+                                           boolean idColumn) {
         StringBuilder sb = new StringBuilder();
-        sb.append("@Result(column=\""); //$NON-NLS-1$
-        sb.append(introspectedColumn.getActualColumnName());
-        sb.append("\", property=\""); //$NON-NLS-1$
-        sb.append(introspectedColumn.getJavaProperty());
-        sb.append('\"');
 
         if (stringHasValue(introspectedColumn.getTypeHandler())) {
             FullyQualifiedJavaType fqjt =
@@ -268,7 +233,6 @@ public class FragmentGenerator {
         if (idColumn) {
             sb.append(", id=true"); //$NON-NLS-1$
         }
-        sb.append(')');
 
         return sb.toString();
     }
@@ -283,7 +247,6 @@ public class FragmentGenerator {
                 sb.append("@Options(useGeneratedKeys=true,keyProperty=\"record."); //$NON-NLS-1$
                 sb.append(introspectedColumn.getJavaProperty());
                 sb.append("\")"); //$NON-NLS-1$
-                builder.withAnnotation(sb.toString());
             } else {
                 builder.withImport(new FullyQualifiedJavaType("org.apache.ibatis.annotations.SelectKey")); //$NON-NLS-1$
                 FullyQualifiedJavaType fqjt = introspectedColumn.getFullyQualifiedJavaType();
@@ -296,36 +259,27 @@ public class FragmentGenerator {
                 sb.append(", resultType="); //$NON-NLS-1$
                 sb.append(fqjt.getShortName());
                 sb.append(".class)"); //$NON-NLS-1$
-                builder.withAnnotation(sb.toString());
             }
+            builder.withAnnotation(sb.toString());
         });
 
         return builder.build();
     }
 
-    public List<String> getSetEqualLines(List<IntrospectedColumn> columnList, boolean terminate) {
-        List<String> lines = new ArrayList<>();
-        List<IntrospectedColumn> columns = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(columnList);
-        Iterator<IntrospectedColumn> iter = columns.iterator();
-        while (iter.hasNext()) {
-            IntrospectedColumn column = iter.next();
-            String fieldName = AbstractMethodGenerator.calculateFieldName(tableFieldName, column);
-            String methodName = JavaBeansUtil.getGetterMethodName(column.getJavaProperty(),
-                    column.getFullyQualifiedJavaType());
-            String line = "        .set(" + fieldName //$NON-NLS-1$
-                    + ").equalTo(record::" + methodName //$NON-NLS-1$
-                    + ")"; //$NON-NLS-1$
-            if (terminate && !iter.hasNext()) {
-                line += ";"; //$NON-NLS-1$
-            }
-            lines.add(line);
-        }
-
-        return lines;
+    public List<String> getSetEqualLines(List<IntrospectedColumn> columnList, String firstLinePrefix,
+            String subsequentLinePrefix, boolean terminate) {
+        return getSetLines(columnList, firstLinePrefix, subsequentLinePrefix, terminate,
+                "equalTo"); //$NON-NLS-1$
     }
 
-    public List<String> getSetEqualLinesV2(List<IntrospectedColumn> columnList, String firstLinePrefix,
+    public List<String> getSetEqualWhenPresentLines(List<IntrospectedColumn> columnList, String firstLinePrefix,
             String subsequentLinePrefix, boolean terminate) {
+        return getSetLines(columnList, firstLinePrefix, subsequentLinePrefix, terminate,
+                "equalToWhenPresent"); //$NON-NLS-1$
+    }
+
+    private List<String> getSetLines(List<IntrospectedColumn> columnList, String firstLinePrefix,
+                                 String subsequentLinePrefix, boolean terminate, String fragment) {
         List<String> lines = new ArrayList<>();
         List<IntrospectedColumn> columns = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(columnList);
         Iterator<IntrospectedColumn> iter = columns.iterator();
@@ -344,62 +298,13 @@ public class FragmentGenerator {
                 start = subsequentLinePrefix;
             }
 
-            String line = start + ".set(" + fieldName //$NON-NLS-1$
-                    + ").equalTo(record::" + methodName //$NON-NLS-1$
-                    + ")"; //$NON-NLS-1$
-
-            if (terminate && !iter.hasNext()) {
-                line += ";"; //$NON-NLS-1$
-            }
-
-            lines.add(line);
-        }
-
-        return lines;
-    }
-
-    public List<String> getSetEqualWhenPresentLines(List<IntrospectedColumn> columnList, boolean terminate) {
-        List<String> lines = new ArrayList<>();
-        List<IntrospectedColumn> columns = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(columnList);
-        Iterator<IntrospectedColumn> iter = columns.iterator();
-        while (iter.hasNext()) {
-            IntrospectedColumn column = iter.next();
-            String fieldName = AbstractMethodGenerator.calculateFieldName(tableFieldName, column);
-            String methodName = JavaBeansUtil.getGetterMethodName(column.getJavaProperty(),
-                    column.getFullyQualifiedJavaType());
-            String line = "        .set(" + fieldName //$NON-NLS-1$
-                    + ").equalToWhenPresent(record::" //$NON-NLS-1$
-                    + methodName + ")"; //$NON-NLS-1$
-            if (terminate && !iter.hasNext()) {
-                line += ";"; //$NON-NLS-1$
-            }
-            lines.add(line);
-        }
-        return lines;
-    }
-
-    public List<String> getSetEqualWhenPresentLinesV2(List<IntrospectedColumn> columnList, String firstLinePrefix,
-            String subsequentLinePrefix, boolean terminate) {
-        List<String> lines = new ArrayList<>();
-        List<IntrospectedColumn> columns = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(columnList);
-        Iterator<IntrospectedColumn> iter = columns.iterator();
-        boolean first = true;
-        while (iter.hasNext()) {
-            IntrospectedColumn column = iter.next();
-            String fieldName = AbstractMethodGenerator.calculateFieldName(tableFieldName, column);
-            String methodName = JavaBeansUtil.getGetterMethodName(column.getJavaProperty(),
-                    column.getFullyQualifiedJavaType());
-
-            String start;
-            if (first) {
-                start = firstLinePrefix;
-                first = false;
-            } else {
-                start = subsequentLinePrefix;
-            }
-
-            String line = start + ".set(" + fieldName //$NON-NLS-1$
-                    + ").equalToWhenPresent(record::" + methodName //$NON-NLS-1$
+            String line = start
+                    + ".set(" //$NON-NLS-1$
+                    + fieldName
+                    + ")." //$NON-NLS-1$
+                    + fragment
+                    + "(record::" //$NON-NLS-1$
+                    + methodName
                     + ")"; //$NON-NLS-1$
 
             if (terminate && !iter.hasNext()) {

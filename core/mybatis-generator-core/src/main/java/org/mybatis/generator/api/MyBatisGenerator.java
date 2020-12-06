@@ -411,16 +411,17 @@ public class MyBatisGenerator {
      *             Signals that an I/O exception has occurred.
      */
     private void writeFile(File file, String content, String fileEncoding) throws IOException {
-        FileOutputStream fos = new FileOutputStream(file, false);
-        OutputStreamWriter osw;
-        if (fileEncoding == null) {
-            osw = new OutputStreamWriter(fos);
-        } else {
-            osw = new OutputStreamWriter(fos, fileEncoding);
-        }
+        try(FileOutputStream fos = new FileOutputStream(file, false)) {
+            OutputStreamWriter osw;
+            if (fileEncoding == null) {
+                osw = new OutputStreamWriter(fos);
+            } else {
+                osw = new OutputStreamWriter(fos, fileEncoding);
+            }
 
-        try (BufferedWriter bw = new BufferedWriter(osw)) {
-            bw.write(content);
+            try (BufferedWriter bw = new BufferedWriter(osw)) {
+                bw.write(content);
+            }
         }
     }
 

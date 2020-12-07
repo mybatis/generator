@@ -24,7 +24,7 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
 public abstract class PropertyHolder {
     private Properties properties;
 
-    public PropertyHolder() {
+    protected PropertyHolder() {
         super();
         properties = new Properties();
     }

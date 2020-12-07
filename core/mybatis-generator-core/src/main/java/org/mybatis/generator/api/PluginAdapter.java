@@ -42,7 +42,7 @@ public abstract class PluginAdapter implements Plugin {
     protected Context context;
     protected Properties properties;
 
-    public PluginAdapter() {
+    protected PluginAdapter() {
         properties = new Properties();
     }
 

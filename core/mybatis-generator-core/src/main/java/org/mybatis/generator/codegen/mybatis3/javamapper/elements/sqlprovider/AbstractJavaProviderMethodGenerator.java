@@ -27,7 +27,7 @@ public abstract class AbstractJavaProviderMethodGenerator extends
     protected boolean useLegacyBuilder;
     protected final String builderPrefix;
 
-    public AbstractJavaProviderMethodGenerator(boolean useLegacyBuilder) {
+    protected AbstractJavaProviderMethodGenerator(boolean useLegacyBuilder) {
         super();
         this.useLegacyBuilder = useLegacyBuilder;
         if (useLegacyBuilder) {

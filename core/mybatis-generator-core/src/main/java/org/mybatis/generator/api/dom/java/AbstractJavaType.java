@@ -36,11 +36,11 @@ public abstract class AbstractJavaType extends JavaElement {
 
     private List<Method> methods = new ArrayList<>();
 
-    public AbstractJavaType(FullyQualifiedJavaType type) {
+    protected AbstractJavaType(FullyQualifiedJavaType type) {
         this.type = type;
     }
 
-    public AbstractJavaType(String type) {
+    protected AbstractJavaType(String type) {
         this.type = new FullyQualifiedJavaType(type);
     }
 

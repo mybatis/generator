@@ -15,6 +15,7 @@
  */
 package org.mybatis.generator.internal.db;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,7 +33,7 @@ import java.util.Set;
  */
 public class SqlReservedWords {
 
-    private static Set<String> reservedWords;
+    private static final Set<String> reservedWords;
 
     static {
         String[] words = { "A", //$NON-NLS-1$
@@ -952,9 +953,7 @@ public class SqlReservedWords {
 
         reservedWords = new HashSet<>(words.length);
 
-        for (String word : words) {
-            reservedWords.add(word);
-        }
+        reservedWords.addAll(Arrays.asList(words));
     }
 
     public static boolean containsWord(String word) {

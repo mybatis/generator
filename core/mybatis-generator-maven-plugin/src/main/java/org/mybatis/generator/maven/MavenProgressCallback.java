@@ -16,7 +16,7 @@
 package org.mybatis.generator.maven;
 
 import org.apache.maven.plugin.logging.Log;
-import org.mybatis.generator.internal.NullProgressCallback;
+import org.mybatis.generator.api.ProgressCallback;
 
 /**
  * This callback logs progress messages with the Maven logger.
@@ -24,10 +24,10 @@ import org.mybatis.generator.internal.NullProgressCallback;
  * @author Jeff Butler
  *
  */
-public class MavenProgressCallback extends NullProgressCallback {
+public class MavenProgressCallback implements ProgressCallback {
 
-    private Log log;
-    private boolean verbose;
+    private final Log log;
+    private final boolean verbose;
 
     public MavenProgressCallback(Log log, boolean verbose) {
         super();

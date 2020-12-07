@@ -36,7 +36,6 @@ import org.mybatis.generator.config.MergeConstants;
 import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.exception.ShellException;
 import org.mybatis.generator.internal.DefaultShellCallback;
-import org.mybatis.generator.internal.NullProgressCallback;
 import org.mybatis.generator.internal.ObjectFactory;
 import org.mybatis.generator.internal.XmlFileMergerJaxp;
 
@@ -212,7 +211,7 @@ public class MyBatisGenerator {
             IOException, InterruptedException {
 
         if (callback == null) {
-            callback = new NullProgressCallback();
+            callback = new ProgressCallback() {};
         }
 
         generatedJavaFiles.clear();

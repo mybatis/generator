@@ -103,8 +103,10 @@ public interface ShellCallback {
      *             existing file will remain undisturbed. The generator will add the
      *             exception message to the list of warnings automatically.
      */
-    String mergeJavaFile(String newFileSource, File existingFile,
-            String[] javadocTags, String fileEncoding) throws ShellException;
+    default String mergeJavaFile(String newFileSource, File existingFile,
+            String[] javadocTags, String fileEncoding) throws ShellException {
+        throw new UnsupportedOperationException();
+    }
 
     /**
      * After all files are saved to the file system, this method is called
@@ -117,7 +119,7 @@ public interface ShellCallback {
      * @param project
      *            the project to be refreshed
      */
-    void refreshProject(String project);
+    default void refreshProject(String project) {}
 
     /**
      * Return true if the callback supports Java merging, otherwise false.
@@ -126,7 +128,9 @@ public interface ShellCallback {
      *
      * @return a boolean specifying whether Java merge is supported or not
      */
-    boolean isMergeSupported();
+    default boolean isMergeSupported() {
+        return false;
+    }
 
     /**
      * Return true if the generator should overwrite an existing file if one exists.

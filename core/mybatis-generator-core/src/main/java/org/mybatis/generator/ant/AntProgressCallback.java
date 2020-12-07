@@ -17,14 +17,14 @@ package org.mybatis.generator.ant;
 
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
-import org.mybatis.generator.internal.NullProgressCallback;
+import org.mybatis.generator.api.ProgressCallback;
 
 /**
  * This callback logs progress messages with the Ant logger.
  *
  * @author Jeff Butler
  */
-public class AntProgressCallback extends NullProgressCallback {
+public class AntProgressCallback implements ProgressCallback {
 
     private final Task task;
 

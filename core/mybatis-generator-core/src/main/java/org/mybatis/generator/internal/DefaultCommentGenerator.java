@@ -28,7 +28,6 @@ import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.MyBatisGenerator;
-import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.InnerClass;
@@ -64,11 +63,6 @@ public class DefaultCommentGenerator implements CommentGenerator {
         addRemarkComments = false;
     }
 
-    @Override
-    public void addJavaFileComment(CompilationUnit compilationUnit) {
-        // add no file level comments by default
-    }
-
     /**
      * Adds a suitable comment to warn users that the element was generated, and
      * when it was generated.
@@ -101,11 +95,6 @@ public class DefaultCommentGenerator implements CommentGenerator {
         }
 
         xmlElement.addElement(new TextElement("-->")); //$NON-NLS-1$
-    }
-
-    @Override
-    public void addRootComment(XmlElement rootElement) {
-        // add no document level comments by default
     }
 
     @Override

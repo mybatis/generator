@@ -30,7 +30,7 @@ import org.mybatis.generator.config.PropertyRegistry;
 public abstract class AbstractJavaGenerator extends AbstractGenerator {
     public abstract List<CompilationUnit> getCompilationUnits();
 
-    private String project;
+    private final String project;
 
     protected AbstractJavaGenerator(String project) {
         this.project = project;
@@ -45,11 +45,10 @@ public abstract class AbstractJavaGenerator extends AbstractGenerator {
                 .getType()));
         method.setReturnType(field.getType());
         method.setVisibility(JavaVisibility.PUBLIC);
-        StringBuilder sb = new StringBuilder();
-        sb.append("return "); //$NON-NLS-1$
-        sb.append(field.getName());
-        sb.append(';');
-        method.addBodyLine(sb.toString());
+        String s = "return " + //$NON-NLS-1$
+                field.getName() +
+                ';';
+        method.addBodyLine(s);
         return method;
     }
 

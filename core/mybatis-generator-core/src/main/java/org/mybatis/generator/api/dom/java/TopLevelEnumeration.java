@@ -22,11 +22,11 @@ import java.util.TreeSet;
 
 public class TopLevelEnumeration extends InnerEnum implements CompilationUnit {
 
-    private Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
+    private final Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
 
-    private Set<String> staticImports = new TreeSet<>();
+    private final Set<String> staticImports = new TreeSet<>();
 
-    private List<String> fileCommentLines = new ArrayList<>();
+    private final List<String> fileCommentLines = new ArrayList<>();
 
     public TopLevelEnumeration(FullyQualifiedJavaType type) {
         super(type);

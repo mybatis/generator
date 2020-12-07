@@ -21,11 +21,11 @@ import java.util.List;
 import org.mybatis.generator.api.dom.java.render.ParameterRenderer;
 
 public class Parameter {
-    private String name;
-    private FullyQualifiedJavaType type;
-    private boolean isVarargs;
+    private final String name;
+    private final FullyQualifiedJavaType type;
+    private final boolean isVarargs;
 
-    private List<String> annotations = new ArrayList<>();
+    private final List<String> annotations = new ArrayList<>();
 
     public Parameter(FullyQualifiedJavaType type, String name, boolean isVarargs) {
         this.name = name;

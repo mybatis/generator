@@ -25,7 +25,7 @@ public class PrimitiveTypeWrapper extends FullyQualifiedJavaType {
     private static PrimitiveTypeWrapper longInstance;
     private static PrimitiveTypeWrapper shortInstance;
 
-    private String toPrimitiveMethod;
+    private final String toPrimitiveMethod;
 
     /**
      * Use the static getXXXInstance methods to gain access to one of the type

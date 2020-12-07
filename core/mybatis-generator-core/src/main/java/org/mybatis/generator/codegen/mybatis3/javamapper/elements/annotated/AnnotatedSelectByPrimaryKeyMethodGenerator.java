@@ -29,7 +29,7 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.SelectByPrimar
 
 public class AnnotatedSelectByPrimaryKeyMethodGenerator extends SelectByPrimaryKeyMethodGenerator {
 
-    private boolean useResultMapIfAvailable;
+    private final boolean useResultMapIfAvailable;
 
     public AnnotatedSelectByPrimaryKeyMethodGenerator(boolean useResultMapIfAvailable, boolean isSimple) {
         super(isSimple);

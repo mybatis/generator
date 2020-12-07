@@ -21,7 +21,7 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 
 public class GeneralDeleteMethodGenerator extends AbstractKotlinFunctionGenerator {
 
-    private String mapperName;
+    private final String mapperName;
 
     private GeneralDeleteMethodGenerator(Builder builder) {
         super(builder);

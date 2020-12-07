@@ -66,7 +66,7 @@ public class GeneralSelectDistinctMethodGenerator extends AbstractMethodGenerato
         return context.getPlugins().clientGeneralSelectDistinctMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, GeneralSelectDistinctMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
         private FullyQualifiedJavaType recordType;
 
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
@@ -79,7 +79,6 @@ public class GeneralSelectDistinctMethodGenerator extends AbstractMethodGenerato
             return this;
         }
 
-        @Override
         public GeneralSelectDistinctMethodGenerator build() {
             return new GeneralSelectDistinctMethodGenerator(this);
         }

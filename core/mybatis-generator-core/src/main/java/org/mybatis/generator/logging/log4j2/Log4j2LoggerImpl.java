@@ -25,7 +25,7 @@ public class Log4j2LoggerImpl implements Log {
 
     private static final Marker MARKER = MarkerManager.getMarker(LogFactory.MARKER);
 
-    private Logger log;
+    private final Logger log;
 
     public Log4j2LoggerImpl(Logger logger) {
         log = logger;

@@ -15,6 +15,8 @@
  */
 package org.mybatis.generator.internal.util;
 
+import java.util.Objects;
+
 /**
  * This class is from javapractices.com:
  *
@@ -81,6 +83,6 @@ public final class EqualsUtil {
      * @return true, if the objects are equals (meaning that the equals() method returns true)
      */
     public static boolean areEqual(Object o1, Object o2) {
-        return o1 == null ? o2 == null : o1.equals(o2);
+        return Objects.equals(o1, o2);
     }
 }

@@ -55,7 +55,7 @@ import org.mybatis.generator.runtime.kotlin.IntrospectedTableKotlinImpl;
  */
 public class ObjectFactory {
 
-    private static List<ClassLoader> externalClassLoaders;
+    private static final List<ClassLoader> externalClassLoaders;
 
     static {
         externalClassLoaders = new ArrayList<>();

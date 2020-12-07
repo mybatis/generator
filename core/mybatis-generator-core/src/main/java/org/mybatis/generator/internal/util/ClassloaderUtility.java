@@ -68,7 +68,6 @@ public class ClassloaderUtility {
 
         ClassLoader parent = Thread.currentThread().getContextClassLoader();
 
-        return new URLClassLoader(urls.toArray(new URL[urls
-                .size()]), parent);
+        return new URLClassLoader(urls.toArray(new URL[urls.size()]), parent);
     }
 }

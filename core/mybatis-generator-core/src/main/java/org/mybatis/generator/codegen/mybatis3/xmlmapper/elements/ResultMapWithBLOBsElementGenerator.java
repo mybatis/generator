@@ -121,11 +121,10 @@ public class ResultMapWithBLOBsElementGenerator extends
 
             if (introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {
                 // need to use the MyBatis type alias for a primitive byte
-                StringBuilder sb = new StringBuilder();
-                sb.append('_');
-                sb.append(introspectedColumn.getFullyQualifiedJavaType().getShortName());
+                String s = '_' +
+                        introspectedColumn.getFullyQualifiedJavaType().getShortName();
                 resultElement.addAttribute(new Attribute("javaType", //$NON-NLS-1$
-                        sb.toString()));
+                        s));
 
             } else if ("byte[]".equals(introspectedColumn.getFullyQualifiedJavaType() //$NON-NLS-1$
                     .getFullyQualifiedName())) {

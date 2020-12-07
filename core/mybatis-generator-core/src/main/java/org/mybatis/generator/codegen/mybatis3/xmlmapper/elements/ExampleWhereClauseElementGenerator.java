@@ -25,7 +25,7 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
 public class ExampleWhereClauseElementGenerator extends
         AbstractXmlElementGenerator {
 
-    private boolean isForUpdateByExample;
+    private final boolean isForUpdateByExample;
 
     public ExampleWhereClauseElementGenerator(boolean isForUpdateByExample) {
         super();

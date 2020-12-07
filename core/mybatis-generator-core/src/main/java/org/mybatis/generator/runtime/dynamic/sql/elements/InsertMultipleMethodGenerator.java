@@ -90,7 +90,7 @@ public class InsertMultipleMethodGenerator extends AbstractMethodGenerator {
         return context.getPlugins().clientInsertMultipleMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, InsertMultipleMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
         private FullyQualifiedJavaType recordType;
 
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
@@ -103,7 +103,6 @@ public class InsertMultipleMethodGenerator extends AbstractMethodGenerator {
             return this;
         }
 
-        @Override
         public InsertMultipleMethodGenerator build() {
             return new InsertMultipleMethodGenerator(this);
         }

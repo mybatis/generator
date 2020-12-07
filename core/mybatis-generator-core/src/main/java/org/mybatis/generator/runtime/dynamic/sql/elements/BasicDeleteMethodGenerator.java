@@ -62,14 +62,13 @@ public class BasicDeleteMethodGenerator extends AbstractMethodGenerator {
         return context.getPlugins().clientBasicDeleteMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, BasicDeleteMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
 
         @Override
         public Builder getThis() {
             return this;
         }
 
-        @Override
         public BasicDeleteMethodGenerator build() {
             return new BasicDeleteMethodGenerator(this);
         }

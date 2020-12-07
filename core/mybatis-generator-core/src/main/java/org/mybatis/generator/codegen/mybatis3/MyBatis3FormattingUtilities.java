@@ -98,12 +98,9 @@ public class MyBatis3FormattingUtilities {
     public static String getAliasedEscapedColumnName(
             IntrospectedColumn introspectedColumn) {
         if (stringHasValue(introspectedColumn.getTableAlias())) {
-            StringBuilder sb = new StringBuilder();
-
-            sb.append(introspectedColumn.getTableAlias());
-            sb.append('.');
-            sb.append(getEscapedColumnName(introspectedColumn));
-            return sb.toString();
+            return introspectedColumn.getTableAlias() +
+                    '.' +
+                    getEscapedColumnName(introspectedColumn);
         } else {
             return getEscapedColumnName(introspectedColumn);
         }
@@ -155,12 +152,9 @@ public class MyBatis3FormattingUtilities {
     public static String getRenamedColumnNameForResultMap(
             IntrospectedColumn introspectedColumn) {
         if (stringHasValue(introspectedColumn.getTableAlias())) {
-            StringBuilder sb = new StringBuilder();
-
-            sb.append(introspectedColumn.getTableAlias());
-            sb.append('_');
-            sb.append(introspectedColumn.getActualColumnName());
-            return sb.toString();
+            return introspectedColumn.getTableAlias() +
+                    '_' +
+                    introspectedColumn.getActualColumnName();
         } else {
             return introspectedColumn.getActualColumnName();
         }

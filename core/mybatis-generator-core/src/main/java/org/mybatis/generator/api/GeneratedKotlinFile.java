@@ -19,11 +19,11 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 
 public class GeneratedKotlinFile extends GeneratedFile {
 
-    private KotlinFile kotlinFile;
+    private final KotlinFile kotlinFile;
 
-    private String fileEncoding;
+    private final String fileEncoding;
 
-    private KotlinFormatter kotlinFormatter;
+    private final KotlinFormatter kotlinFormatter;
 
     public GeneratedKotlinFile(KotlinFile kotlinFile,
             String targetProject,

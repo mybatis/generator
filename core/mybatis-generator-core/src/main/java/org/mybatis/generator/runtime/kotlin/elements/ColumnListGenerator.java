@@ -28,9 +28,9 @@ import org.mybatis.generator.config.Context;
 
 public class ColumnListGenerator {
 
-    private Context context;
-    private IntrospectedTable introspectedTable;
-    private String tableFieldImport;
+    private final Context context;
+    private final IntrospectedTable introspectedTable;
+    private final String tableFieldImport;
 
     private ColumnListGenerator(Builder builder) {
         this.context = Objects.requireNonNull(builder.context);

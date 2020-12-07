@@ -22,8 +22,8 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 import org.mybatis.generator.runtime.dynamic.sql.elements.Utils;
 
 public class InsertMultipleVarargMethodGenerator extends AbstractKotlinFunctionGenerator {
-    private FullyQualifiedKotlinType recordType;
-    private String mapperName;
+    private final FullyQualifiedKotlinType recordType;
+    private final String mapperName;
 
     private InsertMultipleVarargMethodGenerator(Builder builder) {
         super(builder);

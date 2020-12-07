@@ -29,7 +29,7 @@ import org.mybatis.generator.api.dom.java.Parameter;
 public class DeleteByPrimaryKeyMethodGenerator extends
         AbstractJavaMapperMethodGenerator {
 
-    private boolean isSimple;
+    private final boolean isSimple;
 
     public DeleteByPrimaryKeyMethodGenerator(boolean isSimple) {
         super();

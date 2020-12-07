@@ -26,7 +26,7 @@ public enum JavaVisibility {
     PROTECTED("protected "), //$NON-NLS-1$
     DEFAULT(""); //$NON-NLS-1$
 
-    private String value;
+    private final String value;
 
     JavaVisibility(String value) {
         this.value = value;

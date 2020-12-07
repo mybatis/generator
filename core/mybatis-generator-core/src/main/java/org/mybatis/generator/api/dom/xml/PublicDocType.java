@@ -16,8 +16,8 @@
 package org.mybatis.generator.api.dom.xml;
 
 public class PublicDocType implements DocType {
-    private String dtdLocation;
-    private String dtdName;
+    private final String dtdLocation;
+    private final String dtdName;
 
     public PublicDocType(String dtdName, String dtdLocation) {
         super();

@@ -26,11 +26,9 @@ import org.mybatis.generator.internal.NullProgressCallback;
  */
 public class AntProgressCallback extends NullProgressCallback {
 
-    /** The task. */
-    private Task task;
+    private final Task task;
 
-    /** The verbose. */
-    private boolean verbose;
+    private final boolean verbose;
 
     /**
      * Instantiates a new ant progress callback.
@@ -41,7 +39,6 @@ public class AntProgressCallback extends NullProgressCallback {
      *            the verbose
      */
     public AntProgressCallback(Task task, boolean verbose) {
-        super();
         this.task = task;
         this.verbose = verbose;
     }

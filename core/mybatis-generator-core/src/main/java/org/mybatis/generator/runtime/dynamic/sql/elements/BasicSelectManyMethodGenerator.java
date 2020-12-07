@@ -80,7 +80,7 @@ public class BasicSelectManyMethodGenerator extends AbstractMethodGenerator {
         return context.getPlugins().clientBasicSelectManyMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, BasicSelectManyMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
         private FullyQualifiedJavaType recordType;
         private FragmentGenerator fragmentGenerator;
 
@@ -99,7 +99,6 @@ public class BasicSelectManyMethodGenerator extends AbstractMethodGenerator {
             return this;
         }
 
-        @Override
         public BasicSelectManyMethodGenerator build() {
             return new BasicSelectManyMethodGenerator(this);
         }

@@ -22,8 +22,8 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 
 public class KotlinFunctionAndImports {
 
-    private KotlinFunction function;
-    private Set<String> imports;
+    private final KotlinFunction function;
+    private final Set<String> imports;
 
     private KotlinFunctionAndImports(Builder builder) {
         function = builder.function;
@@ -44,7 +44,7 @@ public class KotlinFunctionAndImports {
 
     public static class Builder {
         private KotlinFunction function;
-        private Set<String> imports = new HashSet<>();
+        private final Set<String> imports = new HashSet<>();
 
         public Builder withFunction(KotlinFunction function) {
             this.function = function;

@@ -28,10 +28,9 @@ import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 public class UpdateByPrimaryKeyWithoutBLOBsElementGenerator extends
         AbstractXmlElementGenerator {
 
-    private boolean isSimple;
+    private final boolean isSimple;
 
     public UpdateByPrimaryKeyWithoutBLOBsElementGenerator(boolean isSimple) {
-        super();
         this.isSimple = isSimple;
     }
 

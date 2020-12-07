@@ -68,7 +68,7 @@ public class UpdateByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
                 interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, UpdateByPrimaryKeyMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
         private FullyQualifiedJavaType recordType;
         private FragmentGenerator fragmentGenerator;
 
@@ -87,7 +87,6 @@ public class UpdateByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
             return this;
         }
 
-        @Override
         public UpdateByPrimaryKeyMethodGenerator build() {
             return new UpdateByPrimaryKeyMethodGenerator(this);
         }

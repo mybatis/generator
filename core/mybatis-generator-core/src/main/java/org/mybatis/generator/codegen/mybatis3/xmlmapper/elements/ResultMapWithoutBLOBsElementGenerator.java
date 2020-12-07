@@ -27,7 +27,7 @@ import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 public class ResultMapWithoutBLOBsElementGenerator extends
         AbstractXmlElementGenerator {
 
-    private boolean isSimple;
+    private final boolean isSimple;
 
     public ResultMapWithoutBLOBsElementGenerator(boolean isSimple) {
         super();

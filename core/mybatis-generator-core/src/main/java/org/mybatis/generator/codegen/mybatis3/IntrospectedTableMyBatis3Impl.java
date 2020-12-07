@@ -50,9 +50,9 @@ import org.mybatis.generator.internal.util.StringUtility;
  */
 public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
 
-    protected List<AbstractJavaGenerator> javaGenerators = new ArrayList<>();
+    protected final List<AbstractJavaGenerator> javaGenerators = new ArrayList<>();
 
-    protected List<AbstractKotlinGenerator> kotlinGenerators = new ArrayList<>();
+    protected final List<AbstractKotlinGenerator> kotlinGenerators = new ArrayList<>();
 
     protected AbstractXmlGenerator xmlMapperGenerator;
 

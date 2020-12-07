@@ -22,9 +22,9 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 
 public class BasicSelectOneMethodGenerator extends AbstractKotlinFunctionGenerator {
 
-    private FullyQualifiedKotlinType recordType;
-    private String resultMapId;
-    private KotlinFragmentGenerator fragmentGenerator;
+    private final FullyQualifiedKotlinType recordType;
+    private final String resultMapId;
+    private final KotlinFragmentGenerator fragmentGenerator;
 
     private BasicSelectOneMethodGenerator(Builder builder) {
         super(builder);

@@ -46,9 +46,9 @@ public class TableConfiguration extends PropertyHolder {
 
     private boolean updateByExampleStatementEnabled;
 
-    private List<ColumnOverride> columnOverrides;
+    private final List<ColumnOverride> columnOverrides;
 
-    private Map<IgnoredColumn, Boolean> ignoredColumns;
+    private final Map<IgnoredColumn, Boolean> ignoredColumns;
 
     private GeneratedKey generatedKey;
 
@@ -81,7 +81,7 @@ public class TableConfiguration extends PropertyHolder {
     private String mapperName;
     private String sqlProviderName;
 
-    private List<IgnoredColumnPattern> ignoredColumnPatterns = new ArrayList<>();
+    private final List<IgnoredColumnPattern> ignoredColumnPatterns = new ArrayList<>();
 
     public TableConfiguration(Context context) {
         super();

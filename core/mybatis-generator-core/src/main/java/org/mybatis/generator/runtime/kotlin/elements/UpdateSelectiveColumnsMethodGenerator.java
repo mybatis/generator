@@ -24,8 +24,8 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 
 public class UpdateSelectiveColumnsMethodGenerator extends AbstractKotlinFunctionGenerator {
-    private FullyQualifiedKotlinType recordType;
-    private KotlinFragmentGenerator fragmentGenerator;
+    private final FullyQualifiedKotlinType recordType;
+    private final KotlinFragmentGenerator fragmentGenerator;
 
     private UpdateSelectiveColumnsMethodGenerator(Builder builder) {
         super(builder);

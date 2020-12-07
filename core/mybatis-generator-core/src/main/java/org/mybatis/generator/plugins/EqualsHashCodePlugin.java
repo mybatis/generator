@@ -261,10 +261,7 @@ public class EqualsHashCodePlugin extends PluginAdapter {
 
         StringBuilder sb = new StringBuilder();
         boolean hasTemp = false;
-        Iterator<IntrospectedColumn> iter = introspectedColumns.iterator();
-        while (iter.hasNext()) {
-            IntrospectedColumn introspectedColumn = iter.next();
-
+        for (IntrospectedColumn introspectedColumn : introspectedColumns) {
             FullyQualifiedJavaType fqjt = introspectedColumn
                     .getFullyQualifiedJavaType();
 

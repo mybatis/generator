@@ -30,13 +30,13 @@ import org.mybatis.generator.internal.db.DatabaseDialects;
  */
 public class GeneratedKey {
 
-    private String column;
+    private final String column;
 
-    private String runtimeSqlStatement;
+    private final String runtimeSqlStatement;
 
-    private boolean isIdentity;
+    private final boolean isIdentity;
 
-    private String type;
+    private final String type;
 
     public GeneratedKey(String column, String configuredSqlStatement,
             boolean isIdentity, String type) {

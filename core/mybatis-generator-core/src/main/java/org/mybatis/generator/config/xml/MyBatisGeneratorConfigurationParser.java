@@ -25,7 +25,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import java.util.stream.Collectors;
 
 import org.mybatis.generator.config.ColumnOverride;
 import org.mybatis.generator.config.ColumnRenamingRule;
@@ -60,8 +59,8 @@ import org.w3c.dom.NodeList;
  * @author Jeff Butler
  */
 public class MyBatisGeneratorConfigurationParser {
-    private Properties extraProperties;
-    private Properties configurationProperties;
+    private final Properties extraProperties;
+    private final Properties configurationProperties;
 
     public MyBatisGeneratorConfigurationParser(Properties extraProperties) {
         super();
@@ -750,7 +749,7 @@ public class MyBatisGeneratorConfigurationParser {
             answer.add(s.substring(currentIndex));
         }
 
-        return answer.stream().collect(Collectors.joining());
+        return String.join("", answer);
     }
 
     protected void parseCommentGenerator(Context context, Node node) {
@@ -818,9 +817,7 @@ public class MyBatisGeneratorConfigurationParser {
      *     undefined in any of the sources.
      */
     private String resolveProperty(String key) {
-        String property = null;
-
-        property = System.getProperty(key);
+        String property = System.getProperty(key);
 
         if (property == null) {
             property = configurationProperties.getProperty(key);

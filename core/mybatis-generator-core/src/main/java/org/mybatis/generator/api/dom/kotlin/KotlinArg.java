@@ -22,10 +22,10 @@ import java.util.Optional;
 
 public class KotlinArg {
 
-    private String name;
-    private String dataType;
-    private String initializationString;
-    private List<String> annotations = new ArrayList<>();
+    private final String name;
+    private final String dataType;
+    private final String initializationString;
+    private final List<String> annotations;
 
     private KotlinArg(Builder builder) {
         name = Objects.requireNonNull(builder.name);
@@ -55,10 +55,10 @@ public class KotlinArg {
     }
 
     public static class Builder {
-        private String name;
+        private final String name;
         private String dataType;
         private String initializationString;
-        private List<String> annotations = new ArrayList<>();
+        private final List<String> annotations = new ArrayList<>();
 
         private Builder(String name) {
             this.name = name;

@@ -22,8 +22,8 @@ import org.mybatis.generator.api.dom.kotlin.KotlinProperty;
 
 public class KotlinPropertyAndImports {
 
-    private KotlinProperty property;
-    private Set<String> imports;
+    private final KotlinProperty property;
+    private final Set<String> imports;
 
     private KotlinPropertyAndImports(Builder builder) {
         property = builder.property;
@@ -44,7 +44,7 @@ public class KotlinPropertyAndImports {
 
     public static class Builder {
         private KotlinProperty property;
-        private Set<String> imports = new HashSet<>();
+        private final Set<String> imports = new HashSet<>();
 
         public Builder withProperty(KotlinProperty property) {
             this.property = property;

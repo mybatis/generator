@@ -25,9 +25,9 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 import org.mybatis.generator.runtime.dynamic.sql.elements.Utils;
 
 public class UpdateByPrimaryKeyMethodGenerator extends AbstractKotlinFunctionGenerator {
-    private FullyQualifiedKotlinType recordType;
-    private KotlinFragmentGenerator fragmentGenerator;
-    private String mapperName;
+    private final FullyQualifiedKotlinType recordType;
+    private final KotlinFragmentGenerator fragmentGenerator;
+    private final String mapperName;
 
     private UpdateByPrimaryKeyMethodGenerator(Builder builder) {
         super(builder);

@@ -16,7 +16,7 @@
 package org.mybatis.generator.api.dom.xml;
 
 public class SystemDocType implements DocType {
-    private String dtdLocation;
+    private final String dtdLocation;
 
     public SystemDocType(String dtdLocation) {
         super();

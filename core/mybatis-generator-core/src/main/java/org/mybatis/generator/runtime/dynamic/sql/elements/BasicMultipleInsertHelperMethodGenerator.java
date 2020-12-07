@@ -70,7 +70,7 @@ public class BasicMultipleInsertHelperMethodGenerator extends AbstractMethodGene
                 introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, BasicMultipleInsertHelperMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
 
         private FullyQualifiedJavaType recordType;
 
@@ -84,7 +84,6 @@ public class BasicMultipleInsertHelperMethodGenerator extends AbstractMethodGene
             return this;
         }
 
-        @Override
         public BasicMultipleInsertHelperMethodGenerator build() {
             return new BasicMultipleInsertHelperMethodGenerator(this);
         }

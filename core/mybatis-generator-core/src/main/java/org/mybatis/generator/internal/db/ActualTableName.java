@@ -26,10 +26,10 @@ import static org.mybatis.generator.internal.util.StringUtility.composeFullyQual
  */
 public class ActualTableName {
 
-    private String tableName;
-    private String catalog;
-    private String schema;
-    private String fullName;
+    private final String tableName;
+    private final String catalog;
+    private final String schema;
+    private final String fullName;
 
     public ActualTableName(String catalog, String schema, String tableName) {
         this.catalog = catalog;

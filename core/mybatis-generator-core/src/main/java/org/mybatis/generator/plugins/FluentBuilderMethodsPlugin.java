@@ -63,13 +63,12 @@ public class FluentBuilderMethodsPlugin extends PluginAdapter {
                     introspectedTable);
         }
 
-        StringBuilder sb = new StringBuilder()
-                .append("this.") //$NON-NLS-1$
-                .append(method.getName())
-                .append('(')
-                .append(introspectedColumn.getJavaProperty())
-                .append(");"); //$NON-NLS-1$
-        fluentMethod.addBodyLine(sb.toString()); //$NON-NLS-1$
+        String s = "this." + //$NON-NLS-1$
+                method.getName() +
+                '(' +
+                introspectedColumn.getJavaProperty() +
+                ");";//$NON-NLS-1$
+        fluentMethod.addBodyLine(s); //$NON-NLS-1$
         fluentMethod.addBodyLine("return this;"); //$NON-NLS-1$
 
         topLevelClass.addMethod(fluentMethod);

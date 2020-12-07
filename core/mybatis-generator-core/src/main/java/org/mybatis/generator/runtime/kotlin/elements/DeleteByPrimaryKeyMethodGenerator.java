@@ -23,8 +23,8 @@ import org.mybatis.generator.runtime.dynamic.sql.elements.Utils;
 
 public class DeleteByPrimaryKeyMethodGenerator extends AbstractKotlinFunctionGenerator {
 
-    private KotlinFragmentGenerator fragmentGenerator;
-    private String mapperName;
+    private final KotlinFragmentGenerator fragmentGenerator;
+    private final String mapperName;
 
     private DeleteByPrimaryKeyMethodGenerator(Builder builder) {
         super(builder);

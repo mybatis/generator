@@ -25,8 +25,8 @@ import org.mybatis.generator.runtime.dynamic.sql.elements.Utils;
 
 public class BasicMultipleInsertHelperMethodGenerator extends AbstractKotlinFunctionGenerator {
 
-    private FullyQualifiedKotlinType recordType;
-    private String mapperName;
+    private final FullyQualifiedKotlinType recordType;
+    private final String mapperName;
 
     private BasicMultipleInsertHelperMethodGenerator(Builder builder) {
         super(builder);

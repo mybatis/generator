@@ -69,7 +69,7 @@ public class UpdateByPrimaryKeySelectiveMethodGenerator extends AbstractMethodGe
                 .clientUpdateByPrimaryKeySelectiveMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, UpdateByPrimaryKeySelectiveMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
         private FullyQualifiedJavaType recordType;
         private FragmentGenerator fragmentGenerator;
 
@@ -88,7 +88,6 @@ public class UpdateByPrimaryKeySelectiveMethodGenerator extends AbstractMethodGe
             return this;
         }
 
-        @Override
         public UpdateByPrimaryKeySelectiveMethodGenerator build() {
             return new UpdateByPrimaryKeySelectiveMethodGenerator(this);
         }

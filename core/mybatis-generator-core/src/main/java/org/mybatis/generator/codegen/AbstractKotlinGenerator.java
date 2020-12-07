@@ -23,7 +23,7 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 public abstract class AbstractKotlinGenerator extends AbstractGenerator {
     public abstract List<KotlinFile> getKotlinFiles();
 
-    private String project;
+    private final String project;
 
     protected AbstractKotlinGenerator(String project) {
         this.project = project;

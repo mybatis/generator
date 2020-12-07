@@ -23,9 +23,9 @@ import org.mybatis.generator.config.GeneratedKey;
 
 public class BasicInsertMethodGenerator extends AbstractKotlinFunctionGenerator {
 
-    private FullyQualifiedKotlinType recordType;
-    private KotlinFragmentGenerator fragmentGenerator;
-    private KotlinFile kotlinFile;
+    private final FullyQualifiedKotlinType recordType;
+    private final KotlinFragmentGenerator fragmentGenerator;
+    private final KotlinFile kotlinFile;
 
     private BasicInsertMethodGenerator(Builder builder) {
         super(builder);

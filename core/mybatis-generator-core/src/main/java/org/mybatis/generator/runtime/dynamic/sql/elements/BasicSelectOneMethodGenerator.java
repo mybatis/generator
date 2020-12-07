@@ -95,7 +95,7 @@ public class BasicSelectOneMethodGenerator extends AbstractMethodGenerator {
         return context.getPlugins().clientBasicSelectOneMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, BasicSelectOneMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
 
         private FullyQualifiedJavaType recordType;
         private String resultMapId;
@@ -127,7 +127,6 @@ public class BasicSelectOneMethodGenerator extends AbstractMethodGenerator {
             return this;
         }
 
-        @Override
         public BasicSelectOneMethodGenerator build() {
             return new BasicSelectOneMethodGenerator(this);
         }

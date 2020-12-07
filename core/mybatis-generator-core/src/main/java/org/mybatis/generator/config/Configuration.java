@@ -25,9 +25,9 @@ import org.mybatis.generator.exception.InvalidConfigurationException;
 
 public class Configuration {
 
-    private List<Context> contexts;
+    private final List<Context> contexts;
 
-    private List<String> classPathEntries;
+    private final List<String> classPathEntries;
 
     public Configuration() {
         super();

@@ -23,7 +23,7 @@ public class Log4jImpl implements Log {
 
     private static final String FQCN = Log4jImpl.class.getName();
 
-    private Logger log;
+    private final Logger log;
 
     public Log4jImpl(Class<?> clazz) {
         log = Logger.getLogger(clazz);

@@ -50,7 +50,7 @@ public class NullProgressCallback implements ProgressCallback {
     }
 
     @Override
-    public void checkCancel() throws InterruptedException {
+    public void checkCancel() {
         // nothing to do in the null callback
     }
 

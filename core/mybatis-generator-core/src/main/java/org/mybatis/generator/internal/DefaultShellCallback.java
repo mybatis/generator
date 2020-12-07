@@ -25,7 +25,7 @@ import org.mybatis.generator.exception.ShellException;
 
 public class DefaultShellCallback implements ShellCallback {
 
-    private boolean overwrite;
+    private final boolean overwrite;
 
     public DefaultShellCallback(boolean overwrite) {
         super();
@@ -84,8 +84,7 @@ public class DefaultShellCallback implements ShellCallback {
 
     @Override
     public String mergeJavaFile(String newFileSource,
-            File existingFile, String[] javadocTags, String fileEncoding)
-            throws ShellException {
+            File existingFile, String[] javadocTags, String fileEncoding) {
         throw new UnsupportedOperationException();
     }
 }

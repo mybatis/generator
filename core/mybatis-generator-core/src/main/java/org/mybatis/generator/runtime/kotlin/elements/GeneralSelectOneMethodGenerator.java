@@ -22,7 +22,7 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 
 public class GeneralSelectOneMethodGenerator extends AbstractKotlinFunctionGenerator {
-    private String mapperName;
+    private final String mapperName;
 
     private GeneralSelectOneMethodGenerator(Builder builder) {
         super(builder);

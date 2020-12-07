@@ -55,15 +55,15 @@ import org.mybatis.generator.logging.LogFactory;
 
 public class DatabaseIntrospector {
 
-    private DatabaseMetaData databaseMetaData;
+    private final DatabaseMetaData databaseMetaData;
 
-    private JavaTypeResolver javaTypeResolver;
+    private final JavaTypeResolver javaTypeResolver;
 
-    private List<String> warnings;
+    private final List<String> warnings;
 
-    private Context context;
+    private final Context context;
 
-    private Log logger;
+    private final Log logger;
 
     public DatabaseIntrospector(Context context,
             DatabaseMetaData databaseMetaData,
@@ -78,7 +78,7 @@ public class DatabaseIntrospector {
 
     private void calculatePrimaryKey(FullyQualifiedTable table,
             IntrospectedTable introspectedTable) {
-        ResultSet rs = null;
+        ResultSet rs;
 
         try {
             rs = databaseMetaData.getPrimaryKeys(
@@ -86,7 +86,6 @@ public class DatabaseIntrospector {
                             .getIntrospectedSchema(), table
                             .getIntrospectedTableName());
         } catch (SQLException e) {
-            closeResultSet(rs);
             warnings.add(getString("Warning.15")); //$NON-NLS-1$
             return;
         }
@@ -447,15 +446,13 @@ public class DatabaseIntrospector {
                     .toLowerCase();
             localSchema = tc.getSchema() == null ? null : tc.getSchema()
                     .toLowerCase();
-            localTableName = tc.getTableName() == null ? null : tc
-                    .getTableName().toLowerCase();
+            localTableName = tc.getTableName().toLowerCase();
         } else if (databaseMetaData.storesUpperCaseIdentifiers()) {
             localCatalog = tc.getCatalog() == null ? null : tc.getCatalog()
                     .toUpperCase();
             localSchema = tc.getSchema() == null ? null : tc.getSchema()
                     .toUpperCase();
-            localTableName = tc.getTableName() == null ? null : tc
-                    .getTableName().toUpperCase();
+            localTableName = tc.getTableName().toUpperCase();
         } else {
             localCatalog = tc.getCatalog();
             localSchema = tc.getSchema();

@@ -38,11 +38,10 @@ public class CountByExampleElementGenerator extends AbstractXmlElementGenerator 
 
         context.getCommentGenerator().addComment(answer);
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("select count(*) from "); //$NON-NLS-1$
-        sb.append(introspectedTable
-                .getAliasedFullyQualifiedTableNameAtRuntime());
-        answer.addElement(new TextElement(sb.toString()));
+        String s = "select count(*) from " + //$NON-NLS-1$
+                introspectedTable
+                        .getAliasedFullyQualifiedTableNameAtRuntime();
+        answer.addElement(new TextElement(s));
         answer.addElement(getExampleIncludeElement());
 
         if (context.getPlugins().sqlMapCountByExampleElementGenerated(

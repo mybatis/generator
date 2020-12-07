@@ -36,11 +36,10 @@ import org.mybatis.generator.internal.ObjectFactory;
  */
 public class RootClassInfo {
 
-    private static Map<String, RootClassInfo> rootClassInfoMap;
+    private static final Map<String, RootClassInfo> rootClassInfoMap;
 
     static {
-        rootClassInfoMap = Collections
-                .synchronizedMap(new HashMap<String, RootClassInfo>());
+        rootClassInfoMap = Collections.synchronizedMap(new HashMap<>());
     }
 
     public static RootClassInfo getInstance(String className,
@@ -60,8 +59,8 @@ public class RootClassInfo {
     }
 
     private PropertyDescriptor[] propertyDescriptors;
-    private String className;
-    private List<String> warnings;
+    private final String className;
+    private final List<String> warnings;
     private boolean genericMode = false;
 
     private RootClassInfo(String className, List<String> warnings) {
@@ -101,9 +100,7 @@ public class RootClassInfo {
 
         // get method names from class and check against this column definition.
         // better yet, have a map of method Names. check against it.
-        for (int i = 0; i < propertyDescriptors.length; i++) {
-            PropertyDescriptor propertyDescriptor = propertyDescriptors[i];
-
+        for (PropertyDescriptor propertyDescriptor : propertyDescriptors) {
             if (hasProperty(propertyName, propertyType, propertyDescriptor)) {
                 found = true;
                 break;

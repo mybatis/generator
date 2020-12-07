@@ -26,9 +26,9 @@ import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 import org.mybatis.generator.runtime.dynamic.sql.elements.Utils;
 
 public class InsertMultipleMethodGenerator extends AbstractKotlinFunctionGenerator {
-    private FullyQualifiedKotlinType recordType;
-    private String mapperName;
-    private String tableFieldImport;
+    private final FullyQualifiedKotlinType recordType;
+    private final String mapperName;
+    private final String tableFieldImport;
 
     private InsertMultipleMethodGenerator(Builder builder) {
         super(builder);

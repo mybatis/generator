@@ -66,7 +66,7 @@ public class UpdateAllColumnsMethodGenerator extends AbstractMethodGenerator {
         return context.getPlugins().clientUpdateAllColumnsMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, UpdateAllColumnsMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
         private FullyQualifiedJavaType recordType;
         private FragmentGenerator fragmentGenerator;
 
@@ -85,7 +85,6 @@ public class UpdateAllColumnsMethodGenerator extends AbstractMethodGenerator {
             return this;
         }
 
-        @Override
         public UpdateAllColumnsMethodGenerator build() {
             return new UpdateAllColumnsMethodGenerator(this);
         }

@@ -24,7 +24,7 @@ import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 public class DeleteByPrimaryKeyElementGenerator extends
         AbstractXmlElementGenerator {
 
-    private boolean isSimple;
+    private final boolean isSimple;
 
     public DeleteByPrimaryKeyElementGenerator(boolean isSimple) {
         super();

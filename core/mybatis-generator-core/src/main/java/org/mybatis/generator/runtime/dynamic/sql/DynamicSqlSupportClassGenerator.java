@@ -102,10 +102,9 @@ public class DynamicSqlSupportClassGenerator {
         field.setStatic(true);
         field.setFinal(true);
 
-        StringBuilder initializationString = new StringBuilder();
-        initializationString.append(String.format("new %s()", //$NON-NLS-1$
-                escapeStringForJava(introspectedTable.getFullyQualifiedTable().getDomainObjectName())));
-        field.setInitializationString(initializationString.toString());
+        String initializationString = String.format("new %s()", //$NON-NLS-1$
+                escapeStringForJava(introspectedTable.getFullyQualifiedTable().getDomainObjectName()));
+        field.setInitializationString(initializationString);
         return field;
     }
 

@@ -22,7 +22,7 @@ import java.util.Optional;
 
 public class Method extends JavaElement {
 
-    private List<String> bodyLines = new ArrayList<>();
+    private final List<String> bodyLines = new ArrayList<>();
 
     private boolean constructor;
 
@@ -30,11 +30,11 @@ public class Method extends JavaElement {
 
     private String name;
 
-    private List<TypeParameter> typeParameters = new ArrayList<>();
+    private final List<TypeParameter> typeParameters = new ArrayList<>();
 
-    private List<Parameter> parameters = new ArrayList<>();
+    private final List<Parameter> parameters = new ArrayList<>();
 
-    private List<FullyQualifiedJavaType> exceptions = new ArrayList<>();
+    private final List<FullyQualifiedJavaType> exceptions = new ArrayList<>();
 
     private boolean isSynchronized;
 

@@ -20,7 +20,7 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 
 public class GeneralUpdateMethodGenerator extends AbstractKotlinFunctionGenerator {
-    private String mapperName;
+    private final String mapperName;
 
     private GeneralUpdateMethodGenerator(Builder builder) {
         super(builder);

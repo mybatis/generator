@@ -54,8 +54,8 @@ public class CachePlugin extends PluginAdapter {
         SIZE("cache_size", "size"), //$NON-NLS-1$ //$NON-NLS-2$
         TYPE("cache_type", "type"); //$NON-NLS-1$ //$NON-NLS-2$
 
-        private String propertyName;
-        private String attributeName;
+        private final String propertyName;
+        private final String attributeName;
 
         CacheProperty(String propertyName, String attributeName) {
             this.propertyName = propertyName;

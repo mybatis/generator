@@ -169,7 +169,7 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
         String prop = context.getJavaClientGeneratorConfiguration()
                 .getProperty(PropertyRegistry.CLIENT_USE_LEGACY_BUILDER);
         if (StringUtility.stringHasValue(prop)) {
-            useLegacyBuilder = Boolean.valueOf(prop);
+            useLegacyBuilder = Boolean.parseBoolean(prop);
         }
         SqlProviderGenerator sqlProviderGenerator = new SqlProviderGenerator(getProject(), useLegacyBuilder);
         sqlProviderGenerator.setContext(context);

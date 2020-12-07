@@ -29,19 +29,19 @@ import org.mybatis.generator.internal.util.JavaBeansUtil;
 
 public class FullyQualifiedTable {
 
-    private String introspectedCatalog;
-    private String introspectedSchema;
-    private String introspectedTableName;
-    private String runtimeCatalog;
-    private String runtimeSchema;
-    private String runtimeTableName;
+    private final String introspectedCatalog;
+    private final String introspectedSchema;
+    private final String introspectedTableName;
+    private final String runtimeCatalog;
+    private final String runtimeSchema;
+    private final String runtimeTableName;
     private String domainObjectName;
     private String domainObjectSubPackage;
-    private String alias;
-    private boolean ignoreQualifiersAtRuntime;
-    private String beginningDelimiter;
-    private String endingDelimiter;
-    private DomainObjectRenamingRule domainObjectRenamingRule;
+    private final String alias;
+    private final boolean ignoreQualifiersAtRuntime;
+    private final String beginningDelimiter;
+    private final String endingDelimiter;
+    private final DomainObjectRenamingRule domainObjectRenamingRule;
 
     /**
      * This object is used to hold information related to the table itself, not the columns in the

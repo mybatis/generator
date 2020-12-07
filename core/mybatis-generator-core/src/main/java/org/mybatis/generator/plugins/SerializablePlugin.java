@@ -43,8 +43,8 @@ import org.mybatis.generator.api.dom.kotlin.KotlinType;
  */
 public class SerializablePlugin extends PluginAdapter {
 
-    private FullyQualifiedJavaType serializable;
-    private FullyQualifiedJavaType gwtSerializable;
+    private final FullyQualifiedJavaType serializable;
+    private final FullyQualifiedJavaType gwtSerializable;
     private boolean addGWTInterface;
     private boolean suppressJavaInterface;
 
@@ -63,8 +63,8 @@ public class SerializablePlugin extends PluginAdapter {
     @Override
     public void setProperties(Properties properties) {
         super.setProperties(properties);
-        addGWTInterface = Boolean.valueOf(properties.getProperty("addGWTInterface")); //$NON-NLS-1$
-        suppressJavaInterface = Boolean.valueOf(properties.getProperty("suppressJavaInterface")); //$NON-NLS-1$
+        addGWTInterface = Boolean.parseBoolean(properties.getProperty("addGWTInterface")); //$NON-NLS-1$
+        suppressJavaInterface = Boolean.parseBoolean(properties.getProperty("suppressJavaInterface")); //$NON-NLS-1$
     }
 
     @Override

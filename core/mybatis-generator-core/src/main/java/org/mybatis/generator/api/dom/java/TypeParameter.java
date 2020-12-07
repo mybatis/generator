@@ -22,9 +22,9 @@ import org.mybatis.generator.api.dom.java.render.TypeParameterRenderer;
 
 public class TypeParameter {
 
-    private String name;
+    private final String name;
 
-    private List<FullyQualifiedJavaType> extendsTypes = new ArrayList<>();
+    private final List<FullyQualifiedJavaType> extendsTypes = new ArrayList<>();
 
     public TypeParameter(String name) {
         super();

@@ -55,19 +55,19 @@ import org.mybatis.generator.internal.XmlFileMergerJaxp;
  */
 public class MyBatisGenerator {
 
-    private Configuration configuration;
+    private final Configuration configuration;
 
-    private ShellCallback shellCallback;
+    private final ShellCallback shellCallback;
 
-    private List<GeneratedJavaFile> generatedJavaFiles = new ArrayList<>();
+    private final List<GeneratedJavaFile> generatedJavaFiles = new ArrayList<>();
 
-    private List<GeneratedXmlFile> generatedXmlFiles = new ArrayList<>();
+    private final List<GeneratedXmlFile> generatedXmlFiles = new ArrayList<>();
 
-    private List<GeneratedKotlinFile> generatedKotlinFiles = new ArrayList<>();
+    private final List<GeneratedKotlinFile> generatedKotlinFiles = new ArrayList<>();
 
-    private List<String> warnings;
+    private final List<String> warnings;
 
-    private Set<String> projects = new HashSet<>();
+    private final Set<String> projects = new HashSet<>();
 
     /**
      * Constructs a MyBatisGenerator object.

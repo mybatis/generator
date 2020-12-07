@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InnerInterface extends AbstractJavaType {
-    private List<TypeParameter> typeParameters = new ArrayList<>();
+    private final List<TypeParameter> typeParameters = new ArrayList<>();
 
     public InnerInterface(FullyQualifiedJavaType type) {
         super(type);

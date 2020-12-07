@@ -30,14 +30,13 @@ public class AnnotatedDeleteByExampleMethodGenerator extends
     @Override
     public void addMapperAnnotations(Method method) {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getMyBatis3SqlProviderType());
-        StringBuilder sb = new StringBuilder();
-        sb.append("@DeleteProvider(type="); //$NON-NLS-1$
-        sb.append(fqjt.getShortName());
-        sb.append(".class, method=\""); //$NON-NLS-1$
-        sb.append(introspectedTable.getDeleteByExampleStatementId());
-        sb.append("\")"); //$NON-NLS-1$
 
-        method.addAnnotation(sb.toString());
+        String s = "@DeleteProvider(type=" + //$NON-NLS-1$
+                fqjt.getShortName() +
+                ".class, method=\"" + //$NON-NLS-1$
+                introspectedTable.getDeleteByExampleStatementId() +
+                "\")";//$NON-NLS-1$
+        method.addAnnotation(s);
     }
 
     @Override

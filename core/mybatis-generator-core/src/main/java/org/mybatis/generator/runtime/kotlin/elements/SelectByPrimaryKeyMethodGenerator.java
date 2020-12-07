@@ -20,8 +20,8 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 import org.mybatis.generator.runtime.dynamic.sql.elements.Utils;
 
 public class SelectByPrimaryKeyMethodGenerator extends AbstractKotlinFunctionGenerator {
-    private String mapperName;
-    private KotlinFragmentGenerator fragmentGenerator;
+    private final String mapperName;
+    private final KotlinFragmentGenerator fragmentGenerator;
 
     private SelectByPrimaryKeyMethodGenerator(Builder builder) {
         super(builder);

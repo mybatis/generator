@@ -59,9 +59,9 @@ public class Context extends PropertyHolder {
 
     private JavaClientGeneratorConfiguration javaClientGeneratorConfiguration;
 
-    private ArrayList<TableConfiguration> tableConfigurations;
+    private final ArrayList<TableConfiguration> tableConfigurations;
 
-    private ModelType defaultModelType;
+    private final ModelType defaultModelType;
 
     private String beginningDelimiter = "\""; //$NON-NLS-1$
 
@@ -73,7 +73,7 @@ public class Context extends PropertyHolder {
 
     private PluginAggregator pluginAggregator;
 
-    private List<PluginConfiguration> pluginConfigurations;
+    private final List<PluginConfiguration> pluginConfigurations;
 
     private String targetRuntime;
 
@@ -332,7 +332,7 @@ public class Context extends PropertyHolder {
     // 4. generateFiles()
     //
 
-    private List<IntrospectedTable> introspectedTables = new ArrayList<>();
+    private final List<IntrospectedTable> introspectedTables = new ArrayList<>();
 
     /**
      * This method could be useful for users that use the library for introspection only
@@ -355,7 +355,7 @@ public class Context extends PropertyHolder {
         //
         // 1. Create introspected table implementation
 
-        steps += tableConfigurations.size() * 1;
+        steps += tableConfigurations.size();
 
         return steps;
     }
@@ -511,7 +511,7 @@ public class Context extends PropertyHolder {
 
     public boolean autoDelimitKeywords() {
         return autoDelimitKeywords != null
-                && autoDelimitKeywords.booleanValue();
+                && autoDelimitKeywords;
     }
 
     public ConnectionFactoryConfiguration getConnectionFactoryConfiguration() {

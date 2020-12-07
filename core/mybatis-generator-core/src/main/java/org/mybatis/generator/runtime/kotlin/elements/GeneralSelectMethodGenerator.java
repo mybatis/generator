@@ -20,7 +20,7 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 
 public class GeneralSelectMethodGenerator extends AbstractKotlinFunctionGenerator {
-    private String mapperName;
+    private final String mapperName;
 
     private GeneralSelectMethodGenerator(Builder builder) {
         super(builder);

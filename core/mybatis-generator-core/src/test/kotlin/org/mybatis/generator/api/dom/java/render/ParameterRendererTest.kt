@@ -24,56 +24,47 @@ import org.mybatis.generator.api.dom.java.TopLevelClass
 class ParameterRendererTest {
     @Test
     fun testBasicParameter() {
-        val renderer = ParameterRenderer();
+        val renderer = ParameterRenderer()
         val parameter = Parameter(FullyQualifiedJavaType.getStringInstance(), "firstName")
-
         assertThat(renderer.render(parameter, null)).isEqualTo("String firstName")
     }
 
     @Test
     fun testBasicParameterWithAnnotation() {
-        val renderer = ParameterRenderer();
+        val renderer = ParameterRenderer()
         val parameter = Parameter(FullyQualifiedJavaType.getStringInstance(), "firstName")
         parameter.addAnnotation("""@Param("firstName")""")
-
         assertThat(renderer.render(parameter, null)).isEqualTo("""@Param("firstName") String firstName""")
     }
-	
+
     @Test
     fun testBasicVarargsParameter() {
-        val renderer = ParameterRenderer();
+        val renderer = ParameterRenderer()
         val parameter = Parameter(FullyQualifiedJavaType.getStringInstance(), "names", true)
-
         assertThat(renderer.render(parameter, null)).isEqualTo("String ... names")
     }
 
     @Test
     fun testParameterAndCuInSamePackage() {
-        val renderer = ParameterRenderer();
+        val renderer = ParameterRenderer()
         val cu = TopLevelClass("com.foo.Baz")
         val parameter = Parameter(FullyQualifiedJavaType("com.foo.Bar"), "parm")
-
         assertThat(renderer.render(parameter, cu)).isEqualTo("Bar parm")
-	
     }
 
     @Test
     fun testParameterAndCuInSamePackageWithArguments() {
-        val renderer = ParameterRenderer();
+        val renderer = ParameterRenderer()
         val cu = TopLevelClass("com.foo.Baz")
         val parameter = Parameter(FullyQualifiedJavaType("com.foo.Bar<java.lang.String>"), "parm")
-
         assertThat(renderer.render(parameter, cu)).isEqualTo("Bar<String> parm")
-	
     }
 
     @Test
     fun testParameterAndCuInDifferentPackage() {
-        val renderer = ParameterRenderer();
+        val renderer = ParameterRenderer()
         val cu = TopLevelClass("com.bar.Foo")
         val parameter = Parameter(FullyQualifiedJavaType("com.foo.Bar"), "parm")
-
         assertThat(renderer.render(parameter, cu)).isEqualTo("com.foo.Bar parm")
-	
     }
 }

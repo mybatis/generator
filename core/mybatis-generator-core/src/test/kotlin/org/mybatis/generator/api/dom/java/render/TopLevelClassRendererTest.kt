@@ -27,11 +27,11 @@ class TopLevelClassRendererTest {
     @Test
     fun testGH467() {
         val topLevelClass = TopLevelClass("com.test.GH467")
-        topLevelClass.setVisibility(JavaVisibility.PUBLIC)
+        topLevelClass.visibility = JavaVisibility.PUBLIC
         topLevelClass.addImportedType(FullyQualifiedJavaType("java.util.List<java.math.BigDecimal>"))
 
         val field = Field("listVal", FullyQualifiedJavaType("java.util.List<java.math.BigDecimal>"))
-        field.setVisibility(JavaVisibility.PRIVATE)
+        field.visibility = JavaVisibility.PRIVATE
         topLevelClass.addField(field)
 
         val renderedTlc = TopLevelClassRenderer().render(topLevelClass)

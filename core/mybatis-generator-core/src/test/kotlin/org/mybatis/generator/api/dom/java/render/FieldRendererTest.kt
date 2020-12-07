@@ -38,7 +38,7 @@ class FieldRendererTest {
     @Test
     fun testPrivateFieldWithInitializationString() {
         val f = Field("name", FullyQualifiedJavaType.getStringInstance())
-        f.setVisibility(JavaVisibility.PRIVATE)
+        f.visibility = JavaVisibility.PRIVATE
         f.setInitializationString(""""Fred"""")
         assertThat(toString(f)).isEqualTo("""private String name = "Fred";""")
     }
@@ -46,9 +46,9 @@ class FieldRendererTest {
     @Test
     fun testPrivateStaticFieldWithInitializationString() {
         val f = Field("name", FullyQualifiedJavaType.getStringInstance())
-        f.setVisibility(JavaVisibility.PRIVATE)
-	f.setStatic(true)
-	f.setFinal(true)
+        f.visibility = JavaVisibility.PRIVATE
+        f.isStatic = true
+        f.isFinal = true
         f.setInitializationString(""""Fred"""")
         assertThat(toString(f)).isEqualTo("""private static final String name = "Fred";""")
     }
@@ -56,9 +56,9 @@ class FieldRendererTest {
     @Test
     fun testPrivateTransientFieldWithInitializationString() {
         val f = Field("name", FullyQualifiedJavaType.getStringInstance())
-        f.setVisibility(JavaVisibility.PRIVATE)
-	f.setTransient(true)
-	f.setVolatile(true)
+        f.visibility = JavaVisibility.PRIVATE
+        f.isTransient = true
+        f.isVolatile = true
         f.setInitializationString(""""Fred"""")
         assertThat(toString(f)).isEqualTo("""private transient volatile String name = "Fred";""")
     }
@@ -66,14 +66,14 @@ class FieldRendererTest {
     @Test
     fun testPrivateFieldWithInitializationStringJavadocAndAnnotations() {
         val f = Field("name", FullyQualifiedJavaType.getStringInstance())
-        f.setVisibility(JavaVisibility.PRIVATE)
+        f.visibility = JavaVisibility.PRIVATE
         f.setInitializationString(""""Fred"""")
-	
-	f.addAnnotation("@Generated")
-	f.addJavaDocLine("/**")
-	f.addJavaDocLine(" * Some Javadoc")
-	f.addJavaDocLine(" */")
-		
+
+        f.addAnnotation("@Generated")
+        f.addJavaDocLine("/**")
+        f.addJavaDocLine(" * Some Javadoc")
+        f.addJavaDocLine(" */")
+
         assertThat(toString(f)).isEqualToNormalizingNewlines("""
                 |/**
                 | * Some Javadoc

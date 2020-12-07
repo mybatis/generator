@@ -25,10 +25,10 @@ class InitializationBlockRendererTest {
     fun testStaticBlock() {
         val block = InitializationBlock(true)
 
-	block.addJavaDocLine("/**")
-	block.addJavaDocLine(" * Some Javadoc")
-	block.addJavaDocLine(" */")
-	block.addBodyLine("i = 3;")
+        block.addJavaDocLine("/**")
+        block.addJavaDocLine(" * Some Javadoc")
+        block.addJavaDocLine(" */")
+        block.addBodyLine("i = 3;")
 
         assertThat(toString(block)).isEqualToNormalizingNewlines("""
                 |/**
@@ -44,10 +44,10 @@ class InitializationBlockRendererTest {
     fun testNonStaticBlock() {
         val block = InitializationBlock()
 
-	block.addJavaDocLine("/**")
-	block.addJavaDocLine(" * Some Javadoc")
-	block.addJavaDocLine(" */")
-	block.addBodyLine("i = 3;")
+        block.addJavaDocLine("/**")
+        block.addJavaDocLine(" * Some Javadoc")
+        block.addJavaDocLine(" */")
+        block.addBodyLine("i = 3;")
 
         assertThat(toString(block)).isEqualToNormalizingNewlines("""
                 |/**

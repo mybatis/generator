@@ -30,7 +30,7 @@ class XmlRendererTest {
     fun testNoDoctypeAndEmptyRoot() {
         val doc = Document()
         val root = XmlElement("root")
-        doc.setRootElement(root)
+        doc.rootElement = root
 
         val expected = """
                 |<?xml version="1.0" encoding="UTF-8"?>
@@ -45,7 +45,7 @@ class XmlRendererTest {
     fun testSystemDoctypeAndEmptyRoot() {
         val doc = Document("http://somedtd.com")
         val root = XmlElement("root")
-        doc.setRootElement(root)
+        doc.rootElement = root
 
         val expected = """
                 |<?xml version="1.0" encoding="UTF-8"?>
@@ -60,7 +60,7 @@ class XmlRendererTest {
     fun testDoctypeAndEmptyRoot() {
         val doc = Document("--/PublicId", "http://somedtd.com")
         val root = XmlElement("root")
-        doc.setRootElement(root);
+        doc.rootElement = root
 
         val expected = """
                 |<?xml version="1.0" encoding="UTF-8"?>
@@ -76,7 +76,7 @@ class XmlRendererTest {
         val doc = Document("--/PublicId", "http://somedtd.com")
         val root = XmlElement("root")
         root.addAttribute(Attribute("name", "fred"))
-        doc.setRootElement(root)
+        doc.rootElement = root
 
         val expected = """
                 |<?xml version="1.0" encoding="UTF-8"?>
@@ -84,7 +84,7 @@ class XmlRendererTest {
                 |<root name="fred" />""".trimMargin()
 
         val formatter = DefaultXmlFormatter()
-        assertThat(formatter.getFormattedContent(doc)).isEqualToNormalizingNewlines(expected);
+        assertThat(formatter.getFormattedContent(doc)).isEqualToNormalizingNewlines(expected)
     }
 
     @Test
@@ -93,7 +93,7 @@ class XmlRendererTest {
         val root = XmlElement("root")
         root.addAttribute(Attribute("firstName", "Fred"))
         root.addAttribute(Attribute("lastName", "Flintstone"))
-        doc.setRootElement(root)
+        doc.rootElement = root
 
         val expected = """
                 |<?xml version="1.0" encoding="UTF-8"?>
@@ -101,7 +101,7 @@ class XmlRendererTest {
                 |<root firstName="Fred" lastName="Flintstone" />""".trimMargin()
 
         val formatter = DefaultXmlFormatter()
-        assertThat(formatter.getFormattedContent(doc)).isEqualToNormalizingNewlines(expected);
+        assertThat(formatter.getFormattedContent(doc)).isEqualToNormalizingNewlines(expected)
     }
 
     @Test
@@ -110,20 +110,20 @@ class XmlRendererTest {
         val root = XmlElement("root")
         root.addAttribute(Attribute("firstName", "Fred"))
         root.addAttribute(Attribute("lastName", "Flintstone"))
-        
-        root.addElement(TextElement("some content"));
-        
-        doc.setRootElement(root);
+
+        root.addElement(TextElement("some content"))
+
+        doc.rootElement = root
 
         val expected = """
                 |<?xml version="1.0" encoding="UTF-8"?>
                 |<!DOCTYPE root PUBLIC "--/PublicId" "http://somedtd.com">
                 |<root firstName="Fred" lastName="Flintstone">
                 |  some content
-                |</root>""".trimMargin();
+                |</root>""".trimMargin()
 
         val formatter = DefaultXmlFormatter()
-        assertThat(formatter.getFormattedContent(doc)).isEqualToNormalizingNewlines(expected);
+        assertThat(formatter.getFormattedContent(doc)).isEqualToNormalizingNewlines(expected)
     }
 
     @Test
@@ -133,8 +133,8 @@ class XmlRendererTest {
         root.addAttribute(Attribute("firstName", "Fred"))
         root.addAttribute(Attribute("lastName", "Flintstone"))
 
-        root.addElement(TextElement("some content"));
-        
+        root.addElement(TextElement("some content"))
+
         val child = XmlElement("child")
         child.addAttribute(Attribute("firstName", "Pebbles"))
         child.addAttribute(Attribute("lastName", "Flintstone"))
@@ -151,7 +151,7 @@ class XmlRendererTest {
 
         root.addElement(pet)
 
-        doc.setRootElement(root);
+        doc.rootElement = root
 
         val expected = """
                 |<?xml version="1.0" encoding="UTF-8"?>
@@ -167,9 +167,9 @@ class XmlRendererTest {
                 |      Flintstone
                 |    </lastName>
                 |  </pet>
-                |</root>""".trimMargin();
+                |</root>""".trimMargin()
 
         val formatter = DefaultXmlFormatter()
-        assertThat(formatter.getFormattedContent(doc)).isEqualToNormalizingNewlines(expected);
+        assertThat(formatter.getFormattedContent(doc)).isEqualToNormalizingNewlines(expected)
     }
 }

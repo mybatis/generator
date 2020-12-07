@@ -66,10 +66,6 @@ public class GeneratedKey {
         return runtimeSqlStatement;
     }
 
-    public String getType() {
-        return type;
-    }
-
     public String getMyBatis3Order() {
         return isIdentity ? "AFTER" : "BEFORE"; //$NON-NLS-1$ //$NON-NLS-2$
     }

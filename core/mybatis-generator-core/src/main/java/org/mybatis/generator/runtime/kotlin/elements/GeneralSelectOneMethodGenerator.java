@@ -52,7 +52,7 @@ public class GeneralSelectOneMethodGenerator extends AbstractKotlinFunctionGener
         return context.getPlugins().clientSelectOneMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, GeneralSelectOneMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
         private String mapperName;
 
         public Builder withMapperName(String mapperName) {
@@ -65,7 +65,6 @@ public class GeneralSelectOneMethodGenerator extends AbstractKotlinFunctionGener
             return this;
         }
 
-        @Override
         public GeneralSelectOneMethodGenerator build() {
             return new GeneralSelectOneMethodGenerator(this);
         }

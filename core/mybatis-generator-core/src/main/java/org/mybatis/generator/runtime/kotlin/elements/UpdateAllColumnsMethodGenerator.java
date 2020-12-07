@@ -67,7 +67,7 @@ public class UpdateAllColumnsMethodGenerator extends AbstractKotlinFunctionGener
                 introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, UpdateAllColumnsMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
         private FullyQualifiedKotlinType recordType;
         private KotlinFragmentGenerator fragmentGenerator;
 
@@ -86,7 +86,6 @@ public class UpdateAllColumnsMethodGenerator extends AbstractKotlinFunctionGener
             return this;
         }
 
-        @Override
         public UpdateAllColumnsMethodGenerator build() {
             return new UpdateAllColumnsMethodGenerator(this);
         }

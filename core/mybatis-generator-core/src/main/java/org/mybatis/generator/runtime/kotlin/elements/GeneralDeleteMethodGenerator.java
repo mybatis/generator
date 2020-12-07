@@ -50,7 +50,7 @@ public class GeneralDeleteMethodGenerator extends AbstractKotlinFunctionGenerato
         return context.getPlugins().clientGeneralDeleteMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, GeneralDeleteMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
         private String mapperName;
 
         public Builder withMapperName(String mapperName) {
@@ -63,7 +63,6 @@ public class GeneralDeleteMethodGenerator extends AbstractKotlinFunctionGenerato
             return this;
         }
 
-        @Override
         public GeneralDeleteMethodGenerator build() {
             return new GeneralDeleteMethodGenerator(this);
         }

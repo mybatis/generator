@@ -18,13 +18,12 @@ package org.mybatis.generator.api;
 import static org.mybatis.generator.internal.util.StringUtility.composeFullyQualifiedTableName;
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.DomainObjectRenamingRule;
-import org.mybatis.generator.internal.util.EqualsUtil;
-import org.mybatis.generator.internal.util.HashCodeUtil;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
 
 public class FullyQualifiedTable {
@@ -224,19 +223,14 @@ public class FullyQualifiedTable {
 
         FullyQualifiedTable other = (FullyQualifiedTable) obj;
 
-        return EqualsUtil.areEqual(this.introspectedTableName, other.introspectedTableName)
-                && EqualsUtil.areEqual(this.introspectedCatalog, other.introspectedCatalog)
-                && EqualsUtil.areEqual(this.introspectedSchema, other.introspectedSchema);
+        return Objects.equals(this.introspectedTableName, other.introspectedTableName)
+                && Objects.equals(this.introspectedCatalog, other.introspectedCatalog)
+                && Objects.equals(this.introspectedSchema, other.introspectedSchema);
     }
 
     @Override
     public int hashCode() {
-        int result = HashCodeUtil.SEED;
-        result = HashCodeUtil.hash(result, introspectedTableName);
-        result = HashCodeUtil.hash(result, introspectedCatalog);
-        result = HashCodeUtil.hash(result, introspectedSchema);
-
-        return result;
+        return Objects.hash(introspectedTableName, introspectedCatalog, introspectedCatalog);
     }
 
     @Override

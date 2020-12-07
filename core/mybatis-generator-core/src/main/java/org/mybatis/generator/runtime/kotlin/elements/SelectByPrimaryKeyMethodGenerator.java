@@ -56,7 +56,7 @@ public class SelectByPrimaryKeyMethodGenerator extends AbstractKotlinFunctionGen
                 introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, SelectByPrimaryKeyMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
         private String mapperName;
         private KotlinFragmentGenerator fragmentGenerator;
 
@@ -75,7 +75,6 @@ public class SelectByPrimaryKeyMethodGenerator extends AbstractKotlinFunctionGen
             return this;
         }
 
-        @Override
         public SelectByPrimaryKeyMethodGenerator build() {
             return new SelectByPrimaryKeyMethodGenerator(this);
         }

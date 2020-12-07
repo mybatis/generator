@@ -61,7 +61,7 @@ public class BasicSelectManyMethodGenerator extends AbstractKotlinFunctionGenera
         return context.getPlugins().clientBasicSelectManyMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, BasicSelectManyMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
         private FullyQualifiedKotlinType recordType;
         private KotlinFragmentGenerator fragmentGenerator;
 
@@ -80,7 +80,6 @@ public class BasicSelectManyMethodGenerator extends AbstractKotlinFunctionGenera
             return this;
         }
 
-        @Override
         public BasicSelectManyMethodGenerator build() {
             return new BasicSelectManyMethodGenerator(this);
         }

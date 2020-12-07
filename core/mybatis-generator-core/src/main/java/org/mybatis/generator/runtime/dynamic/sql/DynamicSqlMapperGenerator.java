@@ -185,7 +185,6 @@ public class DynamicSqlMapperGenerator extends AbstractDynamicSqlMapperGenerator
         if (fieldAndImports != null && generator.callPlugins(fieldAndImports.getField(), interfaze)) {
             interfaze.addField(fieldAndImports.getField());
             interfaze.addImportedTypes(fieldAndImports.getImports());
-            interfaze.addStaticImports(fieldAndImports.getStaticImports());
         }
     }
 

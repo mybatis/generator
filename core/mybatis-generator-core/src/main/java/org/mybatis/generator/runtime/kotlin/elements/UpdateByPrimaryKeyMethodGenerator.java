@@ -70,7 +70,7 @@ public class UpdateByPrimaryKeyMethodGenerator extends AbstractKotlinFunctionGen
                 kotlinFile, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, UpdateByPrimaryKeyMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
         private FullyQualifiedKotlinType recordType;
         private KotlinFragmentGenerator fragmentGenerator;
         private String mapperName;
@@ -95,7 +95,6 @@ public class UpdateByPrimaryKeyMethodGenerator extends AbstractKotlinFunctionGen
             return this;
         }
 
-        @Override
         public UpdateByPrimaryKeyMethodGenerator build() {
             return new UpdateByPrimaryKeyMethodGenerator(this);
         }

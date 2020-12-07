@@ -19,13 +19,8 @@ import static org.mybatis.generator.internal.util.StringUtility.composeFullyQual
 import static org.mybatis.generator.internal.util.StringUtility.isTrue;
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import org.mybatis.generator.internal.util.EqualsUtil;
-import org.mybatis.generator.internal.util.HashCodeUtil;
 import org.mybatis.generator.internal.util.messages.Messages;
 
 public class TableConfiguration extends PropertyHolder {
@@ -178,19 +173,14 @@ public class TableConfiguration extends PropertyHolder {
 
         TableConfiguration other = (TableConfiguration) obj;
 
-        return EqualsUtil.areEqual(this.catalog, other.catalog)
-                && EqualsUtil.areEqual(this.schema, other.schema)
-                && EqualsUtil.areEqual(this.tableName, other.tableName);
+        return Objects.equals(this.catalog, other.catalog)
+                && Objects.equals(this.schema, other.schema)
+                && Objects.equals(this.tableName, other.tableName);
     }
 
     @Override
     public int hashCode() {
-        int result = HashCodeUtil.SEED;
-        result = HashCodeUtil.hash(result, catalog);
-        result = HashCodeUtil.hash(result, schema);
-        result = HashCodeUtil.hash(result, tableName);
-
-        return result;
+        return Objects.hash(catalog, schema, tableName);
     }
 
     public boolean isSelectByExampleStatementEnabled() {

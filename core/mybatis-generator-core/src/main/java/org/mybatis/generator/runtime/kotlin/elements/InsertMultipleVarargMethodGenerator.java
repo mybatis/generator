@@ -57,7 +57,7 @@ public class InsertMultipleVarargMethodGenerator extends AbstractKotlinFunctionG
                 introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, InsertMultipleVarargMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
         private FullyQualifiedKotlinType recordType;
         private String mapperName;
 
@@ -76,7 +76,6 @@ public class InsertMultipleVarargMethodGenerator extends AbstractKotlinFunctionG
             return this;
         }
 
-        @Override
         public InsertMultipleVarargMethodGenerator build() {
             return new InsertMultipleVarargMethodGenerator(this);
         }

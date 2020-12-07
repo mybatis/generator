@@ -55,7 +55,7 @@ public class GeneralCountMethodGenerator extends AbstractKotlinFunctionGenerator
         return context.getPlugins().clientGeneralCountMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, GeneralCountMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
         private String mapperName;
         private String tableFieldImport;
 
@@ -74,7 +74,6 @@ public class GeneralCountMethodGenerator extends AbstractKotlinFunctionGenerator
             return this;
         }
 
-        @Override
         public GeneralCountMethodGenerator build() {
             return new GeneralCountMethodGenerator(this);
         }

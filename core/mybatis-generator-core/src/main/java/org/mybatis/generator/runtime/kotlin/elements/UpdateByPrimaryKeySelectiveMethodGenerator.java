@@ -70,7 +70,7 @@ public class UpdateByPrimaryKeySelectiveMethodGenerator extends AbstractKotlinFu
                 .clientUpdateByPrimaryKeySelectiveMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, UpdateByPrimaryKeySelectiveMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
         private FullyQualifiedKotlinType recordType;
         private KotlinFragmentGenerator fragmentGenerator;
         private String mapperName;
@@ -95,7 +95,6 @@ public class UpdateByPrimaryKeySelectiveMethodGenerator extends AbstractKotlinFu
             return this;
         }
 
-        @Override
         public UpdateByPrimaryKeySelectiveMethodGenerator build() {
             return new UpdateByPrimaryKeySelectiveMethodGenerator(this);
         }

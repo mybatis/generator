@@ -89,7 +89,7 @@ public class InsertMultipleMethodGenerator extends AbstractKotlinFunctionGenerat
         return context.getPlugins().clientInsertMultipleMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, InsertMultipleMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
         private FullyQualifiedKotlinType recordType;
         private String mapperName;
         private String tableFieldImport;
@@ -114,7 +114,6 @@ public class InsertMultipleMethodGenerator extends AbstractKotlinFunctionGenerat
             return this;
         }
 
-        @Override
         public InsertMultipleMethodGenerator build() {
             return new InsertMultipleMethodGenerator(this);
         }

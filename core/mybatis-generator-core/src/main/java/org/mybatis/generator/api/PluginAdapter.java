@@ -46,17 +46,9 @@ public abstract class PluginAdapter implements Plugin {
         properties = new Properties();
     }
 
-    public Context getContext() {
-        return context;
-    }
-
     @Override
     public void setContext(Context context) {
         this.context = context;
-    }
-
-    public Properties getProperties() {
-        return properties;
     }
 
     @Override

@@ -64,7 +64,7 @@ public class BasicMultipleInsertHelperMethodGenerator extends AbstractKotlinFunc
                 introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, BasicMultipleInsertHelperMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
 
         private FullyQualifiedKotlinType recordType;
         private String mapperName;
@@ -84,7 +84,6 @@ public class BasicMultipleInsertHelperMethodGenerator extends AbstractKotlinFunc
             return this;
         }
 
-        @Override
         public BasicMultipleInsertHelperMethodGenerator build() {
             return new BasicMultipleInsertHelperMethodGenerator(this);
         }

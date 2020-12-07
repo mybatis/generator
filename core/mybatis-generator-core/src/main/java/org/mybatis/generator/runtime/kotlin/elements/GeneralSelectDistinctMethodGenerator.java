@@ -51,7 +51,7 @@ public class GeneralSelectDistinctMethodGenerator extends AbstractKotlinFunction
                 introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, GeneralSelectDistinctMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
         private String mapperName;
 
         public Builder withMapperName(String mapperName) {
@@ -64,7 +64,6 @@ public class GeneralSelectDistinctMethodGenerator extends AbstractKotlinFunction
             return this;
         }
 
-        @Override
         public GeneralSelectDistinctMethodGenerator build() {
             return new GeneralSelectDistinctMethodGenerator(this);
         }

@@ -71,7 +71,7 @@ public class BasicInsertMethodGenerator extends AbstractKotlinFunctionGenerator 
         return context.getPlugins().clientBasicInsertMethodGenerated(function, kotlinFile, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, BasicInsertMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
 
         private FullyQualifiedKotlinType recordType;
         private KotlinFragmentGenerator fragmentGenerator;
@@ -97,7 +97,6 @@ public class BasicInsertMethodGenerator extends AbstractKotlinFunctionGenerator 
             return this;
         }
 
-        @Override
         public BasicInsertMethodGenerator build() {
             return new BasicInsertMethodGenerator(this);
         }

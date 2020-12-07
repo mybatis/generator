@@ -68,7 +68,7 @@ public class UpdateSelectiveColumnsMethodGenerator extends AbstractKotlinFunctio
                 introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, UpdateSelectiveColumnsMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
         private FullyQualifiedKotlinType recordType;
         private KotlinFragmentGenerator fragmentGenerator;
 
@@ -87,7 +87,6 @@ public class UpdateSelectiveColumnsMethodGenerator extends AbstractKotlinFunctio
             return this;
         }
 
-        @Override
         public UpdateSelectiveColumnsMethodGenerator build() {
             return new UpdateSelectiveColumnsMethodGenerator(this);
         }

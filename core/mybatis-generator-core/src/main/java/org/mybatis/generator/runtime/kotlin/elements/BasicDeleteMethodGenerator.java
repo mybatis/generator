@@ -49,14 +49,13 @@ public class BasicDeleteMethodGenerator extends AbstractKotlinFunctionGenerator 
         return context.getPlugins().clientBasicDeleteMethodGenerated(function, kotlinFile, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, BasicDeleteMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
 
         @Override
         public Builder getThis() {
             return this;
         }
 
-        @Override
         public BasicDeleteMethodGenerator build() {
             return new BasicDeleteMethodGenerator(this);
         }

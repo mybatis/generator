@@ -51,11 +51,6 @@ public class KotlinPropertyAndImports {
             return this;
         }
 
-        public Builder withImport(String im) {
-            this.imports.add(im);
-            return this;
-        }
-
         public Builder withImports(Set<String> imports) {
             this.imports.addAll(imports);
             return this;

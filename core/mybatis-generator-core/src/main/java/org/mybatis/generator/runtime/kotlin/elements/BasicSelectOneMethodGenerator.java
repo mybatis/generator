@@ -73,7 +73,7 @@ public class BasicSelectOneMethodGenerator extends AbstractKotlinFunctionGenerat
         return context.getPlugins().clientBasicSelectOneMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, BasicSelectOneMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
 
         private FullyQualifiedKotlinType recordType;
         private String resultMapId;
@@ -99,7 +99,6 @@ public class BasicSelectOneMethodGenerator extends AbstractKotlinFunctionGenerat
             return this;
         }
 
-        @Override
         public BasicSelectOneMethodGenerator build() {
             return new BasicSelectOneMethodGenerator(this);
         }

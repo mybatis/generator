@@ -49,7 +49,7 @@ public class GeneralUpdateMethodGenerator extends AbstractKotlinFunctionGenerato
         return context.getPlugins().clientGeneralUpdateMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, GeneralUpdateMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
         private String mapperName;
 
         public Builder withMapperName(String mapperName) {
@@ -62,7 +62,6 @@ public class GeneralUpdateMethodGenerator extends AbstractKotlinFunctionGenerato
             return this;
         }
 
-        @Override
         public GeneralUpdateMethodGenerator build() {
             return new GeneralUpdateMethodGenerator(this);
         }

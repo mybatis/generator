@@ -26,7 +26,7 @@ public abstract class AbstractKotlinFunctionGenerator {
     protected final IntrospectedTable introspectedTable;
     protected final String tableFieldName;
 
-    protected AbstractKotlinFunctionGenerator(BaseBuilder<?, ?> builder) {
+    protected AbstractKotlinFunctionGenerator(BaseBuilder<?> builder) {
         context = builder.context;
         introspectedTable = builder.introspectedTable;
         tableFieldName = builder.tableFieldName;
@@ -68,7 +68,7 @@ public abstract class AbstractKotlinFunctionGenerator {
 
     public abstract boolean callPlugins(KotlinFunction method, KotlinFile kotlinFile);
 
-    public abstract static class BaseBuilder<T extends BaseBuilder<T, R>, R> {
+    public abstract static class BaseBuilder<T extends BaseBuilder<T>> {
         private Context context;
         private IntrospectedTable introspectedTable;
         private String tableFieldName;
@@ -89,7 +89,5 @@ public abstract class AbstractKotlinFunctionGenerator {
         }
 
         public abstract T getThis();
-
-        public abstract R build();
     }
 }

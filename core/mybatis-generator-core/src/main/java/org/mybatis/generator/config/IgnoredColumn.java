@@ -37,10 +37,6 @@ public class IgnoredColumn {
         return columnName;
     }
 
-    public boolean isColumnNameDelimited() {
-        return isColumnNameDelimited;
-    }
-
     public void setColumnNameDelimited(boolean isColumnNameDelimited) {
         this.isColumnNameDelimited = isColumnNameDelimited;
     }

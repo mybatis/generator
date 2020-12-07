@@ -82,14 +82,4 @@ public class Configuration {
     public void addContext(Context context) {
         contexts.add(context);
     }
-
-    public Context getContext(String id) {
-        for (Context context : contexts) {
-            if (id.equals(context.getId())) {
-                return context;
-            }
-        }
-
-        return null;
-    }
 }

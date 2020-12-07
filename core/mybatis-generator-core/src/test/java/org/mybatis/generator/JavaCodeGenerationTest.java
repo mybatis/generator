@@ -33,11 +33,11 @@ import org.mybatis.generator.internal.DefaultShellCallback;
 import com.github.javaparser.ParseProblemException;
 import com.github.javaparser.StaticJavaParser;
 
-public class JavaCodeGenerationTest {
+class JavaCodeGenerationTest {
 
     @ParameterizedTest
     @MethodSource("generateJavaFiles")
-    public void testJavaParse(GeneratedJavaFile generatedJavaFile) {
+    void testJavaParse(GeneratedJavaFile generatedJavaFile) {
         DefaultJavaFormatter formatter = new DefaultJavaFormatter();
 
         ByteArrayInputStream is = new ByteArrayInputStream(
@@ -49,24 +49,24 @@ public class JavaCodeGenerationTest {
         }
     }
 
-    public static List<GeneratedJavaFile> generateJavaFiles() throws Exception {
+    static List<GeneratedJavaFile> generateJavaFiles() throws Exception {
         List<GeneratedJavaFile> generatedFiles = new ArrayList<>();
         generatedFiles.addAll(generateJavaFilesMybatis());
         generatedFiles.addAll(generateJavaFilesMybatisDsql());
         return generatedFiles;
     }
 
-    private static List<GeneratedJavaFile> generateJavaFilesMybatis() throws Exception {
+    static List<GeneratedJavaFile> generateJavaFilesMybatis() throws Exception {
         createDatabase();
         return generateJavaFiles("/scripts/generatorConfig.xml");
     }
 
-    private static List<GeneratedJavaFile> generateJavaFilesMybatisDsql() throws Exception {
+    static List<GeneratedJavaFile> generateJavaFilesMybatisDsql() throws Exception {
         createDatabase();
         return generateJavaFiles("/scripts/generatorConfig_Dsql.xml");
     }
 
-    private static List<GeneratedJavaFile> generateJavaFiles(String configFile) throws Exception {
+    static List<GeneratedJavaFile> generateJavaFiles(String configFile) throws Exception {
         List<String> warnings = new ArrayList<>();
         ConfigurationParser cp = new ConfigurationParser(warnings);
         Configuration config = cp.parseConfiguration(JavaCodeGenerationTest.class.getResourceAsStream(configFile));
@@ -78,7 +78,7 @@ public class JavaCodeGenerationTest {
         return myBatisGenerator.getGeneratedJavaFiles();
     }
 
-    public static void createDatabase() throws Exception {
+    static void createDatabase() throws Exception {
         SqlScriptRunner scriptRunner = new SqlScriptRunner(JavaCodeGenerationTest.class.getResourceAsStream("/scripts/CreateDB.sql"), "org.hsqldb.jdbcDriver", "jdbc:hsqldb:mem:aname", "sa", "");
         scriptRunner.executeScript();
     }

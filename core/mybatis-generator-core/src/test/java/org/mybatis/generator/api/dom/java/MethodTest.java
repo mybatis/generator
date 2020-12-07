@@ -24,12 +24,12 @@ import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 import org.mybatis.generator.api.dom.java.render.MethodRenderer;
 
-public class MethodTest {
+class MethodTest {
 
     private static final String LINE_SEPARATOR = System.getProperty("line.separator");
 
     @Test
-    public void testConstructor() {
+    void testConstructor() {
 
         Method method = new Method("bar");
         assertNotNull(method);
@@ -37,7 +37,7 @@ public class MethodTest {
     }
 
     @Test
-    public void testConstructorByName() {
+    void testConstructorByName() {
 
         Method method = new Method("foo");
         assertNotNull(method);
@@ -45,7 +45,7 @@ public class MethodTest {
     }
 
     @Test
-    public void testConstructorByMethod() {
+    void testConstructorByMethod() {
 
         Method original = new Method("foo");
         original.setConstructor(false);
@@ -67,11 +67,11 @@ public class MethodTest {
         Method method = new Method(original);
         assertNotNull(method);
         assertEquals("foo", method.getName());
-        assertEquals(false, method.isConstructor());
+        assertFalse(method.isConstructor());
         assertEquals(JavaVisibility.PUBLIC, method.getVisibility());
-        assertEquals(true, method.isStatic());
-        assertEquals(true, method.isSynchronized());
-        assertEquals(true, method.isFinal());
+        assertTrue(method.isStatic());
+        assertTrue(method.isSynchronized());
+        assertTrue(method.isFinal());
         assertEquals(1, method.getParameters().size());
         assertEquals("t", method.getParameters().get(0).getName());
         assertEquals("T", method.getParameters().get(0).getType().getShortName());
@@ -82,7 +82,7 @@ public class MethodTest {
     }
 
     @Test
-    public void testAddBodyLines() {
+    void testAddBodyLines() {
 
         Method method = new Method("bar");
         assertEquals(0, method.getBodyLines().size());
@@ -109,17 +109,17 @@ public class MethodTest {
     }
 
     @Test
-    public void testSetConstructor() {
+    void testSetConstructor() {
 
         Method method = new Method("Bar");
-        assertEquals(false, method.isConstructor());
+        assertFalse(method.isConstructor());
 
         method.setConstructor(true);
-        assertEquals(true, method.isConstructor());
+        assertTrue(method.isConstructor());
     }
 
     @Test
-    public void testSetName() {
+    void testSetName() {
 
         Method method = new Method("bar");
         assertEquals("bar", method.getName());
@@ -129,7 +129,7 @@ public class MethodTest {
     }
 
     @Test
-    public void testAddTypeParamaters() {
+    void testAddTypeParamaters() {
 
         Method method = new Method("bar");
         assertEquals(0, method.getTypeParameters().size());
@@ -145,7 +145,7 @@ public class MethodTest {
     }
 
     @Test
-    public void testAddParamaters() {
+    void testAddParamaters() {
 
         Method method = new Method("bar");
         assertEquals(0, method.getParameters().size());
@@ -161,8 +161,7 @@ public class MethodTest {
     }
 
     @Test
-    public void testSetReturnType() {
-
+    void testSetReturnType() {
         Method method = new Method("bar");
         assertFalse(method.getReturnType().isPresent());
 
@@ -171,8 +170,7 @@ public class MethodTest {
     }
 
     @Test
-    public void testAddExceptions() {
-
+    void testAddExceptions() {
         Method method = new Method("bar");
         assertEquals(0, method.getExceptions().size());
 
@@ -182,26 +180,23 @@ public class MethodTest {
     }
 
     @Test
-    public void testSetSynchronized() {
-
+    void testSetSynchronized() {
         Method method = new Method("bar");
-        assertEquals(false, method.isSynchronized());
+        assertFalse(method.isSynchronized());
         method.setSynchronized(true);
-        assertEquals(true, method.isSynchronized());
+        assertTrue(method.isSynchronized());
     }
 
     @Test
-    public void testSetNative() {
-
+    void testSetNative() {
         Method method = new Method("bar");
-        assertEquals(false, method.isNative());
+        assertFalse(method.isNative());
         method.setNative(true);
-        assertEquals(true, method.isNative());
+        assertTrue(method.isNative());
     }
 
     @Test
-    public void testGetFormattedContent() {
-
+    void testGetFormattedContent() {
         Method method = new Method("foo");
         method.setConstructor(false);
         method.setVisibility(JavaVisibility.PUBLIC);

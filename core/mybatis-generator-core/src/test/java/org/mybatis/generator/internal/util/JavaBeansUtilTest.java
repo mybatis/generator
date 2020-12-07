@@ -27,17 +27,10 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
  * @author Jeff Butler
  *
  */
-public class JavaBeansUtilTest {
-
-    /**
-     *
-     */
-    public JavaBeansUtilTest() {
-        super();
-    }
+class JavaBeansUtilTest {
 
     @Test
-    public void testGetValidPropertyName() {
+    void testGetValidPropertyName() {
         assertEquals("eMail", getValidPropertyName("eMail")); //$NON-NLS-1$ //$NON-NLS-2$
         assertEquals("firstName", getValidPropertyName("firstName")); //$NON-NLS-1$ //$NON-NLS-2$
         assertEquals("URL", getValidPropertyName("URL")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -51,7 +44,7 @@ public class JavaBeansUtilTest {
     }
 
     @Test
-    public void testGetGetterMethodName() {
+    void testGetGetterMethodName() {
         assertEquals("geteMail", getGetterMethodName("eMail", FullyQualifiedJavaType.getStringInstance())); //$NON-NLS-1$ //$NON-NLS-2$
         assertEquals("getFirstName", getGetterMethodName("firstName", FullyQualifiedJavaType.getStringInstance())); //$NON-NLS-1$ //$NON-NLS-2$
         assertEquals("getURL", getGetterMethodName("URL", FullyQualifiedJavaType.getStringInstance())); //$NON-NLS-1$ //$NON-NLS-2$
@@ -64,7 +57,7 @@ public class JavaBeansUtilTest {
     }
 
     @Test
-    public void testGetSetterMethodName() {
+    void testGetSetterMethodName() {
         assertEquals("seteMail", getSetterMethodName("eMail")); //$NON-NLS-1$ //$NON-NLS-2$
         assertEquals("setFirstName", getSetterMethodName("firstName")); //$NON-NLS-1$ //$NON-NLS-2$
         assertEquals("setURL", getSetterMethodName("URL")); //$NON-NLS-1$ //$NON-NLS-2$

@@ -38,11 +38,11 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-public class XmlCodeGenerationTest {
+class XmlCodeGenerationTest {
 
     @ParameterizedTest
     @MethodSource("generateXmlFiles")
-    public void testXmlParse(GeneratedXmlFile generatedXmlFile) {
+    void testXmlParse(GeneratedXmlFile generatedXmlFile) {
         ByteArrayInputStream is = new ByteArrayInputStream(
                 generatedXmlFile.getFormattedContent().getBytes());
         try {
@@ -57,18 +57,18 @@ public class XmlCodeGenerationTest {
         }
     }
 
-    public static List<GeneratedXmlFile> generateXmlFiles() throws Exception {
+    static List<GeneratedXmlFile> generateXmlFiles() throws Exception {
         List<GeneratedXmlFile> generatedFiles = new ArrayList<>();
         generatedFiles.addAll(generateXmlFilesMybatis());
         return generatedFiles;
     }
 
-    private static List<GeneratedXmlFile> generateXmlFilesMybatis() throws Exception {
+    static List<GeneratedXmlFile> generateXmlFilesMybatis() throws Exception {
         JavaCodeGenerationTest.createDatabase();
         return generateXmlFiles("/scripts/generatorConfig.xml");
     }
 
-    private static List<GeneratedXmlFile> generateXmlFiles(String configFile) throws Exception {
+    static List<GeneratedXmlFile> generateXmlFiles(String configFile) throws Exception {
         List<String> warnings = new ArrayList<>();
         ConfigurationParser cp = new ConfigurationParser(warnings);
         Configuration config = cp.parseConfiguration(JavaCodeGenerationTest.class.getResourceAsStream(configFile));
@@ -80,7 +80,7 @@ public class XmlCodeGenerationTest {
         return myBatisGenerator.getGeneratedXmlFiles();
     }
 
-    public static class TestEntityResolver implements EntityResolver {
+    static class TestEntityResolver implements EntityResolver {
 
         @Override
         public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
@@ -89,10 +89,10 @@ public class XmlCodeGenerationTest {
         }
     }
 
-    public static class TestErrorHandler implements ErrorHandler {
+    static class TestErrorHandler implements ErrorHandler {
 
-        private List<String> errors = new ArrayList<>();
-        private List<String> warnings = new ArrayList<>();
+        private final List<String> errors = new ArrayList<>();
+        private final List<String> warnings = new ArrayList<>();
 
         @Override
         public void warning(SAXParseException exception) throws SAXException {

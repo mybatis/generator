@@ -37,22 +37,22 @@ import org.mybatis.generator.internal.DefaultShellCallback;
  * @author Jeff Butler
  *
  */
-public class KotlinCodeGenerationTest {
+class KotlinCodeGenerationTest {
 
     @ParameterizedTest
     @MethodSource("generateKotlinFiles")
-    public void testKotlinParse(GeneratedKotlinFile generatedKotlinFile) {
+    void testKotlinParse(GeneratedKotlinFile generatedKotlinFile) {
         // for now, just let the test pass. if we find a good Kotlin parser, then mimic the
         // function of the Java test by trying to parse generated code
         assertTrue(true);
     }
 
-    public static List<GeneratedKotlinFile> generateKotlinFiles() throws Exception {
+    static List<GeneratedKotlinFile> generateKotlinFiles() throws Exception {
         JavaCodeGenerationTest.createDatabase();
         return generateKotlinFiles("/scripts/generatorConfig-kotlin.xml");
     }
 
-    private static List<GeneratedKotlinFile> generateKotlinFiles(String configFile) throws Exception {
+    static List<GeneratedKotlinFile> generateKotlinFiles(String configFile) throws Exception {
         List<String> warnings = new ArrayList<>();
         ConfigurationParser cp = new ConfigurationParser(warnings);
         Configuration config = cp.parseConfiguration(KotlinCodeGenerationTest.class.getResourceAsStream(configFile));

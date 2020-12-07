@@ -25,10 +25,10 @@ import org.junit.jupiter.api.Test;
  * @author Jeff Butler
  *
  */
-public class FullyQualifiedJavaTypeTest {
+class FullyQualifiedJavaTypeTest {
 
     @Test
-    public void testJavaType() {
+    void testJavaType() {
         FullyQualifiedJavaType fqjt =
             new FullyQualifiedJavaType("java.lang.String"); //$NON-NLS-1$
         assertFalse(fqjt.isExplicitlyImported());
@@ -39,7 +39,7 @@ public class FullyQualifiedJavaTypeTest {
     }
 
     @Test
-    public void testSimpleType() {
+    void testSimpleType() {
         FullyQualifiedJavaType fqjt =
             new FullyQualifiedJavaType("com.foo.Bar"); //$NON-NLS-1$
         assertTrue(fqjt.isExplicitlyImported());
@@ -51,7 +51,7 @@ public class FullyQualifiedJavaTypeTest {
     }
 
     @Test
-    public void testSimpleType2() {
+    void testSimpleType2() {
         FullyQualifiedJavaType fqjt =
             new FullyQualifiedJavaType("com.foo.bar"); //$NON-NLS-1$
         assertTrue(fqjt.isExplicitlyImported());
@@ -63,7 +63,7 @@ public class FullyQualifiedJavaTypeTest {
     }
 
     @Test
-    public void testSimpleType3() {
+    void testSimpleType3() {
         FullyQualifiedJavaType fqjt =
             new FullyQualifiedJavaType("int"); //$NON-NLS-1$
         assertFalse(fqjt.isExplicitlyImported());
@@ -74,7 +74,7 @@ public class FullyQualifiedJavaTypeTest {
     }
 
     @Test
-    public void testGenericType1() {
+    void testGenericType1() {
         FullyQualifiedJavaType fqjt =
             new FullyQualifiedJavaType("java.util.List<java.lang.String>"); //$NON-NLS-1$
         assertTrue(fqjt.isExplicitlyImported());
@@ -87,7 +87,7 @@ public class FullyQualifiedJavaTypeTest {
     }
 
     @Test
-    public void testGenericType2() {
+    void testGenericType2() {
         FullyQualifiedJavaType fqjt =
             new FullyQualifiedJavaType("java.util.Map<java.lang.String, java.util.List<java.lang.String>>"); //$NON-NLS-1$
         assertTrue(fqjt.isExplicitlyImported());
@@ -99,7 +99,7 @@ public class FullyQualifiedJavaTypeTest {
     }
 
     @Test
-    public void testGenericType3() {
+    void testGenericType3() {
         FullyQualifiedJavaType listOfStrings = new FullyQualifiedJavaType("java.util.List"); //$NON-NLS-1$
         listOfStrings.addTypeArgument(new FullyQualifiedJavaType("java.lang.String")); //$NON-NLS-1$
 
@@ -117,7 +117,7 @@ public class FullyQualifiedJavaTypeTest {
     }
 
     @Test
-    public void testGenericType4() {
+    void testGenericType4() {
         FullyQualifiedJavaType fqjt =
             new FullyQualifiedJavaType("java.util.List<java.util.Map<java.lang.String, java.lang.Object>>"); //$NON-NLS-1$
         assertTrue(fqjt.isExplicitlyImported());
@@ -129,7 +129,7 @@ public class FullyQualifiedJavaTypeTest {
     }
 
     @Test
-    public void testWildcardType1() {
+    void testWildcardType1() {
         FullyQualifiedJavaType fqjt =
             new FullyQualifiedJavaType("java.util.Map<java.lang.String, ? extends com.foo.Bar>");
         assertTrue(fqjt.isExplicitlyImported());
@@ -141,7 +141,7 @@ public class FullyQualifiedJavaTypeTest {
     }
 
     @Test
-    public void testWildcardType2() {
+    void testWildcardType2() {
         FullyQualifiedJavaType fqjt =
             new FullyQualifiedJavaType("java.util.Map<java.lang.String, ?>");
         assertTrue(fqjt.isExplicitlyImported());
@@ -154,7 +154,7 @@ public class FullyQualifiedJavaTypeTest {
     }
 
     @Test
-    public void testWildcardType3() {
+    void testWildcardType3() {
         FullyQualifiedJavaType fqjt =
             new FullyQualifiedJavaType("java.util.Map<? extends java.util.List<?>, ?>");
         assertTrue(fqjt.isExplicitlyImported());
@@ -166,7 +166,7 @@ public class FullyQualifiedJavaTypeTest {
     }
 
     @Test
-    public void testWildcardType4() {
+    void testWildcardType4() {
         FullyQualifiedJavaType fqjt =
             new FullyQualifiedJavaType("java.util.Map<?, ?>");
         assertTrue(fqjt.isExplicitlyImported());
@@ -179,7 +179,7 @@ public class FullyQualifiedJavaTypeTest {
     }
 
     @Test
-    public void testWildcardType5() {
+    void testWildcardType5() {
         FullyQualifiedJavaType fqjt =
             new FullyQualifiedJavaType("java.util.List<? extends java.util.Map<? super java.lang.Object, ?>>");
         assertTrue(fqjt.isExplicitlyImported());
@@ -191,7 +191,7 @@ public class FullyQualifiedJavaTypeTest {
     }
 
     @Test
-    public void testUppercasePackage1() {
+    void testUppercasePackage1() {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType("org.foo.Bar.Inner");
         assertTrue(fqjt.isExplicitlyImported());
         assertEquals("Inner", fqjt.getShortName()); //$NON-NLS-1$
@@ -202,7 +202,7 @@ public class FullyQualifiedJavaTypeTest {
     }
 
     @Test
-    public void testUppercasePackage2() {
+    void testUppercasePackage2() {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType("org.foo.Bar.Inner.Inner");
         assertTrue(fqjt.isExplicitlyImported());
         assertEquals("Inner", fqjt.getShortName()); //$NON-NLS-1$
@@ -213,7 +213,7 @@ public class FullyQualifiedJavaTypeTest {
     }
 
     @Test
-    public void testUppercasePackage3() {
+    void testUppercasePackage3() {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType("java.util.List<org.foo.Bar.Inner>");
         assertTrue(fqjt.isExplicitlyImported());
         assertEquals("List<Inner>", fqjt.getShortName()); //$NON-NLS-1$
@@ -225,28 +225,28 @@ public class FullyQualifiedJavaTypeTest {
     }
 
     @Test
-    public void testByteArray1() {
+    void testByteArray1() {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType("byte[]");
         assertFalse(fqjt.isPrimitive());
         assertTrue(fqjt.isArray());
     }
 
     @Test
-    public void testByteArray2() {
+    void testByteArray2() {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType("byte[ ]");
         assertFalse(fqjt.isPrimitive());
         assertTrue(fqjt.isArray());
     }
 
     @Test
-    public void testStringArray() {
+    void testStringArray() {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType("java.lang.String[]");
         assertFalse(fqjt.isPrimitive());
         assertTrue(fqjt.isArray());
     }
 
     @Test
-    public void testStringArray2() {
+    void testStringArray2() {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType("java.math.BigDecimal[]");
         assertEquals(1, fqjt.getImportList().size());
         assertEquals("java.math.BigDecimal", fqjt.getImportList().get(0));
@@ -256,14 +256,14 @@ public class FullyQualifiedJavaTypeTest {
     }
 
     @Test
-    public void testComplexArray() {
+    void testComplexArray() {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType("java.util.List<String>[]");
         assertFalse(fqjt.isPrimitive());
         assertTrue(fqjt.isArray());
     }
 
     @Test
-    public void testComplexArrayWithoutGenerics() {
+    void testComplexArrayWithoutGenerics() {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType("java.util.List[]");
         assertFalse(fqjt.isPrimitive());
         assertTrue(fqjt.isArray());

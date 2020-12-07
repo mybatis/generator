@@ -31,10 +31,10 @@ import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.internal.DefaultShellCallback;
 
-public class MyBatisGeneratorTest {
+class MyBatisGeneratorTest {
 
     @Test
-    public void testGenerateMyBatis3WithInvalidConfig() throws Exception {
+    void testGenerateMyBatis3WithInvalidConfig() throws Exception {
         List<String> warnings = new ArrayList<>();
         ConfigurationParser cp = new ConfigurationParser(warnings);
         Configuration config = cp.parseConfiguration(this.getClass().getClassLoader().getResourceAsStream("generatorConfigMyBatis3_badConfig.xml"));
@@ -51,7 +51,7 @@ public class MyBatisGeneratorTest {
     }
 
     @Test
-    public void testGenerateInvalidConfigWithNoConnectionSources() throws Exception {
+    void testGenerateInvalidConfigWithNoConnectionSources() {
         List<String> warnings = new ArrayList<>();
         Configuration config = new Configuration();
         Context context = new Context(ModelType.HIERARCHICAL);
@@ -69,7 +69,7 @@ public class MyBatisGeneratorTest {
     }
 
     @Test
-    public void testGenerateInvalidConfigWithTwoConnectionSources() throws Exception {
+    void testGenerateInvalidConfigWithTwoConnectionSources() {
         List<String> warnings = new ArrayList<>();
         Configuration config = new Configuration();
         Context context = new Context(ModelType.HIERARCHICAL);

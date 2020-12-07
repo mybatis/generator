@@ -15,6 +15,7 @@
  */
 package org.mybatis.generator.api.dom.java;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,7 +27,7 @@ import java.util.Set;
  */
 public class JavaReservedWords {
 
-    private static Set<String> reservedWords;
+    private final static Set<String> reservedWords;
 
     static {
         String[] words = { "abstract", //$NON-NLS-1$
@@ -83,9 +84,7 @@ public class JavaReservedWords {
 
         reservedWords = new HashSet<>(words.length);
 
-        for (String word : words) {
-            reservedWords.add(word);
-        }
+        reservedWords.addAll(Arrays.asList(words));
     }
 
     public static boolean containsWord(String word) {

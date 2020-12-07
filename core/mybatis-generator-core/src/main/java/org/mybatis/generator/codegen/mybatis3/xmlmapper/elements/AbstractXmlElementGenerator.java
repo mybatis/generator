@@ -25,7 +25,7 @@ import org.mybatis.generator.config.GeneratedKey;
 public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
     public abstract void addElements(XmlElement parentElement);
 
-    public AbstractXmlElementGenerator() {
+    protected AbstractXmlElementGenerator() {
         super();
     }
 

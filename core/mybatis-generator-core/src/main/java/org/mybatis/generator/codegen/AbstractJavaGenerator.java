@@ -32,7 +32,7 @@ public abstract class AbstractJavaGenerator extends AbstractGenerator {
 
     private String project;
 
-    public AbstractJavaGenerator(String project) {
+    protected AbstractJavaGenerator(String project) {
         this.project = project;
     }
 

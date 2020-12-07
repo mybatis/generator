@@ -38,7 +38,7 @@ public abstract class BaseRules implements Rules {
 
     protected final boolean isModelOnly;
 
-    public BaseRules(IntrospectedTable introspectedTable) {
+    protected BaseRules(IntrospectedTable introspectedTable) {
         super();
         this.introspectedTable = introspectedTable;
         this.tableConfiguration = introspectedTable.getTableConfiguration();

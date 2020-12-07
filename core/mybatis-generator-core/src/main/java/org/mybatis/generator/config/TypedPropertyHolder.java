@@ -19,7 +19,7 @@ public abstract class TypedPropertyHolder extends PropertyHolder {
 
     private String configurationType;
 
-    public TypedPropertyHolder() {
+    protected TypedPropertyHolder() {
         super();
     }
 

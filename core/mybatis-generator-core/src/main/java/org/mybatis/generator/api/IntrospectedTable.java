@@ -134,8 +134,7 @@ public abstract class IntrospectedTable {
      */
     protected String tableType;
 
-    public IntrospectedTable(TargetRuntime targetRuntime) {
-        super();
+    protected IntrospectedTable(TargetRuntime targetRuntime) {
         this.targetRuntime = targetRuntime;
     }
 

@@ -27,7 +27,7 @@ public abstract class AbstractGenerator {
     protected List<String> warnings;
     protected ProgressCallback progressCallback;
 
-    public AbstractGenerator() {
+    protected AbstractGenerator() {
         super();
     }
 

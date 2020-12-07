@@ -19,18 +19,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-public class InnerInterfaceTest {
+class InnerInterfaceTest {
 
     @Test
-    public void testConstructor() {
-
+    void testConstructor() {
         InnerInterface innerInterface = new InnerInterface("com.foo.InnerUserInterface");
         assertNotNull(innerInterface);
     }
 
     @Test
-    public void testAddSuperInterface() {
-
+    void testAddSuperInterface() {
         InnerInterface innerInterface = new InnerInterface("com.foo.InnerUserInterface");
         FullyQualifiedJavaType superInterType = new FullyQualifiedJavaType("com.foo.SuperUserInterface");
         innerInterface.addSuperInterface(superInterType);
@@ -39,8 +37,7 @@ public class InnerInterfaceTest {
     }
 
     @Test
-    public void testAddMethod() {
-
+    void testAddMethod() {
         InnerInterface interfaze = new InnerInterface("com.foo.UserInterface");
         Method method = new Method("foo");
         interfaze.addMethod(method);
@@ -51,16 +48,14 @@ public class InnerInterfaceTest {
     }
 
     @Test
-    public void testGetType() {
-
+    void testGetType() {
         InnerInterface innerInterface = new InnerInterface("com.foo.InnerUserInterface");
         assertNotNull(innerInterface.getType());
         assertEquals("com.foo.InnerUserInterface", innerInterface.getType().getFullyQualifiedName());
     }
 
     @Test
-    public void testAddInnerInterfaces() {
-
+    void testAddInnerInterfaces() {
         InnerInterface interfaze = new InnerInterface("com.foo.UserInterface");
         InnerInterface innerInterfaze = new InnerInterface("com.foo.InnerUserInterface");
 

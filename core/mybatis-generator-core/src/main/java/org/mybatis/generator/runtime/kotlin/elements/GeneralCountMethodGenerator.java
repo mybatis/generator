@@ -23,11 +23,13 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 
 public class GeneralCountMethodGenerator extends AbstractKotlinFunctionGenerator {
 
-    private String mapperName;
+    private final String mapperName;
+    private final String tableFieldImport;
 
     private GeneralCountMethodGenerator(Builder builder) {
         super(builder);
         mapperName = Objects.requireNonNull(builder.mapperName);
+        tableFieldImport = Objects.requireNonNull(builder.tableFieldImport);
     }
 
     @Override
@@ -55,6 +57,12 @@ public class GeneralCountMethodGenerator extends AbstractKotlinFunctionGenerator
 
     public static class Builder extends BaseBuilder<Builder, GeneralCountMethodGenerator> {
         private String mapperName;
+        private String tableFieldImport;
+
+        public Builder withTableFieldImport(String tableFieldImport) {
+            this.tableFieldImport = tableFieldImport;
+            return this;
+        }
 
         public Builder withMapperName(String mapperName) {
             this.mapperName = mapperName;

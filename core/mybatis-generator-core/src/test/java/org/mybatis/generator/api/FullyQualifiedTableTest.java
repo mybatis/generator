@@ -20,24 +20,24 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.mybatis.generator.config.DomainObjectRenamingRule;
 
-public class FullyQualifiedTableTest {
+class FullyQualifiedTableTest {
 
     @Test
-    public void testNormalCase() {
+    void testNormalCase() {
         FullyQualifiedTable fqt = new FullyQualifiedTable(null, "myschema", "mytable", null, null, false, null, null, null, false, null, null);
 
         assertThat(fqt.getDomainObjectName()).isEqualTo("Mytable");
     }
 
     @Test
-    public void testNormalCaseWithPrefix() {
+    void testNormalCaseWithPrefix() {
         FullyQualifiedTable fqt = new FullyQualifiedTable(null, "myschema", "sys_mytable", null, null, false, null, null, null, false, null, null);
 
         assertThat(fqt.getDomainObjectName()).isEqualTo("SysMytable");
     }
 
     @Test
-    public void testRenamingRule() {
+    void testRenamingRule() {
         DomainObjectRenamingRule renamingRule = new DomainObjectRenamingRule();
         renamingRule.setSearchString("^Sys");
         renamingRule.setReplaceString("");
@@ -47,7 +47,7 @@ public class FullyQualifiedTableTest {
     }
 
     @Test
-    public void testRenamingRule2() {
+    void testRenamingRule2() {
         DomainObjectRenamingRule renamingRule = new DomainObjectRenamingRule();
         renamingRule.setSearchString("^Sys");
         renamingRule.setReplaceString("");
@@ -57,7 +57,7 @@ public class FullyQualifiedTableTest {
     }
 
     @Test
-    public void testRenamingRuleNoUnderscore() {
+    void testRenamingRuleNoUnderscore() {
         DomainObjectRenamingRule renamingRule = new DomainObjectRenamingRule();
         renamingRule.setSearchString("^Sys");
         renamingRule.setReplaceString("");
@@ -67,7 +67,7 @@ public class FullyQualifiedTableTest {
     }
 
     @Test
-    public void testRenamingRuleNoUnderscore2() {
+    void testRenamingRuleNoUnderscore2() {
         DomainObjectRenamingRule renamingRule = new DomainObjectRenamingRule();
         renamingRule.setSearchString("^Sys");
         renamingRule.setReplaceString("");

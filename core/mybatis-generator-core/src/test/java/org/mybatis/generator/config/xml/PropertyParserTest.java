@@ -21,10 +21,10 @@ import java.util.Properties;
 
 import org.junit.jupiter.api.Test;
 
-public class PropertyParserTest {
+class PropertyParserTest {
 
     @Test
-    public void testNoMatches() {
+    void testNoMatches() {
         MyBatisGeneratorConfigurationParser parser = new MyBatisGeneratorConfigurationParser(null);
 
         String result = parser.parsePropertyTokens("${gen.code.package}.${gen.code.mapper}.${gen.code.subpackage}");
@@ -33,21 +33,21 @@ public class PropertyParserTest {
     }
 
     @Test
-    public void testNoMarkers() {
+    void testNoMarkers() {
         MyBatisGeneratorConfigurationParser parser = new MyBatisGeneratorConfigurationParser(null);
 
         assertThat(parser.parsePropertyTokens("someValue")).isEqualTo("someValue");
     }
 
     @Test
-    public void testBadFormat() {
+    void testBadFormat() {
         MyBatisGeneratorConfigurationParser parser = new MyBatisGeneratorConfigurationParser(null);
 
         assertThat(parser.parsePropertyTokens("${someValue")).isEqualTo("${someValue");
     }
 
     @Test
-    public void testSingleValue() {
+    void testSingleValue() {
         Properties properties = new Properties();
         properties.setProperty("gen.code.package", "value1");
         properties.setProperty("gen.code.mapper", "value2");
@@ -61,7 +61,7 @@ public class PropertyParserTest {
     }
 
     @Test
-    public void testSingleValueWithTrailingValue() {
+    void testSingleValueWithTrailingValue() {
         Properties properties = new Properties();
         properties.setProperty("gen.code.package", "value1");
         properties.setProperty("gen.code.mapper", "value2");
@@ -73,7 +73,7 @@ public class PropertyParserTest {
     }
 
     @Test
-    public void testTwoValues() {
+    void testTwoValues() {
         Properties properties = new Properties();
         properties.setProperty("gen.code.package", "value1");
         properties.setProperty("gen.code.mapper", "value2");
@@ -85,7 +85,7 @@ public class PropertyParserTest {
     }
 
     @Test
-    public void testTwoValuesOnly() {
+    void testTwoValuesOnly() {
         Properties properties = new Properties();
         properties.setProperty("gen.code.package", "value1");
         properties.setProperty("gen.code.mapper", "value2");
@@ -97,7 +97,7 @@ public class PropertyParserTest {
     }
 
     @Test
-    public void testTwoValuesWithTrailingValue() {
+    void testTwoValuesWithTrailingValue() {
         Properties properties = new Properties();
         properties.setProperty("gen.code.package", "value1");
         properties.setProperty("gen.code.mapper", "value2");
@@ -111,7 +111,7 @@ public class PropertyParserTest {
     }
 
     @Test
-    public void testTwoValuesWithSingleCharacterTrailingValue() {
+    void testTwoValuesWithSingleCharacterTrailingValue() {
         Properties properties = new Properties();
         properties.setProperty("gen.code.package", "value1");
         properties.setProperty("gen.code.mapper", "value2");
@@ -125,7 +125,7 @@ public class PropertyParserTest {
     }
 
     @Test
-    public void testThreeValues() {
+    void testThreeValues() {
         Properties properties = new Properties();
         properties.setProperty("gen.code.package", "value1");
         properties.setProperty("gen.code.mapper", "value2");
@@ -139,7 +139,7 @@ public class PropertyParserTest {
     }
 
 	@Test
-	public void testNestedValues() {
+	void testNestedValues() {
 		Properties properties = new Properties();
 		properties.put("domain", "foo");
 		properties.put("project.foo", "pfoo");

@@ -42,7 +42,7 @@ public abstract class AbstractDynamicSqlMapperGenerator extends AbstractJavaClie
 
     protected FragmentGenerator fragmentGenerator;
 
-    public AbstractDynamicSqlMapperGenerator(String project) {
+    protected AbstractDynamicSqlMapperGenerator(String project) {
         super(project, false);
     }
 

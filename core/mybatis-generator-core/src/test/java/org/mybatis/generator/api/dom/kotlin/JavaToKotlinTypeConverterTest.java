@@ -20,10 +20,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 
-public class JavaToKotlinTypeConverterTest {
+class JavaToKotlinTypeConverterTest {
 
     @Test
-    public void testPrimitiveByte() {
+    void testPrimitiveByte() {
         FullyQualifiedJavaType jt = new FullyQualifiedJavaType("byte");
         FullyQualifiedKotlinType kt = JavaToKotlinTypeConverter.convert(jt);
 
@@ -32,7 +32,7 @@ public class JavaToKotlinTypeConverterTest {
     }
 
     @Test
-    public void testPrimitiveByteArray() {
+    void testPrimitiveByteArray() {
         FullyQualifiedJavaType jt = new FullyQualifiedJavaType("byte[]");
         FullyQualifiedKotlinType kt = JavaToKotlinTypeConverter.convert(jt);
 
@@ -41,7 +41,7 @@ public class JavaToKotlinTypeConverterTest {
     }
 
     @Test
-    public void testByteWrapper() {
+    void testByteWrapper() {
         FullyQualifiedJavaType jt = new FullyQualifiedJavaType("java.lang.Byte");
         FullyQualifiedKotlinType kt = JavaToKotlinTypeConverter.convert(jt);
 
@@ -50,7 +50,7 @@ public class JavaToKotlinTypeConverterTest {
     }
 
     @Test
-    public void testByteWrapperArray() {
+    void testByteWrapperArray() {
         FullyQualifiedJavaType jt = new FullyQualifiedJavaType("java.lang.Byte[]");
         FullyQualifiedKotlinType kt = JavaToKotlinTypeConverter.convert(jt);
 
@@ -59,7 +59,7 @@ public class JavaToKotlinTypeConverterTest {
     }
 
     @Test
-    public void testUnmappedType() {
+    void testUnmappedType() {
         FullyQualifiedJavaType jt = new FullyQualifiedJavaType("java.math.BigDecimal");
         FullyQualifiedKotlinType kt = JavaToKotlinTypeConverter.convert(jt);
 
@@ -69,7 +69,7 @@ public class JavaToKotlinTypeConverterTest {
     }
 
     @Test
-    public void testGenericType() {
+    void testGenericType() {
         FullyQualifiedJavaType jt = new FullyQualifiedJavaType("java.util.List<java.math.BigDecimal>");
         FullyQualifiedKotlinType kt = JavaToKotlinTypeConverter.convert(jt);
 

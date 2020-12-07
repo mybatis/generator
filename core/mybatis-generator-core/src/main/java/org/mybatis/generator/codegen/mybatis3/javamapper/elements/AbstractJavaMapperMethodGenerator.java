@@ -29,7 +29,7 @@ public abstract class AbstractJavaMapperMethodGenerator extends
         AbstractGenerator {
     public abstract void addInterfaceElements(Interface interfaze);
 
-    public AbstractJavaMapperMethodGenerator() {
+    protected AbstractJavaMapperMethodGenerator() {
         super();
     }
 

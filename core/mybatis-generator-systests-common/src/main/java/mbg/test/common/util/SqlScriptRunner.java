@@ -111,7 +111,6 @@ public class SqlScriptRunner {
                 connection.close();
             } catch (SQLException e) {
                 // ignore
-                ;
             }
         }
     }
@@ -122,13 +121,12 @@ public class SqlScriptRunner {
                 statement.close();
             } catch (SQLException e) {
                 // ignore
-                ;
             }
         }
     }
 
     private String readStatement(BufferedReader br) throws IOException {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
 
         String line;
 
@@ -137,12 +135,12 @@ public class SqlScriptRunner {
                 continue;
             }
 
-            if (line == null || line.length() == 0) {
+            if (line.length() == 0) {
                 continue;
             }
 
             if (line.endsWith(";")) { //$NON-NLS-1$
-                sb.append(line.substring(0, line.length() - 1));
+                sb.append(line, 0, line.length() - 1);
                 break;
             } else {
                 sb.append(' ');

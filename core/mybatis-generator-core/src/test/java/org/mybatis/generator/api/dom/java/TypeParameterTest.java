@@ -22,11 +22,10 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 import org.mybatis.generator.api.dom.java.render.TypeParameterRenderer;
 
-public class TypeParameterTest {
+class TypeParameterTest {
 
     @Test
-    public void testConstructor() {
-
+    void testConstructor() {
         TypeParameter typeParameter = new TypeParameter("T");
         assertNotNull(typeParameter);
         assertEquals("T", typeParameter.getName());
@@ -35,8 +34,7 @@ public class TypeParameterTest {
     }
 
     @Test
-    public void testConstructorWIthExtends() {
-
+    void testConstructorWIthExtends() {
         FullyQualifiedJavaType list = FullyQualifiedJavaType.getNewListInstance();
         FullyQualifiedJavaType compare = new FullyQualifiedJavaType("java.util.Comparator");
 
@@ -48,7 +46,7 @@ public class TypeParameterTest {
     }
 
     @Test
-    public void testGetFormattedContent() {
+    void testGetFormattedContent() {
         TypeParameterRenderer renderer = new TypeParameterRenderer();
 
         FullyQualifiedJavaType list = FullyQualifiedJavaType.getNewListInstance();
@@ -66,8 +64,7 @@ public class TypeParameterTest {
     }
 
     @Test
-    public void testToString() {
-
+    void testToString() {
         FullyQualifiedJavaType list = FullyQualifiedJavaType.getNewListInstance();
         FullyQualifiedJavaType compare = new FullyQualifiedJavaType("java.util.Comparator");
 

@@ -40,10 +40,10 @@ import org.xml.sax.InputSource;
  * @author Jeff Butler
  *
  */
-public class XmlFileMergerTest {
+class XmlFileMergerTest {
 
     @Test
-    public void testThatFilesAreTheSameAfterMerge() throws Exception {
+    void testThatFilesAreTheSameAfterMerge() throws Exception {
         DefaultXmlFormatter xmlFormatter = new DefaultXmlFormatter();
         Properties p = new Properties();
         p.setProperty(PropertyRegistry.COMMENT_GENERATOR_SUPPRESS_DATE, "true");
@@ -68,7 +68,7 @@ public class XmlFileMergerTest {
     }
 
     @Test
-    public void testThatOldElementsAreDeleted() throws Exception {
+    void testThatOldElementsAreDeleted() throws Exception {
 
         Document existingDocument = new Document(XmlConstants.MYBATIS3_MAPPER_PUBLIC_ID,
                 XmlConstants.MYBATIS3_MAPPER_SYSTEM_ID);

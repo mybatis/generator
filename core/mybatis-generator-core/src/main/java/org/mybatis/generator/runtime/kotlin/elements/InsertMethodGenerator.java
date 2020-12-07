@@ -25,9 +25,9 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 
 public class InsertMethodGenerator extends AbstractKotlinFunctionGenerator {
-    private FullyQualifiedKotlinType recordType;
-    private String mapperName;
-    private String tableFieldImport;
+    private final FullyQualifiedKotlinType recordType;
+    private final String mapperName;
+    private final String tableFieldImport;
 
     private InsertMethodGenerator(Builder builder) {
         super(builder);

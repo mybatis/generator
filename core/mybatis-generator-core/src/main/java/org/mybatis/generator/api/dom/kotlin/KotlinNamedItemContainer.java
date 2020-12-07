@@ -21,7 +21,7 @@ import java.util.List;
 public abstract class KotlinNamedItemContainer extends KotlinNamedItem {
     private List<KotlinNamedItem> namedItems = new ArrayList<>();
 
-    public KotlinNamedItemContainer(NamedItemContainerBuilder<?> builder) {
+    protected KotlinNamedItemContainer(NamedItemContainerBuilder<?> builder) {
         super(builder);
         namedItems.addAll(builder.namedItems);
     }

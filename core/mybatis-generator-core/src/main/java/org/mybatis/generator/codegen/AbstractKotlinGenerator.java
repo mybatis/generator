@@ -25,7 +25,7 @@ public abstract class AbstractKotlinGenerator extends AbstractGenerator {
 
     private String project;
 
-    public AbstractKotlinGenerator(String project) {
+    protected AbstractKotlinGenerator(String project) {
         this.project = project;
     }
 

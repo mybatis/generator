@@ -19,10 +19,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-public class FullyQualifiedKotlinTypeTest {
+class FullyQualifiedKotlinTypeTest {
 
     @Test
-    public void testKotlinPrimitive() {
+    void testKotlinPrimitive() {
         FullyQualifiedKotlinType fqjt =
             new FullyQualifiedKotlinType("kotlin.String"); //$NON-NLS-1$
         assertThat(fqjt.getShortNameWithTypeArguments()).isEqualTo("String"); //$NON-NLS-1$
@@ -30,7 +30,7 @@ public class FullyQualifiedKotlinTypeTest {
     }
 
     @Test
-    public void testKotlinPrimitive2() {
+    void testKotlinPrimitive2() {
         FullyQualifiedKotlinType fqjt =
             new FullyQualifiedKotlinType("String"); //$NON-NLS-1$
         assertThat(fqjt.getShortNameWithTypeArguments()).isEqualTo("String"); //$NON-NLS-1$
@@ -38,7 +38,7 @@ public class FullyQualifiedKotlinTypeTest {
     }
 
     @Test
-    public void testSimpleType() {
+    void testSimpleType() {
         FullyQualifiedKotlinType fqjt =
             new FullyQualifiedKotlinType("com.foo.Bar"); //$NON-NLS-1$
         assertThat(fqjt.getShortNameWithTypeArguments()).isEqualTo("Bar"); //$NON-NLS-1$
@@ -47,7 +47,7 @@ public class FullyQualifiedKotlinTypeTest {
     }
 
     @Test
-    public void testSimpleType2() {
+    void testSimpleType2() {
         FullyQualifiedKotlinType fqjt =
             new FullyQualifiedKotlinType("com.foo.bar"); //$NON-NLS-1$
         assertThat(fqjt.getShortNameWithTypeArguments()).isEqualTo("bar"); //$NON-NLS-1$
@@ -56,23 +56,23 @@ public class FullyQualifiedKotlinTypeTest {
     }
 
     @Test
-    public void testGenericType1() {
+    void testGenericType1() {
         FullyQualifiedKotlinType fqjt =
             new FullyQualifiedKotlinType("kotlin.collections.List<kotlin.String>"); //$NON-NLS-1$
         assertThat(fqjt.getShortNameWithTypeArguments()).isEqualTo("List<String>"); //$NON-NLS-1$
-        assertThat(fqjt.getImportList()).isEmpty();;
+        assertThat(fqjt.getImportList()).isEmpty();
     }
 
     @Test
-    public void testGenericType2() {
+    void testGenericType2() {
         FullyQualifiedKotlinType fqjt =
             new FullyQualifiedKotlinType("List<String>"); //$NON-NLS-1$
         assertThat(fqjt.getShortNameWithTypeArguments()).isEqualTo("List<String>"); //$NON-NLS-1$
-        assertThat(fqjt.getImportList()).isEmpty();;
+        assertThat(fqjt.getImportList()).isEmpty();
     }
 
     @Test
-    public void testGenericType3() {
+    void testGenericType3() {
         FullyQualifiedKotlinType fqjt =
             new FullyQualifiedKotlinType("kotlin.collections.Map<kotlin.String, kotlin.collections.List<kotlin.String>>"); //$NON-NLS-1$
         assertThat(fqjt.getShortNameWithTypeArguments()).isEqualTo("Map<String, List<String>>"); //$NON-NLS-1$
@@ -80,7 +80,7 @@ public class FullyQualifiedKotlinTypeTest {
     }
 
     @Test
-    public void testGenericType4() {
+    void testGenericType4() {
         FullyQualifiedKotlinType fqjt =
             new FullyQualifiedKotlinType("List<Map<String, String>>"); //$NON-NLS-1$
         assertThat(fqjt.getShortNameWithTypeArguments()).isEqualTo("List<Map<String, String>>"); //$NON-NLS-1$
@@ -88,7 +88,7 @@ public class FullyQualifiedKotlinTypeTest {
     }
 
     @Test
-    public void testUppercasePackage1() {
+    void testUppercasePackage1() {
         FullyQualifiedKotlinType fqjt = new FullyQualifiedKotlinType("org.foo.Bar.Inner");
         assertThat(fqjt.getShortNameWithTypeArguments()).isEqualTo("Inner"); //$NON-NLS-1$
         assertThat(fqjt.getImportList()).hasSize(1);
@@ -96,7 +96,7 @@ public class FullyQualifiedKotlinTypeTest {
     }
 
     @Test
-    public void testUppercasePackage2() {
+    void testUppercasePackage2() {
         FullyQualifiedKotlinType fqjt = new FullyQualifiedKotlinType("org.foo.Bar.Inner.Inner");
         assertThat(fqjt.getShortNameWithTypeArguments()).isEqualTo("Inner"); //$NON-NLS-1$
         assertThat(fqjt.getImportList()).hasSize(1);
@@ -104,7 +104,7 @@ public class FullyQualifiedKotlinTypeTest {
     }
 
     @Test
-    public void testUppercasePackage3() {
+    void testUppercasePackage3() {
         FullyQualifiedKotlinType fqjt = new FullyQualifiedKotlinType("java.util.List<org.foo.Bar.Inner>");
         assertThat(fqjt.getShortNameWithTypeArguments()).isEqualTo("List<Inner>"); //$NON-NLS-1$
         assertThat(fqjt.getImportList()).hasSize(2);
@@ -112,7 +112,7 @@ public class FullyQualifiedKotlinTypeTest {
     }
 
     @Test
-    public void testLateInitialization1() {
+    void testLateInitialization1() {
         FullyQualifiedKotlinType fqjt = new FullyQualifiedKotlinType("List");
         fqjt.addTypeArgument(new FullyQualifiedKotlinType("java.math.BigDecimal"));
         assertThat(fqjt.getShortNameWithTypeArguments()).isEqualTo("List<BigDecimal>"); //$NON-NLS-1$
@@ -121,7 +121,7 @@ public class FullyQualifiedKotlinTypeTest {
     }
 
     @Test
-    public void testLateInitialization2() {
+    void testLateInitialization2() {
         FullyQualifiedKotlinType inner = new FullyQualifiedKotlinType("some.generic.Thing");
         inner.addTypeArgument(new FullyQualifiedKotlinType("java.math.BigDecimal"));
         FullyQualifiedKotlinType fqjt = new FullyQualifiedKotlinType("kotlin.List");

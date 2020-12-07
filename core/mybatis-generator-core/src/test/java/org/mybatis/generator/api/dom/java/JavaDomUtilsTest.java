@@ -19,10 +19,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-public class JavaDomUtilsTest {
+class JavaDomUtilsTest {
 
     @Test
-    public void testGenericTypeNothingImported() {
+    void testGenericTypeNothingImported() {
         Interface interfaze = new Interface(new FullyQualifiedJavaType("com.foo.UserMapper"));
 
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType("java.util.Map<java.math.BigDecimal, java.util.List<com.beeant.dto.User>>");
@@ -31,7 +31,7 @@ public class JavaDomUtilsTest {
     }
 
     @Test
-    public void testGenericTypeBaseTypeImportedImported() {
+    void testGenericTypeBaseTypeImportedImported() {
         Interface interfaze = new Interface(new FullyQualifiedJavaType("com.foo.UserMapper"));
 
         interfaze.addImportedType(new FullyQualifiedJavaType("java.util.Map"));
@@ -42,7 +42,7 @@ public class JavaDomUtilsTest {
     }
 
     @Test
-    public void testGenericTypeWithAllTypeParametersImported() {
+    void testGenericTypeWithAllTypeParametersImported() {
         Interface interfaze = new Interface(new FullyQualifiedJavaType("com.foo.UserMapper"));
 
         interfaze.addImportedType(new FullyQualifiedJavaType("com.beeant.dto.User"));
@@ -55,7 +55,7 @@ public class JavaDomUtilsTest {
     }
 
     @Test
-    public void testGenericTypeWithSomeParametersImported() {
+    void testGenericTypeWithSomeParametersImported() {
         Interface interfaze = new Interface(new FullyQualifiedJavaType("com.foo.UserMapper"));
 
         interfaze.addImportedType(new FullyQualifiedJavaType("com.beeant.dto.User"));
@@ -66,7 +66,7 @@ public class JavaDomUtilsTest {
     }
 
     @Test
-    public void testGenericTypeWithAllImported() {
+    void testGenericTypeWithAllImported() {
         Interface interfaze = new Interface(new FullyQualifiedJavaType("com.foo.UserMapper"));
 
         interfaze.addImportedType(new FullyQualifiedJavaType("java.util.Map"));
@@ -80,7 +80,7 @@ public class JavaDomUtilsTest {
     }
 
     @Test
-    public void testGenericTypeWithWildCardAllImported() {
+    void testGenericTypeWithWildCardAllImported() {
         Interface interfaze = new Interface(new FullyQualifiedJavaType("com.foo.UserMapper"));
 
         interfaze.addImportedType(new FullyQualifiedJavaType("java.util.Map"));
@@ -94,7 +94,7 @@ public class JavaDomUtilsTest {
     }
 
     @Test
-    public void testGenericTypeWithWildCardSomeImported() {
+    void testGenericTypeWithWildCardSomeImported() {
         Interface interfaze = new Interface(new FullyQualifiedJavaType("com.foo.UserMapper"));
 
         interfaze.addImportedType(new FullyQualifiedJavaType("java.util.Map"));
@@ -107,7 +107,7 @@ public class JavaDomUtilsTest {
     }
 
     @Test
-    public void testGenericTypeWithWildCard() {
+    void testGenericTypeWithWildCard() {
         Interface interfaze = new Interface(new FullyQualifiedJavaType("com.foo.UserMapper"));
 
         interfaze.addImportedType(new FullyQualifiedJavaType("java.util.Map"));
@@ -120,7 +120,7 @@ public class JavaDomUtilsTest {
     }
 
     @Test
-    public void testArray() {
+    void testArray() {
         Interface interfaze = new Interface(new FullyQualifiedJavaType("com.foo.UserMapper"));
 
         interfaze.addImportedType(new FullyQualifiedJavaType("java.math.BigDecimal[]"));

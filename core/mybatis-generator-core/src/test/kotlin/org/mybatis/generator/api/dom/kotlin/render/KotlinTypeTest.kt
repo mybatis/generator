@@ -17,7 +17,12 @@ package org.mybatis.generator.api.dom.kotlin.render
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.mybatis.generator.api.dom.kotlin.*
+import org.mybatis.generator.api.dom.kotlin.KotlinArg
+import org.mybatis.generator.api.dom.kotlin.KotlinFile
+import org.mybatis.generator.api.dom.kotlin.KotlinFunction
+import org.mybatis.generator.api.dom.kotlin.KotlinModifier
+import org.mybatis.generator.api.dom.kotlin.KotlinProperty
+import org.mybatis.generator.api.dom.kotlin.KotlinType
 import java.util.stream.Collectors
 
 class KotlinTypeTest {
@@ -253,7 +258,7 @@ class KotlinTypeTest {
                 .build()
 
         val renderedType = KotlinTypeRenderer().render(obj).stream()
-                .collect(Collectors.joining(System.getProperty("line.separator"))); //$NON-NLS-1$
+                .collect(Collectors.joining(System.getProperty("line.separator")))
 
         assertThat(renderedType).isEqualToNormalizingNewlines("""
             |class Adder(
@@ -282,7 +287,7 @@ class KotlinTypeTest {
             .build()
 
         val renderedType = KotlinTypeRenderer().render(obj).stream()
-            .collect(Collectors.joining(System.getProperty("line.separator"))); //$NON-NLS-1$
+            .collect(Collectors.joining(System.getProperty("line.separator")))
 
         assertThat(renderedType).isEqualToNormalizingNewlines("""
             |class Adder(
@@ -301,7 +306,7 @@ class KotlinTypeTest {
                 .build()
 
         val renderedType = KotlinTypeRenderer().render(obj).stream()
-                .collect(Collectors.joining(System.getProperty("line.separator"))); //$NON-NLS-1$
+                .collect(Collectors.joining(System.getProperty("line.separator")))
 
         assertThat(renderedType).isEqualToNormalizingNewlines("""
             |class Adder
@@ -315,7 +320,7 @@ class KotlinTypeTest {
             .build()
 
         val renderedType = KotlinTypeRenderer().render(obj).stream()
-            .collect(Collectors.joining(System.getProperty("line.separator"))); //$NON-NLS-1$
+            .collect(Collectors.joining(System.getProperty("line.separator")))
 
         assertThat(renderedType).isEqualToNormalizingNewlines("""
             |class Adder : Serializable

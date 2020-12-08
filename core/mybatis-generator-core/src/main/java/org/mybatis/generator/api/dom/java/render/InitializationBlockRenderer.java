@@ -22,12 +22,11 @@ import org.mybatis.generator.api.dom.java.InitializationBlock;
 
 public class InitializationBlockRenderer {
 
-    private BodyLineRenderer bodyLineRenderer = new BodyLineRenderer();
+    private final BodyLineRenderer bodyLineRenderer = new BodyLineRenderer();
 
     public List<String> render(InitializationBlock initializationBlock) {
-        List<String> lines = new ArrayList<>();
 
-        lines.addAll(initializationBlock.getJavaDocLines());
+        List<String> lines = new ArrayList<>(initializationBlock.getJavaDocLines());
         lines.add(renderFirstLine(initializationBlock));
         lines.addAll(bodyLineRenderer.render(initializationBlock.getBodyLines()));
         lines.add("}"); //$NON-NLS-1$

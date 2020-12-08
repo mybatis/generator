@@ -20,7 +20,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class JakartaCommonsLoggingImpl implements org.mybatis.generator.logging.Log {
 
-    private Log log;
+    private final Log log;
 
     public JakartaCommonsLoggingImpl(Class<?> clazz) {
         log = LogFactory.getLog(clazz);

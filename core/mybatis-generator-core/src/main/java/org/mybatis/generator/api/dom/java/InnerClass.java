@@ -27,13 +27,13 @@ import java.util.Optional;
  */
 public class InnerClass extends AbstractJavaType {
 
-    private List<TypeParameter> typeParameters = new ArrayList<>();
+    private final List<TypeParameter> typeParameters = new ArrayList<>();
 
     private FullyQualifiedJavaType superClass;
 
     private boolean isAbstract;
 
-    private List<InitializationBlock> initializationBlocks = new ArrayList<>();
+    private final List<InitializationBlock> initializationBlocks = new ArrayList<>();
 
     private boolean isFinal;
 

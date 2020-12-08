@@ -36,7 +36,6 @@ import org.mybatis.generator.config.MergeConstants;
 import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.exception.ShellException;
 import org.mybatis.generator.internal.DefaultShellCallback;
-import org.mybatis.generator.internal.NullProgressCallback;
 import org.mybatis.generator.internal.ObjectFactory;
 import org.mybatis.generator.internal.XmlFileMergerJaxp;
 
@@ -55,19 +54,19 @@ import org.mybatis.generator.internal.XmlFileMergerJaxp;
  */
 public class MyBatisGenerator {
 
-    private Configuration configuration;
+    private final Configuration configuration;
 
-    private ShellCallback shellCallback;
+    private final ShellCallback shellCallback;
 
-    private List<GeneratedJavaFile> generatedJavaFiles = new ArrayList<>();
+    private final List<GeneratedJavaFile> generatedJavaFiles = new ArrayList<>();
 
-    private List<GeneratedXmlFile> generatedXmlFiles = new ArrayList<>();
+    private final List<GeneratedXmlFile> generatedXmlFiles = new ArrayList<>();
 
-    private List<GeneratedKotlinFile> generatedKotlinFiles = new ArrayList<>();
+    private final List<GeneratedKotlinFile> generatedKotlinFiles = new ArrayList<>();
 
-    private List<String> warnings;
+    private final List<String> warnings;
 
-    private Set<String> projects = new HashSet<>();
+    private final Set<String> projects = new HashSet<>();
 
     /**
      * Constructs a MyBatisGenerator object.
@@ -212,7 +211,7 @@ public class MyBatisGenerator {
             IOException, InterruptedException {
 
         if (callback == null) {
-            callback = new NullProgressCallback();
+            callback = new ProgressCallback() {};
         }
 
         generatedJavaFiles.clear();

@@ -20,9 +20,9 @@ import java.util.List;
 
 public class XmlElement implements VisitableElement {
 
-    private List<Attribute> attributes = new ArrayList<>();
+    private final List<Attribute> attributes = new ArrayList<>();
 
-    private List<VisitableElement> elements = new ArrayList<>();
+    private final List<VisitableElement> elements = new ArrayList<>();
 
     private String name;
 

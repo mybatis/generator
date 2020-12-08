@@ -20,15 +20,15 @@ import java.util.Optional;
 
 public class KotlinProperty extends KotlinNamedItem {
 
-    private String dataType;
-    private String initializationString;
-    private Type type;
+    private final String dataType;
+    private final String initializationString;
+    private final Type type;
 
     public enum Type {
         VAL("val"), //$NON-NLS-1$
         VAR("var"); //$NON-NLS-1$
 
-        private String value;
+        private final String value;
 
         Type(String value) {
             this.value = value;
@@ -74,7 +74,7 @@ public class KotlinProperty extends KotlinNamedItem {
     public static class Builder extends AbstractBuilder<Builder> {
         private String dataType;
         private String initializationString;
-        private Type type;
+        private final Type type;
 
         private Builder(Type type, String name) {
             super(name);

@@ -26,9 +26,9 @@ import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.internal.util.CustomCollectors;
 
 public class MethodRenderer {
-    private TypeParameterRenderer typeParameterRenderer = new TypeParameterRenderer();
-    private ParameterRenderer parameterRenderer = new ParameterRenderer();
-    private BodyLineRenderer bodyLineRenderer = new BodyLineRenderer();
+    private final TypeParameterRenderer typeParameterRenderer = new TypeParameterRenderer();
+    private final ParameterRenderer parameterRenderer = new ParameterRenderer();
+    private final BodyLineRenderer bodyLineRenderer = new BodyLineRenderer();
 
     public List<String> render(Method method, boolean inInterface, CompilationUnit compilationUnit) {
         List<String> lines = new ArrayList<>();

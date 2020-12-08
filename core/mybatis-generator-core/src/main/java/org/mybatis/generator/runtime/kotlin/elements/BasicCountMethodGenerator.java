@@ -49,13 +49,12 @@ public class BasicCountMethodGenerator extends AbstractKotlinFunctionGenerator {
         return context.getPlugins().clientBasicCountMethodGenerated(function, kotlinFile, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, BasicCountMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
         @Override
         public Builder getThis() {
             return this;
         }
 
-        @Override
         public BasicCountMethodGenerator build() {
             return new BasicCountMethodGenerator(this);
         }

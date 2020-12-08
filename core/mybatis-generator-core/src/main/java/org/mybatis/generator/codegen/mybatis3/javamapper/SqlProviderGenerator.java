@@ -40,7 +40,7 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider.Pr
 
 public class SqlProviderGenerator extends AbstractJavaGenerator {
 
-    private boolean useLegacyBuilder;
+    private final boolean useLegacyBuilder;
 
     public SqlProviderGenerator(String project, boolean useLegacyBuilder) {
         super(project);
@@ -59,8 +59,8 @@ public class SqlProviderGenerator extends AbstractJavaGenerator {
         topLevelClass.setVisibility(JavaVisibility.PUBLIC);
         commentGenerator.addJavaFileComment(topLevelClass);
 
-        boolean addApplyWhereMethod = false;
-        addApplyWhereMethod |= addCountByExampleMethod(topLevelClass);
+        boolean addApplyWhereMethod;
+        addApplyWhereMethod = addCountByExampleMethod(topLevelClass);
         addApplyWhereMethod |= addDeleteByExampleMethod(topLevelClass);
         addInsertSelectiveMethod(topLevelClass);
         addApplyWhereMethod |= addSelectByExampleWithBLOBsMethod(topLevelClass);

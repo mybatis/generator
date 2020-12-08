@@ -24,8 +24,8 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 
 public class UpdateSelectiveColumnsMethodGenerator extends AbstractKotlinFunctionGenerator {
-    private FullyQualifiedKotlinType recordType;
-    private KotlinFragmentGenerator fragmentGenerator;
+    private final FullyQualifiedKotlinType recordType;
+    private final KotlinFragmentGenerator fragmentGenerator;
 
     private UpdateSelectiveColumnsMethodGenerator(Builder builder) {
         super(builder);
@@ -68,7 +68,7 @@ public class UpdateSelectiveColumnsMethodGenerator extends AbstractKotlinFunctio
                 introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, UpdateSelectiveColumnsMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
         private FullyQualifiedKotlinType recordType;
         private KotlinFragmentGenerator fragmentGenerator;
 
@@ -87,7 +87,6 @@ public class UpdateSelectiveColumnsMethodGenerator extends AbstractKotlinFunctio
             return this;
         }
 
-        @Override
         public UpdateSelectiveColumnsMethodGenerator build() {
             return new UpdateSelectiveColumnsMethodGenerator(this);
         }

@@ -22,8 +22,8 @@ import java.util.List;
 public class InitializationBlock {
 
     private boolean isStatic;
-    private List<String> bodyLines = new ArrayList<>();
-    private List<String> javaDocLines = new ArrayList<>();
+    private final List<String> bodyLines = new ArrayList<>();
+    private final List<String> javaDocLines = new ArrayList<>();
 
     public InitializationBlock() {
         this(false);

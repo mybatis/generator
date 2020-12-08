@@ -19,9 +19,9 @@ import java.util.Objects;
 
 public class Attribute {
 
-    private String name;
+    private final String name;
 
-    private String value;
+    private final String value;
 
     public Attribute(String name, String value) {
         this.name = Objects.requireNonNull(name);

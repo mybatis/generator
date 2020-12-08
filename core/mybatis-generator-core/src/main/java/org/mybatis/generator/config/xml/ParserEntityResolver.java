@@ -15,13 +15,11 @@
  */
 package org.mybatis.generator.config.xml;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 import org.mybatis.generator.codegen.XmlConstants;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 public class ParserEntityResolver implements EntityResolver {
 
@@ -30,8 +28,7 @@ public class ParserEntityResolver implements EntityResolver {
     }
 
     @Override
-    public InputSource resolveEntity(String publicId, String systemId)
-            throws SAXException, IOException {
+    public InputSource resolveEntity(String publicId, String systemId) {
         if (XmlConstants.MYBATIS_GENERATOR_CONFIG_PUBLIC_ID
                 .equalsIgnoreCase(publicId)) {
             InputStream is = getClass()

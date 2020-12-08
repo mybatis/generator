@@ -23,11 +23,11 @@ import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.config.Context;
 
 public abstract class AbstractMethodGenerator {
-    protected Context context;
-    protected IntrospectedTable introspectedTable;
-    protected String tableFieldName;
+    protected final Context context;
+    protected final IntrospectedTable introspectedTable;
+    protected final String tableFieldName;
 
-    protected AbstractMethodGenerator(BaseBuilder<?, ?> builder) {
+    protected AbstractMethodGenerator(BaseBuilder<?> builder) {
         context = builder.context;
         introspectedTable = builder.introspectedTable;
         tableFieldName = builder.tableFieldName;
@@ -63,7 +63,7 @@ public abstract class AbstractMethodGenerator {
 
     public abstract boolean callPlugins(Method method, Interface interfaze);
 
-    public abstract static class BaseBuilder<T extends BaseBuilder<T, R>, R> {
+    public abstract static class BaseBuilder<T extends BaseBuilder<T>> {
         private Context context;
         private IntrospectedTable introspectedTable;
         private String tableFieldName;
@@ -84,7 +84,5 @@ public abstract class AbstractMethodGenerator {
         }
 
         public abstract T getThis();
-
-        public abstract R build();
     }
 }

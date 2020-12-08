@@ -106,11 +106,11 @@ public abstract class IntrospectedTable {
 
     protected Rules rules;
 
-    protected List<IntrospectedColumn> primaryKeyColumns = new ArrayList<>();
+    protected final List<IntrospectedColumn> primaryKeyColumns = new ArrayList<>();
 
-    protected List<IntrospectedColumn> baseColumns = new ArrayList<>();
+    protected final List<IntrospectedColumn> baseColumns = new ArrayList<>();
 
-    protected List<IntrospectedColumn> blobColumns = new ArrayList<>();
+    protected final List<IntrospectedColumn> blobColumns = new ArrayList<>();
 
     protected TargetRuntime targetRuntime;
 
@@ -118,10 +118,10 @@ public abstract class IntrospectedTable {
      * Attributes may be used by plugins to capture table related state between
      * the different plugin calls.
      */
-    protected Map<String, Object> attributes = new HashMap<>();
+    protected final Map<String, Object> attributes = new HashMap<>();
 
     /** Internal attributes are used to store commonly accessed items by all code generators. */
-    protected Map<IntrospectedTable.InternalAttribute, String> internalAttributes =
+    protected final Map<IntrospectedTable.InternalAttribute, String> internalAttributes =
             new EnumMap<>(InternalAttribute.class);
 
     /**
@@ -657,12 +657,8 @@ public abstract class IntrospectedTable {
             return null;
         }
 
-        StringBuilder sb = new StringBuilder();
-        sb.append(config.getTargetPackage());
-
-        sb.append(fullyQualifiedTable.getSubPackageForClientOrSqlMap(isSubPackagesEnabled(config)));
-
-        return sb.toString();
+        return config.getTargetPackage() +
+                fullyQualifiedTable.getSubPackageForClientOrSqlMap(isSubPackagesEnabled(config));
     }
 
     protected void calculateJavaClientAttributes() {
@@ -712,11 +708,8 @@ public abstract class IntrospectedTable {
         JavaModelGeneratorConfiguration config = context
                 .getJavaModelGeneratorConfiguration();
 
-        StringBuilder sb = new StringBuilder();
-        sb.append(config.getTargetPackage());
-        sb.append(fullyQualifiedTable.getSubPackageForModel(isSubPackagesEnabled(config)));
-
-        return sb.toString();
+        return config.getTargetPackage() +
+                fullyQualifiedTable.getSubPackageForModel(isSubPackagesEnabled(config));
     }
 
     protected void calculateModelAttributes() {
@@ -771,10 +764,8 @@ public abstract class IntrospectedTable {
             return calculateJavaModelPackage();
         }
 
-        StringBuilder sb = new StringBuilder();
-        sb.append(exampleTargetPackage);
-        sb.append(fullyQualifiedTable.getSubPackageForModel(isSubPackagesEnabled(config)));
-        return sb.toString();
+        return exampleTargetPackage +
+                fullyQualifiedTable.getSubPackageForModel(isSubPackagesEnabled(config));
     }
 
     protected String calculateSqlMapPackage() {
@@ -790,7 +781,7 @@ public abstract class IntrospectedTable {
                 String mapperName = tableConfiguration.getMapperName();
                 int ind = mapperName.lastIndexOf('.');
                 if (ind != -1) {
-                    sb.append('.').append(mapperName.substring(0, ind));
+                    sb.append('.').append(mapperName, 0, ind);
                 }
             } else if (stringHasValue(fullyQualifiedTable.getDomainObjectSubPackage())) {
                 sb.append('.').append(fullyQualifiedTable.getDomainObjectSubPackage());

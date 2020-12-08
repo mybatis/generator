@@ -19,9 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class KotlinNamedItem {
-    private String name;
-    private List<KotlinModifier> modifiers = new ArrayList<>();
-    private List<String> annotations = new ArrayList<>();
+    private final String name;
+    private final List<KotlinModifier> modifiers = new ArrayList<>();
+    private final List<String> annotations = new ArrayList<>();
 
     protected KotlinNamedItem(AbstractBuilder<?> builder) {
         name = builder.name;
@@ -48,9 +48,9 @@ public abstract class KotlinNamedItem {
     public abstract <R> R accept(KotlinNamedItemVisitor<R> visitor);
 
     public abstract static class AbstractBuilder<T extends AbstractBuilder<T>> {
-        private String name;
-        private List<KotlinModifier> modifiers = new ArrayList<>();
-        private List<String> annotations = new ArrayList<>();
+        private final String name;
+        private final List<KotlinModifier> modifiers = new ArrayList<>();
+        private final List<String> annotations = new ArrayList<>();
 
         protected AbstractBuilder(String name) {
             this.name = name;

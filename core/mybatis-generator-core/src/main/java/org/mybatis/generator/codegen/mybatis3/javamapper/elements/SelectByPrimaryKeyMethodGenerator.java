@@ -29,7 +29,7 @@ import org.mybatis.generator.api.dom.java.Parameter;
 public class SelectByPrimaryKeyMethodGenerator extends
         AbstractJavaMapperMethodGenerator {
 
-    private boolean isSimple;
+    private final boolean isSimple;
 
     public SelectByPrimaryKeyMethodGenerator(boolean isSimple) {
         super();

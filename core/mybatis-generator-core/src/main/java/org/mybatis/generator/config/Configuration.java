@@ -25,9 +25,9 @@ import org.mybatis.generator.exception.InvalidConfigurationException;
 
 public class Configuration {
 
-    private List<Context> contexts;
+    private final List<Context> contexts;
 
-    private List<String> classPathEntries;
+    private final List<String> classPathEntries;
 
     public Configuration() {
         super();
@@ -81,15 +81,5 @@ public class Configuration {
 
     public void addContext(Context context) {
         contexts.add(context);
-    }
-
-    public Context getContext(String id) {
-        for (Context context : contexts) {
-            if (id.equals(context.getId())) {
-                return context;
-            }
-        }
-
-        return null;
     }
 }

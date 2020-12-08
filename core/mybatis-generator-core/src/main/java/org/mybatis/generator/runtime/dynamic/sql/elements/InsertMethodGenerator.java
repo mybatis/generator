@@ -80,7 +80,7 @@ public class InsertMethodGenerator extends AbstractMethodGenerator {
         return context.getPlugins().clientInsertMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, InsertMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
         private FullyQualifiedJavaType recordType;
 
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
@@ -93,7 +93,6 @@ public class InsertMethodGenerator extends AbstractMethodGenerator {
             return this;
         }
 
-        @Override
         public InsertMethodGenerator build() {
             return new InsertMethodGenerator(this);
         }

@@ -23,8 +23,7 @@ import org.mybatis.generator.api.dom.kotlin.KotlinProperty;
 public class KotlinPropertyRenderer {
 
     public List<String> render(KotlinProperty kotlinProperty) {
-        List<String> answer = new ArrayList<>();
-        answer.addAll(kotlinProperty.getAnnotations());
+        List<String> answer = new ArrayList<>(kotlinProperty.getAnnotations());
         answer.add(renderProperty(kotlinProperty));
         return answer;
     }

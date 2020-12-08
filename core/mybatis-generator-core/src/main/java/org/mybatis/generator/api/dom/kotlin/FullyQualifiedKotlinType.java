@@ -38,7 +38,7 @@ public class FullyQualifiedKotlinType {
     }
 
     private String packageName;
-    private List<FullyQualifiedKotlinType> typeArguments = new ArrayList<>();
+    private final List<FullyQualifiedKotlinType> typeArguments = new ArrayList<>();
     private String shortNameWithoutTypeArguments;
     private boolean isExplicitlyImported;
 

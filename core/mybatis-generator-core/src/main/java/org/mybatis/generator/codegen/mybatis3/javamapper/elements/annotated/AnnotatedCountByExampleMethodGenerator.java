@@ -29,14 +29,13 @@ public class AnnotatedCountByExampleMethodGenerator extends CountByExampleMethod
     @Override
     public void addMapperAnnotations(Method method) {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getMyBatis3SqlProviderType());
-        StringBuilder sb = new StringBuilder();
-        sb.append("@SelectProvider(type="); //$NON-NLS-1$
-        sb.append(fqjt.getShortName());
-        sb.append(".class, method=\""); //$NON-NLS-1$
-        sb.append(introspectedTable.getCountByExampleStatementId());
-        sb.append("\")"); //$NON-NLS-1$
 
-        method.addAnnotation(sb.toString());
+        String s = "@SelectProvider(type=" + //$NON-NLS-1$
+                fqjt.getShortName() +
+                ".class, method=\"" + //$NON-NLS-1$
+                introspectedTable.getCountByExampleStatementId() +
+                "\")";//$NON-NLS-1$
+        method.addAnnotation(s);
     }
 
     @Override

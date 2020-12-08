@@ -43,6 +43,8 @@ public class LogFactory {
         tryImplementation(new NoLoggingLogFactory());
     }
 
+    private LogFactory() {}
+
     public static Log getLog(Class<?> clazz) {
         try {
             return theFactory.getLog(clazz);

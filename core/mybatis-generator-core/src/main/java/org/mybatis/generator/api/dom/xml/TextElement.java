@@ -17,7 +17,7 @@ package org.mybatis.generator.api.dom.xml;
 
 public class TextElement implements VisitableElement {
 
-    private String content;
+    private final String content;
 
     public TextElement(String content) {
         this.content = content;

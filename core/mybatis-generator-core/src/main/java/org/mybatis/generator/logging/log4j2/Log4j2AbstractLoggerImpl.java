@@ -31,7 +31,7 @@ public class Log4j2AbstractLoggerImpl implements Log {
 
     private static final String FQCN = Log4j2Impl.class.getName();
 
-    private ExtendedLoggerWrapper log;
+    private final ExtendedLoggerWrapper log;
 
     public Log4j2AbstractLoggerImpl(AbstractLogger abstractLogger) {
         log = new ExtendedLoggerWrapper(abstractLogger, abstractLogger.getName(), abstractLogger.getMessageFactory());

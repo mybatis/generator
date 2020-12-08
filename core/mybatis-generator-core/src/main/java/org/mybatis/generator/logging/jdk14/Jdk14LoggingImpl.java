@@ -22,7 +22,7 @@ import org.mybatis.generator.logging.Log;
 
 public class Jdk14LoggingImpl implements Log {
 
-    private Logger log;
+    private final Logger log;
 
     public Jdk14LoggingImpl(Class<?> clazz) {
         log = Logger.getLogger(clazz.getName());

@@ -23,9 +23,8 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 
 public class KotlinFunctionRenderer {
     public List<String> render(KotlinFunction function) {
-        List<String> answer = new ArrayList<>();
 
-        answer.addAll(function.getAnnotations());
+        List<String> answer = new ArrayList<>(function.getAnnotations());
 
         answer.add(renderFirstLine(function));
 

@@ -41,13 +41,13 @@ public class RenderingUtilities {
     private RenderingUtilities() {}
 
     public static final String JAVA_INDENT = "    "; //$NON-NLS-1$
-    private static TypeParameterRenderer typeParameterRenderer = new TypeParameterRenderer();
-    private static FieldRenderer fieldRenderer = new FieldRenderer();
-    private static InitializationBlockRenderer initializationBlockRenderer = new InitializationBlockRenderer();
-    private static MethodRenderer methodRenderer = new MethodRenderer();
-    private static InnerClassRenderer innerClassRenderer = new InnerClassRenderer();
-    private static InnerInterfaceRenderer innerInterfaceRenderer = new InnerInterfaceRenderer();
-    private static InnerEnumRenderer innerEnumRenderer = new InnerEnumRenderer();
+    private static final TypeParameterRenderer typeParameterRenderer = new TypeParameterRenderer();
+    private static final FieldRenderer fieldRenderer = new FieldRenderer();
+    private static final InitializationBlockRenderer initializationBlockRenderer = new InitializationBlockRenderer();
+    private static final MethodRenderer methodRenderer = new MethodRenderer();
+    private static final InnerClassRenderer innerClassRenderer = new InnerClassRenderer();
+    private static final InnerInterfaceRenderer innerInterfaceRenderer = new InnerInterfaceRenderer();
+    private static final InnerEnumRenderer innerEnumRenderer = new InnerEnumRenderer();
 
     // should return an empty string if no type parameters
     public static String renderTypeParameters(List<TypeParameter> typeParameters, CompilationUnit compilationUnit) {

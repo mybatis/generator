@@ -26,9 +26,9 @@ import java.util.List;
  */
 public class InnerEnum extends AbstractJavaType {
 
-    private List<String> enumConstants = new ArrayList<>();
+    private final List<String> enumConstants = new ArrayList<>();
 
-    private List<InitializationBlock> initializationBlocks = new ArrayList<>();
+    private final List<InitializationBlock> initializationBlocks = new ArrayList<>();
 
     public InnerEnum(FullyQualifiedJavaType type) {
         super(type);

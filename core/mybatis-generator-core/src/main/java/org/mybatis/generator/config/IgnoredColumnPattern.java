@@ -24,9 +24,9 @@ import java.util.regex.Pattern;
 
 public class IgnoredColumnPattern {
 
-    private String patternRegex;
-    private Pattern pattern;
-    private List<IgnoredColumnException> exceptions = new ArrayList<>();
+    private final String patternRegex;
+    private final Pattern pattern;
+    private final List<IgnoredColumnException> exceptions = new ArrayList<>();
 
     public IgnoredColumnPattern(String patternRegex) {
         this.patternRegex = patternRegex;

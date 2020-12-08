@@ -20,7 +20,7 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 
 public class GeneralSelectMethodGenerator extends AbstractKotlinFunctionGenerator {
-    private String mapperName;
+    private final String mapperName;
 
     private GeneralSelectMethodGenerator(Builder builder) {
         super(builder);
@@ -50,7 +50,7 @@ public class GeneralSelectMethodGenerator extends AbstractKotlinFunctionGenerato
         return context.getPlugins().clientGeneralSelectMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, GeneralSelectMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
         private String mapperName;
 
         public Builder withMapperName(String mapperName) {
@@ -63,7 +63,6 @@ public class GeneralSelectMethodGenerator extends AbstractKotlinFunctionGenerato
             return this;
         }
 
-        @Override
         public GeneralSelectMethodGenerator build() {
             return new GeneralSelectMethodGenerator(this);
         }

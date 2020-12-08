@@ -22,7 +22,7 @@ package org.mybatis.generator.api;
  */
 public abstract class GeneratedFile {
 
-    protected String targetProject;
+    protected final String targetProject;
 
     protected GeneratedFile(String targetProject) {
         this.targetProject = targetProject;

@@ -57,7 +57,7 @@ import org.mybatis.generator.codegen.XmlConstants;
  */
 public class MapperConfigPlugin extends PluginAdapter {
 
-    private List<String> mapperFiles = new ArrayList<>();
+    private final List<String> mapperFiles = new ArrayList<>();
 
     @Override
     public boolean validate(List<String> warnings) {
@@ -103,11 +103,10 @@ public class MapperConfigPlugin extends PluginAdapter {
         root.addElement(new TextElement(
                 "    to this file before it is usable by MyBatis.")); //$NON-NLS-1$
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("  This file was generated on "); //$NON-NLS-1$
-        sb.append(new Date());
-        sb.append('.');
-        root.addElement(new TextElement(sb.toString()));
+        String s = "  This file was generated on " + //$NON-NLS-1$
+                new Date() +
+                '.';
+        root.addElement(new TextElement(s));
 
         root.addElement(new TextElement("-->")); //$NON-NLS-1$
 

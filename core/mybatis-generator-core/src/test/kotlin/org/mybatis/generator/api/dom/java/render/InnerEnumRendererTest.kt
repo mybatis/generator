@@ -31,7 +31,7 @@ class InnerEnumRendererTest {
     @Test
     fun testSimpleEnum() {
         val outerEnum = InnerEnum("com.foo.Bar")
-	outerEnum.setVisibility(JavaVisibility.PUBLIC)
+        outerEnum.visibility = JavaVisibility.PUBLIC
         outerEnum.addEnumConstant("ONE")
         outerEnum.addEnumConstant("TWO")
         outerEnum.addEnumConstant("THREE")
@@ -48,51 +48,51 @@ class InnerEnumRendererTest {
     @Test
     fun testComplexEnum() {
         val outerEnum = TopLevelEnumeration("com.foo.Bar")
-	outerEnum.setVisibility(JavaVisibility.PUBLIC)
+        outerEnum.visibility = JavaVisibility.PUBLIC
         outerEnum.addEnumConstant("""ONE("One")""")
         outerEnum.addEnumConstant("""TWO("Two")""")
         outerEnum.addEnumConstant("""THREE("Three")""")
-	val constructor = Method("Bar")
-	constructor.setConstructor(true)
-	constructor.setVisibility(JavaVisibility.PRIVATE)
-	constructor.addParameter(Parameter(FullyQualifiedJavaType.getStringInstance(), "value"))
-	constructor.addBodyLine("this.value = value;")
-	outerEnum.addMethod(constructor)
-	val outerField = Field("value", FullyQualifiedJavaType.getStringInstance())
-	outerField.setVisibility(JavaVisibility.PRIVATE)
-	outerEnum.addField(outerField)
-	val outerMethod = Method("getValue")
-	outerMethod.setReturnType(FullyQualifiedJavaType.getStringInstance())
-	outerMethod.setVisibility(JavaVisibility.PUBLIC)
-	outerMethod.addBodyLine("return value;")
-	outerEnum.addMethod(outerMethod)
+        val constructor = Method("Bar")
+        constructor.isConstructor = true
+        constructor.visibility = JavaVisibility.PRIVATE
+        constructor.addParameter(Parameter(FullyQualifiedJavaType.getStringInstance(), "value"))
+        constructor.addBodyLine("this.value = value;")
+        outerEnum.addMethod(constructor)
+        val outerField = Field("value", FullyQualifiedJavaType.getStringInstance())
+        outerField.visibility = JavaVisibility.PRIVATE
+        outerEnum.addField(outerField)
+        val outerMethod = Method("getValue")
+        outerMethod.setReturnType(FullyQualifiedJavaType.getStringInstance())
+        outerMethod.visibility = JavaVisibility.PUBLIC
+        outerMethod.addBodyLine("return value;")
+        outerEnum.addMethod(outerMethod)
 
         val innerEnum = InnerEnum("InnerEnum")
-        innerEnum.setVisibility(JavaVisibility.PUBLIC)
-        innerEnum.setStatic(true)
+        innerEnum.visibility = JavaVisibility.PUBLIC
+        innerEnum.isStatic = true
         innerEnum.addEnumConstant("FOUR")
         innerEnum.addEnumConstant("FIVE")
         innerEnum.addEnumConstant("SIX")
         outerEnum.addInnerEnum(innerEnum)
 
         val innerClass = InnerClass("InnerClass")
-	innerClass.setVisibility(JavaVisibility.PUBLIC)
-	innerClass.setStatic(true)
-	val field = Field("fred", FullyQualifiedJavaType.getStringInstance())
-	field.setVisibility(JavaVisibility.PRIVATE)
-	innerClass.addField(field)
-	outerEnum.addInnerClass(innerClass)
+        innerClass.visibility = JavaVisibility.PUBLIC
+        innerClass.isStatic = true
+        val field = Field("fred", FullyQualifiedJavaType.getStringInstance())
+        field.visibility = JavaVisibility.PRIVATE
+        innerClass.addField(field)
+        outerEnum.addInnerClass(innerClass)
 
         val innerInterface = InnerInterface("InnerInterface")
-	innerInterface.setVisibility(JavaVisibility.PUBLIC)
-	innerInterface.setStatic(true)
-	val method = Method("getName")
-	method.setVisibility(JavaVisibility.PUBLIC)
-	method.setDefault(true)
-	method.setReturnType(FullyQualifiedJavaType.getStringInstance())
-	method.addBodyLine("""return "Fred";""")
-	innerInterface.addMethod(method)
-	outerEnum.addInnerInterface(innerInterface)
+        innerInterface.visibility = JavaVisibility.PUBLIC
+        innerInterface.isStatic = true
+        val method = Method("getName")
+        method.visibility = JavaVisibility.PUBLIC
+        method.isDefault = true
+        method.setReturnType(FullyQualifiedJavaType.getStringInstance())
+        method.addBodyLine("""return "Fred";""")
+        innerInterface.addMethod(method)
+        outerEnum.addInnerInterface(innerInterface)
 
         assertThat(TopLevelEnumerationRenderer().render(outerEnum)).isEqualToNormalizingNewlines("""
                 |package com.foo;
@@ -132,5 +132,5 @@ class InnerEnumRendererTest {
     }
 
     private fun toString(en: InnerEnum) = InnerEnumRenderer().render(en, null)
-                .joinToString(System.getProperty("line.separator"))
+        .joinToString(System.getProperty("line.separator"))
 }

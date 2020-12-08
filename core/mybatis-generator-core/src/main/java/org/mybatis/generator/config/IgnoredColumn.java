@@ -23,7 +23,7 @@ import java.util.List;
 
 public class IgnoredColumn {
 
-    protected String columnName;
+    protected final String columnName;
 
     private boolean isColumnNameDelimited;
 
@@ -35,10 +35,6 @@ public class IgnoredColumn {
 
     public String getColumnName() {
         return columnName;
-    }
-
-    public boolean isColumnNameDelimited() {
-        return isColumnNameDelimited;
     }
 
     public void setColumnNameDelimited(boolean isColumnNameDelimited) {

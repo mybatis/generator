@@ -33,8 +33,8 @@ import org.mybatis.generator.config.Context;
 import org.mybatis.generator.internal.util.StringUtility;
 
 public class KotlinDynamicSqlSupportClassGenerator {
-    private IntrospectedTable introspectedTable;
-    private Context context;
+    private final IntrospectedTable introspectedTable;
+    private final Context context;
     private KotlinFile kotlinFile;
     private KotlinType innerObject;
     private KotlinType outerObject;

@@ -89,21 +89,6 @@ public class StringUtility {
         return sb.toString();
     }
 
-    public static String escapeStringForXml(String s) {
-        StringTokenizer st = new StringTokenizer(s, "\"", true); //$NON-NLS-1$
-        StringBuilder sb = new StringBuilder();
-        while (st.hasMoreTokens()) {
-            String token = st.nextToken();
-            if ("\"".equals(token)) { //$NON-NLS-1$
-                sb.append("&quot;"); //$NON-NLS-1$
-            } else {
-                sb.append(token);
-            }
-        }
-
-        return sb.toString();
-    }
-
     public static boolean isTrue(String s) {
         return "true".equalsIgnoreCase(s); //$NON-NLS-1$
     }

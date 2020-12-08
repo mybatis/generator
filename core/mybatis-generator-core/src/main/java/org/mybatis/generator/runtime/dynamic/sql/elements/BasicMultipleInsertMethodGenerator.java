@@ -137,7 +137,7 @@ public class BasicMultipleInsertMethodGenerator extends AbstractMethodGenerator 
         return context.getPlugins().clientBasicInsertMultipleMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, BasicMultipleInsertMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
 
         private FullyQualifiedJavaType recordType;
 
@@ -151,7 +151,6 @@ public class BasicMultipleInsertMethodGenerator extends AbstractMethodGenerator 
             return this;
         }
 
-        @Override
         public BasicMultipleInsertMethodGenerator build() {
             return new BasicMultipleInsertMethodGenerator(this);
         }

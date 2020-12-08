@@ -83,7 +83,7 @@ public class InsertSelectiveMethodGenerator extends AbstractKotlinFunctionGenera
         return context.getPlugins().clientInsertSelectiveMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, InsertSelectiveMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
         private FullyQualifiedKotlinType recordType;
         private String mapperName;
         private String tableFieldImport;
@@ -108,7 +108,6 @@ public class InsertSelectiveMethodGenerator extends AbstractKotlinFunctionGenera
             return this;
         }
 
-        @Override
         public InsertSelectiveMethodGenerator build() {
             return new InsertSelectiveMethodGenerator(this);
         }

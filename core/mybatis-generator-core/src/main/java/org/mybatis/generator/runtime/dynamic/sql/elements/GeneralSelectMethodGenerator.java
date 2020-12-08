@@ -66,7 +66,7 @@ public class GeneralSelectMethodGenerator extends AbstractMethodGenerator {
         return context.getPlugins().clientGeneralSelectMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, GeneralSelectMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
         private FullyQualifiedJavaType recordType;
 
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
@@ -79,7 +79,6 @@ public class GeneralSelectMethodGenerator extends AbstractMethodGenerator {
             return this;
         }
 
-        @Override
         public GeneralSelectMethodGenerator build() {
             return new GeneralSelectMethodGenerator(this);
         }

@@ -23,7 +23,7 @@ import java.util.List;
 
 public class ColumnOverride extends PropertyHolder {
 
-    private String columnName;
+    private final String columnName;
 
     private String javaProperty;
 

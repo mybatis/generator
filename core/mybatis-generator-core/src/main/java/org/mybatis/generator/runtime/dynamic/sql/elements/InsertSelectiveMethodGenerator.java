@@ -98,7 +98,7 @@ public class InsertSelectiveMethodGenerator extends AbstractMethodGenerator {
         return context.getPlugins().clientInsertSelectiveMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, InsertSelectiveMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
         private FullyQualifiedJavaType recordType;
 
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
@@ -111,7 +111,6 @@ public class InsertSelectiveMethodGenerator extends AbstractMethodGenerator {
             return this;
         }
 
-        @Override
         public InsertSelectiveMethodGenerator build() {
             return new InsertSelectiveMethodGenerator(this);
         }

@@ -66,7 +66,7 @@ public class SelectByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
         return context.getPlugins().clientSelectByPrimaryKeyMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, SelectByPrimaryKeyMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
         private FullyQualifiedJavaType recordType;
         private FragmentGenerator fragmentGenerator;
 
@@ -85,7 +85,6 @@ public class SelectByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
             return this;
         }
 
-        @Override
         public SelectByPrimaryKeyMethodGenerator build() {
             return new SelectByPrimaryKeyMethodGenerator(this);
         }

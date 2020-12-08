@@ -22,8 +22,8 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 import org.mybatis.generator.runtime.dynamic.sql.elements.Utils;
 
 public class InsertMultipleVarargMethodGenerator extends AbstractKotlinFunctionGenerator {
-    private FullyQualifiedKotlinType recordType;
-    private String mapperName;
+    private final FullyQualifiedKotlinType recordType;
+    private final String mapperName;
 
     private InsertMultipleVarargMethodGenerator(Builder builder) {
         super(builder);
@@ -57,7 +57,7 @@ public class InsertMultipleVarargMethodGenerator extends AbstractKotlinFunctionG
                 introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, InsertMultipleVarargMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
         private FullyQualifiedKotlinType recordType;
         private String mapperName;
 
@@ -76,7 +76,6 @@ public class InsertMultipleVarargMethodGenerator extends AbstractKotlinFunctionG
             return this;
         }
 
-        @Override
         public InsertMultipleVarargMethodGenerator build() {
             return new InsertMultipleVarargMethodGenerator(this);
         }

@@ -59,9 +59,9 @@ public class Context extends PropertyHolder {
 
     private JavaClientGeneratorConfiguration javaClientGeneratorConfiguration;
 
-    private ArrayList<TableConfiguration> tableConfigurations;
+    private final ArrayList<TableConfiguration> tableConfigurations;
 
-    private ModelType defaultModelType;
+    private final ModelType defaultModelType;
 
     private String beginningDelimiter = "\""; //$NON-NLS-1$
 
@@ -73,7 +73,7 @@ public class Context extends PropertyHolder {
 
     private PluginAggregator pluginAggregator;
 
-    private List<PluginConfiguration> pluginConfigurations;
+    private final List<PluginConfiguration> pluginConfigurations;
 
     private String targetRuntime;
 
@@ -86,8 +86,6 @@ public class Context extends PropertyHolder {
     private KotlinFormatter kotlinFormatter;
 
     private XmlFormatter xmlFormatter;
-
-    private boolean isJava8Targeted = true;
 
     public Context(ModelType defaultModelType) {
         super();
@@ -104,10 +102,6 @@ public class Context extends PropertyHolder {
 
     public void addTableConfiguration(TableConfiguration tc) {
         tableConfigurations.add(tc);
-    }
-
-    public JDBCConnectionConfiguration getJdbcConnectionConfiguration() {
-        return jdbcConnectionConfiguration;
     }
 
     public JavaClientGeneratorConfiguration getJavaClientGeneratorConfiguration() {
@@ -232,10 +226,6 @@ public class Context extends PropertyHolder {
         return defaultModelType;
     }
 
-    public List<TableConfiguration> getTableConfigurations() {
-        return tableConfigurations;
-    }
-
     public String getBeginningDelimiter() {
         return beginningDelimiter;
     }
@@ -255,9 +245,6 @@ public class Context extends PropertyHolder {
         } else if (PropertyRegistry.CONTEXT_AUTO_DELIMIT_KEYWORDS.equals(name)
                 && stringHasValue(value)) {
             autoDelimitKeywords = isTrue(value);
-        } else if (PropertyRegistry.CONTEXT_TARGET_JAVA8.equals(name)
-                && stringHasValue(value)) {
-            isJava8Targeted = isTrue(value);
         }
     }
 
@@ -332,7 +319,7 @@ public class Context extends PropertyHolder {
     // 4. generateFiles()
     //
 
-    private List<IntrospectedTable> introspectedTables = new ArrayList<>();
+    private final List<IntrospectedTable> introspectedTables = new ArrayList<>();
 
     /**
      * This method could be useful for users that use the library for introspection only
@@ -355,7 +342,7 @@ public class Context extends PropertyHolder {
         //
         // 1. Create introspected table implementation
 
-        steps += tableConfigurations.size() * 1;
+        steps += tableConfigurations.size();
 
         return steps;
     }
@@ -511,7 +498,7 @@ public class Context extends PropertyHolder {
 
     public boolean autoDelimitKeywords() {
         return autoDelimitKeywords != null
-                && autoDelimitKeywords.booleanValue();
+                && autoDelimitKeywords;
     }
 
     public ConnectionFactoryConfiguration getConnectionFactoryConfiguration() {
@@ -520,13 +507,5 @@ public class Context extends PropertyHolder {
 
     public void setConnectionFactoryConfiguration(ConnectionFactoryConfiguration connectionFactoryConfiguration) {
         this.connectionFactoryConfiguration = connectionFactoryConfiguration;
-    }
-
-    public boolean isJava8Targeted() {
-        return isJava8Targeted;
-    }
-
-    public void setJava8Targeted(boolean isJava8Targeted) {
-        this.isJava8Targeted = isJava8Targeted;
     }
 }

@@ -15,15 +15,13 @@
  */
 package org.mybatis.generator.api;
 
-import org.mybatis.generator.internal.NullProgressCallback;
-
 /**
  * A slightly more verbose progress callback.
  *
  * @author Jeff Butler
  *
  */
-public class VerboseProgressCallback extends NullProgressCallback {
+public class VerboseProgressCallback implements ProgressCallback {
 
     public VerboseProgressCallback() {
         super();

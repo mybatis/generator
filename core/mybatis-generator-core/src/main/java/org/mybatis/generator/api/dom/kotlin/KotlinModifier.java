@@ -22,7 +22,7 @@ public enum KotlinModifier {
     DATA("data"), //$NON-NLS-1$
     LATE_INIT("lateinit"); //$NON-NLS-1$
 
-    private String value;
+    private final String value;
 
     KotlinModifier(String value) {
         this.value = value;

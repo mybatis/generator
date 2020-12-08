@@ -27,7 +27,7 @@ import org.mybatis.generator.internal.util.CustomCollectors;
 
 public class ElementRenderer implements ElementVisitor<Stream<String>> {
 
-    private AttributeRenderer attributeRenderer = new AttributeRenderer();
+    private final AttributeRenderer attributeRenderer = new AttributeRenderer();
 
     @Override
     public Stream<String> visit(TextElement element) {

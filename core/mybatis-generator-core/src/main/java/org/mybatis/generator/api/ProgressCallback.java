@@ -50,7 +50,7 @@ public interface ProgressCallback {
      *            the maximum number of times startTask will be called for the
      *            introspection phase.
      */
-    void introspectionStarted(int totalTasks);
+    default void introspectionStarted(int totalTasks) {}
 
     /**
      * Called to note the start of the generation phase, and to note the maximum
@@ -60,7 +60,7 @@ public interface ProgressCallback {
      *            the maximum number of times startTask will be called for the
      *            generation phase.
      */
-    void generationStarted(int totalTasks);
+    default void generationStarted(int totalTasks) {}
 
     /**
      * Called to note the start of the file saving phase, and to note the
@@ -71,7 +71,7 @@ public interface ProgressCallback {
      *            the maximum number of times startTask will be called for the
      *            file saving phase.
      */
-    void saveStarted(int totalTasks);
+    default void saveStarted(int totalTasks) {}
 
     /**
      * Called to denote the beginning of a save task.
@@ -79,12 +79,12 @@ public interface ProgressCallback {
      * @param taskName
      *            a descriptive name of the current work step
      */
-    void startTask(String taskName);
+    default void startTask(String taskName) {}
 
     /**
      * This method is called when all generated files have been saved.
      */
-    void done();
+    default void done() {}
 
     /**
      * The method is called periodically during a long running method.
@@ -95,5 +95,5 @@ public interface ProgressCallback {
      * @throws InterruptedException
      *             if the operation should be halted
      */
-    void checkCancel() throws InterruptedException;
+    default void checkCancel() throws InterruptedException {}
 }

@@ -32,7 +32,7 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.UpdateByPrimar
 public class AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator
         extends UpdateByPrimaryKeyWithoutBLOBsMethodGenerator {
 
-    private boolean isSimple;
+    private final boolean isSimple;
 
     public AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator(boolean isSimple) {
         super();

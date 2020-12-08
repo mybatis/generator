@@ -24,7 +24,7 @@ import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 
 public class GeneralSelectOneMethodGenerator extends AbstractMethodGenerator {
-    private FullyQualifiedJavaType recordType;
+    private final FullyQualifiedJavaType recordType;
 
     private GeneralSelectOneMethodGenerator(Builder builder) {
         super(builder);
@@ -66,7 +66,7 @@ public class GeneralSelectOneMethodGenerator extends AbstractMethodGenerator {
         return context.getPlugins().clientSelectOneMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, GeneralSelectOneMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
         private FullyQualifiedJavaType recordType;
 
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
@@ -79,7 +79,6 @@ public class GeneralSelectOneMethodGenerator extends AbstractMethodGenerator {
             return this;
         }
 
-        @Override
         public GeneralSelectOneMethodGenerator build() {
             return new GeneralSelectOneMethodGenerator(this);
         }

@@ -40,10 +40,6 @@ public class EclipseProgressCallback implements ProgressCallback {
                 INTROSPECTION_FACTOR + GENERATION_FACTOR + SAVE_FACTOR);
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.mybatis.generator.api.ProgressCallback#checkCancel()
-     */
     @Override
     public void checkCancel() throws InterruptedException {
         if (currentChildProgress.isCanceled()) {
@@ -88,11 +84,5 @@ public class EclipseProgressCallback implements ProgressCallback {
     public void startTask(String taskName) {
         currentChildProgress.subTask(taskName);
         currentChildProgress.worked(currentTick);
-    }
-
-    @Override
-    public void done() {
-        // ignore - don't call done on SubMonitors - leave that to the calling method
-        ;
     }
 }

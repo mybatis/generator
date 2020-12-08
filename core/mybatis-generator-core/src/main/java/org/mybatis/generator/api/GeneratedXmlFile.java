@@ -19,15 +19,15 @@ import org.mybatis.generator.api.dom.xml.Document;
 
 public class GeneratedXmlFile extends GeneratedFile {
 
-    private Document document;
+    private final Document document;
 
-    private String fileName;
+    private final String fileName;
 
-    private String targetPackage;
+    private final String targetPackage;
 
     private boolean isMergeable;
 
-    private XmlFormatter xmlFormatter;
+    private final XmlFormatter xmlFormatter;
 
     public GeneratedXmlFile(Document document, String fileName,
             String targetPackage, String targetProject, boolean isMergeable,

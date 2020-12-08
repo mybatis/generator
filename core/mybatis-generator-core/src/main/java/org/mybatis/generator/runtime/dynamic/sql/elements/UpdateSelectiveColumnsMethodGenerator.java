@@ -66,7 +66,7 @@ public class UpdateSelectiveColumnsMethodGenerator extends AbstractMethodGenerat
         return context.getPlugins().clientUpdateSelectiveColumnsMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, UpdateSelectiveColumnsMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
         private FullyQualifiedJavaType recordType;
         private FragmentGenerator fragmentGenerator;
 
@@ -85,7 +85,6 @@ public class UpdateSelectiveColumnsMethodGenerator extends AbstractMethodGenerat
             return this;
         }
 
-        @Override
         public UpdateSelectiveColumnsMethodGenerator build() {
             return new UpdateSelectiveColumnsMethodGenerator(this);
         }

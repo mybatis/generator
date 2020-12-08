@@ -24,10 +24,10 @@ import org.mybatis.generator.api.dom.kotlin.KotlinArg;
 
 public class KotlinFunctionParts {
 
-    private List<String> annotations;
-    private List<String> codeLines;
-    private Set<String> imports;
-    private List<KotlinArg> arguments;
+    private final List<String> annotations;
+    private final List<String> codeLines;
+    private final Set<String> imports;
+    private final List<KotlinArg> arguments;
 
     private KotlinFunctionParts(Builder builder) {
         imports = builder.imports;
@@ -53,10 +53,10 @@ public class KotlinFunctionParts {
     }
 
     public static class Builder {
-        private List<String> codeLines = new ArrayList<>();
-        private Set<String> imports = new HashSet<>();
-        private List<KotlinArg> arguments = new ArrayList<>();
-        private List<String> annotations = new ArrayList<>();
+        private final List<String> codeLines = new ArrayList<>();
+        private final Set<String> imports = new HashSet<>();
+        private final List<KotlinArg> arguments = new ArrayList<>();
+        private final List<String> annotations = new ArrayList<>();
 
         public Builder withAnnotation(String annotation) {
             annotations.add(annotation);
@@ -65,11 +65,6 @@ public class KotlinFunctionParts {
 
         public Builder withCodeLine(String codeLine) {
             this.codeLines.add(codeLine);
-            return this;
-        }
-
-        public Builder withBodyLines(List<String> codeLines) {
-            this.codeLines.addAll(codeLines);
             return this;
         }
 

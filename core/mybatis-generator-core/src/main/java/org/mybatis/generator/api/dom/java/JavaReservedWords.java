@@ -27,7 +27,7 @@ import java.util.Set;
  */
 public class JavaReservedWords {
 
-    private final static Set<String> reservedWords;
+    private static final Set<String> reservedWords;
 
     static {
         String[] words = { "abstract", //$NON-NLS-1$

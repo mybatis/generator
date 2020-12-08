@@ -44,7 +44,7 @@ class KotlinFileRendererTest {
                 |import org.junit.jupiter.api.Test
                 |import org.mybatis.generator.api.dom.kotlin.KotlinFile
                 """.trimMargin())
-        assertThat(kf.getFileName()).isEqualTo("TestFile.kt")
+        assertThat(kf.fileName).isEqualTo("TestFile.kt")
     }
 
     @Test
@@ -155,6 +155,6 @@ class KotlinFileRendererTest {
         val renderedKf = KotlinFileRenderer().render(kf)
 
         assertThat(renderedKf).isEqualTo("")
-        assertThat(kf.getFileName()).isEqualTo("TestFile.kt")
+        assertThat(kf.fileName).isEqualTo("TestFile.kt")
     }
 }

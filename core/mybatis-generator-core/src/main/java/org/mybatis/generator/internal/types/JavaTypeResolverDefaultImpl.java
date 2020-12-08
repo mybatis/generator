@@ -34,14 +34,14 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
 
     protected List<String> warnings;
 
-    protected Properties properties;
+    protected final Properties properties;
 
     protected Context context;
 
     protected boolean forceBigDecimals;
     protected boolean useJSR310Types;
 
-    protected Map<Integer, JdbcTypeInformation> typeMap;
+    protected final Map<Integer, JdbcTypeInformation> typeMap;
 
     public JavaTypeResolverDefaultImpl() {
         super();
@@ -269,9 +269,9 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
     }
 
     public static class JdbcTypeInformation {
-        private String jdbcTypeName;
+        private final String jdbcTypeName;
 
-        private FullyQualifiedJavaType fullyQualifiedJavaType;
+        private final FullyQualifiedJavaType fullyQualifiedJavaType;
 
         public JdbcTypeInformation(String jdbcTypeName,
                 FullyQualifiedJavaType fullyQualifiedJavaType) {

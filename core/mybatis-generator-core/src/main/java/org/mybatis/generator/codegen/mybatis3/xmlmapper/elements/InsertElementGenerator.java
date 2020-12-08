@@ -30,7 +30,7 @@ import org.mybatis.generator.config.GeneratedKey;
 
 public class InsertElementGenerator extends AbstractXmlElementGenerator {
 
-    private boolean isSimple;
+    private final boolean isSimple;
 
     public InsertElementGenerator(boolean isSimple) {
         super();

@@ -208,11 +208,10 @@ public class JavaBeansUtil {
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(fqjt);
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("return "); //$NON-NLS-1$
-        sb.append(property);
-        sb.append(';');
-        method.addBodyLine(sb.toString());
+        String s = "return " + //$NON-NLS-1$
+                property +
+                ';';
+        method.addBodyLine(s);
 
         return method;
     }

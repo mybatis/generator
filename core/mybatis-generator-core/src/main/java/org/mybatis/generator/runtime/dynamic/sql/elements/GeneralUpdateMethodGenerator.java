@@ -63,13 +63,12 @@ public class GeneralUpdateMethodGenerator extends AbstractMethodGenerator {
         return context.getPlugins().clientGeneralUpdateMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, GeneralUpdateMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
         @Override
         public Builder getThis() {
             return this;
         }
 
-        @Override
         public GeneralUpdateMethodGenerator build() {
             return new GeneralUpdateMethodGenerator(this);
         }

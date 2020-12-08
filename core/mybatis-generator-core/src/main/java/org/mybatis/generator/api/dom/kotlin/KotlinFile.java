@@ -24,11 +24,11 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class KotlinFile {
-    private String fileName;
-    private List<String> fileCommentLines = new ArrayList<>();
-    private Set<String> imports = new TreeSet<>();
+    private final String fileName;
+    private final List<String> fileCommentLines = new ArrayList<>();
+    private final Set<String> imports = new TreeSet<>();
     private String packageDefinition;
-    private List<KotlinNamedItem> namedItems = new ArrayList<>();
+    private final List<KotlinNamedItem> namedItems = new ArrayList<>();
 
     public KotlinFile(String fileName) {
         Objects.requireNonNull(fileName);

@@ -43,9 +43,9 @@ import org.xml.sax.SAXParseException;
 
 public class ConfigurationParser {
 
-    private List<String> warnings;
-    private List<String> parseErrors;
-    private Properties extraProperties;
+    private final List<String> warnings;
+    private final List<String> parseErrors;
+    private final Properties extraProperties;
 
     public ConfigurationParser(List<String> warnings) {
         this(null, warnings);

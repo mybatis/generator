@@ -58,13 +58,12 @@ public class GeneralCountMethodGenerator extends AbstractMethodGenerator {
         return context.getPlugins().clientGeneralCountMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, GeneralCountMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
         @Override
         public Builder getThis() {
             return this;
         }
 
-        @Override
         public GeneralCountMethodGenerator build() {
             return new GeneralCountMethodGenerator(this);
         }

@@ -68,7 +68,7 @@ public class DeleteByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
         return context.getPlugins().clientDeleteByPrimaryKeyMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, DeleteByPrimaryKeyMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
 
         private FragmentGenerator fragmentGenerator;
 
@@ -82,7 +82,6 @@ public class DeleteByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
             return this;
         }
 
-        @Override
         public DeleteByPrimaryKeyMethodGenerator build() {
             return new DeleteByPrimaryKeyMethodGenerator(this);
         }

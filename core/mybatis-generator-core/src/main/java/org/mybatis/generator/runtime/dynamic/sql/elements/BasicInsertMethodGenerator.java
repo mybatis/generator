@@ -79,7 +79,7 @@ public class BasicInsertMethodGenerator extends AbstractMethodGenerator {
         return context.getPlugins().clientBasicInsertMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, BasicInsertMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
 
         private FullyQualifiedJavaType recordType;
         private FragmentGenerator fragmentGenerator;
@@ -99,7 +99,6 @@ public class BasicInsertMethodGenerator extends AbstractMethodGenerator {
             return this;
         }
 
-        @Override
         public BasicInsertMethodGenerator build() {
             return new BasicInsertMethodGenerator(this);
         }

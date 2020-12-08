@@ -19,11 +19,11 @@ import org.mybatis.generator.api.dom.java.CompilationUnit;
 
 public class GeneratedJavaFile extends GeneratedFile {
 
-    private CompilationUnit compilationUnit;
+    private final CompilationUnit compilationUnit;
 
-    private String fileEncoding;
+    private final String fileEncoding;
 
-    private JavaFormatter javaFormatter;
+    private final JavaFormatter javaFormatter;
 
     public GeneratedJavaFile(CompilationUnit compilationUnit,
             String targetProject,

@@ -23,9 +23,9 @@ import org.mybatis.generator.config.GeneratedKey;
 
 public class BasicInsertMethodGenerator extends AbstractKotlinFunctionGenerator {
 
-    private FullyQualifiedKotlinType recordType;
-    private KotlinFragmentGenerator fragmentGenerator;
-    private KotlinFile kotlinFile;
+    private final FullyQualifiedKotlinType recordType;
+    private final KotlinFragmentGenerator fragmentGenerator;
+    private final KotlinFile kotlinFile;
 
     private BasicInsertMethodGenerator(Builder builder) {
         super(builder);
@@ -71,7 +71,7 @@ public class BasicInsertMethodGenerator extends AbstractKotlinFunctionGenerator 
         return context.getPlugins().clientBasicInsertMethodGenerated(function, kotlinFile, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder, BasicInsertMethodGenerator> {
+    public static class Builder extends BaseBuilder<Builder> {
 
         private FullyQualifiedKotlinType recordType;
         private KotlinFragmentGenerator fragmentGenerator;
@@ -97,7 +97,6 @@ public class BasicInsertMethodGenerator extends AbstractKotlinFunctionGenerator 
             return this;
         }
 
-        @Override
         public BasicInsertMethodGenerator build() {
             return new BasicInsertMethodGenerator(this);
         }

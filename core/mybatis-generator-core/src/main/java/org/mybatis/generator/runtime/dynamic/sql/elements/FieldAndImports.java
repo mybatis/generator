@@ -25,12 +25,10 @@ public class FieldAndImports {
 
     private final Field field;
     private final Set<FullyQualifiedJavaType> imports;
-    private final Set<String> staticImports;
 
     private FieldAndImports(Builder builder) {
         field = builder.field;
         imports = builder.imports;
-        staticImports = builder.staticImports;
     }
 
     public Field getField() {
@@ -41,10 +39,6 @@ public class FieldAndImports {
         return imports;
     }
 
-    public Set<String> getStaticImports() {
-        return staticImports;
-    }
-
     public static Builder withField(Field field) {
         return new Builder().withField(field);
     }
@@ -52,30 +46,14 @@ public class FieldAndImports {
     public static class Builder {
         private Field field;
         private final Set<FullyQualifiedJavaType> imports = new HashSet<>();
-        private final Set<String> staticImports = new HashSet<>();
 
         public Builder withField(Field field) {
             this.field = field;
             return this;
         }
 
-        public Builder withImport(FullyQualifiedJavaType importedType) {
-            this.imports.add(importedType);
-            return this;
-        }
-
         public Builder withImports(Set<FullyQualifiedJavaType> imports) {
             this.imports.addAll(imports);
-            return this;
-        }
-
-        public Builder withStaticImport(String staticImport) {
-            this.staticImports.add(staticImport);
-            return this;
-        }
-
-        public Builder withStaticImports(Set<String> staticImports) {
-            this.staticImports.addAll(staticImports);
             return this;
         }
 

@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class KotlinNamedItemContainer extends KotlinNamedItem {
-    private List<KotlinNamedItem> namedItems = new ArrayList<>();
+    private final List<KotlinNamedItem> namedItems = new ArrayList<>();
 
     protected KotlinNamedItemContainer(NamedItemContainerBuilder<?> builder) {
         super(builder);
@@ -37,7 +37,7 @@ public abstract class KotlinNamedItemContainer extends KotlinNamedItem {
     public abstract static class NamedItemContainerBuilder<T extends NamedItemContainerBuilder<T>>
             extends AbstractBuilder<T> {
 
-        private List<KotlinNamedItem> namedItems = new ArrayList<>();
+        private final List<KotlinNamedItem> namedItems = new ArrayList<>();
 
         protected NamedItemContainerBuilder(String name) {
             super(name);

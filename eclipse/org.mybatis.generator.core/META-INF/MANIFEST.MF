@@ -43,8 +43,6 @@ Export-Package: org.mybatis.generator.ant,
  org.mybatis.generator.plugins.dsql,
  org.mybatis.generator.runtime.dynamic.sql,
  org.mybatis.generator.runtime.dynamic.sql.elements,
- org.mybatis.generator.runtime.dynamic.sql.elements.v1,
- org.mybatis.generator.runtime.dynamic.sql.elements.v2,
  org.mybatis.generator.runtime.kotlin,
  org.mybatis.generator.runtime.kotlin.elements
 Automatic-Module-Name: org.mybatis.generator.core

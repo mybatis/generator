@@ -27,9 +27,9 @@ class MethodRendererTest {
 
     @Test
     fun testSimpleGetterMethod() {
-        val method = Method("getName");
+        val method = Method("getName")
         method.setReturnType(FullyQualifiedJavaType.getStringInstance())
-        method.setVisibility(JavaVisibility.PUBLIC)
+        method.visibility = JavaVisibility.PUBLIC
         method.addBodyLine("return name;")
 
         assertThat(toString(method)).isEqualToNormalizingNewlines("""
@@ -41,8 +41,8 @@ class MethodRendererTest {
 
     @Test
     fun testSimpleSetterMethod() {
-        val method = Method("setName");
-        method.setVisibility(JavaVisibility.PUBLIC)
+        val method = Method("setName")
+        method.visibility = JavaVisibility.PUBLIC
         method.addParameter(Parameter(FullyQualifiedJavaType.getStringInstance(), "name"))
         method.addBodyLine("this.name = name;")
 
@@ -55,8 +55,8 @@ class MethodRendererTest {
 
     @Test
     fun testMethodWithIf() {
-        val method = Method("setName");
-        method.setVisibility(JavaVisibility.PUBLIC)
+        val method = Method("setName")
+        method.visibility = JavaVisibility.PUBLIC
         method.addParameter(Parameter(FullyQualifiedJavaType.getStringInstance(), "name"))
         method.addBodyLine("if(name == null) {")
         method.addBodyLine("this.name = null;")
@@ -77,8 +77,8 @@ class MethodRendererTest {
 
     @Test
     fun testMethodWithSwitch() {
-        val method = Method("setType");
-        method.setVisibility(JavaVisibility.PUBLIC)
+        val method = Method("setType")
+        method.visibility = JavaVisibility.PUBLIC
         method.addParameter(Parameter(FullyQualifiedJavaType.getIntInstance(), "type"))
         method.addBodyLine("switch(type) {")
         method.addBodyLine("case 1:")
@@ -111,8 +111,8 @@ class MethodRendererTest {
 
     @Test
     fun testTypeParameters() {
-        val method = Method("getName");
-        method.setVisibility(JavaVisibility.PUBLIC)
+        val method = Method("getName")
+        method.visibility = JavaVisibility.PUBLIC
         method.setReturnType(FullyQualifiedJavaType.getStringInstance())
         method.addTypeParameter(TypeParameter("R"))
         method.addParameter(Parameter(FullyQualifiedJavaType("R"), "name"))
@@ -127,8 +127,8 @@ class MethodRendererTest {
 
     @Test
     fun testMultipleTypeParameters() {
-        val method = Method("getName");
-        method.setVisibility(JavaVisibility.PUBLIC)
+        val method = Method("getName")
+        method.visibility = JavaVisibility.PUBLIC
         method.setReturnType(FullyQualifiedJavaType.getStringInstance())
         method.addTypeParameter(TypeParameter("R"))
         method.addTypeParameter(TypeParameter("T"))
@@ -144,8 +144,8 @@ class MethodRendererTest {
 
     @Test
     fun testMultipleParameters() {
-        val method = Method("getName");
-        method.setVisibility(JavaVisibility.PUBLIC)
+        val method = Method("getName")
+        method.visibility = JavaVisibility.PUBLIC
         method.setReturnType(FullyQualifiedJavaType.getStringInstance())
         method.addTypeParameter(TypeParameter("R"))
         method.addTypeParameter(TypeParameter("T"))
@@ -162,8 +162,8 @@ class MethodRendererTest {
 
     @Test
     fun testExceptions() {
-        val method = Method("getName");
-        method.setVisibility(JavaVisibility.PUBLIC)
+        val method = Method("getName")
+        method.visibility = JavaVisibility.PUBLIC
         method.setReturnType(FullyQualifiedJavaType.getStringInstance())
         method.addTypeParameter(TypeParameter("R"))
         method.addParameter(Parameter(FullyQualifiedJavaType("R"), "name"))
@@ -179,13 +179,13 @@ class MethodRendererTest {
 
     @Test
     fun testAbstract() {
-        val method = Method("getName");
-        method.setVisibility(JavaVisibility.PUBLIC)
+        val method = Method("getName")
+        method.visibility = JavaVisibility.PUBLIC
         method.setReturnType(FullyQualifiedJavaType.getStringInstance())
         method.addTypeParameter(TypeParameter("R"))
         method.addParameter(Parameter(FullyQualifiedJavaType("R"), "name"))
         method.addException(FullyQualifiedJavaType("Exception"))
-        method.setAbstract(true)
+        method.isAbstract = true
         method.addBodyLine("""return "Fred";""") // should be ignored
 
         assertThat(toString(method)).isEqualToNormalizingNewlines("""
@@ -195,13 +195,13 @@ class MethodRendererTest {
 
     @Test
     fun testAbstractInInterface() {
-        val method = Method("getName");
+        val method = Method("getName")
         method.setReturnType(FullyQualifiedJavaType.getStringInstance())
         method.addTypeParameter(TypeParameter("R"))
         method.addParameter(Parameter(FullyQualifiedJavaType("R"), "name"))
         method.addException(FullyQualifiedJavaType("Exception"))
-        method.setAbstract(true)
-        method.setVisibility(JavaVisibility.PUBLIC)  // should be ignored
+        method.isAbstract = true
+        method.visibility = JavaVisibility.PUBLIC // should be ignored
         method.addBodyLine("""return "Fred";""") // should be ignored
 
         assertThat(toString(method, true)).isEqualToNormalizingNewlines("""
@@ -211,12 +211,12 @@ class MethodRendererTest {
 
     @Test
     fun testPrivateInInterface() {
-        val method = Method("getName");
+        val method = Method("getName")
         method.setReturnType(FullyQualifiedJavaType.getStringInstance())
         method.addTypeParameter(TypeParameter("R"))
         method.addParameter(Parameter(FullyQualifiedJavaType("R"), "name"))
         method.addException(FullyQualifiedJavaType("Exception"))
-        method.setVisibility(JavaVisibility.PRIVATE)
+        method.visibility = JavaVisibility.PRIVATE
         method.addBodyLine("""return "Fred";""") // should be ignored
 
         assertThat(toString(method, true)).isEqualToNormalizingNewlines("""
@@ -228,13 +228,13 @@ class MethodRendererTest {
 
     @Test
     fun testNative() {
-        val method = Method("getName");
-        method.setVisibility(JavaVisibility.PUBLIC)
+        val method = Method("getName")
+        method.visibility = JavaVisibility.PUBLIC
         method.setReturnType(FullyQualifiedJavaType.getStringInstance())
         method.addTypeParameter(TypeParameter("R"))
         method.addParameter(Parameter(FullyQualifiedJavaType("R"), "name"))
         method.addException(FullyQualifiedJavaType("Exception"))
-        method.setNative(true)
+        method.isNative = true
         method.addBodyLine("""return "Fred";""") // should be ignored
 
         assertThat(toString(method)).isEqualToNormalizingNewlines("""
@@ -244,8 +244,8 @@ class MethodRendererTest {
 
     @Test
     fun testEmptyMethod() {
-        val method = Method("setName");
-        method.setVisibility(JavaVisibility.PUBLIC)
+        val method = Method("setName")
+        method.visibility = JavaVisibility.PUBLIC
         method.addParameter(Parameter(FullyQualifiedJavaType.getStringInstance(), "name"))
 
         assertThat(toString(method)).isEqualToNormalizingNewlines("""
@@ -256,9 +256,9 @@ class MethodRendererTest {
 
     @Test
     fun testConstructor() {
-        val method = Method("MyClass");
-        method.setVisibility(JavaVisibility.PUBLIC)
-        method.setConstructor(true)
+        val method = Method("MyClass")
+        method.visibility = JavaVisibility.PUBLIC
+        method.isConstructor = true
         method.addParameter(Parameter(FullyQualifiedJavaType.getStringInstance(), "name"))
         method.addBodyLine("super(name);")
         method.setReturnType(FullyQualifiedJavaType.getStringInstance()) // should be ignored
@@ -272,17 +272,16 @@ class MethodRendererTest {
 
     @Test
     fun testJavadocAndAnnotations() {
-        val method = Method("MyClass");
-        method.setVisibility(JavaVisibility.PUBLIC)
-        method.setConstructor(true)
+        val method = Method("MyClass")
+        method.visibility = JavaVisibility.PUBLIC
+        method.isConstructor = true
         method.addParameter(Parameter(FullyQualifiedJavaType.getStringInstance(), "name"))
         method.addBodyLine("super(name);")
 
         method.addAnnotation("@Generated")
-	method.addJavaDocLine("/**")
-	method.addJavaDocLine(" * Some Javadoc")
-	method.addJavaDocLine(" */")
-
+        method.addJavaDocLine("/**")
+        method.addJavaDocLine(" * Some Javadoc")
+        method.addJavaDocLine(" */")
 
         assertThat(toString(method)).isEqualToNormalizingNewlines("""
                 |/**

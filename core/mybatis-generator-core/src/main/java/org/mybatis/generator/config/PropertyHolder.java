@@ -15,14 +15,10 @@
  */
 package org.mybatis.generator.config;
 
-import java.util.Enumeration;
 import java.util.Properties;
 
-import org.mybatis.generator.api.dom.xml.Attribute;
-import org.mybatis.generator.api.dom.xml.XmlElement;
-
 public abstract class PropertyHolder {
-    private Properties properties;
+    private final Properties properties;
 
     protected PropertyHolder() {
         super();
@@ -39,18 +35,5 @@ public abstract class PropertyHolder {
 
     public Properties getProperties() {
         return properties;
-    }
-
-    protected void addPropertyXmlElements(XmlElement xmlElement) {
-        Enumeration<?> enumeration = properties.propertyNames();
-        while (enumeration.hasMoreElements()) {
-            String propertyName = (String) enumeration.nextElement();
-
-            XmlElement propertyElement = new XmlElement("property"); //$NON-NLS-1$
-            propertyElement.addAttribute(new Attribute("name", propertyName)); //$NON-NLS-1$
-            propertyElement.addAttribute(new Attribute(
-                    "value", properties.getProperty(propertyName))); //$NON-NLS-1$
-            xmlElement.addElement(propertyElement);
-        }
     }
 }

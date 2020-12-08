@@ -24,7 +24,7 @@ public abstract class AbstractJavaProviderMethodGenerator extends
 
     protected static final FullyQualifiedJavaType NEW_BUILDER_IMPORT =
             new FullyQualifiedJavaType("org.apache.ibatis.jdbc.SQL"); //$NON-NLS-1$
-    protected boolean useLegacyBuilder;
+    protected final boolean useLegacyBuilder;
     protected final String builderPrefix;
 
     protected AbstractJavaProviderMethodGenerator(boolean useLegacyBuilder) {

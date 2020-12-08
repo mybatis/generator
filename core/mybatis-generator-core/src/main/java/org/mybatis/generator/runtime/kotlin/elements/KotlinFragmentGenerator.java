@@ -35,9 +35,9 @@ import org.mybatis.generator.runtime.kotlin.KotlinDynamicSqlSupportClassGenerato
 
 public class KotlinFragmentGenerator {
 
-    private IntrospectedTable introspectedTable;
-    private String resultMapId;
-    private String tableFieldImport;
+    private final IntrospectedTable introspectedTable;
+    private final String resultMapId;
+    private final String tableFieldImport;
 
     private KotlinFragmentGenerator(Builder builder) {
         this.introspectedTable = builder.introspectedTable;

@@ -69,11 +69,6 @@ public class MethodParts {
             return this;
         }
 
-        public Builder withBodyLines(List<String> bodyLines) {
-            this.bodyLines.addAll(bodyLines);
-            return this;
-        }
-
         public Builder withImport(FullyQualifiedJavaType importedType) {
             this.imports.add(importedType);
             return this;

@@ -68,11 +68,6 @@ public class KotlinFunctionParts {
             return this;
         }
 
-        public Builder withBodyLines(List<String> codeLines) {
-            this.codeLines.addAll(codeLines);
-            return this;
-        }
-
         public Builder withImport(String im) {
             this.imports.add(im);
             return this;

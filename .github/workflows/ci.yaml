@@ -40,4 +40,10 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
       - name: Test with Maven
+        if: matrix.java != '16-ea'
         run: ./mvnw test -B -D"license.skip=true"
+      - name: Test with Maven
+        if: matrix.java == '16-ea'
+        run: ./mvnw test -B -D"license.skip=true"
+        env:
+          MAVEN_OPTS: --add-opens java.base/java.util=ALL-UNNAMED

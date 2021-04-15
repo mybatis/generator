@@ -10,10 +10,7 @@
     qualifiedVersion  (standard Tycho property)
     project.build.directory (standard Maven property - points to the target directory)
     p2.repo.base.directory (the location of the composite repo.  This might have been initialized
-        by pulling a current copy from bintray)
-    bintray.subject
-    bintray.repo
-    bintray.package
+        by pulling a current copy from jfrog)
     
 -->
 <project name="project" default="updateRepo">
@@ -56,13 +53,13 @@
     </replaceregexp>
   	
   	<!-- setup the shebang and variables -->
-  	<echo message="#!/bin/bash${line.separator}" file="${p2.repo.base.directory}/bintrayUpload.sh" />
-  	<echo message="USER=xxxx${line.separator}" file="${p2.repo.base.directory}/bintrayUpload.sh" append="true" />
-  	<echo message="API_KEY=xxxx${line.separator}" file="${p2.repo.base.directory}/bintrayUpload.sh" append="true" />
+  	<echo message="#!/bin/bash${line.separator}" file="${p2.repo.base.directory}/jfrogUpload.sh" />
+  	<echo message="USER=xxxx${line.separator}" file="${p2.repo.base.directory}/jfrogUpload.sh" append="true" />
+  	<echo message="API_KEY=xxxx${line.separator}" file="${p2.repo.base.directory}/jfrogUpload.sh" append="true" />
 
-    <!-- generate the bintray upload script -->
+    <!-- generate the jfrog upload script -->
     <!-- Write curl lines for every file we need to upload -->
-    <apply executable="echo" relative="true" output="${p2.repo.base.directory}/bintrayUpload.sh" append="true">
+    <apply executable="echo" relative="true" output="${p2.repo.base.directory}/jfrogUpload.sh" append="true">
       <arg value="curl -X PUT -T" />
       <srcfile />
       <arg value="-u$USER:$API_KEY"/>
@@ -73,11 +70,11 @@
         <include name="*.xml"/>
         <include name="zipped/${project.artifactId}-${qualifiedVersion}.zip"/>
       </fileset>
-      <globmapper from="*" to="&quot;https://api.bintray.com/content/${bintray.subject}/${bintray.repo}/*;bt_package=${bintray.package};bt_version=${qualifiedVersion};publish=1&quot;" />
+      <globmapper from="*" to="&quot;https://mybatis.jfrog.io/artifactory/generator-eclipse-release/*&quot;" />
     </apply>
     
     <!-- make it executable -->
-    <chmod perm="+x" file="${p2.repo.base.directory}/bintrayUpload.sh"/>
+    <chmod perm="+x" file="${p2.repo.base.directory}/jfrogUpload.sh"/>
     
   </target>
 </project>

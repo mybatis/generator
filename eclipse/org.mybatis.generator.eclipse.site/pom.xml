@@ -49,9 +49,6 @@
       </activation>
       <properties>
         <p2.repo.base.directory>${project.build.directory}/p2-composite-repo</p2.repo.base.directory>
-        <bintray.subject>mybatis</bintray.subject>
-        <bintray.repo>mybatis-generator</bintray.repo>
-        <bintray.package>mybatis-generator</bintray.package>
       </properties>
       <build>
         <plugins>
@@ -67,7 +64,7 @@
                 </goals>
                 <configuration>
                   <target>
-                    <ant antfile="downloadMetadataFromBintray.ant" target="download"/>
+                    <ant antfile="downloadMetadata.ant" target="download"/>
                   </target>
                 </configuration>
               </execution>
@@ -118,9 +115,6 @@
                 <applicationsArg>-DqualifiedVersion=${qualifiedVersion}</applicationsArg>
                 <applicationsArg>-Dproject.build.directory=${project.build.directory}</applicationsArg>
                 <applicationsArg>-Dp2.repo.base.directory=${p2.repo.base.directory}</applicationsArg>
-                <applicationsArg>-Dbintray.subject=${bintray.subject}</applicationsArg>
-                <applicationsArg>-Dbintray.repo=${bintray.repo}</applicationsArg>
-                <applicationsArg>-Dbintray.package=${bintray.package}</applicationsArg>
               </applicationsArgs>
             </configuration>
             <executions>

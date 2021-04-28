@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -28,13 +28,13 @@ import org.mybatis.generator.runtime.dynamic.sql.elements.Utils;
 public class InsertMultipleMethodGenerator extends AbstractKotlinFunctionGenerator {
     private final FullyQualifiedKotlinType recordType;
     private final String mapperName;
-    private final String tableFieldImport;
+    private final String supportObjectImport;
 
     private InsertMultipleMethodGenerator(Builder builder) {
         super(builder);
         recordType = builder.recordType;
         mapperName = builder.mapperName;
-        tableFieldImport = builder.tableFieldImport;
+        supportObjectImport = builder.supportObjectImport;
     }
 
     @Override
@@ -71,10 +71,12 @@ public class InsertMultipleMethodGenerator extends AbstractKotlinFunctionGenerat
         List<IntrospectedColumn> columns =
                 ListUtilities.removeIdentityAndGeneratedAlwaysColumns(introspectedTable.getAllColumns());
         for (IntrospectedColumn column : columns) {
-            String fieldName = column.getJavaProperty();
-            functionAndImports.getImports().add(tableFieldImport + "." + fieldName); //$NON-NLS-1$
+            AbstractKotlinFunctionGenerator.FieldNameAndImport fieldNameAndImport =
+                    AbstractKotlinFunctionGenerator.calculateFieldNameAndImport(tableFieldName,
+                            supportObjectImport, column);
+            functionAndImports.getImports().add(fieldNameAndImport.importString());
 
-            function.addCodeLine("    map(" + fieldName //$NON-NLS-1$
+            function.addCodeLine("    map(" + fieldNameAndImport.fieldName() //$NON-NLS-1$
                     + ").toProperty(\"" + column.getJavaProperty() //$NON-NLS-1$
                     + "\")"); //$NON-NLS-1$
         }
@@ -92,7 +94,7 @@ public class InsertMultipleMethodGenerator extends AbstractKotlinFunctionGenerat
     public static class Builder extends BaseBuilder<Builder> {
         private FullyQualifiedKotlinType recordType;
         private String mapperName;
-        private String tableFieldImport;
+        private String supportObjectImport;
 
         public Builder withRecordType(FullyQualifiedKotlinType recordType) {
             this.recordType = recordType;
@@ -104,8 +106,8 @@ public class InsertMultipleMethodGenerator extends AbstractKotlinFunctionGenerat
             return this;
         }
 
-        public Builder withTableFieldImport(String tableFieldImport) {
-            this.tableFieldImport = tableFieldImport;
+        public Builder withSupportObjectImport(String supportObjectImport) {
+            this.supportObjectImport = supportObjectImport;
             return this;
         }
 

@@ -30,18 +30,24 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinProperty;
 import org.mybatis.generator.api.dom.kotlin.KotlinType;
 import org.mybatis.generator.config.Context;
+import org.mybatis.generator.internal.util.JavaBeansUtil;
 import org.mybatis.generator.internal.util.StringUtility;
+import org.mybatis.generator.internal.util.messages.Messages;
 
 public class KotlinDynamicSqlSupportClassGenerator {
     private final IntrospectedTable introspectedTable;
     private final Context context;
+    private final List<String> warnings;
     private KotlinFile kotlinFile;
-    private KotlinType innerObject;
+    private KotlinType innerClass;
     private KotlinType outerObject;
+    private KotlinProperty tableProperty;
 
-    public KotlinDynamicSqlSupportClassGenerator(Context context, IntrospectedTable introspectedTable) {
+    public KotlinDynamicSqlSupportClassGenerator(Context context, IntrospectedTable introspectedTable,
+                                                 List<String> warnings) {
         this.introspectedTable = Objects.requireNonNull(introspectedTable);
         this.context = Objects.requireNonNull(context);
+        this.warnings = Objects.requireNonNull(warnings);
         generate();
     }
 
@@ -53,28 +59,40 @@ public class KotlinDynamicSqlSupportClassGenerator {
 
         outerObject = buildOuterObject(kotlinFile, type);
 
-        innerObject = buildInnerObject();
-        outerObject.addNamedItem(innerObject);
+        tableProperty = calculateTableProperty();
+        outerObject.addNamedItem(tableProperty);
+
+        innerClass = buildInnerClass();
 
         List<IntrospectedColumn> columns = introspectedTable.getAllColumns();
         for (IntrospectedColumn column : columns) {
-            handleColumn(kotlinFile, innerObject, column);
+            handleColumn(kotlinFile, outerObject, innerClass, getTablePropertyName(), column);
         }
+
+        outerObject.addNamedItem(innerClass);
     }
 
     public KotlinFile getKotlinFile() {
         return kotlinFile;
     }
 
-    public KotlinType getInnerObject() {
-        return innerObject;
+    public String getTablePropertyName() {
+        return tableProperty.getName();
     }
 
-    public String getInnerObjectImport() {
-        return kotlinFile.getPackage().map(s -> s + ".").orElse("") //$NON-NLS-1$ //$NON-NLS-2$
-                + outerObject.getName()
+    public KotlinType getInnerClass() {
+        return innerClass;
+    }
+
+    public String getTablePropertyImport() {
+        return getSupportObjectImport()
                 + "." //$NON-NLS-1$
-                + innerObject.getName();
+                + tableProperty.getName();
+    }
+
+    public String getSupportObjectImport() {
+        return kotlinFile.getPackage().map(s -> s + ".").orElse("") //$NON-NLS-1$ //$NON-NLS-2$
+                + outerObject.getName();
     }
 
     private KotlinFile buildBasicFile(FullyQualifiedJavaType type) {
@@ -97,18 +115,28 @@ public class KotlinDynamicSqlSupportClassGenerator {
     }
 
 
-    private KotlinType buildInnerObject() {
+    private KotlinType buildInnerClass() {
         String domainObjectName = introspectedTable.getFullyQualifiedTable().getDomainObjectName();
 
-        return KotlinType.newObject(domainObjectName)
+        return KotlinType.newClass(domainObjectName)
                 .withSuperType("SqlTable(\"" //$NON-NLS-1$
                         + escapeStringForKotlin(introspectedTable.getFullyQualifiedTableNameAtRuntime())
                         + "\")") //$NON-NLS-1$
                 .build();
     }
 
-    private void handleColumn(KotlinFile kotlinFile, KotlinType kotlinType,
-            IntrospectedColumn column) {
+    private KotlinProperty calculateTableProperty() {
+        String tableType = introspectedTable.getFullyQualifiedTable().getDomainObjectName();
+        String fieldName =
+                JavaBeansUtil.getValidPropertyName(introspectedTable.getFullyQualifiedTable().getDomainObjectName());
+
+        return KotlinProperty.newVal(fieldName)
+                .withInitializationString(tableType + "()") //$NON-NLS-1$
+                .build();
+    }
+
+    private void handleColumn(KotlinFile kotlinFile, KotlinType outerObject, KotlinType innerClass,
+            String tableFieldName, IntrospectedColumn column) {
 
         FullyQualifiedKotlinType kt = JavaToKotlinTypeConverter.convert(column.getFullyQualifiedJavaType());
 
@@ -116,11 +144,26 @@ public class KotlinDynamicSqlSupportClassGenerator {
 
         String fieldName = column.getJavaProperty();
 
+        // outer object
+        if (fieldName.equals(tableFieldName)) {
+            // name collision, skip the shortcut field
+            warnings.add(
+                    Messages.getString("Warning.29", //$NON-NLS-1$
+                            fieldName, getSupportObjectImport()));
+        } else {
+            KotlinProperty prop = KotlinProperty.newVal(fieldName)
+                    .withInitializationString(tableFieldName + "." + fieldName)
+                    .build();
+            outerObject.addNamedItem(prop);
+        }
+
+
+        // inner class
         KotlinProperty property = KotlinProperty.newVal(fieldName)
                 .withInitializationString(calculateInnerInitializationString(column, kt))
                 .build();
 
-        kotlinType.addNamedItem(property);
+        innerClass.addNamedItem(property);
     }
 
     private String calculateInnerInitializationString(IntrospectedColumn column, FullyQualifiedKotlinType kt) {

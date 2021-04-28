@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,13 +18,13 @@ package mbg.test.mb3.dsql.kotlin
 import mbg.test.common.util.TestUtilities.blobsAreEqual
 import mbg.test.common.util.TestUtilities.generateRandomBlob
 import mbg.test.mb3.generated.dsql.kotlin.mapper.*
-import mbg.test.mb3.generated.dsql.kotlin.mapper.AwfulTableDynamicSqlSupport.AwfulTable
-import mbg.test.mb3.generated.dsql.kotlin.mapper.FieldsblobsDynamicSqlSupport.Fieldsblobs
-import mbg.test.mb3.generated.dsql.kotlin.mapper.FieldsonlyDynamicSqlSupport.Fieldsonly
-import mbg.test.mb3.generated.dsql.kotlin.mapper.PkblobsDynamicSqlSupport.Pkblobs
-import mbg.test.mb3.generated.dsql.kotlin.mapper.PkfieldsDynamicSqlSupport.Pkfields
-import mbg.test.mb3.generated.dsql.kotlin.mapper.PkfieldsblobsDynamicSqlSupport.Pkfieldsblobs
-import mbg.test.mb3.generated.dsql.kotlin.mapper.PkonlyDynamicSqlSupport.Pkonly
+import mbg.test.mb3.generated.dsql.kotlin.mapper.AwfulTableDynamicSqlSupport.awfulTable
+import mbg.test.mb3.generated.dsql.kotlin.mapper.FieldsblobsDynamicSqlSupport.fieldsblobs
+import mbg.test.mb3.generated.dsql.kotlin.mapper.FieldsonlyDynamicSqlSupport.fieldsonly
+import mbg.test.mb3.generated.dsql.kotlin.mapper.PkblobsDynamicSqlSupport.pkblobs
+import mbg.test.mb3.generated.dsql.kotlin.mapper.PkfieldsDynamicSqlSupport.pkfields
+import mbg.test.mb3.generated.dsql.kotlin.mapper.PkfieldsblobsDynamicSqlSupport.pkfieldsblobs
+import mbg.test.mb3.generated.dsql.kotlin.mapper.PkonlyDynamicSqlSupport.pkonly
 import mbg.test.mb3.generated.dsql.kotlin.model.*
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.data.Offset
@@ -49,13 +49,13 @@ class UpdateByExampleTest : AbstractTest() {
 
             val rows = mapper.update {
                 updateSelectiveColumns(FieldsonlyRecord(doublefield = 99.0))
-                where(Fieldsonly.integerfield, isGreaterThan(5))
+                where(fieldsonly.integerfield, isGreaterThan(5))
             }
 
             assertThat(rows).isEqualTo(2)
 
             var answer = mapper.select {
-                where(Fieldsonly.integerfield, isEqualTo(5))
+                where(fieldsonly.integerfield, isEqualTo(5))
             }
 
             assertThat(answer).hasSize(1)
@@ -66,7 +66,7 @@ class UpdateByExampleTest : AbstractTest() {
             }
 
             answer = mapper.select {
-                where(Fieldsonly.integerfield, isEqualTo(8))
+                where(fieldsonly.integerfield, isEqualTo(8))
             }
 
             assertThat(answer).hasSize(1)
@@ -78,7 +78,7 @@ class UpdateByExampleTest : AbstractTest() {
             }
 
             answer = mapper.select {
-                where(Fieldsonly.integerfield, isEqualTo(9))
+                where(fieldsonly.integerfield, isEqualTo(9))
             }
             assertThat(answer).hasSize(1)
             with(answer[0]) {
@@ -115,11 +115,11 @@ class UpdateByExampleTest : AbstractTest() {
 
             val rows = mapper.update {
                 updateAllColumns(updateRecord)
-                where(Fieldsonly.integerfield, isEqualTo(5))
+                where(fieldsonly.integerfield, isEqualTo(5))
             }
             assertEquals(1, rows)
 
-            val answer = mapper.select { where(Fieldsonly.integerfield, isEqualTo(22)) }
+            val answer = mapper.select { where(fieldsonly.integerfield, isEqualTo(22)) }
             assertEquals(1, answer.size)
             record = answer[0]
             assertNull(record.doublefield)
@@ -145,19 +145,19 @@ class UpdateByExampleTest : AbstractTest() {
 
             val rows = mapper.update {
                 updateSelectiveColumns(updateKey)
-                where(Pkonly.id, isGreaterThan(4))
+                where(pkonly.id, isGreaterThan(4))
             }
             assertEquals(2, rows)
 
             var returnedRows = mapper.count {
-                where(Pkonly.id, isEqualTo(5))
-                and(Pkonly.seqNum, isEqualTo(3))
+                where(pkonly.id, isEqualTo(5))
+                and(pkonly.seqNum, isEqualTo(3))
             }
             assertEquals(1, returnedRows)
 
             returnedRows = mapper.count {
-                where(Pkonly.id, isEqualTo(7))
-                and(Pkonly.seqNum, isEqualTo(3))
+                where(pkonly.id, isEqualTo(7))
+                and(pkonly.seqNum, isEqualTo(3))
             }
             assertEquals(1, returnedRows)
         }
@@ -180,13 +180,13 @@ class UpdateByExampleTest : AbstractTest() {
 
             val rows = mapper.update {
                 updateAllColumns(updateKey)
-                where(Pkonly.id, isEqualTo(7))
+                where(pkonly.id, isEqualTo(7))
             }
             assertEquals(1, rows)
 
             val returnedRows = mapper.count {
-                where(Pkonly.id, isEqualTo(22))
-                and(Pkonly.seqNum, isEqualTo(3))
+                where(pkonly.id, isEqualTo(22))
+                and(pkonly.seqNum, isEqualTo(3))
             }
             assertEquals(1, returnedRows)
         }
@@ -215,15 +215,15 @@ class UpdateByExampleTest : AbstractTest() {
 
             val rows = mapper.update {
                 updateSelectiveColumns(updateRecord)
-                where(Pkfields.lastname, isLike("J%"))
+                where(pkfields.lastname, isLike("J%"))
             }
             assertEquals(1, rows)
 
             val returnedRows = mapper.count {
-                where(Pkfields.firstname, isEqualTo("Fred"))
-                and(Pkfields.lastname, isEqualTo("Jones"))
-                and(Pkfields.id1, isEqualTo(3))
-                and(Pkfields.id2, isEqualTo(4))
+                where(pkfields.firstname, isEqualTo("Fred"))
+                and(pkfields.lastname, isEqualTo("Jones"))
+                and(pkfields.id1, isEqualTo(3))
+                and(pkfields.id2, isEqualTo(4))
             }
             assertEquals(1, returnedRows)
         }
@@ -252,15 +252,15 @@ class UpdateByExampleTest : AbstractTest() {
 
             val rows = mapper.update {
                 updateAllColumns(updateRecord)
-                where(Pkfields.id1, isEqualTo(3))
-                and(Pkfields.id2, isEqualTo(4))
+                where(pkfields.id1, isEqualTo(3))
+                and(pkfields.id2, isEqualTo(4))
             }
             assertEquals(1, rows)
 
             val returnedRows = mapper.count {
-                where(Pkfields.firstname, isEqualTo("Fred"))
-                and(Pkfields.id1, isEqualTo(3))
-                and(Pkfields.id2, isEqualTo(4))
+                where(pkfields.firstname, isEqualTo("Fred"))
+                and(pkfields.id1, isEqualTo(3))
+                and(pkfields.id2, isEqualTo(4))
             }
             assertEquals(1, returnedRows)
         }
@@ -286,11 +286,11 @@ class UpdateByExampleTest : AbstractTest() {
 
             val rows = mapper.update {
                 updateSelectiveColumns(newRecord)
-                where(Pkblobs.id, isGreaterThan(4))
+                where(pkblobs.id, isGreaterThan(4))
             }
             assertEquals(1, rows)
 
-            val answer = mapper.select { where(Pkblobs.id, isGreaterThan(4)) }
+            val answer = mapper.select { where(pkblobs.id, isGreaterThan(4)) }
             assertEquals(1, answer.size)
 
             val returnedRecord = answer[0]
@@ -321,11 +321,11 @@ class UpdateByExampleTest : AbstractTest() {
 
             val rows = mapper.update {
                 updateAllColumns(newRecord)
-                where(Pkblobs.id, isGreaterThan(4))
+                where(pkblobs.id, isGreaterThan(4))
             }
             assertEquals(1, rows)
 
-            val answer = mapper.select { where(Pkblobs.id, isGreaterThan(4)) }
+            val answer = mapper.select { where(pkblobs.id, isGreaterThan(4)) }
             assertEquals(1, answer.size)
 
             val returnedRecord = answer[0]
@@ -360,11 +360,11 @@ class UpdateByExampleTest : AbstractTest() {
 
             val rows = mapper.update {
                 updateSelectiveColumns(newRecord)
-                where(Pkfieldsblobs.id1, isNotEqualTo(3))
+                where(pkfieldsblobs.id1, isNotEqualTo(3))
             }
             assertEquals(1, rows)
 
-            val answer = mapper.select { where(Pkfieldsblobs.id1, isNotEqualTo(3)) }
+            val answer = mapper.select { where(pkfieldsblobs.id1, isNotEqualTo(3)) }
             assertEquals(1, answer.size)
 
             val returnedRecord = answer[0]
@@ -404,11 +404,11 @@ class UpdateByExampleTest : AbstractTest() {
 
             val rows = mapper.update {
                 updateAllColumns(newRecord)
-                where(Pkfieldsblobs.id1, isEqualTo(3))
+                where(pkfieldsblobs.id1, isEqualTo(3))
             }
             assertEquals(1, rows)
 
-            val answer = mapper.select { where(Pkfieldsblobs.id1, isEqualTo(3)) }
+            val answer = mapper.select { where(pkfieldsblobs.id1, isEqualTo(3)) }
             assertEquals(1, answer.size)
 
             val returnedRecord = answer[0]
@@ -443,11 +443,11 @@ class UpdateByExampleTest : AbstractTest() {
 
             val rows = mapper.update {
                 updateSelectiveColumns(newRecord)
-                where(Fieldsblobs.firstname, isLike("S%"))
+                where(fieldsblobs.firstname, isLike("S%"))
             }
             assertEquals(1, rows)
 
-            val answer = mapper.select { where(Fieldsblobs.firstname, isLike("S%")) }
+            val answer = mapper.select { where(fieldsblobs.firstname, isLike("S%")) }
             assertEquals(1, answer.size)
 
             val returnedRecord = answer[0]
@@ -483,11 +483,11 @@ class UpdateByExampleTest : AbstractTest() {
 
             val rows = mapper.update {
                 updateAllColumns(newRecord)
-                where(Fieldsblobs.firstname, isLike("S%"))
+                where(fieldsblobs.firstname, isLike("S%"))
             }
             assertEquals(1, rows)
 
-            val answer = mapper.select { where(Fieldsblobs.firstname, isLike("S%")) }
+            val answer = mapper.select { where(fieldsblobs.firstname, isLike("S%")) }
             assertEquals(1, answer.size)
 
             val returnedRecord = answer[0]
@@ -537,11 +537,11 @@ class UpdateByExampleTest : AbstractTest() {
 
             val rows = mapper.update {
                 updateSelectiveColumns(newRecord)
-                where(AwfulTable.eMail, isLike("fred2@%"))
+                where(awfulTable.eMail, isLike("fred2@%"))
             }
             assertEquals(1, rows)
 
-            val answer = mapper.select { where(AwfulTable.eMail, isLike("fred2@%")) }
+            val answer = mapper.select { where(awfulTable.eMail, isLike("fred2@%")) }
             assertEquals(1, answer.size)
 
             val returnedRecord = answer[0]
@@ -606,11 +606,11 @@ class UpdateByExampleTest : AbstractTest() {
 
             val rows = mapper.update {
                 updateAllColumns(newRecord)
-                where(AwfulTable.eMail, isLike("fred2@%"))
+                where(awfulTable.eMail, isLike("fred2@%"))
             }
             assertEquals(1, rows)
 
-            val answer = mapper.select { where(AwfulTable.customerId, isEqualTo(58)) }
+            val answer = mapper.select { where(awfulTable.customerId, isEqualTo(58)) }
             assertEquals(1, answer.size)
 
             val returnedRecord = answer[0]

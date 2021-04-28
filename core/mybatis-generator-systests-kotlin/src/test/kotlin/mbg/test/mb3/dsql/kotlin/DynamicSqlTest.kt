@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,13 +18,13 @@ package mbg.test.mb3.dsql.kotlin
 import mbg.test.common.util.TestUtilities.blobsAreEqual
 import mbg.test.common.util.TestUtilities.generateRandomBlob
 import mbg.test.mb3.generated.dsql.kotlin.mapper.*
-import mbg.test.mb3.generated.dsql.kotlin.mapper.AwfulTableDynamicSqlSupport.AwfulTable
-import mbg.test.mb3.generated.dsql.kotlin.mapper.FieldsblobsDynamicSqlSupport.Fieldsblobs
-import mbg.test.mb3.generated.dsql.kotlin.mapper.FieldsonlyDynamicSqlSupport.Fieldsonly
-import mbg.test.mb3.generated.dsql.kotlin.mapper.PkblobsDynamicSqlSupport.Pkblobs
-import mbg.test.mb3.generated.dsql.kotlin.mapper.PkfieldsDynamicSqlSupport.Pkfields
-import mbg.test.mb3.generated.dsql.kotlin.mapper.PkfieldsblobsDynamicSqlSupport.Pkfieldsblobs
-import mbg.test.mb3.generated.dsql.kotlin.mapper.PkonlyDynamicSqlSupport.Pkonly
+import mbg.test.mb3.generated.dsql.kotlin.mapper.AwfulTableDynamicSqlSupport.awfulTable
+import mbg.test.mb3.generated.dsql.kotlin.mapper.FieldsblobsDynamicSqlSupport.fieldsblobs
+import mbg.test.mb3.generated.dsql.kotlin.mapper.FieldsonlyDynamicSqlSupport.fieldsonly
+import mbg.test.mb3.generated.dsql.kotlin.mapper.PkblobsDynamicSqlSupport.pkblobs
+import mbg.test.mb3.generated.dsql.kotlin.mapper.PkfieldsDynamicSqlSupport.pkfields
+import mbg.test.mb3.generated.dsql.kotlin.mapper.PkfieldsblobsDynamicSqlSupport.pkfieldsblobs
+import mbg.test.mb3.generated.dsql.kotlin.mapper.PkonlyDynamicSqlSupport.pkonly
 import mbg.test.mb3.generated.dsql.kotlin.mapper.mbgtest.*
 import mbg.test.mb3.generated.dsql.kotlin.model.*
 import mbg.test.mb3.generated.dsql.kotlin.model.mbgtest.IdRecord
@@ -53,7 +53,7 @@ class DynamicSqlTest : AbstractTest() {
             mapper.insert(FieldsonlyRecord(5, 11.22, 33.44))
 
             val answer = mapper.select {
-                where(Fieldsonly.integerfield, isEqualTo(5))
+                where(fieldsonly.integerfield, isEqualTo(5))
             }
             assertThat(answer).hasSize(1)
 
@@ -75,7 +75,7 @@ class DynamicSqlTest : AbstractTest() {
             mapper.insert(FieldsonlyRecord(9, 88.99, 100.111))
 
             var answer = mapper.select {
-                where(Fieldsonly.integerfield, isGreaterThan(5))
+                where(fieldsonly.integerfield, isGreaterThan(5))
             }
             assertThat(answer).hasSize(2)
 
@@ -98,13 +98,13 @@ class DynamicSqlTest : AbstractTest() {
             mapper.insertMultiple(record1, record2, record3)
 
             var answer = mapper.select {
-                where(Fieldsonly.integerfield, isGreaterThan(5))
+                where(fieldsonly.integerfield, isGreaterThan(5))
             }
             assertThat(answer).hasSize(2)
 
             answer = mapper.select {
                 allRows()
-                orderBy(Fieldsonly.integerfield)
+                orderBy(fieldsonly.integerfield)
             }
 
             assertThat(answer).hasSize(3)
@@ -127,7 +127,7 @@ class DynamicSqlTest : AbstractTest() {
             mapper.insert(FieldsonlyRecord(9, 88.99, 100.111))
 
             var answer = mapper.selectDistinct {
-                where(Fieldsonly.integerfield, isEqualTo(5))
+                where(fieldsonly.integerfield, isEqualTo(5))
             }
             assertThat(answer).hasSize(1)
 
@@ -160,7 +160,7 @@ class DynamicSqlTest : AbstractTest() {
             mapper.insert(FieldsonlyRecord(9, 88.99, 100.111))
 
             val rows = mapper.delete {
-                where(Fieldsonly.integerfield, isGreaterThan(5))
+                where(fieldsonly.integerfield, isGreaterThan(5))
             }
             assertThat(rows).isEqualTo(2)
 
@@ -178,7 +178,7 @@ class DynamicSqlTest : AbstractTest() {
             mapper.insert(FieldsonlyRecord(9, 88.99, 100.111))
 
             var rows = mapper.count {
-                where(Fieldsonly.integerfield, isGreaterThan(5))
+                where(fieldsonly.integerfield, isGreaterThan(5))
             }
             assertThat(rows).isEqualTo(2)
 
@@ -231,7 +231,7 @@ class DynamicSqlTest : AbstractTest() {
             mapper.insert(PkonlyRecord(7, 8))
 
             val rows = mapper.delete {
-                where(Pkonly.id, isGreaterThan(4))
+                where(pkonly.id, isGreaterThan(4))
             }
             assertThat(rows).isEqualTo(2)
 
@@ -249,8 +249,8 @@ class DynamicSqlTest : AbstractTest() {
             mapper.insert(PkonlyRecord(7, 8))
 
             val answer = mapper.select {
-                where(Pkonly.id, isGreaterThan(4))
-                orderBy(Pkonly.id)
+                where(pkonly.id, isGreaterThan(4))
+                orderBy(pkonly.id)
             }
             assertThat(answer).hasSize(2)
             assertThat(answer[0].id).isEqualTo(5)
@@ -267,8 +267,8 @@ class DynamicSqlTest : AbstractTest() {
             mapper.insertMultiple(PkonlyRecord(1, 3), PkonlyRecord(5, 6), PkonlyRecord(7, 8))
 
             val answer = mapper.select {
-                where(Pkonly.id, isGreaterThan(4))
-                orderBy(Pkonly.id)
+                where(pkonly.id, isGreaterThan(4))
+                orderBy(pkonly.id)
             }
             assertThat(answer).hasSize(2)
             assertThat(answer[0].id).isEqualTo(5)
@@ -287,8 +287,8 @@ class DynamicSqlTest : AbstractTest() {
             mapper.insert(PkonlyRecord(7, 8))
 
             val answer = mapper.select {
-                where(Pkonly.id, isGreaterThan(4))
-                orderBy(Pkonly.id)
+                where(pkonly.id, isGreaterThan(4))
+                orderBy(pkonly.id)
             }
 
             assertThat(answer).hasSize(2)
@@ -308,8 +308,8 @@ class DynamicSqlTest : AbstractTest() {
             mapper.insert(PkonlyRecord(7, 8))
 
             val answer = mapper.select {
-                where(Pkonly.id, isGreaterThan(4))
-                orderBy(Pkonly.id)
+                where(pkonly.id, isGreaterThan(4))
+                orderBy(pkonly.id)
             }
 
             assertThat(answer).hasSize(2)
@@ -342,7 +342,7 @@ class DynamicSqlTest : AbstractTest() {
             mapper.insert(PkonlyRecord(7, 8))
 
             var rows = mapper.count {
-                where(Pkonly.id, isGreaterThan(4))
+                where(pkonly.id, isGreaterThan(4))
             }
             assertThat(rows).isEqualTo(2)
 
@@ -465,7 +465,7 @@ class DynamicSqlTest : AbstractTest() {
             assertThat(answer).hasSize(2)
 
             val rows = mapper.delete {
-                where(Pkfields.lastname, isLike("J%"))
+                where(pkfields.lastname, isLike("J%"))
             }
             assertThat(rows).isEqualTo(1)
 
@@ -507,8 +507,8 @@ class DynamicSqlTest : AbstractTest() {
             mapper.insert(PkfieldsRecord(id1 = 2, id2 = 3, firstname = "Bamm Bamm", lastname = "Rubble"))
 
             val answer = mapper.select {
-                where(Pkfields.firstname, isLike("B%"))
-                orderBy(Pkfields.id1, Pkfields.id2)
+                where(pkfields.firstname, isLike("B%"))
+                orderBy(pkfields.id1, pkfields.id2)
             }
 
             assertThat(answer).hasSize(3)
@@ -533,8 +533,8 @@ class DynamicSqlTest : AbstractTest() {
             mapper.insert(PkfieldsRecord(id1 = 2, id2 = 3, firstname = "Bamm Bamm", lastname = "Rubble"))
 
             val answer = mapper.select {
-                where(Pkfields.firstname, isNotLike("B%"))
-                orderBy(Pkfields.id1, Pkfields.id2)
+                where(pkfields.firstname, isNotLike("B%"))
+                orderBy(pkfields.id1, pkfields.id2)
             }
 
             assertThat(answer).hasSize(3)
@@ -559,11 +559,11 @@ class DynamicSqlTest : AbstractTest() {
             mapper.insert(PkfieldsRecord(id1 = 2, id2 = 3, firstname = "Bamm Bamm", lastname = "Rubble"))
 
             val answer = mapper.select {
-                where(Pkfields.firstname, isLike("B%")) {
-                    and(Pkfields.id2, isEqualTo(3))
+                where(pkfields.firstname, isLike("B%")) {
+                    and(pkfields.id2, isEqualTo(3))
                 }
-                or(Pkfields.firstname, isLike("Wi%"))
-                orderBy(Pkfields.id1, Pkfields.id2)
+                or(pkfields.firstname, isLike("Wi%"))
+                orderBy(pkfields.id1, pkfields.id2)
             }
 
             assertThat(answer).hasSize(2)
@@ -586,8 +586,8 @@ class DynamicSqlTest : AbstractTest() {
             mapper.insert(PkfieldsRecord(id1 = 2, id2 = 3, firstname = "Bamm Bamm", lastname = "Rubble"))
 
             val answer = mapper.select {
-                where(Pkfields.id2, isIn(1, 3))
-                orderBy(Pkfields.id1, Pkfields.id2)
+                where(pkfields.id2, isIn(1, 3))
+                orderBy(pkfields.id1, pkfields.id2)
             }
 
             assertThat(answer).hasSize(4)
@@ -614,8 +614,8 @@ class DynamicSqlTest : AbstractTest() {
             mapper.insert(PkfieldsRecord(id1 = 2, id2 = 3, firstname = "Bamm Bamm", lastname = "Rubble"))
 
             val answer = mapper.select {
-                where(Pkfields.id2, isBetween(1).and(3))
-                orderBy(Pkfields.id1, Pkfields.id2)
+                where(pkfields.id2, isBetween(1).and(3))
+                orderBy(pkfields.id1, pkfields.id2)
             }
             assertThat(answer).hasSize(6)
         }
@@ -634,7 +634,7 @@ class DynamicSqlTest : AbstractTest() {
 
             val answer = mapper.select {
                 allRows()
-                orderBy(Pkfields.id1, Pkfields.id2)
+                orderBy(pkfields.id1, pkfields.id2)
             }
 
             assertThat(answer).hasSize(6)
@@ -659,7 +659,7 @@ class DynamicSqlTest : AbstractTest() {
 
             val answer = mapper.select {
                 allRows()
-                orderBy(Pkfields.id1, Pkfields.id2)
+                orderBy(pkfields.id1, pkfields.id2)
             }
 
             assertThat(answer).hasSize(6)
@@ -678,9 +678,9 @@ class DynamicSqlTest : AbstractTest() {
             mapper.insert(PkfieldsRecord(id1 = 2, id2 = 3, firstname = "Bamm Bamm", lastname = "Rubble", wierdField = 66))
 
             val answer = mapper.select {
-                where(Pkfields.wierdField, isLessThan(40))
-                and(Pkfields.wierdField, isIn(11, 22))
-                orderBy(Pkfields.id1, Pkfields.id2)
+                where(pkfields.wierdField, isLessThan(40))
+                and(pkfields.wierdField, isIn(11, 22))
+                orderBy(pkfields.id1, pkfields.id2)
             }
 
             assertThat(answer).hasSize(2)
@@ -695,7 +695,7 @@ class DynamicSqlTest : AbstractTest() {
             mapper.insert(PkfieldsRecord(id1 = 3, id2 = 4, firstname = "Bob", lastname = "Jones"))
 
             var rows = mapper.count {
-                where(Pkfields.lastname, isLike("J%"))
+                where(pkfields.lastname, isLike("J%"))
             }
 
             assertThat(rows).isEqualTo(1)
@@ -791,7 +791,7 @@ class DynamicSqlTest : AbstractTest() {
             var answer = mapper.select { allRows() }
             assertThat(answer).hasSize(2)
 
-            val rows = mapper.delete { where(Pkblobs.id, isLessThan(4)) }
+            val rows = mapper.delete { where(pkblobs.id, isLessThan(4)) }
             assertThat(rows).isEqualTo(1)
 
             answer = mapper.select { allRows() }
@@ -842,7 +842,7 @@ class DynamicSqlTest : AbstractTest() {
             record.blob2 = generateRandomBlob()
             mapper.insert(record)
 
-            val answer = mapper.select { where(Pkblobs.id, isGreaterThan(4)) }
+            val answer = mapper.select { where(pkblobs.id, isGreaterThan(4)) }
 
             assertEquals(1, answer.size)
 
@@ -875,7 +875,7 @@ class DynamicSqlTest : AbstractTest() {
             val recordsInserted = mapper.insertMultiple(records)
             assertEquals(2, recordsInserted)
 
-            val answer = mapper.select { where(Pkblobs.id, isGreaterThan(4)) }
+            val answer = mapper.select { where(pkblobs.id, isGreaterThan(4)) }
 
             assertEquals(1, answer.size)
 
@@ -903,7 +903,7 @@ class DynamicSqlTest : AbstractTest() {
             record.blob2 = generateRandomBlob()
             mapper.insert(record)
 
-            var rows = mapper.count { where(Pkblobs.id, isLessThan(4)) }
+            var rows = mapper.count { where(pkblobs.id, isLessThan(4)) }
             assertEquals(1, rows)
 
             rows = mapper.count { allRows() }
@@ -1061,7 +1061,7 @@ class DynamicSqlTest : AbstractTest() {
             var answer = mapper.select { allRows() }
             assertEquals(2, answer.size)
 
-            val rows = mapper.delete { where(Pkfieldsblobs.id1, isNotEqualTo(3)) }
+            val rows = mapper.delete { where(pkfieldsblobs.id1, isNotEqualTo(3)) }
             assertEquals(1, rows)
 
             answer = mapper.select { allRows() }
@@ -1127,7 +1127,7 @@ class DynamicSqlTest : AbstractTest() {
             record.blob1 = generateRandomBlob()
             mapper.insert(record)
 
-            val answer = mapper.select { where(Pkfieldsblobs.id2, isEqualTo(6)) }
+            val answer = mapper.select { where(pkfieldsblobs.id2, isEqualTo(6)) }
             assertEquals(1, answer.size)
 
             val newRecord = answer[0]
@@ -1165,7 +1165,7 @@ class DynamicSqlTest : AbstractTest() {
             val rowsInserted = mapper.insertMultiple(records)
             assertEquals(2, rowsInserted)
 
-            val answer = mapper.select { where(Pkfieldsblobs.id2, isEqualTo(6)) }
+            val answer = mapper.select { where(pkfieldsblobs.id2, isEqualTo(6)) }
             assertEquals(1, answer.size)
 
             val newRecord = answer[0]
@@ -1250,7 +1250,7 @@ class DynamicSqlTest : AbstractTest() {
             var answer = mapper.select { allRows() }
             assertEquals(2, answer.size)
 
-            val rows = mapper.delete { where(Fieldsblobs.firstname, isLike("S%")) }
+            val rows = mapper.delete { where(fieldsblobs.firstname, isLike("S%")) }
             assertEquals(1, rows)
 
             answer = mapper.select { allRows() }
@@ -1277,7 +1277,7 @@ class DynamicSqlTest : AbstractTest() {
             record.blob2 = generateRandomBlob()
             mapper.insert(record)
 
-            val answer = mapper.select { where(Fieldsblobs.firstname, isLike("S%")) }
+            val answer = mapper.select { where(fieldsblobs.firstname, isLike("S%")) }
             assertEquals(1, answer.size)
 
             val newRecord = answer[0]
@@ -1312,7 +1312,7 @@ class DynamicSqlTest : AbstractTest() {
             val rowsInserted = mapper.insertMultiple(records)
             assertEquals(2, rowsInserted)
 
-            val answer = mapper.select { where(Fieldsblobs.firstname, isLike("S%")) }
+            val answer = mapper.select { where(fieldsblobs.firstname, isLike("S%")) }
             assertEquals(1, answer.size)
 
             val newRecord = answer[0]
@@ -1368,7 +1368,7 @@ class DynamicSqlTest : AbstractTest() {
             record.blob1 = generateRandomBlob()
             mapper.insert(record)
 
-            var rows = mapper.count { where(Pkfieldsblobs.id1, isNotEqualTo(3)) }
+            var rows = mapper.count { where(pkfieldsblobs.id1, isNotEqualTo(3)) }
             assertEquals(1, rows)
 
             rows = mapper.count { allRows() }
@@ -1621,7 +1621,7 @@ class DynamicSqlTest : AbstractTest() {
             var answer = mapper.select { allRows() }
             assertEquals(2, answer.size)
 
-            val rows = mapper.delete { where(AwfulTable.eMail, isLike("fred@%")) }
+            val rows = mapper.delete { where(awfulTable.eMail, isLike("fred@%")) }
             assertEquals(1, rows)
 
             answer = mapper.select { allRows() }
@@ -1775,8 +1775,8 @@ class DynamicSqlTest : AbstractTest() {
             mapper.insert(record)
 
             val answer = mapper.select {
-                where(AwfulTable.firstFirstName, isLike("b%"))
-                orderBy(AwfulTable.customerId)
+                where(awfulTable.firstFirstName, isLike("b%"))
+                orderBy(awfulTable.customerId)
             }
             assertEquals(3, answer.size)
             var returnedRecord = answer[0]
@@ -1899,8 +1899,8 @@ class DynamicSqlTest : AbstractTest() {
             assertEquals(62, records[5].customerId)
 
             val answer = mapper.select {
-                where(AwfulTable.firstFirstName, isLike("b%"))
-                orderBy(AwfulTable.customerId)
+                where(awfulTable.firstFirstName, isLike("b%"))
+                orderBy(awfulTable.customerId)
             }
             assertEquals(3, answer.size)
             var returnedRecord = answer[0]
@@ -2010,8 +2010,8 @@ class DynamicSqlTest : AbstractTest() {
             mapper.insert(record)
 
             val answer = mapper.select {
-                where(AwfulTable.firstFirstName, isNotLike("b%"))
-                orderBy(AwfulTable.customerId)
+                where(awfulTable.firstFirstName, isNotLike("b%"))
+                orderBy(awfulTable.customerId)
             }
             assertEquals(3, answer.size)
             var returnedRecord = answer[0]
@@ -2116,11 +2116,11 @@ class DynamicSqlTest : AbstractTest() {
             mapper.insert(record)
 
             val answer = mapper.select {
-                where(AwfulTable.firstFirstName, isLike("b%")) {
-                    and(AwfulTable.id2, isEqualTo(222222))
+                where(awfulTable.firstFirstName, isLike("b%")) {
+                    and(awfulTable.id2, isEqualTo(222222))
                 }
-                or(AwfulTable.firstFirstName, isLike("wi%"))
-                orderBy(AwfulTable.customerId)
+                or(awfulTable.firstFirstName, isLike("wi%"))
+                orderBy(awfulTable.customerId)
             }
 
             assertEquals(2, answer.size)
@@ -2223,8 +2223,8 @@ class DynamicSqlTest : AbstractTest() {
             mapper.insert(record)
 
             val answer = mapper.select {
-                where(AwfulTable.id1, isIn(1, 11))
-                orderBy(AwfulTable.customerId)
+                where(awfulTable.id1, isIn(1, 11))
+                orderBy(awfulTable.customerId)
             }
 
             assertEquals(2, answer.size)
@@ -2326,7 +2326,7 @@ class DynamicSqlTest : AbstractTest() {
             record.thirdFirstName = "bammbamm3"
             mapper.insert(record)
 
-            val answer = mapper.select { where(AwfulTable.id1, isBetween(1).and(1000)) }
+            val answer = mapper.select { where(awfulTable.id1, isBetween(1).and(1000)) }
             assertEquals(3, answer.size)
         }
     }
@@ -2421,7 +2421,7 @@ class DynamicSqlTest : AbstractTest() {
 
             val answer = mapper.select {
                 allRows()
-                orderBy(AwfulTable.customerId.descending())
+                orderBy(awfulTable.customerId.descending())
             }
 
             assertEquals(6, answer.size)
@@ -2474,7 +2474,7 @@ class DynamicSqlTest : AbstractTest() {
 
             mapper.insert(record)
 
-            var rows = mapper.count { where(AwfulTable.eMail, isLike("fred@%")) }
+            var rows = mapper.count { where(awfulTable.eMail, isLike("fred@%")) }
             assertEquals(1, rows)
 
             rows = mapper.count { allRows() }

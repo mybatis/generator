@@ -37,12 +37,14 @@ public class KotlinFragmentGenerator {
 
     private final IntrospectedTable introspectedTable;
     private final String resultMapId;
-    private final String tableFieldImport;
+    private final String supportObjectImport;
+    private final String tableFieldName;
 
     private KotlinFragmentGenerator(Builder builder) {
-        this.introspectedTable = builder.introspectedTable;
-        this.resultMapId = builder.resultMapId;
-        tableFieldImport = builder.tableFieldImport;
+        introspectedTable = builder.introspectedTable;
+        resultMapId = builder.resultMapId;
+        supportObjectImport = builder.supportObjectImport;
+        tableFieldName = builder.tableFieldName;
     }
 
     public KotlinFunctionParts getPrimaryKeyWhereClauseAndParameters() {
@@ -52,21 +54,23 @@ public class KotlinFragmentGenerator {
         for (IntrospectedColumn column : introspectedTable.getPrimaryKeyColumns()) {
             FullyQualifiedKotlinType kt = JavaToKotlinTypeConverter.convert(column.getFullyQualifiedJavaType());
 
-            String fieldName = column.getJavaProperty();
+            AbstractKotlinFunctionGenerator.FieldNameAndImport fieldNameAndImport =
+                    AbstractKotlinFunctionGenerator.calculateFieldNameAndImport(tableFieldName,
+                    supportObjectImport, column);
             String argName = column.getJavaProperty() + "_"; //$NON-NLS-1$
 
-            builder.withImport(tableFieldImport + "." + fieldName); //$NON-NLS-1$
+            builder.withImport(fieldNameAndImport.importString());
             builder.withImports(kt.getImportList());
             builder.withArgument(KotlinArg.newArg(argName)
                     .withDataType(kt.getShortNameWithTypeArguments())
                     .build());
             if (first) {
-                builder.withCodeLine("    where(" + fieldName //$NON-NLS-1$
+                builder.withCodeLine("    where(" + fieldNameAndImport.fieldName() //$NON-NLS-1$
                         + ", isEqualTo(" + argName //$NON-NLS-1$
                         + "))"); //$NON-NLS-1$
                 first = false;
             } else {
-                builder.withCodeLine("    and(" + fieldName //$NON-NLS-1$
+                builder.withCodeLine("    and(" + fieldNameAndImport.fieldName() //$NON-NLS-1$
                         + ", isEqualTo(" + argName //$NON-NLS-1$
                         + "))"); //$NON-NLS-1$
             }
@@ -81,17 +85,19 @@ public class KotlinFragmentGenerator {
 
         boolean first = true;
         for (IntrospectedColumn column : introspectedTable.getPrimaryKeyColumns()) {
-            String fieldName = column.getJavaProperty();
+            AbstractKotlinFunctionGenerator.FieldNameAndImport fieldNameAndImport =
+                    AbstractKotlinFunctionGenerator.calculateFieldNameAndImport(tableFieldName,
+                            supportObjectImport, column);
 
-            builder.withImport(tableFieldImport + "." + fieldName); //$NON-NLS-1$
+            builder.withImport(fieldNameAndImport.importString());
             if (first) {
-                builder.withCodeLine("    where(" + fieldName //$NON-NLS-1$
-                        + ", isEqualTo(record::" + fieldName //$NON-NLS-1$
+                builder.withCodeLine("    where(" + fieldNameAndImport.fieldName() //$NON-NLS-1$
+                        + ", isEqualTo(record::" + column.getJavaProperty() //$NON-NLS-1$
                         + "))"); //$NON-NLS-1$
                 first = false;
             } else {
-                builder.withCodeLine("    and(" + fieldName //$NON-NLS-1$
-                        + ", isEqualTo(record::" + fieldName //$NON-NLS-1$
+                builder.withCodeLine("    and(" + fieldNameAndImport.fieldName() //$NON-NLS-1$
+                        + ", isEqualTo(record::" + column.getJavaProperty() //$NON-NLS-1$
                         + "))"); //$NON-NLS-1$
             }
         }
@@ -212,10 +218,12 @@ public class KotlinFragmentGenerator {
 
         List<IntrospectedColumn> columns = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(columnList);
         for (IntrospectedColumn column : columns) {
-            String fieldName = column.getJavaProperty();
-            builder.withImport(tableFieldImport + "." + fieldName); //$NON-NLS-1$
+            AbstractKotlinFunctionGenerator.FieldNameAndImport fieldNameAndImport =
+                    AbstractKotlinFunctionGenerator.calculateFieldNameAndImport(tableFieldName,
+                            supportObjectImport, column);
+            builder.withImport(fieldNameAndImport.importString());
 
-            builder.withCodeLine("    set(" + fieldName //$NON-NLS-1$
+            builder.withCodeLine("    set(" + fieldNameAndImport.fieldName() //$NON-NLS-1$
                     + ").equalToOrNull(record::" + column.getJavaProperty() //$NON-NLS-1$
                     + ")"); //$NON-NLS-1$
         }
@@ -229,10 +237,12 @@ public class KotlinFragmentGenerator {
 
         List<IntrospectedColumn> columns = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(columnList);
         for (IntrospectedColumn column : columns) {
-            String fieldName = column.getJavaProperty();
-            builder.withImport(tableFieldImport + "." + fieldName); //$NON-NLS-1$
+            AbstractKotlinFunctionGenerator.FieldNameAndImport fieldNameAndImport =
+                    AbstractKotlinFunctionGenerator.calculateFieldNameAndImport(tableFieldName,
+                            supportObjectImport, column);
+            builder.withImport(fieldNameAndImport.importString());
 
-            builder.withCodeLine("    set(" + fieldName //$NON-NLS-1$
+            builder.withCodeLine("    set(" + fieldNameAndImport.fieldName() //$NON-NLS-1$
                     + ").equalToWhenPresent(record::" + column.getJavaProperty() //$NON-NLS-1$
                     + ")"); //$NON-NLS-1$
         }
@@ -243,7 +253,8 @@ public class KotlinFragmentGenerator {
     public static class Builder {
         private IntrospectedTable introspectedTable;
         private String resultMapId;
-        private String tableFieldImport;
+        private String supportObjectImport;
+        private String tableFieldName;
 
         public Builder withIntrospectedTable(IntrospectedTable introspectedTable) {
             this.introspectedTable = introspectedTable;
@@ -256,7 +267,12 @@ public class KotlinFragmentGenerator {
         }
 
         public Builder withDynamicSqlSupportClassGenerator(KotlinDynamicSqlSupportClassGenerator generator) {
-            tableFieldImport = generator.getInnerObjectImport();
+            supportObjectImport = generator.getSupportObjectImport();
+            return this;
+        }
+
+        public Builder withTableFieldName(String tableFieldName) {
+            this.tableFieldName = tableFieldName;
             return this;
         }
 

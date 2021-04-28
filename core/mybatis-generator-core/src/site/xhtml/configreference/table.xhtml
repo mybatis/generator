@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2019 the original author or authors.
+       Copyright 2006-2021 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -366,7 +366,7 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
   </tr>
   <tr>
     <td valign="top">rootClass</td>
-    <td><i>This attribute is ignored is the target runtime is "MyBatis3Kotlin"</i><br/>
+    <td><i>This attribute is ignored if the target runtime is "MyBatis3Kotlin"</i><br/>
       This property can be used to specify a root class for all generated
       Java model objects.  MBG will specify this value as the super class
       of the primary key object, if the table has a primary key, or the
@@ -388,10 +388,10 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
   </tr>
   <tr>
     <td valign="top">rootInterface</td>
-    <td><i>This property is ignored is the target runtime is "MyBatis3DynamicSql" or "MyBatis3Kotlin"</i><br/>
+    <td><i>This property is ignored if the target runtime is "MyBatis3Kotlin"</i><br/>
       This property can be used to specify a super interface for all generated
       DAO interface objects. The value specified in this property will override
-      the <code>rootInterface</code> property set on the DAO Generator
+      the <code>rootInterface</code> property set on the Java Client Generator
       configuration if any is set.
       <p><b>Important:</b> MBG does not verify that the interface exists, or is a
        valid Java interface.</p>

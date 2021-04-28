@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -216,7 +216,7 @@ public class KotlinFragmentGenerator {
             builder.withImport(tableFieldImport + "." + fieldName); //$NON-NLS-1$
 
             builder.withCodeLine("    set(" + fieldName //$NON-NLS-1$
-                    + ").equalTo(record::" + column.getJavaProperty() //$NON-NLS-1$
+                    + ").equalToOrNull(record::" + column.getJavaProperty() //$NON-NLS-1$
                     + ")"); //$NON-NLS-1$
         }
 

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -90,6 +90,7 @@ public class KotlinDynamicSqlSupportClassGenerator {
                 .build();
 
         kotlinFile.addImport("org.mybatis.dynamic.sql.SqlTable"); //$NON-NLS-1$
+        kotlinFile.addImport("org.mybatis.dynamic.sql.util.kotlin.elements.column"); //$NON-NLS-1$
         kotlinFile.addImport("java.sql.JDBCType"); //$NON-NLS-1$
         kotlinFile.addNamedItem(outerObject);
         return outerObject;
@@ -125,13 +126,13 @@ public class KotlinDynamicSqlSupportClassGenerator {
     private String calculateInnerInitializationString(IntrospectedColumn column, FullyQualifiedKotlinType kt) {
         StringBuilder initializationString = new StringBuilder();
 
-        initializationString.append(String.format("column<%s>(\"%s\", JDBCType.%s", //$NON-NLS-1$
+        initializationString.append(String.format("column<%s>(name = \"%s\", jdbcType = JDBCType.%s", //$NON-NLS-1$
                 kt.getShortNameWithTypeArguments(),
                 escapeStringForKotlin(getEscapedColumnName(column)),
                 column.getJdbcTypeName()));
 
         if (StringUtility.stringHasValue(column.getTypeHandler())) {
-            initializationString.append(String.format(", \"%s\")", column.getTypeHandler())); //$NON-NLS-1$
+            initializationString.append(String.format(", typeHandler = \"%s\")", column.getTypeHandler())); //$NON-NLS-1$
         } else {
             initializationString.append(')');
         }

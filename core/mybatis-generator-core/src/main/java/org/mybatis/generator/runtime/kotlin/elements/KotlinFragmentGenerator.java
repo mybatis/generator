@@ -92,13 +92,13 @@ public class KotlinFragmentGenerator {
             builder.withImport(fieldNameAndImport.importString());
             if (first) {
                 builder.withCodeLine("    where(" + fieldNameAndImport.fieldName() //$NON-NLS-1$
-                        + ", isEqualTo(record::" + column.getJavaProperty() //$NON-NLS-1$
-                        + "))"); //$NON-NLS-1$
+                        + ", isEqualTo(record." + column.getJavaProperty() //$NON-NLS-1$
+                        + "!!))"); //$NON-NLS-1$
                 first = false;
             } else {
                 builder.withCodeLine("    and(" + fieldNameAndImport.fieldName() //$NON-NLS-1$
-                        + ", isEqualTo(record::" + column.getJavaProperty() //$NON-NLS-1$
-                        + "))"); //$NON-NLS-1$
+                        + ", isEqualTo(record." + column.getJavaProperty() //$NON-NLS-1$
+                        + "!!))"); //$NON-NLS-1$
             }
         }
         builder.withCodeLine("}"); //$NON-NLS-1$

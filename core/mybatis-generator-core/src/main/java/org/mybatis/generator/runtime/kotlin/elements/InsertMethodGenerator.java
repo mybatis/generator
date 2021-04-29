@@ -44,7 +44,7 @@ public class InsertMethodGenerator extends AbstractKotlinFunctionGenerator {
                         .withDataType(recordType.getShortNameWithTypeArguments())
                         .build())
                 .build())
-                .withImport("org.mybatis.dynamic.sql.util.kotlin.mybatis3.*") //$NON-NLS-1$
+                .withImport("org.mybatis.dynamic.sql.util.kotlin.mybatis3.insert") //$NON-NLS-1$
                 .withImports(recordType.getImportList())
                 .build();
 

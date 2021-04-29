@@ -56,7 +56,7 @@ public class InsertMultipleMethodGenerator extends AbstractKotlinFunctionGenerat
                                 + ">") //$NON-NLS-1$
                         .build())
                 .build())
-                .withImport("org.mybatis.dynamic.sql.util.kotlin.mybatis3.*") //$NON-NLS-1$
+                .withImport("org.mybatis.dynamic.sql.util.kotlin.mybatis3.insertMultiple") //$NON-NLS-1$
                 .withImports(recordType.getImportList())
                 .build();
 

@@ -66,13 +66,13 @@ public class ColumnListGenerator {
 
     private String getInitializationString(List<FieldNameAndImport> fieldsAndImports) {
         return fieldsAndImports.stream()
-                .map(AbstractKotlinFunctionGenerator.FieldNameAndImport::fieldName)
+                .map(FieldNameAndImport::fieldName)
                 .collect(Collectors.joining(", ", "listOf(", ")")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
     private Set<String> getImports(List<FieldNameAndImport> fieldsAndImports) {
         return fieldsAndImports.stream()
-                .map(AbstractKotlinFunctionGenerator.FieldNameAndImport::importString)
+                .map(FieldNameAndImport::importString)
                 .collect(Collectors.toSet());
     }
 

@@ -40,7 +40,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: ${{ matrix.java }}
-           distribution: ${{ matrix.distribution }}
+          distribution: ${{ matrix.distribution }}
       - name: Test with Maven
         if: matrix.java == '8' || '11'
         run: ./mvnw test -B -D"license.skip=true"

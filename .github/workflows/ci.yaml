@@ -49,6 +49,6 @@ jobs:
         run: ./mvnw test -B -D"license.skip=true"
         env:
           MAVEN_OPTS: --add-opens java.base/java.util=ALL-UNNAMED
-      - name: Test with Maven
+      - name: Compile with Maven
         if: matrix.java == '17-ea'
-        run: ./mvnw test -B -D"license.skip=true -DskipTests"
+        run: ./mvnw compile -B -D"license.skip=true"

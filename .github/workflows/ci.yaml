@@ -45,10 +45,7 @@ jobs:
         if: matrix.java == '8' || matrix.java == '11'
         run: ./mvnw test -B -D"license.skip=true"
       - name: Test with Maven
-        if: matrix.java == '16'
+        if: matrix.java == '16' || matrix.java == '17-ea'
         run: ./mvnw test -B -D"license.skip=true"
         env:
           MAVEN_OPTS: --add-opens java.base/java.util=ALL-UNNAMED
-      - name: Compile with Maven
-        if: matrix.java == '17-ea'
-        run: ./mvnw compile -B -D"license.skip=true"

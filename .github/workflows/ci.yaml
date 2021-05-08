@@ -42,10 +42,4 @@ jobs:
           java-version: ${{ matrix.java }}
           distribution: ${{ matrix.distribution }}
       - name: Test with Maven
-        if: matrix.java == '8' || matrix.java == '11'
         run: ./mvnw test -B -D"license.skip=true"
-      - name: Test with Maven
-        if: matrix.java == '16' || matrix.java == '17-ea'
-        run: ./mvnw test -B -D"license.skip=true"
-        env:
-          MAVEN_OPTS: --add-opens java.base/java.util=ALL-UNNAMED

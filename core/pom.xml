@@ -105,17 +105,6 @@
           <groupId>org.jetbrains.kotlin</groupId>
           <version>${kotlin.version}</version>
         </plugin>
-        <!-- TODO: Items fixed in 4.x license-maven-plugin.  Java is released / kotlin is pending, remove this once updated. -->
-        <plugin>
-          <groupId>com.mycila</groupId>
-          <artifactId>license-maven-plugin</artifactId>
-          <configuration>
-            <mapping>
-              <java>SLASHSTAR_STYLE</java>
-              <kt>SLASHSTAR_STYLE</kt>
-            </mapping>
-          </configuration>
-        </plugin>
       </plugins>
     </pluginManagement>
 

@@ -670,7 +670,7 @@ public abstract class IntrospectedTable {
         }
 
         String packkage = config.getProperty(PropertyRegistry.CLIENT_DYNAMIC_SQL_SUPPORT_PACKAGE);
-        if (StringUtility.stringHasValue(packkage)) {
+        if (stringHasValue(packkage)) {
             return packkage + fullyQualifiedTable.getSubPackageForClientOrSqlMap(isSubPackagesEnabled(config));
         } else {
             return calculateJavaClientInterfacePackage();

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -43,6 +43,7 @@ import org.mybatis.generator.internal.rules.ConditionalModelRules;
 import org.mybatis.generator.internal.rules.FlatModelRules;
 import org.mybatis.generator.internal.rules.HierarchicalModelRules;
 import org.mybatis.generator.internal.rules.Rules;
+import org.mybatis.generator.internal.util.StringUtility;
 
 /**
  * Base class for all code generator implementations. This class provides many
@@ -661,6 +662,21 @@ public abstract class IntrospectedTable {
                 fullyQualifiedTable.getSubPackageForClientOrSqlMap(isSubPackagesEnabled(config));
     }
 
+    protected String calculateDynamicSqlSupportPackage() {
+        JavaClientGeneratorConfiguration config = context
+                .getJavaClientGeneratorConfiguration();
+        if (config == null) {
+            return null;
+        }
+
+        String packkage = config.getProperty(PropertyRegistry.CLIENT_DYNAMIC_SQL_SUPPORT_PACKAGE);
+        if (StringUtility.stringHasValue(packkage)) {
+            return packkage + fullyQualifiedTable.getSubPackageForClientOrSqlMap(isSubPackagesEnabled(config));
+        } else {
+            return calculateJavaClientInterfacePackage();
+        }
+    }
+
     protected void calculateJavaClientAttributes() {
         if (context.getJavaClientGeneratorConfiguration() == null) {
             return;
@@ -697,10 +713,18 @@ public abstract class IntrospectedTable {
         setMyBatis3SqlProviderType(sb.toString());
 
         sb.setLength(0);
-        sb.append(calculateJavaClientInterfacePackage());
+        sb.append(calculateDynamicSqlSupportPackage());
         sb.append('.');
-        sb.append(fullyQualifiedTable.getDomainObjectName());
-        sb.append("DynamicSqlSupport"); //$NON-NLS-1$
+        if (stringHasValue(tableConfiguration.getDynamicSqlSupportClassName())) {
+            sb.append(tableConfiguration.getDynamicSqlSupportClassName());
+        } else {
+            if (stringHasValue(fullyQualifiedTable.getDomainObjectSubPackage())) {
+                sb.append(fullyQualifiedTable.getDomainObjectSubPackage());
+                sb.append('.');
+            }
+            sb.append(fullyQualifiedTable.getDomainObjectName());
+            sb.append("DynamicSqlSupport"); //$NON-NLS-1$
+        }
         setMyBatisDynamicSqlSupportType(sb.toString());
     }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2020 the original author or authors.
+       Copyright 2006-2021 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -71,8 +71,10 @@
       <columnOverride column="id7$$" delimitedColumnName="true" />
       <columnOverride column="class" property="dbClass" />
     </table>
-    <table schema="mbgtest" tableName="Translations" domainObjectName="Translation"/>
-    <table schema="mbgtest" tableName="Ids" domainObjectName="Id"/>
+    <table schema="mbgtest" tableName="Translations" domainObjectName="sub.Translation"/>
+    <table schema="mbgtest" tableName="Ids" domainObjectName="Id">
+      <property name="dynamicSqlSupportClassName" value="sub.IdDSQLSupport"/>
+    </table>
   </context>
 
   <context id="dsql-readonly" targetRuntime="MyBatis3DynamicSql">
@@ -133,6 +135,7 @@
     </javaModelGenerator>
 
     <javaClientGenerator targetPackage="mbg.test.mb3.generated.dsql.miscellaneous.mapper"  targetProject="MAVEN">
+      <property name="dynamicSqlSupportPackage" value="mbg.test.mb3.generated.dsql.miscellaneous.support"/>
     </javaClientGenerator>
 
     <table tableName="PKFields" domainObjectName="MyObject" alias="A" >

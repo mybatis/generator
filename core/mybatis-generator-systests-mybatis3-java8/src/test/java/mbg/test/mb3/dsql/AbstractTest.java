@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ import mbg.test.mb3.generated.dsql.mapper.PkfieldsMapper;
 import mbg.test.mb3.generated.dsql.mapper.PkfieldsblobsMapper;
 import mbg.test.mb3.generated.dsql.mapper.PkonlyMapper;
 import mbg.test.mb3.generated.dsql.mapper.mbgtest.IdMapper;
-import mbg.test.mb3.generated.dsql.mapper.mbgtest.TranslationMapper;
+import mbg.test.mb3.generated.dsql.mapper.mbgtest.sub.TranslationMapper;
 
 /**
  * @author Jeff Butler

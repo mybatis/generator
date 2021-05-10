@@ -333,6 +333,19 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
       <p><i>The default value is false.</i></p></td>
   </tr>
   <tr>
+    <td valign="top">dynamicSqlSupportClassName</td>
+    <td><i>This property is ignored unless the target runtime is "MyBatis3DynamicSQL" or "MyBatis3Kotlin"</i><br/>
+        The name of the generated MyBatis Dynamic SQL support class.
+        If not specified, the name will be whatever the domain object name is, plus the
+        word &quot;DynamicSqlSupport&quot;.
+        <p>You can specify a package fragment in the support class name.  For example,
+            if you specify <code>foo.BarSqlSupport</code> then the SQL provider will be
+            <code>BarSqlSupport</code> and package <code>foo</code> will be appended
+            to the package specified in the generator configuration.</p>
+        <p>Since version 1.4.1</p>
+    </td>
+  </tr>
+  <tr>
     <td valign="top">ignoreQualifiersAtRuntime</td>
     <td>If true, then
         MBG will not add the schema or catalog to the table name in the generated SQL.

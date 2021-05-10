@@ -110,10 +110,7 @@ specify this element, then MyBatis Generator (MBG) will not generate Java client
         If "enableSubPackages" is false (the default) then the calculated package will be
         exactly what is specified in the targetPackage attribute.
         MBG will create folders as required for the generated
-        packages.
-        <p><b>Note:</b> the package for implementation classes may
-        be overridden by specifying the optional <code>implementationPackage</code>
-        attribute as shown below.</p></td>
+        packages.</td>
   </tr>
   <tr>
     <td valign="top">targetProject</td>
@@ -139,6 +136,16 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
   <tr>
     <th>Property Name</th>
     <th>Property Values</th>
+  </tr>
+  <tr>
+      <td valign="top">dynamicSqlSupportPackage</td>
+      <td>This property is only applicable to target runtimes <b>MyBatis3DynamicSql</b> or <b>MyBatis3Kotlin</b>.
+          Use this property to set the package where generated MyBatis Dynamic SQL Support classes will be placed.
+          The calculated package can be modified by the "enableSubPackages" property in the same way as the
+          "targetPackage".
+          If not specified, the package will be the same as "targetPackage" specified above.
+          <p>Since version 1.4.1</p>
+      </td>
   </tr>
   <tr>
     <td valign="top">enableSubPackages</td>

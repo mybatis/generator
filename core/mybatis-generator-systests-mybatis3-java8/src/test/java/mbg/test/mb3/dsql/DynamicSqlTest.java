@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -40,6 +40,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import mbg.test.mb3.generated.dsql.mapper.mbgtest.sub.TranslationMapper;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.Test;
 import org.mybatis.dynamic.sql.select.CountDSLCompleter;
@@ -53,7 +54,6 @@ import mbg.test.mb3.generated.dsql.mapper.PkfieldsMapper;
 import mbg.test.mb3.generated.dsql.mapper.PkfieldsblobsMapper;
 import mbg.test.mb3.generated.dsql.mapper.PkonlyMapper;
 import mbg.test.mb3.generated.dsql.mapper.mbgtest.IdMapper;
-import mbg.test.mb3.generated.dsql.mapper.mbgtest.TranslationMapper;
 import mbg.test.mb3.generated.dsql.model.AwfulTable;
 import mbg.test.mb3.generated.dsql.model.Fieldsblobs;
 import mbg.test.mb3.generated.dsql.model.Fieldsonly;
@@ -62,7 +62,7 @@ import mbg.test.mb3.generated.dsql.model.Pkfields;
 import mbg.test.mb3.generated.dsql.model.Pkfieldsblobs;
 import mbg.test.mb3.generated.dsql.model.Pkonly;
 import mbg.test.mb3.generated.dsql.model.mbgtest.Id;
-import mbg.test.mb3.generated.dsql.model.mbgtest.Translation;
+import mbg.test.mb3.generated.dsql.model.mbgtest.sub.Translation;
 
 /**
  * @author Jeff Butler

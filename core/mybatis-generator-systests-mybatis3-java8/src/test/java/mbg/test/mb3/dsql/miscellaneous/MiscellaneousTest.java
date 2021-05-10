@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 package mbg.test.mb3.dsql.miscellaneous;
 
 import static mbg.test.common.util.TestUtilities.datesAreEqual;
-import static mbg.test.mb3.generated.dsql.miscellaneous.mapper.MyObjectDynamicSqlSupport.myObject;
+import static mbg.test.mb3.generated.dsql.miscellaneous.support.MyObjectDynamicSqlSupport.myObject;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mybatis.dynamic.sql.SqlBuilder.*;

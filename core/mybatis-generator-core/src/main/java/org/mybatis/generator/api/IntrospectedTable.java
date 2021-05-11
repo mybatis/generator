@@ -756,7 +756,6 @@ public abstract class IntrospectedTable {
         sb.append(pakkage);
         sb.append('.');
         sb.append(fullyQualifiedTable.getDomainObjectName());
-        sb.append("Record"); //$NON-NLS-1$
         setKotlinRecordType(sb.toString());
 
         sb.setLength(0);

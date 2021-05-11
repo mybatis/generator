@@ -20,7 +20,7 @@ import mbg.test.common.util.TestUtilities.generateRandomBlob
 import mbg.test.mb3.generated.dsql.kotlin.miscellaneous.mapper.*
 import org.junit.jupiter.api.Test
 
-import mbg.test.mb3.generated.dsql.kotlin.miscellaneous.model.GeneratedalwaystestRecord
+import mbg.test.mb3.generated.dsql.kotlin.miscellaneous.model.Generatedalwaystest
 import mbg.test.mb3.generated.dsql.kotlin.miscellaneous.mapper.GeneratedalwaystestDynamicSqlSupport.generatedalwaystest
 import org.junit.jupiter.api.Assertions.*
 import org.mybatis.dynamic.sql.SqlBuilder.isEqualTo
@@ -32,7 +32,7 @@ class GeneratedAlwaysTest : AbstractAnnotatedMiscellaneousTest() {
         openSession().use { sqlSession ->
             val mapper = sqlSession.getMapper(GeneratedalwaystestMapper::class.java)
 
-            val gaTest = GeneratedalwaystestRecord()
+            val gaTest = Generatedalwaystest()
             gaTest.id = 1
             gaTest.name = "fred"
             gaTest.idPlus1 = 55
@@ -58,7 +58,7 @@ class GeneratedAlwaysTest : AbstractAnnotatedMiscellaneousTest() {
         openSession().use { sqlSession ->
             val mapper = sqlSession.getMapper(GeneratedalwaystestMapper::class.java)
 
-            val gaTest = GeneratedalwaystestRecord()
+            val gaTest = Generatedalwaystest()
             gaTest.id = 1
             gaTest.name = "fred"
             gaTest.idPlus1 = 55
@@ -83,7 +83,7 @@ class GeneratedAlwaysTest : AbstractAnnotatedMiscellaneousTest() {
         openSession().use { sqlSession ->
             val mapper = sqlSession.getMapper(GeneratedalwaystestMapper::class.java)
 
-            val gaTest = GeneratedalwaystestRecord()
+            val gaTest = Generatedalwaystest()
             gaTest.id = 1
             gaTest.name = "fred"
             gaTest.idPlus1 = 55 // should be ignored
@@ -125,7 +125,7 @@ class GeneratedAlwaysTest : AbstractAnnotatedMiscellaneousTest() {
         openSession().use { sqlSession ->
             val mapper = sqlSession.getMapper(GeneratedalwaystestMapper::class.java)
 
-            val gaTest = GeneratedalwaystestRecord()
+            val gaTest = Generatedalwaystest()
             gaTest.id = 1
             gaTest.name = "fred"
             gaTest.idPlus1 = 55 // should be ignored
@@ -166,7 +166,7 @@ class GeneratedAlwaysTest : AbstractAnnotatedMiscellaneousTest() {
         openSession().use { sqlSession ->
             val mapper = sqlSession.getMapper(GeneratedalwaystestMapper::class.java)
 
-            val gaTest = GeneratedalwaystestRecord()
+            val gaTest = Generatedalwaystest()
             gaTest.id = 1
             gaTest.name = "fred"
             gaTest.idPlus1 = 55 // should be ignored
@@ -207,7 +207,7 @@ class GeneratedAlwaysTest : AbstractAnnotatedMiscellaneousTest() {
         openSession().use { sqlSession ->
             val mapper = sqlSession.getMapper(GeneratedalwaystestMapper::class.java)
 
-            val gaTest = GeneratedalwaystestRecord()
+            val gaTest = Generatedalwaystest()
             gaTest.id = 1
             gaTest.name = "fred"
             gaTest.idPlus1 = 55 // should be ignored
@@ -240,7 +240,7 @@ class GeneratedAlwaysTest : AbstractAnnotatedMiscellaneousTest() {
         openSession().use { sqlSession ->
             val mapper = sqlSession.getMapper(GeneratedalwaystestMapper::class.java)
 
-            val gaTest = GeneratedalwaystestRecord()
+            val gaTest = Generatedalwaystest()
             gaTest.id = 1
             gaTest.name = "fred"
             gaTest.idPlus1 = 55 // should be ignored
@@ -273,7 +273,7 @@ class GeneratedAlwaysTest : AbstractAnnotatedMiscellaneousTest() {
         openSession().use { sqlSession ->
             val mapper = sqlSession.getMapper(GeneratedalwaystestMapper::class.java)
 
-            val gaTest = GeneratedalwaystestRecord()
+            val gaTest = Generatedalwaystest()
             gaTest.id = 1
             gaTest.name = "fred"
             gaTest.idPlus1 = 55 // should be ignored

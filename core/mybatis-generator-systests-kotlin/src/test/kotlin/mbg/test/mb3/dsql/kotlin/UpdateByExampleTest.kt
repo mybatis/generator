@@ -43,12 +43,12 @@ class UpdateByExampleTest : AbstractTest() {
         openSession().use { sqlSession ->
             val offset = Offset.offset(0.001)
             val mapper = sqlSession.getMapper(FieldsonlyMapper::class.java)
-            mapper.insert(FieldsonlyRecord(5, 11.22, 33.44))
-            mapper.insert(FieldsonlyRecord(8, 44.55, 66.77))
-            mapper.insert(FieldsonlyRecord(9, 88.88, 100.11))
+            mapper.insert(Fieldsonly(5, 11.22, 33.44))
+            mapper.insert(Fieldsonly(8, 44.55, 66.77))
+            mapper.insert(Fieldsonly(9, 88.88, 100.11))
 
             val rows = mapper.update {
-                updateSelectiveColumns(FieldsonlyRecord(doublefield = 99.0))
+                updateSelectiveColumns(Fieldsonly(doublefield = 99.0))
                 where(fieldsonly.integerfield, isGreaterThan(5))
             }
 
@@ -93,25 +93,25 @@ class UpdateByExampleTest : AbstractTest() {
     fun testFieldsOnlyUpdateByExample() {
         openSession().use { sqlSession ->
             val mapper = sqlSession.getMapper(FieldsonlyMapper::class.java)
-            var record = FieldsonlyRecord()
+            var record = Fieldsonly()
             record.doublefield = 11.22
             record.floatfield = 33.44
             record.integerfield = 5
             mapper.insert(record)
 
-            record = FieldsonlyRecord()
+            record = Fieldsonly()
             record.doublefield = 44.55
             record.floatfield = 66.77
             record.integerfield = 8
             mapper.insert(record)
 
-            record = FieldsonlyRecord()
+            record = Fieldsonly()
             record.doublefield = 88.99
             record.floatfield = 100.111
             record.integerfield = 9
             mapper.insert(record)
 
-            val updateRecord = FieldsonlyRecord(integerfield = 22)
+            val updateRecord = Fieldsonly(integerfield = 22)
 
             val rows = mapper.update {
                 updateAllColumns(updateRecord)
@@ -132,16 +132,16 @@ class UpdateByExampleTest : AbstractTest() {
     fun testPKOnlyUpdateByExampleSelective() {
         openSession().use { sqlSession ->
             val mapper = sqlSession.getMapper(PkonlyMapper::class.java)
-            var key = PkonlyRecord(1, 3)
+            var key = Pkonly(1, 3)
             mapper.insert(key)
 
-            key = PkonlyRecord(5, 6)
+            key = Pkonly(5, 6)
             mapper.insert(key)
 
-            key = PkonlyRecord(7, 8)
+            key = Pkonly(7, 8)
             mapper.insert(key)
 
-            val updateKey = PkonlyRecord(seqNum = 3)
+            val updateKey = Pkonly(seqNum = 3)
 
             val rows = mapper.update {
                 updateSelectiveColumns(updateKey)
@@ -167,16 +167,16 @@ class UpdateByExampleTest : AbstractTest() {
     fun testPKOnlyUpdateByExample() {
         openSession().use { sqlSession ->
             val mapper = sqlSession.getMapper(PkonlyMapper::class.java)
-            var key = PkonlyRecord(1, 3)
+            var key = Pkonly(1, 3)
             mapper.insert(key)
 
-            key = PkonlyRecord(5, 6)
+            key = Pkonly(5, 6)
             mapper.insert(key)
 
-            key = PkonlyRecord(7, 8)
+            key = Pkonly(7, 8)
             mapper.insert(key)
 
-            val updateKey = PkonlyRecord(22, 3)
+            val updateKey = Pkonly(22, 3)
 
             val rows = mapper.update {
                 updateAllColumns(updateKey)
@@ -196,14 +196,14 @@ class UpdateByExampleTest : AbstractTest() {
     fun testPKFieldsUpdateByExampleSelective() {
         openSession().use { sqlSession ->
             val mapper = sqlSession.getMapper(PkfieldsMapper::class.java)
-            var record = PkfieldsRecord()
+            var record = Pkfields()
             record.firstname = "Jeff"
             record.lastname = "Smith"
             record.id1 = 1
             record.id2 = 2
             mapper.insert(record)
 
-            record = PkfieldsRecord()
+            record = Pkfields()
             record.firstname = "Bob"
             record.lastname = "Jones"
             record.id1 = 3
@@ -211,7 +211,7 @@ class UpdateByExampleTest : AbstractTest() {
 
             mapper.insert(record)
 
-            val updateRecord = PkfieldsRecord(firstname = "Fred")
+            val updateRecord = Pkfields(firstname = "Fred")
 
             val rows = mapper.update {
                 updateSelectiveColumns(updateRecord)
@@ -233,14 +233,14 @@ class UpdateByExampleTest : AbstractTest() {
     fun testPKFieldsUpdateByExample() {
         openSession().use { sqlSession ->
             val mapper = sqlSession.getMapper(PkfieldsMapper::class.java)
-            var record = PkfieldsRecord()
+            var record = Pkfields()
             record.firstname = "Jeff"
             record.lastname = "Smith"
             record.id1 = 1
             record.id2 = 2
             mapper.insert(record)
 
-            record = PkfieldsRecord()
+            record = Pkfields()
             record.firstname = "Bob"
             record.lastname = "Jones"
             record.id1 = 3
@@ -248,7 +248,7 @@ class UpdateByExampleTest : AbstractTest() {
 
             mapper.insert(record)
 
-            val updateRecord = PkfieldsRecord(id1 = 3, id2 = 4, firstname = "Fred")
+            val updateRecord = Pkfields(id1 = 3, id2 = 4, firstname = "Fred")
 
             val rows = mapper.update {
                 updateAllColumns(updateRecord)
@@ -270,19 +270,19 @@ class UpdateByExampleTest : AbstractTest() {
     fun testPKBlobsUpdateByExampleSelective() {
         openSession().use { sqlSession ->
             val mapper = sqlSession.getMapper(PkblobsMapper::class.java)
-            var record = PkblobsRecord()
+            var record = Pkblobs()
             record.id = 3
             record.blob1 = generateRandomBlob()
             record.blob2 = generateRandomBlob()
             mapper.insert(record)
 
-            record = PkblobsRecord()
+            record = Pkblobs()
             record.id = 6
             record.blob1 = generateRandomBlob()
             record.blob2 = generateRandomBlob()
             mapper.insert(record)
 
-            val newRecord = PkblobsRecord(blob1 = generateRandomBlob())
+            val newRecord = Pkblobs(blob1 = generateRandomBlob())
 
             val rows = mapper.update {
                 updateSelectiveColumns(newRecord)
@@ -305,19 +305,19 @@ class UpdateByExampleTest : AbstractTest() {
     fun testPKBlobsUpdateByExample() {
         openSession().use { sqlSession ->
             val mapper = sqlSession.getMapper(PkblobsMapper::class.java)
-            var record = PkblobsRecord()
+            var record = Pkblobs()
             record.id = 3
             record.blob1 = generateRandomBlob()
             record.blob2 = generateRandomBlob()
             mapper.insert(record)
 
-            record = PkblobsRecord()
+            record = Pkblobs()
             record.id = 6
             record.blob1 = generateRandomBlob()
             record.blob2 = generateRandomBlob()
             mapper.insert(record)
 
-            val newRecord = PkblobsRecord(id = 8)
+            val newRecord = Pkblobs(id = 8)
 
             val rows = mapper.update {
                 updateAllColumns(newRecord)
@@ -340,7 +340,7 @@ class UpdateByExampleTest : AbstractTest() {
     fun testPKFieldsBlobsUpdateByExampleSelective() {
         openSession().use { sqlSession ->
             val mapper = sqlSession.getMapper(PkfieldsblobsMapper::class.java)
-            var record = PkfieldsblobsRecord()
+            var record = Pkfieldsblobs()
             record.id1 = 3
             record.id2 = 4
             record.firstname = "Jeff"
@@ -348,7 +348,7 @@ class UpdateByExampleTest : AbstractTest() {
             record.blob1 = generateRandomBlob()
             mapper.insert(record)
 
-            record = PkfieldsblobsRecord()
+            record = Pkfieldsblobs()
             record.id1 = 5
             record.id2 = 6
             record.firstname = "Scott"
@@ -356,7 +356,7 @@ class UpdateByExampleTest : AbstractTest() {
             record.blob1 = generateRandomBlob()
             mapper.insert(record)
 
-            val newRecord = PkfieldsblobsRecord(firstname = "Fred")
+            val newRecord = Pkfieldsblobs(firstname = "Fred")
 
             val rows = mapper.update {
                 updateSelectiveColumns(newRecord)
@@ -381,7 +381,7 @@ class UpdateByExampleTest : AbstractTest() {
     fun testPKFieldsBlobsUpdateByExample() {
         openSession().use { sqlSession ->
             val mapper = sqlSession.getMapper(PkfieldsblobsMapper::class.java)
-            var record = PkfieldsblobsRecord()
+            var record = Pkfieldsblobs()
             record.id1 = 3
             record.id2 = 4
             record.firstname = "Jeff"
@@ -389,7 +389,7 @@ class UpdateByExampleTest : AbstractTest() {
             record.blob1 = generateRandomBlob()
             mapper.insert(record)
 
-            record = PkfieldsblobsRecord()
+            record = Pkfieldsblobs()
             record.id1 = 5
             record.id2 = 6
             record.firstname = "Scott"
@@ -397,7 +397,7 @@ class UpdateByExampleTest : AbstractTest() {
             record.blob1 = generateRandomBlob()
             mapper.insert(record)
 
-            val newRecord = PkfieldsblobsRecord()
+            val newRecord = Pkfieldsblobs()
             newRecord.id1 = 3
             newRecord.id2 = 8
             newRecord.firstname = "Fred"
@@ -425,21 +425,21 @@ class UpdateByExampleTest : AbstractTest() {
     fun testFieldsBlobsUpdateByExampleSelective() {
         openSession().use { sqlSession ->
             val mapper = sqlSession.getMapper(FieldsblobsMapper::class.java)
-            var record = FieldsblobsRecord()
+            var record = Fieldsblobs()
             record.firstname = "Jeff"
             record.lastname = "Smith"
             record.blob1 = generateRandomBlob()
             record.blob2 = generateRandomBlob()
             mapper.insert(record)
 
-            record = FieldsblobsRecord()
+            record = Fieldsblobs()
             record.firstname = "Scott"
             record.lastname = "Jones"
             record.blob1 = generateRandomBlob()
             record.blob2 = generateRandomBlob()
             mapper.insert(record)
 
-            val newRecord = FieldsblobsRecord(lastname = "Doe")
+            val newRecord = Fieldsblobs(lastname = "Doe")
 
             val rows = mapper.update {
                 updateSelectiveColumns(newRecord)
@@ -463,21 +463,21 @@ class UpdateByExampleTest : AbstractTest() {
     fun testFieldsBlobsUpdateByExample() {
         openSession().use { sqlSession ->
             val mapper = sqlSession.getMapper(FieldsblobsMapper::class.java)
-            var record = FieldsblobsRecord()
+            var record = Fieldsblobs()
             record.firstname = "Jeff"
             record.lastname = "Smith"
             record.blob1 = generateRandomBlob()
             record.blob2 = generateRandomBlob()
             mapper.insert(record)
 
-            record = FieldsblobsRecord()
+            record = Fieldsblobs()
             record.firstname = "Scott"
             record.lastname = "Jones"
             record.blob1 = generateRandomBlob()
             record.blob2 = generateRandomBlob()
             mapper.insert(record)
 
-            val newRecord = FieldsblobsRecord()
+            val newRecord = Fieldsblobs()
             newRecord.firstname = "Scott"
             newRecord.lastname = "Doe"
 
@@ -503,7 +503,7 @@ class UpdateByExampleTest : AbstractTest() {
     fun testAwfulTableUpdateByExampleSelective() {
         openSession().use { sqlSession ->
             val mapper = sqlSession.getMapper(AwfulTableMapper::class.java)
-            var record = AwfulTableRecord()
+            var record = AwfulTable()
             record.eMail = "fred@fred.com"
             record.emailaddress = "alsofred@fred.com"
             record.firstFirstName = "fred1"
@@ -518,7 +518,7 @@ class UpdateByExampleTest : AbstractTest() {
 
             mapper.insert(record)
 
-            record = AwfulTableRecord()
+            record = AwfulTable()
             record.eMail = "fred2@fred.com"
             record.emailaddress = "alsofred2@fred.com"
             record.firstFirstName = "fred11"
@@ -533,7 +533,7 @@ class UpdateByExampleTest : AbstractTest() {
 
             mapper.insert(record)
 
-            val newRecord = AwfulTableRecord(firstFirstName = "Alonzo")
+            val newRecord = AwfulTable(firstFirstName = "Alonzo")
 
             val rows = mapper.update {
                 updateSelectiveColumns(newRecord)
@@ -565,7 +565,7 @@ class UpdateByExampleTest : AbstractTest() {
     fun testAwfulTableUpdateByExample() {
         openSession().use { sqlSession ->
             val mapper = sqlSession.getMapper(AwfulTableMapper::class.java)
-            var record = AwfulTableRecord()
+            var record = AwfulTable()
             record.eMail = "fred@fred.com"
             record.emailaddress = "alsofred@fred.com"
             record.firstFirstName = "fred1"
@@ -580,7 +580,7 @@ class UpdateByExampleTest : AbstractTest() {
 
             mapper.insert(record)
 
-            record = AwfulTableRecord()
+            record = AwfulTable()
             record.eMail = "fred2@fred.com"
             record.emailaddress = "alsofred2@fred.com"
             record.firstFirstName = "fred11"
@@ -595,7 +595,7 @@ class UpdateByExampleTest : AbstractTest() {
 
             mapper.insert(record)
 
-            val newRecord = AwfulTableRecord()
+            val newRecord = AwfulTable()
             newRecord.firstFirstName = "Alonzo"
             newRecord.customerId = 58
             newRecord.id1 = 111

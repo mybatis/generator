@@ -26,15 +26,35 @@
 <body>
 <h1>What's New in MyBatis Generator</h1>
 <h2>Version 1.4.1</h2>
-<p>This is a relatively minor release focusing mainly on bug fixes and minor enhancements. We've also removed the deprecated
-    MyBatis3DynamicSqlV1 runtime. See the GitHub page for milestone 1.4.1 for details.
-    <a target="_blank" href="https://github.com/mybatis/generator/issues?q=milestone%3A1.4.1">Milestone 1.4.1</a></p>
+<p>This release is mainly focused on updating the runtimes for MyBatis Dynamic SQL ("MyBatis3DynamicSQL" and
+"MyBatis3Kotlin"). The generated code is now dependant on MyBatis Dynamic SQL version 1.3.0 or later
+and makes better use of newer features in that library. See below for details about that change.
+We've also removed the deprecated MyBatis3DynamicSqlV1 runtime. See the GitHub page for milestone 1.4.1 for details
+other other changes in this release:
+<a target="_blank" href="https://github.com/mybatis/generator/issues?q=milestone%3A1.4.1">Milestone 1.4.1</a>.</p>
 
-<h3>Enhancements</h3>
+<h3>Updated MyBatis Dynamic SQL Runtimes</h3>
+<p>The MyBatis3DynamicSQL and MyBatis3Kotlin runtimes have been updated to generate code that requires
+version 1.3.0 or later of MyBatis Dynamic SQL. This should be a relatively minor change for most Java users and should
+simply require updating the MyBatis Dynamic SQL version to 1.3.0 or later.</p>
+
+<p>Differences for Kotlin users are more extensive. The generated Dynamic SQL Support classes in the Kotlin runtime
+have changed and now more closely match the style of the support classes generated in Java.
+This has the following benefits:</p>
+
+<ul>
+    <li>Self-joins are now possible with the generated code</li>
+    <li>There is no longer a need to append the word "Record" to generated model classes and specifying an override
+    to rename the domain object will take effect as desired</li>
+</ul>
+
+This update will require changes in existing code if you regenerate Kotlin code using this updated version.
+
+<h3>Other Enhancements</h3>
 <ul>
     <li>Added capabilities to the SerializablePlugin for Kotlin</li>
-    <li>Added the ability to specify a package for Dynamic SQL Support Classes</li>
-    <li>Added the ability to specify a Dynamic SQL Support class name on the table configuration</li>
+    <li>Added the ability to specify a package for MyBatis Dynamic SQL Support Classes</li>
+    <li>Added the ability to specify a MyBatis Dynamic SQL Support class name on the table configuration</li>
 </ul>
 
 <h2>Version 1.4.0</h2>

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -46,9 +46,9 @@ public class InsertSelectiveMethodGenerator extends AbstractMethodGenerator {
         method.setDefault(true);
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
-        method.addParameter(new Parameter(recordType, "record")); //$NON-NLS-1$
+        method.addParameter(new Parameter(recordType, "row")); //$NON-NLS-1$
 
-        method.addBodyLine("return MyBatis3Utils.insert(this::insert, record, " + tableFieldName + //$NON-NLS-1$
+        method.addBodyLine("return MyBatis3Utils.insert(this::insert, row, " + tableFieldName + //$NON-NLS-1$
                 ", c ->"); //$NON-NLS-1$
 
         List<IntrospectedColumn> columns = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(
@@ -74,13 +74,13 @@ public class InsertSelectiveMethodGenerator extends AbstractMethodGenerator {
                 if (first) {
                     method.addBodyLine("    c.map(" + fieldName //$NON-NLS-1$
                             + ").toPropertyWhenPresent(\"" + column.getJavaProperty() //$NON-NLS-1$
-                            + "\", record::" + methodName //$NON-NLS-1$
+                            + "\", row::" + methodName //$NON-NLS-1$
                             + ")"); //$NON-NLS-1$
                     first = false;
                 } else {
                     method.addBodyLine("    .map(" + fieldName //$NON-NLS-1$
                             + ").toPropertyWhenPresent(\"" + column.getJavaProperty() //$NON-NLS-1$
-                            + "\", record::" + methodName //$NON-NLS-1$
+                            + "\", row::" + methodName //$NON-NLS-1$
                             + ")"); //$NON-NLS-1$
                 }
             }

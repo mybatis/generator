@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2019 the original author or authors.
+       Copyright 2006-2021 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ about how the library works. In particular, see the
 <p>For each introspected table, the generator will generate four Kotlin files:</p>
 <ol>
   <li>A Kotlin data class that represents a row in the table. By default the class will be named based
-    on the table name with "Record" appended</li>
+    on the table name</li>
   <li>A "support" class that includes a table definition and column definitions for the database table</li>
   <li>A mapper interface with the basic MyBatis mapper methods</li>
   <li>A mapper extensions file with extension methods that simplify and reuse the methods in the basic interface.
@@ -70,11 +70,16 @@ package example
 
 import java.sql.JDBCType
 import org.mybatis.dynamic.sql.SqlTable
+import org.mybatis.dynamic.sql.util.kotlin.elements.column
 
 object TableCodeDynamicSqlSupport {
-    object TableCode : SqlTable("MYSCHEMA.TABLE_CODE") {
-        val id = column&lt;Int&gt;("ID", JDBCType.INTEGER)
-        val description = column&lt;String&gt;("DESCRIPTION", JDBCType.VARCHAR)
+    val tableCode = TableCode()
+    val id = tableCode.id
+    val description = tableCode.description
+
+    class TableCode : SqlTable("MYSCHEMA.TABLE_CODE") {
+        val id = column&lt;Int&gt;(name = "ID", jdbcType = JDBCType.INTEGER)
+        val description = column&lt;String&gt;(name = "DESCRIPTION", jdbcType = JDBCType.VARCHAR)
     }
 }
 </pre>
@@ -128,9 +133,9 @@ complex where clauses, and "ORDER BY" phrases as shown below:</p>
 
 <pre>
 // import the generated "support" items...
-import example.TableCodeDynamicSqlSupport.TableCode  
-import example.TableCodeDynamicSqlSupport.TableCode.description
-import example.TableCodeDynamicSqlSupport.TableCode.id
+import example.TableCodeDynamicSqlSupport.tableCode
+import example.TableCodeDynamicSqlSupport.description
+import example.TableCodeDynamicSqlSupport.id
 
 // import MyBatis Dynamic SQL where support
 import org.mybatis.dynamic.sql.SqlBuilder.*
@@ -177,9 +182,9 @@ as well as updates that mimic the old updateByExample and updateByExampleSelecti
 
 <pre>
 // import the generated "support" items...
-import example.TableCodeDynamicSqlSupport.TableCode  
-import example.TableCodeDynamicSqlSupport.TableCode.description
-import example.TableCodeDynamicSqlSupport.TableCode.id
+import example.TableCodeDynamicSqlSupport.tableCode
+import example.TableCodeDynamicSqlSupport.description
+import example.TableCodeDynamicSqlSupport.id
 
 // import MyBatis Dynamic SQL where support
 import org.mybatis.dynamic.sql.SqlBuilder.*
@@ -197,22 +202,22 @@ class SomeService {
         ...
     }
 
-    fun updateByExample(record: TableCode) {
+    fun updateByExample(row: TableCode) {
         ...
         // Update like the old updateByExample method
         val rows =  mapper.update {
-            updateAllColumns(record)
+            updateAllColumns(row)
             where(id, isEqualTo(3))
             or(description, isLike("f%"))
         }
         ...
     }
 
-    fun updateByExampleSelective(record: TableCode) {
+    fun updateByExampleSelective(row: TableCode) {
         ...
         // Update like the old updateByExampleSelective method
         val rows =  mapper.update {
-            updateSelectiveColumns(record)
+            updateSelectiveColumns(row)
             where(id, isEqualTo(3))
             or(description, isLike("f%"))
         }

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -60,11 +60,11 @@ public class ProviderUpdateByExampleSelectiveMethodGenerator extends AbstractJav
                 new FullyQualifiedJavaType("java.util.Map<java.lang.String, java.lang.Object>"), //$NON-NLS-1$
                 "parameter")); //$NON-NLS-1$
 
-        FullyQualifiedJavaType record =
+        FullyQualifiedJavaType recordClass =
                 introspectedTable.getRules().calculateAllFieldsClass();
-        importedTypes.add(record);
-        method.addBodyLine(String.format("%s record = (%s) parameter.get(\"record\");", //$NON-NLS-1$
-                record.getShortName(), record.getShortName()));
+        importedTypes.add(recordClass);
+        method.addBodyLine(String.format("%s row = (%s) parameter.get(\"row\");", //$NON-NLS-1$
+                recordClass.getShortName(), recordClass.getShortName()));
 
         FullyQualifiedJavaType example =
                 new FullyQualifiedJavaType(introspectedTable.getExampleType());
@@ -91,14 +91,14 @@ public class ProviderUpdateByExampleSelectiveMethodGenerator extends AbstractJav
         for (IntrospectedColumn introspectedColumn :
                 ListUtilities.removeGeneratedAlwaysColumns(introspectedTable.getAllColumns())) {
             if (!introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {
-                method.addBodyLine(String.format("if (record.%s() != null) {", //$NON-NLS-1$
+                method.addBodyLine(String.format("if (row.%s() != null) {", //$NON-NLS-1$
                         getGetterMethodName(introspectedColumn.getJavaProperty(),
                                 introspectedColumn.getFullyQualifiedJavaType())));
             }
 
             StringBuilder sb = new StringBuilder();
             sb.append(getParameterClause(introspectedColumn));
-            sb.insert(2, "record."); //$NON-NLS-1$
+            sb.insert(2, "row."); //$NON-NLS-1$
 
             method.addBodyLine(String.format("%sSET(\"%s = %s\");", //$NON-NLS-1$
                     builderPrefix,

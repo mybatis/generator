@@ -37,7 +37,7 @@ public class UpdateAllColumnsMethodGenerator extends AbstractKotlinFunctionGener
     public KotlinFunctionAndImports generateMethodAndImports() {
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
                 KotlinFunction.newOneLineFunction("KotlinUpdateBuilder.updateAllColumns") //$NON-NLS-1$
-                .withArgument(KotlinArg.newArg("record") //$NON-NLS-1$
+                .withArgument(KotlinArg.newArg("row") //$NON-NLS-1$
                         .withDataType(recordType.getShortNameWithTypeArguments())
                         .build())
                 .build())

@@ -60,7 +60,6 @@ public class PropertyRegistry {
     public static final String CONTEXT_KOTLIN_FORMATTER = "kotlinFormatter"; //$NON-NLS-1$
     public static final String CONTEXT_KOTLIN_FILE_ENCODING = "kotlinFileEncoding"; //$NON-NLS-1$
 
-    public static final String CLIENT_USE_LEGACY_BUILDER = "useLegacyBuilder"; //$NON-NLS-1$
     public static final String CLIENT_DYNAMIC_SQL_SUPPORT_PACKAGE = "dynamicSqlSupportPackage"; //$NON-NLS-1$
 
     public static final String TYPE_RESOLVER_FORCE_BIG_DECIMALS = "forceBigDecimals"; //$NON-NLS-1$

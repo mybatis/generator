@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -123,35 +123,16 @@ public class ProviderApplyWhereMethodGenerator extends
         "" //$NON-NLS-1$
     };
 
-    private static final String[] LEGACY_ENDING_METHOD_LINES = {
-        "if (sb.length() > 0) {", //$NON-NLS-1$
-        "WHERE(sb.toString());", //$NON-NLS-1$
-        "}" //$NON-NLS-1$
-    };
-
     private static final String[] ENDING_METHOD_LINES = {
         "if (sb.length() > 0) {", //$NON-NLS-1$
         "sql.WHERE(sb.toString());", //$NON-NLS-1$
         "}" //$NON-NLS-1$
     };
 
-    public ProviderApplyWhereMethodGenerator(boolean useLegacyBuilder) {
-        super(useLegacyBuilder);
-    }
-
     @Override
     public void addClassElements(TopLevelClass topLevelClass) {
         Set<String> staticImports = new TreeSet<>();
-        Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
-
-        if (useLegacyBuilder) {
-            staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.WHERE"); //$NON-NLS-1$
-        } else {
-            importedTypes.add(NEW_BUILDER_IMPORT);
-        }
-
-        importedTypes.add(new FullyQualifiedJavaType(
-                "java.util.List")); //$NON-NLS-1$
+        Set<FullyQualifiedJavaType> importedTypes = initializeImportedTypes("java.util.List"); //$NON-NLS-1$
 
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getExampleType());
         importedTypes.add(fqjt);
@@ -162,32 +143,22 @@ public class ProviderApplyWhereMethodGenerator extends
 
         Method method = new Method("applyWhere"); //$NON-NLS-1$
         method.setVisibility(JavaVisibility.PROTECTED);
-        if (!useLegacyBuilder) {
-            method.addParameter(new Parameter(NEW_BUILDER_IMPORT, "sql")); //$NON-NLS-1$
-        }
+        method.addParameter(new Parameter(BUILDER_IMPORT, "sql")); //$NON-NLS-1$
         method.addParameter(new Parameter(fqjt, "example")); //$NON-NLS-1$
         method.addParameter(new Parameter(FullyQualifiedJavaType.getBooleanPrimitiveInstance(),
                 "includeExamplePhrase")); //$NON-NLS-1$
 
-        context.getCommentGenerator().addGeneralMethodComment(method,
-                introspectedTable);
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
 
         for (String methodLine : BEGINNING_METHOD_LINES) {
             method.addBodyLine(methodLine);
         }
 
-        if (useLegacyBuilder) {
-            for (String methodLine : LEGACY_ENDING_METHOD_LINES) {
-                method.addBodyLine(methodLine);
-            }
-        } else {
-            for (String methodLine : ENDING_METHOD_LINES) {
-                method.addBodyLine(methodLine);
-            }
+        for (String methodLine : ENDING_METHOD_LINES) {
+            method.addBodyLine(methodLine);
         }
 
-        if (context.getPlugins().providerApplyWhereMethodGenerated(method, topLevelClass,
-                introspectedTable)) {
+        if (context.getPlugins().providerApplyWhereMethodGenerated(method, topLevelClass, introspectedTable)) {
             topLevelClass.addStaticImports(staticImports);
             topLevelClass.addImportedTypes(importedTypes);
             topLevelClass.addMethod(method);

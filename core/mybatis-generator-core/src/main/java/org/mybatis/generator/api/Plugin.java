@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -315,6 +315,7 @@ public interface Plugin {
      * The helper method is only created when a multiple row insert has a generated key.
      * This method is only called in the MyBatis3DynamicSql runtime.
      *
+     * @deprecated this method is no longer called
      * @param method
      *     the generated insert method
      * @param interfaze
@@ -326,11 +327,21 @@ public interface Plugin {
      *         first plugin returning false will disable the calling of further
      *         plugins.
      */
+    @Deprecated
     default boolean clientBasicInsertMultipleHelperMethodGenerated(Method method, Interface interfaze,
             IntrospectedTable introspectedTable) {
         return true;
     }
 
+    /**
+     * @deprecated this method is not longer called
+     *
+     * @param kotlinFunction generated function
+     * @param kotlinFile generated file
+     * @param introspectedTable introspected table
+     * @return true
+     */
+    @Deprecated
     default boolean clientBasicInsertMultipleHelperMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
             IntrospectedTable introspectedTable) {
         return true;

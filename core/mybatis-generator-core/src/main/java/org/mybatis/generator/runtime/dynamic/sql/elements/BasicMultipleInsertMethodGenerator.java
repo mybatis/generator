@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -50,15 +50,11 @@ public class BasicMultipleInsertMethodGenerator extends AbstractMethodGenerator 
     private MethodAndImports generateMethodWithoutGeneratedKeys() {
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
 
-        FullyQualifiedJavaType adapter =
-                new FullyQualifiedJavaType("org.mybatis.dynamic.sql.util.SqlProviderAdapter"); //$NON-NLS-1$
-        FullyQualifiedJavaType annotation =
-                new FullyQualifiedJavaType("org.apache.ibatis.annotations.InsertProvider"); //$NON-NLS-1$
 
         imports.add(new FullyQualifiedJavaType(
                 "org.mybatis.dynamic.sql.insert.render.MultiRowInsertStatementProvider")); //$NON-NLS-1$
-        imports.add(adapter);
-        imports.add(annotation);
+        imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.util.SqlProviderAdapter")); //$NON-NLS-1$);
+        imports.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.InsertProvider")); //$NON-NLS-1$
 
         FullyQualifiedJavaType parameterType =
                 new FullyQualifiedJavaType(
@@ -82,7 +78,8 @@ public class BasicMultipleInsertMethodGenerator extends AbstractMethodGenerator 
     private MethodAndImports generateMethodWithGeneratedKeys(GeneratedKey gk) {
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
 
-        imports.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Insert")); //$NON-NLS-1$
+        imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.util.SqlProviderAdapter")); //$NON-NLS-1$);
+        imports.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.InsertProvider")); //$NON-NLS-1$
         imports.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param")); //$NON-NLS-1$
 
         Parameter parm1 = new Parameter(FullyQualifiedJavaType.getStringInstance(), "insertStatement"); //$NON-NLS-1$
@@ -101,9 +98,8 @@ public class BasicMultipleInsertMethodGenerator extends AbstractMethodGenerator 
         method.addParameter(parm1);
         method.addParameter(parm2);
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
-        method.addAnnotation("@Insert({"); //$NON-NLS-1$
-        method.addAnnotation("    \"${insertStatement}\""); //$NON-NLS-1$
-        method.addAnnotation("})"); //$NON-NLS-1$
+        method.addAnnotation(
+                "@InsertProvider(type=SqlProviderAdapter.class, method=\"insertMultipleWithGeneratedKeys\")"); //$NON-NLS-1$
 
         MethodAndImports.Builder builder = MethodAndImports.withMethod(method)
                 .withImports(imports);

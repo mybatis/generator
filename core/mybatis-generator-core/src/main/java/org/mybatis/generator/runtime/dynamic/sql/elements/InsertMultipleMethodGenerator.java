@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -56,7 +56,14 @@ public class InsertMultipleMethodGenerator extends AbstractMethodGenerator {
 
         method.addParameter(new Parameter(parameterType, "records")); //$NON-NLS-1$
 
-        method.addBodyLine("return MyBatis3Utils.insertMultiple(this::insertMultiple, records, " + //$NON-NLS-1$
+        String methodName;
+        if (Utils.canRetrieveMultiRowGeneratedKeys(introspectedTable)) {
+            methodName = "MyBatis3Utils.insertMultipleWithGeneratedKeys";
+        } else {
+            methodName = "MyBatis3Utils.insertMultiple";
+        }
+
+        method.addBodyLine("return " + methodName + "(this::insertMultiple, records, " + //$NON-NLS-1$ //$NON-NLS-2$
                 tableFieldName + //$NON-NLS-1$
                 ", c ->"); //$NON-NLS-1$
 

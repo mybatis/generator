@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -27,7 +27,6 @@ import org.mybatis.generator.runtime.dynamic.sql.elements.FieldAndImports;
 import org.mybatis.generator.runtime.dynamic.sql.elements.BasicCountMethodGenerator;
 import org.mybatis.generator.runtime.dynamic.sql.elements.BasicDeleteMethodGenerator;
 import org.mybatis.generator.runtime.dynamic.sql.elements.BasicInsertMethodGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.BasicMultipleInsertHelperMethodGenerator;
 import org.mybatis.generator.runtime.dynamic.sql.elements.BasicMultipleInsertMethodGenerator;
 import org.mybatis.generator.runtime.dynamic.sql.elements.BasicSelectManyMethodGenerator;
 import org.mybatis.generator.runtime.dynamic.sql.elements.BasicSelectOneMethodGenerator;
@@ -72,9 +71,6 @@ public class DynamicSqlMapperGenerator extends AbstractDynamicSqlMapperGenerator
         addBasicDeleteMethod(interfaze);
         addBasicInsertMethod(interfaze);
         addBasicInsertMultipleMethod(interfaze);
-        if (introspectedTable.getGeneratedKey() != null) {
-            addBasicInsertMultipleHelperMethod(interfaze);
-        }
 
         boolean reuseResultMap = addBasicSelectManyMethod(interfaze);
         addBasicSelectOneMethod(interfaze, reuseResultMap);
@@ -122,17 +118,6 @@ public class DynamicSqlMapperGenerator extends AbstractDynamicSqlMapperGenerator
 
     protected void addBasicInsertMultipleMethod(Interface interfaze) {
         BasicMultipleInsertMethodGenerator generator = new BasicMultipleInsertMethodGenerator.Builder()
-                .withContext(context)
-                .withIntrospectedTable(introspectedTable)
-                .withTableFieldName(tableFieldName)
-                .withRecordType(recordType)
-                .build();
-
-        generate(interfaze, generator);
-    }
-
-    protected void addBasicInsertMultipleHelperMethod(Interface interfaze) {
-        BasicMultipleInsertHelperMethodGenerator generator = new BasicMultipleInsertHelperMethodGenerator.Builder()
                 .withContext(context)
                 .withIntrospectedTable(introspectedTable)
                 .withTableFieldName(tableFieldName)

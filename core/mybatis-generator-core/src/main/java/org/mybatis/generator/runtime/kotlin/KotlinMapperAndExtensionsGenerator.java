@@ -28,7 +28,6 @@ import org.mybatis.generator.runtime.kotlin.elements.AbstractKotlinFunctionGener
 import org.mybatis.generator.runtime.kotlin.elements.BasicCountMethodGenerator;
 import org.mybatis.generator.runtime.kotlin.elements.BasicDeleteMethodGenerator;
 import org.mybatis.generator.runtime.kotlin.elements.BasicInsertMethodGenerator;
-import org.mybatis.generator.runtime.kotlin.elements.BasicMultipleInsertHelperMethodGenerator;
 import org.mybatis.generator.runtime.kotlin.elements.BasicMultipleInsertMethodGenerator;
 import org.mybatis.generator.runtime.kotlin.elements.BasicSelectManyMethodGenerator;
 import org.mybatis.generator.runtime.kotlin.elements.BasicSelectOneMethodGenerator;
@@ -213,7 +212,6 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
         addCountByExampleMethod(extensionsFile, mapperName);
         addDeleteByExampleMethod(extensionsFile, mapperName);
         addDeleteByPrimaryKeyMethod(extensionsFile, mapperName);
-        addBasicInsertMultipleHelperMethod(extensionsFile, mapperName);
         addInsertOneMethod(extensionsFile, mapperName);
         addInsertMultipleMethod(extensionsFile, mapperName);
         addInsertMultipleVarargMethod(extensionsFile, mapperName);
@@ -269,18 +267,6 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .build();
 
         generate(kotlinFile, kotlinType, generator);
-    }
-
-    protected void addBasicInsertMultipleHelperMethod(KotlinFile kotlinFile, String mapperName) {
-        BasicMultipleInsertHelperMethodGenerator generator = new BasicMultipleInsertHelperMethodGenerator.Builder()
-                .withContext(context)
-                .withIntrospectedTable(introspectedTable)
-                .withTableFieldName(supportClassGenerator.getTablePropertyName())
-                .withRecordType(recordType)
-                .withMapperName(mapperName)
-                .build();
-
-        generate(kotlinFile, generator);
     }
 
     protected void addInsertMultipleMethod(KotlinFile kotlinFile, String mapperName) {

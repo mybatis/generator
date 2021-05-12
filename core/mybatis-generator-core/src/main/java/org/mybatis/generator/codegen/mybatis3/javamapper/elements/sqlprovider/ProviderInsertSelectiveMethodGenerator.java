@@ -33,27 +33,11 @@ import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 
 public class ProviderInsertSelectiveMethodGenerator extends AbstractJavaProviderMethodGenerator {
 
-    public ProviderInsertSelectiveMethodGenerator(boolean useLegacyBuilder) {
-        super(useLegacyBuilder);
-    }
-
     @Override
     public void addClassElements(TopLevelClass topLevelClass) {
         Set<String> staticImports = new TreeSet<>();
-        Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
-
-        if (useLegacyBuilder) {
-            staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.BEGIN"); //$NON-NLS-1$
-            staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.INSERT_INTO"); //$NON-NLS-1$
-            staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.SQL"); //$NON-NLS-1$
-            staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.VALUES"); //$NON-NLS-1$
-        } else {
-            importedTypes.add(NEW_BUILDER_IMPORT);
-        }
-
-        FullyQualifiedJavaType fqjt = introspectedTable.getRules()
-                .calculateAllFieldsClass();
-        importedTypes.add(fqjt);
+        FullyQualifiedJavaType fqjt = introspectedTable.getRules().calculateAllFieldsClass();
+        Set<FullyQualifiedJavaType> importedTypes = initializeImportedTypes(fqjt);
 
         Method method = new Method(
                 introspectedTable.getInsertSelectiveStatementId());
@@ -64,14 +48,9 @@ public class ProviderInsertSelectiveMethodGenerator extends AbstractJavaProvider
         context.getCommentGenerator().addGeneralMethodComment(method,
                 introspectedTable);
 
-        if (useLegacyBuilder) {
-            method.addBodyLine("BEGIN();"); //$NON-NLS-1$
-        } else {
-            method.addBodyLine("SQL sql = new SQL();"); //$NON-NLS-1$
-        }
+        method.addBodyLine("SQL sql = new SQL();"); //$NON-NLS-1$
 
-        method.addBodyLine(String.format("%sINSERT_INTO(\"%s\");", //$NON-NLS-1$
-                builderPrefix,
+        method.addBodyLine(String.format("sql.INSERT_INTO(\"%s\");", //$NON-NLS-1$
                 escapeStringForJava(introspectedTable.getFullyQualifiedTableNameAtRuntime())));
 
         for (IntrospectedColumn introspectedColumn :
@@ -84,8 +63,7 @@ public class ProviderInsertSelectiveMethodGenerator extends AbstractJavaProvider
                         getGetterMethodName(introspectedColumn.getJavaProperty(),
                                 introspectedColumn.getFullyQualifiedJavaType())));
             }
-            method.addBodyLine(String.format("%sVALUES(\"%s\", \"%s\");", //$NON-NLS-1$
-                    builderPrefix,
+            method.addBodyLine(String.format("sql.VALUES(\"%s\", \"%s\");", //$NON-NLS-1$
                     escapeStringForJava(getEscapedColumnName(introspectedColumn)),
                     getParameterClause(introspectedColumn)));
 
@@ -96,11 +74,7 @@ public class ProviderInsertSelectiveMethodGenerator extends AbstractJavaProvider
         }
 
         method.addBodyLine(""); //$NON-NLS-1$
-        if (useLegacyBuilder) {
-            method.addBodyLine("return SQL();"); //$NON-NLS-1$
-        } else {
-            method.addBodyLine("return sql.toString();"); //$NON-NLS-1$
-        }
+        method.addBodyLine("return sql.toString();"); //$NON-NLS-1$
 
         if (context.getPlugins().providerInsertSelectiveMethodGenerated(method, topLevelClass,
                 introspectedTable)) {

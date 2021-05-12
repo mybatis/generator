@@ -34,25 +34,10 @@ import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 public class ProviderUpdateByExampleWithoutBLOBsMethodGenerator extends
         AbstractJavaProviderMethodGenerator {
 
-    public ProviderUpdateByExampleWithoutBLOBsMethodGenerator(boolean useLegacyBuilder) {
-        super(useLegacyBuilder);
-    }
-
     @Override
     public void addClassElements(TopLevelClass topLevelClass) {
         Set<String> staticImports = new TreeSet<>();
-        Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
-
-        if (useLegacyBuilder) {
-            staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.BEGIN"); //$NON-NLS-1$
-            staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.UPDATE"); //$NON-NLS-1$
-            staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.SET"); //$NON-NLS-1$
-            staticImports.add("org.apache.ibatis.jdbc.SqlBuilder.SQL"); //$NON-NLS-1$
-        } else {
-            importedTypes.add(NEW_BUILDER_IMPORT);
-        }
-
-        importedTypes.add(new FullyQualifiedJavaType("java.util.Map")); //$NON-NLS-1$
+        Set<FullyQualifiedJavaType> importedTypes = initializeImportedTypes("java.util.Map"); //$NON-NLS-1$
 
         Method method = new Method(getMethodName());
         method.setReturnType(FullyQualifiedJavaType.getStringInstance());
@@ -64,14 +49,9 @@ public class ProviderUpdateByExampleWithoutBLOBsMethodGenerator extends
         context.getCommentGenerator().addGeneralMethodComment(method,
                 introspectedTable);
 
-        if (useLegacyBuilder) {
-            method.addBodyLine("BEGIN();"); //$NON-NLS-1$
-        } else {
-            method.addBodyLine("SQL sql = new SQL();"); //$NON-NLS-1$
-        }
+        method.addBodyLine("SQL sql = new SQL();"); //$NON-NLS-1$
 
-        method.addBodyLine(String.format("%sUPDATE(\"%s\");", //$NON-NLS-1$
-                builderPrefix,
+        method.addBodyLine(String.format("sql.UPDATE(\"%s\");", //$NON-NLS-1$
                 escapeStringForJava(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime())));
         method.addBodyLine(""); //$NON-NLS-1$
 
@@ -80,10 +60,9 @@ public class ProviderUpdateByExampleWithoutBLOBsMethodGenerator extends
             sb.append(getParameterClause(introspectedColumn));
             sb.insert(2, "row."); //$NON-NLS-1$
 
-            method.addBodyLine(String.format("%sSET(\"%s = %s\");", //$NON-NLS-1$
-                    builderPrefix,
+            method.addBodyLine(String.format("sql.SET(\"%s = %s\");", //$NON-NLS-1$
                     escapeStringForJava(getAliasedEscapedColumnName(introspectedColumn)),
-                    sb.toString()));
+                    sb));
         }
 
         method.addBodyLine(""); //$NON-NLS-1$
@@ -94,13 +73,8 @@ public class ProviderUpdateByExampleWithoutBLOBsMethodGenerator extends
         method.addBodyLine(String.format("%s example = (%s) parameter.get(\"example\");", //$NON-NLS-1$
                 example.getShortName(), example.getShortName()));
 
-        if (useLegacyBuilder) {
-            method.addBodyLine("applyWhere(example, true);"); //$NON-NLS-1$
-            method.addBodyLine("return SQL();"); //$NON-NLS-1$
-        } else {
-            method.addBodyLine("applyWhere(sql, example, true);"); //$NON-NLS-1$
-            method.addBodyLine("return sql.toString();"); //$NON-NLS-1$
-        }
+        method.addBodyLine("applyWhere(sql, example, true);"); //$NON-NLS-1$
+        method.addBodyLine("return sql.toString();"); //$NON-NLS-1$
 
         if (callPlugins(method, topLevelClass)) {
             topLevelClass.addStaticImports(staticImports);

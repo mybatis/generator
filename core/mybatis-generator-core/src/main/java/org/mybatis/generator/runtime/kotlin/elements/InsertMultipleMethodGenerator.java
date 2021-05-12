@@ -45,8 +45,15 @@ public class InsertMultipleMethodGenerator extends AbstractKotlinFunctionGenerat
 
         // Kotlin type inference gets lost if we don't name the helper method something different from the
         // regular mapper method
-        String mapperMethod = Utils.generateMultipleRowInsertHelper(introspectedTable)
-                ? "insertMultipleHelper" : "insertMultiple"; //$NON-NLS-1$ //$NON-NLS-2$
+        String importedFunction;
+        String importedFunctionShortName;
+        if (Utils.canRetrieveMultiRowGeneratedKeys(introspectedTable)) {
+            importedFunction = "org.mybatis.dynamic.sql.util.kotlin.mybatis3.insertMultipleWithGeneratedKeys"; //$NON-NLS-1$
+            importedFunctionShortName = "insertMultipleWithGeneratedKeys"; //$NON-NLS-1$
+        } else {
+            importedFunction = "org.mybatis.dynamic.sql.util.kotlin.mybatis3.insertMultiple"; //$NON-NLS-1$
+            importedFunctionShortName = "insertMultiple"; //$NON-NLS-1$
+        }
 
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
                 KotlinFunction.newOneLineFunction(mapperName + ".insertMultiple") //$NON-NLS-1$
@@ -56,7 +63,7 @@ public class InsertMultipleMethodGenerator extends AbstractKotlinFunctionGenerat
                                 + ">") //$NON-NLS-1$
                         .build())
                 .build())
-                .withImport("org.mybatis.dynamic.sql.util.kotlin.mybatis3.insertMultiple") //$NON-NLS-1$
+                .withImport(importedFunction)
                 .withImports(recordType.getImportList())
                 .build();
 
@@ -64,7 +71,7 @@ public class InsertMultipleMethodGenerator extends AbstractKotlinFunctionGenerat
 
         KotlinFunction function = functionAndImports.getFunction();
 
-        function.addCodeLine("insertMultiple(this::" + mapperMethod //$NON-NLS-1$
+        function.addCodeLine(importedFunctionShortName + "(this::insertMultiple" //$NON-NLS-1$
                 + ", records, " + tableFieldName //$NON-NLS-1$
                 + ") {"); //$NON-NLS-1$
 

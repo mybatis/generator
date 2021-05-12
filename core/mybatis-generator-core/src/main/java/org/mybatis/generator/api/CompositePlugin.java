@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -221,30 +221,6 @@ public abstract class CompositePlugin implements Plugin {
             IntrospectedTable introspectedTable) {
         for (Plugin plugin : plugins) {
             if (!plugin.clientBasicInsertMultipleMethodGenerated(kotlinFunction, kotlinFile, introspectedTable)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    @Override
-    public boolean clientBasicInsertMultipleHelperMethodGenerated(Method method, Interface interfaze,
-            IntrospectedTable introspectedTable) {
-        for (Plugin plugin : plugins) {
-            if (!plugin.clientBasicInsertMultipleHelperMethodGenerated(method, interfaze, introspectedTable)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    @Override
-    public boolean clientBasicInsertMultipleHelperMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-            IntrospectedTable introspectedTable) {
-        for (Plugin plugin : plugins) {
-            if (!plugin.clientBasicInsertMultipleHelperMethodGenerated(kotlinFunction, kotlinFile, introspectedTable)) {
                 return false;
             }
         }

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -32,9 +32,9 @@ public class Utils {
         return gk == null || gk.isJdbcStandard();
     }
 
-    public static boolean generateMultipleRowInsertHelper(IntrospectedTable introspectedTable) {
-        // if the generated keys are JDBC standard, then we need a helper method
-        // if no generated keys, or not JDBC, then we can't retrieve them anyway
+    public static boolean canRetrieveMultiRowGeneratedKeys(IntrospectedTable introspectedTable) {
+        // if the generated keys are JDBC standard, then we can retrieve them
+        // if no generated keys, or not JDBC, then we cannot retrieve them
         GeneratedKey gk = introspectedTable.getGeneratedKey();
         return gk != null && gk.isJdbcStandard();
     }

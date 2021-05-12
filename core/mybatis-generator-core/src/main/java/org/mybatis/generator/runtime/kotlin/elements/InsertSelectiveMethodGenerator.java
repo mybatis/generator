@@ -40,7 +40,7 @@ public class InsertSelectiveMethodGenerator extends AbstractKotlinFunctionGenera
     public KotlinFunctionAndImports generateMethodAndImports() {
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
                 KotlinFunction.newOneLineFunction(mapperName + ".insertSelective") //$NON-NLS-1$
-                .withArgument(KotlinArg.newArg("record") //$NON-NLS-1$
+                .withArgument(KotlinArg.newArg("row") //$NON-NLS-1$
                         .withDataType(recordType.getShortNameWithTypeArguments())
                         .build())
                 .build())
@@ -52,7 +52,7 @@ public class InsertSelectiveMethodGenerator extends AbstractKotlinFunctionGenera
 
         KotlinFunction function = functionAndImports.getFunction();
 
-        function.addCodeLine("insert(this::insert, record, " + tableFieldName + //$NON-NLS-1$
+        function.addCodeLine("insert(this::insert, row, " + tableFieldName + //$NON-NLS-1$
                 ") {"); //$NON-NLS-1$
 
         List<IntrospectedColumn> columns =
@@ -70,7 +70,7 @@ public class InsertSelectiveMethodGenerator extends AbstractKotlinFunctionGenera
             } else {
                 function.addCodeLine("    map(" + fieldNameAndImport.fieldName() //$NON-NLS-1$
                         + ").toPropertyWhenPresent(\"" + column.getJavaProperty() //$NON-NLS-1$
-                        + "\", record::" //$NON-NLS-1$
+                        + "\", row::" //$NON-NLS-1$
                         + column.getJavaProperty() + ")"); //$NON-NLS-1$
             }
         }

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -52,7 +52,7 @@ public class UpdateByExampleSelectiveElementGenerator extends
         for (IntrospectedColumn introspectedColumn :
                 ListUtilities.removeGeneratedAlwaysColumns(introspectedTable.getAllColumns())) {
             sb.setLength(0);
-            sb.append(introspectedColumn.getJavaProperty("record.")); //$NON-NLS-1$
+            sb.append(introspectedColumn.getJavaProperty("row.")); //$NON-NLS-1$
             sb.append(" != null"); //$NON-NLS-1$
             XmlElement isNotNullElement = new XmlElement("if"); //$NON-NLS-1$
             isNotNullElement.addAttribute(new Attribute("test", sb.toString())); //$NON-NLS-1$
@@ -63,7 +63,7 @@ public class UpdateByExampleSelectiveElementGenerator extends
                     .getAliasedEscapedColumnName(introspectedColumn));
             sb.append(" = "); //$NON-NLS-1$
             sb.append(MyBatis3FormattingUtilities.getParameterClause(
-                    introspectedColumn, "record.")); //$NON-NLS-1$
+                    introspectedColumn, "row.")); //$NON-NLS-1$
             sb.append(',');
 
             isNotNullElement.addElement(new TextElement(sb.toString()));

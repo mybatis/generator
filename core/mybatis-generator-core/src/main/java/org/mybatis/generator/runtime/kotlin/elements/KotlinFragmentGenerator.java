@@ -92,12 +92,12 @@ public class KotlinFragmentGenerator {
             builder.withImport(fieldNameAndImport.importString());
             if (first) {
                 builder.withCodeLine("    where(" + fieldNameAndImport.fieldName() //$NON-NLS-1$
-                        + ", isEqualTo(record." + column.getJavaProperty() //$NON-NLS-1$
+                        + ", isEqualTo(row." + column.getJavaProperty() //$NON-NLS-1$
                         + "!!))"); //$NON-NLS-1$
                 first = false;
             } else {
                 builder.withCodeLine("    and(" + fieldNameAndImport.fieldName() //$NON-NLS-1$
-                        + ", isEqualTo(record." + column.getJavaProperty() //$NON-NLS-1$
+                        + ", isEqualTo(row." + column.getJavaProperty() //$NON-NLS-1$
                         + "!!))"); //$NON-NLS-1$
             }
         }
@@ -187,7 +187,7 @@ public class KotlinFragmentGenerator {
         introspectedTable.getColumn(gk.getColumn()).ifPresent(introspectedColumn -> {
             if (gk.isJdbcStandard()) {
                 builder.withImport("org.apache.ibatis.annotations.Options"); //$NON-NLS-1$
-                sb.append("@Options(useGeneratedKeys=true,keyProperty=\"record."); //$NON-NLS-1$
+                sb.append("@Options(useGeneratedKeys=true,keyProperty=\"row."); //$NON-NLS-1$
                 sb.append(introspectedColumn.getJavaProperty());
                 sb.append("\")"); //$NON-NLS-1$
                 builder.withAnnotation(sb.toString());
@@ -198,7 +198,7 @@ public class KotlinFragmentGenerator {
 
                 sb.append("@SelectKey(statement=[\""); //$NON-NLS-1$
                 sb.append(gk.getRuntimeSqlStatement());
-                sb.append("\"], keyProperty=\"record."); //$NON-NLS-1$
+                sb.append("\"], keyProperty=\"row."); //$NON-NLS-1$
                 sb.append(introspectedColumn.getJavaProperty());
                 sb.append("\", before="); //$NON-NLS-1$
                 sb.append(gk.isIdentity() ? "false" : "true"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -224,7 +224,7 @@ public class KotlinFragmentGenerator {
             builder.withImport(fieldNameAndImport.importString());
 
             builder.withCodeLine("    set(" + fieldNameAndImport.fieldName() //$NON-NLS-1$
-                    + ").equalToOrNull(record::" + column.getJavaProperty() //$NON-NLS-1$
+                    + ").equalToOrNull(row::" + column.getJavaProperty() //$NON-NLS-1$
                     + ")"); //$NON-NLS-1$
         }
 
@@ -243,7 +243,7 @@ public class KotlinFragmentGenerator {
             builder.withImport(fieldNameAndImport.importString());
 
             builder.withCodeLine("    set(" + fieldNameAndImport.fieldName() //$NON-NLS-1$
-                    + ").equalToWhenPresent(record::" + column.getJavaProperty() //$NON-NLS-1$
+                    + ").equalToWhenPresent(row::" + column.getJavaProperty() //$NON-NLS-1$
                     + ")"); //$NON-NLS-1$
         }
 

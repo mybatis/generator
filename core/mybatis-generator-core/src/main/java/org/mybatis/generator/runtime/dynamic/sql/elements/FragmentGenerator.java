@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -86,12 +86,12 @@ public class FragmentGenerator {
                     column.getJavaProperty(), column.getFullyQualifiedJavaType());
             if (first) {
                 lines.add(prefix + ".where(" + fieldName //$NON-NLS-1$
-                        + ", isEqualTo(record::" + methodName //$NON-NLS-1$
+                        + ", isEqualTo(row::" + methodName //$NON-NLS-1$
                         + "))"); //$NON-NLS-1$
                 first = false;
             } else {
                 lines.add(prefix + ".and(" + fieldName //$NON-NLS-1$
-                        + ", isEqualTo(record::" + methodName //$NON-NLS-1$
+                        + ", isEqualTo(row::" + methodName //$NON-NLS-1$
                         + "))"); //$NON-NLS-1$
             }
         }
@@ -244,7 +244,7 @@ public class FragmentGenerator {
         introspectedTable.getColumn(gk.getColumn()).ifPresent(introspectedColumn -> {
             if (gk.isJdbcStandard()) {
                 builder.withImport(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Options")); //$NON-NLS-1$
-                sb.append("@Options(useGeneratedKeys=true,keyProperty=\"record."); //$NON-NLS-1$
+                sb.append("@Options(useGeneratedKeys=true,keyProperty=\"row."); //$NON-NLS-1$
                 sb.append(introspectedColumn.getJavaProperty());
                 sb.append("\")"); //$NON-NLS-1$
             } else {
@@ -252,7 +252,7 @@ public class FragmentGenerator {
                 FullyQualifiedJavaType fqjt = introspectedColumn.getFullyQualifiedJavaType();
                 sb.append("@SelectKey(statement=\""); //$NON-NLS-1$
                 sb.append(gk.getRuntimeSqlStatement());
-                sb.append("\", keyProperty=\"record."); //$NON-NLS-1$
+                sb.append("\", keyProperty=\"row."); //$NON-NLS-1$
                 sb.append(introspectedColumn.getJavaProperty());
                 sb.append("\", before="); //$NON-NLS-1$
                 sb.append(gk.isIdentity() ? "false" : "true"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -303,7 +303,7 @@ public class FragmentGenerator {
                     + fieldName
                     + ")." //$NON-NLS-1$
                     + fragment
-                    + "(record::" //$NON-NLS-1$
+                    + "(row::" //$NON-NLS-1$
                     + methodName
                     + ")"; //$NON-NLS-1$
 

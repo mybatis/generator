@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,8 +21,10 @@ import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 
 import java.util.Iterator;
+import java.util.List;
 
 import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
@@ -37,7 +39,11 @@ public class AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator extends UpdateB
 
     @Override
     public void addMapperAnnotations(Method method) {
+        addMapperAnnotations(introspectedTable, method, introspectedTable.getNonPrimaryKeyColumns());
+    }
 
+    protected static void addMapperAnnotations(IntrospectedTable introspectedTable, Method method,
+                                               List<IntrospectedColumn> columnList) {
         method.addAnnotation("@Update({"); //$NON-NLS-1$
 
         StringBuilder sb = new StringBuilder();
@@ -52,9 +58,7 @@ public class AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator extends UpdateB
         javaIndent(sb, 1);
         sb.append("\"set "); //$NON-NLS-1$
 
-        Iterator<IntrospectedColumn> iter =
-                ListUtilities.removeGeneratedAlwaysColumns(introspectedTable.getNonPrimaryKeyColumns())
-                .iterator();
+        Iterator<IntrospectedColumn> iter = ListUtilities.removeGeneratedAlwaysColumns(columnList).iterator();
         while (iter.hasNext()) {
             IntrospectedColumn introspectedColumn = iter.next();
 

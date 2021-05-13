@@ -18,7 +18,6 @@ package org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider;
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 
 import java.util.Set;
-import java.util.TreeSet;
 
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
@@ -30,7 +29,6 @@ public class ProviderDeleteByExampleMethodGenerator extends AbstractJavaProvider
 
     @Override
     public void addClassElements(TopLevelClass topLevelClass) {
-        Set<String> staticImports = new TreeSet<>();
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getExampleType());
         Set<FullyQualifiedJavaType> importedTypes = initializeImportedTypes(fqjt);
 
@@ -51,7 +49,6 @@ public class ProviderDeleteByExampleMethodGenerator extends AbstractJavaProvider
 
         if (context.getPlugins().providerDeleteByExampleMethodGenerated(method, topLevelClass,
                 introspectedTable)) {
-            topLevelClass.addStaticImports(staticImports);
             topLevelClass.addImportedTypes(importedTypes);
             topLevelClass.addMethod(method);
         }

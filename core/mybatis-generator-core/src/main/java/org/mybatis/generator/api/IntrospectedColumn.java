@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -132,19 +132,18 @@ public class IntrospectedColumn {
      */
     @Override
     public String toString() {
-
-        return "Actual Column Name: " + //$NON-NLS-1$
-                actualColumnName +
-                ", JDBC Type: " + //$NON-NLS-1$
-                jdbcType +
-                ", Nullable: " + //$NON-NLS-1$
-                nullable +
-                ", Length: " + //$NON-NLS-1$
-                length +
-                ", Scale: " + //$NON-NLS-1$
-                scale +
-                ", Identity: " + //$NON-NLS-1$
-                identity;
+        return "Actual Column Name: " //$NON-NLS-1$
+                + actualColumnName
+                + ", JDBC Type: " //$NON-NLS-1$
+                + jdbcType
+                + ", Nullable: " //$NON-NLS-1$
+                + nullable
+                + ", Length: " //$NON-NLS-1$
+                + length
+                + ", Scale: " //$NON-NLS-1$
+                + scale
+                + ", Identity: " //$NON-NLS-1$
+                + identity;
     }
 
     public void setActualColumnName(String actualColumnName) {

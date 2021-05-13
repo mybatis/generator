@@ -45,14 +45,15 @@ public class InsertMultipleMethodGenerator extends AbstractKotlinFunctionGenerat
 
         // Kotlin type inference gets lost if we don't name the helper method something different from the
         // regular mapper method
-        String importedFunction;
-        String importedFunctionShortName;
+        String functionImport;
+        String functionShortName;
         if (Utils.canRetrieveMultiRowGeneratedKeys(introspectedTable)) {
-            importedFunction = "org.mybatis.dynamic.sql.util.kotlin.mybatis3.insertMultipleWithGeneratedKeys"; //$NON-NLS-1$
-            importedFunctionShortName = "insertMultipleWithGeneratedKeys"; //$NON-NLS-1$
+            functionImport =
+                    "org.mybatis.dynamic.sql.util.kotlin.mybatis3.insertMultipleWithGeneratedKeys"; //$NON-NLS-1$
+            functionShortName = "insertMultipleWithGeneratedKeys"; //$NON-NLS-1$
         } else {
-            importedFunction = "org.mybatis.dynamic.sql.util.kotlin.mybatis3.insertMultiple"; //$NON-NLS-1$
-            importedFunctionShortName = "insertMultiple"; //$NON-NLS-1$
+            functionImport = "org.mybatis.dynamic.sql.util.kotlin.mybatis3.insertMultiple"; //$NON-NLS-1$
+            functionShortName = "insertMultiple"; //$NON-NLS-1$
         }
 
         KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
@@ -63,7 +64,7 @@ public class InsertMultipleMethodGenerator extends AbstractKotlinFunctionGenerat
                                 + ">") //$NON-NLS-1$
                         .build())
                 .build())
-                .withImport(importedFunction)
+                .withImport(functionImport)
                 .withImports(recordType.getImportList())
                 .build();
 
@@ -71,7 +72,7 @@ public class InsertMultipleMethodGenerator extends AbstractKotlinFunctionGenerat
 
         KotlinFunction function = functionAndImports.getFunction();
 
-        function.addCodeLine(importedFunctionShortName + "(this::insertMultiple" //$NON-NLS-1$
+        function.addCodeLine(functionShortName + "(this::insertMultiple" //$NON-NLS-1$
                 + ", records, " + tableFieldName //$NON-NLS-1$
                 + ") {"); //$NON-NLS-1$
 

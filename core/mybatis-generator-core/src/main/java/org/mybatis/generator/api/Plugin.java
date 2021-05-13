@@ -334,6 +334,8 @@ public interface Plugin {
     }
 
     /**
+     * Unused legacy method.
+     *
      * @deprecated this method is not longer called
      *
      * @param kotlinFunction generated function

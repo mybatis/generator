@@ -21,7 +21,6 @@ import static org.mybatis.generator.internal.util.JavaBeansUtil.getGetterMethodN
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 
 import java.util.Set;
-import java.util.TreeSet;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
@@ -35,15 +34,14 @@ public class ProviderUpdateByExampleSelectiveMethodGenerator extends AbstractJav
 
     @Override
     public void addClassElements(TopLevelClass topLevelClass) {
-        Set<String> staticImports = new TreeSet<>();
-        Set<FullyQualifiedJavaType> importedTypes = initializeImportedTypes("java.util.Map"); //$NON-NLS-1$
-
         Method method = new Method(introspectedTable.getUpdateByExampleSelectiveStatementId());
         method.setReturnType(FullyQualifiedJavaType.getStringInstance());
         method.setVisibility(JavaVisibility.PUBLIC);
         method.addParameter(new Parameter(
                 new FullyQualifiedJavaType("java.util.Map<java.lang.String, java.lang.Object>"), //$NON-NLS-1$
                 "parameter")); //$NON-NLS-1$
+
+        Set<FullyQualifiedJavaType> importedTypes = initializeImportedTypes("java.util.Map"); //$NON-NLS-1$
 
         FullyQualifiedJavaType recordClass =
                 introspectedTable.getRules().calculateAllFieldsClass();
@@ -96,7 +94,6 @@ public class ProviderUpdateByExampleSelectiveMethodGenerator extends AbstractJav
 
         if (context.getPlugins().providerUpdateByExampleSelectiveMethodGenerated(method, topLevelClass,
                 introspectedTable)) {
-            topLevelClass.addStaticImports(staticImports);
             topLevelClass.addImportedTypes(importedTypes);
             topLevelClass.addMethod(method);
         }

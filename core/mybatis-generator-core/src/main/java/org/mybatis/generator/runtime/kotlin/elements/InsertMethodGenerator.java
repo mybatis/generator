@@ -52,8 +52,8 @@ public class InsertMethodGenerator extends AbstractKotlinFunctionGenerator {
 
         KotlinFunction function = functionAndImports.getFunction();
 
-        function.addCodeLine("insert(this::insert, row, " + tableFieldName + //$NON-NLS-1$
-                ") {"); //$NON-NLS-1$
+        function.addCodeLine("insert(this::insert, row, " + tableFieldName //$NON-NLS-1$
+                + ") {"); //$NON-NLS-1$
 
         List<IntrospectedColumn> columns =
                 ListUtilities.removeIdentityAndGeneratedAlwaysColumns(introspectedTable.getAllColumns());

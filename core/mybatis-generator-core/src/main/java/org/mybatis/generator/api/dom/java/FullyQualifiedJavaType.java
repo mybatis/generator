@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -141,9 +141,7 @@ public class FullyQualifiedJavaType implements
             } else {
                 // an inner class is specified, only import the top
                 // level class
-                String sb = packageName +
-                        '.' +
-                        calculateActualImport(baseShortName.substring(0, index));
+                String sb = packageName + '.' + calculateActualImport(baseShortName.substring(0, index));
                 answer.add(sb);
             }
         }
@@ -387,42 +385,42 @@ public class FullyQualifiedJavaType implements
             packageName = ""; //$NON-NLS-1$
 
             switch (baseQualifiedName) {
-                case "byte":  //$NON-NLS-1$
-                    primitive = true;
-                    primitiveTypeWrapper = PrimitiveTypeWrapper.getByteInstance();
-                    break;
-                case "short":  //$NON-NLS-1$
-                    primitive = true;
-                    primitiveTypeWrapper = PrimitiveTypeWrapper.getShortInstance();
-                    break;
-                case "int":  //$NON-NLS-1$
-                    primitive = true;
-                    primitiveTypeWrapper = PrimitiveTypeWrapper.getIntegerInstance();
-                    break;
-                case "long":  //$NON-NLS-1$
-                    primitive = true;
-                    primitiveTypeWrapper = PrimitiveTypeWrapper.getLongInstance();
-                    break;
-                case "char":  //$NON-NLS-1$
-                    primitive = true;
-                    primitiveTypeWrapper = PrimitiveTypeWrapper.getCharacterInstance();
-                    break;
-                case "float":  //$NON-NLS-1$
-                    primitive = true;
-                    primitiveTypeWrapper = PrimitiveTypeWrapper.getFloatInstance();
-                    break;
-                case "double":  //$NON-NLS-1$
-                    primitive = true;
-                    primitiveTypeWrapper = PrimitiveTypeWrapper.getDoubleInstance();
-                    break;
-                case "boolean":  //$NON-NLS-1$
-                    primitive = true;
-                    primitiveTypeWrapper = PrimitiveTypeWrapper.getBooleanInstance();
-                    break;
-                default:
-                    primitive = false;
-                    primitiveTypeWrapper = null;
-                    break;
+            case "byte":  //$NON-NLS-1$
+                primitive = true;
+                primitiveTypeWrapper = PrimitiveTypeWrapper.getByteInstance();
+                break;
+            case "short":  //$NON-NLS-1$
+                primitive = true;
+                primitiveTypeWrapper = PrimitiveTypeWrapper.getShortInstance();
+                break;
+            case "int":  //$NON-NLS-1$
+                primitive = true;
+                primitiveTypeWrapper = PrimitiveTypeWrapper.getIntegerInstance();
+                break;
+            case "long":  //$NON-NLS-1$
+                primitive = true;
+                primitiveTypeWrapper = PrimitiveTypeWrapper.getLongInstance();
+                break;
+            case "char":  //$NON-NLS-1$
+                primitive = true;
+                primitiveTypeWrapper = PrimitiveTypeWrapper.getCharacterInstance();
+                break;
+            case "float":  //$NON-NLS-1$
+                primitive = true;
+                primitiveTypeWrapper = PrimitiveTypeWrapper.getFloatInstance();
+                break;
+            case "double":  //$NON-NLS-1$
+                primitive = true;
+                primitiveTypeWrapper = PrimitiveTypeWrapper.getDoubleInstance();
+                break;
+            case "boolean":  //$NON-NLS-1$
+                primitive = true;
+                primitiveTypeWrapper = PrimitiveTypeWrapper.getBooleanInstance();
+                break;
+            default:
+                primitive = false;
+                primitiveTypeWrapper = null;
+                break;
             }
         }
     }

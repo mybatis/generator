@@ -98,8 +98,8 @@ public class BasicMultipleInsertMethodGenerator extends AbstractMethodGenerator 
         method.addParameter(parm1);
         method.addParameter(parm2);
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
-        method.addAnnotation(
-                "@InsertProvider(type=SqlProviderAdapter.class, method=\"insertMultipleWithGeneratedKeys\")"); //$NON-NLS-1$
+        method.addAnnotation("@InsertProvider(type=SqlProviderAdapter.class, " //$NON-NLS-1$
+                + "method=\"insertMultipleWithGeneratedKeys\")"); //$NON-NLS-1$
 
         MethodAndImports.Builder builder = MethodAndImports.withMethod(method)
                 .withImports(imports);

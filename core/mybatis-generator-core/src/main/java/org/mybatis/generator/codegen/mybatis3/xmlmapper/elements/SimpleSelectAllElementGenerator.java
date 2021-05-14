@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -45,25 +45,7 @@ public class SimpleSelectAllElementGenerator extends
 
         StringBuilder sb = new StringBuilder();
         sb.append("select "); //$NON-NLS-1$
-        Iterator<IntrospectedColumn> iter = introspectedTable.getAllColumns()
-                .iterator();
-        while (iter.hasNext()) {
-            sb.append(MyBatis3FormattingUtilities.getSelectListPhrase(iter
-                    .next()));
-
-            if (iter.hasNext()) {
-                sb.append(", "); //$NON-NLS-1$
-            }
-
-            if (sb.length() > 80) {
-                answer.addElement(new TextElement(sb.toString()));
-                sb.setLength(0);
-            }
-        }
-
-        if (sb.length() > 0) {
-            answer.addElement(new TextElement(sb.toString()));
-        }
+        buildSelectList(sb, introspectedTable.getAllColumns(), answer);
 
         sb.setLength(0);
         sb.append("from "); //$NON-NLS-1$

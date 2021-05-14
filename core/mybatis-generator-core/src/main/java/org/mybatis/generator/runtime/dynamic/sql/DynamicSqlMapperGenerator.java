@@ -20,6 +20,7 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
@@ -31,13 +32,10 @@ import org.mybatis.generator.codegen.AbstractXmlGenerator;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
 import org.mybatis.generator.runtime.dynamic.sql.elements.AbstractMethodGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.BasicCountMethodGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.BasicDeleteMethodGenerator;
 import org.mybatis.generator.runtime.dynamic.sql.elements.BasicInsertMethodGenerator;
 import org.mybatis.generator.runtime.dynamic.sql.elements.BasicMultipleInsertMethodGenerator;
 import org.mybatis.generator.runtime.dynamic.sql.elements.BasicSelectManyMethodGenerator;
 import org.mybatis.generator.runtime.dynamic.sql.elements.BasicSelectOneMethodGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.BasicUpdateMethodGenerator;
 import org.mybatis.generator.runtime.dynamic.sql.elements.DeleteByPrimaryKeyMethodGenerator;
 import org.mybatis.generator.runtime.dynamic.sql.elements.FieldAndImports;
 import org.mybatis.generator.runtime.dynamic.sql.elements.FragmentGenerator;
@@ -71,6 +69,8 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
 
     protected FragmentGenerator fragmentGenerator;
 
+    protected boolean hasGeneratedKeys;
+
     public DynamicSqlMapperGenerator(String project) {
         super(project, false);
     }
@@ -88,18 +88,16 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
                 supportClass.getType().getFullyQualifiedNameWithoutTypeParameters() + ".*"; //$NON-NLS-1$
         interfaze.addStaticImport(staticImportString);
 
-        addBasicCountMethod(interfaze);
-        addBasicDeleteMethod(interfaze);
-        addBasicInsertMethod(interfaze);
-        addBasicInsertMultipleMethod(interfaze);
+        if (hasGeneratedKeys) {
+            addBasicInsertMethod(interfaze);
+            addBasicInsertMultipleMethod(interfaze);
+        }
 
         boolean reuseResultMap = addBasicSelectManyMethod(interfaze);
         addBasicSelectOneMethod(interfaze, reuseResultMap);
 
-        addBasicUpdateMethod(interfaze);
-
-        addCountByExampleMethod(interfaze);
-        addDeleteByExampleMethod(interfaze);
+        addGeneralCountMethod(interfaze);
+        addGeneralDeleteMethod(interfaze);
         addDeleteByPrimaryKeyMethod(interfaze);
         addInsertOneMethod(interfaze);
         addInsertMultipleMethod(interfaze);
@@ -108,7 +106,7 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
         addSelectByExampleMethod(interfaze);
         addSelectDistinctByExampleMethod(interfaze);
         addSelectByPrimaryKeyMethod(interfaze);
-        addUpdateByExampleMethod(interfaze);
+        addGeneralUpdateMethod(interfaze);
         addUpdateAllMethod(interfaze);
         addUpdateSelectiveMethod(interfaze);
         addUpdateByPrimaryKeyMethod(interfaze);
@@ -136,6 +134,8 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
                 .withResultMapId(resultMapId)
                 .withTableFieldName(tableFieldName)
                 .build();
+
+        hasGeneratedKeys = introspectedTable.getGeneratedKey() != null;
     }
 
     protected Interface createBasicInterface() {
@@ -175,7 +175,23 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
                 .withRecordType(recordType)
                 .build();
 
-        generate(interfaze, generator);
+        if (generate(interfaze, generator)) {
+            if (!hasGeneratedKeys) {
+                // add common interface
+                addCommonInsertInterface(interfaze);
+            }
+        }
+    }
+
+    protected void addCommonInsertInterface(Interface interfaze) {
+        String baseRecord = introspectedTable.getBaseRecordType();
+        FullyQualifiedJavaType superInterface = new FullyQualifiedJavaType(
+                "org.mybatis.dynamic.sql.util.mybatis3.CommonInsertMapper<" //$NON-NLS-1$
+                        + baseRecord + ">"); //$NON-NLS-1$
+        interfaze.addSuperInterface(superInterface);
+        interfaze.addImportedTypes(superInterface.getImportList().stream()
+                .map(FullyQualifiedJavaType::new)
+                .collect(Collectors.toSet()));
     }
 
     protected void addBasicInsertMultipleMethod(Interface interfaze) {
@@ -197,27 +213,44 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
                 .withRecordType(recordType)
                 .build();
 
-        generate(interfaze, generator);
+        if (generate(interfaze, generator)) {
+            if (!hasGeneratedKeys) {
+                // add common interface
+                addCommonInsertInterface(interfaze);
+            }
+        }
     }
 
-    protected void addCountByExampleMethod(Interface interfaze) {
+    protected void addGeneralCountMethod(Interface interfaze) {
         GeneralCountMethodGenerator generator = new GeneralCountMethodGenerator.Builder()
                 .withContext(context)
                 .withIntrospectedTable(introspectedTable)
                 .withTableFieldName(tableFieldName)
                 .build();
 
-        generate(interfaze, generator);
+        if (generate(interfaze, generator)) {
+            // add common interface
+            FullyQualifiedJavaType superInterface = new FullyQualifiedJavaType(
+                    "org.mybatis.dynamic.sql.util.mybatis3.CommonCountMapper"); //$NON-NLS-1$
+            interfaze.addSuperInterface(superInterface);
+            interfaze.addImportedType(superInterface);
+        }
     }
 
-    protected void addDeleteByExampleMethod(Interface interfaze) {
+    protected void addGeneralDeleteMethod(Interface interfaze) {
         GeneralDeleteMethodGenerator generator = new GeneralDeleteMethodGenerator.Builder()
                 .withContext(context)
                 .withIntrospectedTable(introspectedTable)
                 .withTableFieldName(tableFieldName)
                 .build();
 
-        generate(interfaze, generator);
+        if (generate(interfaze, generator)) {
+            // add common interface
+            FullyQualifiedJavaType superInterface = new FullyQualifiedJavaType(
+                    "org.mybatis.dynamic.sql.util.mybatis3.CommonDeleteMapper"); //$NON-NLS-1$
+            interfaze.addSuperInterface(superInterface);
+            interfaze.addImportedType(superInterface);
+        }
     }
 
     protected void addSelectListField(Interface interfaze) {
@@ -269,14 +302,20 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
         generate(interfaze, generator);
     }
 
-    protected void addUpdateByExampleMethod(Interface interfaze) {
+    protected void addGeneralUpdateMethod(Interface interfaze) {
         GeneralUpdateMethodGenerator generator = new GeneralUpdateMethodGenerator.Builder()
                 .withContext(context)
                 .withIntrospectedTable(introspectedTable)
                 .withTableFieldName(tableFieldName)
                 .build();
 
-        generate(interfaze, generator);
+        if (generate(interfaze, generator)) {
+            // add common interface
+            FullyQualifiedJavaType superInterface = new FullyQualifiedJavaType(
+                    "org.mybatis.dynamic.sql.util.mybatis3.CommonUpdateMapper"); //$NON-NLS-1$
+            interfaze.addSuperInterface(superInterface);
+            interfaze.addImportedType(superInterface);
+        }
     }
 
     protected void addUpdateAllMethod(Interface interfaze) {
@@ -336,7 +375,12 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
                 .withRecordType(recordType)
                 .build();
 
-        generate(interfaze, generator);
+        if (generate(interfaze, generator)) {
+            if (!hasGeneratedKeys) {
+                // add common interface
+                addCommonInsertInterface(interfaze);
+            }
+        }
     }
 
     protected void addSelectByPrimaryKeyMethod(Interface interfaze) {
@@ -376,25 +420,6 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
         generate(interfaze, generator);
     }
 
-    protected void addBasicCountMethod(Interface interfaze) {
-        BasicCountMethodGenerator generator = new BasicCountMethodGenerator.Builder()
-                .withContext(context)
-                .withIntrospectedTable(introspectedTable)
-                .build();
-
-        generate(interfaze, generator);
-    }
-
-    protected void addBasicDeleteMethod(Interface interfaze) {
-        BasicDeleteMethodGenerator generator = new BasicDeleteMethodGenerator.Builder()
-                .withContext(context)
-                .withIntrospectedTable(introspectedTable)
-                .withTableFieldName(tableFieldName)
-                .build();
-
-        generate(interfaze, generator);
-    }
-
     protected void addBasicInsertMethod(Interface interfaze) {
         BasicInsertMethodGenerator generator = new BasicInsertMethodGenerator.Builder()
                 .withContext(context)
@@ -417,16 +442,6 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
                 .build();
 
         return generate(interfaze, generator);
-    }
-
-    protected void addBasicUpdateMethod(Interface interfaze) {
-        BasicUpdateMethodGenerator generator = new BasicUpdateMethodGenerator.Builder()
-                .withContext(context)
-                .withIntrospectedTable(introspectedTable)
-                .withTableFieldName(tableFieldName)
-                .build();
-
-        generate(interfaze, generator);
     }
 
     protected boolean generate(Interface interfaze, AbstractMethodGenerator generator) {

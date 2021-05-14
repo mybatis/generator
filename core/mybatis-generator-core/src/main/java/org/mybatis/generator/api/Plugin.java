@@ -211,8 +211,9 @@ public interface Plugin {
     }
 
     /**
-     * This method is called when the count method has been generated for the mapper interface.
-     * This method is only called in the MyBatis3DynamicSql runtime.
+     * This method is no longer called.
+     *
+     * @deprecated this method is no longer called
      *
      * @param method
      *     the generated count method
@@ -225,6 +226,7 @@ public interface Plugin {
      *         first plugin returning false will disable the calling of further
      *         plugins.
      */
+    @Deprecated
     default boolean clientBasicCountMethodGenerated(Method method, Interface interfaze,
                                                     IntrospectedTable introspectedTable) {
         return true;
@@ -236,9 +238,9 @@ public interface Plugin {
     }
 
     /**
-     * This method is called when the delete method has been generated for the mapper interface.
-     * This method is only called in the MyBatis3DynamicSql runtime.
+     * This method is no longer called.
      *
+     * @deprecated No longer called
      * @param method
      *     the generated delete method
      * @param interfaze
@@ -250,6 +252,7 @@ public interface Plugin {
      *         first plugin returning false will disable the calling of further
      *         plugins.
      */
+    @Deprecated
     default boolean clientBasicDeleteMethodGenerated(Method method, Interface interfaze,
                                                      IntrospectedTable introspectedTable) {
         return true;
@@ -400,9 +403,9 @@ public interface Plugin {
     }
 
     /**
-     * This method is called when the update method has been generated for the mapper interface.
-     * This method is only called in the MyBatis3DynamicSql runtime.
+     * This method is no longer called.
      *
+     * @deprecated no longer called
      * @param method
      *     the generated update method
      * @param interfaze
@@ -414,6 +417,7 @@ public interface Plugin {
      *         first plugin returning false will disable the calling of further
      *         plugins.
      */
+    @Deprecated
     default boolean clientBasicUpdateMethodGenerated(Method method, Interface interfaze,
                                                      IntrospectedTable introspectedTable) {
         return true;

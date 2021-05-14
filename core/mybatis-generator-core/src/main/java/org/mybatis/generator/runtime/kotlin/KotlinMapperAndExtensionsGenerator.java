@@ -132,7 +132,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
         generate(kotlinFile, kotlinType, generator);
     }
 
-    protected void addBasicSelectManyMethod(KotlinFile kotlinFile, KotlinType kotlinType) {
+    protected boolean addBasicSelectManyMethod(KotlinFile kotlinFile, KotlinType kotlinType) {
         BasicSelectManyMethodGenerator generator = new BasicSelectManyMethodGenerator.Builder()
                 .withContext(context)
                 .withFragmentGenerator(fragmentGenerator)
@@ -141,7 +141,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .withRecordType(recordType)
                 .build();
 
-        generate(kotlinFile, kotlinType, generator);
+        return generate(kotlinFile, kotlinType, generator);
     }
 
     protected boolean generate(KotlinFile kotlinFile, AbstractKotlinFunctionGenerator generator) {
@@ -154,12 +154,14 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
         return false;
     }
 
-    protected void generate(KotlinFile kotlinFile, KotlinType kotlinType, AbstractKotlinFunctionGenerator generator) {
+    protected boolean generate(KotlinFile kotlinFile, KotlinType kotlinType, AbstractKotlinFunctionGenerator generator) {
         KotlinFunctionAndImports mi = generator.generateMethodAndImports();
         if (mi != null && generator.callPlugins(mi.getFunction(), kotlinFile)) {
             kotlinType.addNamedItem(mi.getFunction());
             kotlinFile.addImports(mi.getImports());
+            return true;
         }
+        return false;
     }
 
     @Override
@@ -176,8 +178,8 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
             addBasicInsertMultipleMethod(mapperFile, mapper);
         }
 
-        addBasicSelectOneMethod(mapperFile, mapper);
-        addBasicSelectManyMethod(mapperFile, mapper);
+        boolean reuseResultMap = addBasicSelectManyMethod(mapperFile, mapper);
+        addBasicSelectOneMethod(mapperFile, mapper, reuseResultMap);
 
         KotlinFile extensionsFile = createMapperExtensionsFile();
         String mapperName = mapper.getName();
@@ -406,7 +408,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
         generate(kotlinFile, generator);
     }
 
-    protected void addBasicSelectOneMethod(KotlinFile kotlinFile, KotlinType kotlinType) {
+    protected void addBasicSelectOneMethod(KotlinFile kotlinFile, KotlinType kotlinType, boolean reuseResultMap) {
         BasicSelectOneMethodGenerator generator = new BasicSelectOneMethodGenerator.Builder()
                 .withContext(context)
                 .withFragmentGenerator(fragmentGenerator)
@@ -414,6 +416,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .withTableFieldName(supportClassGenerator.getTablePropertyName())
                 .withRecordType(recordType)
                 .withResultMapId(resultMapId)
+                .withReuseResultMap(reuseResultMap)
                 .build();
 
         generate(kotlinFile, kotlinType, generator);

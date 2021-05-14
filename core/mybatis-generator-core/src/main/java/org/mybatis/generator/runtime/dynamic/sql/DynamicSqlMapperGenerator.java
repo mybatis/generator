@@ -103,8 +103,8 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
         addInsertMultipleMethod(interfaze);
         addInsertSelectiveMethod(interfaze);
         addSelectListField(interfaze);
-        addSelectByExampleMethod(interfaze);
-        addSelectDistinctByExampleMethod(interfaze);
+        addGeneralSelectMethod(interfaze);
+        addSelectDistinctMethod(interfaze);
         addSelectByPrimaryKeyMethod(interfaze);
         addGeneralUpdateMethod(interfaze);
         addUpdateAllMethod(interfaze);
@@ -184,10 +184,9 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
     }
 
     protected void addCommonInsertInterface(Interface interfaze) {
-        String baseRecord = introspectedTable.getBaseRecordType();
         FullyQualifiedJavaType superInterface = new FullyQualifiedJavaType(
                 "org.mybatis.dynamic.sql.util.mybatis3.CommonInsertMapper<" //$NON-NLS-1$
-                        + baseRecord + ">"); //$NON-NLS-1$
+                        + recordType.getFullyQualifiedName() + ">"); //$NON-NLS-1$
         interfaze.addSuperInterface(superInterface);
         interfaze.addImportedTypes(superInterface.getImportList().stream()
                 .map(FullyQualifiedJavaType::new)
@@ -268,7 +267,7 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
         }
     }
 
-    protected void addSelectByExampleMethod(Interface interfaze) {
+    protected void addGeneralSelectMethod(Interface interfaze) {
         addGeneralSelectOneMethod(interfaze);
         GeneralSelectMethodGenerator generator = new GeneralSelectMethodGenerator.Builder()
                 .withContext(context)
@@ -280,7 +279,7 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
         generate(interfaze, generator);
     }
 
-    protected void addSelectDistinctByExampleMethod(Interface interfaze) {
+    protected void addSelectDistinctMethod(Interface interfaze) {
         GeneralSelectDistinctMethodGenerator generator = new GeneralSelectDistinctMethodGenerator.Builder()
                 .withContext(context)
                 .withIntrospectedTable(introspectedTable)

@@ -38,12 +38,6 @@ public class DisableUpdatePlugin extends PluginAdapter {
     }
 
     @Override
-    public boolean clientBasicUpdateMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-            IntrospectedTable introspectedTable) {
-        return false;
-    }
-
-    @Override
     public boolean clientGeneralUpdateMethodGenerated(Method method, Interface interfaze,
             IntrospectedTable introspectedTable) {
         return false;

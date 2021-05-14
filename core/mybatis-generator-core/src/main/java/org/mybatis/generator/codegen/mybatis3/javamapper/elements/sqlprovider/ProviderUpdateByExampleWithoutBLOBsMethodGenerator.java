@@ -21,7 +21,6 @@ import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJ
 
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
@@ -36,9 +35,6 @@ public class ProviderUpdateByExampleWithoutBLOBsMethodGenerator extends
 
     @Override
     public void addClassElements(TopLevelClass topLevelClass) {
-        Set<String> staticImports = new TreeSet<>();
-        Set<FullyQualifiedJavaType> importedTypes = initializeImportedTypes("java.util.Map"); //$NON-NLS-1$
-
         Method method = new Method(getMethodName());
         method.setReturnType(FullyQualifiedJavaType.getStringInstance());
         method.setVisibility(JavaVisibility.PUBLIC);
@@ -67,6 +63,7 @@ public class ProviderUpdateByExampleWithoutBLOBsMethodGenerator extends
 
         method.addBodyLine(""); //$NON-NLS-1$
 
+        Set<FullyQualifiedJavaType> importedTypes = initializeImportedTypes("java.util.Map"); //$NON-NLS-1$
         FullyQualifiedJavaType example =
                 new FullyQualifiedJavaType(introspectedTable.getExampleType());
         importedTypes.add(example);
@@ -77,7 +74,6 @@ public class ProviderUpdateByExampleWithoutBLOBsMethodGenerator extends
         method.addBodyLine("return sql.toString();"); //$NON-NLS-1$
 
         if (callPlugins(method, topLevelClass)) {
-            topLevelClass.addStaticImports(staticImports);
             topLevelClass.addImportedTypes(importedTypes);
             topLevelClass.addMethod(method);
         }

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,7 +20,11 @@ import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.AbstractGenerator;
+import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 import org.mybatis.generator.config.GeneratedKey;
+
+import java.util.Iterator;
+import java.util.List;
 
 public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
     public abstract void addElements(XmlElement parentElement);
@@ -93,5 +97,30 @@ public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
         ifElement.addElement(includeElement);
 
         return ifElement;
+    }
+
+    protected void buildSelectList(List<IntrospectedColumn> columns, XmlElement element) {
+        buildSelectList(new StringBuilder(), columns, element);
+    }
+
+    protected void buildSelectList(StringBuilder sb, List<IntrospectedColumn> columns, XmlElement element) {
+        Iterator<IntrospectedColumn> iter = columns.iterator();
+        while (iter.hasNext()) {
+            sb.append(MyBatis3FormattingUtilities.getSelectListPhrase(iter
+                    .next()));
+
+            if (iter.hasNext()) {
+                sb.append(", "); //$NON-NLS-1$
+            }
+
+            if (sb.length() > 80) {
+                element.addElement(new TextElement(sb.toString()));
+                sb.setLength(0);
+            }
+        }
+
+        if (sb.length() > 0) {
+            element.addElement(new TextElement(sb.toString()));
+        }
     }
 }

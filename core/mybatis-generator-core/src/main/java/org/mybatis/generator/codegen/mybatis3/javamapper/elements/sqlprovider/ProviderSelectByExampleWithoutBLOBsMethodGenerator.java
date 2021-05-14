@@ -20,7 +20,6 @@ import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJ
 
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
@@ -33,7 +32,6 @@ public class ProviderSelectByExampleWithoutBLOBsMethodGenerator extends Abstract
 
     @Override
     public void addClassElements(TopLevelClass topLevelClass) {
-        Set<String> staticImports = new TreeSet<>();
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getExampleType());
         Set<FullyQualifiedJavaType> importedTypes = initializeImportedTypes(fqjt);
 
@@ -78,7 +76,6 @@ public class ProviderSelectByExampleWithoutBLOBsMethodGenerator extends Abstract
         method.addBodyLine("return sql.toString();"); //$NON-NLS-1$
 
         if (callPlugins(method, topLevelClass)) {
-            topLevelClass.addStaticImports(staticImports);
             topLevelClass.addImportedTypes(importedTypes);
             topLevelClass.addMethod(method);
         }

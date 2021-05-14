@@ -175,7 +175,8 @@ public class KotlinDynamicSqlSupportClassGenerator {
                 column.getJdbcTypeName()));
 
         if (StringUtility.stringHasValue(column.getTypeHandler())) {
-            initializationString.append(String.format(", typeHandler = \"%s\")", column.getTypeHandler())); //$NON-NLS-1$
+            initializationString.append(
+                    String.format(", typeHandler = \"%s\")", column.getTypeHandler())); //$NON-NLS-1$
         } else {
             initializationString.append(')');
         }

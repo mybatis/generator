@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJ
 import java.util.Iterator;
 
 import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
@@ -100,10 +101,10 @@ public class AnnotatedSelectAllMethodGenerator extends SelectAllMethodGenerator 
 
         method.addAnnotation("})"); //$NON-NLS-1$
 
-        addAnnotatedResults(interfaze, method);
+        addAnnotatedResults(introspectedTable, interfaze, method);
     }
 
-    private void addAnnotatedResults(Interface interfaze, Method method) {
+    protected static void addAnnotatedResults(IntrospectedTable introspectedTable, Interface interfaze, Method method) {
 
         if (introspectedTable.isConstructorBased()) {
             method.addAnnotation("@ConstructorArgs({"); //$NON-NLS-1$
@@ -148,16 +149,6 @@ public class AnnotatedSelectAllMethodGenerator extends SelectAllMethodGenerator 
 
     @Override
     public void addExtraImports(Interface interfaze) {
-        interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.type.JdbcType")); //$NON-NLS-1$
-        if (introspectedTable.isConstructorBased()) {
-            interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Arg")); //$NON-NLS-1$
-            interfaze.addImportedType(
-                    new FullyQualifiedJavaType("org.apache.ibatis.annotations.ConstructorArgs")); //$NON-NLS-1$
-        } else {
-            interfaze.addImportedType(
-                    new FullyQualifiedJavaType("org.apache.ibatis.annotations.Result")); //$NON-NLS-1$
-            interfaze.addImportedType(
-                    new FullyQualifiedJavaType("org.apache.ibatis.annotations.Results")); //$NON-NLS-1$
-        }
+        addAnnotatedSelectImports(interfaze);
     }
 }

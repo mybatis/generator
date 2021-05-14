@@ -16,7 +16,6 @@
 package org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider;
 
 import java.util.Set;
-import java.util.TreeSet;
 
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
@@ -131,7 +130,6 @@ public class ProviderApplyWhereMethodGenerator extends
 
     @Override
     public void addClassElements(TopLevelClass topLevelClass) {
-        Set<String> staticImports = new TreeSet<>();
         Set<FullyQualifiedJavaType> importedTypes = initializeImportedTypes("java.util.List"); //$NON-NLS-1$
 
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getExampleType());
@@ -159,7 +157,6 @@ public class ProviderApplyWhereMethodGenerator extends
         }
 
         if (context.getPlugins().providerApplyWhereMethodGenerated(method, topLevelClass, introspectedTable)) {
-            topLevelClass.addStaticImports(staticImports);
             topLevelClass.addImportedTypes(importedTypes);
             topLevelClass.addMethod(method);
         }

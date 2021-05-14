@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -45,9 +45,8 @@ public abstract class AbstractJavaGenerator extends AbstractGenerator {
                 .getType()));
         method.setReturnType(field.getType());
         method.setVisibility(JavaVisibility.PUBLIC);
-        String s = "return " + //$NON-NLS-1$
-                field.getName() +
-                ';';
+        String s = "return " + field.getName() + ';'; //$NON-NLS-1$
+
         method.addBodyLine(s);
         return method;
     }

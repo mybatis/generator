@@ -23,7 +23,6 @@ import java.util.List;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
-import org.mybatis.generator.runtime.dynamic.sql.elements.FieldAndImports;
 import org.mybatis.generator.runtime.dynamic.sql.elements.BasicCountMethodGenerator;
 import org.mybatis.generator.runtime.dynamic.sql.elements.BasicDeleteMethodGenerator;
 import org.mybatis.generator.runtime.dynamic.sql.elements.BasicInsertMethodGenerator;
@@ -32,6 +31,7 @@ import org.mybatis.generator.runtime.dynamic.sql.elements.BasicSelectManyMethodG
 import org.mybatis.generator.runtime.dynamic.sql.elements.BasicSelectOneMethodGenerator;
 import org.mybatis.generator.runtime.dynamic.sql.elements.BasicUpdateMethodGenerator;
 import org.mybatis.generator.runtime.dynamic.sql.elements.DeleteByPrimaryKeyMethodGenerator;
+import org.mybatis.generator.runtime.dynamic.sql.elements.FieldAndImports;
 import org.mybatis.generator.runtime.dynamic.sql.elements.GeneralCountMethodGenerator;
 import org.mybatis.generator.runtime.dynamic.sql.elements.GeneralDeleteMethodGenerator;
 import org.mybatis.generator.runtime.dynamic.sql.elements.GeneralSelectDistinctMethodGenerator;

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -121,11 +121,9 @@ public class ResultMapWithBLOBsElementGenerator extends
 
             if (introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {
                 // need to use the MyBatis type alias for a primitive byte
-                String s = '_' +
-                        introspectedColumn.getFullyQualifiedJavaType().getShortName();
-                resultElement.addAttribute(new Attribute("javaType", //$NON-NLS-1$
-                        s));
-
+                String s = '_'
+                        + introspectedColumn.getFullyQualifiedJavaType().getShortName();
+                resultElement.addAttribute(new Attribute("javaType", s)); //$NON-NLS-1$
             } else if ("byte[]".equals(introspectedColumn.getFullyQualifiedJavaType() //$NON-NLS-1$
                     .getFullyQualifiedName())) {
                 // need to use the MyBatis type alias for a primitive byte arry

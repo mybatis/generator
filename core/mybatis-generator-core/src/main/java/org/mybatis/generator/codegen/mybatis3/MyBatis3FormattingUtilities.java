@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -98,9 +98,8 @@ public class MyBatis3FormattingUtilities {
     public static String getAliasedEscapedColumnName(
             IntrospectedColumn introspectedColumn) {
         if (stringHasValue(introspectedColumn.getTableAlias())) {
-            return introspectedColumn.getTableAlias() +
-                    '.' +
-                    getEscapedColumnName(introspectedColumn);
+            return introspectedColumn.getTableAlias() + '.'
+                    + getEscapedColumnName(introspectedColumn);
         } else {
             return getEscapedColumnName(introspectedColumn);
         }
@@ -152,9 +151,7 @@ public class MyBatis3FormattingUtilities {
     public static String getRenamedColumnNameForResultMap(
             IntrospectedColumn introspectedColumn) {
         if (stringHasValue(introspectedColumn.getTableAlias())) {
-            return introspectedColumn.getTableAlias() +
-                    '_' +
-                    introspectedColumn.getActualColumnName();
+            return introspectedColumn.getTableAlias() + '_' + introspectedColumn.getActualColumnName();
         } else {
             return introspectedColumn.getActualColumnName();
         }

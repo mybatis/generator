@@ -657,8 +657,8 @@ public abstract class IntrospectedTable {
             return null;
         }
 
-        return config.getTargetPackage() +
-                fullyQualifiedTable.getSubPackageForClientOrSqlMap(isSubPackagesEnabled(config));
+        return config.getTargetPackage()
+                + fullyQualifiedTable.getSubPackageForClientOrSqlMap(isSubPackagesEnabled(config));
     }
 
     protected String calculateDynamicSqlSupportPackage() {
@@ -731,8 +731,8 @@ public abstract class IntrospectedTable {
         JavaModelGeneratorConfiguration config = context
                 .getJavaModelGeneratorConfiguration();
 
-        return config.getTargetPackage() +
-                fullyQualifiedTable.getSubPackageForModel(isSubPackagesEnabled(config));
+        return config.getTargetPackage()
+                + fullyQualifiedTable.getSubPackageForModel(isSubPackagesEnabled(config));
     }
 
     protected void calculateModelAttributes() {
@@ -786,8 +786,8 @@ public abstract class IntrospectedTable {
             return calculateJavaModelPackage();
         }
 
-        return exampleTargetPackage +
-                fullyQualifiedTable.getSubPackageForModel(isSubPackagesEnabled(config));
+        return exampleTargetPackage
+                + fullyQualifiedTable.getSubPackageForModel(isSubPackagesEnabled(config));
     }
 
     protected String calculateSqlMapPackage() {

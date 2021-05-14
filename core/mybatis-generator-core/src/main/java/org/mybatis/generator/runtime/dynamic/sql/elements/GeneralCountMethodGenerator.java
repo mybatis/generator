@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -45,8 +45,8 @@ public class GeneralCountMethodGenerator extends AbstractMethodGenerator {
 
         method.setReturnType(new FullyQualifiedJavaType("long")); //$NON-NLS-1$
 
-        method.addBodyLine("return MyBatis3Utils.countFrom(this::count, " + tableFieldName + //$NON-NLS-1$
-                ", completer);"); //$NON-NLS-1$
+        method.addBodyLine("return MyBatis3Utils.countFrom(this::count, " + tableFieldName //$NON-NLS-1$
+                + ", completer);"); //$NON-NLS-1$
 
         return MethodAndImports.withMethod(method)
                 .withImports(imports)

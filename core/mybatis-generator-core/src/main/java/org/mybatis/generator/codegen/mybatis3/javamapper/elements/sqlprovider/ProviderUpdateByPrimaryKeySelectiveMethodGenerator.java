@@ -21,7 +21,6 @@ import static org.mybatis.generator.internal.util.JavaBeansUtil.getGetterMethodN
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 
 import java.util.Set;
-import java.util.TreeSet;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
@@ -35,7 +34,6 @@ public class ProviderUpdateByPrimaryKeySelectiveMethodGenerator extends Abstract
 
     @Override
     public void addClassElements(TopLevelClass topLevelClass) {
-        Set<String> staticImports = new TreeSet<>();
         FullyQualifiedJavaType fqjt = introspectedTable.getRules().calculateAllFieldsClass();
         Set<FullyQualifiedJavaType> importedTypes = initializeImportedTypes(fqjt);
 
@@ -84,7 +82,6 @@ public class ProviderUpdateByPrimaryKeySelectiveMethodGenerator extends Abstract
 
         if (context.getPlugins().providerUpdateByPrimaryKeySelectiveMethodGenerated(method, topLevelClass,
                 introspectedTable)) {
-            topLevelClass.addStaticImports(staticImports);
             topLevelClass.addImportedTypes(importedTypes);
             topLevelClass.addMethod(method);
         }

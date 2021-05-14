@@ -48,8 +48,8 @@ public class InsertSelectiveMethodGenerator extends AbstractMethodGenerator {
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
         method.addParameter(new Parameter(recordType, "row")); //$NON-NLS-1$
 
-        method.addBodyLine("return MyBatis3Utils.insert(this::insert, row, " + tableFieldName + //$NON-NLS-1$
-                ", c ->"); //$NON-NLS-1$
+        method.addBodyLine("return MyBatis3Utils.insert(this::insert, row, " + tableFieldName //$NON-NLS-1$
+                + ", c ->"); //$NON-NLS-1$
 
         List<IntrospectedColumn> columns = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(
                 introspectedTable.getAllColumns());

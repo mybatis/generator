@@ -19,7 +19,11 @@ import static org.mybatis.generator.internal.util.StringUtility.composeFullyQual
 import static org.mybatis.generator.internal.util.StringUtility.isTrue;
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import org.mybatis.generator.internal.util.messages.Messages;
 

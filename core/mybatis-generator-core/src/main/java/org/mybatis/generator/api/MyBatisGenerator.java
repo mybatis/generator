@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -410,7 +410,7 @@ public class MyBatisGenerator {
      *             Signals that an I/O exception has occurred.
      */
     private void writeFile(File file, String content, String fileEncoding) throws IOException {
-        try(FileOutputStream fos = new FileOutputStream(file, false)) {
+        try (FileOutputStream fos = new FileOutputStream(file, false)) {
             OutputStreamWriter osw;
             if (fileEncoding == null) {
                 osw = new OutputStreamWriter(fos);

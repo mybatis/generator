@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -31,11 +31,11 @@ public class AnnotatedInsertSelectiveMethodGenerator extends InsertSelectiveMeth
     public void addMapperAnnotations(Method method) {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getMyBatis3SqlProviderType());
 
-        String s = "@InsertProvider(type=" + //$NON-NLS-1$
-                fqjt.getShortName() +
-                ".class, method=\"" + //$NON-NLS-1$
-                introspectedTable.getInsertSelectiveStatementId() +
-                "\")";//$NON-NLS-1$
+        String s = "@InsertProvider(type=" //$NON-NLS-1$
+                + fqjt.getShortName()
+                + ".class, method=\"" //$NON-NLS-1$
+                + introspectedTable.getInsertSelectiveStatementId()
+                + "\")"; //$NON-NLS-1$
         method.addAnnotation(s);
 
         GeneratedKey gk = introspectedTable.getGeneratedKey();

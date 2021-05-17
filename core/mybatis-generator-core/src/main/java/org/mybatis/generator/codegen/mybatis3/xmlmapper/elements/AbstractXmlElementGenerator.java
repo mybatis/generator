@@ -15,6 +15,9 @@
  */
 package org.mybatis.generator.codegen.mybatis3.xmlmapper.elements;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
@@ -22,9 +25,6 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.AbstractGenerator;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 import org.mybatis.generator.config.GeneratedKey;
-
-import java.util.Iterator;
-import java.util.List;
 
 public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
     public abstract void addElements(XmlElement parentElement);

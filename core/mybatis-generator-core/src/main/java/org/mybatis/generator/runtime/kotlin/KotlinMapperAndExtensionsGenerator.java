@@ -230,10 +230,8 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .withSupportObjectImport(supportClassGenerator.getSupportObjectImport())
                 .build();
 
-        if (generate(extensionsFile, generator)) {
-            if (!hasGeneratedKeys) {
-                addCommonInsertInterface(mapperFile, mapper);
-            }
+        if (generate(extensionsFile, generator) && !hasGeneratedKeys) {
+            addCommonInsertInterface(mapperFile, mapper);
         }
     }
 
@@ -266,10 +264,8 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .withSupportObjectImport(supportClassGenerator.getSupportObjectImport())
                 .build();
 
-        if (generate(extensionsFile, generator)) {
-            if (!hasGeneratedKeys) {
-                addCommonInsertInterface(mapperFile, mapper);
-            }
+        if (generate(extensionsFile, generator) && !hasGeneratedKeys) {
+            addCommonInsertInterface(mapperFile, mapper);
         }
     }
 
@@ -445,10 +441,8 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .withSupportObjectImport(supportClassGenerator.getSupportObjectImport())
                 .build();
 
-        if (generate(extensionsFile, generator)) {
-            if (!hasGeneratedKeys) {
-                addCommonInsertInterface(mapperFile, mapper);
-            }
+        if (generate(extensionsFile, generator) && !hasGeneratedKeys) {
+            addCommonInsertInterface(mapperFile, mapper);
         }
     }
 

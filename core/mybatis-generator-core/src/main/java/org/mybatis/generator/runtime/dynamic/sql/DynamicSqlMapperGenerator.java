@@ -175,11 +175,9 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
                 .withRecordType(recordType)
                 .build();
 
-        if (generate(interfaze, generator)) {
-            if (!hasGeneratedKeys) {
-                // add common interface
-                addCommonInsertInterface(interfaze);
-            }
+        if (generate(interfaze, generator) && !hasGeneratedKeys) {
+            // add common interface
+            addCommonInsertInterface(interfaze);
         }
     }
 
@@ -212,11 +210,9 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
                 .withRecordType(recordType)
                 .build();
 
-        if (generate(interfaze, generator)) {
-            if (!hasGeneratedKeys) {
-                // add common interface
-                addCommonInsertInterface(interfaze);
-            }
+        if (generate(interfaze, generator) && !hasGeneratedKeys) {
+            // add common interface
+            addCommonInsertInterface(interfaze);
         }
     }
 
@@ -374,11 +370,9 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
                 .withRecordType(recordType)
                 .build();
 
-        if (generate(interfaze, generator)) {
-            if (!hasGeneratedKeys) {
-                // add common interface
-                addCommonInsertInterface(interfaze);
-            }
+        if (generate(interfaze, generator) && !hasGeneratedKeys) {
+            // add common interface
+            addCommonInsertInterface(interfaze);
         }
     }
 

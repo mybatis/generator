@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,14 +16,16 @@
 package org.mybatis.generator.api.dom.kotlin;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public class KotlinType extends KotlinNamedItemContainer {
 
     private final List<KotlinProperty> constructorProperties = new ArrayList<>();
     private final Type type;
-    private final List<String> superTypes = new ArrayList<>();
+    private final Set<String> superTypes = new HashSet<>();
 
     public enum Type {
         CLASS("class"), //$NON-NLS-1$
@@ -56,7 +58,7 @@ public class KotlinType extends KotlinNamedItemContainer {
         return type;
     }
 
-    public List<String> getSuperTypes() {
+    public Set<String> getSuperTypes() {
         return superTypes;
     }
 

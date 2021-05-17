@@ -38,35 +38,7 @@ public class BasicMultipleInsertMethodGenerator extends AbstractKotlinFunctionGe
         }
 
         GeneratedKey gk = introspectedTable.getGeneratedKey();
-        if (gk == null) {
-            return generateMethodWithoutGeneratedKeys();
-        } else {
-            return generateMethodWithGeneratedKeys(gk);
-        }
-    }
-
-    private KotlinFunctionAndImports generateMethodWithoutGeneratedKeys() {
-
-        KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(
-                KotlinFunction.newOneLineFunction("insertMultiple") //$NON-NLS-1$
-                .withExplicitReturnType("Int") //$NON-NLS-1$
-                .withArgument(KotlinArg.newArg("multipleInsertStatement") //$NON-NLS-1$
-                        .withDataType("MultiRowInsertStatementProvider<" //$NON-NLS-1$
-                                + recordType.getShortNameWithTypeArguments()
-                                + ">") //$NON-NLS-1$
-                        .build())
-                .withAnnotation("@InsertProvider(type=SqlProviderAdapter::class," //$NON-NLS-1$
-                        + " method=\"insertMultiple\")") //$NON-NLS-1$
-                .build())
-                .withImport("org.mybatis.dynamic.sql.util.SqlProviderAdapter") //$NON-NLS-1$
-                .withImport("org.apache.ibatis.annotations.InsertProvider") //$NON-NLS-1$
-                .withImport("org.mybatis.dynamic.sql.insert.render.MultiRowInsertStatementProvider") //$NON-NLS-1$
-                .withImports(recordType.getImportList())
-                .build();
-
-        addFunctionComment(functionAndImports);
-
-        return functionAndImports;
+        return generateMethodWithGeneratedKeys(gk);
     }
 
     private KotlinFunctionAndImports generateMethodWithGeneratedKeys(GeneratedKey gk) {

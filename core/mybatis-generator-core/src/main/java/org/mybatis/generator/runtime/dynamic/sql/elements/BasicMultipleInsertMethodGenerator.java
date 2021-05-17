@@ -40,45 +40,13 @@ public class BasicMultipleInsertMethodGenerator extends AbstractMethodGenerator 
         }
 
         GeneratedKey gk = introspectedTable.getGeneratedKey();
-        if (gk == null) {
-            return generateMethodWithoutGeneratedKeys();
-        } else {
-            return generateMethodWithGeneratedKeys(gk);
-        }
-    }
-
-    private MethodAndImports generateMethodWithoutGeneratedKeys() {
-        Set<FullyQualifiedJavaType> imports = new HashSet<>();
-
-
-        imports.add(new FullyQualifiedJavaType(
-                "org.mybatis.dynamic.sql.insert.render.MultiRowInsertStatementProvider")); //$NON-NLS-1$
-        imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.util.SqlProviderAdapter")); //$NON-NLS-1$);
-        imports.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.InsertProvider")); //$NON-NLS-1$
-
-        FullyQualifiedJavaType parameterType =
-                new FullyQualifiedJavaType(
-                        "org.mybatis.dynamic.sql.insert.render.MultiRowInsertStatementProvider"); //$NON-NLS-1$
-        imports.add(recordType);
-        parameterType.addTypeArgument(recordType);
-
-        Method method = new Method("insertMultiple"); //$NON-NLS-1$
-        method.setAbstract(true);
-        method.setReturnType(FullyQualifiedJavaType.getIntInstance());
-        method.addParameter(new Parameter(parameterType, "multipleInsertStatement")); //$NON-NLS-1$
-        context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
-        method.addAnnotation("@InsertProvider(type=SqlProviderAdapter.class, method=\"insertMultiple\")"); //$NON-NLS-1$
-
-        MethodAndImports.Builder builder = MethodAndImports.withMethod(method)
-                .withImports(imports);
-
-        return builder.build();
+        return generateMethodWithGeneratedKeys(gk);
     }
 
     private MethodAndImports generateMethodWithGeneratedKeys(GeneratedKey gk) {
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
 
-        imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.util.SqlProviderAdapter")); //$NON-NLS-1$);
+        imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.util.SqlProviderAdapter")); //$NON-NLS-1$)
         imports.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.InsertProvider")); //$NON-NLS-1$
         imports.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param")); //$NON-NLS-1$
 

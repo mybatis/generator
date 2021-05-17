@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -37,6 +37,7 @@ public class KotlinTypeRenderer {
                 + kotlinType.getType().getValue() + " " //$NON-NLS-1$
                 + kotlinType.getName();
         String renderedSuperTypes = kotlinType.getSuperTypes().stream()
+                .sorted()
                 .collect(CustomCollectors.joining(", ", " : ", "")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
         if (kotlinType.getNamedItems().isEmpty()) {

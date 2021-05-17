@@ -133,54 +133,6 @@ public abstract class CompositePlugin implements Plugin {
     }
 
     @Override
-    public boolean clientBasicCountMethodGenerated(Method method, Interface interfaze,
-            IntrospectedTable introspectedTable) {
-        for (Plugin plugin : plugins) {
-            if (!plugin.clientBasicCountMethodGenerated(method, interfaze, introspectedTable)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    @Override
-    public boolean clientBasicCountMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-            IntrospectedTable introspectedTable) {
-        for (Plugin plugin : plugins) {
-            if (!plugin.clientBasicCountMethodGenerated(kotlinFunction, kotlinFile, introspectedTable)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    @Override
-    public boolean clientBasicDeleteMethodGenerated(Method method, Interface interfaze,
-            IntrospectedTable introspectedTable) {
-        for (Plugin plugin : plugins) {
-            if (!plugin.clientBasicDeleteMethodGenerated(method, interfaze, introspectedTable)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    @Override
-    public boolean clientBasicDeleteMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-            IntrospectedTable introspectedTable) {
-        for (Plugin plugin : plugins) {
-            if (!plugin.clientBasicDeleteMethodGenerated(kotlinFunction, kotlinFile, introspectedTable)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    @Override
     public boolean clientBasicInsertMethodGenerated(Method method, Interface interfaze,
             IntrospectedTable introspectedTable) {
         for (Plugin plugin : plugins) {
@@ -269,30 +221,6 @@ public abstract class CompositePlugin implements Plugin {
             IntrospectedTable introspectedTable) {
         for (Plugin plugin : plugins) {
             if (!plugin.clientBasicSelectOneMethodGenerated(kotlinFunction, kotlinFile, introspectedTable)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    @Override
-    public boolean clientBasicUpdateMethodGenerated(Method method, Interface interfaze,
-            IntrospectedTable introspectedTable) {
-        for (Plugin plugin : plugins) {
-            if (!plugin.clientBasicUpdateMethodGenerated(method, interfaze, introspectedTable)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    @Override
-    public boolean clientBasicUpdateMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
-            IntrospectedTable introspectedTable) {
-        for (Plugin plugin : plugins) {
-            if (!plugin.clientBasicUpdateMethodGenerated(kotlinFunction, kotlinFile, introspectedTable)) {
                 return false;
             }
         }

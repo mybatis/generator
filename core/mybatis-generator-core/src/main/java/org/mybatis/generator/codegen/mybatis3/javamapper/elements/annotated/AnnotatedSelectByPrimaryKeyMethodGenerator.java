@@ -91,10 +91,10 @@ public class AnnotatedSelectByPrimaryKeyMethodGenerator extends SelectByPrimaryK
                     || introspectedTable.getRules().generateResultMapWithBLOBs()) {
                 addResultMapAnnotation(method);
             } else {
-                AnnotatedSelectAllMethodGenerator.addAnnotatedResults(introspectedTable, interfaze, method);
+                addAnnotatedResults(interfaze, method, introspectedTable.getNonPrimaryKeyColumns());
             }
         } else {
-            AnnotatedSelectAllMethodGenerator.addAnnotatedResults(introspectedTable, interfaze, method);
+            addAnnotatedResults(interfaze, method, introspectedTable.getNonPrimaryKeyColumns());
         }
     }
 

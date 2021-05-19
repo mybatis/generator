@@ -22,7 +22,6 @@ import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJ
 import java.util.Iterator;
 
 import org.mybatis.generator.api.IntrospectedColumn;
-import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
@@ -101,50 +100,7 @@ public class AnnotatedSelectAllMethodGenerator extends SelectAllMethodGenerator 
 
         method.addAnnotation("})"); //$NON-NLS-1$
 
-        addAnnotatedResults(introspectedTable, interfaze, method);
-    }
-
-    protected static void addAnnotatedResults(IntrospectedTable introspectedTable, Interface interfaze, Method method) {
-
-        if (introspectedTable.isConstructorBased()) {
-            method.addAnnotation("@ConstructorArgs({"); //$NON-NLS-1$
-        } else {
-            method.addAnnotation("@Results({"); //$NON-NLS-1$
-        }
-
-        StringBuilder sb = new StringBuilder();
-
-        Iterator<IntrospectedColumn> iterPk = introspectedTable.getPrimaryKeyColumns().iterator();
-        Iterator<IntrospectedColumn> iterNonPk = introspectedTable.getNonPrimaryKeyColumns().iterator();
-        while (iterPk.hasNext()) {
-            IntrospectedColumn introspectedColumn = iterPk.next();
-            sb.setLength(0);
-            javaIndent(sb, 1);
-            sb.append(getResultAnnotation(interfaze, introspectedColumn, true,
-                    introspectedTable.isConstructorBased()));
-
-            if (iterPk.hasNext() || iterNonPk.hasNext()) {
-                sb.append(',');
-            }
-
-            method.addAnnotation(sb.toString());
-        }
-
-        while (iterNonPk.hasNext()) {
-            IntrospectedColumn introspectedColumn = iterNonPk.next();
-            sb.setLength(0);
-            javaIndent(sb, 1);
-            sb.append(getResultAnnotation(interfaze, introspectedColumn, false,
-                    introspectedTable.isConstructorBased()));
-
-            if (iterNonPk.hasNext()) {
-                sb.append(',');
-            }
-
-            method.addAnnotation(sb.toString());
-        }
-
-        method.addAnnotation("})"); //$NON-NLS-1$
+        addAnnotatedResults(interfaze, method, introspectedTable.getNonPrimaryKeyColumns());
     }
 
     @Override

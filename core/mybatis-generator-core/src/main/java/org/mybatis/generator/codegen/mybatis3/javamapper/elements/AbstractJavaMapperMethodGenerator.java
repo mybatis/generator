@@ -238,4 +238,47 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractGenerato
             }
         }
     }
+
+    protected void addAnnotatedResults(Interface interfaze, Method method, List<IntrospectedColumn> nonPrimaryKeyColumns) {
+
+        if (introspectedTable.isConstructorBased()) {
+            method.addAnnotation("@ConstructorArgs({"); //$NON-NLS-1$
+        } else {
+            method.addAnnotation("@Results({"); //$NON-NLS-1$
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        Iterator<IntrospectedColumn> iterPk = introspectedTable.getPrimaryKeyColumns().iterator();
+        Iterator<IntrospectedColumn> iterNonPk = nonPrimaryKeyColumns.iterator();
+        while (iterPk.hasNext()) {
+            IntrospectedColumn introspectedColumn = iterPk.next();
+            sb.setLength(0);
+            javaIndent(sb, 1);
+            sb.append(getResultAnnotation(interfaze, introspectedColumn, true,
+                    introspectedTable.isConstructorBased()));
+
+            if (iterPk.hasNext() || iterNonPk.hasNext()) {
+                sb.append(',');
+            }
+
+            method.addAnnotation(sb.toString());
+        }
+
+        while (iterNonPk.hasNext()) {
+            IntrospectedColumn introspectedColumn = iterNonPk.next();
+            sb.setLength(0);
+            javaIndent(sb, 1);
+            sb.append(getResultAnnotation(interfaze, introspectedColumn, false,
+                    introspectedTable.isConstructorBased()));
+
+            if (iterNonPk.hasNext()) {
+                sb.append(',');
+            }
+
+            method.addAnnotation(sb.toString());
+        }
+
+        method.addAnnotation("})"); //$NON-NLS-1$
+    }
 }

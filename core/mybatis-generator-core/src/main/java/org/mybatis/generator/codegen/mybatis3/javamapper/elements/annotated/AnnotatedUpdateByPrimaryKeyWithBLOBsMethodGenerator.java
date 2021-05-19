@@ -15,20 +15,9 @@
  */
 package org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated;
 
-import static org.mybatis.generator.api.dom.OutputUtilities.javaIndent;
-import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getEscapedColumnName;
-import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getParameterClause;
-import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
-
-import java.util.Iterator;
-import java.util.List;
-
-import org.mybatis.generator.api.IntrospectedColumn;
-import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
-import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.UpdateByPrimaryKeyWithBLOBsMethodGenerator;
 
 public class AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator extends UpdateByPrimaryKeyWithBLOBsMethodGenerator {
@@ -39,72 +28,7 @@ public class AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator extends UpdateB
 
     @Override
     public void addMapperAnnotations(Method method) {
-        addMapperAnnotations(introspectedTable, method, introspectedTable.getNonPrimaryKeyColumns());
-    }
-
-    protected static void addMapperAnnotations(IntrospectedTable introspectedTable, Method method,
-                                               List<IntrospectedColumn> columnList) {
-        method.addAnnotation("@Update({"); //$NON-NLS-1$
-
-        StringBuilder sb = new StringBuilder();
-        javaIndent(sb, 1);
-        sb.append("\"update "); //$NON-NLS-1$
-        sb.append(escapeStringForJava(introspectedTable.getFullyQualifiedTableNameAtRuntime()));
-        sb.append("\","); //$NON-NLS-1$
-        method.addAnnotation(sb.toString());
-
-        // set up for first column
-        sb.setLength(0);
-        javaIndent(sb, 1);
-        sb.append("\"set "); //$NON-NLS-1$
-
-        Iterator<IntrospectedColumn> iter = ListUtilities.removeGeneratedAlwaysColumns(columnList).iterator();
-        while (iter.hasNext()) {
-            IntrospectedColumn introspectedColumn = iter.next();
-
-            sb.append(escapeStringForJava(getEscapedColumnName(introspectedColumn)));
-            sb.append(" = "); //$NON-NLS-1$
-            sb.append(getParameterClause(introspectedColumn));
-
-            if (iter.hasNext()) {
-                sb.append(',');
-            }
-
-            sb.append("\","); //$NON-NLS-1$
-            method.addAnnotation(sb.toString());
-
-            // set up for the next column
-            if (iter.hasNext()) {
-                sb.setLength(0);
-                javaIndent(sb, 1);
-                sb.append("  \""); //$NON-NLS-1$
-            }
-        }
-
-        boolean and = false;
-        iter = introspectedTable.getPrimaryKeyColumns().iterator();
-        while (iter.hasNext()) {
-            sb.setLength(0);
-            javaIndent(sb, 1);
-            if (and) {
-                sb.append("  \"and "); //$NON-NLS-1$
-            } else {
-                sb.append("\"where "); //$NON-NLS-1$
-                and = true;
-            }
-
-            IntrospectedColumn introspectedColumn = iter.next();
-            sb.append(escapeStringForJava(getEscapedColumnName(introspectedColumn)));
-            sb.append(" = "); //$NON-NLS-1$
-            sb.append(getParameterClause(introspectedColumn));
-            sb.append('\"');
-            if (iter.hasNext()) {
-                sb.append(',');
-            }
-            method.addAnnotation(sb.toString());
-        }
-
-        method.addAnnotation("})"); //$NON-NLS-1$
+        buildUpdateByPrimaryKeyAnnotations(introspectedTable.getNonPrimaryKeyColumns()).forEach(method::addAnnotation);
     }
 
     @Override

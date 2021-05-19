@@ -15,14 +15,23 @@
  */
 package org.mybatis.generator.codegen.mybatis3.javamapper.elements;
 
+import static org.mybatis.generator.api.dom.OutputUtilities.javaIndent;
+import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getEscapedColumnName;
+import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getParameterClause;
 import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getRenamedColumnNameForResultMap;
+import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.codegen.AbstractGenerator;
+import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 import org.mybatis.generator.config.GeneratedKey;
 
 public abstract class AbstractJavaMapperMethodGenerator extends
@@ -121,5 +130,79 @@ public abstract class AbstractJavaMapperMethodGenerator extends
             interfaze.addImportedType(
                     new FullyQualifiedJavaType("org.apache.ibatis.annotations.Results")); //$NON-NLS-1$
         }
+    }
+
+    protected List<String> buildByPrimaryKeyWhereClause() {
+        List<String> answer = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+        boolean and = false;
+        Iterator<IntrospectedColumn> iter = introspectedTable.getPrimaryKeyColumns().iterator();
+        while (iter.hasNext()) {
+            sb.setLength(0);
+            javaIndent(sb, 1);
+            if (and) {
+                sb.append("  \"and "); //$NON-NLS-1$
+            } else {
+                sb.append("\"where "); //$NON-NLS-1$
+                and = true;
+            }
+
+            IntrospectedColumn introspectedColumn = iter.next();
+            sb.append(escapeStringForJava(getEscapedColumnName(introspectedColumn)));
+            sb.append(" = "); //$NON-NLS-1$
+            sb.append(getParameterClause(introspectedColumn));
+            sb.append('\"');
+            if (iter.hasNext()) {
+                sb.append(',');
+            }
+            answer.add(sb.toString());
+        }
+
+        return answer;
+    }
+
+    protected List<String> buildUpdateByPrimaryKeyAnnotations(List<IntrospectedColumn> columnList) {
+        List<String> answer = new ArrayList<>();
+        answer.add("@Update({"); //$NON-NLS-1$
+
+        StringBuilder sb = new StringBuilder();
+        javaIndent(sb, 1);
+        sb.append("\"update "); //$NON-NLS-1$
+        sb.append(escapeStringForJava(introspectedTable.getFullyQualifiedTableNameAtRuntime()));
+        sb.append("\","); //$NON-NLS-1$
+        answer.add(sb.toString());
+
+        // set up for first column
+        sb.setLength(0);
+        javaIndent(sb, 1);
+        sb.append("\"set "); //$NON-NLS-1$
+
+        Iterator<IntrospectedColumn> iter = ListUtilities.removeGeneratedAlwaysColumns(columnList).iterator();
+        while (iter.hasNext()) {
+            IntrospectedColumn introspectedColumn = iter.next();
+
+            sb.append(escapeStringForJava(getEscapedColumnName(introspectedColumn)));
+            sb.append(" = "); //$NON-NLS-1$
+            sb.append(getParameterClause(introspectedColumn));
+
+            if (iter.hasNext()) {
+                sb.append(',');
+            }
+
+            sb.append("\","); //$NON-NLS-1$
+            answer.add(sb.toString());
+
+            // set up for the next column
+            if (iter.hasNext()) {
+                sb.setLength(0);
+                javaIndent(sb, 1);
+                sb.append("  \""); //$NON-NLS-1$
+            }
+        }
+
+        answer.addAll(buildByPrimaryKeyWhereClause());
+
+        answer.add("})"); //$NON-NLS-1$
+        return answer;
     }
 }

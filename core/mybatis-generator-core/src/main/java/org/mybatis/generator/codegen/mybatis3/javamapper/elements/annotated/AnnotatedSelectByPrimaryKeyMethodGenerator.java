@@ -25,7 +25,6 @@ import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
-import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.SelectByPrimaryKeyMethodGenerator;
 
 public class AnnotatedSelectByPrimaryKeyMethodGenerator extends SelectByPrimaryKeyMethodGenerator {
@@ -83,29 +82,7 @@ public class AnnotatedSelectByPrimaryKeyMethodGenerator extends SelectByPrimaryK
         sb.append("\","); //$NON-NLS-1$
         method.addAnnotation(sb.toString());
 
-        boolean and = false;
-        iter = introspectedTable.getPrimaryKeyColumns().iterator();
-        while (iter.hasNext()) {
-            sb.setLength(0);
-            javaIndent(sb, 1);
-            if (and) {
-                sb.append("  \"and "); //$NON-NLS-1$
-            } else {
-                sb.append("\"where "); //$NON-NLS-1$
-                and = true;
-            }
-
-            IntrospectedColumn introspectedColumn = iter.next();
-            sb.append(escapeStringForJava(
-                    MyBatis3FormattingUtilities.getAliasedEscapedColumnName(introspectedColumn)));
-            sb.append(" = "); //$NON-NLS-1$
-            sb.append(MyBatis3FormattingUtilities.getParameterClause(introspectedColumn));
-            sb.append('\"');
-            if (iter.hasNext()) {
-                sb.append(',');
-            }
-            method.addAnnotation(sb.toString());
-        }
+        buildByPrimaryKeyWhereClause().forEach(method::addAnnotation);
 
         method.addAnnotation("})"); //$NON-NLS-1$
 

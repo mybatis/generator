@@ -128,4 +128,25 @@ public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
 
         return answer;
     }
+
+    protected List<TextElement> buildPrimaryKeyWhereClause() {
+        List<TextElement> answer = new ArrayList<>();
+        boolean first = true;
+        for (IntrospectedColumn introspectedColumn : introspectedTable.getPrimaryKeyColumns()) {
+            String line;
+            if (first) {
+                line = "where "; //$NON-NLS-1$
+                first = false;
+            } else {
+                line = "  and "; //$NON-NLS-1$
+            }
+
+            line += MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn);
+            line += " = "; //$NON-NLS-1$
+            line += MyBatis3FormattingUtilities.getParameterClause(introspectedColumn);
+            answer.add(new TextElement(line));
+        }
+
+        return answer;
+    }
 }

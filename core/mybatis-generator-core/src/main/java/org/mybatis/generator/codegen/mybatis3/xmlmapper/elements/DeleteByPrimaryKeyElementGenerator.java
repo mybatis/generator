@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,11 +15,9 @@
  */
 package org.mybatis.generator.codegen.mybatis3.xmlmapper.elements;
 
-import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
-import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 
 public class DeleteByPrimaryKeyElementGenerator extends
         AbstractXmlElementGenerator {
@@ -50,38 +48,18 @@ public class DeleteByPrimaryKeyElementGenerator extends
                         .get(0).getFullyQualifiedJavaType().toString();
             }
         }
-        answer.addAttribute(new Attribute("parameterType", //$NON-NLS-1$
-                parameterClass));
+        answer.addAttribute(new Attribute("parameterType", parameterClass)); //$NON-NLS-1$
 
         context.getCommentGenerator().addComment(answer);
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("delete from "); //$NON-NLS-1$
-        sb.append(introspectedTable.getFullyQualifiedTableNameAtRuntime());
-        answer.addElement(new TextElement(sb.toString()));
+        String sb = "delete from " + //$NON-NLS-1$
+                introspectedTable.getFullyQualifiedTableNameAtRuntime();
+        answer.addElement(new TextElement(sb));
 
-        boolean and = false;
-        for (IntrospectedColumn introspectedColumn : introspectedTable
-                .getPrimaryKeyColumns()) {
-            sb.setLength(0);
-            if (and) {
-                sb.append("  and "); //$NON-NLS-1$
-            } else {
-                sb.append("where "); //$NON-NLS-1$
-                and = true;
-            }
-
-            sb.append(MyBatis3FormattingUtilities
-                    .getEscapedColumnName(introspectedColumn));
-            sb.append(" = "); //$NON-NLS-1$
-            sb.append(MyBatis3FormattingUtilities
-                    .getParameterClause(introspectedColumn));
-            answer.addElement(new TextElement(sb.toString()));
-        }
+        buildPrimaryKeyWhereClause().forEach(answer::addElement);
 
         if (context.getPlugins()
-                .sqlMapDeleteByPrimaryKeyElementGenerated(answer,
-                        introspectedTable)) {
+                .sqlMapDeleteByPrimaryKeyElementGenerated(answer,introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

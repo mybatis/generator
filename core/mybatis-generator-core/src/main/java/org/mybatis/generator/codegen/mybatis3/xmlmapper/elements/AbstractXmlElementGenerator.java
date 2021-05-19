@@ -20,6 +20,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
@@ -145,6 +146,36 @@ public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
             line += " = "; //$NON-NLS-1$
             line += MyBatis3FormattingUtilities.getParameterClause(introspectedColumn);
             answer.add(new TextElement(line));
+        }
+
+        return answer;
+    }
+
+    protected XmlElement buildInitialInsert(String statementId, FullyQualifiedJavaType parameterType) {
+        XmlElement answer = new XmlElement("insert"); //$NON-NLS-1$
+
+        answer.addAttribute(new Attribute("id", statementId)); //$NON-NLS-1$
+
+        answer.addAttribute(new Attribute("parameterType", //$NON-NLS-1$
+                parameterType.getFullyQualifiedName()));
+
+        context.getCommentGenerator().addComment(answer);
+
+        GeneratedKey gk = introspectedTable.getGeneratedKey();
+        if (gk != null) {
+            introspectedTable.getColumn(gk.getColumn()).ifPresent(introspectedColumn -> {
+                // if the column is null, then it's a configuration error. The
+                // warning has already been reported
+                if (gk.isJdbcStandard()) {
+                    answer.addAttribute(new Attribute("useGeneratedKeys", "true")); //$NON-NLS-1$ //$NON-NLS-2$
+                    answer.addAttribute(
+                            new Attribute("keyProperty", introspectedColumn.getJavaProperty())); //$NON-NLS-1$
+                    answer.addAttribute(
+                            new Attribute("keyColumn", introspectedColumn.getActualColumnName())); //$NON-NLS-1$
+                } else {
+                    answer.addElement(getSelectKey(introspectedColumn, gk));
+                }
+            });
         }
 
         return answer;

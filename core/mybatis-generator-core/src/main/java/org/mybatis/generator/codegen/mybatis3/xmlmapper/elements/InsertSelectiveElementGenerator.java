@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,13 +16,11 @@
 package org.mybatis.generator.codegen.mybatis3.xmlmapper.elements;
 
 import org.mybatis.generator.api.IntrospectedColumn;
-import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
-import org.mybatis.generator.config.GeneratedKey;
 
 public class InsertSelectiveElementGenerator extends
         AbstractXmlElementGenerator {
@@ -33,35 +31,8 @@ public class InsertSelectiveElementGenerator extends
 
     @Override
     public void addElements(XmlElement parentElement) {
-        XmlElement answer = new XmlElement("insert"); //$NON-NLS-1$
-
-        answer.addAttribute(new Attribute(
-                "id", introspectedTable.getInsertSelectiveStatementId())); //$NON-NLS-1$
-
-        FullyQualifiedJavaType parameterType = introspectedTable.getRules()
-                .calculateAllFieldsClass();
-
-        answer.addAttribute(new Attribute("parameterType", //$NON-NLS-1$
-                parameterType.getFullyQualifiedName()));
-
-        context.getCommentGenerator().addComment(answer);
-
-        GeneratedKey gk = introspectedTable.getGeneratedKey();
-        if (gk != null) {
-            introspectedTable.getColumn(gk.getColumn()).ifPresent(introspectedColumn -> {
-                // if the column is null, then it's a configuration error. The
-                // warning has already been reported
-                if (gk.isJdbcStandard()) {
-                    answer.addAttribute(new Attribute("useGeneratedKeys", "true")); //$NON-NLS-1$ //$NON-NLS-2$
-                    answer.addAttribute(
-                            new Attribute("keyProperty", introspectedColumn.getJavaProperty())); //$NON-NLS-1$
-                    answer.addAttribute(
-                            new Attribute("keyColumn", introspectedColumn.getActualColumnName())); //$NON-NLS-1$
-                } else {
-                    answer.addElement(getSelectKey(introspectedColumn, gk));
-                }
-            });
-        }
+        XmlElement answer = buildInitialInsert(introspectedTable.getInsertSelectiveStatementId(),
+                introspectedTable.getRules().calculateAllFieldsClass());
 
         StringBuilder sb = new StringBuilder();
 
@@ -135,8 +106,7 @@ public class InsertSelectiveElementGenerator extends
             valuesTrimElement.addElement(valuesNotNullElement);
         }
 
-        if (context.getPlugins().sqlMapInsertSelectiveElementGenerated(
-                answer, introspectedTable)) {
+        if (context.getPlugins().sqlMapInsertSelectiveElementGenerated( answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

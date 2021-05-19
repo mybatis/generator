@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -37,9 +37,8 @@ public class ExampleWhereClauseElementGenerator extends
         XmlElement answer = new XmlElement("sql"); //$NON-NLS-1$
 
         if (isForUpdateByExample) {
-            answer
-                    .addAttribute(new Attribute(
-                            "id", introspectedTable.getMyBatis3UpdateByExampleWhereClauseId())); //$NON-NLS-1$
+            answer.addAttribute(new Attribute(
+                    "id", introspectedTable.getMyBatis3UpdateByExampleWhereClauseId())); //$NON-NLS-1$
         } else {
             answer.addAttribute(new Attribute(
                     "id", introspectedTable.getExampleWhereClauseId())); //$NON-NLS-1$
@@ -75,18 +74,13 @@ public class ExampleWhereClauseElementGenerator extends
 
         trimElement.addElement(getMiddleForEachElement(null));
 
-        for (IntrospectedColumn introspectedColumn : introspectedTable
-                .getNonBLOBColumns()) {
-            if (stringHasValue(introspectedColumn
-                    .getTypeHandler())) {
-                trimElement
-                        .addElement(getMiddleForEachElement(introspectedColumn));
+        for (IntrospectedColumn introspectedColumn : introspectedTable.getNonBLOBColumns()) {
+            if (stringHasValue(introspectedColumn.getTypeHandler())) {
+                trimElement.addElement(getMiddleForEachElement(introspectedColumn));
             }
         }
 
-        if (context.getPlugins()
-                .sqlMapExampleWhereClauseElementGenerated(answer,
-                        introspectedTable)) {
+        if (context.getPlugins().sqlMapExampleWhereClauseElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

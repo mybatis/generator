@@ -28,6 +28,8 @@ import org.mybatis.generator.codegen.AbstractGenerator;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 import org.mybatis.generator.config.GeneratedKey;
 
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+
 public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
     public abstract void addElements(XmlElement parentElement);
 
@@ -179,5 +181,103 @@ public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
         }
 
         return answer;
+    }
+
+    protected enum ResultElementType {
+        ID("id"), //$NON-NLS-1$
+        RESULT("result"); //$NON-NLS-1$
+
+        private final String value;
+
+        ResultElementType(String value) {
+            this.value = value;
+        }
+    }
+
+    protected List<XmlElement> buildResultMapItems(ResultElementType elementType, List<IntrospectedColumn> columns) {
+        List<XmlElement> answer = new ArrayList<>();
+        for (IntrospectedColumn introspectedColumn : columns) {
+            XmlElement resultElement = new XmlElement(elementType.value);
+
+            resultElement.addAttribute(generateColumnAttribute(introspectedColumn));
+            resultElement.addAttribute(new Attribute(
+                    "property", introspectedColumn.getJavaProperty())); //$NON-NLS-1$
+            resultElement.addAttribute(new Attribute("jdbcType", //$NON-NLS-1$
+                    introspectedColumn.getJdbcTypeName()));
+
+            if (stringHasValue(introspectedColumn.getTypeHandler())) {
+                resultElement.addAttribute(new Attribute(
+                        "typeHandler", introspectedColumn.getTypeHandler())); //$NON-NLS-1$
+            }
+
+            answer.add(resultElement);
+        }
+
+        return answer;
+    }
+
+    protected XmlElement buildConstructorElement(boolean includeBlobColumns) {
+        XmlElement constructor = new XmlElement("constructor"); //$NON-NLS-1$
+
+        for (IntrospectedColumn introspectedColumn : introspectedTable
+                .getPrimaryKeyColumns()) {
+            XmlElement resultElement = new XmlElement("idArg"); //$NON-NLS-1$
+
+            resultElement.addAttribute(generateColumnAttribute(introspectedColumn));
+            resultElement.addAttribute(new Attribute("jdbcType", //$NON-NLS-1$
+                    introspectedColumn.getJdbcTypeName()));
+            resultElement.addAttribute(new Attribute("javaType", //$NON-NLS-1$
+                    introspectedColumn.getFullyQualifiedJavaType().getFullyQualifiedName()));
+
+            if (stringHasValue(introspectedColumn.getTypeHandler())) {
+                resultElement.addAttribute(new Attribute(
+                        "typeHandler", introspectedColumn.getTypeHandler())); //$NON-NLS-1$
+            }
+
+            constructor.addElement(resultElement);
+        }
+
+        List<IntrospectedColumn> columns;
+        if (includeBlobColumns) {
+            columns = introspectedTable.getNonPrimaryKeyColumns();
+        } else {
+            columns = introspectedTable.getBaseColumns();
+        }
+        for (IntrospectedColumn introspectedColumn : columns) {
+            XmlElement resultElement = new XmlElement("arg"); //$NON-NLS-1$
+
+            resultElement.addAttribute(generateColumnAttribute(introspectedColumn));
+            resultElement.addAttribute(new Attribute("jdbcType", //$NON-NLS-1$
+                    introspectedColumn.getJdbcTypeName()));
+
+            if (introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {
+                // need to use the MyBatis type alias for a primitive byte
+                String s = '_'
+                        + introspectedColumn.getFullyQualifiedJavaType().getShortName();
+                resultElement.addAttribute(new Attribute("javaType", s)); //$NON-NLS-1$
+            } else if ("byte[]".equals(introspectedColumn.getFullyQualifiedJavaType() //$NON-NLS-1$
+                    .getFullyQualifiedName())) {
+                // need to use the MyBatis type alias for a primitive byte arry
+                resultElement.addAttribute(new Attribute("javaType", //$NON-NLS-1$
+                        "_byte[]")); //$NON-NLS-1$
+            } else {
+                resultElement.addAttribute(new Attribute("javaType", //$NON-NLS-1$
+                        introspectedColumn.getFullyQualifiedJavaType().getFullyQualifiedName()));
+            }
+
+            if (stringHasValue(introspectedColumn.getTypeHandler())) {
+                resultElement.addAttribute(new Attribute(
+                        "typeHandler", introspectedColumn.getTypeHandler())); //$NON-NLS-1$
+            }
+
+            constructor.addElement(resultElement);
+        }
+
+        return constructor;
+    }
+
+    protected Attribute generateColumnAttribute(IntrospectedColumn introspectedColumn) {
+        return new Attribute("column", //$NON-NLS-1$
+                MyBatis3FormattingUtilities.getRenamedColumnNameForResultMap(introspectedColumn));
     }
 }

@@ -106,7 +106,7 @@ public class InsertSelectiveElementGenerator extends
             valuesTrimElement.addElement(valuesNotNullElement);
         }
 
-        if (context.getPlugins().sqlMapInsertSelectiveElementGenerated( answer, introspectedTable)) {
+        if (context.getPlugins().sqlMapInsertSelectiveElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

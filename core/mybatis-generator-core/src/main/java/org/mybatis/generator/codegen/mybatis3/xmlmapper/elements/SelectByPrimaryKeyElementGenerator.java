@@ -63,8 +63,7 @@ public class SelectByPrimaryKeyElementGenerator extends
         StringBuilder sb = new StringBuilder();
         sb.append("select "); //$NON-NLS-1$
 
-        if (stringHasValue(introspectedTable
-                .getSelectByPrimaryKeyQueryId())) {
+        if (stringHasValue(introspectedTable.getSelectByPrimaryKeyQueryId())) {
             sb.append('\'');
             sb.append(introspectedTable.getSelectByPrimaryKeyQueryId());
             sb.append("' as QUERYID,"); //$NON-NLS-1$
@@ -85,7 +84,7 @@ public class SelectByPrimaryKeyElementGenerator extends
         buildPrimaryKeyWhereClause().forEach(answer::addElement);
 
         if (context.getPlugins()
-                .sqlMapSelectByPrimaryKeyElementGenerated(answer,introspectedTable)) {
+                .sqlMapSelectByPrimaryKeyElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

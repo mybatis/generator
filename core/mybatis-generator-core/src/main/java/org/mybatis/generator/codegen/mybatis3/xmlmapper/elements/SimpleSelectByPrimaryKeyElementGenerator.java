@@ -17,11 +17,9 @@ package org.mybatis.generator.codegen.mybatis3.xmlmapper.elements;
 
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
-import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
-import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 
 public class SimpleSelectByPrimaryKeyElementGenerator extends
         AbstractXmlElementGenerator {
@@ -49,8 +47,7 @@ public class SimpleSelectByPrimaryKeyElementGenerator extends
                     .getFullyQualifiedJavaType().toString();
         }
 
-        answer.addAttribute(new Attribute("parameterType", //$NON-NLS-1$
-                parameterType));
+        answer.addAttribute(new Attribute("parameterType", parameterType)); //$NON-NLS-1$
 
         context.getCommentGenerator().addComment(answer);
 

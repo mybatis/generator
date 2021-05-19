@@ -52,8 +52,8 @@ public class DeleteByPrimaryKeyElementGenerator extends
 
         context.getCommentGenerator().addComment(answer);
 
-        String sb = "delete from " + //$NON-NLS-1$
-                introspectedTable.getFullyQualifiedTableNameAtRuntime();
+        String sb = "delete from " //$NON-NLS-1$
+                + introspectedTable.getFullyQualifiedTableNameAtRuntime();
         answer.addElement(new TextElement(sb));
 
         buildPrimaryKeyWhereClause().forEach(answer::addElement);

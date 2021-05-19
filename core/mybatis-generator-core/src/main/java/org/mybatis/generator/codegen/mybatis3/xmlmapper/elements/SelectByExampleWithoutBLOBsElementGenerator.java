@@ -30,15 +30,13 @@ public class SelectByExampleWithoutBLOBsElementGenerator extends
 
     @Override
     public void addElements(XmlElement parentElement) {
-        String fqjt = introspectedTable.getExampleType();
-
         XmlElement answer = new XmlElement("select"); //$NON-NLS-1$
 
         answer.addAttribute(new Attribute("id", //$NON-NLS-1$
                 introspectedTable.getSelectByExampleStatementId()));
         answer.addAttribute(new Attribute(
                 "resultMap", introspectedTable.getBaseResultMapId())); //$NON-NLS-1$
-        answer.addAttribute(new Attribute("parameterType", fqjt)); //$NON-NLS-1$
+        answer.addAttribute(new Attribute("parameterType", introspectedTable.getExampleType())); //$NON-NLS-1$
 
         context.getCommentGenerator().addComment(answer);
 
@@ -49,8 +47,7 @@ public class SelectByExampleWithoutBLOBsElementGenerator extends
         answer.addElement(ifElement);
 
         StringBuilder sb = new StringBuilder();
-        if (stringHasValue(introspectedTable
-                .getSelectByExampleQueryId())) {
+        if (stringHasValue(introspectedTable.getSelectByExampleQueryId())) {
             sb.append('\'');
             sb.append(introspectedTable.getSelectByExampleQueryId());
             sb.append("' as QUERYID,"); //$NON-NLS-1$

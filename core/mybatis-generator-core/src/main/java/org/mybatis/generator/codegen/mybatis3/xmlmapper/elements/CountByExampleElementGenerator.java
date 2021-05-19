@@ -29,11 +29,9 @@ public class CountByExampleElementGenerator extends AbstractXmlElementGenerator 
     public void addElements(XmlElement parentElement) {
         XmlElement answer = new XmlElement("select"); //$NON-NLS-1$
 
-        String fqjt = introspectedTable.getExampleType();
-
         answer.addAttribute(new Attribute(
                 "id", introspectedTable.getCountByExampleStatementId())); //$NON-NLS-1$
-        answer.addAttribute(new Attribute("parameterType", fqjt)); //$NON-NLS-1$
+        answer.addAttribute(new Attribute("parameterType", introspectedTable.getExampleType())); //$NON-NLS-1$
         answer.addAttribute(new Attribute("resultType", "java.lang.Long")); //$NON-NLS-1$ //$NON-NLS-2$
 
         context.getCommentGenerator().addComment(answer);
@@ -43,8 +41,7 @@ public class CountByExampleElementGenerator extends AbstractXmlElementGenerator 
         answer.addElement(new TextElement(s));
         answer.addElement(getExampleIncludeElement());
 
-        if (context.getPlugins().sqlMapCountByExampleElementGenerated(
-                answer, introspectedTable)) {
+        if (context.getPlugins().sqlMapCountByExampleElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

@@ -80,8 +80,7 @@ public class UpdateByExampleWithoutBLOBsElementGenerator extends
         answer.addElement(getUpdateByExampleIncludeElement());
 
         if (context.getPlugins()
-                .sqlMapUpdateByExampleWithoutBLOBsElementGenerated(answer,
-                        introspectedTable)) {
+                .sqlMapUpdateByExampleWithoutBLOBsElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

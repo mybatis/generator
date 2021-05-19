@@ -79,8 +79,7 @@ public class UpdateByExampleWithBLOBsElementGenerator extends
         answer.addElement(getUpdateByExampleIncludeElement());
 
         if (context.getPlugins()
-                .sqlMapUpdateByExampleWithBLOBsElementGenerated(answer,
-                        introspectedTable)) {
+                .sqlMapUpdateByExampleWithBLOBsElementGenerated(answer,introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

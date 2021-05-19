@@ -63,7 +63,7 @@ public class SimpleSelectByPrimaryKeyElementGenerator extends
             sb.append("' as QUERYID,"); //$NON-NLS-1$
         }
 
-        buildSelectList(sb, introspectedTable.getAllColumns(), answer);
+        buildSelectList(sb.toString(), introspectedTable.getAllColumns()).forEach(answer::addElement);
 
         sb.setLength(0);
         sb.append("from "); //$NON-NLS-1$

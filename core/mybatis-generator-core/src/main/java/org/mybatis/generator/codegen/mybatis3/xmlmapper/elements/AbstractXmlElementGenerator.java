@@ -15,6 +15,7 @@
  */
 package org.mybatis.generator.codegen.mybatis3.xmlmapper.elements;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -99,11 +100,13 @@ public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
         return ifElement;
     }
 
-    protected void buildSelectList(List<IntrospectedColumn> columns, XmlElement element) {
-        buildSelectList(new StringBuilder(), columns, element);
+    protected List<TextElement> buildSelectList(List<IntrospectedColumn> columns) {
+        return buildSelectList("", columns); //$NON-NLS-1$
     }
 
-    protected void buildSelectList(StringBuilder sb, List<IntrospectedColumn> columns, XmlElement element) {
+    protected List<TextElement> buildSelectList(String initial, List<IntrospectedColumn> columns) {
+        List<TextElement> answer = new ArrayList<>();
+        StringBuilder sb = new StringBuilder(initial);
         Iterator<IntrospectedColumn> iter = columns.iterator();
         while (iter.hasNext()) {
             sb.append(MyBatis3FormattingUtilities.getSelectListPhrase(iter
@@ -114,13 +117,15 @@ public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
             }
 
             if (sb.length() > 80) {
-                element.addElement(new TextElement(sb.toString()));
+                answer.add(new TextElement(sb.toString()));
                 sb.setLength(0);
             }
         }
 
         if (sb.length() > 0) {
-            element.addElement(new TextElement(sb.toString()));
+            answer.add(new TextElement(sb.toString()));
         }
+
+        return answer;
     }
 }

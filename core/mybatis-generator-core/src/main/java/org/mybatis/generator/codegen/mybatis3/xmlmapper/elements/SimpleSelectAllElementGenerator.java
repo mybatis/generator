@@ -39,11 +39,9 @@ public class SimpleSelectAllElementGenerator extends
 
         context.getCommentGenerator().addComment(answer);
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("select "); //$NON-NLS-1$
-        buildSelectList(sb, introspectedTable.getAllColumns(), answer);
+        buildSelectList("select ", introspectedTable.getAllColumns()).forEach(answer::addElement); //$NON-NLS-1$
 
-        sb.setLength(0);
+        StringBuilder sb = new StringBuilder();
         sb.append("from "); //$NON-NLS-1$
         sb.append(introspectedTable
                 .getAliasedFullyQualifiedTableNameAtRuntime());

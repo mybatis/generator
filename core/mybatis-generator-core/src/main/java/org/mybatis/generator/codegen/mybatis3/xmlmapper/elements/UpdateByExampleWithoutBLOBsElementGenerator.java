@@ -26,7 +26,7 @@ public class UpdateByExampleWithoutBLOBsElementGenerator extends
 
     @Override
     public void addElements(XmlElement parentElement) {
-        XmlElement answer = generateUpdateByExampleElement(introspectedTable.getUpdateByExampleStatementId(),
+        XmlElement answer = buildUpdateByExampleElement(introspectedTable.getUpdateByExampleStatementId(),
                 introspectedTable.getNonBLOBColumns());
 
         if (context.getPlugins()

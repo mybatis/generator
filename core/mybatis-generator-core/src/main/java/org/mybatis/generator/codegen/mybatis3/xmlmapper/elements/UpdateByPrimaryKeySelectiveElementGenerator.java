@@ -44,8 +44,7 @@ public class UpdateByPrimaryKeySelectiveElementGenerator extends
             parameterType = introspectedTable.getBaseRecordType();
         }
 
-        answer.addAttribute(new Attribute("parameterType", //$NON-NLS-1$
-                parameterType));
+        answer.addAttribute(new Attribute("parameterType", parameterType)); //$NON-NLS-1$
 
         context.getCommentGenerator().addComment(answer);
 
@@ -68,11 +67,9 @@ public class UpdateByPrimaryKeySelectiveElementGenerator extends
             dynamicElement.addElement(isNotNullElement);
 
             sb.setLength(0);
-            sb.append(MyBatis3FormattingUtilities
-                    .getEscapedColumnName(introspectedColumn));
+            sb.append(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn));
             sb.append(" = "); //$NON-NLS-1$
-            sb.append(MyBatis3FormattingUtilities
-                    .getParameterClause(introspectedColumn));
+            sb.append(MyBatis3FormattingUtilities.getParameterClause(introspectedColumn));
             sb.append(',');
 
             isNotNullElement.addElement(new TextElement(sb.toString()));

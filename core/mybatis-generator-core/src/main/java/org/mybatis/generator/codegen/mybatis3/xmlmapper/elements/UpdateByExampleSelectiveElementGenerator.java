@@ -59,11 +59,9 @@ public class UpdateByExampleSelectiveElementGenerator extends
             dynamicElement.addElement(isNotNullElement);
 
             sb.setLength(0);
-            sb.append(MyBatis3FormattingUtilities
-                    .getAliasedEscapedColumnName(introspectedColumn));
+            sb.append(MyBatis3FormattingUtilities.getAliasedEscapedColumnName(introspectedColumn));
             sb.append(" = "); //$NON-NLS-1$
-            sb.append(MyBatis3FormattingUtilities.getParameterClause(
-                    introspectedColumn, "row.")); //$NON-NLS-1$
+            sb.append(MyBatis3FormattingUtilities.getParameterClause(introspectedColumn, "row.")); //$NON-NLS-1$
             sb.append(',');
 
             isNotNullElement.addElement(new TextElement(sb.toString()));

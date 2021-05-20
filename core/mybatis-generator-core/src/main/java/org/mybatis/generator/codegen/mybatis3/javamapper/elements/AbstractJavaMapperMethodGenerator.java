@@ -322,4 +322,15 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractGenerato
 
         return method;
     }
+
+    protected Method buildBasicUpdateByPrimaryKeyMethod(String statementId, FullyQualifiedJavaType parameterType) {
+        Method method = new Method(statementId);
+        method.setVisibility(JavaVisibility.PUBLIC);
+        method.setAbstract(true);
+        method.setReturnType(FullyQualifiedJavaType.getIntInstance());
+        method.addParameter(new Parameter(parameterType, "row")); //$NON-NLS-1$
+
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
+        return method;
+    }
 }

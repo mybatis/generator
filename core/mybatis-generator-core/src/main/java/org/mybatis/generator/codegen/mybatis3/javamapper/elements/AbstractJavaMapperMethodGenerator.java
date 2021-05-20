@@ -33,6 +33,7 @@ import java.util.Set;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
+import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.codegen.AbstractGenerator;
@@ -298,5 +299,27 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractGenerato
         }
 
         method.addAnnotation("})"); //$NON-NLS-1$
+    }
+
+    protected Method buildBasicUpdateByExampleMethod(String statementId, FullyQualifiedJavaType parameterType,
+                                                     Set<FullyQualifiedJavaType> importedTypes) {
+        Method method = new Method(statementId);
+        method.setVisibility(JavaVisibility.PUBLIC);
+        method.setAbstract(true);
+        method.setReturnType(FullyQualifiedJavaType.getIntInstance());
+
+        method.addParameter(new Parameter(parameterType, "row", "@Param(\"row\")")); //$NON-NLS-1$ //$NON-NLS-2$
+
+        importedTypes.add(parameterType);
+
+        FullyQualifiedJavaType exampleType = new FullyQualifiedJavaType(introspectedTable.getExampleType());
+        method.addParameter(new Parameter(exampleType,"example", "@Param(\"example\")")); //$NON-NLS-1$ //$NON-NLS-2$
+        importedTypes.add(exampleType);
+
+        importedTypes.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param")); //$NON-NLS-1$
+
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
+
+        return method;
     }
 }

@@ -20,46 +20,21 @@ import java.util.TreeSet;
 
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
-import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
-import org.mybatis.generator.api.dom.java.Parameter;
 
-public class UpdateByExampleSelectiveMethodGenerator extends
-        AbstractJavaMapperMethodGenerator {
+public class UpdateByExampleSelectiveMethodGenerator extends AbstractJavaMapperMethodGenerator {
 
     @Override
     public void addInterfaceElements(Interface interfaze) {
-        Method method = new Method(introspectedTable
-                .getUpdateByExampleSelectiveStatementId());
-        method.setVisibility(JavaVisibility.PUBLIC);
-        method.setAbstract(true);
-        method.setReturnType(FullyQualifiedJavaType.getIntInstance());
-
-        FullyQualifiedJavaType parameterType =
-                introspectedTable.getRules().calculateAllFieldsClass();
-        method.addParameter(new Parameter(parameterType,
-                "row", "@Param(\"row\")")); //$NON-NLS-1$ //$NON-NLS-2$
-
+        String statementId = introspectedTable.getUpdateByExampleSelectiveStatementId();
+        FullyQualifiedJavaType parameterType = introspectedTable.getRules().calculateAllFieldsClass();
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
-        importedTypes.add(parameterType);
 
-        FullyQualifiedJavaType exampleType = new FullyQualifiedJavaType(
-                introspectedTable.getExampleType());
-        method.addParameter(new Parameter(exampleType,
-                "example", "@Param(\"example\")")); //$NON-NLS-1$ //$NON-NLS-2$
-        importedTypes.add(exampleType);
-
-        importedTypes.add(new FullyQualifiedJavaType(
-                "org.apache.ibatis.annotations.Param")); //$NON-NLS-1$
-
-        context.getCommentGenerator().addGeneralMethodComment(method,
-                introspectedTable);
+        Method method = buildBasicUpdateByExampleMethod(statementId, parameterType, importedTypes);
 
         addMapperAnnotations(method);
 
-        if (context.getPlugins()
-                .clientUpdateByExampleSelectiveMethodGenerated(method, interfaze,
-                        introspectedTable)) {
+        if (context.getPlugins().clientUpdateByExampleSelectiveMethodGenerated(method, interfaze, introspectedTable)) {
             addExtraImports(interfaze);
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);

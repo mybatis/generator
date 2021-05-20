@@ -23,6 +23,7 @@ import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJ
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -83,49 +84,53 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractGenerato
     }
 
     protected Optional<String> buildGeneratedKeyAnnotation() {
-        GeneratedKey gk = introspectedTable.getGeneratedKey();
-        if (gk == null) {
-            return Optional.empty();
+        return introspectedTable.getGeneratedKey().flatMap(this::buildGeneratedKeyAnnotation);
+    }
+
+    private Optional<String> buildGeneratedKeyAnnotation(GeneratedKey gk) {
+        return introspectedTable.getColumn(gk.getColumn()).map(ic -> buildGeneratedKeyAnnotation(gk, ic));
+    }
+
+    private String buildGeneratedKeyAnnotation(GeneratedKey gk, IntrospectedColumn introspectedColumn) {
+        StringBuilder sb = new StringBuilder();
+        if (gk.isJdbcStandard()) {
+            sb.append("@Options(useGeneratedKeys=true,keyProperty=\""); //$NON-NLS-1$
+            sb.append(introspectedColumn.getJavaProperty());
+            sb.append("\")"); //$NON-NLS-1$
         } else {
-            return introspectedTable.getColumn(gk.getColumn()).map(introspectedColumn -> {
-                StringBuilder sb = new StringBuilder();
-                if (gk.isJdbcStandard()) {
-                    sb.append("@Options(useGeneratedKeys=true,keyProperty=\""); //$NON-NLS-1$
-                    sb.append(introspectedColumn.getJavaProperty());
-                    sb.append("\")"); //$NON-NLS-1$
-                } else {
-                    FullyQualifiedJavaType fqjt = introspectedColumn.getFullyQualifiedJavaType();
-                    sb.append("@SelectKey(statement=\""); //$NON-NLS-1$
-                    sb.append(gk.getRuntimeSqlStatement());
-                    sb.append("\", keyProperty=\""); //$NON-NLS-1$
-                    sb.append(introspectedColumn.getJavaProperty());
-                    sb.append("\", before="); //$NON-NLS-1$
-                    sb.append(gk.isIdentity() ? "false" : "true"); //$NON-NLS-1$ //$NON-NLS-2$
-                    sb.append(", resultType="); //$NON-NLS-1$
-                    sb.append(fqjt.getShortName());
-                    sb.append(".class)"); //$NON-NLS-1$
-                }
-                return sb.toString();
-            });
+            sb.append("@SelectKey(statement=\""); //$NON-NLS-1$
+            sb.append(gk.getRuntimeSqlStatement());
+            sb.append("\", keyProperty=\""); //$NON-NLS-1$
+            sb.append(introspectedColumn.getJavaProperty());
+            sb.append("\", before="); //$NON-NLS-1$
+            sb.append(gk.isIdentity() ? "false" : "true"); //$NON-NLS-1$ //$NON-NLS-2$
+            sb.append(", resultType="); //$NON-NLS-1$
+            sb.append(introspectedColumn.getFullyQualifiedJavaType().getShortName());
+            sb.append(".class)"); //$NON-NLS-1$
         }
+        return sb.toString();
     }
 
     protected Set<FullyQualifiedJavaType> buildGeneratedKeyImportsIfRequired() {
+        return introspectedTable.getGeneratedKey().map(this::buildGeneratedKeyImportsIfRequired)
+                .orElseGet(Collections::emptySet);
+    }
+
+    private Set<FullyQualifiedJavaType> buildGeneratedKeyImportsIfRequired(GeneratedKey gk) {
+        return introspectedTable.getColumn(gk.getColumn()).map(ic -> buildGeneratedKeyImports(gk, ic))
+                .orElseGet(Collections::emptySet);
+    }
+
+    private Set<FullyQualifiedJavaType> buildGeneratedKeyImports(GeneratedKey gk,
+                                                                 IntrospectedColumn introspectedColumn) {
         Set<FullyQualifiedJavaType> answer = new HashSet<>();
-        GeneratedKey gk = introspectedTable.getGeneratedKey();
-        if (gk != null) {
-            introspectedTable.getColumn(gk.getColumn()).ifPresent(introspectedColumn -> {
-                if (gk.isJdbcStandard()) {
-                    answer.add(
-                            new FullyQualifiedJavaType("org.apache.ibatis.annotations.Options")); //$NON-NLS-1$
-                } else {
-                    answer.add(
-                            new FullyQualifiedJavaType("org.apache.ibatis.annotations.SelectKey")); //$NON-NLS-1$
-                    FullyQualifiedJavaType fqjt = introspectedColumn.getFullyQualifiedJavaType();
-                    answer.add(fqjt);
-                }
-            });
+        if (gk.isJdbcStandard()) {
+            answer.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Options")); //$NON-NLS-1$
+        } else {
+            answer.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.SelectKey")); //$NON-NLS-1$
+            answer.add(introspectedColumn.getFullyQualifiedJavaType());
         }
+
         return answer;
     }
 
@@ -251,7 +256,8 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractGenerato
         }
     }
 
-    protected void addAnnotatedResults(Interface interfaze, Method method, List<IntrospectedColumn> nonPrimaryKeyColumns) {
+    protected void addAnnotatedResults(Interface interfaze, Method method,
+                                       List<IntrospectedColumn> nonPrimaryKeyColumns) {
 
         if (introspectedTable.isConstructorBased()) {
             method.addAnnotation("@ConstructorArgs({"); //$NON-NLS-1$

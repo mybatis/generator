@@ -79,7 +79,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .withTableFieldName(supportClassGenerator.getTablePropertyName())
                 .build();
 
-        hasGeneratedKeys = introspectedTable.getGeneratedKey() != null;
+        hasGeneratedKeys = introspectedTable.getGeneratedKey().isPresent();
     }
 
     protected KotlinFile createMapperInterfaceFile() {

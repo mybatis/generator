@@ -34,12 +34,12 @@ public class DeleteByPrimaryKeyMethodGenerator extends AbstractJavaMapperMethodG
 
     @Override
     public void addInterfaceElements(Interface interfaze) {
-        Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
         Method method = new Method(introspectedTable.getDeleteByPrimaryKeyStatementId());
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setAbstract(true);
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
 
+        Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
         addPrimaryKeyMethodParameters(isSimple, method, importedTypes);
 
         addMapperAnnotations(method);

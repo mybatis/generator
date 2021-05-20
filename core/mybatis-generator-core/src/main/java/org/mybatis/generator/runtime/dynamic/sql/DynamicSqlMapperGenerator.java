@@ -135,7 +135,7 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
                 .withTableFieldName(tableFieldName)
                 .build();
 
-        hasGeneratedKeys = introspectedTable.getGeneratedKey() != null;
+        hasGeneratedKeys = introspectedTable.getGeneratedKey().isPresent();
     }
 
     protected Interface createBasicInterface() {

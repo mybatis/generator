@@ -150,7 +150,7 @@ public abstract class IntrospectedTable {
         return tableConfiguration.getSelectByPrimaryKeyQueryId();
     }
 
-    public GeneratedKey getGeneratedKey() {
+    public Optional<GeneratedKey> getGeneratedKey() {
         return tableConfiguration.getGeneratedKey();
     }
 

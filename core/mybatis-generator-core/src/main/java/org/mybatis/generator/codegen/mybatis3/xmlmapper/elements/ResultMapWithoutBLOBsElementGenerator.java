@@ -21,8 +21,7 @@ import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
-public class ResultMapWithoutBLOBsElementGenerator extends
-        AbstractXmlElementGenerator {
+public class ResultMapWithoutBLOBsElementGenerator extends AbstractXmlElementGenerator {
 
     private final boolean isSimple;
 
@@ -34,8 +33,7 @@ public class ResultMapWithoutBLOBsElementGenerator extends
     @Override
     public void addElements(XmlElement parentElement) {
         XmlElement answer = new XmlElement("resultMap"); //$NON-NLS-1$
-        answer.addAttribute(new Attribute("id", //$NON-NLS-1$
-                introspectedTable.getBaseResultMapId()));
+        answer.addAttribute(new Attribute("id", introspectedTable.getBaseResultMapId())); //$NON-NLS-1$
 
         String returnType;
         if (isSimple) {
@@ -48,8 +46,7 @@ public class ResultMapWithoutBLOBsElementGenerator extends
             }
         }
 
-        answer.addAttribute(new Attribute("type", //$NON-NLS-1$
-                returnType));
+        answer.addAttribute(new Attribute("type", returnType)); //$NON-NLS-1$
 
         context.getCommentGenerator().addComment(answer);
 
@@ -59,15 +56,13 @@ public class ResultMapWithoutBLOBsElementGenerator extends
             addResultMapElements(answer);
         }
 
-        if (context.getPlugins().sqlMapResultMapWithoutBLOBsElementGenerated(
-                answer, introspectedTable)) {
+        if (context.getPlugins().sqlMapResultMapWithoutBLOBsElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }
 
     private void addResultMapElements(XmlElement answer) {
-        buildResultMapItems(ResultElementType.ID, introspectedTable.getPrimaryKeyColumns())
-                .forEach(answer::addElement);
+        buildResultMapItems(ResultElementType.ID, introspectedTable.getPrimaryKeyColumns()).forEach(answer::addElement);
 
         List<IntrospectedColumn> columns;
         if (isSimple) {

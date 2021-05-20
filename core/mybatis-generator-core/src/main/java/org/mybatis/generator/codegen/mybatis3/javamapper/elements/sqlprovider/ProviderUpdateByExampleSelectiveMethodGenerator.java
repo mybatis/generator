@@ -43,20 +43,17 @@ public class ProviderUpdateByExampleSelectiveMethodGenerator extends AbstractJav
 
         Set<FullyQualifiedJavaType> importedTypes = initializeImportedTypes("java.util.Map"); //$NON-NLS-1$
 
-        FullyQualifiedJavaType recordClass =
-                introspectedTable.getRules().calculateAllFieldsClass();
+        FullyQualifiedJavaType recordClass = introspectedTable.getRules().calculateAllFieldsClass();
         importedTypes.add(recordClass);
         method.addBodyLine(String.format("%s row = (%s) parameter.get(\"row\");", //$NON-NLS-1$
                 recordClass.getShortName(), recordClass.getShortName()));
 
-        FullyQualifiedJavaType example =
-                new FullyQualifiedJavaType(introspectedTable.getExampleType());
+        FullyQualifiedJavaType example = new FullyQualifiedJavaType(introspectedTable.getExampleType());
         importedTypes.add(example);
         method.addBodyLine(String.format("%s example = (%s) parameter.get(\"example\");", //$NON-NLS-1$
                 example.getShortName(), example.getShortName()));
 
-        context.getCommentGenerator().addGeneralMethodComment(method,
-                introspectedTable);
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
 
         method.addBodyLine(""); //$NON-NLS-1$
 
@@ -92,8 +89,8 @@ public class ProviderUpdateByExampleSelectiveMethodGenerator extends AbstractJav
         method.addBodyLine("applyWhere(sql, example, true);"); //$NON-NLS-1$
         method.addBodyLine("return sql.toString();"); //$NON-NLS-1$
 
-        if (context.getPlugins().providerUpdateByExampleSelectiveMethodGenerated(method, topLevelClass,
-                introspectedTable)) {
+        if (context.getPlugins()
+                .providerUpdateByExampleSelectiveMethodGenerated(method, topLevelClass, introspectedTable)) {
             topLevelClass.addImportedTypes(importedTypes);
             topLevelClass.addMethod(method);
         }

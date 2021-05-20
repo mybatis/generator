@@ -17,8 +17,7 @@ package org.mybatis.generator.codegen.mybatis3.xmlmapper.elements;
 
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
-public class UpdateByPrimaryKeyWithBLOBsElementGenerator extends
-        AbstractXmlElementGenerator {
+public class UpdateByPrimaryKeyWithBLOBsElementGenerator extends AbstractXmlElementGenerator {
 
     public UpdateByPrimaryKeyWithBLOBsElementGenerator() {
         super();
@@ -38,8 +37,7 @@ public class UpdateByPrimaryKeyWithBLOBsElementGenerator extends
                 parameterType,
                 introspectedTable.getNonPrimaryKeyColumns());
 
-        if (context.getPlugins()
-                .sqlMapUpdateByPrimaryKeyWithBLOBsElementGenerated(answer, introspectedTable)) {
+        if (context.getPlugins().sqlMapUpdateByPrimaryKeyWithBLOBsElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

@@ -42,8 +42,7 @@ public class UpdateByExampleSelectiveElementGenerator extends
 
         StringBuilder sb = new StringBuilder();
         sb.append("update "); //$NON-NLS-1$
-        sb.append(introspectedTable
-                .getAliasedFullyQualifiedTableNameAtRuntime());
+        sb.append(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime());
         answer.addElement(new TextElement(sb.toString()));
 
         XmlElement dynamicElement = new XmlElement("set"); //$NON-NLS-1$
@@ -69,8 +68,7 @@ public class UpdateByExampleSelectiveElementGenerator extends
 
         answer.addElement(getUpdateByExampleIncludeElement());
 
-        if (context.getPlugins()
-                .sqlMapUpdateByExampleSelectiveElementGenerated(answer, introspectedTable)) {
+        if (context.getPlugins().sqlMapUpdateByExampleSelectiveElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

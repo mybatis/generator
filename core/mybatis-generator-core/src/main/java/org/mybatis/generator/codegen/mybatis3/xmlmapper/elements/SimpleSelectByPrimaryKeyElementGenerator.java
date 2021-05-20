@@ -21,8 +21,7 @@ import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
-public class SimpleSelectByPrimaryKeyElementGenerator extends
-        AbstractXmlElementGenerator {
+public class SimpleSelectByPrimaryKeyElementGenerator extends AbstractXmlElementGenerator {
 
     public SimpleSelectByPrimaryKeyElementGenerator() {
         super();
@@ -64,14 +63,12 @@ public class SimpleSelectByPrimaryKeyElementGenerator extends
 
         sb.setLength(0);
         sb.append("from "); //$NON-NLS-1$
-        sb.append(introspectedTable
-                .getAliasedFullyQualifiedTableNameAtRuntime());
+        sb.append(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime());
         answer.addElement(new TextElement(sb.toString()));
 
         buildPrimaryKeyWhereClause().forEach(answer::addElement);
 
-        if (context.getPlugins()
-                .sqlMapSelectByPrimaryKeyElementGenerated(answer, introspectedTable)) {
+        if (context.getPlugins().sqlMapSelectByPrimaryKeyElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

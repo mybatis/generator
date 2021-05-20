@@ -18,8 +18,7 @@ package org.mybatis.generator.codegen.mybatis3.xmlmapper.elements;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
-public class ResultMapWithBLOBsElementGenerator extends
-        AbstractXmlElementGenerator {
+public class ResultMapWithBLOBsElementGenerator extends AbstractXmlElementGenerator {
 
     public ResultMapWithBLOBsElementGenerator() {
         super();
@@ -41,8 +40,7 @@ public class ResultMapWithBLOBsElementGenerator extends
             returnType = introspectedTable.getBaseRecordType();
         }
 
-        answer.addAttribute(new Attribute("type", //$NON-NLS-1$
-                returnType));
+        answer.addAttribute(new Attribute("type", returnType)); //$NON-NLS-1$
 
         if (!introspectedTable.isConstructorBased()) {
             answer.addAttribute(new Attribute("extends", //$NON-NLS-1$
@@ -57,15 +55,13 @@ public class ResultMapWithBLOBsElementGenerator extends
             addResultMapElements(answer);
         }
 
-        if (context.getPlugins()
-                .sqlMapResultMapWithBLOBsElementGenerated(answer, introspectedTable)) {
+        if (context.getPlugins().sqlMapResultMapWithBLOBsElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }
 
     private void addResultMapElements(XmlElement answer) {
-        buildResultMapItems(ResultElementType.RESULT, introspectedTable.getBLOBColumns())
-                .forEach(answer::addElement);
+        buildResultMapItems(ResultElementType.RESULT, introspectedTable.getBLOBColumns()).forEach(answer::addElement);
     }
 
     private void addResultMapConstructorElements(XmlElement answer) {

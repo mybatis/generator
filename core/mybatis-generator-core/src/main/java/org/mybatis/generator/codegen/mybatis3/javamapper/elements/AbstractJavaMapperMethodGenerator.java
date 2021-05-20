@@ -66,8 +66,7 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractGenerato
         }
 
         if (stringHasValue(introspectedColumn.getTypeHandler())) {
-            FullyQualifiedJavaType fqjt =
-                    new FullyQualifiedJavaType(introspectedColumn.getTypeHandler());
+            FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedColumn.getTypeHandler());
             interfaze.addImportedType(fqjt);
             sb.append(", typeHandler="); //$NON-NLS-1$
             sb.append(fqjt.getShortName());

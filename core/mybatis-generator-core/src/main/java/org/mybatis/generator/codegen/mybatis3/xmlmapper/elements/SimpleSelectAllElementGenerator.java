@@ -21,8 +21,7 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.internal.util.StringUtility;
 
-public class SimpleSelectAllElementGenerator extends
-        AbstractXmlElementGenerator {
+public class SimpleSelectAllElementGenerator extends AbstractXmlElementGenerator {
 
     public SimpleSelectAllElementGenerator() {
         super();
@@ -43,8 +42,7 @@ public class SimpleSelectAllElementGenerator extends
 
         StringBuilder sb = new StringBuilder();
         sb.append("from "); //$NON-NLS-1$
-        sb.append(introspectedTable
-                .getAliasedFullyQualifiedTableNameAtRuntime());
+        sb.append(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime());
         answer.addElement(new TextElement(sb.toString()));
 
         String orderByClause = introspectedTable.getTableConfigurationProperty(
@@ -57,8 +55,7 @@ public class SimpleSelectAllElementGenerator extends
             answer.addElement(new TextElement(sb.toString()));
         }
 
-        if (context.getPlugins().sqlMapSelectAllElementGenerated(
-                answer, introspectedTable)) {
+        if (context.getPlugins().sqlMapSelectAllElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

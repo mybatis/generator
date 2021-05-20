@@ -23,8 +23,7 @@ import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 
-public class ProviderApplyWhereMethodGenerator extends
-        AbstractJavaProviderMethodGenerator {
+public class ProviderApplyWhereMethodGenerator extends AbstractJavaProviderMethodGenerator {
 
     private static final String[] BEGINNING_METHOD_LINES = {
         "if (example == null) {", //$NON-NLS-1$

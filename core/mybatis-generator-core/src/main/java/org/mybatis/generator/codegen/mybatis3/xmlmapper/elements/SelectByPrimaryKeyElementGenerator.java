@@ -21,8 +21,7 @@ import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
-public class SelectByPrimaryKeyElementGenerator extends
-        AbstractXmlElementGenerator {
+public class SelectByPrimaryKeyElementGenerator extends AbstractXmlElementGenerator {
 
     public SelectByPrimaryKeyElementGenerator() {
         super();
@@ -51,8 +50,7 @@ public class SelectByPrimaryKeyElementGenerator extends
             if (introspectedTable.getPrimaryKeyColumns().size() > 1) {
                 parameterType = "map"; //$NON-NLS-1$
             } else {
-                parameterType = introspectedTable.getPrimaryKeyColumns().get(0)
-                        .getFullyQualifiedJavaType().toString();
+                parameterType = introspectedTable.getPrimaryKeyColumns().get(0).getFullyQualifiedJavaType().toString();
             }
         }
 
@@ -77,14 +75,12 @@ public class SelectByPrimaryKeyElementGenerator extends
 
         sb.setLength(0);
         sb.append("from "); //$NON-NLS-1$
-        sb.append(introspectedTable
-                .getAliasedFullyQualifiedTableNameAtRuntime());
+        sb.append(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime());
         answer.addElement(new TextElement(sb.toString()));
 
         buildPrimaryKeyWhereClause().forEach(answer::addElement);
 
-        if (context.getPlugins()
-                .sqlMapSelectByPrimaryKeyElementGenerated(answer, introspectedTable)) {
+        if (context.getPlugins().sqlMapSelectByPrimaryKeyElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

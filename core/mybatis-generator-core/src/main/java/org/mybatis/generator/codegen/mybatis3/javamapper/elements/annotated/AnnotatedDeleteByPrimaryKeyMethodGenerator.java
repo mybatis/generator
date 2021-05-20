@@ -23,8 +23,7 @@ import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.DeleteByPrimaryKeyMethodGenerator;
 
-public class AnnotatedDeleteByPrimaryKeyMethodGenerator extends
-        DeleteByPrimaryKeyMethodGenerator {
+public class AnnotatedDeleteByPrimaryKeyMethodGenerator extends DeleteByPrimaryKeyMethodGenerator {
 
     public AnnotatedDeleteByPrimaryKeyMethodGenerator(boolean isSimple) {
         super(isSimple);

@@ -30,8 +30,7 @@ import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 
-public class ProviderUpdateByExampleWithoutBLOBsMethodGenerator extends
-        AbstractJavaProviderMethodGenerator {
+public class ProviderUpdateByExampleWithoutBLOBsMethodGenerator extends AbstractJavaProviderMethodGenerator {
 
     @Override
     public void addClassElements(TopLevelClass topLevelClass) {
@@ -42,8 +41,7 @@ public class ProviderUpdateByExampleWithoutBLOBsMethodGenerator extends
                 new FullyQualifiedJavaType("java.util.Map<java.lang.String, java.lang.Object>"), //$NON-NLS-1$
                 "parameter")); //$NON-NLS-1$
 
-        context.getCommentGenerator().addGeneralMethodComment(method,
-                introspectedTable);
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
 
         method.addBodyLine("SQL sql = new SQL();"); //$NON-NLS-1$
 
@@ -64,8 +62,7 @@ public class ProviderUpdateByExampleWithoutBLOBsMethodGenerator extends
         method.addBodyLine(""); //$NON-NLS-1$
 
         Set<FullyQualifiedJavaType> importedTypes = initializeImportedTypes("java.util.Map"); //$NON-NLS-1$
-        FullyQualifiedJavaType example =
-                new FullyQualifiedJavaType(introspectedTable.getExampleType());
+        FullyQualifiedJavaType example = new FullyQualifiedJavaType(introspectedTable.getExampleType());
         importedTypes.add(example);
         method.addBodyLine(String.format("%s example = (%s) parameter.get(\"example\");", //$NON-NLS-1$
                 example.getShortName(), example.getShortName()));
@@ -88,7 +85,7 @@ public class ProviderUpdateByExampleWithoutBLOBsMethodGenerator extends
     }
 
     public boolean callPlugins(Method method, TopLevelClass topLevelClass) {
-        return context.getPlugins().providerUpdateByExampleWithoutBLOBsMethodGenerated(method, topLevelClass,
-                introspectedTable);
+        return context.getPlugins()
+                .providerUpdateByExampleWithoutBLOBsMethodGenerated(method, topLevelClass, introspectedTable);
     }
 }

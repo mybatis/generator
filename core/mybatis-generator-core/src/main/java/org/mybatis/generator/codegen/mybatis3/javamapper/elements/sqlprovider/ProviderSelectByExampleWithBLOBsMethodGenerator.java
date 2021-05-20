@@ -21,8 +21,8 @@ import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 
-public class ProviderSelectByExampleWithBLOBsMethodGenerator extends
-        ProviderSelectByExampleWithoutBLOBsMethodGenerator {
+public class ProviderSelectByExampleWithBLOBsMethodGenerator
+        extends ProviderSelectByExampleWithoutBLOBsMethodGenerator {
 
     @Override
     public List<IntrospectedColumn> getColumns() {
@@ -36,7 +36,7 @@ public class ProviderSelectByExampleWithBLOBsMethodGenerator extends
 
     @Override
     public boolean callPlugins(Method method, TopLevelClass topLevelClass) {
-        return context.getPlugins().providerSelectByExampleWithBLOBsMethodGenerated(method, topLevelClass,
-                introspectedTable);
+        return context.getPlugins()
+                .providerSelectByExampleWithBLOBsMethodGenerated(method, topLevelClass, introspectedTable);
     }
 }

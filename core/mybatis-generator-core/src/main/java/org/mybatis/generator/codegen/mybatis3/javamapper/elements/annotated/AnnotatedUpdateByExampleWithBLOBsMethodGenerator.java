@@ -29,12 +29,8 @@ public class AnnotatedUpdateByExampleWithBLOBsMethodGenerator extends UpdateByEx
     @Override
     public void addMapperAnnotations(Method method) {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getMyBatis3SqlProviderType());
-
-        String s = "@UpdateProvider(type=" //$NON-NLS-1$
-                + fqjt.getShortName()
-                + ".class, method=\"" //$NON-NLS-1$
-                + introspectedTable.getUpdateByExampleWithBLOBsStatementId()
-                + "\")"; //$NON-NLS-1$
+        String s = String.format("@UpdateProvider(type=%s.class, method=\"%s\")", fqjt.getShortName(), //$NON-NLS-1$
+                introspectedTable.getUpdateByExampleWithBLOBsStatementId());
         method.addAnnotation(s);
     }
 

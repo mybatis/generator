@@ -20,8 +20,7 @@ import java.util.List;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
-public class UpdateByPrimaryKeyWithoutBLOBsElementGenerator extends
-        AbstractXmlElementGenerator {
+public class UpdateByPrimaryKeyWithoutBLOBsElementGenerator extends AbstractXmlElementGenerator {
 
     private final boolean isSimple;
 
@@ -42,8 +41,7 @@ public class UpdateByPrimaryKeyWithoutBLOBsElementGenerator extends
                 introspectedTable.getBaseRecordType(),
                 columns);
 
-        if (context.getPlugins()
-                .sqlMapUpdateByPrimaryKeyWithoutBLOBsElementGenerated(answer, introspectedTable)) {
+        if (context.getPlugins().sqlMapUpdateByPrimaryKeyWithoutBLOBsElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

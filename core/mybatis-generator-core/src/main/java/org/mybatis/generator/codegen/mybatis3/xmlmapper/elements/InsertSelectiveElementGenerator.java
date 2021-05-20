@@ -22,8 +22,7 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 
-public class InsertSelectiveElementGenerator extends
-        AbstractXmlElementGenerator {
+public class InsertSelectiveElementGenerator extends AbstractXmlElementGenerator {
 
     public InsertSelectiveElementGenerator() {
         super();
@@ -63,14 +62,12 @@ public class InsertSelectiveElementGenerator extends
 
                 // if it is primitive, we cannot do a null check
                 sb.setLength(0);
-                sb.append(MyBatis3FormattingUtilities
-                        .getEscapedColumnName(introspectedColumn));
+                sb.append(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn));
                 sb.append(',');
                 insertTrimElement.addElement(new TextElement(sb.toString()));
 
                 sb.setLength(0);
-                sb.append(MyBatis3FormattingUtilities
-                        .getParameterClause(introspectedColumn));
+                sb.append(MyBatis3FormattingUtilities.getParameterClause(introspectedColumn));
                 sb.append(',');
                 valuesTrimElement.addElement(new TextElement(sb.toString()));
 
@@ -85,8 +82,7 @@ public class InsertSelectiveElementGenerator extends
                     "test", sb.toString())); //$NON-NLS-1$
 
             sb.setLength(0);
-            sb.append(MyBatis3FormattingUtilities
-                    .getEscapedColumnName(introspectedColumn));
+            sb.append(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn));
             sb.append(',');
             insertNotNullElement.addElement(new TextElement(sb.toString()));
             insertTrimElement.addElement(insertNotNullElement);
@@ -95,12 +91,10 @@ public class InsertSelectiveElementGenerator extends
             sb.append(introspectedColumn.getJavaProperty());
             sb.append(" != null"); //$NON-NLS-1$
             XmlElement valuesNotNullElement = new XmlElement("if"); //$NON-NLS-1$
-            valuesNotNullElement.addAttribute(new Attribute(
-                    "test", sb.toString())); //$NON-NLS-1$
+            valuesNotNullElement.addAttribute(new Attribute("test", sb.toString())); //$NON-NLS-1$
 
             sb.setLength(0);
-            sb.append(MyBatis3FormattingUtilities
-                    .getParameterClause(introspectedColumn));
+            sb.append(MyBatis3FormattingUtilities.getParameterClause(introspectedColumn));
             sb.append(',');
             valuesNotNullElement.addElement(new TextElement(sb.toString()));
             valuesTrimElement.addElement(valuesNotNullElement);

@@ -17,8 +17,7 @@ package org.mybatis.generator.codegen.mybatis3.xmlmapper.elements;
 
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
-public class UpdateByExampleWithoutBLOBsElementGenerator extends
-        AbstractXmlElementGenerator {
+public class UpdateByExampleWithoutBLOBsElementGenerator extends AbstractXmlElementGenerator {
 
     public UpdateByExampleWithoutBLOBsElementGenerator() {
         super();
@@ -29,8 +28,7 @@ public class UpdateByExampleWithoutBLOBsElementGenerator extends
         XmlElement answer = buildUpdateByExampleElement(introspectedTable.getUpdateByExampleStatementId(),
                 introspectedTable.getNonBLOBColumns());
 
-        if (context.getPlugins()
-                .sqlMapUpdateByExampleWithoutBLOBsElementGenerated(answer, introspectedTable)) {
+        if (context.getPlugins().sqlMapUpdateByExampleWithoutBLOBsElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

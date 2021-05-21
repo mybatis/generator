@@ -16,12 +16,8 @@
 package org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated;
 
 import static org.mybatis.generator.api.dom.OutputUtilities.javaIndent;
-import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getSelectListPhrase;
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 
-import java.util.Iterator;
-
-import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
@@ -38,47 +34,14 @@ public class AnnotatedSelectByPrimaryKeyMethodGenerator extends SelectByPrimaryK
 
     @Override
     public void addMapperAnnotations(Interface interfaze, Method method) {
+        interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Select")); //$NON-NLS-1$
+
+        buildInitialSelectAnnotationStrings().forEach(method::addAnnotation);
 
         StringBuilder sb = new StringBuilder();
-        method.addAnnotation("@Select({"); //$NON-NLS-1$
-        javaIndent(sb, 1);
-        sb.append("\"select\","); //$NON-NLS-1$
-        method.addAnnotation(sb.toString());
-
-        sb.setLength(0);
-        javaIndent(sb, 1);
-        sb.append('"');
-        boolean hasColumns = false;
-        Iterator<IntrospectedColumn> iter = introspectedTable.getAllColumns().iterator();
-        while (iter.hasNext()) {
-            sb.append(escapeStringForJava(getSelectListPhrase(iter.next())));
-            hasColumns = true;
-
-            if (iter.hasNext()) {
-                sb.append(", "); //$NON-NLS-1$
-            }
-
-            if (sb.length() > 80) {
-                sb.append("\","); //$NON-NLS-1$
-                method.addAnnotation(sb.toString());
-
-                sb.setLength(0);
-                javaIndent(sb, 1);
-                sb.append('"');
-                hasColumns = false;
-            }
-        }
-
-        if (hasColumns) {
-            sb.append("\","); //$NON-NLS-1$
-            method.addAnnotation(sb.toString());
-        }
-
-        sb.setLength(0);
         javaIndent(sb, 1);
         sb.append("\"from "); //$NON-NLS-1$
-        sb.append(escapeStringForJava(introspectedTable
-                .getAliasedFullyQualifiedTableNameAtRuntime()));
+        sb.append(escapeStringForJava(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime()));
         sb.append("\","); //$NON-NLS-1$
         method.addAnnotation(sb.toString());
 

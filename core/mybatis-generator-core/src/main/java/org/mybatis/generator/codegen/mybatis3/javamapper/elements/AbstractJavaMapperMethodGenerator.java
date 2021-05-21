@@ -19,6 +19,7 @@ import static org.mybatis.generator.api.dom.OutputUtilities.javaIndent;
 import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getEscapedColumnName;
 import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getParameterClause;
 import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getRenamedColumnNameForResultMap;
+import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getSelectListPhrase;
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
@@ -331,5 +332,45 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractGenerato
 
         context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
         return method;
+    }
+
+    protected List<String> buildInitialSelectAnnotationStrings() {
+        List<String> answer = new ArrayList<>();
+        answer.add("@Select({"); //$NON-NLS-1$
+        StringBuilder sb = new StringBuilder();
+        javaIndent(sb, 1);
+        sb.append("\"select\","); //$NON-NLS-1$
+        answer.add(sb.toString());
+
+        sb.setLength(0);
+        javaIndent(sb, 1);
+        sb.append('"');
+        boolean hasColumns = false;
+        Iterator<IntrospectedColumn> iter = introspectedTable.getAllColumns().iterator();
+        while (iter.hasNext()) {
+            sb.append(escapeStringForJava(getSelectListPhrase(iter.next())));
+            hasColumns = true;
+
+            if (iter.hasNext()) {
+                sb.append(", "); //$NON-NLS-1$
+            }
+
+            if (sb.length() > 80) {
+                sb.append("\","); //$NON-NLS-1$
+                answer.add(sb.toString());
+
+                sb.setLength(0);
+                javaIndent(sb, 1);
+                sb.append('"');
+                hasColumns = false;
+            }
+        }
+
+        if (hasColumns) {
+            sb.append("\","); //$NON-NLS-1$
+            answer.add(sb.toString());
+        }
+
+        return answer;
     }
 }

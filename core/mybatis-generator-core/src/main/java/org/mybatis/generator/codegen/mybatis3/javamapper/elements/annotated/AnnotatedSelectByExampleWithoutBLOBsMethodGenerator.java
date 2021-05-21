@@ -30,12 +30,12 @@ public class AnnotatedSelectByExampleWithoutBLOBsMethodGenerator extends SelectB
     public void addMapperAnnotations(Interface interfaze, Method method) {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getMyBatis3SqlProviderType());
 
-        String sb = "@SelectProvider(type=" + //$NON-NLS-1$
-                fqjt.getShortName() +
-                ".class, method=\"" + //$NON-NLS-1$
-                introspectedTable.getSelectByExampleStatementId() +
-                "\")";//$NON-NLS-1$
-        method.addAnnotation(sb);
+        String s = "@SelectProvider(type=" //$NON-NLS-1$
+                + fqjt.getShortName()
+                + ".class, method=\"" //$NON-NLS-1$
+                + introspectedTable.getSelectByExampleStatementId()
+                + "\")"; //$NON-NLS-1$
+        method.addAnnotation(s);
 
         addAnnotatedResults(interfaze, method, introspectedTable.getBaseColumns());
     }

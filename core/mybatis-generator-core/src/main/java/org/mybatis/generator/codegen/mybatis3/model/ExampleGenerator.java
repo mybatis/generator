@@ -250,19 +250,11 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         method.addBodyLine("}"); //$NON-NLS-1$
         answer.addMethod(method);
 
-        method = new Method("Criterion"); //$NON-NLS-1$
-        method.setVisibility(JavaVisibility.PROTECTED);
-        method.setConstructor(true);
-        method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "condition")); //$NON-NLS-1$
-        method.addParameter(new Parameter(FullyQualifiedJavaType.getObjectInstance(), "value")); //$NON-NLS-1$
+        method = createCriterionConstructor();
         method.addBodyLine("this(condition, value, null);"); //$NON-NLS-1$
         answer.addMethod(method);
 
-        method = new Method("Criterion"); //$NON-NLS-1$
-        method.setVisibility(JavaVisibility.PROTECTED);
-        method.setConstructor(true);
-        method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "condition")); //$NON-NLS-1$
-        method.addParameter(new Parameter(FullyQualifiedJavaType.getObjectInstance(), "value")); //$NON-NLS-1$
+        method = createCriterionConstructor();
         method.addParameter(new Parameter(FullyQualifiedJavaType.getObjectInstance(), "secondValue")); //$NON-NLS-1$
         method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "typeHandler")); //$NON-NLS-1$
         method.addBodyLine("super();"); //$NON-NLS-1$
@@ -273,16 +265,21 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         method.addBodyLine("this.betweenValue = true;"); //$NON-NLS-1$
         answer.addMethod(method);
 
-        method = new Method("Criterion"); //$NON-NLS-1$
-        method.setVisibility(JavaVisibility.PROTECTED);
-        method.setConstructor(true);
-        method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "condition")); //$NON-NLS-1$
-        method.addParameter(new Parameter(FullyQualifiedJavaType.getObjectInstance(), "value")); //$NON-NLS-1$
+        method = createCriterionConstructor();
         method.addParameter(new Parameter(FullyQualifiedJavaType.getObjectInstance(), "secondValue")); //$NON-NLS-1$
         method.addBodyLine("this(condition, value, secondValue, null);"); //$NON-NLS-1$
         answer.addMethod(method);
 
         return answer;
+    }
+
+    private Method createCriterionConstructor() {
+        Method method = new Method("Criterion"); //$NON-NLS-1$
+        method.setVisibility(JavaVisibility.PROTECTED);
+        method.setConstructor(true);
+        method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "condition")); //$NON-NLS-1$
+        method.addParameter(new Parameter(FullyQualifiedJavaType.getObjectInstance(), "value")); //$NON-NLS-1$
+        return method;
     }
 
     private InnerClass getCriteriaInnerClass() {
@@ -620,17 +617,39 @@ public class ExampleGenerator extends AbstractJavaGenerator {
     private Method getSingleValueMethod(IntrospectedColumn introspectedColumn, String nameFragment, String operator) {
 
         StringBuilder sb = new StringBuilder();
-        sb.append(introspectedColumn.getJavaProperty());
-        sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
-        sb.insert(0, "and"); //$NON-NLS-1$
+        sb.append(initializeAndMethodName(introspectedColumn));
         sb.append(nameFragment);
 
         Method method = new Method(sb.toString());
         method.setVisibility(JavaVisibility.PUBLIC);
         method.addParameter(new Parameter(introspectedColumn.getFullyQualifiedJavaType(), "value")); //$NON-NLS-1$
         method.setReturnType(FullyQualifiedJavaType.getCriteriaInstance());
-        sb.setLength(0);
 
+        sb.setLength(0);
+        sb.append(initializeAddLine(introspectedColumn));
+        sb.append(' ');
+        sb.append(operator);
+        sb.append("\", "); //$NON-NLS-1$
+        sb.append("value"); //$NON-NLS-1$
+        sb.append(", \""); //$NON-NLS-1$
+        sb.append(introspectedColumn.getJavaProperty());
+        sb.append("\");"); //$NON-NLS-1$
+        method.addBodyLine(sb.toString());
+        method.addBodyLine("return (Criteria) this;"); //$NON-NLS-1$
+
+        return method;
+    }
+
+    private String initializeAndMethodName(IntrospectedColumn introspectedColumn) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(introspectedColumn.getJavaProperty());
+        sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
+        sb.insert(0, "and"); //$NON-NLS-1$
+        return sb.toString();
+    }
+
+    private String initializeAddLine(IntrospectedColumn introspectedColumn) {
+        StringBuilder sb = new StringBuilder();
         if (introspectedColumn.isJDBCDateColumn()) {
             sb.append("addCriterionForJDBCDate(\""); //$NON-NLS-1$
         } else if (introspectedColumn.isJDBCTimeColumn()) {
@@ -645,17 +664,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         }
 
         sb.append(MyBatis3FormattingUtilities.getAliasedActualColumnName(introspectedColumn));
-        sb.append(' ');
-        sb.append(operator);
-        sb.append("\", "); //$NON-NLS-1$
-        sb.append("value"); //$NON-NLS-1$
-        sb.append(", \""); //$NON-NLS-1$
-        sb.append(introspectedColumn.getJavaProperty());
-        sb.append("\");"); //$NON-NLS-1$
-        method.addBodyLine(sb.toString());
-        method.addBodyLine("return (Criteria) this;"); //$NON-NLS-1$
-
-        return method;
+        return sb.toString();
     }
 
     /**
@@ -668,9 +677,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
     private Method getSetBetweenOrNotBetweenMethod(IntrospectedColumn introspectedColumn, boolean betweenMethod) {
 
         StringBuilder sb = new StringBuilder();
-        sb.append(introspectedColumn.getJavaProperty());
-        sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
-        sb.insert(0, "and"); //$NON-NLS-1$
+        sb.append(initializeAndMethodName(introspectedColumn));
         if (betweenMethod) {
             sb.append("Between"); //$NON-NLS-1$
         } else {
@@ -685,20 +692,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         method.setReturnType(FullyQualifiedJavaType.getCriteriaInstance());
 
         sb.setLength(0);
-        if (introspectedColumn.isJDBCDateColumn()) {
-            sb.append("addCriterionForJDBCDate(\""); //$NON-NLS-1$
-        } else if (introspectedColumn.isJDBCTimeColumn()) {
-            sb.append("addCriterionForJDBCTime(\""); //$NON-NLS-1$
-        } else if (stringHasValue(introspectedColumn.getTypeHandler())) {
-            sb.append("add"); //$NON-NLS-1$
-            sb.append(introspectedColumn.getJavaProperty());
-            sb.setCharAt(3, Character.toUpperCase(sb.charAt(3)));
-            sb.append("Criterion(\""); //$NON-NLS-1$
-        } else {
-            sb.append("addCriterion(\""); //$NON-NLS-1$
-        }
-
-        sb.append(MyBatis3FormattingUtilities.getAliasedActualColumnName(introspectedColumn));
+        sb.append(initializeAddLine(introspectedColumn));
         if (betweenMethod) {
             sb.append(" between"); //$NON-NLS-1$
         } else {
@@ -726,9 +720,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
      */
     private Method getSetInOrNotInMethod(IntrospectedColumn introspectedColumn, boolean inMethod) {
         StringBuilder sb = new StringBuilder();
-        sb.append(introspectedColumn.getJavaProperty());
-        sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
-        sb.insert(0, "and"); //$NON-NLS-1$
+        sb.append(initializeAndMethodName(introspectedColumn));
         if (inMethod) {
             sb.append("In"); //$NON-NLS-1$
         } else {
@@ -747,20 +739,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         method.setReturnType(FullyQualifiedJavaType.getCriteriaInstance());
 
         sb.setLength(0);
-        if (introspectedColumn.isJDBCDateColumn()) {
-            sb.append("addCriterionForJDBCDate(\""); //$NON-NLS-1$
-        } else if (introspectedColumn.isJDBCTimeColumn()) {
-            sb.append("addCriterionForJDBCTime(\""); //$NON-NLS-1$
-        } else if (stringHasValue(introspectedColumn.getTypeHandler())) {
-            sb.append("add"); //$NON-NLS-1$
-            sb.append(introspectedColumn.getJavaProperty());
-            sb.setCharAt(3, Character.toUpperCase(sb.charAt(3)));
-            sb.append("Criterion(\""); //$NON-NLS-1$
-        } else {
-            sb.append("addCriterion(\""); //$NON-NLS-1$
-        }
-
-        sb.append(MyBatis3FormattingUtilities.getAliasedActualColumnName(introspectedColumn));
+        sb.append(initializeAddLine(introspectedColumn));
         if (inMethod) {
             sb.append(" in"); //$NON-NLS-1$
         } else {
@@ -777,9 +756,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 
     private Method getNoValueMethod(IntrospectedColumn introspectedColumn, String nameFragment, String operator) {
         StringBuilder sb = new StringBuilder();
-        sb.append(introspectedColumn.getJavaProperty());
-        sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
-        sb.insert(0, "and"); //$NON-NLS-1$
+        sb.append(initializeAndMethodName(introspectedColumn));
         sb.append(nameFragment);
         Method method = new Method(sb.toString());
 

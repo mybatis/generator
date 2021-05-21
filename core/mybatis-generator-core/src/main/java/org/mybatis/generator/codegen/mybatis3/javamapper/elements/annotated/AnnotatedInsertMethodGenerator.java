@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -30,7 +30,6 @@ import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.InsertMethodGenerator;
-import org.mybatis.generator.config.GeneratedKey;
 
 public class AnnotatedInsertMethodGenerator extends InsertMethodGenerator {
 
@@ -109,18 +108,12 @@ public class AnnotatedInsertMethodGenerator extends InsertMethodGenerator {
 
         method.addAnnotation("})"); //$NON-NLS-1$
 
-        GeneratedKey gk = introspectedTable.getGeneratedKey();
-        if (gk != null) {
-            addGeneratedKeyAnnotation(method, gk);
-        }
+        buildGeneratedKeyAnnotation().ifPresent(method::addAnnotation);
     }
 
     @Override
     public void addExtraImports(Interface interfaze) {
-        GeneratedKey gk = introspectedTable.getGeneratedKey();
-        if (gk != null) {
-            addGeneratedKeyImports(interfaze, gk);
-        }
+        interfaze.addImportedTypes(buildGeneratedKeyImportsIfRequired());
         interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Insert")); //$NON-NLS-1$
     }
 }

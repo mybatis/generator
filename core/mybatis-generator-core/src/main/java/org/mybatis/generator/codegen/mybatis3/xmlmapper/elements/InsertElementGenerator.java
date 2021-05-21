@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,12 +21,10 @@ import java.util.List;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.OutputUtilities;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
-import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
-import org.mybatis.generator.config.GeneratedKey;
 
 public class InsertElementGenerator extends AbstractXmlElementGenerator {
 
@@ -39,48 +37,19 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
 
     @Override
     public void addElements(XmlElement parentElement) {
-        XmlElement answer = new XmlElement("insert"); //$NON-NLS-1$
-
-        answer.addAttribute(new Attribute(
-                "id", introspectedTable.getInsertStatementId())); //$NON-NLS-1$
-
         FullyQualifiedJavaType parameterType;
         if (isSimple) {
-            parameterType = new FullyQualifiedJavaType(
-                    introspectedTable.getBaseRecordType());
+            parameterType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
         } else {
-            parameterType = introspectedTable.getRules()
-                    .calculateAllFieldsClass();
+            parameterType = introspectedTable.getRules().calculateAllFieldsClass();
         }
 
-        answer.addAttribute(new Attribute("parameterType", //$NON-NLS-1$
-                parameterType.getFullyQualifiedName()));
-
-        context.getCommentGenerator().addComment(answer);
-
-        GeneratedKey gk = introspectedTable.getGeneratedKey();
-        if (gk != null) {
-            introspectedTable.getColumn(gk.getColumn()).ifPresent(introspectedColumn -> {
-                // if the column is null, then it's a configuration error. The
-                // warning has already been reported
-                if (gk.isJdbcStandard()) {
-                    answer.addAttribute(new Attribute(
-                            "useGeneratedKeys", "true")); //$NON-NLS-1$ //$NON-NLS-2$
-                    answer.addAttribute(new Attribute(
-                            "keyProperty", introspectedColumn.getJavaProperty())); //$NON-NLS-1$
-                    answer.addAttribute(new Attribute(
-                            "keyColumn", introspectedColumn.getActualColumnName())); //$NON-NLS-1$
-                } else {
-                    answer.addElement(getSelectKey(introspectedColumn, gk));
-                }
-            });
-        }
+        XmlElement answer = buildInitialInsert(introspectedTable.getInsertStatementId(), parameterType);
 
         StringBuilder insertClause = new StringBuilder();
 
         insertClause.append("insert into "); //$NON-NLS-1$
-        insertClause.append(introspectedTable
-                .getFullyQualifiedTableNameAtRuntime());
+        insertClause.append(introspectedTable.getFullyQualifiedTableNameAtRuntime());
         insertClause.append(" ("); //$NON-NLS-1$
 
         StringBuilder valuesClause = new StringBuilder();
@@ -92,10 +61,8 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
         for (int i = 0; i < columns.size(); i++) {
             IntrospectedColumn introspectedColumn = columns.get(i);
 
-            insertClause.append(MyBatis3FormattingUtilities
-                    .getEscapedColumnName(introspectedColumn));
-            valuesClause.append(MyBatis3FormattingUtilities
-                    .getParameterClause(introspectedColumn));
+            insertClause.append(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn));
+            valuesClause.append(MyBatis3FormattingUtilities.getParameterClause(introspectedColumn));
             if (i + 1 < columns.size()) {
                 insertClause.append(", "); //$NON-NLS-1$
                 valuesClause.append(", "); //$NON-NLS-1$
@@ -122,8 +89,7 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
             answer.addElement(new TextElement(clause));
         }
 
-        if (context.getPlugins().sqlMapInsertElementGenerated(answer,
-                introspectedTable)) {
+        if (context.getPlugins().sqlMapInsertElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

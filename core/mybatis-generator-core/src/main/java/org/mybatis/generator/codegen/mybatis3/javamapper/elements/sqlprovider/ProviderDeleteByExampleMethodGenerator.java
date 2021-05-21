@@ -32,14 +32,12 @@ public class ProviderDeleteByExampleMethodGenerator extends AbstractJavaProvider
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getExampleType());
         Set<FullyQualifiedJavaType> importedTypes = initializeImportedTypes(fqjt);
 
-        Method method = new Method(
-                introspectedTable.getDeleteByExampleStatementId());
+        Method method = new Method(introspectedTable.getDeleteByExampleStatementId());
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(FullyQualifiedJavaType.getStringInstance());
         method.addParameter(new Parameter(fqjt, "example")); //$NON-NLS-1$
 
-        context.getCommentGenerator().addGeneralMethodComment(method,
-                introspectedTable);
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
 
         method.addBodyLine("SQL sql = new SQL();"); //$NON-NLS-1$
         method.addBodyLine(String.format("sql.DELETE_FROM(\"%s\");", //$NON-NLS-1$
@@ -47,8 +45,7 @@ public class ProviderDeleteByExampleMethodGenerator extends AbstractJavaProvider
         method.addBodyLine("applyWhere(sql, example, false);"); //$NON-NLS-1$
         method.addBodyLine("return sql.toString();"); //$NON-NLS-1$
 
-        if (context.getPlugins().providerDeleteByExampleMethodGenerated(method, topLevelClass,
-                introspectedTable)) {
+        if (context.getPlugins().providerDeleteByExampleMethodGenerated(method, topLevelClass, introspectedTable)) {
             topLevelClass.addImportedTypes(importedTypes);
             topLevelClass.addMethod(method);
         }

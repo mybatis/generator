@@ -37,8 +37,7 @@ public class BasicMultipleInsertMethodGenerator extends AbstractKotlinFunctionGe
             return null;
         }
 
-        GeneratedKey gk = introspectedTable.getGeneratedKey();
-        return generateMethodWithGeneratedKeys(gk);
+        return introspectedTable.getGeneratedKey().map(this::generateMethodWithGeneratedKeys).orElse(null);
     }
 
     private KotlinFunctionAndImports generateMethodWithGeneratedKeys(GeneratedKey gk) {

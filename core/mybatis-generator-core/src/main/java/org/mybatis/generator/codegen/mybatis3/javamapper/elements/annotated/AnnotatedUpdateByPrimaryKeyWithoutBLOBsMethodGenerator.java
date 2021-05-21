@@ -33,11 +33,10 @@ public class AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator
     @Override
     public void addMapperAnnotations(Method method) {
         if (isSimple) {
-            AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator.addMapperAnnotations(introspectedTable, method,
-                    introspectedTable.getNonPrimaryKeyColumns());
+            buildUpdateByPrimaryKeyAnnotations(introspectedTable.getNonPrimaryKeyColumns())
+                    .forEach(method::addAnnotation);
         } else {
-            AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator.addMapperAnnotations(introspectedTable, method,
-                    introspectedTable.getBaseColumns());
+            buildUpdateByPrimaryKeyAnnotations(introspectedTable.getBaseColumns()).forEach(method::addAnnotation);
         }
     }
 

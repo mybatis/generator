@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,19 +15,15 @@
  */
 package org.mybatis.generator.codegen.mybatis3.javamapper.elements;
 
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
-import org.mybatis.generator.api.dom.java.Parameter;
 
-public class DeleteByPrimaryKeyMethodGenerator extends
-        AbstractJavaMapperMethodGenerator {
+public class DeleteByPrimaryKeyMethodGenerator extends AbstractJavaMapperMethodGenerator {
 
     private final boolean isSimple;
 
@@ -38,54 +34,19 @@ public class DeleteByPrimaryKeyMethodGenerator extends
 
     @Override
     public void addInterfaceElements(Interface interfaze) {
-        Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
         Method method = new Method(introspectedTable.getDeleteByPrimaryKeyStatementId());
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setAbstract(true);
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
 
-        if (!isSimple && introspectedTable.getRules().generatePrimaryKeyClass()) {
-            FullyQualifiedJavaType type = new FullyQualifiedJavaType(
-                    introspectedTable.getPrimaryKeyType());
-            importedTypes.add(type);
-            method.addParameter(new Parameter(type, "key")); //$NON-NLS-1$
-        } else {
-            // no primary key class - fields are in the base class
-            // if more than one PK field, then we need to annotate the
-            // parameters
-            // for MyBatis
-            List<IntrospectedColumn> introspectedColumns = introspectedTable
-                    .getPrimaryKeyColumns();
-            boolean annotate = introspectedColumns.size() > 1;
-            if (annotate) {
-                importedTypes.add(new FullyQualifiedJavaType(
-                        "org.apache.ibatis.annotations.Param")); //$NON-NLS-1$
-            }
-            StringBuilder sb = new StringBuilder();
-            for (IntrospectedColumn introspectedColumn : introspectedColumns) {
-                FullyQualifiedJavaType type = introspectedColumn
-                        .getFullyQualifiedJavaType();
-                importedTypes.add(type);
-                Parameter parameter = new Parameter(type, introspectedColumn
-                        .getJavaProperty());
-                if (annotate) {
-                    sb.setLength(0);
-                    sb.append("@Param(\""); //$NON-NLS-1$
-                    sb.append(introspectedColumn.getJavaProperty());
-                    sb.append("\")"); //$NON-NLS-1$
-                    parameter.addAnnotation(sb.toString());
-                }
-                method.addParameter(parameter);
-            }
-        }
-
-        context.getCommentGenerator().addGeneralMethodComment(method,
-                introspectedTable);
+        Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
+        addPrimaryKeyMethodParameters(isSimple, method, importedTypes);
 
         addMapperAnnotations(method);
 
-        if (context.getPlugins().clientDeleteByPrimaryKeyMethodGenerated(
-                method, interfaze, introspectedTable)) {
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
+
+        if (context.getPlugins().clientDeleteByPrimaryKeyMethodGenerated(method, interfaze, introspectedTable)) {
             addExtraImports(interfaze);
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);

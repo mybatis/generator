@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -139,17 +139,17 @@ public class DatabaseIntrospector {
                     string, table.toString()));
         }
 
-        GeneratedKey generatedKey = tableConfiguration.getGeneratedKey();
-        if (generatedKey != null
-                && !introspectedTable.getColumn(generatedKey.getColumn()).isPresent()) {
-            if (generatedKey.isIdentity()) {
-                warnings.add(getString("Warning.5", //$NON-NLS-1$
-                        generatedKey.getColumn(), table.toString()));
-            } else {
-                warnings.add(getString("Warning.6", //$NON-NLS-1$
-                        generatedKey.getColumn(), table.toString()));
+        tableConfiguration.getGeneratedKey().ifPresent(generatedKey -> {
+            if (!introspectedTable.getColumn(generatedKey.getColumn()).isPresent()) {
+                if (generatedKey.isIdentity()) {
+                    warnings.add(getString("Warning.5", //$NON-NLS-1$
+                            generatedKey.getColumn(), table.toString()));
+                } else {
+                    warnings.add(getString("Warning.6", //$NON-NLS-1$
+                            generatedKey.getColumn(), table.toString()));
+                }
             }
-        }
+        });
 
         for (IntrospectedColumn ic : introspectedTable.getAllColumns()) {
             if (JavaReservedWords.containsWord(ic.getJavaProperty())) {
@@ -297,11 +297,7 @@ public class DatabaseIntrospector {
                             .calculateJdbcTypeName(introspectedColumn));
                 } else {
                     // type cannot be resolved. Check for ignored or overridden
-                    boolean warn = true;
-                    if (tc.isColumnIgnored(introspectedColumn
-                            .getActualColumnName())) {
-                        warn = false;
-                    }
+                    boolean warn = !tc.isColumnIgnored(introspectedColumn.getActualColumnName());
 
                     ColumnOverride co = tc.getColumnOverride(introspectedColumn
                             .getActualColumnName());
@@ -340,27 +336,22 @@ public class DatabaseIntrospector {
     }
 
     private void calculateIdentityColumns(TableConfiguration tc,
-            Map<ActualTableName, List<IntrospectedColumn>> columns) {
-        GeneratedKey gk = tc.getGeneratedKey();
-        if (gk == null) {
-            // no generated key, then no identity or sequence columns
-            return;
-        }
-
-        for (Map.Entry<ActualTableName, List<IntrospectedColumn>> entry : columns
-                .entrySet()) {
-            for (IntrospectedColumn introspectedColumn : entry.getValue()) {
-                if (isMatchedColumn(introspectedColumn, gk)) {
-                    if (gk.isIdentity() || gk.isJdbcStandard()) {
-                        introspectedColumn.setIdentity(true);
-                        introspectedColumn.setSequenceColumn(false);
-                    } else {
-                        introspectedColumn.setIdentity(false);
-                        introspectedColumn.setSequenceColumn(true);
+                                          Map<ActualTableName, List<IntrospectedColumn>> columns) {
+        tc.getGeneratedKey().ifPresent(gk -> {
+            for (Map.Entry<ActualTableName, List<IntrospectedColumn>> entry : columns.entrySet()) {
+                for (IntrospectedColumn introspectedColumn : entry.getValue()) {
+                    if (isMatchedColumn(introspectedColumn, gk)) {
+                        if (gk.isIdentity() || gk.isJdbcStandard()) {
+                            introspectedColumn.setIdentity(true);
+                            introspectedColumn.setSequenceColumn(false);
+                        } else {
+                            introspectedColumn.setIdentity(false);
+                            introspectedColumn.setSequenceColumn(true);
+                        }
                     }
                 }
             }
-        }
+        });
     }
 
     private boolean isMatchedColumn(IntrospectedColumn introspectedColumn, GeneratedKey gk) {
@@ -462,32 +453,11 @@ public class DatabaseIntrospector {
         if (tc.isWildcardEscapingEnabled()) {
             String escapeString = databaseMetaData.getSearchStringEscape();
 
-            StringBuilder sb = new StringBuilder();
-            StringTokenizer st;
             if (localSchema != null) {
-                st = new StringTokenizer(localSchema, "_%", true); //$NON-NLS-1$
-                while (st.hasMoreTokens()) {
-                    String token = st.nextToken();
-                    if (token.equals("_") //$NON-NLS-1$
-                            || token.equals("%")) { //$NON-NLS-1$
-                        sb.append(escapeString);
-                    }
-                    sb.append(token);
-                }
-                localSchema = sb.toString();
+                localSchema = escapeName(localSchema, escapeString);
             }
 
-            sb.setLength(0);
-            st = new StringTokenizer(localTableName, "_%", true); //$NON-NLS-1$
-            while (st.hasMoreTokens()) {
-                String token = st.nextToken();
-                if (token.equals("_") //$NON-NLS-1$
-                        || token.equals("%")) { //$NON-NLS-1$
-                    sb.append(escapeString);
-                }
-                sb.append(token);
-            }
-            localTableName = sb.toString();
+            localTableName = escapeName(localTableName, escapeString);
         }
 
         Map<ActualTableName, List<IntrospectedColumn>> answer = new HashMap<>();
@@ -583,6 +553,20 @@ public class DatabaseIntrospector {
         }
 
         return answer;
+    }
+
+    private String escapeName(String localName, String escapeString) {
+        StringTokenizer st = new StringTokenizer(localName, "_%", true); //$NON-NLS-1$
+        StringBuilder sb = new StringBuilder();
+        while (st.hasMoreTokens()) {
+            String token = st.nextToken();
+            if (token.equals("_") //$NON-NLS-1$
+                    || token.equals("%")) { //$NON-NLS-1$
+                sb.append(escapeString);
+            }
+            sb.append(token);
+        }
+        return sb.toString();
     }
 
     private List<IntrospectedTable> calculateIntrospectedTables(

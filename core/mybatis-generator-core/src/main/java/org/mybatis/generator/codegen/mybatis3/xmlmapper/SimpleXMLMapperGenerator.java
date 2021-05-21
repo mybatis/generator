@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -42,8 +42,7 @@ public class SimpleXMLMapperGenerator extends AbstractXmlGenerator {
         progressCallback.startTask(getString("Progress.12", table.toString())); //$NON-NLS-1$
         XmlElement answer = new XmlElement("mapper"); //$NON-NLS-1$
         String namespace = introspectedTable.getMyBatis3SqlMapNamespace();
-        answer.addAttribute(new Attribute("namespace", //$NON-NLS-1$
-                namespace));
+        answer.addAttribute(new Attribute("namespace", namespace)); //$NON-NLS-1$
 
         context.getCommentGenerator().addRootComment(answer);
 
@@ -59,8 +58,7 @@ public class SimpleXMLMapperGenerator extends AbstractXmlGenerator {
 
     protected void addResultMapElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateBaseResultMap()) {
-            AbstractXmlElementGenerator elementGenerator = new ResultMapWithoutBLOBsElementGenerator(
-                    true);
+            AbstractXmlElementGenerator elementGenerator = new ResultMapWithoutBLOBsElementGenerator(true);
             initializeAndExecuteGenerator(elementGenerator, parentElement);
         }
     }
@@ -93,15 +91,13 @@ public class SimpleXMLMapperGenerator extends AbstractXmlGenerator {
 
     protected void addUpdateByPrimaryKeyElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateUpdateByPrimaryKeySelective()) {
-            AbstractXmlElementGenerator elementGenerator = new UpdateByPrimaryKeyWithoutBLOBsElementGenerator(
-                    true);
+            AbstractXmlElementGenerator elementGenerator = new UpdateByPrimaryKeyWithoutBLOBsElementGenerator(true);
             initializeAndExecuteGenerator(elementGenerator, parentElement);
         }
     }
 
-    protected void initializeAndExecuteGenerator(
-            AbstractXmlElementGenerator elementGenerator,
-            XmlElement parentElement) {
+    protected void initializeAndExecuteGenerator(AbstractXmlElementGenerator elementGenerator,
+                                                 XmlElement parentElement) {
         elementGenerator.setContext(context);
         elementGenerator.setIntrospectedTable(introspectedTable);
         elementGenerator.setProgressCallback(progressCallback);
@@ -111,13 +107,11 @@ public class SimpleXMLMapperGenerator extends AbstractXmlGenerator {
 
     @Override
     public Document getDocument() {
-        Document document = new Document(
-                XmlConstants.MYBATIS3_MAPPER_PUBLIC_ID,
+        Document document = new Document(XmlConstants.MYBATIS3_MAPPER_PUBLIC_ID,
                 XmlConstants.MYBATIS3_MAPPER_SYSTEM_ID);
         document.setRootElement(getSqlMapElement());
 
-        if (!context.getPlugins().sqlMapDocumentGenerated(document,
-                introspectedTable)) {
+        if (!context.getPlugins().sqlMapDocumentGenerated(document, introspectedTable)) {
             document = null;
         }
 

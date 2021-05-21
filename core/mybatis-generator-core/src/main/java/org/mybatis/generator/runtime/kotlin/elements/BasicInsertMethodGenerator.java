@@ -19,7 +19,6 @@ import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
 import org.mybatis.generator.api.dom.kotlin.KotlinArg;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
-import org.mybatis.generator.config.GeneratedKey;
 
 public class BasicInsertMethodGenerator extends AbstractKotlinFunctionGenerator {
 
@@ -57,9 +56,10 @@ public class BasicInsertMethodGenerator extends AbstractKotlinFunctionGenerator 
 
         addFunctionComment(functionAndImports);
 
-        GeneratedKey gk = introspectedTable.getGeneratedKey();
-        KotlinFunctionParts functionParts = fragmentGenerator.getGeneratedKeyAnnotation(gk);
-        acceptParts(kotlinFile, functionAndImports.getFunction(), functionParts);
+        introspectedTable.getGeneratedKey().ifPresent(gk -> {
+            KotlinFunctionParts functionParts = fragmentGenerator.getGeneratedKeyAnnotation(gk);
+            acceptParts(kotlinFile, functionAndImports.getFunction(), functionParts);
+        });
 
         return functionAndImports;
     }

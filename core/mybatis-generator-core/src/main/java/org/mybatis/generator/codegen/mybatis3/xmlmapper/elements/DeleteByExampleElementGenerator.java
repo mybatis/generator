@@ -19,8 +19,7 @@ import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
-public class DeleteByExampleElementGenerator extends
-        AbstractXmlElementGenerator {
+public class DeleteByExampleElementGenerator extends AbstractXmlElementGenerator {
 
     public DeleteByExampleElementGenerator() {
         super();
@@ -30,21 +29,16 @@ public class DeleteByExampleElementGenerator extends
     public void addElements(XmlElement parentElement) {
         XmlElement answer = new XmlElement("delete"); //$NON-NLS-1$
 
-        String fqjt = introspectedTable.getExampleType();
-
-        answer.addAttribute(new Attribute(
-                "id", introspectedTable.getDeleteByExampleStatementId())); //$NON-NLS-1$
-        answer.addAttribute(new Attribute("parameterType", fqjt)); //$NON-NLS-1$
+        answer.addAttribute(new Attribute("id", introspectedTable.getDeleteByExampleStatementId())); //$NON-NLS-1$
+        answer.addAttribute(new Attribute("parameterType", introspectedTable.getExampleType())); //$NON-NLS-1$
 
         context.getCommentGenerator().addComment(answer);
 
-        String s = "delete from " //$NON-NLS-1$
-                + introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime();
+        String s = "delete from " + introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime(); //$NON-NLS-1$
         answer.addElement(new TextElement(s));
         answer.addElement(getExampleIncludeElement());
 
-        if (context.getPlugins().sqlMapDeleteByExampleElementGenerated(
-                answer, introspectedTable)) {
+        if (context.getPlugins().sqlMapDeleteByExampleElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,8 +22,7 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 
-public class UpdateByPrimaryKeySelectiveElementGenerator extends
-        AbstractXmlElementGenerator {
+public class UpdateByPrimaryKeySelectiveElementGenerator extends AbstractXmlElementGenerator {
 
     public UpdateByPrimaryKeySelectiveElementGenerator() {
         super();
@@ -44,8 +43,7 @@ public class UpdateByPrimaryKeySelectiveElementGenerator extends
             parameterType = introspectedTable.getBaseRecordType();
         }
 
-        answer.addAttribute(new Attribute("parameterType", //$NON-NLS-1$
-                parameterType));
+        answer.addAttribute(new Attribute("parameterType", parameterType)); //$NON-NLS-1$
 
         context.getCommentGenerator().addComment(answer);
 
@@ -68,38 +66,17 @@ public class UpdateByPrimaryKeySelectiveElementGenerator extends
             dynamicElement.addElement(isNotNullElement);
 
             sb.setLength(0);
-            sb.append(MyBatis3FormattingUtilities
-                    .getEscapedColumnName(introspectedColumn));
+            sb.append(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn));
             sb.append(" = "); //$NON-NLS-1$
-            sb.append(MyBatis3FormattingUtilities
-                    .getParameterClause(introspectedColumn));
+            sb.append(MyBatis3FormattingUtilities.getParameterClause(introspectedColumn));
             sb.append(',');
 
             isNotNullElement.addElement(new TextElement(sb.toString()));
         }
 
-        boolean and = false;
-        for (IntrospectedColumn introspectedColumn : introspectedTable
-                .getPrimaryKeyColumns()) {
-            sb.setLength(0);
-            if (and) {
-                sb.append("  and "); //$NON-NLS-1$
-            } else {
-                sb.append("where "); //$NON-NLS-1$
-                and = true;
-            }
+        buildPrimaryKeyWhereClause().forEach(answer::addElement);
 
-            sb.append(MyBatis3FormattingUtilities
-                    .getEscapedColumnName(introspectedColumn));
-            sb.append(" = "); //$NON-NLS-1$
-            sb.append(MyBatis3FormattingUtilities
-                    .getParameterClause(introspectedColumn));
-            answer.addElement(new TextElement(sb.toString()));
-        }
-
-        if (context.getPlugins()
-                .sqlMapUpdateByPrimaryKeySelectiveElementGenerated(answer,
-                        introspectedTable)) {
+        if (context.getPlugins().sqlMapUpdateByPrimaryKeySelectiveElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

@@ -79,7 +79,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .withTableFieldName(supportClassGenerator.getTablePropertyName())
                 .build();
 
-        hasGeneratedKeys = introspectedTable.getGeneratedKey() != null;
+        hasGeneratedKeys = introspectedTable.getGeneratedKey().isPresent();
     }
 
     protected KotlinFile createMapperInterfaceFile() {
@@ -154,7 +154,8 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
         return false;
     }
 
-    protected boolean generate(KotlinFile kotlinFile, KotlinType kotlinType, AbstractKotlinFunctionGenerator generator) {
+    protected boolean generate(KotlinFile kotlinFile, KotlinType kotlinType,
+                               AbstractKotlinFunctionGenerator generator) {
         KotlinFunctionAndImports mi = generator.generateMethodAndImports();
         if (mi != null && generator.callPlugins(mi.getFunction(), kotlinFile)) {
             kotlinType.addNamedItem(mi.getFunction());
@@ -220,7 +221,8 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
         return answer;
     }
 
-    protected void addInsertOneMethod(KotlinFile mapperFile, KotlinType mapper, KotlinFile extensionsFile, String mapperName) {
+    protected void addInsertOneMethod(KotlinFile mapperFile, KotlinType mapper, KotlinFile extensionsFile,
+                                      String mapperName) {
         InsertMethodGenerator generator = new InsertMethodGenerator.Builder()
                 .withContext(context)
                 .withIntrospectedTable(introspectedTable)

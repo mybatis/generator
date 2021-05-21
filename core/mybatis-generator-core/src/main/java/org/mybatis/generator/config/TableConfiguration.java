@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.mybatis.generator.internal.util.messages.Messages;
 
@@ -219,8 +220,8 @@ public class TableConfiguration extends PropertyHolder {
         return null;
     }
 
-    public GeneratedKey getGeneratedKey() {
-        return generatedKey;
+    public Optional<GeneratedKey> getGeneratedKey() {
+        return Optional.ofNullable(generatedKey);
     }
 
     public String getSelectByExampleQueryId() {

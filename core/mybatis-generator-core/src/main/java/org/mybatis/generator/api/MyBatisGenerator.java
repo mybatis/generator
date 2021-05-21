@@ -54,6 +54,8 @@ import org.mybatis.generator.internal.XmlFileMergerJaxp;
  */
 public class MyBatisGenerator {
 
+    private static final ProgressCallback NULL_PROGRESS_CALLBACK = new ProgressCallback() {};
+
     private final Configuration configuration;
 
     private final ShellCallback shellCallback;
@@ -211,7 +213,7 @@ public class MyBatisGenerator {
             IOException, InterruptedException {
 
         if (callback == null) {
-            callback = new ProgressCallback() {};
+            callback = NULL_PROGRESS_CALLBACK;
         }
 
         generatedJavaFiles.clear();

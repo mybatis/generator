@@ -22,7 +22,6 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
-import org.mybatis.generator.config.GeneratedKey;
 
 public class BasicInsertMethodGenerator extends AbstractMethodGenerator {
 
@@ -65,9 +64,10 @@ public class BasicInsertMethodGenerator extends AbstractMethodGenerator {
         MethodAndImports.Builder builder = MethodAndImports.withMethod(method)
                 .withImports(imports);
 
-        GeneratedKey gk = introspectedTable.getGeneratedKey();
-        MethodParts methodParts = fragmentGenerator.getGeneratedKeyAnnotation(gk);
-        acceptParts(builder, method, methodParts);
+        introspectedTable.getGeneratedKey().ifPresent(gk -> {
+            MethodParts methodParts = fragmentGenerator.getGeneratedKeyAnnotation(gk);
+            acceptParts(builder, method, methodParts);
+        });
 
         return builder.build();
     }

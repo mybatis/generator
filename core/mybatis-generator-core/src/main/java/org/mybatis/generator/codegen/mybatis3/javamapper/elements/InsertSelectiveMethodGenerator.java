@@ -24,8 +24,7 @@ import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 
-public class InsertSelectiveMethodGenerator extends
-        AbstractJavaMapperMethodGenerator {
+public class InsertSelectiveMethodGenerator extends AbstractJavaMapperMethodGenerator {
 
     public InsertSelectiveMethodGenerator() {
         super();
@@ -39,20 +38,17 @@ public class InsertSelectiveMethodGenerator extends
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setAbstract(true);
 
-        FullyQualifiedJavaType parameterType = introspectedTable.getRules()
-                .calculateAllFieldsClass();
+        FullyQualifiedJavaType parameterType = introspectedTable.getRules().calculateAllFieldsClass();
 
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
         importedTypes.add(parameterType);
         method.addParameter(new Parameter(parameterType, "row")); //$NON-NLS-1$
 
-        context.getCommentGenerator().addGeneralMethodComment(method,
-                introspectedTable);
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
 
         addMapperAnnotations(method);
 
-        if (context.getPlugins().clientInsertSelectiveMethodGenerated(
-                method, interfaze, introspectedTable)) {
+        if (context.getPlugins().clientInsertSelectiveMethodGenerated(method, interfaze, introspectedTable)) {
             addExtraImports(interfaze);
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);

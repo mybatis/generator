@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2020 the original author or authors.
+       Copyright 2006-2021 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -119,6 +119,9 @@
   <context id="kotlin-miscellaneousTests_Annotated" targetRuntime="MyBatis3Kotlin">
     <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
     <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin" />
+    <plugin type="org.mybatis.generator.plugins.CacheNamespacePlugin" >
+      <property name="cache_readWrite" value="true"/>
+    </plugin>
 
     <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
         connectionURL="jdbc:hsqldb:mem:aname"
@@ -145,6 +148,7 @@
       <columnOverride column="wierd$Field" delimitedColumnName="true"/>
     </table>
     <table tableName="RegexRename">
+      <property name="cache_skip" value="true"/>
       <generatedKey column="CUST_ID" sqlStatement="call next value for TestSequence" />
       <columnRenamingRule searchString="^CUST" />
     </table>

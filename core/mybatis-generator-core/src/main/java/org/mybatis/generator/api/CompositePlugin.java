@@ -1201,9 +1201,9 @@ public abstract class CompositePlugin implements Plugin {
     }
 
     @Override
-    public boolean mapperGenerated(KotlinFile mapperFile, IntrospectedTable introspectedTable) {
+    public boolean mapperGenerated(KotlinFile mapperFile, KotlinType mapper, IntrospectedTable introspectedTable) {
         for (Plugin plugin : plugins) {
-            if (!plugin.mapperGenerated(mapperFile, introspectedTable)) {
+            if (!plugin.mapperGenerated(mapperFile, mapper, introspectedTable)) {
                 return false;
             }
         }

@@ -210,7 +210,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
             answer.add(supportFile);
         }
 
-        if (context.getPlugins().mapperGenerated(mapperFile, introspectedTable)) {
+        if (context.getPlugins().mapperGenerated(mapperFile, mapper, introspectedTable)) {
             answer.add(mapperFile);
         }
 

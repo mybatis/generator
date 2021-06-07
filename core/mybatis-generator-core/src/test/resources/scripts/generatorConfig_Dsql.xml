@@ -120,6 +120,7 @@
   <context id="miscellaneousTests_Annotated" targetRuntime="MyBatis3DynamicSql">
     <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
     <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin" />
+    <plugin type="org.mybatis.generator.plugins.CacheNamespacePlugin" />
 
     <commentGenerator>
       <property name="suppressAllComments" value="true"/>
@@ -151,6 +152,7 @@
       <columnOverride column="wierd$Field" delimitedColumnName="true"/>
     </table>
     <table tableName="RegexRename">
+      <property name="cache_skip" value="true"/>
       <generatedKey column="CUST_ID" sqlStatement="call next value for TestSequence" />
       <columnRenamingRule searchString="^CUST" />
     </table>

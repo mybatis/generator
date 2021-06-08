@@ -46,7 +46,7 @@ import org.mybatis.generator.internal.util.StringUtility;
  * plugin element.  The property on the table element will override any
  * property on the plugin element.
  *
- * <p>If the "cache_skip" property is specified - either on the plugin or on a specific table,
+ * <p>If the "cache_skip" property is set to "true" - either on the plugin or on a specific table,
  * the annotation will not be applied to the generated interface.
  *
  * @author Jeff Butler

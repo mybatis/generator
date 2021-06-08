@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2020 the original author or authors.
+       Copyright 2006-2021 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -40,10 +40,25 @@ online
 <a target="_blank" href="https://github.com/mybatis/generator/tree/master/core/mybatis-generator-core/src/main/java/org/mybatis/generator/plugins">
 here</a>.</p>
 
+<h2>org.mybatis.generator.plugins.CacheNamespacePlugin</h2>
+<p>This plugin adds a @CacheNamespace annotation to generated mapper interface (Kotlin or Java).  This
+    plugin is for MyBatis3 targeted runtimes only.</p>
+<p>This plugin accepts the following properties.  All are optional and,
+    if specified, the values (except "cache_skip") will be passed directly to the corresponding property
+    on the generated @CacheNamespace annotation. If "cache_skip" is set to "true" on the plugin configuration,
+    or for any table, the annotation will not be generated.</p>
+<ul>
+    <li>cache_blocking</li>
+    <li>cache_flushInterval</li>
+    <li>cache_readWrite</li>
+    <li>cache_size</li>
+    <li>cache_skip</li>
+</ul>
+<p>Any property can be overridden by specifying the property on a &lt;table&gt; element.</p>
+
 <h2>org.mybatis.generator.plugins.CachePlugin</h2>
 <p>This plugin has no impact when the target runtime in use does not generate XML.</p>
-<p>This plugin adds a &lt;cache&gt; element to generated SQL maps.  This
-plugin is for MyBatis3 targeted runtimes only.</p>
+<p>This plugin adds a &lt;cache&gt; element to generated SQL maps.</p>
 <p>This plugin accepts the following properties.  All are optional and,
 if specified, the values will be passed directly to the corresponding property
 on the generated &lt;cache&gt; element.</p>

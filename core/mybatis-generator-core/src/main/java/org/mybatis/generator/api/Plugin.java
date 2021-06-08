@@ -1978,7 +1978,7 @@ public interface Plugin {
         return true;
     }
 
-    default boolean mapperGenerated(KotlinFile mapperFile, IntrospectedTable introspectedTable) {
+    default boolean mapperGenerated(KotlinFile mapperFile, KotlinType mapper, IntrospectedTable introspectedTable) {
         return true;
     }
 

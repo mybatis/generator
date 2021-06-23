@@ -243,8 +243,14 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         method.addBodyLine("this.condition = condition;"); //$NON-NLS-1$
         method.addBodyLine("this.value = value;"); //$NON-NLS-1$
         method.addBodyLine("this.typeHandler = typeHandler;"); //$NON-NLS-1$
-        method.addBodyLine("if (value instanceof List<?>) {"); //$NON-NLS-1$
+        method.addBodyLine("if (value instanceof Collection<?>) {"); //$NON-NLS-1$
+        method.addBodyLine("if (((Collection<?>) value).size() != 0) {"); //$NON-NLS-1$
         method.addBodyLine("this.listValue = true;"); //$NON-NLS-1$
+        method.addBodyLine("} else {"); //$NON-NLS-1$
+        method.addBodyLine("this.noValue = true;"); //$NON-NLS-1$
+        method.addBodyLine("if (value instanceof Collection<?>) {"); //$NON-NLS-1$
+        method.addBodyLine("this.condition = \"false\""); //$NON-NLS-1$
+        method.addBodyLine("}"); //$NON-NLS-1$
         method.addBodyLine("} else {"); //$NON-NLS-1$
         method.addBodyLine("this.singleValue = true;"); //$NON-NLS-1$
         method.addBodyLine("}"); //$NON-NLS-1$

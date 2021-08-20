@@ -553,22 +553,34 @@ public class ExampleGenerator extends AbstractJavaGenerator {
             // conditions for a field
             answer.addMethod(getSetNullMethod(introspectedColumn));
             answer.addMethod(getSetNotNullMethod(introspectedColumn));
-            answer.addMethod(getSetEqualMethod(introspectedColumn));
-            answer.addMethod(getSetNotEqualMethod(introspectedColumn));
-            answer.addMethod(getSetGreaterThanMethod(introspectedColumn));
-            answer.addMethod(getSetGreaterThenOrEqualMethod(introspectedColumn));
-            answer.addMethod(getSetLessThanMethod(introspectedColumn));
-            answer.addMethod(getSetLessThanOrEqualMethod(introspectedColumn));
+            answer.addMethod(getSetEqualMethod(introspectedColumn, false));
+            answer.addMethod(getSetEqualMethod(introspectedColumn, true));
+            answer.addMethod(getSetNotEqualMethod(introspectedColumn, false));
+            answer.addMethod(getSetNotEqualMethod(introspectedColumn, true));
+            answer.addMethod(getSetGreaterThanMethod(introspectedColumn, false));
+            answer.addMethod(getSetGreaterThanMethod(introspectedColumn, true));
+            answer.addMethod(getSetGreaterThenOrEqualMethod(introspectedColumn, false));
+            answer.addMethod(getSetGreaterThenOrEqualMethod(introspectedColumn, true));
+            answer.addMethod(getSetLessThanMethod(introspectedColumn, false));
+            answer.addMethod(getSetLessThanMethod(introspectedColumn, true));
+            answer.addMethod(getSetLessThanOrEqualMethod(introspectedColumn, false));
+            answer.addMethod(getSetLessThanOrEqualMethod(introspectedColumn, true));
 
             if (introspectedColumn.isJdbcCharacterColumn()) {
-                answer.addMethod(getSetLikeMethod(introspectedColumn));
-                answer.addMethod(getSetNotLikeMethod(introspectedColumn));
+                answer.addMethod(getSetLikeMethod(introspectedColumn, false));
+                answer.addMethod(getSetLikeMethod(introspectedColumn, true));
+                answer.addMethod(getSetNotLikeMethod(introspectedColumn, false));
+                answer.addMethod(getSetNotLikeMethod(introspectedColumn, true));
             }
 
-            answer.addMethod(getSetInOrNotInMethod(introspectedColumn, true));
-            answer.addMethod(getSetInOrNotInMethod(introspectedColumn, false));
-            answer.addMethod(getSetBetweenOrNotBetweenMethod(introspectedColumn, true));
-            answer.addMethod(getSetBetweenOrNotBetweenMethod(introspectedColumn, false));
+            answer.addMethod(getSetInOrNotInMethod(introspectedColumn, true, false));
+            answer.addMethod(getSetInOrNotInMethod(introspectedColumn, true, true));
+            answer.addMethod(getSetInOrNotInMethod(introspectedColumn, false, false));
+            answer.addMethod(getSetInOrNotInMethod(introspectedColumn, false, true));
+            answer.addMethod(getSetBetweenOrNotBetweenMethod(introspectedColumn, true, false));
+            answer.addMethod(getSetBetweenOrNotBetweenMethod(introspectedColumn, true, true));
+            answer.addMethod(getSetBetweenOrNotBetweenMethod(introspectedColumn, false, false));
+            answer.addMethod(getSetBetweenOrNotBetweenMethod(introspectedColumn, false, true));
         }
 
         return answer;
@@ -582,39 +594,39 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         return getNoValueMethod(introspectedColumn, "IsNotNull", "is not null"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    private Method getSetEqualMethod(IntrospectedColumn introspectedColumn) {
-        return getSingleValueMethod(introspectedColumn, "EqualTo", "="); //$NON-NLS-1$ //$NON-NLS-2$
+    private Method getSetEqualMethod(IntrospectedColumn introspectedColumn, boolean withExpression) {
+        return getSingleValueMethod(introspectedColumn, "EqualTo", "=", withExpression); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    private Method getSetNotEqualMethod(IntrospectedColumn introspectedColumn) {
-        return getSingleValueMethod(introspectedColumn, "NotEqualTo", "<>"); //$NON-NLS-1$ //$NON-NLS-2$
+    private Method getSetNotEqualMethod(IntrospectedColumn introspectedColumn, boolean withExpression) {
+        return getSingleValueMethod(introspectedColumn, "NotEqualTo", "<>", withExpression); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    private Method getSetGreaterThanMethod(IntrospectedColumn introspectedColumn) {
-        return getSingleValueMethod(introspectedColumn, "GreaterThan", ">"); //$NON-NLS-1$ //$NON-NLS-2$
+    private Method getSetGreaterThanMethod(IntrospectedColumn introspectedColumn, boolean withExpression) {
+        return getSingleValueMethod(introspectedColumn, "GreaterThan", ">", withExpression); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    private Method getSetGreaterThenOrEqualMethod(IntrospectedColumn introspectedColumn) {
-        return getSingleValueMethod(introspectedColumn,"GreaterThanOrEqualTo", ">="); //$NON-NLS-1$ //$NON-NLS-2$
+    private Method getSetGreaterThenOrEqualMethod(IntrospectedColumn introspectedColumn, boolean withExpression) {
+        return getSingleValueMethod(introspectedColumn,"GreaterThanOrEqualTo", ">=", withExpression); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    private Method getSetLessThanMethod(IntrospectedColumn introspectedColumn) {
-        return getSingleValueMethod(introspectedColumn, "LessThan", "<"); //$NON-NLS-1$ //$NON-NLS-2$
+    private Method getSetLessThanMethod(IntrospectedColumn introspectedColumn, boolean withExpression) {
+        return getSingleValueMethod(introspectedColumn, "LessThan", "<", withExpression); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    private Method getSetLessThanOrEqualMethod(IntrospectedColumn introspectedColumn) {
-        return getSingleValueMethod(introspectedColumn,"LessThanOrEqualTo", "<="); //$NON-NLS-1$ //$NON-NLS-2$
+    private Method getSetLessThanOrEqualMethod(IntrospectedColumn introspectedColumn, boolean withExpression) {
+        return getSingleValueMethod(introspectedColumn,"LessThanOrEqualTo", "<=", withExpression); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    private Method getSetLikeMethod(IntrospectedColumn introspectedColumn) {
-        return getSingleValueMethod(introspectedColumn, "Like", "like"); //$NON-NLS-1$ //$NON-NLS-2$
+    private Method getSetLikeMethod(IntrospectedColumn introspectedColumn, boolean withExpression) {
+        return getSingleValueMethod(introspectedColumn, "Like", "like", withExpression); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    private Method getSetNotLikeMethod(IntrospectedColumn introspectedColumn) {
-        return getSingleValueMethod(introspectedColumn, "NotLike", "not like"); //$NON-NLS-1$ //$NON-NLS-2$
+    private Method getSetNotLikeMethod(IntrospectedColumn introspectedColumn, boolean withExpression) {
+        return getSingleValueMethod(introspectedColumn, "NotLike", "not like", withExpression); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    private Method getSingleValueMethod(IntrospectedColumn introspectedColumn, String nameFragment, String operator) {
+    private Method getSingleValueMethod(IntrospectedColumn introspectedColumn, String nameFragment, String operator, boolean withExpression) {
 
         StringBuilder sb = new StringBuilder();
         sb.append(initializeAndMethodName(introspectedColumn));
@@ -622,6 +634,9 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 
         Method method = new Method(sb.toString());
         method.setVisibility(JavaVisibility.PUBLIC);
+        if (withExpression) {
+            method.addParameter(new Parameter(FullyQualifiedJavaType.getBooleanPrimitiveInstance(), "expression"));
+        }
         method.addParameter(new Parameter(introspectedColumn.getFullyQualifiedJavaType(), "value")); //$NON-NLS-1$
         method.setReturnType(FullyQualifiedJavaType.getCriteriaInstance());
 
@@ -634,7 +649,13 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         sb.append(", \""); //$NON-NLS-1$
         sb.append(introspectedColumn.getJavaProperty());
         sb.append("\");"); //$NON-NLS-1$
+        if (withExpression) {
+            method.addBodyLine("if (expression) {");
+        }
         method.addBodyLine(sb.toString());
+        if (withExpression) {
+            method.addBodyLine("}");
+        }
         method.addBodyLine("return (Criteria) this;"); //$NON-NLS-1$
 
         return method;
@@ -674,7 +695,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
      * @param betweenMethod true if between, else not between
      * @return a generated method for the between or not between method
      */
-    private Method getSetBetweenOrNotBetweenMethod(IntrospectedColumn introspectedColumn, boolean betweenMethod) {
+    private Method getSetBetweenOrNotBetweenMethod(IntrospectedColumn introspectedColumn, boolean betweenMethod, boolean withExpression) {
 
         StringBuilder sb = new StringBuilder();
         sb.append(initializeAndMethodName(introspectedColumn));
@@ -686,7 +707,9 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         Method method = new Method(sb.toString());
         method.setVisibility(JavaVisibility.PUBLIC);
         FullyQualifiedJavaType type = introspectedColumn.getFullyQualifiedJavaType();
-
+        if (withExpression) {
+            method.addParameter(new Parameter(FullyQualifiedJavaType.getBooleanPrimitiveInstance(), "expression"));
+        }
         method.addParameter(new Parameter(type, "value1")); //$NON-NLS-1$
         method.addParameter(new Parameter(type, "value2")); //$NON-NLS-1$
         method.setReturnType(FullyQualifiedJavaType.getCriteriaInstance());
@@ -703,7 +726,13 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         sb.append(", \""); //$NON-NLS-1$
         sb.append(introspectedColumn.getJavaProperty());
         sb.append("\");"); //$NON-NLS-1$
+        if (withExpression) {
+            method.addBodyLine("if (expression) {");
+        }
         method.addBodyLine(sb.toString());
+        if (withExpression) {
+            method.addBodyLine("}");
+        }
         method.addBodyLine("return (Criteria) this;"); //$NON-NLS-1$
 
         return method;
@@ -718,7 +747,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
      *            method
      * @return a generated method for the in or not in method
      */
-    private Method getSetInOrNotInMethod(IntrospectedColumn introspectedColumn, boolean inMethod) {
+    private Method getSetInOrNotInMethod(IntrospectedColumn introspectedColumn, boolean inMethod, boolean withExpression) {
         StringBuilder sb = new StringBuilder();
         sb.append(initializeAndMethodName(introspectedColumn));
         if (inMethod) {
@@ -735,6 +764,9 @@ public class ExampleGenerator extends AbstractJavaGenerator {
             type.addTypeArgument(introspectedColumn.getFullyQualifiedJavaType());
         }
 
+        if (withExpression) {
+            method.addParameter(new Parameter(FullyQualifiedJavaType.getBooleanPrimitiveInstance(), "expression"));
+        }
         method.addParameter(new Parameter(type, "values")); //$NON-NLS-1$
         method.setReturnType(FullyQualifiedJavaType.getCriteriaInstance());
 
@@ -748,7 +780,13 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         sb.append("\", values, \""); //$NON-NLS-1$
         sb.append(introspectedColumn.getJavaProperty());
         sb.append("\");"); //$NON-NLS-1$
+        if (withExpression) {
+            method.addBodyLine("if (expression) {");
+        }
         method.addBodyLine(sb.toString());
+        if (withExpression) {
+            method.addBodyLine("}");
+        }
         method.addBodyLine("return (Criteria) this;"); //$NON-NLS-1$
 
         return method;

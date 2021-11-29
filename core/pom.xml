@@ -59,9 +59,9 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <java.version>1.8</java.version>
-    <kotlin.version>1.5.10</kotlin.version>
-    <junit.jupiter.version>5.7.2</junit.jupiter.version>
-    <junit.platform.version>1.7.2</junit.platform.version>
+    <kotlin.version>1.6.0</kotlin.version>
+    <junit.jupiter.version>5.8.2</junit.jupiter.version>
+    <junit.platform.version>1.8.2</junit.platform.version>
   </properties>
 
   <build>
@@ -80,7 +80,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-plugin-plugin</artifactId>
-          <version>3.6.1</version>
+          <version>3.6.2</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -181,14 +181,9 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>log4j</groupId>
-        <artifactId>log4j</artifactId>
-        <version>1.2.17</version>
-      </dependency>
-      <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-api</artifactId>
-        <version>1.7.30</version>
+        <version>1.7.32</version>
       </dependency>
       <dependency>
         <groupId>org.apache.logging.log4j</groupId>
@@ -203,7 +198,7 @@
       <dependency>
         <groupId>org.apache.ant</groupId>
         <artifactId>ant</artifactId>
-        <version>1.10.10</version>
+        <version>1.10.12</version>
       </dependency>
       <dependency>
         <groupId>org.junit.jupiter</groupId>
@@ -232,7 +227,7 @@
       <dependency>
         <groupId>org.assertj</groupId>
         <artifactId>assertj-core</artifactId>
-        <version>3.19.0</version>
+        <version>3.21.0</version>
         <scope>test</scope>
       </dependency>
       <dependency>
@@ -244,18 +239,18 @@
       <dependency>
         <groupId>org.apache.maven</groupId>
         <artifactId>maven-plugin-api</artifactId>
-        <version>3.8.1</version>
+        <version>3.8.4</version>
       </dependency>
       <dependency>
         <groupId>org.apache.maven.plugin-tools</groupId>
         <artifactId>maven-plugin-annotations</artifactId>
-        <version>3.6.1</version>
+        <version>3.6.2</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>org.apache.maven</groupId>
         <artifactId>maven-core</artifactId>
-        <version>3.8.1</version>
+        <version>3.8.4</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
@@ -266,13 +261,13 @@
       <dependency>
         <groupId>com.github.javaparser</groupId>
         <artifactId>javaparser-core</artifactId>
-        <version>3.22.1</version>
+        <version>3.23.1</version>
         <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>ch.qos.logback</groupId>
         <artifactId>logback-classic</artifactId>
-        <version>1.2.3</version>
+        <version>1.2.7</version>
         <scope>test</scope>
       </dependency>
       <dependency>
@@ -288,7 +283,7 @@
       <dependency>
         <groupId>org.reflections</groupId>
         <artifactId>reflections</artifactId>
-        <version>0.9.12</version>
+        <version>0.10.2</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

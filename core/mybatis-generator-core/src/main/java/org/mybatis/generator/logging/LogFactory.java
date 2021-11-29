@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import org.mybatis.generator.logging.commons.JakartaCommonsLoggingLogFactory;
 import org.mybatis.generator.logging.jdk14.Jdk14LoggingLogFactory;
-import org.mybatis.generator.logging.log4j.Log4jLoggingLogFactory;
 import org.mybatis.generator.logging.log4j2.Log4j2LoggingLogFactory;
 import org.mybatis.generator.logging.nologging.NoLoggingLogFactory;
 import org.mybatis.generator.logging.slf4j.Slf4jLoggingLogFactory;
@@ -38,7 +37,6 @@ public class LogFactory {
         tryImplementation(new Slf4jLoggingLogFactory());
         tryImplementation(new JakartaCommonsLoggingLogFactory());
         tryImplementation(new Log4j2LoggingLogFactory());
-        tryImplementation(new Log4jLoggingLogFactory());
         tryImplementation(new Jdk14LoggingLogFactory());
         tryImplementation(new NoLoggingLogFactory());
     }
@@ -72,10 +70,6 @@ public class LogFactory {
 
     public static synchronized void forceCommonsLogging() {
         setImplementation(new JakartaCommonsLoggingLogFactory());
-    }
-
-    public static synchronized void forceLog4jLogging() {
-        setImplementation(new Log4jLoggingLogFactory());
     }
 
     public static synchronized void forceLog4j2Logging() {

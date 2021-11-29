@@ -18,7 +18,6 @@ package org.mybatis.generator.eclipse.ui.ant.logging;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import org.mybatis.generator.eclipse.ui.ant.logging.commons.JakartaCommonsLoggingLogFactory;
-import org.mybatis.generator.eclipse.ui.ant.logging.log4j.Log4jLoggingLogFactory;
 import org.mybatis.generator.eclipse.ui.ant.logging.log4j2.Log4j2LoggingLogFactory;
 import org.mybatis.generator.eclipse.ui.ant.logging.slf4j.Slf4jLoggingLogFactory;
 import org.mybatis.generator.logging.AbstractLogFactory;
@@ -45,8 +44,6 @@ public class AntLogFactory implements AbstractLogFactory {
                 setImplementation(new JakartaCommonsLoggingLogFactory());
             } else if ("LOG4J2".equals(loggingImplementation)) { //$NON-NLS-1$
                 setImplementation(new Log4j2LoggingLogFactory());
-            } else if ("LOG4J".equals(loggingImplementation)) { //$NON-NLS-1$
-                setImplementation(new Log4jLoggingLogFactory());
             } else if ("JDK".equals(loggingImplementation)) { //$NON-NLS-1$
                 setImplementation(new Jdk14LoggingLogFactory());
             } else {
@@ -59,7 +56,6 @@ public class AntLogFactory implements AbstractLogFactory {
         tryImplementation(new Slf4jLoggingLogFactory());
         tryImplementation(new JakartaCommonsLoggingLogFactory());
         tryImplementation(new Log4j2LoggingLogFactory());
-        tryImplementation(new Log4jLoggingLogFactory());
         tryImplementation(new Jdk14LoggingLogFactory());
         tryImplementation(new NoLoggingLogFactory());
     }

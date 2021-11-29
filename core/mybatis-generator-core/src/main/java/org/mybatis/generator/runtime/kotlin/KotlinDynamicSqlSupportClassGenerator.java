@@ -84,6 +84,10 @@ public class KotlinDynamicSqlSupportClassGenerator {
         return innerClass;
     }
 
+    public KotlinType getOuterObject() {
+        return outerObject;
+    }
+
     public String getTablePropertyImport() {
         return getSupportObjectImport()
                 + "." //$NON-NLS-1$

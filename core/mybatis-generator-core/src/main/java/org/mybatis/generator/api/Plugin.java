@@ -1969,11 +1969,39 @@ public interface Plugin {
         return true;
     }
 
-    default boolean dynamicSqlSupportGenerated(KotlinFile kotlinFile, KotlinType supportClass,
-            IntrospectedTable introspectedTable) {
+    /**
+     * This method is called when the MyBatis Dynamic SQL support object has been generated. The format of the class
+     * is an outer object with an inner class. The inner class contains the table and column definitions. The outer
+     * (singleton) object contains a reference to an instance of the inner class, and shortcut properties that
+     * reference the columns of that instance.
+     *
+     * @param kotlinFile the generated Kotlin file containing the outer object and inner class
+     * @param outerSupportObject a reference to the outer object in the file
+     * @param innerSupportClass a reference to the inner class
+     * @param introspectedTable the class containing information about the table as
+     *                          introspected from the database
+     * @return true if the generated file should be kept
+     */
+    default boolean dynamicSqlSupportGenerated(KotlinFile kotlinFile, KotlinType outerSupportObject,
+                                               KotlinType innerSupportClass, IntrospectedTable introspectedTable) {
         return true;
     }
 
+    /**
+     * This method is no longer called.
+     *
+     * @deprecated this method is no longer called
+     *
+     * @param extensionsFile
+     *     the partially generated file
+     * @param introspectedTable
+     *     The class containing information about the table as introspected from the database
+     * @return true if the file should be generated, false if the generated
+     *         file should be ignored. In the case of multiple plugins, the
+     *         first plugin returning false will disable the calling of further
+     *         plugins.
+     */
+    @Deprecated
     default boolean mapperExtensionsGenerated(KotlinFile extensionsFile, IntrospectedTable introspectedTable) {
         return true;
     }

@@ -123,7 +123,7 @@ public class KotlinDynamicSqlSupportClassGenerator {
         String domainObjectName = introspectedTable.getFullyQualifiedTable().getDomainObjectName();
 
         return KotlinType.newClass(domainObjectName)
-                .withSuperType("AliasableSqlTable<" + domainObjectName +">(\"" //$NON-NLS-1$  //$NON-NLS-2$
+                .withSuperType("AliasableSqlTable<" + domainObjectName + ">(\"" //$NON-NLS-1$ //$NON-NLS-2$
                         + escapeStringForKotlin(introspectedTable.getFullyQualifiedTableNameAtRuntime())
                         + "\", ::" + domainObjectName //$NON-NLS-1$
                         + ")") //$NON-NLS-1$

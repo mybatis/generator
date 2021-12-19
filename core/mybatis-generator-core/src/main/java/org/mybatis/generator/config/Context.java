@@ -447,11 +447,16 @@ public class Context extends PropertyHolder {
             }
         }
 
+        // initialize everything first before generating. This allows plugins to know about other
+        // items in the configuration.
         for (IntrospectedTable introspectedTable : introspectedTables) {
             callback.checkCancel();
-
             introspectedTable.initialize();
             introspectedTable.calculateGenerators(warnings, callback);
+        }
+
+        for (IntrospectedTable introspectedTable : introspectedTables) {
+            callback.checkCancel();
             generatedJavaFiles.addAll(introspectedTable
                     .getGeneratedJavaFiles());
             generatedXmlFiles.addAll(introspectedTable

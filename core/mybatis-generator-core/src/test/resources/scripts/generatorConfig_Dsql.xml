@@ -120,7 +120,11 @@
   <context id="miscellaneousTests_Annotated" targetRuntime="MyBatis3DynamicSql">
     <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
     <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin" />
-    <plugin type="org.mybatis.generator.plugins.CacheNamespacePlugin" />
+    <plugin type="org.mybatis.generator.plugins.CacheNamespacePlugin" >
+      <property name="cache_readWrite" value="true"/>
+      <property name="cache_implementation" value="org.apache.ibatis.cache.impl.PerpetualCache"/>
+      <property name="cache_eviction" value="org.apache.ibatis.cache.decorators.LruCache"/>
+    </plugin>
 
     <commentGenerator>
       <property name="suppressAllComments" value="true"/>

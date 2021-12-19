@@ -44,14 +44,19 @@ here</a>.</p>
 <p>This plugin adds a @CacheNamespace annotation to generated mapper interface (Kotlin or Java).  This
     plugin is for MyBatis3 targeted runtimes only.</p>
 <p>This plugin accepts the following properties.  All are optional and,
-    if specified, the values (except "cache_skip") will be passed directly to the corresponding property
-    on the generated @CacheNamespace annotation. If "cache_skip" is set to "true" on the plugin configuration,
+    if specified, most values (except "cache_skip") will be passed directly to the corresponding property
+    on the generated @CacheNamespace annotation. The cache_eviction and cache_implementation properties
+    must be fully qualified class names. The class will be added to the import list in the mapper, and the
+    short name will be used on the generated annotation.
+    If "cache_skip" is set to "true" on the plugin configuration,
     or for any table, the annotation will not be generated.</p>
 <ul>
     <li>cache_blocking</li>
     <li>cache_flushInterval</li>
     <li>cache_readWrite</li>
     <li>cache_size</li>
+    <li>cache_eviction (must be a fully qualified class name)</li>
+    <li>cache_implementation (must be a fully qualified class name)</li>
     <li>cache_skip</li>
 </ul>
 <p>Any property can be overridden by specifying the property on a &lt;table&gt; element.</p>

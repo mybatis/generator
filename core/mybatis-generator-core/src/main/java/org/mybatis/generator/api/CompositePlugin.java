@@ -1178,21 +1178,11 @@ public abstract class CompositePlugin implements Plugin {
     }
 
     @Override
-    public boolean dynamicSqlSupportGenerated(KotlinFile kotlinFile, KotlinType supportClass,
-            IntrospectedTable introspectedTable) {
+    public boolean dynamicSqlSupportGenerated(KotlinFile kotlinFile, KotlinType outerSupportObject,
+                                              KotlinType innerSupportClass, IntrospectedTable introspectedTable) {
         for (Plugin plugin : plugins) {
-            if (!plugin.dynamicSqlSupportGenerated(kotlinFile, supportClass, introspectedTable)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    @Override
-    public boolean mapperExtensionsGenerated(KotlinFile extensionsFile, IntrospectedTable introspectedTable) {
-        for (Plugin plugin : plugins) {
-            if (!plugin.mapperExtensionsGenerated(extensionsFile, introspectedTable)) {
+            if (!plugin.dynamicSqlSupportGenerated(kotlinFile, outerSupportObject, innerSupportClass,
+                    introspectedTable)) {
                 return false;
             }
         }

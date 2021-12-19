@@ -37,7 +37,17 @@ See the GitHub page for milestone 1.4.1 for details other other changes in this 
 version 1.3.0 or later of MyBatis Dynamic SQL. This should be a relatively minor change for most <b>Java</b> users
 and should simply require updating the MyBatis Dynamic SQL version to 1.3.0 or later.</p>
 
-<p>Differences for <b>Kotlin</b> users are more extensive. The generated Dynamic SQL Support class in the Kotlin runtime
+<p>Differences for <b>Kotlin</b> users are more extensive. As a result of the changes detailed below, several plugin
+methods related to the generated Kotlin files have changed or been deprecated. If a method has been deprecated,
+it is no longer in use by the generator and will be removed in the future.</p>
+
+<p>We have merged the generated mapper extension methods into the same file as the mapper itself - eliminating
+generated files with the word "Extensions" in their names. If you are regenerating code in an existing project,
+you should manually delete the old generated extension files (generated Kotlin files with the word "Extensions"
+in the file name).
+</p>
+
+<p>The generated Dynamic SQL Support class in the Kotlin runtime
 has changed and now matches the recommended format published in the MyBatis Dynamic SQL documentation (it more closely
 matches the style of the support class generated for Java).
 This has the following benefits:</p>
@@ -72,9 +82,9 @@ required:</p>
 
 <ul>
     <li>The declared <code>SqlTable</code> object is now an instance of an inner Class rather than an inner Object.
-        It should be reference with the new name (typically the same name as previously, with the first letter now
+        It should be referenced with the new name (typically the same name as previously, with the first letter now
         lowercase)</li>
-    <li>Reference to any <code>SqlColumn</code> should reference the top level value rather than a nested value</li>
+    <li>References to any <code>SqlColumn</code> should reference the top level value rather than a nested value</li>
 </ul>
 
 <p>For example, previously code might have looked like this:</p>

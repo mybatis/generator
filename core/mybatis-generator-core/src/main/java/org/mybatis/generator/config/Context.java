@@ -475,7 +475,16 @@ public class Context extends PropertyHolder {
                 .contextGenerateAdditionalKotlinFiles());
     }
 
-    private Connection getConnection() throws SQLException {
+    /**
+     * This method creates a new JDBC connection from the values specified in the configuration file.
+     * If you call this method, then you are responsible
+     * for closing the connection (See {@link Context#closeConnection(Connection)}). If you do not
+     * close the connection, then there could be connection leaks.
+     *
+     * @return a new connection created from the values in the configuration file
+     * @throws SQLException if any error occurs while creating the connection
+     */
+    public Connection getConnection() throws SQLException {
         ConnectionFactory connectionFactory;
         if (jdbcConnectionConfiguration != null) {
             connectionFactory = new JDBCConnectionFactory(jdbcConnectionConfiguration);
@@ -486,7 +495,13 @@ public class Context extends PropertyHolder {
         return connectionFactory.getConnection();
     }
 
-    private void closeConnection(Connection connection) {
+    /**
+     * This method closes a JDBC connection and ignores any errors. If the passed connection is null,
+     * then the method does nothing.
+     *
+     * @param connection a JDBC connection to close, may be null
+     */
+    public void closeConnection(Connection connection) {
         if (connection != null) {
             try {
                 connection.close();

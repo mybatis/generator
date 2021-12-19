@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -64,7 +64,7 @@ public class DynamicSqlSupportClassGenerator {
         topLevelClass.setVisibility(JavaVisibility.PUBLIC);
         topLevelClass.setFinal(true);
         topLevelClass.addImportedType(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.SqlColumn")); //$NON-NLS-1$
-        topLevelClass.addImportedType(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.SqlTable")); //$NON-NLS-1$
+        topLevelClass.addImportedType(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.AliasableSqlTable")); //$NON-NLS-1$
         topLevelClass.addImportedType(new FullyQualifiedJavaType("java.sql.JDBCType")); //$NON-NLS-1$
         return topLevelClass;
     }
@@ -76,14 +76,16 @@ public class DynamicSqlSupportClassGenerator {
         innerClass.setVisibility(JavaVisibility.PUBLIC);
         innerClass.setStatic(true);
         innerClass.setFinal(true);
-        innerClass.setSuperClass(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.SqlTable")); //$NON-NLS-1$
+        innerClass.setSuperClass(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.AliasableSqlTable<" //$NON-NLS-1$
+                        + fqjt.getShortName() + ">")); //$NON-NLS-1$
 
         Method method = new Method(fqjt.getShortName());
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setConstructor(true);
         method.addBodyLine("super(\"" //$NON-NLS-1$
                 + escapeStringForJava(introspectedTable.getFullyQualifiedTableNameAtRuntime())
-                + "\");"); //$NON-NLS-1$
+                + "\", " + fqjt.getShortName() + "::new" //$NON-NLS-1$ //$NON-NLS-2$
+                + ");"); //$NON-NLS-1$
         innerClass.addMethod(method);
 
         commentGenerator.addClassAnnotation(innerClass, introspectedTable, topLevelClass.getImportedTypes());

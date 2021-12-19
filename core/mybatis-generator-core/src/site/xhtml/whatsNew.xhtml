@@ -27,15 +27,21 @@
 <h1>What's New in MyBatis Generator</h1>
 <h2>Version 1.4.1</h2>
 <p>This release is primarily focused on updating the runtimes for MyBatis Dynamic SQL ("MyBatis3DynamicSQL" and
-"MyBatis3Kotlin"). The generated code is now dependant on MyBatis Dynamic SQL version 1.3.0 or later
+"MyBatis3Kotlin"). The generated code is now dependent on MyBatis Dynamic SQL version 1.3.1 or later
 and makes use of newer features in that library. See below for details about that change.
-See the GitHub page for milestone 1.4.1 for details other other changes in this release:
+See the GitHub page for milestone 1.4.1 for details other changes in this release:
 <a target="_blank" href="https://github.com/mybatis/generator/issues?q=milestone%3A1.4.1">Milestone 1.4.1</a>.</p>
 
 <h3>Updated MyBatis Dynamic SQL Runtimes</h3>
 <p>The MyBatis3DynamicSQL and MyBatis3Kotlin runtimes have been updated to generate code that requires
-version 1.3.0 or later of MyBatis Dynamic SQL. This should be a relatively minor change for most <b>Java</b> users
-and should simply require updating the MyBatis Dynamic SQL version to 1.3.0 or later.</p>
+version 1.3.1 or later of MyBatis Dynamic SQL. This should be a relatively minor change for most <b>Java</b> users
+and should simply require updating the MyBatis Dynamic SQL version to 1.3.1 or later.</p>
+
+<p>For both Java and Kotlin users, the new database model classes (a.k.a. the "support" classes) now extend
+    <code>AliasableSqlTable</code>. This allows you to specify a table alias directly within an instance
+    of a table class, rather than specifying the alias in a select statement. This can make the code a bit clearer
+    if you are doing a self join.
+</p>
 
 <p>Differences for <b>Kotlin</b> users are more extensive. As a result of the changes detailed below, several plugin
 methods related to the generated Kotlin files have changed or been deprecated. If a method has been deprecated,
@@ -60,7 +66,7 @@ This has the following benefits:</p>
 
 <p><b>This update will require changes in existing code if you regenerate Kotlin code using this updated version.</b></p>
 
-<p>Generated Kotlin data classes no longer have the word "Record" appended to their names. Otherwise they are
+<p>Generated Kotlin data classes no longer have the word "Record" appended to their names. Otherwise, they are
 the same. Your use of these classes will need to change. In most cases, you can simply remove the word "Record" from the
 reference. For example, if you have a table named "Bar", you may see code like this:</p>
 <pre>

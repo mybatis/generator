@@ -97,6 +97,8 @@ public class ConfigVerifyer extends DefaultHandler {
     boolean isConfigFile(InputStream inputStream) {
         try {
             SAXParserFactory factory = SAXParserFactory.newInstance();
+            factory.setFeature("http://xml.org/sax/features/external-general-entities", false);
+            factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
             factory.setValidating(false);
             SAXParser parser = factory.newSAXParser();
         

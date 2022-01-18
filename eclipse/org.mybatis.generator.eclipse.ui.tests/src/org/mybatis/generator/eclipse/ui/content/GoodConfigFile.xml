@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+  <context id="context1" targetRuntime="MyBatis3Simple" >
+    <jdbcConnection driverClass="org.hsqldb.jdbcDriver"
+      connectionURL="${jdbcUrl}"
+      userId="sa" >
+    </jdbcConnection>
+    <javaModelGenerator targetPackage="gen.model" targetProject="MBGTest" >
+        <!--
+        <property name="rootClass" value="base.BaseModel" />
+        --> 
+    </javaModelGenerator>
+    <sqlMapGenerator targetPackage="gen.mapper" targetProject="MBGTest" />
+    <javaClientGenerator targetPackage="gen.mapper" targetProject="MBGTest" type="XMLMAPPER" />
+    <table tableName="a" />
+  </context>
+
+  <context id="context2" targetRuntime="MyBatis3Simple" >
+    <commentGenerator>
+      <property name="suppressAllComments" value="false"/>
+    </commentGenerator>
+    
+    <connectionFactory type="DEFAULT" >
+        <property name="driverClass" value="org.hsqldb.jdbcDriver" />
+        <property name="connectionURL" value="jdbc:hsqldb:mem:aname" />
+        <property name="userId" value="sa" />
+    </connectionFactory>
+    <javaModelGenerator targetPackage="gen.src.model" targetProject="MBGTest/generatedsrc" />
+    <sqlMapGenerator targetPackage="gen.src.mapper" targetProject="MBGTest/generatedsrc" />
+    <javaClientGenerator targetPackage="gen.src.mapper" targetProject="MBGTest/generatedsrc" type="XMLMAPPER" />
+    <table schema="mbgtest" tableName="%" />
+  </context>
+</generatorConfiguration>

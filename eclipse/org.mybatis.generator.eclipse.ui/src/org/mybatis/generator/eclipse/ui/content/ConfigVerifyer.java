@@ -94,7 +94,7 @@ public class ConfigVerifyer extends DefaultHandler {
         return rc;
     }
 
-    private boolean isConfigFile(InputStream inputStream) {
+    boolean isConfigFile(InputStream inputStream) {
         try {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             factory.setValidating(false);

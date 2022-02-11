@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2021 the original author or authors.
+ *    Copyright 2006-2022 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -65,14 +65,14 @@ public class KotlinFragmentGenerator {
                     .withDataType(kt.getShortNameWithTypeArguments())
                     .build());
             if (first) {
-                builder.withCodeLine("    where(" + fieldNameAndImport.fieldName() //$NON-NLS-1$
-                        + ", isEqualTo(" + argName //$NON-NLS-1$
-                        + "))"); //$NON-NLS-1$
+                builder.withCodeLine("    where { " + fieldNameAndImport.fieldName() //$NON-NLS-1$
+                        + " isEqualTo " + argName //$NON-NLS-1$
+                        + " }"); //$NON-NLS-1$
                 first = false;
             } else {
-                builder.withCodeLine("    and(" + fieldNameAndImport.fieldName() //$NON-NLS-1$
-                        + ", isEqualTo(" + argName //$NON-NLS-1$
-                        + "))"); //$NON-NLS-1$
+                builder.withCodeLine("    and { " + fieldNameAndImport.fieldName() //$NON-NLS-1$
+                        + " isEqualTo " + argName //$NON-NLS-1$
+                        + " }"); //$NON-NLS-1$
             }
         }
         builder.withCodeLine("}"); //$NON-NLS-1$
@@ -91,14 +91,14 @@ public class KotlinFragmentGenerator {
 
             builder.withImport(fieldNameAndImport.importString());
             if (first) {
-                builder.withCodeLine("    where(" + fieldNameAndImport.fieldName() //$NON-NLS-1$
-                        + ", isEqualTo(row." + column.getJavaProperty() //$NON-NLS-1$
-                        + "!!))"); //$NON-NLS-1$
+                builder.withCodeLine("    where { " + fieldNameAndImport.fieldName() //$NON-NLS-1$
+                        + " isEqualTo row." + column.getJavaProperty() //$NON-NLS-1$
+                        + "!! }"); //$NON-NLS-1$
                 first = false;
             } else {
-                builder.withCodeLine("    and(" + fieldNameAndImport.fieldName() //$NON-NLS-1$
-                        + ", isEqualTo(row." + column.getJavaProperty() //$NON-NLS-1$
-                        + "!!))"); //$NON-NLS-1$
+                builder.withCodeLine("    and {" + fieldNameAndImport.fieldName() //$NON-NLS-1$
+                        + " isEqualTo row." + column.getJavaProperty() //$NON-NLS-1$
+                        + "!! }"); //$NON-NLS-1$
             }
         }
         builder.withCodeLine("}"); //$NON-NLS-1$

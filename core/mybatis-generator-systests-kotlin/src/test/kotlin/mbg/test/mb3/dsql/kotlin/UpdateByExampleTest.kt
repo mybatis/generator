@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2021 the original author or authors.
+ *    Copyright 2006-2022 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -30,7 +30,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.data.Offset
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import org.mybatis.dynamic.sql.SqlBuilder.*
 
 /**
  *
@@ -49,13 +48,13 @@ class UpdateByExampleTest : AbstractTest() {
 
             val rows = mapper.update {
                 updateSelectiveColumns(Fieldsonly(doublefield = 99.0))
-                where(fieldsonly.integerfield, isGreaterThan(5))
+                where { fieldsonly.integerfield isGreaterThan 5 }
             }
 
             assertThat(rows).isEqualTo(2)
 
             var answer = mapper.select {
-                where(fieldsonly.integerfield, isEqualTo(5))
+                where { fieldsonly.integerfield isEqualTo 5 }
             }
 
             assertThat(answer).hasSize(1)
@@ -66,7 +65,7 @@ class UpdateByExampleTest : AbstractTest() {
             }
 
             answer = mapper.select {
-                where(fieldsonly.integerfield, isEqualTo(8))
+                where { fieldsonly.integerfield isEqualTo 8 }
             }
 
             assertThat(answer).hasSize(1)
@@ -78,7 +77,7 @@ class UpdateByExampleTest : AbstractTest() {
             }
 
             answer = mapper.select {
-                where(fieldsonly.integerfield, isEqualTo(9))
+                where { fieldsonly.integerfield isEqualTo 9 }
             }
             assertThat(answer).hasSize(1)
             with(answer[0]) {
@@ -115,11 +114,11 @@ class UpdateByExampleTest : AbstractTest() {
 
             val rows = mapper.update {
                 updateAllColumns(updateRecord)
-                where(fieldsonly.integerfield, isEqualTo(5))
+                where { fieldsonly.integerfield isEqualTo 5 }
             }
             assertEquals(1, rows)
 
-            val answer = mapper.select { where(fieldsonly.integerfield, isEqualTo(22)) }
+            val answer = mapper.select { where { fieldsonly.integerfield isEqualTo 22 } }
             assertEquals(1, answer.size)
             record = answer[0]
             assertNull(record.doublefield)
@@ -145,19 +144,19 @@ class UpdateByExampleTest : AbstractTest() {
 
             val rows = mapper.update {
                 updateSelectiveColumns(updateKey)
-                where(pkonly.id, isGreaterThan(4))
+                where { pkonly.id isGreaterThan 4 }
             }
             assertEquals(2, rows)
 
             var returnedRows = mapper.count {
-                where(pkonly.id, isEqualTo(5))
-                and(pkonly.seqNum, isEqualTo(3))
+                where { pkonly.id isEqualTo 5 }
+                and { pkonly.seqNum isEqualTo 3 }
             }
             assertEquals(1, returnedRows)
 
             returnedRows = mapper.count {
-                where(pkonly.id, isEqualTo(7))
-                and(pkonly.seqNum, isEqualTo(3))
+                where { pkonly.id isEqualTo 7 }
+                and { pkonly.seqNum isEqualTo 3 }
             }
             assertEquals(1, returnedRows)
         }
@@ -180,13 +179,13 @@ class UpdateByExampleTest : AbstractTest() {
 
             val rows = mapper.update {
                 updateAllColumns(updateKey)
-                where(pkonly.id, isEqualTo(7))
+                where { pkonly.id isEqualTo 7 }
             }
             assertEquals(1, rows)
 
             val returnedRows = mapper.count {
-                where(pkonly.id, isEqualTo(22))
-                and(pkonly.seqNum, isEqualTo(3))
+                where { pkonly.id isEqualTo 22 }
+                and { pkonly.seqNum isEqualTo 3 }
             }
             assertEquals(1, returnedRows)
         }
@@ -215,15 +214,15 @@ class UpdateByExampleTest : AbstractTest() {
 
             val rows = mapper.update {
                 updateSelectiveColumns(updateRecord)
-                where(pkfields.lastname, isLike("J%"))
+                where { pkfields.lastname isLike "J%" }
             }
             assertEquals(1, rows)
 
             val returnedRows = mapper.count {
-                where(pkfields.firstname, isEqualTo("Fred"))
-                and(pkfields.lastname, isEqualTo("Jones"))
-                and(pkfields.id1, isEqualTo(3))
-                and(pkfields.id2, isEqualTo(4))
+                where { pkfields.firstname isEqualTo "Fred" }
+                and { pkfields.lastname isEqualTo "Jones" }
+                and { pkfields.id1 isEqualTo 3 }
+                and { pkfields.id2 isEqualTo 4 }
             }
             assertEquals(1, returnedRows)
         }
@@ -252,15 +251,15 @@ class UpdateByExampleTest : AbstractTest() {
 
             val rows = mapper.update {
                 updateAllColumns(updateRecord)
-                where(pkfields.id1, isEqualTo(3))
-                and(pkfields.id2, isEqualTo(4))
+                where { pkfields.id1 isEqualTo 3 }
+                and { pkfields.id2 isEqualTo 4 }
             }
             assertEquals(1, rows)
 
             val returnedRows = mapper.count {
-                where(pkfields.firstname, isEqualTo("Fred"))
-                and(pkfields.id1, isEqualTo(3))
-                and(pkfields.id2, isEqualTo(4))
+                where { pkfields.firstname isEqualTo "Fred" }
+                and { pkfields.id1 isEqualTo 3 }
+                and { pkfields.id2 isEqualTo 4 }
             }
             assertEquals(1, returnedRows)
         }
@@ -286,11 +285,11 @@ class UpdateByExampleTest : AbstractTest() {
 
             val rows = mapper.update {
                 updateSelectiveColumns(newRecord)
-                where(pkblobs.id, isGreaterThan(4))
+                where { pkblobs.id isGreaterThan 4 }
             }
             assertEquals(1, rows)
 
-            val answer = mapper.select { where(pkblobs.id, isGreaterThan(4)) }
+            val answer = mapper.select { where { pkblobs.id isGreaterThan 4 } }
             assertEquals(1, answer.size)
 
             val returnedRecord = answer[0]
@@ -321,11 +320,11 @@ class UpdateByExampleTest : AbstractTest() {
 
             val rows = mapper.update {
                 updateAllColumns(newRecord)
-                where(pkblobs.id, isGreaterThan(4))
+                where { pkblobs.id isGreaterThan 4 }
             }
             assertEquals(1, rows)
 
-            val answer = mapper.select { where(pkblobs.id, isGreaterThan(4)) }
+            val answer = mapper.select { where { pkblobs.id isGreaterThan 4 } }
             assertEquals(1, answer.size)
 
             val returnedRecord = answer[0]
@@ -360,11 +359,11 @@ class UpdateByExampleTest : AbstractTest() {
 
             val rows = mapper.update {
                 updateSelectiveColumns(newRecord)
-                where(pkfieldsblobs.id1, isNotEqualTo(3))
+                where { pkfieldsblobs.id1 isNotEqualTo 3 }
             }
             assertEquals(1, rows)
 
-            val answer = mapper.select { where(pkfieldsblobs.id1, isNotEqualTo(3)) }
+            val answer = mapper.select { where { pkfieldsblobs.id1 isNotEqualTo 3 } }
             assertEquals(1, answer.size)
 
             val returnedRecord = answer[0]
@@ -404,11 +403,11 @@ class UpdateByExampleTest : AbstractTest() {
 
             val rows = mapper.update {
                 updateAllColumns(newRecord)
-                where(pkfieldsblobs.id1, isEqualTo(3))
+                where { pkfieldsblobs.id1 isEqualTo 3 }
             }
             assertEquals(1, rows)
 
-            val answer = mapper.select { where(pkfieldsblobs.id1, isEqualTo(3)) }
+            val answer = mapper.select { where { pkfieldsblobs.id1 isEqualTo 3 } }
             assertEquals(1, answer.size)
 
             val returnedRecord = answer[0]
@@ -443,11 +442,11 @@ class UpdateByExampleTest : AbstractTest() {
 
             val rows = mapper.update {
                 updateSelectiveColumns(newRecord)
-                where(fieldsblobs.firstname, isLike("S%"))
+                where { fieldsblobs.firstname isLike "S%" }
             }
             assertEquals(1, rows)
 
-            val answer = mapper.select { where(fieldsblobs.firstname, isLike("S%")) }
+            val answer = mapper.select { where { fieldsblobs.firstname isLike "S%" } }
             assertEquals(1, answer.size)
 
             val returnedRecord = answer[0]
@@ -483,11 +482,11 @@ class UpdateByExampleTest : AbstractTest() {
 
             val rows = mapper.update {
                 updateAllColumns(newRecord)
-                where(fieldsblobs.firstname, isLike("S%"))
+                where { fieldsblobs.firstname isLike "S%" }
             }
             assertEquals(1, rows)
 
-            val answer = mapper.select { where(fieldsblobs.firstname, isLike("S%")) }
+            val answer = mapper.select { where { fieldsblobs.firstname isLike "S%" } }
             assertEquals(1, answer.size)
 
             val returnedRecord = answer[0]
@@ -537,11 +536,11 @@ class UpdateByExampleTest : AbstractTest() {
 
             val rows = mapper.update {
                 updateSelectiveColumns(newRecord)
-                where(awfulTable.eMail, isLike("fred2@%"))
+                where { awfulTable.eMail isLike "fred2@%" }
             }
             assertEquals(1, rows)
 
-            val answer = mapper.select { where(awfulTable.eMail, isLike("fred2@%")) }
+            val answer = mapper.select { where { awfulTable.eMail isLike "fred2@%" } }
             assertEquals(1, answer.size)
 
             val returnedRecord = answer[0]
@@ -606,11 +605,11 @@ class UpdateByExampleTest : AbstractTest() {
 
             val rows = mapper.update {
                 updateAllColumns(newRecord)
-                where(awfulTable.eMail, isLike("fred2@%"))
+                where { awfulTable.eMail isLike "fred2@%" }
             }
             assertEquals(1, rows)
 
-            val answer = mapper.select { where(awfulTable.customerId, isEqualTo(58)) }
+            val answer = mapper.select { where { awfulTable.customerId isEqualTo 58 } }
             assertEquals(1, answer.size)
 
             val returnedRecord = answer[0]

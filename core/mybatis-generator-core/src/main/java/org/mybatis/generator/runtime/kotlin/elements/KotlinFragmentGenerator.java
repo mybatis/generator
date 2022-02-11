@@ -224,8 +224,7 @@ public class KotlinFragmentGenerator {
             builder.withImport(fieldNameAndImport.importString());
 
             builder.withCodeLine("    set(" + fieldNameAndImport.fieldName() //$NON-NLS-1$
-                    + ").equalToOrNull(row::" + column.getJavaProperty() //$NON-NLS-1$
-                    + ")"); //$NON-NLS-1$
+                    + ") equalToOrNull row::" + column.getJavaProperty()); //$NON-NLS-1$
         }
 
         return builder.build();
@@ -243,8 +242,7 @@ public class KotlinFragmentGenerator {
             builder.withImport(fieldNameAndImport.importString());
 
             builder.withCodeLine("    set(" + fieldNameAndImport.fieldName() //$NON-NLS-1$
-                    + ").equalToWhenPresent(row::" + column.getJavaProperty() //$NON-NLS-1$
-                    + ")"); //$NON-NLS-1$
+                    + ") equalToWhenPresent row::" + column.getJavaProperty()); //$NON-NLS-1$
         }
 
         return builder.build();

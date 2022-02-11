@@ -372,7 +372,7 @@ class DynamicSqlTest : AbstractTest() {
 
             val returnedRecord = mapper.selectByPrimaryKey(2, 1)
 
-            assertThat(returnedRecord).isNotNull()
+            assertThat(returnedRecord).isNotNull
             assertThat(returnedRecord).usingRecursiveComparison().ignoringFields("timestampfield").isEqualTo(record)
             assertThat(returnedRecord?.timestampfield).isCloseTo(record.timestampfield, within(1, ChronoUnit.MILLIS))
         }
@@ -398,7 +398,7 @@ class DynamicSqlTest : AbstractTest() {
 
             val record2 = mapper.selectByPrimaryKey(2, 1)
 
-            assertThat(record2).isNotNull()
+            assertThat(record2).isNotNull
             if (record2 != null) {
                 assertEquals(record.firstname, record2.firstname)
                 assertEquals(record.lastname, record2.lastname)
@@ -421,7 +421,7 @@ class DynamicSqlTest : AbstractTest() {
 
             val returnedRecord = mapper.selectByPrimaryKey(2, 1)
 
-            assertThat(returnedRecord).isNotNull()
+            assertThat(returnedRecord).isNotNull
             if(returnedRecord != null) {
                 assertEquals(record.datefield, returnedRecord.datefield)
                 assertEquals(record.decimal100field, returnedRecord.decimal100field)
@@ -484,7 +484,7 @@ class DynamicSqlTest : AbstractTest() {
 
             val newRecord = mapper.selectByPrimaryKey(4, 3)
 
-            assertThat(newRecord).isNotNull()
+            assertThat(newRecord).isNotNull
             if (newRecord != null) {
                 assertEquals(record1.firstname, newRecord.firstname)
                 assertEquals(record1.lastname, newRecord.lastname)
@@ -720,8 +720,8 @@ class DynamicSqlTest : AbstractTest() {
 
             with(answer[0]) {
                 assertThat(id).isEqualTo(record.id!!)
-                assertThat(blobsAreEqual(blob1, record.blob1)).isTrue()
-                assertThat(blobsAreEqual(blob2, record.blob2)).isTrue()
+                assertThat(blobsAreEqual(blob1, record.blob1)).isTrue
+                assertThat(blobsAreEqual(blob2, record.blob2)).isTrue
             }
         }
     }
@@ -738,10 +738,10 @@ class DynamicSqlTest : AbstractTest() {
 
             val newRecord = mapper.selectByPrimaryKey(3)
 
-            assertThat(newRecord).isNotNull()
+            assertThat(newRecord).isNotNull
             assertThat(newRecord!!.id).isEqualTo(record1.id)
-            assertThat(blobsAreEqual(newRecord.blob1, record1.blob1)).isTrue()
-            assertThat(blobsAreEqual(newRecord.blob2, record1.blob2)).isTrue()
+            assertThat(blobsAreEqual(newRecord.blob1, record1.blob1)).isTrue
+            assertThat(blobsAreEqual(newRecord.blob2, record1.blob2)).isTrue
         }
     }
 
@@ -757,10 +757,10 @@ class DynamicSqlTest : AbstractTest() {
 
             val returnedRecord = mapper.selectByPrimaryKey(3)
 
-            assertThat(returnedRecord).isNotNull()
+            assertThat(returnedRecord).isNotNull
             assertThat(returnedRecord!!.id).isEqualTo(record.id)
-            assertThat(blobsAreEqual(returnedRecord.blob1, record.blob1)).isTrue()
-            assertThat(blobsAreEqual(returnedRecord.blob2, newRecord.blob2)).isTrue()
+            assertThat(blobsAreEqual(returnedRecord.blob1, record.blob1)).isTrue
+            assertThat(blobsAreEqual(returnedRecord.blob2, newRecord.blob2)).isTrue
         }
     }
 
@@ -817,11 +817,11 @@ class DynamicSqlTest : AbstractTest() {
 
             val newRecord = mapper.selectByPrimaryKey(6)
 
-            assertThat(newRecord).isNotNull()
+            assertThat(newRecord).isNotNull
             if (newRecord != null) {
                 assertThat(newRecord.id).isEqualTo(record1.id!!)
-                assertThat(blobsAreEqual(newRecord.blob1, record1.blob1)).isTrue()
-                assertThat(blobsAreEqual(newRecord.blob2, record1.blob2)).isTrue()
+                assertThat(blobsAreEqual(newRecord.blob1, record1.blob1)).isTrue
+                assertThat(blobsAreEqual(newRecord.blob2, record1.blob2)).isTrue
             }
         }
     }
@@ -962,7 +962,7 @@ class DynamicSqlTest : AbstractTest() {
 
             val newRecord = mapper.selectByPrimaryKey(3, 4)
 
-            assertThat(newRecord).isNotNull()
+            assertThat(newRecord).isNotNull
             if (newRecord != null) {
                 assertEquals(updateRecord.firstname, newRecord.firstname)
                 assertEquals(updateRecord.lastname, newRecord.lastname)
@@ -996,7 +996,7 @@ class DynamicSqlTest : AbstractTest() {
 
             val returnedRecord = mapper.selectByPrimaryKey(3, 4)
 
-            assertThat(returnedRecord).isNotNull()
+            assertThat(returnedRecord).isNotNull
             assertEquals(record.firstname, returnedRecord!!.firstname)
             assertEquals(updateRecord.lastname, returnedRecord.lastname)
             assertEquals(record.id1!!, returnedRecord.id1)
@@ -1095,7 +1095,7 @@ class DynamicSqlTest : AbstractTest() {
 
             val newRecord = mapper.selectByPrimaryKey(5, 6)
 
-            assertThat(newRecord).isNotNull()
+            assertThat(newRecord).isNotNull
             if (newRecord != null) {
                 assertEquals(record1.id1!!, newRecord.id1)
                 assertEquals(record1.id2!!, newRecord.id2)
@@ -1404,7 +1404,7 @@ class DynamicSqlTest : AbstractTest() {
             val returnedRecord = mapper
                     .selectByPrimaryKey(generatedCustomerId)
 
-            assertThat(returnedRecord).isNotNull()
+            assertThat(returnedRecord).isNotNull
             if (returnedRecord != null) {
                 assertEquals(generatedCustomerId, returnedRecord.customerId)
                 assertEquals(record.eMail, returnedRecord.eMail)
@@ -1418,8 +1418,8 @@ class DynamicSqlTest : AbstractTest() {
                 assertEquals(record.id7!!, returnedRecord.id7)
                 assertEquals(record.secondFirstName, returnedRecord.secondFirstName)
                 assertEquals(record.thirdFirstName, returnedRecord.thirdFirstName)
-                assertThat(returnedRecord.active).isTrue()
-                assertThat(returnedRecord.active1).isFalse()
+                assertThat(returnedRecord.active).isTrue
+                assertThat(returnedRecord.active1).isFalse
                 assertEquals(3, returnedRecord.active2!!.size)
                 assertEquals(-128, returnedRecord.active2!![0])
                 assertEquals(127, returnedRecord.active2!![1])
@@ -1453,7 +1453,7 @@ class DynamicSqlTest : AbstractTest() {
             val returnedRecord = mapper
                     .selectByPrimaryKey(generatedCustomerId)
 
-            assertThat(returnedRecord).isNotNull()
+            assertThat(returnedRecord).isNotNull
             if (returnedRecord != null) {
                 assertThat(returnedRecord.customerId).isEqualTo(generatedCustomerId)
                 assertThat(returnedRecord.eMail).isEqualTo(record.eMail)
@@ -1500,7 +1500,7 @@ class DynamicSqlTest : AbstractTest() {
 
             val returnedRecord = mapper.selectByPrimaryKey(generatedCustomerId)
 
-            assertThat(returnedRecord).isNotNull()
+            assertThat(returnedRecord).isNotNull
             assertThat(returnedRecord).usingRecursiveComparison().isEqualTo(record)
         }
     }
@@ -1536,7 +1536,7 @@ class DynamicSqlTest : AbstractTest() {
 
             val returnedRecord = mapper.selectByPrimaryKey(generatedCustomerId)
 
-            assertThat(returnedRecord).isNotNull()
+            assertThat(returnedRecord).isNotNull
             if (returnedRecord != null) {
                 assertEquals(generatedCustomerId, returnedRecord.customerId)
                 assertEquals(record.eMail, returnedRecord.eMail)
@@ -1667,7 +1667,7 @@ class DynamicSqlTest : AbstractTest() {
 
             val returnedRecord = mapper.selectByPrimaryKey(generatedKey)
 
-            assertThat(returnedRecord).isNotNull()
+            assertThat(returnedRecord).isNotNull
             if (returnedRecord != null) {
                 assertEquals(record1.customerId!!, returnedRecord.customerId)
                 assertEquals(record1.eMail, returnedRecord.eMail)
@@ -2496,7 +2496,7 @@ class DynamicSqlTest : AbstractTest() {
 
             var returnedRecord = mapper.selectByPrimaryKey(2)
 
-            assertThat(returnedRecord).isNotNull()
+            assertThat(returnedRecord).isNotNull
             if (returnedRecord != null) {
                 assertEquals(t1.id, returnedRecord.id)
                 assertEquals(t1.translation, returnedRecord.translation)
@@ -2506,7 +2506,7 @@ class DynamicSqlTest : AbstractTest() {
             mapper.updateByPrimaryKey(t1)
 
             returnedRecord = mapper.selectByPrimaryKey(2)
-            assertThat(returnedRecord).isNotNull()
+            assertThat(returnedRecord).isNotNull
             if (returnedRecord != null) {
                 assertEquals(t1.id, returnedRecord.id)
                 assertEquals(t1.translation, returnedRecord.translation)
@@ -2530,7 +2530,7 @@ class DynamicSqlTest : AbstractTest() {
             mapper.insert(id1)
 
             var returnedRecord = mapper.selectByPrimaryKey(2)
-            assertThat(returnedRecord).isNotNull()
+            assertThat(returnedRecord).isNotNull
             if (returnedRecord != null) {
                 assertEquals(id1.id!!, returnedRecord.id)
                 assertEquals(id1.description, returnedRecord.description)
@@ -2541,7 +2541,7 @@ class DynamicSqlTest : AbstractTest() {
 
             returnedRecord = mapper.selectByPrimaryKey(2)
 
-            assertThat(returnedRecord).isNotNull()
+            assertThat(returnedRecord).isNotNull
             if (returnedRecord != null) {
                 assertEquals(id1.id!!, returnedRecord.id)
                 assertEquals(id1.description, returnedRecord.description)
@@ -2552,7 +2552,7 @@ class DynamicSqlTest : AbstractTest() {
     @Test
     fun testEquals1() {
         val pkfields1 = Pkfields()
-        assertThat(pkfields1).isNotNull()
+        assertThat(pkfields1).isNotNull
     }
 
     @Test

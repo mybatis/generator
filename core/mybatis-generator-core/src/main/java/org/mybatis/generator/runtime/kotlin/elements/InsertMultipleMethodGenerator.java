@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2021 the original author or authors.
+ *    Copyright 2006-2022 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -85,8 +85,8 @@ public class InsertMultipleMethodGenerator extends AbstractKotlinFunctionGenerat
             functionAndImports.getImports().add(fieldNameAndImport.importString());
 
             function.addCodeLine("    map(" + fieldNameAndImport.fieldName() //$NON-NLS-1$
-                    + ").toProperty(\"" + column.getJavaProperty() //$NON-NLS-1$
-                    + "\")"); //$NON-NLS-1$
+                    + ") toProperty \"" + column.getJavaProperty() //$NON-NLS-1$
+                    + "\""); //$NON-NLS-1$
         }
 
         function.addCodeLine("}"); //$NON-NLS-1$

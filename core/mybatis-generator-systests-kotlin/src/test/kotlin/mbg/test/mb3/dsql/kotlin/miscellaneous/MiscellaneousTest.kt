@@ -17,23 +17,21 @@ package mbg.test.mb3.dsql.kotlin.miscellaneous
 
 import mbg.test.common.FirstName
 import mbg.test.common.MyTime
+import mbg.test.common.util.TestUtilities.datesAreEqual
 import mbg.test.mb3.common.TestEnum
+import mbg.test.mb3.generated.dsql.kotlin.miscellaneous.mapper.MyObjectMapper
+import mbg.test.mb3.generated.dsql.kotlin.miscellaneous.mapper.*
+import mbg.test.mb3.generated.dsql.kotlin.miscellaneous.mapper.MyObjectDynamicSqlSupport.myObject
 import mbg.test.mb3.generated.dsql.kotlin.miscellaneous.model.Enumtest
 import mbg.test.mb3.generated.dsql.kotlin.miscellaneous.model.MyObject
 import mbg.test.mb3.generated.dsql.kotlin.miscellaneous.model.Regexrename
 import org.apache.ibatis.session.RowBounds
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.Assertions.*
 import org.mybatis.dynamic.sql.insert.render.MultiRowInsertStatementProvider
 import org.mybatis.dynamic.sql.select.render.SelectStatementProvider
-
-import java.util.*
-
-import mbg.test.common.util.TestUtilities.datesAreEqual
-import mbg.test.mb3.generated.dsql.kotlin.miscellaneous.mapper.*
-import mbg.test.mb3.generated.dsql.kotlin.miscellaneous.mapper.MyObjectDynamicSqlSupport.myObject
-import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.*
-
+import java.util.Date
 
 /**
  * @author Jeff Butler
@@ -103,7 +101,7 @@ class MiscellaneousTest : AbstractAnnotatedMiscellaneousTest() {
             record.lastname = "Jones"
 
             val rows = mapper.updateByPrimaryKey(record)
-            assertEquals(1, rows)
+            assertThat(rows).isEqualTo(1)
 
             val record2 = mapper.selectByPrimaryKey(2, 1)
 
@@ -950,17 +948,16 @@ class MiscellaneousTest : AbstractAnnotatedMiscellaneousTest() {
     fun testEnumInsertMultiple() {
         openSession().use { sqlSession ->
             val mapper = sqlSession.getMapper(EnumtestMapper::class.java)
-            val records = mutableListOf<Enumtest>()
-
-            var enumTest = Enumtest()
-            enumTest.id = 1
-            enumTest.name = TestEnum.FRED
-            records.add(enumTest)
-
-            enumTest = Enumtest()
-            enumTest.id = 2
-            enumTest.name = TestEnum.BARNEY
-            records.add(enumTest)
+            val records = listOf(
+                Enumtest().apply {
+                    id = 1
+                    name = TestEnum.FRED
+                },
+                Enumtest().apply {
+                    id = 2
+                    name = TestEnum.BARNEY
+                }
+            )
 
             val rows = mapper.insertMultiple(records)
             assertEquals(2, rows)

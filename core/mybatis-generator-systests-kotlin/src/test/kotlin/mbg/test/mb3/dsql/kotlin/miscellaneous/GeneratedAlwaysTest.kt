@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2021 the original author or authors.
+ *    Copyright 2006-2022 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -23,7 +23,6 @@ import org.junit.jupiter.api.Test
 import mbg.test.mb3.generated.dsql.kotlin.miscellaneous.model.Generatedalwaystest
 import mbg.test.mb3.generated.dsql.kotlin.miscellaneous.mapper.GeneratedalwaystestDynamicSqlSupport.generatedalwaystest
 import org.junit.jupiter.api.Assertions.*
-import org.mybatis.dynamic.sql.SqlBuilder.isEqualTo
 
 class GeneratedAlwaysTest : AbstractAnnotatedMiscellaneousTest() {
 
@@ -99,14 +98,14 @@ class GeneratedAlwaysTest : AbstractAnnotatedMiscellaneousTest() {
 
             rows = mapper.update {
                 updateAllColumns(gaTest)
-                where(generatedalwaystest.idPlus1, isEqualTo(2))
-                and(generatedalwaystest.idPlus2, isEqualTo(3))
+                where { generatedalwaystest.idPlus1 isEqualTo 2 }
+                and { generatedalwaystest.idPlus2 isEqualTo 3 }
             }
             assertEquals(1, rows)
 
             val returnedRecords = mapper.select {
-                where(generatedalwaystest.idPlus1, isEqualTo(2))
-                and(generatedalwaystest.idPlus2, isEqualTo(3))
+                where { generatedalwaystest.idPlus1 isEqualTo 2 }
+                and { generatedalwaystest.idPlus2 isEqualTo 3 }
             }
             assertEquals(1, returnedRecords.size)
 
@@ -141,14 +140,14 @@ class GeneratedAlwaysTest : AbstractAnnotatedMiscellaneousTest() {
 
             rows = mapper.update {
                 updateSelectiveColumns(gaTest)
-                where(generatedalwaystest.idPlus1, isEqualTo(2))
-                and(generatedalwaystest.idPlus2, isEqualTo(3))
+                where { generatedalwaystest.idPlus1 isEqualTo 2 }
+                and { generatedalwaystest.idPlus2  isEqualTo 3 }
             }
             assertEquals(1, rows)
 
             val returnedRecords = mapper.select {
-                where(generatedalwaystest.idPlus1, isEqualTo(2))
-                and(generatedalwaystest.idPlus2, isEqualTo(3))
+                where { generatedalwaystest.idPlus1 isEqualTo 2 }
+                and { generatedalwaystest.idPlus2  isEqualTo 3 }
             }
             assertEquals(1, returnedRecords.size)
 
@@ -182,14 +181,14 @@ class GeneratedAlwaysTest : AbstractAnnotatedMiscellaneousTest() {
 
             rows = mapper.update {
                 updateAllColumns(gaTest)
-                where(generatedalwaystest.idPlus1, isEqualTo(2))
-                and(generatedalwaystest.idPlus2, isEqualTo(3))
+                where { generatedalwaystest.idPlus1 isEqualTo 2 }
+                and { generatedalwaystest.idPlus2 isEqualTo 3 }
             }
             assertEquals(1, rows)
 
             val returnedRecords = mapper.select {
-                where(generatedalwaystest.idPlus1, isEqualTo(2))
-                and(generatedalwaystest.idPlus2, isEqualTo(3))
+                where { generatedalwaystest.idPlus1 isEqualTo 2 }
+                and { generatedalwaystest.idPlus2 isEqualTo 3 }
             }
             assertEquals(1, returnedRecords.size)
 

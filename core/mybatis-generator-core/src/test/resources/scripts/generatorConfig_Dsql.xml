@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2021 the original author or authors.
+       Copyright 2006-2022 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -47,6 +47,7 @@
     </table>
     <table tableName="PKFields" alias="B" >
       <property name="selectAllOrderByClause" value="ID1, ID2"/>
+      <property name="dynamicSqlTableObjectName" value="Pkfieldstable"/>
       <columnOverride column="wierd$Field" delimitedColumnName="true"/>
       <columnOverride column="stringBoolean" javaType="boolean" typeHandler="mbg.test.mb3.common.StringBooleanTypeHandler"/>
     </table>

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2021 the original author or authors.
+ *    Copyright 2006-2022 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -120,7 +120,7 @@ public class KotlinDynamicSqlSupportClassGenerator {
 
 
     private KotlinType buildInnerClass() {
-        String domainObjectName = introspectedTable.getFullyQualifiedTable().getDomainObjectName();
+        String domainObjectName = introspectedTable.getMyBatisDynamicSQLTableObjectName();
 
         return KotlinType.newClass(domainObjectName)
                 .withSuperType("AliasableSqlTable<" + domainObjectName + ">(\"" //$NON-NLS-1$ //$NON-NLS-2$
@@ -131,9 +131,9 @@ public class KotlinDynamicSqlSupportClassGenerator {
     }
 
     private KotlinProperty calculateTableProperty() {
-        String tableType = introspectedTable.getFullyQualifiedTable().getDomainObjectName();
+        String tableType = introspectedTable.getMyBatisDynamicSQLTableObjectName();
         String fieldName =
-                JavaBeansUtil.getValidPropertyName(introspectedTable.getFullyQualifiedTable().getDomainObjectName());
+                JavaBeansUtil.getValidPropertyName(introspectedTable.getMyBatisDynamicSQLTableObjectName());
 
         return KotlinProperty.newVal(fieldName)
                 .withInitializationString(tableType + "()") //$NON-NLS-1$

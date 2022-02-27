@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2022 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import static mbg.test.mb3.generated.dsql.mapper.AwfulTableDynamicSqlSupport.awf
 import static mbg.test.mb3.generated.dsql.mapper.FieldsblobsDynamicSqlSupport.fieldsblobs;
 import static mbg.test.mb3.generated.dsql.mapper.FieldsonlyDynamicSqlSupport.fieldsonly;
 import static mbg.test.mb3.generated.dsql.mapper.PkblobsDynamicSqlSupport.pkblobs;
-import static mbg.test.mb3.generated.dsql.mapper.PkfieldsDynamicSqlSupport.pkfields;
+import static mbg.test.mb3.generated.dsql.mapper.PkfieldsDynamicSqlSupport.pkfieldstable;
 import static mbg.test.mb3.generated.dsql.mapper.PkfieldsblobsDynamicSqlSupport.pkfieldsblobs;
 import static mbg.test.mb3.generated.dsql.mapper.PkonlyDynamicSqlSupport.pkonly;
 import static org.junit.jupiter.api.Assertions.*;
@@ -233,14 +233,14 @@ public class UpdateByExampleTest extends AbstractTest {
 
             int rows = mapper.update(dsl ->
                 PkfieldsMapper.updateSelectiveColumns(updateRecord, dsl)
-                .where(pkfields.lastname, isLike("J%")));
+                .where(pkfieldstable.lastname, isLike("J%")));
             assertEquals(1, rows);
 
             long returnedRows = mapper.count(dsl ->
-                    dsl.where(pkfields.firstname, isEqualTo("Fred"))
-                    .and(pkfields.lastname, isEqualTo("Jones"))
-                    .and(pkfields.id1, isEqualTo(3))
-                    .and(pkfields.id2, isEqualTo(4)));
+                    dsl.where(pkfieldstable.firstname, isEqualTo("Fred"))
+                    .and(pkfieldstable.lastname, isEqualTo("Jones"))
+                    .and(pkfieldstable.id1, isEqualTo(3))
+                    .and(pkfieldstable.id2, isEqualTo(4)));
             assertEquals(1, returnedRows);
         }
     }
@@ -271,14 +271,14 @@ public class UpdateByExampleTest extends AbstractTest {
 
             int rows = mapper.update(dsl ->
                 PkfieldsMapper.updateAllColumns(updateRecord, dsl)
-                .where(pkfields.id1, isEqualTo(3))
-                .and(pkfields.id2, isEqualTo(4)));
+                .where(pkfieldstable.id1, isEqualTo(3))
+                .and(pkfieldstable.id2, isEqualTo(4)));
             assertEquals(1, rows);
 
             long returnedRows = mapper.count(dsl ->
-                    dsl.where(pkfields.firstname, isEqualTo("Fred"))
-                    .and(pkfields.id1, isEqualTo(3))
-                    .and(pkfields.id2, isEqualTo(4)));
+                    dsl.where(pkfieldstable.firstname, isEqualTo("Fred"))
+                    .and(pkfieldstable.id1, isEqualTo(3))
+                    .and(pkfieldstable.id2, isEqualTo(4)));
             assertEquals(1, returnedRows);
         }
     }

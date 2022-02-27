@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2021 the original author or authors.
+       Copyright 2006-2022 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -344,6 +344,13 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
             to the package specified in the generator configuration.</p>
         <p>Since version 1.4.1</p>
     </td>
+  </tr>
+  <tr>
+    <td valign="top">dynamicSqlTableObjectName</td>
+    <td>The name to use for the inner class generated in support classes for MyBatis Dynamic SQL. If not
+        specified, the name will be the calculated domain object name (typically the table name). The value
+        if this property will be used as is for the inner class name (case-sensitive). An outer class
+        property name will also be calculated from this name (typically with the initial letter lower-cased).</td>
   </tr>
   <tr>
     <td valign="top">ignoreQualifiersAtRuntime</td>

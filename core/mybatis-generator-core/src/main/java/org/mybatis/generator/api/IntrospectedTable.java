@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2021 the original author or authors.
+ *    Copyright 2006-2022 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -95,7 +95,8 @@ public abstract class IntrospectedTable {
         ATTR_MYBATIS3_UPDATE_BY_EXAMPLE_WHERE_CLAUSE_ID,
         ATTR_MYBATIS3_SQL_PROVIDER_TYPE,
         ATTR_MYBATIS_DYNAMIC_SQL_SUPPORT_TYPE,
-        ATTR_KOTLIN_RECORD_TYPE
+        ATTR_KOTLIN_RECORD_TYPE,
+        ATTR_MYBATIS_DYNAMIC_SQL_TABLE_OBJECT_NAME
     }
 
     protected TableConfiguration tableConfiguration;
@@ -646,6 +647,14 @@ public abstract class IntrospectedTable {
                 .get(InternalAttribute.ATTR_COUNT_BY_EXAMPLE_STATEMENT_ID);
     }
 
+    public String getMyBatisDynamicSQLTableObjectName() {
+        return internalAttributes.get(InternalAttribute.ATTR_MYBATIS_DYNAMIC_SQL_TABLE_OBJECT_NAME);
+    }
+
+    public void setMyBatisDynamicSQLTableObjectName(String name) {
+        internalAttributes.put(InternalAttribute.ATTR_MYBATIS_DYNAMIC_SQL_TABLE_OBJECT_NAME, name);
+    }
+
     private boolean isSubPackagesEnabled(PropertyHolder propertyHolder) {
         return isTrue(propertyHolder.getProperty(PropertyRegistry.ANY_ENABLE_SUB_PACKAGES));
     }
@@ -725,6 +734,12 @@ public abstract class IntrospectedTable {
             sb.append("DynamicSqlSupport"); //$NON-NLS-1$
         }
         setMyBatisDynamicSqlSupportType(sb.toString());
+
+        if(stringHasValue(tableConfiguration.getDynamicSqlTableObjectName())) {
+            setMyBatisDynamicSQLTableObjectName(tableConfiguration.getDynamicSqlTableObjectName());
+        } else {
+            setMyBatisDynamicSQLTableObjectName(fullyQualifiedTable.getDomainObjectName());
+        }
     }
 
     protected String calculateJavaModelPackage() {

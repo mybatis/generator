@@ -22,7 +22,7 @@ import mbg.test.mb3.generated.dsql.kotlin.mapper.AwfulTableDynamicSqlSupport.awf
 import mbg.test.mb3.generated.dsql.kotlin.mapper.FieldsblobsDynamicSqlSupport.fieldsblobs
 import mbg.test.mb3.generated.dsql.kotlin.mapper.FieldsonlyDynamicSqlSupport.fieldsonly
 import mbg.test.mb3.generated.dsql.kotlin.mapper.PkblobsDynamicSqlSupport.pkblobs
-import mbg.test.mb3.generated.dsql.kotlin.mapper.PkfieldsDynamicSqlSupport.pkfields
+import mbg.test.mb3.generated.dsql.kotlin.mapper.PkfieldsDynamicSqlSupport.pkfieldstable
 import mbg.test.mb3.generated.dsql.kotlin.mapper.PkfieldsblobsDynamicSqlSupport.pkfieldsblobs
 import mbg.test.mb3.generated.dsql.kotlin.mapper.PkonlyDynamicSqlSupport.pkonly
 import mbg.test.mb3.generated.dsql.kotlin.mapper.mbgtest.*
@@ -464,7 +464,7 @@ class DynamicSqlTest : AbstractTest() {
             assertThat(answer).hasSize(2)
 
             val rows = mapper.delete {
-                where { pkfields.lastname isLike "J%" }
+                where { pkfieldstable.lastname isLike "J%" }
             }
             assertThat(rows).isEqualTo(1)
 
@@ -506,8 +506,8 @@ class DynamicSqlTest : AbstractTest() {
             mapper.insert(Pkfields(id1 = 2, id2 = 3, firstname = "Bamm Bamm", lastname = "Rubble"))
 
             val answer = mapper.select {
-                where { pkfields.firstname isLike "B%" }
-                orderBy(pkfields.id1, pkfields.id2)
+                where { pkfieldstable.firstname isLike "B%" }
+                orderBy(pkfieldstable.id1, pkfieldstable.id2)
             }
 
             assertThat(answer).hasSize(3)
@@ -532,8 +532,8 @@ class DynamicSqlTest : AbstractTest() {
             mapper.insert(Pkfields(id1 = 2, id2 = 3, firstname = "Bamm Bamm", lastname = "Rubble"))
 
             val answer = mapper.select {
-                where { pkfields.firstname isNotLike "B%" }
-                orderBy(pkfields.id1, pkfields.id2)
+                where { pkfieldstable.firstname isNotLike "B%" }
+                orderBy(pkfieldstable.id1, pkfieldstable.id2)
             }
 
             assertThat(answer).hasSize(3)
@@ -559,11 +559,11 @@ class DynamicSqlTest : AbstractTest() {
 
             val answer = mapper.select {
                 where {
-                    pkfields.firstname isLike "B%"
-                    and { pkfields.id2 isEqualTo 3 }
+                    pkfieldstable.firstname isLike "B%"
+                    and { pkfieldstable.id2 isEqualTo 3 }
                 }
-                or { pkfields.firstname isLike "Wi%" }
-                orderBy(pkfields.id1, pkfields.id2)
+                or { pkfieldstable.firstname isLike "Wi%" }
+                orderBy(pkfieldstable.id1, pkfieldstable.id2)
             }
 
             assertThat(answer).hasSize(2)
@@ -586,8 +586,8 @@ class DynamicSqlTest : AbstractTest() {
             mapper.insert(Pkfields(id1 = 2, id2 = 3, firstname = "Bamm Bamm", lastname = "Rubble"))
 
             val answer = mapper.select {
-                where { pkfields.id2.isIn(1, 3) }
-                orderBy(pkfields.id1, pkfields.id2)
+                where { pkfieldstable.id2.isIn(1, 3) }
+                orderBy(pkfieldstable.id1, pkfieldstable.id2)
             }
 
             assertThat(answer).hasSize(4)
@@ -614,8 +614,8 @@ class DynamicSqlTest : AbstractTest() {
             mapper.insert(Pkfields(id1 = 2, id2 = 3, firstname = "Bamm Bamm", lastname = "Rubble"))
 
             val answer = mapper.select {
-                where { pkfields.id2 isBetween 1 and 3 }
-                orderBy(pkfields.id1, pkfields.id2)
+                where { pkfieldstable.id2 isBetween 1 and 3 }
+                orderBy(pkfieldstable.id1, pkfieldstable.id2)
             }
             assertThat(answer).hasSize(6)
         }
@@ -634,7 +634,7 @@ class DynamicSqlTest : AbstractTest() {
 
             val answer = mapper.select {
                 allRows()
-                orderBy(pkfields.id1, pkfields.id2)
+                orderBy(pkfieldstable.id1, pkfieldstable.id2)
             }
 
             assertThat(answer).hasSize(6)
@@ -659,7 +659,7 @@ class DynamicSqlTest : AbstractTest() {
 
             val answer = mapper.select {
                 allRows()
-                orderBy(pkfields.id1, pkfields.id2)
+                orderBy(pkfieldstable.id1, pkfieldstable.id2)
             }
 
             assertThat(answer).hasSize(6)
@@ -678,9 +678,9 @@ class DynamicSqlTest : AbstractTest() {
             mapper.insert(Pkfields(id1 = 2, id2 = 3, firstname = "Bamm Bamm", lastname = "Rubble", wierdField = 66))
 
             val answer = mapper.select {
-                where { pkfields.wierdField isLessThan 40 }
-                and { pkfields.wierdField.isIn(11, 22) }
-                orderBy(pkfields.id1, pkfields.id2)
+                where { pkfieldstable.wierdField isLessThan 40 }
+                and { pkfieldstable.wierdField.isIn(11, 22) }
+                orderBy(pkfieldstable.id1, pkfieldstable.id2)
             }
 
             assertThat(answer).hasSize(2)
@@ -695,7 +695,7 @@ class DynamicSqlTest : AbstractTest() {
             mapper.insert(Pkfields(id1 = 3, id2 = 4, firstname = "Bob", lastname = "Jones"))
 
             var rows = mapper.count {
-                where { pkfields.lastname isLike "J%" }
+                where { pkfieldstable.lastname isLike "J%" }
             }
 
             assertThat(rows).isEqualTo(1)

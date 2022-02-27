@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2021 the original author or authors.
+ *    Copyright 2006-2022 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -72,7 +72,7 @@ public class DynamicSqlSupportClassGenerator {
 
     private InnerClass buildInnerTableClass(TopLevelClass topLevelClass) {
         FullyQualifiedJavaType fqjt =
-                new FullyQualifiedJavaType(introspectedTable.getFullyQualifiedTable().getDomainObjectName());
+                new FullyQualifiedJavaType(introspectedTable.getMyBatisDynamicSQLTableObjectName());
         InnerClass innerClass = new InnerClass(fqjt.getShortName());
         innerClass.setVisibility(JavaVisibility.PUBLIC);
         innerClass.setStatic(true);
@@ -96,9 +96,9 @@ public class DynamicSqlSupportClassGenerator {
 
     private Field calculateTableDefinition(TopLevelClass topLevelClass) {
         FullyQualifiedJavaType fqjt =
-                new FullyQualifiedJavaType(introspectedTable.getFullyQualifiedTable().getDomainObjectName());
+                new FullyQualifiedJavaType(introspectedTable.getMyBatisDynamicSQLTableObjectName());
         String fieldName =
-                JavaBeansUtil.getValidPropertyName(introspectedTable.getFullyQualifiedTable().getDomainObjectName());
+                JavaBeansUtil.getValidPropertyName(introspectedTable.getMyBatisDynamicSQLTableObjectName());
         Field field = new Field(fieldName, fqjt);
         commentGenerator.addFieldAnnotation(field, introspectedTable, topLevelClass.getImportedTypes());
         field.setVisibility(JavaVisibility.PUBLIC);
@@ -106,7 +106,7 @@ public class DynamicSqlSupportClassGenerator {
         field.setFinal(true);
 
         String initializationString = String.format("new %s()", //$NON-NLS-1$
-                escapeStringForJava(introspectedTable.getFullyQualifiedTable().getDomainObjectName()));
+                escapeStringForJava(introspectedTable.getMyBatisDynamicSQLTableObjectName()));
         field.setInitializationString(initializationString);
         return field;
     }

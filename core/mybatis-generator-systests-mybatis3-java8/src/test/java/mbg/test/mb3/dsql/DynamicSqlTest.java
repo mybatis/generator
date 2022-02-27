@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2021 the original author or authors.
+ *    Copyright 2006-2022 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import static mbg.test.mb3.generated.dsql.mapper.AwfulTableDynamicSqlSupport.awf
 import static mbg.test.mb3.generated.dsql.mapper.FieldsblobsDynamicSqlSupport.fieldsblobs;
 import static mbg.test.mb3.generated.dsql.mapper.FieldsonlyDynamicSqlSupport.fieldsonly;
 import static mbg.test.mb3.generated.dsql.mapper.PkblobsDynamicSqlSupport.pkblobs;
-import static mbg.test.mb3.generated.dsql.mapper.PkfieldsDynamicSqlSupport.pkfields;
+import static mbg.test.mb3.generated.dsql.mapper.PkfieldsDynamicSqlSupport.pkfieldstable;
 import static mbg.test.mb3.generated.dsql.mapper.PkfieldsblobsDynamicSqlSupport.pkfieldsblobs;
 import static mbg.test.mb3.generated.dsql.mapper.PkonlyDynamicSqlSupport.pkonly;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -642,7 +642,7 @@ public class DynamicSqlTest extends AbstractTest {
             assertEquals(2, answer.size());
 
             int rows = mapper.delete(dsl ->
-                    dsl.where(pkfields.lastname, isLike("J%")));
+                    dsl.where(pkfieldstable.lastname, isLike("J%")));
             assertEquals(1, rows);
 
             answer = mapper.select(SelectDSLCompleter.allRows());
@@ -728,8 +728,8 @@ public class DynamicSqlTest extends AbstractTest {
             mapper.insert(record);
 
             List<Pkfields> answer = mapper.select(dsl ->
-                    dsl.where(pkfields.firstname, isLike("B%"))
-                    .orderBy(pkfields.id1, pkfields.id2));
+                    dsl.where(pkfieldstable.firstname, isLike("B%"))
+                    .orderBy(pkfieldstable.id1, pkfieldstable.id2));
             assertEquals(3, answer.size());
             Pkfields returnedRecord = answer.get(0);
             assertEquals(2, returnedRecord.getId1().intValue());
@@ -791,8 +791,8 @@ public class DynamicSqlTest extends AbstractTest {
             mapper.insert(record);
 
             List<Pkfields> answer = mapper.select(dsl ->
-                    dsl.where(pkfields.firstname, isNotLike("B%"))
-                    .orderBy(pkfields.id1, pkfields.id2));
+                    dsl.where(pkfieldstable.firstname, isNotLike("B%"))
+                    .orderBy(pkfieldstable.id1, pkfieldstable.id2));
             assertEquals(3, answer.size());
             Pkfields returnedRecord = answer.get(0);
             assertEquals(1, returnedRecord.getId1().intValue());
@@ -854,9 +854,9 @@ public class DynamicSqlTest extends AbstractTest {
             mapper.insert(record);
 
             List<Pkfields> answer = mapper.select(dsl ->
-                    dsl.where(pkfields.firstname, isLike("B%"), and(pkfields.id2, isEqualTo(3)))
-                    .or(pkfields.firstname, isLike("Wi%"))
-                    .orderBy(pkfields.id1, pkfields.id2));
+                    dsl.where(pkfieldstable.firstname, isLike("B%"), and(pkfieldstable.id2, isEqualTo(3)))
+                    .or(pkfieldstable.firstname, isLike("Wi%"))
+                    .orderBy(pkfieldstable.id1, pkfieldstable.id2));
 
             assertEquals(2, answer.size());
             Pkfields returnedRecord = answer.get(0);
@@ -916,8 +916,8 @@ public class DynamicSqlTest extends AbstractTest {
             mapper.insert(record);
 
             List<Pkfields> answer = mapper.select(dsl ->
-                    dsl.where(pkfields.id2, isIn(1, 3))
-                    .orderBy(pkfields.id1, pkfields.id2));
+                    dsl.where(pkfieldstable.id2, isIn(1, 3))
+                    .orderBy(pkfieldstable.id1, pkfieldstable.id2));
             assertEquals(4, answer.size());
             Pkfields returnedRecord = answer.get(0);
             assertEquals(1, returnedRecord.getId1().intValue());
@@ -982,8 +982,8 @@ public class DynamicSqlTest extends AbstractTest {
             mapper.insert(record);
 
             List<Pkfields> answer = mapper.select(dsl ->
-                    dsl.where(pkfields.id2, isBetween(1).and(3))
-                    .orderBy(pkfields.id1, pkfields.id2));
+                    dsl.where(pkfieldstable.id2, isBetween(1).and(3))
+                    .orderBy(pkfieldstable.id1, pkfieldstable.id2));
             assertEquals(6, answer.size());
         }
     }
@@ -1036,7 +1036,7 @@ public class DynamicSqlTest extends AbstractTest {
             mapper.insert(record);
 
             List<Pkfields> answer = mapper.select(
-                    SelectDSLCompleter.allRowsOrderedBy(pkfields.id1, pkfields.id2));
+                    SelectDSLCompleter.allRowsOrderedBy(pkfieldstable.id1, pkfieldstable.id2));
 
             assertEquals(6, answer.size());
         }
@@ -1097,7 +1097,7 @@ public class DynamicSqlTest extends AbstractTest {
             assertEquals(6, rowsInserted);
 
             List<Pkfields> answer = mapper.select(
-                    SelectDSLCompleter.allRowsOrderedBy(pkfields.id1, pkfields.id2));
+                    SelectDSLCompleter.allRowsOrderedBy(pkfieldstable.id1, pkfieldstable.id2));
 
             assertEquals(6, answer.size());
         }
@@ -1157,9 +1157,9 @@ public class DynamicSqlTest extends AbstractTest {
             mapper.insert(record);
 
             List<Pkfields> answer = mapper.select(DSL ->
-                    DSL.where(pkfields.wierdField, isLessThan(40))
-                    .and(pkfields.wierdField, isIn(11, 22))
-                    .orderBy(pkfields.id1, pkfields.id2));
+                    DSL.where(pkfieldstable.wierdField, isLessThan(40))
+                    .and(pkfieldstable.wierdField, isIn(11, 22))
+                    .orderBy(pkfieldstable.id1, pkfieldstable.id2));
 
             assertEquals(2, answer.size());
         }
@@ -1185,7 +1185,7 @@ public class DynamicSqlTest extends AbstractTest {
             mapper.insert(record);
 
             long rows = mapper.count(dsl ->
-                    dsl.where(pkfields.lastname, isLike("J%")));
+                    dsl.where(pkfieldstable.lastname, isLike("J%")));
 
             assertEquals(1, rows);
 

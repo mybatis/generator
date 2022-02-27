@@ -22,7 +22,7 @@ import mbg.test.mb3.generated.dsql.kotlin.mapper.AwfulTableDynamicSqlSupport.awf
 import mbg.test.mb3.generated.dsql.kotlin.mapper.FieldsblobsDynamicSqlSupport.fieldsblobs
 import mbg.test.mb3.generated.dsql.kotlin.mapper.FieldsonlyDynamicSqlSupport.fieldsonly
 import mbg.test.mb3.generated.dsql.kotlin.mapper.PkblobsDynamicSqlSupport.pkblobs
-import mbg.test.mb3.generated.dsql.kotlin.mapper.PkfieldsDynamicSqlSupport.pkfields
+import mbg.test.mb3.generated.dsql.kotlin.mapper.PkfieldsDynamicSqlSupport.pkfieldstable
 import mbg.test.mb3.generated.dsql.kotlin.mapper.PkfieldsblobsDynamicSqlSupport.pkfieldsblobs
 import mbg.test.mb3.generated.dsql.kotlin.mapper.PkonlyDynamicSqlSupport.pkonly
 import mbg.test.mb3.generated.dsql.kotlin.model.*
@@ -214,15 +214,15 @@ class UpdateByExampleTest : AbstractTest() {
 
             val rows = mapper.update {
                 updateSelectiveColumns(updateRecord)
-                where { pkfields.lastname isLike "J%" }
+                where { pkfieldstable.lastname isLike "J%" }
             }
             assertEquals(1, rows)
 
             val returnedRows = mapper.count {
-                where { pkfields.firstname isEqualTo "Fred" }
-                and { pkfields.lastname isEqualTo "Jones" }
-                and { pkfields.id1 isEqualTo 3 }
-                and { pkfields.id2 isEqualTo 4 }
+                where { pkfieldstable.firstname isEqualTo "Fred" }
+                and { pkfieldstable.lastname isEqualTo "Jones" }
+                and { pkfieldstable.id1 isEqualTo 3 }
+                and { pkfieldstable.id2 isEqualTo 4 }
             }
             assertEquals(1, returnedRows)
         }
@@ -251,15 +251,15 @@ class UpdateByExampleTest : AbstractTest() {
 
             val rows = mapper.update {
                 updateAllColumns(updateRecord)
-                where { pkfields.id1 isEqualTo 3 }
-                and { pkfields.id2 isEqualTo 4 }
+                where { pkfieldstable.id1 isEqualTo 3 }
+                and { pkfieldstable.id2 isEqualTo 4 }
             }
             assertEquals(1, rows)
 
             val returnedRows = mapper.count {
-                where { pkfields.firstname isEqualTo "Fred" }
-                and { pkfields.id1 isEqualTo 3 }
-                and { pkfields.id2 isEqualTo 4 }
+                where { pkfieldstable.firstname isEqualTo "Fred" }
+                and { pkfieldstable.id1 isEqualTo 3 }
+                and { pkfieldstable.id2 isEqualTo 4 }
             }
             assertEquals(1, returnedRows)
         }

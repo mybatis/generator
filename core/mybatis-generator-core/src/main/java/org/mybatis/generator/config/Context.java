@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2021 the original author or authors.
+ *    Copyright 2006-2022 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -28,6 +28,7 @@ import java.util.Set;
 
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.ConnectionFactory;
+import org.mybatis.generator.api.GeneratedFile;
 import org.mybatis.generator.api.GeneratedJavaFile;
 import org.mybatis.generator.api.GeneratedKotlinFile;
 import org.mybatis.generator.api.GeneratedXmlFile;
@@ -432,6 +433,7 @@ public class Context extends PropertyHolder {
             List<GeneratedJavaFile> generatedJavaFiles,
             List<GeneratedXmlFile> generatedXmlFiles,
             List<GeneratedKotlinFile> generatedKotlinFiles,
+            List<GeneratedFile> otherGeneratedFiles,
             List<String> warnings)
             throws InterruptedException {
 
@@ -470,6 +472,8 @@ public class Context extends PropertyHolder {
                     .contextGenerateAdditionalXmlFiles(introspectedTable));
             generatedKotlinFiles.addAll(pluginAggregator
                     .contextGenerateAdditionalKotlinFiles(introspectedTable));
+            otherGeneratedFiles.addAll(pluginAggregator
+                    .contextGenerateAdditionalFiles(introspectedTable));
         }
 
         generatedJavaFiles.addAll(pluginAggregator
@@ -478,6 +482,8 @@ public class Context extends PropertyHolder {
                 .contextGenerateAdditionalXmlFiles());
         generatedKotlinFiles.addAll(pluginAggregator
                 .contextGenerateAdditionalKotlinFiles());
+        otherGeneratedFiles.addAll(pluginAggregator
+                .contextGenerateAdditionalFiles());
     }
 
     /**

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2021 the original author or authors.
+ *    Copyright 2006-2022 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -101,6 +101,22 @@ public abstract class CompositePlugin implements Plugin {
     public List<GeneratedKotlinFile> contextGenerateAdditionalKotlinFiles(IntrospectedTable introspectedTable) {
         return plugins.stream()
                 .map(p -> p.contextGenerateAdditionalKotlinFiles(introspectedTable))
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<GeneratedFile> contextGenerateAdditionalFiles() {
+        return plugins.stream()
+                .map(Plugin::contextGenerateAdditionalFiles)
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<GeneratedFile> contextGenerateAdditionalFiles(IntrospectedTable introspectedTable) {
+        return plugins.stream()
+                .map(p -> p.contextGenerateAdditionalFiles(introspectedTable))
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
     }

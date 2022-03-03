@@ -166,7 +166,9 @@
     </table>
     <table tableName="EnumOrdinalTest">
       <columnOverride column="name" javaType="mbg.test.mb3.common.TestEnum" jdbcType="INTEGER"
-                      typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
+                      typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" >
+        <property name="forceJavaTypeIntoMapping" value="true" />
+      </columnOverride>
     </table>
     <table tableName="GeneratedAlwaysTest" >
       <columnOverride column="ID_PLUS1" isGeneratedAlways="true" />

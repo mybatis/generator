@@ -30,6 +30,7 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinProperty;
 import org.mybatis.generator.api.dom.kotlin.KotlinType;
 import org.mybatis.generator.config.Context;
+import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
 import org.mybatis.generator.internal.util.StringUtility;
 import org.mybatis.generator.internal.util.messages.Messages;
@@ -181,10 +182,16 @@ public class KotlinDynamicSqlSupportClassGenerator {
 
         if (StringUtility.stringHasValue(column.getTypeHandler())) {
             initializationString.append(
-                    String.format(", typeHandler = \"%s\")", column.getTypeHandler())); //$NON-NLS-1$
-        } else {
-            initializationString.append(')');
+                    String.format(", typeHandler = \"%s\"", column.getTypeHandler())); //$NON-NLS-1$
         }
+
+        if (StringUtility.isTrue(
+                column.getProperties().getProperty(PropertyRegistry.COLUMN_OVERRIDE_FORCE_JAVA_TYPE))) {
+            initializationString.append(
+                    String.format(", javaType = %s::class", kt.getShortNameWithoutTypeArguments())); //$NON-NLS-1$
+        }
+
+        initializationString.append(')'); //$NON-NLS-1$
 
         return initializationString.toString();
     }

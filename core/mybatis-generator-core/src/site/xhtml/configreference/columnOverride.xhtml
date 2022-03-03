@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2018 the original author or authors.
+       Copyright 2006-2022 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -132,21 +132,32 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
     <th>Property Values</th>
   </tr>
   <tr>
-    <td valign="top">trimStrings</td>
+    <td valign="top">forceJavaTypeIntoMapping</td>
     <td>
-      This property is used to select whether MyBatis Generator adds code to trim
-      the white space from character fields returned from the database.
-      This can be useful if your database stores data in CHAR fields rather than
-      VARCHAR fields.  When true for a character field/column, MyBatis Generator will 
-      insert code to trim leading and trailing whitespace.
-      This property value overrides the property if specified at the 
-      <a href="table.html">&lt;javaModelGenerator&gt;</a> and/or 
-      <a href="javaModelGenerator.html">&lt;table&gt;</a> level.
-      
-      <p><i>The default value is inherited from the 
-      <a href="table.html">&lt;javaModelGenerator&gt;</a> and/or 
-      <a href="javaModelGenerator.html">&lt;javaModelGenerator&gt;</a>, otherwise false.</i></p></td>
+      When true, this property will add the Java type to the generated mappings. This is normally not necessary.
+      However some functions will need it such as when you use MyBatis' EnumOrdinalTypeHandler.
+
+      <p>This property is only recognized, and only needed, by the MyBatis3DynamicSQL and MyBatis3Kotlin runtimes.</p>
+      <p><i>The default value is false</i></p>
+      <p>Since version 1.4.1</p>
+    </td>
   </tr>
+    <tr>
+        <td valign="top">trimStrings</td>
+        <td>
+            This property is used to select whether MyBatis Generator adds code to trim
+            the white space from character fields returned from the database.
+            This can be useful if your database stores data in CHAR fields rather than
+            VARCHAR fields.  When true for a character field/column, MyBatis Generator will
+            insert code to trim leading and trailing whitespace.
+            This property value overrides the property if specified at the
+            <a href="table.html">&lt;javaModelGenerator&gt;</a> and/or
+            <a href="javaModelGenerator.html">&lt;table&gt;</a> level.
+
+            <p><i>The default value is inherited from the
+                <a href="table.html">&lt;javaModelGenerator&gt;</a> and/or
+                <a href="javaModelGenerator.html">&lt;javaModelGenerator&gt;</a>, otherwise false.</i></p></td>
+    </tr>
 </table>
 </body>
 </html>

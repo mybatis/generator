@@ -159,7 +159,7 @@
       <columnOverride column="name" javaType="mbg.test.mb3.common.TestEnum"/>
     </table>
     <table tableName="EnumOrdinalTest">
-      <columnOverride column="enumOrdinal" javaType="mbg.test.mb3.common.TestEnum" jdbcType="INTEGER"
+      <columnOverride column="name" javaType="mbg.test.mb3.common.TestEnum" jdbcType="INTEGER"
                       typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
     </table>
     <table tableName="GeneratedAlwaysTest" >

@@ -1008,7 +1008,7 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
 
             Enumordinaltest enumTest = new Enumordinaltest();
             enumTest.setId(1);
-            enumTest.setEnumordinal(TestEnum.FRED);
+            enumTest.setName(TestEnum.FRED);
             int rows = mapper.insert(enumTest);
             assertEquals(1, rows);
 
@@ -1017,7 +1017,7 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
 
             Enumordinaltest returnedRecord = returnedRecords.get(0);
             assertEquals(1, returnedRecord.getId().intValue());
-            assertEquals(TestEnum.FRED, returnedRecord.getEnumordinal());
+            assertEquals(TestEnum.FRED, returnedRecord.getName());
         }
     }
 
@@ -1029,12 +1029,12 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
 
             Enumordinaltest enumTest = new Enumordinaltest();
             enumTest.setId(1);
-            enumTest.setEnumordinal(TestEnum.FRED);
+            enumTest.setName(TestEnum.FRED);
             records.add(enumTest);
 
             enumTest = new Enumordinaltest();
             enumTest.setId(2);
-            enumTest.setEnumordinal(TestEnum.BARNEY);
+            enumTest.setName(TestEnum.BARNEY);
             records.add(enumTest);
 
             int rows = mapper.insertMultiple(records);
@@ -1045,7 +1045,7 @@ public class MiscellaneousTest extends AbstractAnnotatedMiscellaneousTest {
 
             Enumordinaltest returnedRecord = returnedRecords.get(0);
             assertEquals(1, returnedRecord.getId().intValue());
-            assertEquals(TestEnum.FRED, returnedRecord.getEnumordinal());
+            assertEquals(TestEnum.FRED, returnedRecord.getName());
         }
     }
 }

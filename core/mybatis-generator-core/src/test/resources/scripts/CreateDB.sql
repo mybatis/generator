@@ -158,7 +158,7 @@ create table EnumTest (
 
 create table EnumOrdinalTest (
   id int not null,
-  enumOrdinal int not null,
+  name int not null,
   primary key(id)
 );
 

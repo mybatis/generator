@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2020 the original author or authors.
+       Copyright 2006-2022 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -229,6 +229,10 @@
     </table>
     <table tableName="EnumTest">
       <columnOverride column="name" javaType="mbg.test.mb3.common.TestEnum"/>
+    </table>
+    <table tableName="EnumOrdinalTest">
+      <columnOverride column="name" javaType="mbg.test.mb3.common.TestEnum" jdbcType="INTEGER"
+                      typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
     </table>
     <table tableName="GeneratedAlwaysTest" >
       <columnOverride column="ID_PLUS1" isGeneratedAlways="true" />
@@ -545,6 +549,10 @@
     </table>
     <table tableName="EnumTest">
       <columnOverride column="name" javaType="mbg.test.mb3.common.TestEnum"/>
+    </table>
+    <table tableName="EnumOrdinalTest">
+      <columnOverride column="name" javaType="mbg.test.mb3.common.TestEnum" jdbcType="INTEGER"
+                      typeHandler="org.apache.ibatis.type.EnumOrdinalTypeHandler" />
     </table>
     <table tableName="GeneratedAlwaysTest" >
       <columnOverride column="ID_PLUS1" isGeneratedAlways="true" />

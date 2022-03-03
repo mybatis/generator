@@ -980,7 +980,7 @@ class MiscellaneousTest : AbstractAnnotatedMiscellaneousTest() {
 
             val enumTest = Enumordinaltest()
             enumTest.id = 1
-            enumTest.enumordinal = TestEnum.FRED
+            enumTest.name = TestEnum.FRED
 
             val rows = mapper.insert(enumTest)
             assertEquals(1, rows)
@@ -990,7 +990,7 @@ class MiscellaneousTest : AbstractAnnotatedMiscellaneousTest() {
 
             val returnedRecord = returnedRecords[0]
             assertEquals(1, returnedRecord.id)
-            assertEquals(TestEnum.FRED, returnedRecord.enumordinal)
+            assertEquals(TestEnum.FRED, returnedRecord.name)
         }
     }
 
@@ -1001,11 +1001,11 @@ class MiscellaneousTest : AbstractAnnotatedMiscellaneousTest() {
             val records = listOf(
                 Enumordinaltest().apply {
                     id = 1
-                    enumordinal = TestEnum.FRED
+                    name = TestEnum.FRED
                 },
                 Enumordinaltest().apply {
                     id = 2
-                    enumordinal = TestEnum.BARNEY
+                    name = TestEnum.BARNEY
                 }
             )
 
@@ -1017,7 +1017,7 @@ class MiscellaneousTest : AbstractAnnotatedMiscellaneousTest() {
 
             val returnedRecord = returnedRecords[0]
             assertEquals(1, returnedRecord.id)
-            assertEquals(TestEnum.FRED, returnedRecord.enumordinal)
+            assertEquals(TestEnum.FRED, returnedRecord.name)
         }
     }
 }

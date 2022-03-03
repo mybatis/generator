@@ -20,8 +20,8 @@
   </modules>
 
   <properties>
-    <tycho-version>1.4.0</tycho-version>
-    <tycho-extras-version>1.4.0</tycho-extras-version>
+    <tycho-version>2.7.0</tycho-version>
+    <tycho-extras-version>2.7.0</tycho-extras-version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <!-- Sonar -->
@@ -83,23 +83,10 @@
               <goal>plugin-source</goal>
             </goals>
           </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.eclipse.tycho</groupId>
-        <artifactId>tycho-versions-plugin</artifactId>
-        <version>${tycho-version}</version>
-      </plugin>
-      <plugin>
-        <groupId>org.eclipse.tycho.extras</groupId>
-        <artifactId>tycho-source-feature-plugin</artifactId>
-        <version>${tycho-extras-version}</version>
-        <executions>
           <execution>
-            <id>source-feature</id>
-            <phase>package</phase>
+            <id>feature-source</id>
             <goals>
-              <goal>source-feature</goal>
+              <goal>feature-source</goal>
             </goals>
             <configuration>
               <labelSuffix> - Source Feature</labelSuffix>
@@ -109,6 +96,11 @@
             </configuration>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-versions-plugin</artifactId>
+        <version>${tycho-version}</version>
       </plugin>
       <plugin>
         <groupId>org.eclipse.tycho</groupId>

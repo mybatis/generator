@@ -16,7 +16,7 @@
 package org.mybatis.generator.eclipse.core.tests.merge;
 
 import static org.hamcrest.core.IsNull.nullValue;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mybatis.generator.eclipse.core.tests.merge.support.TestResourceGenerator.simpleClassWithAllGeneratedItems;
 import static org.mybatis.generator.eclipse.core.tests.merge.support.TestResourceGenerator.simpleClassWithGeneratedAndCustomItems;
 import static org.mybatis.generator.eclipse.core.tests.merge.support.TestResourceGenerator.simpleInterfaceWithAllGeneratedItems;

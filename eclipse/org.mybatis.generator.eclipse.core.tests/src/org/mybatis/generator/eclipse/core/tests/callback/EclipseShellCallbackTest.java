@@ -18,7 +18,7 @@ package org.mybatis.generator.eclipse.core.tests.callback;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNull.notNullValue;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mybatis.generator.eclipse.core.tests.callback.WorkspaceUtilities.createJavaProject;
 import static org.mybatis.generator.eclipse.core.tests.callback.WorkspaceUtilities.deleteProject;
 import static org.mybatis.generator.eclipse.core.tests.callback.WorkspaceUtilities.getWorkspace;

@@ -29,6 +29,7 @@ import org.mybatis.generator.api.dom.java.InnerClass;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
 import org.mybatis.generator.internal.util.StringUtility;
 import org.mybatis.generator.internal.util.messages.Messages;
@@ -114,7 +115,15 @@ public class DynamicSqlSupportClassGenerator {
     private void handleColumn(TopLevelClass topLevelClass, InnerClass innerClass,
             IntrospectedColumn column, String tableFieldName) {
         topLevelClass.addImportedType(column.getFullyQualifiedJavaType());
-        FullyQualifiedJavaType fieldType = calculateFieldType(column);
+
+        FullyQualifiedJavaType javaType;
+        if (column.getFullyQualifiedJavaType().isPrimitive()) {
+            javaType = column.getFullyQualifiedJavaType().getPrimitiveTypeWrapper();
+        } else {
+            javaType = column.getFullyQualifiedJavaType();
+        }
+
+        FullyQualifiedJavaType fieldType = calculateFieldType(javaType);
         String fieldName = column.getJavaProperty();
 
         if (fieldName.equals(tableFieldName)) {
@@ -137,21 +146,15 @@ public class DynamicSqlSupportClassGenerator {
         Field field = new Field(fieldName, fieldType);
         field.setVisibility(JavaVisibility.PUBLIC);
         field.setFinal(true);
-        field.setInitializationString(calculateInnerInitializationString(column));
+        field.setInitializationString(calculateInnerInitializationString(column, javaType));
         innerClass.addField(field);
     }
 
-    private FullyQualifiedJavaType calculateFieldType(IntrospectedColumn column) {
-        FullyQualifiedJavaType typeParameter;
-        if (column.getFullyQualifiedJavaType().isPrimitive()) {
-            typeParameter = column.getFullyQualifiedJavaType().getPrimitiveTypeWrapper();
-        } else {
-            typeParameter = column.getFullyQualifiedJavaType();
-        }
-        return new FullyQualifiedJavaType(String.format("SqlColumn<%s>", typeParameter.getShortName())); //$NON-NLS-1$
+    private FullyQualifiedJavaType calculateFieldType(FullyQualifiedJavaType javaType) {
+        return new FullyQualifiedJavaType(String.format("SqlColumn<%s>", javaType.getShortName())); //$NON-NLS-1$
     }
 
-    private String calculateInnerInitializationString(IntrospectedColumn column) {
+    private String calculateInnerInitializationString(IntrospectedColumn column, FullyQualifiedJavaType javaType) {
         StringBuilder initializationString = new StringBuilder();
 
         initializationString.append(String.format("column(\"%s\", JDBCType.%s", //$NON-NLS-1$ //$NON-NLS-2$
@@ -161,7 +164,14 @@ public class DynamicSqlSupportClassGenerator {
         if (StringUtility.stringHasValue(column.getTypeHandler())) {
             initializationString.append(String.format(", \"%s\")", column.getTypeHandler())); //$NON-NLS-1$
         } else {
-            initializationString.append(')');
+            initializationString.append(')'); //$NON-NLS-1$
+        }
+
+
+        if (StringUtility.isTrue(column.getProperties().getProperty(PropertyRegistry.COLUMN_OVERRIDE_FORCE_JAVA_TYPE))) {
+            initializationString.append(".withJavaType("); //$NON-NLS-1$
+            initializationString.append(javaType.getShortName());
+            initializationString.append(".class)"); //$NON-NLS-1$
         }
 
         return initializationString.toString();

@@ -27,9 +27,10 @@
 <h1>What's New in MyBatis Generator</h1>
 <h2>Version 1.4.1</h2>
 <p>This release is primarily focused on updating the runtimes for MyBatis Dynamic SQL ("MyBatis3DynamicSQL" and
-"MyBatis3Kotlin"). The generated Java code is now dependent on MyBatis Dynamic SQL version 1.3.1 or later. The
-generated Kotlin code is now dependent on MyBatis Dynamic SQL version 1.4.0 or later. See below for details about these
-changes. See the GitHub page for milestone 1.4.1 for details other changes in this release:
+"MyBatis3Kotlin"). The generated code for "MyBatis3DynamicSQL" is now dependent on MyBatis Dynamic SQL version 1.3.1 or
+later. The generated code for "MyBatis3Kotlin" is now dependent on MyBatis Dynamic SQL version 1.4.0 or later. See
+below for details about these changes. See the GitHub page for milestone 1.4.1 for details other changes in this
+release:
 <a target="_blank" href="https://github.com/mybatis/generator/issues?q=milestone%3A1.4.1">Milestone 1.4.1</a>.</p>
 
 <h3>Updated MyBatis Dynamic SQL Runtimes</h3>
@@ -83,15 +84,16 @@ reference. For example, if you have a table named "Bar", you may see code like t
     val bar = Bar(1, 2)      // remove "Record"
 </pre>
 
-<p>Additionally, generated support classes now declare an instance of the <code>SqlTable</code> object, and all fields,
-as values in the top level object. If you wrote custom code that used these generated objects, two changes will be
-required:</p>
+<p>Additionally, generated support classes now declare an instance of the <code>AliasableSqlTable</code> object,
+and all fields, as values in the top level object. If you wrote custom code that used these generated objects, two
+changes will be required:</p>
 
 <ul>
-    <li>The declared <code>SqlTable</code> object is now an instance of an inner Class rather than an inner Object.
-        It should be referenced with the new name (typically the same name as previously, with the first letter now
-        lowercase)</li>
-    <li>References to any <code>SqlColumn</code> should reference the top level value rather than a nested value</li>
+    <li>The declared <code>AliasableSqlTable</code> object is now an instance of an inner Class rather than an inner
+        Object. It should be referenced with the new name (typically the same name as previously, with the first letter
+        now lowercase)</li>
+    <li>References to any <code>AliasableSqlColumn</code> should reference the top level value rather than a nested
+        value</li>
 </ul>
 
 <p>For example, previously code might have looked like this:</p>
@@ -116,9 +118,9 @@ required:</p>
     }
 </pre>
 
-<p>Lastly, the generated code uses upgraded DSL features that should be mostly transparent. But you will notice that any
-    "where" clauses you write will likely have deprecation warnings. This is due to a change in MyBatis Dynamic SQL. You
-    can read about remediation of these warnings in the documentation for that project.
+<p>Lastly, the generated Kotlin code uses upgraded DSL features that should be mostly transparent. But you will notice
+    that any "where" clauses you write will likely have deprecation warnings. This is due to a change in MyBatis
+    Dynamic SQL. You can read about remediation of these warnings in the documentation for that project.
 </p>
 
 <h3>Other Enhancements</h3>
@@ -129,6 +131,10 @@ required:</p>
     <li>Added a plugin to generate @CacheNamespace annotations</li>
     <li>Added the ability to specify a name for the inner class generated in the MyBatis Dynamic SQL support class</li>
     <li>Added plugin methods that allow generation of any arbitrary file type</li>
+    <li>Added a property to &lt;columnOverride&gt; that forces the Java type into generated mappings for the
+        MyBatis Dynamic SQL based runtimes. This is useful in certain cases such as when you use MyBatis'
+        EnumOrdinalTypeHandler.
+    </li>
 </ul>
 
 <h3>Removed Items</h3>

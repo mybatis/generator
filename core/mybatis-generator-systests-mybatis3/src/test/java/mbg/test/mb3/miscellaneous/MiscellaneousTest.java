@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2022 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -28,6 +28,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import mbg.test.mb3.generated.miscellaneous.mapper.EnumordinaltestMapper;
+import mbg.test.mb3.generated.miscellaneous.model.Enumordinaltest;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.Test;
 
@@ -1110,6 +1112,30 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
             assertEquals(1, returnedRecords.size());
 
             Enumtest returnedRecord = returnedRecords.get(0);
+            assertEquals(1, returnedRecord.getId().intValue());
+            assertEquals(TestEnum.FRED, returnedRecord.getName());
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+    @Test
+    public void testEnumOrdinal() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        try {
+            EnumordinaltestMapper mapper = sqlSession.getMapper(EnumordinaltestMapper.class);
+
+            Enumordinaltest enumTest = new Enumordinaltest();
+            enumTest.setId(1);
+            enumTest.setName(TestEnum.FRED);
+            int rows = mapper.insert(enumTest);
+            assertEquals(1, rows);
+
+            List<Enumordinaltest> returnedRecords = mapper.selectByExample(null);
+            assertEquals(1, returnedRecords.size());
+
+            Enumordinaltest returnedRecord = returnedRecords.get(0);
             assertEquals(1, returnedRecord.getId().intValue());
             assertEquals(TestEnum.FRED, returnedRecord.getName());
         } finally {

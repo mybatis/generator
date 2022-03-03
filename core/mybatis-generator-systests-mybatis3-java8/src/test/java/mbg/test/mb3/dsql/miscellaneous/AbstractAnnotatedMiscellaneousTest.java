@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2022 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@ package mbg.test.mb3.dsql.miscellaneous;
 
 import static mbg.test.common.util.TestUtilities.createDatabase;
 
+import mbg.test.mb3.generated.dsql.miscellaneous.mapper.EnumordinaltestMapper;
 import org.apache.ibatis.datasource.unpooled.UnpooledDataSource;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.Configuration;
@@ -46,6 +47,7 @@ public abstract class AbstractAnnotatedMiscellaneousTest {
         Environment environment = new Environment("test", new JdbcTransactionFactory(), ds);
         Configuration config = new Configuration(environment);
         config.addMapper(EnumtestMapper.class);
+        config.addMapper(EnumordinaltestMapper.class);
         config.addMapper(GeneratedalwaystestMapper.class);
         config.addMapper(GeneratedalwaystestnoupdatesMapper.class);
         config.addMapper(MyObjectMapper.class);

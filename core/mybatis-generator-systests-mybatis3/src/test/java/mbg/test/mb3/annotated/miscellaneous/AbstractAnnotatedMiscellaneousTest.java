@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2022 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 package mbg.test.mb3.annotated.miscellaneous;
 
+import mbg.test.mb3.generated.annotated.miscellaneous.mapper.EnumordinaltestMapper;
 import org.junit.jupiter.api.BeforeEach;
 
 import mbg.test.mb3.AbstractTest;
@@ -31,6 +32,7 @@ public abstract class AbstractAnnotatedMiscellaneousTest extends AbstractTest {
     public void setUp() throws Exception {
         super.setUp();
         sqlSessionFactory.getConfiguration().addMapper(EnumtestMapper.class);
+        sqlSessionFactory.getConfiguration().addMapper(EnumordinaltestMapper.class);
         sqlSessionFactory.getConfiguration().addMapper(MyObjectMapper.class);
         sqlSessionFactory.getConfiguration().addMapper(RegexrenameMapper.class);
         sqlSessionFactory.getConfiguration().addMapper(GeneratedalwaystestMapper.class);

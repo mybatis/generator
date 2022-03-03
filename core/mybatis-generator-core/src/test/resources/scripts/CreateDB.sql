@@ -1,5 +1,5 @@
 --
---    Copyright 2006-2018 the original author or authors.
+--    Copyright 2006-2022 the original author or authors.
 --
 --    Licensed under the Apache License, Version 2.0 (the "License");
 --    you may not use this file except in compliance with the License.
@@ -30,6 +30,7 @@ drop table mbgtest.Translations if exists;
 drop table CompoundKey if exists;
 drop schema mbgtest if exists;
 drop table EnumTest if exists;
+drop table EnumOrdinalTest if exists;
 drop table GeneratedAlwaysTest if exists;
 drop table GeneratedAlwaysTestNoUpdates if exists;
 drop table IgnoreManyColumns if exists;
@@ -152,6 +153,12 @@ create table CompoundKey (
 create table EnumTest (
   id int not null,
   name varchar(20) not null,
+  primary key(id)
+);
+
+create table EnumOrdinalTest (
+  id int not null,
+  name int not null,
   primary key(id)
 );
 

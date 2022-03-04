@@ -42,6 +42,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 import org.mybatis.generator.eclipse.ui.Activator;
 import org.mybatis.generator.eclipse.ui.Messages;
@@ -138,7 +139,7 @@ public class GeneratorLaunchShortcut implements ILaunchShortcut {
     }
 
     private Shell getShell() {
-        IWorkbenchWindow window = Activator.getDefault().getWorkbench().getActiveWorkbenchWindow();
+        IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
         if (window != null) {
             return window.getShell();
         }

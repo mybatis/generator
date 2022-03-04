@@ -44,7 +44,7 @@ of the Eclipse user interface for MyBatis Generator.</p>
 tests build on items created in previous tests.</p>
 <h3>Installation</h3>
 <ol>
-  <li>Install a fresh version of Eclipse version 4.7.3 (Oxygen 3A) or later.</li>
+  <li>Install a fresh version of Eclipse version 4.10 (2018-12) or later.</li>
   <li>Open the fresh Eclipse install, and create a new (empty) workspace</li>
   <li>Configure a local update site to point to the newly generated site
       (Help&gt;Install New Software...)</li>
@@ -261,6 +261,10 @@ create table mbgtest.j (id int not null, description varchar(50), primary key(id
       button.</li>
   <li>Press the "Run" button</li>
   <li>You should see an error in the progress window stating "Class not found: JDBC Driver...".</li>
+  <li>Open the configuration file and replace <code>${driver}</code> with <code>org.hsqldb.jdbcDriver</code>.
+    There is a limitation in Eclipse that you cannot change environment variables for builds that run in the same
+    JRE as the workspace. 
+  </li>
   <li>Right click on the new <code>build.xml</code> file, then select the
       menu option "Run As&gt;Ant Build...".  You should see the Ant launch configuration
       dialog open.</li>

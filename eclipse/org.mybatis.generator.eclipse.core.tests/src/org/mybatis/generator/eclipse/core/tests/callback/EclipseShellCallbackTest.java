@@ -30,9 +30,10 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.IJavaProject;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.mybatis.generator.eclipse.core.callback.EclipseShellCallback;
 import org.mybatis.generator.exception.ShellException;
 
@@ -40,12 +41,12 @@ public class EclipseShellCallbackTest {
 
     private static IJavaProject javaProject;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() throws CoreException {
         javaProject = createJavaProject("P", new String[] { "src/main/java", "generatedsrc" }, "bin", "1.5");
     }
     
-    @AfterClass
+    @AfterAll
     public static void tearDown() throws CoreException {
         deleteProject("P");
     }
@@ -86,9 +87,11 @@ public class EclipseShellCallbackTest {
         assertThat(expectedPath, is(equalTo(actualPath)));
     }
 
-    @Test(expected=ShellException.class)
+    @Test
     public void testCalculatingDirectoryOnNonExistingSourceFolder() throws ShellException {
         EclipseShellCallback callback = new EclipseShellCallback();
-        callback.getDirectory(javaProject.getElementName() + "/othersrc", "org.mybatis.test");
+        Assertions.assertThrows(ShellException.class, () -> {
+            callback.getDirectory(javaProject.getElementName() + "/othersrc", "org.mybatis.test");
+        });
     }
 }

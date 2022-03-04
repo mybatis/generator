@@ -25,8 +25,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.mybatis.generator.eclipse.tests.harness.Utilities;
 import org.mybatis.generator.eclipse.tests.harness.Utilities.CantCreateInstanceException;
 import org.mybatis.generator.eclipse.tests.harness.matchers.HasCount;
@@ -50,7 +51,7 @@ public class MatcherTest {
     
     private static CompilationUnitSummary cuSummary;
 
-    @BeforeClass
+    @BeforeAll
     public static void beforeClass() throws IOException {
         InputStream resource = MatcherTest.class.getResourceAsStream("/org/mybatis/generator/eclipse/tests/harness/tests/resources/OuterClass.java.src");
         cuSummary = getCompilationUnitSummaryFromResource(resource);
@@ -61,9 +62,11 @@ public class MatcherTest {
         assertThat(cuSummary, hasImport("import java.io.Serializable"));
     }
     
-    @Test(expected=AssertionError.class)
+    @Test
     public void voidTestHasImportFails() {
-        assertThat(cuSummary, hasImport("import foo.Bar"));
+        Assertions.assertThrows(AssertionError.class, () -> {
+            assertThat(cuSummary, hasImport("import foo.Bar"));
+        });
     }
     
     @Test
@@ -71,9 +74,11 @@ public class MatcherTest {
         assertThat(cuSummary, hasImportCount(2));
     }
     
-    @Test(expected=AssertionError.class)
+    @Test
     public void voidTestHasImportCountFails() {
-        assertThat(cuSummary, hasImportCount(3));
+        Assertions.assertThrows(AssertionError.class, () -> {
+            assertThat(cuSummary, hasImportCount(3));
+        });
     }
     
     @Test
@@ -81,9 +86,11 @@ public class MatcherTest {
         assertThat(cuSummary, hasClass(OUTER_CLASS));
     }
 
-    @Test(expected=AssertionError.class)
+    @Test
     public void testHasClassFails() {
-        assertThat(cuSummary, hasClass(FAKE_CLASS));
+        Assertions.assertThrows(AssertionError.class, () -> {
+            assertThat(cuSummary, hasClass(FAKE_CLASS));
+        });
     }
 
     @Test
@@ -91,9 +98,11 @@ public class MatcherTest {
         assertThat(cuSummary, withClass(OUTER_CLASS));
     }
 
-    @Test(expected=AssertionError.class)
+    @Test
     public void testWithClassFails() {
-        assertThat(cuSummary, withClass(FAKE_CLASS));
+        Assertions.assertThrows(AssertionError.class, () -> {
+            assertThat(cuSummary, withClass(FAKE_CLASS));
+        });
     }
 
     @Test
@@ -101,9 +110,11 @@ public class MatcherTest {
         assertThat(cuSummary, hasClass(OUTER_CLASS, withClass(INNER_CLASS)));
     }
 
-    @Test(expected=AssertionError.class)
+    @Test
     public void testHasClassWithClassFails() {
-        assertThat(cuSummary, hasClass(OUTER_CLASS, withClass(FAKE_CLASS)));
+        Assertions.assertThrows(AssertionError.class, () -> {
+            assertThat(cuSummary, hasClass(OUTER_CLASS, withClass(FAKE_CLASS)));
+        });
     }
 
     @Test
@@ -111,9 +122,11 @@ public class MatcherTest {
         assertThat(cuSummary, hasClass(OUTER_CLASS, withClassCount(1)));
     }
 
-    @Test(expected=AssertionError.class)
+    @Test
     public void testHasClassWithClassCountFails() {
-        assertThat(cuSummary, hasClass(OUTER_CLASS, withClassCount(2)));
+        Assertions.assertThrows(AssertionError.class, () -> {
+            assertThat(cuSummary, hasClass(OUTER_CLASS, withClassCount(2)));
+        });
     }
 
     @Test
@@ -126,9 +139,11 @@ public class MatcherTest {
         assertThat(cuSummary, hasClass(OUTER_CLASS, withEnum(INNER_ENUM)));
     }
 
-    @Test(expected=AssertionError.class)
+    @Test
     public void testHasClassWithEnumFails() {
-        assertThat(cuSummary, hasClass(OUTER_CLASS, withEnum(FAKE_ENUM)));
+        Assertions.assertThrows(AssertionError.class, () -> {
+            assertThat(cuSummary, hasClass(OUTER_CLASS, withEnum(FAKE_ENUM)));
+        });
     }
 
     @Test
@@ -136,9 +151,11 @@ public class MatcherTest {
         assertThat(cuSummary, hasClass(OUTER_CLASS, withEnumCount(1)));
     }
 
-    @Test(expected=AssertionError.class)
+    @Test
     public void testHasClassWithEnumCountFails() {
-        assertThat(cuSummary, hasClass(OUTER_CLASS, withEnumCount(2)));
+        Assertions.assertThrows(AssertionError.class, () -> {
+            assertThat(cuSummary, hasClass(OUTER_CLASS, withEnumCount(2)));
+        });
     }
 
     @Test
@@ -146,9 +163,11 @@ public class MatcherTest {
         assertThat(cuSummary, hasClass(OUTER_CLASS, withInterface(INNER_INTERFACE)));
     }
 
-    @Test(expected=AssertionError.class)
+    @Test
     public void testHasClassWithInterfaceFails() {
-        assertThat(cuSummary, hasClass(OUTER_CLASS, withInterface(FAKE_INTERFACE)));
+        Assertions.assertThrows(AssertionError.class, () -> {
+            assertThat(cuSummary, hasClass(OUTER_CLASS, withInterface(FAKE_INTERFACE)));
+        });
     }
 
     @Test
@@ -156,9 +175,11 @@ public class MatcherTest {
         assertThat(cuSummary, hasClass(OUTER_CLASS, withInterfaceCount(1)));
     }
 
-    @Test(expected=AssertionError.class)
+    @Test
     public void testHasClassWithInterfaceCountFails() {
-        assertThat(cuSummary, hasClass(OUTER_CLASS, withInterfaceCount(2)));
+        Assertions.assertThrows(AssertionError.class, () -> {
+            assertThat(cuSummary, hasClass(OUTER_CLASS, withInterfaceCount(2)));
+        });
     }
 
     @Test
@@ -171,9 +192,11 @@ public class MatcherTest {
         assertThat(cuSummary, hasClass(OUTER_CLASS, withAnnotation(INNER_ANNOTATION)));
     }
 
-    @Test(expected=AssertionError.class)
+    @Test
     public void testHasClassWithAnnotationFails() {
-        assertThat(cuSummary, hasClass(OUTER_CLASS, withAnnotation(FAKE_ANNOTATION)));
+        Assertions.assertThrows(AssertionError.class, () -> {
+            assertThat(cuSummary, hasClass(OUTER_CLASS, withAnnotation(FAKE_ANNOTATION)));
+        });
     }
 
     @Test
@@ -181,9 +204,11 @@ public class MatcherTest {
         assertThat(cuSummary, hasClass(OUTER_CLASS, withAnnotationCount(1)));
     }
 
-    @Test(expected=AssertionError.class)
+    @Test
     public void testHasClassWithAnnotationCountFails() {
-        assertThat(cuSummary, hasClass(OUTER_CLASS, withAnnotationCount(2)));
+        Assertions.assertThrows(AssertionError.class, () -> {
+            assertThat(cuSummary, hasClass(OUTER_CLASS, withAnnotationCount(2)));
+        });
     }
 
     @Test
@@ -191,9 +216,11 @@ public class MatcherTest {
         assertThat(cuSummary, hasClass(OUTER_CLASS, withField(UNRELIABLE_COUNT)));
     }
 
-    @Test(expected=AssertionError.class)
+    @Test
     public void testHasClassWithFieldFails() {
-        assertThat(cuSummary, hasClass(OUTER_CLASS, withField("fakeField")));
+        Assertions.assertThrows(AssertionError.class, () -> {
+            assertThat(cuSummary, hasClass(OUTER_CLASS, withField("fakeField")));
+        });
     }
 
     @Test
@@ -201,14 +228,18 @@ public class MatcherTest {
         assertThat(cuSummary, hasClass(OUTER_CLASS, withField(UNRELIABLE_COUNT, ofType("int"))));
     }
 
-    @Test(expected=AssertionError.class)
+    @Test
     public void testHasClassWithFieldOfTypeFails() {
-        assertThat(cuSummary, hasClass(OUTER_CLASS, withField(UNRELIABLE_COUNT, ofType("long"))));
+        Assertions.assertThrows(AssertionError.class, () -> {
+            assertThat(cuSummary, hasClass(OUTER_CLASS, withField(UNRELIABLE_COUNT, ofType("long"))));
+        });
     }
 
-    @Test(expected=AssertionError.class)
+    @Test
     public void testHasClassWithFakeFieldOfTypeFails() {
-        assertThat(cuSummary, hasClass(OUTER_CLASS, withField("fakeField", ofType("long"))));
+        Assertions.assertThrows(AssertionError.class, () -> {
+            assertThat(cuSummary, hasClass(OUTER_CLASS, withField("fakeField", ofType("long"))));
+        });
     }
 
     @Test
@@ -216,9 +247,11 @@ public class MatcherTest {
         assertThat(cuSummary, hasClass(OUTER_CLASS, withFieldCount(2)));
     }
 
-    @Test(expected=AssertionError.class)
+    @Test
     public void testHasClassWithFieldCountFails() {
-        assertThat(cuSummary, hasClass(OUTER_CLASS, withFieldCount(3)));
+        Assertions.assertThrows(AssertionError.class, () -> {
+            assertThat(cuSummary, hasClass(OUTER_CLASS, withFieldCount(3)));
+        });
     }
 
     @Test
@@ -226,9 +259,11 @@ public class MatcherTest {
         assertThat(cuSummary, hasClass(SECOND_OUTER_CLASS, withMethod("setId(int)")));
     }
 
-    @Test(expected=AssertionError.class)
+    @Test
     public void testHasClassWithMethodFails() {
-        assertThat(cuSummary, hasClass(OUTER_CLASS, withMethod("setId(int)")));
+        Assertions.assertThrows(AssertionError.class, () -> {
+            assertThat(cuSummary, hasClass(OUTER_CLASS, withMethod("setId(int)")));
+        });
     }
 
     @Test
@@ -236,9 +271,11 @@ public class MatcherTest {
         assertThat(cuSummary, hasClass(SECOND_OUTER_CLASS, withMethodCount(2)));
     }
 
-    @Test(expected=AssertionError.class)
+    @Test
     public void testHasClassWithMethodCountFails() {
-        assertThat(cuSummary, hasClass(SECOND_OUTER_CLASS, withMethodCount(3)));
+        Assertions.assertThrows(AssertionError.class, () -> {
+            assertThat(cuSummary, hasClass(SECOND_OUTER_CLASS, withMethodCount(3)));
+        });
     }
 
     @Test
@@ -246,9 +283,11 @@ public class MatcherTest {
         assertThat(cuSummary, hasClass(OUTER_CLASS, withSuperClass("ArrayList<String>")));
     }
 
-    @Test(expected=AssertionError.class)
+    @Test
     public void testHasClassWithNullSuperClassFails() {
-        assertThat(cuSummary, hasClass(OUTER_CLASS, withSuperClass(nullValue())));
+        Assertions.assertThrows(AssertionError.class, () -> {
+            assertThat(cuSummary, hasClass(OUTER_CLASS, withSuperClass(nullValue())));
+        });
     }
 
     @Test
@@ -256,9 +295,11 @@ public class MatcherTest {
         assertThat(cuSummary, hasClass(SECOND_OUTER_CLASS, withSuperClass(nullValue())));
     }
 
-    @Test(expected=AssertionError.class)
+    @Test
     public void testHasClassWithSuperClassFails() {
-        assertThat(cuSummary, hasClass(SECOND_OUTER_CLASS, withSuperClass(FAKE_CLASS)));
+        Assertions.assertThrows(AssertionError.class, () -> {
+            assertThat(cuSummary, hasClass(SECOND_OUTER_CLASS, withSuperClass(FAKE_CLASS)));
+        });
     }
 
     @Test
@@ -266,9 +307,11 @@ public class MatcherTest {
         assertThat(cuSummary, hasClass(OUTER_CLASS, withSuperInterface("Serializable")));
     }
 
-    @Test(expected=AssertionError.class)
+    @Test
     public void testHasClassWithSuperInterfaceFails() {
-        assertThat(cuSummary, hasClass(OUTER_CLASS, withSuperInterface(FAKE_INTERFACE)));
+        Assertions.assertThrows(AssertionError.class, () -> {
+            assertThat(cuSummary, hasClass(OUTER_CLASS, withSuperInterface(FAKE_INTERFACE)));
+        });
     }
 
     @Test
@@ -276,9 +319,11 @@ public class MatcherTest {
         assertThat(cuSummary, hasClass(OUTER_CLASS, withSuperInterfaceCount(1)));
     }
 
-    @Test(expected=AssertionError.class)
+    @Test
     public void testHasClassWithSuperInterfaceCountFails() {
-        assertThat(cuSummary, hasClass(OUTER_CLASS, withSuperInterfaceCount(2)));
+        Assertions.assertThrows(AssertionError.class, () -> {
+            assertThat(cuSummary, hasClass(OUTER_CLASS, withSuperInterfaceCount(2)));
+        });
     }
 
     @Test
@@ -286,9 +331,11 @@ public class MatcherTest {
         assertThat(cuSummary, hasClass(OUTER_CLASS, withEnum(INNER_ENUM, withEnumConstant("GEORGE"))));
     }
 
-    @Test(expected=AssertionError.class)
+    @Test
     public void testHasClassWithEnumWithEnumConstantFails() {
-        assertThat(cuSummary, hasClass(OUTER_CLASS, withEnum(INNER_ENUM, withEnumConstant("FRED"))));
+        Assertions.assertThrows(AssertionError.class, () -> {
+            assertThat(cuSummary, hasClass(OUTER_CLASS, withEnum(INNER_ENUM, withEnumConstant("FRED"))));
+        });
     }
 
     @Test
@@ -296,9 +343,11 @@ public class MatcherTest {
         assertThat(cuSummary, hasClass(OUTER_CLASS, withEnum(INNER_ENUM, withEnumConstantCount(2))));
     }
 
-    @Test(expected=AssertionError.class)
+    @Test
     public void testHasClassWithEnumWithEnumConstantCountFails() {
-        assertThat(cuSummary, hasClass(OUTER_CLASS, withEnum(INNER_ENUM, withEnumConstantCount(3))));
+        Assertions.assertThrows(AssertionError.class, () -> {
+            assertThat(cuSummary, hasClass(OUTER_CLASS, withEnum(INNER_ENUM, withEnumConstantCount(3))));
+        });
     }
 
     @Test
@@ -306,9 +355,11 @@ public class MatcherTest {
         assertThat(cuSummary, hasClass(OUTER_CLASS, withAnnotation(INNER_ANNOTATION, withAnnotationMember("amount"))));
     }
 
-    @Test(expected=AssertionError.class)
+    @Test
     public void testHasClassWithAnnotationWithAnnotationMemberFails() {
-        assertThat(cuSummary, hasClass(OUTER_CLASS, withAnnotation(INNER_ANNOTATION, withAnnotationMember("fakeMember"))));
+        Assertions.assertThrows(AssertionError.class, () -> {
+            assertThat(cuSummary, hasClass(OUTER_CLASS, withAnnotation(INNER_ANNOTATION, withAnnotationMember("fakeMember"))));
+        });
     }
 
     @Test
@@ -316,26 +367,34 @@ public class MatcherTest {
         assertThat(cuSummary, hasClass(OUTER_CLASS, withAnnotation(INNER_ANNOTATION, withAnnotationMemberCount(1))));
     }
 
-    @Test(expected=AssertionError.class)
+    @Test
     public void testHasClassWithAnnotationWithAnnotationMemberCountFails() {
-        assertThat(cuSummary, hasClass(OUTER_CLASS, withAnnotation(INNER_ANNOTATION, withAnnotationMemberCount(2))));
+        Assertions.assertThrows(AssertionError.class, () -> {
+            assertThat(cuSummary, hasClass(OUTER_CLASS, withAnnotation(INNER_ANNOTATION, withAnnotationMemberCount(2))));
+        });
     }
 
-    @Test(expected=AssertionError.class)
+    @Test
     public void testHasClassWithAnnotationWithFakeAnnotationMemberCountFails() {
-        assertThat(cuSummary, hasClass(OUTER_CLASS, withAnnotation(FAKE_ANNOTATION, withAnnotationMemberCount(2))));
+        Assertions.assertThrows(AssertionError.class, () -> {
+            assertThat(cuSummary, hasClass(OUTER_CLASS, withAnnotation(FAKE_ANNOTATION, withAnnotationMemberCount(2))));
+        });
     }
     
-    @Test(expected=AssertionError.class)
+    @Test
     public void testHasClassWithEnumConstantCountFails() {
         // the compiler allows us to write tests that don't make any sense,
         // but the tests fail at runtime.
-        assertThat(cuSummary, hasClass(OUTER_CLASS, withEnumConstantCount(0)));
+        Assertions.assertThrows(AssertionError.class, () -> {
+            assertThat(cuSummary, hasClass(OUTER_CLASS, withEnumConstantCount(0)));
+        });
     }
 
-    @Test(expected=CantCreateInstanceException.class)
+    @Test
     public void testCreateInstanceFails() {
-        Utilities.newInstance(Serializable.class);
+        Assertions.assertThrows(CantCreateInstanceException.class, () -> {
+            Utilities.newInstance(Serializable.class);
+        });
     }
     
     @Test

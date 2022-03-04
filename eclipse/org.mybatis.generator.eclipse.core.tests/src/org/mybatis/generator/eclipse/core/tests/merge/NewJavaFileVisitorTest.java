@@ -26,7 +26,7 @@ import java.io.InputStream;
 
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.SimpleType;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mybatis.generator.eclipse.core.merge.NewJavaFileVisitor;
 import org.mybatis.generator.eclipse.core.tests.merge.support.TestResourceGenerator;
 import org.mybatis.generator.eclipse.tests.harness.Utilities;

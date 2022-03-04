@@ -24,7 +24,7 @@ import static org.mybatis.generator.eclipse.tests.harness.matchers.Matchers.*;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mybatis.generator.eclipse.tests.harness.summary.AbstractSummary;
 import org.mybatis.generator.eclipse.tests.harness.summary.AnnotationSummary;
 import org.mybatis.generator.eclipse.tests.harness.summary.ClassSummary;

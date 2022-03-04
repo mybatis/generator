@@ -25,7 +25,7 @@ import static org.mybatis.generator.eclipse.core.tests.merge.support.TestResourc
 import static org.mybatis.generator.eclipse.tests.harness.Utilities.getCompilationUnitSummaryFromSource;
 import static org.mybatis.generator.eclipse.tests.harness.matchers.Matchers.*;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mybatis.generator.config.MergeConstants;
 import org.mybatis.generator.eclipse.core.merge.JavaFileMerger;
 import org.mybatis.generator.eclipse.tests.harness.summary.CompilationUnitSummary;

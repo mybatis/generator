@@ -1,22 +1,23 @@
-/**
- *    Copyright 2006-2016 the original author or authors.
+/*
+ *    Copyright 2006-2022 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
  *    You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *       https://www.apache.org/licenses/LICENSE-2.0
  *
  *    Unless required by applicable law or agreed to in writing, software
  *    distributed under the License is distributed on an "AS IS" BASIS,
  *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
+ *
  */
 package org.mybatis.generator.eclipse.core.tests.merge;
 
 import static org.hamcrest.core.IsNull.nullValue;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mybatis.generator.eclipse.core.tests.merge.support.TestResourceGenerator.simpleClassWithAllGeneratedItems;
 import static org.mybatis.generator.eclipse.core.tests.merge.support.TestResourceGenerator.simpleClassWithGeneratedAndCustomItems;
 import static org.mybatis.generator.eclipse.core.tests.merge.support.TestResourceGenerator.simpleInterfaceWithAllGeneratedItems;
@@ -24,7 +25,7 @@ import static org.mybatis.generator.eclipse.core.tests.merge.support.TestResourc
 import static org.mybatis.generator.eclipse.tests.harness.Utilities.getCompilationUnitSummaryFromSource;
 import static org.mybatis.generator.eclipse.tests.harness.matchers.Matchers.*;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mybatis.generator.config.MergeConstants;
 import org.mybatis.generator.eclipse.core.merge.JavaFileMerger;
 import org.mybatis.generator.eclipse.tests.harness.summary.CompilationUnitSummary;

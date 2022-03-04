@@ -1,24 +1,25 @@
-/**
- *    Copyright 2006-2016 the original author or authors.
+/*
+ *    Copyright 2006-2022 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
  *    You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *       https://www.apache.org/licenses/LICENSE-2.0
  *
  *    Unless required by applicable law or agreed to in writing, software
  *    distributed under the License is distributed on an "AS IS" BASIS,
  *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
+ *
  */
 package org.mybatis.generator.eclipse.core.tests.callback;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNull.notNullValue;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mybatis.generator.eclipse.core.tests.callback.WorkspaceUtilities.createJavaProject;
 import static org.mybatis.generator.eclipse.core.tests.callback.WorkspaceUtilities.deleteProject;
 import static org.mybatis.generator.eclipse.core.tests.callback.WorkspaceUtilities.getWorkspace;
@@ -29,9 +30,10 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.IJavaProject;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.mybatis.generator.eclipse.core.callback.EclipseShellCallback;
 import org.mybatis.generator.exception.ShellException;
 
@@ -39,12 +41,12 @@ public class EclipseShellCallbackTest {
 
     private static IJavaProject javaProject;
 
-    @BeforeClass
+    @BeforeAll
     public static void setup() throws CoreException {
         javaProject = createJavaProject("P", new String[] { "src/main/java", "generatedsrc" }, "bin", "1.5");
     }
     
-    @AfterClass
+    @AfterAll
     public static void tearDown() throws CoreException {
         deleteProject("P");
     }
@@ -85,9 +87,11 @@ public class EclipseShellCallbackTest {
         assertThat(expectedPath, is(equalTo(actualPath)));
     }
 
-    @Test(expected=ShellException.class)
+    @Test
     public void testCalculatingDirectoryOnNonExistingSourceFolder() throws ShellException {
         EclipseShellCallback callback = new EclipseShellCallback();
-        callback.getDirectory(javaProject.getElementName() + "/othersrc", "org.mybatis.test");
+        Assertions.assertThrows(ShellException.class, () -> {
+            callback.getDirectory(javaProject.getElementName() + "/othersrc", "org.mybatis.test");
+        });
     }
 }

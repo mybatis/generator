@@ -221,8 +221,6 @@ public interface Plugin {
     /**
      * This method is no longer called.
      *
-     * @deprecated this method is no longer called
-     *
      * @param method
      *     the generated count method
      * @param interfaze
@@ -233,6 +231,7 @@ public interface Plugin {
      *         method should be ignored. In the case of multiple plugins, the
      *         first plugin returning false will disable the calling of further
      *         plugins.
+     * @deprecated this method is no longer called
      */
     @Deprecated
     default boolean clientBasicCountMethodGenerated(Method method, Interface interfaze,
@@ -242,8 +241,6 @@ public interface Plugin {
 
     /**
      * This method is no longer called.
-     *
-     * @deprecated this method is no longer called
      *
      * @param kotlinFunction
      *     the generated function
@@ -255,6 +252,7 @@ public interface Plugin {
      *         method should be ignored. In the case of multiple plugins, the
      *         first plugin returning false will disable the calling of further
      *         plugins.
+     * @deprecated this method is no longer called
      */
     @Deprecated
     default boolean clientBasicCountMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
@@ -265,7 +263,6 @@ public interface Plugin {
     /**
      * This method is no longer called.
      *
-     * @deprecated No longer called
      * @param method
      *     the generated delete method
      * @param interfaze
@@ -276,6 +273,7 @@ public interface Plugin {
      *         method should be ignored. In the case of multiple plugins, the
      *         first plugin returning false will disable the calling of further
      *         plugins.
+     * @deprecated No longer called
      */
     @Deprecated
     default boolean clientBasicDeleteMethodGenerated(Method method, Interface interfaze,
@@ -286,7 +284,6 @@ public interface Plugin {
     /**
      * This method is no longer called.
      *
-     * @deprecated No longer called
      * @param kotlinFunction
      *     the generated delete function
      * @param kotlinFile
@@ -297,6 +294,7 @@ public interface Plugin {
      *         method should be ignored. In the case of multiple plugins, the
      *         first plugin returning false will disable the calling of further
      *         plugins.
+     * @deprecated No longer called
      */
     @Deprecated
     default boolean clientBasicDeleteMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
@@ -391,7 +389,6 @@ public interface Plugin {
     /**
      * This method is no longer called.
      *
-     * @deprecated this method is no longer called
      * @param method
      *     the generated insert method
      * @param interfaze
@@ -402,6 +399,7 @@ public interface Plugin {
      *         method should be ignored. In the case of multiple plugins, the
      *         first plugin returning false will disable the calling of further
      *         plugins.
+     * @deprecated this method is no longer called
      */
     @Deprecated
     default boolean clientBasicInsertMultipleHelperMethodGenerated(Method method, Interface interfaze,
@@ -412,12 +410,11 @@ public interface Plugin {
     /**
      * Unused legacy method.
      *
-     * @deprecated this method is not longer called
-     *
      * @param kotlinFunction generated function
      * @param kotlinFile generated file
      * @param introspectedTable introspected table
      * @return true
+     * @deprecated this method is no longer called
      */
     @Deprecated
     default boolean clientBasicInsertMultipleHelperMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
@@ -478,7 +475,6 @@ public interface Plugin {
     /**
      * This method is no longer called.
      *
-     * @deprecated no longer called
      * @param method
      *     the generated update method
      * @param interfaze
@@ -489,6 +485,7 @@ public interface Plugin {
      *         method should be ignored. In the case of multiple plugins, the
      *         first plugin returning false will disable the calling of further
      *         plugins.
+     * @deprecated no longer called
      */
     @Deprecated
     default boolean clientBasicUpdateMethodGenerated(Method method, Interface interfaze,
@@ -499,7 +496,6 @@ public interface Plugin {
     /**
      * This method is no longer called.
      *
-     * @deprecated no longer called
      * @param kotlinFunction
      *     the generated update function
      * @param kotlinFile
@@ -510,6 +506,7 @@ public interface Plugin {
      *         method should be ignored. In the case of multiple plugins, the
      *         first plugin returning false will disable the calling of further
      *         plugins.
+     * @deprecated no longer called
      */
     @Deprecated
     default boolean clientBasicUpdateMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
@@ -1998,8 +1995,6 @@ public interface Plugin {
     /**
      * This method is no longer called.
      *
-     * @deprecated this method is no longer called
-     *
      * @param extensionsFile
      *     the partially generated file
      * @param introspectedTable
@@ -2008,6 +2003,8 @@ public interface Plugin {
      *         file should be ignored. In the case of multiple plugins, the
      *         first plugin returning false will disable the calling of further
      *         plugins.
+     *
+     * @deprecated this method is no longer called
      */
     @Deprecated
     default boolean mapperExtensionsGenerated(KotlinFile extensionsFile, IntrospectedTable introspectedTable) {

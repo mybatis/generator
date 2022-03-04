@@ -168,7 +168,8 @@ public class DynamicSqlSupportClassGenerator {
         }
 
 
-        if (StringUtility.isTrue(column.getProperties().getProperty(PropertyRegistry.COLUMN_OVERRIDE_FORCE_JAVA_TYPE))) {
+        if (StringUtility.isTrue(
+                column.getProperties().getProperty(PropertyRegistry.COLUMN_OVERRIDE_FORCE_JAVA_TYPE))) {
             initializationString.append(".withJavaType("); //$NON-NLS-1$
             initializationString.append(javaType.getShortName());
             initializationString.append(".class)"); //$NON-NLS-1$

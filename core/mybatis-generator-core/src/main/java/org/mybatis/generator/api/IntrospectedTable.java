@@ -735,7 +735,7 @@ public abstract class IntrospectedTable {
         }
         setMyBatisDynamicSqlSupportType(sb.toString());
 
-        if(stringHasValue(tableConfiguration.getDynamicSqlTableObjectName())) {
+        if (stringHasValue(tableConfiguration.getDynamicSqlTableObjectName())) {
             setMyBatisDynamicSQLTableObjectName(tableConfiguration.getDynamicSqlTableObjectName());
         } else {
             setMyBatisDynamicSQLTableObjectName(fullyQualifiedTable.getDomainObjectName());

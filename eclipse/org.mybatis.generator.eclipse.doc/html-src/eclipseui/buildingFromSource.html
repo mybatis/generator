@@ -29,16 +29,19 @@
 MyBatis Generator (MBG) feature from source.</p>
 
 <h2>Build Overview</h2>
-<p>The feature build uses Eclipse Tycho - which is Maven support for Eclipse projects.
-Tycho is a thin wrapper over the normal eclipse PDE processes.  Even though the projects
-have a pom.xml, the projects are not structured like normal maven projects.  Within Eclipse, 
-you still need to use normal PDE support and editors to modify the feature.</p>
+<p>The feature is built using Eclipse Tycho - which is Maven support for Eclipse projects.
+Tycho is a thin wrapper over the normal Eclipse PDE build processes.  Even though some of the projects
+have a pom.xml, the projects are not structured like normal Maven projects.  Within Eclipse, 
+you still need to use normal PDE support and editors to modify the feature. Do not try to import the
+projects into your IDE as Maven projects - it will not work. The projects need to be imported as
+regular Eclipse projects.</p>
 
 <h2>Feature Structure</h2>
-<p>The MBG feature is structured as five different Eclipse projects - a feature project,
+<p>There are eleven total projects that makeup the feature. Some projects are just for build support and testing.</p> 
+<p>The published MBG feature is composed of five different Eclipse projects - a feature project,
 and four plugin projects.
 The feature project groups the four plugins together for easy installation.
-The projects are structured as follows:</p>
+Those projects are structured as follows:</p>
 <table cellspacing="0" cellpadding="5" border="1">
   <tr>
     <th>Project</th>
@@ -165,9 +168,9 @@ familiar with git and the Eclipse plug-in development environment (PDE).</p>
     <code>org.mybatis.generator.core</code> project.  There are two ways to solve this:
       <ol type="a">
         <li>If you are comfortable with Maven, then you can run the Maven build by
-          right clicking on <code>pom.xml</code> in the
-          <code>org.mybatis.generator.eclipse.parent</code> project and selecting
-          Run As&gt;Maven test.  A slight warning: this will download many 
+          executing "./mvnw clean integration-test" on the <code>pom.xml</code> in the
+          parent directory of all Eclipse projects (../eclipse)
+          A slight warning: this will download many 
           dependent JARs from Maven central and eclipse.org the first time you run it.
           <p>This method is preferred because it runs the full build for all the
              plugins.  This will make is possible to debug all of the plugin

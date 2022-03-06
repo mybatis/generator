@@ -37,9 +37,9 @@ access when running this build.</p>
   <li>Follow the instructions in <a href="buildingFromSource.html">Building from Source</a> to
       checkout the source and setup the projects in Eclipse.  You can use the steps
       on that page to debug any changes and ensure that the build works properly.</li>
-   <li>Once you are ready to publish, run "<code>mvn -Prelease-composite clean integration-test</code>"
-      on the <code>pom.xml</code> in the
-      <code>org.mybatis.generator.eclipse.parent</code> project. This turns on the "release-composite"
+   <li>Once you are ready to publish, run "<code>./mvnw -Prelease-composite clean integration-test</code>"
+       on the <code>pom.xml</code> in the parent directory of all eclipse projects ("../eclipse"). This turns on
+       the "release-composite"
        profile which adds build steps to retrieve the current P2 metadata from JFrog and prepare
        the release artifacts for uploading.
    </li>
@@ -77,7 +77,7 @@ access when running this build.</p>
          <li><code>org.mybatis.generator.eclipse.ui.tests/pom.xml</code></li>
        </ul>
        <p>This can be easily accomplished with the Tycho versions plugin:
-       <code>mvn tycho-versions:set-version -DnewVersion=1.4.1-SNAPSHOT</code></p>
+       <code>./mvnw tycho-versions:set-version -DnewVersion=1.4.1-SNAPSHOT</code></p>
    </li>
 </ul>
 

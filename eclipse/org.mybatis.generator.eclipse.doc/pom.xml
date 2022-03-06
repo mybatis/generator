@@ -28,6 +28,7 @@
 
   <artifactId>org.mybatis.generator.eclipse.doc</artifactId>
   <packaging>eclipse-plugin</packaging>
+  <name>MyBatis Generator Documentation</name>
 
   <properties>
     <!-- skip sonar - no code here -->

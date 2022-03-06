@@ -27,6 +27,7 @@
   </parent>
   <artifactId>org.mybatis.generator.eclipse.site</artifactId>
   <packaging>eclipse-repository</packaging>
+  <name>MyBatis Generator Update Site</name>
 
   <properties>
     <!-- skip sonar - no code here -->

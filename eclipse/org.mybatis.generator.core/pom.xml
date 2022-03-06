@@ -28,6 +28,7 @@
 
   <artifactId>org.mybatis.generator.core</artifactId>
   <packaging>eclipse-plugin</packaging>
+  <name>MyBatis Generator Core Library</name>
 
   <properties>
     <!-- skip sonar here - we will do the sonar analysis on the main project -->

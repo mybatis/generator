@@ -28,6 +28,7 @@
 
   <artifactId>org.mybatis.generator.eclipse.ui</artifactId>
   <packaging>eclipse-plugin</packaging>
+  <name>MyBatis Generator UI Plugin</name>
 
   <build>
     <plugins>
@@ -67,5 +68,4 @@
       </plugin>
     </plugins>
   </build>
-  <name>Plugin UI</name>
 </project>

@@ -13,3 +13,4 @@ Export-Package: org.mybatis.generator.eclipse.test,
  org.mybatis.generator.eclipse.test.matchers.support,
  org.mybatis.generator.eclipse.test.summary,
  org.mybatis.generator.eclipse.test.summary.support
+Bundle-Vendor: mybatis.org

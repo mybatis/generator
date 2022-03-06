@@ -35,7 +35,8 @@
     <module>org.mybatis.generator.eclipse.ui.tests</module>
     <module>org.mybatis.generator.eclipse.site</module>
     <module>org.mybatis.generator.eclipse.core.tests</module>
-    <module>org.mybatis.generator.eclipse.tests.harness</module>
+    <module>org.mybatis.generator.eclipse.test.utilities</module>
+    <module>org.mybatis.generator.eclipse.test.utilities.tests</module>
   </modules>
 
   <properties>
@@ -48,7 +49,7 @@
     <!-- The destination file for the code coverage report has to be set to the same value
          in the parent pom and in each module pom. Then JaCoCo will add up information in
          the same report, so that, it will give the cross-module code coverage. -->
-    <sonar.jacoco.itReportPath>${project.basedir}/../org.mybatis.generator.eclipse.parent/target/jacoco-it.exec</sonar.jacoco.itReportPath>
+    <sonar.jacoco.itReportPath>${project.basedir}/target/jacoco-it.exec</sonar.jacoco.itReportPath>
     <sonar.language>java</sonar.language>
   </properties>
 

@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Test Utilities Tests
+Bundle-SymbolicName: org.mybatis.generator.eclipse.test.utilities.tests
+Bundle-Version: 1.4.1.qualifier
+Fragment-Host: org.mybatis.generator.eclipse.test.utilities;bundle-version="1.4.1"
+Automatic-Module-Name: org.mybatis.generator.eclipse.test.utilities.tests
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.junit.jupiter.api;bundle-version="5.3.1",
+ org.junit;bundle-version="4.12.0"

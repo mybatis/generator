@@ -86,7 +86,7 @@ The projects are structured as follows:</p>
 </table>
 
 <h2>Other Projects</h2>
-<p>There are four other Eclipse projects that are used in the build of the feature:</p>
+<p>There are six other Eclipse projects that are used in the build of the feature:</p>
 <table cellspacing="0" cellpadding="5" border="1">
   <tr>
     <th>Project</th>
@@ -107,10 +107,19 @@ The projects are structured as follows:</p>
         org.mybatis.generator.eclipse.ui plugin.</td>
   </tr>
   <tr>
-    <td><code>org.mybatis.generator.eclipse.tests.harness</code></td>
+    <td><code>org.mybatis.generator.eclipse.test.utilities</code></td>
     <td>This project is a plugin that contains specialized AST visitors and custom
-        Hamcrest (<a href="http://hamcrest.org">http://hamcrest.org</a>) matchers that are used in the test fragment for writing unit tests
+        Hamcrest (<a href="http://hamcrest.org">http://hamcrest.org</a>) matchers that are used in the test fragments for writing unit tests
         that cover the Java merge functionality.</td>
+  </tr>
+  <tr>
+    <td><code>org.mybatis.generator.eclipse.test.utilities.tests</code></td>
+    <td>This project is a plugin fragment that holds tests for the
+    org.mybatis.generator.eclipse.test.utilities plugin.</td>
+  </tr>
+  <tr>
+    <td><code>releng</code></td>
+    <td>This project is a simple project that holds other items useful during the build.</td>
   </tr>
 </table>
 
@@ -138,7 +147,7 @@ familiar with git and the Eclipse plug-in development environment (PDE).</p>
         (File&gt;Import&gt;General&gt;Existing Projects into Workspace)
       </li>
       <li>Set the root directory to the "eclipse" sub-directory in your Git clone</li>
-      <li>Select all nine projects, do not copy the projects into
+      <li>Select all eleven projects, do not copy the projects into
         your workspace.
         The filled out wizard looks similar to this: <br />
         <p><img src="importWizard.png" alt="Eclipse Project Import Wizard"/></p>
@@ -148,7 +157,7 @@ familiar with git and the Eclipse plug-in development environment (PDE).</p>
   </li>
   <li>The project includes an Eclipse target platform definition file. The purpose is to set the minimum version
    of Eclipse supported by the feature and to ensure that you do not inadvertently use Eclipse features from later
-   versions. The file is <code>org.mybatis.generator/target-platform-definition.target</code>. To activate
+   versions. The file is <code>releng/target-platform-definition.target</code>. To activate
    the target platform, open the file and click on the link that says "Set as active target platform". This action
    may take a few minutes to complete.
   </li>

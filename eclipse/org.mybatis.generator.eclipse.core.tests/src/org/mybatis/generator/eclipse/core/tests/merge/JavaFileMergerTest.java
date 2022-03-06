@@ -22,13 +22,13 @@ import static org.mybatis.generator.eclipse.core.tests.merge.support.TestResourc
 import static org.mybatis.generator.eclipse.core.tests.merge.support.TestResourceGenerator.simpleClassWithGeneratedAndCustomItems;
 import static org.mybatis.generator.eclipse.core.tests.merge.support.TestResourceGenerator.simpleInterfaceWithAllGeneratedItems;
 import static org.mybatis.generator.eclipse.core.tests.merge.support.TestResourceGenerator.simpleInterfaceWithGeneratedAndCustomItems;
-import static org.mybatis.generator.eclipse.tests.harness.Utilities.getCompilationUnitSummaryFromSource;
-import static org.mybatis.generator.eclipse.tests.harness.matchers.Matchers.*;
+import static org.mybatis.generator.eclipse.test.Utilities.getCompilationUnitSummaryFromSource;
+import static org.mybatis.generator.eclipse.test.matchers.Matchers.*;
 
 import org.junit.jupiter.api.Test;
 import org.mybatis.generator.config.MergeConstants;
 import org.mybatis.generator.eclipse.core.merge.JavaFileMerger;
-import org.mybatis.generator.eclipse.tests.harness.summary.CompilationUnitSummary;
+import org.mybatis.generator.eclipse.test.summary.CompilationUnitSummary;
 
 public class JavaFileMergerTest {
 

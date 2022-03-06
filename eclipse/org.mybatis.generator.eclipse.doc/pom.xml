@@ -24,11 +24,11 @@
     <groupId>org.mybatis.generator</groupId>
     <artifactId>org.mybatis.generator.eclipse.parent</artifactId>
     <version>1.4.1-SNAPSHOT</version>
-    <relativePath>../org.mybatis.generator.eclipse.parent</relativePath>
   </parent>
 
   <artifactId>org.mybatis.generator.eclipse.doc</artifactId>
   <packaging>eclipse-plugin</packaging>
+  <name>MyBatis Generator Documentation</name>
 
   <properties>
     <!-- skip sonar - no code here -->

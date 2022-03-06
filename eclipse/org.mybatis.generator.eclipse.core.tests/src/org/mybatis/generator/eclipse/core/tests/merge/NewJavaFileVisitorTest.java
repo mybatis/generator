@@ -29,7 +29,7 @@ import org.eclipse.jdt.core.dom.SimpleType;
 import org.junit.jupiter.api.Test;
 import org.mybatis.generator.eclipse.core.merge.NewJavaFileVisitor;
 import org.mybatis.generator.eclipse.core.tests.merge.support.TestResourceGenerator;
-import org.mybatis.generator.eclipse.tests.harness.Utilities;
+import org.mybatis.generator.eclipse.test.Utilities;
 
 public class NewJavaFileVisitorTest {
 

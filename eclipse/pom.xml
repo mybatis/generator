@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2006-2022 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          https://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.mybatis.generator</groupId>
+  <artifactId>org.mybatis.generator.eclipse.parent</artifactId>
+  <version>1.4.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <inceptionYear>2006</inceptionYear>
+
+  <modules>
+    <module>org.mybatis.generator</module>
+    <module>org.mybatis.generator.core</module>
+    <module>org.mybatis.generator.eclipse.core</module>
+    <module>org.mybatis.generator.eclipse.doc</module>
+    <module>org.mybatis.generator.eclipse.ui</module>
+    <module>org.mybatis.generator.eclipse.ui.tests</module>
+    <module>org.mybatis.generator.eclipse.site</module>
+    <module>org.mybatis.generator.eclipse.core.tests</module>
+    <module>org.mybatis.generator.eclipse.test.utilities</module>
+    <module>org.mybatis.generator.eclipse.test.utilities.tests</module>
+  </modules>
+
+  <properties>
+    <tycho-version>2.7.0</tycho-version>
+    <tycho-extras-version>2.7.0</tycho-extras-version>
+    <license.version>4.2.rc2</license.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <!-- Sonar -->
+    <!-- The destination file for the code coverage report has to be set to the same value
+         in the parent pom and in each module pom. Then JaCoCo will add up information in
+         the same report, so that, it will give the cross-module code coverage. -->
+    <sonar.jacoco.itReportPath>${project.basedir}/target/jacoco-it.exec</sonar.jacoco.itReportPath>
+    <sonar.language>java</sonar.language>
+  </properties>
+
+  <repositories>
+    <repository>
+      <id>Oldest Version Supporting Java 11</id>
+      <layout>p2</layout>
+      <url>http://download.eclipse.org/releases/2018-12</url>
+    </repository>
+  </repositories>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>com.mycila</groupId>
+          <artifactId>license-maven-plugin</artifactId>
+          <version>${license.version}</version>
+          <configuration>
+            <licenseSets>
+              <licenseSet>
+                <header>${project.basedir}/license.txt</header>
+                <excludes>
+                  <exclude>**/*.ctrl</exclude>
+                  <exclude>**/*.dat</exclude>
+                  <exclude>ICLA</exclude>
+                  <exclude>KEYS</exclude>
+                  <exclude>NOTICE</exclude>
+                </excludes>
+              </licenseSet>
+            </licenseSets>
+            <mapping>
+              <ant>XML_STYLE</ant>
+              <xml.vm>XML_STYLE</xml.vm>
+              <java>SLASHSTAR_STYLE</java>
+              <kt>SLASHSTAR_STYLE</kt>
+              <java.src>SLASHSTAR_STYLE</java.src>
+            </mapping>
+          </configuration>
+          <dependencies>
+            <dependency>
+              <groupId>com.mycila</groupId>
+              <artifactId>license-maven-plugin-git</artifactId>
+              <version>${license.version}</version>
+            </dependency>
+          </dependencies>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <version>3.0.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>3.1.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.eclipse.tycho</groupId>
+          <artifactId>tycho-compiler-plugin</artifactId>
+          <version>${tycho-version}</version>
+          <configuration>
+            <source>1.8</source>
+            <target>1.8</target>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    
+    <plugins>
+      <plugin>
+        <groupId>com.mycila</groupId>
+        <artifactId>license-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-maven-plugin</artifactId>
+        <version>${tycho-version}</version>
+        <extensions>true</extensions>
+      </plugin>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-source-plugin</artifactId>
+        <version>${tycho-version}</version>
+        <executions>
+          <execution>
+            <id>plugin-source</id>
+            <goals>
+              <goal>plugin-source</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>feature-source</id>
+            <goals>
+              <goal>feature-source</goal>
+            </goals>
+            <configuration>
+              <labelSuffix> - Source Feature</labelSuffix>
+              <excludes>
+                <plugin id="org.mybatis.generator.eclipse.doc"/>
+              </excludes>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-versions-plugin</artifactId>
+        <version>${tycho-version}</version>
+      </plugin>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-p2-plugin</artifactId>
+        <version>${tycho-version}</version>
+        <executions>
+          <execution>
+            <id>attach-p2-metadata</id>
+            <phase>package</phase>
+            <goals>
+              <goal>p2-metadata</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>target-platform-configuration</artifactId>
+        <version>${tycho-version}</version>
+        <configuration>
+          <executionEnvironments>JavaSE-1.8</executionEnvironments>
+          <environments>
+            <environment>
+              <os>win32</os>
+              <ws>win32</ws>
+              <arch>x86</arch>
+            </environment>
+            <environment>
+              <os>win32</os>
+              <ws>win32</ws>
+              <arch>x86_64</arch>
+            </environment>
+            <environment>
+              <os>linux</os>
+              <ws>gtk</ws>
+              <arch>x86</arch>
+            </environment>
+            <environment>
+              <os>linux</os>
+              <ws>gtk</ws>
+              <arch>x86_64</arch>
+            </environment>
+            <environment>
+              <os>macosx</os>
+              <ws>cocoa</ws>
+              <arch>x86_64</arch>
+            </environment>
+          </environments>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.6</version>
+        <configuration>
+          <append>true</append>
+        </configuration>
+        <executions>
+          <execution>
+            <id>prepare-agent</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+            <configuration>
+              <destFile>${sonar.jacoco.itReportPath}</destFile>
+              <propertyName>jacoco.agent.arg</propertyName>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+  <name>MyBatis Generator - Eclipse Feature</name>
+</project>

@@ -21,9 +21,9 @@ import static org.hamcrest.core.IsNull.notNullValue;
 import static org.hamcrest.core.IsNull.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mybatis.generator.eclipse.core.merge.EclipseDomUtils.getCompilationUnitFromSource;
-import static org.mybatis.generator.eclipse.tests.harness.Utilities.getCompilationUnitSummaryFromSource;
-import static org.mybatis.generator.eclipse.tests.harness.Utilities.getResourceAsString;
-import static org.mybatis.generator.eclipse.tests.harness.matchers.Matchers.*;
+import static org.mybatis.generator.eclipse.test.Utilities.getCompilationUnitSummaryFromSource;
+import static org.mybatis.generator.eclipse.test.Utilities.getResourceAsString;
+import static org.mybatis.generator.eclipse.test.matchers.Matchers.*;
 
 import java.io.InputStream;
 
@@ -34,7 +34,7 @@ import org.eclipse.text.edits.TextEdit;
 import org.junit.jupiter.api.Test;
 import org.mybatis.generator.config.MergeConstants;
 import org.mybatis.generator.eclipse.core.merge.ExistingJavaFileVisitor;
-import org.mybatis.generator.eclipse.tests.harness.summary.CompilationUnitSummary;
+import org.mybatis.generator.eclipse.test.summary.CompilationUnitSummary;
 
 public class ExistingJavaFileVisitorTest {
 

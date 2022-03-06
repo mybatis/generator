@@ -27,15 +27,15 @@
   <inceptionYear>2006</inceptionYear>
 
   <modules>
-    <module>../org.mybatis.generator</module>
-    <module>../org.mybatis.generator.core</module>
-    <module>../org.mybatis.generator.eclipse.core</module>
-    <module>../org.mybatis.generator.eclipse.doc</module>
-    <module>../org.mybatis.generator.eclipse.ui</module>
-    <module>../org.mybatis.generator.eclipse.ui.tests</module>
-    <module>../org.mybatis.generator.eclipse.site</module>
-    <module>../org.mybatis.generator.eclipse.core.tests</module>
-    <module>../org.mybatis.generator.eclipse.tests.harness</module>
+    <module>org.mybatis.generator</module>
+    <module>org.mybatis.generator.core</module>
+    <module>org.mybatis.generator.eclipse.core</module>
+    <module>org.mybatis.generator.eclipse.doc</module>
+    <module>org.mybatis.generator.eclipse.ui</module>
+    <module>org.mybatis.generator.eclipse.ui.tests</module>
+    <module>org.mybatis.generator.eclipse.site</module>
+    <module>org.mybatis.generator.eclipse.core.tests</module>
+    <module>org.mybatis.generator.eclipse.tests.harness</module>
   </modules>
 
   <properties>

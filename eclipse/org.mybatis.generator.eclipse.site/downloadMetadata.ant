@@ -23,25 +23,22 @@
   This file will download the existing P2 composite metadata so we can add our new
   version.
   The following environment properties are expected:
-  
+
     p2.repo.base.directory (the location of the local composite repo)
-    
+
 -->
 <project name="project" default="download">
   <target name="init">
     <!-- Create repository directories if they don't already exist -->
     <mkdir dir="${p2.repo.base.directory}"/>
   </target>
-  
+
   <target name="download" depends="init">
-    
     <get dest="${p2.repo.base.directory}/compositeArtifacts.xml" ignoreerrors="true">
       <url url="https://mybatis.jfrog.io/artifactory/generator-eclipse-release/compositeArtifacts.xml"/>
     </get>
-      
     <get dest="${p2.repo.base.directory}/compositeContent.xml" ignoreerrors="true">
       <url url="https://mybatis.jfrog.io/artifactory/generator-eclipse-release/compositeContent.xml"/>
     </get>
-
   </target>
 </project>

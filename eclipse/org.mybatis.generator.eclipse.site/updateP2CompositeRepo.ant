@@ -35,7 +35,7 @@
   <target name="init">
     <property name="repo.drops.dir" value="${p2.repo.base.directory}/drops"/>
     <property name="repo.zipped.dir" value="${p2.repo.base.directory}/zipped"/>
-    
+
     <!-- Create repository directories if they don't already exist -->
     <mkdir dir="${p2.repo.base.directory}"/>
     <mkdir dir="${repo.drops.dir}"/>
@@ -52,7 +52,7 @@
       <fileset dir="${project.build.directory}/repository"/>
     </copy>
     
-  	<!-- turn off composite loading so we don't download all the old versions -->
+    <!-- turn off composite loading so we don't download all the old versions -->
     <replaceregexp byline="true">
       <regexp pattern="property name='p2.atomic.composite.loading' value='true'" />
       <substitution expression="property name='p2.atomic.composite.loading' value='false'" />
@@ -61,7 +61,7 @@
       </fileset>
     </replaceregexp>
 
-  	<!-- update composite repo (this task needs to run in the Eclipse runtime) -->
+    <!-- update composite repo (this task needs to run in the Eclipse runtime) -->
     <p2.composite.repository>
       <repository compressed="false" location="${p2.repo.base.directory}"/>
       <add>
@@ -78,11 +78,11 @@
         <include name="*.xml" />
       </fileset>
     </replaceregexp>
-  	
-  	<!-- setup the shebang and variables -->
-  	<echo message="#!/bin/bash${line.separator}" file="${p2.repo.base.directory}/jfrogUpload.sh" />
-  	<echo message="USER=xxxx${line.separator}" file="${p2.repo.base.directory}/jfrogUpload.sh" append="true" />
-  	<echo message="API_KEY=xxxx${line.separator}" file="${p2.repo.base.directory}/jfrogUpload.sh" append="true" />
+
+    <!-- setup the shebang and variables -->
+    <echo message="#!/bin/bash${line.separator}" file="${p2.repo.base.directory}/jfrogUpload.sh" />
+    <echo message="USER=xxxx${line.separator}" file="${p2.repo.base.directory}/jfrogUpload.sh" append="true" />
+    <echo message="API_KEY=xxxx${line.separator}" file="${p2.repo.base.directory}/jfrogUpload.sh" append="true" />
 
     <!-- generate the jfrog upload script -->
     <!-- Write curl lines for every file we need to upload -->
@@ -91,7 +91,7 @@
       <srcfile />
       <arg value="-u$USER:$API_KEY"/>
       <targetfile/>
-      
+
       <fileset dir="${p2.repo.base.directory}" >
         <include name="drops/**/*.*"/>
         <include name="*.xml"/>
@@ -99,9 +99,9 @@
       </fileset>
       <globmapper from="*" to="&quot;https://mybatis.jfrog.io/artifactory/generator-eclipse-release/*&quot;" />
     </apply>
-    
+
     <!-- make it executable -->
     <chmod perm="+x" file="${p2.repo.base.directory}/jfrogUpload.sh"/>
-    
+
   </target>
 </project>

@@ -95,9 +95,9 @@
             <configuration>
               <repositories>
                 <repository>
-                  <id>Oldest Version Supporting Java 11</id>
+                  <id>Eclipse Latest</id>
                   <layout>p2</layout>
-                  <url>http://download.eclipse.org/releases/2018-12</url>
+                  <url>http://download.eclipse.org/releases/latest</url>
                 </repository>
               </repositories>
               <dependencies>

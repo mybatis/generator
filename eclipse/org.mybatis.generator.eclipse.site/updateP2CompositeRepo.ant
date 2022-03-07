@@ -52,7 +52,16 @@
       <fileset dir="${project.build.directory}/repository"/>
     </copy>
     
-    <!-- update composite repo (this task needs to run in the Eclipse runtime) -->
+  	<!-- turn off composite loading so we don't download all the old versions -->
+    <replaceregexp byline="true">
+      <regexp pattern="property name='p2.atomic.composite.loading' value='true'" />
+      <substitution expression="property name='p2.atomic.composite.loading' value='false'" />
+      <fileset dir="${p2.repo.base.directory}">
+        <include name="*.xml" />
+      </fileset>
+    </replaceregexp>
+
+  	<!-- update composite repo (this task needs to run in the Eclipse runtime) -->
     <p2.composite.repository>
       <repository compressed="false" location="${p2.repo.base.directory}"/>
       <add>

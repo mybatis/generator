@@ -42,13 +42,6 @@
     <get dest="${p2.repo.base.directory}/compositeContent.xml" ignoreerrors="true">
       <url url="https://mybatis.jfrog.io/artifactory/generator-eclipse-release/compositeContent.xml"/>
     </get>
-    
-    <replaceregexp byline="true">
-      <regexp pattern="property name='p2.atomic.composite.loading' value='true'" />
-      <substitution expression="property name='p2.atomic.composite.loading' value='false'" />
-      <fileset dir="${p2.repo.base.directory}">
-        <include name="*.xml" />
-      </fileset>
-    </replaceregexp>
+
   </target>
 </project>

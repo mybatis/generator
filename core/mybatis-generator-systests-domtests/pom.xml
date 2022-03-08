@@ -1,6 +1,6 @@
 <!--
 
-       Copyright 2006-2022 the original author or authors.
+       Copyright 2006-2020 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@
   <parent>
     <groupId>org.mybatis.generator</groupId>
     <artifactId>mybatis-generator</artifactId>
-    <version>1.4.2-SNAPSHOT</version>
+    <version>1.4.1-SNAPSHOT</version>
   </parent>
   <artifactId>mybatis-generator-systests-domtests</artifactId>
 

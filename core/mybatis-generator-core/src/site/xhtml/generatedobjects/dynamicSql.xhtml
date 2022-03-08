@@ -87,16 +87,17 @@ in either a direct or qualified manner - "id" or "tableCode.id".</p>
 <h2>Usage of the Mapper Classes</h2>
 <p>The following methods work the same as the other runtimes and we won't cover them here:</p>
 <ul>
-  <li>Delete by Primary Key</li>
-  <li>Insert - will insert nulls</li>
-  <li>insert selective - ignores null properties</li>
-  <li>Select by Primary Key</li>
-  <li>Update by Primary Key - will set null values</li>
-  <li>Update by Primary Key Selective - ignores null values</li>
+  <li>deleteByPrimaryKey</li>
+  <li>insert - insert a single row (will insert nulls)</li>
+  <li>insertMultiple - insert multiple rows (will insert nulls)</li>
+  <li>insertSelective - insert a single row and ignore null properties</li>
+  <li>selectByPrimaryKey</li>
+  <li>updateByPrimaryKey - will set null values</li>
+  <li>updateByPrimaryKey Selective - ignores null values</li>
 </ul>
 
 <p>There are no "by example" methods. Instead, there are general purpose methods that allow you to specify a
-where clause with a lambda.  The generator will create the following general:</p>
+  where clause with a lambda.  The generator will create the following general methods:</p>
 <ul>
   <li>count</li>
   <li>delete</li>

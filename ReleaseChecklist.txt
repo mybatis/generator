@@ -39,11 +39,11 @@ Releasing the Eclipse Feature:
    cd generator
    git checkout mybatis-generator-1.3.3
    
-2. cd eclipse/org.mybatis.generator.eclipse.parent
+2. cd eclipse/
 3. mvn -Prelease-composite clean integration-test
 4. cd ../org.mybatis.generator.eclipse.site/target/p2-composite-repo
-5. Edit bintrayUpload.sh and add your Bintray credentials
-6. ./bintrayUpload.sh
+5. Edit jfrogUpload.sh and add your jFrog credentials
+6. ./jfrogUpload.sh
 7. Logon to the eclipse marketplace and add the new release information
 
 -------------------------------------------------------------------------------
@@ -56,7 +56,7 @@ Final Details:
 5. Update the version numbers in all the Eclipse projects with the tycho-versions plugin.  For example:
 
    git checkout master
-   cd .../org.mybatis.generator.eclipse.parent
-   mvn tycho-versions:set-version -DnewVersion=1.3.7-SNAPSHOT
-   git commit -m "Update versions for new release" .
+   cd eclipse/
+   mvn tycho-versions:set-version -DnewVersion=1.4.1-SNAPSHOT
+   git commit -m "Update Eclipse versions for new release" .
    git push

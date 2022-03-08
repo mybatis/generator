@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GeneratorAntTask.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.ant</a> &gt; <span class="el_source">GeneratorAntTask.java</span></div><h1>GeneratorAntTask.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2019 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GeneratorAntTask.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.ant</a> &gt; <span class="el_source">GeneratorAntTask.java</span></div><h1>GeneratorAntTask.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -42,7 +42,7 @@ import org.mybatis.generator.internal.DefaultShellCallback;
 /**
  * This is an Ant task that will run the generator. The following is a sample
  * Ant script that shows how to run the generator from Ant:
- * 
+ *
  * &lt;pre&gt;
  *  &amp;lt;project default=&quot;genfiles&quot; basedir=&quot;.&quot;&amp;gt;
  *    &amp;lt;property name=&quot;generated.source.dir&quot; value=&quot;${basedir}&quot; /&amp;gt;
@@ -58,10 +58,10 @@ import org.mybatis.generator.internal.DefaultShellCallback;
  *    &amp;lt;/target&amp;gt;
  *  &amp;lt;/project&amp;gt;
  * &lt;/pre&gt;
- * 
+ *
  * &lt;p&gt;The task requires that the attribute &quot;configFile&quot; be set to an existing XML
  * configuration file.
- * 
+ *
  * &lt;p&gt;The task supports these optional attributes:
  * &lt;ul&gt;
  * &lt;li&gt;&quot;overwrite&quot; - if true, then existing Java files will be overwritten. if
@@ -73,8 +73,8 @@ import org.mybatis.generator.internal.DefaultShellCallback;
  * &lt;li&gt;&quot;fullyQualifiedTableNames&quot; - a comma delimited list of fully qualified
  * table names to use for this run&lt;/li&gt;
  * &lt;/ul&gt;
- * 
- * 
+ *
+ *
  * @author Jeff Butler
  */
 public class GeneratorAntTask extends Task {
@@ -222,4 +222,4 @@ public class GeneratorAntTask extends Task {
 <span class="nc" id="L222">        this.fullyQualifiedTableNames = fullyQualifiedTableNames;</span>
 <span class="nc" id="L223">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

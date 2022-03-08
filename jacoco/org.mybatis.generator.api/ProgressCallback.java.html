@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProgressCallback.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api</a> &gt; <span class="el_source">ProgressCallback.java</span></div><h1>ProgressCallback.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2020 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.api;
+
+/**
+ * This interface can be implemented to return progress information from the file generation process.
+ *
+ * &lt;p&gt;During the execution of code generation, there are three main operations:
+ * database introspection, code generation based on the results of
+ * introspection, and then merging/saving generated files. Methods
+ * in this interface accordingly and in this order:
+ * &lt;ol&gt;
+ * &lt;li&gt;introspectionStarted(int)&lt;/li&gt;
+ * &lt;li&gt;(Repeatedly) startTask(String)&lt;/li&gt;
+ * &lt;li&gt;generationStarted(int)&lt;/li&gt;
+ * &lt;li&gt;(Repeatedly) startTask(String)&lt;/li&gt;
+ * &lt;li&gt;saveStarted(int)&lt;/li&gt;
+ * &lt;li&gt;(Repeatedly) startTask(String)&lt;/li&gt;
+ * &lt;li&gt;done()&lt;/li&gt;
+ * &lt;/ol&gt;
+ *
+ * &lt;p&gt;Periodically, the &lt;code&gt;checkCancel()&lt;/code&gt; method will be called to see if the
+ * method should be canceled.
+ *
+ * &lt;p&gt;For planning purposes, the most common use case will have a ratio of 20%
+ * introspection tasks, 40% generation tasks, and 40% save tasks.
+ *
+ * @author Jeff Butler
+ */
+public interface ProgressCallback {
+    /**
+     * Called to note the start of the introspection phase, and to note the
+     * maximum number of startTask messages that will be sent for the
+     * introspection phase.
+     *
+     * @param totalTasks
+     *            the maximum number of times startTask will be called for the
+     *            introspection phase.
+     */
+<span class="fc" id="L53">    default void introspectionStarted(int totalTasks) {}</span>
+
+    /**
+     * Called to note the start of the generation phase, and to note the maximum
+     * number of startTask messages that will be sent for the generation phase.
+     *
+     * @param totalTasks
+     *            the maximum number of times startTask will be called for the
+     *            generation phase.
+     */
+<span class="fc" id="L63">    default void generationStarted(int totalTasks) {}</span>
+
+    /**
+     * Called to note the start of the file saving phase, and to note the
+     * maximum number of startTask messages that will be sent for the file
+     * saving phase phase.
+     *
+     * @param totalTasks
+     *            the maximum number of times startTask will be called for the
+     *            file saving phase.
+     */
+<span class="nc" id="L74">    default void saveStarted(int totalTasks) {}</span>
+
+    /**
+     * Called to denote the beginning of a save task.
+     *
+     * @param taskName
+     *            a descriptive name of the current work step
+     */
+<span class="fc" id="L82">    default void startTask(String taskName) {}</span>
+
+    /**
+     * This method is called when all generated files have been saved.
+     */
+<span class="fc" id="L87">    default void done() {}</span>
+
+    /**
+     * The method is called periodically during a long running method.
+     * If the the implementation throws &lt;code&gt;InterruptedException&lt;/code&gt; then
+     * the method will be canceled. Any files that have already been saved will
+     * remain on the file system.
+     *
+     * @throws InterruptedException
+     *             if the operation should be halted
+     */
+<span class="fc" id="L98">    default void checkCancel() throws InterruptedException {}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

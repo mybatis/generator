@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UpdateByPrimaryKeyWithBLOBsElementGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.codegen.mybatis3.xmlmapper.elements</a> &gt; <span class="el_source">UpdateByPrimaryKeyWithBLOBsElementGenerator.java</span></div><h1>UpdateByPrimaryKeyWithBLOBsElementGenerator.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2019 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UpdateByPrimaryKeyWithBLOBsElementGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.codegen.mybatis3.xmlmapper.elements</a> &gt; <span class="el_source">UpdateByPrimaryKeyWithBLOBsElementGenerator.java</span></div><h1>UpdateByPrimaryKeyWithBLOBsElementGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -15,101 +15,31 @@
  */
 package org.mybatis.generator.codegen.mybatis3.xmlmapper.elements;
 
-import java.util.Iterator;
-
-import org.mybatis.generator.api.IntrospectedColumn;
-import org.mybatis.generator.api.dom.OutputUtilities;
-import org.mybatis.generator.api.dom.xml.Attribute;
-import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
-import org.mybatis.generator.codegen.mybatis3.ListUtilities;
-import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 
-public class UpdateByPrimaryKeyWithBLOBsElementGenerator extends
-        AbstractXmlElementGenerator {
+public class UpdateByPrimaryKeyWithBLOBsElementGenerator extends AbstractXmlElementGenerator {
 
     public UpdateByPrimaryKeyWithBLOBsElementGenerator() {
-<span class="fc" id="L32">        super();</span>
-<span class="fc" id="L33">    }</span>
+<span class="fc" id="L23">        super();</span>
+<span class="fc" id="L24">    }</span>
 
     @Override
     public void addElements(XmlElement parentElement) {
-<span class="fc" id="L37">        XmlElement answer = new XmlElement(&quot;update&quot;); //$NON-NLS-1$</span>
-
-<span class="fc" id="L39">        answer</span>
-<span class="fc" id="L40">                .addAttribute(new Attribute(</span>
-<span class="fc" id="L41">                        &quot;id&quot;, introspectedTable.getUpdateByPrimaryKeyWithBLOBsStatementId())); //$NON-NLS-1$</span>
-
         String parameterType;
-<span class="fc bfc" id="L44" title="All 2 branches covered.">        if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {</span>
-<span class="fc" id="L45">            parameterType = introspectedTable.getRecordWithBLOBsType();</span>
+<span class="fc bfc" id="L29" title="All 2 branches covered.">        if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {</span>
+<span class="fc" id="L30">            parameterType = introspectedTable.getRecordWithBLOBsType();</span>
         } else {
-<span class="fc" id="L47">            parameterType = introspectedTable.getBaseRecordType();</span>
+<span class="fc" id="L32">            parameterType = introspectedTable.getBaseRecordType();</span>
         }
 
-<span class="fc" id="L50">        answer.addAttribute(new Attribute(&quot;parameterType&quot;, //$NON-NLS-1$</span>
-                parameterType));
+<span class="fc" id="L35">        XmlElement answer = buildUpdateByPrimaryKeyElement(</span>
+<span class="fc" id="L36">                introspectedTable.getUpdateByPrimaryKeyWithBLOBsStatementId(),</span>
+                parameterType,
+<span class="fc" id="L38">                introspectedTable.getNonPrimaryKeyColumns());</span>
 
-<span class="fc" id="L53">        context.getCommentGenerator().addComment(answer);</span>
-
-<span class="fc" id="L55">        StringBuilder sb = new StringBuilder();</span>
-
-<span class="fc" id="L57">        sb.append(&quot;update &quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L58">        sb.append(introspectedTable.getFullyQualifiedTableNameAtRuntime());</span>
-<span class="fc" id="L59">        answer.addElement(new TextElement(sb.toString()));</span>
-
-        // set up for first column
-<span class="fc" id="L62">        sb.setLength(0);</span>
-<span class="fc" id="L63">        sb.append(&quot;set &quot;); //$NON-NLS-1$</span>
-
-<span class="fc" id="L65">        Iterator&lt;IntrospectedColumn&gt; iter = ListUtilities.removeGeneratedAlwaysColumns(introspectedTable</span>
-<span class="fc" id="L66">                .getNonPrimaryKeyColumns()).iterator();</span>
-<span class="fc bfc" id="L67" title="All 2 branches covered.">        while (iter.hasNext()) {</span>
-<span class="fc" id="L68">            IntrospectedColumn introspectedColumn = iter.next();</span>
-
-<span class="fc" id="L70">            sb.append(MyBatis3FormattingUtilities</span>
-<span class="fc" id="L71">                    .getEscapedColumnName(introspectedColumn));</span>
-<span class="fc" id="L72">            sb.append(&quot; = &quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L73">            sb.append(MyBatis3FormattingUtilities</span>
-<span class="fc" id="L74">                    .getParameterClause(introspectedColumn));</span>
-
-<span class="fc bfc" id="L76" title="All 2 branches covered.">            if (iter.hasNext()) {</span>
-<span class="fc" id="L77">                sb.append(',');</span>
-            }
-
-<span class="fc" id="L80">            answer.addElement(new TextElement(sb.toString()));</span>
-
-            // set up for the next column
-<span class="fc bfc" id="L83" title="All 2 branches covered.">            if (iter.hasNext()) {</span>
-<span class="fc" id="L84">                sb.setLength(0);</span>
-<span class="fc" id="L85">                OutputUtilities.xmlIndent(sb, 1);</span>
-            }
-<span class="fc" id="L87">        }</span>
-
-<span class="fc" id="L89">        boolean and = false;</span>
-<span class="fc bfc" id="L90" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable</span>
-<span class="fc" id="L91">                .getPrimaryKeyColumns()) {</span>
-<span class="fc" id="L92">            sb.setLength(0);</span>
-<span class="fc bfc" id="L93" title="All 2 branches covered.">            if (and) {</span>
-<span class="fc" id="L94">                sb.append(&quot;  and &quot;); //$NON-NLS-1$</span>
-            } else {
-<span class="fc" id="L96">                sb.append(&quot;where &quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L97">                and = true;</span>
-            }
-
-<span class="fc" id="L100">            sb.append(MyBatis3FormattingUtilities</span>
-<span class="fc" id="L101">                    .getEscapedColumnName(introspectedColumn));</span>
-<span class="fc" id="L102">            sb.append(&quot; = &quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L103">            sb.append(MyBatis3FormattingUtilities</span>
-<span class="fc" id="L104">                    .getParameterClause(introspectedColumn));</span>
-<span class="fc" id="L105">            answer.addElement(new TextElement(sb.toString()));</span>
-<span class="fc" id="L106">        }</span>
-
-<span class="fc" id="L108">        if (context.getPlugins()</span>
-<span class="pc bpc" id="L109" title="1 of 2 branches missed.">                .sqlMapUpdateByPrimaryKeyWithBLOBsElementGenerated(answer,</span>
-                        introspectedTable)) {
-<span class="fc" id="L111">            parentElement.addElement(answer);</span>
+<span class="pc bpc" id="L40" title="1 of 2 branches missed.">        if (context.getPlugins().sqlMapUpdateByPrimaryKeyWithBLOBsElementGenerated(answer, introspectedTable)) {</span>
+<span class="fc" id="L41">            parentElement.addElement(answer);</span>
         }
-<span class="fc" id="L113">    }</span>
+<span class="fc" id="L43">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

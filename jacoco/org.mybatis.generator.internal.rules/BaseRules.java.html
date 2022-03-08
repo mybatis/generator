@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BaseRules.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.internal.rules</a> &gt; <span class="el_source">BaseRules.java</span></div><h1>BaseRules.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2019 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BaseRules.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.internal.rules</a> &gt; <span class="el_source">BaseRules.java</span></div><h1>BaseRules.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -27,18 +27,18 @@ import org.mybatis.generator.internal.util.StringUtility;
  * This class centralizes all the rules related to code generation - including
  * the methods and objects to create, and certain attributes related to those
  * objects.
- * 
+ *
  * @author Jeff Butler
  */
 public abstract class BaseRules implements Rules {
 
-    protected TableConfiguration tableConfiguration;
+    protected final TableConfiguration tableConfiguration;
 
-    protected IntrospectedTable introspectedTable;
+    protected final IntrospectedTable introspectedTable;
 
     protected final boolean isModelOnly;
 
-    public BaseRules(IntrospectedTable introspectedTable) {
+    protected BaseRules(IntrospectedTable introspectedTable) {
 <span class="fc" id="L42">        super();</span>
 <span class="fc" id="L43">        this.introspectedTable = introspectedTable;</span>
 <span class="fc" id="L44">        this.tableConfiguration = introspectedTable.getTableConfiguration();</span>
@@ -50,7 +50,7 @@ public abstract class BaseRules implements Rules {
      * Implements the rule for generating the insert SQL Map element and DAO
      * method. If the insert statement is allowed, then generate the element and
      * method.
-     * 
+     *
      * @return true if the element and method should be generated
      */
     @Override
@@ -66,7 +66,7 @@ public abstract class BaseRules implements Rules {
      * Implements the rule for generating the insert selective SQL Map element
      * and DAO method. If the insert statement is allowed, then generate the
      * element and method.
-     * 
+     *
      * @return true if the element and method should be generated
      */
     @Override
@@ -79,7 +79,7 @@ public abstract class BaseRules implements Rules {
      * insert statement parameter, as well as the returned value from the select
      * by primary key method. The actual class depends on how the domain model
      * is generated.
-     * 
+     *
      * @return the type of the class that holds all fields
      */
     @Override
@@ -103,7 +103,7 @@ public abstract class BaseRules implements Rules {
      * BLOBs SQL Map element and DAO method. If the table has a primary key as
      * well as other non-BLOB fields, and the updateByPrimaryKey statement is
      * allowed, then generate the element and method.
-     * 
+     *
      * @return true if the element and method should be generated
      */
     @Override
@@ -126,7 +126,7 @@ public abstract class BaseRules implements Rules {
      * SQL Map element and DAO method. If the table has a primary key as well as
      * other BLOB fields, and the updateByPrimaryKey statement is allowed, then
      * generate the element and method.
-     * 
+     *
      * @return true if the element and method should be generated
      */
     @Override
@@ -138,7 +138,7 @@ public abstract class BaseRules implements Rules {
 <span class="fc bfc" id="L138" title="All 2 branches covered.">        if (ListUtilities.removeGeneratedAlwaysColumns(introspectedTable.getNonPrimaryKeyColumns()).isEmpty()) {</span>
 <span class="fc" id="L139">            return false;</span>
         }
-        
+
 <span class="pc bpc" id="L142" title="1 of 2 branches missed.">        return tableConfiguration.isUpdateByPrimaryKeyStatementEnabled()</span>
 <span class="fc bfc" id="L143" title="All 2 branches covered.">                &amp;&amp; introspectedTable.hasPrimaryKeyColumns()</span>
 <span class="fc bfc" id="L144" title="All 2 branches covered.">                &amp;&amp; introspectedTable.hasBLOBColumns();</span>
@@ -149,7 +149,7 @@ public abstract class BaseRules implements Rules {
      * SQL Map element and DAO method. If the table has a primary key as well as
      * other fields, and the updateByPrimaryKey statement is allowed, then
      * generate the element and method.
-     * 
+     *
      * @return true if the element and method should be generated
      */
     @Override
@@ -173,7 +173,7 @@ public abstract class BaseRules implements Rules {
      * element and DAO method. If the table has a primary key, and the
      * deleteByPrimaryKey statement is allowed, then generate the element and
      * method.
-     * 
+     *
      * @return true if the element and method should be generated
      */
     @Override
@@ -190,7 +190,7 @@ public abstract class BaseRules implements Rules {
      * Implements the rule for generating the delete by example SQL Map element
      * and DAO method. If the deleteByExample statement is allowed, then
      * generate the element and method.
-     * 
+     *
      * @return true if the element and method should be generated
      */
     @Override
@@ -205,7 +205,7 @@ public abstract class BaseRules implements Rules {
     /**
      * Implements the rule for generating the result map without BLOBs. If
      * either select method is allowed, then generate the result map.
-     * 
+     *
      * @return true if the result map should be generated
      */
     @Override
@@ -222,7 +222,7 @@ public abstract class BaseRules implements Rules {
      * Implements the rule for generating the result map with BLOBs. If the
      * table has BLOB columns, and either select method is allowed, then
      * generate the result map.
-     * 
+     *
      * @return true if the result map should be generated
      */
     @Override
@@ -245,10 +245,10 @@ public abstract class BaseRules implements Rules {
 
     /**
      * Implements the rule for generating the SQL example where clause element.
-     * 
+     *
      * &lt;p&gt;In MyBatis3, generate the element if the selectByExample,
      * deleteByExample, or countByExample statements are allowed.
-     * 
+     *
      * @return true if the SQL where clause element should be generated
      */
     @Override
@@ -265,10 +265,10 @@ public abstract class BaseRules implements Rules {
     /**
      * Implements the rule for generating the SQL example where clause element
      * specifically for use in the update by example methods.
-     * 
+     *
      * &lt;p&gt;In MyBatis3, generate the element if the updateByExample statements are
      * allowed.
-     * 
+     *
      * @return true if the SQL where clause element should be generated
      */
     @Override
@@ -286,7 +286,7 @@ public abstract class BaseRules implements Rules {
      * element and DAO method. If the table has a primary key as well as other
      * fields, and the selectByPrimaryKey statement is allowed, then generate
      * the element and method.
-     * 
+     *
      * @return true if the element and method should be generated
      */
     @Override
@@ -305,7 +305,7 @@ public abstract class BaseRules implements Rules {
      * Implements the rule for generating the select by example without BLOBs
      * SQL Map element and DAO method. If the selectByExample statement is
      * allowed, then generate the element and method.
-     * 
+     *
      * @return true if the element and method should be generated
      */
     @Override
@@ -322,7 +322,7 @@ public abstract class BaseRules implements Rules {
      * Map element and DAO method. If the table has BLOB fields and the
      * selectByExample statement is allowed, then generate the element and
      * method.
-     * 
+     *
      * @return true if the element and method should be generated
      */
     @Override
@@ -330,7 +330,7 @@ public abstract class BaseRules implements Rules {
 <span class="fc bfc" id="L330" title="All 2 branches covered.">        if (isModelOnly) {</span>
 <span class="fc" id="L331">            return false;</span>
         }
-        
+
 <span class="pc bpc" id="L334" title="1 of 2 branches missed.">        return tableConfiguration.isSelectByExampleStatementEnabled()</span>
 <span class="fc bfc" id="L335" title="All 2 branches covered.">                &amp;&amp; introspectedTable.hasBLOBColumns();</span>
     }
@@ -339,7 +339,7 @@ public abstract class BaseRules implements Rules {
      * Implements the rule for generating an example class. The class should be
      * generated if the selectByExample or deleteByExample or countByExample
      * methods are allowed.
-     * 
+     *
      * @return true if the example class should be generated
      */
     @Override
@@ -394,7 +394,7 @@ public abstract class BaseRules implements Rules {
 <span class="fc bfc" id="L394" title="All 2 branches covered.">        if (isModelOnly) {</span>
 <span class="fc" id="L395">            return false;</span>
         }
-        
+
 <span class="pc bpc" id="L398" title="1 of 2 branches missed.">        return tableConfiguration.isUpdateByExampleStatementEnabled()</span>
 <span class="fc bfc" id="L399" title="All 2 branches covered.">                &amp;&amp; introspectedTable.hasBLOBColumns();</span>
     }
@@ -409,7 +409,7 @@ public abstract class BaseRules implements Rules {
 <span class="fc bfc" id="L409" title="All 2 branches covered.">        if (isModelOnly) {</span>
 <span class="fc" id="L410">            return false;</span>
         }
-        
+
 <span class="fc bfc" id="L413" title="All 2 branches covered.">        return generateSelectByPrimaryKey()</span>
 <span class="pc bpc" id="L414" title="1 of 2 branches missed.">                || generateSelectByExampleWithoutBLOBs();</span>
     }
@@ -419,7 +419,7 @@ public abstract class BaseRules implements Rules {
 <span class="fc bfc" id="L419" title="All 2 branches covered.">        if (isModelOnly) {</span>
 <span class="fc" id="L420">            return false;</span>
         }
-        
+
 <span class="fc bfc" id="L423" title="All 2 branches covered.">        return introspectedTable.hasBLOBColumns()</span>
 <span class="pc bpc" id="L424" title="1 of 2 branches missed.">                &amp;&amp; (tableConfiguration.isSelectByExampleStatementEnabled() || tableConfiguration</span>
 <span class="pc bnc" id="L425" title="All 2 branches missed.">                        .isSelectByPrimaryKeyStatementEnabled());</span>
@@ -430,4 +430,4 @@ public abstract class BaseRules implements Rules {
 <span class="fc bfc" id="L430" title="All 2 branches covered.">        return !isModelOnly;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

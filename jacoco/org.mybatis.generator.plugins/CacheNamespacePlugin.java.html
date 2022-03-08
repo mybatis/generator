@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CacheNamespacePlugin.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.plugins</a> &gt; <span class="el_source">CacheNamespacePlugin.java</span></div><h1>CacheNamespacePlugin.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2021 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.plugins;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.PluginAdapter;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.Interface;
+import org.mybatis.generator.api.dom.kotlin.KotlinFile;
+import org.mybatis.generator.api.dom.kotlin.KotlinType;
+import org.mybatis.generator.internal.util.StringUtility;
+
+/**
+ * This plugin adds a CacheNamespace annotation to generated Java or Kotlin mapper interfaces.
+ * The plugin accepts the following properties (all are optional):
+ *
+ * &lt;ul&gt;
+ *   &lt;li&gt;cache_blocking&lt;/li&gt;
+ *   &lt;li&gt;cache_flushInterval&lt;/li&gt;
+ *   &lt;li&gt;cache_readWrite&lt;/li&gt;
+ *   &lt;li&gt;cache_size&lt;/li&gt;
+ *   &lt;li&gt;cache_implementation&lt;/li&gt;
+ *   &lt;li&gt;cache_eviction&lt;/li&gt;
+ *   &lt;li&gt;cache_skip&lt;/li&gt;
+ * &lt;/ul&gt;
+ *
+ * &lt;p&gt;All properties (except cache_skip) correspond to properties of the MyBatis CacheNamespace annotation.
+ * Most properties are passed &quot;as is&quot; to the corresponding properties of the generated
+ * annotation.  The properties &quot;cache_implementation&quot; and &quot;cache_eviction&quot; must be fully qualified class names.
+ * If specified, the values
+ * will be added to the import list of the mapper file, and the short names will be used in the generated annotation.
+ * All properties can be specified at the table level, or on the
+ * plugin element.  The property on the table element will override any
+ * property on the plugin element.
+ *
+ * &lt;p&gt;If the &quot;cache_skip&quot; property is set to &quot;true&quot; - either on the plugin or on a specific table,
+ * the annotation will not be applied to the generated interface.
+ *
+ * @author Jeff Butler
+ */
+<span class="fc" id="L59">public class CacheNamespacePlugin extends PluginAdapter {</span>
+
+<span class="fc" id="L61">    public enum CacheProperty {</span>
+<span class="fc" id="L62">        BLOCKING(&quot;cache_blocking&quot;, &quot;blocking&quot;, false), //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L63">        FLUSH_INTERVAL(&quot;cache_flushInterval&quot;, &quot;flushInterval&quot;, false), //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L64">        READ_WRITE(&quot;cache_readWrite&quot;, &quot;readWrite&quot;, false), //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L65">        SIZE(&quot;cache_size&quot;, &quot;size&quot;, false), //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L66">        IMPLEMENTATION(&quot;cache_implementation&quot;, &quot;implementation&quot;, true), //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L67">        EVICTION(&quot;cache_eviction&quot;, &quot;eviction&quot;, true); //$NON-NLS-1$ //$NON-NLS-2$</span>
+
+        private final String propertyName;
+        private final String attributeName;
+        private final boolean isClassName;
+
+<span class="fc" id="L73">        CacheProperty(String propertyName, String attributeName, boolean isClassName) {</span>
+<span class="fc" id="L74">            this.propertyName = propertyName;</span>
+<span class="fc" id="L75">            this.attributeName = attributeName;</span>
+<span class="fc" id="L76">            this.isClassName = isClassName;</span>
+<span class="fc" id="L77">        }</span>
+
+        public String getPropertyName() {
+<span class="fc" id="L80">            return propertyName;</span>
+        }
+
+        public String getAttributeName() {
+<span class="fc" id="L84">            return attributeName;</span>
+        }
+
+        public boolean isClassName() {
+<span class="fc" id="L88">            return isClassName;</span>
+        }
+    }
+
+    @Override
+    public boolean validate(List&lt;String&gt; arg0) {
+<span class="fc" id="L94">        return true;</span>
+    }
+
+    @Override
+    public boolean clientGenerated(Interface interfaze, IntrospectedTable introspectedTable) {
+<span class="fc bfc" id="L99" title="All 2 branches covered.">        if (!skip(introspectedTable)) {</span>
+<span class="fc" id="L100">            interfaze.addImportedType(</span>
+                    new FullyQualifiedJavaType(&quot;org.apache.ibatis.annotations.CacheNamespace&quot;)); //$NON-NLS-1$
+
+<span class="fc" id="L103">            Arrays.stream(CacheProperty.values())</span>
+<span class="fc" id="L104">                    .filter(CacheProperty::isClassName)</span>
+<span class="fc" id="L105">                    .map(cp -&gt; getRawPropertyValue(introspectedTable, cp.getPropertyName()))</span>
+<span class="fc" id="L106">                    .filter(Optional::isPresent)</span>
+<span class="fc" id="L107">                    .map(Optional::get)</span>
+<span class="fc" id="L108">                    .map(FullyQualifiedJavaType::new)</span>
+<span class="fc" id="L109">                    .forEach(interfaze::addImportedType);</span>
+
+<span class="fc" id="L111">            interfaze.addAnnotation(calculateAnnotation(introspectedTable, &quot;.class&quot;)); //$NON-NLS-1$</span>
+        }
+
+<span class="fc" id="L114">        return true;</span>
+    }
+
+    @Override
+    public boolean mapperGenerated(KotlinFile mapperFile, KotlinType mapper, IntrospectedTable introspectedTable) {
+<span class="fc bfc" id="L119" title="All 2 branches covered.">        if (!skip(introspectedTable)) {</span>
+<span class="fc" id="L120">            mapperFile.addImport(&quot;org.apache.ibatis.annotations.CacheNamespace&quot;); //$NON-NLS-1$</span>
+
+<span class="fc" id="L122">            Arrays.stream(CacheProperty.values())</span>
+<span class="fc" id="L123">                    .filter(CacheProperty::isClassName)</span>
+<span class="fc" id="L124">                    .map(cp -&gt; getRawPropertyValue(introspectedTable, cp.getPropertyName()))</span>
+<span class="fc" id="L125">                    .filter(Optional::isPresent)</span>
+<span class="fc" id="L126">                    .map(Optional::get)</span>
+<span class="fc" id="L127">                    .forEach(mapperFile::addImport);</span>
+
+<span class="fc" id="L129">            mapper.addAnnotation(calculateAnnotation(introspectedTable, &quot;::class&quot;)); //$NON-NLS-1$</span>
+        }
+
+<span class="fc" id="L132">        return true;</span>
+    }
+
+    private boolean skip(IntrospectedTable introspectedTable) {
+<span class="fc" id="L136">        return getRawPropertyValue(introspectedTable, &quot;cache_skip&quot;) //$NON-NLS-1$</span>
+<span class="fc" id="L137">                .map(&quot;true&quot;::equalsIgnoreCase) //$NON-NLS-1$</span>
+<span class="fc" id="L138">                .orElse(false);</span>
+    }
+
+    private String calculateAnnotation(IntrospectedTable introspectedTable, String classAccessor) {
+<span class="fc" id="L142">        String attributes = Arrays.stream(CacheProperty.values())</span>
+<span class="fc" id="L143">                .map(cp -&gt; calculateAttribute(introspectedTable, cp, classAccessor))</span>
+<span class="fc" id="L144">                .filter(Optional::isPresent)</span>
+<span class="fc" id="L145">                .map(Optional::get)</span>
+<span class="fc" id="L146">                .collect(Collectors.joining(&quot;, &quot;)); //$NON-NLS-1$</span>
+
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">        if (StringUtility.stringHasValue(attributes)) {</span>
+<span class="fc" id="L149">            return &quot;@CacheNamespace(&quot; + attributes + &quot;)&quot;; //$NON-NLS-1$ //$NON-NLS-2$</span>
+        } else {
+<span class="nc" id="L151">            return &quot;@CacheNamespace&quot;; //$NON-NLS-1$</span>
+        }
+    }
+
+    private Optional&lt;String&gt; calculateAttribute(IntrospectedTable introspectedTable,
+                                                CacheProperty cacheProperty,
+                                                String classAccessor) {
+<span class="fc" id="L158">        return getPropertyValueForAttribute(introspectedTable, cacheProperty, classAccessor)</span>
+<span class="fc" id="L159">                .map(v -&gt; String.format(&quot;%s = %s&quot;, cacheProperty.getAttributeName(), v)); //$NON-NLS-1$</span>
+    }
+
+    private Optional&lt;String&gt; getPropertyValueForAttribute(IntrospectedTable introspectedTable,
+                                                          CacheProperty cacheProperty,
+                                                          String classAccessor) {
+<span class="fc" id="L165">        Optional&lt;String&gt; value = getRawPropertyValue(introspectedTable, cacheProperty.getPropertyName());</span>
+
+<span class="fc bfc" id="L167" title="All 2 branches covered.">        if (cacheProperty.isClassName()) {</span>
+<span class="fc" id="L168">            value = value.map(FullyQualifiedJavaType::new)</span>
+<span class="fc" id="L169">                    .map(FullyQualifiedJavaType::getShortName)</span>
+<span class="fc" id="L170">                    .map(s -&gt; s + classAccessor);</span>
+        }
+
+<span class="fc" id="L173">        return value;</span>
+    }
+
+    private Optional&lt;String&gt; getRawPropertyValue(IntrospectedTable introspectedTable, String propertyName) {
+<span class="fc" id="L177">        String value = introspectedTable.getTableConfigurationProperty(propertyName);</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">        if (value == null) {</span>
+<span class="fc" id="L179">            value = properties.getProperty(propertyName);</span>
+        }
+
+<span class="fc bfc" id="L182" title="All 2 branches covered.">        if (StringUtility.stringHasValue(value)) {</span>
+<span class="fc" id="L183">            return Optional.of(value);</span>
+        } else {
+<span class="fc" id="L185">            return Optional.empty();</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

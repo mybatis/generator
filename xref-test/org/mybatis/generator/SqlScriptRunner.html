@@ -6,21 +6,21 @@
 </head>
 <body>
 <div id="overview"><a href="../../../../testapidocs/org/mybatis/generator/SqlScriptRunner.html">View Javadoc</a></div><pre>
-<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_javadoccomment"> *    Copyright 2006-2017 the original author or authors.</em>
-<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_javadoccomment"> *    Licensed under the Apache License, Version 2.0 (the "License");</em>
-<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_javadoccomment"> *    you may not use this file except in compliance with the License.</em>
-<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <em class="jxr_javadoccomment"> *    You may obtain a copy of the License at</em>
-<a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_javadoccomment"> *       <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a></em>
-<a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_javadoccomment"> *    Unless required by applicable law or agreed to in writing, software</em>
-<a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_javadoccomment"> *    distributed under the License is distributed on an "AS IS" BASIS,</em>
-<a class="jxr_linenumber" name="L12" href="#L12">12</a>  <em class="jxr_javadoccomment"> *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</em>
-<a class="jxr_linenumber" name="L13" href="#L13">13</a>  <em class="jxr_javadoccomment"> *    See the License for the specific language governing permissions and</em>
-<a class="jxr_linenumber" name="L14" href="#L14">14</a>  <em class="jxr_javadoccomment"> *    limitations under the License.</em>
-<a class="jxr_linenumber" name="L15" href="#L15">15</a>  <em class="jxr_javadoccomment"> */</em>
+<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_comment">/*</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> *    Copyright 2006-2020 the original author or authors.</em>
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_comment"> *</em>
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_comment"> *    Licensed under the Apache License, Version 2.0 (the "License");</em>
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_comment"> *    you may not use this file except in compliance with the License.</em>
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <em class="jxr_comment"> *    You may obtain a copy of the License at</em>
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_comment"> *</em>
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_comment"> *       <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a></em>
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_comment"> *</em>
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_comment"> *    Unless required by applicable law or agreed to in writing, software</em>
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_comment"> *    distributed under the License is distributed on an "AS IS" BASIS,</em>
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  <em class="jxr_comment"> *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</em>
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>  <em class="jxr_comment"> *    See the License for the specific language governing permissions and</em>
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>  <em class="jxr_comment"> *    limitations under the License.</em>
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>  <em class="jxr_comment"> */</em>
 <a class="jxr_linenumber" name="L16" href="#L16">16</a>  <strong class="jxr_keyword">package</strong> org.mybatis.generator;
 <a class="jxr_linenumber" name="L17" href="#L17">17</a>  
 <a class="jxr_linenumber" name="L18" href="#L18">18</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.mybatis.generator.internal.util.StringUtility.stringHasValue;
@@ -37,19 +37,19 @@
 <a class="jxr_linenumber" name="L29" href="#L29">29</a>  <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>  <em class="jxr_javadoccomment"> * This class is used to execute an SQL script before a code generation</em>
 <a class="jxr_linenumber" name="L31" href="#L31">31</a>  <em class="jxr_javadoccomment"> * run.</em>
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <em class="jxr_javadoccomment"> * </em>
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>  <em class="jxr_javadoccomment"> * @author Jeff Butler</em>
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>  <em class="jxr_javadoccomment"> */</em>
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="SqlScriptRunner" href="../../../org/mybatis/generator/SqlScriptRunner.html#SqlScriptRunner">SqlScriptRunner</a> {
-<a class="jxr_linenumber" name="L36" href="#L36">36</a>      <strong class="jxr_keyword">private</strong> String driver;
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>      <strong class="jxr_keyword">private</strong> String url;
-<a class="jxr_linenumber" name="L38" href="#L38">38</a>      <strong class="jxr_keyword">private</strong> String userid;
-<a class="jxr_linenumber" name="L39" href="#L39">39</a>      <strong class="jxr_keyword">private</strong> String password;
-<a class="jxr_linenumber" name="L40" href="#L40">40</a>      <strong class="jxr_keyword">private</strong> InputStream sourceFile;
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> String driver;
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> String url;
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> String userid;
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> String password;
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> InputStream sourceFile;
 <a class="jxr_linenumber" name="L41" href="#L41">41</a>  
 <a class="jxr_linenumber" name="L42" href="#L42">42</a>      <strong class="jxr_keyword">public</strong> <a name="SqlScriptRunner" href="../../../org/mybatis/generator/SqlScriptRunner.html#SqlScriptRunner">SqlScriptRunner</a>(InputStream sourceFile, String driver, String url,
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>              String userId, String password) <strong class="jxr_keyword">throws</strong> Exception {
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>          
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>  
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>          <strong class="jxr_keyword">if</strong> (!stringHasValue(driver)) {
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> Exception(<span class="jxr_string">"JDBC Driver is required"</span>);
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>          }
@@ -91,74 +91,56 @@
 <a class="jxr_linenumber" name="L83" href="#L83">83</a>          }
 <a class="jxr_linenumber" name="L84" href="#L84">84</a>      }
 <a class="jxr_linenumber" name="L85" href="#L85">85</a>  
-<a class="jxr_linenumber" name="L86" href="#L86">86</a>      <strong class="jxr_keyword">public</strong> String getDriver() {
-<a class="jxr_linenumber" name="L87" href="#L87">87</a>          <strong class="jxr_keyword">return</strong> driver;
-<a class="jxr_linenumber" name="L88" href="#L88">88</a>      }
-<a class="jxr_linenumber" name="L89" href="#L89">89</a>  
-<a class="jxr_linenumber" name="L90" href="#L90">90</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setDriver(String driver) {
-<a class="jxr_linenumber" name="L91" href="#L91">91</a>          <strong class="jxr_keyword">this</strong>.driver = driver;
-<a class="jxr_linenumber" name="L92" href="#L92">92</a>      }
-<a class="jxr_linenumber" name="L93" href="#L93">93</a>  
-<a class="jxr_linenumber" name="L94" href="#L94">94</a>      <strong class="jxr_keyword">public</strong> String getPassword() {
-<a class="jxr_linenumber" name="L95" href="#L95">95</a>          <strong class="jxr_keyword">return</strong> password;
-<a class="jxr_linenumber" name="L96" href="#L96">96</a>      }
-<a class="jxr_linenumber" name="L97" href="#L97">97</a>  
-<a class="jxr_linenumber" name="L98" href="#L98">98</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setPassword(String password) {
-<a class="jxr_linenumber" name="L99" href="#L99">99</a>          <strong class="jxr_keyword">this</strong>.password = password;
-<a class="jxr_linenumber" name="L100" href="#L100">100</a>     }
-<a class="jxr_linenumber" name="L101" href="#L101">101</a> 
-<a class="jxr_linenumber" name="L102" href="#L102">102</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> closeConnection(Connection connection) {
-<a class="jxr_linenumber" name="L103" href="#L103">103</a>         <strong class="jxr_keyword">if</strong> (connection != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L104" href="#L104">104</a>             <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L105" href="#L105">105</a>                 connection.close();
-<a class="jxr_linenumber" name="L106" href="#L106">106</a>             } <strong class="jxr_keyword">catch</strong> (SQLException e) {
-<a class="jxr_linenumber" name="L107" href="#L107">107</a>                 <em class="jxr_comment">// ignore</em>
-<a class="jxr_linenumber" name="L108" href="#L108">108</a>                 ;
-<a class="jxr_linenumber" name="L109" href="#L109">109</a>             }
-<a class="jxr_linenumber" name="L110" href="#L110">110</a>         }
-<a class="jxr_linenumber" name="L111" href="#L111">111</a>     }
-<a class="jxr_linenumber" name="L112" href="#L112">112</a> 
-<a class="jxr_linenumber" name="L113" href="#L113">113</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> closeStatement(Statement statement) {
-<a class="jxr_linenumber" name="L114" href="#L114">114</a>         <strong class="jxr_keyword">if</strong> (statement != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L115" href="#L115">115</a>             <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L116" href="#L116">116</a>                 statement.close();
-<a class="jxr_linenumber" name="L117" href="#L117">117</a>             } <strong class="jxr_keyword">catch</strong> (SQLException e) {
-<a class="jxr_linenumber" name="L118" href="#L118">118</a>                 <em class="jxr_comment">// ignore</em>
-<a class="jxr_linenumber" name="L119" href="#L119">119</a>                 ;
-<a class="jxr_linenumber" name="L120" href="#L120">120</a>             }
-<a class="jxr_linenumber" name="L121" href="#L121">121</a>         }
-<a class="jxr_linenumber" name="L122" href="#L122">122</a>     }
-<a class="jxr_linenumber" name="L123" href="#L123">123</a> 
-<a class="jxr_linenumber" name="L124" href="#L124">124</a>     <strong class="jxr_keyword">private</strong> String readStatement(BufferedReader br) <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L125" href="#L125">125</a>         StringBuffer sb = <strong class="jxr_keyword">new</strong> StringBuffer();
-<a class="jxr_linenumber" name="L126" href="#L126">126</a> 
-<a class="jxr_linenumber" name="L127" href="#L127">127</a>         String line;
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> closeConnection(Connection connection) {
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>          <strong class="jxr_keyword">if</strong> (connection != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L88" href="#L88">88</a>              <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>                  connection.close();
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>              } <strong class="jxr_keyword">catch</strong> (SQLException e) {
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>                  <em class="jxr_comment">// ignore</em>
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>              }
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>          }
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>      }
+<a class="jxr_linenumber" name="L95" href="#L95">95</a>  
+<a class="jxr_linenumber" name="L96" href="#L96">96</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> closeStatement(Statement statement) {
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>          <strong class="jxr_keyword">if</strong> (statement != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L98" href="#L98">98</a>              <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L99" href="#L99">99</a>                  statement.close();
+<a class="jxr_linenumber" name="L100" href="#L100">100</a>             } <strong class="jxr_keyword">catch</strong> (SQLException e) {
+<a class="jxr_linenumber" name="L101" href="#L101">101</a>                 <em class="jxr_comment">// ignore</em>
+<a class="jxr_linenumber" name="L102" href="#L102">102</a>             }
+<a class="jxr_linenumber" name="L103" href="#L103">103</a>         }
+<a class="jxr_linenumber" name="L104" href="#L104">104</a>     }
+<a class="jxr_linenumber" name="L105" href="#L105">105</a> 
+<a class="jxr_linenumber" name="L106" href="#L106">106</a>     <strong class="jxr_keyword">private</strong> String readStatement(BufferedReader br) <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L107" href="#L107">107</a>         StringBuilder sb = <strong class="jxr_keyword">new</strong> StringBuilder();
+<a class="jxr_linenumber" name="L108" href="#L108">108</a> 
+<a class="jxr_linenumber" name="L109" href="#L109">109</a>         String line;
+<a class="jxr_linenumber" name="L110" href="#L110">110</a> 
+<a class="jxr_linenumber" name="L111" href="#L111">111</a>         <strong class="jxr_keyword">while</strong> ((line = br.readLine()) != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L112" href="#L112">112</a>             <strong class="jxr_keyword">if</strong> (line.startsWith(<span class="jxr_string">"--"</span>)) { <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L113" href="#L113">113</a>                 <strong class="jxr_keyword">continue</strong>;
+<a class="jxr_linenumber" name="L114" href="#L114">114</a>             }
+<a class="jxr_linenumber" name="L115" href="#L115">115</a> 
+<a class="jxr_linenumber" name="L116" href="#L116">116</a>             <strong class="jxr_keyword">if</strong> (!stringHasValue(line)) {
+<a class="jxr_linenumber" name="L117" href="#L117">117</a>                 <strong class="jxr_keyword">continue</strong>;
+<a class="jxr_linenumber" name="L118" href="#L118">118</a>             }
+<a class="jxr_linenumber" name="L119" href="#L119">119</a> 
+<a class="jxr_linenumber" name="L120" href="#L120">120</a>             <strong class="jxr_keyword">if</strong> (line.endsWith(<span class="jxr_string">";"</span>)) { <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L121" href="#L121">121</a>                 sb.append(line, 0, line.length() - 1);
+<a class="jxr_linenumber" name="L122" href="#L122">122</a>                 <strong class="jxr_keyword">break</strong>;
+<a class="jxr_linenumber" name="L123" href="#L123">123</a>             } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L124" href="#L124">124</a>                 sb.append(' ');
+<a class="jxr_linenumber" name="L125" href="#L125">125</a>                 sb.append(line);
+<a class="jxr_linenumber" name="L126" href="#L126">126</a>             }
+<a class="jxr_linenumber" name="L127" href="#L127">127</a>         }
 <a class="jxr_linenumber" name="L128" href="#L128">128</a> 
-<a class="jxr_linenumber" name="L129" href="#L129">129</a>         <strong class="jxr_keyword">while</strong> ((line = br.readLine()) != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L130" href="#L130">130</a>             <strong class="jxr_keyword">if</strong> (line.startsWith(<span class="jxr_string">"--"</span>)) { <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L131" href="#L131">131</a>                 <strong class="jxr_keyword">continue</strong>;
-<a class="jxr_linenumber" name="L132" href="#L132">132</a>             }
-<a class="jxr_linenumber" name="L133" href="#L133">133</a> 
-<a class="jxr_linenumber" name="L134" href="#L134">134</a>             <strong class="jxr_keyword">if</strong> (!stringHasValue(line)) {
-<a class="jxr_linenumber" name="L135" href="#L135">135</a>                 <strong class="jxr_keyword">continue</strong>;
-<a class="jxr_linenumber" name="L136" href="#L136">136</a>             }
-<a class="jxr_linenumber" name="L137" href="#L137">137</a> 
-<a class="jxr_linenumber" name="L138" href="#L138">138</a>             <strong class="jxr_keyword">if</strong> (line.endsWith(<span class="jxr_string">";"</span>)) { <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L139" href="#L139">139</a>                 sb.append(line.substring(0, line.length() - 1));
-<a class="jxr_linenumber" name="L140" href="#L140">140</a>                 <strong class="jxr_keyword">break</strong>;
-<a class="jxr_linenumber" name="L141" href="#L141">141</a>             } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L142" href="#L142">142</a>                 sb.append(' ');
-<a class="jxr_linenumber" name="L143" href="#L143">143</a>                 sb.append(line);
-<a class="jxr_linenumber" name="L144" href="#L144">144</a>             }
-<a class="jxr_linenumber" name="L145" href="#L145">145</a>         }
-<a class="jxr_linenumber" name="L146" href="#L146">146</a> 
-<a class="jxr_linenumber" name="L147" href="#L147">147</a>         String s = sb.toString().trim();
-<a class="jxr_linenumber" name="L148" href="#L148">148</a> 
-<a class="jxr_linenumber" name="L149" href="#L149">149</a>         <strong class="jxr_keyword">return</strong> s.length() &gt; 0 ? s : <strong class="jxr_keyword">null</strong>;
-<a class="jxr_linenumber" name="L150" href="#L150">150</a>     }
-<a class="jxr_linenumber" name="L151" href="#L151">151</a> }
+<a class="jxr_linenumber" name="L129" href="#L129">129</a>         String s = sb.toString().trim();
+<a class="jxr_linenumber" name="L130" href="#L130">130</a> 
+<a class="jxr_linenumber" name="L131" href="#L131">131</a>         <strong class="jxr_keyword">return</strong> s.length() &gt; 0 ? s : <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="L132" href="#L132">132</a>     }
+<a class="jxr_linenumber" name="L133" href="#L133">133</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2006&#x2013;2019 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2006&#x2013;2022 <a href="https://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
 </body>
 </html>

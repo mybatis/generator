@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GeneralCountMethodGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.kotlin.elements</a> &gt; <span class="el_source">GeneralCountMethodGenerator.java</span></div><h1>GeneralCountMethodGenerator.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2019 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GeneralCountMethodGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.kotlin.elements</a> &gt; <span class="el_source">GeneralCountMethodGenerator.java</span></div><h1>GeneralCountMethodGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -23,53 +23,60 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 
 public class GeneralCountMethodGenerator extends AbstractKotlinFunctionGenerator {
 
-    private String mapperName;
-    
+    private final String mapperName;
+    private final String tableFieldImport;
+
     private GeneralCountMethodGenerator(Builder builder) {
-<span class="fc" id="L29">        super(builder);</span>
-<span class="fc" id="L30">        mapperName = Objects.requireNonNull(builder.mapperName);</span>
-<span class="fc" id="L31">    }</span>
-    
+<span class="fc" id="L30">        super(builder);</span>
+<span class="fc" id="L31">        mapperName = Objects.requireNonNull(builder.mapperName);</span>
+<span class="fc" id="L32">        tableFieldImport = Objects.requireNonNull(builder.tableFieldImport);</span>
+<span class="fc" id="L33">    }</span>
+
     @Override
     public KotlinFunctionAndImports generateMethodAndImports() {
-<span class="fc" id="L35">        KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(</span>
-<span class="fc" id="L36">                KotlinFunction.newOneLineFunction(mapperName + &quot;.count&quot;) //$NON-NLS-1$</span>
-<span class="fc" id="L37">                .withArgument(KotlinArg.newArg(&quot;completer&quot;) //$NON-NLS-1$</span>
-<span class="fc" id="L38">                        .withDataType(&quot;CountCompleter&quot;) //$NON-NLS-1$</span>
-<span class="fc" id="L39">                        .build())</span>
-<span class="fc" id="L40">                .withCodeLine(&quot;countFrom(this::count, &quot; + tableFieldName + &quot;, completer)&quot;) //$NON-NLS-1$ //$NON-NLS-2$</span>
-<span class="fc" id="L41">                .build())</span>
-<span class="fc" id="L42">                .withImport(&quot;org.mybatis.dynamic.sql.util.kotlin.*&quot;) //$NON-NLS-1$</span>
-<span class="fc" id="L43">                .withImport(&quot;org.mybatis.dynamic.sql.util.kotlin.mybatis3.*&quot;) //$NON-NLS-1$</span>
-<span class="fc" id="L44">                .withImport(tableFieldImport)</span>
-<span class="fc" id="L45">                .build();</span>
+<span class="fc" id="L37">        KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(</span>
+<span class="fc" id="L38">                KotlinFunction.newOneLineFunction(mapperName + &quot;.count&quot;) //$NON-NLS-1$</span>
+<span class="fc" id="L39">                .withArgument(KotlinArg.newArg(&quot;completer&quot;) //$NON-NLS-1$</span>
+<span class="fc" id="L40">                        .withDataType(&quot;CountCompleter&quot;) //$NON-NLS-1$</span>
+<span class="fc" id="L41">                        .build())</span>
+<span class="fc" id="L42">                .withCodeLine(&quot;countFrom(this::count, &quot; + tableFieldName + &quot;, completer)&quot;) //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L43">                .build())</span>
+<span class="fc" id="L44">                .withImport(&quot;org.mybatis.dynamic.sql.util.kotlin.CountCompleter&quot;) //$NON-NLS-1$</span>
+<span class="fc" id="L45">                .withImport(&quot;org.mybatis.dynamic.sql.util.kotlin.mybatis3.countFrom&quot;) //$NON-NLS-1$</span>
+<span class="fc" id="L46">                .withImport(tableFieldImport)</span>
+<span class="fc" id="L47">                .build();</span>
 
-<span class="fc" id="L47">        addFunctionComment(functionAndImports);</span>
-<span class="fc" id="L48">        return functionAndImports;</span>
+<span class="fc" id="L49">        addFunctionComment(functionAndImports);</span>
+<span class="fc" id="L50">        return functionAndImports;</span>
     }
 
     @Override
     public boolean callPlugins(KotlinFunction kotlinFunction, KotlinFile kotlinFile) {
-<span class="fc" id="L53">        return context.getPlugins().clientGeneralCountMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);</span>
+<span class="fc" id="L55">        return context.getPlugins().clientGeneralCountMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);</span>
     }
 
-<span class="fc" id="L56">    public static class Builder extends BaseBuilder&lt;Builder, GeneralCountMethodGenerator&gt; {</span>
+<span class="fc" id="L58">    public static class Builder extends BaseBuilder&lt;Builder&gt; {</span>
         private String mapperName;
-        
-        public Builder withMapperName(String mapperName) {
-<span class="fc" id="L60">            this.mapperName = mapperName;</span>
-<span class="fc" id="L61">            return this;</span>
+        private String tableFieldImport;
+
+        public Builder withTableFieldImport(String tableFieldImport) {
+<span class="fc" id="L63">            this.tableFieldImport = tableFieldImport;</span>
+<span class="fc" id="L64">            return this;</span>
         }
-        
-        @Override
-        public Builder getThis() {
-<span class="fc" id="L66">            return this;</span>
+
+        public Builder withMapperName(String mapperName) {
+<span class="fc" id="L68">            this.mapperName = mapperName;</span>
+<span class="fc" id="L69">            return this;</span>
         }
 
         @Override
+        public Builder getThis() {
+<span class="fc" id="L74">            return this;</span>
+        }
+
         public GeneralCountMethodGenerator build() {
-<span class="fc" id="L71">            return new GeneralCountMethodGenerator(this);</span>
+<span class="fc" id="L78">            return new GeneralCountMethodGenerator(this);</span>
         }
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

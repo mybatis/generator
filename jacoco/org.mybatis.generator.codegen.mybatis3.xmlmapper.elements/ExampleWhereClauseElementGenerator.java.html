@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExampleWhereClauseElementGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.codegen.mybatis3.xmlmapper.elements</a> &gt; <span class="el_source">ExampleWhereClauseElementGenerator.java</span></div><h1>ExampleWhereClauseElementGenerator.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2019 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExampleWhereClauseElementGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.codegen.mybatis3.xmlmapper.elements</a> &gt; <span class="el_source">ExampleWhereClauseElementGenerator.java</span></div><h1>ExampleWhereClauseElementGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -22,160 +22,151 @@ import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
-public class ExampleWhereClauseElementGenerator extends
-        AbstractXmlElementGenerator {
+public class ExampleWhereClauseElementGenerator extends AbstractXmlElementGenerator {
 
-    private boolean isForUpdateByExample;
+    private final boolean isForUpdateByExample;
 
     public ExampleWhereClauseElementGenerator(boolean isForUpdateByExample) {
-<span class="fc" id="L31">        super();</span>
-<span class="fc" id="L32">        this.isForUpdateByExample = isForUpdateByExample;</span>
-<span class="fc" id="L33">    }</span>
+<span class="fc" id="L30">        super();</span>
+<span class="fc" id="L31">        this.isForUpdateByExample = isForUpdateByExample;</span>
+<span class="fc" id="L32">    }</span>
 
     @Override
     public void addElements(XmlElement parentElement) {
-<span class="fc" id="L37">        XmlElement answer = new XmlElement(&quot;sql&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L36">        XmlElement answer = new XmlElement(&quot;sql&quot;); //$NON-NLS-1$</span>
 
-<span class="fc bfc" id="L39" title="All 2 branches covered.">        if (isForUpdateByExample) {</span>
-<span class="fc" id="L40">            answer</span>
-<span class="fc" id="L41">                    .addAttribute(new Attribute(</span>
-<span class="fc" id="L42">                            &quot;id&quot;, introspectedTable.getMyBatis3UpdateByExampleWhereClauseId())); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        if (isForUpdateByExample) {</span>
+<span class="fc" id="L39">            answer.addAttribute(new Attribute(</span>
+<span class="fc" id="L40">                    &quot;id&quot;, introspectedTable.getMyBatis3UpdateByExampleWhereClauseId())); //$NON-NLS-1$</span>
         } else {
-<span class="fc" id="L44">            answer.addAttribute(new Attribute(</span>
-<span class="fc" id="L45">                    &quot;id&quot;, introspectedTable.getExampleWhereClauseId())); //$NON-NLS-1$</span>
+<span class="fc" id="L42">            answer.addAttribute(new Attribute(</span>
+<span class="fc" id="L43">                    &quot;id&quot;, introspectedTable.getExampleWhereClauseId())); //$NON-NLS-1$</span>
         }
 
-<span class="fc" id="L48">        context.getCommentGenerator().addComment(answer);</span>
+<span class="fc" id="L46">        context.getCommentGenerator().addComment(answer);</span>
 
-<span class="fc" id="L50">        XmlElement whereElement = new XmlElement(&quot;where&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L51">        answer.addElement(whereElement);</span>
+<span class="fc" id="L48">        XmlElement whereElement = new XmlElement(&quot;where&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L49">        answer.addElement(whereElement);</span>
 
-<span class="fc" id="L53">        XmlElement outerForEachElement = new XmlElement(&quot;foreach&quot;); //$NON-NLS-1$</span>
-<span class="fc bfc" id="L54" title="All 2 branches covered.">        if (isForUpdateByExample) {</span>
-<span class="fc" id="L55">            outerForEachElement.addAttribute(new Attribute(</span>
+<span class="fc" id="L51">        XmlElement outerForEachElement = new XmlElement(&quot;foreach&quot;); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        if (isForUpdateByExample) {</span>
+<span class="fc" id="L53">            outerForEachElement.addAttribute(new Attribute(</span>
                     &quot;collection&quot;, &quot;example.oredCriteria&quot;)); //$NON-NLS-1$ //$NON-NLS-2$
         } else {
-<span class="fc" id="L58">            outerForEachElement.addAttribute(new Attribute(</span>
+<span class="fc" id="L56">            outerForEachElement.addAttribute(new Attribute(</span>
                     &quot;collection&quot;, &quot;oredCriteria&quot;)); //$NON-NLS-1$ //$NON-NLS-2$
         }
-<span class="fc" id="L61">        outerForEachElement.addAttribute(new Attribute(&quot;item&quot;, &quot;criteria&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
-<span class="fc" id="L62">        outerForEachElement.addAttribute(new Attribute(&quot;separator&quot;, &quot;or&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
-<span class="fc" id="L63">        whereElement.addElement(outerForEachElement);</span>
+<span class="fc" id="L59">        outerForEachElement.addAttribute(new Attribute(&quot;item&quot;, &quot;criteria&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L60">        outerForEachElement.addAttribute(new Attribute(&quot;separator&quot;, &quot;or&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L61">        whereElement.addElement(outerForEachElement);</span>
 
-<span class="fc" id="L65">        XmlElement ifElement = new XmlElement(&quot;if&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L66">        ifElement.addAttribute(new Attribute(&quot;test&quot;, &quot;criteria.valid&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
-<span class="fc" id="L67">        outerForEachElement.addElement(ifElement);</span>
+<span class="fc" id="L63">        XmlElement ifElement = new XmlElement(&quot;if&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L64">        ifElement.addAttribute(new Attribute(&quot;test&quot;, &quot;criteria.valid&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L65">        outerForEachElement.addElement(ifElement);</span>
 
-<span class="fc" id="L69">        XmlElement trimElement = new XmlElement(&quot;trim&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L70">        trimElement.addAttribute(new Attribute(&quot;prefix&quot;, &quot;(&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
-<span class="fc" id="L71">        trimElement.addAttribute(new Attribute(&quot;suffix&quot;, &quot;)&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
-<span class="fc" id="L72">        trimElement.addAttribute(new Attribute(&quot;prefixOverrides&quot;, &quot;and&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L67">        XmlElement trimElement = new XmlElement(&quot;trim&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L68">        trimElement.addAttribute(new Attribute(&quot;prefix&quot;, &quot;(&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L69">        trimElement.addAttribute(new Attribute(&quot;suffix&quot;, &quot;)&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L70">        trimElement.addAttribute(new Attribute(&quot;prefixOverrides&quot;, &quot;and&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
 
-<span class="fc" id="L74">        ifElement.addElement(trimElement);</span>
+<span class="fc" id="L72">        ifElement.addElement(trimElement);</span>
 
-<span class="fc" id="L76">        trimElement.addElement(getMiddleForEachElement(null));</span>
+<span class="fc" id="L74">        trimElement.addElement(getMiddleForEachElement(null));</span>
 
-<span class="fc bfc" id="L78" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable</span>
-<span class="fc" id="L79">                .getNonBLOBColumns()) {</span>
-<span class="fc bfc" id="L80" title="All 2 branches covered.">            if (stringHasValue(introspectedColumn</span>
-<span class="fc" id="L81">                    .getTypeHandler())) {</span>
-<span class="fc" id="L82">                trimElement</span>
-<span class="fc" id="L83">                        .addElement(getMiddleForEachElement(introspectedColumn));</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable.getNonBLOBColumns()) {</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">            if (stringHasValue(introspectedColumn.getTypeHandler())) {</span>
+<span class="fc" id="L78">                trimElement.addElement(getMiddleForEachElement(introspectedColumn));</span>
             }
-<span class="fc" id="L85">        }</span>
+<span class="fc" id="L80">        }</span>
 
-<span class="fc" id="L87">        if (context.getPlugins()</span>
-<span class="pc bpc" id="L88" title="1 of 2 branches missed.">                .sqlMapExampleWhereClauseElementGenerated(answer,</span>
-                        introspectedTable)) {
-<span class="fc" id="L90">            parentElement.addElement(answer);</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">        if (context.getPlugins().sqlMapExampleWhereClauseElementGenerated(answer, introspectedTable)) {</span>
+<span class="fc" id="L83">            parentElement.addElement(answer);</span>
         }
-<span class="fc" id="L92">    }</span>
+<span class="fc" id="L85">    }</span>
 
-    private XmlElement getMiddleForEachElement(
-            IntrospectedColumn introspectedColumn) {
-<span class="fc" id="L96">        StringBuilder sb = new StringBuilder();</span>
+    private XmlElement getMiddleForEachElement(IntrospectedColumn introspectedColumn) {
+<span class="fc" id="L88">        StringBuilder sb = new StringBuilder();</span>
         String criteriaAttribute;
         boolean typeHandled;
         String typeHandlerString;
-<span class="fc bfc" id="L100" title="All 2 branches covered.">        if (introspectedColumn == null) {</span>
-<span class="fc" id="L101">            criteriaAttribute = &quot;criteria.criteria&quot;; //$NON-NLS-1$</span>
-<span class="fc" id="L102">            typeHandled = false;</span>
-<span class="fc" id="L103">            typeHandlerString = null;</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">        if (introspectedColumn == null) {</span>
+<span class="fc" id="L93">            criteriaAttribute = &quot;criteria.criteria&quot;; //$NON-NLS-1$</span>
+<span class="fc" id="L94">            typeHandled = false;</span>
+<span class="fc" id="L95">            typeHandlerString = null;</span>
         } else {
+<span class="fc" id="L97">            sb.setLength(0);</span>
+<span class="fc" id="L98">            sb.append(&quot;criteria.&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L99">            sb.append(introspectedColumn.getJavaProperty());</span>
+<span class="fc" id="L100">            sb.append(&quot;Criteria&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L101">            criteriaAttribute = sb.toString();</span>
+
+<span class="fc" id="L103">            typeHandled = true;</span>
+
 <span class="fc" id="L105">            sb.setLength(0);</span>
-<span class="fc" id="L106">            sb.append(&quot;criteria.&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L107">            sb.append(introspectedColumn.getJavaProperty());</span>
-<span class="fc" id="L108">            sb.append(&quot;Criteria&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L109">            criteriaAttribute = sb.toString();</span>
-
-<span class="fc" id="L111">            typeHandled = true;</span>
-
-<span class="fc" id="L113">            sb.setLength(0);</span>
-<span class="fc" id="L114">            sb.append(&quot;,typeHandler=&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L115">            sb.append(introspectedColumn.getTypeHandler());</span>
-<span class="fc" id="L116">            typeHandlerString = sb.toString();</span>
+<span class="fc" id="L106">            sb.append(&quot;,typeHandler=&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L107">            sb.append(introspectedColumn.getTypeHandler());</span>
+<span class="fc" id="L108">            typeHandlerString = sb.toString();</span>
         }
 
-<span class="fc" id="L119">        XmlElement middleForEachElement = new XmlElement(&quot;foreach&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L120">        middleForEachElement.addAttribute(new Attribute(</span>
+<span class="fc" id="L111">        XmlElement middleForEachElement = new XmlElement(&quot;foreach&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L112">        middleForEachElement.addAttribute(new Attribute(</span>
                 &quot;collection&quot;, criteriaAttribute)); //$NON-NLS-1$
-<span class="fc" id="L122">        middleForEachElement.addAttribute(new Attribute(&quot;item&quot;, &quot;criterion&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L114">        middleForEachElement.addAttribute(new Attribute(&quot;item&quot;, &quot;criterion&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
 
-<span class="fc" id="L124">        XmlElement chooseElement = new XmlElement(&quot;choose&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L125">        middleForEachElement.addElement(chooseElement);</span>
+<span class="fc" id="L116">        XmlElement chooseElement = new XmlElement(&quot;choose&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L117">        middleForEachElement.addElement(chooseElement);</span>
 
-<span class="fc" id="L127">        XmlElement when = new XmlElement(&quot;when&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L128">        when.addAttribute(new Attribute(&quot;test&quot;, &quot;criterion.noValue&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
-<span class="fc" id="L129">        when.addElement(new TextElement(&quot;and ${criterion.condition}&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L130">        chooseElement.addElement(when);</span>
+<span class="fc" id="L119">        XmlElement when = new XmlElement(&quot;when&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L120">        when.addAttribute(new Attribute(&quot;test&quot;, &quot;criterion.noValue&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L121">        when.addElement(new TextElement(&quot;and ${criterion.condition}&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L122">        chooseElement.addElement(when);</span>
 
-<span class="fc" id="L132">        when = new XmlElement(&quot;when&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L133">        when.addAttribute(new Attribute(&quot;test&quot;, &quot;criterion.singleValue&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
-<span class="fc" id="L134">        sb.setLength(0);</span>
-<span class="fc" id="L135">        sb.append(&quot;and ${criterion.condition} #{criterion.value&quot;); //$NON-NLS-1$</span>
-<span class="fc bfc" id="L136" title="All 2 branches covered.">        if (typeHandled) {</span>
-<span class="fc" id="L137">            sb.append(typeHandlerString);</span>
+<span class="fc" id="L124">        when = new XmlElement(&quot;when&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L125">        when.addAttribute(new Attribute(&quot;test&quot;, &quot;criterion.singleValue&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L126">        sb.setLength(0);</span>
+<span class="fc" id="L127">        sb.append(&quot;and ${criterion.condition} #{criterion.value&quot;); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">        if (typeHandled) {</span>
+<span class="fc" id="L129">            sb.append(typeHandlerString);</span>
         }
-<span class="fc" id="L139">        sb.append('}');</span>
-<span class="fc" id="L140">        when.addElement(new TextElement(sb.toString()));</span>
-<span class="fc" id="L141">        chooseElement.addElement(when);</span>
+<span class="fc" id="L131">        sb.append('}');</span>
+<span class="fc" id="L132">        when.addElement(new TextElement(sb.toString()));</span>
+<span class="fc" id="L133">        chooseElement.addElement(when);</span>
 
-<span class="fc" id="L143">        when = new XmlElement(&quot;when&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L144">        when.addAttribute(new Attribute(&quot;test&quot;, &quot;criterion.betweenValue&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
-<span class="fc" id="L145">        sb.setLength(0);</span>
-<span class="fc" id="L146">        sb.append(&quot;and ${criterion.condition} #{criterion.value&quot;); //$NON-NLS-1$</span>
-<span class="fc bfc" id="L147" title="All 2 branches covered.">        if (typeHandled) {</span>
-<span class="fc" id="L148">            sb.append(typeHandlerString);</span>
+<span class="fc" id="L135">        when = new XmlElement(&quot;when&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L136">        when.addAttribute(new Attribute(&quot;test&quot;, &quot;criterion.betweenValue&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L137">        sb.setLength(0);</span>
+<span class="fc" id="L138">        sb.append(&quot;and ${criterion.condition} #{criterion.value&quot;); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">        if (typeHandled) {</span>
+<span class="fc" id="L140">            sb.append(typeHandlerString);</span>
         }
-<span class="fc" id="L150">        sb.append(&quot;} and #{criterion.secondValue&quot;); //$NON-NLS-1$</span>
-<span class="fc bfc" id="L151" title="All 2 branches covered.">        if (typeHandled) {</span>
-<span class="fc" id="L152">            sb.append(typeHandlerString);</span>
+<span class="fc" id="L142">        sb.append(&quot;} and #{criterion.secondValue&quot;); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">        if (typeHandled) {</span>
+<span class="fc" id="L144">            sb.append(typeHandlerString);</span>
         }
-<span class="fc" id="L154">        sb.append('}');</span>
-<span class="fc" id="L155">        when.addElement(new TextElement(sb.toString()));</span>
-<span class="fc" id="L156">        chooseElement.addElement(when);</span>
+<span class="fc" id="L146">        sb.append('}');</span>
+<span class="fc" id="L147">        when.addElement(new TextElement(sb.toString()));</span>
+<span class="fc" id="L148">        chooseElement.addElement(when);</span>
 
-<span class="fc" id="L158">        when = new XmlElement(&quot;when&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L159">        when.addAttribute(new Attribute(&quot;test&quot;, &quot;criterion.listValue&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
-<span class="fc" id="L160">        when.addElement(new TextElement(&quot;and ${criterion.condition}&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L161">        XmlElement innerForEach = new XmlElement(&quot;foreach&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L162">        innerForEach</span>
-<span class="fc" id="L163">                .addAttribute(new Attribute(&quot;collection&quot;, &quot;criterion.value&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
-<span class="fc" id="L164">        innerForEach.addAttribute(new Attribute(&quot;item&quot;, &quot;listItem&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
-<span class="fc" id="L165">        innerForEach.addAttribute(new Attribute(&quot;open&quot;, &quot;(&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
-<span class="fc" id="L166">        innerForEach.addAttribute(new Attribute(&quot;close&quot;, &quot;)&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
-<span class="fc" id="L167">        innerForEach.addAttribute(new Attribute(&quot;separator&quot;, &quot;,&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
-<span class="fc" id="L168">        sb.setLength(0);</span>
-<span class="fc" id="L169">        sb.append(&quot;#{listItem&quot;); //$NON-NLS-1$</span>
-<span class="fc bfc" id="L170" title="All 2 branches covered.">        if (typeHandled) {</span>
-<span class="fc" id="L171">            sb.append(typeHandlerString);</span>
+<span class="fc" id="L150">        when = new XmlElement(&quot;when&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L151">        when.addAttribute(new Attribute(&quot;test&quot;, &quot;criterion.listValue&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L152">        when.addElement(new TextElement(&quot;and ${criterion.condition}&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L153">        XmlElement innerForEach = new XmlElement(&quot;foreach&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L154">        innerForEach.addAttribute(new Attribute(&quot;collection&quot;, &quot;criterion.value&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L155">        innerForEach.addAttribute(new Attribute(&quot;item&quot;, &quot;listItem&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L156">        innerForEach.addAttribute(new Attribute(&quot;open&quot;, &quot;(&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L157">        innerForEach.addAttribute(new Attribute(&quot;close&quot;, &quot;)&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L158">        innerForEach.addAttribute(new Attribute(&quot;separator&quot;, &quot;,&quot;)); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L159">        sb.setLength(0);</span>
+<span class="fc" id="L160">        sb.append(&quot;#{listItem&quot;); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">        if (typeHandled) {</span>
+<span class="fc" id="L162">            sb.append(typeHandlerString);</span>
         }
-<span class="fc" id="L173">        sb.append('}');</span>
-<span class="fc" id="L174">        innerForEach.addElement(new TextElement(sb.toString()));</span>
-<span class="fc" id="L175">        when.addElement(innerForEach);</span>
-<span class="fc" id="L176">        chooseElement.addElement(when);</span>
+<span class="fc" id="L164">        sb.append('}');</span>
+<span class="fc" id="L165">        innerForEach.addElement(new TextElement(sb.toString()));</span>
+<span class="fc" id="L166">        when.addElement(innerForEach);</span>
+<span class="fc" id="L167">        chooseElement.addElement(when);</span>
 
-<span class="fc" id="L178">        return middleForEachElement;</span>
+<span class="fc" id="L169">        return middleForEachElement;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

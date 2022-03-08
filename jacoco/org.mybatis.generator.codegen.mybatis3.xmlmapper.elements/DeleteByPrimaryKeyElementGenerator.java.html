@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DeleteByPrimaryKeyElementGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.codegen.mybatis3.xmlmapper.elements</a> &gt; <span class="el_source">DeleteByPrimaryKeyElementGenerator.java</span></div><h1>DeleteByPrimaryKeyElementGenerator.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2019 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DeleteByPrimaryKeyElementGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.codegen.mybatis3.xmlmapper.elements</a> &gt; <span class="el_source">DeleteByPrimaryKeyElementGenerator.java</span></div><h1>DeleteByPrimaryKeyElementGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -15,75 +15,49 @@
  */
 package org.mybatis.generator.codegen.mybatis3.xmlmapper.elements;
 
-import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
-import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 
-public class DeleteByPrimaryKeyElementGenerator extends
-        AbstractXmlElementGenerator {
+public class DeleteByPrimaryKeyElementGenerator extends AbstractXmlElementGenerator {
 
-    private boolean isSimple;
+    private final boolean isSimple;
 
     public DeleteByPrimaryKeyElementGenerator(boolean isSimple) {
-<span class="fc" id="L30">        super();</span>
-<span class="fc" id="L31">        this.isSimple = isSimple;</span>
-<span class="fc" id="L32">    }</span>
+<span class="fc" id="L27">        super();</span>
+<span class="fc" id="L28">        this.isSimple = isSimple;</span>
+<span class="fc" id="L29">    }</span>
 
     @Override
     public void addElements(XmlElement parentElement) {
-<span class="fc" id="L36">        XmlElement answer = new XmlElement(&quot;delete&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L33">        XmlElement answer = new XmlElement(&quot;delete&quot;); //$NON-NLS-1$</span>
 
-<span class="fc" id="L38">        answer.addAttribute(new Attribute(</span>
-<span class="fc" id="L39">                &quot;id&quot;, introspectedTable.getDeleteByPrimaryKeyStatementId())); //$NON-NLS-1$</span>
+<span class="fc" id="L35">        answer.addAttribute(new Attribute(&quot;id&quot;, introspectedTable.getDeleteByPrimaryKeyStatementId())); //$NON-NLS-1$</span>
         String parameterClass;
-<span class="fc bfc" id="L41" title="All 4 branches covered.">        if (!isSimple &amp;&amp; introspectedTable.getRules().generatePrimaryKeyClass()) {</span>
-<span class="fc" id="L42">            parameterClass = introspectedTable.getPrimaryKeyType();</span>
+<span class="fc bfc" id="L37" title="All 4 branches covered.">        if (!isSimple &amp;&amp; introspectedTable.getRules().generatePrimaryKeyClass()) {</span>
+<span class="fc" id="L38">            parameterClass = introspectedTable.getPrimaryKeyType();</span>
         } else {
             // PK fields are in the base class. If more than on PK
             // field, then they are coming in a map.
-<span class="fc bfc" id="L46" title="All 2 branches covered.">            if (introspectedTable.getPrimaryKeyColumns().size() &gt; 1) {</span>
-<span class="fc" id="L47">                parameterClass = &quot;map&quot;; //$NON-NLS-1$</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">            if (introspectedTable.getPrimaryKeyColumns().size() &gt; 1) {</span>
+<span class="fc" id="L43">                parameterClass = &quot;map&quot;; //$NON-NLS-1$</span>
             } else {
-<span class="fc" id="L49">                parameterClass = introspectedTable.getPrimaryKeyColumns()</span>
-<span class="fc" id="L50">                        .get(0).getFullyQualifiedJavaType().toString();</span>
+<span class="fc" id="L45">                parameterClass =</span>
+<span class="fc" id="L46">                        introspectedTable.getPrimaryKeyColumns().get(0).getFullyQualifiedJavaType().toString();</span>
             }
         }
-<span class="fc" id="L53">        answer.addAttribute(new Attribute(&quot;parameterType&quot;, //$NON-NLS-1$</span>
-                parameterClass));
+<span class="fc" id="L49">        answer.addAttribute(new Attribute(&quot;parameterType&quot;, parameterClass)); //$NON-NLS-1$</span>
 
-<span class="fc" id="L56">        context.getCommentGenerator().addComment(answer);</span>
+<span class="fc" id="L51">        context.getCommentGenerator().addComment(answer);</span>
 
-<span class="fc" id="L58">        StringBuilder sb = new StringBuilder();</span>
-<span class="fc" id="L59">        sb.append(&quot;delete from &quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L60">        sb.append(introspectedTable.getFullyQualifiedTableNameAtRuntime());</span>
-<span class="fc" id="L61">        answer.addElement(new TextElement(sb.toString()));</span>
+<span class="fc" id="L53">        String sb = &quot;delete from &quot; + introspectedTable.getFullyQualifiedTableNameAtRuntime(); //$NON-NLS-1$</span>
+<span class="fc" id="L54">        answer.addElement(new TextElement(sb));</span>
 
-<span class="fc" id="L63">        boolean and = false;</span>
-<span class="fc bfc" id="L64" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : introspectedTable</span>
-<span class="fc" id="L65">                .getPrimaryKeyColumns()) {</span>
-<span class="fc" id="L66">            sb.setLength(0);</span>
-<span class="fc bfc" id="L67" title="All 2 branches covered.">            if (and) {</span>
-<span class="fc" id="L68">                sb.append(&quot;  and &quot;); //$NON-NLS-1$</span>
-            } else {
-<span class="fc" id="L70">                sb.append(&quot;where &quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L71">                and = true;</span>
-            }
+<span class="fc" id="L56">        buildPrimaryKeyWhereClause().forEach(answer::addElement);</span>
 
-<span class="fc" id="L74">            sb.append(MyBatis3FormattingUtilities</span>
-<span class="fc" id="L75">                    .getEscapedColumnName(introspectedColumn));</span>
-<span class="fc" id="L76">            sb.append(&quot; = &quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L77">            sb.append(MyBatis3FormattingUtilities</span>
-<span class="fc" id="L78">                    .getParameterClause(introspectedColumn));</span>
-<span class="fc" id="L79">            answer.addElement(new TextElement(sb.toString()));</span>
-<span class="fc" id="L80">        }</span>
-
-<span class="fc" id="L82">        if (context.getPlugins()</span>
-<span class="pc bpc" id="L83" title="1 of 2 branches missed.">                .sqlMapDeleteByPrimaryKeyElementGenerated(answer,</span>
-                        introspectedTable)) {
-<span class="fc" id="L85">            parentElement.addElement(answer);</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">        if (context.getPlugins().sqlMapDeleteByPrimaryKeyElementGenerated(answer,introspectedTable)) {</span>
+<span class="fc" id="L59">            parentElement.addElement(answer);</span>
         }
-<span class="fc" id="L87">    }</span>
+<span class="fc" id="L61">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

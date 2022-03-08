@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HierarchicalModelRules.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.internal.rules</a> &gt; <span class="el_source">HierarchicalModelRules.java</span></div><h1>HierarchicalModelRules.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2017 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HierarchicalModelRules.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.internal.rules</a> &gt; <span class="el_source">HierarchicalModelRules.java</span></div><h1>HierarchicalModelRules.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -20,9 +20,9 @@ import org.mybatis.generator.api.IntrospectedTable;
 /**
  * This class encapsulates all the code generation rules for a table using the
  * hierarchical model.
- * 
+ *
  * @author Jeff Butler
- * 
+ *
  */
 public class HierarchicalModelRules extends BaseRules {
 
@@ -40,7 +40,7 @@ public class HierarchicalModelRules extends BaseRules {
      * Implements the rule for determining whether to generate a primary key
      * class. If the physical table has a primary key, then we generate the
      * class.
-     * 
+     *
      * @return true if the primary key should be generated
      */
     @Override
@@ -52,7 +52,7 @@ public class HierarchicalModelRules extends BaseRules {
      * Implements the rule for generating a base record. If the table has fields
      * that are not in the primary key, and non-BLOB fields, then generate the
      * class.
-     * 
+     *
      * @return true if the class should be generated
      */
     @Override
@@ -63,7 +63,7 @@ public class HierarchicalModelRules extends BaseRules {
     /**
      * Implements the rule for generating a record with BLOBs. A record with
      * BLOBs is generated if the table contains any BLOB fields.
-     * 
+     *
      * @return true if the record with BLOBs class should be generated
      */
     @Override
@@ -71,4 +71,4 @@ public class HierarchicalModelRules extends BaseRules {
 <span class="fc" id="L71">        return introspectedTable.hasBLOBColumns();</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FullyQualifiedKotlinType.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api.dom.kotlin</a> &gt; <span class="el_source">FullyQualifiedKotlinType.java</span></div><h1>FullyQualifiedKotlinType.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2019 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FullyQualifiedKotlinType.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api.dom.kotlin</a> &gt; <span class="el_source">FullyQualifiedKotlinType.java</span></div><h1>FullyQualifiedKotlinType.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ public class FullyQualifiedKotlinType {
 <span class="fc" id="L38">    }</span>
 
     private String packageName;
-<span class="fc" id="L41">    private List&lt;FullyQualifiedKotlinType&gt; typeArguments = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L41">    private final List&lt;FullyQualifiedKotlinType&gt; typeArguments = new ArrayList&lt;&gt;();</span>
     private String shortNameWithoutTypeArguments;
     private boolean isExplicitlyImported;
 
@@ -49,11 +49,11 @@ public class FullyQualifiedKotlinType {
     public String getPackageName() {
 <span class="fc" id="L50">        return packageName;</span>
     }
-    
+
     public String getShortNameWithoutTypeArguments() {
 <span class="fc" id="L54">        return shortNameWithoutTypeArguments;</span>
     }
-    
+
     public String getShortNameWithTypeArguments() {
 <span class="fc bfc" id="L58" title="All 2 branches covered.">        if (typeArguments.isEmpty()) {</span>
 <span class="fc" id="L59">            return shortNameWithoutTypeArguments;</span>
@@ -67,7 +67,7 @@ public class FullyQualifiedKotlinType {
     public List&lt;FullyQualifiedKotlinType&gt; getTypeArguments() {
 <span class="nc" id="L68">        return typeArguments;</span>
     }
-    
+
     public void addTypeArgument(FullyQualifiedKotlinType typeArgument) {
 <span class="fc" id="L72">        typeArguments.add(typeArgument);</span>
 <span class="fc" id="L73">    }</span>
@@ -165,7 +165,7 @@ public class FullyQualifiedKotlinType {
 
     /**
      * Returns the package name of a fully qualified type.
-     * 
+     *
      * &lt;p&gt;This method calculates the package as the part of the fully qualified name up
      * to, but not including, the last element. Therefore, it does not support fully
      * qualified inner classes. Not totally fool proof, but correct in most
@@ -179,4 +179,4 @@ public class FullyQualifiedKotlinType {
 <span class="fc" id="L179">        return baseQualifiedName.substring(0, index);</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FullyQualifiedJavaType.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api.dom.java</a> &gt; <span class="el_source">FullyQualifiedJavaType.java</span></div><h1>FullyQualifiedJavaType.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2019 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FullyQualifiedJavaType.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api.dom.java</a> &gt; <span class="el_source">FullyQualifiedJavaType.java</span></div><h1>FullyQualifiedJavaType.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import java.util.StringTokenizer;
 
 public class FullyQualifiedJavaType implements
         Comparable&lt;FullyQualifiedJavaType&gt; {
-    
+
     private static final String JAVA_LANG = &quot;java.lang&quot;; //$NON-NLS-1$
 
 <span class="fc" id="L30">    private static FullyQualifiedJavaType intInstance = null;</span>
@@ -57,7 +57,7 @@ public class FullyQualifiedJavaType implements
 
     private PrimitiveTypeWrapper primitiveTypeWrapper;
 
-    private List&lt;FullyQualifiedJavaType&gt; typeArguments;
+    private final List&lt;FullyQualifiedJavaType&gt; typeArguments;
 
     // the following three values are used for dealing with wildcard types
     private boolean wildcardType;
@@ -141,341 +141,337 @@ public class FullyQualifiedJavaType implements
             } else {
                 // an inner class is specified, only import the top
                 // level class
-<span class="nc" id="L144">                StringBuilder sb = new StringBuilder();</span>
-<span class="nc" id="L145">                sb.append(packageName);</span>
-<span class="nc" id="L146">                sb.append('.');</span>
-<span class="nc" id="L147">                sb.append(calculateActualImport(baseShortName.substring(0, index)));</span>
-<span class="nc" id="L148">                answer.add(sb.toString());</span>
+<span class="nc" id="L144">                String sb = packageName + '.' + calculateActualImport(baseShortName.substring(0, index));</span>
+<span class="nc" id="L145">                answer.add(sb);</span>
             }
         }
 
-<span class="fc bfc" id="L152" title="All 2 branches covered.">        for (FullyQualifiedJavaType fqjt : typeArguments) {</span>
-<span class="fc" id="L153">            answer.addAll(fqjt.getImportList());</span>
-<span class="fc" id="L154">        }</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">        for (FullyQualifiedJavaType fqjt : typeArguments) {</span>
+<span class="fc" id="L150">            answer.addAll(fqjt.getImportList());</span>
+<span class="fc" id="L151">        }</span>
 
-<span class="fc" id="L156">        return answer;</span>
+<span class="fc" id="L153">        return answer;</span>
     }
 
     private String calculateActualImport(String name) {
-<span class="fc" id="L160">        String answer = name;</span>
-<span class="fc bfc" id="L161" title="All 2 branches covered.">        if (this.isArray()) {</span>
-<span class="fc" id="L162">            int index = name.indexOf('[');</span>
-<span class="pc bpc" id="L163" title="1 of 2 branches missed.">            if (index != -1) {</span>
-<span class="fc" id="L164">                answer = name.substring(0, index);</span>
+<span class="fc" id="L157">        String answer = name;</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">        if (this.isArray()) {</span>
+<span class="fc" id="L159">            int index = name.indexOf('[');</span>
+<span class="pc bpc" id="L160" title="1 of 2 branches missed.">            if (index != -1) {</span>
+<span class="fc" id="L161">                answer = name.substring(0, index);</span>
             }
         }
-<span class="fc" id="L167">        return answer;</span>
+<span class="fc" id="L164">        return answer;</span>
     }
 
     public String getPackageName() {
-<span class="fc" id="L171">        return packageName;</span>
+<span class="fc" id="L168">        return packageName;</span>
     }
 
     public String getShortName() {
-<span class="fc" id="L175">        StringBuilder sb = new StringBuilder();</span>
-<span class="fc bfc" id="L176" title="All 2 branches covered.">        if (wildcardType) {</span>
-<span class="fc" id="L177">            sb.append('?');</span>
-<span class="fc bfc" id="L178" title="All 2 branches covered.">            if (boundedWildcard) {</span>
-<span class="fc bfc" id="L179" title="All 2 branches covered.">                if (extendsBoundedWildcard) {</span>
-<span class="fc" id="L180">                    sb.append(&quot; extends &quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L172">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L173" title="All 2 branches covered.">        if (wildcardType) {</span>
+<span class="fc" id="L174">            sb.append('?');</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">            if (boundedWildcard) {</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">                if (extendsBoundedWildcard) {</span>
+<span class="fc" id="L177">                    sb.append(&quot; extends &quot;); //$NON-NLS-1$</span>
                 } else {
-<span class="fc" id="L182">                    sb.append(&quot; super &quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L179">                    sb.append(&quot; super &quot;); //$NON-NLS-1$</span>
                 }
 
-<span class="fc" id="L185">                sb.append(baseShortName);</span>
+<span class="fc" id="L182">                sb.append(baseShortName);</span>
             }
         } else {
-<span class="fc" id="L188">            sb.append(baseShortName);</span>
+<span class="fc" id="L185">            sb.append(baseShortName);</span>
         }
 
-<span class="fc bfc" id="L191" title="All 2 branches covered.">        if (!typeArguments.isEmpty()) {</span>
-<span class="fc" id="L192">            boolean first = true;</span>
-<span class="fc" id="L193">            sb.append('&lt;');</span>
-<span class="fc bfc" id="L194" title="All 2 branches covered.">            for (FullyQualifiedJavaType fqjt : typeArguments) {</span>
-<span class="fc bfc" id="L195" title="All 2 branches covered.">                if (first) {</span>
-<span class="fc" id="L196">                    first = false;</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">        if (!typeArguments.isEmpty()) {</span>
+<span class="fc" id="L189">            boolean first = true;</span>
+<span class="fc" id="L190">            sb.append('&lt;');</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">            for (FullyQualifiedJavaType fqjt : typeArguments) {</span>
+<span class="fc bfc" id="L192" title="All 2 branches covered.">                if (first) {</span>
+<span class="fc" id="L193">                    first = false;</span>
                 } else {
-<span class="fc" id="L198">                    sb.append(&quot;, &quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L195">                    sb.append(&quot;, &quot;); //$NON-NLS-1$</span>
                 }
-<span class="fc" id="L200">                sb.append(fqjt.getShortName());</span>
+<span class="fc" id="L197">                sb.append(fqjt.getShortName());</span>
 
-<span class="fc" id="L202">            }</span>
-<span class="fc" id="L203">            sb.append('&gt;');</span>
+<span class="fc" id="L199">            }</span>
+<span class="fc" id="L200">            sb.append('&gt;');</span>
         }
 
-<span class="fc" id="L206">        return sb.toString();</span>
+<span class="fc" id="L203">        return sb.toString();</span>
     }
 
     public String getShortNameWithoutTypeArguments() {
-<span class="fc" id="L210">        return baseShortName;</span>
+<span class="fc" id="L207">        return baseShortName;</span>
     }
 
     @Override
     public boolean equals(Object obj) {
-<span class="fc bfc" id="L215" title="All 2 branches covered.">        if (this == obj) {</span>
-<span class="fc" id="L216">            return true;</span>
+<span class="fc bfc" id="L212" title="All 2 branches covered.">        if (this == obj) {</span>
+<span class="fc" id="L213">            return true;</span>
         }
 
-<span class="pc bpc" id="L219" title="1 of 2 branches missed.">        if (!(obj instanceof FullyQualifiedJavaType)) {</span>
-<span class="nc" id="L220">            return false;</span>
+<span class="pc bpc" id="L216" title="1 of 2 branches missed.">        if (!(obj instanceof FullyQualifiedJavaType)) {</span>
+<span class="nc" id="L217">            return false;</span>
         }
 
-<span class="fc" id="L223">        FullyQualifiedJavaType other = (FullyQualifiedJavaType) obj;</span>
+<span class="fc" id="L220">        FullyQualifiedJavaType other = (FullyQualifiedJavaType) obj;</span>
 
-<span class="fc" id="L225">        return getFullyQualifiedName().equals(other.getFullyQualifiedName());</span>
+<span class="fc" id="L222">        return getFullyQualifiedName().equals(other.getFullyQualifiedName());</span>
     }
 
     @Override
     public int hashCode() {
-<span class="fc" id="L230">        return getFullyQualifiedName().hashCode();</span>
+<span class="fc" id="L227">        return getFullyQualifiedName().hashCode();</span>
     }
 
     @Override
     public String toString() {
-<span class="fc" id="L235">        return getFullyQualifiedName();</span>
+<span class="fc" id="L232">        return getFullyQualifiedName();</span>
     }
 
     public boolean isPrimitive() {
-<span class="fc" id="L239">        return primitive;</span>
+<span class="fc" id="L236">        return primitive;</span>
     }
 
     public PrimitiveTypeWrapper getPrimitiveTypeWrapper() {
-<span class="fc" id="L243">        return primitiveTypeWrapper;</span>
+<span class="fc" id="L240">        return primitiveTypeWrapper;</span>
     }
 
-    public static final FullyQualifiedJavaType getIntInstance() {
-<span class="fc bfc" id="L247" title="All 2 branches covered.">        if (intInstance == null) {</span>
-<span class="fc" id="L248">            intInstance = new FullyQualifiedJavaType(&quot;int&quot;); //$NON-NLS-1$</span>
+    public static FullyQualifiedJavaType getIntInstance() {
+<span class="fc bfc" id="L244" title="All 2 branches covered.">        if (intInstance == null) {</span>
+<span class="fc" id="L245">            intInstance = new FullyQualifiedJavaType(&quot;int&quot;); //$NON-NLS-1$</span>
         }
 
-<span class="fc" id="L251">        return intInstance;</span>
+<span class="fc" id="L248">        return intInstance;</span>
     }
 
-    public static final FullyQualifiedJavaType getNewMapInstance() {
+    public static FullyQualifiedJavaType getNewListInstance() {
         // always return a new instance because the type may be parameterized
-<span class="nc" id="L256">        return new FullyQualifiedJavaType(&quot;java.util.Map&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L253">        return new FullyQualifiedJavaType(&quot;java.util.List&quot;); //$NON-NLS-1$</span>
     }
 
-    public static final FullyQualifiedJavaType getNewListInstance() {
+    public static FullyQualifiedJavaType getNewHashMapInstance() {
         // always return a new instance because the type may be parameterized
-<span class="fc" id="L261">        return new FullyQualifiedJavaType(&quot;java.util.List&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L258">        return new FullyQualifiedJavaType(&quot;java.util.HashMap&quot;); //$NON-NLS-1$</span>
     }
 
-    public static final FullyQualifiedJavaType getNewHashMapInstance() {
+    public static FullyQualifiedJavaType getNewArrayListInstance() {
         // always return a new instance because the type may be parameterized
-<span class="fc" id="L266">        return new FullyQualifiedJavaType(&quot;java.util.HashMap&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L263">        return new FullyQualifiedJavaType(&quot;java.util.ArrayList&quot;); //$NON-NLS-1$</span>
     }
 
-    public static final FullyQualifiedJavaType getNewArrayListInstance() {
+    public static FullyQualifiedJavaType getNewIteratorInstance() {
         // always return a new instance because the type may be parameterized
-<span class="fc" id="L271">        return new FullyQualifiedJavaType(&quot;java.util.ArrayList&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L268">        return new FullyQualifiedJavaType(&quot;java.util.Iterator&quot;); //$NON-NLS-1$</span>
     }
 
-    public static final FullyQualifiedJavaType getNewIteratorInstance() {
-        // always return a new instance because the type may be parameterized
-<span class="fc" id="L276">        return new FullyQualifiedJavaType(&quot;java.util.Iterator&quot;); //$NON-NLS-1$</span>
-    }
-
-    public static final FullyQualifiedJavaType getStringInstance() {
-<span class="fc bfc" id="L280" title="All 2 branches covered.">        if (stringInstance == null) {</span>
-<span class="fc" id="L281">            stringInstance = new FullyQualifiedJavaType(&quot;java.lang.String&quot;); //$NON-NLS-1$</span>
+    public static FullyQualifiedJavaType getStringInstance() {
+<span class="fc bfc" id="L272" title="All 2 branches covered.">        if (stringInstance == null) {</span>
+<span class="fc" id="L273">            stringInstance = new FullyQualifiedJavaType(&quot;java.lang.String&quot;); //$NON-NLS-1$</span>
         }
 
-<span class="fc" id="L284">        return stringInstance;</span>
+<span class="fc" id="L276">        return stringInstance;</span>
     }
 
-    public static final FullyQualifiedJavaType getBooleanPrimitiveInstance() {
-<span class="fc bfc" id="L288" title="All 2 branches covered.">        if (booleanPrimitiveInstance == null) {</span>
-<span class="fc" id="L289">            booleanPrimitiveInstance = new FullyQualifiedJavaType(&quot;boolean&quot;); //$NON-NLS-1$</span>
+    public static FullyQualifiedJavaType getBooleanPrimitiveInstance() {
+<span class="fc bfc" id="L280" title="All 2 branches covered.">        if (booleanPrimitiveInstance == null) {</span>
+<span class="fc" id="L281">            booleanPrimitiveInstance = new FullyQualifiedJavaType(&quot;boolean&quot;); //$NON-NLS-1$</span>
         }
 
-<span class="fc" id="L292">        return booleanPrimitiveInstance;</span>
+<span class="fc" id="L284">        return booleanPrimitiveInstance;</span>
     }
 
-    public static final FullyQualifiedJavaType getObjectInstance() {
-<span class="fc bfc" id="L296" title="All 2 branches covered.">        if (objectInstance == null) {</span>
-<span class="fc" id="L297">            objectInstance = new FullyQualifiedJavaType(&quot;java.lang.Object&quot;); //$NON-NLS-1$</span>
+    public static FullyQualifiedJavaType getObjectInstance() {
+<span class="fc bfc" id="L288" title="All 2 branches covered.">        if (objectInstance == null) {</span>
+<span class="fc" id="L289">            objectInstance = new FullyQualifiedJavaType(&quot;java.lang.Object&quot;); //$NON-NLS-1$</span>
         }
 
-<span class="fc" id="L300">        return objectInstance;</span>
+<span class="fc" id="L292">        return objectInstance;</span>
     }
 
-    public static final FullyQualifiedJavaType getDateInstance() {
-<span class="fc bfc" id="L304" title="All 2 branches covered.">        if (dateInstance == null) {</span>
-<span class="fc" id="L305">            dateInstance = new FullyQualifiedJavaType(&quot;java.util.Date&quot;); //$NON-NLS-1$</span>
+    public static FullyQualifiedJavaType getDateInstance() {
+<span class="fc bfc" id="L296" title="All 2 branches covered.">        if (dateInstance == null) {</span>
+<span class="fc" id="L297">            dateInstance = new FullyQualifiedJavaType(&quot;java.util.Date&quot;); //$NON-NLS-1$</span>
         }
 
-<span class="fc" id="L308">        return dateInstance;</span>
+<span class="fc" id="L300">        return dateInstance;</span>
     }
 
-    public static final FullyQualifiedJavaType getCriteriaInstance() {
-<span class="fc bfc" id="L312" title="All 2 branches covered.">        if (criteriaInstance == null) {</span>
-<span class="fc" id="L313">            criteriaInstance = new FullyQualifiedJavaType(&quot;Criteria&quot;); //$NON-NLS-1$</span>
+    public static FullyQualifiedJavaType getCriteriaInstance() {
+<span class="fc bfc" id="L304" title="All 2 branches covered.">        if (criteriaInstance == null) {</span>
+<span class="fc" id="L305">            criteriaInstance = new FullyQualifiedJavaType(&quot;Criteria&quot;); //$NON-NLS-1$</span>
         }
 
-<span class="fc" id="L316">        return criteriaInstance;</span>
+<span class="fc" id="L308">        return criteriaInstance;</span>
     }
 
-    public static final FullyQualifiedJavaType getGeneratedCriteriaInstance() {
-<span class="fc bfc" id="L320" title="All 2 branches covered.">        if (generatedCriteriaInstance == null) {</span>
-<span class="fc" id="L321">            generatedCriteriaInstance = new FullyQualifiedJavaType(</span>
+    public static FullyQualifiedJavaType getGeneratedCriteriaInstance() {
+<span class="fc bfc" id="L312" title="All 2 branches covered.">        if (generatedCriteriaInstance == null) {</span>
+<span class="fc" id="L313">            generatedCriteriaInstance = new FullyQualifiedJavaType(</span>
                     &quot;GeneratedCriteria&quot;); //$NON-NLS-1$
         }
 
-<span class="fc" id="L325">        return generatedCriteriaInstance;</span>
+<span class="fc" id="L317">        return generatedCriteriaInstance;</span>
     }
 
     @Override
     public int compareTo(FullyQualifiedJavaType other) {
-<span class="fc" id="L330">        return getFullyQualifiedName().compareTo(other.getFullyQualifiedName());</span>
+<span class="fc" id="L322">        return getFullyQualifiedName().compareTo(other.getFullyQualifiedName());</span>
     }
 
     public void addTypeArgument(FullyQualifiedJavaType type) {
-<span class="fc" id="L334">        typeArguments.add(type);</span>
-<span class="fc" id="L335">    }</span>
+<span class="fc" id="L326">        typeArguments.add(type);</span>
+<span class="fc" id="L327">    }</span>
 
     private void parse(String fullTypeSpecification) {
-<span class="fc" id="L338">        String spec = fullTypeSpecification.trim();</span>
+<span class="fc" id="L330">        String spec = fullTypeSpecification.trim();</span>
 
-<span class="fc bfc" id="L340" title="All 2 branches covered.">        if (spec.startsWith(&quot;?&quot;)) { //$NON-NLS-1$</span>
-<span class="fc" id="L341">            wildcardType = true;</span>
-<span class="fc" id="L342">            spec = spec.substring(1).trim();</span>
-<span class="fc bfc" id="L343" title="All 2 branches covered.">            if (spec.startsWith(&quot;extends &quot;)) { //$NON-NLS-1$</span>
-<span class="fc" id="L344">                boundedWildcard = true;</span>
-<span class="fc" id="L345">                extendsBoundedWildcard = true;</span>
-<span class="fc" id="L346">                spec = spec.substring(8);  // &quot;extends &quot;.length()</span>
-<span class="fc bfc" id="L347" title="All 2 branches covered.">            } else if (spec.startsWith(&quot;super &quot;)) { //$NON-NLS-1$</span>
-<span class="fc" id="L348">                boundedWildcard = true;</span>
-<span class="fc" id="L349">                extendsBoundedWildcard = false;</span>
-<span class="fc" id="L350">                spec = spec.substring(6);  // &quot;super &quot;.length()</span>
+<span class="fc bfc" id="L332" title="All 2 branches covered.">        if (spec.startsWith(&quot;?&quot;)) { //$NON-NLS-1$</span>
+<span class="fc" id="L333">            wildcardType = true;</span>
+<span class="fc" id="L334">            spec = spec.substring(1).trim();</span>
+<span class="fc bfc" id="L335" title="All 2 branches covered.">            if (spec.startsWith(&quot;extends &quot;)) { //$NON-NLS-1$</span>
+<span class="fc" id="L336">                boundedWildcard = true;</span>
+<span class="fc" id="L337">                extendsBoundedWildcard = true;</span>
+<span class="fc" id="L338">                spec = spec.substring(8);  // &quot;extends &quot;.length()</span>
+<span class="fc bfc" id="L339" title="All 2 branches covered.">            } else if (spec.startsWith(&quot;super &quot;)) { //$NON-NLS-1$</span>
+<span class="fc" id="L340">                boundedWildcard = true;</span>
+<span class="fc" id="L341">                extendsBoundedWildcard = false;</span>
+<span class="fc" id="L342">                spec = spec.substring(6);  // &quot;super &quot;.length()</span>
             } else {
-<span class="fc" id="L352">                boundedWildcard = false;</span>
+<span class="fc" id="L344">                boundedWildcard = false;</span>
             }
-<span class="fc" id="L354">            parse(spec);</span>
+<span class="fc" id="L346">            parse(spec);</span>
         } else {
-<span class="fc" id="L356">            int index = fullTypeSpecification.indexOf('&lt;');</span>
-<span class="fc bfc" id="L357" title="All 2 branches covered.">            if (index == -1) {</span>
-<span class="fc" id="L358">                simpleParse(fullTypeSpecification);</span>
+<span class="fc" id="L348">            int index = fullTypeSpecification.indexOf('&lt;');</span>
+<span class="fc bfc" id="L349" title="All 2 branches covered.">            if (index == -1) {</span>
+<span class="fc" id="L350">                simpleParse(fullTypeSpecification);</span>
             } else {
-<span class="fc" id="L360">                simpleParse(fullTypeSpecification.substring(0, index));</span>
-<span class="fc" id="L361">                int endIndex = fullTypeSpecification.lastIndexOf('&gt;');</span>
-<span class="pc bpc" id="L362" title="1 of 2 branches missed.">                if (endIndex == -1) {</span>
-<span class="nc" id="L363">                    throw new RuntimeException(getString(</span>
+<span class="fc" id="L352">                simpleParse(fullTypeSpecification.substring(0, index));</span>
+<span class="fc" id="L353">                int endIndex = fullTypeSpecification.lastIndexOf('&gt;');</span>
+<span class="pc bpc" id="L354" title="1 of 2 branches missed.">                if (endIndex == -1) {</span>
+<span class="nc" id="L355">                    throw new RuntimeException(getString(</span>
                             &quot;RuntimeError.22&quot;, fullTypeSpecification)); //$NON-NLS-1$
                 }
-<span class="fc" id="L366">                genericParse(fullTypeSpecification.substring(index, endIndex + 1));</span>
+<span class="fc" id="L358">                genericParse(fullTypeSpecification.substring(index, endIndex + 1));</span>
             }
 
             // this is far from a perfect test for detecting arrays, but is close
             // enough for most cases.  It will not detect an improperly specified
             // array type like byte], but it will detect byte[] and byte[   ]
             // which are both valid
-<span class="fc" id="L373">            isArray = fullTypeSpecification.endsWith(&quot;]&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L365">            isArray = fullTypeSpecification.endsWith(&quot;]&quot;); //$NON-NLS-1$</span>
         }
-<span class="fc" id="L375">    }</span>
+<span class="fc" id="L367">    }</span>
 
     private void simpleParse(String typeSpecification) {
-<span class="fc" id="L378">        baseQualifiedName = typeSpecification.trim();</span>
-<span class="fc bfc" id="L379" title="All 2 branches covered.">        if (baseQualifiedName.contains(&quot;.&quot;)) { //$NON-NLS-1$</span>
-<span class="fc" id="L380">            packageName = getPackage(baseQualifiedName);</span>
-<span class="fc" id="L381">            baseShortName = baseQualifiedName</span>
-<span class="fc" id="L382">                    .substring(packageName.length() + 1);</span>
-<span class="fc" id="L383">            int index = baseShortName.lastIndexOf('.');</span>
-<span class="pc bpc" id="L384" title="1 of 2 branches missed.">            if (index != -1) {</span>
-<span class="nc" id="L385">                baseShortName = baseShortName.substring(index + 1);</span>
+<span class="fc" id="L370">        baseQualifiedName = typeSpecification.trim();</span>
+<span class="fc bfc" id="L371" title="All 2 branches covered.">        if (baseQualifiedName.contains(&quot;.&quot;)) { //$NON-NLS-1$</span>
+<span class="fc" id="L372">            packageName = getPackage(baseQualifiedName);</span>
+<span class="fc" id="L373">            baseShortName = baseQualifiedName</span>
+<span class="fc" id="L374">                    .substring(packageName.length() + 1);</span>
+<span class="fc" id="L375">            int index = baseShortName.lastIndexOf('.');</span>
+<span class="pc bpc" id="L376" title="1 of 2 branches missed.">            if (index != -1) {</span>
+<span class="nc" id="L377">                baseShortName = baseShortName.substring(index + 1);</span>
             }
 
-<span class="fc bfc" id="L388" title="All 2 branches covered.">            if (JAVA_LANG.equals(packageName)) { //$NON-NLS-1$</span>
-<span class="fc" id="L389">                explicitlyImported = false;</span>
-            } else {
-<span class="fc" id="L391">                explicitlyImported = true;</span>
-            }
-<span class="fc" id="L393">        } else {</span>
-<span class="fc" id="L394">            baseShortName = baseQualifiedName;</span>
-<span class="fc" id="L395">            explicitlyImported = false;</span>
-<span class="fc" id="L396">            packageName = &quot;&quot;; //$NON-NLS-1$</span>
+            //$NON-NLS-1$
+<span class="fc bfc" id="L381" title="All 2 branches covered.">            explicitlyImported = !JAVA_LANG.equals(packageName);</span>
+<span class="fc" id="L382">        } else {</span>
+<span class="fc" id="L383">            baseShortName = baseQualifiedName;</span>
+<span class="fc" id="L384">            explicitlyImported = false;</span>
+<span class="fc" id="L385">            packageName = &quot;&quot;; //$NON-NLS-1$</span>
 
-<span class="fc bfc" id="L398" title="All 2 branches covered.">            if (&quot;byte&quot;.equals(baseQualifiedName)) { //$NON-NLS-1$</span>
-<span class="fc" id="L399">                primitive = true;</span>
-<span class="fc" id="L400">                primitiveTypeWrapper = PrimitiveTypeWrapper.getByteInstance();</span>
-<span class="pc bpc" id="L401" title="1 of 2 branches missed.">            } else if (&quot;short&quot;.equals(baseQualifiedName)) { //$NON-NLS-1$</span>
-<span class="nc" id="L402">                primitive = true;</span>
-<span class="nc" id="L403">                primitiveTypeWrapper = PrimitiveTypeWrapper.getShortInstance();</span>
-<span class="fc bfc" id="L404" title="All 2 branches covered.">            } else if (&quot;int&quot;.equals(baseQualifiedName)) { //$NON-NLS-1$</span>
-<span class="fc" id="L405">                primitive = true;</span>
-<span class="fc" id="L406">                primitiveTypeWrapper = PrimitiveTypeWrapper</span>
-<span class="fc" id="L407">                        .getIntegerInstance();</span>
-<span class="fc bfc" id="L408" title="All 2 branches covered.">            } else if (&quot;long&quot;.equals(baseQualifiedName)) { //$NON-NLS-1$</span>
-<span class="fc" id="L409">                primitive = true;</span>
-<span class="fc" id="L410">                primitiveTypeWrapper = PrimitiveTypeWrapper.getLongInstance();</span>
-<span class="pc bpc" id="L411" title="1 of 2 branches missed.">            } else if (&quot;char&quot;.equals(baseQualifiedName)) { //$NON-NLS-1$</span>
-<span class="nc" id="L412">                primitive = true;</span>
-<span class="nc" id="L413">                primitiveTypeWrapper = PrimitiveTypeWrapper</span>
-<span class="nc" id="L414">                        .getCharacterInstance();</span>
-<span class="pc bpc" id="L415" title="1 of 2 branches missed.">            } else if (&quot;float&quot;.equals(baseQualifiedName)) { //$NON-NLS-1$</span>
-<span class="nc" id="L416">                primitive = true;</span>
-<span class="nc" id="L417">                primitiveTypeWrapper = PrimitiveTypeWrapper.getFloatInstance();</span>
-<span class="pc bpc" id="L418" title="1 of 2 branches missed.">            } else if (&quot;double&quot;.equals(baseQualifiedName)) { //$NON-NLS-1$</span>
-<span class="nc" id="L419">                primitive = true;</span>
-<span class="nc" id="L420">                primitiveTypeWrapper = PrimitiveTypeWrapper.getDoubleInstance();</span>
-<span class="fc bfc" id="L421" title="All 2 branches covered.">            } else if (&quot;boolean&quot;.equals(baseQualifiedName)) { //$NON-NLS-1$</span>
-<span class="fc" id="L422">                primitive = true;</span>
-<span class="fc" id="L423">                primitiveTypeWrapper = PrimitiveTypeWrapper</span>
-<span class="fc" id="L424">                        .getBooleanInstance();</span>
-            } else {
-<span class="fc" id="L426">                primitive = false;</span>
-<span class="fc" id="L427">                primitiveTypeWrapper = null;</span>
+<span class="pc bpc" id="L387" title="4 of 9 branches missed.">            switch (baseQualifiedName) {</span>
+            case &quot;byte&quot;:  //$NON-NLS-1$
+<span class="fc" id="L389">                primitive = true;</span>
+<span class="fc" id="L390">                primitiveTypeWrapper = PrimitiveTypeWrapper.getByteInstance();</span>
+<span class="fc" id="L391">                break;</span>
+            case &quot;short&quot;:  //$NON-NLS-1$
+<span class="nc" id="L393">                primitive = true;</span>
+<span class="nc" id="L394">                primitiveTypeWrapper = PrimitiveTypeWrapper.getShortInstance();</span>
+<span class="nc" id="L395">                break;</span>
+            case &quot;int&quot;:  //$NON-NLS-1$
+<span class="fc" id="L397">                primitive = true;</span>
+<span class="fc" id="L398">                primitiveTypeWrapper = PrimitiveTypeWrapper.getIntegerInstance();</span>
+<span class="fc" id="L399">                break;</span>
+            case &quot;long&quot;:  //$NON-NLS-1$
+<span class="fc" id="L401">                primitive = true;</span>
+<span class="fc" id="L402">                primitiveTypeWrapper = PrimitiveTypeWrapper.getLongInstance();</span>
+<span class="fc" id="L403">                break;</span>
+            case &quot;char&quot;:  //$NON-NLS-1$
+<span class="nc" id="L405">                primitive = true;</span>
+<span class="nc" id="L406">                primitiveTypeWrapper = PrimitiveTypeWrapper.getCharacterInstance();</span>
+<span class="nc" id="L407">                break;</span>
+            case &quot;float&quot;:  //$NON-NLS-1$
+<span class="nc" id="L409">                primitive = true;</span>
+<span class="nc" id="L410">                primitiveTypeWrapper = PrimitiveTypeWrapper.getFloatInstance();</span>
+<span class="nc" id="L411">                break;</span>
+            case &quot;double&quot;:  //$NON-NLS-1$
+<span class="nc" id="L413">                primitive = true;</span>
+<span class="nc" id="L414">                primitiveTypeWrapper = PrimitiveTypeWrapper.getDoubleInstance();</span>
+<span class="nc" id="L415">                break;</span>
+            case &quot;boolean&quot;:  //$NON-NLS-1$
+<span class="fc" id="L417">                primitive = true;</span>
+<span class="fc" id="L418">                primitiveTypeWrapper = PrimitiveTypeWrapper.getBooleanInstance();</span>
+<span class="fc" id="L419">                break;</span>
+            default:
+<span class="fc" id="L421">                primitive = false;</span>
+<span class="fc" id="L422">                primitiveTypeWrapper = null;</span>
+                break;
             }
         }
-<span class="fc" id="L430">    }</span>
+<span class="fc" id="L426">    }</span>
 
     private void genericParse(String genericSpecification) {
-<span class="fc" id="L433">        int lastIndex = genericSpecification.lastIndexOf('&gt;');</span>
-<span class="pc bpc" id="L434" title="1 of 2 branches missed.">        if (lastIndex == -1) {</span>
+<span class="fc" id="L429">        int lastIndex = genericSpecification.lastIndexOf('&gt;');</span>
+<span class="pc bpc" id="L430" title="1 of 2 branches missed.">        if (lastIndex == -1) {</span>
             // shouldn't happen - should be caught already, but just in case...
-<span class="nc" id="L436">            throw new RuntimeException(getString(</span>
+<span class="nc" id="L432">            throw new RuntimeException(getString(</span>
                     &quot;RuntimeError.22&quot;, genericSpecification)); //$NON-NLS-1$
         }
-<span class="fc" id="L439">        String argumentString = genericSpecification.substring(1, lastIndex);</span>
+<span class="fc" id="L435">        String argumentString = genericSpecification.substring(1, lastIndex);</span>
         // need to find &quot;,&quot; outside of a &lt;&gt; bounds
-<span class="fc" id="L441">        StringTokenizer st = new StringTokenizer(argumentString, &quot;,&lt;&gt;&quot;, true); //$NON-NLS-1$</span>
-<span class="fc" id="L442">        int openCount = 0;</span>
-<span class="fc" id="L443">        StringBuilder sb = new StringBuilder();</span>
-<span class="fc bfc" id="L444" title="All 2 branches covered.">        while (st.hasMoreTokens()) {</span>
-<span class="fc" id="L445">            String token = st.nextToken();</span>
-<span class="fc bfc" id="L446" title="All 2 branches covered.">            if (&quot;&lt;&quot;.equals(token)) { //$NON-NLS-1$</span>
-<span class="fc" id="L447">                sb.append(token);</span>
-<span class="fc" id="L448">                openCount++;</span>
-<span class="fc bfc" id="L449" title="All 2 branches covered.">            } else if (&quot;&gt;&quot;.equals(token)) { //$NON-NLS-1$</span>
-<span class="fc" id="L450">                sb.append(token);</span>
-<span class="fc" id="L451">                openCount--;</span>
-<span class="fc bfc" id="L452" title="All 2 branches covered.">            } else if (&quot;,&quot;.equals(token)) { //$NON-NLS-1$</span>
-<span class="fc bfc" id="L453" title="All 2 branches covered.">                if (openCount == 0) {</span>
-<span class="fc" id="L454">                    typeArguments</span>
-<span class="fc" id="L455">                            .add(new FullyQualifiedJavaType(sb.toString()));</span>
-<span class="fc" id="L456">                    sb.setLength(0);</span>
+<span class="fc" id="L437">        StringTokenizer st = new StringTokenizer(argumentString, &quot;,&lt;&gt;&quot;, true); //$NON-NLS-1$</span>
+<span class="fc" id="L438">        int openCount = 0;</span>
+<span class="fc" id="L439">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L440" title="All 2 branches covered.">        while (st.hasMoreTokens()) {</span>
+<span class="fc" id="L441">            String token = st.nextToken();</span>
+<span class="fc bfc" id="L442" title="All 2 branches covered.">            if (&quot;&lt;&quot;.equals(token)) { //$NON-NLS-1$</span>
+<span class="fc" id="L443">                sb.append(token);</span>
+<span class="fc" id="L444">                openCount++;</span>
+<span class="fc bfc" id="L445" title="All 2 branches covered.">            } else if (&quot;&gt;&quot;.equals(token)) { //$NON-NLS-1$</span>
+<span class="fc" id="L446">                sb.append(token);</span>
+<span class="fc" id="L447">                openCount--;</span>
+<span class="fc bfc" id="L448" title="All 2 branches covered.">            } else if (&quot;,&quot;.equals(token)) { //$NON-NLS-1$</span>
+<span class="fc bfc" id="L449" title="All 2 branches covered.">                if (openCount == 0) {</span>
+<span class="fc" id="L450">                    typeArguments</span>
+<span class="fc" id="L451">                            .add(new FullyQualifiedJavaType(sb.toString()));</span>
+<span class="fc" id="L452">                    sb.setLength(0);</span>
                 } else {
-<span class="fc" id="L458">                    sb.append(token);</span>
+<span class="fc" id="L454">                    sb.append(token);</span>
                 }
             } else {
-<span class="fc" id="L461">                sb.append(token);</span>
+<span class="fc" id="L457">                sb.append(token);</span>
             }
-<span class="fc" id="L463">        }</span>
+<span class="fc" id="L459">        }</span>
 
-<span class="pc bpc" id="L465" title="1 of 2 branches missed.">        if (openCount != 0) {</span>
-<span class="nc" id="L466">            throw new RuntimeException(getString(</span>
+<span class="pc bpc" id="L461" title="1 of 2 branches missed.">        if (openCount != 0) {</span>
+<span class="nc" id="L462">            throw new RuntimeException(getString(</span>
                     &quot;RuntimeError.22&quot;, genericSpecification)); //$NON-NLS-1$
         }
 
-<span class="fc" id="L470">        String finalType = sb.toString();</span>
-<span class="pc bpc" id="L471" title="1 of 2 branches missed.">        if (stringHasValue(finalType)) {</span>
-<span class="fc" id="L472">            typeArguments.add(new FullyQualifiedJavaType(finalType));</span>
+<span class="fc" id="L466">        String finalType = sb.toString();</span>
+<span class="pc bpc" id="L467" title="1 of 2 branches missed.">        if (stringHasValue(finalType)) {</span>
+<span class="fc" id="L468">            typeArguments.add(new FullyQualifiedJavaType(finalType));</span>
         }
-<span class="fc" id="L474">    }</span>
+<span class="fc" id="L470">    }</span>
 
     /**
      * Returns the package name of a fully qualified type.
-     * 
+     *
      * &lt;p&gt;This method calculates the package as the part of the fully qualified name up to, but not including, the last
      * element. Therefore, it does not support fully qualified inner classes. Not totally fool proof, but correct in
      * most instances.
@@ -485,16 +481,16 @@ public class FullyQualifiedJavaType implements
      * @return the package
      */
     private static String getPackage(String baseQualifiedName) {
-<span class="fc" id="L488">        int index = baseQualifiedName.lastIndexOf('.');</span>
-<span class="fc" id="L489">        return baseQualifiedName.substring(0, index);</span>
+<span class="fc" id="L484">        int index = baseQualifiedName.lastIndexOf('.');</span>
+<span class="fc" id="L485">        return baseQualifiedName.substring(0, index);</span>
     }
 
     public boolean isArray() {
-<span class="fc" id="L493">        return isArray;</span>
+<span class="fc" id="L489">        return isArray;</span>
     }
 
     public List&lt;FullyQualifiedJavaType&gt; getTypeArguments() {
-<span class="fc" id="L497">        return typeArguments;</span>
+<span class="fc" id="L493">        return typeArguments;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

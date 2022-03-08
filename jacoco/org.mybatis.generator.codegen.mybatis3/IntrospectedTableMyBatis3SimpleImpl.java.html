@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>IntrospectedTableMyBatis3SimpleImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.codegen.mybatis3</a> &gt; <span class="el_source">IntrospectedTableMyBatis3SimpleImpl.java</span></div><h1>IntrospectedTableMyBatis3SimpleImpl.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2018 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>IntrospectedTableMyBatis3SimpleImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.codegen.mybatis3</a> &gt; <span class="el_source">IntrospectedTableMyBatis3SimpleImpl.java</span></div><h1>IntrospectedTableMyBatis3SimpleImpl.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -29,9 +29,9 @@ import org.mybatis.generator.internal.ObjectFactory;
 /**
  * Introspected table implementation for generating simple MyBatis3 artifacts (no &quot;by example&quot; methods,
  * flat model, etc.)
- * 
+ *
  * @author Jeff Butler
- * 
+ *
  */
 public class IntrospectedTableMyBatis3SimpleImpl extends IntrospectedTableMyBatis3Impl {
     public IntrospectedTableMyBatis3SimpleImpl() {
@@ -39,7 +39,7 @@ public class IntrospectedTableMyBatis3SimpleImpl extends IntrospectedTableMyBati
 <span class="fc" id="L39">    }</span>
 
     @Override
-    protected void calculateXmlMapperGenerator(AbstractJavaClientGenerator javaClientGenerator, 
+    protected void calculateXmlMapperGenerator(AbstractJavaClientGenerator javaClientGenerator,
             List&lt;String&gt; warnings,
             ProgressCallback progressCallback) {
 <span class="pc bpc" id="L45" title="1 of 2 branches missed.">        if (javaClientGenerator == null) {</span>
@@ -49,43 +49,38 @@ public class IntrospectedTableMyBatis3SimpleImpl extends IntrospectedTableMyBati
         } else {
 <span class="fc" id="L50">            xmlMapperGenerator = javaClientGenerator.getMatchedXMLGenerator();</span>
         }
-        
-<span class="fc" id="L53">        initializeAbstractGenerator(xmlMapperGenerator, warnings,</span>
-                progressCallback);
-<span class="fc" id="L55">    }</span>
+
+<span class="fc" id="L53">        initializeAbstractGenerator(xmlMapperGenerator, warnings, progressCallback);</span>
+<span class="fc" id="L54">    }</span>
 
     @Override
     protected AbstractJavaClientGenerator createJavaClientGenerator() {
-<span class="pc bpc" id="L59" title="1 of 2 branches missed.">        if (context.getJavaClientGeneratorConfiguration() == null) {</span>
-<span class="nc" id="L60">            return null;</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">        if (context.getJavaClientGeneratorConfiguration() == null) {</span>
+<span class="nc" id="L59">            return null;</span>
         }
-        
-<span class="fc" id="L63">        String type = context.getJavaClientGeneratorConfiguration()</span>
-<span class="fc" id="L64">                .getConfigurationType();</span>
+
+<span class="fc" id="L62">        String type = context.getJavaClientGeneratorConfiguration().getConfigurationType();</span>
 
         AbstractJavaClientGenerator javaGenerator;
-<span class="fc bfc" id="L67" title="All 2 branches covered.">        if (&quot;XMLMAPPER&quot;.equalsIgnoreCase(type)) { //$NON-NLS-1$</span>
-<span class="fc" id="L68">            javaGenerator = new SimpleJavaClientGenerator(getClientProject());</span>
-<span class="pc bpc" id="L69" title="1 of 2 branches missed.">        } else if (&quot;ANNOTATEDMAPPER&quot;.equalsIgnoreCase(type)) { //$NON-NLS-1$</span>
-<span class="fc" id="L70">            javaGenerator = new SimpleAnnotatedClientGenerator(getClientProject());</span>
-<span class="nc bnc" id="L71" title="All 2 branches missed.">        } else if (&quot;MAPPER&quot;.equalsIgnoreCase(type)) { //$NON-NLS-1$</span>
-<span class="nc" id="L72">            javaGenerator = new SimpleJavaClientGenerator(getClientProject());</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        if (&quot;XMLMAPPER&quot;.equalsIgnoreCase(type)) { //$NON-NLS-1$</span>
+<span class="fc" id="L66">            javaGenerator = new SimpleJavaClientGenerator(getClientProject());</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">        } else if (&quot;ANNOTATEDMAPPER&quot;.equalsIgnoreCase(type)) { //$NON-NLS-1$</span>
+<span class="fc" id="L68">            javaGenerator = new SimpleAnnotatedClientGenerator(getClientProject());</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        } else if (&quot;MAPPER&quot;.equalsIgnoreCase(type)) { //$NON-NLS-1$</span>
+<span class="nc" id="L70">            javaGenerator = new SimpleJavaClientGenerator(getClientProject());</span>
         } else {
-<span class="nc" id="L74">            javaGenerator = (AbstractJavaClientGenerator) ObjectFactory</span>
-<span class="nc" id="L75">                    .createInternalObject(type);</span>
+<span class="nc" id="L72">            javaGenerator = (AbstractJavaClientGenerator) ObjectFactory.createInternalObject(type);</span>
         }
 
-<span class="fc" id="L78">        return javaGenerator;</span>
+<span class="fc" id="L75">        return javaGenerator;</span>
     }
 
     @Override
-    protected void calculateJavaModelGenerators(List&lt;String&gt; warnings,
-            ProgressCallback progressCallback) {
+    protected void calculateJavaModelGenerators(List&lt;String&gt; warnings, ProgressCallback progressCallback) {
 
-<span class="fc" id="L85">        AbstractJavaGenerator javaGenerator = new SimpleModelGenerator(getModelProject());</span>
-<span class="fc" id="L86">        initializeAbstractGenerator(javaGenerator, warnings,</span>
-                progressCallback);
-<span class="fc" id="L88">        javaGenerators.add(javaGenerator);</span>
-<span class="fc" id="L89">    }</span>
+<span class="fc" id="L81">        AbstractJavaGenerator javaGenerator = new SimpleModelGenerator(getModelProject());</span>
+<span class="fc" id="L82">        initializeAbstractGenerator(javaGenerator, warnings, progressCallback);</span>
+<span class="fc" id="L83">        javaGenerators.add(javaGenerator);</span>
+<span class="fc" id="L84">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

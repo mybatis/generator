@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BasicMultipleInsertMethodGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.kotlin.elements</a> &gt; <span class="el_source">BasicMultipleInsertMethodGenerator.java</span></div><h1>BasicMultipleInsertMethodGenerator.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2019 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BasicMultipleInsertMethodGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.kotlin.elements</a> &gt; <span class="el_source">BasicMultipleInsertMethodGenerator.java</span></div><h1>BasicMultipleInsertMethodGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -20,12 +20,12 @@ import org.mybatis.generator.api.dom.kotlin.KotlinArg;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 import org.mybatis.generator.config.GeneratedKey;
-import org.mybatis.generator.runtime.dynamic.sql.elements.v2.Utils;
+import org.mybatis.generator.runtime.dynamic.sql.elements.Utils;
 
 public class BasicMultipleInsertMethodGenerator extends AbstractKotlinFunctionGenerator {
-    
-    private FullyQualifiedKotlinType recordType;
-    
+
+    private final FullyQualifiedKotlinType recordType;
+
     private BasicMultipleInsertMethodGenerator(Builder builder) {
 <span class="fc" id="L30">        super(builder);</span>
 <span class="fc" id="L31">        recordType = builder.recordType;</span>
@@ -36,114 +36,83 @@ public class BasicMultipleInsertMethodGenerator extends AbstractKotlinFunctionGe
 <span class="fc bfc" id="L36" title="All 2 branches covered.">        if (!Utils.generateMultipleRowInsert(introspectedTable)) {</span>
 <span class="fc" id="L37">            return null;</span>
         }
-        
-<span class="fc" id="L40">        GeneratedKey gk = introspectedTable.getGeneratedKey();</span>
-<span class="fc bfc" id="L41" title="All 2 branches covered.">        if (gk == null) {</span>
-<span class="fc" id="L42">            return generateMethodWithoutGeneratedKeys();</span>
-        } else {
-<span class="fc" id="L44">            return generateMethodWithGeneratedKeys(gk);</span>
-        }
-    }
-    
-    private KotlinFunctionAndImports generateMethodWithoutGeneratedKeys() {
-        
-<span class="fc" id="L50">        KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(</span>
-<span class="fc" id="L51">                KotlinFunction.newOneLineFunction(&quot;insertMultiple&quot;) //$NON-NLS-1$</span>
-<span class="fc" id="L52">                .withExplicitReturnType(&quot;Int&quot;) //$NON-NLS-1$</span>
-<span class="fc" id="L53">                .withArgument(KotlinArg.newArg(&quot;multipleInsertStatement&quot;) //$NON-NLS-1$</span>
-<span class="fc" id="L54">                        .withDataType(&quot;MultiRowInsertStatementProvider&lt;&quot; //$NON-NLS-1$</span>
-<span class="fc" id="L55">                                + recordType.getShortNameWithTypeArguments()</span>
-                                + &quot;&gt;&quot;) //$NON-NLS-1$
-<span class="fc" id="L57">                        .build())</span>
-<span class="fc" id="L58">                .withAnnotation(&quot;@InsertProvider(type=SqlProviderAdapter::class,&quot; //$NON-NLS-1$</span>
-                        + &quot; method=\&quot;insertMultiple\&quot;)&quot;) //$NON-NLS-1$
-<span class="fc" id="L60">                .build())</span>
-<span class="fc" id="L61">                .withImport(&quot;org.mybatis.dynamic.sql.util.SqlProviderAdapter&quot;) //$NON-NLS-1$</span>
-<span class="fc" id="L62">                .withImport(&quot;org.apache.ibatis.annotations.InsertProvider&quot;) //$NON-NLS-1$</span>
-<span class="fc" id="L63">                .withImport(&quot;org.mybatis.dynamic.sql.insert.render.MultiRowInsertStatementProvider&quot;) //$NON-NLS-1$</span>
-<span class="fc" id="L64">                .withImports(recordType.getImportList())</span>
-<span class="fc" id="L65">                .build();</span>
-        
-<span class="fc" id="L67">        addFunctionComment(functionAndImports);</span>
 
-<span class="fc" id="L69">        return functionAndImports;</span>
+<span class="fc" id="L40">        return introspectedTable.getGeneratedKey().map(this::generateMethodWithGeneratedKeys).orElse(null);</span>
     }
 
     private KotlinFunctionAndImports generateMethodWithGeneratedKeys(GeneratedKey gk) {
-        
-<span class="fc" id="L74">        KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(</span>
-<span class="fc" id="L75">                KotlinFunction.newOneLineFunction(&quot;insertMultiple&quot;) //$NON-NLS-1$</span>
-<span class="fc" id="L76">                .withExplicitReturnType(&quot;Int&quot;) //$NON-NLS-1$</span>
-<span class="fc" id="L77">                .withAnnotation(&quot;@Insert(&quot;) //$NON-NLS-1$</span>
-<span class="fc" id="L78">                .withAnnotation(&quot;    \&quot;\\${insertStatement}\&quot;&quot;) //$NON-NLS-1$</span>
-<span class="fc" id="L79">                .withAnnotation(&quot;)&quot;) //$NON-NLS-1$</span>
-<span class="fc" id="L80">                .withArgument(KotlinArg.newArg(&quot;insertStatement&quot;) //$NON-NLS-1$</span>
-<span class="fc" id="L81">                        .withAnnotation(&quot;@Param(\&quot;insertStatement\&quot;)&quot;) //$NON-NLS-1$</span>
-<span class="fc" id="L82">                        .withDataType(&quot;String&quot;) //$NON-NLS-1$</span>
-<span class="fc" id="L83">                        .build())</span>
-<span class="fc" id="L84">                .withArgument(KotlinArg.newArg(&quot;records&quot;) //$NON-NLS-1$</span>
-<span class="fc" id="L85">                        .withAnnotation(&quot;@Param(\&quot;records\&quot;)&quot;) //$NON-NLS-1$</span>
-<span class="fc" id="L86">                        .withDataType(&quot;List&lt;&quot; //$NON-NLS-1$</span>
-<span class="fc" id="L87">                                + recordType.getShortNameWithTypeArguments()</span>
+
+<span class="fc" id="L45">        KotlinFunctionAndImports functionAndImports = KotlinFunctionAndImports.withFunction(</span>
+<span class="fc" id="L46">                KotlinFunction.newOneLineFunction(&quot;insertMultiple&quot;) //$NON-NLS-1$</span>
+<span class="fc" id="L47">                .withExplicitReturnType(&quot;Int&quot;) //$NON-NLS-1$</span>
+<span class="fc" id="L48">                .withAnnotation(&quot;@InsertProvider(type = SqlProviderAdapter::class,&quot; //$NON-NLS-1$</span>
+                        + &quot; method = \&quot;insertMultipleWithGeneratedKeys\&quot;)&quot;) //$NON-NLS-1$
+<span class="fc" id="L50">                .withArgument(KotlinArg.newArg(&quot;insertStatement&quot;) //$NON-NLS-1$</span>
+<span class="fc" id="L51">                        .withAnnotation(&quot;@Param(\&quot;insertStatement\&quot;)&quot;) //$NON-NLS-1$</span>
+<span class="fc" id="L52">                        .withDataType(&quot;String&quot;) //$NON-NLS-1$</span>
+<span class="fc" id="L53">                        .build())</span>
+<span class="fc" id="L54">                .withArgument(KotlinArg.newArg(&quot;records&quot;) //$NON-NLS-1$</span>
+<span class="fc" id="L55">                        .withAnnotation(&quot;@Param(\&quot;records\&quot;)&quot;) //$NON-NLS-1$</span>
+<span class="fc" id="L56">                        .withDataType(&quot;List&lt;&quot; //$NON-NLS-1$</span>
+<span class="fc" id="L57">                                + recordType.getShortNameWithTypeArguments()</span>
                                 + &quot;&gt;&quot;) //$NON-NLS-1$
-<span class="fc" id="L89">                        .build())</span>
-<span class="fc" id="L90">                .build())</span>
-<span class="fc" id="L91">                .withImport(&quot;org.apache.ibatis.annotations.Insert&quot;) //$NON-NLS-1$</span>
-<span class="fc" id="L92">                .withImport(&quot;org.apache.ibatis.annotations.Param&quot;) //$NON-NLS-1$</span>
-<span class="fc" id="L93">                .withImports(recordType.getImportList())</span>
-<span class="fc" id="L94">                .build();</span>
-                
-<span class="fc" id="L96">        addFunctionComment(functionAndImports);</span>
-                
-                
-<span class="fc" id="L99">        KotlinFunctionParts functionParts = getGeneratedKeyAnnotation(gk);</span>
-<span class="fc" id="L100">        acceptParts(functionAndImports, functionParts);</span>
-        
-<span class="fc" id="L102">        return functionAndImports;</span>
+<span class="fc" id="L59">                        .build())</span>
+<span class="fc" id="L60">                .build())</span>
+<span class="fc" id="L61">                .withImport(&quot;org.mybatis.dynamic.sql.util.SqlProviderAdapter&quot;) //$NON-NLS-1$</span>
+<span class="fc" id="L62">                .withImport(&quot;org.apache.ibatis.annotations.InsertProvider&quot;) //$NON-NLS-1$</span>
+<span class="fc" id="L63">                .withImport(&quot;org.apache.ibatis.annotations.Param&quot;) //$NON-NLS-1$</span>
+<span class="fc" id="L64">                .withImports(recordType.getImportList())</span>
+<span class="fc" id="L65">                .build();</span>
+
+<span class="fc" id="L67">        addFunctionComment(functionAndImports);</span>
+
+<span class="fc" id="L69">        KotlinFunctionParts functionParts = getGeneratedKeyAnnotation(gk);</span>
+<span class="fc" id="L70">        acceptParts(functionAndImports, functionParts);</span>
+
+<span class="fc" id="L72">        return functionAndImports;</span>
     }
 
     private KotlinFunctionParts getGeneratedKeyAnnotation(GeneratedKey gk) {
-<span class="fc" id="L106">        KotlinFunctionParts.Builder builder = new KotlinFunctionParts.Builder();</span>
-        
-<span class="fc" id="L108">        StringBuilder sb = new StringBuilder();</span>
-<span class="fc" id="L109">        introspectedTable.getColumn(gk.getColumn()).ifPresent(introspectedColumn -&gt; {</span>
-<span class="pc bpc" id="L110" title="1 of 2 branches missed.">            if (gk.isJdbcStandard()) {</span>
+<span class="fc" id="L76">        KotlinFunctionParts.Builder builder = new KotlinFunctionParts.Builder();</span>
+
+<span class="fc" id="L78">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L79">        introspectedTable.getColumn(gk.getColumn()).ifPresent(introspectedColumn -&gt; {</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">            if (gk.isJdbcStandard()) {</span>
                 // only jdbc standard keys are supported for multiple insert
-<span class="fc" id="L112">                builder.withImport(&quot;org.apache.ibatis.annotations.Options&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L113">                sb.append(&quot;@Options(useGeneratedKeys=true,keyProperty=\&quot;records.&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L114">                sb.append(introspectedColumn.getJavaProperty());</span>
-<span class="fc" id="L115">                sb.append(&quot;\&quot;)&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L116">                builder.withAnnotation(sb.toString());</span>
+<span class="fc" id="L82">                builder.withImport(&quot;org.apache.ibatis.annotations.Options&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L83">                sb.append(&quot;@Options(useGeneratedKeys=true,keyProperty=\&quot;records.&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L84">                sb.append(introspectedColumn.getJavaProperty());</span>
+<span class="fc" id="L85">                sb.append(&quot;\&quot;)&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L86">                builder.withAnnotation(sb.toString());</span>
             }
-<span class="fc" id="L118">        });</span>
-        
-<span class="fc" id="L120">        return builder.build();</span>
+<span class="fc" id="L88">        });</span>
+
+<span class="fc" id="L90">        return builder.build();</span>
     }
 
     @Override
     public boolean callPlugins(KotlinFunction kotlinFunction, KotlinFile kotlinFile) {
-<span class="fc" id="L125">        return context.getPlugins().clientBasicInsertMultipleMethodGenerated(kotlinFunction, kotlinFile,</span>
+<span class="fc" id="L95">        return context.getPlugins().clientBasicInsertMultipleMethodGenerated(kotlinFunction, kotlinFile,</span>
                 introspectedTable);
     }
 
-<span class="fc" id="L129">    public static class Builder extends BaseBuilder&lt;Builder, BasicMultipleInsertMethodGenerator&gt; {</span>
+<span class="fc" id="L99">    public static class Builder extends BaseBuilder&lt;Builder&gt; {</span>
 
         private FullyQualifiedKotlinType recordType;
-        
+
         public Builder withRecordType(FullyQualifiedKotlinType recordType) {
-<span class="fc" id="L134">            this.recordType = recordType;</span>
-<span class="fc" id="L135">            return this;</span>
-        }
-        
-        @Override
-        public Builder getThis() {
-<span class="fc" id="L140">            return this;</span>
+<span class="fc" id="L104">            this.recordType = recordType;</span>
+<span class="fc" id="L105">            return this;</span>
         }
 
         @Override
+        public Builder getThis() {
+<span class="fc" id="L110">            return this;</span>
+        }
+
         public BasicMultipleInsertMethodGenerator build() {
-<span class="fc" id="L145">            return new BasicMultipleInsertMethodGenerator(this);</span>
+<span class="fc" id="L114">            return new BasicMultipleInsertMethodGenerator(this);</span>
         }
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BasicMultipleInsertMethodGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.dynamic.sql.elements</a> &gt; <span class="el_source">BasicMultipleInsertMethodGenerator.java</span></div><h1>BasicMultipleInsertMethodGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2021 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.runtime.dynamic.sql.elements;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.Interface;
+import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.config.GeneratedKey;
+
+public class BasicMultipleInsertMethodGenerator extends AbstractMethodGenerator {
+
+    private final FullyQualifiedJavaType recordType;
+
+    private BasicMultipleInsertMethodGenerator(Builder builder) {
+<span class="fc" id="L32">        super(builder);</span>
+<span class="fc" id="L33">        recordType = builder.recordType;</span>
+<span class="fc" id="L34">    }</span>
+
+    @Override
+    public MethodAndImports generateMethodAndImports() {
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        if (!Utils.generateMultipleRowInsert(introspectedTable)) {</span>
+<span class="fc" id="L39">            return null;</span>
+        }
+
+<span class="fc" id="L42">        return introspectedTable.getGeneratedKey().map(this::generateMethodWithGeneratedKeys).orElse(null);</span>
+    }
+
+    private MethodAndImports generateMethodWithGeneratedKeys(GeneratedKey gk) {
+<span class="fc" id="L46">        Set&lt;FullyQualifiedJavaType&gt; imports = new HashSet&lt;&gt;();</span>
+
+<span class="fc" id="L48">        imports.add(new FullyQualifiedJavaType(&quot;org.mybatis.dynamic.sql.util.SqlProviderAdapter&quot;)); //$NON-NLS-1$)</span>
+<span class="fc" id="L49">        imports.add(new FullyQualifiedJavaType(&quot;org.apache.ibatis.annotations.InsertProvider&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L50">        imports.add(new FullyQualifiedJavaType(&quot;org.apache.ibatis.annotations.Param&quot;)); //$NON-NLS-1$</span>
+
+<span class="fc" id="L52">        Parameter parm1 = new Parameter(FullyQualifiedJavaType.getStringInstance(), &quot;insertStatement&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L53">        parm1.addAnnotation(&quot;@Param(\&quot;insertStatement\&quot;)&quot;); //$NON-NLS-1$</span>
+
+<span class="fc" id="L55">        FullyQualifiedJavaType recordListType = FullyQualifiedJavaType.getNewListInstance();</span>
+<span class="fc" id="L56">        recordListType.addTypeArgument(recordType);</span>
+<span class="fc" id="L57">        imports.add(recordListType);</span>
+
+<span class="fc" id="L59">        Parameter parm2 = new Parameter(recordListType, &quot;records&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L60">        parm2.addAnnotation(&quot;@Param(\&quot;records\&quot;)&quot;); //$NON-NLS-1$</span>
+
+<span class="fc" id="L62">        Method method = new Method(&quot;insertMultiple&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L63">        method.setAbstract(true);</span>
+<span class="fc" id="L64">        method.setReturnType(FullyQualifiedJavaType.getIntInstance());</span>
+<span class="fc" id="L65">        method.addParameter(parm1);</span>
+<span class="fc" id="L66">        method.addParameter(parm2);</span>
+<span class="fc" id="L67">        context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);</span>
+<span class="fc" id="L68">        method.addAnnotation(&quot;@InsertProvider(type=SqlProviderAdapter.class, &quot; //$NON-NLS-1$</span>
+                + &quot;method=\&quot;insertMultipleWithGeneratedKeys\&quot;)&quot;); //$NON-NLS-1$
+
+<span class="fc" id="L71">        MethodAndImports.Builder builder = MethodAndImports.withMethod(method)</span>
+<span class="fc" id="L72">                .withImports(imports);</span>
+
+<span class="fc" id="L74">        MethodParts methodParts = getGeneratedKeyAnnotation(gk);</span>
+<span class="fc" id="L75">        acceptParts(builder, method, methodParts);</span>
+
+<span class="fc" id="L77">        return builder.build();</span>
+    }
+
+    private MethodParts getGeneratedKeyAnnotation(GeneratedKey gk) {
+<span class="fc" id="L81">        MethodParts.Builder builder = new MethodParts.Builder();</span>
+
+<span class="fc" id="L83">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L84">        introspectedTable.getColumn(gk.getColumn()).ifPresent(introspectedColumn -&gt; {</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">            if (gk.isJdbcStandard()) {</span>
+                // only jdbc standard keys are supported for multiple insert
+<span class="fc" id="L87">                builder.withImport(new FullyQualifiedJavaType(&quot;org.apache.ibatis.annotations.Options&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L88">                sb.append(&quot;@Options(useGeneratedKeys=true,keyProperty=\&quot;records.&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L89">                sb.append(introspectedColumn.getJavaProperty());</span>
+<span class="fc" id="L90">                sb.append(&quot;\&quot;)&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L91">                builder.withAnnotation(sb.toString());</span>
+            }
+<span class="fc" id="L93">        });</span>
+
+<span class="fc" id="L95">        return builder.build();</span>
+    }
+
+    @Override
+    public boolean callPlugins(Method method, Interface interfaze) {
+<span class="fc" id="L100">        return context.getPlugins().clientBasicInsertMultipleMethodGenerated(method, interfaze, introspectedTable);</span>
+    }
+
+<span class="fc" id="L103">    public static class Builder extends BaseBuilder&lt;Builder&gt; {</span>
+
+        private FullyQualifiedJavaType recordType;
+
+        public Builder withRecordType(FullyQualifiedJavaType recordType) {
+<span class="fc" id="L108">            this.recordType = recordType;</span>
+<span class="fc" id="L109">            return this;</span>
+        }
+
+        @Override
+        public Builder getThis() {
+<span class="fc" id="L114">            return this;</span>
+        }
+
+        public BasicMultipleInsertMethodGenerator build() {
+<span class="fc" id="L118">            return new BasicMultipleInsertMethodGenerator(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

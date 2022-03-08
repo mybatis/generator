@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProviderSelectByExampleWithoutBLOBsMethodGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider</a> &gt; <span class="el_source">ProviderSelectByExampleWithoutBLOBsMethodGenerator.java</span></div><h1>ProviderSelectByExampleWithoutBLOBsMethodGenerator.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2019 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProviderSelectByExampleWithoutBLOBsMethodGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider</a> &gt; <span class="el_source">ProviderSelectByExampleWithoutBLOBsMethodGenerator.java</span></div><h1>ProviderSelectByExampleWithoutBLOBsMethodGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJ
 
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
@@ -29,105 +28,69 @@ import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 
-public class ProviderSelectByExampleWithoutBLOBsMethodGenerator extends AbstractJavaProviderMethodGenerator {
-
-    public ProviderSelectByExampleWithoutBLOBsMethodGenerator(boolean useLegacyBuilder) {
-<span class="fc" id="L35">        super(useLegacyBuilder);</span>
-<span class="fc" id="L36">    }</span>
+<span class="fc" id="L31">public class ProviderSelectByExampleWithoutBLOBsMethodGenerator extends AbstractJavaProviderMethodGenerator {</span>
 
     @Override
     public void addClassElements(TopLevelClass topLevelClass) {
-<span class="fc" id="L40">        Set&lt;String&gt; staticImports = new TreeSet&lt;&gt;();</span>
-<span class="fc" id="L41">        Set&lt;FullyQualifiedJavaType&gt; importedTypes = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L35">        FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getExampleType());</span>
+<span class="fc" id="L36">        Set&lt;FullyQualifiedJavaType&gt; importedTypes = initializeImportedTypes(fqjt);</span>
 
-<span class="pc bpc" id="L43" title="1 of 2 branches missed.">        if (useLegacyBuilder) {</span>
-<span class="nc" id="L44">            staticImports.add(&quot;org.apache.ibatis.jdbc.SqlBuilder.BEGIN&quot;); //$NON-NLS-1$</span>
-<span class="nc" id="L45">            staticImports.add(&quot;org.apache.ibatis.jdbc.SqlBuilder.SELECT&quot;); //$NON-NLS-1$</span>
-<span class="nc" id="L46">            staticImports.add(&quot;org.apache.ibatis.jdbc.SqlBuilder.SELECT_DISTINCT&quot;); //$NON-NLS-1$</span>
-<span class="nc" id="L47">            staticImports.add(&quot;org.apache.ibatis.jdbc.SqlBuilder.FROM&quot;); //$NON-NLS-1$</span>
-<span class="nc" id="L48">            staticImports.add(&quot;org.apache.ibatis.jdbc.SqlBuilder.ORDER_BY&quot;); //$NON-NLS-1$</span>
-<span class="nc" id="L49">            staticImports.add(&quot;org.apache.ibatis.jdbc.SqlBuilder.SQL&quot;); //$NON-NLS-1$</span>
-        } else {
-<span class="fc" id="L51">            importedTypes.add(NEW_BUILDER_IMPORT);</span>
-        }
+<span class="fc" id="L38">        Method method = new Method(getMethodName());</span>
+<span class="fc" id="L39">        method.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L40">        method.setReturnType(FullyQualifiedJavaType.getStringInstance());</span>
+<span class="fc" id="L41">        method.addParameter(new Parameter(fqjt, &quot;example&quot;)); //$NON-NLS-1$</span>
 
-<span class="fc" id="L54">        FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getExampleType());</span>
-<span class="fc" id="L55">        importedTypes.add(fqjt);</span>
+<span class="fc" id="L43">        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);</span>
 
-<span class="fc" id="L57">        Method method = new Method(getMethodName());</span>
-<span class="fc" id="L58">        method.setVisibility(JavaVisibility.PUBLIC);</span>
-<span class="fc" id="L59">        method.setReturnType(FullyQualifiedJavaType.getStringInstance());</span>
-<span class="fc" id="L60">        method.addParameter(new Parameter(fqjt, &quot;example&quot;)); //$NON-NLS-1$</span>
-        
-<span class="fc" id="L62">        context.getCommentGenerator().addGeneralMethodComment(method,</span>
-                introspectedTable);
-        
-<span class="pc bpc" id="L65" title="1 of 2 branches missed.">        if (useLegacyBuilder) {</span>
-<span class="nc" id="L66">            method.addBodyLine(&quot;BEGIN();&quot;); //$NON-NLS-1$</span>
-        } else {
-<span class="fc" id="L68">            method.addBodyLine(&quot;SQL sql = new SQL();&quot;); //$NON-NLS-1$</span>
-        }
+<span class="fc" id="L45">        method.addBodyLine(&quot;SQL sql = new SQL();&quot;); //$NON-NLS-1$</span>
 
-<span class="fc" id="L71">        boolean distinctCheck = true;</span>
-<span class="fc bfc" id="L72" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : getColumns()) {</span>
-<span class="fc bfc" id="L73" title="All 2 branches covered.">            if (distinctCheck) {</span>
-<span class="fc" id="L74">                method.addBodyLine(&quot;if (example != null &amp;&amp; example.isDistinct()) {&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L75">                method.addBodyLine(String.format(&quot;%sSELECT_DISTINCT(\&quot;%s\&quot;);&quot;, //$NON-NLS-1$</span>
-                        builderPrefix,
-<span class="fc" id="L77">                        escapeStringForJava(getSelectListPhrase(introspectedColumn))));</span>
-<span class="fc" id="L78">                method.addBodyLine(&quot;} else {&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L79">                method.addBodyLine(String.format(&quot;%sSELECT(\&quot;%s\&quot;);&quot;, //$NON-NLS-1$</span>
-                        builderPrefix,
-<span class="fc" id="L81">                        escapeStringForJava(getSelectListPhrase(introspectedColumn))));</span>
-<span class="fc" id="L82">                method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L47">        boolean distinctCheck = true;</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        for (IntrospectedColumn introspectedColumn : getColumns()) {</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">            if (distinctCheck) {</span>
+<span class="fc" id="L50">                method.addBodyLine(&quot;if (example != null &amp;&amp; example.isDistinct()) {&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L51">                method.addBodyLine(String.format(&quot;sql.SELECT_DISTINCT(\&quot;%s\&quot;);&quot;, //$NON-NLS-1$</span>
+<span class="fc" id="L52">                        escapeStringForJava(getSelectListPhrase(introspectedColumn))));</span>
+<span class="fc" id="L53">                method.addBodyLine(&quot;} else {&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L54">                method.addBodyLine(String.format(&quot;sql.SELECT(\&quot;%s\&quot;);&quot;, //$NON-NLS-1$</span>
+<span class="fc" id="L55">                        escapeStringForJava(getSelectListPhrase(introspectedColumn))));</span>
+<span class="fc" id="L56">                method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>
             } else {
-<span class="fc" id="L84">                method.addBodyLine(String.format(&quot;%sSELECT(\&quot;%s\&quot;);&quot;, //$NON-NLS-1$</span>
-                        builderPrefix,
-<span class="fc" id="L86">                        escapeStringForJava(getSelectListPhrase(introspectedColumn))));</span>
+<span class="fc" id="L58">                method.addBodyLine(String.format(&quot;sql.SELECT(\&quot;%s\&quot;);&quot;, //$NON-NLS-1$</span>
+<span class="fc" id="L59">                        escapeStringForJava(getSelectListPhrase(introspectedColumn))));</span>
             }
 
-<span class="fc" id="L89">            distinctCheck = false;</span>
-<span class="fc" id="L90">        }</span>
+<span class="fc" id="L62">            distinctCheck = false;</span>
+<span class="fc" id="L63">        }</span>
 
-<span class="fc" id="L92">        method.addBodyLine(String.format(&quot;%sFROM(\&quot;%s\&quot;);&quot;, //$NON-NLS-1$</span>
-                builderPrefix,
-<span class="fc" id="L94">                escapeStringForJava(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime())));</span>
-<span class="pc bpc" id="L95" title="1 of 2 branches missed.">        if (useLegacyBuilder) {</span>
-<span class="nc" id="L96">            method.addBodyLine(&quot;applyWhere(example, false);&quot;); //$NON-NLS-1$</span>
-        } else {
-<span class="fc" id="L98">            method.addBodyLine(&quot;applyWhere(sql, example, false);&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L65">        method.addBodyLine(String.format(&quot;sql.FROM(\&quot;%s\&quot;);&quot;, //$NON-NLS-1$</span>
+<span class="fc" id="L66">                escapeStringForJava(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime())));</span>
+<span class="fc" id="L67">        method.addBodyLine(&quot;applyWhere(sql, example, false);&quot;); //$NON-NLS-1$</span>
+
+<span class="fc" id="L69">        method.addBodyLine(&quot;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L70">        method.addBodyLine(&quot;if (example != null &amp;&amp; example.getOrderByClause() != null) {&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L71">        method.addBodyLine(&quot;sql.ORDER_BY(example.getOrderByClause());&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L72">        method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>
+
+<span class="fc" id="L74">        method.addBodyLine(&quot;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L75">        method.addBodyLine(&quot;return sql.toString();&quot;); //$NON-NLS-1$</span>
+
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">        if (callPlugins(method, topLevelClass)) {</span>
+<span class="fc" id="L78">            topLevelClass.addImportedTypes(importedTypes);</span>
+<span class="fc" id="L79">            topLevelClass.addMethod(method);</span>
         }
-
-<span class="fc" id="L101">        method.addBodyLine(&quot;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L102">        method.addBodyLine(&quot;if (example != null &amp;&amp; example.getOrderByClause() != null) {&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L103">        method.addBodyLine(String.format(&quot;%sORDER_BY(example.getOrderByClause());&quot;, builderPrefix)); //$NON-NLS-1$</span>
-<span class="fc" id="L104">        method.addBodyLine(&quot;}&quot;); //$NON-NLS-1$</span>
-
-<span class="fc" id="L106">        method.addBodyLine(&quot;&quot;); //$NON-NLS-1$</span>
-<span class="pc bpc" id="L107" title="1 of 2 branches missed.">        if (useLegacyBuilder) {</span>
-<span class="nc" id="L108">            method.addBodyLine(&quot;return SQL();&quot;); //$NON-NLS-1$</span>
-        } else {
-<span class="fc" id="L110">            method.addBodyLine(&quot;return sql.toString();&quot;); //$NON-NLS-1$</span>
-        }
-
-<span class="pc bpc" id="L113" title="1 of 2 branches missed.">        if (callPlugins(method, topLevelClass)) {</span>
-<span class="fc" id="L114">            topLevelClass.addStaticImports(staticImports);</span>
-<span class="fc" id="L115">            topLevelClass.addImportedTypes(importedTypes);</span>
-<span class="fc" id="L116">            topLevelClass.addMethod(method);</span>
-        }
-<span class="fc" id="L118">    }</span>
+<span class="fc" id="L81">    }</span>
 
     public List&lt;IntrospectedColumn&gt; getColumns() {
-<span class="fc" id="L121">        return introspectedTable.getNonBLOBColumns();</span>
+<span class="fc" id="L84">        return introspectedTable.getNonBLOBColumns();</span>
     }
 
     public String getMethodName() {
-<span class="fc" id="L125">        return introspectedTable.getSelectByExampleStatementId();</span>
+<span class="fc" id="L88">        return introspectedTable.getSelectByExampleStatementId();</span>
     }
 
     public boolean callPlugins(Method method, TopLevelClass topLevelClass) {
-<span class="fc" id="L129">        return context.getPlugins().providerSelectByExampleWithoutBLOBsMethodGenerated(method, topLevelClass,</span>
-                introspectedTable);
+<span class="fc" id="L92">        return context.getPlugins()</span>
+<span class="fc" id="L93">                .providerSelectByExampleWithoutBLOBsMethodGenerated(method, topLevelClass, introspectedTable);</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

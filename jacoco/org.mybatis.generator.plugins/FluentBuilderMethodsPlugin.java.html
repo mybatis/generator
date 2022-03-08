@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FluentBuilderMethodsPlugin.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.plugins</a> &gt; <span class="el_source">FluentBuilderMethodsPlugin.java</span></div><h1>FluentBuilderMethodsPlugin.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2018 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FluentBuilderMethodsPlugin.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.plugins</a> &gt; <span class="el_source">FluentBuilderMethodsPlugin.java</span></div><h1>FluentBuilderMethodsPlugin.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -29,9 +29,9 @@ import org.mybatis.generator.api.dom.java.TopLevelClass;
  * This plugin adds fluent builder methods to the generated model classes.
  *
  * &lt;p&gt;Example:
- * 
+ *
  * &lt;p&gt;Given the domain class &lt;code&gt;MyDomainClass&lt;/code&gt; with setter-method &lt;code&gt;setValue(Object v)&lt;/code&gt;
- * 
+ *
  * &lt;p&gt;The plugin will create the additional Method &lt;code&gt;public MyDomainClass withValue(Object v)&lt;/code&gt;
  *
  *
@@ -49,12 +49,12 @@ import org.mybatis.generator.api.dom.java.TopLevelClass;
             TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn,
             IntrospectedTable introspectedTable,
             ModelClassType modelClassType) {
-        
+
 <span class="fc" id="L53">        Method fluentMethod = new Method(&quot;with&quot; + method.getName().substring(3)); //$NON-NLS-1$</span>
 <span class="fc" id="L54">        fluentMethod.setVisibility(JavaVisibility.PUBLIC);</span>
 <span class="fc" id="L55">        fluentMethod.setReturnType(topLevelClass.getType());</span>
 <span class="fc" id="L56">        fluentMethod.getParameters().addAll(method.getParameters());</span>
-         
+
 <span class="pc bpc" id="L58" title="1 of 2 branches missed.">        if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3_DSQL) {</span>
 <span class="nc" id="L59">            context.getCommentGenerator().addGeneralMethodAnnotation(fluentMethod,</span>
 <span class="nc" id="L60">                    introspectedTable, topLevelClass.getImportedTypes());</span>
@@ -62,20 +62,19 @@ import org.mybatis.generator.api.dom.java.TopLevelClass;
 <span class="fc" id="L62">            context.getCommentGenerator().addGeneralMethodComment(fluentMethod,</span>
                     introspectedTable);
         }
-        
-<span class="fc" id="L66">        StringBuilder sb = new StringBuilder()</span>
-<span class="fc" id="L67">                .append(&quot;this.&quot;) //$NON-NLS-1$</span>
-<span class="fc" id="L68">                .append(method.getName())</span>
-<span class="fc" id="L69">                .append('(')</span>
-<span class="fc" id="L70">                .append(introspectedColumn.getJavaProperty())</span>
-<span class="fc" id="L71">                .append(&quot;);&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L72">        fluentMethod.addBodyLine(sb.toString()); //$NON-NLS-1$</span>
-<span class="fc" id="L73">        fluentMethod.addBodyLine(&quot;return this;&quot;); //$NON-NLS-1$</span>
 
-<span class="fc" id="L75">        topLevelClass.addMethod(fluentMethod);</span>
+<span class="fc" id="L66">        String s = &quot;this.&quot; //$NON-NLS-1$</span>
+<span class="fc" id="L67">                + method.getName()</span>
+                + '('
+<span class="fc" id="L69">                + introspectedColumn.getJavaProperty()</span>
+                + &quot;);&quot;; //$NON-NLS-1$
+<span class="fc" id="L71">        fluentMethod.addBodyLine(s); //$NON-NLS-1$</span>
+<span class="fc" id="L72">        fluentMethod.addBodyLine(&quot;return this;&quot;); //$NON-NLS-1$</span>
 
-<span class="fc" id="L77">        return super.modelSetterMethodGenerated(method, topLevelClass, introspectedColumn,</span>
+<span class="fc" id="L74">        topLevelClass.addMethod(fluentMethod);</span>
+
+<span class="fc" id="L76">        return super.modelSetterMethodGenerated(method, topLevelClass, introspectedColumn,</span>
                 introspectedTable, modelClassType);
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

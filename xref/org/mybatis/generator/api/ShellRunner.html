@@ -6,21 +6,21 @@
 </head>
 <body>
 <div id="overview"><a href="../../../../../apidocs/org/mybatis/generator/api/ShellRunner.html">View Javadoc</a></div><pre>
-<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_javadoccomment"> *    Copyright 2006-2019 the original author or authors.</em>
-<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_javadoccomment"> *    Licensed under the Apache License, Version 2.0 (the "License");</em>
-<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_javadoccomment"> *    you may not use this file except in compliance with the License.</em>
-<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <em class="jxr_javadoccomment"> *    You may obtain a copy of the License at</em>
-<a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_javadoccomment"> *       <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a></em>
-<a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_javadoccomment"> *    Unless required by applicable law or agreed to in writing, software</em>
-<a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_javadoccomment"> *    distributed under the License is distributed on an "AS IS" BASIS,</em>
-<a class="jxr_linenumber" name="L12" href="#L12">12</a>  <em class="jxr_javadoccomment"> *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</em>
-<a class="jxr_linenumber" name="L13" href="#L13">13</a>  <em class="jxr_javadoccomment"> *    See the License for the specific language governing permissions and</em>
-<a class="jxr_linenumber" name="L14" href="#L14">14</a>  <em class="jxr_javadoccomment"> *    limitations under the License.</em>
-<a class="jxr_linenumber" name="L15" href="#L15">15</a>  <em class="jxr_javadoccomment"> */</em>
+<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_comment">/*</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> *    Copyright 2006-2020 the original author or authors.</em>
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_comment"> *</em>
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_comment"> *    Licensed under the Apache License, Version 2.0 (the "License");</em>
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_comment"> *    you may not use this file except in compliance with the License.</em>
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <em class="jxr_comment"> *    You may obtain a copy of the License at</em>
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_comment"> *</em>
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_comment"> *       <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a></em>
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_comment"> *</em>
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_comment"> *    Unless required by applicable law or agreed to in writing, software</em>
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_comment"> *    distributed under the License is distributed on an "AS IS" BASIS,</em>
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  <em class="jxr_comment"> *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</em>
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>  <em class="jxr_comment"> *    See the License for the specific language governing permissions and</em>
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>  <em class="jxr_comment"> *    limitations under the License.</em>
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>  <em class="jxr_comment"> */</em>
 <a class="jxr_linenumber" name="L16" href="#L16">16</a>  <strong class="jxr_keyword">package</strong> org.mybatis.generator.api;
 <a class="jxr_linenumber" name="L17" href="#L17">17</a>  
 <a class="jxr_linenumber" name="L18" href="#L18">18</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.mybatis.generator.internal.util.messages.Messages.getString;
@@ -45,7 +45,7 @@
 <a class="jxr_linenumber" name="L37" href="#L37">37</a>  
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>  <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>  <em class="jxr_javadoccomment"> * This class allows the code generator to be run from the command line.</em>
-<a class="jxr_linenumber" name="L40" href="#L40">40</a>  <em class="jxr_javadoccomment"> * </em>
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L41" href="#L41">41</a>  <em class="jxr_javadoccomment"> * @author Jeff Butler</em>
 <a class="jxr_linenumber" name="L42" href="#L42">42</a>  <em class="jxr_javadoccomment"> */</em>
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="ShellRunner" href="../../../../org/mybatis/generator/api/ShellRunner.html#ShellRunner">ShellRunner</a> {
@@ -111,13 +111,13 @@
 <a class="jxr_linenumber" name="L103" href="#L103">103</a>         }
 <a class="jxr_linenumber" name="L104" href="#L104">104</a> 
 <a class="jxr_linenumber" name="L105" href="#L105">105</a>         <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L106" href="#L106">106</a>             <a name="ConfigurationParser" href="../../../../org/mybatis/genera<a name="ConfigurationParser" href="../../../../org/mybatis/generator/config/xml/ConfigurationParser.html#ConfigurationParser">ConfigurationParser</a>igurationParser.html#ConfigurationParser">ConfigurationParser</a> cp = <strong class="jxr_keyword">new</strong> <a name="ConfigurationParser" href="../../../../org/mybatis/generator/config/xml/ConfigurationParser.html#ConfigurationParser">ConfigurationParser</a>(warnings);
+<a class="jxr_linenumber" name="L106" href="#L106">106</a>             <a name="ConfigurationParser" href="../../../../org/mybatis/generator/config/xml/ConfigurationParser.html#ConfigurationParser">ConfigurationParser</a> cp = <strong class="jxr_keyword">new</strong> <a name="ConfigurationParser" href="../../../../org/mybatis/generator/config/xml/ConfigurationParser.html#ConfigurationParser">ConfigurationParser</a>(warnings);
 <a class="jxr_linenumber" name="L107" href="#L107">107</a>             <a name="Configuration" href="../../../../org/mybatis/generator/config/Configuration.html#Configuration">Configuration</a> config = cp.parseConfiguration(configurationFile);
 <a class="jxr_linenumber" name="L108" href="#L108">108</a> 
-<a class="jxr_linenumber" name="L109" href="#L109">109</a>             <a name="DefaultShellCallback" href="../../../../org/mybatis/generator/interna<a name="DefaultShellCallback" href="../../../../org/mybatis/generator/internal/DefaultShellCallback.html#DefaultShellCallback">DefaultShellCallback</a>ck.html#DefaultShellCallback">DefaultShellCallback</a> shellCallback = <strong class="jxr_keyword">new</strong> <a name="DefaultShellCallback" href="../../../../org/mybatis/generator/internal/DefaultShellCallback.html#DefaultShellCallback">DefaultShellCallback</a>(
+<a class="jxr_linenumber" name="L109" href="#L109">109</a>             <a name="DefaultShellCallback" href="../../../../org/mybatis/generator/internal/DefaultShellCallback.html#DefaultShellCallback">DefaultShellCallback</a> shellCallback = <strong class="jxr_keyword">new</strong> <a name="DefaultShellCallback" href="../../../../org/mybatis/generator/internal/DefaultShellCallback.html#DefaultShellCallback">DefaultShellCallback</a>(
 <a class="jxr_linenumber" name="L110" href="#L110">110</a>                     arguments.containsKey(OVERWRITE));
 <a class="jxr_linenumber" name="L111" href="#L111">111</a> 
-<a class="jxr_linenumber" name="L112" href="#L112">112</a>             <a name="MyBatisGenerator" href="../../../../org/mybatis/generator/api/MyBati<a name="MyBatisGenerator" href="../../../../org/mybatis/generator/api/MyBatisGenerator.html#MyBatisGenerator">MyBatisGenerator</a>MyBatisGenerator">MyBatisGenerator</a> myBatisGenerator = <strong class="jxr_keyword">new</strong> <a name="MyBatisGenerator" href="../../../../org/mybatis/generator/api/MyBatisGenerator.html#MyBatisGenerator">MyBatisGenerator</a>(config, shellCallback, warnings);
+<a class="jxr_linenumber" name="L112" href="#L112">112</a>             <a name="MyBatisGenerator" href="../../../../org/mybatis/generator/api/MyBatisGenerator.html#MyBatisGenerator">MyBatisGenerator</a> myBatisGenerator = <strong class="jxr_keyword">new</strong> <a name="MyBatisGenerator" href="../../../../org/mybatis/generator/api/MyBatisGenerator.html#MyBatisGenerator">MyBatisGenerator</a>(config, shellCallback, warnings);
 <a class="jxr_linenumber" name="L113" href="#L113">113</a> 
 <a class="jxr_linenumber" name="L114" href="#L114">114</a>             <a name="ProgressCallback" href="../../../../org/mybatis/generator/api/ProgressCallback.html#ProgressCallback">ProgressCallback</a> progressCallback = arguments.containsKey(VERBOSE) ? <strong class="jxr_keyword">new</strong> <a name="VerboseProgressCallback" href="../../../../org/mybatis/generator/api/VerboseProgressCallback.html#VerboseProgressCallback">VerboseProgressCallback</a>()
 <a class="jxr_linenumber" name="L115" href="#L115">115</a>                     : <strong class="jxr_keyword">null</strong>;
@@ -227,6 +227,6 @@
 <a class="jxr_linenumber" name="L219" href="#L219">219</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2006&#x2013;2019 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2006&#x2013;2022 <a href="https://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
 </body>
 </html>

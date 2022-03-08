@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Context.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.config</a> &gt; <span class="el_source">Context.java</span></div><h1>Context.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2019 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Context.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.config</a> &gt; <span class="el_source">Context.java</span></div><h1>Context.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2022 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -28,6 +28,7 @@ import java.util.Set;
 
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.ConnectionFactory;
+import org.mybatis.generator.api.GeneratedFile;
 import org.mybatis.generator.api.GeneratedJavaFile;
 import org.mybatis.generator.api.GeneratedKotlinFile;
 import org.mybatis.generator.api.GeneratedXmlFile;
@@ -59,13 +60,13 @@ public class Context extends PropertyHolder {
 
     private JavaClientGeneratorConfiguration javaClientGeneratorConfiguration;
 
-    private ArrayList&lt;TableConfiguration&gt; tableConfigurations;
+    private final ArrayList&lt;TableConfiguration&gt; tableConfigurations;
 
-    private ModelType defaultModelType;
+    private final ModelType defaultModelType;
 
-<span class="fc" id="L66">    private String beginningDelimiter = &quot;\&quot;&quot;; //$NON-NLS-1$</span>
+<span class="fc" id="L67">    private String beginningDelimiter = &quot;\&quot;&quot;; //$NON-NLS-1$</span>
 
-<span class="fc" id="L68">    private String endingDelimiter = &quot;\&quot;&quot;; //$NON-NLS-1$</span>
+<span class="fc" id="L69">    private String endingDelimiter = &quot;\&quot;&quot;; //$NON-NLS-1$</span>
 
     private CommentGeneratorConfiguration commentGeneratorConfiguration;
 
@@ -73,7 +74,7 @@ public class Context extends PropertyHolder {
 
     private PluginAggregator pluginAggregator;
 
-    private List&lt;PluginConfiguration&gt; pluginConfigurations;
+    private final List&lt;PluginConfiguration&gt; pluginConfigurations;
 
     private String targetRuntime;
 
@@ -86,50 +87,44 @@ public class Context extends PropertyHolder {
     private KotlinFormatter kotlinFormatter;
 
     private XmlFormatter xmlFormatter;
-    
-<span class="fc" id="L90">    private boolean isJava8Targeted = true;</span>
 
     public Context(ModelType defaultModelType) {
-<span class="fc" id="L93">        super();</span>
+<span class="fc" id="L92">        super();</span>
 
-<span class="fc bfc" id="L95" title="All 2 branches covered.">        if (defaultModelType == null) {</span>
-<span class="fc" id="L96">            this.defaultModelType = ModelType.CONDITIONAL;</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        if (defaultModelType == null) {</span>
+<span class="fc" id="L95">            this.defaultModelType = ModelType.CONDITIONAL;</span>
         } else {
-<span class="fc" id="L98">            this.defaultModelType = defaultModelType;</span>
+<span class="fc" id="L97">            this.defaultModelType = defaultModelType;</span>
         }
 
-<span class="fc" id="L101">        tableConfigurations = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L102">        pluginConfigurations = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L103">    }</span>
+<span class="fc" id="L100">        tableConfigurations = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L101">        pluginConfigurations = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L102">    }</span>
 
     public void addTableConfiguration(TableConfiguration tc) {
-<span class="fc" id="L106">        tableConfigurations.add(tc);</span>
-<span class="fc" id="L107">    }</span>
-
-    public JDBCConnectionConfiguration getJdbcConnectionConfiguration() {
-<span class="nc" id="L110">        return jdbcConnectionConfiguration;</span>
-    }
+<span class="fc" id="L105">        tableConfigurations.add(tc);</span>
+<span class="fc" id="L106">    }</span>
 
     public JavaClientGeneratorConfiguration getJavaClientGeneratorConfiguration() {
-<span class="fc" id="L114">        return javaClientGeneratorConfiguration;</span>
+<span class="fc" id="L109">        return javaClientGeneratorConfiguration;</span>
     }
 
     public JavaModelGeneratorConfiguration getJavaModelGeneratorConfiguration() {
-<span class="fc" id="L118">        return javaModelGeneratorConfiguration;</span>
+<span class="fc" id="L113">        return javaModelGeneratorConfiguration;</span>
     }
 
     public JavaTypeResolverConfiguration getJavaTypeResolverConfiguration() {
-<span class="fc" id="L122">        return javaTypeResolverConfiguration;</span>
+<span class="fc" id="L117">        return javaTypeResolverConfiguration;</span>
     }
 
     public SqlMapGeneratorConfiguration getSqlMapGeneratorConfiguration() {
-<span class="fc" id="L126">        return sqlMapGeneratorConfiguration;</span>
+<span class="fc" id="L121">        return sqlMapGeneratorConfiguration;</span>
     }
 
     public void addPluginConfiguration(
             PluginConfiguration pluginConfiguration) {
-<span class="fc" id="L131">        pluginConfigurations.add(pluginConfiguration);</span>
-<span class="fc" id="L132">    }</span>
+<span class="fc" id="L126">        pluginConfigurations.add(pluginConfiguration);</span>
+<span class="fc" id="L127">    }</span>
 
     /**
      * This method does a simple validate, it makes sure that all required fields have been filled in. It does not do
@@ -139,188 +134,181 @@ public class Context extends PropertyHolder {
      *            the errors
      */
     public void validate(List&lt;String&gt; errors) {
-<span class="pc bpc" id="L142" title="1 of 2 branches missed.">        if (!stringHasValue(id)) {</span>
-<span class="nc" id="L143">            errors.add(getString(&quot;ValidationError.16&quot;)); //$NON-NLS-1$</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">        if (!stringHasValue(id)) {</span>
+<span class="nc" id="L138">            errors.add(getString(&quot;ValidationError.16&quot;)); //$NON-NLS-1$</span>
         }
 
-<span class="fc bfc" id="L146" title="All 4 branches covered.">        if (jdbcConnectionConfiguration == null &amp;&amp; connectionFactoryConfiguration == null) {</span>
+<span class="fc bfc" id="L141" title="All 4 branches covered.">        if (jdbcConnectionConfiguration == null &amp;&amp; connectionFactoryConfiguration == null) {</span>
             // must specify one
-<span class="fc" id="L148">            errors.add(getString(&quot;ValidationError.10&quot;, id)); //$NON-NLS-1$</span>
-<span class="fc bfc" id="L149" title="All 4 branches covered.">        } else if (jdbcConnectionConfiguration != null &amp;&amp; connectionFactoryConfiguration != null) {</span>
+<span class="fc" id="L143">            errors.add(getString(&quot;ValidationError.10&quot;, id)); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L144" title="All 4 branches covered.">        } else if (jdbcConnectionConfiguration != null &amp;&amp; connectionFactoryConfiguration != null) {</span>
             // must not specify both
-<span class="fc" id="L151">            errors.add(getString(&quot;ValidationError.10&quot;, id)); //$NON-NLS-1$</span>
-<span class="fc bfc" id="L152" title="All 2 branches covered.">        } else if (jdbcConnectionConfiguration != null) {</span>
-<span class="fc" id="L153">            jdbcConnectionConfiguration.validate(errors);</span>
+<span class="fc" id="L146">            errors.add(getString(&quot;ValidationError.10&quot;, id)); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">        } else if (jdbcConnectionConfiguration != null) {</span>
+<span class="fc" id="L148">            jdbcConnectionConfiguration.validate(errors);</span>
         } else {
-<span class="fc" id="L155">            connectionFactoryConfiguration.validate(errors);</span>
+<span class="fc" id="L150">            connectionFactoryConfiguration.validate(errors);</span>
         }
 
-<span class="fc bfc" id="L158" title="All 2 branches covered.">        if (javaModelGeneratorConfiguration == null) {</span>
-<span class="fc" id="L159">            errors.add(getString(&quot;ValidationError.8&quot;, id)); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">        if (javaModelGeneratorConfiguration == null) {</span>
+<span class="fc" id="L154">            errors.add(getString(&quot;ValidationError.8&quot;, id)); //$NON-NLS-1$</span>
         } else {
-<span class="fc" id="L161">            javaModelGeneratorConfiguration.validate(errors, id);</span>
+<span class="fc" id="L156">            javaModelGeneratorConfiguration.validate(errors, id);</span>
         }
 
-<span class="fc bfc" id="L164" title="All 2 branches covered.">        if (javaClientGeneratorConfiguration != null) {</span>
-<span class="fc" id="L165">            javaClientGeneratorConfiguration.validate(errors, id);</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">        if (javaClientGeneratorConfiguration != null) {</span>
+<span class="fc" id="L160">            javaClientGeneratorConfiguration.validate(errors, id);</span>
         }
 
-<span class="fc" id="L168">        IntrospectedTable it = null;</span>
+<span class="fc" id="L163">        IntrospectedTable it = null;</span>
         try {
-<span class="fc" id="L170">            it = ObjectFactory.createIntrospectedTableForValidation(this);</span>
-<span class="nc" id="L171">        } catch (Exception e) {</span>
-<span class="nc" id="L172">            errors.add(getString(&quot;ValidationError.25&quot;, id)); //$NON-NLS-1$</span>
-<span class="fc" id="L173">        }</span>
+<span class="fc" id="L165">            it = ObjectFactory.createIntrospectedTableForValidation(this);</span>
+<span class="nc" id="L166">        } catch (Exception e) {</span>
+<span class="nc" id="L167">            errors.add(getString(&quot;ValidationError.25&quot;, id)); //$NON-NLS-1$</span>
+<span class="fc" id="L168">        }</span>
 
-<span class="pc bpc" id="L175" title="1 of 4 branches missed.">        if (it != null &amp;&amp; it.requiresXMLGenerator()) {</span>
-<span class="fc bfc" id="L176" title="All 2 branches covered.">            if (sqlMapGeneratorConfiguration == null) {</span>
-<span class="fc" id="L177">                errors.add(getString(&quot;ValidationError.9&quot;, id)); //$NON-NLS-1$</span>
+<span class="pc bpc" id="L170" title="1 of 4 branches missed.">        if (it != null &amp;&amp; it.requiresXMLGenerator()) {</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">            if (sqlMapGeneratorConfiguration == null) {</span>
+<span class="fc" id="L172">                errors.add(getString(&quot;ValidationError.9&quot;, id)); //$NON-NLS-1$</span>
             } else {
-<span class="fc" id="L179">                sqlMapGeneratorConfiguration.validate(errors, id);</span>
+<span class="fc" id="L174">                sqlMapGeneratorConfiguration.validate(errors, id);</span>
             }
         }
 
-<span class="fc bfc" id="L183" title="All 2 branches covered.">        if (tableConfigurations.isEmpty()) {</span>
-<span class="fc" id="L184">            errors.add(getString(&quot;ValidationError.3&quot;, id)); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">        if (tableConfigurations.isEmpty()) {</span>
+<span class="fc" id="L179">            errors.add(getString(&quot;ValidationError.3&quot;, id)); //$NON-NLS-1$</span>
         } else {
-<span class="fc bfc" id="L186" title="All 2 branches covered.">            for (int i = 0; i &lt; tableConfigurations.size(); i++) {</span>
-<span class="fc" id="L187">                TableConfiguration tc = tableConfigurations.get(i);</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">            for (int i = 0; i &lt; tableConfigurations.size(); i++) {</span>
+<span class="fc" id="L182">                TableConfiguration tc = tableConfigurations.get(i);</span>
 
-<span class="fc" id="L189">                tc.validate(errors, i);</span>
+<span class="fc" id="L184">                tc.validate(errors, i);</span>
             }
         }
 
-<span class="fc bfc" id="L193" title="All 2 branches covered.">        for (PluginConfiguration pluginConfiguration : pluginConfigurations) {</span>
-<span class="fc" id="L194">            pluginConfiguration.validate(errors, id);</span>
-<span class="fc" id="L195">        }</span>
-<span class="fc" id="L196">    }</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">        for (PluginConfiguration pluginConfiguration : pluginConfigurations) {</span>
+<span class="fc" id="L189">            pluginConfiguration.validate(errors, id);</span>
+<span class="fc" id="L190">        }</span>
+<span class="fc" id="L191">    }</span>
 
     public String getId() {
-<span class="nc" id="L199">        return id;</span>
+<span class="nc" id="L194">        return id;</span>
     }
 
     public void setId(String id) {
-<span class="fc" id="L203">        this.id = id;</span>
-<span class="fc" id="L204">    }</span>
+<span class="fc" id="L198">        this.id = id;</span>
+<span class="fc" id="L199">    }</span>
 
     public void setJavaClientGeneratorConfiguration(
             JavaClientGeneratorConfiguration javaClientGeneratorConfiguration) {
-<span class="fc" id="L208">        this.javaClientGeneratorConfiguration = javaClientGeneratorConfiguration;</span>
-<span class="fc" id="L209">    }</span>
+<span class="fc" id="L203">        this.javaClientGeneratorConfiguration = javaClientGeneratorConfiguration;</span>
+<span class="fc" id="L204">    }</span>
 
     public void setJavaModelGeneratorConfiguration(
             JavaModelGeneratorConfiguration javaModelGeneratorConfiguration) {
-<span class="fc" id="L213">        this.javaModelGeneratorConfiguration = javaModelGeneratorConfiguration;</span>
-<span class="fc" id="L214">    }</span>
+<span class="fc" id="L208">        this.javaModelGeneratorConfiguration = javaModelGeneratorConfiguration;</span>
+<span class="fc" id="L209">    }</span>
 
     public void setJavaTypeResolverConfiguration(
             JavaTypeResolverConfiguration javaTypeResolverConfiguration) {
-<span class="fc" id="L218">        this.javaTypeResolverConfiguration = javaTypeResolverConfiguration;</span>
-<span class="fc" id="L219">    }</span>
+<span class="fc" id="L213">        this.javaTypeResolverConfiguration = javaTypeResolverConfiguration;</span>
+<span class="fc" id="L214">    }</span>
 
     public void setJdbcConnectionConfiguration(
             JDBCConnectionConfiguration jdbcConnectionConfiguration) {
-<span class="fc" id="L223">        this.jdbcConnectionConfiguration = jdbcConnectionConfiguration;</span>
-<span class="fc" id="L224">    }</span>
+<span class="fc" id="L218">        this.jdbcConnectionConfiguration = jdbcConnectionConfiguration;</span>
+<span class="fc" id="L219">    }</span>
 
     public void setSqlMapGeneratorConfiguration(
             SqlMapGeneratorConfiguration sqlMapGeneratorConfiguration) {
-<span class="fc" id="L228">        this.sqlMapGeneratorConfiguration = sqlMapGeneratorConfiguration;</span>
-<span class="fc" id="L229">    }</span>
+<span class="fc" id="L223">        this.sqlMapGeneratorConfiguration = sqlMapGeneratorConfiguration;</span>
+<span class="fc" id="L224">    }</span>
 
     public ModelType getDefaultModelType() {
-<span class="fc" id="L232">        return defaultModelType;</span>
-    }
-
-    public List&lt;TableConfiguration&gt; getTableConfigurations() {
-<span class="nc" id="L236">        return tableConfigurations;</span>
+<span class="fc" id="L227">        return defaultModelType;</span>
     }
 
     public String getBeginningDelimiter() {
-<span class="fc" id="L240">        return beginningDelimiter;</span>
+<span class="fc" id="L231">        return beginningDelimiter;</span>
     }
 
     public String getEndingDelimiter() {
-<span class="fc" id="L244">        return endingDelimiter;</span>
+<span class="fc" id="L235">        return endingDelimiter;</span>
     }
 
     @Override
     public void addProperty(String name, String value) {
-<span class="fc" id="L249">        super.addProperty(name, value);</span>
+<span class="fc" id="L240">        super.addProperty(name, value);</span>
 
-<span class="pc bpc" id="L251" title="1 of 2 branches missed.">        if (PropertyRegistry.CONTEXT_BEGINNING_DELIMITER.equals(name)) {</span>
-<span class="nc" id="L252">            beginningDelimiter = value;</span>
-<span class="pc bpc" id="L253" title="1 of 2 branches missed.">        } else if (PropertyRegistry.CONTEXT_ENDING_DELIMITER.equals(name)) {</span>
-<span class="nc" id="L254">            endingDelimiter = value;</span>
-<span class="pc bpc" id="L255" title="1 of 2 branches missed.">        } else if (PropertyRegistry.CONTEXT_AUTO_DELIMIT_KEYWORDS.equals(name)</span>
-<span class="pc bpc" id="L256" title="1 of 2 branches missed.">                &amp;&amp; stringHasValue(value)) {</span>
-<span class="fc" id="L257">            autoDelimitKeywords = isTrue(value);</span>
-<span class="nc bnc" id="L258" title="All 2 branches missed.">        } else if (PropertyRegistry.CONTEXT_TARGET_JAVA8.equals(name)</span>
-<span class="nc bnc" id="L259" title="All 2 branches missed.">                &amp;&amp; stringHasValue(value)) {</span>
-<span class="nc" id="L260">            isJava8Targeted = isTrue(value);</span>
+<span class="pc bpc" id="L242" title="1 of 2 branches missed.">        if (PropertyRegistry.CONTEXT_BEGINNING_DELIMITER.equals(name)) {</span>
+<span class="nc" id="L243">            beginningDelimiter = value;</span>
+<span class="pc bpc" id="L244" title="1 of 2 branches missed.">        } else if (PropertyRegistry.CONTEXT_ENDING_DELIMITER.equals(name)) {</span>
+<span class="nc" id="L245">            endingDelimiter = value;</span>
+<span class="pc bpc" id="L246" title="1 of 2 branches missed.">        } else if (PropertyRegistry.CONTEXT_AUTO_DELIMIT_KEYWORDS.equals(name)</span>
+<span class="pc bpc" id="L247" title="1 of 2 branches missed.">                &amp;&amp; stringHasValue(value)) {</span>
+<span class="fc" id="L248">            autoDelimitKeywords = isTrue(value);</span>
         }
-<span class="fc" id="L262">    }</span>
+<span class="fc" id="L250">    }</span>
 
     public CommentGenerator getCommentGenerator() {
-<span class="fc bfc" id="L265" title="All 2 branches covered.">        if (commentGenerator == null) {</span>
-<span class="fc" id="L266">            commentGenerator = ObjectFactory.createCommentGenerator(this);</span>
+<span class="fc bfc" id="L253" title="All 2 branches covered.">        if (commentGenerator == null) {</span>
+<span class="fc" id="L254">            commentGenerator = ObjectFactory.createCommentGenerator(this);</span>
         }
 
-<span class="fc" id="L269">        return commentGenerator;</span>
+<span class="fc" id="L257">        return commentGenerator;</span>
     }
 
     public JavaFormatter getJavaFormatter() {
-<span class="fc bfc" id="L273" title="All 2 branches covered.">        if (javaFormatter == null) {</span>
-<span class="fc" id="L274">            javaFormatter = ObjectFactory.createJavaFormatter(this);</span>
+<span class="fc bfc" id="L261" title="All 2 branches covered.">        if (javaFormatter == null) {</span>
+<span class="fc" id="L262">            javaFormatter = ObjectFactory.createJavaFormatter(this);</span>
         }
 
-<span class="fc" id="L277">        return javaFormatter;</span>
+<span class="fc" id="L265">        return javaFormatter;</span>
     }
 
     public KotlinFormatter getKotlinFormatter() {
-<span class="fc bfc" id="L281" title="All 2 branches covered.">        if (kotlinFormatter == null) {</span>
-<span class="fc" id="L282">            kotlinFormatter = ObjectFactory.createKotlinFormatter(this);</span>
+<span class="fc bfc" id="L269" title="All 2 branches covered.">        if (kotlinFormatter == null) {</span>
+<span class="fc" id="L270">            kotlinFormatter = ObjectFactory.createKotlinFormatter(this);</span>
         }
 
-<span class="fc" id="L285">        return kotlinFormatter;</span>
+<span class="fc" id="L273">        return kotlinFormatter;</span>
     }
 
     public XmlFormatter getXmlFormatter() {
-<span class="fc bfc" id="L289" title="All 2 branches covered.">        if (xmlFormatter == null) {</span>
-<span class="fc" id="L290">            xmlFormatter = ObjectFactory.createXmlFormatter(this);</span>
+<span class="fc bfc" id="L277" title="All 2 branches covered.">        if (xmlFormatter == null) {</span>
+<span class="fc" id="L278">            xmlFormatter = ObjectFactory.createXmlFormatter(this);</span>
         }
 
-<span class="fc" id="L293">        return xmlFormatter;</span>
+<span class="fc" id="L281">        return xmlFormatter;</span>
     }
 
     public CommentGeneratorConfiguration getCommentGeneratorConfiguration() {
-<span class="fc" id="L297">        return commentGeneratorConfiguration;</span>
+<span class="fc" id="L285">        return commentGeneratorConfiguration;</span>
     }
 
     public void setCommentGeneratorConfiguration(
             CommentGeneratorConfiguration commentGeneratorConfiguration) {
-<span class="fc" id="L302">        this.commentGeneratorConfiguration = commentGeneratorConfiguration;</span>
-<span class="fc" id="L303">    }</span>
+<span class="fc" id="L290">        this.commentGeneratorConfiguration = commentGeneratorConfiguration;</span>
+<span class="fc" id="L291">    }</span>
 
     public Plugin getPlugins() {
-<span class="fc" id="L306">        return pluginAggregator;</span>
+<span class="fc" id="L294">        return pluginAggregator;</span>
     }
 
     public String getTargetRuntime() {
-<span class="fc" id="L310">        return targetRuntime;</span>
+<span class="fc" id="L298">        return targetRuntime;</span>
     }
 
     public void setTargetRuntime(String targetRuntime) {
-<span class="fc" id="L314">        this.targetRuntime = targetRuntime;</span>
-<span class="fc" id="L315">    }</span>
+<span class="fc" id="L302">        this.targetRuntime = targetRuntime;</span>
+<span class="fc" id="L303">    }</span>
 
     public String getIntrospectedColumnImpl() {
-<span class="fc" id="L318">        return introspectedColumnImpl;</span>
+<span class="fc" id="L306">        return introspectedColumnImpl;</span>
     }
 
     public void setIntrospectedColumnImpl(String introspectedColumnImpl) {
-<span class="nc" id="L322">        this.introspectedColumnImpl = introspectedColumnImpl;</span>
-<span class="nc" id="L323">    }</span>
+<span class="nc" id="L310">        this.introspectedColumnImpl = introspectedColumnImpl;</span>
+<span class="nc" id="L311">    }</span>
 
     // methods related to code generation.
     //
@@ -332,7 +320,19 @@ public class Context extends PropertyHolder {
     // 4. generateFiles()
     //
 
-    private List&lt;IntrospectedTable&gt; introspectedTables;
+<span class="fc" id="L323">    private final List&lt;IntrospectedTable&gt; introspectedTables = new ArrayList&lt;&gt;();</span>
+
+    /**
+     * This method could be useful for users that use the library for introspection only
+     * and not for code generation.
+     *
+     * @return a list containing the results of table introspection. The list will be empty
+     *     if this method is called before introspectTables(), or if no tables are found that
+     *     match the configuration
+     */
+    public List&lt;IntrospectedTable&gt; getIntrospectedTables() {
+<span class="nc" id="L334">        return introspectedTables;</span>
+    }
 
     public int getIntrospectionSteps() {
 <span class="fc" id="L338">        int steps = 0;</span>
@@ -343,7 +343,7 @@ public class Context extends PropertyHolder {
         //
         // 1. Create introspected table implementation
 
-<span class="fc" id="L346">        steps += tableConfigurations.size() * 1;</span>
+<span class="fc" id="L346">        steps += tableConfigurations.size();</span>
 
 <span class="fc" id="L348">        return steps;</span>
     }
@@ -351,7 +351,7 @@ public class Context extends PropertyHolder {
     /**
      * Introspect tables based on the configuration specified in the
      * constructor. This method is long running.
-     * 
+     *
      * @param callback
      *            a progress callback if progress information is desired, or
      *            &lt;code&gt;null&lt;/code&gt;
@@ -365,7 +365,7 @@ public class Context extends PropertyHolder {
      *            &quot;bar&quot;, then the fully qualified table name is &quot;foo.bar&quot;. If
      *            the Set is null or empty, then all tables in the configuration
      *            will be used for code generation.
-     * 
+     *
      * @throws SQLException
      *             if some error arises while introspecting the specified
      *             database tables.
@@ -376,7 +376,7 @@ public class Context extends PropertyHolder {
             List&lt;String&gt; warnings, Set&lt;String&gt; fullyQualifiedTableNames)
             throws SQLException, InterruptedException {
 
-<span class="fc" id="L379">        introspectedTables = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L379">        introspectedTables.clear();</span>
 <span class="fc" id="L380">        JavaTypeResolver javaTypeResolver = ObjectFactory</span>
 <span class="fc" id="L381">                .createJavaTypeResolver(this, warnings);</span>
 
@@ -422,104 +422,117 @@ public class Context extends PropertyHolder {
     public int getGenerationSteps() {
 <span class="fc" id="L423">        int steps = 0;</span>
 
-<span class="pc bpc" id="L425" title="1 of 2 branches missed.">        if (introspectedTables != null) {</span>
-<span class="fc bfc" id="L426" title="All 2 branches covered.">            for (IntrospectedTable introspectedTable : introspectedTables) {</span>
-<span class="fc" id="L427">                steps += introspectedTable.getGenerationSteps();</span>
-<span class="fc" id="L428">            }</span>
-        }
+<span class="fc bfc" id="L425" title="All 2 branches covered.">        for (IntrospectedTable introspectedTable : introspectedTables) {</span>
+<span class="fc" id="L426">            steps += introspectedTable.getGenerationSteps();</span>
+<span class="fc" id="L427">        }</span>
 
-<span class="fc" id="L431">        return steps;</span>
+<span class="fc" id="L429">        return steps;</span>
     }
 
     public void generateFiles(ProgressCallback callback,
             List&lt;GeneratedJavaFile&gt; generatedJavaFiles,
             List&lt;GeneratedXmlFile&gt; generatedXmlFiles,
             List&lt;GeneratedKotlinFile&gt; generatedKotlinFiles,
+            List&lt;GeneratedFile&gt; otherGeneratedFiles,
             List&lt;String&gt; warnings)
             throws InterruptedException {
 
-<span class="fc" id="L441">        pluginAggregator = new PluginAggregator();</span>
-<span class="fc bfc" id="L442" title="All 2 branches covered.">        for (PluginConfiguration pluginConfiguration : pluginConfigurations) {</span>
-<span class="fc" id="L443">            Plugin plugin = ObjectFactory.createPlugin(this,</span>
+<span class="fc" id="L440">        pluginAggregator = new PluginAggregator();</span>
+<span class="fc bfc" id="L441" title="All 2 branches covered.">        for (PluginConfiguration pluginConfiguration : pluginConfigurations) {</span>
+<span class="fc" id="L442">            Plugin plugin = ObjectFactory.createPlugin(this,</span>
                     pluginConfiguration);
-<span class="fc bfc" id="L445" title="All 2 branches covered.">            if (plugin.validate(warnings)) {</span>
-<span class="fc" id="L446">                pluginAggregator.addPlugin(plugin);</span>
+<span class="fc bfc" id="L444" title="All 2 branches covered.">            if (plugin.validate(warnings)) {</span>
+<span class="fc" id="L445">                pluginAggregator.addPlugin(plugin);</span>
             } else {
-<span class="fc" id="L448">                warnings.add(getString(&quot;Warning.24&quot;, //$NON-NLS-1$</span>
-<span class="fc" id="L449">                        pluginConfiguration.getConfigurationType(), id));</span>
+<span class="fc" id="L447">                warnings.add(getString(&quot;Warning.24&quot;, //$NON-NLS-1$</span>
+<span class="fc" id="L448">                        pluginConfiguration.getConfigurationType(), id));</span>
             }
-<span class="fc" id="L451">        }</span>
+<span class="fc" id="L450">        }</span>
 
-<span class="pc bpc" id="L453" title="1 of 2 branches missed.">        if (introspectedTables != null) {</span>
-<span class="fc bfc" id="L454" title="All 2 branches covered.">            for (IntrospectedTable introspectedTable : introspectedTables) {</span>
-<span class="fc" id="L455">                callback.checkCancel();</span>
+        // initialize everything first before generating. This allows plugins to know about other
+        // items in the configuration.
+<span class="fc bfc" id="L454" title="All 2 branches covered.">        for (IntrospectedTable introspectedTable : introspectedTables) {</span>
+<span class="fc" id="L455">            callback.checkCancel();</span>
+<span class="fc" id="L456">            introspectedTable.initialize();</span>
+<span class="fc" id="L457">            introspectedTable.calculateGenerators(warnings, callback);</span>
+<span class="fc" id="L458">        }</span>
 
-<span class="fc" id="L457">                introspectedTable.initialize();</span>
-<span class="fc" id="L458">                introspectedTable.calculateGenerators(warnings, callback);</span>
-<span class="fc" id="L459">                generatedJavaFiles.addAll(introspectedTable</span>
-<span class="fc" id="L460">                        .getGeneratedJavaFiles());</span>
-<span class="fc" id="L461">                generatedXmlFiles.addAll(introspectedTable</span>
-<span class="fc" id="L462">                        .getGeneratedXmlFiles());</span>
-<span class="fc" id="L463">                generatedKotlinFiles.addAll(introspectedTable</span>
-<span class="fc" id="L464">                        .getGeneratedKotlinFiles());</span>
+<span class="fc bfc" id="L460" title="All 2 branches covered.">        for (IntrospectedTable introspectedTable : introspectedTables) {</span>
+<span class="fc" id="L461">            callback.checkCancel();</span>
+<span class="fc" id="L462">            generatedJavaFiles.addAll(introspectedTable</span>
+<span class="fc" id="L463">                    .getGeneratedJavaFiles());</span>
+<span class="fc" id="L464">            generatedXmlFiles.addAll(introspectedTable</span>
+<span class="fc" id="L465">                    .getGeneratedXmlFiles());</span>
+<span class="fc" id="L466">            generatedKotlinFiles.addAll(introspectedTable</span>
+<span class="fc" id="L467">                    .getGeneratedKotlinFiles());</span>
 
-<span class="fc" id="L466">                generatedJavaFiles.addAll(pluginAggregator</span>
-<span class="fc" id="L467">                        .contextGenerateAdditionalJavaFiles(introspectedTable));</span>
-<span class="fc" id="L468">                generatedXmlFiles.addAll(pluginAggregator</span>
-<span class="fc" id="L469">                        .contextGenerateAdditionalXmlFiles(introspectedTable));</span>
-<span class="fc" id="L470">                generatedKotlinFiles.addAll(pluginAggregator</span>
-<span class="fc" id="L471">                        .contextGenerateAdditionalKotlinFiles(introspectedTable));</span>
-<span class="fc" id="L472">            }</span>
-        }
+<span class="fc" id="L469">            generatedJavaFiles.addAll(pluginAggregator</span>
+<span class="fc" id="L470">                    .contextGenerateAdditionalJavaFiles(introspectedTable));</span>
+<span class="fc" id="L471">            generatedXmlFiles.addAll(pluginAggregator</span>
+<span class="fc" id="L472">                    .contextGenerateAdditionalXmlFiles(introspectedTable));</span>
+<span class="fc" id="L473">            generatedKotlinFiles.addAll(pluginAggregator</span>
+<span class="fc" id="L474">                    .contextGenerateAdditionalKotlinFiles(introspectedTable));</span>
+<span class="fc" id="L475">            otherGeneratedFiles.addAll(pluginAggregator</span>
+<span class="fc" id="L476">                    .contextGenerateAdditionalFiles(introspectedTable));</span>
+<span class="fc" id="L477">        }</span>
 
-<span class="fc" id="L475">        generatedJavaFiles.addAll(pluginAggregator</span>
-<span class="fc" id="L476">                .contextGenerateAdditionalJavaFiles());</span>
-<span class="fc" id="L477">        generatedXmlFiles.addAll(pluginAggregator</span>
-<span class="fc" id="L478">                .contextGenerateAdditionalXmlFiles());</span>
-<span class="fc" id="L479">        generatedKotlinFiles.addAll(pluginAggregator</span>
-<span class="fc" id="L480">                .contextGenerateAdditionalKotlinFiles());</span>
-<span class="fc" id="L481">    }</span>
+<span class="fc" id="L479">        generatedJavaFiles.addAll(pluginAggregator</span>
+<span class="fc" id="L480">                .contextGenerateAdditionalJavaFiles());</span>
+<span class="fc" id="L481">        generatedXmlFiles.addAll(pluginAggregator</span>
+<span class="fc" id="L482">                .contextGenerateAdditionalXmlFiles());</span>
+<span class="fc" id="L483">        generatedKotlinFiles.addAll(pluginAggregator</span>
+<span class="fc" id="L484">                .contextGenerateAdditionalKotlinFiles());</span>
+<span class="fc" id="L485">        otherGeneratedFiles.addAll(pluginAggregator</span>
+<span class="fc" id="L486">                .contextGenerateAdditionalFiles());</span>
+<span class="fc" id="L487">    }</span>
 
-    private Connection getConnection() throws SQLException {
+    /**
+     * This method creates a new JDBC connection from the values specified in the configuration file.
+     * If you call this method, then you are responsible
+     * for closing the connection (See {@link Context#closeConnection(Connection)}). If you do not
+     * close the connection, then there could be connection leaks.
+     *
+     * @return a new connection created from the values in the configuration file
+     * @throws SQLException if any error occurs while creating the connection
+     */
+    public Connection getConnection() throws SQLException {
         ConnectionFactory connectionFactory;
-<span class="fc bfc" id="L485" title="All 2 branches covered.">        if (jdbcConnectionConfiguration != null) {</span>
-<span class="fc" id="L486">            connectionFactory = new JDBCConnectionFactory(jdbcConnectionConfiguration);</span>
+<span class="fc bfc" id="L500" title="All 2 branches covered.">        if (jdbcConnectionConfiguration != null) {</span>
+<span class="fc" id="L501">            connectionFactory = new JDBCConnectionFactory(jdbcConnectionConfiguration);</span>
         } else {
-<span class="fc" id="L488">            connectionFactory = ObjectFactory.createConnectionFactory(this);</span>
+<span class="fc" id="L503">            connectionFactory = ObjectFactory.createConnectionFactory(this);</span>
         }
 
-<span class="fc" id="L491">        return connectionFactory.getConnection();</span>
+<span class="fc" id="L506">        return connectionFactory.getConnection();</span>
     }
 
-    private void closeConnection(Connection connection) {
-<span class="pc bpc" id="L495" title="1 of 2 branches missed.">        if (connection != null) {</span>
+    /**
+     * This method closes a JDBC connection and ignores any errors. If the passed connection is null,
+     * then the method does nothing.
+     *
+     * @param connection a JDBC connection to close, may be null
+     */
+    public void closeConnection(Connection connection) {
+<span class="pc bpc" id="L516" title="1 of 2 branches missed.">        if (connection != null) {</span>
             try {
-<span class="fc" id="L497">                connection.close();</span>
-<span class="nc" id="L498">            } catch (SQLException e) {</span>
+<span class="fc" id="L518">                connection.close();</span>
+<span class="nc" id="L519">            } catch (SQLException e) {</span>
                 // ignore
-<span class="fc" id="L500">            }</span>
+<span class="fc" id="L521">            }</span>
         }
-<span class="fc" id="L502">    }</span>
+<span class="fc" id="L523">    }</span>
 
     public boolean autoDelimitKeywords() {
-<span class="fc bfc" id="L505" title="All 2 branches covered.">        return autoDelimitKeywords != null</span>
-<span class="pc bpc" id="L506" title="1 of 2 branches missed.">                &amp;&amp; autoDelimitKeywords.booleanValue();</span>
+<span class="fc bfc" id="L526" title="All 2 branches covered.">        return autoDelimitKeywords != null</span>
+<span class="pc bpc" id="L527" title="1 of 2 branches missed.">                &amp;&amp; autoDelimitKeywords;</span>
     }
 
     public ConnectionFactoryConfiguration getConnectionFactoryConfiguration() {
-<span class="fc" id="L510">        return connectionFactoryConfiguration;</span>
+<span class="fc" id="L531">        return connectionFactoryConfiguration;</span>
     }
 
     public void setConnectionFactoryConfiguration(ConnectionFactoryConfiguration connectionFactoryConfiguration) {
-<span class="fc" id="L514">        this.connectionFactoryConfiguration = connectionFactoryConfiguration;</span>
-<span class="fc" id="L515">    }</span>
-
-    public boolean isJava8Targeted() {
-<span class="fc" id="L518">        return isJava8Targeted;</span>
-    }
-
-    public void setJava8Targeted(boolean isJava8Targeted) {
-<span class="nc" id="L522">        this.isJava8Targeted = isJava8Targeted;</span>
-<span class="nc" id="L523">    }</span>
+<span class="fc" id="L535">        this.connectionFactoryConfiguration = connectionFactoryConfiguration;</span>
+<span class="fc" id="L536">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UpdateByExampleSelectiveElementGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.codegen.mybatis3.xmlmapper.elements</a> &gt; <span class="el_source">UpdateByExampleSelectiveElementGenerator.java</span></div><h1>UpdateByExampleSelectiveElementGenerator.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2019 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UpdateByExampleSelectiveElementGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.codegen.mybatis3.xmlmapper.elements</a> &gt; <span class="el_source">UpdateByExampleSelectiveElementGenerator.java</span></div><h1>UpdateByExampleSelectiveElementGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -42,40 +42,35 @@ public class UpdateByExampleSelectiveElementGenerator extends
 
 <span class="fc" id="L43">        StringBuilder sb = new StringBuilder();</span>
 <span class="fc" id="L44">        sb.append(&quot;update &quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L45">        sb.append(introspectedTable</span>
-<span class="fc" id="L46">                .getAliasedFullyQualifiedTableNameAtRuntime());</span>
-<span class="fc" id="L47">        answer.addElement(new TextElement(sb.toString()));</span>
+<span class="fc" id="L45">        sb.append(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime());</span>
+<span class="fc" id="L46">        answer.addElement(new TextElement(sb.toString()));</span>
 
-<span class="fc" id="L49">        XmlElement dynamicElement = new XmlElement(&quot;set&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L50">        answer.addElement(dynamicElement);</span>
+<span class="fc" id="L48">        XmlElement dynamicElement = new XmlElement(&quot;set&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L49">        answer.addElement(dynamicElement);</span>
 
         for (IntrospectedColumn introspectedColumn :
-<span class="fc bfc" id="L53" title="All 2 branches covered.">                ListUtilities.removeGeneratedAlwaysColumns(introspectedTable.getAllColumns())) {</span>
-<span class="fc" id="L54">            sb.setLength(0);</span>
-<span class="fc" id="L55">            sb.append(introspectedColumn.getJavaProperty(&quot;record.&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L56">            sb.append(&quot; != null&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L57">            XmlElement isNotNullElement = new XmlElement(&quot;if&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L58">            isNotNullElement.addAttribute(new Attribute(&quot;test&quot;, sb.toString())); //$NON-NLS-1$</span>
-<span class="fc" id="L59">            dynamicElement.addElement(isNotNullElement);</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">                ListUtilities.removeGeneratedAlwaysColumns(introspectedTable.getAllColumns())) {</span>
+<span class="fc" id="L53">            sb.setLength(0);</span>
+<span class="fc" id="L54">            sb.append(introspectedColumn.getJavaProperty(&quot;row.&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L55">            sb.append(&quot; != null&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L56">            XmlElement isNotNullElement = new XmlElement(&quot;if&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L57">            isNotNullElement.addAttribute(new Attribute(&quot;test&quot;, sb.toString())); //$NON-NLS-1$</span>
+<span class="fc" id="L58">            dynamicElement.addElement(isNotNullElement);</span>
 
-<span class="fc" id="L61">            sb.setLength(0);</span>
-<span class="fc" id="L62">            sb.append(MyBatis3FormattingUtilities</span>
-<span class="fc" id="L63">                    .getAliasedEscapedColumnName(introspectedColumn));</span>
-<span class="fc" id="L64">            sb.append(&quot; = &quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L65">            sb.append(MyBatis3FormattingUtilities.getParameterClause(</span>
-                    introspectedColumn, &quot;record.&quot;)); //$NON-NLS-1$
-<span class="fc" id="L67">            sb.append(',');</span>
+<span class="fc" id="L60">            sb.setLength(0);</span>
+<span class="fc" id="L61">            sb.append(MyBatis3FormattingUtilities.getAliasedEscapedColumnName(introspectedColumn));</span>
+<span class="fc" id="L62">            sb.append(&quot; = &quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L63">            sb.append(MyBatis3FormattingUtilities.getParameterClause(introspectedColumn, &quot;row.&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L64">            sb.append(',');</span>
 
-<span class="fc" id="L69">            isNotNullElement.addElement(new TextElement(sb.toString()));</span>
-<span class="fc" id="L70">        }</span>
+<span class="fc" id="L66">            isNotNullElement.addElement(new TextElement(sb.toString()));</span>
+<span class="fc" id="L67">        }</span>
 
-<span class="fc" id="L72">        answer.addElement(getUpdateByExampleIncludeElement());</span>
+<span class="fc" id="L69">        answer.addElement(getUpdateByExampleIncludeElement());</span>
 
-<span class="fc" id="L74">        if (context.getPlugins()</span>
-<span class="pc bpc" id="L75" title="1 of 2 branches missed.">                .sqlMapUpdateByExampleSelectiveElementGenerated(answer,</span>
-                        introspectedTable)) {
-<span class="fc" id="L77">            parentElement.addElement(answer);</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">        if (context.getPlugins().sqlMapUpdateByExampleSelectiveElementGenerated(answer, introspectedTable)) {</span>
+<span class="fc" id="L72">            parentElement.addElement(answer);</span>
         }
-<span class="fc" id="L79">    }</span>
+<span class="fc" id="L74">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

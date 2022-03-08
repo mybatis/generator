@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Interface.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api.dom.java</a> &gt; <span class="el_source">Interface.java</span></div><h1>Interface.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2018 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Interface.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api.dom.java</a> &gt; <span class="el_source">Interface.java</span></div><h1>Interface.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -21,12 +21,12 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class Interface extends InnerInterface implements CompilationUnit {
-    
-<span class="fc" id="L25">    private Set&lt;FullyQualifiedJavaType&gt; importedTypes = new TreeSet&lt;&gt;();</span>
 
-<span class="fc" id="L27">    private Set&lt;String&gt; staticImports = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L25">    private final Set&lt;FullyQualifiedJavaType&gt; importedTypes = new TreeSet&lt;&gt;();</span>
 
-<span class="fc" id="L29">    private List&lt;String&gt; fileCommentLines = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L27">    private final Set&lt;String&gt; staticImports = new TreeSet&lt;&gt;();</span>
+
+<span class="fc" id="L29">    private final List&lt;String&gt; fileCommentLines = new ArrayList&lt;&gt;();</span>
 
     public Interface(FullyQualifiedJavaType type) {
 <span class="fc" id="L32">        super(type);</span>
@@ -84,4 +84,4 @@ public class Interface extends InnerInterface implements CompilationUnit {
 <span class="fc" id="L84">        return visitor.visit(this);</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

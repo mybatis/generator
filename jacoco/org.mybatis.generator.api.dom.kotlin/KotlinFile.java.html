@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>KotlinFile.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api.dom.kotlin</a> &gt; <span class="el_source">KotlinFile.java</span></div><h1>KotlinFile.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2019 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>KotlinFile.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api.dom.kotlin</a> &gt; <span class="el_source">KotlinFile.java</span></div><h1>KotlinFile.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -24,46 +24,46 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class KotlinFile {
-    private String fileName;
-<span class="fc" id="L28">    private List&lt;String&gt; fileCommentLines = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L29">    private Set&lt;String&gt; imports = new TreeSet&lt;&gt;();</span>
+    private final String fileName;
+<span class="fc" id="L28">    private final List&lt;String&gt; fileCommentLines = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L29">    private final Set&lt;String&gt; imports = new TreeSet&lt;&gt;();</span>
     private String packageDefinition;
-<span class="fc" id="L31">    private List&lt;KotlinNamedItem&gt; namedItems = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L31">    private final List&lt;KotlinNamedItem&gt; namedItems = new ArrayList&lt;&gt;();</span>
 
 <span class="fc" id="L33">    public KotlinFile(String fileName) {</span>
 <span class="fc" id="L34">        Objects.requireNonNull(fileName);</span>
-        
+
 <span class="fc bfc" id="L36" title="All 2 branches covered.">        if (fileName.endsWith(&quot;.kt&quot;)) { //$NON-NLS-1$</span>
 <span class="fc" id="L37">            this.fileName = fileName;</span>
         } else {
 <span class="fc" id="L39">            this.fileName = fileName + &quot;.kt&quot;; //$NON-NLS-1$</span>
         }
 <span class="fc" id="L41">    }</span>
- 
+
     public String getFileName() {
 <span class="fc" id="L44">        return fileName;</span>
     }
-    
+
     public List&lt;String&gt; getFileCommentLines() {
 <span class="fc" id="L48">        return fileCommentLines;</span>
     }
-    
+
     public void addFileCommentLine(String fileComentLine) {
 <span class="fc" id="L52">        fileCommentLines.add(fileComentLine);</span>
 <span class="fc" id="L53">    }</span>
-    
+
     public Set&lt;String&gt; getImports() {
 <span class="fc" id="L56">        return imports;</span>
     }
-    
+
     public void addImport(String i) {
 <span class="fc" id="L60">        imports.add(i);</span>
 <span class="fc" id="L61">    }</span>
-    
+
     public void addImports(Collection&lt;String&gt; imports) {
 <span class="fc" id="L64">        this.imports.addAll(imports);</span>
 <span class="fc" id="L65">    }</span>
-    
+
     public Optional&lt;String&gt; getPackage() {
 <span class="fc" id="L68">        return Optional.ofNullable(packageDefinition);</span>
     }
@@ -71,13 +71,13 @@ public class KotlinFile {
     public void setPackage(String p) {
 <span class="fc" id="L72">        this.packageDefinition = p;</span>
 <span class="fc" id="L73">    }</span>
-    
+
     public void addNamedItem(KotlinNamedItem namedItem) {
 <span class="fc" id="L76">        namedItems.add(namedItem);</span>
 <span class="fc" id="L77">    }</span>
-    
+
     public List&lt;KotlinNamedItem&gt; getNamedItems() {
 <span class="fc" id="L80">        return namedItems;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

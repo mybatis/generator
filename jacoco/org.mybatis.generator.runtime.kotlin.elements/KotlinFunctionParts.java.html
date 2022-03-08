@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>KotlinFunctionParts.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.kotlin.elements</a> &gt; <span class="el_source">KotlinFunctionParts.java</span></div><h1>KotlinFunctionParts.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2019 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>KotlinFunctionParts.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.runtime.kotlin.elements</a> &gt; <span class="el_source">KotlinFunctionParts.java</span></div><h1>KotlinFunctionParts.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -24,73 +24,68 @@ import org.mybatis.generator.api.dom.kotlin.KotlinArg;
 
 public class KotlinFunctionParts {
 
-    private List&lt;String&gt; annotations;
-    private List&lt;String&gt; codeLines;
-    private Set&lt;String&gt; imports;
-    private List&lt;KotlinArg&gt; arguments;
-    
+    private final List&lt;String&gt; annotations;
+    private final List&lt;String&gt; codeLines;
+    private final Set&lt;String&gt; imports;
+    private final List&lt;KotlinArg&gt; arguments;
+
 <span class="fc" id="L32">    private KotlinFunctionParts(Builder builder) {</span>
 <span class="fc" id="L33">        imports = builder.imports;</span>
 <span class="fc" id="L34">        codeLines = builder.codeLines;</span>
 <span class="fc" id="L35">        arguments = builder.arguments;</span>
 <span class="fc" id="L36">        annotations = builder.annotations;</span>
 <span class="fc" id="L37">    }</span>
-    
+
     public Set&lt;String&gt; getImports() {
 <span class="fc" id="L40">        return imports;</span>
     }
-    
+
     public List&lt;String&gt; getAnnotations() {
 <span class="fc" id="L44">        return annotations;</span>
     }
-    
+
     public List&lt;String&gt; getCodeLines() {
 <span class="fc" id="L48">        return codeLines;</span>
     }
-    
+
     public List&lt;KotlinArg&gt; getArguments() {
 <span class="fc" id="L52">        return arguments;</span>
     }
-    
+
 <span class="fc" id="L55">    public static class Builder {</span>
-<span class="fc" id="L56">        private List&lt;String&gt; codeLines = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L57">        private Set&lt;String&gt; imports = new HashSet&lt;&gt;();</span>
-<span class="fc" id="L58">        private List&lt;KotlinArg&gt; arguments = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L59">        private List&lt;String&gt; annotations = new ArrayList&lt;&gt;();</span>
-        
+<span class="fc" id="L56">        private final List&lt;String&gt; codeLines = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L57">        private final Set&lt;String&gt; imports = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L58">        private final List&lt;KotlinArg&gt; arguments = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L59">        private final List&lt;String&gt; annotations = new ArrayList&lt;&gt;();</span>
+
         public Builder withAnnotation(String annotation) {
 <span class="fc" id="L62">            annotations.add(annotation);</span>
 <span class="fc" id="L63">            return this;</span>
         }
-        
+
         public Builder withCodeLine(String codeLine) {
 <span class="fc" id="L67">            this.codeLines.add(codeLine);</span>
 <span class="fc" id="L68">            return this;</span>
         }
-        
-        public Builder withBodyLines(List&lt;String&gt; codeLines) {
-<span class="nc" id="L72">            this.codeLines.addAll(codeLines);</span>
-<span class="nc" id="L73">            return this;</span>
-        }
 
         public Builder withImport(String im) {
-<span class="fc" id="L77">            this.imports.add(im);</span>
+<span class="fc" id="L72">            this.imports.add(im);</span>
+<span class="fc" id="L73">            return this;</span>
+        }
+
+        public Builder withImports(Set&lt;String&gt; imports) {
+<span class="fc" id="L77">            this.imports.addAll(imports);</span>
 <span class="fc" id="L78">            return this;</span>
         }
-        
-        public Builder withImports(Set&lt;String&gt; imports) {
-<span class="fc" id="L82">            this.imports.addAll(imports);</span>
+
+        public Builder withArgument(KotlinArg argument) {
+<span class="fc" id="L82">            arguments.add(argument);</span>
 <span class="fc" id="L83">            return this;</span>
         }
-        
-        public Builder withArgument(KotlinArg argument) {
-<span class="fc" id="L87">            arguments.add(argument);</span>
-<span class="fc" id="L88">            return this;</span>
-        }
-        
+
         public KotlinFunctionParts build() {
-<span class="fc" id="L92">            return new KotlinFunctionParts(this);</span>
+<span class="fc" id="L87">            return new KotlinFunctionParts(this);</span>
         }
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

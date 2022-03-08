@@ -6,21 +6,21 @@
 </head>
 <body>
 <div id="overview"><a href="../../../../testapidocs/org/mybatis/generator/XmlCodeGenerationTest.html">View Javadoc</a></div><pre>
-<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_javadoccomment"> *    Copyright 2006-2018 the original author or authors.</em>
-<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_javadoccomment"> *    Licensed under the Apache License, Version 2.0 (the "License");</em>
-<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_javadoccomment"> *    you may not use this file except in compliance with the License.</em>
-<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <em class="jxr_javadoccomment"> *    You may obtain a copy of the License at</em>
-<a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_javadoccomment"> *       <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a></em>
-<a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_javadoccomment"> *    Unless required by applicable law or agreed to in writing, software</em>
-<a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_javadoccomment"> *    distributed under the License is distributed on an "AS IS" BASIS,</em>
-<a class="jxr_linenumber" name="L12" href="#L12">12</a>  <em class="jxr_javadoccomment"> *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</em>
-<a class="jxr_linenumber" name="L13" href="#L13">13</a>  <em class="jxr_javadoccomment"> *    See the License for the specific language governing permissions and</em>
-<a class="jxr_linenumber" name="L14" href="#L14">14</a>  <em class="jxr_javadoccomment"> *    limitations under the License.</em>
-<a class="jxr_linenumber" name="L15" href="#L15">15</a>  <em class="jxr_javadoccomment"> */</em>
+<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_comment">/*</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> *    Copyright 2006-2020 the original author or authors.</em>
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_comment"> *</em>
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_comment"> *    Licensed under the Apache License, Version 2.0 (the "License");</em>
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_comment"> *    you may not use this file except in compliance with the License.</em>
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <em class="jxr_comment"> *    You may obtain a copy of the License at</em>
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_comment"> *</em>
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_comment"> *       <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a></em>
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_comment"> *</em>
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_comment"> *    Unless required by applicable law or agreed to in writing, software</em>
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_comment"> *    distributed under the License is distributed on an "AS IS" BASIS,</em>
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  <em class="jxr_comment"> *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</em>
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>  <em class="jxr_comment"> *    See the License for the specific language governing permissions and</em>
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>  <em class="jxr_comment"> *    limitations under the License.</em>
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>  <em class="jxr_comment"> */</em>
 <a class="jxr_linenumber" name="L16" href="#L16">16</a>  <strong class="jxr_keyword">package</strong> org.mybatis.generator;
 <a class="jxr_linenumber" name="L17" href="#L17">17</a>  
 <a class="jxr_linenumber" name="L18" href="#L18">18</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.junit.jupiter.api.Assertions.*;
@@ -46,11 +46,11 @@
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>  <strong class="jxr_keyword">import</strong> org.xml.sax.SAXException;
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>  <strong class="jxr_keyword">import</strong> org.xml.sax.SAXParseException;
 <a class="jxr_linenumber" name="L40" href="#L40">40</a>  
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="XmlCodeGenerationTest" href="../../../org/mybatis/generator/XmlCodeGenerationTest.html#XmlCodeGenerationTest">XmlCodeGenerationTest</a> {
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <strong class="jxr_keyword">class</strong> <a name="XmlCodeGenerationTest" href="../../../org/mybatis/generator/XmlCodeGenerationTest.html#XmlCodeGenerationTest">XmlCodeGenerationTest</a> {
 <a class="jxr_linenumber" name="L42" href="#L42">42</a>  
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>      @ParameterizedTest
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>      @MethodSource(<span class="jxr_string">"generateXmlFiles"</span>)
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testXmlParse(GeneratedXmlFile generatedXmlFile) {
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>      <strong class="jxr_keyword">void</strong> testXmlParse(GeneratedXmlFile generatedXmlFile) {
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>          ByteArrayInputStream is = <strong class="jxr_keyword">new</strong> ByteArrayInputStream(
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>                  generatedXmlFile.getFormattedContent().getBytes());
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>          <strong class="jxr_keyword">try</strong> {
@@ -65,18 +65,18 @@
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>          }
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>      }
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>  
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> List&lt;GeneratedXmlFile&gt; generateXmlFiles() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>      <strong class="jxr_keyword">static</strong> List&lt;GeneratedXmlFile&gt; generateXmlFiles() <strong class="jxr_keyword">throws</strong> Exception {
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>          List&lt;GeneratedXmlFile&gt; generatedFiles = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>          generatedFiles.addAll(generateXmlFilesMybatis());
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>          <strong class="jxr_keyword">return</strong> generatedFiles;
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>      }
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>  
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> List&lt;GeneratedXmlFile&gt; generateXmlFilesMybatis() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>      <strong class="jxr_keyword">static</strong> List&lt;GeneratedXmlFile&gt; generateXmlFilesMybatis() <strong class="jxr_keyword">throws</strong> Exception {
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>          JavaCodeGenerationTest.createDatabase();
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>          <strong class="jxr_keyword">return</strong> generateXmlFiles(<span class="jxr_string">"/scripts/generatorConfig.xml"</span>);
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>      }
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>  
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> List&lt;GeneratedXmlFile&gt; generateXmlFiles(String configFile) <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>      <strong class="jxr_keyword">static</strong> List&lt;GeneratedXmlFile&gt; generateXmlFiles(String configFile) <strong class="jxr_keyword">throws</strong> Exception {
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>          List&lt;String&gt; warnings = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>          ConfigurationParser cp = <strong class="jxr_keyword">new</strong> ConfigurationParser(warnings);
 <a class="jxr_linenumber" name="L74" href="#L74">74</a>          Configuration config = cp.parseConfiguration(JavaCodeGenerationTest.<strong class="jxr_keyword">class</strong>.getResourceAsStream(configFile));
@@ -88,7 +88,7 @@
 <a class="jxr_linenumber" name="L80" href="#L80">80</a>          <strong class="jxr_keyword">return</strong> myBatisGenerator.getGeneratedXmlFiles();
 <a class="jxr_linenumber" name="L81" href="#L81">81</a>      }
 <a class="jxr_linenumber" name="L82" href="#L82">82</a>  
-<a class="jxr_linenumber" name="L83" href="#L83">83</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> TestEntityResolver <strong class="jxr_keyword">implements</strong> EntityResolver {
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>      <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> TestEntityResolver <strong class="jxr_keyword">implements</strong> EntityResolver {
 <a class="jxr_linenumber" name="L84" href="#L84">84</a>  
 <a class="jxr_linenumber" name="L85" href="#L85">85</a>          @Override
 <a class="jxr_linenumber" name="L86" href="#L86">86</a>          <strong class="jxr_keyword">public</strong> InputSource resolveEntity(String publicId, String systemId) <strong class="jxr_keyword">throws</strong> SAXException, IOException {
@@ -97,10 +97,10 @@
 <a class="jxr_linenumber" name="L89" href="#L89">89</a>          }
 <a class="jxr_linenumber" name="L90" href="#L90">90</a>      }
 <a class="jxr_linenumber" name="L91" href="#L91">91</a>  
-<a class="jxr_linenumber" name="L92" href="#L92">92</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> TestErrorHandler <strong class="jxr_keyword">implements</strong> ErrorHandler {
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>      <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> TestErrorHandler <strong class="jxr_keyword">implements</strong> ErrorHandler {
 <a class="jxr_linenumber" name="L93" href="#L93">93</a>  
-<a class="jxr_linenumber" name="L94" href="#L94">94</a>          <strong class="jxr_keyword">private</strong> List&lt;String&gt; errors = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
-<a class="jxr_linenumber" name="L95" href="#L95">95</a>          <strong class="jxr_keyword">private</strong> List&lt;String&gt; warnings = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>          <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> List&lt;String&gt; errors = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
+<a class="jxr_linenumber" name="L95" href="#L95">95</a>          <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> List&lt;String&gt; warnings = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
 <a class="jxr_linenumber" name="L96" href="#L96">96</a>  
 <a class="jxr_linenumber" name="L97" href="#L97">97</a>          @Override
 <a class="jxr_linenumber" name="L98" href="#L98">98</a>          <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> warning(SAXParseException exception) <strong class="jxr_keyword">throws</strong> SAXException {
@@ -128,6 +128,6 @@
 <a class="jxr_linenumber" name="L120" href="#L120">120</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2006&#x2013;2019 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2006&#x2013;2022 <a href="https://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
 </body>
 </html>

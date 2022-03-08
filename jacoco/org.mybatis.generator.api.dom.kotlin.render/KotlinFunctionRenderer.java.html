@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>KotlinFunctionRenderer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api.dom.kotlin.render</a> &gt; <span class="el_source">KotlinFunctionRenderer.java</span></div><h1>KotlinFunctionRenderer.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2019 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>KotlinFunctionRenderer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api.dom.kotlin.render</a> &gt; <span class="el_source">KotlinFunctionRenderer.java</span></div><h1>KotlinFunctionRenderer.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -23,55 +23,54 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 
 <span class="fc" id="L24">public class KotlinFunctionRenderer {</span>
     public List&lt;String&gt; render(KotlinFunction function) {
-<span class="fc" id="L26">        List&lt;String&gt; answer = new ArrayList&lt;&gt;();</span>
 
-<span class="fc" id="L28">        answer.addAll(function.getAnnotations());</span>
+<span class="fc" id="L27">        List&lt;String&gt; answer = new ArrayList&lt;&gt;(function.getAnnotations());</span>
 
-<span class="fc" id="L30">        answer.add(renderFirstLine(function));</span>
+<span class="fc" id="L29">        answer.add(renderFirstLine(function));</span>
 
-<span class="fc" id="L32">        answer.addAll(function.getCodeLines().stream().map(KotlinRenderingUtilities::kotlinIndent)</span>
-<span class="fc" id="L33">                .collect(Collectors.toList()));</span>
+<span class="fc" id="L31">        answer.addAll(function.getCodeLines().stream().map(KotlinRenderingUtilities::kotlinIndent)</span>
+<span class="fc" id="L32">                .collect(Collectors.toList()));</span>
 
-<span class="fc bfc" id="L35" title="All 4 branches covered.">        if (!function.getCodeLines().isEmpty() &amp;&amp; !function.isOneLineFunction()) {</span>
-<span class="fc" id="L36">            answer.add(&quot;}&quot;); //$NON-NLS-1$</span>
+<span class="fc bfc" id="L34" title="All 4 branches covered.">        if (!function.getCodeLines().isEmpty() &amp;&amp; !function.isOneLineFunction()) {</span>
+<span class="fc" id="L35">            answer.add(&quot;}&quot;); //$NON-NLS-1$</span>
         }
 
-<span class="fc" id="L39">        return answer;</span>
+<span class="fc" id="L38">        return answer;</span>
     }
 
     private String renderFirstLine(KotlinFunction function) {
-<span class="fc" id="L43">        String firstLine = KotlinRenderingUtilities.renderModifiers(function.getModifiers())</span>
+<span class="fc" id="L42">        String firstLine = KotlinRenderingUtilities.renderModifiers(function.getModifiers())</span>
                 + &quot;fun &quot; //$NON-NLS-1$
-<span class="fc" id="L45">                + function.getName()</span>
+<span class="fc" id="L44">                + function.getName()</span>
                 + &quot;(&quot;; //$NON-NLS-1$
 
-<span class="fc" id="L48">        firstLine += renderArguments(function);</span>
-<span class="fc" id="L49">        firstLine += &quot;)&quot;; //$NON-NLS-1$</span>
-<span class="fc" id="L50">        firstLine += renderReturnType(function);</span>
+<span class="fc" id="L47">        firstLine += renderArguments(function);</span>
+<span class="fc" id="L48">        firstLine += &quot;)&quot;; //$NON-NLS-1$</span>
+<span class="fc" id="L49">        firstLine += renderReturnType(function);</span>
 
-<span class="fc bfc" id="L52" title="All 2 branches covered.">        if (!function.getCodeLines().isEmpty()) {</span>
-<span class="fc bfc" id="L53" title="All 2 branches covered.">            if (function.isOneLineFunction()) {</span>
-<span class="fc" id="L54">                firstLine += &quot; =&quot;; //$NON-NLS-1$</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        if (!function.getCodeLines().isEmpty()) {</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">            if (function.isOneLineFunction()) {</span>
+<span class="fc" id="L53">                firstLine += &quot; =&quot;; //$NON-NLS-1$</span>
             } else {
-<span class="fc" id="L56">                firstLine += &quot; {&quot;; //$NON-NLS-1$</span>
+<span class="fc" id="L55">                firstLine += &quot; {&quot;; //$NON-NLS-1$</span>
             }
         }
 
-<span class="fc" id="L60">        return firstLine;</span>
+<span class="fc" id="L59">        return firstLine;</span>
     }
 
     private String renderArguments(KotlinFunction function) {
-<span class="fc" id="L64">        KotlinArgRenderer argRenderer = new KotlinArgRenderer();</span>
+<span class="fc" id="L63">        KotlinArgRenderer argRenderer = new KotlinArgRenderer();</span>
 
-<span class="fc" id="L66">        return function.getArguments().stream()</span>
-<span class="fc" id="L67">                .map(argRenderer::render)</span>
-<span class="fc" id="L68">                .collect(Collectors.joining(&quot;, &quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L65">        return function.getArguments().stream()</span>
+<span class="fc" id="L66">                .map(argRenderer::render)</span>
+<span class="fc" id="L67">                .collect(Collectors.joining(&quot;, &quot;)); //$NON-NLS-1$</span>
     }
 
     private String renderReturnType(KotlinFunction function) {
-<span class="fc" id="L72">        return function.getExplicitReturnType()</span>
-<span class="fc" id="L73">                .map(s -&gt; &quot;: &quot; + s) //$NON-NLS-1$</span>
-<span class="fc" id="L74">                .orElse(&quot;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L71">        return function.getExplicitReturnType()</span>
+<span class="fc" id="L72">                .map(s -&gt; &quot;: &quot; + s) //$NON-NLS-1$</span>
+<span class="fc" id="L73">                .orElse(&quot;&quot;); //$NON-NLS-1$</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -6,21 +6,21 @@
 </head>
 <body>
 <div id="overview"><a href="../../../../../../../apidocs/org/mybatis/generator/runtime/dynamic/sql/DynamicSqlModelGenerator.html">View Javadoc</a></div><pre>
-<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_javadoccomment"> *    Copyright 2006-2019 the original author or authors.</em>
-<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_javadoccomment"> *    Licensed under the Apache License, Version 2.0 (the "License");</em>
-<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_javadoccomment"> *    you may not use this file except in compliance with the License.</em>
-<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <em class="jxr_javadoccomment"> *    You may obtain a copy of the License at</em>
-<a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_javadoccomment"> *       <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a></em>
-<a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_javadoccomment"> *    Unless required by applicable law or agreed to in writing, software</em>
-<a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_javadoccomment"> *    distributed under the License is distributed on an "AS IS" BASIS,</em>
-<a class="jxr_linenumber" name="L12" href="#L12">12</a>  <em class="jxr_javadoccomment"> *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</em>
-<a class="jxr_linenumber" name="L13" href="#L13">13</a>  <em class="jxr_javadoccomment"> *    See the License for the specific language governing permissions and</em>
-<a class="jxr_linenumber" name="L14" href="#L14">14</a>  <em class="jxr_javadoccomment"> *    limitations under the License.</em>
-<a class="jxr_linenumber" name="L15" href="#L15">15</a>  <em class="jxr_javadoccomment"> */</em>
+<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_comment">/*</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> *    Copyright 2006-2020 the original author or authors.</em>
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_comment"> *</em>
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_comment"> *    Licensed under the Apache License, Version 2.0 (the "License");</em>
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_comment"> *    you may not use this file except in compliance with the License.</em>
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <em class="jxr_comment"> *    You may obtain a copy of the License at</em>
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_comment"> *</em>
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_comment"> *       <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a></em>
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_comment"> *</em>
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_comment"> *    Unless required by applicable law or agreed to in writing, software</em>
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_comment"> *    distributed under the License is distributed on an "AS IS" BASIS,</em>
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  <em class="jxr_comment"> *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</em>
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>  <em class="jxr_comment"> *    See the License for the specific language governing permissions and</em>
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>  <em class="jxr_comment"> *    limitations under the License.</em>
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>  <em class="jxr_comment"> */</em>
 <a class="jxr_linenumber" name="L16" href="#L16">16</a>  <strong class="jxr_keyword">package</strong> org.mybatis.generator.runtime.dynamic.sql;
 <a class="jxr_linenumber" name="L17" href="#L17">17</a>  
 <a class="jxr_linenumber" name="L18" href="#L18">18</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.mybatis.generator.internal.util.JavaBeansUtil.getJavaBeansFieldWithGeneratedAnnotation;
@@ -48,9 +48,9 @@
 <a class="jxr_linenumber" name="L40" href="#L40">40</a>  <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L41" href="#L41">41</a>  <em class="jxr_javadoccomment"> * This model generator builds a flat model with default constructor and getters/setters.</em>
 <a class="jxr_linenumber" name="L42" href="#L42">42</a>  <em class="jxr_javadoccomment"> * It does not support the immutable model, or constructor based attributes.</em>
-<a class="jxr_linenumber" name="L43" href="#L43">43</a>  <em class="jxr_javadoccomment"> * </em>
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>  <em class="jxr_javadoccomment"> * @author Jeff Butler</em>
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>  <em class="jxr_javadoccomment"> * </em>
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>  <em class="jxr_javadoccomment"> */</em>
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="DynamicSqlModelGenerator" href="../../../../../../org/mybatis/generator/runtime/dynamic/sql/DynamicSqlModelGenerator.html#DynamicSqlModelGenerator">DynamicSqlModelGenerator</a> <strong class="jxr_keyword">extends</strong> <a name="AbstractJavaGenerator" href="../../../../../../org/mybatis/generator/codegen/AbstractJavaGenerator.html#AbstractJavaGenerator">AbstractJavaGenerator</a> {
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>  
@@ -65,9 +65,9 @@
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>          <a name="Plugin" href="../../../../../../org/mybatis/generator/api/Plugin.html#Plugin">Plugin</a> plugins = context.getPlugins();
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>          <a name="CommentGenerator" href="../../../../../../org/mybatis/generator/api/CommentGenerator.html#CommentGenerator">CommentGenerator</a> commentGenerator = context.getCommentGenerator();
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>  
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>          <a name="FullyQualifiedJavaType" href="../../../../../../org/mybatis/ge<a name="FullyQualifiedJavaType" href="../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html#FullyQualifiedJavaType">FullyQualifiedJavaType</a>ullyQualifiedJavaType.html#FullyQualifiedJavaType">FullyQualifiedJavaType</a> type = <strong class="jxr_keyword">new</strong> <a name="FullyQualifiedJavaType" href="../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html#FullyQualifiedJavaType">FullyQualifiedJavaType</a>(
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>          <a name="FullyQualifiedJavaType" href="../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html#FullyQualifiedJavaType">FullyQualifiedJavaType</a> type = <strong class="jxr_keyword">new</strong> <a name="FullyQualifiedJavaType" href="../../../../../../org/mybatis/generator/api/dom/java/FullyQualifiedJavaType.html#FullyQualifiedJavaType">FullyQualifiedJavaType</a>(
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>                  introspectedTable.getBaseRecordType());
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>          <a name="TopLevelClass" href="../../../../../../org/mybatis/generator/a<a name="TopLevelClass" href="../../../../../../org/mybatis/generator/api/dom/java/TopLevelClass.html#TopLevelClass">TopLevelClass</a>opLevelClass.html#TopLevelClass">TopLevelClass</a> topLevelClass = <strong class="jxr_keyword">new</strong> <a name="TopLevelClass" href="../../../../../../org/mybatis/generator/api/dom/java/TopLevelClass.html#TopLevelClass">TopLevelClass</a>(type);
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>          <a name="TopLevelClass" href="../../../../../../org/mybatis/generator/api/dom/java/TopLevelClass.html#TopLevelClass">TopLevelClass</a> topLevelClass = <strong class="jxr_keyword">new</strong> <a name="TopLevelClass" href="../../../../../../org/mybatis/generator/api/dom/java/TopLevelClass.html#TopLevelClass">TopLevelClass</a>(type);
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>          topLevelClass.setVisibility(JavaVisibility.PUBLIC);
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>          commentGenerator.addJavaFileComment(topLevelClass);
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>  
@@ -98,7 +98,7 @@
 <a class="jxr_linenumber" name="L90" href="#L90">90</a>  
 <a class="jxr_linenumber" name="L91" href="#L91">91</a>              <a name="Field" href="../../../../../../org/mybatis/generator/api/dom/java/Field.html#Field">Field</a> field = getJavaBeansFieldWithGeneratedAnnotation(introspectedColumn, context, introspectedTable,
 <a class="jxr_linenumber" name="L92" href="#L92">92</a>                      topLevelClass);
-<a class="jxr_linenumber" name="L93" href="#L93">93</a>              
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>  
 <a class="jxr_linenumber" name="L94" href="#L94">94</a>              <strong class="jxr_keyword">if</strong> (plugins.modelFieldGenerated(field, topLevelClass,
 <a class="jxr_linenumber" name="L95" href="#L95">95</a>                      introspectedColumn, introspectedTable,
 <a class="jxr_linenumber" name="L96" href="#L96">96</a>                      Plugin.ModelClassType.BASE_RECORD)) {
@@ -146,7 +146,7 @@
 <a class="jxr_linenumber" name="L138" href="#L138">138</a>     }
 <a class="jxr_linenumber" name="L139" href="#L139">139</a> 
 <a class="jxr_linenumber" name="L140" href="#L140">140</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> addParameterizedConstructor(<a name="TopLevelClass" href="../../../../../../org/mybatis/generator/api/dom/java/TopLevelClass.html#TopLevelClass">TopLevelClass</a> topLevelClass) {
-<a class="jxr_linenumber" name="L141" href="#L141">141</a>         <a name="Method" href="../../../../../../org/mybatis/gene<a name="Method" href="../../../../../../org/mybatis/generator/api/dom/java/Method.html#Method">Method</a>api/dom/java/Method.html#Method">Method</a> method = <strong class="jxr_keyword">new</strong> <a name="Method" href="../../../../../../org/mybatis/generator/api/dom/java/Method.html#Method">Method</a>(topLevelClass.getType().getShortName());
+<a class="jxr_linenumber" name="L141" href="#L141">141</a>         <a name="Method" href="../../../../../../org/mybatis/generator/api/dom/java/Method.html#Method">Method</a> method = <strong class="jxr_keyword">new</strong> <a name="Method" href="../../../../../../org/mybatis/generator/api/dom/java/Method.html#Method">Method</a>(topLevelClass.getType().getShortName());
 <a class="jxr_linenumber" name="L142" href="#L142">142</a>         method.setVisibility(JavaVisibility.PUBLIC);
 <a class="jxr_linenumber" name="L143" href="#L143">143</a>         method.setConstructor(<strong class="jxr_keyword">true</strong>);
 <a class="jxr_linenumber" name="L144" href="#L144">144</a>         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable,
@@ -178,6 +178,6 @@
 <a class="jxr_linenumber" name="L170" href="#L170">170</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2006&#x2013;2019 <a href="http://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2006&#x2013;2022 <a href="https://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
 </body>
 </html>

@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RenderingUtilities.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api.dom.java.render</a> &gt; <span class="el_source">RenderingUtilities.java</span></div><h1>RenderingUtilities.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2019 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RenderingUtilities.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api.dom.java.render</a> &gt; <span class="el_source">RenderingUtilities.java</span></div><h1>RenderingUtilities.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -39,15 +39,15 @@ import org.mybatis.generator.internal.util.CustomCollectors;
 
 public class RenderingUtilities {
     private RenderingUtilities() {}
-    
+
     public static final String JAVA_INDENT = &quot;    &quot;; //$NON-NLS-1$
-<span class="fc" id="L44">    private static TypeParameterRenderer typeParameterRenderer = new TypeParameterRenderer();</span>
-<span class="fc" id="L45">    private static FieldRenderer fieldRenderer = new FieldRenderer();</span>
-<span class="fc" id="L46">    private static InitializationBlockRenderer initializationBlockRenderer = new InitializationBlockRenderer();</span>
-<span class="fc" id="L47">    private static MethodRenderer methodRenderer = new MethodRenderer();</span>
-<span class="fc" id="L48">    private static InnerClassRenderer innerClassRenderer = new InnerClassRenderer();</span>
-<span class="fc" id="L49">    private static InnerInterfaceRenderer innerInterfaceRenderer = new InnerInterfaceRenderer();</span>
-<span class="fc" id="L50">    private static InnerEnumRenderer innerEnumRenderer = new InnerEnumRenderer();</span>
+<span class="fc" id="L44">    private static final TypeParameterRenderer typeParameterRenderer = new TypeParameterRenderer();</span>
+<span class="fc" id="L45">    private static final FieldRenderer fieldRenderer = new FieldRenderer();</span>
+<span class="fc" id="L46">    private static final InitializationBlockRenderer initializationBlockRenderer = new InitializationBlockRenderer();</span>
+<span class="fc" id="L47">    private static final MethodRenderer methodRenderer = new MethodRenderer();</span>
+<span class="fc" id="L48">    private static final InnerClassRenderer innerClassRenderer = new InnerClassRenderer();</span>
+<span class="fc" id="L49">    private static final InnerInterfaceRenderer innerInterfaceRenderer = new InnerInterfaceRenderer();</span>
+<span class="fc" id="L50">    private static final InnerEnumRenderer innerEnumRenderer = new InnerEnumRenderer();</span>
 
     // should return an empty string if no type parameters
     public static String renderTypeParameters(List&lt;TypeParameter&gt; typeParameters, CompilationUnit compilationUnit) {
@@ -77,7 +77,7 @@ public class RenderingUtilities {
 <span class="fc" id="L77">        return addEmptyLine(initializationBlockRenderer.render(initializationBlock).stream()</span>
 <span class="fc" id="L78">                .map(RenderingUtilities::javaIndent));</span>
     }
-    
+
     public static List&lt;String&gt; renderClassOrEnumMethods(List&lt;Method&gt; methods, CompilationUnit compilationUnit) {
 <span class="fc" id="L82">        return methods.stream()</span>
 <span class="fc" id="L83">                .flatMap(m -&gt; renderMethod(m, false, compilationUnit))</span>
@@ -94,7 +94,7 @@ public class RenderingUtilities {
 <span class="fc" id="L94">        return addEmptyLine(methodRenderer.render(method, inInterface, compilationUnit).stream()</span>
 <span class="fc" id="L95">                .map(RenderingUtilities::javaIndent));</span>
     }
-    
+
     private static Stream&lt;String&gt; addEmptyLine(Stream&lt;String&gt; in) {
 <span class="fc" id="L99">        return Stream.of(in, Stream.of(&quot;&quot;)) //$NON-NLS-1$</span>
 <span class="fc" id="L100">                .flatMap(Function.identity());</span>
@@ -109,12 +109,12 @@ public class RenderingUtilities {
     public static List&lt;String&gt; renderInnerClassNoIndent(InnerClass innerClass, CompilationUnit compilationUnit) {
 <span class="fc" id="L110">        return innerClassRenderer.render(innerClass, compilationUnit);</span>
     }
-    
+
     private static Stream&lt;String&gt; renderInnerClass(InnerClass innerClass, CompilationUnit compilationUnit) {
 <span class="fc" id="L114">        return addEmptyLine(innerClassRenderer.render(innerClass, compilationUnit).stream()</span>
 <span class="fc" id="L115">                .map(RenderingUtilities::javaIndent));</span>
     }
-    
+
     public static List&lt;String&gt; renderInnerInterfaces(List&lt;InnerInterface&gt; innerInterfaces,
             CompilationUnit compilationUnit) {
 <span class="fc" id="L120">        return innerInterfaces.stream()</span>
@@ -126,12 +126,12 @@ public class RenderingUtilities {
             CompilationUnit compilationUnit) {
 <span class="fc" id="L127">        return innerInterfaceRenderer.render(innerInterface, compilationUnit);</span>
     }
-    
+
     private static Stream&lt;String&gt; renderInnerInterface(InnerInterface innerInterface, CompilationUnit compilationUnit) {
 <span class="fc" id="L131">        return addEmptyLine(innerInterfaceRenderer.render(innerInterface, compilationUnit).stream()</span>
 <span class="fc" id="L132">                .map(RenderingUtilities::javaIndent));</span>
     }
-    
+
     public static List&lt;String&gt; renderInnerEnums(List&lt;InnerEnum&gt; innerEnums, CompilationUnit compilationUnit) {
 <span class="fc" id="L136">        return innerEnums.stream()</span>
 <span class="fc" id="L137">                .flatMap(ie -&gt; renderInnerEnum(ie, compilationUnit))</span>
@@ -149,7 +149,7 @@ public class RenderingUtilities {
 
     public static List&lt;String&gt; renderPackage(CompilationUnit compilationUnit) {
 <span class="fc" id="L151">        List&lt;String&gt; answer = new ArrayList&lt;&gt;();</span>
-        
+
 <span class="fc" id="L153">        String pack = compilationUnit.getType().getPackageName();</span>
 <span class="pc bpc" id="L154" title="1 of 2 branches missed.">        if (stringHasValue(pack)) {</span>
 <span class="fc" id="L155">            answer.add(&quot;package &quot; + pack + &quot;;&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
@@ -157,12 +157,12 @@ public class RenderingUtilities {
         }
 <span class="fc" id="L158">        return answer;</span>
     }
-    
+
     public static List&lt;String&gt; renderStaticImports(CompilationUnit compilationUnit) {
 <span class="fc bfc" id="L162" title="All 2 branches covered.">        if (compilationUnit.getStaticImports().isEmpty()) {</span>
 <span class="fc" id="L163">            return Collections.emptyList();</span>
         }
-        
+
 <span class="fc" id="L166">        return addEmptyLine(compilationUnit.getStaticImports().stream()</span>
 <span class="fc" id="L167">                .map(s -&gt; &quot;import static &quot; + s + &quot;;&quot;)) //$NON-NLS-1$ //$NON-NLS-2$</span>
 <span class="fc" id="L168">                .collect(Collectors.toList());</span>
@@ -170,14 +170,14 @@ public class RenderingUtilities {
 
     public static List&lt;String&gt; renderImports(CompilationUnit compilationUnit) {
 <span class="fc" id="L172">        Set&lt;String&gt; imports = renderImports(compilationUnit.getImportedTypes());</span>
-        
+
 <span class="fc bfc" id="L174" title="All 2 branches covered.">        if (imports.isEmpty()) {</span>
 <span class="fc" id="L175">            return Collections.emptyList();</span>
         }
-        
+
 <span class="fc" id="L178">        return addEmptyLine(imports.stream()).collect(Collectors.toList());</span>
     }
-    
+
     private static Set&lt;String&gt; renderImports(Set&lt;FullyQualifiedJavaType&gt; imports) {
 <span class="fc" id="L182">        return imports.stream()</span>
 <span class="fc" id="L183">                .map(FullyQualifiedJavaType::getImportList)</span>
@@ -185,7 +185,7 @@ public class RenderingUtilities {
 <span class="fc" id="L185">                .map(RenderingUtilities::toFullImport)</span>
 <span class="fc" id="L186">                .collect(Collectors.toCollection(TreeSet::new));</span>
     }
-    
+
     private static String toFullImport(String s) {
 <span class="fc" id="L190">        return &quot;import &quot; + s + &quot;;&quot;; //$NON-NLS-1$ //$NON-NLS-2$</span>
     }
@@ -195,10 +195,10 @@ public class RenderingUtilities {
 <span class="fc bfc" id="L195" title="All 2 branches covered.">        if (in.isEmpty()) {</span>
 <span class="fc" id="L196">            return in; // don't indent empty lines</span>
         }
-        
+
 <span class="fc" id="L199">        return JAVA_INDENT + in;</span>
     }
-    
+
     public static List&lt;String&gt; removeLastEmptyLine(List&lt;String&gt; lines) {
 <span class="fc bfc" id="L203" title="All 2 branches covered.">        if (lines.get(lines.size() - 1).isEmpty()) {</span>
 <span class="fc" id="L204">            return lines.subList(0, lines.size() - 1);</span>
@@ -207,4 +207,4 @@ public class RenderingUtilities {
         }
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

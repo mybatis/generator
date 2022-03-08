@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SelectByPrimaryKeyMethodGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.codegen.mybatis3.javamapper.elements</a> &gt; <span class="el_source">SelectByPrimaryKeyMethodGenerator.java</span></div><h1>SelectByPrimaryKeyMethodGenerator.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2019 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SelectByPrimaryKeyMethodGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.codegen.mybatis3.javamapper.elements</a> &gt; <span class="el_source">SelectByPrimaryKeyMethodGenerator.java</span></div><h1>SelectByPrimaryKeyMethodGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -15,94 +15,54 @@
  */
 package org.mybatis.generator.codegen.mybatis3.javamapper.elements;
 
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
-import org.mybatis.generator.api.dom.java.Parameter;
 
-public class SelectByPrimaryKeyMethodGenerator extends
-        AbstractJavaMapperMethodGenerator {
+public class SelectByPrimaryKeyMethodGenerator extends AbstractJavaMapperMethodGenerator {
 
-    private boolean isSimple;
+    private final boolean isSimple;
 
     public SelectByPrimaryKeyMethodGenerator(boolean isSimple) {
-<span class="fc" id="L35">        super();</span>
-<span class="fc" id="L36">        this.isSimple = isSimple;</span>
-<span class="fc" id="L37">    }</span>
+<span class="fc" id="L31">        super();</span>
+<span class="fc" id="L32">        this.isSimple = isSimple;</span>
+<span class="fc" id="L33">    }</span>
 
     @Override
     public void addInterfaceElements(Interface interfaze) {
-<span class="fc" id="L41">        Method method = new Method(introspectedTable.getSelectByPrimaryKeyStatementId());</span>
-<span class="fc" id="L42">        method.setVisibility(JavaVisibility.PUBLIC);</span>
-<span class="fc" id="L43">        method.setAbstract(true);</span>
+<span class="fc" id="L37">        Method method = new Method(introspectedTable.getSelectByPrimaryKeyStatementId());</span>
+<span class="fc" id="L38">        method.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L39">        method.setAbstract(true);</span>
 
-<span class="fc" id="L45">        FullyQualifiedJavaType returnType = introspectedTable.getRules()</span>
-<span class="fc" id="L46">                .calculateAllFieldsClass();</span>
-<span class="fc" id="L47">        method.setReturnType(returnType);</span>
+<span class="fc" id="L41">        FullyQualifiedJavaType returnType = introspectedTable.getRules().calculateAllFieldsClass();</span>
+<span class="fc" id="L42">        method.setReturnType(returnType);</span>
 
-<span class="fc" id="L49">        Set&lt;FullyQualifiedJavaType&gt; importedTypes = new TreeSet&lt;&gt;();</span>
-<span class="fc" id="L50">        importedTypes.add(returnType);</span>
+<span class="fc" id="L44">        Set&lt;FullyQualifiedJavaType&gt; importedTypes = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L45">        importedTypes.add(returnType);</span>
 
-<span class="fc bfc" id="L52" title="All 4 branches covered.">        if (!isSimple &amp;&amp; introspectedTable.getRules().generatePrimaryKeyClass()) {</span>
-<span class="fc" id="L53">            FullyQualifiedJavaType type = new FullyQualifiedJavaType(</span>
-<span class="fc" id="L54">                    introspectedTable.getPrimaryKeyType());</span>
-<span class="fc" id="L55">            importedTypes.add(type);</span>
-<span class="fc" id="L56">            method.addParameter(new Parameter(type, &quot;key&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L57">        } else {</span>
-            // no primary key class - fields are in the base class
-            // if more than one PK field, then we need to annotate the
-            // parameters
-            // for MyBatis3
-<span class="fc" id="L62">            List&lt;IntrospectedColumn&gt; introspectedColumns = introspectedTable</span>
-<span class="fc" id="L63">                    .getPrimaryKeyColumns();</span>
-<span class="fc bfc" id="L64" title="All 2 branches covered.">            boolean annotate = introspectedColumns.size() &gt; 1;</span>
-<span class="fc bfc" id="L65" title="All 2 branches covered.">            if (annotate) {</span>
-<span class="fc" id="L66">                importedTypes.add(new FullyQualifiedJavaType(</span>
-                        &quot;org.apache.ibatis.annotations.Param&quot;)); //$NON-NLS-1$
-            }
-<span class="fc" id="L69">            StringBuilder sb = new StringBuilder();</span>
-<span class="fc bfc" id="L70" title="All 2 branches covered.">            for (IntrospectedColumn introspectedColumn : introspectedColumns) {</span>
-<span class="fc" id="L71">                FullyQualifiedJavaType type = introspectedColumn</span>
-<span class="fc" id="L72">                        .getFullyQualifiedJavaType();</span>
-<span class="fc" id="L73">                importedTypes.add(type);</span>
-<span class="fc" id="L74">                Parameter parameter = new Parameter(type, introspectedColumn</span>
-<span class="fc" id="L75">                        .getJavaProperty());</span>
-<span class="fc bfc" id="L76" title="All 2 branches covered.">                if (annotate) {</span>
-<span class="fc" id="L77">                    sb.setLength(0);</span>
-<span class="fc" id="L78">                    sb.append(&quot;@Param(\&quot;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L79">                    sb.append(introspectedColumn.getJavaProperty());</span>
-<span class="fc" id="L80">                    sb.append(&quot;\&quot;)&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L81">                    parameter.addAnnotation(sb.toString());</span>
-                }
-<span class="fc" id="L83">                method.addParameter(parameter);</span>
-<span class="fc" id="L84">            }</span>
+<span class="fc" id="L47">        addPrimaryKeyMethodParameters(isSimple, method, importedTypes);</span>
+
+<span class="fc" id="L49">        addMapperAnnotations(interfaze, method);</span>
+
+<span class="fc" id="L51">        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);</span>
+
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">        if (context.getPlugins().clientSelectByPrimaryKeyMethodGenerated(method, interfaze, introspectedTable)) {</span>
+<span class="fc" id="L54">            addExtraImports(interfaze);</span>
+<span class="fc" id="L55">            interfaze.addImportedTypes(importedTypes);</span>
+<span class="fc" id="L56">            interfaze.addMethod(method);</span>
         }
-
-<span class="fc" id="L87">        addMapperAnnotations(interfaze, method);</span>
-
-<span class="fc" id="L89">        context.getCommentGenerator().addGeneralMethodComment(method,</span>
-                introspectedTable);
-
-<span class="pc bpc" id="L92" title="1 of 2 branches missed.">        if (context.getPlugins().clientSelectByPrimaryKeyMethodGenerated(</span>
-                method, interfaze, introspectedTable)) {
-<span class="fc" id="L94">            addExtraImports(interfaze);</span>
-<span class="fc" id="L95">            interfaze.addImportedTypes(importedTypes);</span>
-<span class="fc" id="L96">            interfaze.addMethod(method);</span>
-        }
-<span class="fc" id="L98">    }</span>
+<span class="fc" id="L58">    }</span>
 
     public void addMapperAnnotations(Interface interfaze, Method method) {
         // extension point for subclasses
-<span class="fc" id="L102">    }</span>
+<span class="fc" id="L62">    }</span>
 
     public void addExtraImports(Interface interfaze) {
         // extension point for subclasses
-<span class="fc" id="L106">    }</span>
+<span class="fc" id="L66">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

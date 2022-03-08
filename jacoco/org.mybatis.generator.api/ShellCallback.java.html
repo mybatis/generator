@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ShellCallback.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api</a> &gt; <span class="el_source">ShellCallback.java</span></div><h1>ShellCallback.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2020 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.api;
+
+import java.io.File;
+
+import org.mybatis.generator.exception.ShellException;
+
+/**
+ * This interface defines methods that a shell should support to enable
+ * the generator
+ * to work. A &quot;shell&quot; is defined as the execution environment (i.e. an
+ * Eclipse plugin, and Ant task, a NetBeans plugin, etc.)
+ *
+ * &lt;p&gt;The default ShellCallback that is very low function and does
+ * not support the merging of Java files. The default shell callback is
+ * appropriate for use in well controlled environments where no changes
+ * made to generated Java files.
+ *
+ * @author Jeff Butler
+ */
+public interface ShellCallback {
+
+    /**
+     * This method is called to ask the shell to resolve a project/package combination into a directory on the file
+     * system. This method is called repeatedly (once for each generated file), so it would be wise for an implementing
+     * class to cache results.
+     *
+     * &lt;p&gt;The returned &lt;code&gt;java.io.File&lt;/code&gt; object:
+     * &lt;ul&gt;
+     * &lt;li&gt;Must be a directory&lt;/li&gt;
+     * &lt;li&gt;Must exist&lt;/li&gt;
+     * &lt;/ul&gt;
+     *
+     * &lt;p&gt;The default shell callback interprets both values as directories and simply concatenates the two values to
+     * generate the default directory.
+     *
+     * @param targetProject
+     *            the target project
+     * @param targetPackage
+     *            the target package
+     * @return the directory (must exist)
+     * @throws ShellException
+     *             if the project/package cannot be resolved into a directory on the file system. In this case, the
+     *             generator will not save the file it is currently working on. The generator will add the exception
+     *             message to the list of warnings automatically.
+     */
+    File getDirectory(String targetProject, String targetPackage)
+            throws ShellException;
+
+    /**
+     * This method is called if a newly generated Java file would
+     * overwrite an existing file. This method should return the merged source
+     * (formatted). The generator will write the merged source as-is to the file
+     * system.
+     *
+     * &lt;p&gt;A merge typically follows these steps:
+     * &lt;ol&gt;
+     * &lt;li&gt;Delete any methods/fields in the existing file that have the
+     * specified JavaDoc tag&lt;/li&gt;
+     * &lt;li&gt;Add any new super interfaces from the new file into the existing file
+     * &lt;/li&gt;
+     * &lt;li&gt;Make sure that the existing file's super class matches the new file&lt;/li&gt;
+     * &lt;li&gt;Make sure that the existing file is of the same type as the existing
+     * file (either interface or class)&lt;/li&gt;
+     * &lt;li&gt;Add any new imports from the new file into the existing file&lt;/li&gt;
+     * &lt;li&gt;Add all methods and fields from the new file into the existing file&lt;/li&gt;
+     * &lt;li&gt;Format the resulting source string&lt;/li&gt;
+     * &lt;/ol&gt;
+     *
+     * &lt;p&gt;This method is called only if you return &lt;code&gt;true&lt;/code&gt; from
+     * &lt;code&gt;isMergeSupported()&lt;/code&gt;.
+     *
+     * @param newFileSource
+     *            the source of the newly generated Java file
+     * @param existingFile
+     *            the existing Java file
+     * @param javadocTags
+     *            the JavaDoc tags that denotes which methods and fields in the
+     *            old file to delete (if the Java element has any of these tags,
+     *            the element is eligible for merge)
+     * @param fileEncoding
+     *            the file encoding for reading existing Java files.  Can be null,
+     *            in which case the platform default encoding will be used.
+     * @return the merged source, properly formatted. The source will be saved
+     *         exactly as returned from this method.
+     * @throws ShellException
+     *             if the file cannot be merged for some reason. If this
+     *             exception is thrown, nothing will be saved and the
+     *             existing file will remain undisturbed. The generator will add the
+     *             exception message to the list of warnings automatically.
+     */
+    default String mergeJavaFile(String newFileSource, File existingFile,
+            String[] javadocTags, String fileEncoding) throws ShellException {
+<span class="nc" id="L108">        throw new UnsupportedOperationException();</span>
+    }
+
+    /**
+     * After all files are saved to the file system, this method is called
+     * once for each unique project that was affected by the generation
+     * run. This method is useful if your IDE needs to be informed that file
+     * system objects have been created or updated. If you are running
+     * outside of an IDE, your implementation need not do anything in this
+     * method.
+     *
+     * @param project
+     *            the project to be refreshed
+     */
+<span class="nc" id="L122">    default void refreshProject(String project) {}</span>
+
+    /**
+     * Return true if the callback supports Java merging, otherwise false.
+     * The &lt;code&gt;mergeJavaFile()&lt;/code&gt; method will be called only if this
+     * method returns &lt;code&gt;true&lt;/code&gt;.
+     *
+     * @return a boolean specifying whether Java merge is supported or not
+     */
+    default boolean isMergeSupported() {
+<span class="nc" id="L132">        return false;</span>
+    }
+
+    /**
+     * Return true if the generator should overwrite an existing file if one exists.
+     * This method will be called only if &lt;code&gt;isMergeSupported()&lt;/code&gt;
+     * returns &lt;code&gt;false&lt;/code&gt; and a file exists that would be overwritten by
+     * a generated file. If you return &lt;code&gt;true&lt;/code&gt;, then we will log a
+     * warning specifying what file was overwritten.
+     *
+     * @return true if you want to overwrite existing files
+     */
+    boolean isOverwriteEnabled();
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

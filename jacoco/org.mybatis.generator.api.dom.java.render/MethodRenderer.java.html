@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MethodRenderer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api.dom.java.render</a> &gt; <span class="el_source">MethodRenderer.java</span></div><h1>MethodRenderer.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2018 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MethodRenderer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api.dom.java.render</a> &gt; <span class="el_source">MethodRenderer.java</span></div><h1>MethodRenderer.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -26,17 +26,17 @@ import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.internal.util.CustomCollectors;
 
 <span class="fc" id="L28">public class MethodRenderer {</span>
-<span class="fc" id="L29">    private TypeParameterRenderer typeParameterRenderer = new TypeParameterRenderer();</span>
-<span class="fc" id="L30">    private ParameterRenderer parameterRenderer = new ParameterRenderer();</span>
-<span class="fc" id="L31">    private BodyLineRenderer bodyLineRenderer = new BodyLineRenderer();</span>
-    
+<span class="fc" id="L29">    private final TypeParameterRenderer typeParameterRenderer = new TypeParameterRenderer();</span>
+<span class="fc" id="L30">    private final ParameterRenderer parameterRenderer = new ParameterRenderer();</span>
+<span class="fc" id="L31">    private final BodyLineRenderer bodyLineRenderer = new BodyLineRenderer();</span>
+
     public List&lt;String&gt; render(Method method, boolean inInterface, CompilationUnit compilationUnit) {
 <span class="fc" id="L34">        List&lt;String&gt; lines = new ArrayList&lt;&gt;();</span>
 
 <span class="fc" id="L36">        lines.addAll(method.getJavaDocLines());</span>
 <span class="fc" id="L37">        lines.addAll(method.getAnnotations());</span>
 <span class="fc" id="L38">        lines.add(getFirstLine(method, inInterface, compilationUnit));</span>
-        
+
 <span class="fc bfc" id="L40" title="All 4 branches covered.">        if (!method.isAbstract() &amp;&amp; !method.isNative()) {</span>
 <span class="fc" id="L41">            lines.addAll(bodyLineRenderer.render(method.getBodyLines()));</span>
 <span class="fc" id="L42">            lines.add(&quot;}&quot;); //$NON-NLS-1$</span>
@@ -75,21 +75,21 @@ import org.mybatis.generator.internal.util.CustomCollectors;
         }
 
 <span class="fc" id="L77">        sb.append(renderTypeParameters(method, compilationUnit));</span>
-        
+
 <span class="fc bfc" id="L79" title="All 2 branches covered.">        if (!method.isConstructor()) {</span>
 <span class="fc" id="L80">            sb.append(method.getReturnType()</span>
 <span class="fc" id="L81">                    .map(t -&gt; JavaDomUtils.calculateTypeName(compilationUnit, t))</span>
 <span class="fc" id="L82">                    .orElse(&quot;void&quot;)); //$NON-NLS-1$</span>
-            
+
 <span class="fc" id="L84">            sb.append(' ');</span>
         }
 
 <span class="fc" id="L87">        sb.append(method.getName());</span>
-        
+
 <span class="fc" id="L89">        sb.append(renderParameters(method, compilationUnit));</span>
-        
+
 <span class="fc" id="L91">        sb.append(renderExceptions(method, compilationUnit));</span>
-        
+
 <span class="fc bfc" id="L93" title="All 4 branches covered.">        if (method.isAbstract() || method.isNative()) {</span>
 <span class="fc" id="L94">            sb.append(';');</span>
         } else {
@@ -103,10 +103,10 @@ import org.mybatis.generator.internal.util.CustomCollectors;
 <span class="fc bfc" id="L103" title="All 4 branches covered.">        if (inInterface &amp;&amp; method.getVisibility() == JavaVisibility.PUBLIC) {</span>
 <span class="fc" id="L104">            return &quot;&quot;; //$NON-NLS-1$</span>
         }
-        
+
 <span class="fc" id="L107">        return method.getVisibility().getValue();</span>
     }
-    
+
     // should return an empty string if no type parameters
     private String renderTypeParameters(Method method, CompilationUnit compilationUnit) {
 <span class="fc" id="L112">        return method.getTypeParameters().stream()</span>
@@ -127,4 +127,4 @@ import org.mybatis.generator.internal.util.CustomCollectors;
 <span class="fc" id="L127">                .collect(CustomCollectors.joining(&quot;, &quot;, &quot; throws &quot;, &quot;&quot;)); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProviderDeleteByExampleMethodGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider</a> &gt; <span class="el_source">ProviderDeleteByExampleMethodGenerator.java</span></div><h1>ProviderDeleteByExampleMethodGenerator.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2019 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProviderDeleteByExampleMethodGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider</a> &gt; <span class="el_source">ProviderDeleteByExampleMethodGenerator.java</span></div><h1>ProviderDeleteByExampleMethodGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@ package org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider;
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 
 import java.util.Set;
-import java.util.TreeSet;
 
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
@@ -26,57 +25,30 @@ import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 
-public class ProviderDeleteByExampleMethodGenerator extends AbstractJavaProviderMethodGenerator {
-
-    public ProviderDeleteByExampleMethodGenerator(boolean useLegacyBuilder) {
-<span class="fc" id="L32">        super(useLegacyBuilder);</span>
-<span class="fc" id="L33">    }</span>
+<span class="fc" id="L28">public class ProviderDeleteByExampleMethodGenerator extends AbstractJavaProviderMethodGenerator {</span>
 
     @Override
     public void addClassElements(TopLevelClass topLevelClass) {
-<span class="fc" id="L37">        Set&lt;String&gt; staticImports = new TreeSet&lt;&gt;();</span>
-<span class="fc" id="L38">        Set&lt;FullyQualifiedJavaType&gt; importedTypes = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L32">        FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getExampleType());</span>
+<span class="fc" id="L33">        Set&lt;FullyQualifiedJavaType&gt; importedTypes = initializeImportedTypes(fqjt);</span>
 
-<span class="pc bpc" id="L40" title="1 of 2 branches missed.">        if (useLegacyBuilder) {</span>
-<span class="nc" id="L41">            staticImports.add(&quot;org.apache.ibatis.jdbc.SqlBuilder.BEGIN&quot;); //$NON-NLS-1$</span>
-<span class="nc" id="L42">            staticImports.add(&quot;org.apache.ibatis.jdbc.SqlBuilder.DELETE_FROM&quot;); //$NON-NLS-1$</span>
-<span class="nc" id="L43">            staticImports.add(&quot;org.apache.ibatis.jdbc.SqlBuilder.SQL&quot;); //$NON-NLS-1$</span>
-        } else {
-<span class="fc" id="L45">            importedTypes.add(NEW_BUILDER_IMPORT);</span>
+<span class="fc" id="L35">        Method method = new Method(introspectedTable.getDeleteByExampleStatementId());</span>
+<span class="fc" id="L36">        method.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L37">        method.setReturnType(FullyQualifiedJavaType.getStringInstance());</span>
+<span class="fc" id="L38">        method.addParameter(new Parameter(fqjt, &quot;example&quot;)); //$NON-NLS-1$</span>
+
+<span class="fc" id="L40">        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);</span>
+
+<span class="fc" id="L42">        method.addBodyLine(&quot;SQL sql = new SQL();&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L43">        method.addBodyLine(String.format(&quot;sql.DELETE_FROM(\&quot;%s\&quot;);&quot;, //$NON-NLS-1$</span>
+<span class="fc" id="L44">                escapeStringForJava(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime())));</span>
+<span class="fc" id="L45">        method.addBodyLine(&quot;applyWhere(sql, example, false);&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L46">        method.addBodyLine(&quot;return sql.toString();&quot;); //$NON-NLS-1$</span>
+
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">        if (context.getPlugins().providerDeleteByExampleMethodGenerated(method, topLevelClass, introspectedTable)) {</span>
+<span class="fc" id="L49">            topLevelClass.addImportedTypes(importedTypes);</span>
+<span class="fc" id="L50">            topLevelClass.addMethod(method);</span>
         }
-
-<span class="fc" id="L48">        FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getExampleType());</span>
-<span class="fc" id="L49">        importedTypes.add(fqjt);</span>
-
-<span class="fc" id="L51">        Method method = new Method(</span>
-<span class="fc" id="L52">                introspectedTable.getDeleteByExampleStatementId());</span>
-<span class="fc" id="L53">        method.setVisibility(JavaVisibility.PUBLIC);</span>
-<span class="fc" id="L54">        method.setReturnType(FullyQualifiedJavaType.getStringInstance());</span>
-<span class="fc" id="L55">        method.addParameter(new Parameter(fqjt, &quot;example&quot;)); //$NON-NLS-1$</span>
-        
-<span class="fc" id="L57">        context.getCommentGenerator().addGeneralMethodComment(method,</span>
-                introspectedTable);
-
-<span class="pc bpc" id="L60" title="1 of 2 branches missed.">        if (useLegacyBuilder) {</span>
-<span class="nc" id="L61">            method.addBodyLine(&quot;BEGIN();&quot;); //$NON-NLS-1$</span>
-<span class="nc" id="L62">            method.addBodyLine(String.format(&quot;DELETE_FROM(\&quot;%s\&quot;);&quot;, //$NON-NLS-1$</span>
-<span class="nc" id="L63">                    escapeStringForJava(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime())));</span>
-<span class="nc" id="L64">            method.addBodyLine(&quot;applyWhere(example, false);&quot;); //$NON-NLS-1$</span>
-<span class="nc" id="L65">            method.addBodyLine(&quot;return SQL();&quot;); //$NON-NLS-1$</span>
-        } else {
-<span class="fc" id="L67">            method.addBodyLine(&quot;SQL sql = new SQL();&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L68">            method.addBodyLine(String.format(&quot;sql.DELETE_FROM(\&quot;%s\&quot;);&quot;, //$NON-NLS-1$</span>
-<span class="fc" id="L69">                    escapeStringForJava(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime())));</span>
-<span class="fc" id="L70">            method.addBodyLine(&quot;applyWhere(sql, example, false);&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L71">            method.addBodyLine(&quot;return sql.toString();&quot;); //$NON-NLS-1$</span>
-        }
-        
-<span class="pc bpc" id="L74" title="1 of 2 branches missed.">        if (context.getPlugins().providerDeleteByExampleMethodGenerated(method, topLevelClass,</span>
-                introspectedTable)) {
-<span class="fc" id="L76">            topLevelClass.addStaticImports(staticImports);</span>
-<span class="fc" id="L77">            topLevelClass.addImportedTypes(importedTypes);</span>
-<span class="fc" id="L78">            topLevelClass.addMethod(method);</span>
-        }
-<span class="fc" id="L80">    }</span>
+<span class="fc" id="L52">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

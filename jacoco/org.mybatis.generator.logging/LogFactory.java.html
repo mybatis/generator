@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LogFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.logging</a> &gt; <span class="el_source">LogFactory.java</span></div><h1>LogFactory.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2019 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LogFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.logging</a> &gt; <span class="el_source">LogFactory.java</span></div><h1>LogFactory.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -19,29 +19,29 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import org.mybatis.generator.logging.commons.JakartaCommonsLoggingLogFactory;
 import org.mybatis.generator.logging.jdk14.Jdk14LoggingLogFactory;
-import org.mybatis.generator.logging.log4j.Log4jLoggingLogFactory;
 import org.mybatis.generator.logging.log4j2.Log4j2LoggingLogFactory;
 import org.mybatis.generator.logging.nologging.NoLoggingLogFactory;
 import org.mybatis.generator.logging.slf4j.Slf4jLoggingLogFactory;
 
 /**
  * Factory for creating loggers.
- * 
+ *
  * @author Jeff Butler
- * 
+ *
  */
-<span class="nc" id="L33">public class LogFactory {</span>
+public class LogFactory {
     private static AbstractLogFactory theFactory;
     public static final String MARKER = &quot;MYBATIS-GENERATOR&quot;; //$NON-NLS-1$
 
     static {
-<span class="fc" id="L38">        tryImplementation(new Slf4jLoggingLogFactory());</span>
-<span class="fc" id="L39">        tryImplementation(new JakartaCommonsLoggingLogFactory());</span>
-<span class="fc" id="L40">        tryImplementation(new Log4j2LoggingLogFactory());</span>
-<span class="fc" id="L41">        tryImplementation(new Log4jLoggingLogFactory());</span>
-<span class="fc" id="L42">        tryImplementation(new Jdk14LoggingLogFactory());</span>
-<span class="fc" id="L43">        tryImplementation(new NoLoggingLogFactory());</span>
-<span class="fc" id="L44">    }</span>
+<span class="fc" id="L37">        tryImplementation(new Slf4jLoggingLogFactory());</span>
+<span class="fc" id="L38">        tryImplementation(new JakartaCommonsLoggingLogFactory());</span>
+<span class="fc" id="L39">        tryImplementation(new Log4j2LoggingLogFactory());</span>
+<span class="fc" id="L40">        tryImplementation(new Jdk14LoggingLogFactory());</span>
+<span class="fc" id="L41">        tryImplementation(new NoLoggingLogFactory());</span>
+<span class="fc" id="L42">    }</span>
+
+    private LogFactory() {}
 
     public static Log getLog(Class&lt;?&gt; clazz) {
         try {
@@ -72,42 +72,38 @@ import org.mybatis.generator.logging.slf4j.Slf4jLoggingLogFactory;
 <span class="nc" id="L72">        setImplementation(new JakartaCommonsLoggingLogFactory());</span>
 <span class="nc" id="L73">    }</span>
 
-    public static synchronized void forceLog4jLogging() {
-<span class="nc" id="L76">        setImplementation(new Log4jLoggingLogFactory());</span>
+    public static synchronized void forceLog4j2Logging() {
+<span class="nc" id="L76">        setImplementation(new Log4j2LoggingLogFactory());</span>
 <span class="nc" id="L77">    }</span>
 
-    public static synchronized void forceLog4j2Logging() {
-<span class="nc" id="L80">        setImplementation(new Log4j2LoggingLogFactory());</span>
+    public static synchronized void forceNoLogging() {
+<span class="nc" id="L80">        setImplementation(new NoLoggingLogFactory());</span>
 <span class="nc" id="L81">    }</span>
 
-    public static synchronized void forceNoLogging() {
-<span class="nc" id="L84">        setImplementation(new NoLoggingLogFactory());</span>
+    public static void setLogFactory(AbstractLogFactory logFactory) {
+<span class="nc" id="L84">        setImplementation(logFactory);</span>
 <span class="nc" id="L85">    }</span>
 
-    public static void setLogFactory(AbstractLogFactory logFactory) {
-<span class="nc" id="L88">        setImplementation(logFactory);</span>
-<span class="nc" id="L89">    }</span>
-
     private static void tryImplementation(AbstractLogFactory factory) {
-<span class="fc bfc" id="L92" title="All 2 branches covered.">        if (theFactory == null) {</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">        if (theFactory == null) {</span>
             try {
-<span class="fc" id="L94">                setImplementation(factory);</span>
-<span class="nc" id="L95">            } catch (LogException e) {</span>
+<span class="fc" id="L90">                setImplementation(factory);</span>
+<span class="nc" id="L91">            } catch (LogException e) {</span>
                 // ignore
-<span class="fc" id="L97">            }</span>
+<span class="fc" id="L93">            }</span>
         }
-<span class="fc" id="L99">    }</span>
+<span class="fc" id="L95">    }</span>
 
     private static void setImplementation(AbstractLogFactory factory) {
         try {
-<span class="fc" id="L103">            Log log = factory.getLog(LogFactory.class);</span>
-<span class="pc bpc" id="L104" title="1 of 2 branches missed.">            if (log.isDebugEnabled()) {</span>
-<span class="nc" id="L105">                log.debug(&quot;Logging initialized using '&quot; + factory + &quot;' adapter.&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L99">            Log log = factory.getLog(LogFactory.class);</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">            if (log.isDebugEnabled()) {</span>
+<span class="fc" id="L101">                log.debug(&quot;Logging initialized using '&quot; + factory + &quot;' adapter.&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
             }
-<span class="fc" id="L107">            theFactory = factory;</span>
-<span class="nc" id="L108">        } catch (Throwable t) {</span>
-<span class="nc" id="L109">            throw new LogException(&quot;Error setting Log implementation.  Cause: &quot; + t.getMessage(), t); //$NON-NLS-1$</span>
-<span class="fc" id="L110">        }</span>
-<span class="fc" id="L111">    }</span>
+<span class="fc" id="L103">            theFactory = factory;</span>
+<span class="nc" id="L104">        } catch (Throwable t) {</span>
+<span class="nc" id="L105">            throw new LogException(&quot;Error setting Log implementation.  Cause: &quot; + t.getMessage(), t); //$NON-NLS-1$</span>
+<span class="fc" id="L106">        }</span>
+<span class="fc" id="L107">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

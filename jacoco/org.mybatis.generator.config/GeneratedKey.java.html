@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GeneratedKey.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.config</a> &gt; <span class="el_source">GeneratedKey.java</span></div><h1>GeneratedKey.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2018 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GeneratedKey.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.config</a> &gt; <span class="el_source">GeneratedKey.java</span></div><h1>GeneratedKey.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -25,18 +25,18 @@ import org.mybatis.generator.internal.db.DatabaseDialects;
 /**
  * This class specifies that a key is auto-generated, either as an identity
  * column (post insert), or as some other query like a sequences (pre insert).
- * 
+ *
  * @author Jeff Butler
  */
 public class GeneratedKey {
 
-    private String column;
+    private final String column;
 
-    private String runtimeSqlStatement;
+    private final String runtimeSqlStatement;
 
-    private boolean isIdentity;
+    private final boolean isIdentity;
 
-    private String type;
+    private final String type;
 
     public GeneratedKey(String column, String configuredSqlStatement,
             boolean isIdentity, String type) {
@@ -66,39 +66,35 @@ public class GeneratedKey {
 <span class="fc" id="L66">        return runtimeSqlStatement;</span>
     }
 
-    public String getType() {
-<span class="nc" id="L70">        return type;</span>
-    }
-
     public String getMyBatis3Order() {
-<span class="fc bfc" id="L74" title="All 2 branches covered.">        return isIdentity ? &quot;AFTER&quot; : &quot;BEFORE&quot;; //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        return isIdentity ? &quot;AFTER&quot; : &quot;BEFORE&quot;; //$NON-NLS-1$ //$NON-NLS-2$</span>
     }
 
     public void validate(List&lt;String&gt; errors, String tableName) {
-<span class="pc bpc" id="L78" title="1 of 2 branches missed.">        if (!stringHasValue(runtimeSqlStatement)) {</span>
-<span class="nc" id="L79">            errors.add(getString(&quot;ValidationError.7&quot;, //$NON-NLS-1$</span>
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">        if (!stringHasValue(runtimeSqlStatement)) {</span>
+<span class="nc" id="L75">            errors.add(getString(&quot;ValidationError.7&quot;, //$NON-NLS-1$</span>
                     tableName));
         }
 
-<span class="pc bpc" id="L83" title="1 of 2 branches missed.">        if (stringHasValue(type)</span>
-<span class="nc bnc" id="L84" title="All 2 branches missed.">                &amp;&amp; !&quot;pre&quot;.equals(type) //$NON-NLS-1$</span>
-<span class="nc bnc" id="L85" title="All 2 branches missed.">                &amp;&amp; !&quot;post&quot;.equals(type)) { //$NON-NLS-1$ //$NON-NLS-2$</span>
-<span class="nc" id="L86">            errors.add(getString(&quot;ValidationError.15&quot;, tableName)); //$NON-NLS-1$</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">        if (stringHasValue(type)</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">                &amp;&amp; !&quot;pre&quot;.equals(type) //$NON-NLS-1$</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">                &amp;&amp; !&quot;post&quot;.equals(type)) { //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="nc" id="L82">            errors.add(getString(&quot;ValidationError.15&quot;, tableName)); //$NON-NLS-1$</span>
         }
 
-<span class="pc bpc" id="L89" title="3 of 4 branches missed.">        if (&quot;pre&quot;.equals(type) &amp;&amp; isIdentity) { //$NON-NLS-1$</span>
-<span class="nc" id="L90">            errors.add(getString(&quot;ValidationError.23&quot;, //$NON-NLS-1$</span>
+<span class="pc bpc" id="L85" title="3 of 4 branches missed.">        if (&quot;pre&quot;.equals(type) &amp;&amp; isIdentity) { //$NON-NLS-1$</span>
+<span class="nc" id="L86">            errors.add(getString(&quot;ValidationError.23&quot;, //$NON-NLS-1$</span>
                     tableName));
         }
 
-<span class="pc bpc" id="L94" title="3 of 4 branches missed.">        if (&quot;post&quot;.equals(type) &amp;&amp; !isIdentity) { //$NON-NLS-1$</span>
-<span class="nc" id="L95">            errors.add(getString(&quot;ValidationError.24&quot;, //$NON-NLS-1$</span>
+<span class="pc bpc" id="L90" title="3 of 4 branches missed.">        if (&quot;post&quot;.equals(type) &amp;&amp; !isIdentity) { //$NON-NLS-1$</span>
+<span class="nc" id="L91">            errors.add(getString(&quot;ValidationError.24&quot;, //$NON-NLS-1$</span>
                     tableName));
         }
-<span class="fc" id="L98">    }</span>
+<span class="fc" id="L94">    }</span>
 
     public boolean isJdbcStandard() {
-<span class="fc" id="L101">        return &quot;JDBC&quot;.equals(runtimeSqlStatement); //$NON-NLS-1$</span>
+<span class="fc" id="L97">        return &quot;JDBC&quot;.equals(runtimeSqlStatement); //$NON-NLS-1$</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

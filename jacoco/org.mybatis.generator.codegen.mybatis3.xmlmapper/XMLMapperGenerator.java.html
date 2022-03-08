@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>XMLMapperGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.codegen.mybatis3.xmlmapper</a> &gt; <span class="el_source">XMLMapperGenerator.java</span></div><h1>XMLMapperGenerator.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2019 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>XMLMapperGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.codegen.mybatis3.xmlmapper</a> &gt; <span class="el_source">XMLMapperGenerator.java</span></div><h1>XMLMapperGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -52,212 +52,197 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
 
     protected XmlElement getSqlMapElement() {
 <span class="fc" id="L54">        FullyQualifiedTable table = introspectedTable.getFullyQualifiedTable();</span>
-<span class="fc" id="L55">        progressCallback.startTask(getString(</span>
-<span class="fc" id="L56">                &quot;Progress.12&quot;, table.toString())); //$NON-NLS-1$</span>
-<span class="fc" id="L57">        XmlElement answer = new XmlElement(&quot;mapper&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L58">        String namespace = introspectedTable.getMyBatis3SqlMapNamespace();</span>
-<span class="fc" id="L59">        answer.addAttribute(new Attribute(&quot;namespace&quot;, //$NON-NLS-1$</span>
-                namespace));
+<span class="fc" id="L55">        progressCallback.startTask(getString(&quot;Progress.12&quot;, table.toString())); //$NON-NLS-1$</span>
+<span class="fc" id="L56">        XmlElement answer = new XmlElement(&quot;mapper&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L57">        String namespace = introspectedTable.getMyBatis3SqlMapNamespace();</span>
+<span class="fc" id="L58">        answer.addAttribute(new Attribute(&quot;namespace&quot;, namespace)); //$NON-NLS-1$</span>
 
-<span class="fc" id="L62">        context.getCommentGenerator().addRootComment(answer);</span>
+<span class="fc" id="L60">        context.getCommentGenerator().addRootComment(answer);</span>
 
-<span class="fc" id="L64">        addResultMapWithoutBLOBsElement(answer);</span>
-<span class="fc" id="L65">        addResultMapWithBLOBsElement(answer);</span>
-<span class="fc" id="L66">        addExampleWhereClauseElement(answer);</span>
-<span class="fc" id="L67">        addMyBatis3UpdateByExampleWhereClauseElement(answer);</span>
-<span class="fc" id="L68">        addBaseColumnListElement(answer);</span>
-<span class="fc" id="L69">        addBlobColumnListElement(answer);</span>
-<span class="fc" id="L70">        addSelectByExampleWithBLOBsElement(answer);</span>
-<span class="fc" id="L71">        addSelectByExampleWithoutBLOBsElement(answer);</span>
-<span class="fc" id="L72">        addSelectByPrimaryKeyElement(answer);</span>
-<span class="fc" id="L73">        addDeleteByPrimaryKeyElement(answer);</span>
-<span class="fc" id="L74">        addDeleteByExampleElement(answer);</span>
-<span class="fc" id="L75">        addInsertElement(answer);</span>
-<span class="fc" id="L76">        addInsertSelectiveElement(answer);</span>
-<span class="fc" id="L77">        addCountByExampleElement(answer);</span>
-<span class="fc" id="L78">        addUpdateByExampleSelectiveElement(answer);</span>
-<span class="fc" id="L79">        addUpdateByExampleWithBLOBsElement(answer);</span>
-<span class="fc" id="L80">        addUpdateByExampleWithoutBLOBsElement(answer);</span>
-<span class="fc" id="L81">        addUpdateByPrimaryKeySelectiveElement(answer);</span>
-<span class="fc" id="L82">        addUpdateByPrimaryKeyWithBLOBsElement(answer);</span>
-<span class="fc" id="L83">        addUpdateByPrimaryKeyWithoutBLOBsElement(answer);</span>
+<span class="fc" id="L62">        addResultMapWithoutBLOBsElement(answer);</span>
+<span class="fc" id="L63">        addResultMapWithBLOBsElement(answer);</span>
+<span class="fc" id="L64">        addExampleWhereClauseElement(answer);</span>
+<span class="fc" id="L65">        addMyBatis3UpdateByExampleWhereClauseElement(answer);</span>
+<span class="fc" id="L66">        addBaseColumnListElement(answer);</span>
+<span class="fc" id="L67">        addBlobColumnListElement(answer);</span>
+<span class="fc" id="L68">        addSelectByExampleWithBLOBsElement(answer);</span>
+<span class="fc" id="L69">        addSelectByExampleWithoutBLOBsElement(answer);</span>
+<span class="fc" id="L70">        addSelectByPrimaryKeyElement(answer);</span>
+<span class="fc" id="L71">        addDeleteByPrimaryKeyElement(answer);</span>
+<span class="fc" id="L72">        addDeleteByExampleElement(answer);</span>
+<span class="fc" id="L73">        addInsertElement(answer);</span>
+<span class="fc" id="L74">        addInsertSelectiveElement(answer);</span>
+<span class="fc" id="L75">        addCountByExampleElement(answer);</span>
+<span class="fc" id="L76">        addUpdateByExampleSelectiveElement(answer);</span>
+<span class="fc" id="L77">        addUpdateByExampleWithBLOBsElement(answer);</span>
+<span class="fc" id="L78">        addUpdateByExampleWithoutBLOBsElement(answer);</span>
+<span class="fc" id="L79">        addUpdateByPrimaryKeySelectiveElement(answer);</span>
+<span class="fc" id="L80">        addUpdateByPrimaryKeyWithBLOBsElement(answer);</span>
+<span class="fc" id="L81">        addUpdateByPrimaryKeyWithoutBLOBsElement(answer);</span>
 
-<span class="fc" id="L85">        return answer;</span>
+<span class="fc" id="L83">        return answer;</span>
     }
 
     protected void addResultMapWithoutBLOBsElement(XmlElement parentElement) {
-<span class="pc bpc" id="L89" title="1 of 2 branches missed.">        if (introspectedTable.getRules().generateBaseResultMap()) {</span>
-<span class="fc" id="L90">            AbstractXmlElementGenerator elementGenerator = new ResultMapWithoutBLOBsElementGenerator(false);</span>
-<span class="fc" id="L91">            initializeAndExecuteGenerator(elementGenerator, parentElement);</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">        if (introspectedTable.getRules().generateBaseResultMap()) {</span>
+<span class="fc" id="L88">            AbstractXmlElementGenerator elementGenerator = new ResultMapWithoutBLOBsElementGenerator(false);</span>
+<span class="fc" id="L89">            initializeAndExecuteGenerator(elementGenerator, parentElement);</span>
         }
-<span class="fc" id="L93">    }</span>
+<span class="fc" id="L91">    }</span>
 
     protected void addResultMapWithBLOBsElement(XmlElement parentElement) {
-<span class="fc bfc" id="L96" title="All 2 branches covered.">        if (introspectedTable.getRules().generateResultMapWithBLOBs()) {</span>
-<span class="fc" id="L97">            AbstractXmlElementGenerator elementGenerator = new ResultMapWithBLOBsElementGenerator();</span>
-<span class="fc" id="L98">            initializeAndExecuteGenerator(elementGenerator, parentElement);</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        if (introspectedTable.getRules().generateResultMapWithBLOBs()) {</span>
+<span class="fc" id="L95">            AbstractXmlElementGenerator elementGenerator = new ResultMapWithBLOBsElementGenerator();</span>
+<span class="fc" id="L96">            initializeAndExecuteGenerator(elementGenerator, parentElement);</span>
         }
-<span class="fc" id="L100">    }</span>
+<span class="fc" id="L98">    }</span>
 
     protected void addExampleWhereClauseElement(XmlElement parentElement) {
-<span class="fc bfc" id="L103" title="All 2 branches covered.">        if (introspectedTable.getRules().generateSQLExampleWhereClause()) {</span>
-<span class="fc" id="L104">            AbstractXmlElementGenerator elementGenerator = new ExampleWhereClauseElementGenerator(</span>
-                    false);
-<span class="fc" id="L106">            initializeAndExecuteGenerator(elementGenerator, parentElement);</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">        if (introspectedTable.getRules().generateSQLExampleWhereClause()) {</span>
+<span class="fc" id="L102">            AbstractXmlElementGenerator elementGenerator = new ExampleWhereClauseElementGenerator(false);</span>
+<span class="fc" id="L103">            initializeAndExecuteGenerator(elementGenerator, parentElement);</span>
         }
-<span class="fc" id="L108">    }</span>
+<span class="fc" id="L105">    }</span>
 
-    protected void addMyBatis3UpdateByExampleWhereClauseElement(
-            XmlElement parentElement) {
-<span class="fc" id="L112">        if (introspectedTable.getRules()</span>
-<span class="fc bfc" id="L113" title="All 2 branches covered.">                .generateMyBatis3UpdateByExampleWhereClause()) {</span>
-<span class="fc" id="L114">            AbstractXmlElementGenerator elementGenerator = new ExampleWhereClauseElementGenerator(</span>
-                    true);
-<span class="fc" id="L116">            initializeAndExecuteGenerator(elementGenerator, parentElement);</span>
+    protected void addMyBatis3UpdateByExampleWhereClauseElement(XmlElement parentElement) {
+<span class="fc bfc" id="L108" title="All 2 branches covered.">        if (introspectedTable.getRules().generateMyBatis3UpdateByExampleWhereClause()) {</span>
+<span class="fc" id="L109">            AbstractXmlElementGenerator elementGenerator = new ExampleWhereClauseElementGenerator(true);</span>
+<span class="fc" id="L110">            initializeAndExecuteGenerator(elementGenerator, parentElement);</span>
         }
-<span class="fc" id="L118">    }</span>
+<span class="fc" id="L112">    }</span>
 
     protected void addBaseColumnListElement(XmlElement parentElement) {
-<span class="fc bfc" id="L121" title="All 2 branches covered.">        if (introspectedTable.getRules().generateBaseColumnList()) {</span>
-<span class="fc" id="L122">            AbstractXmlElementGenerator elementGenerator = new BaseColumnListElementGenerator();</span>
-<span class="fc" id="L123">            initializeAndExecuteGenerator(elementGenerator, parentElement);</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">        if (introspectedTable.getRules().generateBaseColumnList()) {</span>
+<span class="fc" id="L116">            AbstractXmlElementGenerator elementGenerator = new BaseColumnListElementGenerator();</span>
+<span class="fc" id="L117">            initializeAndExecuteGenerator(elementGenerator, parentElement);</span>
         }
-<span class="fc" id="L125">    }</span>
+<span class="fc" id="L119">    }</span>
 
     protected void addBlobColumnListElement(XmlElement parentElement) {
-<span class="fc bfc" id="L128" title="All 2 branches covered.">        if (introspectedTable.getRules().generateBlobColumnList()) {</span>
-<span class="fc" id="L129">            AbstractXmlElementGenerator elementGenerator = new BlobColumnListElementGenerator();</span>
-<span class="fc" id="L130">            initializeAndExecuteGenerator(elementGenerator, parentElement);</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">        if (introspectedTable.getRules().generateBlobColumnList()) {</span>
+<span class="fc" id="L123">            AbstractXmlElementGenerator elementGenerator = new BlobColumnListElementGenerator();</span>
+<span class="fc" id="L124">            initializeAndExecuteGenerator(elementGenerator, parentElement);</span>
         }
-<span class="fc" id="L132">    }</span>
+<span class="fc" id="L126">    }</span>
 
-    protected void addSelectByExampleWithoutBLOBsElement(
-            XmlElement parentElement) {
-<span class="fc bfc" id="L136" title="All 2 branches covered.">        if (introspectedTable.getRules().generateSelectByExampleWithoutBLOBs()) {</span>
-<span class="fc" id="L137">            AbstractXmlElementGenerator elementGenerator = new SelectByExampleWithoutBLOBsElementGenerator();</span>
+    protected void addSelectByExampleWithoutBLOBsElement(XmlElement parentElement) {
+<span class="fc bfc" id="L129" title="All 2 branches covered.">        if (introspectedTable.getRules().generateSelectByExampleWithoutBLOBs()) {</span>
+<span class="fc" id="L130">            AbstractXmlElementGenerator elementGenerator = new SelectByExampleWithoutBLOBsElementGenerator();</span>
+<span class="fc" id="L131">            initializeAndExecuteGenerator(elementGenerator, parentElement);</span>
+        }
+<span class="fc" id="L133">    }</span>
+
+    protected void addSelectByExampleWithBLOBsElement(XmlElement parentElement) {
+<span class="fc bfc" id="L136" title="All 2 branches covered.">        if (introspectedTable.getRules().generateSelectByExampleWithBLOBs()) {</span>
+<span class="fc" id="L137">            AbstractXmlElementGenerator elementGenerator = new SelectByExampleWithBLOBsElementGenerator();</span>
 <span class="fc" id="L138">            initializeAndExecuteGenerator(elementGenerator, parentElement);</span>
         }
 <span class="fc" id="L140">    }</span>
 
-    protected void addSelectByExampleWithBLOBsElement(XmlElement parentElement) {
-<span class="fc bfc" id="L143" title="All 2 branches covered.">        if (introspectedTable.getRules().generateSelectByExampleWithBLOBs()) {</span>
-<span class="fc" id="L144">            AbstractXmlElementGenerator elementGenerator = new SelectByExampleWithBLOBsElementGenerator();</span>
+    protected void addSelectByPrimaryKeyElement(XmlElement parentElement) {
+<span class="fc bfc" id="L143" title="All 2 branches covered.">        if (introspectedTable.getRules().generateSelectByPrimaryKey()) {</span>
+<span class="fc" id="L144">            AbstractXmlElementGenerator elementGenerator = new SelectByPrimaryKeyElementGenerator();</span>
 <span class="fc" id="L145">            initializeAndExecuteGenerator(elementGenerator, parentElement);</span>
         }
 <span class="fc" id="L147">    }</span>
 
-    protected void addSelectByPrimaryKeyElement(XmlElement parentElement) {
-<span class="fc bfc" id="L150" title="All 2 branches covered.">        if (introspectedTable.getRules().generateSelectByPrimaryKey()) {</span>
-<span class="fc" id="L151">            AbstractXmlElementGenerator elementGenerator = new SelectByPrimaryKeyElementGenerator();</span>
+    protected void addDeleteByExampleElement(XmlElement parentElement) {
+<span class="fc bfc" id="L150" title="All 2 branches covered.">        if (introspectedTable.getRules().generateDeleteByExample()) {</span>
+<span class="fc" id="L151">            AbstractXmlElementGenerator elementGenerator = new DeleteByExampleElementGenerator();</span>
 <span class="fc" id="L152">            initializeAndExecuteGenerator(elementGenerator, parentElement);</span>
         }
 <span class="fc" id="L154">    }</span>
 
-    protected void addDeleteByExampleElement(XmlElement parentElement) {
-<span class="fc bfc" id="L157" title="All 2 branches covered.">        if (introspectedTable.getRules().generateDeleteByExample()) {</span>
-<span class="fc" id="L158">            AbstractXmlElementGenerator elementGenerator = new DeleteByExampleElementGenerator();</span>
+    protected void addDeleteByPrimaryKeyElement(XmlElement parentElement) {
+<span class="fc bfc" id="L157" title="All 2 branches covered.">        if (introspectedTable.getRules().generateDeleteByPrimaryKey()) {</span>
+<span class="fc" id="L158">            AbstractXmlElementGenerator elementGenerator = new DeleteByPrimaryKeyElementGenerator(false);</span>
 <span class="fc" id="L159">            initializeAndExecuteGenerator(elementGenerator, parentElement);</span>
         }
 <span class="fc" id="L161">    }</span>
 
-    protected void addDeleteByPrimaryKeyElement(XmlElement parentElement) {
-<span class="fc bfc" id="L164" title="All 2 branches covered.">        if (introspectedTable.getRules().generateDeleteByPrimaryKey()) {</span>
-<span class="fc" id="L165">            AbstractXmlElementGenerator elementGenerator = new DeleteByPrimaryKeyElementGenerator(false);</span>
+    protected void addInsertElement(XmlElement parentElement) {
+<span class="fc bfc" id="L164" title="All 2 branches covered.">        if (introspectedTable.getRules().generateInsert()) {</span>
+<span class="fc" id="L165">            AbstractXmlElementGenerator elementGenerator = new InsertElementGenerator(false);</span>
 <span class="fc" id="L166">            initializeAndExecuteGenerator(elementGenerator, parentElement);</span>
         }
 <span class="fc" id="L168">    }</span>
 
-    protected void addInsertElement(XmlElement parentElement) {
-<span class="fc bfc" id="L171" title="All 2 branches covered.">        if (introspectedTable.getRules().generateInsert()) {</span>
-<span class="fc" id="L172">            AbstractXmlElementGenerator elementGenerator = new InsertElementGenerator(false);</span>
+    protected void addInsertSelectiveElement(XmlElement parentElement) {
+<span class="fc bfc" id="L171" title="All 2 branches covered.">        if (introspectedTable.getRules().generateInsertSelective()) {</span>
+<span class="fc" id="L172">            AbstractXmlElementGenerator elementGenerator = new InsertSelectiveElementGenerator();</span>
 <span class="fc" id="L173">            initializeAndExecuteGenerator(elementGenerator, parentElement);</span>
         }
 <span class="fc" id="L175">    }</span>
 
-    protected void addInsertSelectiveElement(XmlElement parentElement) {
-<span class="fc bfc" id="L178" title="All 2 branches covered.">        if (introspectedTable.getRules().generateInsertSelective()) {</span>
-<span class="fc" id="L179">            AbstractXmlElementGenerator elementGenerator = new InsertSelectiveElementGenerator();</span>
+    protected void addCountByExampleElement(XmlElement parentElement) {
+<span class="fc bfc" id="L178" title="All 2 branches covered.">        if (introspectedTable.getRules().generateCountByExample()) {</span>
+<span class="fc" id="L179">            AbstractXmlElementGenerator elementGenerator = new CountByExampleElementGenerator();</span>
 <span class="fc" id="L180">            initializeAndExecuteGenerator(elementGenerator, parentElement);</span>
         }
 <span class="fc" id="L182">    }</span>
 
-    protected void addCountByExampleElement(XmlElement parentElement) {
-<span class="fc bfc" id="L185" title="All 2 branches covered.">        if (introspectedTable.getRules().generateCountByExample()) {</span>
-<span class="fc" id="L186">            AbstractXmlElementGenerator elementGenerator = new CountByExampleElementGenerator();</span>
+    protected void addUpdateByExampleSelectiveElement(XmlElement parentElement) {
+<span class="fc bfc" id="L185" title="All 2 branches covered.">        if (introspectedTable.getRules().generateUpdateByExampleSelective()) {</span>
+<span class="fc" id="L186">            AbstractXmlElementGenerator elementGenerator = new UpdateByExampleSelectiveElementGenerator();</span>
 <span class="fc" id="L187">            initializeAndExecuteGenerator(elementGenerator, parentElement);</span>
         }
 <span class="fc" id="L189">    }</span>
 
-    protected void addUpdateByExampleSelectiveElement(XmlElement parentElement) {
-<span class="fc bfc" id="L192" title="All 2 branches covered.">        if (introspectedTable.getRules().generateUpdateByExampleSelective()) {</span>
-<span class="fc" id="L193">            AbstractXmlElementGenerator elementGenerator = new UpdateByExampleSelectiveElementGenerator();</span>
+    protected void addUpdateByExampleWithBLOBsElement(XmlElement parentElement) {
+<span class="fc bfc" id="L192" title="All 2 branches covered.">        if (introspectedTable.getRules().generateUpdateByExampleWithBLOBs()) {</span>
+<span class="fc" id="L193">            AbstractXmlElementGenerator elementGenerator = new UpdateByExampleWithBLOBsElementGenerator();</span>
 <span class="fc" id="L194">            initializeAndExecuteGenerator(elementGenerator, parentElement);</span>
         }
 <span class="fc" id="L196">    }</span>
 
-    protected void addUpdateByExampleWithBLOBsElement(XmlElement parentElement) {
-<span class="fc bfc" id="L199" title="All 2 branches covered.">        if (introspectedTable.getRules().generateUpdateByExampleWithBLOBs()) {</span>
-<span class="fc" id="L200">            AbstractXmlElementGenerator elementGenerator = new UpdateByExampleWithBLOBsElementGenerator();</span>
+    protected void addUpdateByExampleWithoutBLOBsElement(XmlElement parentElement) {
+<span class="fc bfc" id="L199" title="All 2 branches covered.">        if (introspectedTable.getRules().generateUpdateByExampleWithoutBLOBs()) {</span>
+<span class="fc" id="L200">            AbstractXmlElementGenerator elementGenerator = new UpdateByExampleWithoutBLOBsElementGenerator();</span>
 <span class="fc" id="L201">            initializeAndExecuteGenerator(elementGenerator, parentElement);</span>
         }
 <span class="fc" id="L203">    }</span>
 
-    protected void addUpdateByExampleWithoutBLOBsElement(
-            XmlElement parentElement) {
-<span class="fc bfc" id="L207" title="All 2 branches covered.">        if (introspectedTable.getRules().generateUpdateByExampleWithoutBLOBs()) {</span>
-<span class="fc" id="L208">            AbstractXmlElementGenerator elementGenerator = new UpdateByExampleWithoutBLOBsElementGenerator();</span>
-<span class="fc" id="L209">            initializeAndExecuteGenerator(elementGenerator, parentElement);</span>
+    protected void addUpdateByPrimaryKeySelectiveElement(XmlElement parentElement) {
+<span class="fc bfc" id="L206" title="All 2 branches covered.">        if (introspectedTable.getRules().generateUpdateByPrimaryKeySelective()) {</span>
+<span class="fc" id="L207">            AbstractXmlElementGenerator elementGenerator = new UpdateByPrimaryKeySelectiveElementGenerator();</span>
+<span class="fc" id="L208">            initializeAndExecuteGenerator(elementGenerator, parentElement);</span>
         }
-<span class="fc" id="L211">    }</span>
+<span class="fc" id="L210">    }</span>
 
-    protected void addUpdateByPrimaryKeySelectiveElement(
-            XmlElement parentElement) {
-<span class="fc bfc" id="L215" title="All 2 branches covered.">        if (introspectedTable.getRules().generateUpdateByPrimaryKeySelective()) {</span>
-<span class="fc" id="L216">            AbstractXmlElementGenerator elementGenerator = new UpdateByPrimaryKeySelectiveElementGenerator();</span>
-<span class="fc" id="L217">            initializeAndExecuteGenerator(elementGenerator, parentElement);</span>
+    protected void addUpdateByPrimaryKeyWithBLOBsElement(XmlElement parentElement) {
+<span class="fc bfc" id="L213" title="All 2 branches covered.">        if (introspectedTable.getRules().generateUpdateByPrimaryKeyWithBLOBs()) {</span>
+<span class="fc" id="L214">            AbstractXmlElementGenerator elementGenerator = new UpdateByPrimaryKeyWithBLOBsElementGenerator();</span>
+<span class="fc" id="L215">            initializeAndExecuteGenerator(elementGenerator, parentElement);</span>
         }
-<span class="fc" id="L219">    }</span>
+<span class="fc" id="L217">    }</span>
 
-    protected void addUpdateByPrimaryKeyWithBLOBsElement(
-            XmlElement parentElement) {
-<span class="fc bfc" id="L223" title="All 2 branches covered.">        if (introspectedTable.getRules().generateUpdateByPrimaryKeyWithBLOBs()) {</span>
-<span class="fc" id="L224">            AbstractXmlElementGenerator elementGenerator = new UpdateByPrimaryKeyWithBLOBsElementGenerator();</span>
-<span class="fc" id="L225">            initializeAndExecuteGenerator(elementGenerator, parentElement);</span>
+    protected void addUpdateByPrimaryKeyWithoutBLOBsElement(XmlElement parentElement) {
+<span class="fc bfc" id="L220" title="All 2 branches covered.">        if (introspectedTable.getRules().generateUpdateByPrimaryKeyWithoutBLOBs()) {</span>
+<span class="fc" id="L221">            AbstractXmlElementGenerator elementGenerator = new UpdateByPrimaryKeyWithoutBLOBsElementGenerator(false);</span>
+<span class="fc" id="L222">            initializeAndExecuteGenerator(elementGenerator, parentElement);</span>
         }
-<span class="fc" id="L227">    }</span>
+<span class="fc" id="L224">    }</span>
 
-    protected void addUpdateByPrimaryKeyWithoutBLOBsElement(
-            XmlElement parentElement) {
-<span class="fc" id="L231">        if (introspectedTable.getRules()</span>
-<span class="fc bfc" id="L232" title="All 2 branches covered.">                .generateUpdateByPrimaryKeyWithoutBLOBs()) {</span>
-<span class="fc" id="L233">            AbstractXmlElementGenerator elementGenerator = new UpdateByPrimaryKeyWithoutBLOBsElementGenerator(false);</span>
-<span class="fc" id="L234">            initializeAndExecuteGenerator(elementGenerator, parentElement);</span>
-        }
-<span class="fc" id="L236">    }</span>
-
-    protected void initializeAndExecuteGenerator(
-            AbstractXmlElementGenerator elementGenerator,
-            XmlElement parentElement) {
-<span class="fc" id="L241">        elementGenerator.setContext(context);</span>
-<span class="fc" id="L242">        elementGenerator.setIntrospectedTable(introspectedTable);</span>
-<span class="fc" id="L243">        elementGenerator.setProgressCallback(progressCallback);</span>
-<span class="fc" id="L244">        elementGenerator.setWarnings(warnings);</span>
-<span class="fc" id="L245">        elementGenerator.addElements(parentElement);</span>
-<span class="fc" id="L246">    }</span>
+    protected void initializeAndExecuteGenerator(AbstractXmlElementGenerator elementGenerator,
+                                                 XmlElement parentElement) {
+<span class="fc" id="L228">        elementGenerator.setContext(context);</span>
+<span class="fc" id="L229">        elementGenerator.setIntrospectedTable(introspectedTable);</span>
+<span class="fc" id="L230">        elementGenerator.setProgressCallback(progressCallback);</span>
+<span class="fc" id="L231">        elementGenerator.setWarnings(warnings);</span>
+<span class="fc" id="L232">        elementGenerator.addElements(parentElement);</span>
+<span class="fc" id="L233">    }</span>
 
     @Override
     public Document getDocument() {
-<span class="fc" id="L250">        Document document = new Document(</span>
-                XmlConstants.MYBATIS3_MAPPER_PUBLIC_ID,
+<span class="fc" id="L237">        Document document = new Document(XmlConstants.MYBATIS3_MAPPER_PUBLIC_ID,</span>
                 XmlConstants.MYBATIS3_MAPPER_SYSTEM_ID);
-<span class="fc" id="L253">        document.setRootElement(getSqlMapElement());</span>
+<span class="fc" id="L239">        document.setRootElement(getSqlMapElement());</span>
 
-<span class="pc bpc" id="L255" title="1 of 2 branches missed.">        if (!context.getPlugins().sqlMapDocumentGenerated(document,</span>
-                introspectedTable)) {
-<span class="nc" id="L257">            document = null;</span>
+<span class="pc bpc" id="L241" title="1 of 2 branches missed.">        if (!context.getPlugins().sqlMapDocumentGenerated(document, introspectedTable)) {</span>
+<span class="nc" id="L242">            document = null;</span>
         }
 
-<span class="fc" id="L260">        return document;</span>
+<span class="fc" id="L245">        return document;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

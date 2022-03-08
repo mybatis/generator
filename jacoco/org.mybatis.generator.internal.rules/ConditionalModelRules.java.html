@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConditionalModelRules.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.internal.rules</a> &gt; <span class="el_source">ConditionalModelRules.java</span></div><h1>ConditionalModelRules.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2018 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConditionalModelRules.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.internal.rules</a> &gt; <span class="el_source">ConditionalModelRules.java</span></div><h1>ConditionalModelRules.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -21,9 +21,9 @@ import org.mybatis.generator.api.IntrospectedTable;
  * This class encapsulates all the code generation rules for a table using the
  * conditional model. In this model we do not generate primary key or record
  * with BLOBs classes if the class would only hold one field.
- * 
+ *
  * @author Jeff Butler
- * 
+ *
  */
 public class ConditionalModelRules extends BaseRules {
 
@@ -39,7 +39,7 @@ public class ConditionalModelRules extends BaseRules {
 
     /**
      * We generate a primary key if there is more than one primary key field.
-     * 
+     *
      * @return true if the primary key should be generated
      */
     @Override
@@ -52,7 +52,7 @@ public class ConditionalModelRules extends BaseRules {
      * one primary key coulmn (in which case we will not generate a primary key
      * class), or if there is only one BLOB column (in which case we will not
      * generate a record with BLOBs class).
-     * 
+     *
      * @return true if the class should be generated
      */
     @Override
@@ -64,7 +64,7 @@ public class ConditionalModelRules extends BaseRules {
 
     /**
      * Blobs will be in the base record class if there is only one blob column.
-     * 
+     *
      * @return true if there are blobs but they are in the base record class
      */
     private boolean blobsAreInBaseRecord() {
@@ -75,7 +75,7 @@ public class ConditionalModelRules extends BaseRules {
      * We generate a record with BLOBs class if there is more than one BLOB
      * column. Do not generate a BLOBs class if any other super class would only
      * contain one field
-     * 
+     *
      * @return true if the record with BLOBs class should be generated
      */
     @Override
@@ -87,4 +87,4 @@ public class ConditionalModelRules extends BaseRules {
 <span class="fc bfc" id="L87" title="All 2 branches covered.">                &amp;&amp; introspectedTable.getBLOBColumns().size() &gt; 1;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

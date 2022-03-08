@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ObjectFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.internal</a> &gt; <span class="el_source">ObjectFactory.java</span></div><h1>ObjectFactory.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2019 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ObjectFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.internal</a> &gt; <span class="el_source">ObjectFactory.java</span></div><h1>ObjectFactory.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -45,8 +45,7 @@ import org.mybatis.generator.config.PluginConfiguration;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.config.TableConfiguration;
 import org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl;
-import org.mybatis.generator.runtime.dynamic.sql.IntrospectedTableMyBatis3DynamicSqlImplV1;
-import org.mybatis.generator.runtime.dynamic.sql.IntrospectedTableMyBatis3DynamicSqlImplV2;
+import org.mybatis.generator.runtime.dynamic.sql.IntrospectedTableMyBatis3DynamicSqlImpl;
 import org.mybatis.generator.runtime.kotlin.IntrospectedTableKotlinImpl;
 
 /**
@@ -56,11 +55,11 @@ import org.mybatis.generator.runtime.kotlin.IntrospectedTableKotlinImpl;
  */
 public class ObjectFactory {
 
-    private static List&lt;ClassLoader&gt; externalClassLoaders;
+    private static final List&lt;ClassLoader&gt; externalClassLoaders;
 
     static {
-<span class="fc" id="L62">        externalClassLoaders = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L63">    }</span>
+<span class="fc" id="L61">        externalClassLoaders = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L62">    }</span>
 
     /**
      * Utility class. No instances allowed.
@@ -74,11 +73,11 @@ public class ObjectFactory {
      * a generation run so that and change to the classloading configuration
      * will be reflected.  For example, if the eclipse launcher changes configuration
      * it might not be updated if eclipse hasn't been restarted.
-     * 
+     *
      */
     public static void reset() {
-<span class="fc" id="L80">        externalClassLoaders.clear();</span>
-<span class="fc" id="L81">    }</span>
+<span class="fc" id="L79">        externalClassLoaders.clear();</span>
+<span class="fc" id="L80">    }</span>
 
     /**
      * Adds a custom classloader to the collection of classloaders searched for &quot;external&quot; classes. These are classes
@@ -90,8 +89,8 @@ public class ObjectFactory {
      */
     public static synchronized void addExternalClassLoader(
             ClassLoader classLoader) {
-<span class="nc" id="L93">        ObjectFactory.externalClassLoaders.add(classLoader);</span>
-<span class="nc" id="L94">    }</span>
+<span class="nc" id="L92">        ObjectFactory.externalClassLoaders.add(classLoader);</span>
+<span class="nc" id="L93">    }</span>
 
     /**
      * Returns a class loaded from the context classloader, or the classloader supplied by a client. This is
@@ -109,258 +108,254 @@ public class ObjectFactory {
 
         Class&lt;?&gt; clazz;
 
-<span class="pc bpc" id="L112" title="1 of 2 branches missed.">        for (ClassLoader classLoader : externalClassLoaders) {</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">        for (ClassLoader classLoader : externalClassLoaders) {</span>
             try {
-<span class="nc" id="L114">                clazz = Class.forName(type, true, classLoader);</span>
-<span class="nc" id="L115">                return clazz;</span>
-<span class="nc" id="L116">            } catch (Exception e) {</span>
+<span class="nc" id="L113">                clazz = Class.forName(type, true, classLoader);</span>
+<span class="nc" id="L114">                return clazz;</span>
+<span class="nc" id="L115">            } catch (Exception e) {</span>
                 // ignore - fail safe below
             }
-<span class="nc" id="L119">        }</span>
+<span class="nc" id="L118">        }</span>
 
-<span class="fc" id="L121">        return internalClassForName(type);</span>
+<span class="fc" id="L120">        return internalClassForName(type);</span>
     }
 
     public static Object createExternalObject(String type) {
         Object answer;
 
         try {
-<span class="nc" id="L128">            Class&lt;?&gt; clazz = externalClassForName(type);</span>
-<span class="nc" id="L129">            answer = clazz.getConstructor().newInstance();</span>
-<span class="nc" id="L130">        } catch (Exception e) {</span>
-<span class="nc" id="L131">            throw new RuntimeException(getString(</span>
+<span class="nc" id="L127">            Class&lt;?&gt; clazz = externalClassForName(type);</span>
+<span class="nc" id="L128">            answer = clazz.getConstructor().newInstance();</span>
+<span class="nc" id="L129">        } catch (Exception e) {</span>
+<span class="nc" id="L130">            throw new RuntimeException(getString(</span>
                     &quot;RuntimeError.6&quot;, type), e); //$NON-NLS-1$
-<span class="nc" id="L133">        }</span>
+<span class="nc" id="L132">        }</span>
 
-<span class="nc" id="L135">        return answer;</span>
+<span class="nc" id="L134">        return answer;</span>
     }
 
     public static Class&lt;?&gt; internalClassForName(String type)
             throws ClassNotFoundException {
-<span class="fc" id="L140">        Class&lt;?&gt; clazz = null;</span>
+<span class="fc" id="L139">        Class&lt;?&gt; clazz = null;</span>
 
         try {
-<span class="fc" id="L143">            ClassLoader cl = Thread.currentThread().getContextClassLoader();</span>
-<span class="fc" id="L144">            clazz = Class.forName(type, true, cl);</span>
-<span class="fc" id="L145">        } catch (Exception e) {</span>
+<span class="fc" id="L142">            ClassLoader cl = Thread.currentThread().getContextClassLoader();</span>
+<span class="fc" id="L143">            clazz = Class.forName(type, true, cl);</span>
+<span class="fc" id="L144">        } catch (Exception e) {</span>
             // ignore - failsafe below
-<span class="fc" id="L147">        }</span>
+<span class="fc" id="L146">        }</span>
 
-<span class="fc bfc" id="L149" title="All 2 branches covered.">        if (clazz == null) {</span>
-<span class="nc" id="L150">            clazz = Class.forName(type, true, ObjectFactory.class.getClassLoader());</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">        if (clazz == null) {</span>
+<span class="nc" id="L149">            clazz = Class.forName(type, true, ObjectFactory.class.getClassLoader());</span>
         }
 
-<span class="fc" id="L153">        return clazz;</span>
+<span class="fc" id="L152">        return clazz;</span>
     }
 
     public static URL getResource(String resource) {
         URL url;
 
-<span class="pc bpc" id="L159" title="1 of 2 branches missed.">        for (ClassLoader classLoader : externalClassLoaders) {</span>
-<span class="nc" id="L160">            url = classLoader.getResource(resource);</span>
-<span class="nc bnc" id="L161" title="All 2 branches missed.">            if (url != null) {</span>
-<span class="nc" id="L162">                return url;</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">        for (ClassLoader classLoader : externalClassLoaders) {</span>
+<span class="nc" id="L159">            url = classLoader.getResource(resource);</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">            if (url != null) {</span>
+<span class="nc" id="L161">                return url;</span>
             }
-<span class="nc" id="L164">        }</span>
+<span class="nc" id="L163">        }</span>
 
-<span class="fc" id="L166">        ClassLoader cl = Thread.currentThread().getContextClassLoader();</span>
-<span class="fc" id="L167">        url = cl.getResource(resource);</span>
+<span class="fc" id="L165">        ClassLoader cl = Thread.currentThread().getContextClassLoader();</span>
+<span class="fc" id="L166">        url = cl.getResource(resource);</span>
 
-<span class="pc bpc" id="L169" title="1 of 2 branches missed.">        if (url == null) {</span>
-<span class="nc" id="L170">            url = ObjectFactory.class.getClassLoader().getResource(resource);</span>
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">        if (url == null) {</span>
+<span class="nc" id="L169">            url = ObjectFactory.class.getClassLoader().getResource(resource);</span>
         }
 
-<span class="fc" id="L173">        return url;</span>
+<span class="fc" id="L172">        return url;</span>
     }
 
     public static Object createInternalObject(String type) {
         Object answer;
 
         try {
-<span class="fc" id="L180">            Class&lt;?&gt; clazz = internalClassForName(type);</span>
+<span class="fc" id="L179">            Class&lt;?&gt; clazz = internalClassForName(type);</span>
 
-<span class="fc" id="L182">            answer = clazz.getConstructor().newInstance();</span>
-<span class="nc" id="L183">        } catch (Exception e) {</span>
-<span class="nc" id="L184">            throw new RuntimeException(getString(</span>
+<span class="fc" id="L181">            answer = clazz.getConstructor().newInstance();</span>
+<span class="nc" id="L182">        } catch (Exception e) {</span>
+<span class="nc" id="L183">            throw new RuntimeException(getString(</span>
                     &quot;RuntimeError.6&quot;, type), e); //$NON-NLS-1$
 
-<span class="fc" id="L187">        }</span>
+<span class="fc" id="L186">        }</span>
 
-<span class="fc" id="L189">        return answer;</span>
+<span class="fc" id="L188">        return answer;</span>
     }
 
     public static JavaTypeResolver createJavaTypeResolver(Context context,
             List&lt;String&gt; warnings) {
-<span class="fc" id="L194">        JavaTypeResolverConfiguration config = context</span>
-<span class="fc" id="L195">                .getJavaTypeResolverConfiguration();</span>
+<span class="fc" id="L193">        JavaTypeResolverConfiguration config = context</span>
+<span class="fc" id="L194">                .getJavaTypeResolverConfiguration();</span>
         String type;
 
-<span class="pc bpc" id="L198" title="1 of 4 branches missed.">        if (config != null &amp;&amp; config.getConfigurationType() != null) {</span>
-<span class="nc" id="L199">            type = config.getConfigurationType();</span>
-<span class="nc bnc" id="L200" title="All 2 branches missed.">            if (&quot;DEFAULT&quot;.equalsIgnoreCase(type)) { //$NON-NLS-1$</span>
-<span class="nc" id="L201">                type = JavaTypeResolverDefaultImpl.class.getName();</span>
+<span class="pc bpc" id="L197" title="1 of 4 branches missed.">        if (config != null &amp;&amp; config.getConfigurationType() != null) {</span>
+<span class="nc" id="L198">            type = config.getConfigurationType();</span>
+<span class="nc bnc" id="L199" title="All 2 branches missed.">            if (&quot;DEFAULT&quot;.equalsIgnoreCase(type)) { //$NON-NLS-1$</span>
+<span class="nc" id="L200">                type = JavaTypeResolverDefaultImpl.class.getName();</span>
             }
         } else {
-<span class="fc" id="L204">            type = JavaTypeResolverDefaultImpl.class.getName();</span>
+<span class="fc" id="L203">            type = JavaTypeResolverDefaultImpl.class.getName();</span>
         }
 
-<span class="fc" id="L207">        JavaTypeResolver answer = (JavaTypeResolver) createInternalObject(type);</span>
-<span class="fc" id="L208">        answer.setWarnings(warnings);</span>
+<span class="fc" id="L206">        JavaTypeResolver answer = (JavaTypeResolver) createInternalObject(type);</span>
+<span class="fc" id="L207">        answer.setWarnings(warnings);</span>
 
-<span class="fc bfc" id="L210" title="All 2 branches covered.">        if (config != null) {</span>
-<span class="fc" id="L211">            answer.addConfigurationProperties(config.getProperties());</span>
+<span class="fc bfc" id="L209" title="All 2 branches covered.">        if (config != null) {</span>
+<span class="fc" id="L210">            answer.addConfigurationProperties(config.getProperties());</span>
         }
 
-<span class="fc" id="L214">        answer.setContext(context);</span>
+<span class="fc" id="L213">        answer.setContext(context);</span>
 
-<span class="fc" id="L216">        return answer;</span>
+<span class="fc" id="L215">        return answer;</span>
     }
 
     public static Plugin createPlugin(Context context,
             PluginConfiguration pluginConfiguration) {
-<span class="fc" id="L221">        Plugin plugin = (Plugin) createInternalObject(pluginConfiguration</span>
-<span class="fc" id="L222">                .getConfigurationType());</span>
-<span class="fc" id="L223">        plugin.setContext(context);</span>
-<span class="fc" id="L224">        plugin.setProperties(pluginConfiguration.getProperties());</span>
-<span class="fc" id="L225">        return plugin;</span>
+<span class="fc" id="L220">        Plugin plugin = (Plugin) createInternalObject(pluginConfiguration</span>
+<span class="fc" id="L221">                .getConfigurationType());</span>
+<span class="fc" id="L222">        plugin.setContext(context);</span>
+<span class="fc" id="L223">        plugin.setProperties(pluginConfiguration.getProperties());</span>
+<span class="fc" id="L224">        return plugin;</span>
     }
 
     public static CommentGenerator createCommentGenerator(Context context) {
 
-<span class="fc" id="L230">        CommentGeneratorConfiguration config = context</span>
-<span class="fc" id="L231">                .getCommentGeneratorConfiguration();</span>
+<span class="fc" id="L229">        CommentGeneratorConfiguration config = context</span>
+<span class="fc" id="L230">                .getCommentGeneratorConfiguration();</span>
         CommentGenerator answer;
 
         String type;
-<span class="pc bpc" id="L235" title="1 of 4 branches missed.">        if (config == null || config.getConfigurationType() == null) {</span>
-<span class="fc" id="L236">            type = DefaultCommentGenerator.class.getName();</span>
+<span class="pc bpc" id="L234" title="1 of 4 branches missed.">        if (config == null || config.getConfigurationType() == null) {</span>
+<span class="fc" id="L235">            type = DefaultCommentGenerator.class.getName();</span>
         } else {
-<span class="nc" id="L238">            type = config.getConfigurationType();</span>
+<span class="nc" id="L237">            type = config.getConfigurationType();</span>
         }
 
-<span class="fc" id="L241">        answer = (CommentGenerator) createInternalObject(type);</span>
+<span class="fc" id="L240">        answer = (CommentGenerator) createInternalObject(type);</span>
 
-<span class="fc bfc" id="L243" title="All 2 branches covered.">        if (config != null) {</span>
-<span class="fc" id="L244">            answer.addConfigurationProperties(config.getProperties());</span>
+<span class="fc bfc" id="L242" title="All 2 branches covered.">        if (config != null) {</span>
+<span class="fc" id="L243">            answer.addConfigurationProperties(config.getProperties());</span>
         }
 
-<span class="fc" id="L247">        return answer;</span>
+<span class="fc" id="L246">        return answer;</span>
     }
 
     public static ConnectionFactory createConnectionFactory(Context context) {
 
-<span class="fc" id="L252">        ConnectionFactoryConfiguration config = context</span>
-<span class="fc" id="L253">                .getConnectionFactoryConfiguration();</span>
+<span class="fc" id="L251">        ConnectionFactoryConfiguration config = context</span>
+<span class="fc" id="L252">                .getConnectionFactoryConfiguration();</span>
         ConnectionFactory answer;
 
         String type;
-<span class="pc bpc" id="L257" title="2 of 4 branches missed.">        if (config == null || config.getConfigurationType() == null) {</span>
-<span class="fc" id="L258">            type = JDBCConnectionFactory.class.getName();</span>
+<span class="pc bpc" id="L256" title="2 of 4 branches missed.">        if (config == null || config.getConfigurationType() == null) {</span>
+<span class="fc" id="L257">            type = JDBCConnectionFactory.class.getName();</span>
         } else {
-<span class="nc" id="L260">            type = config.getConfigurationType();</span>
+<span class="nc" id="L259">            type = config.getConfigurationType();</span>
         }
 
-<span class="fc" id="L263">        answer = (ConnectionFactory) createInternalObject(type);</span>
+<span class="fc" id="L262">        answer = (ConnectionFactory) createInternalObject(type);</span>
 
-<span class="pc bpc" id="L265" title="1 of 2 branches missed.">        if (config != null) {</span>
-<span class="fc" id="L266">            answer.addConfigurationProperties(config.getProperties());</span>
+<span class="pc bpc" id="L264" title="1 of 2 branches missed.">        if (config != null) {</span>
+<span class="fc" id="L265">            answer.addConfigurationProperties(config.getProperties());</span>
         }
 
-<span class="fc" id="L269">        return answer;</span>
+<span class="fc" id="L268">        return answer;</span>
     }
 
     public static JavaFormatter createJavaFormatter(Context context) {
-<span class="fc" id="L273">        String type = context.getProperty(PropertyRegistry.CONTEXT_JAVA_FORMATTER);</span>
-<span class="pc bpc" id="L274" title="1 of 2 branches missed.">        if (!stringHasValue(type)) {</span>
-<span class="fc" id="L275">            type = DefaultJavaFormatter.class.getName();</span>
+<span class="fc" id="L272">        String type = context.getProperty(PropertyRegistry.CONTEXT_JAVA_FORMATTER);</span>
+<span class="pc bpc" id="L273" title="1 of 2 branches missed.">        if (!stringHasValue(type)) {</span>
+<span class="fc" id="L274">            type = DefaultJavaFormatter.class.getName();</span>
         }
 
-<span class="fc" id="L278">        JavaFormatter answer = (JavaFormatter) createInternalObject(type);</span>
+<span class="fc" id="L277">        JavaFormatter answer = (JavaFormatter) createInternalObject(type);</span>
 
-<span class="fc" id="L280">        answer.setContext(context);</span>
+<span class="fc" id="L279">        answer.setContext(context);</span>
 
-<span class="fc" id="L282">        return answer;</span>
+<span class="fc" id="L281">        return answer;</span>
     }
 
     public static KotlinFormatter createKotlinFormatter(Context context) {
-<span class="fc" id="L286">        String type = context.getProperty(PropertyRegistry.CONTEXT_KOTLIN_FORMATTER);</span>
-<span class="pc bpc" id="L287" title="1 of 2 branches missed.">        if (!stringHasValue(type)) {</span>
-<span class="fc" id="L288">            type = DefaultKotlinFormatter.class.getName();</span>
+<span class="fc" id="L285">        String type = context.getProperty(PropertyRegistry.CONTEXT_KOTLIN_FORMATTER);</span>
+<span class="pc bpc" id="L286" title="1 of 2 branches missed.">        if (!stringHasValue(type)) {</span>
+<span class="fc" id="L287">            type = DefaultKotlinFormatter.class.getName();</span>
         }
 
-<span class="fc" id="L291">        KotlinFormatter answer = (KotlinFormatter) createInternalObject(type);</span>
+<span class="fc" id="L290">        KotlinFormatter answer = (KotlinFormatter) createInternalObject(type);</span>
 
-<span class="fc" id="L293">        answer.setContext(context);</span>
+<span class="fc" id="L292">        answer.setContext(context);</span>
 
-<span class="fc" id="L295">        return answer;</span>
+<span class="fc" id="L294">        return answer;</span>
     }
 
     public static XmlFormatter createXmlFormatter(Context context) {
-<span class="fc" id="L299">        String type = context.getProperty(PropertyRegistry.CONTEXT_XML_FORMATTER);</span>
-<span class="pc bpc" id="L300" title="1 of 2 branches missed.">        if (!stringHasValue(type)) {</span>
-<span class="fc" id="L301">            type = DefaultXmlFormatter.class.getName();</span>
+<span class="fc" id="L298">        String type = context.getProperty(PropertyRegistry.CONTEXT_XML_FORMATTER);</span>
+<span class="pc bpc" id="L299" title="1 of 2 branches missed.">        if (!stringHasValue(type)) {</span>
+<span class="fc" id="L300">            type = DefaultXmlFormatter.class.getName();</span>
         }
 
-<span class="fc" id="L304">        XmlFormatter answer = (XmlFormatter) createInternalObject(type);</span>
+<span class="fc" id="L303">        XmlFormatter answer = (XmlFormatter) createInternalObject(type);</span>
 
-<span class="fc" id="L306">        answer.setContext(context);</span>
+<span class="fc" id="L305">        answer.setContext(context);</span>
 
-<span class="fc" id="L308">        return answer;</span>
+<span class="fc" id="L307">        return answer;</span>
     }
 
     public static IntrospectedTable createIntrospectedTable(
             TableConfiguration tableConfiguration, FullyQualifiedTable table,
             Context context) {
 
-<span class="fc" id="L315">        IntrospectedTable answer = createIntrospectedTableForValidation(context);</span>
-<span class="fc" id="L316">        answer.setFullyQualifiedTable(table);</span>
-<span class="fc" id="L317">        answer.setTableConfiguration(tableConfiguration);</span>
+<span class="fc" id="L314">        IntrospectedTable answer = createIntrospectedTableForValidation(context);</span>
+<span class="fc" id="L315">        answer.setFullyQualifiedTable(table);</span>
+<span class="fc" id="L316">        answer.setTableConfiguration(tableConfiguration);</span>
 
-<span class="fc" id="L319">        return answer;</span>
+<span class="fc" id="L318">        return answer;</span>
     }
 
     /**
      * Creates an introspected table implementation that is only usable for validation .
-     * 
+     *
      *
      * @param context
      *            the context
      * @return the introspected table
      */
     public static IntrospectedTable createIntrospectedTableForValidation(Context context) {
-<span class="fc" id="L331">        String type = context.getTargetRuntime();</span>
-<span class="fc bfc" id="L332" title="All 2 branches covered.">        if (!stringHasValue(type)) {</span>
-<span class="fc" id="L333">            type = IntrospectedTableMyBatis3DynamicSqlImplV2.class.getName();</span>
-<span class="fc bfc" id="L334" title="All 2 branches covered.">        } else if (&quot;MyBatis3&quot;.equalsIgnoreCase(type)) { //$NON-NLS-1$</span>
-<span class="fc" id="L335">            type = IntrospectedTableMyBatis3Impl.class.getName();</span>
-<span class="fc bfc" id="L336" title="All 2 branches covered.">        } else if (&quot;MyBatis3Simple&quot;.equalsIgnoreCase(type)) { //$NON-NLS-1$</span>
-<span class="fc" id="L337">            type = IntrospectedTableMyBatis3SimpleImpl.class.getName();</span>
-<span class="fc bfc" id="L338" title="All 2 branches covered.">        } else if (&quot;MyBatis3DynamicSql&quot;.equalsIgnoreCase(type)) { //$NON-NLS-1$</span>
-<span class="fc" id="L339">            type = IntrospectedTableMyBatis3DynamicSqlImplV2.class.getName();</span>
-<span class="fc bfc" id="L340" title="All 2 branches covered.">        } else if (&quot;MyBatis3DynamicSqlV1&quot;.equalsIgnoreCase(type)) { //$NON-NLS-1$</span>
-<span class="fc" id="L341">            type = IntrospectedTableMyBatis3DynamicSqlImplV1.class.getName();</span>
-<span class="fc bfc" id="L342" title="All 2 branches covered.">        } else if (&quot;MyBatis3DynamicSqlV2&quot;.equalsIgnoreCase(type)) { //$NON-NLS-1$</span>
-<span class="fc" id="L343">            type = IntrospectedTableMyBatis3DynamicSqlImplV2.class.getName();</span>
-<span class="pc bpc" id="L344" title="1 of 2 branches missed.">        } else if (&quot;MyBatis3Kotlin&quot;.equalsIgnoreCase(type)) { //$NON-NLS-1$</span>
-<span class="fc" id="L345">            type = IntrospectedTableKotlinImpl.class.getName();</span>
+<span class="fc" id="L330">        String type = context.getTargetRuntime();</span>
+<span class="fc bfc" id="L331" title="All 2 branches covered.">        if (!stringHasValue(type)) {</span>
+<span class="fc" id="L332">            type = IntrospectedTableMyBatis3DynamicSqlImpl.class.getName();</span>
+<span class="fc bfc" id="L333" title="All 2 branches covered.">        } else if (&quot;MyBatis3&quot;.equalsIgnoreCase(type)) { //$NON-NLS-1$</span>
+<span class="fc" id="L334">            type = IntrospectedTableMyBatis3Impl.class.getName();</span>
+<span class="fc bfc" id="L335" title="All 2 branches covered.">        } else if (&quot;MyBatis3Simple&quot;.equalsIgnoreCase(type)) { //$NON-NLS-1$</span>
+<span class="fc" id="L336">            type = IntrospectedTableMyBatis3SimpleImpl.class.getName();</span>
+<span class="fc bfc" id="L337" title="All 2 branches covered.">        } else if (&quot;MyBatis3DynamicSql&quot;.equalsIgnoreCase(type)) { //$NON-NLS-1$</span>
+<span class="fc" id="L338">            type = IntrospectedTableMyBatis3DynamicSqlImpl.class.getName();</span>
+<span class="pc bpc" id="L339" title="1 of 2 branches missed.">        } else if (&quot;MyBatis3Kotlin&quot;.equalsIgnoreCase(type)) { //$NON-NLS-1$</span>
+<span class="fc" id="L340">            type = IntrospectedTableKotlinImpl.class.getName();</span>
         }
 
-<span class="fc" id="L348">        IntrospectedTable answer = (IntrospectedTable) createInternalObject(type);</span>
-<span class="fc" id="L349">        answer.setContext(context);</span>
+<span class="fc" id="L343">        IntrospectedTable answer = (IntrospectedTable) createInternalObject(type);</span>
+<span class="fc" id="L344">        answer.setContext(context);</span>
 
-<span class="fc" id="L351">        return answer;</span>
+<span class="fc" id="L346">        return answer;</span>
     }
 
     public static IntrospectedColumn createIntrospectedColumn(Context context) {
-<span class="fc" id="L355">        String type = context.getIntrospectedColumnImpl();</span>
-<span class="pc bpc" id="L356" title="1 of 2 branches missed.">        if (!stringHasValue(type)) {</span>
-<span class="fc" id="L357">            type = IntrospectedColumn.class.getName();</span>
+<span class="fc" id="L350">        String type = context.getIntrospectedColumnImpl();</span>
+<span class="pc bpc" id="L351" title="1 of 2 branches missed.">        if (!stringHasValue(type)) {</span>
+<span class="fc" id="L352">            type = IntrospectedColumn.class.getName();</span>
         }
 
-<span class="fc" id="L360">        IntrospectedColumn answer = (IntrospectedColumn) createInternalObject(type);</span>
-<span class="fc" id="L361">        answer.setContext(context);</span>
+<span class="fc" id="L355">        IntrospectedColumn answer = (IntrospectedColumn) createInternalObject(type);</span>
+<span class="fc" id="L356">        answer.setContext(context);</span>
 
-<span class="fc" id="L363">        return answer;</span>
+<span class="fc" id="L358">        return answer;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

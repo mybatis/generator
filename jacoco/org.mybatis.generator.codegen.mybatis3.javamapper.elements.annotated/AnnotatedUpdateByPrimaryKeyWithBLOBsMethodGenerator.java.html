@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated</a> &gt; <span class="el_source">AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator.java</span></div><h1>AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2019 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated</a> &gt; <span class="el_source">AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator.java</span></div><h1>AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -15,97 +15,25 @@
  */
 package org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated;
 
-import static org.mybatis.generator.api.dom.OutputUtilities.javaIndent;
-import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getEscapedColumnName;
-import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getParameterClause;
-import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
-
-import java.util.Iterator;
-
-import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
-import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.UpdateByPrimaryKeyWithBLOBsMethodGenerator;
 
 public class AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator extends UpdateByPrimaryKeyWithBLOBsMethodGenerator {
 
     public AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator() {
-<span class="fc" id="L35">        super();</span>
-<span class="fc" id="L36">    }</span>
+<span class="fc" id="L26">        super();</span>
+<span class="fc" id="L27">    }</span>
 
     @Override
     public void addMapperAnnotations(Method method) {
-
-<span class="fc" id="L41">        method.addAnnotation(&quot;@Update({&quot;); //$NON-NLS-1$</span>
-
-<span class="fc" id="L43">        StringBuilder sb = new StringBuilder();</span>
-<span class="fc" id="L44">        javaIndent(sb, 1);</span>
-<span class="fc" id="L45">        sb.append(&quot;\&quot;update &quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L46">        sb.append(escapeStringForJava(introspectedTable.getFullyQualifiedTableNameAtRuntime()));</span>
-<span class="fc" id="L47">        sb.append(&quot;\&quot;,&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L48">        method.addAnnotation(sb.toString());</span>
-
-        // set up for first column
-<span class="fc" id="L51">        sb.setLength(0);</span>
-<span class="fc" id="L52">        javaIndent(sb, 1);</span>
-<span class="fc" id="L53">        sb.append(&quot;\&quot;set &quot;); //$NON-NLS-1$</span>
-
-<span class="fc" id="L55">        Iterator&lt;IntrospectedColumn&gt; iter =</span>
-<span class="fc" id="L56">                ListUtilities.removeGeneratedAlwaysColumns(introspectedTable.getNonPrimaryKeyColumns())</span>
-<span class="fc" id="L57">                .iterator();</span>
-<span class="fc bfc" id="L58" title="All 2 branches covered.">        while (iter.hasNext()) {</span>
-<span class="fc" id="L59">            IntrospectedColumn introspectedColumn = iter.next();</span>
-
-<span class="fc" id="L61">            sb.append(escapeStringForJava(getEscapedColumnName(introspectedColumn)));</span>
-<span class="fc" id="L62">            sb.append(&quot; = &quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L63">            sb.append(getParameterClause(introspectedColumn));</span>
-
-<span class="fc bfc" id="L65" title="All 2 branches covered.">            if (iter.hasNext()) {</span>
-<span class="fc" id="L66">                sb.append(',');</span>
-            }
-
-<span class="fc" id="L69">            sb.append(&quot;\&quot;,&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L70">            method.addAnnotation(sb.toString());</span>
-
-            // set up for the next column
-<span class="fc bfc" id="L73" title="All 2 branches covered.">            if (iter.hasNext()) {</span>
-<span class="fc" id="L74">                sb.setLength(0);</span>
-<span class="fc" id="L75">                javaIndent(sb, 1);</span>
-<span class="fc" id="L76">                sb.append(&quot;  \&quot;&quot;); //$NON-NLS-1$</span>
-            }
-<span class="fc" id="L78">        }</span>
-
-<span class="fc" id="L80">        boolean and = false;</span>
-<span class="fc" id="L81">        iter = introspectedTable.getPrimaryKeyColumns().iterator();</span>
-<span class="fc bfc" id="L82" title="All 2 branches covered.">        while (iter.hasNext()) {</span>
-<span class="fc" id="L83">            sb.setLength(0);</span>
-<span class="fc" id="L84">            javaIndent(sb, 1);</span>
-<span class="fc bfc" id="L85" title="All 2 branches covered.">            if (and) {</span>
-<span class="fc" id="L86">                sb.append(&quot;  \&quot;and &quot;); //$NON-NLS-1$</span>
-            } else {
-<span class="fc" id="L88">                sb.append(&quot;\&quot;where &quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L89">                and = true;</span>
-            }
-
-<span class="fc" id="L92">            IntrospectedColumn introspectedColumn = iter.next();</span>
-<span class="fc" id="L93">            sb.append(escapeStringForJava(getEscapedColumnName(introspectedColumn)));</span>
-<span class="fc" id="L94">            sb.append(&quot; = &quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L95">            sb.append(getParameterClause(introspectedColumn));</span>
-<span class="fc" id="L96">            sb.append('\&quot;');</span>
-<span class="fc bfc" id="L97" title="All 2 branches covered.">            if (iter.hasNext()) {</span>
-<span class="fc" id="L98">                sb.append(',');</span>
-            }
-<span class="fc" id="L100">            method.addAnnotation(sb.toString());</span>
-<span class="fc" id="L101">        }</span>
-
-<span class="fc" id="L103">        method.addAnnotation(&quot;})&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L104">    }</span>
+<span class="fc" id="L31">        buildUpdateByPrimaryKeyAnnotations(introspectedTable.getNonPrimaryKeyColumns()).forEach(method::addAnnotation);</span>
+<span class="fc" id="L32">    }</span>
 
     @Override
     public void addExtraImports(Interface interfaze) {
-<span class="fc" id="L108">        interfaze.addImportedType(new FullyQualifiedJavaType(&quot;org.apache.ibatis.annotations.Update&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L109">    }</span>
+<span class="fc" id="L36">        interfaze.addImportedType(new FullyQualifiedJavaType(&quot;org.apache.ibatis.annotations.Update&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L37">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

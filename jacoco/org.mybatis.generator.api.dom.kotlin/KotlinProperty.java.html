@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>KotlinProperty.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api.dom.kotlin</a> &gt; <span class="el_source">KotlinProperty.java</span></div><h1>KotlinProperty.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2019 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>KotlinProperty.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api.dom.kotlin</a> &gt; <span class="el_source">KotlinProperty.java</span></div><h1>KotlinProperty.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -20,15 +20,15 @@ import java.util.Optional;
 
 public class KotlinProperty extends KotlinNamedItem {
 
-    private String dataType;
-    private String initializationString;
-    private Type type;
+    private final String dataType;
+    private final String initializationString;
+    private final Type type;
 
 <span class="fc" id="L27">    public enum Type {</span>
 <span class="fc" id="L28">        VAL(&quot;val&quot;), //$NON-NLS-1$</span>
 <span class="fc" id="L29">        VAR(&quot;var&quot;); //$NON-NLS-1$</span>
 
-        private String value;
+        private final String value;
 
 <span class="fc" id="L33">        Type(String value) {</span>
 <span class="fc" id="L34">            this.value = value;</span>
@@ -38,18 +38,18 @@ public class KotlinProperty extends KotlinNamedItem {
 <span class="fc" id="L38">            return value;</span>
         }
     }
-    
+
     private KotlinProperty(Builder builder) {
 <span class="fc" id="L43">        super(builder);</span>
 <span class="fc" id="L44">        dataType = builder.dataType;</span>
 <span class="fc" id="L45">        initializationString = builder.initializationString;</span>
 <span class="fc" id="L46">        type = Objects.requireNonNull(builder.type);</span>
 <span class="fc" id="L47">    }</span>
-    
+
     public Optional&lt;String&gt; getInitializationString() {
 <span class="fc" id="L50">        return Optional.ofNullable(initializationString);</span>
     }
-    
+
     public Optional&lt;String&gt; getDataType() {
 <span class="fc" id="L54">        return Optional.ofNullable(dataType);</span>
     }
@@ -74,7 +74,7 @@ public class KotlinProperty extends KotlinNamedItem {
     public static class Builder extends AbstractBuilder&lt;Builder&gt; {
         private String dataType;
         private String initializationString;
-        private Type type;
+        private final Type type;
 
         private Builder(Type type, String name) {
 <span class="fc" id="L80">            super(name);</span>
@@ -100,4 +100,4 @@ public class KotlinProperty extends KotlinNamedItem {
         }
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

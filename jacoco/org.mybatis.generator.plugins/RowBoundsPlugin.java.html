@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RowBoundsPlugin.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.plugins</a> &gt; <span class="el_source">RowBoundsPlugin.java</span></div><h1>RowBoundsPlugin.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2019 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RowBoundsPlugin.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.plugins</a> &gt; <span class="el_source">RowBoundsPlugin.java</span></div><h1>RowBoundsPlugin.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.mybatis.generator.api.FullyQualifiedTable;
 import org.mybatis.generator.api.IntrospectedTable;
@@ -39,62 +38,59 @@ import org.mybatis.generator.internal.util.messages.Messages;
  * This plugin will add selectByExample methods that include rowBounds
  * parameters to the generated mapper interface.  This plugin is only
  * valid for MyBatis3.
- * 
+ *
  * @author Jeff Butler
  */
-<span class="fc" id="L45">public class RowBoundsPlugin extends PluginAdapter {</span>
+<span class="fc" id="L44">public class RowBoundsPlugin extends PluginAdapter {</span>
 
-<span class="fc" id="L47">    private FullyQualifiedJavaType rowBounds =</span>
+<span class="fc" id="L46">    private final FullyQualifiedJavaType rowBounds =</span>
             new FullyQualifiedJavaType(&quot;org.apache.ibatis.session.RowBounds&quot;); //$NON-NLS-1$
-<span class="fc" id="L49">    private Map&lt;FullyQualifiedTable, List&lt;XmlElement&gt;&gt; elementsToAdd = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L48">    private final Map&lt;FullyQualifiedTable, List&lt;XmlElement&gt;&gt; elementsToAdd = new HashMap&lt;&gt;();</span>
 
     @Override
     public boolean validate(List&lt;String&gt; warnings) {
-<span class="pc bpc" id="L53" title="1 of 2 branches missed.">        if (&quot;MyBatis3DynamicSqlV2&quot;.equalsIgnoreCase(context.getTargetRuntime()) //$NON-NLS-1$</span>
-<span class="fc bfc" id="L54" title="All 2 branches covered.">                || &quot;MyBatis3DynamicSql&quot;.equalsIgnoreCase(context.getTargetRuntime())) { //$NON-NLS-1$</span>
-<span class="fc" id="L55">            warnings.add(Messages.getString(&quot;Warning.30&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L56">            return false;</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        if (&quot;MyBatis3DynamicSql&quot;.equalsIgnoreCase(context.getTargetRuntime())) { //$NON-NLS-1$</span>
+<span class="fc" id="L53">            warnings.add(Messages.getString(&quot;Warning.30&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L54">            return false;</span>
         }
-<span class="fc" id="L58">        return true;</span>
+<span class="fc" id="L56">        return true;</span>
     }
 
     @Override
     public boolean clientSelectByExampleWithBLOBsMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable) {
-<span class="fc bfc" id="L64" title="All 2 branches covered.">        if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3) {</span>
-<span class="fc" id="L65">            copyAndAddMethod(method, interfaze);</span>
-<span class="pc bpc" id="L66" title="1 of 2 branches missed.">        } else if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3_DSQL) {</span>
-<span class="fc" id="L67">            copyAndAddSelectByExampleMethodForDSQL(method, interfaze);</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">        if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3) {</span>
+<span class="fc" id="L63">            copyAndAddMethod(method, interfaze);</span>
         }
-<span class="fc" id="L69">        return true;</span>
+<span class="fc" id="L65">        return true;</span>
     }
 
     @Override
     public boolean clientSelectByExampleWithoutBLOBsMethodGenerated(
             Method method, Interface interfaze,
             IntrospectedTable introspectedTable) {
-<span class="pc bpc" id="L76" title="1 of 2 branches missed.">        if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3) {</span>
-<span class="fc" id="L77">            copyAndAddMethod(method, interfaze);</span>
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">        if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3) {</span>
+<span class="fc" id="L73">            copyAndAddMethod(method, interfaze);</span>
         }
-<span class="fc" id="L79">        return true;</span>
+<span class="fc" id="L75">        return true;</span>
     }
 
     @Override
     public boolean sqlMapSelectByExampleWithoutBLOBsElementGenerated(
             XmlElement element, IntrospectedTable introspectedTable) {
-<span class="pc bpc" id="L85" title="1 of 2 branches missed.">        if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3) {</span>
-<span class="fc" id="L86">            copyAndSaveElement(element, introspectedTable.getFullyQualifiedTable());</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">        if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3) {</span>
+<span class="fc" id="L82">            copyAndSaveElement(element, introspectedTable.getFullyQualifiedTable());</span>
         }
-<span class="fc" id="L88">        return true;</span>
+<span class="fc" id="L84">        return true;</span>
     }
 
     @Override
     public boolean sqlMapSelectByExampleWithBLOBsElementGenerated(
             XmlElement element, IntrospectedTable introspectedTable) {
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">        if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3) {</span>
-<span class="fc" id="L95">            copyAndSaveElement(element, introspectedTable.getFullyQualifiedTable());</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">        if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3) {</span>
+<span class="fc" id="L91">            copyAndSaveElement(element, introspectedTable.getFullyQualifiedTable());</span>
         }
-<span class="fc" id="L97">        return true;</span>
+<span class="fc" id="L93">        return true;</span>
     }
 
     /**
@@ -104,153 +100,57 @@ import org.mybatis.generator.internal.util.messages.Messages;
     @Override
     public boolean sqlMapDocumentGenerated(Document document,
             IntrospectedTable introspectedTable) {
-<span class="fc" id="L107">        List&lt;XmlElement&gt; elements = elementsToAdd.get(introspectedTable.getFullyQualifiedTable());</span>
-<span class="fc bfc" id="L108" title="All 2 branches covered.">        if (elements != null) {</span>
-<span class="fc bfc" id="L109" title="All 2 branches covered.">            for (XmlElement element : elements) {</span>
-<span class="fc" id="L110">                document.getRootElement().addElement(element);</span>
-<span class="fc" id="L111">            }</span>
+<span class="fc" id="L103">        List&lt;XmlElement&gt; elements = elementsToAdd.get(introspectedTable.getFullyQualifiedTable());</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">        if (elements != null) {</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">            for (XmlElement element : elements) {</span>
+<span class="fc" id="L106">                document.getRootElement().addElement(element);</span>
+<span class="fc" id="L107">            }</span>
         }
 
-<span class="fc" id="L114">        return true;</span>
+<span class="fc" id="L110">        return true;</span>
     }
-
-    @Override
-    public boolean clientBasicSelectManyMethodGenerated(Method method, Interface interfaze,
-            IntrospectedTable introspectedTable) {
-<span class="fc" id="L120">        copyAndAddSelectManyMethod(method, interfaze);</span>
-        
-<span class="fc" id="L122">        addNewComposedFunction(interfaze, introspectedTable, method.getReturnType());</span>
-<span class="fc" id="L123">        return true;</span>
-    }
-
-    private void addNewComposedFunction(Interface interfaze, IntrospectedTable introspectedTable,
-            Optional&lt;FullyQualifiedJavaType&gt; baseMethodReturnType) {
-<span class="pc bpc" id="L128" title="1 of 2 branches missed.">        if (!baseMethodReturnType.isPresent()) {</span>
-            // shouldn't happen, but just in case...
-<span class="nc" id="L130">            return;</span>
-        }
-        
-<span class="fc" id="L133">        interfaze.addImportedType(new FullyQualifiedJavaType(&quot;java.util.function.Function&quot;)); //$NON-NLS-1$</span>
-        
-<span class="fc" id="L135">        FullyQualifiedJavaType returnType =</span>
-                new FullyQualifiedJavaType(&quot;Function&lt;SelectStatementProvider, &quot; //$NON-NLS-1$
-<span class="fc" id="L137">                        + baseMethodReturnType.get().getShortName() + &quot;&gt;&quot;); //$NON-NLS-1$</span>
-        
-<span class="fc" id="L139">        Method method = new Method(&quot;selectManyWithRowbounds&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L140">        method.setDefault(true);</span>
-<span class="fc" id="L141">        method.setReturnType(returnType);</span>
-<span class="fc" id="L142">        method.addParameter(new Parameter(rowBounds, &quot;rowBounds&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L143">        method.addBodyLine(</span>
-                &quot;return selectStatement -&gt; selectManyWithRowbounds(selectStatement, rowBounds);&quot;); //$NON-NLS-1$
-<span class="fc" id="L145">        context.getCommentGenerator().addGeneralMethodAnnotation(</span>
-<span class="fc" id="L146">                method, introspectedTable, interfaze.getImportedTypes());</span>
-<span class="fc" id="L147">        interfaze.addMethod(method);</span>
-<span class="fc" id="L148">    }</span>
 
     /**
      * Use the method copy constructor to create a new method, then
      * add the rowBounds parameter.
-     * 
-     * @param fullyQualifiedTable the table
+     *
      * @param method the method
+     * @param interfaze the interface
      */
     private void copyAndAddMethod(Method method, Interface interfaze) {
-<span class="fc" id="L158">        Method newMethod = new Method(method);</span>
-<span class="fc" id="L159">        newMethod.setName(method.getName() + &quot;WithRowbounds&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L160">        newMethod.addParameter(new Parameter(rowBounds, &quot;rowBounds&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L161">        interfaze.addMethod(newMethod);</span>
-<span class="fc" id="L162">        interfaze.addImportedType(rowBounds);</span>
-<span class="fc" id="L163">    }</span>
+<span class="fc" id="L121">        Method newMethod = new Method(method);</span>
+<span class="fc" id="L122">        newMethod.setName(method.getName() + &quot;WithRowbounds&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L123">        newMethod.addParameter(new Parameter(rowBounds, &quot;rowBounds&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L124">        interfaze.addMethod(newMethod);</span>
+<span class="fc" id="L125">        interfaze.addImportedType(rowBounds);</span>
+<span class="fc" id="L126">    }</span>
 
-    private void copyAndAddSelectManyMethod(Method method, Interface interfaze) {
-<span class="fc" id="L166">        List&lt;String&gt; annotations = new ArrayList&lt;&gt;(method.getAnnotations());</span>
-        
-        // remove the @Results annotation and replace it with @ResultMap
-<span class="fc" id="L169">        boolean inResultsAnnotation = false;</span>
-<span class="fc" id="L170">        String resultMapId = null;</span>
-<span class="fc" id="L171">        Iterator&lt;String&gt; iter = annotations.iterator();</span>
-<span class="fc bfc" id="L172" title="All 2 branches covered.">        while (iter.hasNext()) {</span>
-<span class="fc" id="L173">            String annotation = iter.next();</span>
-
-<span class="fc bfc" id="L175" title="All 2 branches covered.">            if (inResultsAnnotation) {</span>
-<span class="fc bfc" id="L176" title="All 2 branches covered.">                if (annotation.equals(&quot;})&quot;)) { //$NON-NLS-1$</span>
-<span class="fc" id="L177">                    inResultsAnnotation = false;</span>
-                }
-<span class="fc" id="L179">                iter.remove();</span>
-<span class="fc bfc" id="L180" title="All 2 branches covered.">            } else if (annotation.startsWith(&quot;@Results(&quot;)) { //$NON-NLS-1$</span>
-<span class="fc" id="L181">                inResultsAnnotation = true;</span>
-<span class="fc" id="L182">                iter.remove();</span>
-                
-                // now find the ID
-<span class="fc" id="L185">                int index = annotation.indexOf(&quot;id=\&quot;&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L186">                int startIndex = index + &quot;id=\&quot;&quot;.length(); //$NON-NLS-1$</span>
-<span class="fc" id="L187">                int endIndex = annotation.indexOf('\&quot;', startIndex + 1); //$NON-NLS-1$</span>
-<span class="fc" id="L188">                resultMapId = annotation.substring(startIndex, endIndex);</span>
-            }
-<span class="fc" id="L190">        }</span>
-        
-<span class="pc bpc" id="L192" title="1 of 2 branches missed.">        if (resultMapId != null) {</span>
-<span class="fc" id="L193">            interfaze.addImportedType(</span>
-                    new FullyQualifiedJavaType(&quot;org.apache.ibatis.annotations.ResultMap&quot;)); //$NON-NLS-1$
-<span class="fc" id="L195">            annotations.add(&quot;@ResultMap(\&quot;&quot; + resultMapId + &quot;\&quot;)&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
-        }
-        
-<span class="fc" id="L198">        Method newMethod = new Method(method);</span>
-<span class="fc" id="L199">        newMethod.getAnnotations().clear();</span>
-<span class="fc bfc" id="L200" title="All 2 branches covered.">        for (String annotation : annotations) {</span>
-<span class="fc" id="L201">            newMethod.addAnnotation(annotation);</span>
-<span class="fc" id="L202">        }</span>
-        
-<span class="fc" id="L204">        newMethod.setName(method.getName() + &quot;WithRowbounds&quot;); //$NON-NLS-1$</span>
-<span class="fc" id="L205">        newMethod.addParameter(new Parameter(rowBounds, &quot;rowBounds&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L206">        interfaze.addMethod(newMethod);</span>
-<span class="fc" id="L207">        interfaze.addImportedType(rowBounds);</span>
-<span class="fc" id="L208">    }</span>
-    
-    private void copyAndAddSelectByExampleMethodForDSQL(Method method, Interface interfaze) {
-<span class="fc" id="L211">        Method newMethod = new Method(method);</span>
-<span class="fc" id="L212">        newMethod.addParameter(new Parameter(rowBounds, &quot;rowBounds&quot;)); //$NON-NLS-1$</span>
-<span class="fc" id="L213">        interfaze.addMethod(newMethod);</span>
-<span class="fc" id="L214">        interfaze.addImportedType(rowBounds);</span>
-        
-        // replace the call to selectMany with the new call to selectManyWithRowbounds
-<span class="pc bpc" id="L217" title="1 of 2 branches missed.">        for (int i = 0; i &lt; newMethod.getBodyLines().size(); i++) {</span>
-<span class="fc" id="L218">            String bodyLine = newMethod.getBodyLines().get(i);</span>
-            
-<span class="pc bpc" id="L220" title="1 of 2 branches missed.">            if (bodyLine.contains(&quot;this::selectMany&quot;)) { //$NON-NLS-1$</span>
-<span class="fc" id="L221">                bodyLine = bodyLine.replace(&quot;this::selectMany&quot;, //$NON-NLS-1$</span>
-                        &quot;selectManyWithRowbounds(rowBounds)&quot;); //$NON-NLS-1$
-<span class="fc" id="L223">                newMethod.getBodyLines().set(i, bodyLine);</span>
-<span class="fc" id="L224">                break;</span>
-            }
-        }
-<span class="fc" id="L227">    }</span>
-    
     /**
      * Use the method copy constructor to create a new element.
-     * 
-     * @param fullyQualifiedTable the table
-     * @param method the method
+     *
+     * @param element the base element
+     * @param fqt the fully qualified type
      */
     private void copyAndSaveElement(XmlElement element, FullyQualifiedTable fqt) {
-<span class="fc" id="L236">        XmlElement newElement = new XmlElement(element);</span>
+<span class="fc" id="L135">        XmlElement newElement = new XmlElement(element);</span>
 
         // remove old id attribute and add a new one with the new name
-<span class="pc bpc" id="L239" title="1 of 2 branches missed.">        for (Iterator&lt;Attribute&gt; iterator = newElement.getAttributes().iterator(); iterator.hasNext();) {</span>
-<span class="fc" id="L240">            Attribute attribute = iterator.next();</span>
-<span class="pc bpc" id="L241" title="1 of 2 branches missed.">            if (&quot;id&quot;.equals(attribute.getName())) { //$NON-NLS-1$</span>
-<span class="fc" id="L242">                iterator.remove();</span>
-<span class="fc" id="L243">                Attribute newAttribute =</span>
-<span class="fc" id="L244">                        new Attribute(&quot;id&quot;, attribute.getValue() + &quot;WithRowbounds&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
-<span class="fc" id="L245">                newElement.addAttribute(newAttribute);</span>
-<span class="fc" id="L246">                break;</span>
+<span class="fc" id="L138">        Iterator&lt;Attribute&gt; iterator = newElement.getAttributes().iterator();</span>
+<span class="pc bpc" id="L139" title="1 of 2 branches missed.">        while (iterator.hasNext()) {</span>
+<span class="fc" id="L140">            Attribute attribute = iterator.next();</span>
+<span class="pc bpc" id="L141" title="1 of 2 branches missed.">            if (&quot;id&quot;.equals(attribute.getName())) { //$NON-NLS-1$</span>
+<span class="fc" id="L142">                iterator.remove();</span>
+<span class="fc" id="L143">                Attribute newAttribute =</span>
+<span class="fc" id="L144">                        new Attribute(&quot;id&quot;, attribute.getValue() + &quot;WithRowbounds&quot;); //$NON-NLS-1$ //$NON-NLS-2$</span>
+<span class="fc" id="L145">                newElement.addAttribute(newAttribute);</span>
+<span class="fc" id="L146">                break;</span>
             }
-<span class="nc" id="L248">        }</span>
+<span class="nc" id="L148">        }</span>
 
         // save the new element locally.   We'll add it to the document
         // later
-<span class="fc" id="L252">        List&lt;XmlElement&gt; elements = elementsToAdd.computeIfAbsent(fqt, k -&gt; new ArrayList&lt;&gt;());</span>
-<span class="fc" id="L253">        elements.add(newElement);</span>
-<span class="fc" id="L254">    }</span>
+<span class="fc" id="L152">        List&lt;XmlElement&gt; elements = elementsToAdd.computeIfAbsent(fqt, k -&gt; new ArrayList&lt;&gt;());</span>
+<span class="fc" id="L153">        elements.add(newElement);</span>
+<span class="fc" id="L154">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

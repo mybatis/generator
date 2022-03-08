@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SelectByExampleWithBLOBsMethodGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.codegen.mybatis3.javamapper.elements</a> &gt; <span class="el_source">SelectByExampleWithBLOBsMethodGenerator.java</span></div><h1>SelectByExampleWithBLOBsMethodGenerator.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2019 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SelectByExampleWithBLOBsMethodGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.codegen.mybatis3.javamapper.elements</a> &gt; <span class="el_source">SelectByExampleWithBLOBsMethodGenerator.java</span></div><h1>SelectByExampleWithBLOBsMethodGenerator.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2021 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -24,63 +24,55 @@ import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 
-public class SelectByExampleWithBLOBsMethodGenerator extends
-        AbstractJavaMapperMethodGenerator {
+public class SelectByExampleWithBLOBsMethodGenerator extends AbstractJavaMapperMethodGenerator {
 
     public SelectByExampleWithBLOBsMethodGenerator() {
-<span class="fc" id="L31">        super();</span>
-<span class="fc" id="L32">    }</span>
+<span class="fc" id="L30">        super();</span>
+<span class="fc" id="L31">    }</span>
 
     @Override
     public void addInterfaceElements(Interface interfaze) {
-<span class="fc" id="L36">        Set&lt;FullyQualifiedJavaType&gt; importedTypes = new TreeSet&lt;&gt;();</span>
-<span class="fc" id="L37">        FullyQualifiedJavaType type = new FullyQualifiedJavaType(</span>
-<span class="fc" id="L38">                introspectedTable.getExampleType());</span>
-<span class="fc" id="L39">        importedTypes.add(type);</span>
-<span class="fc" id="L40">        importedTypes.add(FullyQualifiedJavaType.getNewListInstance());</span>
+<span class="fc" id="L35">        Set&lt;FullyQualifiedJavaType&gt; importedTypes = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L36">        FullyQualifiedJavaType type = new FullyQualifiedJavaType(introspectedTable.getExampleType());</span>
+<span class="fc" id="L37">        importedTypes.add(type);</span>
+<span class="fc" id="L38">        importedTypes.add(FullyQualifiedJavaType.getNewListInstance());</span>
 
-<span class="fc" id="L42">        Method method = new Method(introspectedTable</span>
-<span class="fc" id="L43">                .getSelectByExampleWithBLOBsStatementId());</span>
-<span class="fc" id="L44">        method.setVisibility(JavaVisibility.PUBLIC);</span>
-<span class="fc" id="L45">        method.setAbstract(true);</span>
+<span class="fc" id="L40">        Method method = new Method(introspectedTable.getSelectByExampleWithBLOBsStatementId());</span>
+<span class="fc" id="L41">        method.setVisibility(JavaVisibility.PUBLIC);</span>
+<span class="fc" id="L42">        method.setAbstract(true);</span>
 
-        FullyQualifiedJavaType returnType = FullyQualifiedJavaType
-<span class="fc" id="L48">                .getNewListInstance();</span>
+<span class="fc" id="L44">        FullyQualifiedJavaType returnType = FullyQualifiedJavaType.getNewListInstance();</span>
         FullyQualifiedJavaType listType;
-<span class="fc bfc" id="L50" title="All 2 branches covered.">        if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {</span>
-<span class="fc" id="L51">            listType = new FullyQualifiedJavaType(introspectedTable</span>
-<span class="fc" id="L52">                    .getRecordWithBLOBsType());</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {</span>
+<span class="fc" id="L47">            listType = new FullyQualifiedJavaType(introspectedTable.getRecordWithBLOBsType());</span>
         } else {
             // the blob fields must be rolled up into the base class
-<span class="fc" id="L55">            listType = new FullyQualifiedJavaType(introspectedTable</span>
-<span class="fc" id="L56">                    .getBaseRecordType());</span>
+<span class="fc" id="L50">            listType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());</span>
         }
 
-<span class="fc" id="L59">        importedTypes.add(listType);</span>
-<span class="fc" id="L60">        returnType.addTypeArgument(listType);</span>
-<span class="fc" id="L61">        method.setReturnType(returnType);</span>
-<span class="fc" id="L62">        method.addParameter(new Parameter(type, &quot;example&quot;)); //$NON-NLS-1$</span>
+<span class="fc" id="L53">        importedTypes.add(listType);</span>
+<span class="fc" id="L54">        returnType.addTypeArgument(listType);</span>
+<span class="fc" id="L55">        method.setReturnType(returnType);</span>
+<span class="fc" id="L56">        method.addParameter(new Parameter(type, &quot;example&quot;)); //$NON-NLS-1$</span>
 
-<span class="fc" id="L64">        context.getCommentGenerator().addGeneralMethodComment(method,</span>
-                introspectedTable);
+<span class="fc" id="L58">        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);</span>
 
-<span class="fc" id="L67">        addMapperAnnotations(interfaze, method);</span>
-        
-<span class="fc" id="L69">        if (context.getPlugins()</span>
-<span class="pc bpc" id="L70" title="1 of 2 branches missed.">                .clientSelectByExampleWithBLOBsMethodGenerated(method, interfaze,</span>
-                        introspectedTable)) {
-<span class="fc" id="L72">            addExtraImports(interfaze);</span>
-<span class="fc" id="L73">            interfaze.addImportedTypes(importedTypes);</span>
-<span class="fc" id="L74">            interfaze.addMethod(method);</span>
+<span class="fc" id="L60">        addMapperAnnotations(interfaze, method);</span>
+
+<span class="fc" id="L62">        if (context.getPlugins()</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">                .clientSelectByExampleWithBLOBsMethodGenerated(method, interfaze, introspectedTable)) {</span>
+<span class="fc" id="L64">            addExtraImports(interfaze);</span>
+<span class="fc" id="L65">            interfaze.addImportedTypes(importedTypes);</span>
+<span class="fc" id="L66">            interfaze.addMethod(method);</span>
         }
-<span class="fc" id="L76">    }</span>
+<span class="fc" id="L68">    }</span>
 
     public void addMapperAnnotations(Interface interfaze, Method method) {
         // extension point for subclasses
-<span class="fc" id="L80">    }</span>
+<span class="fc" id="L72">    }</span>
 
     public void addExtraImports(Interface interfaze) {
         // extension point for subclasses
-<span class="fc" id="L84">    }</span>
+<span class="fc" id="L76">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

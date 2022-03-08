@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FullyQualifiedTable.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api</a> &gt; <span class="el_source">FullyQualifiedTable.java</span></div><h1>FullyQualifiedTable.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2019 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FullyQualifiedTable.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.api</a> &gt; <span class="el_source">FullyQualifiedTable.java</span></div><h1>FullyQualifiedTable.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -18,30 +18,29 @@ package org.mybatis.generator.api;
 import static org.mybatis.generator.internal.util.StringUtility.composeFullyQualifiedTableName;
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.DomainObjectRenamingRule;
-import org.mybatis.generator.internal.util.EqualsUtil;
-import org.mybatis.generator.internal.util.HashCodeUtil;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
 
 public class FullyQualifiedTable {
 
-    private String introspectedCatalog;
-    private String introspectedSchema;
-    private String introspectedTableName;
-    private String runtimeCatalog;
-    private String runtimeSchema;
-    private String runtimeTableName;
+    private final String introspectedCatalog;
+    private final String introspectedSchema;
+    private final String introspectedTableName;
+    private final String runtimeCatalog;
+    private final String runtimeSchema;
+    private final String runtimeTableName;
     private String domainObjectName;
     private String domainObjectSubPackage;
-    private String alias;
-    private boolean ignoreQualifiersAtRuntime;
-    private String beginningDelimiter;
-    private String endingDelimiter;
-    private DomainObjectRenamingRule domainObjectRenamingRule;
+    private final String alias;
+    private final boolean ignoreQualifiersAtRuntime;
+    private final String beginningDelimiter;
+    private final String endingDelimiter;
+    private final DomainObjectRenamingRule domainObjectRenamingRule;
 
     /**
      * This object is used to hold information related to the table itself, not the columns in the
@@ -95,165 +94,160 @@ public class FullyQualifiedTable {
             String runtimeSchema, String runtimeTableName,
             boolean delimitIdentifiers, DomainObjectRenamingRule domainObjectRenamingRule,
             Context context) {
-<span class="fc" id="L98">        super();</span>
-<span class="fc" id="L99">        this.introspectedCatalog = introspectedCatalog;</span>
-<span class="fc" id="L100">        this.introspectedSchema = introspectedSchema;</span>
-<span class="fc" id="L101">        this.introspectedTableName = introspectedTableName;</span>
-<span class="fc" id="L102">        this.ignoreQualifiersAtRuntime = ignoreQualifiersAtRuntime;</span>
-<span class="fc" id="L103">        this.runtimeCatalog = runtimeCatalog;</span>
-<span class="fc" id="L104">        this.runtimeSchema = runtimeSchema;</span>
-<span class="fc" id="L105">        this.runtimeTableName = runtimeTableName;</span>
-<span class="fc" id="L106">        this.domainObjectRenamingRule = domainObjectRenamingRule;</span>
+<span class="fc" id="L97">        super();</span>
+<span class="fc" id="L98">        this.introspectedCatalog = introspectedCatalog;</span>
+<span class="fc" id="L99">        this.introspectedSchema = introspectedSchema;</span>
+<span class="fc" id="L100">        this.introspectedTableName = introspectedTableName;</span>
+<span class="fc" id="L101">        this.ignoreQualifiersAtRuntime = ignoreQualifiersAtRuntime;</span>
+<span class="fc" id="L102">        this.runtimeCatalog = runtimeCatalog;</span>
+<span class="fc" id="L103">        this.runtimeSchema = runtimeSchema;</span>
+<span class="fc" id="L104">        this.runtimeTableName = runtimeTableName;</span>
+<span class="fc" id="L105">        this.domainObjectRenamingRule = domainObjectRenamingRule;</span>
 
-<span class="fc bfc" id="L108" title="All 2 branches covered.">        if (stringHasValue(domainObjectName)) {</span>
-<span class="fc" id="L109">            int index = domainObjectName.lastIndexOf('.');</span>
-<span class="fc bfc" id="L110" title="All 2 branches covered.">            if (index == -1) {</span>
-<span class="fc" id="L111">                this.domainObjectName = domainObjectName;</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">        if (stringHasValue(domainObjectName)) {</span>
+<span class="fc" id="L108">            int index = domainObjectName.lastIndexOf('.');</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">            if (index == -1) {</span>
+<span class="fc" id="L110">                this.domainObjectName = domainObjectName;</span>
             } else {
-<span class="fc" id="L113">                this.domainObjectName = domainObjectName.substring(index + 1);</span>
-<span class="fc" id="L114">                this.domainObjectSubPackage = domainObjectName.substring(0, index);</span>
+<span class="fc" id="L112">                this.domainObjectName = domainObjectName.substring(index + 1);</span>
+<span class="fc" id="L113">                this.domainObjectSubPackage = domainObjectName.substring(0, index);</span>
             }
         }
 
-<span class="fc bfc" id="L118" title="All 2 branches covered.">        if (alias == null) {</span>
-<span class="fc" id="L119">            this.alias = null;</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">        if (alias == null) {</span>
+<span class="fc" id="L118">            this.alias = null;</span>
         } else {
-<span class="fc" id="L121">            this.alias = alias.trim();</span>
+<span class="fc" id="L120">            this.alias = alias.trim();</span>
         }
 
-<span class="fc bfc" id="L124" title="All 2 branches covered.">        beginningDelimiter = delimitIdentifiers ? context</span>
-<span class="fc" id="L125">                .getBeginningDelimiter() : &quot;&quot;; //$NON-NLS-1$</span>
-<span class="fc bfc" id="L126" title="All 2 branches covered.">        endingDelimiter = delimitIdentifiers ? context.getEndingDelimiter()</span>
-                : &quot;&quot;; //$NON-NLS-1$
-<span class="fc" id="L128">    }</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">        beginningDelimiter = delimitIdentifiers ? context</span>
+<span class="fc" id="L124">                .getBeginningDelimiter() : &quot;&quot;; //$NON-NLS-1$</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">        endingDelimiter = delimitIdentifiers ? context.getEndingDelimiter()</span>
+<span class="fc" id="L126">                : &quot;&quot;; //$NON-NLS-1$</span>
+<span class="fc" id="L127">    }</span>
 
     public String getIntrospectedCatalog() {
-<span class="fc" id="L131">        return introspectedCatalog;</span>
+<span class="fc" id="L130">        return introspectedCatalog;</span>
     }
 
     public String getIntrospectedSchema() {
-<span class="fc" id="L135">        return introspectedSchema;</span>
+<span class="fc" id="L134">        return introspectedSchema;</span>
     }
 
     public String getIntrospectedTableName() {
-<span class="fc" id="L139">        return introspectedTableName;</span>
+<span class="fc" id="L138">        return introspectedTableName;</span>
     }
 
     public String getFullyQualifiedTableNameAtRuntime() {
-<span class="fc" id="L143">        StringBuilder localCatalog = new StringBuilder();</span>
-<span class="pc bpc" id="L144" title="1 of 2 branches missed.">        if (!ignoreQualifiersAtRuntime) {</span>
-<span class="pc bpc" id="L145" title="1 of 2 branches missed.">            if (stringHasValue(runtimeCatalog)) {</span>
-<span class="nc" id="L146">                localCatalog.append(runtimeCatalog);</span>
-<span class="pc bpc" id="L147" title="1 of 2 branches missed.">            } else if (stringHasValue(introspectedCatalog)) {</span>
-<span class="nc" id="L148">                localCatalog.append(introspectedCatalog);</span>
+<span class="fc" id="L142">        StringBuilder localCatalog = new StringBuilder();</span>
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">        if (!ignoreQualifiersAtRuntime) {</span>
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">            if (stringHasValue(runtimeCatalog)) {</span>
+<span class="nc" id="L145">                localCatalog.append(runtimeCatalog);</span>
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">            } else if (stringHasValue(introspectedCatalog)) {</span>
+<span class="nc" id="L147">                localCatalog.append(introspectedCatalog);</span>
             }
         }
-<span class="pc bpc" id="L151" title="1 of 2 branches missed.">        if (localCatalog.length() &gt; 0) {</span>
-<span class="nc" id="L152">            addDelimiters(localCatalog);</span>
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">        if (localCatalog.length() &gt; 0) {</span>
+<span class="nc" id="L151">            addDelimiters(localCatalog);</span>
         }
 
-<span class="fc" id="L155">        StringBuilder localSchema = new StringBuilder();</span>
-<span class="pc bpc" id="L156" title="1 of 2 branches missed.">        if (!ignoreQualifiersAtRuntime) {</span>
-<span class="pc bpc" id="L157" title="1 of 2 branches missed.">            if (stringHasValue(runtimeSchema)) {</span>
-<span class="nc" id="L158">                localSchema.append(runtimeSchema);</span>
-<span class="fc bfc" id="L159" title="All 2 branches covered.">            } else if (stringHasValue(introspectedSchema)) {</span>
-<span class="fc" id="L160">                localSchema.append(introspectedSchema);</span>
+<span class="fc" id="L154">        StringBuilder localSchema = new StringBuilder();</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">        if (!ignoreQualifiersAtRuntime) {</span>
+<span class="pc bpc" id="L156" title="1 of 2 branches missed.">            if (stringHasValue(runtimeSchema)) {</span>
+<span class="nc" id="L157">                localSchema.append(runtimeSchema);</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">            } else if (stringHasValue(introspectedSchema)) {</span>
+<span class="fc" id="L159">                localSchema.append(introspectedSchema);</span>
             }
         }
-<span class="fc bfc" id="L163" title="All 2 branches covered.">        if (localSchema.length() &gt; 0) {</span>
-<span class="fc" id="L164">            addDelimiters(localSchema);</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">        if (localSchema.length() &gt; 0) {</span>
+<span class="fc" id="L163">            addDelimiters(localSchema);</span>
         }
 
-<span class="fc" id="L167">        StringBuilder localTableName = new StringBuilder();</span>
-<span class="pc bpc" id="L168" title="1 of 2 branches missed.">        if (stringHasValue(runtimeTableName)) {</span>
-<span class="nc" id="L169">            localTableName.append(runtimeTableName);</span>
+<span class="fc" id="L166">        StringBuilder localTableName = new StringBuilder();</span>
+<span class="pc bpc" id="L167" title="1 of 2 branches missed.">        if (stringHasValue(runtimeTableName)) {</span>
+<span class="nc" id="L168">            localTableName.append(runtimeTableName);</span>
         } else {
-<span class="fc" id="L171">            localTableName.append(introspectedTableName);</span>
+<span class="fc" id="L170">            localTableName.append(introspectedTableName);</span>
         }
-<span class="fc" id="L173">        addDelimiters(localTableName);</span>
+<span class="fc" id="L172">        addDelimiters(localTableName);</span>
 
-<span class="fc" id="L175">        return composeFullyQualifiedTableName(localCatalog</span>
-<span class="fc" id="L176">                .toString(), localSchema.toString(), localTableName.toString(),</span>
+<span class="fc" id="L174">        return composeFullyQualifiedTableName(localCatalog</span>
+<span class="fc" id="L175">                .toString(), localSchema.toString(), localTableName.toString(),</span>
                 '.');
     }
 
     public String getAliasedFullyQualifiedTableNameAtRuntime() {
-<span class="fc" id="L181">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L180">        StringBuilder sb = new StringBuilder();</span>
 
-<span class="fc" id="L183">        sb.append(getFullyQualifiedTableNameAtRuntime());</span>
+<span class="fc" id="L182">        sb.append(getFullyQualifiedTableNameAtRuntime());</span>
 
-<span class="fc bfc" id="L185" title="All 2 branches covered.">        if (stringHasValue(alias)) {</span>
-<span class="fc" id="L186">            sb.append(' ');</span>
-<span class="fc" id="L187">            sb.append(alias);</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">        if (stringHasValue(alias)) {</span>
+<span class="fc" id="L185">            sb.append(' ');</span>
+<span class="fc" id="L186">            sb.append(alias);</span>
         }
 
-<span class="fc" id="L190">        return sb.toString();</span>
+<span class="fc" id="L189">        return sb.toString();</span>
     }
 
     public String getDomainObjectName() {
-<span class="fc bfc" id="L194" title="All 2 branches covered.">        if (stringHasValue(domainObjectName)) {</span>
-<span class="fc" id="L195">            return domainObjectName;</span>
+<span class="fc bfc" id="L193" title="All 2 branches covered.">        if (stringHasValue(domainObjectName)) {</span>
+<span class="fc" id="L194">            return domainObjectName;</span>
         }
 
         String finalDomainObjectName;
-<span class="pc bpc" id="L199" title="1 of 2 branches missed.">        if (stringHasValue(runtimeTableName)) {</span>
-<span class="nc" id="L200">            finalDomainObjectName = JavaBeansUtil.getCamelCaseString(runtimeTableName, true);</span>
+<span class="pc bpc" id="L198" title="1 of 2 branches missed.">        if (stringHasValue(runtimeTableName)) {</span>
+<span class="nc" id="L199">            finalDomainObjectName = JavaBeansUtil.getCamelCaseString(runtimeTableName, true);</span>
         } else {
-<span class="fc" id="L202">            finalDomainObjectName = JavaBeansUtil.getCamelCaseString(introspectedTableName, true);</span>
+<span class="fc" id="L201">            finalDomainObjectName = JavaBeansUtil.getCamelCaseString(introspectedTableName, true);</span>
         }
 
-<span class="fc bfc" id="L205" title="All 2 branches covered.">        if (domainObjectRenamingRule != null) {</span>
-<span class="fc" id="L206">            Pattern pattern = Pattern.compile(domainObjectRenamingRule.getSearchString());</span>
-<span class="fc" id="L207">            String replaceString = domainObjectRenamingRule.getReplaceString();</span>
-<span class="fc bfc" id="L208" title="All 2 branches covered.">            replaceString = replaceString == null ? &quot;&quot; : replaceString; //$NON-NLS-1$</span>
-<span class="fc" id="L209">            Matcher matcher = pattern.matcher(finalDomainObjectName);</span>
-<span class="fc" id="L210">            finalDomainObjectName = JavaBeansUtil.getFirstCharacterUppercase(matcher.replaceAll(replaceString));</span>
+<span class="fc bfc" id="L204" title="All 2 branches covered.">        if (domainObjectRenamingRule != null) {</span>
+<span class="fc" id="L205">            Pattern pattern = Pattern.compile(domainObjectRenamingRule.getSearchString());</span>
+<span class="fc" id="L206">            String replaceString = domainObjectRenamingRule.getReplaceString();</span>
+<span class="fc bfc" id="L207" title="All 2 branches covered.">            replaceString = replaceString == null ? &quot;&quot; : replaceString; //$NON-NLS-1$</span>
+<span class="fc" id="L208">            Matcher matcher = pattern.matcher(finalDomainObjectName);</span>
+<span class="fc" id="L209">            finalDomainObjectName = JavaBeansUtil.getFirstCharacterUppercase(matcher.replaceAll(replaceString));</span>
         }
-<span class="fc" id="L212">        return finalDomainObjectName;</span>
+<span class="fc" id="L211">        return finalDomainObjectName;</span>
     }
 
     @Override
     public boolean equals(Object obj) {
-<span class="nc bnc" id="L217" title="All 2 branches missed.">        if (this == obj) {</span>
-<span class="nc" id="L218">            return true;</span>
+<span class="nc bnc" id="L216" title="All 2 branches missed.">        if (this == obj) {</span>
+<span class="nc" id="L217">            return true;</span>
         }
 
-<span class="nc bnc" id="L221" title="All 2 branches missed.">        if (!(obj instanceof FullyQualifiedTable)) {</span>
-<span class="nc" id="L222">            return false;</span>
+<span class="nc bnc" id="L220" title="All 2 branches missed.">        if (!(obj instanceof FullyQualifiedTable)) {</span>
+<span class="nc" id="L221">            return false;</span>
         }
 
-<span class="nc" id="L225">        FullyQualifiedTable other = (FullyQualifiedTable) obj;</span>
+<span class="nc" id="L224">        FullyQualifiedTable other = (FullyQualifiedTable) obj;</span>
 
-<span class="nc bnc" id="L227" title="All 2 branches missed.">        return EqualsUtil.areEqual(this.introspectedTableName, other.introspectedTableName)</span>
-<span class="nc bnc" id="L228" title="All 2 branches missed.">                &amp;&amp; EqualsUtil.areEqual(this.introspectedCatalog, other.introspectedCatalog)</span>
-<span class="nc bnc" id="L229" title="All 2 branches missed.">                &amp;&amp; EqualsUtil.areEqual(this.introspectedSchema, other.introspectedSchema);</span>
+<span class="nc bnc" id="L226" title="All 2 branches missed.">        return Objects.equals(this.introspectedTableName, other.introspectedTableName)</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">                &amp;&amp; Objects.equals(this.introspectedCatalog, other.introspectedCatalog)</span>
+<span class="nc bnc" id="L228" title="All 2 branches missed.">                &amp;&amp; Objects.equals(this.introspectedSchema, other.introspectedSchema);</span>
     }
 
     @Override
     public int hashCode() {
-<span class="fc" id="L234">        int result = HashCodeUtil.SEED;</span>
-<span class="fc" id="L235">        result = HashCodeUtil.hash(result, introspectedTableName);</span>
-<span class="fc" id="L236">        result = HashCodeUtil.hash(result, introspectedCatalog);</span>
-<span class="fc" id="L237">        result = HashCodeUtil.hash(result, introspectedSchema);</span>
-
-<span class="fc" id="L239">        return result;</span>
+<span class="fc" id="L233">        return Objects.hash(introspectedTableName, introspectedCatalog, introspectedCatalog);</span>
     }
 
     @Override
     public String toString() {
-<span class="fc" id="L244">        return composeFullyQualifiedTableName(</span>
+<span class="fc" id="L238">        return composeFullyQualifiedTableName(</span>
                 introspectedCatalog, introspectedSchema, introspectedTableName,
                 '.');
     }
 
     public String getAlias() {
-<span class="nc" id="L250">        return alias;</span>
+<span class="nc" id="L244">        return alias;</span>
     }
 
     /**
      * Calculates a Java package fragment based on the table catalog and schema.
      * If qualifiers are ignored, then this method will return an empty string.
-     * 
+     *
      * &lt;p&gt;This method is used for determining the sub package for Java client and
      * SQL map (XML) objects.  It ignores any sub-package added to the
      * domain object name in the table configuration.
@@ -263,33 +257,33 @@ public class FullyQualifiedTable {
      * @return the subpackage for this table
      */
     public String getSubPackageForClientOrSqlMap(boolean isSubPackagesEnabled) {
-<span class="fc" id="L266">        StringBuilder sb = new StringBuilder();</span>
-<span class="pc bpc" id="L267" title="1 of 4 branches missed.">        if (!ignoreQualifiersAtRuntime &amp;&amp; isSubPackagesEnabled) {</span>
-<span class="pc bpc" id="L268" title="1 of 2 branches missed.">            if (stringHasValue(runtimeCatalog)) {</span>
-<span class="nc" id="L269">                sb.append('.');</span>
-<span class="nc" id="L270">                sb.append(runtimeCatalog.toLowerCase());</span>
-<span class="pc bpc" id="L271" title="1 of 2 branches missed.">            } else if (stringHasValue(introspectedCatalog)) {</span>
-<span class="nc" id="L272">                sb.append('.');</span>
-<span class="nc" id="L273">                sb.append(introspectedCatalog.toLowerCase());</span>
+<span class="fc" id="L260">        StringBuilder sb = new StringBuilder();</span>
+<span class="pc bpc" id="L261" title="1 of 4 branches missed.">        if (!ignoreQualifiersAtRuntime &amp;&amp; isSubPackagesEnabled) {</span>
+<span class="pc bpc" id="L262" title="1 of 2 branches missed.">            if (stringHasValue(runtimeCatalog)) {</span>
+<span class="nc" id="L263">                sb.append('.');</span>
+<span class="nc" id="L264">                sb.append(runtimeCatalog.toLowerCase());</span>
+<span class="pc bpc" id="L265" title="1 of 2 branches missed.">            } else if (stringHasValue(introspectedCatalog)) {</span>
+<span class="nc" id="L266">                sb.append('.');</span>
+<span class="nc" id="L267">                sb.append(introspectedCatalog.toLowerCase());</span>
             }
 
-<span class="pc bpc" id="L276" title="1 of 2 branches missed.">            if (stringHasValue(runtimeSchema)) {</span>
-<span class="nc" id="L277">                sb.append('.');</span>
-<span class="nc" id="L278">                sb.append(runtimeSchema.toLowerCase());</span>
-<span class="fc bfc" id="L279" title="All 2 branches covered.">            } else if (stringHasValue(introspectedSchema)) {</span>
-<span class="fc" id="L280">                sb.append('.');</span>
-<span class="fc" id="L281">                sb.append(introspectedSchema.toLowerCase());</span>
+<span class="pc bpc" id="L270" title="1 of 2 branches missed.">            if (stringHasValue(runtimeSchema)) {</span>
+<span class="nc" id="L271">                sb.append('.');</span>
+<span class="nc" id="L272">                sb.append(runtimeSchema.toLowerCase());</span>
+<span class="fc bfc" id="L273" title="All 2 branches covered.">            } else if (stringHasValue(introspectedSchema)) {</span>
+<span class="fc" id="L274">                sb.append('.');</span>
+<span class="fc" id="L275">                sb.append(introspectedSchema.toLowerCase());</span>
             }
         }
 
         // TODO - strip characters that are not valid in package names
-<span class="fc" id="L286">        return sb.toString();</span>
+<span class="fc" id="L280">        return sb.toString();</span>
     }
 
     /**
      * Calculates a Java package fragment based on the table catalog and schema.
      * If qualifiers are ignored, then this method will return an empty string.
-     * 
+     *
      * &lt;p&gt;This method is used for determining the sub package for Java model objects only.
      * It takes into account the possibility that a sub-package was added to the
      * domain object name in the table configuration.
@@ -299,29 +293,29 @@ public class FullyQualifiedTable {
      * @return the subpackage for this table
      */
     public String getSubPackageForModel(boolean isSubPackagesEnabled) {
-<span class="fc" id="L302">        StringBuilder sb = new StringBuilder();</span>
-<span class="fc" id="L303">        sb.append(getSubPackageForClientOrSqlMap(isSubPackagesEnabled));</span>
+<span class="fc" id="L296">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L297">        sb.append(getSubPackageForClientOrSqlMap(isSubPackagesEnabled));</span>
 
-<span class="fc bfc" id="L305" title="All 2 branches covered.">        if (stringHasValue(domainObjectSubPackage)) {</span>
-<span class="fc" id="L306">            sb.append('.');</span>
-<span class="fc" id="L307">            sb.append(domainObjectSubPackage);</span>
+<span class="fc bfc" id="L299" title="All 2 branches covered.">        if (stringHasValue(domainObjectSubPackage)) {</span>
+<span class="fc" id="L300">            sb.append('.');</span>
+<span class="fc" id="L301">            sb.append(domainObjectSubPackage);</span>
         }
 
-<span class="fc" id="L310">        return sb.toString();</span>
+<span class="fc" id="L304">        return sb.toString();</span>
     }
 
     private void addDelimiters(StringBuilder sb) {
-<span class="fc bfc" id="L314" title="All 2 branches covered.">        if (stringHasValue(beginningDelimiter)) {</span>
-<span class="fc" id="L315">            sb.insert(0, beginningDelimiter);</span>
+<span class="fc bfc" id="L308" title="All 2 branches covered.">        if (stringHasValue(beginningDelimiter)) {</span>
+<span class="fc" id="L309">            sb.insert(0, beginningDelimiter);</span>
         }
 
-<span class="fc bfc" id="L318" title="All 2 branches covered.">        if (stringHasValue(endingDelimiter)) {</span>
-<span class="fc" id="L319">            sb.append(endingDelimiter);</span>
+<span class="fc bfc" id="L312" title="All 2 branches covered.">        if (stringHasValue(endingDelimiter)) {</span>
+<span class="fc" id="L313">            sb.append(endingDelimiter);</span>
         }
-<span class="fc" id="L321">    }</span>
+<span class="fc" id="L315">    }</span>
 
     public String getDomainObjectSubPackage() {
-<span class="fc" id="L324">        return domainObjectSubPackage;</span>
+<span class="fc" id="L318">        return domainObjectSubPackage;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

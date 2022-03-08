@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>XmlFileMergerJaxp.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.internal</a> &gt; <span class="el_source">XmlFileMergerJaxp.java</span></div><h1>XmlFileMergerJaxp.java</h1><pre class="source lang-java linenums">/**
- *    Copyright 2006-2019 the original author or authors.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>XmlFileMergerJaxp.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.internal</a> &gt; <span class="el_source">XmlFileMergerJaxp.java</span></div><h1>XmlFileMergerJaxp.java</h1><pre class="source lang-java linenums">/*
+ *    Copyright 2006-2020 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
@@ -25,7 +25,6 @@ import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -48,7 +47,7 @@ import org.xml.sax.SAXException;
 
 /**
  * This class handles the task of merging changes into an existing XML file.
- * 
+ *
  * @author Jeff Butler
  */
 public class XmlFileMergerJaxp {
@@ -61,12 +60,11 @@ public class XmlFileMergerJaxp {
          * it can cause problems on systems that aren't Internet connected.
          */
         @Override
-        public InputSource resolveEntity(String publicId, String systemId)
-                throws SAXException, IOException {
+        public InputSource resolveEntity(String publicId, String systemId) {
 
-<span class="fc" id="L67">            StringReader sr = new StringReader(&quot;&quot;); //$NON-NLS-1$</span>
+<span class="fc" id="L65">            StringReader sr = new StringReader(&quot;&quot;); //$NON-NLS-1$</span>
 
-<span class="fc" id="L69">            return new InputSource(sr);</span>
+<span class="fc" id="L67">            return new InputSource(sr);</span>
         }
     }
 
@@ -74,21 +72,23 @@ public class XmlFileMergerJaxp {
             File existingFile) throws ShellException {
 
         try {
-<span class="nc" id="L77">            return getMergedSource(new InputSource(new StringReader(generatedXmlFile.getFormattedContent())),</span>
+<span class="nc" id="L75">            return getMergedSource(new InputSource(new StringReader(generatedXmlFile.getFormattedContent())),</span>
                 new InputSource(new InputStreamReader(new FileInputStream(existingFile), StandardCharsets.UTF_8)),
-<span class="nc" id="L79">                existingFile.getName());</span>
-<span class="nc" id="L80">        } catch (IOException | SAXException | ParserConfigurationException e) {</span>
-<span class="nc" id="L81">            throw new ShellException(getString(&quot;Warning.13&quot;, //$NON-NLS-1$</span>
-<span class="nc" id="L82">                    existingFile.getName()), e);</span>
+<span class="nc" id="L77">                existingFile.getName());</span>
+<span class="nc" id="L78">        } catch (IOException | SAXException | ParserConfigurationException e) {</span>
+<span class="nc" id="L79">            throw new ShellException(getString(&quot;Warning.13&quot;, //$NON-NLS-1$</span>
+<span class="nc" id="L80">                    existingFile.getName()), e);</span>
         }
     }
-    
+
     public static String getMergedSource(InputSource newFile,
             InputSource existingFile, String existingFileName) throws IOException, SAXException,
             ParserConfigurationException, ShellException {
 
         DocumentBuilderFactory factory = DocumentBuilderFactory
-<span class="fc" id="L91">                .newInstance();</span>
+<span class="fc" id="L89">                .newInstance();</span>
+<span class="fc" id="L90">        factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, &quot;&quot;);</span>
+<span class="fc" id="L91">        factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, &quot;&quot;);</span>
 <span class="fc" id="L92">        factory.setExpandEntityReferences(false);</span>
 <span class="fc" id="L93">        factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);</span>
 <span class="fc" id="L94">        DocumentBuilder builder = factory.newDocumentBuilder();</span>
@@ -188,10 +188,10 @@ public class XmlFileMergerJaxp {
 <span class="pc bpc" id="L188" title="1 of 2 branches missed.">        if (id != null) {</span>
 <span class="fc" id="L189">            return MergeConstants.idStartsWithPrefix(id);</span>
         }
-        
+
 <span class="nc" id="L192">        return false;</span>
     }
-    
+
     private static boolean isNewFormatNode(Node node) {
         // check for new node format - if the first non-whitespace node
         // is an XML comment, and the comment includes
@@ -206,10 +206,10 @@ public class XmlFileMergerJaxp {
 <span class="fc" id="L206">                return MergeConstants.commentContainsTag(commentData);</span>
             }
         }
-        
+
 <span class="fc" id="L210">        return false;</span>
     }
-    
+
     private static boolean isWhiteSpace(Node node) {
 <span class="fc" id="L214">        boolean rc = false;</span>
 
@@ -223,4 +223,4 @@ public class XmlFileMergerJaxp {
 <span class="fc" id="L223">        return rc;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

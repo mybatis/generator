@@ -43,6 +43,7 @@
         <artifactId>maven-site-plugin</artifactId>
         <configuration>
           <skipDeploy>false</skipDeploy>
+          <skip>false</skip>
         </configuration>
       </plugin>
       <!-- create the Source JAR and JavaDoc a bit earlier so it is ready for the assembly -->

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2016 the original author or authors.
+       Copyright 2006-2022 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -47,20 +47,34 @@ to enable logging as well as asking MBG to be verbose with progress messages.
 This may generate a substantial output, but it will also give a very complete
 picture of what's happening internally during the MBG run.</p>
 
-<p>MBG will use Apache Log4J logging if Log4J is in the runtime classpath.
-See <a href="http://logging.apache.org/log4j/">http://logging.apache.org/log4j/</a>
-for more information about Log4J.  If Log4J is not in the runtime classpath,
-MBG will use standard Java logging.</p>
-<p>If for any reason you prefer to force the use of standard Java logging, even
-if Log4J is in the runtime classpath, you may specify the <code>-forceJavaLogging</code>
-command line argument, or specify the following line of code when running
-MBG from Java:</p>
-<p><code>org.mybatis.generator.logging.LogFactory.forceJavaLogging();</code></p>
-<p><b>Important:</b> You should specify the above line of code <i>before</i> any other MBG code.</p>
+<p>By default, MBG will use SLF4J logging if it is on the runtime classpath.
+See <a href="https://www.slf4j.org/">https://www.slf4j.org/</a>
+for more information about SLF4J.  If SLF4J is not in the runtime classpath,
+MBG will search for logging implementations in the following order:</p>
+<ol>
+    <li>SLF4J</li>
+    <li>Jakarta Commons Logging</li>
+    <li>Log4J V2</li>
+    <li>JDK Standard logging</li>
+</ol>
+<p>If for any reason you prefer to force the use of JDK standard logging, even
+if other implementations are on the runtime classpath, you may specify the command line
+options <code>-forceJavaLogging</code>.</p>
+<p>If you are running MBG from Java, you can also call one of the following methods to force a particular logging
+implementation:</p>
+<ul>
+    <li><code>org.mybatis.generator.logging.LogFactory.forceJavaLogging();</code></li>
+    <li><code>org.mybatis.generator.logging.LogFactory.forceSlf4jLogging();</code></li>
+    <li><code>org.mybatis.generator.logging.LogFactory.forceCommonsLogging();</code></li>
+    <li><code>org.mybatis.generator.logging.LogFactory.forceLog4j2Logging();</code></li>
+    <li><code>org.mybatis.generator.logging.LogFactory.forceNoLogging();</code></li>
+</ul>
+
+<p><b>Important:</b> You should call these methods <i>before</i> any other MBG code.</p>
 
 <h2>Supplying an Alternate Implementation</h2>
-<p>If you prefer to use a different logging implementation than Log4J or
-standard Java logging, you may supply an alternate implementation of the key logging
+<p>If you prefer to use a different logging implementation than one of the build in implementations,
+you may supply an alternate implementation of the key logging
 interfaces as follows:</p>
 <ol>
   <li>Create an implementation of the <code>org.mybatis.generator.logging.Log</code>
@@ -73,31 +87,32 @@ interfaces as follows:</p>
       and supplying an instance of your <code>AbstractLogFactory</code> implementation.</li>
 </ol>
 
-<h2>Configuring Log4J Logging</h2>
-<p>The following is a sample Log4J configuration file:</p>
+<h2>Configuring SLF4J Logging</h2>
+<p>The following is a sample Logback configuration file (Logback is the default implementation of SLF4J):</p>
 <pre>
-# Set root logger
-log4j.rootLogger=INFO, A1
-
-# A1 is set to be a ConsoleAppender.
-log4j.appender.A1=org.apache.log4j.ConsoleAppender
-log4j.appender.A1.layout=org.apache.log4j.PatternLayout
-log4j.appender.A1.layout.ConversionPattern=%-4r %-5p %c - %m%n
-
-# MBG logging configuration...
-log4j.logger.org.mybatis.generator=DEBUG
+&lt;configuration&gt;
+  &lt;appender name="Console" class="ch.qos.logback.core.ConsoleAppender"&gt;
+    &lt;encoder&gt;
+      &lt;pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n&lt;/pattern&gt;
+    &lt;/encoder&gt;
+  &lt;/appender&gt;
+  &lt;logger name="org.mybatis.generator" level="debug" /&gt;
+  &lt;root level="error"&gt;
+    &lt;appender-ref ref="Console" /&gt;
+  &lt;/root&gt;
+&lt;/configuration&gt;
 </pre>
-<p>This file will instruct Log4J to write all MBG debug messages
+
+<p>This file will instruct SLF4J to write all MBG debug messages
 to the console.  To use this file:</p>
 <ol>
-  <li>Create a file called <code>log4j.properties</code> in the
+  <li>Create a file called <code>logback.xml</code> in the
       root of your runtime classpath</li>
   <li>Copy the above entries into the new file</li>
-  <li>Run MBG with the Log4J JAR file also in the runtime
-      classpath.</li>
+  <li>Run MBG with Logback classic as a dependency in your POM.</li>
 </ol>
 <p>You should see many log messages in the console.</p>
-<p>You may also configure Log4J in any of the other supported
+<p>You may also configure SLF4J in any of the other supported
 methods if you prefer.</p>
 
 <h2>Configuring Java Logging</h2>

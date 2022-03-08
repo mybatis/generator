@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2021 the original author or authors.
+       Copyright 2006-2022 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -35,13 +35,13 @@ about how the library works. In particular, see the
 <h2>Generated Files</h2>
 <p>For each introspected table, the generator will generate four Kotlin files:</p>
 <ol>
-  <li>A Kotlin data class that represents a row in the table. By default the class will be named based
+  <li>A Kotlin data class that represents a row in the table. By default, the class will be named based
     on the table name</li>
   <li>A "support" class that includes a table definition and column definitions for the database table</li>
-  <li>A mapper interface with the basic MyBatis mapper methods</li>
-  <li>A mapper extensions file with extension methods that simplify and reuse the methods in the basic interface.
-  This is similar to the default interface methods generated in the other runtimes, but it is accomplished
-  with extension methods in Kotlin. </li>
+  <li>A mapper interface with the basic MyBatis mapper methods and extension methods that simplify reuse of the basic
+      mapper methods. This is similar to the default interface methods generated in the other runtimes, but it is accomplished
+      with extension methods in Kotlin.
+  </li>
 </ol>
 
 <p>Important notes about the generated objects:</p>
@@ -54,7 +54,7 @@ about how the library works. In particular, see the
   <li>Java 8 or higher is required</li>
   <li>Any recent version of Kotlin should work</li>
   <li>MyBatis 3.4.2 or higher is required</li>
-  <li>MyBatis Dynamic SQL 1.1.4 or higher is required</li>
+  <li>MyBatis Dynamic SQL 1.4.0 or higher is required</li>
 </ul>
 
 <h2>Format of the "Support" classes</h2>
@@ -69,7 +69,7 @@ will write.</p>
 package example
 
 import java.sql.JDBCType
-import org.mybatis.dynamic.sql.SqlTable
+import org.mybatis.dynamic.sql.AliasableSqlTable
 import org.mybatis.dynamic.sql.util.kotlin.elements.column
 
 object TableCodeDynamicSqlSupport {
@@ -77,7 +77,7 @@ object TableCodeDynamicSqlSupport {
     val id = tableCode.id
     val description = tableCode.description
 
-    class TableCode : SqlTable("MYSCHEMA.TABLE_CODE") {
+    class TableCode : AliasableSqlTable&lt;TableCode&gt;("MYSCHEMA.TABLE_CODE", ::TableCode) {
         val id = column&lt;Int&gt;(name = "ID", jdbcType = JDBCType.INTEGER)
         val description = column&lt;String&gt;(name = "DESCRIPTION", jdbcType = JDBCType.VARCHAR)
     }
@@ -137,16 +137,13 @@ import example.TableCodeDynamicSqlSupport.tableCode
 import example.TableCodeDynamicSqlSupport.description
 import example.TableCodeDynamicSqlSupport.id
 
-// import MyBatis Dynamic SQL where support
-import org.mybatis.dynamic.sql.SqlBuilder.*
-
 class SomeService {
 
     fun simpleWhere() {
         ...
         // Simple WHERE clause
         val records = mapper.select {
-            where(id, isEqualTo(3))
+            where { id isEqualTo 3 }
         }
         ...
     }
@@ -155,8 +152,8 @@ class SomeService {
         ...
         // Simple WHERE clause with OR
         val records = mapper.select {
-            where(id, isEqualTo(3))
-            or(description, isLike("f%"))
+            where { id isEqualTo 3 }
+            or { description isLike "f%" }
         }
         ...
     }
@@ -165,10 +162,11 @@ class SomeService {
         ...
         // complex WHERE and ORDER BY
         val records = mapper.select {
-            where(id, isLessThan(10)) {
-                and(description, isEqualTo("foo"))
+            where {
+                id isLessThan 10
+                and { description isEqualTo "foo" }
             }
-            or(description, isLike("b%"))
+            or { description isLike "b%" }
             orderBy(id.descending())
         }        
         ...
@@ -186,18 +184,15 @@ import example.TableCodeDynamicSqlSupport.tableCode
 import example.TableCodeDynamicSqlSupport.description
 import example.TableCodeDynamicSqlSupport.id
 
-// import MyBatis Dynamic SQL where support
-import org.mybatis.dynamic.sql.SqlBuilder.*
-
 class SomeService {
 
     fun simpleUpdate() {
         ...
         // Flexible update - no backing record needed
         val rows = mapper.update {
-            set(id).equalTo(1)
+            set(id) equalTo 1
             set(description).equalToNull()
-            where(id, isEqualTo(3))
+            where { id isEqualTo 3 }
         }
         ...
     }
@@ -207,8 +202,8 @@ class SomeService {
         // Update like the old updateByExample method
         val rows =  mapper.update {
             updateAllColumns(row)
-            where(id, isEqualTo(3))
-            or(description, isLike("f%"))
+            where { id isEqualTo 3 }
+            or { description isLike "f%" }
         }
         ...
     }
@@ -218,8 +213,8 @@ class SomeService {
         // Update like the old updateByExampleSelective method
         val rows =  mapper.update {
             updateSelectiveColumns(row)
-            where(id, isEqualTo(3))
-            or(description, isLike("f%"))
+            where { id isEqualTo 3 }
+            or { description isLike "f%" }
         }
         ...
     }

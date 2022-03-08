@@ -28,7 +28,7 @@
   <groupId>org.mybatis.generator</groupId>
   <artifactId>mybatis-generator</artifactId>
   <name>MyBatis Generator</name>
-  <version>1.4.1-SNAPSHOT</version>
+  <version>1.4.2-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <inceptionYear>2006</inceptionYear>
@@ -122,6 +122,7 @@
         <configuration>
           <!-- turn off deployment by default, we'll turn it back on in the core project -->
           <skipDeploy>true</skipDeploy>
+          <skip>true</skip>
         </configuration>
       </plugin>
       <!-- need to allow snapshots so the maven plugin can be tested -->

@@ -45,17 +45,6 @@
           <finalName>${project.artifactId}-${qualifiedVersion}</finalName>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-clean-plugin</artifactId>
-        <configuration>
-          <filesets>
-            <fileset>
-              <directory>workspace</directory>
-            </fileset>
-          </filesets>
-        </configuration>
-      </plugin>
     </plugins>
   </build>
   
@@ -95,9 +84,9 @@
             <configuration>
               <repositories>
                 <repository>
-                  <id>Oldest Version Supporting Java 11</id>
+                  <id>Eclipse Latest</id>
                   <layout>p2</layout>
-                  <url>http://download.eclipse.org/releases/2018-12</url>
+                  <url>http://download.eclipse.org/releases/latest</url>
                 </repository>
               </repositories>
               <dependencies>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2020 the original author or authors.
+       Copyright 2006-2022 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -64,7 +64,7 @@
         <item href="configreference/table.html" name="&amp;lt;table&amp;gt;" />
       </item>
       <item href="generatedobjects/results.html" name="Using the Generated Objects" collapse="true" >
-        <item href="generatedobjects/dynamicSqlV2.html" name="MyBatis Dynamic SQL Usage Notes" />
+        <item href="generatedobjects/dynamicSql.html" name="MyBatis Dynamic SQL Usage Notes" />
         <item href="generatedobjects/dynamicSqlKotlin.html" name="MyBatis Dynamic SQL with Kotlin Usage Notes" />
         <item href="generatedobjects/legacy.html" name="Legacy Generators">
           <item href="generatedobjects/javamodel.html" name="Java Model Objects" />
@@ -73,7 +73,6 @@
           <item href="generatedobjects/exampleClassUsage.html" name="Example Class Usage Notes" />
           <item href="generatedobjects/extendingExampleClass.html" name="Extending the Example Classes" />
         </item>
-        <item href="generatedobjects/dynamicSqlV1.html" name="MyBatis Dynamic SQL Usage Notes - V1 (Deprecated)" />
       </item>
       <item href="usage/intro.html" name="Database Specific Information" collapse="true" >
         <item href="usage/db2.html" name="DB2" />

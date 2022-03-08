@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: UI Tests
 Bundle-SymbolicName: org.mybatis.generator.eclipse.ui.tests
 Bundle-Version: 1.4.2.qualifier
-Fragment-Host: org.mybatis.generator.eclipse.ui;bundle-version="1.4.1"
+Fragment-Host: org.mybatis.generator.eclipse.ui;bundle-version="1.4.2"
 Automatic-Module-Name: org.mybatis.generator.eclipse.ui.tests
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.junit.jupiter.api;bundle-version="5.3.1",

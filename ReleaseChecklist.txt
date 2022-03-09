@@ -33,11 +33,11 @@ Releasing Core:
 -------------------------------------------------------------------------------
 Releasing the Eclipse Feature:
 
-1. On a linux machine, clone the main repo and checkout the release tag.  e.g.:
+1. Clone the main repo and checkout the release tag.  e.g.:
    
    git clone https://github.com/mybatis/generator.git
    cd generator
-   git checkout mybatis-generator-1.3.3
+   git checkout mybatis-generator-1.4.1
    
 2. cd eclipse/
 3. mvn -Prelease-composite clean integration-test
@@ -58,5 +58,6 @@ Final Details:
    git checkout master
    cd eclipse/
    mvn tycho-versions:set-version -DnewVersion=1.4.1-SNAPSHOT
-   git commit -m "Update Eclipse versions for new release" .
+   git add .
+   git commit -m "Update Eclipse versions for new release"
    git push

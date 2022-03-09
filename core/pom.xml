@@ -46,8 +46,8 @@
     <url>https://github.com/mybatis/generator/issues</url>
   </issueManagement>
   <ciManagement>
-    <system>Travis CI</system>
-    <url>https://travis-ci.org/mybatis/generator/</url>
+    <system>Github</system>
+    <url>https://github.com/mybatis/generator/actions</url>
   </ciManagement>
 
   <properties>

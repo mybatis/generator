@@ -16,8 +16,16 @@
 
 version: 2
 updates:
+- package-ecosystem: github-actions
+  directory: "/"
+  schedule:
+    interval: daily
 - package-ecosystem: maven
   directory: "/core"
   schedule:
     interval: daily
   open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: jakarta.annotation:jakarta.annotation-api
+    versions:
+    - ">= 2.0.0"

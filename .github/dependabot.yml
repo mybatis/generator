@@ -25,7 +25,3 @@ updates:
   schedule:
     interval: daily
   open-pull-requests-limit: 10
-  ignore:
-  - dependency-name: jakarta.annotation:jakarta.annotation-api
-    versions:
-    - ">= 2.0.0"

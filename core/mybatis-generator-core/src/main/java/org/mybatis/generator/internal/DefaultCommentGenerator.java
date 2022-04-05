@@ -64,12 +64,12 @@ public class DefaultCommentGenerator implements CommentGenerator {
         suppressAllComments = false;
         addRemarkComments = false;
 
-        try {
-            Class.forName("javax.annotation.Generated"); //$NON-NLS-1$
-            generatedImport = new FullyQualifiedJavaType("javax.annotation.Generated"); //$NON-NLS-1$
-        } catch (ClassNotFoundException e) {
+//        try {
+//            Class.forName("javax.annotation.Generated"); //$NON-NLS-1$
+//            generatedImport = new FullyQualifiedJavaType("javax.annotation.Generated"); //$NON-NLS-1$
+//        } catch (ClassNotFoundException e) {
             generatedImport = new FullyQualifiedJavaType("jakarta.annotation.Generated"); //$NON-NLS-1$
-        }
+//        }
     }
 
     /**

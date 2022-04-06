@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2018 the original author or authors.
+       Copyright 2006-2022 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -74,14 +74,14 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
   <tr>
     <td valign="top">suppressAllComments</td>
     <td>
-      This property is used to specify whether MBG will include any coments in the
+      This property is used to specify whether MBG will include any comments in the
       generated code.
       The property supports these values:
       <table>
         <tr>
           <th valign="top">false</th>
           <td><i>This is the default value</i>
-            <br/>When the property is false or unspecified, all generated elelments
+            <br/>When the property is false or unspecified, all generated elements
             will include comments indicating that the element is a generated element.
           </td>
         </tr>
@@ -155,6 +155,28 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
       <p>Since 1.3.4</p>
       <p><b>Warning: </b> If the suppressAllComments option is true, this option will be ignored.</p>
       <p><b>Warning: </b> If the suppressDate option is true, this option will be ignored.</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">useLegacyGeneratedAnnotation</td>
+    <td>
+      Specifies whether to use an annotation from the deprecated "javax" namespace. In JDK 9+ it is recommended
+      to use the "jakarta" namespace instead. The property supports these values:
+      <table>
+        <tr>
+          <th valign="top">false</th>
+          <td><i>This is the default value</i>
+            <br/>When the property is false or unspecified, generated Java elements
+            will be annotated with <code>jakarta.annotation.Generated</code>
+          </td>
+        </tr>
+        <tr>
+          <th valign="top">true</th>
+          <td>When the property is true, generated Java elements will be annotated with
+            <code>javax.annotation.Generated</code>
+          </td>
+        </tr>
+      </table>
     </td>
   </tr>
 </table>

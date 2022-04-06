@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2021 the original author or authors.
+ *    Copyright 2006-2022 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -109,6 +109,10 @@ public class DefaultCommentGenerator implements CommentGenerator {
         suppressAllComments = isTrue(properties.getProperty(PropertyRegistry.COMMENT_GENERATOR_SUPPRESS_ALL_COMMENTS));
 
         addRemarkComments = isTrue(properties.getProperty(PropertyRegistry.COMMENT_GENERATOR_ADD_REMARK_COMMENTS));
+
+        if (isTrue(properties.getProperty(PropertyRegistry.COMMENT_GENERATOR_USE_LEGACY_GENERATED_ANNOTATION))) {
+            generatedImport = new FullyQualifiedJavaType("javax.annotation.Generated"); //$NON-NLS-1$
+        }
 
         String dateFormatString = properties.getProperty(PropertyRegistry.COMMENT_GENERATOR_DATE_FORMAT);
         if (StringUtility.stringHasValue(dateFormatString)) {

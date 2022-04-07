@@ -74,6 +74,8 @@ public class PropertyRegistry {
     public static final String COMMENT_GENERATOR_SUPPRESS_ALL_COMMENTS = "suppressAllComments"; //$NON-NLS-1$
     public static final String COMMENT_GENERATOR_ADD_REMARK_COMMENTS = "addRemarkComments"; //$NON-NLS-1$
     public static final String COMMENT_GENERATOR_DATE_FORMAT = "dateFormat"; //$NON-NLS-1$
+    public static final String COMMENT_GENERATOR_USE_LEGACY_GENERATED_ANNOTATION =
+            "useLegacyGeneratedAnnotation"; //$NON-NLS-1$
 
     public static final String COLUMN_OVERRIDE_FORCE_JAVA_TYPE = "forceJavaTypeIntoMapping"; //$NON-NLS-1$
 }

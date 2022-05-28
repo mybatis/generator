@@ -43,9 +43,11 @@ import org.mybatis.generator.internal.JDBCConnectionFactory;
 import org.mybatis.generator.internal.ObjectFactory;
 import org.mybatis.generator.internal.PluginAggregator;
 import org.mybatis.generator.internal.db.DatabaseIntrospector;
+import org.mybatis.generator.logging.Log;
+import org.mybatis.generator.logging.LogFactory;
+import org.mybatis.generator.logging.slf4j.Slf4jLoggingLogFactory;
 
 public class Context extends PropertyHolder {
-
     private String id;
 
     private JDBCConnectionConfiguration jdbcConnectionConfiguration;
@@ -87,6 +89,8 @@ public class Context extends PropertyHolder {
     private KotlinFormatter kotlinFormatter;
 
     private XmlFormatter xmlFormatter;
+
+    private Log log = LogFactory.getLog(getClass());
 
     public Context(ModelType defaultModelType) {
         super();
@@ -385,6 +389,7 @@ public class Context extends PropertyHolder {
         try {
             callback.startTask(getString("Progress.0")); //$NON-NLS-1$
             connection = getConnection();
+            log.debug("connection:"+connection);
 
             DatabaseIntrospector databaseIntrospector = new DatabaseIntrospector(
                     this, connection.getMetaData(), javaTypeResolver, warnings);
@@ -392,6 +397,8 @@ public class Context extends PropertyHolder {
             for (TableConfiguration tc : tableConfigurations) {
                 String tableName = composeFullyQualifiedTableName(tc.getCatalog(), tc
                                 .getSchema(), tc.getTableName(), '.');
+
+                log.debug("tableName:"+tableName);
 
                 if (fullyQualifiedTableNames != null
                         && !fullyQualifiedTableNames.isEmpty()

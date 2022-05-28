@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2022 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -30,7 +30,8 @@ public enum DatabaseDialects {
     HSQLDB("CALL IDENTITY()"), //$NON-NLS-1$
     SYBASE("SELECT @@IDENTITY"), //$NON-NLS-1$
     DB2_MF("SELECT IDENTITY_VAL_LOCAL() FROM SYSIBM.SYSDUMMY1"), //$NON-NLS-1$
-    INFORMIX("select dbinfo('sqlca.sqlerrd1') from systables where tabid=1"); //$NON-NLS-1$
+    INFORMIX("select dbinfo('sqlca.sqlerrd1') from systables where tabid=1"), //$NON-NLS-1$
+    DM("select @@IDENTITY");
 
     private final String identityRetrievalStatement;
 
@@ -57,6 +58,8 @@ public enum DatabaseDialects {
             returnValue = DB2;
         } else if ("MySQL".equalsIgnoreCase(database)) { //$NON-NLS-1$
             returnValue = MYSQL;
+        } else if ("DM".equalsIgnoreCase(database)) {
+            returnValue = DM;
         } else if ("SqlServer".equalsIgnoreCase(database)) { //$NON-NLS-1$
             returnValue = SQLSERVER;
         } else if ("Cloudscape".equalsIgnoreCase(database)) { //$NON-NLS-1$

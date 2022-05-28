@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2022 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -238,6 +238,7 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
         } catch (SQLException e) {
             throw new MojoExecutionException(e.getMessage());
         } catch (IOException e) {
+            e.printStackTrace();
             throw new MojoExecutionException(e.getMessage());
         } catch (InvalidConfigurationException e) {
             for (String error : e.getErrors()) {

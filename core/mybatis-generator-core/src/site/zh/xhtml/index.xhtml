@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2006-2022 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+  <title>MyBatis 生成器简介</title>
+  <link rel="stylesheet" type="text/css" href="mbgstyle.css" />
+</head>
+
+<body>
+  <h1>MyBatis 生成器简介</h1>
+  <p>MyBatis Generator（MBG）是 <a target="_blank" href="http://mybatis.org">MyBatis</a> 的代码生成器。支持 MyBatis
+    的所有版本。它将内省（introspect）数据库表，并生成可用于访问表的框架（artifacts）。这减轻了在于数据库交互时需要设置对象和配置文件的负担。MBG 对大部分简单的数据库
+    CRUD（创建、查询、更新、删除）操作提供支持。所以你仍然需要为连接查询或存储过程编写 SQL 和对象。
+  <p>MBG 根据其配置方式，以不同的风格和语言生成代码。例如，MBG可以生成 Java 或 Kotlin 代码。MBG 可以生成与 MyBatis 3 兼容的 XML——尽管这现在被认为是 MBG 的传统用途。生成代码的新方式不需要
+    XML。</p>
+  <p>根据配置方式，MyBatis 生成器可能生成：</p>
+  <ul>
+    <li>与表结构匹配的Java或Kotlin类。这可能包括：
+      <ul>
+        <li>与表的主键匹配的类（如果有主键）</li>
+        <li>匹配表的非主键字段（BLOB 字段除外）的类</li>
+        <li>包含表的 BLOB 字段的类（如果表有 BLOB 字段）</li>
+        <li>用于启用动态查询、更新和删除的类</li>
+      </ul>
+      <p>这些类之间有适当的继承关系。请注意，生成器可以配置以生成不同类型的 POJO 层次结构——例如，如果需要，你可以选择为每个表生成单个域对象。</p>
+    </li>
+    <li>在某些情况下，MBG 会生成与 MyBatis 3 兼容的SQL 映射 XML 文件。MBG 为配置的每个表生成简单的 CRUD 功能的 SQL。生成的 SQL 语句包括：
+      <ul>
+        <li>插入</li>
+        <li>根据主键更新</li>
+        <li>根据示例更新（使用动态的 where 子句）</li>
+        <li>根据主键删除</li>
+        <li>根据示例删除（使用动态的 where 子句）</li>
+        <li>根据主键查询</li>
+        <li>根据示例查询（使用动态的 where 子句）</li>
+        <li>根据示例计数</li>
+      </ul>
+      <p>根据表的结构，这些语句有不同的变体（例如，如果表没有主键，则 MBG 将不会生成按主键更新的 SQL）。</p>
+    </li>
+    <li>适当使用上述对象的 Java 或 Kotlin 委托类、接口和 Kotlin 扩展方法。委托类的生成是可选的。MBG 将生成一个与 MyBatis 映射器基础设施配合使用的映射器接口。</li>
+  </ul>
+
+  <p>MyBatis生成器在迭代开发环境中运行良好，并且可以作为 Ant 任务或 Maven 的插件包含在构建环境中。迭代运行 MBG 时需要注意的重要事项包括：</p>
+
+  <ol>
+    <li>如果存在与新生成的 XML 文件同名的现有文件，MBG 将自动合并 XML 文件。MBG 不会覆盖你对其生成的 XML 文件所做的任何自定义更改。你可以一遍又一遍地运行它，而不必担心丢失对 XML 的自定义更改。MBG
+      将替换在先前运行中生成的 XML 元素。
+    </li>
+    <li>MBG 不会合并 Java 文件，它可以覆盖现有文件，也可以使用不同的名称保存新生成的文件。如果对生成的 Java 文件进行更改并迭代运行 MBG ，则必须手动合并更改。当作为 <a target="_blank"
+        href="http://www.eclipse.org">Eclipse</a> ，则 MBG 可以自动合并 Java 文件。</li>
+    <li>MBG 不会合并 Kotlin 文件，它可以覆盖现有文件，也可以使用不同的名称保存新生成的文件。如果你对生成的 Kotlin 文件进行更改并迭代运行 MBG，则必须手动合并更改。</li>
+  </ol>
+
+  <h2>使用 Eclipse 运行</h2>
+  <p>当在 Eclipse 运行时，生成器还可以合并 Java 文件，并将用户修改保存到生成的 Java 文件中。生成器使用Eclipse Java 解析器和 AST Walker 来完成此任务。Eclipse
+    还具有一些用户界面增强功能，使生成器更易于运行。最后， Eclipse 提供了生成器的完整用户手册。</p>
+  <p>Eclipse 的这项特性可在 Eclipse 的市场上找到：
+    <a
+      href="https://marketplace.eclipse.org/content/mybatis-generator">https://marketplace.eclipse.org/content/mybatis-generator</a>。
+  </p>
+  <h2>依赖信息</h2>
+  <p>MBG 没有 JRE 之外的依赖关系。需要Java 8 或以上版本。还需要一个 JDBC 驱动程序，其实现了 DatabaseMetaData 接口，特别是<code>getColumns</code> 与
+    <code>getPrimaryKeys</code> 方法是必需的。</p>
+
+  <h2>生成的代码依赖</h2>
+  <p>MBG 将生成不同风格的代码。这由&lt;context&gt;元素的 “targetRuntime” 属性控制。所有运行时生成都会依赖于 <a
+      href="https://mybatis.org/mybatis-3/">MyBatis</a>。一些运行时生成的代码也依赖于 <a
+      href="https://mybatis.org/mybatis-dynamic-sql/">MyBatis Dynamic SQL</a>。
+    下表显示了生成的代码中所需的依赖关系。</p>
+
+  <table>
+    <tr>
+      <th>Runtime</th>
+      <th>MyBatis Generator Version</th>
+      <th>MyBatis Version</th>
+      <th>MyBatis Dynamic SQL Version</th>
+    </tr>
+    <tr>
+      <td>MyBatis3, MyBatis3Simple</td>
+      <td>Any</td>
+      <td>3.0+</td>
+      <td>N/A</td>
+    </tr>
+    <tr>
+      <td>MyBatis3DynamicSQL</td>
+      <td>1.3.6 - 1.3.7</td>
+      <td>3.4.2+</td>
+      <td>1.1.0 - 1.2.1</td>
+    </tr>
+    <tr>
+      <td>MyBatis3DynamicSQL, MyBatis3Kotlin</td>
+      <td>1.4.0</td>
+      <td>3.4.2+</td>
+      <td>1.1.3+</td>
+    </tr>
+    <tr>
+      <td>MyBatis3DynamicSQL</td>
+      <td>1.4.1+</td>
+      <td>3.4.2+</td>
+      <td>1.3.1+</td>
+    </tr>
+    <tr>
+      <td>MyBatis3Kotlin</td>
+      <td>1.4.1+</td>
+      <td>3.4.2+</td>
+      <td>1.4.0+</td>
+    </tr>
+  </table>
+
+  <h2>支持</h2>
+  <p>通过 MyBatis 用户邮件列表提供对 MyBatis 生成器的支持。你可以 Google 代码订阅或查看邮件列表：</p>
+
+  <blockquote>
+    <p>
+      <a target="_blank"
+        href="http://groups.google.com/group/mybatis-user">http://groups.google.com/group/mybatis-user</a>
+    </p>
+  </blockquote>
+
+  <p>如果你认为你发现了错误，请在创建新 issue 之前，先在用户列表中询问有关它的问题。如果你发现错误或有新功能请求，你可以在 GitHub 上创建新的 issue</p>：
+
+  <blockquote>
+    <p>
+      <a target="_blank" href="https://github.com/mybatis/generator/issues">
+        https://github.com/mybatis/generator/issues
+      </a>
+    </p>
+  </blockquote>
+
+</body>
+
+</html>

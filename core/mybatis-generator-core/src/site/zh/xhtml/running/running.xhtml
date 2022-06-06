@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2006-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Running MyBatis Generator</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>Running MyBatis Generator</h1>
+<p>MyBatis Generator (MBG) can be run in the following ways:</p>
+<ul>
+  <li>From the
+    <a href="runningFromCmdLine.html">command prompt</a>
+    with an XML configuration</li>
+  <li>As an <a href="runningWithAnt.html">Ant task</a> with an XML configuration</li>
+  <li>As a <a href="runningWithMaven.html">Maven Plugin</a></li>
+  <li>From another <a href="runningWithJava.html">Java program</a> with an XML configuration</li>
+  <li>From another <a href="runningWithJava.html">Java program</a> with a Java based configuration</li>
+  <li>As an <a href="runningWithEclipse.html">Eclipse Feature</a></li>  
+</ul>
+<p>Each method is described in detail on the linked pages.</p>
+<p><b>Note:</b> there is also an Eclipse
+plugin for MBG that adds extra function - namely good integration into Eclipse,
+an Eclipse enabled Ant task, and support for automatic merging of
+Java files.  See the
+<a target="_blank" href="http://mybatis.org">MyBatis</a>
+web site page for information on installing the Eclipse plugin.</p>
+
+<p><b>Important:</b> When running outside of an IDE environment like Eclipse,
+  MBG interprets the <code>targetProject</code> and
+  <code>targetPackage</code> attributes in all XML configurations as follows:</p>
+<ul>
+  <li><code>targetProject</code> is assumed to be an existing directory structure.
+    MBG will fail if this directory structure does not exist.  There is one exception to this
+    rule - when MBG is running through the Maven plugin.  See the Maven plugin page
+    for information about how <code>targetProject</code> is interpreted in Maven.</li>
+   <li><code>targetPackage</code> will be translated to a suitable subdirectory
+     structure of the <code>targetProject</code>
+     directory structure.  MBG will create these subdirectories if necessary.</li>
+</ul>
+</body>
+</html>

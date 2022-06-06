@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2006-2017 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>The &lt;domainObjectRenamingRule&gt; Element</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>The &lt;domainObjectRenamingRule&gt; Element</h1>
+<p>MyBatis Generator (MBG) uses the &lt;domainObjectRenamingRule&gt; element
+to rename database tables before calculating the corresponding domain object
+name.  This is useful when all tables have a common prefix that should be
+removed before calculating the domain object name.  For example, suppose some tables
+as the following:</p>
+ <ul>
+   <li>SYS_USER</li>
+   <li>SYS_ROLE</li>
+   <li>SYS_FUNCTION</li>
+ </ul>
+<p>It might be annoying to have the generated domain object name
+ all containing the SYS prefix.  The prefix can be removed by
+ specifying a renaming rule like this:</p>
+
+<p><code>&lt;domainObjectRenamingRule searchString="^Sys" replaceString="" /&gt;</code></p>
+
+<p>Note that, internally, MBG uses the
+ <code>java.util.regex.Matcher.replaceAll</code> method
+ for this function.  See the documentation for that method
+ and class for examples of the regular expression language used in
+ Java.</p>
+
+<p>If specified, the renaming rule in this element will rename all the names base on the
+ domain object name. Suppose a table named SYS_USER :</p>
+
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>Class</th>
+    <th>Before using rename rule</th>
+    <th>After using rename rule</th>
+  </tr>
+  <tr>
+    <td>Domain Object</td>
+    <td>SysUser</td>
+    <td>User</td>
+  </tr>
+  <tr>
+    <td>Key</td>
+    <td>SysUserKey</td>
+    <td>UserKey</td>
+  </tr>
+  <tr>
+    <td>Blob</td>
+    <td>SysUserWithBLOBs</td>
+    <td>UserWithBLOBs</td>
+  </tr>
+  <tr>
+    <td>Example</td>
+    <td>SysUserExample</td>
+    <td>UserExample</td>
+  </tr>
+  <tr>
+    <td>Mapper</td>
+    <td>SysUserMapper</td>
+    <td>UserMapper</td>
+  </tr>
+</table>
+
+<p>This element is an optional child
+element of the <a href="table.html">&lt;table&gt;</a> element.</p>
+
+<h2>Required Attributes</h2>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>Attribute</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>searchString</td>
+    <td>This is a regular expression that defines the substring to be replaced.</td>
+  </tr>
+</table>
+
+<h2>Optional Attributes</h2>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>Attribute</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>replaceString</td>
+    <td>This is a string to be substituted for every occurrence of the
+        search string.  If not specified, the empty string is used.</td>
+  </tr>
+</table>
+
+<h2>Child Elements</h2>
+<p>None</p>
+
+</body>
+</html>

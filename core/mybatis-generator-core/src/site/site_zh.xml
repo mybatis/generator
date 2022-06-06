@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2006-2022 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<project xmlns="http://maven.apache.org/DECORATION/1.8.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/DECORATION/1.8.0 http://maven.apache.org/xsd/decoration-1.8.0.xsd"
+  name="${project.name}">
+
+  <bannerLeft>
+    <name>MyBatis 生成器</name>
+    <href>index.html</href>
+  </bannerLeft>
+
+  <body>
+    <menu name="User's Guide">
+      <item href="index.html" name="简介" />
+      <item href="whatsNew.html" name="What's New?" />
+      <item href="quickstart.html" name="快速入门指南" />
+      <item href="running/running.html" name="运行 MyBatis Generator" collapse="true">
+        <item href="running/runningFromCmdLine.html" name="从命令行运行" />
+        <item href="running/runningWithAnt.html" name="使用 Ant" />
+        <item href="running/runningWithMaven.html" name="使用 Maven" />
+        <item href="running/runningWithJava.html" name="使用 Java" />
+        <item href="running/runningWithEclipse.html" name="使用 Eclipse" />
+      </item>
+      <item href="afterRunning.html" name="运行 MyBatis Generator 以后" />
+      <item href="migratingFromIbator.html" name="从 Ibator 迁移" />
+      <item href="migratingFromAbator.html" name="从 Abator 迁移" />
+      <item href="configreference/xmlconfig.html" name="XML 配置参考" collapse="true" >
+        <item href="configreference/classPathEntry.html" name="&amp;lt;classPathEntry&amp;gt;" />
+        <item href="configreference/columnOverride.html" name="&amp;lt;columnOverride&amp;gt;" />
+        <item href="configreference/columnRenamingRule.html" name="&amp;lt;columnRenamingRule&amp;gt;" />
+        <item href="configreference/commentGenerator.html" name="&amp;lt;commentGenerator&amp;gt;" />
+        <item href="configreference/connectionFactory.html" name="&amp;lt;connectionFactory&amp;gt;" />
+        <item href="configreference/context.html" name="&amp;lt;context&amp;gt;" />
+        <item href="configreference/domainObjectRenamingRule.html" name="&amp;lt;domainObjectRenamingRule&amp;gt;" />
+        <item href="configreference/except.html" name="&amp;lt;except&amp;gt;" />
+        <item href="configreference/generatedKey.html" name="&amp;lt;generatedKey&amp;gt;" />
+        <item href="configreference/generatorConfiguration.html" name="&amp;lt;generatorConfiguration&amp;gt;" />
+        <item href="configreference/ignoreColumn.html" name="&amp;lt;ignoreColumn&amp;gt;" />
+        <item href="configreference/ignoreColumnsByRegex.html" name="&amp;lt;ignoreColumnsByRegex&amp;gt;" />
+        <item href="configreference/javaClientGenerator.html" name="&amp;lt;javaClientGenerator&amp;gt;" />
+        <item href="configreference/javaModelGenerator.html" name="&amp;lt;javaModelGenerator&amp;gt;" />
+        <item href="configreference/javaTypeResolver.html" name="&amp;lt;javaTypeResolver&amp;gt;" />
+        <item href="configreference/jdbcConnection.html" name="&amp;lt;jdbcConnection&amp;gt;" />
+        <item href="configreference/plugin.html" name="&amp;lt;plugin&amp;gt;" />
+        <item href="configreference/properties.html" name="&amp;lt;properties&amp;gt;" />
+        <item href="configreference/property.html" name="&amp;lt;property&amp;gt;" />
+        <item href="configreference/sqlMapGenerator.html" name="&amp;lt;sqlMapGenerator&amp;gt;" />
+        <item href="configreference/table.html" name="&amp;lt;table&amp;gt;" />
+      </item>
+      <item href="generatedobjects/results.html" name="使用生成的对象" collapse="true" >
+        <item href="generatedobjects/dynamicSql.html" name="使用 MyBatis 动态 SQL" />
+        <item href="generatedobjects/dynamicSqlKotlin.html" name="使用 MyBatis 动态 SQL" />
+        <item href="generatedobjects/legacy.html" name="遗留的生成器">
+          <item href="generatedobjects/javamodel.html" name="Java 模型对象" />
+          <item href="generatedobjects/sqlmap.html" name="SQL 映射文件" />
+          <item href="generatedobjects/javaclient.html" name="Java Client 对象" />
+          <item href="generatedobjects/exampleClassUsage.html" name="使用 Example Class" />
+          <item href="generatedobjects/extendingExampleClass.html" name="继承 Example Classes" />
+        </item>
+      </item>
+      <item href="usage/intro.html" name="指定数据库信息" collapse="true" >
+        <item href="usage/db2.html" name="DB2" />
+        <item href="usage/mysql.html" name="MySql" />
+        <item href="usage/oracle.html" name="Oracle" />
+        <item href="usage/postgresql.html" name="PostgreSQL" />
+      </item>
+      <item href="reference/intro.html" name="其他参考信息" collapse="true" >
+        <item href="reference/building.html" name="从源码构建" />
+        <item href="reference/extending.html" name="继承 MyBatis Generator" />
+        <item href="reference/pluggingIn.html" name="实现插件" />
+        <item href="reference/logging.html" name="日志信息" />
+        <item href="reference/plugins.html" name="已应用的插件" />
+        <item href="philosophy.html" name="设计哲学" />
+      </item>
+    </menu>
+
+    <menu ref="reports"/>
+  </body>
+</project>

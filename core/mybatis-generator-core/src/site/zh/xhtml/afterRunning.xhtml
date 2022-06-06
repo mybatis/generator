@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2006-2019 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>运行 MyBatis Generator 之后</title>
+  <link rel="stylesheet" type="text/css" href="mbgstyle.css" />
+</head>
+<body>
+<h1>运行 MyBatis Generator 之后</h1>
+<p>运行 MyBatis Generator 之后，你需要创建或修改其他 MyBatis 配置文件。主要任务是创建或修改 MapperConfig.xml 文件。</p>
+
+<h2>更新 MapperConfig.xml 文件（MyBatis 3.x）</h2>
+<p>MyBatis 3.x 使用XML文件，通常命名为 <code>MapperConfig.xml</code>，
+来指定将在 MyBatis 会话中使用的数据库连接、事务管理方案和 XML 映射器文件的信息。MBG 无法为你创建此文件，因为它对你的执行环境一无所知。但是，此文件中的某些配置直接与 MBG 生成的项目相关。有关不同配置选项的详细信息，请参阅 MyBatis 的相关文档。</p>
+
+<p>MBG 配置文件中的具体需求如下：</p>
+<ul>
+  <li>MBG 必须列出生成的 XML 映射器文件</li>
+</ul>
+
+<p>例如，假设MBG生成了一个名为
+<code>MyTableMapper.xml</code> 的文件，并且文件已放置在
+<code>test.xml</code> 的包中，<code>MapperConfig.xml</code> 文件应具有以下条目：</p>
+<pre>
+  &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+  &lt;!DOCTYPE configuration
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd"&gt;
+
+  &lt;configuration&gt;
+    &lt;!-- Setup the transaction manager and data source that are
+         appropriate for your environment
+    --&gt;
+    &lt;environments default"..."&gt;
+      &lt;environment id"..."&gt;
+        &lt;transactionManager type="..."&gt;
+        &lt;/transactionManager&gt;
+        &lt;dataSource type="..."&gt;
+        &lt;/dataSource&gt;
+      &lt;/environment&gt;
+    &lt;/environments&gt;
+
+    &lt;mappers&gt;
+      &lt;!-- XML mapper files should be listed here --&gt;
+      &lt;mapper resource="test/xml/MyTable_SqlMap.xml" /&gt;
+    &lt;/mappers&gt;
+
+  &lt;/configuration&gt;
+</pre>
+
+<p>如果有多个 XML 映射器文件（这很常见），则文件可以在 <code>&lt;mappers&gt;</code> 里面使用 <code>&lt;mapper&gt;</code> 以任意顺序列出。</p>
+
+<p>如果你使用基于 Java 的配置或 Spring，则需要以合适方式注册映射器。</p>
+
+</body>
+</html>

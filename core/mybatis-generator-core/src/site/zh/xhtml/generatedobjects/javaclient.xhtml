@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2006-2018 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>MyBatis Generator Generated Java Client Objects</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>MyBatis Generator Generated Java Client Objects</h1>
+<p>MyBatis Generator (MBG) generates Java client objects that
+are used to make interaction with the generated XML elements much easier.
+For each table in the configuration, MBG generates a MyBatis mapper interface.
+Generating Java client objects is optional, and is controlled by the
+<code>&lt;javaClientGenerator&gt;</code> configuration element.</p>
+
+<p>Every field and method generated includes the non-standard JavaDoc tag
+<code>@mbg.generated</code>.  When run from the Eclipse plugin,
+on subsequent runs every field and method that
+includes this JavaDoc tag will be deleted and replaced.  Any other field or method in the
+class will be untouched.
+With this in mind, you can add other fields and methods to the classes without fear of losing them in
+subsequent runs - simply DO NOT include the <code>@mbg.generated</code>
+JavaDoc tag on anything that you add to the class.</p>
+
+<p>Outside of the Eclipse plugin, Java files need to be merged by hand, but you can use the
+<code>@mbg.generated</code> JavaDoc tag to know what is safe to delete from a prior
+version of a file.</p>
+
+<p>Note: in the following descriptions, the term "BLOB" is used to refer to any column
+with a data type of BLOB, CLOB, LONGVARCHAR, or LONGVARBINARY.</p>
+
+<h2>Client Methods</h2>
+<p>Depending on the specifics of the table, and the configuration options, the Java client generator
+will generate these methods:</p>
+<ul>
+  <li>countByExample</li>
+  <li>deleteByPrimaryKey</li>
+  <li>deleteByExample</li>
+  <li>insert</li>
+  <li>insertSelective</li>
+  <li>selectByPrimaryKey</li>
+  <li>selectByExample</li>
+  <li>selectByExampleWithBLOBs</li>
+  <li>updateByPrimaryKey (with an override to specify whether or not to update BLOB columns)</li>
+  <li>updateByPrimaryKeySelective (will only update non-null fields in the parameter class)</li>
+  <li>updateByExample (with an override to specify whether or not to update BLOB columns)</li>
+  <li>updateByExampleSelective (will only update non-null fields in the parameter class)</li>
+</ul>
+<p>MBG attempts to make it easier to deal with tables that contain BLOBs by generating
+different objects and methods so that you can use the BLOB fields, or ignore them, depending
+on the situation.</p>
+<p>See the
+<a href="exampleClassUsage.html">Example Class Usage</a>
+page for an example of using the <code>selectByExample</code> method.</p>
+
+<h2>Client Usage in MyBatis</h2>
+<p>MyBatis mappers are interfaces that will map to
+methods in the generated XML mapper files (if you have chosen to generated XML). If you have chosen an annotated
+mapper, then the mapper interface contains all the generated code within itself. For example, suppose that MBG generated
+an interface called <code>MyTableMapper</code>.  You can use the interface as follows:</p>
+<pre>
+  SqlSession sqlSession = sqlSessionFactory.openSession();
+
+  try {
+    MyTableMapper mapper = sqlSession.getMapper(MyTableMapper.class);
+    List&lt;MyTable&gt; allRecords = mapper.selectByExample(null);
+  } finally {
+    sqlSession.close();
+  }
+</pre>
+<p>See the standard MyBatis documentation for details on how to create the instance
+of <code>sqlSessionFactory</code>.</p>
+
+</body>
+</html>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2006-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>The &lt;connectionFactory&gt; Element</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>The &lt;connectionFactory&gt; Element</h1>
+<p>The &lt;connectionFactory&gt; element is used to specify a connection factory for obtaining
+the database connection required to introspect tables.  MyBatis Generator uses JDBC's
+DatabaseMetaData class to discover the properties of the tables you specify
+in the configuration.  One &lt;connectionFactory&gt; or &lt;jdbcConnection&gt; element
+is required for
+each <a href="context.html">&lt;context&gt;</a> element.</p>
+
+<h2>Required Attributes</h2>
+<p>None</p>
+
+<h2>Optional Attributes</h2>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>Attribute</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td valign="top">type</td>
+    <td>This may be used to specify the type of the user provided connection factory.
+        The class must implement the interface <code>org.mybatis.generator.api.ConnectionFactory</code>
+        and must have a public default constructor.  The attribute also accepts
+        the special value DEFAULT in which case the default implementation will
+        be used (this has the same effect as not specifying the type).</td>
+  </tr>
+</table>
+
+<h2>Child Elements</h2>
+<ul>
+  <li><a href="property.html">&lt;property&gt;</a> (0..N)
+    Note: for the default connection factory, any properties specified beyond what is detailed
+    below will be added to the properties of the JDBC driver.</li>
+</ul>
+
+<h2>Supported Properties</h2>
+<p>This table lists the properties of the default connection factory that can be
+specified with the <a href="property.html">&lt;property&gt;</a> child element:</p>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>Property Name</th>
+    <th>Property Values</th>
+  </tr>
+  <tr>
+    <td valign="top">driverClass</td>
+    <td>
+      This property is used to specify the fully qualified class name of the JDBC driver.  This
+      property is required for the default connection factory.
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">connectionURL</td>
+    <td>
+      This property is used to specify the JDBC connection URL for the database.  This
+      property is required for the default connection factory.
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">userId</td>
+    <td>
+      This property is used to specify the User ID for the connection.
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">password</td>
+    <td>
+      This property is used to specify the password for the connection.
+    </td>
+  </tr>
+</table>
+
+<h2>Example</h2>
+<p>This element will connect to an HSQLDB in memory database configured as
+aname:</p>
+<pre>
+&lt;connectionFactory&gt;
+  &lt;property name="driverClass" value="org.hsqldb.jdbcDriver"/&gt;
+  &lt;property name="connectionURL" value="jdbc:hsqldb:mem:aname"/&gt;
+  &lt;property name="userId" value="sa"/&gt;
+&lt;/connectionFactory&gt;
+</pre>
+
+</body>
+</html>

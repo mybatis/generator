@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2006-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Extending the Example Classes</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>Extending the Example Classes</h1>
+<p>In some cases it may be desirable to extended the generated example classes.
+You may want to add criterion that are specific to your database (such as Oracle
+ROWNUM support), or add criterion that are not automatically generated (such as
+a case insensitive search).  In situations like these, you may extend the generated
+example class to add these additional criteria.</p>
+
+<h2>General Principles</h2>
+<p>MyBatis Generator (MBG) generates an "example" class for each table, unless instructed otherwise
+in the configuration.  The "example" class is used to generate a dynamic where
+clause for use in the <code>xxxByExample</code> statements.
+The standard "example" class includes functionality for all standard SQL predicates.
+In some cases, it may be desirable to add additional predicates for the
+specific needs of your application.  This may include adding support for non-standard
+predicates, or for using database specific functions in your where clauses.</p>
+
+<p>The generated "example" class includes a nested inner class where the actual
+functionality of the predicates exists.  This inner class is always named <code>GeneratedCriteria</code>.
+MBG also generates an inner class named <code>Criteria</code> which extends
+<code>GeneratedCriteria</code> and which you may
+use for adding your own functions to the example classes.  The <code>Criteria</code>
+class will not be deleted by the Eclipse Java code merger, so you may add to it without
+fear of losing your changes upon regeneration.</p>
+<p>For example, suppose there is a
+table called CUSTOMER.  Typically, MBG would generate a class named
+<code>CustomerExample</code>.  To add functionality to the <code>CustomerExample</code> class, you
+should add additional methods to the <code>CustomerExample.Criteria</code> class.</p>
+
+<h2>Extending vs. Plugging In</h2>
+<p>If you find that you are extending the example classes frequently, it might be
+more convenient for you to create a plugin to generate the additional
+functionality rather than hand coding the extended classes.  The example below (under
+the heading "Single Parameter Predicates") can also be accomplished with a plugin
+as demonstrated by the class
+<code>org.mybatis.generator.plugins.CaseInsensitiveLikePlugin</code>.</p>
+
+<h2>Adding Predicates</h2>
+<p>MBG generates a dynamic SQL fragment that allows virtually unlimited
+where clauses to be created at run-time.  To accomplish this, the generated SQL
+fragment supports four broad types of SQL predicates.  For each type of
+SQL predicate, there is a corresponding method in the <code>GeneratedCriteria</code>
+inner class
+that can be used to add a predicate to the dynamic where clause.</p>
+
+<h3>1. Simple String Substitution</h3>
+<p>This type of predicate is used when there is no need for a property
+from the parameter object to be substituted into the where clause.  Examples
+include:</p>
+<p><code>FIRST_NAME is null</code><br/>
+   <code>LAST_NAME is not null</code></p>
+
+<p>The <code>GeneratedCriteria</code> class method for this predicate is:</p>
+&nbsp;&nbsp;&nbsp;<code>addCriterion(String anyString)</code>
+
+<p>Where "anyString" is the string to be substituted into the where clauses.
+This method can be used to add any kind of test to the generated where clause.</p>
+
+<p>For example, suppose you wanted to use the SOUNDEX function to do a "sounds like"
+name search.  In MySQL, the predicate should look like this:</p>
+<code>SOUNDEX(FIRST_NAME) = SOUNDEX('frod')</code>
+<p>This predicate is too complex to use one of the other methods, so it must
+be inserted into the where clause by simple string substitution.  Add the following
+method to the <code>Criteria</code> inner class for this functionality:</p>
+<pre>
+public Criteria andFirstNameSoundsLike(String value) {
+  StringBuffer sb = new StringBuffer("SOUNDEX(FIRST_NAME) = SOUNDEX('");
+  sb.append(value);
+  sb.append("')");
+
+  addCriterion(sb.toString());
+
+  return this;
+}
+</pre>
+
+<p>The following code shows the use of this new functionality with the <code>selectByExample</code> method:</p>
+<pre>
+CustomerExample example = new CustomerExample();
+Criteria criteria = example.createCriteria();
+criteria.andFirstNameSoundsLike("frod");
+List results = selectByExample(example);
+</pre>
+
+<p>This method can be used to add virtually any predicate to a where clause.
+However, it is generally better to use parameter substitution if possible because
+the problems of formatting different data types properly (most notably
+dates, times, and timestamps).  Also, there is a chance of SQL
+injection issues with this method if you expose a too generic method.
+If possible, we suggest using one of the other methods listed below.</p>
+
+<h3>2. Single Parameter Predicates</h3>
+<p>This type of predicate is used when there is a single property
+   from the parameter object to be substituted into the where clause.  Examples
+   include</p>
+<p><code>FIRST_NAME = ?</code><br/>
+   <code>LAST_NAME &lt;&gt; ?</code></p>
+
+<p>The generated <code>Criteria</code> class method for this predicate is:</p>
+<p>&nbsp;&nbsp;&nbsp;<code>addCriterion(String anyString, Object anyObject, String propertyName)</code></p>
+
+<p>Where:</p>
+<dl>
+  <dt><b>anyString</b></dt>
+  <dd>is the string to be substituted into the where clause before a parameter substitution</dd>
+  <dt><b>anyObject</b></dt>
+  <dd>is the Object to be substituted into the where clause after the string substitution</dd>
+  <dt><b>propertyName</b></dt>
+  <dd>is a string denoting the property name related to this clause.  This String is only used
+      in potential error messages.</dd>
+</dl>
+
+<p>This method can be used to add simple tests related to a single parameter to the generated where clause.</p>
+
+<p>For example, suppose you wanted to perform a case insensitive search on certain columns.
+In MySQL, the predicate could look like this:</p>
+<code>upper(FIRST_NAME) like ?</code>
+<p>This predicate fits the capabilities of a single parameter predicate - where the predicate
+is a string value followed by a single parameter.  Add the following
+method to the <code>ExtendedCriteria</code> for this functionality:</p>
+<pre>
+public ExtendedCriteria andFirstNameLikeInsensitive(String value) {
+  addCriterion("upper(FIRST_NAME) like",
+    value.toUpperCase(), "firstName");
+
+  return this;
+}
+</pre>
+
+<p>The following code shows the use of this new functionality with the <code>selectByExample</code> method:</p>
+<pre>
+ExtendedExample example = new ExtendedExample();
+ExtendedCriteria criteria = (ExtendedCriteria) example.createCriteria();
+criteria.andFirstNameLikeInsensitive("fred%");
+List results = selectByExample(example);
+</pre>
+
+<h3>3. List Predicates</h3>
+<p>List predicates are used to add a variable sized list of values as parameters to a where
+clause.  Examples include:</p>
+<p><code>FIRST_NAME IN (?, ?, ?)</code><br/>
+<code>LAST_NAME NOT IN (?, ?, ?, ?)</code></p>
+
+<p>This predicate is less flexible then the others because it is included specifically
+for the "in" and "not in" standard predicates.  Nevertheless, if you find some use for it
+the corresponding method in the <code>Criteria</code> class is as follows:</p>
+
+<p>&nbsp;&nbsp;&nbsp;<code>addCriterion(String anyString, List listOfObjects, String propertyName)</code></p>
+
+<p>Where:</p>
+<dl>
+  <dt><b>anyString</b></dt>
+  <dd>is the string to be substituted into the where clause before a parameter substitution</dd>
+  <dt><b>listOfObjects</b></dt>
+  <dd>is the List of Objects to be substituted into the where clause after the string substitution
+      (an open parenthesis will be appended before the list, list items will be comma delimited,
+      and a close parenthesis will be appended after the list).</dd>
+  <dt><b>propertyName</b></dt>
+  <dd>is a string denoting the property name related to this clause.  This String is only used
+      in potential error messages.</dd>
+</dl>
+
+<h3>4. Between Predicates</h3>
+<p>Between predicates are used to add a two parameters to a where
+clause in a specific format.  Examples include:</p>
+<p><code>FIRST_NAME BETWEEN ? AND ?</code><br/>
+<code>LAST_NAME NOT BETWEEN ? AND ?</code></p>
+
+<p>This predicate is less flexible then the others because it is included specifically
+for the "between" and "not between" standard predicates.  Nevertheless, if you find some use for it
+the corresponding method in the <code>Criteria</code> class is as follows:</p>
+
+<p>&nbsp;&nbsp;&nbsp;<code>addCriterion(String anyString, Object object1, Object object2, String propertyName)</code></p>
+
+<p>Where:</p>
+<dl>
+  <dt><b>anyString</b></dt>
+  <dd>is the string to be substituted into the where clause before a parameter substitution</dd>
+  <dt><b>object1</b></dt>
+  <dd>is the objects to be substituted into the where clause after the string substitution
+      (the word "and" will be appended after this object).</dd>
+  <dt><b>object2</b></dt>
+  <dd>is the objects to be substituted into the where clause after the word "and".</dd>
+  <dt><b>propertyName</b></dt>
+  <dd>is a string denoting the property name related to this clause.  This String is only used
+      in potential error messages.</dd>
+</dl>
+
+
+
+</body>
+</html>

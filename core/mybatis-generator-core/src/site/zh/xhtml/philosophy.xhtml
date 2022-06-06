@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2006-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Philosophy and Apology</title>
+  <link rel="stylesheet" type="text/css" href="mbgstyle.css" />
+</head>
+<body>
+<h1>Philosophy and Apology</h1>
+<p>这个工具可能会提出一些哲学问题，因为这个工具更关注数据库表，而不是领域模型。我们将通过几个段落来谈谈这种方法。</p>
+
+<p>首先，这个工具做了它该做的。我们并没有就项目如何组织发表任何看法。总的来说，我们是富领域模型的坚定支持者——但创建一个富领域模型与回答如何坚持该模型的问题是完全不同的。</p>
+
+<p>如果你的设计理念是由域模型驱动来所有决策，并且数据库设计服从于域模型，那么此工具——以及 MyBatis 本身——可能不适合你的应用程序。在这种情况下，我们建议认真研究 <a target="_blank" href="http://www.hibernate.org">Hibernate</a>——它可能更符合您的应用设计和理念。</p>
+
+<p>但并不是所有的项目都符合这种范式。很少有真正的企业级应用程序能做到。在数据库设计被视为与领域对象设计等同的项目中， MyBatis 可能会有很大的帮助。MyBatis 不是对象关系映射器，也不尝试透明地持久化对象。因此，编写 SQL 来与数据库表交互就是应用程序开发人员的事情了。</p>
+
+<p>在大型或企业级项目中，这些因素中的许多是相当常见的：</p>
+<ul>
+  <li>在面向对象的域模型设计中，数据库设计通常是一个单独的功能，有着自己的管理模式。 
+  </li>
+  <li>数据库设计者没有面向对象的工具（比如继承），所以他们不会用面向对象的术语来思考。</li>
+  <li>应用程序设计人员不能完全控制数据库表的最终形式。例如，似乎适合应用程序的一个对象的数据可能会被拆分为数据库中的几个表。</li>
+  <li>数据库设计最终往往与面向对象的设计大不相同，导致表和对象之间的不匹配。</li>
+</ul>
+<p>
+这些因素是 MyBatis 对你的应用程序来说是一个很好的候选工具的主要指标，这也是 MyBatis Generator 可以产生重大影响的项目类型。那么，在这种情况下，应该如何使用 MyBatis 呢？</p>
+
+<p>数据访问对象（DAO）模式仍然是一种主要模式。MyBatis Generator 可以生成与每个单独表匹配的基本对象集合。生成的代码是事务中立的。这意味着，如果一个事务涉及多个表，则很容易扩展生成的代码以添加事务属性。或者，您可以创建另一个 DAO（或 service 方法），它更符合域对象的持久化需求，并在单个事务中使用一个或多个生成的对象。</p>
+
+<p>例如，考虑一个典型的 <code>Order</code> 对象——典型的 header/detail 问题。
+在某些环境中，这样的对象将被持久化到至少 4 个表中——两个关键表、一个“表头”表和一个“详细信息”表（同样，我们并没有就这是否“正确”的设计发表任何看法，只是陈述一个事实）.
+您的应用程序仍应与 <code>Order</code> 对象交互，可能会有一个 <code>saveOrder(Order order)</code> 方法在某个地方（在 OrderDAO 或 service 对象中）。该方法将与所涉及的 4 个表中的每一个表的生成代码交互。</p>
+
+<p>在这种情况下，代码生成给我们带来了什么？如下：</p>
+<ul>
+  <li>重用——可能需要从多个不同的 DAO 或 Service 方法访问某些表。为每个表创建 DAO 可促进应用程序内的重用和一致性。</li>
+  <li>数据库抽象——Service 层通常定义应用程序中的持久性。这些方法可以相当快地确定下来。随着数据库设计的发展：
+    <ol>
+      <li>代码可以随着表的变化快速重新生成</li>
+      <li>Service 方法可以根据需要进行修改</li>
+      <li>应用程序中的高层可以保持不变</li>
+    </ol>
+  </li>
+  <li>开发人员的生产力——生成基于表的 DAO 是快速、可重复和无错误的。开发人员可以专注于对象持久性，如果需要，还可以专注于复杂的连接查询。</li>
+  <li>更少的缺陷——因为任何应用程序中最乏味和最容易出错的部分（让 SQL 与对象匹配）都是自动化的。</li>
+</ul>
+</body>
+</html>

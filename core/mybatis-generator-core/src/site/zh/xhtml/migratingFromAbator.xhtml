@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2006-2018 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>从 Abator 迁移</title>
+  <link rel="stylesheet" type="text/css" href="mbgstyle.css" />
+</head>
+<body>
+<h1>从 Abator 迁移</h1>
+<p>此页面详细说明了 MyBatis Gernerator（MBG）和 Abator 之间的变化。对于大多数用户来说，更改应该很简单。如果你扩展 Abator 的任何类来提供自定义实现的代码生成器或 Java 类解析器，你将需要重新编写这些类。</p>
+<p>这些更改分为三类：从必需的配置更改到不常见的更改。请注意，大多数更改都是假设你使用 MBG 的 XML 配置进行描述的。如果你使用的是基于 Java 的配置，那么这些更改仍然是必需的，并且应该很容易从 XML 更改的描述中推断出来。</p>
+<h2>所有用户都需要进行的更改</h2>
+<ul>
+  <li>DTD 已经改变了。新的 DOCTYPE 应该是：
+      <pre>
+
+&lt;!DOCTYPE generatorConfiguration
+  PUBLIC &quot;-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN&quot;
+  &quot;http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd&quot;&gt;
+    </pre>
+  </li>
+  <li><code>&lt;abatorConfiguration&gt;</code> 元素被重命名为
+   <code>&lt;generatorConfiguration&gt;</code></li>
+  <li>The <code>&lt;abatorContext&gt;</code> 元素被重命名为
+   <code>&lt;context&gt;</code></li>
+  <li>The <code>&lt;daoGenerator&gt;</code> 元素被重命名为
+   <code>&lt;javaClientGenerator&gt;</code></li>
+</ul>
+<h2>一些用户需要更改的</h2>
+<ul>
+  <li>MyBatis3 现在是默认的目标运行环境。</li>
+  <li><code>&lt;context&gt;</code> 元素现在需要一个 ID</li>
+  <li><code>generatorSet</code> 属性已从
+    <code>&lt;context&gt;</code> 元素中移除，被替换为
+    <code>targetRuntime</code> 属性。此属性的有效值为 <code>MyBatis3</code>、<code>MyBatis3Simple</code> 或者 <code>MyBatis3DynamicSql</code>。</li>
+  <li>MBG 的类加载策略已经发生了实质性的变化，现在我们建议您管理 MBG 外部的运行时类路径。如果使用配置管理类路径，则必须从 Abator 中进行以下更改：
+      <ul>
+        <li>类路径条目在配置文件级别指定，使用 <a href="configreference/classPathEntry.html">&lt;classPathEntry&gt;</a> 元素，现在仅仅是 <code>&lt;generatorConfiguration&gt;</code> 的子元素<。/li>
+        <li><code>&lt;classPathEntry&gt;</code> 不再允许作为 <code>&lt;jdbcConnection&gt;</code> 的子元素。</li>
+        <li>"rootClasspath" 属性不再是 <code>&lt;javaModelGenerator&gt;</code> 元素的合法值。</li>
+      </ul>
+  </li>
+</ul>
+<h2>很少人需要的更改</h2>
+<ul>
+  <li><code>type</code> 属性将从
+    <code>&lt;javaModelGenerator&gt;</code> 和
+    <code>&lt;sqlMapGenerator&gt;</code> 元素中移除。MBG 提供自定义代码生成器的方法与 Abator 完全不同。参见 <a href="reference/extending.html">从 MyBatis Generator 中扩展</a>以获取更多信息。</li>
+  <li><code>JavaTypeResolver</code> 接口已更改并简化。如果你在 <code>&lt;javaTypeResolver&gt;</code> 元素上指定了自定义实现。你必须重新编写你的实现类。</li>
+  <li><code>ProgressCallback</code> 接口已经发生了显著的变化。如果你为其他执行环境实现了此接口，则需要重新编写你的实现。</li>
+</ul>
+</body>
+</html>

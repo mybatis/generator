@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2006-2018 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>从 Ibator 迁移</title>
+  <link rel="stylesheet" type="text/css" href="mbgstyle.css" />
+</head>
+<body>
+<h1>从 Ibator 迁移</h1>
+<p>这个页面详细介绍了 MyBatis Generator（MBG）和 Ibator 的变化。对于大多数用户来说，更改应该很简单。如果你扩展了任何 Ibator 的类，以提供代码生成器或 Java 类解析器的自定义实现，你将需要重新编写这些自定义类。</p>
+<p>假设你正在使用 MBG 的 XML 配置，将描述它的更改。如果你使用的是基于 Java 的配置，那么这些更改仍然是必需的，并且应该很容易从 XML 更改的描述中推断出来。</p>
+<h2>部分用户需要的更改</h2>
+<ul>
+  <li>DTD 已经发生了变化，新的 DOCTYPE 应该是：
+      <pre>
+
+&lt;!DOCTYPE generatorConfiguration
+  PUBLIC &quot;-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN&quot;
+  &quot;http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd&quot;&gt;
+    </pre>
+  </li>
+  <li>MyBatis3 现在是默认的目标运行环境。</li>
+  <li><code>&lt;ibatorConfiguration&gt;</code> h
+   <code>&lt;generatorConfiguration&gt;</code></li>
+  <li><code>&lt;ibatorContext&gt;</code> 元素被重命名为
+   <code>&lt;context&gt;</code></li>
+  <li><code>&lt;ibatorPlugin&gt;</code> 元素被重命名为
+   <code>&lt;plugin&gt;</code></li>
+  <li><code>&lt;daoGenerator&gt;</code> 元素被重命名为
+   <code>&lt;javaClientGenerator&gt;</code></li>
+  <li>如果你实现了插件，则 <code>daoXXX</code> 方法已经被重命名为 <code>clientXXX</code>。</li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2006-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>The &lt;columnRenamingRule&gt; Element</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>The &lt;columnRenamingRule&gt; Element</h1>
+<p>MyBatis Generator (MBG) uses the &lt;columnRenamingRule&gt; element
+to rename database columns before calculating the corresponding property
+name in an introspected table.  This is useful when all columns
+in a table have a common prefix that should be removed before
+calculating the property name.  For example, suppose a table
+contains the following columns:</p>
+ <ul>
+   <li>CUST_BUSINESS_NAME</li>
+   <li>CUST_STREET_ADDRESS</li>
+   <li>CUST_CITY</li>
+   <li>CUST_STATE</li>
+ </ul>
+<p>It might be annoying to have the generated properties
+ all containing the CUST prefix.  The prefix can be removed by
+ specifying a renaming rule like this:</p>
+
+<p><code>&lt;columnRenamingRule searchString="^CUST_" replaceString="" /&gt;</code></p>
+
+<p>Note that, internally, MBG uses the
+ <code>java.util.regex.Matcher.replaceAll</code> method
+ for this function.  See the documentation for that method
+ and class for examples of the regular expression language used in
+ Java.</p>
+
+<p>This element will be ignored for any column where a &lt;columnOverride&gt; element
+   matches a column - the &lt;columnOverride&gt;
+  will take precedence over the renaming rule.</p>
+
+<p>If specified, the renaming rule in this element will rename the column
+  before the property name is calculated.  The calculated property name
+  may be different depending on the value of the
+  "useActualColumnNames" property on the corresponding &lt;table&gt; element.
+  The following table shows the different values that will result if
+  the column renaming rule shown above is applied to the field set
+  shown above:</p>
+
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>Column Name</th>
+    <th>Property if useActualColumnNames="true"</th>
+    <th>Property if useActualColumnNames="false"</th>
+  </tr>
+  <tr>
+    <td>CUST_BUSINESS_NAME</td>
+    <td>BUSINESS_NAME</td>
+    <td>businessName</td>
+  </tr>
+  <tr>
+    <td>CUST_STREET_ADDRESS</td>
+    <td>STREET_ADDRESS</td>
+    <td>streetAddress</td>
+  </tr>
+  <tr>
+    <td>CUST_CITY</td>
+    <td>CITY</td>
+    <td>city</td>
+  </tr>
+  <tr>
+    <td>CUST_STATE</td>
+    <td>STATE</td>
+    <td>state</td>
+  </tr>
+</table>
+
+<p>This element is an optional child
+element of the <a href="table.html">&lt;table&gt;</a> element.</p>
+
+<h2>Required Attributes</h2>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>Attribute</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>searchString</td>
+    <td>This is a regular expression that defines the substring to be replaced.</td>
+  </tr>
+</table>
+
+<h2>Optional Attributes</h2>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>Attribute</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>replaceString</td>
+    <td>This is a string to be substituted for every occurrence of the
+        search string.  If not specified, the empty string is used.</td>
+  </tr>
+</table>
+
+<h2>Child Elements</h2>
+<p>None</p>
+
+</body>
+</html>

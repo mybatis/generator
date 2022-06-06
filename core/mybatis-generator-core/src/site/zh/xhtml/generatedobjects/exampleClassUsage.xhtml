@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2006-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Example Class Usage Notes</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>Example Class Usage Notes</h1>
+<p>The example class specifies how to build a dynamic where clause.  Each non-BLOB column in the
+table can optionally be included in the where clause.  Examples are the best way
+to demonstrate the usage of this class.</p>
+<p>The example class can be used to generate a virtually
+unlimited where clauses.</p>
+<p>The example classes contain
+an inner static class called <code>Criteria</code>
+that holds a list of conditions that will be <code>anded</code> together in the where clause.  The
+example class holds a list of <code>Criteria</code> objects and all the clauses
+from the inner classes will be <code>ored</code> together.  Using different sets of
+<code>Criteria</code> classes allows you to generate virtually unlimited
+types of where clauses.</p>
+<p><code>Criteria</code> objects can be created with the either the <code>createCriteria</code> method
+or the <code>or</code> method
+in the example class.  When the first <code>Criteria</code> object is created with the
+<code>createCriteria</code> method it is automatically
+added to the list of <code>Criteria</code> objects - this makes it easy to write
+a simple where clause if you don't need to <code>or</code> several other clauses together.
+When using the <code>or</code> method, the <code>Criteria</code> class is added to the
+list in all instances.</p>
+
+<p><b>Important</b> We recommend that
+you only use the <code>or</code> method for creating <code>Criteria</code> classes.  We
+believe that this method makes for more readable code.</p>
+
+<h2>Simple Queries</h2>
+<p>This example shows how to generate a simple WHERE clause using the generated
+example class:</p>
+
+<pre>
+  TestTableExample example = new TestTableExample();
+
+  example.createCriteria().andField1EqualTo(5);
+</pre>
+
+<p>Alternatively, the following syntax also works:</p>
+<pre>
+  TestTableExample example = new TestTableExample();
+
+  example.or().andField1EqualTo(5);
+</pre>
+
+<p>In either above example, the dynamically generated where clause will effectively be:</p>
+<pre>
+  where field1 = 5
+</pre>
+
+<h2>Complex Queries</h2>
+<p>The next example shows how to generate a complex WHERE clause using the generated
+example class (using JSE 5.0 parameterized types):</p>
+<pre>
+  TestTableExample example = new TestTableExample();
+
+  example.or()
+    .andField1EqualTo(5)
+    .andField2IsNull();
+
+  example.or()
+    .andField3NotEqualTo(9)
+    .andField4IsNotNull();
+
+  List&lt;Integer&gt; field5Values = new ArrayList&lt;Integer&gt;();
+  field5Values.add(8);
+  field5Values.add(11);
+  field5Values.add(14);
+  field5Values.add(22);
+
+  example.or()
+    .andField5In(field5Values);
+
+  example.or()
+    .andField6Between(3, 7);
+
+</pre>
+<p>In the above example, the dynamically generated where clause will effectively be:</p>
+<pre>
+  where (field1 = 5 and field2 is null)
+     or (field3 &lt;&gt; 9 and field4 is not null)
+     or (field5 in (8, 11, 14, 22))
+     or (field6 between 3 and 7)
+</pre>
+<p>Returned records will meet these criteria.</p>
+
+<h2>Distinct Queries</h2>
+<p>You can force queries to be DISTINCT by calling the <code>setDistinct(true)</code>
+method on any example class.</p>
+
+<h2>Criteria Classes</h2>
+<p>The <code>Criteria</code> inner class includes <code>andXXX</code> methods for each field,
+and each standard SQL predicate including:</p>
+<ul>
+  <li>IS NULL - meaning the related column must be NULL</li>
+  <li>IS NOT NULL - meaning the related column must not be NULL</li>
+  <li>= (equal) - meaning the related column must be equal to the value passed in on the method call</li>
+  <li>&lt;&gt; (not equal) - meaning the related column must not be equal to the value passed in on the method call</li>
+  <li>&gt; (greater than) - meaning the related column must be greater than the value passed in on the method call</li>
+  <li>&gt;= (greater than or equal) - meaning the related column must be greater than or equal to the value passed in on the method call</li>
+  <li>&lt; (less than) - meaning the related column must be less than the value passed in on the method call</li>
+  <li>&lt;= (less than or equal) - meaning the related column must be less than or equal to the value passed in on the method call</li>
+  <li>LIKE - meaning the related column must be "like" the value passed in on the method call.
+    The code does not add the required '%', you must set that value yourself in the value you pass
+    in on the method call.
+  </li>
+  <li>NOT LIKE - meaning the related column must be "not like" the value passed in on the method call.
+    The code does not add the required '%', you must set that value yourself in the value you pass
+    in on the method call.
+  </li>
+  <li>BETWEEN - meaning the related column must be "between" the two values passed in on
+      the method call.</li>
+  <li>NOT BETWEEN - meaning the related column must be "not between" the two values passed in on
+      the method call.</li>
+  <li>IN - meaning the related column must be one of the list of values passed in on
+      the method call.</li>
+  <li>NOT IN - meaning the related column must not be one of the list of values passed in on
+      the method call.</li>
+</ul>
+
+
+</body>
+</html>

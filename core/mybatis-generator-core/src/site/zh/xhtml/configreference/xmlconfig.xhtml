@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2006-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>MyBatis Generator XML Configuration File Reference</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>MyBatis GeneratorXML Configuration File Reference</h1>
+<p>In the most common use case, MyBatis Generator (MBG) is driven by an XML
+  configuration file. The configuration file tells MBG:</p>
+
+<ul>
+  <li>How to connect to the database</li>
+  <li>What objects to generate, and how to generate them</li>
+  <li>What tables should be used for object generation</li>
+</ul>
+
+<p>The following is an example MBG configuration file.  See the individual pages
+for each element for more information about the elements and the values of the
+attributes.</p>
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd"&gt;
+
+&lt;generatorConfiguration&gt;
+  &lt;classPathEntry location="/Program Files/IBM/SQLLIB/java/db2java.zip" /&gt;
+
+  &lt;context id="DB2Tables" targetRuntime="MyBatis3"&gt;
+    &lt;jdbcConnection driverClass="COM.ibm.db2.jdbc.app.DB2Driver"
+        connectionURL="jdbc:db2:TEST"
+        userId="db2admin"
+        password="db2admin"&gt;
+    &lt;/jdbcConnection&gt;
+
+    &lt;javaTypeResolver &gt;
+      &lt;property name="forceBigDecimals" value="false" /&gt;
+    &lt;/javaTypeResolver&gt;
+
+    &lt;javaModelGenerator targetPackage="test.model" targetProject="\MBGTestProject\src"&gt;
+      &lt;property name="enableSubPackages" value="true" /&gt;
+      &lt;property name="trimStrings" value="true" /&gt;
+    &lt;/javaModelGenerator&gt;
+
+    &lt;sqlMapGenerator targetPackage="test.xml"  targetProject="\MBGTestProject\src"&gt;
+      &lt;property name="enableSubPackages" value="true" /&gt;
+    &lt;/sqlMapGenerator&gt;
+
+    &lt;javaClientGenerator type="XMLMAPPER" targetPackage="test.dao"  targetProject="\MBGTestProject\src"&gt;
+      &lt;property name="enableSubPackages" value="true" /&gt;
+    &lt;/javaClientGenerator&gt;
+
+    &lt;table schema="DB2ADMIN" tableName="ALLTYPES" domainObjectName="Customer" &gt;
+      &lt;property name="useActualColumnNames" value="true"/&gt;
+      &lt;generatedKey column="ID" sqlStatement="DB2" identity="true" /&gt;
+      &lt;columnOverride column="DATE_FIELD" property="startDate" /&gt;
+      &lt;ignoreColumn column="FRED" /&gt;
+      &lt;columnOverride column="LONG_VARCHAR_FIELD" jdbcType="VARCHAR" /&gt;
+    &lt;/table&gt;
+
+  &lt;/context&gt;
+&lt;/generatorConfiguration&gt;
+
+</pre>
+<p>Important notes about this file follow:</p>
+<ul>
+  <li>The file specifies that the legacy DB2 CLI driver will be used to connect to the database,
+      and also specifies where the driver can be found.</li>
+  <li>The Java Type Resolver should not force the use of BigDecimal fields - this means that
+      integral types (Short, Integer, Long, etc.) will be substituted if possible.  This feature
+      is an attempt to make database DECIMAL and NUMERIC columns easier to deal with.</li>
+  <li>The Java model generator should use sub-packages.  This means that the generated model
+      objects will be placed in a package called <code>test.model.db2admin</code> in this case
+      (because the table
+      is in the DB2ADMIN schema).  If the <code>enableSubPackages</code> attribute was set to
+      <code>false</code>,
+      then the package would be <code>test.model</code>.  The Java model generator should
+      also trim strings.
+      This means that the setters for any String properties will call the <code>trim</code>
+      function -
+      this is useful if your database might return blank characters at the end of character
+      columns.</li>
+  <li>The SQL Map generator should use sub-packages.  This means that the generated XML files
+      will be placed in a package called <code>test.xml.db2admin</code> in this case
+      (because the table
+      is in the DB2ADMIN schema).  If the <code>enableSubPackages</code> attribute was set
+      to <code>false</code>,
+      then the package would be <code>test.xml</code>.</li>
+  <li>The DAO generator should use sub-packages.  This means that the generated DAO classes
+      will be placed in a package called <code>test.dao.db2admin</code> in this case
+      (because the table
+      is in the DB2ADMIN schema).  If the <code>enableSubPackages</code> attribute was set
+      to <code>false</code>,
+      then the package would be <code>test.dao</code>.  The DAO generator should generate
+      mapper interfaces that reference an XML configuration for MyBatis.
+  </li>
+  <li>The file specifies only one table will be introspected, but many more could be specified.
+      Important notes about the specified table include:
+    <ul>
+      <li>The generated objects will be based on the name Customer (<code>CustomerKey</code>,
+          <code>Customer</code>,
+          <code>CustomerMapper</code>, etc.) - rather than on the table name.</li>
+      <li>Actual column names will be used as properties.  If this property were set to
+          <code>false</code> (or not specified), then MBG would attempt to camel case
+          the column
+          names.  In either case, the name can be overridden by the
+          <code>&lt;columnOverride&gt;</code>
+          element</li>
+      <li>The column has a generated key, it is an identity column, and the database type is DB2.
+          This will cause
+          MBG to generate the proper
+          <code>&lt;selectKey&gt;</code> element in the generated
+          <code>&lt;insert&gt;</code>
+          statement so that the newly generated key can be returned (using DB2 specific SQL).</li>
+      <li>The column <code>DATE_FIELD</code> will be mapped to a property called
+          <code>startDate</code>.  This will
+          override the default property which would be
+          <code>DATE_FIELD</code> in this case, or <code>dateField</code>
+          if the <code>useActualColumnNames</code> property was set to
+          <code>false</code>.</li>
+      <li>The column <code>FRED</code> will be ignored.  No SQL will list the field,
+          and no Java property will be generated.</li>
+      <li>The column <code>LONG_VARCHAR_FIELD</code> will be treated as a
+          <code>VARCHAR</code> field, regardless of the actual data type.</li>
+    </ul>
+  </li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2006-2018 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Extending MyBatis Generator</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>Extending MyBatis Generator</h1>
+<p>MyBatis Generator (MBG) is designed for extensibility.  All code generation is performed using a
+simple DOM representation of Java and XML elements.</p>
+<p>The Java DOM is included in the package <code>org.mybatis.generator.api.dom.java</code></p>
+<p>The XML DOM is included in the package <code>org.mybatis.generator.api.dom.xml</code></p>
+<p>These classes are not sufficient for every conceivable code generation possibility, but they are quite
+useful for generating simple to moderately complex Java and XML code.</p>
+
+<p>Using options in the configuration file, you can provide your own implementations
+of many of the key code generation interfaces.  You can also subclass any of the provided implementations
+to provide customized behaviors.  This page will describe the public APIs available
+and provide pointers to the source code for further investigation.  If you have
+any difficulty understanding how to extend MBG, feel free to send a note to the
+support mailing list at
+<a href="mailto:mybatis-user@googlegroups.com">mybatis-user@googlegroups.com</a>.</p>
+
+<h2>Extending Versus Plugging In</h2>
+<p>Although there are a number of different extension points shown on this
+page, in most cases it will be far easier to extend MBG through the use of a plugin.  See the
+<a href="pluggingIn.html">Implementing Plugins</a> reference page for more information.</p>
+<p>The primary extension point for code generation is
+<code>org.mybatis.generator.api.IntrospectedTable</code>.  Implementing a code generator
+is a non-trivial task and should only be contemplated when you want to completely replace
+the code generation activities of MBG.  In the years since the original release of Abator,
+very few enhancement requests have appeared that could not be handled by a plugin.</p>
+
+<h2>Extension Points</h2>
+<p>MBG provides a number of different extension points.  The following sections
+list the different methods of extending MBG, and describe the types of
+activities that can be accomplished with the different extensions.  If you
+need some help understanding the different options, feel free to ask a question
+on the user mailing list.</p>
+
+<h3>org.mybatis.generator.api.IntrospectedTable</h3>
+<p><code>IntrospectedTable</code> is an abstract class that can be extended to supply
+different code generators than the versions supplied with MBG.  A good example of
+such an implementation would be a FreeMarker or Velocity template based
+implementation.  In most other instances, coding a plugin is the better way to go.</p>
+<p>If you choose to extend this class, you must supply code to generate Java and XML
+files.  You may choose to generated those files with the
+technology of your choice.  The base <code>IntrospectedTable</code> class holds an instance
+of <code>org.mybatis.generator.internal.rules.Rules</code> that can be queried
+to determine many of the rules for code generation.</p>
+<p>MBG supplies several implementations of introspected table.  The implementation is chosen
+based on the value of the <code>targetRuntime</code> attribute of the
+<code>&lt;context&gt;</code> element.  In many cases it will be far simpler
+to extend one of the built in implementations, rather than creating an implementation
+from scratch.  The following table shows the built in implementations:</p>
+<table cellspacing="0" cellpadding="5" border="1">
+  <tr>
+    <th>TargetRuntime</th>
+    <th>Implementation</th>
+  </tr>
+  <tr>
+    <td>MyBatis3 (default)</td>
+    <td><code>org.mybatis.generator.codegen.mybatis3.IntrospectedTableMyBatis3Impl</code></td>
+  </tr>
+</table>
+
+<p>If you choose to implement this extension point, specify the fully qualified
+class name of your implementation with the <code>targetRuntime</code>
+attribute of the <code>&lt;context&gt;</code> element.</p>
+
+<h3>org.mybatis.generator.api.IntrospectedColumn</h3>
+<p><code>IntrospectedColumn</code> is a class that holds information about a
+column as it is returned from database metadata.  In some rare
+circumstances it might be desirable to override this class to provide
+your own implementation - especially if you create a new set of code
+generators.</p>
+<p>If you choose to implement this extension point, specify the fully qualified
+class name of your implementation with the <code>introspectedColumnImpl</code>
+attribute of the <code>&lt;context&gt;</code> element.</p>
+
+<h3>org.mybatis.generator.api.JavaTypeResolver</h3>
+<p>MBG calls methods in this interface to map JDBC types to Java types
+   during database introspection.  The default implementation of this
+   interface is <code>org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl</code>.
+   You can provide your own implementation, and the default implementation has
+   been designed for extensibility.</p>
+
+<p>To provide your own implementation, specify the fully qualified class name
+   in the XML configuration like this:</p>
+<pre>
+    &lt;javaTypeResolver type="mypackage.MyImplementation"&gt;
+      ...
+    &lt;/javaTypeResolver&gt;
+</pre>
+
+<h3>org.mybatis.generator.api.ShellCallback</h3>
+<p>MBG calls methods in this interface to perform functions that it cannot
+   do on its own.  The most important of these functions are:</p>
+<ul>
+  <li>Translating project/package into a directory structure</li>
+   <li>Merging Java source files in the event that an existing Java file of
+     the same name/package exists.</li>
+</ul>
+
+<p>The default implementation of this interface is
+   <code>org.mybatis.generator.internal.DefaultShellCallback</code>.  The default
+   implementation simply concatenates project and package together and creates
+   the necessary package directories if needed.  The default implementation does not
+   support merging of Java files, and will either overwrite or ignore files.</p>
+
+<p>You can provide your own implementation.  This would be the most important
+   class to write if you want to integrate MBG into some other environment.
+   For example, the Eclipse plugin provides an implementation of this interface that
+   supports Java file merging when running in the Eclipse environment.</p>
+
+<p>To provide your own implementation, supply an instance of the interface
+   on the constructor to the <code>org.mybatis.generator.api.MyBatisGenerator</code>
+   object.  This cannot be configured through XML.  If you are providing
+   your own implementation of this interface then we assume that you are
+   also providing some collateral code (like a new Ant task) to run
+   your implementation.</p>
+
+<h3>org.mybatis.generator.api.ProgressCallback</h3>
+<p>MBG calls methods in this interface to report progress during the
+   generation of files (a long running process).  The default implementation
+   of this interface is
+   <code>org.mybatis.generator.internal.NullProgressCallback</code>
+   which simply ignores all progress messages.  You can provide an
+   implementation of this interface to support progress notifications and
+   cancellation of code generation.</p>
+
+<p>Implementing this interface would be important when integrating MBG
+   into other IDE environments.  The Eclipse plugin provides an implementation
+   of this interface that hooks into Eclipse's progress notification system.</p>
+
+<p>To provide your own implementation, supply an instance of the interface
+   on one of the <code>org.mybatis.generator.api.MyBatisGenerator.generate()</code> method calls.
+   This cannot be configured through XML.  Again, we assume that if you are providing
+   your own implementation of this interface then you are
+   also providing some collateral code (like a new Ant task or an IDE integration) to run
+   your implementation.</p>
+</body>
+</html>

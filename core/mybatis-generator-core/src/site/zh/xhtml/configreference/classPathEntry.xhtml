@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2006-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>The &lt;classPathEntry&gt; Element</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>The &lt;classPathEntry&gt; Element</h1>
+<p>The &lt;classPathEntry&gt; element is used to add classpath locations to the
+classpath of the MyBatis Generator (MBG) run.  The &lt;classPathEntry&gt; element is an option child
+element of the <a href="generatorConfiguration.html">&lt;generatorConfiguration&gt;</a> element.
+MBG loads classes from these locations in these instances:</p>
+<ul>
+  <li>When loading the JDBC driver for database introspection</li>
+  <li>When loading root classes in the JavaModelGenerator to check for overridden
+      methods</li>
+</ul>
+
+<p>This element is optional and is not required if you setup the classpath externally to MBG
+(e.g. with the <code>-cp</code> argument of the <code>java</code> command</p>
+
+<p><b>Important Note:</b> these locations are NOT used when loading classes that
+extend one of MBG's classes or implement one of MBG's interfaces.  In those cases
+you must add your external classes to the runtime classpath in the same way you
+add MBG to the classpath (e.g. with the <code>-cp</code> argument of the
+<code>java</code> command).</p>
+
+<h2>Required Attributes</h2>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>Attribute</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>location</td>
+    <td>The full path name of a JAR/ZIP file to add to the classpath, or
+        a directory to add to the classpath.</td>
+  </tr>
+</table>
+
+<h2>Optional Attributes</h2>
+<p>None</p>
+
+<h2>Child Elements</h2>
+<p>None</p>
+
+
+<h2>Example</h2>
+<p>This element specifies the location of a DB2 JDBC driver:</p>
+<pre>
+&lt;classPathEntry location="/Program Files/IBM/SQLLIB/java/db2java.zip" /&gt;
+</pre>
+</body>
+</html>

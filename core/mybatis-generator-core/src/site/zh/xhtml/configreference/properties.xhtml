@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2006-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>The &lt;properties&gt; Element</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>The &lt;properties&gt; Element</h1>
+<p>The &lt;properties&gt; element is used to specify an external properties file
+for use in the parsing of the configuration.  Any attribute in the
+configuration will accept a property in the form <code>${property}</code>.
+The specified properties file will be searched for a matching value and the
+matching value will be substituted.  The properties file is of the normal
+format for a Java properties file.</p>
+<p>If there are name collisions between a property specified here and
+a system property, the system property will win.</p>
+
+<p>The &lt;properties&gt; element is a child element of the
+<a href="generatorConfiguration.html">&lt;generatorConfiguration&gt;</a>
+element.</p>
+
+
+<h2>Required Attributes</h2>
+<p>One, and only one, of the following attributes is required.</p>
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>Attribute</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td valign="top">resource</td>
+    <td>The qualified name of the property file.  When specifying the resource, the
+    classpath will be searched for the properties file.  So a file specified as
+    <code>com/myproject/generatorConfig.properties</code> must exist in the
+    <code>com.myproject</code> package.</td>
+  </tr>
+  <tr>
+    <td valign="top">url</td>
+    <td>A URL value to use for the property file.  This can be used to specify a property
+    file in a specific place on the file system when used in a form like
+    <code>file:///C:/myfolder/generatorConfig.properties</code>.</td>
+  </tr>
+</table>
+
+<h2>Optional Attributes</h2>
+<p>None</p>
+
+<h2>Child Elements</h2>
+<p>None</p>
+
+</body>
+</html>

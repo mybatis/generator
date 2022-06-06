@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2006-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Running MyBatis Generator From a Command Prompt</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>Running MyBatis Generator From a Command Prompt</h1>
+<p>MyBatis Generator (MBG) may be run directly from a command prompt.  The JAR manifest includes the
+   name of the default class (<code>org.mybatis.generator.api.ShellRunner</code>)
+   or you may specify it yourself.  The <code>ShellRunner</code>
+   class accepts several arguments as detailed below:</p>
+<table border="1" cellspacing="0" cellpadding="5">
+<tr>
+  <th>Argument</th>
+  <th>Value</th>
+</tr>
+<tr>
+  <td>-configfile <i>file_name</i> <br/>(required)</td>
+  <td>Specifies the name of the configuration file.</td>
+</tr>
+<tr>
+  <td>-overwrite (optional)</td>
+  <td>If specified, then existing Java files will be overwritten if an existing Java
+      file if found with the same name as a generated file.  If not specified, and a
+      Java file already exists with the same name as a generated file, then MBG
+      will write the newly generated Java file to the proper directory with a
+      unique name (e.g. MyClass.java.1, MyClass.java.2, etc.).
+      <b>Important: The generator will always merge and overwrite XML files.</b></td>
+</tr>
+<tr>
+  <td>-verbose (optional)</td>
+  <td>If specified, then progress messages will be written to the console.</td>
+</tr>
+<tr>
+  <td>-forceJavaLogging (optional)</td>
+  <td>If specified, then MBG will use Java logging rather than Log4J even if
+      Log4J is in the runtime classpath.</td>
+</tr>
+<tr>
+  <td>-contextids <i>context1,context2,...</i><br/>(optional)</td>
+  <td>If specified, then this is a comma delimited list of contexts to use in
+      the current run.  Any id specified in the list must exactly
+      match the value of the <code>id</code> attribute of an
+      &lt;context&gt; configuration element.  Only ids specified
+      in this list will be active for this run.  If this argument
+      is not specified, then all contexts will be active.</td>
+</tr>
+<tr>
+  <td>-tables <i>table1, table2,...</i><br/>(optional)</td>
+  <td>If specified, then this is a comma delimited list of tables to use in
+      the current run.  Any table specified in the list must exactly
+      match the fully qualified table name specified in a
+      &lt;table&gt; configuration element.  Only tables specified
+      in this list will be active for this run.  If this argument
+      is not specified, then all tables will be active.
+      Specify table names as: <br/><br/>
+      <code>table</code><br/>
+      <code>schema.table</code><br/>
+      <code>catalog..table</code><br/>
+      etc.</td>
+</tr>
+</table>
+
+<p>You must create an XML configuration file to run MBG from the
+   command line.  If the file is
+   named "generatorConfig.xml", then any of the following command lines will run
+   MBG:</p>
+<pre>
+   java -jar mybatis-generator-core-x.x.x.jar -configfile generatorConfig.xml
+   java -jar mybatis-generator-core-x.x.x.jar -configfile generatorConfig.xml -overwrite
+   java -cp mybatis-generator-core-x.x.x.jar org.mybatis.generator.api.ShellRunner -configfile generatorConfig.xml
+   java -cp mybatis-generator-core-x.x.x.jar org.mybatis.generator.api.ShellRunner -configfile generatorConfig.xml -overwrite
+</pre>
+</body>
+</html>

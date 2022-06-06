@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2006-2016 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>PostgreSQL Usage Notes</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>PostgreSQL Usage Notes</h1>
+<h2>Case Sensitivity</h2>
+<p>PostgreSQL is case sensitive with regards to all database identifiers
+(table names, schema names, column names, etc.)  In addition, PostgreSQL
+has a distinct preference for all identifiers being in all lower case letters.
+If you use all lower case identifiers for PostgreSQL, then MyBatis Generator will find tables
+and write correct SQL with no additional consideration.  If you used mixed cased,
+or upper case, identifiers you will
+need to configure MyBatis Generator appropriately:</p>
+<ul>
+  <li>Use the <code>delimitIdentifiers</code> option if your table or schema
+      is mixed case or all upper case.</li>
+  <li>For each mixed case or upper case column you could specify a
+      <code>&lt;columnOverride&gt;</code> element to specifically delimit the column,
+      or you could specify the <code>delimitAllColumns</code> attribute
+      to delimit all column names.</li>
+</ul>
+<p>Examples:</p>
+<pre>
+  &lt;table schema="HR" tableName="Employees"
+      delimitIdentifiers="true" delimitAllColumns="true"/&gt;
+</pre>
+<p>Or...</p>
+<pre>
+  &lt;table schema="HR" tableName="Employees" delimitIdentifiers="true" &gt;
+    &lt;columnOverride column="EmployeeId" delimitedColumnName="true" /&gt;
+    &lt;columnOverride column="EmployeeName" delimitedColumnName="true" /&gt;
+  &lt;/table&gt;
+</pre>
+</body>
+</html>

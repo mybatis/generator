@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2006-2018 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>MyBatis Generator Generated SQL Map XML Files</title>
+  <link rel="stylesheet" type="text/css" href="../mbgstyle.css" />
+</head>
+<body>
+<h1>MyBatis Generator Generated SQL Map XML Files</h1>
+<p><b>Important:</b> SQL Map XML files are not generated for the MyBatis3DynamicSQL runtime.</p>
+
+<p>MyBatis Generator (MBG) generates SQL Map XML files that conform to the MyBatis SQL Map DTD.
+The files contain many different
+elements based on the characteristics of the table, and on the configuration options you specify.
+MBG generates a different SQL Map file for every table you specify.  The name space of the
+SQL Map is the name of the table (qualified by schema and catalog if present).  MBG does not
+add the SQL Map entries to the MyBatis configuration files - you must do that manually (or you may use
+a plugin to cause MBG to generate a skeleton configuration file if you wish).</p>
+
+<p>Every generated XML element contains an XML comment section that contains the string <code>@mbg.generated
+</code>.  On subsequent runs, every element that contains a comment with the string
+<code>@mbg.generated</code>
+will be deleted and replaced.  Any other element in the XML file will remain untouched.
+With this in mind, you can add other elements to the file without fear of losing them in
+subsequent runs - simply do not include the string
+<code>@mbg.generated</code> in any element comment.</p>
+<p>The following sections describe the elements that will be generated.</p>
+
+<p>Note: in the following descriptions, the term "BLOB" is used to refer to any column
+with a data type of BLOB, CLOB, LONGVARCHAR, or LONGVARBINARY.</p>
+
+<h2>Result Map</h2>
+<p>This element is used to map table columns to properties of the generated Java model object.
+The result map (and corresponding select statements) will not contain:</p>
+<ul>
+  <li>Any field that has been ignored by the <code>&lt;ignoreColumn&gt;</code> configuration element</li>
+  <li>Any BLOB field from the table (see the result map with BLOBs element)</li>
+</ul>
+<p>The columns will be mapped according the configuration element <code>&lt;columnOverride&gt;</code> if it exists
+for the specific column.  If the override does not exist, then a default property name and JDBC type
+will be used.</p>
+<p>It is acceptable to extend this result map if you code any
+custom join queries in the SQL map.  This is a common use case and is expected.
+If you plan to reuse this result map with other join queries, you may wish to have
+MBG generate a prefix for the fields in the result map.  See the
+<a href="../configreference/table.html">&lt;table&gt;</a> reference page for information about generating
+a prefix.</p>
+<p>This element will be generated if either the select by example, or select by primary key statements
+are enabled.</p>
+
+<h2>Result Map With BLOBs</h2>
+<p>The element extends the base result map, and adds any BLOB fields that exist in the table.
+We do this because we offer different versions of the select by example statement depending on
+whether or not you want to return the BLOB fields in those queries.</p>
+
+<p>The result map (and corresponding select statements) will not contain:</p>
+<ul>
+  <li>Any field that has been ignored by the <code>&lt;ignoreColumn&gt;</code> configuration element</li>
+</ul>
+<p>The columns will be mapped according the configuration element <code>&lt;columnOverride&gt;</code> if it exists
+for the specific column.  If the override does not exist, then a default property name and JDBC type
+will be used.</p>
+<p>It is acceptable to extend this result map if you code any
+custom join queries in the SQL map.  This is a common use case and is expected.
+If you plan to reuse this result map with other join queries, you may wish to have
+MBG generate a prefix for the fields in the result map.  See the
+<a href="../configreference/table.html">&lt;table&gt;</a> reference page for information about generating
+a prefix.</p>
+<p>This element will be generated if that table contains BLOB fields, and either the select by example,
+or select by primary key statements are enabled.</p>
+
+<h2>SQL Where Clause</h2>
+<p>This element contains a reusable where clause that is used by the "by example" methods. The
+where clause will not include any BLOB fields if they exist in the table.  Most databases do not
+support BLOB fields in the WHERE clause.</p>
+<p>This element will be generated if any of the "by example" statements
+are enabled.</p>
+
+<h2>Select By Primary Key</h2>
+<p>This element contains a select statement that will return one row - designated by the primary key.
+The returned row will include BLOB fields if they exist in the table.</p>
+<p>This element will be generated if the table has a primary key and the select by primary key statement
+is enabled.</p>
+
+<h2>Select by Example</h2>
+<p>This element contains a select statement with rows that match the example object.
+This implements a simple "query by example" functionality that can be used to generate many
+different database queries.  The returned rows will not include any BLOB fields that exist in the table
+(see the select by example with BLOBs statement below).</p>
+<p><b>Important:</b> If the example class is null, or no criteria have been set,
+then <b>all</b> rows in the table will be selected.</p>
+<p>This element will be generated if the select by example statement is enabled.</p>
+
+<h2>Select by Example With BLOBs</h2>
+<p>This element contains a select statement with rows that match the example object.
+This implements a simple "query by example" functionality that can be used to generate many
+different database queries.  The returned rows will include any BLOB fields that exist in the table.</p>
+<p><b>Important:</b> If the example class is null, or no criteria have been set,
+then <b>all</b> rows in the table will be selected.</p>
+<p>This element will be generated if the table contains BLOB fields, and the select by example
+ statement is enabled.</p>
+
+<h2>Insert</h2>
+<p>This element is an insert statement that includes all fields in the table (including BLOBs),
+unless the field is specifically ignored with the <code>&lt;ignoreColumn&gt;</code> configuration
+element.</p>
+<p>If the table has an auto generated key (an identity column or value from a sequence), and the
+<code>&lt;generatedKey&gt;</code> configuration element is specified, then MBG will generate
+an appropriate <code>&lt;selectKey&gt;</code> element.</p>
+<p><b>Important Note:</b> the method will return the number of rows inserted (typically either 0 or 1).
+If a &lt;generatedKey&gt; element is specified, the value of the newly generated
+key will be set in the corresponding property of the parameter object.</p>
+<p>This element will be generated if the insert statement is enabled.</p>
+
+<h2>Insert Selective</h2>
+<p>This element is an insert statement that includes all fields in the table (including BLOBs),
+unless the field is specifically ignored with the <code>&lt;ignoreColumn&gt;</code> configuration
+element.  However, this statement will not include fields that are <code>null</code> in the
+parameter object.  This allows you to use database defaults for columns, if they exist.
+This element will not allow the insert of <code>null</code> into any field - for that
+you must use the regular insert statement.  <b>Important:</b> any field mapped to a Java primitive
+is always inserted by this method.</p>
+<p>If the table has an auto generated key (an identity column or value from a sequence), and the
+<code>&lt;generatedKey&gt;</code> configuration element is specified, then MBG will generate
+an appropriate <code>&lt;selectKey&gt;</code> element.</p>
+<p><b>Important Note:</b> the method will return the number of rows inserted (typically either 0 or 1).
+If a &lt;generatedKey&gt; element is specified, the value of the newly generated
+key will be set in the corresponding property of the parameter object.</p>
+<p>This element will be generated if the insert statement is enabled.</p>
+
+<h2>Update By Primary Key</h2>
+<p>This element is an update statement that will update one row - designated by the primary
+key.  The update statement will update all fields in the table unless:</p>
+<ul>
+  <li>The field has been ignored by the <code>&lt;ignoreColumn&gt;</code> configuration element</li>
+  <li>The field is a BLOB field (see the update by primary key with BLOBs element)</li>
+</ul>
+<p>This element will be generated if the table has a primary key, and the update by primary
+key statement is enabled.</p>
+
+<h2>Update By Primary Key With BLOBs</h2>
+<p>This element is an update statement that will update one row - designated by the primary
+key.  The update statement will update all fields in the table (including BLOB fields) unless:</p>
+<ul>
+  <li>The field has been ignored by the <code>&lt;ignoreColumn&gt;</code> configuration element</li>
+</ul>
+<p>This element will be generated if the table has a primary key, the table has BLOB columns,
+ and the update by primary key statement is enabled.</p>
+
+<h2>Update By Primary Key Selective</h2>
+<p>This element is an update statement that will update one row - designated by the primary
+key.  The update statement will update only the fields in the table whose corresponding
+property in the parameter object is non-null.  This statement can be used to update
+certain columns in a record without affecting all columns in the record.  <b>Important:</b>
+if the column has been mapped to a primitive type, then the column will always be
+updated.</p>
+<p>This element will be generated if the table has a primary key, and the update by primary
+key statement is enabled.</p>
+
+<h2>Delete By Primary Key</h2>
+<p>This element is a delete statement that will delete one row in the table - designated by the
+primary key.</p>
+<p>This element will be generated if the table has a primary key, and the delete by primary key
+ statement is enabled.</p>
+
+<h2>Delete By Example</h2>
+<p>This element is a delete statement that will delete one or more rows in the table - designated by
+the example object.</p>
+<p><b>Important:</b> If the example class is null, or no criteria have been set,
+then <b>all</b> rows in the table will be deleted.</p>
+<p>This element will be generated if the delete by example statement is enabled.</p>
+
+<h2>Count By Example</h2>
+<p>This element is a select count(*) statement that will return the number of rows in the table
+that match the specified example object.</p>
+<p><b>Important:</b> If the example class is null, or no criteria have been set,
+then the select will return the number of rows in the entire table.</p>
+<p>This element will be generated if the count by example statement is enabled.</p>
+
+<h2>Update By Example</h2>
+<p>This element is an update statement that will update all rows in a table that match
+the specified example.  The update statement will update all fields in the table unless:</p>
+<ul>
+  <li>The field has been ignored by the <code>&lt;ignoreColumn&gt;</code> configuration element</li>
+  <li>The field is a BLOB field (see the update by example with BLOBs element)</li>
+</ul>
+<p><b>Important:</b> If the example class is null, or no criteria have been set,
+then <b>all</b> rows in the table will be updated.</p>
+<p>This element will be generated if the update by example statement is enabled.</p>
+
+<h2>Update By Example With BLOBs</h2>
+<p>This element is an update statement that will update all rows in a table that match
+the specified example.  The update statement will update all fields in the table (including BLOB fields)
+unless:</p>
+<ul>
+  <li>The field has been ignored by the <code>&lt;ignoreColumn&gt;</code> configuration element</li>
+</ul>
+<p><b>Important:</b> If the example class is null, or no criteria have been set,
+then <b>all</b> rows in the table will be updated.</p>
+<p>This element will be generated if the table contains BLOB columns, and the update by
+example statement is enabled.</p>
+
+<h2>Update By Example Selective</h2>
+<p>This element is an update statement that will update all rows in a table that match the
+specified example.  The update statement will update only the fields in the table whose corresponding
+property in the parameter object is non-null.  This statement can be used to update
+certain columns in certain records without affecting all columns in the records.  <b>Important:</b>
+if the column has been mapped to a primitive type, then the column will always be
+updated.</p>
+<p><b>Important:</b> If the example class is null, or no criteria have been set,
+then <b>all</b> rows in the table will be updated.</p>
+<p>This element will be generated if the update by example statement is enabled.</p>
+</body>
+</html>

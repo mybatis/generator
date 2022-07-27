@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2022 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@ import org.xml.sax.SAXParseException;
 class XmlCodeGenerationTest {
 
     @ParameterizedTest
-    @MethodSource("generateXmlFiles")
+    @MethodSource("xmlFileGenerator")
     void testXmlParse(GeneratedXmlFile generatedXmlFile) {
         ByteArrayInputStream is = new ByteArrayInputStream(
                 generatedXmlFile.getFormattedContent().getBytes());
@@ -57,10 +57,8 @@ class XmlCodeGenerationTest {
         }
     }
 
-    static List<GeneratedXmlFile> generateXmlFiles() throws Exception {
-        List<GeneratedXmlFile> generatedFiles = new ArrayList<>();
-        generatedFiles.addAll(generateXmlFilesMybatis());
-        return generatedFiles;
+    static List<GeneratedXmlFile> xmlFileGenerator() throws Exception {
+        return new ArrayList<>(generateXmlFilesMybatis());
     }
 
     static List<GeneratedXmlFile> generateXmlFilesMybatis() throws Exception {

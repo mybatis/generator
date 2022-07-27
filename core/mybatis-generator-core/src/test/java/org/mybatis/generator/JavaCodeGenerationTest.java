@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2022 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ import com.github.javaparser.StaticJavaParser;
 class JavaCodeGenerationTest {
 
     @ParameterizedTest
-    @MethodSource("generateJavaFiles")
+    @MethodSource("javaFileGenerator")
     void testJavaParse(GeneratedJavaFile generatedJavaFile) {
         DefaultJavaFormatter formatter = new DefaultJavaFormatter();
 
@@ -49,7 +49,7 @@ class JavaCodeGenerationTest {
         }
     }
 
-    static List<GeneratedJavaFile> generateJavaFiles() throws Exception {
+    static List<GeneratedJavaFile> javaFileGenerator() throws Exception {
         List<GeneratedJavaFile> generatedFiles = new ArrayList<>();
         generatedFiles.addAll(generateJavaFilesMybatis());
         generatedFiles.addAll(generateJavaFilesMybatisDsql());

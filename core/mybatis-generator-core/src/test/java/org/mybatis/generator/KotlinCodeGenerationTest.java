@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2020 the original author or authors.
+ *    Copyright 2006-2022 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -40,14 +40,14 @@ import org.mybatis.generator.internal.DefaultShellCallback;
 class KotlinCodeGenerationTest {
 
     @ParameterizedTest
-    @MethodSource("generateKotlinFiles")
+    @MethodSource("kotlinFileGenerator")
     void testKotlinParse(GeneratedKotlinFile generatedKotlinFile) {
         // for now, just let the test pass. if we find a good Kotlin parser, then mimic the
         // function of the Java test by trying to parse generated code
         assertTrue(true);
     }
 
-    static List<GeneratedKotlinFile> generateKotlinFiles() throws Exception {
+    static List<GeneratedKotlinFile> kotlinFileGenerator() throws Exception {
         JavaCodeGenerationTest.createDatabase();
         return generateKotlinFiles("/scripts/generatorConfig-kotlin.xml");
     }

@@ -55,7 +55,7 @@
   <properties>
     <findbugs.onlyAnalyze>org.mybatis.generator.*</findbugs.onlyAnalyze>
     <clirr.comparisonVersion>1.3.2</clirr.comparisonVersion>
-    <hsqldb.version>2.5.1</hsqldb.version>
+    <hsqldb.version>2.7.0</hsqldb.version>
     <checkstyle.config>${project.basedir}/checkstyle-override.xml</checkstyle.config>
     <formatter.config>eclipse-formatter-config-4space.xml</formatter.config>
     <kotlin.version>1.7.10</kotlin.version>
@@ -137,6 +137,9 @@
             </goals>
             <configuration>
               <rules>
+                <enforceBytecodeVersion>
+                  <ignoredScopes>test</ignoredScopes>
+                </enforceBytecodeVersion>
                 <requirePluginVersions>
                   <banSnapshots>false</banSnapshots>
                 </requirePluginVersions>

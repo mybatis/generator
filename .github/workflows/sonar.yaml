@@ -37,10 +37,10 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          java-version: 11
+          java-version: 17
           distribution: zulu
       - name: Analyze with SonarCloud
-        run: ../mvnw verify jacoco:report sonar:sonar -B -Dsonar.projectKey=mybatis_generator -Dsonar.organization=mybatis -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN -Dlicense.skip=true
+        run: ./mvnw verify jacoco:report sonar:sonar -B -Dsonar.projectKey=mybatis_generator -Dsonar.organization=mybatis -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN -Dlicense.skip=true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

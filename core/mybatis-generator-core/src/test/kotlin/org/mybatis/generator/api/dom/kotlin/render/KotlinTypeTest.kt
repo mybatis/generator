@@ -326,4 +326,139 @@ class KotlinTypeTest {
             |class Adder : Serializable
             """.trimMargin())
     }
+
+    @Test
+    fun testDataClassWithCompanionObjectAndConstVal() {
+        val obj = KotlinType.newClass("Adder")
+            .withModifier(KotlinModifier.DATA)
+            .withConstructorProperty(KotlinProperty.newVal("a")
+                .withDataType("Int")
+                .build())
+            .withNamedItem(KotlinFunction.newOneLineFunction("adjustWithConstant")
+                .withCodeLine("addConstant(a)")
+                .build())
+            .withNamedItem(KotlinType.newCompanionObject()
+                .withNamedItem(KotlinProperty.newVal("VALUE_TO_ADD")
+                    .withModifier(KotlinModifier.CONST)
+                    .withDataType("Int")
+                    .withInitializationString("42")
+                    .build())
+                .withNamedItem(KotlinFunction.newOneLineFunction("addConstant")
+                    .withArgument(KotlinArg.newArg("a").withDataType("Int").build())
+                    .withExplicitReturnType("Int")
+                    .withCodeLine("VALUE_TO_ADD + a")
+                    .build())
+                .build()
+            )
+            .build()
+
+        val renderedType = KotlinTypeRenderer().render(obj).stream()
+            .collect(Collectors.joining(System.getProperty("line.separator")))
+
+        assertThat(renderedType).isEqualToNormalizingNewlines("""
+            |data class Adder(
+            |    val a: Int
+            |) {
+            |    fun adjustWithConstant() =
+            |        addConstant(a)
+            |
+            |    companion object {
+            |        const val VALUE_TO_ADD: Int = 42
+            |
+            |        fun addConstant(a: Int): Int =
+            |            VALUE_TO_ADD + a
+            |    }
+            |}
+            """.trimMargin())
+    }
+
+    @Test
+    fun testRegularClassWithCompanionObjectAndConstVal() {
+        val obj = KotlinType.newClass("Adder")
+            .withConstructorProperty(KotlinProperty.newVal("a")
+                .withDataType("Int")
+                .build())
+            .withNamedItem(KotlinFunction.newOneLineFunction("adjustWithConstant")
+                .withCodeLine("addConstant(a)")
+                .build())
+            .withNamedItem(KotlinType.newCompanionObject()
+                .withNamedItem(KotlinProperty.newVal("VALUE_TO_ADD")
+                    .withModifier(KotlinModifier.CONST)
+                    .withDataType("Int")
+                    .withInitializationString("42")
+                    .build())
+                .withNamedItem(KotlinFunction.newOneLineFunction("addConstant")
+                    .withArgument(KotlinArg.newArg("a").withDataType("Int").build())
+                    .withExplicitReturnType("Int")
+                    .withCodeLine("VALUE_TO_ADD + a")
+                    .build())
+                .build()
+            )
+            .build()
+
+        val renderedType = KotlinTypeRenderer().render(obj).stream()
+            .collect(Collectors.joining(System.getProperty("line.separator")))
+
+        assertThat(renderedType).isEqualToNormalizingNewlines("""
+            |class Adder(
+            |    val a: Int
+            |) {
+            |    fun adjustWithConstant() =
+            |        addConstant(a)
+            |
+            |    companion object {
+            |        const val VALUE_TO_ADD: Int = 42
+            |
+            |        fun addConstant(a: Int): Int =
+            |            VALUE_TO_ADD + a
+            |    }
+            |}
+            """.trimMargin())
+    }
+
+    @Test
+    fun testRegularClassWithNamedCompanionObjectAndConstVal() {
+        val obj = KotlinType.newClass("Adder")
+            .withConstructorProperty(KotlinProperty.newVal("a")
+                .withDataType("Int")
+                .build())
+            .withNamedItem(KotlinFunction.newOneLineFunction("adjustWithConstant")
+                .withCodeLine("addConstant(a)")
+                .build())
+            .withNamedItem(KotlinType.newCompanionObject("Util")
+                .withNamedItem(KotlinProperty.newVal("VALUE_TO_ADD")
+                    .withModifier(KotlinModifier.CONST)
+                    .withDataType("Int")
+                    .withInitializationString("42")
+                    .build())
+                .withNamedItem(KotlinFunction.newOneLineFunction("addConstant")
+                    .withAnnotation("@JvmStatic")
+                    .withArgument(KotlinArg.newArg("a").withDataType("Int").build())
+                    .withExplicitReturnType("Int")
+                    .withCodeLine("VALUE_TO_ADD + a")
+                    .build())
+                .build()
+            )
+            .build()
+
+        val renderedType = KotlinTypeRenderer().render(obj).stream()
+            .collect(Collectors.joining(System.getProperty("line.separator")))
+
+        assertThat(renderedType).isEqualToNormalizingNewlines("""
+            |class Adder(
+            |    val a: Int
+            |) {
+            |    fun adjustWithConstant() =
+            |        addConstant(a)
+            |
+            |    companion object Util {
+            |        const val VALUE_TO_ADD: Int = 42
+            |
+            |        @JvmStatic
+            |        fun addConstant(a: Int): Int =
+            |            VALUE_TO_ADD + a
+            |    }
+            |}
+            """.trimMargin())
+    }
 }

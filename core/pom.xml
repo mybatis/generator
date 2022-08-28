@@ -60,7 +60,6 @@
     <formatter.config>eclipse-formatter-config-4space.xml</formatter.config>
     <kotlin.version>1.7.10</kotlin.version>
     <junit.jupiter.version>5.9.0</junit.jupiter.version>
-    <junit.platform.version>1.9.0</junit.platform.version>
     <argLine>-Djdk.attach.allowAttachSelf -Xmx1024m -Duser.timezone=UTC</argLine>
   </properties>
 
@@ -199,12 +198,6 @@
       </dependency>
       <dependency>
         <groupId>org.junit.jupiter</groupId>
-        <artifactId>junit-jupiter-api</artifactId>
-        <version>${junit.jupiter.version}</version>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.junit.jupiter</groupId>
         <artifactId>junit-jupiter-params</artifactId>
         <version>${junit.jupiter.version}</version>
         <scope>test</scope>
@@ -213,12 +206,6 @@
         <groupId>org.junit.jupiter</groupId>
         <artifactId>junit-jupiter-engine</artifactId>
         <version>${junit.jupiter.version}</version>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.junit.platform</groupId>
-        <artifactId>junit-platform-launcher</artifactId>
-        <version>${junit.platform.version}</version>
         <scope>test</scope>
       </dependency>
       <dependency>

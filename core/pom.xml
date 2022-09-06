@@ -130,9 +130,6 @@
             </goals>
             <configuration>
               <rules>
-                <enforceBytecodeVersion>
-                  <ignoredScopes>test</ignoredScopes>
-                </enforceBytecodeVersion>
                 <requirePluginVersions>
                   <banSnapshots>false</banSnapshots>
                 </requirePluginVersions>

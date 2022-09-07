@@ -9,7 +9,7 @@ MyBatis Generator (MBG)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=mybatis_generator&metric=alert_status)](https://sonarcloud.io/dashboard?id=mybatis_generator)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=mybatis_generator&metric=security_rating)](https://sonarcloud.io/dashboard?id=mybatis_generator)
 
-![mybatis-generator](http://mybatis.github.io/images/mybatis-logo.png)
+![mybatis-generator](https://mybatis.org/images/mybatis-logo.png)
 
 This is a code generator for MyBatis.
 

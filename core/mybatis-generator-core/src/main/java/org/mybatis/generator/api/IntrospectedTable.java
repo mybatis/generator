@@ -770,6 +770,7 @@ public abstract class IntrospectedTable {
         sb.append(pakkage);
         sb.append('.');
         sb.append(fullyQualifiedTable.getDomainObjectName());
+        sb.append("Record");
         setKotlinRecordType(sb.toString());
 
         sb.setLength(0);

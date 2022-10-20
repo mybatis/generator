@@ -231,7 +231,7 @@
       <dependency>
         <groupId>com.github.javaparser</groupId>
         <artifactId>javaparser-core</artifactId>
-        <version>3.24.4</version>
+        <version>3.24.7</version>
         <scope>test</scope>
       </dependency>
       <dependency>

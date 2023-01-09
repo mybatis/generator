@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2022 the original author or authors.
+ *    Copyright 2006-2023 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -47,63 +47,61 @@ public class KotlinFragmentGenerator {
         tableFieldName = builder.tableFieldName;
     }
 
-    public KotlinFunctionParts getPrimaryKeyWhereClauseAndParameters() {
+    public KotlinFunctionParts getPrimaryKeyWhereClauseAndParameters(boolean forUpdate) {
         KotlinFunctionParts.Builder builder = new KotlinFunctionParts.Builder();
 
+        int columnCount = introspectedTable.getPrimaryKeyColumns().size();
         boolean first = true;
         for (IntrospectedColumn column : introspectedTable.getPrimaryKeyColumns()) {
-            FullyQualifiedKotlinType kt = JavaToKotlinTypeConverter.convert(column.getFullyQualifiedJavaType());
+            String argName;
+            if (forUpdate) {
+                argName = "row." + column.getJavaProperty() + "!!"; //$NON-NLS-1$ //$NON-NLS-2$
+            } else {
+                argName = column.getJavaProperty() + "_"; //$NON-NLS-1$
+                FullyQualifiedKotlinType kt = JavaToKotlinTypeConverter.convert(column.getFullyQualifiedJavaType());
+                builder.withImports(kt.getImportList());
+                builder.withArgument(KotlinArg.newArg(argName)
+                        .withDataType(kt.getShortNameWithTypeArguments())
+                        .build());
+            }
 
             AbstractKotlinFunctionGenerator.FieldNameAndImport fieldNameAndImport =
                     AbstractKotlinFunctionGenerator.calculateFieldNameAndImport(tableFieldName,
                     supportObjectImport, column);
-            String argName = column.getJavaProperty() + "_"; //$NON-NLS-1$
 
             builder.withImport(fieldNameAndImport.importString());
-            builder.withImports(kt.getImportList());
-            builder.withArgument(KotlinArg.newArg(argName)
-                    .withDataType(kt.getShortNameWithTypeArguments())
-                    .build());
-            if (first) {
-                builder.withCodeLine("    where { " + fieldNameAndImport.fieldName() //$NON-NLS-1$
-                        + " isEqualTo " + argName //$NON-NLS-1$
-                        + " }"); //$NON-NLS-1$
+            if(columnCount == 1) {
+                builder.withCodeLine(singleColumnWhere(fieldNameAndImport.fieldName(), argName));
+                first = false;
+            } else if (first) {
+                builder.withCodeLine("    where {"); //$NON-NLS-1$
+                builder.withCodeLine(multiColumnWhere(fieldNameAndImport.fieldName(), argName));
                 first = false;
             } else {
-                builder.withCodeLine("    and { " + fieldNameAndImport.fieldName() //$NON-NLS-1$
-                        + " isEqualTo " + argName //$NON-NLS-1$
-                        + " }"); //$NON-NLS-1$
+                builder.withCodeLine(multiColumnAnd(fieldNameAndImport.fieldName(), argName));
             }
         }
-        builder.withCodeLine("}"); //$NON-NLS-1$
+        if (columnCount > 1) {
+            builder.withCodeLine("    }"); //$NON-NLS-1$
+        }
 
         return builder.build();
     }
 
-    public KotlinFunctionParts getPrimaryKeyWhereClauseForUpdate() {
-        KotlinFunctionParts.Builder builder = new KotlinFunctionParts.Builder();
+    private String singleColumnWhere(String columName, String property) {
+        return "    where { " + composeIsEqualTo(columName, property)  + " }"; //$NON-NLS-1$ //$NON-NLS-2$
+    }
 
-        boolean first = true;
-        for (IntrospectedColumn column : introspectedTable.getPrimaryKeyColumns()) {
-            AbstractKotlinFunctionGenerator.FieldNameAndImport fieldNameAndImport =
-                    AbstractKotlinFunctionGenerator.calculateFieldNameAndImport(tableFieldName,
-                            supportObjectImport, column);
+    private String multiColumnWhere(String columName, String property) {
+        return "        " + composeIsEqualTo(columName, property); //$NON-NLS-1$
+    }
 
-            builder.withImport(fieldNameAndImport.importString());
-            if (first) {
-                builder.withCodeLine("    where { " + fieldNameAndImport.fieldName() //$NON-NLS-1$
-                        + " isEqualTo row." + column.getJavaProperty() //$NON-NLS-1$
-                        + "!! }"); //$NON-NLS-1$
-                first = false;
-            } else {
-                builder.withCodeLine("    and {" + fieldNameAndImport.fieldName() //$NON-NLS-1$
-                        + " isEqualTo row." + column.getJavaProperty() //$NON-NLS-1$
-                        + "!! }"); //$NON-NLS-1$
-            }
-        }
-        builder.withCodeLine("}"); //$NON-NLS-1$
+    private String multiColumnAnd(String columName, String property) {
+        return "        and { " + composeIsEqualTo(columName, property)  + " }"; //$NON-NLS-1$ //$NON-NLS-2$
+    }
 
-        return builder.build();
+    private String composeIsEqualTo(String columName, String property) {
+        return columName + " isEqualTo " + property; //$NON-NLS-1$
     }
 
     public KotlinFunctionParts getAnnotatedResults() {

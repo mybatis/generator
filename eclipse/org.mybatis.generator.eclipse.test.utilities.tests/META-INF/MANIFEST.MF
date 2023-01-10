@@ -6,6 +6,6 @@ Bundle-Version: 1.4.2.qualifier
 Fragment-Host: org.mybatis.generator.eclipse.test.utilities;bundle-version="1.4.2"
 Automatic-Module-Name: org.mybatis.generator.eclipse.test.utilities.tests
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Require-Bundle: org.junit.jupiter.api;bundle-version="5.3.1",
- org.junit;bundle-version="4.12.0"
+Require-Bundle: org.junit.jupiter.api;bundle-version="5.7.1",
+ org.junit;bundle-version="4.13.0"
 Bundle-Vendor: mybatis.org

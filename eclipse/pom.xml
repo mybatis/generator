@@ -121,6 +121,25 @@
     
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-toolchains-plugin</artifactId>
+        <version>3.1.0</version>
+        <configuration>
+          <toolchains>
+            <jdk>
+              <version>11</version>
+            </jdk>
+          </toolchains>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>toolchain</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>com.mycila</groupId>
         <artifactId>license-maven-plugin</artifactId>
       </plugin>
@@ -179,7 +198,7 @@
         <artifactId>target-platform-configuration</artifactId>
         <version>${tycho-version}</version>
         <configuration>
-          <executionEnvironments>JavaSE-1.8</executionEnvironments>
+          <executionEnvironments>JavaSE-11</executionEnvironments>
           <environments>
             <environment>
               <os>win32</os>

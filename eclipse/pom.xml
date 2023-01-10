@@ -55,9 +55,9 @@
 
   <repositories>
     <repository>
-      <id>Oldest Version Supporting Java 11</id>
+      <id>2021-06</id>
       <layout>p2</layout>
-      <url>http://download.eclipse.org/releases/2018-12</url>
+      <url>http://download.eclipse.org/releases/2021-06/</url>
     </repository>
   </repositories>
 

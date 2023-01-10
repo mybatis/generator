@@ -4,12 +4,12 @@ Bundle-Name: MyBatis Generator Eclipse Core Support
 Bundle-SymbolicName: org.mybatis.generator.eclipse.core
 Bundle-Version: 1.4.2.qualifier
 Bundle-Vendor: mybatis.org
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Require-Bundle: org.mybatis.generator.core;bundle-version="1.4.2";visibility:=reexport,
- org.eclipse.jdt.core;bundle-version="3.16.0",
- org.eclipse.jface.text;bundle-version="3.15.0",
- org.eclipse.core.resources;bundle-version="3.13.200",
- org.eclipse.core.runtime;bundle-version="3.15.100"
+ org.eclipse.jdt.core;bundle-version="3.26.0",
+ org.eclipse.jface.text;bundle-version="3.18.0",
+ org.eclipse.core.resources;bundle-version="3.15.0",
+ org.eclipse.core.runtime;bundle-version="3.22.0"
 Export-Package: org.mybatis.generator.eclipse.core.callback,
  org.mybatis.generator.eclipse.core.merge,
  org.mybatis.generator.eclipse.core.merge.visitors

@@ -4,7 +4,7 @@ Bundle-Name: MyBatis Generator Core
 Bundle-SymbolicName: org.mybatis.generator.core
 Bundle-Version: 1.4.2.qualifier
 Bundle-Vendor: mybatis.org
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: org.mybatis.generator.ant,
  org.mybatis.generator.api,
  org.mybatis.generator.api.dom,
@@ -45,5 +45,8 @@ Export-Package: org.mybatis.generator.ant,
  org.mybatis.generator.runtime.kotlin,
  org.mybatis.generator.runtime.kotlin.elements
 Automatic-Module-Name: org.mybatis.generator.core
-Import-Package: org.apache.tools.ant;version="1.10.5";resolution:=optional,
- org.apache.tools.ant.types;version="1.10.5";resolution:=optional
+Import-Package: org.apache.commons.logging;version="1.2.0";resolution:=optional,
+ org.apache.tools.ant;version="1.10.10";resolution:=optional,
+ org.apache.tools.ant.types;version="1.10.10";resolution:=optional,
+ org.slf4j;version="1.7.30";resolution:=optional,
+ org.slf4j.spi;version="1.7.30";resolution:=optional

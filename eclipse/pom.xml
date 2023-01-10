@@ -53,14 +53,6 @@
     <sonar.language>java</sonar.language>
   </properties>
 
-  <repositories>
-    <repository>
-      <id>Oldest Version Supporting Java 11</id>
-      <layout>p2</layout>
-      <url>http://download.eclipse.org/releases/2018-12</url>
-    </repository>
-  </repositories>
-
   <build>
     <pluginManagement>
       <plugins>
@@ -112,14 +104,33 @@
           <artifactId>tycho-compiler-plugin</artifactId>
           <version>${tycho-version}</version>
           <configuration>
-            <source>1.8</source>
-            <target>1.8</target>
+            <source>11</source>
+            <target>11</target>
           </configuration>
         </plugin>
       </plugins>
     </pluginManagement>
     
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-toolchains-plugin</artifactId>
+        <version>3.1.0</version>
+        <configuration>
+          <toolchains>
+            <jdk>
+              <version>11</version>
+            </jdk>
+          </toolchains>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>toolchain</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>com.mycila</groupId>
         <artifactId>license-maven-plugin</artifactId>
@@ -179,7 +190,16 @@
         <artifactId>target-platform-configuration</artifactId>
         <version>${tycho-version}</version>
         <configuration>
-          <executionEnvironments>JavaSE-1.8</executionEnvironments>
+          <target>
+            <artifact>
+              <groupId>org.mybatis.generator</groupId>
+              <artifactId>org.mybatis.generator.eclipse.target.platform</artifactId>
+              <version>${project.version}</version>
+            </artifact>
+          </target>
+          <target>
+            <file>../releng/2021-06.target</file>
+          </target>
           <environments>
             <environment>
               <os>win32</os>
@@ -205,6 +225,11 @@
               <os>macosx</os>
               <ws>cocoa</ws>
               <arch>x86_64</arch>
+            </environment>
+            <environment>
+              <os>macosx</os>
+              <ws>cocoa</ws>
+              <arch>aarch64</arch>
             </environment>
           </environments>
         </configuration>

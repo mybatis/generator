@@ -158,11 +158,11 @@ familiar with git and the Eclipse plug-in development environment (PDE).</p>
       <li>Press "Finish", wait for the workspace to build.</li>
     </ol>
   </li>
-  <li>The project includes an Eclipse target platform definition file. The purpose is to set the minimum version
+  <li>The project includes Eclipse target platform definition files. The purpose is to set the minimum version
    of Eclipse supported by the feature and to ensure that you do not inadvertently use Eclipse features from later
-   versions. The file is <code>releng/target-platform-definition.target</code>. To activate
-   the target platform, open the file and click on the link that says "Set as active target platform". This action
-   may take a few minutes to complete.
+   versions. Target platform files are in the <code>releng</code> project. To activate
+   the target platform, open the proper target file and click on the link that says "Set as active target platform". This action
+   may take a few minutes to complete. The README in the releng project contains information about which target platform file to use.
   </li>
   <li>You will likely have workspace errors due to missing source code in the
     <code>org.mybatis.generator.core</code> project.  There are two ways to solve this:

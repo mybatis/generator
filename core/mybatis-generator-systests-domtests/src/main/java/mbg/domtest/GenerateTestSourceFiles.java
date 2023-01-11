@@ -48,20 +48,20 @@ public class GenerateTestSourceFiles {
         }
     }
 
-    private void gatherGenerators(List<CompilationUnitGenerator> generators) throws InstantiationException, IllegalAccessException {
+    private void gatherGenerators(List<CompilationUnitGenerator> generators) throws ReflectiveOperationException {
         Reflections reflections = new Reflections("mbg.domtest.generators");
         Set<Class<? extends CompilationUnitGenerator>> classes = reflections.getSubTypesOf(CompilationUnitGenerator.class);
 
         for (Class<? extends CompilationUnitGenerator> clazz : classes) {
             if (clazz.getAnnotation(IgnoreDomTest.class) == null) {
-                generators.add(clazz.newInstance());
+                generators.add(clazz.getDeclaredConstructor().newInstance());
             } else {
                 System.out.println("Generator " + clazz.getName() + " ignored");
             }
         }
     }
 
-    private void run(File outputDirectory) throws IOException, InstantiationException, IllegalAccessException {
+    private void run(File outputDirectory) throws IOException, ReflectiveOperationException {
         setupOutputDirectry(outputDirectory);
 
         List<CompilationUnitGenerator> generators = new ArrayList<>();

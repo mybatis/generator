@@ -79,7 +79,7 @@ public class SqlScriptRunner {
 
         try {
             Class<?> driverClass = ObjectFactory.externalClassForName(driver);
-            Driver theDriver = (Driver) driverClass.newInstance();
+            Driver theDriver = (Driver) driverClass.getDeclaredConstructor().newInstance();
 
             Properties properties = new Properties();
             if (userid != null) {
@@ -114,10 +114,8 @@ public class SqlScriptRunner {
             throw new MojoExecutionException("SqlException: " + e.getMessage(), e);
         } catch (IOException e) {
             throw new MojoExecutionException("IOException: " + e.getMessage(), e);
-        } catch (InstantiationException e) {
-            throw new MojoExecutionException("InstantiationException: " + e.getMessage());
-        } catch (IllegalAccessException e) {
-            throw new MojoExecutionException("IllegalAccessException: " + e.getMessage());
+        } catch (ReflectiveOperationException e) {
+            throw new MojoExecutionException("ReflectiveOperationException: " + e.getMessage());
         } finally {
             closeConnection(connection);
         }

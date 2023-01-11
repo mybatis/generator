@@ -191,13 +191,6 @@
         <version>${tycho-version}</version>
         <configuration>
           <target>
-            <artifact>
-              <groupId>org.mybatis.generator</groupId>
-              <artifactId>org.mybatis.generator.eclipse.target.platform</artifactId>
-              <version>${project.version}</version>
-            </artifact>
-          </target>
-          <target>
             <file>../releng/2021-06.target</file>
           </target>
           <environments>

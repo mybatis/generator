@@ -111,18 +111,22 @@
                   <type>eclipse-feature</type>
                 </dependency>
                 <dependency>
-                  <artifactId>org.eclipse.equinox.ds</artifactId>
-                  <type>eclipse-plugin</type>
+                  <artifactId>org.eclipse.equinox.p2.discovery.feature</artifactId>
+                  <type>eclipse-feature</type>
                 </dependency>
               </dependencies>
-              <applicationsArgs>
-                <applicationsArg>-application org.eclipse.ant.core.antRunner</applicationsArg>
-                <applicationsArg>-buildfile updateP2CompositeRepo.ant</applicationsArg>
-                <applicationsArg>-Dproject.artifactId=${project.artifactId}</applicationsArg>
-                <applicationsArg>-DqualifiedVersion=${qualifiedVersion}</applicationsArg>
-                <applicationsArg>-Dproject.build.directory=${project.build.directory}</applicationsArg>
-                <applicationsArg>-Dp2.repo.base.directory=${p2.repo.base.directory}</applicationsArg>
-              </applicationsArgs>
+              <applicationArgs>
+                <arg>-application</arg>
+                <arg>org.eclipse.ant.core.antRunner</arg>
+                <arg>-buildfile</arg>
+                <arg>updateP2CompositeRepo.ant</arg>
+              </applicationArgs>
+              <jvmArgs>
+                <arg>-Dproject.artifactId=${project.artifactId}</arg>
+                <arg>-DqualifiedVersion=${qualifiedVersion}</arg>
+                <arg>-Dproject.build.directory=${project.build.directory}</arg>
+                <arg>-Dp2.repo.base.directory=${p2.repo.base.directory}</arg>
+              </jvmArgs>
             </configuration>
             <executions>
               <execution>

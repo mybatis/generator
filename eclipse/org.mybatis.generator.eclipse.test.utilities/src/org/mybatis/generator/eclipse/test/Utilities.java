@@ -60,7 +60,7 @@ public class Utilities {
 
     public static <T> T newInstance(Class<? extends T> type) {
         try {
-            return type.newInstance();
+            return type.getDeclaredConstructor().newInstance();
         } catch (Exception e) {
             throw new CantCreateInstanceException("error creating instance of class " + type.getName(), e);
         }

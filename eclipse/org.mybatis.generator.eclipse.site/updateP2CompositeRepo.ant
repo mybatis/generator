@@ -31,7 +31,11 @@
         by pulling a current copy from jfrog)
     
 -->
-<project name="project" default="updateRepo">
+<project name="project" default="writeScript">
+  <condition property="isUnix">
+  	<os family="unix" />
+  </condition>
+  
   <target name="init">
     <property name="repo.drops.dir" value="${p2.repo.base.directory}/drops"/>
     <property name="repo.zipped.dir" value="${p2.repo.base.directory}/zipped"/>
@@ -78,7 +82,9 @@
         <include name="*.xml" />
       </fileset>
     </replaceregexp>
+  </target>
 
+  <target name="writeScript" depends="updateRepo" if="isUnix">
     <!-- setup the shebang and variables -->
     <echo message="#!/bin/bash${line.separator}" file="${p2.repo.base.directory}/jfrogUpload.sh" />
     <echo message="USER=xxxx${line.separator}" file="${p2.repo.base.directory}/jfrogUpload.sh" append="true" />
@@ -102,6 +108,5 @@
 
     <!-- make it executable -->
     <chmod perm="+x" file="${p2.repo.base.directory}/jfrogUpload.sh"/>
-
   </target>
 </project>

@@ -22,7 +22,6 @@ public enum LoggingButtonData {
     SLF4J(false, "SLF4J"),
     COMMONS_LOGGING(false, "Jakarta Commons"),
     LOG4J2(false, "Log4j 2.x"),
-    LOG4J(false, "Log4j 1.x"),
     JDK(false, "JDK Standard");
     
     private String displayText;

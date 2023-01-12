@@ -62,4 +62,8 @@ class Slf4jLocationAwareLoggerImpl implements Log {
         logger.log(MARKER, FQCN, LocationAwareLogger.WARN_INT, s, null, null);
     }
 
+    @Override
+    public void info(String s) {
+        logger.log(MARKER, FQCN, LocationAwareLogger.INFO_INT, s, null, null);
+    }
 }

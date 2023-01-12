@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2022 the original author or authors.
+ *    Copyright 2006-2023 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -65,7 +65,7 @@ public interface ProgressCallback {
     /**
      * Called to note the start of the file saving phase, and to note the
      * maximum number of startTask messages that will be sent for the file
-     * saving phase phase.
+     * saving phase.
      *
      * @param totalTasks
      *            the maximum number of times startTask will be called for the
@@ -87,8 +87,8 @@ public interface ProgressCallback {
     default void done() {}
 
     /**
-     * The method is called periodically during a long running method.
-     * If the the implementation throws <code>InterruptedException</code> then
+     * The method is called periodically during a long-running method.
+     * If the implementation throws <code>InterruptedException</code> then
      * the method will be canceled. Any files that have already been saved will
      * remain on the file system.
      *

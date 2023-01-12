@@ -42,9 +42,6 @@ import org.mybatis.generator.internal.ObjectFactory;
 import org.mybatis.generator.internal.util.ClassloaderUtility;
 import org.mybatis.generator.internal.util.StringUtility;
 import org.mybatis.generator.internal.util.messages.Messages;
-import org.mybatis.generator.logging.LogFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Goal which generates MyBatis artifacts.
@@ -164,8 +161,6 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
         }
 
         saveClassLoader();
-
-        LogFactory.setLogFactory(new MavenLogFactory(this));
 
         calculateClassPath();
 

@@ -31,6 +31,6 @@ public class IgnoreViewsPlugin extends PluginAdapter {
 
     @Override
     public boolean shouldGenerate(IntrospectedTable introspectedTable) {
-        return !"VIEW".equals(introspectedTable.getTableType()); //$NON-NLS-1$
+        return !"VIEW".equalsIgnoreCase(introspectedTable.getTableType()); //$NON-NLS-1$
     }
 }

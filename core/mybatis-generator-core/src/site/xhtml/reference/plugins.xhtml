@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2022 the original author or authors.
+       Copyright 2006-2023 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -118,6 +118,11 @@ The plugin will create the additional Methods:
 
 <p>Using this plugin, you can configure the property values fluently with chained method calls. Example: <code>new MyDomain().withFoo("Test").withBar(4711);</code></p>
 
+
+<h2>org.mybatis.generator.plugins.IgnoreViewsPlugin</h2>
+<p>This plugin will filter out any table of type "VIEW" from a code generation run. This can be useful if you use
+    a wildcard to select many tables and views, but don't want to generate code for the views.
+</p>
 
 <h2>org.mybatis.generator.plugins.MapperAnnotationPlugin</h2>
 <p>This plugin has no impact and is not needed when the target runtime in use is based on MyBatis Dynamic SQL.</p>

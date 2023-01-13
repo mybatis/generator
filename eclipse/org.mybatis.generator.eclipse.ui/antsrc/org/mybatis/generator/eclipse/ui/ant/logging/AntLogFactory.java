@@ -20,13 +20,13 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import org.mybatis.generator.eclipse.ui.ant.logging.commons.JakartaCommonsLoggingLogFactory;
 import org.mybatis.generator.eclipse.ui.ant.logging.log4j2.Log4j2LoggingLogFactory;
+import org.mybatis.generator.eclipse.ui.ant.logging.slf4j.Slf4jLoggingLogFactory;
 import org.mybatis.generator.eclipse.ui.launcher.tabs.LoggingButtonData;
 import org.mybatis.generator.logging.AbstractLogFactory;
 import org.mybatis.generator.logging.Log;
 import org.mybatis.generator.logging.LogException;
 import org.mybatis.generator.logging.jdk14.Jdk14LoggingLogFactory;
 import org.mybatis.generator.logging.nologging.NoLoggingLogFactory;
-import org.mybatis.generator.logging.slf4j.Slf4jLoggingLogFactory;
 
 /**
  * Factory for creating loggers

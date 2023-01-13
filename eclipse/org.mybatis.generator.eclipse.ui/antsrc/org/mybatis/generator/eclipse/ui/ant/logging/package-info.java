@@ -19,8 +19,15 @@
  * in the base MyBatis Generator code.  We need to duplicate them in the Eclipse plugin Ant runner
  * because of some complexities in plugin class loading.
  * <p>
- * We don't want the optional logging frameworks to always be on the plugin classpath.  And the plugin
- * classpath cannot be altered at runtime.  And the plugin classloader is a parent of the Ant classloader.
+ * Classes in the antsupport JAR are loaded by the Ant classloader - which is a child of the plugin classloader.
+ * 
+ * Only the Ant classloader will have the logging implementations that are added to the launch configuration
+ * classpath.
+ * 
+ * Any class that uses one of the optional logging implementations must also be loaded by the Ant classloader.
+ * If we use the versions from the base library (loaded by the plugin classloader), they will not be able to see
+ * the implementation JARs.
+ * 
  * All of this combines to mean that we need the logging implementations that have optional dependencies
  * to be loaded by the Ant classloader, rather than the plugin classloader - so we need them in this source
  * JAR rather than the main plugin JAR.

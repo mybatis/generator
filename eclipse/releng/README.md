@@ -43,6 +43,18 @@ following projects:
 - org.mybatis.generator.eclipse.ui
 - org.mybatis.generator.eclipse.ui.tests
 
+### Libraries
+
+Optional dependencies are in the "lib" directory of the org.mybatis.generator.core project. They should be upgraded
+periodically.
+
+We use this strategy rather then relying on Eclipse's distributions of these libraries for the following reasons:
+
+- Eclipse doesn't distribute every library we need
+- The Eclipse versions are often very down level
+- We don't want the packages declared as dependencies for the final artifact
+
+
 ### Update Java Execution Environment
 
 Eclipse may throw warnings about the plugin execution environment being lower than a plugin dependency.

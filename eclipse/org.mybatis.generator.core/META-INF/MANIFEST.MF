@@ -45,8 +45,3 @@ Export-Package: org.mybatis.generator.ant,
  org.mybatis.generator.runtime.kotlin,
  org.mybatis.generator.runtime.kotlin.elements
 Automatic-Module-Name: org.mybatis.generator.core
-Import-Package: org.apache.commons.logging;version="1.2.0";resolution:=optional,
- org.apache.tools.ant;version="1.10.10";resolution:=optional,
- org.apache.tools.ant.types;version="1.10.10";resolution:=optional,
- org.slf4j;version="1.7.30";resolution:=optional,
- org.slf4j.spi;version="1.7.30";resolution:=optional

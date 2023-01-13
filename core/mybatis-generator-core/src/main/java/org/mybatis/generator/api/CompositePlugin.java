@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2022 the original author or authors.
+ *    Copyright 2006-2023 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -1258,6 +1258,17 @@ public abstract class CompositePlugin implements Plugin {
             IntrospectedTable introspectedTable) {
         for (Plugin plugin : plugins) {
             if (!plugin.clientUpdateByPrimaryKeyMethodGenerated(kotlinFunction, kotlinFile, introspectedTable)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean shouldGenerate(IntrospectedTable introspectedTable) {
+        for (Plugin plugin : plugins) {
+            if (!plugin.shouldGenerate(introspectedTable)) {
                 return false;
             }
         }

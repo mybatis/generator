@@ -40,10 +40,10 @@ import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.eclipse.core.callback.EclipseProgressCallback;
 import org.mybatis.generator.eclipse.core.callback.EclipseShellCallback;
 import org.mybatis.generator.eclipse.ui.ant.logging.AntLogFactory;
-import org.mybatis.generator.eclipse.ui.ant.logging.LogException;
 import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.exception.XMLParserException;
 import org.mybatis.generator.internal.util.StringUtility;
+import org.mybatis.generator.logging.LogException;
 import org.mybatis.generator.logging.LogFactory;
 
 /**

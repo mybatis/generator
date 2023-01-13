@@ -20,11 +20,13 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import org.mybatis.generator.eclipse.ui.ant.logging.commons.JakartaCommonsLoggingLogFactory;
 import org.mybatis.generator.eclipse.ui.ant.logging.log4j2.Log4j2LoggingLogFactory;
-import org.mybatis.generator.eclipse.ui.ant.logging.slf4j.Slf4jLoggingLogFactory;
+import org.mybatis.generator.eclipse.ui.launcher.tabs.LoggingButtonData;
 import org.mybatis.generator.logging.AbstractLogFactory;
 import org.mybatis.generator.logging.Log;
+import org.mybatis.generator.logging.LogException;
 import org.mybatis.generator.logging.jdk14.Jdk14LoggingLogFactory;
 import org.mybatis.generator.logging.nologging.NoLoggingLogFactory;
+import org.mybatis.generator.logging.slf4j.Slf4jLoggingLogFactory;
 
 /**
  * Factory for creating loggers
@@ -39,13 +41,13 @@ public class AntLogFactory implements AbstractLogFactory {
         if (loggingImplementation == null || loggingImplementation.length() == 0) {
             calculateDefaultImplementation();
         } else {
-            if ("SLF4J".equals(loggingImplementation)) { //$NON-NLS-1$
+            if (LoggingButtonData.SLF4J.name().equals(loggingImplementation)) {
                 setImplementation(new Slf4jLoggingLogFactory());
-            } else if ("COMMONS_LOGGING".equals(loggingImplementation)) { //$NON-NLS-1$
+            } else if (LoggingButtonData.COMMONS_LOGGING.name().equals(loggingImplementation)) {
                 setImplementation(new JakartaCommonsLoggingLogFactory());
-            } else if ("LOG4J2".equals(loggingImplementation)) { //$NON-NLS-1$
+            } else if (LoggingButtonData.LOG4J2.name().equals(loggingImplementation)) {
                 setImplementation(new Log4j2LoggingLogFactory());
-            } else if ("JDK".equals(loggingImplementation)) { //$NON-NLS-1$
+            } else if (LoggingButtonData.JDK.name().equals(loggingImplementation)) {
                 setImplementation(new Jdk14LoggingLogFactory());
             } else {
                 setImplementation(new NoLoggingLogFactory());

@@ -30,7 +30,4 @@ Export-Package: org.mybatis.generator.eclipse.ui,
  org.mybatis.generator.eclipse.ui.launcher,
  org.mybatis.generator.eclipse.ui.launcher.tabs,
  org.mybatis.generator.eclipse.ui.wizards
-Import-Package: org.apache.commons.logging;version="1.2.0";resolution:=optional,
- org.slf4j;version="1.7.30";resolution:=optional,
- org.slf4j.spi;version="1.7.30";resolution:=optional
 Automatic-Module-Name: org.mybatis.generator.eclipse.ui

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2022 the original author or authors.
+ *    Copyright 2006-2023 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@ package mbg.test.mb3.simpleannotated;
 
 import static mbg.test.common.util.TestUtilities.datesAreEqual;
 import static mbg.test.common.util.TestUtilities.timesAreEqual;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.math.BigDecimal;
@@ -463,5 +464,19 @@ public class SimpleAnnotatedTest extends AbstractSimpleAnnotatedTest {
         } finally {
             sqlSession.close();
         }
+    }
+
+    @Test
+    void testThatViewWasIgnored() throws ClassNotFoundException {
+        Class<?> goodClass = Class.forName("mbg.test.mb3.generated.simpleannotated.nothing.Pkfields");
+        assertNotNull(goodClass);
+
+        assertThatExceptionOfType(ClassNotFoundException.class).isThrownBy(() -> {
+            Class.forName("mbg.test.mb3.generated.simpleannotated.nothing.Nameview");
+        });
+
+        assertThatExceptionOfType(ClassNotFoundException.class).isThrownBy(() -> {
+            Class.forName("mbg.test.mb3.generated.simpleannotated.nothing.NameviewMapper");
+        });
     }
 }

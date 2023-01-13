@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2022 the original author or authors.
+ *    Copyright 2006-2023 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -2032,6 +2032,16 @@ public interface Plugin {
 
     default boolean clientUpdateByPrimaryKeyMethodGenerated(KotlinFunction kotlinFunction, KotlinFile kotlinFile,
             IntrospectedTable introspectedTable) {
+        return true;
+    }
+
+    /**
+     * If false, the table will be skipped in code generation.
+     *
+     * @param introspectedTable the current table
+     * @return true if code should be generated for this table, else false
+     */
+    default boolean shouldGenerate(IntrospectedTable introspectedTable) {
         return true;
     }
 }

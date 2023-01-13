@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2022 the original author or authors.
+       Copyright 2006-2023 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -905,5 +905,18 @@
       <columnOverride column="id7$$" delimitedColumnName="true" />
       <columnOverride column="class" property="dbClass" />
     </table>
+  </context>
+
+  <context id="nothing-generated" targetRuntime="MyBatis3Simple">
+    <plugin type="org.mybatis.generator.plugins.IgnoreViewsPlugin" />
+
+    <jdbcConnection driverClass="org.hsqldb.jdbcDriver" connectionURL="${database.url}" userId="sa" />
+
+    <javaModelGenerator targetPackage="mbg.test.mb3.generated.simpleannotated.nothing" targetProject="MAVEN"/>
+
+    <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="mbg.test.mb3.generated.simpleannotated.nothing"  targetProject="MAVEN"/>
+
+    <table tableName="NameView" />
+    <table tableName="PKFields" />
   </context>
 </generatorConfiguration>

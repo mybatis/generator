@@ -47,9 +47,7 @@ public class SimpleAnnotatedTest extends AbstractSimpleAnnotatedTest {
 
     @Test
     public void testAwfulTable() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             AwfulTableMapper mapper = sqlSession.getMapper(AwfulTableMapper.class);
 
             AwfulTable record = new AwfulTable();
@@ -84,18 +82,13 @@ public class SimpleAnnotatedTest extends AbstractSimpleAnnotatedTest {
 
             records = mapper.selectAll();
             assertEquals(1, records.size());
-
-        } finally {
-            sqlSession.close();
         }
     }
 
 
     @Test
     public void testPKFieldsInsert() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
             Pkfields record = new Pkfields();
             record.setDatefield(new Date());
@@ -133,16 +126,12 @@ public class SimpleAnnotatedTest extends AbstractSimpleAnnotatedTest {
                     .getTimefield()));
             assertEquals(record.getTimestampfield(), returnedRecord
                     .getTimestampfield());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsUpdateByPrimaryKey() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
             Pkfields record = new Pkfields();
             record.setFirstname("Jeff");
@@ -165,16 +154,12 @@ public class SimpleAnnotatedTest extends AbstractSimpleAnnotatedTest {
             assertEquals(record.getLastname(), record2.getLastname());
             assertEquals(record.getId1(), record2.getId1());
             assertEquals(record.getId2(), record2.getId2());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKfieldsDeleteByPrimaryKey() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
             Pkfields record = new Pkfields();
             record.setFirstname("Jeff");
@@ -189,16 +174,12 @@ public class SimpleAnnotatedTest extends AbstractSimpleAnnotatedTest {
 
             List<Pkfields> answer = mapper.selectAll();
             assertEquals(0, answer.size());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsSelectByPrimaryKey() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
             Pkfields record = new Pkfields();
             record.setFirstname("Jeff");
@@ -221,16 +202,12 @@ public class SimpleAnnotatedTest extends AbstractSimpleAnnotatedTest {
             assertEquals(record.getLastname(), newRecord.getLastname());
             assertEquals(record.getId1(), newRecord.getId1());
             assertEquals(record.getId2(), newRecord.getId2());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsSelectAll() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
             Pkfields record = new Pkfields();
             record.setFirstname("Fred");
@@ -276,16 +253,12 @@ public class SimpleAnnotatedTest extends AbstractSimpleAnnotatedTest {
 
             List<Pkfields> answer = mapper.selectAll();
             assertEquals(6, answer.size());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testFieldsOnly() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             FieldsonlyMapper mapper = sqlSession.getMapper(FieldsonlyMapper.class);
 
             Fieldsonly record = new Fieldsonly();
@@ -303,17 +276,12 @@ public class SimpleAnnotatedTest extends AbstractSimpleAnnotatedTest {
             List<Fieldsonly> records = mapper.selectAll();
 
             assertEquals(2, records.size());
-
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testFieldsblobs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             FieldsblobsMapper mapper = sqlSession.getMapper(FieldsblobsMapper.class);
 
             Fieldsblobs record = new Fieldsblobs();
@@ -329,17 +297,12 @@ public class SimpleAnnotatedTest extends AbstractSimpleAnnotatedTest {
             List<Fieldsblobs> records = mapper.selectAll();
 
             assertEquals(2, records.size());
-
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPkblobs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
 
             Pkblobs record = new Pkblobs();
@@ -374,17 +337,12 @@ public class SimpleAnnotatedTest extends AbstractSimpleAnnotatedTest {
 
             records = mapper.selectAll();
             assertEquals(1, records.size());
-
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPkfieldsblobs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
 
             Pkfieldsblobs record = new Pkfieldsblobs();
@@ -421,17 +379,12 @@ public class SimpleAnnotatedTest extends AbstractSimpleAnnotatedTest {
 
             records = mapper.selectAll();
             assertEquals(1, records.size());
-
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPkonly() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkonlyMapper mapper = sqlSession.getMapper(PkonlyMapper.class);
 
             Pkonly record = new Pkonly();
@@ -461,8 +414,6 @@ public class SimpleAnnotatedTest extends AbstractSimpleAnnotatedTest {
 
             records = mapper.selectAll();
             assertEquals(3, records.size());
-        } finally {
-            sqlSession.close();
         }
     }
 
@@ -471,12 +422,10 @@ public class SimpleAnnotatedTest extends AbstractSimpleAnnotatedTest {
         Class<?> goodClass = Class.forName("mbg.test.mb3.generated.simpleannotated.nothing.Pkfields");
         assertNotNull(goodClass);
 
-        assertThatExceptionOfType(ClassNotFoundException.class).isThrownBy(() -> {
-            Class.forName("mbg.test.mb3.generated.simpleannotated.nothing.Nameview");
-        });
+        assertThatExceptionOfType(ClassNotFoundException.class).isThrownBy(() ->
+                Class.forName("mbg.test.mb3.generated.simpleannotated.nothing.Nameview"));
 
-        assertThatExceptionOfType(ClassNotFoundException.class).isThrownBy(() -> {
-            Class.forName("mbg.test.mb3.generated.simpleannotated.nothing.NameviewMapper");
-        });
+        assertThatExceptionOfType(ClassNotFoundException.class).isThrownBy(() ->
+                Class.forName("mbg.test.mb3.generated.simpleannotated.nothing.NameviewMapper"));
     }
 }

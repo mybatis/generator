@@ -36,6 +36,10 @@
   <li>The Maven plugin now includes an integration with Eclipse Maven support. If you import a Maven project with the 
     generator configured into an Eclipse workspace, the code generator will run automatically.
   </li>
+  <li>Added an "info" logging level to the log abstraction. Also removed the broken Maven logging implementation.
+      Logging should now work as expected in Maven - Maven ships with the SLF4J simple logger in the classpath, so
+      configuring logging in Maven will always use the SLF simple logger.
+  </li>
 </ul>
 
 

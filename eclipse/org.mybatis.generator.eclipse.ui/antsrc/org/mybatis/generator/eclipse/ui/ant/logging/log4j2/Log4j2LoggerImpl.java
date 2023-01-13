@@ -60,4 +60,8 @@ public class Log4j2LoggerImpl implements Log {
         log.warn(MARKER, s);
     }
 
+    @Override
+    public void info(String s) {
+        log.info(MARKER, s);
+    }
 }

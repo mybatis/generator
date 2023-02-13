@@ -39,7 +39,7 @@ jobs:
       - name: Install Toolchain JDK
         uses: battila7/jdk-via-jabba@v1
         with:
-          jdk: zulu@11
+          jdk: zulu@1.11.0-10
           javaHomeEnvironmentVariable: TOOLCHAIN_JDK
       - name: Set up Toolchain
         shell: bash

@@ -75,3 +75,4 @@ out
 bin/
 data/*
 *workspace.xml
+.vscode

@@ -41,7 +41,7 @@
 
   <properties>
     <tycho-version>3.0.1</tycho-version>
-    <tycho-extras-version>3.0.1</tycho-extras-version>
+    <tycho-extras-version>3.0.2</tycho-extras-version>
     <license.version>4.2.rc3</license.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 

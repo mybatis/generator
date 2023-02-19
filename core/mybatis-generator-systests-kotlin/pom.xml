@@ -21,7 +21,7 @@
   <parent>
     <groupId>org.mybatis.generator</groupId>
     <artifactId>mybatis-generator</artifactId>
-    <version>1.4.3-SNAPSHOT</version>
+    <version>1.4.2-SNAPSHOT</version>
   </parent>
   <artifactId>mybatis-generator-systests-kotlin</artifactId>
   <description>Tests for the MyBatis3 code generator using Kotlin</description>

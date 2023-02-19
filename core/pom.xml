@@ -30,7 +30,7 @@
   <groupId>org.mybatis.generator</groupId>
   <artifactId>mybatis-generator</artifactId>
   <name>MyBatis Generator</name>
-  <version>1.4.3-SNAPSHOT</version>
+  <version>1.4.2-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <inceptionYear>2006</inceptionYear>
@@ -63,7 +63,7 @@
     <argLine>-Djdk.attach.allowAttachSelf -Xmx1024m -Duser.timezone=UTC</argLine>
 
     <!-- Reproducible Builds -->
-    <project.build.outputTimestamp>1676844308</project.build.outputTimestamp>
+    <project.build.outputTimestamp>1757561022</project.build.outputTimestamp>
   </properties>
 
   <build>

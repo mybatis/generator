@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2022 the original author or authors.
+       Copyright 2006-2023 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@
   <parent>
     <groupId>org.mybatis.generator</groupId>
     <artifactId>mybatis-generator</artifactId>
-    <version>1.4.2-SNAPSHOT</version>
+    <version>1.4.2</version>
   </parent>
 
   <artifactId>mybatis-generator-core</artifactId>
@@ -233,6 +233,6 @@
   <description>MyBatis Generator - a code generator for MyBatis.</description>
   <scm>
     <url>https://github.com/mybatis/generator</url>
-    <tag>HEAD</tag>
+    <tag>mybatis-generator-1.4.2</tag>
   </scm>
 </project>

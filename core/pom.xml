@@ -30,7 +30,7 @@
   <groupId>org.mybatis.generator</groupId>
   <artifactId>mybatis-generator</artifactId>
   <name>MyBatis Generator</name>
-  <version>1.4.2-SNAPSHOT</version>
+  <version>1.4.2</version>
   <packaging>pom</packaging>
 
   <inceptionYear>2006</inceptionYear>
@@ -41,7 +41,7 @@
     <url>https://github.com/mybatis/generator</url>
     <connection>scm:git:ssh://github.com/mybatis/generator.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/mybatis/generator.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>mybatis-generator-1.4.2</tag>
   </scm>
   <issueManagement>
     <system>GitHub Issue Management</system>
@@ -63,7 +63,7 @@
     <argLine>-Djdk.attach.allowAttachSelf -Xmx1024m -Duser.timezone=UTC</argLine>
 
     <!-- Reproducible Builds -->
-    <project.build.outputTimestamp>1757561022</project.build.outputTimestamp>
+    <project.build.outputTimestamp>1676846192</project.build.outputTimestamp>
   </properties>
 
   <build>

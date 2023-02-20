@@ -22,7 +22,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.mybatis.generator</groupId>
   <artifactId>org.mybatis.generator.eclipse.parent</artifactId>
-  <version>1.4.2-SNAPSHOT</version>
+  <version>1.4.3-SNAPSHOT</version>
   <packaging>pom</packaging>
   <inceptionYear>2006</inceptionYear>
 

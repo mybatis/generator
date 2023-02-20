@@ -22,7 +22,7 @@ Releasing Core:
 1. Clone the main repo (with ssh), checkout the master branch
 2. cd core
 3. mvn release:prepare
-4. mvn release:perform (this also updates the site)
+4. mvn release:perform
 5. Logon to https://oss.sonatype.org/
 6. Find the mybatis staging repo
 7. Verify everything looks OK (I usually delete the bundle files as they're not
@@ -31,13 +31,52 @@ Releasing Core:
 9. Release the repo
 
 -------------------------------------------------------------------------------
+Update the site:
+
+The site deployment plugin is broken on Mac M1 and with newer keys on any
+platform. Therefore it is disabled in the normal release. Here's how to do it
+manually:
+
+1. Clone the main repo and checkout the release tag.  e.g.:
+   
+   git clone https://github.com/mybatis/generator.git
+   cd generator
+   git checkout mybatis-generator-1.4.2
+   
+2. cd core/mybatis-generator-core
+3. mvn clean site
+4. Checkout a copy of the main repo in a temp directory:
+
+   mkdir ~/temp/temp-generator
+   cd ~/temp/temp-generator
+   git clone https://github.com/mybatis/generator.git
+   cd generator
+   git checkout gh-pages
+
+5. Copy the generated site into the temp checkout:
+
+   cp -R <<source git>>/mybatis-generator-core/target/site ~/temp/temp-generator/generator
+
+6. Push the new site:
+
+   cd ~/temp/temp-generator/generator
+   git add .
+   git commit -m "Manual Site Update 1.4.2"
+   git push
+
+7. Delete the temporary checkout
+
+   rm -R ~/temp/temp-generator
+
+
+-------------------------------------------------------------------------------
 Releasing the Eclipse Feature:
 
 1. Clone the main repo and checkout the release tag.  e.g.:
    
    git clone https://github.com/mybatis/generator.git
    cd generator
-   git checkout mybatis-generator-1.4.1
+   git checkout mybatis-generator-1.4.2
    
 2. cd eclipse/
 3. mvn -Prelease-composite clean integration-test
@@ -57,7 +96,7 @@ Final Details:
 
    git checkout master
    cd eclipse/
-   mvn tycho-versions:set-version -DnewVersion=1.4.1-SNAPSHOT
+   mvn tycho-versions:set-version -DnewVersion=1.4.3-SNAPSHOT
    git add .
    git commit -m "Update Eclipse versions for new release"
    git push

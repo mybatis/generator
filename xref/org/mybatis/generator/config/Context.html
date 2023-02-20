@@ -7,13 +7,13 @@
 <body>
 <div id="overview"><a href="../../../../../apidocs/org/mybatis/generator/config/Context.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_comment">/*</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> *    Copyright 2006-2022 the original author or authors.</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> *    Copyright 2006-2023 the original author or authors.</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_comment"> *    Licensed under the Apache License, Version 2.0 (the "License");</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_comment"> *    you may not use this file except in compliance with the License.</em>
 <a class="jxr_linenumber" name="L6" href="#L6">6</a>   <em class="jxr_comment"> *    You may obtain a copy of the License at</em>
 <a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_comment"> *</em>
-<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_comment"> *       <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a></em>
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_comment"> *       <a href="https://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">https://www.apache.org/licenses/LICENSE-2.0</a></em>
 <a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_comment"> *    Unless required by applicable law or agreed to in writing, software</em>
 <a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_comment"> *    distributed under the License is distributed on an "AS IS" BASIS,</em>
@@ -467,84 +467,89 @@
 <a class="jxr_linenumber" name="L459" href="#L459">459</a> 
 <a class="jxr_linenumber" name="L460" href="#L460">460</a>         <strong class="jxr_keyword">for</strong> (<a name="IntrospectedTable" href="../../../../org/mybatis/generator/api/IntrospectedTable.html#IntrospectedTable">IntrospectedTable</a> introspectedTable : introspectedTables) {
 <a class="jxr_linenumber" name="L461" href="#L461">461</a>             callback.checkCancel();
-<a class="jxr_linenumber" name="L462" href="#L462">462</a>             generatedJavaFiles.addAll(introspectedTable
-<a class="jxr_linenumber" name="L463" href="#L463">463</a>                     .getGeneratedJavaFiles());
-<a class="jxr_linenumber" name="L464" href="#L464">464</a>             generatedXmlFiles.addAll(introspectedTable
-<a class="jxr_linenumber" name="L465" href="#L465">465</a>                     .getGeneratedXmlFiles());
-<a class="jxr_linenumber" name="L466" href="#L466">466</a>             generatedKotlinFiles.addAll(introspectedTable
-<a class="jxr_linenumber" name="L467" href="#L467">467</a>                     .getGeneratedKotlinFiles());
-<a class="jxr_linenumber" name="L468" href="#L468">468</a> 
-<a class="jxr_linenumber" name="L469" href="#L469">469</a>             generatedJavaFiles.addAll(pluginAggregator
-<a class="jxr_linenumber" name="L470" href="#L470">470</a>                     .contextGenerateAdditionalJavaFiles(introspectedTable));
-<a class="jxr_linenumber" name="L471" href="#L471">471</a>             generatedXmlFiles.addAll(pluginAggregator
-<a class="jxr_linenumber" name="L472" href="#L472">472</a>                     .contextGenerateAdditionalXmlFiles(introspectedTable));
-<a class="jxr_linenumber" name="L473" href="#L473">473</a>             generatedKotlinFiles.addAll(pluginAggregator
-<a class="jxr_linenumber" name="L474" href="#L474">474</a>                     .contextGenerateAdditionalKotlinFiles(introspectedTable));
-<a class="jxr_linenumber" name="L475" href="#L475">475</a>             otherGeneratedFiles.addAll(pluginAggregator
-<a class="jxr_linenumber" name="L476" href="#L476">476</a>                     .contextGenerateAdditionalFiles(introspectedTable));
-<a class="jxr_linenumber" name="L477" href="#L477">477</a>         }
-<a class="jxr_linenumber" name="L478" href="#L478">478</a> 
-<a class="jxr_linenumber" name="L479" href="#L479">479</a>         generatedJavaFiles.addAll(pluginAggregator
-<a class="jxr_linenumber" name="L480" href="#L480">480</a>                 .contextGenerateAdditionalJavaFiles());
-<a class="jxr_linenumber" name="L481" href="#L481">481</a>         generatedXmlFiles.addAll(pluginAggregator
-<a class="jxr_linenumber" name="L482" href="#L482">482</a>                 .contextGenerateAdditionalXmlFiles());
-<a class="jxr_linenumber" name="L483" href="#L483">483</a>         generatedKotlinFiles.addAll(pluginAggregator
-<a class="jxr_linenumber" name="L484" href="#L484">484</a>                 .contextGenerateAdditionalKotlinFiles());
-<a class="jxr_linenumber" name="L485" href="#L485">485</a>         otherGeneratedFiles.addAll(pluginAggregator
-<a class="jxr_linenumber" name="L486" href="#L486">486</a>                 .contextGenerateAdditionalFiles());
-<a class="jxr_linenumber" name="L487" href="#L487">487</a>     }
-<a class="jxr_linenumber" name="L488" href="#L488">488</a> 
-<a class="jxr_linenumber" name="L489" href="#L489">489</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L490" href="#L490">490</a> <em class="jxr_javadoccomment">     * This method creates a new JDBC connection from the values specified in the configuration file.</em>
-<a class="jxr_linenumber" name="L491" href="#L491">491</a> <em class="jxr_javadoccomment">     * If you call this method, then you are responsible</em>
-<a class="jxr_linenumber" name="L492" href="#L492">492</a> <em class="jxr_javadoccomment">     * for closing the connection (See {@link Context#closeConnection(Connection)}). If you do not</em>
-<a class="jxr_linenumber" name="L493" href="#L493">493</a> <em class="jxr_javadoccomment">     * close the connection, then there could be connection leaks.</em>
-<a class="jxr_linenumber" name="L494" href="#L494">494</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L495" href="#L495">495</a> <em class="jxr_javadoccomment">     * @return a new connection created from the values in the configuration file</em>
-<a class="jxr_linenumber" name="L496" href="#L496">496</a> <em class="jxr_javadoccomment">     * @throws SQLException if any error occurs while creating the connection</em>
-<a class="jxr_linenumber" name="L497" href="#L497">497</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L498" href="#L498">498</a>     <strong class="jxr_keyword">public</strong> Connection getConnection() <strong class="jxr_keyword">throws</strong> SQLException {
-<a class="jxr_linenumber" name="L499" href="#L499">499</a>         <a name="ConnectionFactory" href="../../../../org/mybatis/generator/api/ConnectionFactory.html#ConnectionFactory">ConnectionFactory</a> connectionFactory;
-<a class="jxr_linenumber" name="L500" href="#L500">500</a>         <strong class="jxr_keyword">if</strong> (jdbcConnectionConfiguration != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L501" href="#L501">501</a>             connectionFactory = <strong class="jxr_keyword">new</strong> <a name="JDBCConnectionFactory" href="../../../../org/mybatis/generator/internal/JDBCConnectionFactory.html#JDBCConnectionFactory">JDBCConnectionFactory</a>(jdbcConnectionConfiguration);
-<a class="jxr_linenumber" name="L502" href="#L502">502</a>         } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L503" href="#L503">503</a>             connectionFactory = ObjectFactory.createConnectionFactory(<strong class="jxr_keyword">this</strong>);
-<a class="jxr_linenumber" name="L504" href="#L504">504</a>         }
-<a class="jxr_linenumber" name="L505" href="#L505">505</a> 
-<a class="jxr_linenumber" name="L506" href="#L506">506</a>         <strong class="jxr_keyword">return</strong> connectionFactory.getConnection();
-<a class="jxr_linenumber" name="L507" href="#L507">507</a>     }
-<a class="jxr_linenumber" name="L508" href="#L508">508</a> 
-<a class="jxr_linenumber" name="L509" href="#L509">509</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L510" href="#L510">510</a> <em class="jxr_javadoccomment">     * This method closes a JDBC connection and ignores any errors. If the passed connection is null,</em>
-<a class="jxr_linenumber" name="L511" href="#L511">511</a> <em class="jxr_javadoccomment">     * then the method does nothing.</em>
-<a class="jxr_linenumber" name="L512" href="#L512">512</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L513" href="#L513">513</a> <em class="jxr_javadoccomment">     * @param connection a JDBC connection to close, may be null</em>
-<a class="jxr_linenumber" name="L514" href="#L514">514</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L515" href="#L515">515</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> closeConnection(Connection connection) {
-<a class="jxr_linenumber" name="L516" href="#L516">516</a>         <strong class="jxr_keyword">if</strong> (connection != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L517" href="#L517">517</a>             <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L518" href="#L518">518</a>                 connection.close();
-<a class="jxr_linenumber" name="L519" href="#L519">519</a>             } <strong class="jxr_keyword">catch</strong> (SQLException e) {
-<a class="jxr_linenumber" name="L520" href="#L520">520</a>                 <em class="jxr_comment">// ignore</em>
-<a class="jxr_linenumber" name="L521" href="#L521">521</a>             }
-<a class="jxr_linenumber" name="L522" href="#L522">522</a>         }
-<a class="jxr_linenumber" name="L523" href="#L523">523</a>     }
-<a class="jxr_linenumber" name="L524" href="#L524">524</a> 
-<a class="jxr_linenumber" name="L525" href="#L525">525</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> autoDelimitKeywords() {
-<a class="jxr_linenumber" name="L526" href="#L526">526</a>         <strong class="jxr_keyword">return</strong> autoDelimitKeywords != <strong class="jxr_keyword">null</strong>
-<a class="jxr_linenumber" name="L527" href="#L527">527</a>                 &amp;&amp; autoDelimitKeywords;
+<a class="jxr_linenumber" name="L462" href="#L462">462</a> 
+<a class="jxr_linenumber" name="L463" href="#L463">463</a>             <strong class="jxr_keyword">if</strong> (!pluginAggregator.shouldGenerate(introspectedTable)) {
+<a class="jxr_linenumber" name="L464" href="#L464">464</a>                 <strong class="jxr_keyword">continue</strong>;
+<a class="jxr_linenumber" name="L465" href="#L465">465</a>             }
+<a class="jxr_linenumber" name="L466" href="#L466">466</a> 
+<a class="jxr_linenumber" name="L467" href="#L467">467</a>             generatedJavaFiles.addAll(introspectedTable
+<a class="jxr_linenumber" name="L468" href="#L468">468</a>                     .getGeneratedJavaFiles());
+<a class="jxr_linenumber" name="L469" href="#L469">469</a>             generatedXmlFiles.addAll(introspectedTable
+<a class="jxr_linenumber" name="L470" href="#L470">470</a>                     .getGeneratedXmlFiles());
+<a class="jxr_linenumber" name="L471" href="#L471">471</a>             generatedKotlinFiles.addAll(introspectedTable
+<a class="jxr_linenumber" name="L472" href="#L472">472</a>                     .getGeneratedKotlinFiles());
+<a class="jxr_linenumber" name="L473" href="#L473">473</a> 
+<a class="jxr_linenumber" name="L474" href="#L474">474</a>             generatedJavaFiles.addAll(pluginAggregator
+<a class="jxr_linenumber" name="L475" href="#L475">475</a>                     .contextGenerateAdditionalJavaFiles(introspectedTable));
+<a class="jxr_linenumber" name="L476" href="#L476">476</a>             generatedXmlFiles.addAll(pluginAggregator
+<a class="jxr_linenumber" name="L477" href="#L477">477</a>                     .contextGenerateAdditionalXmlFiles(introspectedTable));
+<a class="jxr_linenumber" name="L478" href="#L478">478</a>             generatedKotlinFiles.addAll(pluginAggregator
+<a class="jxr_linenumber" name="L479" href="#L479">479</a>                     .contextGenerateAdditionalKotlinFiles(introspectedTable));
+<a class="jxr_linenumber" name="L480" href="#L480">480</a>             otherGeneratedFiles.addAll(pluginAggregator
+<a class="jxr_linenumber" name="L481" href="#L481">481</a>                     .contextGenerateAdditionalFiles(introspectedTable));
+<a class="jxr_linenumber" name="L482" href="#L482">482</a>         }
+<a class="jxr_linenumber" name="L483" href="#L483">483</a> 
+<a class="jxr_linenumber" name="L484" href="#L484">484</a>         generatedJavaFiles.addAll(pluginAggregator
+<a class="jxr_linenumber" name="L485" href="#L485">485</a>                 .contextGenerateAdditionalJavaFiles());
+<a class="jxr_linenumber" name="L486" href="#L486">486</a>         generatedXmlFiles.addAll(pluginAggregator
+<a class="jxr_linenumber" name="L487" href="#L487">487</a>                 .contextGenerateAdditionalXmlFiles());
+<a class="jxr_linenumber" name="L488" href="#L488">488</a>         generatedKotlinFiles.addAll(pluginAggregator
+<a class="jxr_linenumber" name="L489" href="#L489">489</a>                 .contextGenerateAdditionalKotlinFiles());
+<a class="jxr_linenumber" name="L490" href="#L490">490</a>         otherGeneratedFiles.addAll(pluginAggregator
+<a class="jxr_linenumber" name="L491" href="#L491">491</a>                 .contextGenerateAdditionalFiles());
+<a class="jxr_linenumber" name="L492" href="#L492">492</a>     }
+<a class="jxr_linenumber" name="L493" href="#L493">493</a> 
+<a class="jxr_linenumber" name="L494" href="#L494">494</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L495" href="#L495">495</a> <em class="jxr_javadoccomment">     * This method creates a new JDBC connection from the values specified in the configuration file.</em>
+<a class="jxr_linenumber" name="L496" href="#L496">496</a> <em class="jxr_javadoccomment">     * If you call this method, then you are responsible</em>
+<a class="jxr_linenumber" name="L497" href="#L497">497</a> <em class="jxr_javadoccomment">     * for closing the connection (See {@link Context#closeConnection(Connection)}). If you do not</em>
+<a class="jxr_linenumber" name="L498" href="#L498">498</a> <em class="jxr_javadoccomment">     * close the connection, then there could be connection leaks.</em>
+<a class="jxr_linenumber" name="L499" href="#L499">499</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L500" href="#L500">500</a> <em class="jxr_javadoccomment">     * @return a new connection created from the values in the configuration file</em>
+<a class="jxr_linenumber" name="L501" href="#L501">501</a> <em class="jxr_javadoccomment">     * @throws SQLException if any error occurs while creating the connection</em>
+<a class="jxr_linenumber" name="L502" href="#L502">502</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L503" href="#L503">503</a>     <strong class="jxr_keyword">public</strong> Connection getConnection() <strong class="jxr_keyword">throws</strong> SQLException {
+<a class="jxr_linenumber" name="L504" href="#L504">504</a>         <a name="ConnectionFactory" href="../../../../org/mybatis/generator/api/ConnectionFactory.html#ConnectionFactory">ConnectionFactory</a> connectionFactory;
+<a class="jxr_linenumber" name="L505" href="#L505">505</a>         <strong class="jxr_keyword">if</strong> (jdbcConnectionConfiguration != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L506" href="#L506">506</a>             connectionFactory = <strong class="jxr_keyword">new</strong> <a name="JDBCConnectionFactory" href="../../../../org/mybatis/generator/internal/JDBCConnectionFactory.html#JDBCConnectionFactory">JDBCConnectionFactory</a>(jdbcConnectionConfiguration);
+<a class="jxr_linenumber" name="L507" href="#L507">507</a>         } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L508" href="#L508">508</a>             connectionFactory = ObjectFactory.createConnectionFactory(<strong class="jxr_keyword">this</strong>);
+<a class="jxr_linenumber" name="L509" href="#L509">509</a>         }
+<a class="jxr_linenumber" name="L510" href="#L510">510</a> 
+<a class="jxr_linenumber" name="L511" href="#L511">511</a>         <strong class="jxr_keyword">return</strong> connectionFactory.getConnection();
+<a class="jxr_linenumber" name="L512" href="#L512">512</a>     }
+<a class="jxr_linenumber" name="L513" href="#L513">513</a> 
+<a class="jxr_linenumber" name="L514" href="#L514">514</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L515" href="#L515">515</a> <em class="jxr_javadoccomment">     * This method closes a JDBC connection and ignores any errors. If the passed connection is null,</em>
+<a class="jxr_linenumber" name="L516" href="#L516">516</a> <em class="jxr_javadoccomment">     * then the method does nothing.</em>
+<a class="jxr_linenumber" name="L517" href="#L517">517</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L518" href="#L518">518</a> <em class="jxr_javadoccomment">     * @param connection a JDBC connection to close, may be null</em>
+<a class="jxr_linenumber" name="L519" href="#L519">519</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L520" href="#L520">520</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> closeConnection(Connection connection) {
+<a class="jxr_linenumber" name="L521" href="#L521">521</a>         <strong class="jxr_keyword">if</strong> (connection != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L522" href="#L522">522</a>             <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L523" href="#L523">523</a>                 connection.close();
+<a class="jxr_linenumber" name="L524" href="#L524">524</a>             } <strong class="jxr_keyword">catch</strong> (SQLException e) {
+<a class="jxr_linenumber" name="L525" href="#L525">525</a>                 <em class="jxr_comment">// ignore</em>
+<a class="jxr_linenumber" name="L526" href="#L526">526</a>             }
+<a class="jxr_linenumber" name="L527" href="#L527">527</a>         }
 <a class="jxr_linenumber" name="L528" href="#L528">528</a>     }
 <a class="jxr_linenumber" name="L529" href="#L529">529</a> 
-<a class="jxr_linenumber" name="L530" href="#L530">530</a>     <strong class="jxr_keyword">public</strong> <a name="ConnectionFactoryConfiguration" href="../../../../org/mybatis/generator/config/ConnectionFactoryConfiguration.html#ConnectionFactoryConfiguration">ConnectionFactoryConfiguration</a> getConnectionFactoryConfiguration() {
-<a class="jxr_linenumber" name="L531" href="#L531">531</a>         <strong class="jxr_keyword">return</strong> connectionFactoryConfiguration;
-<a class="jxr_linenumber" name="L532" href="#L532">532</a>     }
-<a class="jxr_linenumber" name="L533" href="#L533">533</a> 
-<a class="jxr_linenumber" name="L534" href="#L534">534</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setConnectionFactoryConfiguration(<a name="ConnectionFactoryConfiguration" href="../../../../org/mybatis/generator/config/ConnectionFactoryConfiguration.html#ConnectionFactoryConfiguration">ConnectionFactoryConfiguration</a> connectionFactoryConfiguration) {
-<a class="jxr_linenumber" name="L535" href="#L535">535</a>         <strong class="jxr_keyword">this</strong>.connectionFactoryConfiguration = connectionFactoryConfiguration;
-<a class="jxr_linenumber" name="L536" href="#L536">536</a>     }
-<a class="jxr_linenumber" name="L537" href="#L537">537</a> }
+<a class="jxr_linenumber" name="L530" href="#L530">530</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> autoDelimitKeywords() {
+<a class="jxr_linenumber" name="L531" href="#L531">531</a>         <strong class="jxr_keyword">return</strong> autoDelimitKeywords != <strong class="jxr_keyword">null</strong>
+<a class="jxr_linenumber" name="L532" href="#L532">532</a>                 &amp;&amp; autoDelimitKeywords;
+<a class="jxr_linenumber" name="L533" href="#L533">533</a>     }
+<a class="jxr_linenumber" name="L534" href="#L534">534</a> 
+<a class="jxr_linenumber" name="L535" href="#L535">535</a>     <strong class="jxr_keyword">public</strong> <a name="ConnectionFactoryConfiguration" href="../../../../org/mybatis/generator/config/ConnectionFactoryConfiguration.html#ConnectionFactoryConfiguration">ConnectionFactoryConfiguration</a> getConnectionFactoryConfiguration() {
+<a class="jxr_linenumber" name="L536" href="#L536">536</a>         <strong class="jxr_keyword">return</strong> connectionFactoryConfiguration;
+<a class="jxr_linenumber" name="L537" href="#L537">537</a>     }
+<a class="jxr_linenumber" name="L538" href="#L538">538</a> 
+<a class="jxr_linenumber" name="L539" href="#L539">539</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setConnectionFactoryConfiguration(<a name="ConnectionFactoryConfiguration" href="../../../../org/mybatis/generator/config/ConnectionFactoryConfiguration.html#ConnectionFactoryConfiguration">ConnectionFactoryConfiguration</a> connectionFactoryConfiguration) {
+<a class="jxr_linenumber" name="L540" href="#L540">540</a>         <strong class="jxr_keyword">this</strong>.connectionFactoryConfiguration = connectionFactoryConfiguration;
+<a class="jxr_linenumber" name="L541" href="#L541">541</a>     }
+<a class="jxr_linenumber" name="L542" href="#L542">542</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2006&#x2013;2022 <a href="https://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2006&#x2013;2023 <a href="https://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
 </body>
 </html>

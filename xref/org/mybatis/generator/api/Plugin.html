@@ -7,13 +7,13 @@
 <body>
 <div id="overview"><a href="../../../../../apidocs/org/mybatis/generator/api/Plugin.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_comment">/*</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> *    Copyright 2006-2022 the original author or authors.</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> *    Copyright 2006-2023 the original author or authors.</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_comment"> *    Licensed under the Apache License, Version 2.0 (the "License");</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_comment"> *    you may not use this file except in compliance with the License.</em>
 <a class="jxr_linenumber" name="L6" href="#L6">6</a>   <em class="jxr_comment"> *    You may obtain a copy of the License at</em>
 <a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_comment"> *</em>
-<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_comment"> *       <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a></em>
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_comment"> *       <a href="https://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">https://www.apache.org/licenses/LICENSE-2.0</a></em>
 <a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_comment"> *    Unless required by applicable law or agreed to in writing, software</em>
 <a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_comment"> *    distributed under the License is distributed on an "AS IS" BASIS,</em>
@@ -2042,9 +2042,19 @@
 <a class="jxr_linenumber" name="L2034" href="#L2034">2034</a>             <a name="IntrospectedTable" href="../../../../org/mybatis/generator/api/IntrospectedTable.html#IntrospectedTable">IntrospectedTable</a> introspectedTable) {
 <a class="jxr_linenumber" name="L2035" href="#L2035">2035</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
 <a class="jxr_linenumber" name="L2036" href="#L2036">2036</a>     }
-<a class="jxr_linenumber" name="L2037" href="#L2037">2037</a> }
+<a class="jxr_linenumber" name="L2037" href="#L2037">2037</a> 
+<a class="jxr_linenumber" name="L2038" href="#L2038">2038</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L2039" href="#L2039">2039</a> <em class="jxr_javadoccomment">     * If false, the table will be skipped in code generation.</em>
+<a class="jxr_linenumber" name="L2040" href="#L2040">2040</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L2041" href="#L2041">2041</a> <em class="jxr_javadoccomment">     * @param introspectedTable the current table</em>
+<a class="jxr_linenumber" name="L2042" href="#L2042">2042</a> <em class="jxr_javadoccomment">     * @return true if code should be generated for this table, else false</em>
+<a class="jxr_linenumber" name="L2043" href="#L2043">2043</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L2044" href="#L2044">2044</a>     <strong class="jxr_keyword">default</strong> <strong class="jxr_keyword">boolean</strong> shouldGenerate(<a name="IntrospectedTable" href="../../../../org/mybatis/generator/api/IntrospectedTable.html#IntrospectedTable">IntrospectedTable</a> introspectedTable) {
+<a class="jxr_linenumber" name="L2045" href="#L2045">2045</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="L2046" href="#L2046">2046</a>     }
+<a class="jxr_linenumber" name="L2047" href="#L2047">2047</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2006&#x2013;2022 <a href="https://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2006&#x2013;2023 <a href="https://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
 </body>
 </html>

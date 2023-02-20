@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Context.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MyBatis Generator Core</a> &gt; <a href="index.source.html" class="el_package">org.mybatis.generator.config</a> &gt; <span class="el_source">Context.java</span></div><h1>Context.java</h1><pre class="source lang-java linenums">/*
- *    Copyright 2006-2022 the original author or authors.
+ *    Copyright 2006-2023 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
  *    you may not use this file except in compliance with the License.
  *    You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *       https://www.apache.org/licenses/LICENSE-2.0
  *
  *    Unless required by applicable law or agreed to in writing, software
  *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
@@ -459,32 +459,37 @@ public class Context extends PropertyHolder {
 
 <span class="fc bfc" id="L460" title="All 2 branches covered.">        for (IntrospectedTable introspectedTable : introspectedTables) {</span>
 <span class="fc" id="L461">            callback.checkCancel();</span>
-<span class="fc" id="L462">            generatedJavaFiles.addAll(introspectedTable</span>
-<span class="fc" id="L463">                    .getGeneratedJavaFiles());</span>
-<span class="fc" id="L464">            generatedXmlFiles.addAll(introspectedTable</span>
-<span class="fc" id="L465">                    .getGeneratedXmlFiles());</span>
-<span class="fc" id="L466">            generatedKotlinFiles.addAll(introspectedTable</span>
-<span class="fc" id="L467">                    .getGeneratedKotlinFiles());</span>
 
-<span class="fc" id="L469">            generatedJavaFiles.addAll(pluginAggregator</span>
-<span class="fc" id="L470">                    .contextGenerateAdditionalJavaFiles(introspectedTable));</span>
-<span class="fc" id="L471">            generatedXmlFiles.addAll(pluginAggregator</span>
-<span class="fc" id="L472">                    .contextGenerateAdditionalXmlFiles(introspectedTable));</span>
-<span class="fc" id="L473">            generatedKotlinFiles.addAll(pluginAggregator</span>
-<span class="fc" id="L474">                    .contextGenerateAdditionalKotlinFiles(introspectedTable));</span>
-<span class="fc" id="L475">            otherGeneratedFiles.addAll(pluginAggregator</span>
-<span class="fc" id="L476">                    .contextGenerateAdditionalFiles(introspectedTable));</span>
-<span class="fc" id="L477">        }</span>
+<span class="fc bfc" id="L463" title="All 2 branches covered.">            if (!pluginAggregator.shouldGenerate(introspectedTable)) {</span>
+<span class="fc" id="L464">                continue;</span>
+            }
 
-<span class="fc" id="L479">        generatedJavaFiles.addAll(pluginAggregator</span>
-<span class="fc" id="L480">                .contextGenerateAdditionalJavaFiles());</span>
-<span class="fc" id="L481">        generatedXmlFiles.addAll(pluginAggregator</span>
-<span class="fc" id="L482">                .contextGenerateAdditionalXmlFiles());</span>
-<span class="fc" id="L483">        generatedKotlinFiles.addAll(pluginAggregator</span>
-<span class="fc" id="L484">                .contextGenerateAdditionalKotlinFiles());</span>
-<span class="fc" id="L485">        otherGeneratedFiles.addAll(pluginAggregator</span>
-<span class="fc" id="L486">                .contextGenerateAdditionalFiles());</span>
-<span class="fc" id="L487">    }</span>
+<span class="fc" id="L467">            generatedJavaFiles.addAll(introspectedTable</span>
+<span class="fc" id="L468">                    .getGeneratedJavaFiles());</span>
+<span class="fc" id="L469">            generatedXmlFiles.addAll(introspectedTable</span>
+<span class="fc" id="L470">                    .getGeneratedXmlFiles());</span>
+<span class="fc" id="L471">            generatedKotlinFiles.addAll(introspectedTable</span>
+<span class="fc" id="L472">                    .getGeneratedKotlinFiles());</span>
+
+<span class="fc" id="L474">            generatedJavaFiles.addAll(pluginAggregator</span>
+<span class="fc" id="L475">                    .contextGenerateAdditionalJavaFiles(introspectedTable));</span>
+<span class="fc" id="L476">            generatedXmlFiles.addAll(pluginAggregator</span>
+<span class="fc" id="L477">                    .contextGenerateAdditionalXmlFiles(introspectedTable));</span>
+<span class="fc" id="L478">            generatedKotlinFiles.addAll(pluginAggregator</span>
+<span class="fc" id="L479">                    .contextGenerateAdditionalKotlinFiles(introspectedTable));</span>
+<span class="fc" id="L480">            otherGeneratedFiles.addAll(pluginAggregator</span>
+<span class="fc" id="L481">                    .contextGenerateAdditionalFiles(introspectedTable));</span>
+<span class="fc" id="L482">        }</span>
+
+<span class="fc" id="L484">        generatedJavaFiles.addAll(pluginAggregator</span>
+<span class="fc" id="L485">                .contextGenerateAdditionalJavaFiles());</span>
+<span class="fc" id="L486">        generatedXmlFiles.addAll(pluginAggregator</span>
+<span class="fc" id="L487">                .contextGenerateAdditionalXmlFiles());</span>
+<span class="fc" id="L488">        generatedKotlinFiles.addAll(pluginAggregator</span>
+<span class="fc" id="L489">                .contextGenerateAdditionalKotlinFiles());</span>
+<span class="fc" id="L490">        otherGeneratedFiles.addAll(pluginAggregator</span>
+<span class="fc" id="L491">                .contextGenerateAdditionalFiles());</span>
+<span class="fc" id="L492">    }</span>
 
     /**
      * This method creates a new JDBC connection from the values specified in the configuration file.
@@ -497,13 +502,13 @@ public class Context extends PropertyHolder {
      */
     public Connection getConnection() throws SQLException {
         ConnectionFactory connectionFactory;
-<span class="fc bfc" id="L500" title="All 2 branches covered.">        if (jdbcConnectionConfiguration != null) {</span>
-<span class="fc" id="L501">            connectionFactory = new JDBCConnectionFactory(jdbcConnectionConfiguration);</span>
+<span class="fc bfc" id="L505" title="All 2 branches covered.">        if (jdbcConnectionConfiguration != null) {</span>
+<span class="fc" id="L506">            connectionFactory = new JDBCConnectionFactory(jdbcConnectionConfiguration);</span>
         } else {
-<span class="fc" id="L503">            connectionFactory = ObjectFactory.createConnectionFactory(this);</span>
+<span class="fc" id="L508">            connectionFactory = ObjectFactory.createConnectionFactory(this);</span>
         }
 
-<span class="fc" id="L506">        return connectionFactory.getConnection();</span>
+<span class="fc" id="L511">        return connectionFactory.getConnection();</span>
     }
 
     /**
@@ -513,26 +518,26 @@ public class Context extends PropertyHolder {
      * @param connection a JDBC connection to close, may be null
      */
     public void closeConnection(Connection connection) {
-<span class="pc bpc" id="L516" title="1 of 2 branches missed.">        if (connection != null) {</span>
+<span class="pc bpc" id="L521" title="1 of 2 branches missed.">        if (connection != null) {</span>
             try {
-<span class="fc" id="L518">                connection.close();</span>
-<span class="nc" id="L519">            } catch (SQLException e) {</span>
+<span class="fc" id="L523">                connection.close();</span>
+<span class="nc" id="L524">            } catch (SQLException e) {</span>
                 // ignore
-<span class="fc" id="L521">            }</span>
+<span class="fc" id="L526">            }</span>
         }
-<span class="fc" id="L523">    }</span>
+<span class="fc" id="L528">    }</span>
 
     public boolean autoDelimitKeywords() {
-<span class="fc bfc" id="L526" title="All 2 branches covered.">        return autoDelimitKeywords != null</span>
-<span class="pc bpc" id="L527" title="1 of 2 branches missed.">                &amp;&amp; autoDelimitKeywords;</span>
+<span class="fc bfc" id="L531" title="All 2 branches covered.">        return autoDelimitKeywords != null</span>
+<span class="pc bpc" id="L532" title="1 of 2 branches missed.">                &amp;&amp; autoDelimitKeywords;</span>
     }
 
     public ConnectionFactoryConfiguration getConnectionFactoryConfiguration() {
-<span class="fc" id="L531">        return connectionFactoryConfiguration;</span>
+<span class="fc" id="L536">        return connectionFactoryConfiguration;</span>
     }
 
     public void setConnectionFactoryConfiguration(ConnectionFactoryConfiguration connectionFactoryConfiguration) {
-<span class="fc" id="L535">        this.connectionFactoryConfiguration = connectionFactoryConfiguration;</span>
-<span class="fc" id="L536">    }</span>
+<span class="fc" id="L540">        this.connectionFactoryConfiguration = connectionFactoryConfiguration;</span>
+<span class="fc" id="L541">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

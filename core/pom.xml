@@ -58,7 +58,7 @@
     <hsqldb.version>2.7.2</hsqldb.version>
     <checkstyle.config>${project.basedir}/checkstyle-override.xml</checkstyle.config>
     <formatter.config>eclipse-formatter-config-4space.xml</formatter.config>
-    <kotlin.version>1.8.22</kotlin.version>
+    <kotlin.version>1.9.0</kotlin.version>
     <junit.jupiter.version>5.9.3</junit.jupiter.version>
     <argLine>-Djdk.attach.allowAttachSelf -Xmx1024m -Duser.timezone=UTC</argLine>
 

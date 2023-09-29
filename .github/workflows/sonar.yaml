@@ -37,7 +37,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          java-version: 17
+          java-version: 21
           distribution: zulu
       - name: Analyze with SonarCloud
         # Note: the mvnw executable is in the parent directory - not this working directory. We only do sonar on the

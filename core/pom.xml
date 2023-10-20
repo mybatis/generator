@@ -214,7 +214,7 @@
       <dependency>
         <groupId>org.apache.maven.plugin-tools</groupId>
         <artifactId>maven-plugin-annotations</artifactId>
-        <version>3.9.0</version>
+        <version>3.10.1</version>
         <scope>provided</scope>
       </dependency>
       <dependency>

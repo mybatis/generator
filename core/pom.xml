@@ -39,7 +39,7 @@
 
   <scm>
     <url>https://github.com/mybatis/generator</url>
-    <connection>scm:git:ssh://github.com/mybatis/generator.git</connection>
+    <connection>scm:git:ssh://git@github.com/mybatis/generator.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/mybatis/generator.git</developerConnection>
     <tag>HEAD</tag>
   </scm>

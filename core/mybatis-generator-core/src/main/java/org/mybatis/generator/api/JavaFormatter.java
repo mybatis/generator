@@ -28,7 +28,6 @@ import org.mybatis.generator.config.Context;
  * be passed into the class through the use of properties in the Context.
  *
  * @author Jeff Butler
- *
  */
 public interface JavaFormatter {
     void setContext(Context context);

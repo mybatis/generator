@@ -27,7 +27,9 @@ public interface ConnectionFactory {
      * The generator will close the connection.
      *
      * @return the connection
-     * @throws SQLException if there is some error obtaining the connection
+     *
+     * @throws SQLException
+     *             if there is some error obtaining the connection
      */
     Connection getConnection() throws SQLException;
 

@@ -26,7 +26,6 @@ import org.junit.jupiter.api.BeforeEach;
 
 /**
  * @author Jeff Butler
- *
  */
 public abstract class AbstractTest {
 

@@ -15,12 +15,12 @@
  */
 package org.mybatis.generator.maven;
 
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 import java.io.File;
 
 import org.mybatis.generator.exception.ShellException;
 import org.mybatis.generator.internal.DefaultShellCallback;
-
-import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 /**
  * Shell callback that calculates the Maven output directory.

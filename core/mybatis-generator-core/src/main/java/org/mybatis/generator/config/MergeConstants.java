@@ -21,13 +21,11 @@ import java.util.Arrays;
  * This class holds constants useful in the XML and Java merging operations.
  *
  * @author Jeff Butler
- *
  */
 public class MergeConstants {
 
     /**
      * Utility class - no instances.
-     *
      */
     private MergeConstants() {
     }

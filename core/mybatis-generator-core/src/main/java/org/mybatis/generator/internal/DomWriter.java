@@ -325,7 +325,7 @@ public class DomWriter {
     protected void write(CDATASection node) {
         printWriter.print("<![CDATA["); //$NON-NLS-1$
         String data = node.getNodeValue();
-        // XML parsers normalize line endings to '\n'.  We should write
+        // XML parsers normalize line endings to '\n'. We should write
         // it out as it was in the original to avoid whitespace commits
         // on some version control systems
         int len = (data != null) ? data.length() : 0;

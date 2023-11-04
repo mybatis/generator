@@ -27,7 +27,6 @@ import org.mybatis.generator.logging.slf4j.Slf4jLoggingLogFactory;
  * Factory for creating loggers.
  *
  * @author Jeff Butler
- *
  */
 public class LogFactory {
     private static AbstractLogFactory theFactory;
@@ -41,7 +40,8 @@ public class LogFactory {
         tryImplementation(new NoLoggingLogFactory());
     }
 
-    private LogFactory() {}
+    private LogFactory() {
+    }
 
     public static Log getLog(Class<?> clazz) {
         try {

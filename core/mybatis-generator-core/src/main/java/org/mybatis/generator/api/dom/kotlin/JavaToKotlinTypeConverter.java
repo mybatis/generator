@@ -27,10 +27,10 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
  * classes as those Java types have replacements in Kotlin.
  *
  * @author Jeff Butler
- *
  */
 public class JavaToKotlinTypeConverter {
-    private JavaToKotlinTypeConverter() {}
+    private JavaToKotlinTypeConverter() {
+    }
 
     private static final Map<String, String> typeMap = new HashMap<>();
 

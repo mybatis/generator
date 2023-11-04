@@ -40,7 +40,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-import mbg.test.mb3.generated.dsql.mapper.mbgtest.sub.TranslationMapper;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.Test;
 import org.mybatis.dynamic.sql.select.CountDSLCompleter;
@@ -54,6 +53,7 @@ import mbg.test.mb3.generated.dsql.mapper.PkfieldsMapper;
 import mbg.test.mb3.generated.dsql.mapper.PkfieldsblobsMapper;
 import mbg.test.mb3.generated.dsql.mapper.PkonlyMapper;
 import mbg.test.mb3.generated.dsql.mapper.mbgtest.IdMapper;
+import mbg.test.mb3.generated.dsql.mapper.mbgtest.sub.TranslationMapper;
 import mbg.test.mb3.generated.dsql.model.AwfulTable;
 import mbg.test.mb3.generated.dsql.model.Fieldsblobs;
 import mbg.test.mb3.generated.dsql.model.Fieldsonly;
@@ -66,7 +66,6 @@ import mbg.test.mb3.generated.dsql.model.mbgtest.sub.Translation;
 
 /**
  * @author Jeff Butler
- *
  */
 public class DynamicSqlTest extends AbstractTest {
 

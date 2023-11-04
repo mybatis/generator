@@ -21,10 +21,10 @@ package org.mybatis.generator.config;
  * properties, and helps to avoid spelling errors.
  *
  * @author Jeff Butler
- *
  */
 public class PropertyRegistry {
-    private PropertyRegistry() {}
+    private PropertyRegistry() {
+    }
 
     public static final String ANY_ENABLE_SUB_PACKAGES = "enableSubPackages"; //$NON-NLS-1$
 

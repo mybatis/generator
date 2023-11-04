@@ -38,7 +38,8 @@ import org.mybatis.generator.api.dom.java.TypeParameter;
 import org.mybatis.generator.internal.util.CustomCollectors;
 
 public class RenderingUtilities {
-    private RenderingUtilities() {}
+    private RenderingUtilities() {
+    }
 
     public static final String JAVA_INDENT = "    "; //$NON-NLS-1$
     private static final TypeParameterRenderer typeParameterRenderer = new TypeParameterRenderer();

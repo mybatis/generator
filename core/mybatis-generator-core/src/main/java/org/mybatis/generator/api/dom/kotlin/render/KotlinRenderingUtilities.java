@@ -22,7 +22,8 @@ import org.mybatis.generator.internal.util.CustomCollectors;
 
 public class KotlinRenderingUtilities {
 
-    private KotlinRenderingUtilities() {}
+    private KotlinRenderingUtilities() {
+    }
 
     public static final String KOTLIN_INDENT = "    "; //$NON-NLS-1$
 

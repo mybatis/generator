@@ -22,7 +22,6 @@ package org.mybatis.generator.codegen;
  * annotations does not need matching XML.
  *
  * @author Jeff Butler
- *
  */
 public abstract class AbstractJavaClientGenerator extends AbstractJavaGenerator {
 

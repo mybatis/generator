@@ -21,8 +21,8 @@ import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 
-public class ProviderUpdateByExampleWithBLOBsMethodGenerator extends
-        ProviderUpdateByExampleWithoutBLOBsMethodGenerator {
+public class ProviderUpdateByExampleWithBLOBsMethodGenerator
+        extends ProviderUpdateByExampleWithoutBLOBsMethodGenerator {
 
     @Override
     public String getMethodName() {

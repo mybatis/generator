@@ -33,7 +33,7 @@ public abstract class AbstractKotlinGenerator extends AbstractGenerator {
         return project;
     }
 
-    public List<KotlinFile> listOf(KotlinFile...kotlinFiles) {
+    public List<KotlinFile> listOf(KotlinFile... kotlinFiles) {
         return Arrays.asList(kotlinFiles);
     }
 }

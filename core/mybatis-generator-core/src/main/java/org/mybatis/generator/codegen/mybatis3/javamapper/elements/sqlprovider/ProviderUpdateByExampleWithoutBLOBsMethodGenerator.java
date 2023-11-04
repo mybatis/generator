@@ -55,8 +55,7 @@ public class ProviderUpdateByExampleWithoutBLOBsMethodGenerator extends Abstract
             sb.insert(2, "row."); //$NON-NLS-1$
 
             method.addBodyLine(String.format("sql.SET(\"%s = %s\");", //$NON-NLS-1$
-                    escapeStringForJava(getAliasedEscapedColumnName(introspectedColumn)),
-                    sb));
+                    escapeStringForJava(getAliasedEscapedColumnName(introspectedColumn)), sb));
         }
 
         method.addBodyLine(""); //$NON-NLS-1$

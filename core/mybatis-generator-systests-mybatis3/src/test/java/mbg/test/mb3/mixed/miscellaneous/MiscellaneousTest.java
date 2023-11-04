@@ -39,7 +39,6 @@ import mbg.test.mb3.generated.mixed.miscellaneous.model.Regexrename;
 
 /**
  * @author Jeff Butler
- *
  */
 public class MiscellaneousTest extends AbstractMixedMiscellaneousTest {
 

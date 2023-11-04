@@ -35,7 +35,6 @@ import org.mybatis.generator.internal.DefaultShellCallback;
  * test coverage as it mimics the code paths executed by the integration test.
  *
  * @author Jeff Butler
- *
  */
 class KotlinCodeGenerationTest {
 

@@ -43,7 +43,8 @@ public class AntProgressCallback implements ProgressCallback {
         this.verbose = verbose;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see org.mybatis.generator.internal.NullProgressCallback#startTask(java.lang.String)
      */
     @Override

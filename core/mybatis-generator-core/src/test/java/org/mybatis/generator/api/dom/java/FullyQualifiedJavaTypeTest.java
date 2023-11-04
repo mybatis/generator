@@ -23,7 +23,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * @author Jeff Butler
- *
  */
 class FullyQualifiedJavaTypeTest {
 

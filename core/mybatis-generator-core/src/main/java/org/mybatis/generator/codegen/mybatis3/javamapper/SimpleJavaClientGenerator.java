@@ -124,7 +124,7 @@ public class SimpleJavaClientGenerator extends AbstractJavaClientGenerator {
     }
 
     protected void initializeAndExecuteGenerator(AbstractJavaMapperMethodGenerator methodGenerator,
-                                                 Interface interfaze) {
+            Interface interfaze) {
         methodGenerator.setContext(context);
         methodGenerator.setIntrospectedTable(introspectedTable);
         methodGenerator.setProgressCallback(progressCallback);

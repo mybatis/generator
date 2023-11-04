@@ -29,7 +29,6 @@ import java.util.Set;
  * http://drupal.org/node/141051 With additions for DB2
  *
  * @author Jeff Butler
- *
  */
 public class SqlReservedWords {
 

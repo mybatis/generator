@@ -52,7 +52,9 @@ public interface ShellCallback {
      *            the target project
      * @param targetPackage
      *            the target package
+     *
      * @return the directory (must exist)
+     *
      * @throws ShellException
      *             if the project/package cannot be resolved into a directory on the file system. In this case, the
      *             generator will not save the file it is currently working on. The generator will add the exception

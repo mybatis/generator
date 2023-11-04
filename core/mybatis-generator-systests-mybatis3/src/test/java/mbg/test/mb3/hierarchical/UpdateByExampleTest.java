@@ -50,9 +50,7 @@ import mbg.test.mb3.generated.hierarchical.model.subpackage.FieldsOnlyEntity;
 import mbg.test.mb3.generated.hierarchical.model.subpackage.FieldsOnlyEntityExample;
 
 /**
- *
  * @author Jeff Butler
- *
  */
 public class UpdateByExampleTest extends AbstractHierarchicalTest {
 

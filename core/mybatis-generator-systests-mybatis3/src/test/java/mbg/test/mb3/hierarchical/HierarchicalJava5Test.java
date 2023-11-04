@@ -59,7 +59,6 @@ import mbg.test.mb3.generated.hierarchical.model.subpackage.FieldsOnlyEntityExam
 
 /**
  * @author Jeff Butler
- *
  */
 public class HierarchicalJava5Test extends AbstractHierarchicalTest {
 

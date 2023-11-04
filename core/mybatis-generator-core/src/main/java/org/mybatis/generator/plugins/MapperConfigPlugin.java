@@ -53,7 +53,6 @@ import org.mybatis.generator.codegen.XmlConstants;
  * element.
  *
  * @author Jeff Butler
- *
  */
 public class MapperConfigPlugin extends PluginAdapter {
 

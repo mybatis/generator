@@ -22,7 +22,6 @@ import org.mybatis.generator.api.IntrospectedTable;
  * flat model.
  *
  * @author Jeff Butler
- *
  */
 public class FlatModelRules extends BaseRules {
 

@@ -104,10 +104,12 @@ public class StringUtility {
     }
 
     /**
-     * Given an input string, tokenize on the commas and trim all token.
-     * Returns an empty set if the input string is null.
+     * Given an input string, tokenize on the commas and trim all token. Returns an empty set if the input string is
+     * null.
      *
-     * @param in strong to tokenize.
+     * @param in
+     *            strong to tokenize.
+     *
      * @return Set of tokens
      */
     public static Set<String> tokenize(String in) {

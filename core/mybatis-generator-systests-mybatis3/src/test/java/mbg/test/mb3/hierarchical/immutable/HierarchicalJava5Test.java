@@ -55,7 +55,6 @@ import mbg.test.mb3.generated.hierarchical.immutable.model.PkonlyKey;
 
 /**
  * @author Jeff Butler
- *
  */
 public class HierarchicalJava5Test extends AbstractHierarchicalImmutableTest {
 

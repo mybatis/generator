@@ -123,7 +123,7 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractGenerato
     }
 
     private Set<FullyQualifiedJavaType> buildGeneratedKeyImports(GeneratedKey gk,
-                                                                 IntrospectedColumn introspectedColumn) {
+            IntrospectedColumn introspectedColumn) {
         Set<FullyQualifiedJavaType> answer = new HashSet<>();
         if (gk.isJdbcStandard()) {
             answer.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Options")); //$NON-NLS-1$
@@ -225,7 +225,7 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractGenerato
     }
 
     protected void addPrimaryKeyMethodParameters(boolean isSimple, Method method,
-                                                 Set<FullyQualifiedJavaType> importedTypes) {
+            Set<FullyQualifiedJavaType> importedTypes) {
         if (!isSimple && introspectedTable.getRules().generatePrimaryKeyClass()) {
             FullyQualifiedJavaType type = new FullyQualifiedJavaType(introspectedTable.getPrimaryKeyType());
             importedTypes.add(type);
@@ -234,8 +234,7 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractGenerato
             // no primary key class - fields are in the base class
             // if more than one PK field, then we need to annotate the
             // parameters for MyBatis3
-            List<IntrospectedColumn> introspectedColumns = introspectedTable
-                    .getPrimaryKeyColumns();
+            List<IntrospectedColumn> introspectedColumns = introspectedTable.getPrimaryKeyColumns();
             boolean annotate = introspectedColumns.size() > 1;
             if (annotate) {
                 importedTypes.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param")); //$NON-NLS-1$
@@ -258,7 +257,7 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractGenerato
     }
 
     protected void addAnnotatedResults(Interface interfaze, Method method,
-                                       List<IntrospectedColumn> nonPrimaryKeyColumns) {
+            List<IntrospectedColumn> nonPrimaryKeyColumns) {
 
         if (introspectedTable.isConstructorBased()) {
             method.addAnnotation("@ConstructorArgs({"); //$NON-NLS-1$
@@ -302,7 +301,7 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractGenerato
     }
 
     protected Method buildBasicUpdateByExampleMethod(String statementId, FullyQualifiedJavaType parameterType,
-                                                     Set<FullyQualifiedJavaType> importedTypes) {
+            Set<FullyQualifiedJavaType> importedTypes) {
         Method method = new Method(statementId);
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setAbstract(true);
@@ -313,7 +312,7 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractGenerato
         importedTypes.add(parameterType);
 
         FullyQualifiedJavaType exampleType = new FullyQualifiedJavaType(introspectedTable.getExampleType());
-        method.addParameter(new Parameter(exampleType,"example", "@Param(\"example\")")); //$NON-NLS-1$ //$NON-NLS-2$
+        method.addParameter(new Parameter(exampleType, "example", "@Param(\"example\")")); //$NON-NLS-1$ //$NON-NLS-2$
         importedTypes.add(exampleType);
 
         importedTypes.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param")); //$NON-NLS-1$

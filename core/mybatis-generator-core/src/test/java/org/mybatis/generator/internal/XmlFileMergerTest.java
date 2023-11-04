@@ -38,7 +38,6 @@ import org.xml.sax.InputSource;
  * after running through the XML merger.
  *
  * @author Jeff Butler
- *
  */
 class XmlFileMergerTest {
 

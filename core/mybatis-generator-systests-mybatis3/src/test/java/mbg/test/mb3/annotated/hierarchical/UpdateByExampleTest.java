@@ -50,9 +50,7 @@ import mbg.test.mb3.generated.annotated.hierarchical.model.PkonlyExample;
 import mbg.test.mb3.generated.annotated.hierarchical.model.PkonlyKey;
 
 /**
- *
  * @author Jeff Butler
- *
  */
 public class UpdateByExampleTest extends AbstractAnnotatedHierarchicalTest {
 

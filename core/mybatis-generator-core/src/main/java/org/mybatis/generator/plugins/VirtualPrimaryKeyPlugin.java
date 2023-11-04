@@ -31,7 +31,6 @@ import org.mybatis.generator.api.PluginAdapter;
  * <p>&lt;property name="virtualKeyColumns" value="ID1,ID2"&gt;
  *
  * @author Jeff Butler
- *
  */
 public class VirtualPrimaryKeyPlugin extends PluginAdapter {
 

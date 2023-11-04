@@ -82,7 +82,7 @@ class XmlCodeGenerationTest {
 
         @Override
         public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
-            // just return an empty string.  this should stop the parser from trying to access the network
+            // just return an empty string. this should stop the parser from trying to access the network
             return new InputSource(new ByteArrayInputStream("".getBytes()));
         }
     }

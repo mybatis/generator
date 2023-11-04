@@ -74,6 +74,7 @@ public class JavaBeansUtil {
      *
      * @param property
      *            the property
+     *
      * @return the setter method name
      */
     public static String getSetterMethodName(String property) {

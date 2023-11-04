@@ -15,10 +15,10 @@
  */
 package mbg.test.mb3.annotated.miscellaneous;
 
-import mbg.test.mb3.generated.annotated.miscellaneous.mapper.EnumordinaltestMapper;
 import org.junit.jupiter.api.BeforeEach;
 
 import mbg.test.mb3.AbstractTest;
+import mbg.test.mb3.generated.annotated.miscellaneous.mapper.EnumordinaltestMapper;
 import mbg.test.mb3.generated.annotated.miscellaneous.mapper.EnumtestMapper;
 import mbg.test.mb3.generated.annotated.miscellaneous.mapper.GeneratedalwaystestMapper;
 import mbg.test.mb3.generated.annotated.miscellaneous.mapper.GeneratedalwaystestnoupdatesMapper;

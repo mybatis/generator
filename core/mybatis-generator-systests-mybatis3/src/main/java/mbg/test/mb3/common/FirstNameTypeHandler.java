@@ -20,14 +20,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import mbg.test.common.FirstName;
-
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
 
+import mbg.test.common.FirstName;
+
 /**
  * @author Jeff Butler
- *
  */
 public class FirstNameTypeHandler implements TypeHandler<FirstName> {
 

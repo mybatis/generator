@@ -22,7 +22,6 @@ import static org.mybatis.generator.internal.util.StringUtility.composeFullyQual
  * database introspection.
  *
  * @author Jeff Butler
- *
  */
 public class ActualTableName {
 

@@ -28,17 +28,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import mbg.test.mb3.generated.miscellaneous.mapper.EnumordinaltestMapper;
-import mbg.test.mb3.generated.miscellaneous.model.Enumordinaltest;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.Test;
 
 import mbg.test.common.FirstName;
 import mbg.test.common.MyTime;
 import mbg.test.mb3.common.TestEnum;
+import mbg.test.mb3.generated.miscellaneous.mapper.EnumordinaltestMapper;
 import mbg.test.mb3.generated.miscellaneous.mapper.EnumtestMapper;
 import mbg.test.mb3.generated.miscellaneous.mapper.MyMapper;
 import mbg.test.mb3.generated.miscellaneous.mapper.RegexrenameMapper;
+import mbg.test.mb3.generated.miscellaneous.model.Enumordinaltest;
 import mbg.test.mb3.generated.miscellaneous.model.Enumtest;
 import mbg.test.mb3.generated.miscellaneous.model.MyObject;
 import mbg.test.mb3.generated.miscellaneous.model.MyObjectCriteria;
@@ -49,7 +49,6 @@ import mbg.test.mb3.generated.miscellaneous.model.mbgtest.Anotherawfultable;
 
 /**
  * @author Jeff Butler
- *
  */
 public class MiscellaneousTest extends AbstractMiscellaneousTest {
 

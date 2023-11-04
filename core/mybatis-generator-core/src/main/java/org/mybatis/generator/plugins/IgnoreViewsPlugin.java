@@ -15,10 +15,10 @@
  */
 package org.mybatis.generator.plugins;
 
+import java.util.List;
+
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.PluginAdapter;
-
-import java.util.List;
 
 /**
  * This plugin will cause any table of type "VIEW" in a context to be ignored.

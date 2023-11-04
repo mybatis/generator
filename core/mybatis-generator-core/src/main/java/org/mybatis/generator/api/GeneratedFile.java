@@ -65,7 +65,8 @@ public abstract class GeneratedFile {
      */
     public abstract String getTargetPackage();
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see java.lang.Object#toString()
      */
     @Override

@@ -48,9 +48,7 @@ import org.mybatis.generator.api.PluginAdapter;
  * <dd>Criteria</dd>
  * </dl>
  *
- *
  * @author Jeff Butler
- *
  */
 public class RenameExampleClassPlugin extends PluginAdapter {
     private String replaceString;

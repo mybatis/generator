@@ -26,13 +26,13 @@ import org.mybatis.generator.config.Context;
  * must perform validation.
  *
  * @author Jeff Butler
- *
  */
 public abstract class PluginAdapter implements Plugin {
     protected Context context;
     protected final Properties properties = new Properties();
 
-    protected PluginAdapter() {}
+    protected PluginAdapter() {
+    }
 
     @Override
     public void setContext(Context context) {

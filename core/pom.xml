@@ -39,7 +39,7 @@
 
   <scm>
     <url>https://github.com/mybatis/generator</url>
-    <connection>scm:git:ssh://github.com/mybatis/generator.git</connection>
+    <connection>scm:git:ssh://git@github.com/mybatis/generator.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/mybatis/generator.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
@@ -60,7 +60,7 @@
     <formatter.config>eclipse-formatter-config-4space.xml</formatter.config>
     <kotlin.version>1.9.20</kotlin.version>
     <junit.jupiter.version>5.10.0</junit.jupiter.version>
-    <argLine>-Djdk.attach.allowAttachSelf -Xmx1024m -Duser.timezone=UTC</argLine>
+    <argLine>-Xmx1024m -Duser.timezone=UTC</argLine>
 
     <!-- Reproducible Builds -->
     <project.build.outputTimestamp>1676846560</project.build.outputTimestamp>

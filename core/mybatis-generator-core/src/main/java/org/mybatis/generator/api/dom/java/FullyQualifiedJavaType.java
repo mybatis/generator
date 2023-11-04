@@ -22,8 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-public class FullyQualifiedJavaType implements
-        Comparable<FullyQualifiedJavaType> {
+public class FullyQualifiedJavaType implements Comparable<FullyQualifiedJavaType> {
 
     private static final String JAVA_LANG = "java.lang"; //$NON-NLS-1$
 
@@ -335,11 +334,11 @@ public class FullyQualifiedJavaType implements
             if (spec.startsWith("extends ")) { //$NON-NLS-1$
                 boundedWildcard = true;
                 extendsBoundedWildcard = true;
-                spec = spec.substring(8);  // "extends ".length()
+                spec = spec.substring(8); // "extends ".length()
             } else if (spec.startsWith("super ")) { //$NON-NLS-1$
                 boundedWildcard = true;
                 extendsBoundedWildcard = false;
-                spec = spec.substring(6);  // "super ".length()
+                spec = spec.substring(6); // "super ".length()
             } else {
                 boundedWildcard = false;
             }
@@ -359,8 +358,8 @@ public class FullyQualifiedJavaType implements
             }
 
             // this is far from a perfect test for detecting arrays, but is close
-            // enough for most cases.  It will not detect an improperly specified
-            // array type like byte], but it will detect byte[] and byte[   ]
+            // enough for most cases. It will not detect an improperly specified
+            // array type like byte], but it will detect byte[] and byte[ ]
             // which are both valid
             isArray = fullTypeSpecification.endsWith("]"); //$NON-NLS-1$
         }
@@ -478,6 +477,7 @@ public class FullyQualifiedJavaType implements
      *
      * @param baseQualifiedName
      *            the base qualified name
+     *
      * @return the package
      */
     private static String getPackage(String baseQualifiedName) {

@@ -32,7 +32,6 @@ import org.mybatis.generator.logging.LogFactory;
  * This class holds methods useful for constructing custom classloaders.
  *
  * @author Jeff Butler
- *
  */
 public class ClassloaderUtility {
 

@@ -28,7 +28,6 @@ import org.mybatis.generator.api.PluginAdapter;
  * <p>This can be useful when comments are disabled so the normal XML merge won't work.
  *
  * @author Jeff Butler
- *
  */
 public class UnmergeableXmlMappersPlugin extends PluginAdapter {
 

@@ -47,9 +47,7 @@ import mbg.test.mb3.generated.flat.model.subpackage.Fieldsonly;
 import mbg.test.mb3.generated.flat.model.subpackage.FieldsonlyExample;
 
 /**
- *
  * @author Jeff Butler
- *
  */
 public class UpdateByExampleTest extends AbstractFlatTest {
 

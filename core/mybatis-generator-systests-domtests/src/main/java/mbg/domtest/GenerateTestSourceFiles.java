@@ -32,7 +32,7 @@ import org.reflections.Reflections;
 
 public class GenerateTestSourceFiles {
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         if (args.length < 1 || !StringUtility.stringHasValue(args[0])) {
             throw new RuntimeException("This class requres one argument which is the location of the output directory");
         }
@@ -73,7 +73,7 @@ public class GenerateTestSourceFiles {
             cus.addAll(generator.generate());
         }
 
-        for (CompilationUnit cu: cus) {
+        for (CompilationUnit cu : cus) {
             writeCompilationUnit(outputDirectory, cu);
         }
     }

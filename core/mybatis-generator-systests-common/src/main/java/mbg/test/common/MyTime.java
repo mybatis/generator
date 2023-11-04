@@ -17,7 +17,6 @@ package mbg.test.common;
 
 /**
  * @author Jeff Butler
- *
  */
 public class MyTime {
     private int hours;

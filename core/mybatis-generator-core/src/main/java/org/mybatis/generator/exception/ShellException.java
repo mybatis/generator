@@ -16,8 +16,7 @@
 package org.mybatis.generator.exception;
 
 /**
- * This class is used by the ShellCallback methods to denote unrecoverable
- * errors.
+ * This class is used by the ShellCallback methods to denote unrecoverable errors.
  *
  * @author Jeff Butler
  */

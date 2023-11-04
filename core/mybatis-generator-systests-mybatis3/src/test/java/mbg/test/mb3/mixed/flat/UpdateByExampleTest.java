@@ -47,9 +47,7 @@ import mbg.test.mb3.generated.mixed.flat.model.Pkonly;
 import mbg.test.mb3.generated.mixed.flat.model.PkonlyExample;
 
 /**
- *
  * @author Jeff Butler
- *
  */
 public class UpdateByExampleTest extends AbstractMixedFlatTest {
 

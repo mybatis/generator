@@ -37,7 +37,6 @@ import mbg.test.mb3.generated.dsql.mapper.mbgtest.sub.TranslationMapper;
 
 /**
  * @author Jeff Butler
- *
  */
 public abstract class AbstractTest {
 

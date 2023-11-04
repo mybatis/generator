@@ -42,7 +42,6 @@ import org.mybatis.generator.codegen.RootClassInfo;
  * It does not support the immutable model, or constructor based attributes.
  *
  * @author Jeff Butler
- *
  */
 public class DynamicSqlModelGenerator extends AbstractJavaGenerator {
 

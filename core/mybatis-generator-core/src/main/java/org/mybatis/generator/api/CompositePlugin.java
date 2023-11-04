@@ -39,7 +39,6 @@ import org.mybatis.generator.config.Context;
  * subsequent plugin is called.
  *
  * @author Jeff Butler
- *
  */
 public abstract class CompositePlugin implements Plugin {
     private final List<Plugin> plugins = new ArrayList<>();

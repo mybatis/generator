@@ -28,7 +28,6 @@ import org.mybatis.generator.api.IntrospectedColumn;
  * <p>If a column is identity, it should not be referenced on an insert method.
  *
  * @author Jeff Butler
- *
  */
 public class ListUtilities {
 

@@ -85,7 +85,6 @@ public class SimpleAnnotatedTest extends AbstractSimpleAnnotatedTest {
         }
     }
 
-
     @Test
     public void testPKFieldsInsert() {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {

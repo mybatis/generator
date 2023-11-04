@@ -64,7 +64,7 @@ public class InsertMultipleMethodGenerator extends AbstractMethodGenerator {
         }
 
         method.addBodyLine("return " + methodName + "(this::insertMultiple, records, " //$NON-NLS-1$ //$NON-NLS-2$
-                + tableFieldName //$NON-NLS-1$
+                + tableFieldName // $NON-NLS-1$
                 + ", c ->"); //$NON-NLS-1$
 
         List<IntrospectedColumn> columns =

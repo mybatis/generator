@@ -54,7 +54,6 @@ import mbg.test.mb3.generated.mixed.flat.model.PkonlyExample;
 
 /**
  * @author Jeff Butler
- *
  */
 public class FlatJava5Test extends AbstractMixedFlatTest {
 

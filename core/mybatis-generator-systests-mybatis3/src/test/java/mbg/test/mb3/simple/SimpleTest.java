@@ -89,7 +89,6 @@ public class SimpleTest extends AbstractSimpleTest {
         }
     }
 
-
     @Test
     public void testPKFieldsInsert() {
         SqlSession sqlSession = sqlSessionFactory.openSession();

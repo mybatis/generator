@@ -53,7 +53,6 @@ import mbg.test.mb3.generated.conditional.immutable.model.PkonlyKey;
 
 /**
  * @author Jeff Butler
- *
  */
 public class ConditionalJava5Test extends AbstractConditionalImmutableTest {
 

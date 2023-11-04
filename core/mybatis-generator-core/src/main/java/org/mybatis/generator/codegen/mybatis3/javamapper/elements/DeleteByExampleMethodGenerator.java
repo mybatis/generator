@@ -46,8 +46,7 @@ public class DeleteByExampleMethodGenerator extends AbstractJavaMapperMethodGene
 
         addMapperAnnotations(method);
 
-        if (context.getPlugins().clientDeleteByExampleMethodGenerated(
-                method, interfaze, introspectedTable)) {
+        if (context.getPlugins().clientDeleteByExampleMethodGenerated(method, interfaze, introspectedTable)) {
             addExtraImports(interfaze);
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);

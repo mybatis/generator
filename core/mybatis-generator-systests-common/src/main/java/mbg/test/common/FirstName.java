@@ -17,7 +17,6 @@ package mbg.test.common;
 
 /**
  * @author Jeff Butler
- *
  */
 public class FirstName {
 
@@ -44,7 +43,7 @@ public class FirstName {
             return false;
         }
 
-        return value.equals(((FirstName)arg0).getValue());
+        return value.equals(((FirstName) arg0).getValue());
     }
 
     @Override

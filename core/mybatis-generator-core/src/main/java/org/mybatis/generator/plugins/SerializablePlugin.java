@@ -39,7 +39,6 @@ import org.mybatis.generator.api.dom.kotlin.KotlinType;
  * attempt to do any versioning of classes.
  *
  * @author Jeff Butler
- *
  */
 public class SerializablePlugin extends PluginAdapter {
 

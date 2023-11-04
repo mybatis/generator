@@ -31,7 +31,6 @@ import org.mybatis.generator.config.Context;
  * subclassed by clients.
  *
  * @author Jeff Butler
- *
  */
 public final class PluginAggregator extends CompositePlugin {
 

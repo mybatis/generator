@@ -25,7 +25,6 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 
 /**
  * @author Jeff Butler
- *
  */
 class JavaBeansUtilTest {
 

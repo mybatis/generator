@@ -46,7 +46,8 @@ public class JDBCConnectionFactory implements ConnectionFactory {
      * This constructor is called when there is a JDBCConnectionConfiguration
      * specified in the configuration.
      *
-     * @param config the configuration
+     * @param config
+     *            the configuration
      */
     public JDBCConnectionFactory(JDBCConnectionConfiguration config) {
         super();

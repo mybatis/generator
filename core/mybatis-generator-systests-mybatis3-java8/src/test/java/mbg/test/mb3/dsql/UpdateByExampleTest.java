@@ -48,9 +48,7 @@ import mbg.test.mb3.generated.dsql.model.Pkfieldsblobs;
 import mbg.test.mb3.generated.dsql.model.Pkonly;
 
 /**
- *
  * @author Jeff Butler
- *
  */
 public class UpdateByExampleTest extends AbstractTest {
 

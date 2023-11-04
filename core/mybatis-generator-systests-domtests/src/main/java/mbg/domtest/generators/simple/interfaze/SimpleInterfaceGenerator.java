@@ -28,7 +28,6 @@ import mbg.domtest.CompilationUnitGenerator;
 
 /**
  * This generator generates a simple interface and implementing class in different packages.
- *
  */
 public class SimpleInterfaceGenerator implements CompilationUnitGenerator {
 

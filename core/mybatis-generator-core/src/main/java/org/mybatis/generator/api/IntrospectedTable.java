@@ -50,7 +50,6 @@ import org.mybatis.generator.internal.rules.Rules;
  * the actual code generation methods left unimplemented.
  *
  * @author Jeff Butler
- *
  */
 public abstract class IntrospectedTable {
 

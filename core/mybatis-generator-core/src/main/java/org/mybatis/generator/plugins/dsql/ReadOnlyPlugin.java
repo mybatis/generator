@@ -23,7 +23,6 @@ import org.mybatis.generator.api.CompositePlugin;
  * Disables delete, insert, delete, and update methods in the MyBatisDynamicSQLV2 runtime.
  *
  * @author Jeff Butler
- *
  */
 public class ReadOnlyPlugin extends CompositePlugin {
 

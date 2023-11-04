@@ -23,7 +23,6 @@ import org.mybatis.generator.api.IntrospectedTable;
  * with BLOBs classes if the class would only hold one field.
  *
  * @author Jeff Butler
- *
  */
 public class ConditionalModelRules extends BaseRules {
 

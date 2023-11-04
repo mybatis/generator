@@ -29,7 +29,7 @@ public class BaseClass {
     }
 
     // these methods are final so that an error will be generated
-    // if the extended class tries to overwrite them.  This
+    // if the extended class tries to overwrite them. This
     // will break the build as the generator should
     // see a duplicate property.
     public final String getLastname() {

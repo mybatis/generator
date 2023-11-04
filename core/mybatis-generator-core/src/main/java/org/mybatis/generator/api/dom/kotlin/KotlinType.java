@@ -92,6 +92,7 @@ public class KotlinType extends KotlinNamedItemContainer {
     public static Builder newCompanionObject() {
         return new Builder(Type.COMPANION_OBJECT, DEFAULT_COMPANION_OBJECT_NAME);
     }
+
     public static Builder newCompanionObject(String name) {
         return new Builder(Type.COMPANION_OBJECT, name);
     }

@@ -19,8 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class encapsulates the idea of an inner enum - it has methods that make
- * it easy to generate inner enum.
+ * This class encapsulates the idea of an inner enum - it has methods that make it easy to generate inner enum.
  *
  * @author Jeff Butler
  */

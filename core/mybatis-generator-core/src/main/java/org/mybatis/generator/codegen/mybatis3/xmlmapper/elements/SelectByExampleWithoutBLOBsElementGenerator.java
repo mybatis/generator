@@ -21,8 +21,7 @@ import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
-public class SelectByExampleWithoutBLOBsElementGenerator extends
-        AbstractXmlElementGenerator {
+public class SelectByExampleWithoutBLOBsElementGenerator extends AbstractXmlElementGenerator {
 
     public SelectByExampleWithoutBLOBsElementGenerator() {
         super();

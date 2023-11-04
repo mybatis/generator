@@ -34,7 +34,7 @@ import mbg.domtest.CompilationUnitGenerator;
  * in code generation when the type is not explicitly imported.
  *
  */
-//@IgnoreDomTest("Ignore until changes for issue #63 are committed")
+// @IgnoreDomTest("Ignore until changes for issue #63 are committed")
 public class Test1Generator implements CompilationUnitGenerator {
 
     private static final String BASE_PACKAGE = "mbg.domtest.generators.fieldtype1.output";

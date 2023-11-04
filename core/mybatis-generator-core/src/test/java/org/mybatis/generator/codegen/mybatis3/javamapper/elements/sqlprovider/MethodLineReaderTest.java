@@ -17,9 +17,9 @@ package org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.Test;
-
 import java.util.List;
+
+import org.junit.jupiter.api.Test;
 
 class MethodLineReaderTest {
 

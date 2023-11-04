@@ -31,7 +31,7 @@ class PropertyParserTest {
     @DisplayName("Testing MyBatisGeneratorConfigurationParser.parsePropertyTokens(String token)")
     @ParameterizedTest(name = "{index} => properties:''{0}'', token:''{1}'', expected:''{2}''")
     @MethodSource("parsePropertyTokensTestSource")
-    void parsePropertyTokensTest(Properties prop, String token, String expected){
+    void parsePropertyTokensTest(Properties prop, String token, String expected) {
         MyBatisGeneratorConfigurationParser parser = new MyBatisGeneratorConfigurationParser(prop);
         String result = parser.parsePropertyTokens(token);
         assertThat(result).isEqualTo(expected);

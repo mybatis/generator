@@ -22,7 +22,6 @@ import org.mybatis.generator.api.IntrospectedTable;
  * hierarchical model.
  *
  * @author Jeff Butler
- *
  */
 public class HierarchicalModelRules extends BaseRules {
 

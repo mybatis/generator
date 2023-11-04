@@ -25,6 +25,7 @@ import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -51,7 +52,8 @@ import org.xml.sax.SAXException;
  * @author Jeff Butler
  */
 public class XmlFileMergerJaxp {
-    private XmlFileMergerJaxp() {}
+    private XmlFileMergerJaxp() {
+    }
 
     private static class NullEntityResolver implements EntityResolver {
         /**

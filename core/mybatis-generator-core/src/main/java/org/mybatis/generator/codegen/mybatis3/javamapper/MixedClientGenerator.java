@@ -30,7 +30,6 @@ import org.mybatis.generator.codegen.mybatis3.xmlmapper.MixedMapperGenerator;
  * methods that don't require SQL provider support.
  *
  * @author Jeff Butler
- *
  */
 public class MixedClientGenerator extends JavaMapperGenerator {
 

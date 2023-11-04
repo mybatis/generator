@@ -67,8 +67,8 @@ import org.mybatis.generator.config.Context;
  * implementations, these methods may not be called.
  *
  * @author Jeff Butler
- * @see PluginAdapter
  *
+ * @see PluginAdapter
  */
 public interface Plugin {
 

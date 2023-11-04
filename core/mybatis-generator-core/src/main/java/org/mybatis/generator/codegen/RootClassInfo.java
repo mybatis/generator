@@ -31,8 +31,8 @@ import org.mybatis.generator.internal.ObjectFactory;
 
 /**
  * Holds information about a class (uses the JavaBeans Introspector to find properties).
- * @author Jeff Butler
  *
+ * @author Jeff Butler
  */
 public class RootClassInfo {
 

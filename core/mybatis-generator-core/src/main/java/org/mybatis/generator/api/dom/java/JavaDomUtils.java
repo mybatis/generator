@@ -18,16 +18,18 @@ package org.mybatis.generator.api.dom.java;
 import java.util.stream.Collectors;
 
 public class JavaDomUtils {
-    private JavaDomUtils() {}
+    private JavaDomUtils() {
+    }
 
     /**
-     * Calculates type names for writing into generated Java.  We try to
-     * use short names wherever possible.  If the type requires an import,
-     * but has not been imported, then we need to use the fully qualified
-     * type name.
+     * Calculates type names for writing into generated Java. We try to use short names wherever possible. If the type
+     * requires an import, but has not been imported, then we need to use the fully qualified type name.
      *
-     * @param compilationUnit the compilation unit being written
-     * @param fqjt the type in question
+     * @param compilationUnit
+     *            the compilation unit being written
+     * @param fqjt
+     *            the type in question
+     *
      * @return the full type name
      */
     public static String calculateTypeName(CompilationUnit compilationUnit, FullyQualifiedJavaType fqjt) {

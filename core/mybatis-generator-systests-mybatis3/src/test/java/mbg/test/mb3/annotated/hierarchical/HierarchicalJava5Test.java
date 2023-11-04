@@ -59,7 +59,6 @@ import mbg.test.mb3.generated.annotated.hierarchical.model.PkonlyKey;
 
 /**
  * @author Jeff Butler
- *
  */
 public class HierarchicalJava5Test extends AbstractAnnotatedHierarchicalTest {
 

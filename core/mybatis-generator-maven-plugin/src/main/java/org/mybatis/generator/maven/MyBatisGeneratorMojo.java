@@ -54,7 +54,6 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
 
     /**
      * Maven Project.
-     *
      */
     @Parameter(property = "project", required = true, readonly = true)
     private MavenProject project;

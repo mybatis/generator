@@ -22,7 +22,6 @@ import org.mybatis.generator.api.ProgressCallback;
  * This callback logs progress messages with the Maven logger.
  *
  * @author Jeff Butler
- *
  */
 public class MavenProgressCallback implements ProgressCallback {
 

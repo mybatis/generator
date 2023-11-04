@@ -57,7 +57,6 @@ import mbg.test.mb3.generated.conditional.model.PkonlyKey;
 
 /**
  * @author Jeff Butler
- *
  */
 public class ConditionalJava5Test extends AbstractConditionalTest {
 

@@ -17,6 +17,9 @@ package org.mybatis.generator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.github.javaparser.ParseProblemException;
+import com.github.javaparser.StaticJavaParser;
+
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +32,6 @@ import org.mybatis.generator.api.dom.DefaultJavaFormatter;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.internal.DefaultShellCallback;
-
-import com.github.javaparser.ParseProblemException;
-import com.github.javaparser.StaticJavaParser;
 
 class JavaCodeGenerationTest {
 

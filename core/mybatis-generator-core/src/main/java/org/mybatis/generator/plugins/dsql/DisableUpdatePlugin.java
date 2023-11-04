@@ -28,7 +28,6 @@ import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
  * Disables all update methods in the MyBatis3DynamicSQL and MyBatis3Kotlin runtimes.
  *
  * @author Jeff Butler
- *
  */
 public class DisableUpdatePlugin extends PluginAdapter {
 

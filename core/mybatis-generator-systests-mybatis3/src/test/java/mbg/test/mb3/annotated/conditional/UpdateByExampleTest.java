@@ -47,9 +47,7 @@ import mbg.test.mb3.generated.annotated.conditional.model.PkonlyExample;
 import mbg.test.mb3.generated.annotated.conditional.model.PkonlyKey;
 
 /**
- *
  * @author Jeff Butler
- *
  */
 public class UpdateByExampleTest extends AbstractAnnotatedConditionalTest {
 

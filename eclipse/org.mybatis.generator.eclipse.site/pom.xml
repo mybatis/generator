@@ -86,7 +86,7 @@
                 <repository>
                   <id>Eclipse Latest</id>
                   <layout>p2</layout>
-                  <url>http://download.eclipse.org/releases/latest</url>
+                  <url>https://download.eclipse.org/releases/latest/</url>
                 </repository>
               </repositories>
               <dependencies>

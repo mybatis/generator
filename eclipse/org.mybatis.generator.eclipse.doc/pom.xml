@@ -56,10 +56,10 @@
         <executions>
           <execution>
             <id>refresh core source</id>
-            <phase>generate-sources</phase>
             <goals>
               <goal>run</goal>
             </goals>
+            <phase>generate-sources</phase>
             <configuration>
               <target>
                 <ant antfile="buildDoc.xml" target="refresh" />
@@ -68,7 +68,7 @@
           </execution>
         </executions>
       </plugin>
-      
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-clean-plugin</artifactId>

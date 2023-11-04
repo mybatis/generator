@@ -54,10 +54,10 @@
         <executions>
           <execution>
             <id>refresh DTDs</id>
-            <phase>generate-sources</phase>
             <goals>
               <goal>run</goal>
             </goals>
+            <phase>generate-sources</phase>
             <configuration>
               <target>
                 <ant antfile="copyDtds.xml" target="refresh" />

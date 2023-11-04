@@ -17,8 +17,7 @@
 
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.mybatis.generator</groupId>
@@ -47,7 +46,7 @@
       </plugin>
     </plugins>
   </build>
-  
+
   <profiles>
     <profile>
       <id>release-composite</id>
@@ -65,10 +64,10 @@
             <executions>
               <execution>
                 <id>download-composite-metadata</id>
-                <phase>prepare-package</phase>
                 <goals>
-                 <goal>run</goal>
+                  <goal>run</goal>
                 </goals>
+                <phase>prepare-package</phase>
                 <configuration>
                   <target>
                     <ant antfile="downloadMetadata.ant" target="download"/>
@@ -131,10 +130,10 @@
             <executions>
               <execution>
                 <id>update composite repo</id>
-                <phase>package</phase>
                 <goals>
                   <goal>eclipse-run</goal>
                 </goals>
+                <phase>package</phase>
               </execution>
             </executions>
           </plugin>

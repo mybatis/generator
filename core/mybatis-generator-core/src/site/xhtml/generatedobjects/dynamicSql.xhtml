@@ -168,7 +168,7 @@ public class SomeService {
         List&lt;TableCode&gt; records = mapper.select(c -&gt;
                 c.where(id, isLessThan(10), and(description, isEqualTo("foo")))
                 .or(description, isLike("b%"))
-                .orderBy(id.descending()));        
+                .orderBy(id.descending()));
         ...
     }
 }

@@ -29,7 +29,7 @@
 These classes
 are dependent on the <a href="http://www.mybatis.org/mybatis-dynamic-sql/docs/introduction.html">MyBatis Dynamic SQL</a>
 library version 1.1.4 or higher. Please refer to that site for full information
-about how the library works. In particular, see the 
+about how the library works. In particular, see the
 <a href="https://mybatis.org/mybatis-dynamic-sql/docs/kotlinMyBatis3.html">Kotlin Usage Page</a> for full details.</p>
 
 <h2>Generated Files</h2>
@@ -128,7 +128,7 @@ That code looks like this:</p>
   val allRecords = mapper.select { allRows() }
 </pre>
 
-<p>It is far more interesting to add WHERE clauses to these methods.  To add support for WHERE clauses, you should import the 
+<p>It is far more interesting to add WHERE clauses to these methods.  To add support for WHERE clauses, you should import the
 elements from the support class as shown above, and you should also import the SqlBuilder support.  Then you can code arbitrarily
 complex where clauses, and "ORDER BY" phrases as shown below:</p>
 
@@ -168,7 +168,7 @@ class SomeService {
             }
             or { description isLike "b%" }
             orderBy(id.descending())
-        }        
+        }
         ...
     }
 }

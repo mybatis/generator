@@ -26,70 +26,11 @@
   <artifactId>mybatis-generator-systests-mybatis3</artifactId>
   <packaging>jar</packaging>
   <name>MyBatis Generator Tests (MyBatis3)</name>
+  <description>Tests for the MyBatis3 code generator.</description>
 
   <properties>
     <checkstyle.config>${project.basedir}/../checkstyle-override.xml</checkstyle.config>
   </properties>
-
-  <build>
-    <pluginManagement>
-      <plugins>
-        <!-- Don't run the coverage reports here. It will throw off the coverage calculation for the core module -->
-        <plugin>
-          <groupId>org.jacoco</groupId>
-          <artifactId>jacoco-maven-plugin</artifactId>
-          <configuration>
-            <skip>true</skip>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-
-    <plugins>
-      <plugin>
-        <groupId>org.mybatis.generator</groupId>
-        <artifactId>mybatis-generator-maven-plugin</artifactId>
-        <version>${project.version}</version>
-        <executions>
-          <execution>
-            <id>Generate MyBatis Artifacts</id>
-            <goals>
-              <goal>generate</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <sqlScript>classpath:mbg/test/common/scripts/CreateDB.sql</sqlScript>
-          <jdbcDriver>org.hsqldb.jdbcDriver</jdbcDriver>
-          <jdbcURL>jdbc:hsqldb:mem:aname</jdbcURL>
-          <jdbcUserId>sa</jdbcUserId>
-          <overwrite>true</overwrite>
-          <includeAllDependencies>true</includeAllDependencies>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-deploy-plugin</artifactId>
-        <configuration>
-          <skip>true</skip>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <configuration>
-          <skip>true</skip>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-        <configuration>
-          <skipSource>true</skipSource>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
 
   <dependencies>
     <dependency>
@@ -115,10 +56,69 @@
       <artifactId>assertj-core</artifactId>
     </dependency>
   </dependencies>
-  <description>Tests for the MyBatis3 code generator.</description>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <!-- Don't run the coverage reports here. It will throw off the coverage calculation for the core module -->
+        <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <configuration>
+            <skip>true</skip>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <groupId>org.mybatis.generator</groupId>
+        <artifactId>mybatis-generator-maven-plugin</artifactId>
+        <version>${project.version}</version>
+        <configuration>
+          <sqlScript>classpath:mbg/test/common/scripts/CreateDB.sql</sqlScript>
+          <jdbcDriver>org.hsqldb.jdbcDriver</jdbcDriver>
+          <jdbcURL>jdbc:hsqldb:mem:aname</jdbcURL>
+          <jdbcUserId>sa</jdbcUserId>
+          <overwrite>true</overwrite>
+          <includeAllDependencies>true</includeAllDependencies>
+        </configuration>
+        <executions>
+          <execution>
+            <id>Generate MyBatis Artifacts</id>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <configuration>
+          <skipSource>true</skipSource>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
   <profiles>
     <profile>
-     <id>eclipse</id>
+      <id>eclipse</id>
       <activation>
         <property>
           <name>m2e.version</name>
@@ -132,10 +132,10 @@
             <executions>
               <execution>
                 <id>add-generated-source</id>
-                <phase>generate-sources</phase>
                 <goals>
                   <goal>add-source</goal>
                 </goals>
+                <phase>generate-sources</phase>
                 <configuration>
                   <sources>
                     <source>${project.build.directory}/generated-sources/mybatis-generator</source>

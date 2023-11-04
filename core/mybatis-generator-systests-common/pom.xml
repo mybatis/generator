@@ -28,6 +28,7 @@
   <artifactId>mybatis-generator-systests-common</artifactId>
   <packaging>jar</packaging>
   <name>MyBatis Generator Tests (Common Classes)</name>
+  <description>Shared classes for all the test projects.</description>
 
   <properties>
     <checkstyle.config>${project.basedir}/../checkstyle-override.xml</checkstyle.config>
@@ -58,5 +59,4 @@
       </plugin>
     </plugins>
   </build>
-  <description>Shared classes for all the test projects.</description>
 </project>

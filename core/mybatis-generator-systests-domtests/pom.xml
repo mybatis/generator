@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 
        Copyright 2006-2023 the original author or authors.
@@ -17,39 +18,52 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <name>MyBatis Generator Tests (Java DOM Tests)</name>
   <parent>
     <groupId>org.mybatis.generator</groupId>
     <artifactId>mybatis-generator</artifactId>
     <version>1.4.3-SNAPSHOT</version>
   </parent>
   <artifactId>mybatis-generator-systests-domtests</artifactId>
+  <name>MyBatis Generator Tests (Java DOM Tests)</name>
+  <description>Tests for the Java DOM classes.  Generates Java classes and fails if the classes won't compile.</description>
 
   <properties>
     <generated.source.directory>${project.build.directory}/generated-test-sources/mybatis-generator-domtest</generated.source.directory>
     <checkstyle.config>${project.basedir}/../checkstyle-override.xml</checkstyle.config>
   </properties>
-  
+
+  <dependencies>
+    <dependency>
+      <groupId>org.mybatis.generator</groupId>
+      <artifactId>mybatis-generator-core</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.reflections</groupId>
+      <artifactId>reflections</artifactId>
+    </dependency>
+  </dependencies>
+
   <build>
     <plugins>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>generate-test-sources</id>
-            <phase>generate-test-sources</phase>
-            <goals>
-              <goal>java</goal>
-            </goals>
-          </execution>
-        </executions>
         <configuration>
           <mainClass>mbg.domtest.GenerateTestSourceFiles</mainClass>
           <arguments>
             <argument>${generated.source.directory}</argument>
           </arguments>
         </configuration>
+        <executions>
+          <execution>
+            <id>generate-test-sources</id>
+            <goals>
+              <goal>java</goal>
+            </goals>
+            <phase>generate-test-sources</phase>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -57,10 +71,10 @@
         <executions>
           <execution>
             <id>add-test-source</id>
-            <phase>generate-test-sources</phase>
             <goals>
               <goal>add-test-source</goal>
             </goals>
+            <phase>generate-test-sources</phase>
             <configuration>
               <sources>
                 <source>${generated.source.directory}</source>
@@ -100,17 +114,4 @@
       </plugin>
     </plugins>
   </build>
-  
-  <dependencies>
-    <dependency>
-      <groupId>org.mybatis.generator</groupId>
-      <artifactId>mybatis-generator-core</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.reflections</groupId>
-      <artifactId>reflections</artifactId>
-    </dependency>
-  </dependencies>
-  <description>Tests for the Java DOM classes.  Generates Java classes and fails if the classes won't compile.</description>
 </project>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 
        Copyright 2006-2023 the original author or authors.
@@ -23,83 +24,12 @@
     <version>1.4.3-SNAPSHOT</version>
   </parent>
   <artifactId>mybatis-generator-systests-mybatis3-java8</artifactId>
-  <description>Tests for the MyBatis3 code generator using Java8 Features.</description>
   <name>MyBatis Generator Tests (MyBatis3 with Java 8)</name>
+  <description>Tests for the MyBatis3 code generator using Java8 Features.</description>
 
   <properties>
     <checkstyle.config>${project.basedir}/../checkstyle-override.xml</checkstyle.config>
   </properties>
-
-  <build>
-    <pluginManagement>
-      <plugins>
-        <!-- Don't run the coverage reports here. It will throw off the coverage calculation for the core module -->
-        <plugin>
-          <groupId>org.jacoco</groupId>
-          <artifactId>jacoco-maven-plugin</artifactId>
-          <configuration>
-            <skip>true</skip>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-
-    <plugins>
-      <plugin>
-        <groupId>org.mybatis.generator</groupId>
-        <artifactId>mybatis-generator-maven-plugin</artifactId>
-        <version>${project.version}</version>
-        <executions>
-          <execution>
-            <id>Generate MyBatis Artifacts</id>
-            <goals>
-              <goal>generate</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <sqlScript>classpath:mbg/test/common/scripts/CreateDB.sql</sqlScript>
-          <jdbcDriver>org.hsqldb.jdbcDriver</jdbcDriver>
-          <jdbcURL>jdbc:hsqldb:mem:aname</jdbcURL>
-          <jdbcUserId>sa</jdbcUserId>
-          <overwrite>true</overwrite>
-        </configuration>
-        <dependencies>
-          <dependency>
-            <groupId>org.hsqldb</groupId>
-            <artifactId>hsqldb</artifactId>
-            <version>${hsqldb.version}</version>
-          </dependency>
-          <dependency>
-            <groupId>org.mybatis.generator</groupId>
-            <artifactId>mybatis-generator-systests-common</artifactId>
-            <version>${project.version}</version>
-          </dependency>
-        </dependencies>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-deploy-plugin</artifactId>
-        <configuration>
-          <skip>true</skip>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <configuration>
-          <skip>true</skip>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-        <configuration>
-          <skipSource>true</skipSource>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
 
   <dependencies>
     <dependency>
@@ -134,9 +64,80 @@
       <artifactId>jakarta.annotation-api</artifactId>
     </dependency>
   </dependencies>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <!-- Don't run the coverage reports here. It will throw off the coverage calculation for the core module -->
+        <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <configuration>
+            <skip>true</skip>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <groupId>org.mybatis.generator</groupId>
+        <artifactId>mybatis-generator-maven-plugin</artifactId>
+        <version>${project.version}</version>
+        <configuration>
+          <sqlScript>classpath:mbg/test/common/scripts/CreateDB.sql</sqlScript>
+          <jdbcDriver>org.hsqldb.jdbcDriver</jdbcDriver>
+          <jdbcURL>jdbc:hsqldb:mem:aname</jdbcURL>
+          <jdbcUserId>sa</jdbcUserId>
+          <overwrite>true</overwrite>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>${hsqldb.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>org.mybatis.generator</groupId>
+            <artifactId>mybatis-generator-systests-common</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <id>Generate MyBatis Artifacts</id>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <configuration>
+          <skipSource>true</skipSource>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
   <profiles>
     <profile>
-     <id>eclipse</id>
+      <id>eclipse</id>
       <activation>
         <property>
           <name>m2e.version</name>
@@ -150,10 +151,10 @@
             <executions>
               <execution>
                 <id>add-generated-source</id>
-                <phase>generate-sources</phase>
                 <goals>
                   <goal>add-source</goal>
                 </goals>
+                <phase>generate-sources</phase>
                 <configuration>
                   <sources>
                     <source>${project.build.directory}/generated-sources/mybatis-generator</source>

@@ -24,8 +24,8 @@
     <version>1.4.3-SNAPSHOT</version>
   </parent>
   <artifactId>mybatis-generator-systests-kotlin</artifactId>
-  <description>Tests for the MyBatis3 code generator using Kotlin</description>
   <name>MyBatis Generator Tests (Kotlin)</name>
+  <description>Tests for the MyBatis3 code generator using Kotlin</description>
 
   <dependencies>
     <dependency>
@@ -80,35 +80,10 @@
         </plugin>
       </plugins>
     </pluginManagement>
-
-    <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
-    <testSourceDirectory>src/test/kotlin</testSourceDirectory>
     <plugins>
       <plugin>
         <groupId>org.jetbrains.kotlin</groupId>
         <artifactId>kotlin-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>compile</id>
-            <phase>compile</phase>
-            <goals>
-              <goal>compile</goal>
-            </goals>
-            <configuration>
-              <sourceDirs>
-                <source>src/main/kotlin</source>
-                <source>target/generated-sources/mybatis-generator</source>
-              </sourceDirs>
-            </configuration>
-          </execution>
-          <execution>
-            <id>test-compile</id>
-            <phase>test-compile</phase>
-            <goals>
-              <goal>test-compile</goal>
-            </goals>
-          </execution>
-        </executions>
         <configuration>
           <args>
             <arg>-Xjsr305=strict</arg>
@@ -122,19 +97,33 @@
             <version>${kotlin.version}</version>
           </dependency>
         </dependencies>
+        <executions>
+          <execution>
+            <id>compile</id>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+            <phase>compile</phase>
+            <configuration>
+              <sourceDirs>
+                <source>src/main/kotlin</source>
+                <source>target/generated-sources/mybatis-generator</source>
+              </sourceDirs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>test-compile</id>
+            <goals>
+              <goal>test-compile</goal>
+            </goals>
+            <phase>test-compile</phase>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.mybatis.generator</groupId>
         <artifactId>mybatis-generator-maven-plugin</artifactId>
         <version>${project.version}</version>
-        <executions>
-          <execution>
-            <id>Generate MyBatis Artifacts</id>
-            <goals>
-              <goal>generate</goal>
-            </goals>
-          </execution>
-        </executions>
         <configuration>
           <sqlScript>classpath:mbg/test/common/scripts/CreateDB.sql</sqlScript>
           <jdbcDriver>org.hsqldb.jdbcDriver</jdbcDriver>
@@ -154,6 +143,14 @@
             <version>${project.version}</version>
           </dependency>
         </dependencies>
+        <executions>
+          <execution>
+            <id>Generate MyBatis Artifacts</id>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -177,6 +174,9 @@
         </configuration>
       </plugin>
     </plugins>
+
+    <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
+    <testSourceDirectory>src/test/kotlin</testSourceDirectory>
   </build>
 
   <profiles>
@@ -195,10 +195,10 @@
             <executions>
               <execution>
                 <id>add-generated-source</id>
-                <phase>generate-sources</phase>
                 <goals>
                   <goal>add-source</goal>
                 </goals>
+                <phase>generate-sources</phase>
                 <configuration>
                   <sources>
                     <source>target/generated-sources/mybatis-generator</source>

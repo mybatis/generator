@@ -24,24 +24,34 @@
     <groupId>org.mybatis</groupId>
     <artifactId>mybatis-parent</artifactId>
     <version>39</version>
-    <relativePath />
+    <relativePath/>
   </parent>
 
   <groupId>org.mybatis.generator</groupId>
   <artifactId>mybatis-generator</artifactId>
-  <name>MyBatis Generator</name>
   <version>1.4.3-SNAPSHOT</version>
   <packaging>pom</packaging>
-
-  <inceptionYear>2006</inceptionYear>
+  <name>MyBatis Generator</name>
 
   <description>Parent POM for MyBatis Generator</description>
 
+  <inceptionYear>2006</inceptionYear>
+
+  <modules>
+    <module>mybatis-generator-core</module>
+    <module>mybatis-generator-systests-domtests</module>
+    <module>mybatis-generator-maven-plugin</module>
+    <module>mybatis-generator-systests-common</module>
+    <module>mybatis-generator-systests-mybatis3</module>
+    <module>mybatis-generator-systests-mybatis3-java8</module>
+    <module>mybatis-generator-systests-kotlin</module>
+  </modules>
+
   <scm>
-    <url>https://github.com/mybatis/generator</url>
     <connection>scm:git:ssh://git@github.com/mybatis/generator.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/mybatis/generator.git</developerConnection>
     <tag>HEAD</tag>
+    <url>https://github.com/mybatis/generator</url>
   </scm>
   <issueManagement>
     <system>GitHub Issue Management</system>
@@ -65,100 +75,6 @@
     <!-- Reproducible Builds -->
     <project.build.outputTimestamp>1676846560</project.build.outputTimestamp>
   </properties>
-
-  <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>build-helper-maven-plugin</artifactId>
-          <version>3.4.0</version>
-        </plugin>
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>exec-maven-plugin</artifactId>
-          <version>3.1.0</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-plugin-plugin</artifactId>
-          <version>3.10.1</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-source-plugin</artifactId>
-          <version>3.3.0</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-javadoc-plugin</artifactId>
-          <configuration>
-            <quiet>true</quiet>
-            <tags>
-              <tag>
-                <name>mbg.generated</name>
-                <placement>ctmf</placement>
-              </tag>
-            </tags>
-          </configuration>
-        </plugin>
-        <plugin>
-          <artifactId>kotlin-maven-plugin</artifactId>
-          <groupId>org.jetbrains.kotlin</groupId>
-          <version>${kotlin.version}</version>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-site-plugin</artifactId>
-        <configuration>
-          <!-- turn off deployment by default, we'll turn it back on in the core project -->
-          <skipDeploy>true</skipDeploy>
-          <skip>true</skip>
-        </configuration>
-      </plugin>
-      <!-- need to allow snapshots so the maven plugin can be tested -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-enforcer-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>enforce-java</id>
-            <phase>validate</phase>
-            <goals>
-              <goal>enforce</goal>
-            </goals>
-            <configuration>
-              <rules>
-                <requirePluginVersions>
-                  <banSnapshots>false</banSnapshots>
-                </requirePluginVersions>
-              </rules>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
-
-  <reporting>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-plugin-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <configuration>
-          <configLocation>${checkstyle.config}</configLocation>
-        </configuration>
-      </plugin>
-    </plugins>
-  </reporting>
 
   <dependencyManagement>
     <dependencies>
@@ -263,16 +179,6 @@
     </dependencies>
   </dependencyManagement>
 
-  <modules>
-    <module>mybatis-generator-core</module>
-    <module>mybatis-generator-systests-domtests</module>
-    <module>mybatis-generator-maven-plugin</module>
-    <module>mybatis-generator-systests-common</module>
-    <module>mybatis-generator-systests-mybatis3</module>
-    <module>mybatis-generator-systests-mybatis3-java8</module>
-    <module>mybatis-generator-systests-kotlin</module>
-  </modules>
-
   <repositories>
     <repository>
       <id>sonatype-oss-snapshots</id>
@@ -281,9 +187,103 @@
     </repository>
   </repositories>
 
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>build-helper-maven-plugin</artifactId>
+          <version>3.4.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <version>3.1.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-plugin-plugin</artifactId>
+          <version>3.10.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>3.3.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <configuration>
+            <quiet>true</quiet>
+            <tags>
+              <tag>
+                <name>mbg.generated</name>
+                <placement>ctmf</placement>
+              </tag>
+            </tags>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.jetbrains.kotlin</groupId>
+          <artifactId>kotlin-maven-plugin</artifactId>
+          <version>${kotlin.version}</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <configuration>
+          <!-- turn off deployment by default, we'll turn it back on in the core project -->
+          <skipDeploy>true</skipDeploy>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+      <!-- need to allow snapshots so the maven plugin can be tested -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>enforce-java</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <phase>validate</phase>
+            <configuration>
+              <rules>
+                <requirePluginVersions>
+                  <banSnapshots>false</banSnapshots>
+                </requirePluginVersions>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-plugin-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <configuration>
+          <configLocation>${checkstyle.config}</configLocation>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
+
   <profiles>
     <profile>
-     <id>eclipse</id>
+      <id>eclipse</id>
       <activation>
         <property>
           <name>m2e.version</name>
@@ -310,7 +310,7 @@
                         </goals>
                       </pluginExecutionFilter>
                       <action>
-                        <ignore />
+                        <ignore/>
                       </action>
                     </pluginExecution>
                     <pluginExecution>
@@ -324,7 +324,7 @@
                         </goals>
                       </pluginExecutionFilter>
                       <action>
-                        <ignore />
+                        <ignore/>
                       </action>
                     </pluginExecution>
                     <pluginExecution>
@@ -337,7 +337,7 @@
                         </goals>
                       </pluginExecutionFilter>
                       <action>
-                        <ignore />
+                        <ignore/>
                       </action>
                     </pluginExecution>
                   </pluginExecutions>

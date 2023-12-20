@@ -1274,4 +1274,16 @@ public abstract class CompositePlugin implements Plugin {
 
         return true;
     }
+
+    @Override
+    public boolean clientUpdateByPrimaryKeyMethodGenerated(Method method, Interface interfaze,
+            IntrospectedTable introspectedTable) {
+        for (Plugin plugin : plugins) {
+            if (!plugin.clientUpdateByPrimaryKeyMethodGenerated(method, interfaze, introspectedTable)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

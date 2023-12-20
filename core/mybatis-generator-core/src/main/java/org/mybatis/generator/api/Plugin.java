@@ -2050,7 +2050,7 @@ public interface Plugin {
      * https://github.com/mybatis/generator/issues/1116
      *
      * This method is called when the updateByPrimaryKey method
-     * has been generated in the client interface.
+     * has been generated in the dynamic SQL runtime client interface.
      *
      * @param method
      *            the generated updateByPrimaryKey method

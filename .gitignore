@@ -76,3 +76,4 @@ bin/
 data/*
 *workspace.xml
 .vscode
+.github/keys

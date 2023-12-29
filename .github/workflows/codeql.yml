@@ -79,6 +79,7 @@ jobs:
       uses: github/codeql-action/autobuild@v3
       with:
         working-directory: core
+      run: ./mvnw clean install -DskipTests
 
     - name: Autobuild
       working-directory: eclipse

@@ -16,3 +16,11 @@ This is a code generator for MyBatis.
 This library will generate code for use with MyBatis. It will introspect a database table (or many tables) and will generate artifacts that can be used to access the table(s). This lessens the initial nuisance of setting up objects and configuration files to interact with database tables. MBG seeks to make a major impact on the large percentage of database operations that are simple CRUD (Create, Retrieve, Update, Delete).
 
 MBG can generate code in multiple styles (or "runtimes"). MBG can generate code for Java based projects, or for Kotlin based projects.
+
+## Eclipse Update Site (Direct) ##
+
+https://jeffgbutler.github.io/mybatis-generator-update-site/
+
+## Eclipse Update Site (Marketplace) ##
+
+https://marketplace.eclipse.org/content/mybatis-generator

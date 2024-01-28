@@ -86,6 +86,9 @@
 
     <!-- Reproducible Builds -->
     <project.build.outputTimestamp>1676846560</project.build.outputTimestamp>
+
+    <!-- Disable topSiteURL -->
+    <topSiteURL />
   </properties>
 
   <dependencyManagement>

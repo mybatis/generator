@@ -32,7 +32,7 @@
   <description>MyBatis Generator - a code generator for MyBatis.</description>
   <scm>
     <tag>HEAD</tag>
-    <url>https://github.com/mybatis/generator</url>
+    <url>https://github.com/mybatis/generator/</url>
   </scm>
 
   <distributionManagement>

@@ -32,6 +32,7 @@
   <version>1.4.3-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>MyBatis Generator</name>
+  <url>https://www.mybatis.org/generator/</url>
 
   <description>Parent POM for MyBatis Generator</description>
 
@@ -51,7 +52,7 @@
     <connection>scm:git:ssh://git@github.com/mybatis/generator.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/mybatis/generator.git</developerConnection>
     <tag>HEAD</tag>
-    <url>https://github.com/mybatis/generator</url>
+    <url>https://github.com/mybatis/generator/</url>
   </scm>
   <issueManagement>
     <system>GitHub Issue Management</system>

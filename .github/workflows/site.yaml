@@ -23,6 +23,9 @@ jobs:
       - uses: webfactory/ssh-agent@master
         with:
           ssh-private-key: ${{ secrets.DEPLOY_KEY }}
+      - name: Build project
+        # Build the project as some sites skipped
+        run: ./mvnw install -DskipTests -B -V --no-transfer-progress -Dlicense.skip=true
       - name: Build site
         run: ./mvnw site site:stage -DskipTests -B -V --no-transfer-progress -Dlicense.skip=true
         env:

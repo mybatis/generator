@@ -62,6 +62,13 @@
     <system>Github</system>
     <url>https://github.com/mybatis/generator/actions</url>
   </ciManagement>
+  <distributionManagement>
+    <site>
+      <id>gh-pages-scm</id>
+      <name>Mybatis GitHub Pages</name>
+      <url>scm:git:ssh://git@github.com/mybatis/generator.git</url>
+    </site>
+  </distributionManagement>
 
   <properties>
     <findbugs.onlyAnalyze>org.mybatis.generator.*</findbugs.onlyAnalyze>

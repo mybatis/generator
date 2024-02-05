@@ -36,6 +36,6 @@ jobs:
         with:
           ssh-key: true
           branch: gh-pages
-          folder: target/staging
+          folder: core/target/staging
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

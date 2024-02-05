@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="" lang="">
 <head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <title>Plugin xref</title>
 <link type="text/css" rel="stylesheet" href="../../../../stylesheet.css" />
@@ -75,8 +75,8 @@
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>  <em class="jxr_javadoccomment"> * implementations, these methods may not be called.</em>
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>  <em class="jxr_javadoccomment"> * @author Jeff Butler</em>
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>  <em class="jxr_javadoccomment"> * @see PluginAdapter</em>
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>  <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>  <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>  <em class="jxr_javadoccomment"> * @see PluginAdapter</em>
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>  <em class="jxr_javadoccomment"> */</em>
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">interface</strong> <a name="Plugin" href="../../../../org/mybatis/generator/api/Plugin.html#Plugin">Plugin</a> {
 <a class="jxr_linenumber" name="L74" href="#L74">74</a>  
@@ -2052,9 +2052,35 @@
 <a class="jxr_linenumber" name="L2044" href="#L2044">2044</a>     <strong class="jxr_keyword">default</strong> <strong class="jxr_keyword">boolean</strong> shouldGenerate(<a name="IntrospectedTable" href="../../../../org/mybatis/generator/api/IntrospectedTable.html#IntrospectedTable">IntrospectedTable</a> introspectedTable) {
 <a class="jxr_linenumber" name="L2045" href="#L2045">2045</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
 <a class="jxr_linenumber" name="L2046" href="#L2046">2046</a>     }
-<a class="jxr_linenumber" name="L2047" href="#L2047">2047</a> }
+<a class="jxr_linenumber" name="L2047" href="#L2047">2047</a> 
+<a class="jxr_linenumber" name="L2048" href="#L2048">2048</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L2049" href="#L2049">2049</a> <em class="jxr_javadoccomment">     * The motivation for adding this method can be found in</em>
+<a class="jxr_linenumber" name="L2050" href="#L2050">2050</a> <em class="jxr_javadoccomment">     * <a href="https://github.com/mybatis/generator/issues/1116" target="alexandria_uri">https://github.com/mybatis/generator/issues/1116</a></em>
+<a class="jxr_linenumber" name="L2051" href="#L2051">2051</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L2052" href="#L2052">2052</a> <em class="jxr_javadoccomment">     * This method is called when the updateByPrimaryKey method</em>
+<a class="jxr_linenumber" name="L2053" href="#L2053">2053</a> <em class="jxr_javadoccomment">     * has been generated in the dynamic SQL runtime client interface.</em>
+<a class="jxr_linenumber" name="L2054" href="#L2054">2054</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L2055" href="#L2055">2055</a> <em class="jxr_javadoccomment">     * @param method</em>
+<a class="jxr_linenumber" name="L2056" href="#L2056">2056</a> <em class="jxr_javadoccomment">     *            the generated updateByPrimaryKey method</em>
+<a class="jxr_linenumber" name="L2057" href="#L2057">2057</a> <em class="jxr_javadoccomment">     * @param interfaze</em>
+<a class="jxr_linenumber" name="L2058" href="#L2058">2058</a> <em class="jxr_javadoccomment">     *            the partially implemented client interface. You can add</em>
+<a class="jxr_linenumber" name="L2059" href="#L2059">2059</a> <em class="jxr_javadoccomment">     *            additional imported classes to the interface if</em>
+<a class="jxr_linenumber" name="L2060" href="#L2060">2060</a> <em class="jxr_javadoccomment">     *            necessary.</em>
+<a class="jxr_linenumber" name="L2061" href="#L2061">2061</a> <em class="jxr_javadoccomment">     * @param introspectedTable</em>
+<a class="jxr_linenumber" name="L2062" href="#L2062">2062</a> <em class="jxr_javadoccomment">     *            The class containing information about the table as</em>
+<a class="jxr_linenumber" name="L2063" href="#L2063">2063</a> <em class="jxr_javadoccomment">     *            introspected from the database</em>
+<a class="jxr_linenumber" name="L2064" href="#L2064">2064</a> <em class="jxr_javadoccomment">     * @return true if the method should be generated, false if the generated</em>
+<a class="jxr_linenumber" name="L2065" href="#L2065">2065</a> <em class="jxr_javadoccomment">     *         method should be ignored. In the case of multiple plugins, the</em>
+<a class="jxr_linenumber" name="L2066" href="#L2066">2066</a> <em class="jxr_javadoccomment">     *         first plugin returning false will disable the calling of further</em>
+<a class="jxr_linenumber" name="L2067" href="#L2067">2067</a> <em class="jxr_javadoccomment">     *         plugins.</em>
+<a class="jxr_linenumber" name="L2068" href="#L2068">2068</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L2069" href="#L2069">2069</a>     <strong class="jxr_keyword">default</strong> <strong class="jxr_keyword">boolean</strong> clientUpdateByPrimaryKeyMethodGenerated(<a name="Method" href="../../../../org/mybatis/generator/api/dom/java/Method.html#Method">Method</a> method,
+<a class="jxr_linenumber" name="L2070" href="#L2070">2070</a>             <a name="Interface" href="../../../../org/mybatis/generator/api/dom/java/Interface.html#Interface">Interface</a> interfaze, <a name="IntrospectedTable" href="../../../../org/mybatis/generator/api/IntrospectedTable.html#IntrospectedTable">IntrospectedTable</a> introspectedTable) {
+<a class="jxr_linenumber" name="L2071" href="#L2071">2071</a>         <strong class="jxr_keyword">return</strong> clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(method, interfaze, introspectedTable);
+<a class="jxr_linenumber" name="L2072" href="#L2072">2072</a>     }
+<a class="jxr_linenumber" name="L2073" href="#L2073">2073</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2006&#x2013;2023 <a href="https://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2006&#x2013;2024 <a href="https://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
 </body>
 </html>

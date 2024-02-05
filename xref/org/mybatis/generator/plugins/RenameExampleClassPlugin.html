@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="" lang="">
 <head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <title>RenameExampleClassPlugin xref</title>
 <link type="text/css" rel="stylesheet" href="../../../../stylesheet.css" />
@@ -7,7 +7,7 @@
 <body>
 <div id="overview"><a href="../../../../../apidocs/org/mybatis/generator/plugins/RenameExampleClassPlugin.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_comment">/*</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> *    Copyright 2006-2022 the original author or authors.</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> *    Copyright 2006-2023 the original author or authors.</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_comment"> *    Licensed under the Apache License, Version 2.0 (the "License");</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_comment"> *    you may not use this file except in compliance with the License.</em>
@@ -56,52 +56,50 @@
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>  <em class="jxr_javadoccomment"> * &lt;dd&gt;Criteria&lt;/dd&gt;</em>
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>  <em class="jxr_javadoccomment"> * &lt;/dl&gt;</em>
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>  <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>  <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>  <em class="jxr_javadoccomment"> * @author Jeff Butler</em>
-<a class="jxr_linenumber" name="L53" href="#L53">53</a>  <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="L54" href="#L54">54</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L55" href="#L55">55</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="RenameExampleClassPlugin" href="../../../../org/mybatis/generator/plugins/RenameExampleClassPlugin.html#RenameExampleClassPlugin">RenameExampleClassPlugin</a> <strong class="jxr_keyword">extends</strong> <a name="PluginAdapter" href="../../../../org/mybatis/generator/api/PluginAdapter.html#PluginAdapter">PluginAdapter</a> {
-<a class="jxr_linenumber" name="L56" href="#L56">56</a>      <strong class="jxr_keyword">private</strong> String replaceString;
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>      <strong class="jxr_keyword">private</strong> Pattern pattern;
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>  
-<a class="jxr_linenumber" name="L59" href="#L59">59</a>      @Override
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> validate(List&lt;String&gt; warnings) {
-<a class="jxr_linenumber" name="L61" href="#L61">61</a>  
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>          String searchString = properties.getProperty(<span class="jxr_string">"searchString"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>          replaceString = properties.getProperty(<span class="jxr_string">"replaceString"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>  
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>          <strong class="jxr_keyword">boolean</strong> valid = stringHasValue(searchString)
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>                  &amp;&amp; stringHasValue(replaceString);
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>  
-<a class="jxr_linenumber" name="L68" href="#L68">68</a>          <strong class="jxr_keyword">if</strong> (valid) {
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>              pattern = Pattern.compile(searchString);
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>          } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>              <strong class="jxr_keyword">if</strong> (!stringHasValue(searchString)) {
-<a class="jxr_linenumber" name="L72" href="#L72">72</a>                  warnings.add(getString(<span class="jxr_string">"ValidationError.18"</span>, <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L73" href="#L73">73</a>                          <span class="jxr_string">"RenameExampleClassPlugin"</span>, <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>                          <span class="jxr_string">"searchString"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>              }
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>              <strong class="jxr_keyword">if</strong> (!stringHasValue(replaceString)) {
-<a class="jxr_linenumber" name="L77" href="#L77">77</a>                  warnings.add(getString(<span class="jxr_string">"ValidationError.18"</span>, <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L78" href="#L78">78</a>                          <span class="jxr_string">"RenameExampleClassPlugin"</span>, <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L79" href="#L79">79</a>                          <span class="jxr_string">"replaceString"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L80" href="#L80">80</a>              }
-<a class="jxr_linenumber" name="L81" href="#L81">81</a>          }
-<a class="jxr_linenumber" name="L82" href="#L82">82</a>  
-<a class="jxr_linenumber" name="L83" href="#L83">83</a>          <strong class="jxr_keyword">return</strong> valid;
-<a class="jxr_linenumber" name="L84" href="#L84">84</a>      }
-<a class="jxr_linenumber" name="L85" href="#L85">85</a>  
-<a class="jxr_linenumber" name="L86" href="#L86">86</a>      @Override
-<a class="jxr_linenumber" name="L87" href="#L87">87</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> initialized(<a name="IntrospectedTable" href="../../../../org/mybatis/generator/api/IntrospectedTable.html#IntrospectedTable">IntrospectedTable</a> introspectedTable) {
-<a class="jxr_linenumber" name="L88" href="#L88">88</a>          String oldType = introspectedTable.getExampleType();
-<a class="jxr_linenumber" name="L89" href="#L89">89</a>          Matcher matcher = pattern.matcher(oldType);
-<a class="jxr_linenumber" name="L90" href="#L90">90</a>          oldType = matcher.replaceAll(replaceString);
-<a class="jxr_linenumber" name="L91" href="#L91">91</a>  
-<a class="jxr_linenumber" name="L92" href="#L92">92</a>          introspectedTable.setExampleType(oldType);
-<a class="jxr_linenumber" name="L93" href="#L93">93</a>      }
-<a class="jxr_linenumber" name="L94" href="#L94">94</a>  }
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>  <em class="jxr_javadoccomment"> * @author Jeff Butler</em>
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>  <em class="jxr_javadoccomment"> */</em>
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="RenameExampleClassPlugin" href="../../../../org/mybatis/generator/plugins/RenameExampleClassPlugin.html#RenameExampleClassPlugin">RenameExampleClassPlugin</a> <strong class="jxr_keyword">extends</strong> <a name="PluginAdapter" href="../../../../org/mybatis/generator/api/PluginAdapter.html#PluginAdapter">PluginAdapter</a> {
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>      <strong class="jxr_keyword">private</strong> String replaceString;
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>      <strong class="jxr_keyword">private</strong> Pattern pattern;
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>  
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>      @Override
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> validate(List&lt;String&gt; warnings) {
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>  
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>          String searchString = properties.getProperty(<span class="jxr_string">"searchString"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>          replaceString = properties.getProperty(<span class="jxr_string">"replaceString"</span>); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>  
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>          <strong class="jxr_keyword">boolean</strong> valid = stringHasValue(searchString)
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>                  &amp;&amp; stringHasValue(replaceString);
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>  
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>          <strong class="jxr_keyword">if</strong> (valid) {
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>              pattern = Pattern.compile(searchString);
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>          } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>              <strong class="jxr_keyword">if</strong> (!stringHasValue(searchString)) {
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>                  warnings.add(getString(<span class="jxr_string">"ValidationError.18"</span>, <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>                          <span class="jxr_string">"RenameExampleClassPlugin"</span>, <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>                          <span class="jxr_string">"searchString"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>              }
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>              <strong class="jxr_keyword">if</strong> (!stringHasValue(replaceString)) {
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>                  warnings.add(getString(<span class="jxr_string">"ValidationError.18"</span>, <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>                          <span class="jxr_string">"RenameExampleClassPlugin"</span>, <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>                          <span class="jxr_string">"replaceString"</span>)); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>              }
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>          }
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>  
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>          <strong class="jxr_keyword">return</strong> valid;
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>      }
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>  
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>      @Override
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> initialized(<a name="IntrospectedTable" href="../../../../org/mybatis/generator/api/IntrospectedTable.html#IntrospectedTable">IntrospectedTable</a> introspectedTable) {
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>          String oldType = introspectedTable.getExampleType();
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>          Matcher matcher = pattern.matcher(oldType);
+<a class="jxr_linenumber" name="L88" href="#L88">88</a>          oldType = matcher.replaceAll(replaceString);
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>  
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>          introspectedTable.setExampleType(oldType);
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>      }
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>  }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2006&#x2013;2023 <a href="https://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2006&#x2013;2024 <a href="https://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="" lang="">
 <head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <title>KotlinCodeGenerationTest xref</title>
 <link type="text/css" rel="stylesheet" href="../../../stylesheet.css" />
@@ -7,7 +7,7 @@
 <body>
 <div id="overview"><a href="../../../../testapidocs/org/mybatis/generator/KotlinCodeGenerationTest.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_comment">/*</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> *    Copyright 2006-2022 the original author or authors.</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> *    Copyright 2006-2023 the original author or authors.</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_comment"> *    Licensed under the Apache License, Version 2.0 (the "License");</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_comment"> *    you may not use this file except in compliance with the License.</em>
@@ -43,37 +43,36 @@
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>  <em class="jxr_javadoccomment"> * test coverage as it mimics the code paths executed by the integration test.</em>
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L37" href="#L37">37</a>  <em class="jxr_javadoccomment"> * @author Jeff Butler</em>
-<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="L39" href="#L39">39</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L40" href="#L40">40</a>  <strong class="jxr_keyword">class</strong> <a name="KotlinCodeGenerationTest" href="../../../org/mybatis/generator/KotlinCodeGenerationTest.html#KotlinCodeGenerationTest">KotlinCodeGenerationTest</a> {
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>  
-<a class="jxr_linenumber" name="L42" href="#L42">42</a>      @ParameterizedTest
-<a class="jxr_linenumber" name="L43" href="#L43">43</a>      @MethodSource(<span class="jxr_string">"kotlinFileGenerator"</span>)
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>      <strong class="jxr_keyword">void</strong> testKotlinParse(GeneratedKotlinFile generatedKotlinFile) {
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>          <em class="jxr_comment">// for now, just let the test pass. if we find a good Kotlin parser, then mimic the</em>
-<a class="jxr_linenumber" name="L46" href="#L46">46</a>          <em class="jxr_comment">// function of the Java test by trying to parse generated code</em>
-<a class="jxr_linenumber" name="L47" href="#L47">47</a>          assertTrue(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>      }
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>  
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>      <strong class="jxr_keyword">static</strong> List&lt;GeneratedKotlinFile&gt; kotlinFileGenerator() <strong class="jxr_keyword">throws</strong> Exception {
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>          JavaCodeGenerationTest.createDatabase();
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>          <strong class="jxr_keyword">return</strong> generateKotlinFiles(<span class="jxr_string">"/scripts/generatorConfig-kotlin.xml"</span>);
-<a class="jxr_linenumber" name="L53" href="#L53">53</a>      }
-<a class="jxr_linenumber" name="L54" href="#L54">54</a>  
-<a class="jxr_linenumber" name="L55" href="#L55">55</a>      <strong class="jxr_keyword">static</strong> List&lt;GeneratedKotlinFile&gt; generateKotlinFiles(String configFile) <strong class="jxr_keyword">throws</strong> Exception {
-<a class="jxr_linenumber" name="L56" href="#L56">56</a>          List&lt;String&gt; warnings = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>          ConfigurationParser cp = <strong class="jxr_keyword">new</strong> ConfigurationParser(warnings);
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>          Configuration config = cp.parseConfiguration(KotlinCodeGenerationTest.<strong class="jxr_keyword">class</strong>.getResourceAsStream(configFile));
-<a class="jxr_linenumber" name="L59" href="#L59">59</a>  
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>          DefaultShellCallback shellCallback = <strong class="jxr_keyword">new</strong> DefaultShellCallback(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L61" href="#L61">61</a>  
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>          MyBatisGenerator myBatisGenerator = <strong class="jxr_keyword">new</strong> MyBatisGenerator(config, shellCallback, warnings);
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>          myBatisGenerator.generate(<strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, false);
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>          <strong class="jxr_keyword">return</strong> myBatisGenerator.getGeneratedKotlinFiles();
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>      }
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>  }
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <em class="jxr_javadoccomment"> */</em>
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>  <strong class="jxr_keyword">class</strong> <a name="KotlinCodeGenerationTest" href="../../../org/mybatis/generator/KotlinCodeGenerationTest.html#KotlinCodeGenerationTest">KotlinCodeGenerationTest</a> {
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>  
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>      @ParameterizedTest
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>      @MethodSource(<span class="jxr_string">"kotlinFileGenerator"</span>)
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>      <strong class="jxr_keyword">void</strong> testKotlinParse(GeneratedKotlinFile generatedKotlinFile) {
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>          <em class="jxr_comment">// for now, just let the test pass. if we find a good Kotlin parser, then mimic the</em>
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>          <em class="jxr_comment">// function of the Java test by trying to parse generated code</em>
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>          assertTrue(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>      }
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>  
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>      <strong class="jxr_keyword">static</strong> List&lt;GeneratedKotlinFile&gt; kotlinFileGenerator() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>          JavaCodeGenerationTest.createDatabase();
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>          <strong class="jxr_keyword">return</strong> generateKotlinFiles(<span class="jxr_string">"/scripts/generatorConfig-kotlin.xml"</span>);
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>      }
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>  
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>      <strong class="jxr_keyword">static</strong> List&lt;GeneratedKotlinFile&gt; generateKotlinFiles(String configFile) <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>          List&lt;String&gt; warnings = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>          ConfigurationParser cp = <strong class="jxr_keyword">new</strong> ConfigurationParser(warnings);
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>          Configuration config = cp.parseConfiguration(KotlinCodeGenerationTest.<strong class="jxr_keyword">class</strong>.getResourceAsStream(configFile));
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>  
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>          DefaultShellCallback shellCallback = <strong class="jxr_keyword">new</strong> DefaultShellCallback(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>  
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>          MyBatisGenerator myBatisGenerator = <strong class="jxr_keyword">new</strong> MyBatisGenerator(config, shellCallback, warnings);
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>          myBatisGenerator.generate(<strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, <strong class="jxr_keyword">null</strong>, false);
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>          <strong class="jxr_keyword">return</strong> myBatisGenerator.getGeneratedKotlinFiles();
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>      }
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>  }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2006&#x2013;2023 <a href="https://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2006&#x2013;2024 <a href="https://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
 </body>
 </html>

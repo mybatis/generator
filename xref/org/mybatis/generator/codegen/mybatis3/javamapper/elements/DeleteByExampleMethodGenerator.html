@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="" lang="">
 <head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <title>DeleteByExampleMethodGenerator xref</title>
 <link type="text/css" rel="stylesheet" href="../../../../../../../stylesheet.css" />
@@ -7,7 +7,7 @@
 <body>
 <div id="overview"><a href="../../../../../../../../apidocs/org/mybatis/generator/codegen/mybatis3/javamapper/elements/DeleteByExampleMethodGenerator.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_comment">/*</em>
-<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> *    Copyright 2006-2022 the original author or authors.</em>
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> *    Copyright 2006-2023 the original author or authors.</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_comment"> *    Licensed under the Apache License, Version 2.0 (the "License");</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_comment"> *    you may not use this file except in compliance with the License.</em>
@@ -54,24 +54,23 @@
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>  
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>          addMapperAnnotations(method);
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>  
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>          <strong class="jxr_keyword">if</strong> (context.getPlugins().clientDeleteByExampleMethodGenerated(
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>                  method, interfaze, introspectedTable)) {
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>              addExtraImports(interfaze);
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>              interfaze.addImportedTypes(importedTypes);
-<a class="jxr_linenumber" name="L53" href="#L53">53</a>              interfaze.addMethod(method);
-<a class="jxr_linenumber" name="L54" href="#L54">54</a>          }
-<a class="jxr_linenumber" name="L55" href="#L55">55</a>      }
-<a class="jxr_linenumber" name="L56" href="#L56">56</a>  
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> addMapperAnnotations(<a name="Method" href="../../../../../../../org/mybatis/generator/api/dom/java/Method.html#Method">Method</a> method) {
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>          <em class="jxr_comment">// extension point for subclasses</em>
-<a class="jxr_linenumber" name="L59" href="#L59">59</a>      }
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>  
-<a class="jxr_linenumber" name="L61" href="#L61">61</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> addExtraImports(<a name="Interface" href="../../../../../../../org/mybatis/generator/api/dom/java/Interface.html#Interface">Interface</a> interfaze) {
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>          <em class="jxr_comment">// extension point for subclasses</em>
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>      }
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>  }
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>          <strong class="jxr_keyword">if</strong> (context.getPlugins().clientDeleteByExampleMethodGenerated(method, interfaze, introspectedTable)) {
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>              addExtraImports(interfaze);
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>              interfaze.addImportedTypes(importedTypes);
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>              interfaze.addMethod(method);
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>          }
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>      }
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>  
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> addMapperAnnotations(<a name="Method" href="../../../../../../../org/mybatis/generator/api/dom/java/Method.html#Method">Method</a> method) {
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>          <em class="jxr_comment">// extension point for subclasses</em>
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>      }
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>  
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> addExtraImports(<a name="Interface" href="../../../../../../../org/mybatis/generator/api/dom/java/Interface.html#Interface">Interface</a> interfaze) {
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>          <em class="jxr_comment">// extension point for subclasses</em>
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>      }
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>  }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2006&#x2013;2023 <a href="https://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2006&#x2013;2024 <a href="https://www.mybatis.org/">MyBatis.org</a>. All rights reserved.</div>
 </body>
 </html>

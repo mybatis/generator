@@ -76,9 +76,7 @@ jobs:
         # queries: security-extended,security-and-quality
 
     - name: Autobuild
-      uses: github/codeql-action/autobuild@v3
-      with:
-        working-directory: core
+      working-directory: core
       run: ./mvnw clean install -DskipTests
 
     - name: Autobuild

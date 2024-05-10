@@ -42,7 +42,7 @@
   <properties>
     <tycho-version>4.0.7</tycho-version>
     <tycho-extras-version>4.0.7</tycho-extras-version>
-    <license.version>4.3</license.version>
+    <license.version>4.4</license.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <!-- Sonar -->

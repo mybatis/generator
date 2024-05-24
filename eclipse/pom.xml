@@ -41,7 +41,7 @@
 
   <properties>
     <tycho-version>4.0.8</tycho-version>
-    <tycho-extras-version>4.0.7</tycho-extras-version>
+    <tycho-extras-version>4.0.8</tycho-extras-version>
     <license.version>4.5</license.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 

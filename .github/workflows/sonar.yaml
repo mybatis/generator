@@ -21,12 +21,13 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
+          cache: maven
+          distribution: temurin
           java-version: 21
-          distribution: zulu
       - name: Analyze with SonarCloud
         # Note: the mvnw executable is in the parent directory - not this working directory. We only do sonar on the
         # core project, not all the test projects.
-        run: ../mvnw verify jacoco:report sonar:sonar -B -Dsonar.projectKey=mybatis_generator -Dsonar.organization=mybatis -Dsonar.host.url=https://sonarcloud.io -Dsonar.token=$SONAR_TOKEN -Dlicense.skip=true --no-transfer-progress
+        run: ../mvnw verify jacoco:report sonar:sonar -B -V -Dsonar.projectKey=mybatis_generator -Dsonar.organization=mybatis -Dsonar.host.url=https://sonarcloud.io -Dsonar.token=$SONAR_TOKEN -Dlicense.skip=true --no-transfer-progress
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

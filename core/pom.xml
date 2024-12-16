@@ -77,7 +77,7 @@
     <checkstyle.config>${project.basedir}/checkstyle-override.xml</checkstyle.config>
     <formatter.config>eclipse-formatter-config-4space.xml</formatter.config>
     <kotlin.version>2.1.0</kotlin.version>
-    <junit.jupiter.version>5.11.3</junit.jupiter.version>
+    <junit.jupiter.version>5.11.4</junit.jupiter.version>
     <argLine>-Xmx1024m -Duser.timezone=UTC</argLine>
 
     <!-- Reproducible Builds -->

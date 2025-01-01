@@ -150,7 +150,7 @@
       <dependency>
         <groupId>org.mybatis</groupId>
         <artifactId>mybatis</artifactId>
-        <version>3.5.17</version>
+        <version>3.5.18</version>
       </dependency>
       <dependency>
         <groupId>com.github.javaparser</groupId>

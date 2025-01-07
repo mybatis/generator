@@ -59,7 +59,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         Method method = new Method(type.getShortName());
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setConstructor(true);
-        method.addBodyLine("oredCriteria = new ArrayList<>();"); //$NON-NLS-1$
+        method.addBodyLine("orderCriteria = new ArrayList<>();"); //$NON-NLS-1$
 
         commentGenerator.addGeneralMethodComment(method, introspectedTable);
         topLevelClass.addMethod(method);
@@ -107,23 +107,23 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 
         // add field and methods for the list of ored criteria
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType("java.util.List<Criteria>"); //$NON-NLS-1$
-        field = new Field("oredCriteria", fqjt); //$NON-NLS-1$
+        field = new Field("orderCriteria", fqjt); //$NON-NLS-1$
         field.setVisibility(JavaVisibility.PROTECTED);
 
         commentGenerator.addFieldComment(field, introspectedTable);
         topLevelClass.addField(field);
 
-        method = new Method("getOredCriteria"); //$NON-NLS-1$
+        method = new Method("getorderCriteria"); //$NON-NLS-1$
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(fqjt);
-        method.addBodyLine("return oredCriteria;"); //$NON-NLS-1$
+        method.addBodyLine("return orderCriteria;"); //$NON-NLS-1$
         commentGenerator.addGeneralMethodComment(method, introspectedTable);
         topLevelClass.addMethod(method);
 
         method = new Method("or"); //$NON-NLS-1$
         method.setVisibility(JavaVisibility.PUBLIC);
         method.addParameter(new Parameter(FullyQualifiedJavaType.getCriteriaInstance(), "criteria")); //$NON-NLS-1$
-        method.addBodyLine("oredCriteria.add(criteria);"); //$NON-NLS-1$
+        method.addBodyLine("orderCriteria.add(criteria);"); //$NON-NLS-1$
         commentGenerator.addGeneralMethodComment(method, introspectedTable);
         topLevelClass.addMethod(method);
 
@@ -131,7 +131,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(FullyQualifiedJavaType.getCriteriaInstance());
         method.addBodyLine("Criteria criteria = createCriteriaInternal();"); //$NON-NLS-1$
-        method.addBodyLine("oredCriteria.add(criteria);"); //$NON-NLS-1$
+        method.addBodyLine("orderCriteria.add(criteria);"); //$NON-NLS-1$
         method.addBodyLine("return criteria;"); //$NON-NLS-1$
         commentGenerator.addGeneralMethodComment(method, introspectedTable);
         topLevelClass.addMethod(method);
@@ -140,8 +140,8 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setReturnType(FullyQualifiedJavaType.getCriteriaInstance());
         method.addBodyLine("Criteria criteria = createCriteriaInternal();"); //$NON-NLS-1$
-        method.addBodyLine("if (oredCriteria.size() == 0) {"); //$NON-NLS-1$
-        method.addBodyLine("oredCriteria.add(criteria);"); //$NON-NLS-1$
+        method.addBodyLine("if (orderCriteria.size() == 0) {"); //$NON-NLS-1$
+        method.addBodyLine("orderCriteria.add(criteria);"); //$NON-NLS-1$
         method.addBodyLine("}"); //$NON-NLS-1$
         method.addBodyLine("return criteria;"); //$NON-NLS-1$
         commentGenerator.addGeneralMethodComment(method, introspectedTable);
@@ -157,7 +157,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 
         method = new Method("clear"); //$NON-NLS-1$
         method.setVisibility(JavaVisibility.PUBLIC);
-        method.addBodyLine("oredCriteria.clear();"); //$NON-NLS-1$
+        method.addBodyLine("orderCriteria.clear();"); //$NON-NLS-1$
         method.addBodyLine("orderByClause = null;"); //$NON-NLS-1$
         method.addBodyLine("distinct = false;"); //$NON-NLS-1$
         commentGenerator.addGeneralMethodComment(method, introspectedTable);

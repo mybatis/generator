@@ -51,10 +51,10 @@ public class ExampleWhereClauseElementGenerator extends AbstractXmlElementGenera
         XmlElement outerForEachElement = new XmlElement("foreach"); //$NON-NLS-1$
         if (isForUpdateByExample) {
             outerForEachElement.addAttribute(new Attribute(
-                    "collection", "example.oredCriteria")); //$NON-NLS-1$ //$NON-NLS-2$
+                    "collection", "example.orderCriteria")); //$NON-NLS-1$ //$NON-NLS-2$
         } else {
             outerForEachElement.addAttribute(new Attribute(
-                    "collection", "oredCriteria")); //$NON-NLS-1$ //$NON-NLS-2$
+                    "collection", "orderCriteria")); //$NON-NLS-1$ //$NON-NLS-2$
         }
         outerForEachElement.addAttribute(new Attribute("item", "criteria")); //$NON-NLS-1$ //$NON-NLS-2$
         outerForEachElement.addAttribute(new Attribute("separator", "or")); //$NON-NLS-1$ //$NON-NLS-2$

@@ -30,26 +30,26 @@ String parmPhrase2_th;
 String parmPhrase3;
 String parmPhrase3_th;
 if (includeExamplePhrase) {
-    parmPhrase1 = "%s #{example.oredCriteria[%d].allCriteria[%d].value}";
-    parmPhrase1_th = "%s #{example.oredCriteria[%d].allCriteria[%d].value,typeHandler=%s}";
-    parmPhrase2 = "%s #{example.oredCriteria[%d].allCriteria[%d].value} and #{example.oredCriteria[%d].criteria[%d].secondValue}";
-    parmPhrase2_th = "%s #{example.oredCriteria[%d].allCriteria[%d].value,typeHandler=%s} and #{example.oredCriteria[%d].criteria[%d].secondValue,typeHandler=%s}";
-    parmPhrase3 = "#{example.oredCriteria[%d].allCriteria[%d].value[%d]}";
-    parmPhrase3_th = "#{example.oredCriteria[%d].allCriteria[%d].value[%d],typeHandler=%s}";
+    parmPhrase1 = "%s #{example.orderCriteria[%d].allCriteria[%d].value}";
+    parmPhrase1_th = "%s #{example.orderCriteria[%d].allCriteria[%d].value,typeHandler=%s}";
+    parmPhrase2 = "%s #{example.orderCriteria[%d].allCriteria[%d].value} and #{example.orderCriteria[%d].criteria[%d].secondValue}";
+    parmPhrase2_th = "%s #{example.orderCriteria[%d].allCriteria[%d].value,typeHandler=%s} and #{example.orderCriteria[%d].criteria[%d].secondValue,typeHandler=%s}";
+    parmPhrase3 = "#{example.orderCriteria[%d].allCriteria[%d].value[%d]}";
+    parmPhrase3_th = "#{example.orderCriteria[%d].allCriteria[%d].value[%d],typeHandler=%s}";
 } else {
-    parmPhrase1 = "%s #{oredCriteria[%d].allCriteria[%d].value}";
-    parmPhrase1_th = "%s #{oredCriteria[%d].allCriteria[%d].value,typeHandler=%s}";
-    parmPhrase2 = "%s #{oredCriteria[%d].allCriteria[%d].value} and #{oredCriteria[%d].criteria[%d].secondValue}";
-    parmPhrase2_th = "%s #{oredCriteria[%d].allCriteria[%d].value,typeHandler=%s} and #{oredCriteria[%d].criteria[%d].secondValue,typeHandler=%s}";
-    parmPhrase3 = "#{oredCriteria[%d].allCriteria[%d].value[%d]}";
-    parmPhrase3_th = "#{oredCriteria[%d].allCriteria[%d].value[%d],typeHandler=%s}";
+    parmPhrase1 = "%s #{orderCriteria[%d].allCriteria[%d].value}";
+    parmPhrase1_th = "%s #{orderCriteria[%d].allCriteria[%d].value,typeHandler=%s}";
+    parmPhrase2 = "%s #{orderCriteria[%d].allCriteria[%d].value} and #{orderCriteria[%d].criteria[%d].secondValue}";
+    parmPhrase2_th = "%s #{orderCriteria[%d].allCriteria[%d].value,typeHandler=%s} and #{orderCriteria[%d].criteria[%d].secondValue,typeHandler=%s}";
+    parmPhrase3 = "#{orderCriteria[%d].allCriteria[%d].value[%d]}";
+    parmPhrase3_th = "#{orderCriteria[%d].allCriteria[%d].value[%d],typeHandler=%s}";
 }
 
 StringBuilder sb = new StringBuilder();
-List<Criteria> oredCriteria = example.getOredCriteria();
+List<Criteria> orderCriteria = example.getorderCriteria();
 boolean firstCriteria = true;
-for (int i = 0; i < oredCriteria.size(); i++) {
-    Criteria criteria = oredCriteria.get(i);
+for (int i = 0; i < orderCriteria.size(); i++) {
+    Criteria criteria = orderCriteria.get(i);
     if (criteria.isValid()) {
         if (firstCriteria) {
             firstCriteria = false;

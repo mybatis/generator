@@ -289,7 +289,7 @@ class FullyQualifiedJavaTypeTest {
         TopLevelInterfaceRenderer renderer = new TopLevelInterfaceRenderer();
         String out = renderer.render(interfaze);
 
-        assertThat(out).isEqualTo("package foo;\n\npublic interface Bar {\n    void setConverter(Class<?> converterType);\n}");
+        assertThat(out).isEqualToNormalizingNewlines("package foo;\n\npublic interface Bar {\n    void setConverter(Class<?> converterType);\n}");
     }
 
     @Test
@@ -309,7 +309,7 @@ class FullyQualifiedJavaTypeTest {
         TopLevelInterfaceRenderer renderer = new TopLevelInterfaceRenderer();
         String out = renderer.render(interfaze);
 
-        assertThat(out).isEqualTo("package foo;\n\npublic interface Bar {\n    void setConverter(Class<? extends String> converterType);\n}");
+        assertThat(out).isEqualToNormalizingNewlines("package foo;\n\npublic interface Bar {\n    void setConverter(Class<? extends String> converterType);\n}");
     }
 
     @Test
@@ -330,7 +330,7 @@ class FullyQualifiedJavaTypeTest {
         TopLevelInterfaceRenderer renderer = new TopLevelInterfaceRenderer();
         String out = renderer.render(interfaze);
 
-        assertThat(out).isEqualTo("package foo;\n\npublic interface Bar {\n    void setConverter(Class<? extends HttpMessageConverter<?>> converterType);\n}");
+        assertThat(out).isEqualToNormalizingNewlines("package foo;\n\npublic interface Bar {\n    void setConverter(Class<? extends HttpMessageConverter<?>> converterType);\n}");
     }
 
     @Test

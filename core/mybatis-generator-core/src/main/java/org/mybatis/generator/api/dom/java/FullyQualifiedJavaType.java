@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2023 the original author or authors.
+ *    Copyright 2006-2025 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -87,21 +87,7 @@ public class FullyQualifiedJavaType implements Comparable<FullyQualifiedJavaType
      * @return Returns the fullyQualifiedName.
      */
     public String getFullyQualifiedName() {
-        StringBuilder sb = new StringBuilder();
-        if (wildcardType) {
-            sb.append('?');
-            if (boundedWildcard) {
-                if (extendsBoundedWildcard) {
-                    sb.append(" extends "); //$NON-NLS-1$
-                } else {
-                    sb.append(" super "); //$NON-NLS-1$
-                }
-
-                sb.append(baseQualifiedName);
-            }
-        } else {
-            sb.append(baseQualifiedName);
-        }
+        StringBuilder sb = new StringBuilder(getFullyQualifiedNameWithoutTypeParameters());
 
         if (!typeArguments.isEmpty()) {
             boolean first = true;
@@ -122,6 +108,30 @@ public class FullyQualifiedJavaType implements Comparable<FullyQualifiedJavaType
     }
 
     public String getFullyQualifiedNameWithoutTypeParameters() {
+        StringBuilder sb = new StringBuilder();
+        if (wildcardType) {
+            sb.append('?');
+            if (boundedWildcard) {
+                if (extendsBoundedWildcard) {
+                    sb.append(" extends "); //$NON-NLS-1$
+                } else {
+                    sb.append(" super "); //$NON-NLS-1$
+                }
+
+                sb.append(baseQualifiedName);
+            }
+        } else {
+            sb.append(baseQualifiedName);
+        }
+        return sb.toString();
+    }
+
+    /**
+     * The name (fully qualified) that should be imported
+     *
+     * @return the fully qualified name that should be imported. Does not include the wildcard bounds.
+     */
+    public String getImportName() {
         return baseQualifiedName;
     }
 
@@ -168,21 +178,7 @@ public class FullyQualifiedJavaType implements Comparable<FullyQualifiedJavaType
     }
 
     public String getShortName() {
-        StringBuilder sb = new StringBuilder();
-        if (wildcardType) {
-            sb.append('?');
-            if (boundedWildcard) {
-                if (extendsBoundedWildcard) {
-                    sb.append(" extends "); //$NON-NLS-1$
-                } else {
-                    sb.append(" super "); //$NON-NLS-1$
-                }
-
-                sb.append(baseShortName);
-            }
-        } else {
-            sb.append(baseShortName);
-        }
+        StringBuilder sb = new StringBuilder(getShortNameWithoutTypeArguments());
 
         if (!typeArguments.isEmpty()) {
             boolean first = true;
@@ -203,7 +199,22 @@ public class FullyQualifiedJavaType implements Comparable<FullyQualifiedJavaType
     }
 
     public String getShortNameWithoutTypeArguments() {
-        return baseShortName;
+        StringBuilder sb = new StringBuilder();
+        if (wildcardType) {
+            sb.append('?');
+            if (boundedWildcard) {
+                if (extendsBoundedWildcard) {
+                    sb.append(" extends "); //$NON-NLS-1$
+                } else {
+                    sb.append(" super "); //$NON-NLS-1$
+                }
+
+                sb.append(baseShortName);
+            }
+        } else {
+            sb.append(baseShortName);
+        }
+        return sb.toString();
     }
 
     @Override

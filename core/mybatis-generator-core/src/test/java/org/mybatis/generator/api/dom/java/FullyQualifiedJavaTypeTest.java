@@ -15,11 +15,13 @@
  */
 package org.mybatis.generator.api.dom.java;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
+import org.mybatis.generator.api.dom.java.render.TopLevelInterfaceRenderer;
 
 /**
  * @author Jeff Butler
@@ -268,5 +270,77 @@ class FullyQualifiedJavaTypeTest {
         assertTrue(fqjt.isArray());
         assertTrue(fqjt.getImportList().contains("java.util.List"));
         assertFalse(fqjt.getImportList().contains("java.util.List[]"));
+    }
+
+    @Test
+    void gh1288Test1() {
+        FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType("Class<?>");
+        assertThat(fqjt.getFullyQualifiedName()).isEqualTo("Class<?>");
+
+        Method method = new Method("setConverter");
+        Parameter parameter = new Parameter(fqjt, "converterType");
+        method.addParameter(parameter);
+        method.setAbstract(true);
+
+        Interface interfaze = new Interface("foo.Bar");
+        interfaze.setVisibility(JavaVisibility.PUBLIC);
+        interfaze.addMethod(method);
+
+        TopLevelInterfaceRenderer renderer = new TopLevelInterfaceRenderer();
+        String out = renderer.render(interfaze);
+
+        assertThat(out).isEqualTo("package foo;\n\npublic interface Bar {\n    void setConverter(Class<?> converterType);\n}");
+    }
+
+    @Test
+    void gh1288Test2() {
+        FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType("Class<? extends String>");
+        assertThat(fqjt.getFullyQualifiedName()).isEqualTo("Class<? extends String>");
+
+        Method method = new Method("setConverter");
+        Parameter parameter = new Parameter(fqjt, "converterType");
+        method.addParameter(parameter);
+        method.setAbstract(true);
+
+        Interface interfaze = new Interface("foo.Bar");
+        interfaze.setVisibility(JavaVisibility.PUBLIC);
+        interfaze.addMethod(method);
+
+        TopLevelInterfaceRenderer renderer = new TopLevelInterfaceRenderer();
+        String out = renderer.render(interfaze);
+
+        assertThat(out).isEqualTo("package foo;\n\npublic interface Bar {\n    void setConverter(Class<? extends String> converterType);\n}");
+    }
+
+    @Test
+    void gh1288Test3() {
+        FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType("Class");
+        fqjt.addTypeArgument(new FullyQualifiedJavaType("? extends HttpMessageConverter<?>"));
+        assertThat(fqjt.getFullyQualifiedName()).isEqualTo("Class<? extends HttpMessageConverter<?>>");
+
+        Method method = new Method("setConverter");
+        Parameter parameter = new Parameter(fqjt, "converterType");
+        method.addParameter(parameter);
+        method.setAbstract(true);
+
+        Interface interfaze = new Interface("foo.Bar");
+        interfaze.setVisibility(JavaVisibility.PUBLIC);
+        interfaze.addMethod(method);
+
+        TopLevelInterfaceRenderer renderer = new TopLevelInterfaceRenderer();
+        String out = renderer.render(interfaze);
+
+        assertThat(out).isEqualTo("package foo;\n\npublic interface Bar {\n    void setConverter(Class<? extends HttpMessageConverter<?>> converterType);\n}");
+    }
+
+    @Test
+    void gh1288Test3Minified() {
+        FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType("Class");
+        fqjt.addTypeArgument(new FullyQualifiedJavaType("? extends HttpMessageConverter<?>"));
+        assertThat(fqjt.getFullyQualifiedName()).isEqualTo("Class<? extends HttpMessageConverter<?>>");
+
+        Parameter parameter = new Parameter(fqjt, "converterType");
+        String out = parameter.toString();
+        assertThat(out).isEqualTo("Class<? extends HttpMessageConverter<?>> converterType");
     }
 }

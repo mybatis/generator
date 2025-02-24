@@ -287,18 +287,18 @@ public class FlatJava5Test extends AbstractMixedFlatTest {
             Pkonly key = new Pkonly();
             key.setId(1);
             key.setSeqNum(3);
-            int rows = mapper.insert(key);
+            mapper.insert(key);
 
             key = new Pkonly();
             key.setId(5);
             key.setSeqNum(6);
-            rows = mapper.insert(key);
+            mapper.insert(key);
 
             PkonlyExample example = new PkonlyExample();
             List<Pkonly> answer = mapper.selectByExample(example);
             assertEquals(2, answer.size());
 
-            rows = mapper.deleteByPrimaryKey(5, 6);
+            int rows = mapper.deleteByPrimaryKey(5, 6);
             assertEquals(1, rows);
 
             answer = mapper.selectByExample(example);
@@ -2943,14 +2943,14 @@ public class FlatJava5Test extends AbstractMixedFlatTest {
     @Test
     public void testEquals1() {
         Pkfields pkfields1 = new Pkfields();
-        assertFalse(pkfields1.equals(null));
+        assertNotEquals(null, pkfields1);
     }
 
     @Test
     public void testEquals2() {
         Pkfields pkfields1 = new Pkfields();
         Pkfields pkfields2 = new Pkfields();
-        assertTrue(pkfields1.equals(pkfields2));
+        assertEquals(pkfields1, pkfields2);
     }
 
     @Test
@@ -2961,7 +2961,7 @@ public class FlatJava5Test extends AbstractMixedFlatTest {
         Pkfields pkfields2 = new Pkfields();
         pkfields2.setId1(2);
 
-        assertTrue(pkfields1.equals(pkfields2));
+        assertEquals(pkfields1, pkfields2);
     }
 
     @Test
@@ -2972,7 +2972,7 @@ public class FlatJava5Test extends AbstractMixedFlatTest {
         Pkfields pkfields2 = new Pkfields();
         pkfields2.setId1(3);
 
-        assertFalse(pkfields1.equals(pkfields2));
+        assertNotEquals(pkfields1, pkfields2);
     }
 
     @Test
@@ -3009,17 +3009,17 @@ public class FlatJava5Test extends AbstractMixedFlatTest {
         awfulTable2.setSecondFirstName("Bamm Bamm");
         awfulTable2.setThirdFirstName("Pebbles");
 
-        assertTrue(awfulTable1.equals(awfulTable2));
+        assertEquals(awfulTable1, awfulTable2);
 
         awfulTable2.setActive(true);
-        assertFalse(awfulTable1.equals(awfulTable2));
+        assertNotEquals(awfulTable1, awfulTable2);
     }
 
     @Test
     public void testHashCode1() {
         Pkfields pkfields1 = new Pkfields();
         Pkfields pkfields2 = new Pkfields();
-        assertTrue(pkfields1.hashCode() == pkfields2.hashCode());
+        assertEquals(pkfields1.hashCode(), pkfields2.hashCode());
     }
 
     @Test
@@ -3030,7 +3030,7 @@ public class FlatJava5Test extends AbstractMixedFlatTest {
         Pkfields pkfields2 = new Pkfields();
         pkfields2.setId1(2);
 
-        assertTrue(pkfields1.hashCode() == pkfields2.hashCode());
+        assertEquals(pkfields1.hashCode(), pkfields2.hashCode());
     }
 
     @Test
@@ -3067,6 +3067,6 @@ public class FlatJava5Test extends AbstractMixedFlatTest {
         awfulTable2.setSecondFirstName("Bamm Bamm");
         awfulTable2.setThirdFirstName("Pebbles");
 
-        assertTrue(awfulTable1.hashCode() == awfulTable2.hashCode());
+        assertEquals(awfulTable1.hashCode(), awfulTable2.hashCode());
     }
 }

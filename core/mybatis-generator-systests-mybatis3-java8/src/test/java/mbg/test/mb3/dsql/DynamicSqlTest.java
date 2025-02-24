@@ -3087,7 +3087,7 @@ public class DynamicSqlTest extends AbstractTest {
     @Test
     public void testEquals1() {
         Pkfields pkfields1 = new Pkfields();
-        assertNotEquals(pkfields1, null);
+        assertNotEquals(null, pkfields1);
     }
 
     @Test

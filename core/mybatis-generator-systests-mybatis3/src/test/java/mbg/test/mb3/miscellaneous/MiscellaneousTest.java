@@ -72,7 +72,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
             MyTime myTime = new MyTime();
             myTime.setHours(12);
             myTime.setMinutes(34);
-            myTime.setSeconds(05);
+            myTime.setSeconds(5);
             record.setTimefield(myTime);
             record.setTimestampfield(new Date());
 
@@ -712,7 +712,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
             MyTime myTime = new MyTime();
             myTime.setHours(12);
             myTime.setMinutes(34);
-            myTime.setSeconds(05);
+            myTime.setSeconds(5);
             record.setTimefield(myTime);
             record.setTimestampfield(new Date());
 
@@ -941,7 +941,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
                     sqlSession.selectList("mbg.test.mb3.generated.miscellaneous.xml.AnotherawfultableMapper.selectByExample",
                             example);
 
-            assertEquals(returnedRecords.size(), 1);
+            assertEquals(1, returnedRecords.size());
 
             Anotherawfultable returnedRecord = (Anotherawfultable) returnedRecords.get(0);
 
@@ -1113,7 +1113,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
             fail("Pkblobs class should be generated in model only configuration");
         }
 
-        if (!resourceExists("mbg/test/mb3/generated/miscellaneous/modelonly2/xml/PkblobsMapper.xml")) {
+        if (resourceMissing("mbg/test/mb3/generated/miscellaneous/modelonly2/xml/PkblobsMapper.xml")) {
             fail("PkblobsMapper.xml file should be generated in model only configuration");
         }
     }
@@ -1136,7 +1136,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
             fail("PkfieldsKey class should be generated in model only configuration");
         }
 
-        if (!resourceExists("mbg/test/mb3/generated/miscellaneous/modelonly2/xml/PkfieldsMapper.xml")) {
+        if (resourceMissing("mbg/test/mb3/generated/miscellaneous/modelonly2/xml/PkfieldsMapper.xml")) {
             fail("PkfieldsMapper.xml file should be generated in model only configuration");
         }
     }
@@ -1155,7 +1155,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
             fail("Fieldsonly class should be generated in model only configuration");
         }
 
-        if (!resourceExists("mbg/test/mb3/generated/miscellaneous/modelonly2/xml/FieldsonlyMapper.xml")) {
+        if (resourceMissing("mbg/test/mb3/generated/miscellaneous/modelonly2/xml/FieldsonlyMapper.xml")) {
             fail("FieldsonlyMapper.xml file should be generated in model only configuration");
         }
     }
@@ -1174,7 +1174,7 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
             fail("RenameMapper class should be generated (renamed from suffix_rename)");
         }
 
-        if (!resourceExists("mbg/test/mb3/generated/miscellaneous/xml/RenameMapper.xml")) {
+        if (resourceMissing("mbg/test/mb3/generated/miscellaneous/xml/RenameMapper.xml")) {
             fail("RenameMapper.xml file should be generated (renamed from suffix_rename)");
         }
     }
@@ -1188,9 +1188,8 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
         }
     }
 
-    private boolean resourceExists(String resourceName) {
+    private boolean resourceMissing(String resourceName) {
         URL url = getClass().getClassLoader().getResource(resourceName);
-
-        return url != null;
+        return url == null;
     }
 }

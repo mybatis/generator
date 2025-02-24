@@ -62,7 +62,7 @@ public class MiscellaneousTest extends AbstractMixedMiscellaneousTest {
             MyTime myTime = new MyTime();
             myTime.setHours(12);
             myTime.setMinutes(34);
-            myTime.setSeconds(05);
+            myTime.setSeconds(5);
             record.setTimefield(myTime);
             record.setTimestampfield(new Date());
 
@@ -702,7 +702,7 @@ public class MiscellaneousTest extends AbstractMixedMiscellaneousTest {
             MyTime myTime = new MyTime();
             myTime.setHours(12);
             myTime.setMinutes(34);
-            myTime.setSeconds(05);
+            myTime.setSeconds(5);
             record.setTimefield(myTime);
             record.setTimestampfield(new Date());
 

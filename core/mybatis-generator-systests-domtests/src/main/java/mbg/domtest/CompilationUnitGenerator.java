@@ -26,7 +26,7 @@ import org.mybatis.generator.api.dom.java.CompilationUnit;
  * If any code produced by the Java code generator is incorrect, the build should fail
  * with compile errors in the generated objects.
  *
- * Use the IgnoreDomTest annotation to skip a generator class (for example,
+ * <p>Use the IgnoreDomTest annotation to skip a generator class (for example,
  * when doing TDD to fix an error in the code generator, and you want to commit the
  * test before committing the fix)
  *

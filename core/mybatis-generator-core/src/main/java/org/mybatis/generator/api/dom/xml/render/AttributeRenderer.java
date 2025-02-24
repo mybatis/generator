@@ -20,9 +20,9 @@ import org.mybatis.generator.api.dom.xml.Attribute;
 public class AttributeRenderer {
 
     public String render(Attribute attribute) {
-        return attribute.getName()
+        return attribute.name()
                 + "=\"" //$NON-NLS-1$
-                + attribute.getValue()
+                + attribute.value()
                 + "\""; //$NON-NLS-1$
     }
 }

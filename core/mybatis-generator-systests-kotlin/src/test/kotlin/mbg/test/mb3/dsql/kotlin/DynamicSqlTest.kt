@@ -559,10 +559,12 @@ class DynamicSqlTest : AbstractTest() {
 
             val answer = mapper.select {
                 where {
-                    pkfieldstable.firstname isLike "B%"
-                    and { pkfieldstable.id2 isEqualTo 3 }
+                    group {
+                        pkfieldstable.firstname isLike "B%"
+                        and { pkfieldstable.id2 isEqualTo 3 }
+                    }
+                    or { pkfieldstable.firstname isLike "Wi%" }
                 }
-                or { pkfieldstable.firstname isLike "Wi%" }
                 orderBy(pkfieldstable.id1, pkfieldstable.id2)
             }
 
@@ -678,8 +680,10 @@ class DynamicSqlTest : AbstractTest() {
             mapper.insert(Pkfields(id1 = 2, id2 = 3, firstname = "Bamm Bamm", lastname = "Rubble", wierdField = 66))
 
             val answer = mapper.select {
-                where { pkfieldstable.wierdField isLessThan 40 }
-                and { pkfieldstable.wierdField.isIn(11, 22) }
+                where {
+                    pkfieldstable.wierdField isLessThan 40
+                    and { pkfieldstable.wierdField.isIn(11, 22) }
+                }
                 orderBy(pkfieldstable.id1, pkfieldstable.id2)
             }
 
@@ -2117,10 +2121,12 @@ class DynamicSqlTest : AbstractTest() {
 
             val answer = mapper.select {
                 where {
-                    awfulTable.firstFirstName isLike "b%"
-                    and { awfulTable.id2 isEqualTo 222222 }
+                    group {
+                        awfulTable.firstFirstName isLike "b%"
+                        and { awfulTable.id2 isEqualTo 222222 }
+                    }
+                    or { awfulTable.firstFirstName isLike "wi%" }
                 }
-                or { awfulTable.firstFirstName isLike "wi%" }
                 orderBy(awfulTable.customerId)
             }
 

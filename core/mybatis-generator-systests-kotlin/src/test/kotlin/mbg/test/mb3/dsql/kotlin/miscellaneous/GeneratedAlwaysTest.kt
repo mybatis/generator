@@ -98,14 +98,18 @@ class GeneratedAlwaysTest : AbstractAnnotatedMiscellaneousTest() {
 
             rows = mapper.update {
                 updateAllColumns(gaTest)
-                where { generatedalwaystest.idPlus1 isEqualTo 2 }
-                and { generatedalwaystest.idPlus2 isEqualTo 3 }
+                where {
+                    generatedalwaystest.idPlus1 isEqualTo 2
+                    and { generatedalwaystest.idPlus2 isEqualTo 3 }
+                }
             }
             assertEquals(1, rows)
 
             val returnedRecords = mapper.select {
-                where { generatedalwaystest.idPlus1 isEqualTo 2 }
-                and { generatedalwaystest.idPlus2 isEqualTo 3 }
+                where {
+                    generatedalwaystest.idPlus1 isEqualTo 2
+                    and { generatedalwaystest.idPlus2 isEqualTo 3 }
+                }
             }
             assertEquals(1, returnedRecords.size)
 
@@ -140,14 +144,18 @@ class GeneratedAlwaysTest : AbstractAnnotatedMiscellaneousTest() {
 
             rows = mapper.update {
                 updateSelectiveColumns(gaTest)
-                where { generatedalwaystest.idPlus1 isEqualTo 2 }
-                and { generatedalwaystest.idPlus2  isEqualTo 3 }
+                where {
+                    generatedalwaystest.idPlus1 isEqualTo 2
+                    and { generatedalwaystest.idPlus2  isEqualTo 3 }
+                }
             }
             assertEquals(1, rows)
 
             val returnedRecords = mapper.select {
-                where { generatedalwaystest.idPlus1 isEqualTo 2 }
-                and { generatedalwaystest.idPlus2  isEqualTo 3 }
+                where {
+                    generatedalwaystest.idPlus1 isEqualTo 2
+                    and { generatedalwaystest.idPlus2  isEqualTo 3 }
+                }
             }
             assertEquals(1, returnedRecords.size)
 
@@ -181,14 +189,18 @@ class GeneratedAlwaysTest : AbstractAnnotatedMiscellaneousTest() {
 
             rows = mapper.update {
                 updateAllColumns(gaTest)
-                where { generatedalwaystest.idPlus1 isEqualTo 2 }
-                and { generatedalwaystest.idPlus2 isEqualTo 3 }
+                where {
+                    generatedalwaystest.idPlus1 isEqualTo 2
+                    and { generatedalwaystest.idPlus2 isEqualTo 3 }
+                }
             }
             assertEquals(1, rows)
 
             val returnedRecords = mapper.select {
-                where { generatedalwaystest.idPlus1 isEqualTo 2 }
-                and { generatedalwaystest.idPlus2 isEqualTo 3 }
+                where {
+                    generatedalwaystest.idPlus1 isEqualTo 2
+                    and { generatedalwaystest.idPlus2 isEqualTo 3 }
+                }
             }
             assertEquals(1, returnedRecords.size)
 

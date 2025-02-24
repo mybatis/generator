@@ -588,7 +588,7 @@ public class DatabaseIntrospector {
             // specified on the table configuration. If something was returned
             // from the DB for these fields, but nothing was specified on the
             // table
-            // configuration, then some sort of DB default is being returned
+            // configuration, then some sort of DB default is being returned,
             // and we don't want that in our SQL
             FullyQualifiedTable table = new FullyQualifiedTable(
                     stringHasValue(tc.getCatalog()) ? atn.getCatalog() : null,

@@ -918,7 +918,7 @@ public abstract class IntrospectedTable {
 
     /**
      * This method should return the number of progress messages that will be
-     * send during the generation phase.
+     * sent during the generation phase.
      *
      * @return the number of progress messages
      */

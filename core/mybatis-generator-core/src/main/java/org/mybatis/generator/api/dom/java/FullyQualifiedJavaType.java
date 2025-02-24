@@ -20,6 +20,7 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.StringTokenizer;
 
 public class FullyQualifiedJavaType implements Comparable<FullyQualifiedJavaType> {
@@ -223,11 +224,9 @@ public class FullyQualifiedJavaType implements Comparable<FullyQualifiedJavaType
             return true;
         }
 
-        if (!(obj instanceof FullyQualifiedJavaType)) {
+        if (!(obj instanceof FullyQualifiedJavaType other)) {
             return false;
         }
-
-        FullyQualifiedJavaType other = (FullyQualifiedJavaType) obj;
 
         return getFullyQualifiedName().equals(other.getFullyQualifiedName());
     }
@@ -279,10 +278,8 @@ public class FullyQualifiedJavaType implements Comparable<FullyQualifiedJavaType
     }
 
     public static FullyQualifiedJavaType getStringInstance() {
-        if (stringInstance == null) {
-            stringInstance = new FullyQualifiedJavaType("java.lang.String"); //$NON-NLS-1$
-        }
-
+        stringInstance = Objects.requireNonNullElseGet(stringInstance,
+                () -> new FullyQualifiedJavaType("java.lang.String")); //$NON-NLS-1$
         return stringInstance;
     }
 
@@ -443,7 +440,7 @@ public class FullyQualifiedJavaType implements Comparable<FullyQualifiedJavaType
                     "RuntimeError.22", genericSpecification)); //$NON-NLS-1$
         }
         String argumentString = genericSpecification.substring(1, lastIndex);
-        // need to find "," outside of a <> bounds
+        // need to find "," outside a <> bounds
         StringTokenizer st = new StringTokenizer(argumentString, ",<>", true); //$NON-NLS-1$
         int openCount = 0;
         StringBuilder sb = new StringBuilder();
@@ -483,7 +480,7 @@ public class FullyQualifiedJavaType implements Comparable<FullyQualifiedJavaType
      * Returns the package name of a fully qualified type.
      *
      * <p>This method calculates the package as the part of the fully qualified name up to, but not including, the last
-     * element. Therefore, it does not support fully qualified inner classes. Not totally fool proof, but correct in
+     * element. Therefore, it does not support fully qualified inner classes. Not totally foolproof, but correct in
      * most instances.
      *
      * @param baseQualifiedName

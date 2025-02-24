@@ -81,7 +81,7 @@ class XmlCodeGenerationTest {
     static class TestEntityResolver implements EntityResolver {
 
         @Override
-        public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
+        public InputSource resolveEntity(String publicId, String systemId) {
             // just return an empty string. this should stop the parser from trying to access the network
             return new InputSource(new ByteArrayInputStream("".getBytes()));
         }
@@ -93,17 +93,17 @@ class XmlCodeGenerationTest {
         private final List<String> warnings = new ArrayList<>();
 
         @Override
-        public void warning(SAXParseException exception) throws SAXException {
+        public void warning(SAXParseException exception) {
             warnings.add(exception.getMessage());
         }
 
         @Override
-        public void error(SAXParseException exception) throws SAXException {
+        public void error(SAXParseException exception) {
             errors.add(exception.getMessage());
         }
 
         @Override
-        public void fatalError(SAXParseException exception) throws SAXException {
+        public void fatalError(SAXParseException exception) {
             errors.add(exception.getMessage());
         }
 

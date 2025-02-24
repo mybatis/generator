@@ -59,9 +59,8 @@ public class FlatJava5Test extends AbstractFlatTest {
 
     @Test
     public void testFieldsOnlyInsert() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             FieldsonlyMapper mapper = sqlSession.getMapper(FieldsonlyMapper.class);
             Fieldsonly record = new Fieldsonly();
             record.setDoublefield(11.22);
@@ -87,16 +86,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             assertEquals(record.getDoublefield(), returnedRecord
                     .getDoublefield());
             assertEquals(record.getFloatfield(), returnedRecord.getFloatfield());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testFieldsOnlySelectByExample() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             FieldsonlyMapper mapper = sqlSession.getMapper(FieldsonlyMapper.class);
             Fieldsonly record = new Fieldsonly();
             record.setDoublefield(11.22);
@@ -125,16 +121,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             example = new FieldsonlyExample();
             answer = mapper.selectByExample(example);
             assertEquals(3, answer.size());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testFieldsOnlySelectByExampleDistinct() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             FieldsonlyMapper mapper = sqlSession.getMapper(FieldsonlyMapper.class);
             Fieldsonly record = new Fieldsonly();
             record.setDoublefield(11.22);
@@ -166,16 +159,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             example.clear();
             answer = mapper.selectByExample(example);
             assertEquals(5, answer.size());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testFieldsOnlySelectByExampleNoCriteria() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             FieldsonlyMapper mapper = sqlSession.getMapper(FieldsonlyMapper.class);
             Fieldsonly record = new Fieldsonly();
             record.setDoublefield(11.22);
@@ -203,16 +193,13 @@ public class FlatJava5Test extends AbstractFlatTest {
 
             answer = mapper.selectByExample(null);
             assertEquals(3, answer.size());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testFieldsOnlyDeleteByExample() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             FieldsonlyMapper mapper = sqlSession.getMapper(FieldsonlyMapper.class);
             Fieldsonly record = new Fieldsonly();
             record.setDoublefield(11.22);
@@ -241,16 +228,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             example = new FieldsonlyExample();
             List<Fieldsonly> answer = mapper.selectByExample(example);
             assertEquals(1, answer.size());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testFieldsOnlyCountByExample() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             FieldsonlyMapper mapper = sqlSession.getMapper(FieldsonlyMapper.class);
             Fieldsonly record = new Fieldsonly();
             record.setDoublefield(11.22);
@@ -278,16 +262,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             example.clear();
             rows = mapper.countByExample(example);
             assertEquals(3, rows);
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKOnlyInsert() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkonlyMapper mapper = sqlSession.getMapper(PkonlyMapper.class);
             Pkonly key = new Pkonly();
             key.setId(1);
@@ -301,16 +282,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             Pkonly returnedRecord = answer.get(0);
             assertEquals(key.getId(), returnedRecord.getId());
             assertEquals(key.getSeqNum(), returnedRecord.getSeqNum());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKOnlyDeleteByPrimaryKey() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkonlyMapper mapper = sqlSession.getMapper(PkonlyMapper.class);
             Pkonly key = new Pkonly();
             key.setId(1);
@@ -331,16 +309,13 @@ public class FlatJava5Test extends AbstractFlatTest {
 
             answer = mapper.selectByExample(example);
             assertEquals(1, answer.size());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKOnlyDeleteByExample() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkonlyMapper mapper = sqlSession.getMapper(PkonlyMapper.class);
             Pkonly key = new Pkonly();
             key.setId(1);
@@ -365,16 +340,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             example = new PkonlyExample();
             List<Pkonly> answer = mapper.selectByExample(example);
             assertEquals(1, answer.size());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKOnlySelectByExample() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkonlyMapper mapper = sqlSession.getMapper(PkonlyMapper.class);
             Pkonly key = new Pkonly();
             key.setId(1);
@@ -395,16 +367,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             example.createCriteria().andIdGreaterThan(4);
             List<Pkonly> answer = mapper.selectByExample(example);
             assertEquals(2, answer.size());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKOnlySelectByExampleNoCriteria() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkonlyMapper mapper = sqlSession.getMapper(PkonlyMapper.class);
             Pkonly key = new Pkonly();
             key.setId(1);
@@ -425,16 +394,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             example.createCriteria();
             List<Pkonly> answer = mapper.selectByExample(example);
             assertEquals(3, answer.size());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKOnlyCountByExample() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkonlyMapper mapper = sqlSession.getMapper(PkonlyMapper.class);
             Pkonly key = new Pkonly();
             key.setId(1);
@@ -459,16 +425,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             example.clear();
             rows = mapper.countByExample(example);
             assertEquals(3, rows);
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsInsert() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
             Pkfields record = new Pkfields();
             record.setDatefield(new Date());
@@ -508,16 +471,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             assertEquals(record.getTimestampfield(), returnedRecord
                     .getTimestampfield());
             assertEquals(record.isStringboolean(), returnedRecord.isStringboolean());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsUpdateByPrimaryKey() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
             Pkfields record = new Pkfields();
             record.setFirstname("Jeff");
@@ -539,16 +499,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             assertEquals(record.getLastname(), record2.getLastname());
             assertEquals(record.getId1(), record2.getId1());
             assertEquals(record.getId2(), record2.getId2());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsUpdateByPrimaryKeySelective() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
             Pkfields record = new Pkfields();
             record.setFirstname("Jeff");
@@ -589,16 +546,13 @@ public class FlatJava5Test extends AbstractFlatTest {
                     .getTimefield()));
             assertEquals(record.getTimestampfield(), returnedRecord
                     .getTimestampfield());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKfieldsDeleteByPrimaryKey() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
             Pkfields record = new Pkfields();
             record.setFirstname("Jeff");
@@ -614,16 +568,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             PkfieldsExample example = new PkfieldsExample();
             List<Pkfields> answer = mapper.selectByExample(example);
             assertEquals(0, answer.size());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsDeleteByExample() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
             Pkfields record = new Pkfields();
             record.setFirstname("Jeff");
@@ -652,16 +603,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             example = new PkfieldsExample();
             answer = mapper.selectByExample(example);
             assertEquals(1, answer.size());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsSelectByPrimaryKey() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
             Pkfields record = new Pkfields();
             record.setFirstname("Jeff");
@@ -684,16 +632,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             assertEquals(record.getLastname(), newRecord.getLastname());
             assertEquals(record.getId1(), newRecord.getId1());
             assertEquals(record.getId2(), newRecord.getId2());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsSelectByExampleLike() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
             Pkfields record = new Pkfields();
             record.setFirstname("Fred");
@@ -751,16 +696,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             returnedRecord = answer.get(2);
             assertEquals(2, returnedRecord.getId1().intValue());
             assertEquals(3, returnedRecord.getId2().intValue());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsSelectByExampleNotLike() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
             Pkfields record = new Pkfields();
             record.setFirstname("Fred");
@@ -818,16 +760,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             returnedRecord = answer.get(2);
             assertEquals(1, returnedRecord.getId1().intValue());
             assertEquals(3, returnedRecord.getId2().intValue());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsSelectByExampleComplexLike() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
             Pkfields record = new Pkfields();
             record.setFirstname("Fred");
@@ -884,16 +823,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             returnedRecord = answer.get(1);
             assertEquals(2, returnedRecord.getId1().intValue());
             assertEquals(3, returnedRecord.getId2().intValue());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsSelectByExampleIn() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
             Pkfields record = new Pkfields();
             record.setFirstname("Fred");
@@ -959,16 +895,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             returnedRecord = answer.get(3);
             assertEquals(2, returnedRecord.getId1().intValue());
             assertEquals(3, returnedRecord.getId2().intValue());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsSelectByExampleBetween() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
             Pkfields record = new Pkfields();
             record.setFirstname("Fred");
@@ -1018,16 +951,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             example.setOrderByClause("ID1, ID2");
             List<Pkfields> answer = mapper.selectByExample(example);
             assertEquals(6, answer.size());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsSelectByExampleBetweenWithRowbounds() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
             Pkfields record = new Pkfields();
             record.setFirstname("Fred");
@@ -1081,16 +1011,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             assertEquals("Pebbles", answer.get(0).getFirstname());
             assertEquals("Barney", answer.get(1).getFirstname());
             assertEquals("Betty", answer.get(2).getFirstname());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsSelectByExampleNoCriteria() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
             Pkfields record = new Pkfields();
             record.setFirstname("Fred");
@@ -1140,16 +1067,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             example.setOrderByClause("ID1, ID2");
             List<Pkfields> answer = mapper.selectByExample(example);
             assertEquals(6, answer.size());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsSelectByExampleEscapedFields() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
             Pkfields record = new Pkfields();
             record.setFirstname("Fred");
@@ -1210,16 +1134,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             example.setOrderByClause("ID1, ID2");
             List<Pkfields> answer = mapper.selectByExample(example);
             assertEquals(2, answer.size());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsCountByExample() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
             Pkfields record = new Pkfields();
             record.setFirstname("Jeff");
@@ -1243,16 +1164,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             example.clear();
             rows = mapper.countByExample(example);
             assertEquals(2, rows);
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKBlobsInsert() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
             Pkblobs record = new Pkblobs();
             record.setId(3);
@@ -1270,16 +1188,13 @@ public class FlatJava5Test extends AbstractFlatTest {
                     .getBlob1()));
             assertTrue(blobsAreEqual(record.getBlob2(), returnedRecord
                     .getBlob2()));
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKBlobsUpdateByPrimaryKeyWithBLOBs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
             Pkblobs record = new Pkblobs();
             record.setId(3);
@@ -1300,16 +1215,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             assertEquals(record.getId(), newRecord.getId());
             assertTrue(blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
             assertTrue(blobsAreEqual(record.getBlob2(), newRecord.getBlob2()));
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKBlobsUpdateByPrimaryKeySelective() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
             Pkblobs record = new Pkblobs();
             record.setId(3);
@@ -1329,16 +1241,13 @@ public class FlatJava5Test extends AbstractFlatTest {
                     .getBlob1()));
             assertTrue(blobsAreEqual(newRecord.getBlob2(), returnedRecord
                     .getBlob2()));
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKBlobsDeleteByPrimaryKey() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
             Pkblobs record = new Pkblobs();
             record.setId(3);
@@ -1356,16 +1265,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             example = new PkblobsExample();
             answer = mapper.selectByExample(example);
             assertEquals(0, answer.size());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKBlobsDeleteByExample() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
             Pkblobs record = new Pkblobs();
             record.setId(3);
@@ -1391,16 +1297,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             example = new PkblobsExample();
             answer = mapper.selectByExample(example);
             assertEquals(1, answer.size());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKBlobsSelectByPrimaryKey() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
             Pkblobs record = new Pkblobs();
             record.setId(3);
@@ -1419,16 +1322,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             assertEquals(record.getId(), newRecord.getId());
             assertTrue(blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
             assertTrue(blobsAreEqual(record.getBlob2(), newRecord.getBlob2()));
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKBlobsSelectByExampleWithoutBlobs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
             Pkblobs record = new Pkblobs();
             record.setId(3);
@@ -1452,16 +1352,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             assertEquals(6, key.getId().intValue());
             assertNull(key.getBlob1());
             assertNull(key.getBlob2());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKBlobsSelectByExampleWithoutBlobsNoCriteria() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
             Pkblobs record = new Pkblobs();
             record.setId(3);
@@ -1480,16 +1377,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             List<Pkblobs> answer = mapper.selectByExample(example);
 
             assertEquals(2, answer.size());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKBlobsSelectByExampleWithBlobs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
             Pkblobs record = new Pkblobs();
             record.setId(3);
@@ -1513,16 +1407,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             assertEquals(record.getId(), newRecord.getId());
             assertTrue(blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
             assertTrue(blobsAreEqual(record.getBlob2(), newRecord.getBlob2()));
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKBlobsCountByExample() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
             Pkblobs record = new Pkblobs();
             record.setId(3);
@@ -1544,16 +1435,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             example.clear();
             rows = mapper.countByExample(example);
             assertEquals(2, rows);
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsBlobsInsert() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
             Pkfieldsblobs record = new Pkfieldsblobs();
             record.setId1(3);
@@ -1574,16 +1462,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             assertEquals(record.getLastname(), returnedRecord.getLastname());
             assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord
                     .getBlob1()));
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsBlobsUpdateByPrimaryKeyWithBLOBs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
             Pkfieldsblobs record = new Pkfieldsblobs();
             record.setId1(3);
@@ -1610,16 +1495,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             assertEquals(record.getId2(), newRecord.getId2());
             assertTrue(blobsAreEqual(updateRecord.getBlob1(), newRecord
                     .getBlob1()));
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsBlobsUpdateByPrimaryKeyWithoutBLOBs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
             Pkfieldsblobs record = new Pkfieldsblobs();
             record.setId1(3);
@@ -1644,16 +1526,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             assertEquals(record.getId1(), newRecord.getId1());
             assertEquals(record.getId2(), newRecord.getId2());
             assertTrue(blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsBlobsUpdateByPrimaryKeySelective() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
             Pkfieldsblobs record = new Pkfieldsblobs();
             record.setId1(3);
@@ -1679,16 +1558,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             assertEquals(record.getId2(), returnedRecord.getId2());
             assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord
                     .getBlob1()));
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsBlobsDeleteByPrimaryKey() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
             Pkfieldsblobs record = new Pkfieldsblobs();
             record.setId1(3);
@@ -1717,16 +1593,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             example = new PkfieldsblobsExample();
             answer = mapper.selectByExample(example);
             assertEquals(1, answer.size());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsBlobsDeleteByExample() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
             Pkfieldsblobs record = new Pkfieldsblobs();
             record.setId1(3);
@@ -1757,16 +1630,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             example = new PkfieldsblobsExample();
             answer = mapper.selectByExample(example);
             assertEquals(1, answer.size());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsBlobsSelectByPrimaryKey() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
             Pkfieldsblobs record = new Pkfieldsblobs();
             record.setId1(3);
@@ -1795,16 +1665,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             assertEquals(record.getFirstname(), newRecord.getFirstname());
             assertEquals(record.getLastname(), newRecord.getLastname());
             assertTrue(blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsBlobsSelectByExampleWithoutBlobs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
             Pkfieldsblobs record = new Pkfieldsblobs();
             record.setId1(3);
@@ -1834,16 +1701,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             assertEquals(record.getFirstname(), newRecord.getFirstname());
             assertEquals(record.getLastname(), newRecord.getLastname());
             assertNull(newRecord.getBlob1());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsBlobsSelectByExampleWithBlobs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
             Pkfieldsblobs record = new Pkfieldsblobs();
             record.setId1(3);
@@ -1872,16 +1736,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             assertEquals(record.getFirstname(), newRecord.getFirstname());
             assertEquals(record.getLastname(), newRecord.getLastname());
             assertTrue(blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsBlobsSelectByExampleWithBlobsNoCriteria() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
             Pkfieldsblobs record = new Pkfieldsblobs();
             record.setId1(3);
@@ -1903,16 +1764,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             example.createCriteria();
             List<Pkfieldsblobs> answer = mapper.selectByExampleWithBLOBs(example);
             assertEquals(2, answer.size());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testFieldsBlobsInsert() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             FieldsblobsMapper mapper = sqlSession.getMapper(FieldsblobsMapper.class);
             Fieldsblobs record = new Fieldsblobs();
             record.setFirstname("Jeff");
@@ -1932,16 +1790,13 @@ public class FlatJava5Test extends AbstractFlatTest {
                     .getBlob1()));
             assertTrue(blobsAreEqual(record.getBlob2(), returnedRecord
                     .getBlob2()));
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testFieldsBlobsDeleteByExample() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             FieldsblobsMapper mapper = sqlSession.getMapper(FieldsblobsMapper.class);
             Fieldsblobs record = new Fieldsblobs();
             record.setFirstname("Jeff");
@@ -1969,16 +1824,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             example = new FieldsblobsExample();
             answer = mapper.selectByExample(example);
             assertEquals(1, answer.size());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testFieldsBlobsSelectByExampleWithoutBlobs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             FieldsblobsMapper mapper = sqlSession.getMapper(FieldsblobsMapper.class);
             Fieldsblobs record = new Fieldsblobs();
             record.setFirstname("Jeff");
@@ -2004,16 +1856,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             assertEquals(record.getLastname(), newRecord.getLastname());
             assertNull(newRecord.getBlob1());
             assertNull(newRecord.getBlob2());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testFieldsBlobsSelectByExampleWithBlobs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             FieldsblobsMapper mapper = sqlSession.getMapper(FieldsblobsMapper.class);
             Fieldsblobs record = new Fieldsblobs();
             record.setFirstname("Jeff");
@@ -2039,16 +1888,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             assertEquals(record.getLastname(), newRecord.getLastname());
             assertTrue(blobsAreEqual(record.getBlob1(), newRecord.getBlob1()));
             assertTrue(blobsAreEqual(record.getBlob2(), newRecord.getBlob2()));
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testFieldsBlobsSelectByExampleWithBlobsNoCriteria() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             FieldsblobsMapper mapper = sqlSession.getMapper(FieldsblobsMapper.class);
             Fieldsblobs record = new Fieldsblobs();
             record.setFirstname("Jeff");
@@ -2068,16 +1914,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             example.createCriteria();
             List<Fieldsblobs> answer = mapper.selectByExampleWithBLOBs(example);
             assertEquals(2, answer.size());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsBlobsCountByExample() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
             Pkfieldsblobs record = new Pkfieldsblobs();
             record.setId1(3);
@@ -2103,16 +1946,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             example.clear();
             rows = mapper.countByExample(example);
             assertEquals(2, rows);
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testAwfulTableInsert() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             AwfulTableMapper mapper = sqlSession.getMapper(AwfulTableMapper.class);
             AwfulTable record = new AwfulTable();
             record.seteMail("fred@fred.com");
@@ -2150,16 +1990,13 @@ public class FlatJava5Test extends AbstractFlatTest {
                     .getSecondFirstName());
             assertEquals(record.getThirdFirstName(), returnedRecord
                     .getThirdFirstName());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testAwfulTableInsertSelective() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             AwfulTableMapper mapper = sqlSession.getMapper(AwfulTableMapper.class);
             AwfulTable record = new AwfulTable();
 
@@ -2196,16 +2033,13 @@ public class FlatJava5Test extends AbstractFlatTest {
                     .getSecondFirstName());
             assertEquals(record.getThirdFirstName(), returnedRecord
                     .getThirdFirstName());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testAwfulTableUpdateByPrimaryKey() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             AwfulTableMapper mapper = sqlSession.getMapper(AwfulTableMapper.class);
             AwfulTable record = new AwfulTable();
             record.seteMail("fred@fred.com");
@@ -2247,16 +2081,13 @@ public class FlatJava5Test extends AbstractFlatTest {
                     .getSecondFirstName());
             assertEquals(record.getThirdFirstName(), returnedRecord
                     .getThirdFirstName());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testAwfulTableUpdateByPrimaryKeySelective() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             AwfulTableMapper mapper = sqlSession.getMapper(AwfulTableMapper.class);
             AwfulTable record = new AwfulTable();
             record.seteMail("fred@fred.com");
@@ -2300,16 +2131,13 @@ public class FlatJava5Test extends AbstractFlatTest {
                     .getSecondFirstName());
             assertEquals(record.getThirdFirstName(), returnedRecord
                     .getThirdFirstName());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testAwfulTableDeleteByPrimaryKey() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             AwfulTableMapper mapper = sqlSession.getMapper(AwfulTableMapper.class);
             AwfulTable record = new AwfulTable();
             record.seteMail("fred@fred.com");
@@ -2333,16 +2161,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             AwfulTableExample example = new AwfulTableExample();
             List<AwfulTable> answer = mapper.selectByExample(example);
             assertEquals(0, answer.size());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testAwfulTableDeleteByExample() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             AwfulTableMapper mapper = sqlSession.getMapper(AwfulTableMapper.class);
             AwfulTable record = new AwfulTable();
             record.seteMail("fred@fred.com");
@@ -2386,16 +2211,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             example.clear();
             answer = mapper.selectByExample(example);
             assertEquals(1, answer.size());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testAwfulTableSelectByPrimaryKey() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             AwfulTableMapper mapper = sqlSession.getMapper(AwfulTableMapper.class);
             AwfulTable record = new AwfulTable();
             record.seteMail("fred@fred.com");
@@ -2447,16 +2269,13 @@ public class FlatJava5Test extends AbstractFlatTest {
                     .getSecondFirstName());
             assertEquals(record.getThirdFirstName(), returnedRecord
                     .getThirdFirstName());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testAwfulTableSelectByExampleLike() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             AwfulTableMapper mapper = sqlSession.getMapper(AwfulTableMapper.class);
             AwfulTable record = new AwfulTable();
             record.seteMail("fred@fred.com");
@@ -2556,16 +2375,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             returnedRecord = answer.get(2);
             assertEquals(111111, returnedRecord.getId1().intValue());
             assertEquals(222222, returnedRecord.getId2().intValue());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testAwfulTableSelectByExampleNotLike() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             AwfulTableMapper mapper = sqlSession.getMapper(AwfulTableMapper.class);
             AwfulTable record = new AwfulTable();
             record.seteMail("fred@fred.com");
@@ -2665,16 +2481,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             returnedRecord = answer.get(2);
             assertEquals(111, returnedRecord.getId1().intValue());
             assertEquals(222, returnedRecord.getId2().intValue());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testAwfulTableSelectByExampleComplexLike() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             AwfulTableMapper mapper = sqlSession.getMapper(AwfulTableMapper.class);
             AwfulTable record = new AwfulTable();
             record.seteMail("fred@fred.com");
@@ -2772,16 +2585,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             returnedRecord = answer.get(1);
             assertEquals(111111, returnedRecord.getId1().intValue());
             assertEquals(222222, returnedRecord.getId2().intValue());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testAwfulTableSelectByExampleIn() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             AwfulTableMapper mapper = sqlSession.getMapper(AwfulTableMapper.class);
             AwfulTable record = new AwfulTable();
             record.seteMail("fred@fred.com");
@@ -2883,16 +2693,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             returnedRecord = answer.get(1);
             assertEquals(11, returnedRecord.getId1().intValue());
             assertEquals(22, returnedRecord.getId2().intValue());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testAwfulTableSelectByExampleBetween() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             AwfulTableMapper mapper = sqlSession.getMapper(AwfulTableMapper.class);
             AwfulTable record = new AwfulTable();
             record.seteMail("fred@fred.com");
@@ -2982,16 +2789,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             example.createCriteria().andId1Between(1, 1000);
             List<AwfulTable> answer = mapper.selectByExample(example);
             assertEquals(3, answer.size());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testAwfulTableSelectByExampleNoCriteria() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             AwfulTableMapper mapper = sqlSession.getMapper(AwfulTableMapper.class);
             AwfulTable record = new AwfulTable();
             record.seteMail("fred@fred.com");
@@ -3095,16 +2899,13 @@ public class FlatJava5Test extends AbstractFlatTest {
             assertEquals(11, returnedRecord.getId1().intValue());
             returnedRecord = answer.get(5);
             assertEquals(1, returnedRecord.getId1().intValue());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testAwfulTableCountByExample() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             AwfulTableMapper mapper = sqlSession.getMapper(AwfulTableMapper.class);
             AwfulTable record = new AwfulTable();
             record.seteMail("fred@fred.com");
@@ -3144,8 +2945,6 @@ public class FlatJava5Test extends AbstractFlatTest {
             example.clear();
             rows = mapper.countByExample(example);
             assertEquals(2, rows);
-        } finally {
-            sqlSession.close();
         }
     }
 

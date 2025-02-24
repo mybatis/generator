@@ -24,7 +24,7 @@ import org.mybatis.generator.api.dom.java.render.InnerClassRenderer;
 
 class InnerClassTest {
 
-    private static final String LF = System.getProperty("line.separator");
+    private static final String LF = System.lineSeparator();
 
     @Test
     void testConstructor() {

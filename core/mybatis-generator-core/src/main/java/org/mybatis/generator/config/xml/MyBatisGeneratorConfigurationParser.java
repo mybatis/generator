@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
 
 import org.mybatis.generator.config.ColumnOverride;
@@ -64,11 +65,7 @@ public class MyBatisGeneratorConfigurationParser {
 
     public MyBatisGeneratorConfigurationParser(Properties extraProperties) {
         super();
-        if (extraProperties == null) {
-            this.extraProperties = new Properties();
-        } else {
-            this.extraProperties = extraProperties;
-        }
+        this.extraProperties = Objects.requireNonNullElseGet(extraProperties, Properties::new);
         configurationProperties = new Properties();
     }
 
@@ -85,12 +82,13 @@ public class MyBatisGeneratorConfigurationParser {
                 continue;
             }
 
-            if ("properties".equals(childNode.getNodeName())) { //$NON-NLS-1$
-                parseProperties(childNode);
-            } else if ("classPathEntry".equals(childNode.getNodeName())) { //$NON-NLS-1$
-                parseClassPathEntry(configuration, childNode);
-            } else if ("context".equals(childNode.getNodeName())) { //$NON-NLS-1$
-                parseContext(configuration, childNode);
+            switch (childNode.getNodeName()) {
+                case "properties" ->  //$NON-NLS-1$
+                        parseProperties(childNode);
+                case "classPathEntry" ->  //$NON-NLS-1$
+                        parseClassPathEntry(configuration, childNode);
+                case "context" ->  //$NON-NLS-1$
+                        parseContext(configuration, childNode);
             }
         }
 
@@ -173,26 +171,27 @@ public class MyBatisGeneratorConfigurationParser {
                 continue;
             }
 
-            if ("property".equals(childNode.getNodeName())) { //$NON-NLS-1$
-                parseProperty(context, childNode);
-            } else if ("plugin".equals(childNode.getNodeName())) { //$NON-NLS-1$
-                parsePlugin(context, childNode);
-            } else if ("commentGenerator".equals(childNode.getNodeName())) { //$NON-NLS-1$
-                parseCommentGenerator(context, childNode);
-            } else if ("jdbcConnection".equals(childNode.getNodeName())) { //$NON-NLS-1$
-                parseJdbcConnection(context, childNode);
-            } else if ("connectionFactory".equals(childNode.getNodeName())) { //$NON-NLS-1$
-                parseConnectionFactory(context, childNode);
-            } else if ("javaModelGenerator".equals(childNode.getNodeName())) { //$NON-NLS-1$
-                parseJavaModelGenerator(context, childNode);
-            } else if ("javaTypeResolver".equals(childNode.getNodeName())) { //$NON-NLS-1$
-                parseJavaTypeResolver(context, childNode);
-            } else if ("sqlMapGenerator".equals(childNode.getNodeName())) { //$NON-NLS-1$
-                parseSqlMapGenerator(context, childNode);
-            } else if ("javaClientGenerator".equals(childNode.getNodeName())) { //$NON-NLS-1$
-                parseJavaClientGenerator(context, childNode);
-            } else if ("table".equals(childNode.getNodeName())) { //$NON-NLS-1$
-                parseTable(context, childNode);
+            switch (childNode.getNodeName()) {
+                case "property" ->  //$NON-NLS-1$
+                        parseProperty(context, childNode);
+                case "plugin" ->  //$NON-NLS-1$
+                        parsePlugin(context, childNode);
+                case "commentGenerator" ->  //$NON-NLS-1$
+                        parseCommentGenerator(context, childNode);
+                case "jdbcConnection" ->  //$NON-NLS-1$
+                        parseJdbcConnection(context, childNode);
+                case "connectionFactory" ->  //$NON-NLS-1$
+                        parseConnectionFactory(context, childNode);
+                case "javaModelGenerator" ->  //$NON-NLS-1$
+                        parseJavaModelGenerator(context, childNode);
+                case "javaTypeResolver" ->  //$NON-NLS-1$
+                        parseJavaTypeResolver(context, childNode);
+                case "sqlMapGenerator" ->  //$NON-NLS-1$
+                        parseSqlMapGenerator(context, childNode);
+                case "javaClientGenerator" ->  //$NON-NLS-1$
+                        parseJavaClientGenerator(context, childNode);
+                case "table" ->  //$NON-NLS-1$
+                        parseTable(context, childNode);
             }
         }
     }
@@ -359,20 +358,21 @@ public class MyBatisGeneratorConfigurationParser {
                 continue;
             }
 
-            if ("property".equals(childNode.getNodeName())) { //$NON-NLS-1$
-                parseProperty(tc, childNode);
-            } else if ("columnOverride".equals(childNode.getNodeName())) { //$NON-NLS-1$
-                parseColumnOverride(tc, childNode);
-            } else if ("ignoreColumn".equals(childNode.getNodeName())) { //$NON-NLS-1$
-                parseIgnoreColumn(tc, childNode);
-            } else if ("ignoreColumnsByRegex".equals(childNode.getNodeName())) { //$NON-NLS-1$
-                parseIgnoreColumnByRegex(tc, childNode);
-            } else if ("generatedKey".equals(childNode.getNodeName())) { //$NON-NLS-1$
-                parseGeneratedKey(tc, childNode);
-            } else if ("domainObjectRenamingRule".equals(childNode.getNodeName())) { //$NON-NLS-1$
-                parseDomainObjectRenamingRule(tc, childNode);
-            } else if ("columnRenamingRule".equals(childNode.getNodeName())) { //$NON-NLS-1$
-                parseColumnRenamingRule(tc, childNode);
+            switch (childNode.getNodeName()) {
+                case "property" ->  //$NON-NLS-1$
+                        parseProperty(tc, childNode);
+                case "columnOverride" ->  //$NON-NLS-1$
+                        parseColumnOverride(tc, childNode);
+                case "ignoreColumn" ->  //$NON-NLS-1$
+                        parseIgnoreColumn(tc, childNode);
+                case "ignoreColumnsByRegex" ->  //$NON-NLS-1$
+                        parseIgnoreColumnByRegex(tc, childNode);
+                case "generatedKey" ->  //$NON-NLS-1$
+                        parseGeneratedKey(tc, childNode);
+                case "domainObjectRenamingRule" ->  //$NON-NLS-1$
+                        parseDomainObjectRenamingRule(tc, childNode);
+                case "columnRenamingRule" ->  //$NON-NLS-1$
+                        parseColumnRenamingRule(tc, childNode);
             }
         }
     }

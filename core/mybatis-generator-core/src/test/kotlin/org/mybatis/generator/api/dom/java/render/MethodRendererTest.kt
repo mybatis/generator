@@ -295,5 +295,5 @@ class MethodRendererTest {
     }
 
     private fun toString(m: Method, inInterface: Boolean = false) = MethodRenderer().render(m, inInterface, null)
-                .joinToString(System.getProperty("line.separator"))
+                .joinToString(System.lineSeparator())
 }

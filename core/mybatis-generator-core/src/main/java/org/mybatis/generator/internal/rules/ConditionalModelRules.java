@@ -64,7 +64,7 @@ public class ConditionalModelRules extends BaseRules {
     /**
      * Blobs will be in the base record class if there is only one blob column.
      *
-     * @return true if there are blobs but they are in the base record class
+     * @return true if there are blobs, but they are in the base record class
      */
     private boolean blobsAreInBaseRecord() {
         return introspectedTable.hasBLOBColumns() && !generateRecordWithBLOBsClass();

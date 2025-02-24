@@ -31,9 +31,8 @@ public class GeneratedAlwaysTest extends AbstractAnnotatedMiscellaneousTest {
 
     @Test
     public void testInsert() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             GeneratedalwaystestMapper mapper = sqlSession.getMapper(GeneratedalwaystestMapper.class);
 
             Generatedalwaystest gaTest = new Generatedalwaystest();
@@ -54,16 +53,13 @@ public class GeneratedAlwaysTest extends AbstractAnnotatedMiscellaneousTest {
             assertEquals(3, returnedRecord.getIdPlus2().intValue());
             assertEquals("fred", returnedRecord.getName());
             assertTrue(TestUtilities.blobsAreEqual(gaTest.getBlob1(), returnedRecord.getBlob1()));
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testInsertSelective() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             GeneratedalwaystestMapper mapper = sqlSession.getMapper(GeneratedalwaystestMapper.class);
 
             Generatedalwaystest gaTest = new Generatedalwaystest();
@@ -83,16 +79,13 @@ public class GeneratedAlwaysTest extends AbstractAnnotatedMiscellaneousTest {
             assertEquals(3, returnedRecord.getIdPlus2().intValue());
             assertEquals("fred", returnedRecord.getName());
             assertNull(returnedRecord.getBlob1());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testUpdateByExample() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             GeneratedalwaystestMapper mapper = sqlSession.getMapper(GeneratedalwaystestMapper.class);
 
             Generatedalwaystest gaTest = new Generatedalwaystest();
@@ -127,16 +120,13 @@ public class GeneratedAlwaysTest extends AbstractAnnotatedMiscellaneousTest {
             assertEquals("barney", returnedRecord.getName());
             // should not have update the BLOB in regular update by primary key
             assertTrue(TestUtilities.blobsAreEqual(originalBlob, returnedRecord.getBlob1()));
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testUpdateByExampleSelective() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             GeneratedalwaystestMapper mapper = sqlSession.getMapper(GeneratedalwaystestMapper.class);
 
             Generatedalwaystest gaTest = new Generatedalwaystest();
@@ -168,16 +158,13 @@ public class GeneratedAlwaysTest extends AbstractAnnotatedMiscellaneousTest {
             assertEquals(3, returnedRecord.getIdPlus2().intValue());
             assertEquals("fred", returnedRecord.getName());
             assertTrue(TestUtilities.blobsAreEqual(gaTest.getBlob1(), returnedRecord.getBlob1()));
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testUpdateByExampleWithBlobs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             GeneratedalwaystestMapper mapper = sqlSession.getMapper(GeneratedalwaystestMapper.class);
 
             Generatedalwaystest gaTest = new Generatedalwaystest();
@@ -209,16 +196,13 @@ public class GeneratedAlwaysTest extends AbstractAnnotatedMiscellaneousTest {
             assertEquals(3, returnedRecord.getIdPlus2().intValue());
             assertEquals("barney", returnedRecord.getName());
             assertTrue(TestUtilities.blobsAreEqual(gaTest.getBlob1(), returnedRecord.getBlob1()));
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testUpdateByPrimaryKey() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             GeneratedalwaystestMapper mapper = sqlSession.getMapper(GeneratedalwaystestMapper.class);
 
             Generatedalwaystest gaTest = new Generatedalwaystest();
@@ -249,16 +233,13 @@ public class GeneratedAlwaysTest extends AbstractAnnotatedMiscellaneousTest {
             assertEquals("barney", returnedRecord.getName());
             // should not have update the BLOB in regular update by primary key
             assertTrue(TestUtilities.blobsAreEqual(originalBlob, returnedRecord.getBlob1()));
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testUpdateByPrimaryKeySelective() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             GeneratedalwaystestMapper mapper = sqlSession.getMapper(GeneratedalwaystestMapper.class);
 
             Generatedalwaystest gaTest = new Generatedalwaystest();
@@ -286,16 +267,13 @@ public class GeneratedAlwaysTest extends AbstractAnnotatedMiscellaneousTest {
             assertEquals(3, returnedRecord.getIdPlus2().intValue());
             assertEquals("fred", returnedRecord.getName());
             assertTrue(TestUtilities.blobsAreEqual(gaTest.getBlob1(), returnedRecord.getBlob1()));
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testUpdateByPrimaryKeyWithBlobs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             GeneratedalwaystestMapper mapper = sqlSession.getMapper(GeneratedalwaystestMapper.class);
 
             Generatedalwaystest gaTest = new Generatedalwaystest();
@@ -323,8 +301,6 @@ public class GeneratedAlwaysTest extends AbstractAnnotatedMiscellaneousTest {
             assertEquals(3, returnedRecord.getIdPlus2().intValue());
             assertEquals("barney", returnedRecord.getName());
             assertTrue(TestUtilities.blobsAreEqual(gaTest.getBlob1(), returnedRecord.getBlob1()));
-        } finally {
-            sqlSession.close();
         }
     }
 }

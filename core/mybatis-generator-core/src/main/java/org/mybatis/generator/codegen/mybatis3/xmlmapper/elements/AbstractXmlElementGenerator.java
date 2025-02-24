@@ -121,7 +121,7 @@ public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
             }
         }
 
-        if (sb.length() > 0) {
+        if (!sb.isEmpty()) {
             answer.add(new TextElement(sb.toString()));
         }
 

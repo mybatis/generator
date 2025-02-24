@@ -58,7 +58,7 @@ public class XmlFileMergerJaxp {
     private static class NullEntityResolver implements EntityResolver {
         /**
          * returns an empty reader. This is done so that the parser doesn't
-         * attempt to read a DTD. We don't need that support for the merge and
+         * attempt to read a DTD. We don't need that support for the merge, and
          * it can cause problems on systems that aren't Internet connected.
          */
         @Override
@@ -217,7 +217,7 @@ public class XmlFileMergerJaxp {
 
         if (node != null && node.getNodeType() == Node.TEXT_NODE) {
             Text tn = (Text) node;
-            if (tn.getData().trim().length() == 0) {
+            if (tn.getData().trim().isEmpty()) {
                 rc = true;
             }
         }

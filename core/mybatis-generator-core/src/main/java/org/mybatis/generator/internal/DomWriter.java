@@ -151,7 +151,7 @@ public class DomWriter {
         // line separator.  XML parsing forces \n only after a parse,
         // but we should write it out as it was to avoid whitespace
         // commits on some version control systems.
-        printWriter.print(System.getProperty("line.separator")); //$NON-NLS-1$
+        printWriter.print(System.lineSeparator());
     }
 
     private void handleCarriageReturn() {
@@ -350,7 +350,7 @@ public class DomWriter {
         printWriter.print("<?"); //$NON-NLS-1$
         printWriter.print(node.getNodeName());
         String data = node.getNodeValue();
-        if (data != null && data.length() > 0) {
+        if (data != null && !data.isEmpty()) {
             printWriter.print(' ');
             printWriter.print(data);
         }
@@ -361,7 +361,7 @@ public class DomWriter {
     protected void write(Comment node) {
         printWriter.print("<!--"); //$NON-NLS-1$
         String comment = node.getNodeValue();
-        if (comment != null && comment.length() > 0) {
+        if (comment != null && !comment.isEmpty()) {
             normalizeAndPrint(comment, false);
         }
         printWriter.print("-->"); //$NON-NLS-1$

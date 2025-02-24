@@ -41,7 +41,7 @@ public class StringBooleanTypeHandler implements TypeHandler<Boolean> {
     @Override
     public void setParameter(PreparedStatement ps, int columnIndex, Boolean parameter,
             JdbcType jdbcType) throws SQLException {
-        String s = parameter == null ? "N" : parameter.booleanValue() ? "Y" : "N";
+        String s = parameter == null ? "N" : parameter ? "Y" : "N";
         ps.setString(columnIndex, s);
     }
 

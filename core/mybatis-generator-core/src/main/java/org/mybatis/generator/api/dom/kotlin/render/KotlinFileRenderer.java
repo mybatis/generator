@@ -38,7 +38,7 @@ public class KotlinFileRenderer {
 
         lines.addAll(0, kotlinFile.getFileCommentLines());
         return lines.stream()
-                .collect(Collectors.joining(System.getProperty("line.separator"))); //$NON-NLS-1$
+                .collect(Collectors.joining(System.lineSeparator()));
     }
 
     private List<String> prependBlankLineIfNotEmpty(int currentLength, List<String> in) {

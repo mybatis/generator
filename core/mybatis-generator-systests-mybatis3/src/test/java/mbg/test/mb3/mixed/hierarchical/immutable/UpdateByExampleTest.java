@@ -53,9 +53,8 @@ public class UpdateByExampleTest extends AbstractMixedHierarchicalImmutableTest 
 
     @Test
     public void testFieldsOnlyUpdateByExampleSelective() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             FieldsonlyMapper mapper = sqlSession
                     .getMapper(FieldsonlyMapper.class);
             Fieldsonly record = new Fieldsonly(5, 11.22, 33.44);
@@ -100,16 +99,13 @@ public class UpdateByExampleTest extends AbstractMixedHierarchicalImmutableTest 
             assertEquals(record.getDoublefield(), 99d, 0.001);
             assertEquals(record.getFloatfield(), 100.111, 0.001);
             assertEquals(record.getIntegerfield().intValue(), 9);
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testFieldsOnlyUpdateByExample() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             FieldsonlyMapper mapper = sqlSession
                     .getMapper(FieldsonlyMapper.class);
             Fieldsonly record = new Fieldsonly(5, 11.22, 33.44);
@@ -136,16 +132,13 @@ public class UpdateByExampleTest extends AbstractMixedHierarchicalImmutableTest 
             assertNull(record.getDoublefield());
             assertNull(record.getFloatfield());
             assertEquals(record.getIntegerfield().intValue(), 22);
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKOnlyUpdateByExampleSelective() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkonlyMapper mapper = sqlSession.getMapper(PkonlyMapper.class);
             PkonlyKey key = new PkonlyKey(1, 3);
             mapper.insert(key);
@@ -173,16 +166,13 @@ public class UpdateByExampleTest extends AbstractMixedHierarchicalImmutableTest 
 
             returnedRows = mapper.countByExample(example);
             assertEquals(1, returnedRows);
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKOnlyUpdateByExample() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkonlyMapper mapper = sqlSession.getMapper(PkonlyMapper.class);
             PkonlyKey key = new PkonlyKey(1, 3);
             mapper.insert(key);
@@ -204,16 +194,13 @@ public class UpdateByExampleTest extends AbstractMixedHierarchicalImmutableTest 
 
             long returnedRows = mapper.countByExample(example);
             assertEquals(1, returnedRows);
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsUpdateByExampleSelective() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
             Pkfields record = new Pkfields();
             record.setFirstname("Jeff");
@@ -244,16 +231,13 @@ public class UpdateByExampleTest extends AbstractMixedHierarchicalImmutableTest 
 
             long returnedRows = mapper.countByExample(example);
             assertEquals(1, returnedRows);
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsUpdateByExample() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
             Pkfields record = new Pkfields();
             record.setFirstname("Jeff");
@@ -286,16 +270,13 @@ public class UpdateByExampleTest extends AbstractMixedHierarchicalImmutableTest 
 
             long returnedRows = mapper.countByExample(example);
             assertEquals(1, returnedRows);
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKBlobsUpdateByExampleSelective() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
             PkblobsWithBLOBs record = new PkblobsWithBLOBs(3,
                     generateRandomBlob(), generateRandomBlob(), "Long String 1");
@@ -325,16 +306,13 @@ public class UpdateByExampleTest extends AbstractMixedHierarchicalImmutableTest 
             assertTrue(blobsAreEqual(record.getBlob2(),
                     returnedRecord.getBlob2()));
             assertEquals(record.getCharacterlob(), returnedRecord.getCharacterlob());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKBlobsUpdateByExampleWithoutBLOBs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
             PkblobsWithBLOBs record = new PkblobsWithBLOBs(3,
                     generateRandomBlob(), generateRandomBlob(), "Long String 1");
@@ -363,16 +341,13 @@ public class UpdateByExampleTest extends AbstractMixedHierarchicalImmutableTest 
             assertTrue(blobsAreEqual(record.getBlob2(),
                     returnedRecord.getBlob2()));
             assertEquals(record.getCharacterlob(), returnedRecord.getCharacterlob());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKBlobsUpdateByExampleWithBLOBs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
             PkblobsWithBLOBs record = new PkblobsWithBLOBs(3,
                     generateRandomBlob(), generateRandomBlob(), "Long String 1");
@@ -399,16 +374,13 @@ public class UpdateByExampleTest extends AbstractMixedHierarchicalImmutableTest 
             assertNull(returnedRecord.getBlob1());
             assertNull(returnedRecord.getBlob2());
             assertNull(returnedRecord.getCharacterlob());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsBlobsUpdateByExampleSelective() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsblobsMapper mapper = sqlSession
                     .getMapper(PkfieldsblobsMapper.class);
             PkfieldsblobsWithBLOBs record = new PkfieldsblobsWithBLOBs(3, 4,
@@ -440,16 +412,13 @@ public class UpdateByExampleTest extends AbstractMixedHierarchicalImmutableTest 
             assertTrue(blobsAreEqual(record.getBlob1(),
                     returnedRecord.getBlob1()));
 
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsBlobsUpdateByExampleWithoutBLOBs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsblobsMapper mapper = sqlSession
                     .getMapper(PkfieldsblobsMapper.class);
             PkfieldsblobsWithBLOBs record = new PkfieldsblobsWithBLOBs(3, 4,
@@ -480,16 +449,13 @@ public class UpdateByExampleTest extends AbstractMixedHierarchicalImmutableTest 
             assertTrue(blobsAreEqual(record.getBlob1(),
                     returnedRecord.getBlob1()));
 
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsBlobsUpdateByExampleWithBLOBs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsblobsMapper mapper = sqlSession
                     .getMapper(PkfieldsblobsMapper.class);
             PkfieldsblobsWithBLOBs record = new PkfieldsblobsWithBLOBs(3, 4,
@@ -520,16 +486,13 @@ public class UpdateByExampleTest extends AbstractMixedHierarchicalImmutableTest 
             assertNull(returnedRecord.getLastname());
             assertNull(returnedRecord.getBlob1());
 
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testFieldsBlobsUpdateByExampleSelective() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             FieldsblobsMapper mapper = sqlSession
                     .getMapper(FieldsblobsMapper.class);
             FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs("Jeff",
@@ -559,16 +522,13 @@ public class UpdateByExampleTest extends AbstractMixedHierarchicalImmutableTest 
                     returnedRecord.getBlob1()));
             assertTrue(blobsAreEqual(record.getBlob2(),
                     returnedRecord.getBlob2()));
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testFieldsBlobsUpdateByExampleWithoutBLOBs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             FieldsblobsMapper mapper = sqlSession
                     .getMapper(FieldsblobsMapper.class);
             FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs("Jeff",
@@ -598,16 +558,13 @@ public class UpdateByExampleTest extends AbstractMixedHierarchicalImmutableTest 
                     returnedRecord.getBlob1()));
             assertTrue(blobsAreEqual(record.getBlob2(),
                     returnedRecord.getBlob2()));
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testFieldsBlobsUpdateByExampleWithBLOBs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             FieldsblobsMapper mapper = sqlSession
                     .getMapper(FieldsblobsMapper.class);
             FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs("Jeff",
@@ -636,8 +593,6 @@ public class UpdateByExampleTest extends AbstractMixedHierarchicalImmutableTest 
             assertEquals(newRecord.getLastname(), returnedRecord.getLastname());
             assertNull(returnedRecord.getBlob1());
             assertNull(returnedRecord.getBlob2());
-        } finally {
-            sqlSession.close();
         }
     }
 }

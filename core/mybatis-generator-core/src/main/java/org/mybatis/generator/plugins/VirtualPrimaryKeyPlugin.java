@@ -26,7 +26,7 @@ import org.mybatis.generator.api.PluginAdapter;
  * they are not strictly defined as primary keys in the database.
  *
  * <p>To use the plugin, add a property to the table configuration specifying a
- * comma delimited list of column names to use as a primary key:
+ * comma-delimited list of column names to use as a primary key:
  *
  * <p>&lt;property name="virtualKeyColumns" value="ID1,ID2"&gt;
  *

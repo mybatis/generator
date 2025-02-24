@@ -114,7 +114,7 @@ public class JavaBeansUtil {
             case ' ':
             case '/':
             case '&':
-                if (sb.length() > 0) {
+                if (!sb.isEmpty()) {
                     nextUpperCase = true;
                 }
                 break;

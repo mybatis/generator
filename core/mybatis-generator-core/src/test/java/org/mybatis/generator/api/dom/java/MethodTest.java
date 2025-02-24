@@ -26,7 +26,7 @@ import org.mybatis.generator.api.dom.java.render.MethodRenderer;
 
 class MethodTest {
 
-    private static final String LINE_SEPARATOR = System.getProperty("line.separator");
+    private static final String LINE_SEPARATOR = System.lineSeparator();
 
     @Test
     void testConstructor() {

@@ -56,9 +56,8 @@ public class UpdateByExampleTest extends AbstractHierarchicalTest {
 
     @Test
     public void testFieldsOnlyUpdateByExampleSelective() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             FieldsOnlyMapper mapper = sqlSession.getMapper(FieldsOnlyMapper.class);
             FieldsOnlyEntity record = new FieldsOnlyEntity();
             record.setDoublefield(11.22);
@@ -112,16 +111,13 @@ public class UpdateByExampleTest extends AbstractHierarchicalTest {
             assertEquals(record.getDoublefield(), 99d, 0.001);
             assertEquals(record.getFloatfield(), 100.111, 0.001);
             assertEquals(record.getIntegerfield().intValue(), 9);
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testFieldsOnlyUpdateByExample() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             FieldsOnlyMapper mapper = sqlSession.getMapper(FieldsOnlyMapper.class);
             FieldsOnlyEntity record = new FieldsOnlyEntity();
             record.setDoublefield(11.22);
@@ -157,16 +153,13 @@ public class UpdateByExampleTest extends AbstractHierarchicalTest {
             assertNull(record.getDoublefield());
             assertNull(record.getFloatfield());
             assertEquals(record.getIntegerfield().intValue(), 22);
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testFieldsOnlyUpdateAllRows() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             FieldsOnlyMapper mapper = sqlSession.getMapper(FieldsOnlyMapper.class);
             FieldsOnlyEntity record = new FieldsOnlyEntity();
             record.setDoublefield(11.22);
@@ -210,16 +203,13 @@ public class UpdateByExampleTest extends AbstractHierarchicalTest {
             assertNull(record.getDoublefield());
             assertNull(record.getFloatfield());
             assertEquals(record.getIntegerfield().intValue(), 22);
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKOnlyUpdateByExampleSelective() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkonlyMapper mapper = sqlSession.getMapper(PkonlyMapper.class);
             PkonlyKey key = new PkonlyKey();
             key.setId(1);
@@ -245,29 +235,26 @@ public class UpdateByExampleTest extends AbstractHierarchicalTest {
 
             example.clear();
             example.createCriteria()
-                .andIdEqualTo(5)
-                .andSeqNumEqualTo(3);
+                    .andIdEqualTo(5)
+                    .andSeqNumEqualTo(3);
 
             long returnedRows = mapper.countByExample(example);
             assertEquals(1, returnedRows);
 
             example.clear();
             example.createCriteria()
-                .andIdEqualTo(7)
-                .andSeqNumEqualTo(3);
+                    .andIdEqualTo(7)
+                    .andSeqNumEqualTo(3);
 
             returnedRows = mapper.countByExample(example);
             assertEquals(1, returnedRows);
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKOnlyUpdateByExample() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkonlyMapper mapper = sqlSession.getMapper(PkonlyMapper.class);
             PkonlyKey key = new PkonlyKey();
             key.setId(1);
@@ -286,7 +273,7 @@ public class UpdateByExampleTest extends AbstractHierarchicalTest {
 
             PkonlyExample example = new PkonlyExample();
             example.createCriteria()
-                .andIdEqualTo(7);
+                    .andIdEqualTo(7);
             key = new PkonlyKey();
             key.setSeqNum(3);
             key.setId(22);
@@ -295,21 +282,18 @@ public class UpdateByExampleTest extends AbstractHierarchicalTest {
 
             example.clear();
             example.createCriteria()
-                .andIdEqualTo(22)
-                .andSeqNumEqualTo(3);
+                    .andIdEqualTo(22)
+                    .andSeqNumEqualTo(3);
 
             long returnedRows = mapper.countByExample(example);
             assertEquals(1, returnedRows);
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsUpdateByExampleSelective() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
             Pkfields record = new Pkfields();
             record.setFirstname("Jeff");
@@ -335,23 +319,20 @@ public class UpdateByExampleTest extends AbstractHierarchicalTest {
 
             example.clear();
             example.createCriteria()
-                .andFirstnameEqualTo("Fred")
-                .andLastnameEqualTo("Jones")
-                .andId1EqualTo(3)
-                .andId2EqualTo(4);
+                    .andFirstnameEqualTo("Fred")
+                    .andLastnameEqualTo("Jones")
+                    .andId1EqualTo(3)
+                    .andId2EqualTo(4);
 
             long returnedRows = mapper.countByExample(example);
             assertEquals(1, returnedRows);
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsUpdateByExample() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
             Pkfields record = new Pkfields();
             record.setFirstname("Jeff");
@@ -374,31 +355,28 @@ public class UpdateByExampleTest extends AbstractHierarchicalTest {
             record.setId2(4);
             PkfieldsExample example = new PkfieldsExample();
             example.createCriteria()
-                .andId1EqualTo(3)
-                .andId2EqualTo(4);
+                    .andId1EqualTo(3)
+                    .andId2EqualTo(4);
 
             int rows = mapper.updateByExample(record, example);
             assertEquals(1, rows);
 
             example.clear();
             example.createCriteria()
-                .andFirstnameEqualTo("Fred")
-                .andLastnameIsNull()
-                .andId1EqualTo(3)
-                .andId2EqualTo(4);
+                    .andFirstnameEqualTo("Fred")
+                    .andLastnameIsNull()
+                    .andId1EqualTo(3)
+                    .andId2EqualTo(4);
 
             long returnedRows = mapper.countByExample(example);
             assertEquals(1, returnedRows);
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsUpdateAllRows() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
             Pkfields record = new Pkfields();
             record.setFirstname("Jeff");
@@ -423,20 +401,17 @@ public class UpdateByExampleTest extends AbstractHierarchicalTest {
 
             PkfieldsExample example = new PkfieldsExample();
             example.createCriteria()
-                .andLastnameEqualTo("Cooper");
+                    .andLastnameEqualTo("Cooper");
 
             long returnedRows = mapper.countByExample(example);
             assertEquals(2, returnedRows);
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKBlobsUpdateByExampleSelective() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
             PkblobsWithBLOBs record = new PkblobsWithBLOBs();
             record.setId(3);
@@ -466,16 +441,13 @@ public class UpdateByExampleTest extends AbstractHierarchicalTest {
             assertEquals(6, returnedRecord.getId().intValue());
             assertTrue(blobsAreEqual(newRecord.getBlob1(), returnedRecord.getBlob1()));
             assertTrue(blobsAreEqual(record.getBlob2(), returnedRecord.getBlob2()));
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKBlobsUpdateByExampleWithoutBLOBs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
             PkblobsWithBLOBs record = new PkblobsWithBLOBs();
             record.setId(3);
@@ -505,16 +477,13 @@ public class UpdateByExampleTest extends AbstractHierarchicalTest {
             assertEquals(8, returnedRecord.getId().intValue());
             assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord.getBlob1()));
             assertTrue(blobsAreEqual(record.getBlob2(), returnedRecord.getBlob2()));
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKBlobsUpdateByExampleWithBLOBs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
             PkblobsWithBLOBs record = new PkblobsWithBLOBs();
             record.setId(3);
@@ -544,16 +513,13 @@ public class UpdateByExampleTest extends AbstractHierarchicalTest {
             assertEquals(8, returnedRecord.getId().intValue());
             assertNull(returnedRecord.getBlob1());
             assertNull(returnedRecord.getBlob2());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsBlobsUpdateByExampleSelective() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
             PkfieldsblobsWithBLOBs record = new PkfieldsblobsWithBLOBs();
             record.setId1(3);
@@ -589,16 +555,13 @@ public class UpdateByExampleTest extends AbstractHierarchicalTest {
             assertEquals(record.getLastname(), returnedRecord.getLastname());
             assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord.getBlob1()));
 
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsBlobsUpdateByExampleWithoutBLOBs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
             PkfieldsblobsWithBLOBs record = new PkfieldsblobsWithBLOBs();
             record.setId1(3);
@@ -636,16 +599,13 @@ public class UpdateByExampleTest extends AbstractHierarchicalTest {
             assertNull(returnedRecord.getLastname());
             assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord.getBlob1()));
 
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsBlobsUpdateByExampleWithBLOBs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
             PkfieldsblobsWithBLOBs record = new PkfieldsblobsWithBLOBs();
             record.setId1(3);
@@ -683,16 +643,13 @@ public class UpdateByExampleTest extends AbstractHierarchicalTest {
             assertNull(returnedRecord.getLastname());
             assertNull(returnedRecord.getBlob1());
 
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testFieldsBlobsUpdateByExampleSelective() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             FieldsblobsMapper mapper = sqlSession.getMapper(FieldsblobsMapper.class);
             FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs();
             record.setFirstname("Jeff");
@@ -724,16 +681,13 @@ public class UpdateByExampleTest extends AbstractHierarchicalTest {
             assertEquals(newRecord.getLastname(), returnedRecord.getLastname());
             assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord.getBlob1()));
             assertTrue(blobsAreEqual(record.getBlob2(), returnedRecord.getBlob2()));
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testFieldsBlobsUpdateByExampleWithoutBLOBs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             FieldsblobsMapper mapper = sqlSession.getMapper(FieldsblobsMapper.class);
             FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs();
             record.setFirstname("Jeff");
@@ -766,16 +720,13 @@ public class UpdateByExampleTest extends AbstractHierarchicalTest {
             assertEquals(newRecord.getLastname(), returnedRecord.getLastname());
             assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord.getBlob1()));
             assertTrue(blobsAreEqual(record.getBlob2(), returnedRecord.getBlob2()));
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testFieldsBlobsUpdateByExampleWithBLOBs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             FieldsblobsMapper mapper = sqlSession.getMapper(FieldsblobsMapper.class);
             FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs();
             record.setFirstname("Jeff");
@@ -808,16 +759,13 @@ public class UpdateByExampleTest extends AbstractHierarchicalTest {
             assertEquals(newRecord.getLastname(), returnedRecord.getLastname());
             assertNull(returnedRecord.getBlob1());
             assertNull(returnedRecord.getBlob2());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testAwfulTableUpdateByExampleSelective() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             AwfulTableMapper mapper = sqlSession.getMapper(AwfulTableMapper.class);
             AwfulTable record = new AwfulTable();
             record.seteMail("fred@fred.com");
@@ -874,16 +822,13 @@ public class UpdateByExampleTest extends AbstractHierarchicalTest {
             assertEquals(record.getSecondFirstName(), returnedRecord.getSecondFirstName());
             assertEquals(record.getThirdFirstName(), returnedRecord.getThirdFirstName());
 
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testAwfulTableUpdateByExample() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             AwfulTableMapper mapper = sqlSession.getMapper(AwfulTableMapper.class);
             AwfulTable record = new AwfulTable();
             record.seteMail("fred@fred.com");
@@ -947,8 +892,6 @@ public class UpdateByExampleTest extends AbstractHierarchicalTest {
             assertEquals(newRecord.getId7(), returnedRecord.getId7());
             assertNull(returnedRecord.getSecondFirstName());
             assertNull(returnedRecord.getThirdFirstName());
-        } finally {
-            sqlSession.close();
         }
     }
 }

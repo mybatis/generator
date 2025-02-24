@@ -212,7 +212,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
         String remarks = introspectedTable.getRemarks();
         if (addRemarkComments && StringUtility.stringHasValue(remarks)) {
             topLevelClass.addJavaDocLine(" * Database Table Remarks:"); //$NON-NLS-1$
-            String[] remarkLines = remarks.split(System.getProperty("line.separator")); //$NON-NLS-1$
+            String[] remarkLines = remarks.split(System.lineSeparator());
             for (String remarkLine : remarkLines) {
                 topLevelClass.addJavaDocLine(" *   " + remarkLine); //$NON-NLS-1$
             }
@@ -260,7 +260,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
         String remarks = introspectedColumn.getRemarks();
         if (addRemarkComments && StringUtility.stringHasValue(remarks)) {
             field.addJavaDocLine(" * Database Column Remarks:"); //$NON-NLS-1$
-            String[] remarkLines = remarks.split(System.getProperty("line.separator")); //$NON-NLS-1$
+            String[] remarkLines = remarks.split(System.lineSeparator());
             for (String remarkLine : remarkLines) {
                 field.addJavaDocLine(" *   " + remarkLine); //$NON-NLS-1$
             }
@@ -427,7 +427,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
             if (addRemarkComments && StringUtility.stringHasValue(remarks)) {
                 field.addJavaDocLine("/**"); //$NON-NLS-1$
                 field.addJavaDocLine(" * Database Column Remarks:"); //$NON-NLS-1$
-                String[] remarkLines = remarks.split(System.getProperty("line.separator")); //$NON-NLS-1$
+                String[] remarkLines = remarks.split(System.lineSeparator());
                 for (String remarkLine : remarkLines) {
                     field.addJavaDocLine(" *   " + remarkLine); //$NON-NLS-1$
                 }

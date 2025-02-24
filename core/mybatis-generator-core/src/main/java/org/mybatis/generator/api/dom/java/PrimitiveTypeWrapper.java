@@ -52,18 +52,11 @@ public class PrimitiveTypeWrapper extends FullyQualifiedJavaType {
             return true;
         }
 
-        if (!(obj instanceof PrimitiveTypeWrapper)) {
+        if (!(obj instanceof PrimitiveTypeWrapper other)) {
             return false;
         }
 
-        PrimitiveTypeWrapper other = (PrimitiveTypeWrapper) obj;
-
         return getFullyQualifiedName().equals(other.getFullyQualifiedName());
-    }
-
-    @Override
-    public int hashCode() {
-        return getFullyQualifiedName().hashCode();
     }
 
     public static PrimitiveTypeWrapper getBooleanInstance() {

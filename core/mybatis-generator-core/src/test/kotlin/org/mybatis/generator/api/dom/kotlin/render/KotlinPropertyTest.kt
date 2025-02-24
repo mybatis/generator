@@ -29,7 +29,7 @@ class KotlinPropertyTest {
                 .build()
 
         val renderedObj = KotlinPropertyRenderer().render(obj).stream()
-                .collect(Collectors.joining(System.getProperty("line.separator")))
+                .collect(Collectors.joining(System.lineSeparator()))
 
         assertThat(renderedObj).isEqualTo("val id: Int?")
     }
@@ -42,7 +42,7 @@ class KotlinPropertyTest {
                 .build()
 
         val renderedObj = KotlinPropertyRenderer().render(obj).stream()
-                .collect(Collectors.joining(System.getProperty("line.separator")))
+                .collect(Collectors.joining(System.lineSeparator()))
 
         assertThat(renderedObj).isEqualTo("val id: Int? = null")
     }
@@ -55,7 +55,7 @@ class KotlinPropertyTest {
                 .build()
 
         val renderedObj = KotlinPropertyRenderer().render(obj).stream()
-                .collect(Collectors.joining(System.getProperty("line.separator")))
+                .collect(Collectors.joining(System.lineSeparator()))
 
         assertThat(renderedObj).isEqualTo("private val id: Int?")
     }
@@ -67,7 +67,7 @@ class KotlinPropertyTest {
                 .build()
 
         val renderedObj = KotlinPropertyRenderer().render(obj).stream()
-                .collect(Collectors.joining(System.getProperty("line.separator")))
+                .collect(Collectors.joining(System.lineSeparator()))
 
         assertThat(renderedObj).isEqualTo("var id: Int?")
     }
@@ -80,7 +80,7 @@ class KotlinPropertyTest {
                 .build()
 
         val renderedObj = KotlinPropertyRenderer().render(obj).stream()
-                .collect(Collectors.joining(System.getProperty("line.separator")))
+                .collect(Collectors.joining(System.lineSeparator()))
 
         assertThat(renderedObj).isEqualTo("var id: Int? = null")
     }
@@ -93,7 +93,7 @@ class KotlinPropertyTest {
                 .build()
 
         val renderedObj = KotlinPropertyRenderer().render(obj).stream()
-                .collect(Collectors.joining(System.getProperty("line.separator")))
+                .collect(Collectors.joining(System.lineSeparator()))
 
         assertThat(renderedObj).isEqualTo("private var id: Int?")
     }
@@ -105,7 +105,7 @@ class KotlinPropertyTest {
                 .build()
 
         val renderedObj = KotlinPropertyRenderer().render(obj).stream()
-                .collect(Collectors.joining(System.getProperty("line.separator")))
+                .collect(Collectors.joining(System.lineSeparator()))
 
         assertThat(renderedObj).isEqualTo("val id = 33")
     }
@@ -118,7 +118,7 @@ class KotlinPropertyTest {
                 .build()
 
         val renderedObj = KotlinPropertyRenderer().render(obj).stream()
-                .collect(Collectors.joining(System.getProperty("line.separator")))
+                .collect(Collectors.joining(System.lineSeparator()))
 
         assertThat(renderedObj).isEqualToNormalizingNewlines("""
             |@SomeAnnotation

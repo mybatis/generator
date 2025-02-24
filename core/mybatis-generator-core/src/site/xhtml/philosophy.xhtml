@@ -30,7 +30,7 @@
  We will take a few paragraphs to talk about this approach.</p>
 
 <p>First of all, this tool does what it does.  We are not making any kind of statement
-about how projects should, or should not, be structured.  In general we are strong proponents
+about how projects should, or should not, be structured.  In general, we are strong proponents
 of rich domain models - but creating a rich domain model is quite a different thing from
 answering the question of how that model should be persisted.</p>
 
@@ -77,7 +77,7 @@ and make use of one or more generated objects in a single transaction.</p>
 In some environments such an object would be persisted into at least 4 tables -
 two key tables, a "header" table, and a "detail" table (again, we are not making any kind of
 statement about whether this is "correct" design, just stating a fact).
-Your application should still interact with interact with the <code>Order</code> object, and
+Your application should still interact with the <code>Order</code> object, and
 there might
 be a <code>saveOrder(Order order)</code> method
 somewhere (in an OrderDAO, or a service object).  That method
@@ -98,7 +98,7 @@ would interact with the generated code for each of the 4 tables involved.</p>
   </li>
   <li>Developer productivity - generating table based DAOs is quick and repeatable and error free.
     Developers can concentrate on Object persistence, and on complex join queries if needed.</li>
-  <li>Fewer defects - because the most tedious and error prone part of any application (getting the
+  <li>Fewer defects - because the most tedious and error-prone part of any application (getting the
    SQL to match the objects) is automated.</li>
 </ul>
 </body>

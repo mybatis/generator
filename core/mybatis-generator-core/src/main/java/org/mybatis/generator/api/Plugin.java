@@ -1316,7 +1316,7 @@ public interface Plugin {
 
     /**
      * This method is called when the SqlMap document has been generated. This
-     * method can be used to add additional XML elements the the generated
+     * method can be used to add additional XML elements to the generated
      * document.
      *
      * @param document

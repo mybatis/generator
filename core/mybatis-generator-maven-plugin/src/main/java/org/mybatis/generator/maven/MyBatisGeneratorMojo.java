@@ -50,7 +50,7 @@ import org.mybatis.generator.internal.util.messages.Messages;
         requiresDependencyResolution = ResolutionScope.TEST)
 public class MyBatisGeneratorMojo extends AbstractMojo {
 
-    private ThreadLocal<ClassLoader> savedClassloader = new ThreadLocal<>();
+    private final ThreadLocal<ClassLoader> savedClassloader = new ThreadLocal<>();
 
     /**
      * Maven Project.
@@ -119,13 +119,13 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
     private String jdbcPassword;
 
     /**
-     * Comma delimited list of table names to generate.
+     * Comma-delimited list of table names to generate.
      */
     @Parameter(property = "mybatis.generator.tableNames")
     private String tableNames;
 
     /**
-     * Comma delimited list of contexts to generate.
+     * Comma-delimited list of contexts to generate.
      */
     @Parameter(property = "mybatis.generator.contexts")
     private String contexts;

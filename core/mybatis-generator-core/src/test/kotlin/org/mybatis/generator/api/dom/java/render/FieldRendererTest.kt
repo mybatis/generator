@@ -84,5 +84,5 @@ class FieldRendererTest {
     }
 
     private fun toString(f: Field) = FieldRenderer().render(f, null)
-                .joinToString(System.getProperty("line.separator"))
+                .joinToString(System.lineSeparator())
 }

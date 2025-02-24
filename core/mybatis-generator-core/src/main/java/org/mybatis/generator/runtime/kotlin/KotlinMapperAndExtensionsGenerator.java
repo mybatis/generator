@@ -115,7 +115,6 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .withIntrospectedTable(introspectedTable)
                 .withTableFieldName(supportClassGenerator.getTablePropertyName())
                 .withRecordType(recordType)
-                .withKotlinFile(kotlinFile)
                 .build();
 
         generate(kotlinFile, kotlinType, generator);

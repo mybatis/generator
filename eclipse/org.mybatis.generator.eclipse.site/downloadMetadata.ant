@@ -35,10 +35,10 @@
 
   <target name="download" depends="init">
     <get dest="${p2.repo.base.directory}/compositeArtifacts.xml" ignoreerrors="true">
-      <url url="https://mybatis.jfrog.io/artifactory/generator-eclipse-release/compositeArtifacts.xml"/>
+      <url url="https://jeffgbutler.github.io/mybatis-generator-update-site/compositeArtifacts.xml"/>
     </get>
     <get dest="${p2.repo.base.directory}/compositeContent.xml" ignoreerrors="true">
-      <url url="https://mybatis.jfrog.io/artifactory/generator-eclipse-release/compositeContent.xml"/>
+      <url url="https://jeffgbutler.github.io/mybatis-generator-update-site/compositeContent.xml"/>
     </get>
   </target>
 </project>

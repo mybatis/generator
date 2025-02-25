@@ -28,7 +28,7 @@
    </description>
 
    <copyright>
-      Copyright 2016 Jeff Butler
+      Copyright 2025 Jeff Butler
    </copyright>
 
    <license url="http://www.apache.org/licenses/LICENSE-2.0">
@@ -241,30 +241,18 @@
 
    <plugin
          id="org.mybatis.generator.core"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         version="0.0.0"/>
 
    <plugin
          id="org.mybatis.generator.eclipse.core"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         version="0.0.0"/>
 
    <plugin
          id="org.mybatis.generator.eclipse.doc"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         version="0.0.0"/>
 
    <plugin
          id="org.mybatis.generator.eclipse.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         version="0.0.0"/>
 
 </feature>

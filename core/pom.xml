@@ -71,6 +71,10 @@
   </distributionManagement>
 
   <properties>
+    <java.version>17</java.version>
+    <java.release.version>17</java.release.version>
+    <java.test.version>17</java.test.version>
+    <java.test.release.version>17</java.test.release.version>
     <findbugs.onlyAnalyze>org.mybatis.generator.*</findbugs.onlyAnalyze>
     <clirr.comparisonVersion>1.3.2</clirr.comparisonVersion>
     <hsqldb.version>2.7.4</hsqldb.version>

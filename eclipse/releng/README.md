@@ -7,8 +7,9 @@ the feature and plugins in Eclipse. These files are used to make sure we maintai
 |-------------|-------------|-----------------------------------------------|--------------------------------------------------------|
 | 2018-12     | 1.4.1       | http://download.eclipse.org/releases/2018-12/ | First Eclipse version that supports Java 11 in the AST |
 | 2021-06     | 1.4.2       | http://download.eclipse.org/releases/2021-06/ | First Eclipse version that supports M1 Mac             |
+| 2022-09     | 1.4.3       | http://download.eclipse.org/releases/2022-09/ | First Eclipse version that requires Java 17            |
 
-Find p2 Repository sites for the various releases here: https://wiki.eclipse.org/Simultaneous_Release
+Find p2 Repository sites for the various releases here: https://github.com/eclipse-simrel/.github/blob/main/wiki/Simultaneous_Release.md
 
 ## How To Update Dependencies for Eclipse
 

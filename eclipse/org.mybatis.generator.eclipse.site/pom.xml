@@ -77,9 +77,9 @@
             </executions>
           </plugin>
           <plugin>
-            <groupId>org.eclipse.tycho.extras</groupId>
-            <artifactId>tycho-eclipserun-plugin</artifactId>
-            <version>${tycho-extras-version}</version>
+            <groupId>org.eclipse.tycho</groupId>
+            <artifactId>tycho-eclipse-plugin</artifactId>
+            <version>${tycho-version}</version>
             <configuration>
               <repositories>
                 <repository>

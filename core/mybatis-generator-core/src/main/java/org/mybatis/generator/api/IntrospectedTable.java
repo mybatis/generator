@@ -221,7 +221,7 @@ public abstract class IntrospectedTable {
     public List<IntrospectedColumn> getAllColumns() {
         return Stream.of(primaryKeyColumns.stream(), baseColumns.stream(), blobColumns.stream())
                 .flatMap(Function.identity())
-                .collect(Collectors.toList());
+                .toList();
     }
 
     /**
@@ -232,7 +232,7 @@ public abstract class IntrospectedTable {
     public List<IntrospectedColumn> getNonBLOBColumns() {
         return Stream.of(primaryKeyColumns.stream(), baseColumns.stream())
                 .flatMap(Function.identity())
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public int getNonBLOBColumnCount() {
@@ -242,7 +242,7 @@ public abstract class IntrospectedTable {
     public List<IntrospectedColumn> getNonPrimaryKeyColumns() {
         return Stream.of(baseColumns.stream(), blobColumns.stream())
                 .flatMap(Function.identity())
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public List<IntrospectedColumn> getBLOBColumns() {

@@ -16,7 +16,6 @@
 package org.mybatis.generator.codegen.mybatis3;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 
@@ -36,12 +35,12 @@ public class ListUtilities {
     public static List<IntrospectedColumn> removeGeneratedAlwaysColumns(List<IntrospectedColumn> columns) {
         return columns.stream()
                 .filter(ic -> !ic.isGeneratedAlways())
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public static List<IntrospectedColumn> removeIdentityAndGeneratedAlwaysColumns(List<IntrospectedColumn> columns) {
         return columns.stream()
                 .filter(ic -> !ic.isGeneratedAlways() && !ic.isIdentity())
-                .collect(Collectors.toList());
+                .toList();
     }
 }

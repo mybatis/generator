@@ -18,7 +18,6 @@ package org.mybatis.generator.api.dom.kotlin.render;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.mybatis.generator.api.dom.java.render.RenderingUtilities;
 import org.mybatis.generator.api.dom.kotlin.KotlinNamedItem;
@@ -67,7 +66,7 @@ public class KotlinTypeRenderer {
 
         for (KotlinNamedItem namedItem : kotlinType.getNamedItems()) {
             answer.addAll(renderer.render(namedItem).stream().map(KotlinRenderingUtilities::kotlinIndent)
-                    .collect(Collectors.toList()));
+                    .toList());
             answer.add(""); //$NON-NLS-1$
         }
 
@@ -87,7 +86,7 @@ public class KotlinTypeRenderer {
         Iterator<KotlinProperty> iter = kotlinType.getConstructorProperties().iterator();
         while (iter.hasNext()) {
             lines.addAll(renderer.render(iter.next()).stream().map(KotlinRenderingUtilities::kotlinIndent)
-                    .collect(Collectors.toList()));
+                    .toList());
             if (iter.hasNext()) {
                 lines.set(lines.size() - 1,
                         lines.get(lines.size() - 1) + ","); //$NON-NLS-1$

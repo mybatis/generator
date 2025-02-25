@@ -52,7 +52,7 @@ public class KotlinFileRenderer {
 
     private List<String> renderImports(KotlinFile kotlinFile) {
         return kotlinFile.getImports().stream()
-                .map(s -> "import " + s) //$NON-NLS-1$
-                .collect(Collectors.toList());
+                .map(s -> "import " + s)
+                .toList();
     }
 }

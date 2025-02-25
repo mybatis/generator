@@ -3,7 +3,7 @@
   <extension>
     <groupId>org.eclipse.tycho</groupId>
     <artifactId>tycho-build</artifactId>
-    <version>4.0.11</version>
+    <version>4.0.12</version>
   </extension>
   <extension>
     <groupId>fr.jcgay.maven</groupId>

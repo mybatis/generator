@@ -2036,16 +2036,6 @@ public interface Plugin {
     }
 
     /**
-     * If false, the table will be skipped in code generation.
-     *
-     * @param introspectedTable the current table
-     * @return true if code should be generated for this table, else false
-     */
-    default boolean shouldGenerate(IntrospectedTable introspectedTable) {
-        return true;
-    }
-
-    /**
      * The motivation for adding this method can be found in
      * https://github.com/mybatis/generator/issues/1116
      *
@@ -2069,5 +2059,15 @@ public interface Plugin {
     default boolean clientUpdateByPrimaryKeyMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable) {
         return clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(method, interfaze, introspectedTable);
+    }
+
+    /**
+     * If false, the table will be skipped in code generation.
+     *
+     * @param introspectedTable the current table
+     * @return true if code should be generated for this table, else false
+     */
+    default boolean shouldGenerate(IntrospectedTable introspectedTable) {
+        return true;
     }
 }

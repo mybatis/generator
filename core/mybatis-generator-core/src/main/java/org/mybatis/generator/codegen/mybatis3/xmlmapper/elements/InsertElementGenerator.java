@@ -44,8 +44,6 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
             parameterType = introspectedTable.getRules().calculateAllFieldsClass();
         }
 
-        XmlElement answer = buildInitialInsert(introspectedTable.getInsertStatementId(), parameterType);
-
         StringBuilder insertClause = new StringBuilder();
 
         insertClause.append("insert into "); //$NON-NLS-1$
@@ -58,6 +56,7 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
         List<String> valuesClauses = new ArrayList<>();
         List<IntrospectedColumn> columns =
                 ListUtilities.removeIdentityAndGeneratedAlwaysColumns(introspectedTable.getAllColumns());
+        XmlElement answer = buildInitialInsert(introspectedTable.getInsertStatementId(), parameterType);
         for (int i = 0; i < columns.size(); i++) {
             IntrospectedColumn introspectedColumn = columns.get(i);
 

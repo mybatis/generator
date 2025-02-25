@@ -128,7 +128,7 @@ public class FullyQualifiedJavaType implements Comparable<FullyQualifiedJavaType
     }
 
     /**
-     * The name (fully qualified) that should be imported
+     * The name (fully qualified) that should be imported.
      *
      * @return the fully qualified name that should be imported. Does not include the wildcard bounds.
      */

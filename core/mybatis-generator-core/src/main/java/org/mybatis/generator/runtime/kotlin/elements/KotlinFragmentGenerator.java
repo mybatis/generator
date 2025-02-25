@@ -70,7 +70,7 @@ public class KotlinFragmentGenerator {
                     supportObjectImport, column);
 
             builder.withImport(fieldNameAndImport.importString());
-            if(columnCount == 1) {
+            if (columnCount == 1) {
                 builder.withCodeLine(singleColumnWhere(fieldNameAndImport.fieldName(), argName));
                 first = false;
             } else if (first) {

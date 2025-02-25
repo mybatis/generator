@@ -40,8 +40,8 @@ public class BasicInsertMethodGenerator extends AbstractKotlinFunctionGenerator 
         KotlinFunction function = KotlinFunction.newOneLineFunction("insert") //$NON-NLS-1$
                 .withExplicitReturnType("Int") //$NON-NLS-1$
                 .withArgument(KotlinArg.newArg("insertStatement") //$NON-NLS-1$
-                                .withDataType(parameterType)
-                                .build())
+                        .withDataType(parameterType)
+                        .build())
                 .withAnnotation("@InsertProvider(type=SqlProviderAdapter::class, method=\"insert\")") //$NON-NLS-1$
                 .build();
 

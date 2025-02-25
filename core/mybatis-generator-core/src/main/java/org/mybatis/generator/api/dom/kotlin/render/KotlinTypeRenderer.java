@@ -33,10 +33,11 @@ public class KotlinTypeRenderer {
         List<String> answer = new ArrayList<>(kotlinType.getAnnotations());
 
         String renderedModifiers = KotlinRenderingUtilities.renderModifiers(kotlinType.getModifiers())
-            + kotlinType.getType().getValue(); //$NON-NLS-1$
+                + kotlinType.getType().getValue(); //$NON-NLS-1$
 
         String renderedModifiersAndName;
-        if (kotlinType.getType() == KotlinType.Type.COMPANION_OBJECT && kotlinType.getName().equals(KotlinType.DEFAULT_COMPANION_OBJECT_NAME)) {
+        if (kotlinType.getType() == KotlinType.Type.COMPANION_OBJECT
+                && kotlinType.getName().equals(KotlinType.DEFAULT_COMPANION_OBJECT_NAME)) {
             renderedModifiersAndName = renderedModifiers;
         } else {
             renderedModifiersAndName = renderedModifiers + " " + kotlinType.getName(); //$NON-NLS-1$

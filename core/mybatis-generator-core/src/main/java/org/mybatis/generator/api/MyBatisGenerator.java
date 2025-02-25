@@ -25,7 +25,11 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 import org.mybatis.generator.codegen.RootClassInfo;
 import org.mybatis.generator.config.Configuration;

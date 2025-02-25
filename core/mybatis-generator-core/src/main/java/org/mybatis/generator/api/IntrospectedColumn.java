@@ -34,7 +34,7 @@ public class IntrospectedColumn {
     protected int jdbcType;
 
     /**
-     * The platform specific data type name as reported from DatabaseMetadata.getColumns()
+     * The platform specific data type name as reported from DatabaseMetadata.getColumns().
      */
     protected String actualTypeName;
 

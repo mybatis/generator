@@ -20,8 +20,6 @@ import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities
 import static org.mybatis.generator.internal.util.JavaBeansUtil.getGetterMethodName;
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 
-import java.util.Set;
-
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
@@ -35,7 +33,6 @@ public class ProviderInsertSelectiveMethodGenerator extends AbstractJavaProvider
     @Override
     public void addClassElements(TopLevelClass topLevelClass) {
         FullyQualifiedJavaType fqjt = introspectedTable.getRules().calculateAllFieldsClass();
-        Set<FullyQualifiedJavaType> importedTypes = initializeImportedTypes(fqjt);
 
         Method method = new Method(introspectedTable.getInsertSelectiveStatementId());
         method.setVisibility(JavaVisibility.PUBLIC);
@@ -73,7 +70,7 @@ public class ProviderInsertSelectiveMethodGenerator extends AbstractJavaProvider
         method.addBodyLine("return sql.toString();"); //$NON-NLS-1$
 
         if (context.getPlugins().providerInsertSelectiveMethodGenerated(method, topLevelClass, introspectedTable)) {
-            topLevelClass.addImportedTypes(importedTypes);
+            topLevelClass.addImportedTypes(initializeImportedTypes(fqjt));
             topLevelClass.addMethod(method);
         }
     }

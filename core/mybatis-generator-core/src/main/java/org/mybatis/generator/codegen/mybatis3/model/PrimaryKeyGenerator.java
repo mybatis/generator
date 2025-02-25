@@ -47,7 +47,6 @@ public class PrimaryKeyGenerator extends AbstractJavaGenerator {
     public List<CompilationUnit> getCompilationUnits() {
         FullyQualifiedTable table = introspectedTable.getFullyQualifiedTable();
         progressCallback.startTask(getString("Progress.7", table.toString())); //$NON-NLS-1$
-        Plugin plugins = context.getPlugins();
         CommentGenerator commentGenerator = context.getCommentGenerator();
 
         TopLevelClass topLevelClass = new TopLevelClass(introspectedTable.getPrimaryKeyType());
@@ -76,6 +75,7 @@ public class PrimaryKeyGenerator extends AbstractJavaGenerator {
                 continue;
             }
 
+            Plugin plugins = context.getPlugins();
             Field field = getJavaBeansField(introspectedColumn, context, introspectedTable);
             if (plugins.modelFieldGenerated(field, topLevelClass, introspectedColumn, introspectedTable,
                     Plugin.ModelClassType.PRIMARY_KEY)) {

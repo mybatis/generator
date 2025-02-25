@@ -31,7 +31,7 @@
         by pulling a current copy from jfrog)
     
 -->
-<project name="project" default="writeScript">
+<project name="project" default="updateRepo">
   <condition property="isUnix">
   	<os family="unix" />
   </condition>
@@ -82,31 +82,5 @@
         <include name="*.xml" />
       </fileset>
     </replaceregexp>
-  </target>
-
-  <target name="writeScript" depends="updateRepo" if="isUnix">
-    <!-- setup the shebang and variables -->
-    <echo message="#!/bin/bash${line.separator}" file="${p2.repo.base.directory}/jfrogUpload.sh" />
-    <echo message="USER=xxxx${line.separator}" file="${p2.repo.base.directory}/jfrogUpload.sh" append="true" />
-    <echo message="API_KEY=xxxx${line.separator}" file="${p2.repo.base.directory}/jfrogUpload.sh" append="true" />
-
-    <!-- generate the jfrog upload script -->
-    <!-- Write curl lines for every file we need to upload -->
-    <apply executable="echo" relative="true" output="${p2.repo.base.directory}/jfrogUpload.sh" append="true">
-      <arg value="curl -X PUT -T" />
-      <srcfile />
-      <arg value="-u$USER:$API_KEY"/>
-      <targetfile/>
-
-      <fileset dir="${p2.repo.base.directory}" >
-        <include name="drops/**/*.*"/>
-        <include name="*.xml"/>
-        <include name="zipped/${project.artifactId}-${qualifiedVersion}.zip"/>
-      </fileset>
-      <globmapper from="*" to="&quot;https://mybatis.jfrog.io/artifactory/generator-eclipse-release/*&quot;" />
-    </apply>
-
-    <!-- make it executable -->
-    <chmod perm="+x" file="${p2.repo.base.directory}/jfrogUpload.sh"/>
   </target>
 </project>

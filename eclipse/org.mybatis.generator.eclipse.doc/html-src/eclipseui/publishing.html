@@ -25,12 +25,11 @@
 </head>
 <body>
 <h1>Publishing a New Version</h1>
-<p>The feature is distributed via a P2 composite repository hosted at JFrog (https://mybatis.jfrog.io/artifactory/generator-eclipse-release/).
+<p>The feature is distributed via a P2 composite repository hosted at GitHub (https://jeffgbutler.github.io/mybatis-generator-update-site/).
 The build
 includes scripts that automate much of the work involved with publishing a new version to
-JFrog.  The generated JFrog upload script is a bash script - so the first thing to know is that you must do this
-on a machine that supports bash.</p>
-<p>The publishing build communicates with JFrog during the build - so you must have Internet
+GitHub.</p>
+<p>The publishing build communicates with GitHub during the build - so you must have Internet
 access when running this build.</p>
 <p>Here's how to do it:</p>
 <ul>
@@ -40,25 +39,19 @@ access when running this build.</p>
    <li>Once you are ready to publish, run "<code>./mvnw -Prelease-composite clean integration-test</code>"
        on the <code>pom.xml</code> in the parent directory of all eclipse projects ("../eclipse"). This turns on
        the "release-composite"
-       profile which adds build steps to retrieve the current P2 metadata from JFrog and prepare
+       profile which adds build steps to retrieve the current P2 metadata from GitHub and prepare
        the release artifacts for uploading.
    </li>
    <li>After the build runs, you should see a new subdirectory "<code>target/p2-composite-repo</code>" in the
        <code>org.mybatis.generator.eclipse.site</code> project.  That directory will contain all
-       the updated artifacts for uploading to JFrog, and there will also be a script file
-       <code>jfrogUpload.sh</code> that you can use to upload the new version to JFrog.
+       the updated artifacts for uploading to GitHub.
    </li>
-   <li>Edit <code>jfrogUpload.sh</code> and set the proper values for your JFrog user and
-       API key.  There are Bash variables defined at the top of the script that you should update
-       for that purpose.</li>
-   <li>Once you have set your values in the script, then you can execute the script from 
-       a terminal session.  You should see progress messages as the files are uploaded.
-       There are typically 17 files uploaded.</li>
+   <li>Copy all the files from <code>target/p2-composite-repo</code> into your git clone of the update site,
+	   then commit the changes. There are typically 17 files uploaded.</li>
    <li>After the version is published, you should update the version number in the
        following files:
        <ul>
          <li><code>org.mybatis.generator/feature.xml</code></li>
-         <li><code>org.mybatis.generator/pom.xml</code></li>
          <li><code>org.mybatis.generator.core/META-INF/MANIFEST.MF</code></li>
          <li><code>org.mybatis.generator.core/pom.xml</code></li>
          <li><code>org.mybatis.generator.eclipse.core/META-INF/MANIFEST.MF</code></li>

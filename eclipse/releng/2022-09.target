@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.8"?>
+<target name="2022-09">
+	<locations>
+		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+			<repository location="https://download.eclipse.org/releases/2022-09/"/>
+			<unit id="org.eclipse.wst.xml_ui.feature.feature.group" version="3.27.0.v202208280234"/>
+			<unit id="org.eclipse.platform.feature.group" version="4.25.0.v20220831-1800"/>
+			<unit id="org.eclipse.jdt.feature.group" version="3.18.1300.v20220831-1800"/>
+			<unit id="org.eclipse.m2e.feature.feature.group" version="2.0.4.20220904-1703"/>
+		</location>
+	</locations>
+	<targetJRE path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17"/>
+</target>

@@ -26,12 +26,6 @@ import org.mybatis.generator.api.IntrospectedTable;
  */
 public class ConditionalModelRules extends BaseRules {
 
-    /**
-     * Instantiates a new conditional model rules.
-     *
-     * @param introspectedTable
-     *            the introspected table
-     */
     public ConditionalModelRules(IntrospectedTable introspectedTable) {
         super(introspectedTable);
     }

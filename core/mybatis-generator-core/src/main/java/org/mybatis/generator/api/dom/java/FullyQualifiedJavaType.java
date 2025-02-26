@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.StringTokenizer;
+import java.util.stream.Collectors;
 
 public class FullyQualifiedJavaType implements Comparable<FullyQualifiedJavaType> {
 
@@ -88,43 +89,19 @@ public class FullyQualifiedJavaType implements Comparable<FullyQualifiedJavaType
      * @return Returns the fullyQualifiedName.
      */
     public String getFullyQualifiedName() {
-        StringBuilder sb = new StringBuilder(getFullyQualifiedNameWithoutTypeParameters());
+        String s = getFullyQualifiedNameWithoutTypeParameters();
 
-        if (!typeArguments.isEmpty()) {
-            boolean first = true;
-            sb.append('<');
-            for (FullyQualifiedJavaType fqjt : typeArguments) {
-                if (first) {
-                    first = false;
-                } else {
-                    sb.append(", "); //$NON-NLS-1$
-                }
-                sb.append(fqjt.getFullyQualifiedName());
-
-            }
-            sb.append('>');
+        if (typeArguments.isEmpty()) {
+            return s;
+        } else {
+            return typeArguments.stream()
+                    .map(FullyQualifiedJavaType::getFullyQualifiedName)
+                    .collect(Collectors.joining(", ", s + "<", ">")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         }
-
-        return sb.toString();
     }
 
     public String getFullyQualifiedNameWithoutTypeParameters() {
-        StringBuilder sb = new StringBuilder();
-        if (wildcardType) {
-            sb.append('?');
-            if (boundedWildcard) {
-                if (extendsBoundedWildcard) {
-                    sb.append(" extends "); //$NON-NLS-1$
-                } else {
-                    sb.append(" super "); //$NON-NLS-1$
-                }
-
-                sb.append(baseQualifiedName);
-            }
-        } else {
-            sb.append(baseQualifiedName);
-        }
-        return sb.toString();
+        return calculateBaseType(baseQualifiedName);
     }
 
     /**
@@ -156,9 +133,7 @@ public class FullyQualifiedJavaType implements Comparable<FullyQualifiedJavaType
             }
         }
 
-        for (FullyQualifiedJavaType fqjt : typeArguments) {
-            answer.addAll(fqjt.getImportList());
-        }
+        typeArguments.forEach(t -> answer.addAll(t.getImportList()));
 
         return answer;
     }
@@ -179,27 +154,22 @@ public class FullyQualifiedJavaType implements Comparable<FullyQualifiedJavaType
     }
 
     public String getShortName() {
-        StringBuilder sb = new StringBuilder(getShortNameWithoutTypeArguments());
+        String s = getShortNameWithoutTypeArguments();
 
-        if (!typeArguments.isEmpty()) {
-            boolean first = true;
-            sb.append('<');
-            for (FullyQualifiedJavaType fqjt : typeArguments) {
-                if (first) {
-                    first = false;
-                } else {
-                    sb.append(", "); //$NON-NLS-1$
-                }
-                sb.append(fqjt.getShortName());
-
-            }
-            sb.append('>');
+        if (typeArguments.isEmpty()) {
+            return s;
+        } else {
+            return typeArguments.stream()
+                    .map(FullyQualifiedJavaType::getShortName)
+                    .collect(Collectors.joining(", ", s + "<", ">")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         }
-
-        return sb.toString();
     }
 
     public String getShortNameWithoutTypeArguments() {
+        return calculateBaseType(baseShortName);
+    }
+
+    private String calculateBaseType(String name) {
         StringBuilder sb = new StringBuilder();
         if (wildcardType) {
             sb.append('?');
@@ -210,10 +180,10 @@ public class FullyQualifiedJavaType implements Comparable<FullyQualifiedJavaType
                     sb.append(" super "); //$NON-NLS-1$
                 }
 
-                sb.append(baseShortName);
+                sb.append(name);
             }
         } else {
-            sb.append(baseShortName);
+            sb.append(name);
         }
         return sb.toString();
     }
@@ -284,43 +254,32 @@ public class FullyQualifiedJavaType implements Comparable<FullyQualifiedJavaType
     }
 
     public static FullyQualifiedJavaType getBooleanPrimitiveInstance() {
-        if (booleanPrimitiveInstance == null) {
-            booleanPrimitiveInstance = new FullyQualifiedJavaType("boolean"); //$NON-NLS-1$
-        }
-
+        booleanPrimitiveInstance = Objects.requireNonNullElseGet(booleanPrimitiveInstance,
+                () -> new FullyQualifiedJavaType("boolean")); //$NON-NLS-1$
         return booleanPrimitiveInstance;
     }
 
     public static FullyQualifiedJavaType getObjectInstance() {
-        if (objectInstance == null) {
-            objectInstance = new FullyQualifiedJavaType("java.lang.Object"); //$NON-NLS-1$
-        }
-
+        objectInstance = Objects.requireNonNullElseGet(objectInstance,
+                () -> new FullyQualifiedJavaType("java.lang.Object")); //$NON-NLS-1$
         return objectInstance;
     }
 
     public static FullyQualifiedJavaType getDateInstance() {
-        if (dateInstance == null) {
-            dateInstance = new FullyQualifiedJavaType("java.util.Date"); //$NON-NLS-1$
-        }
-
+        dateInstance = Objects.requireNonNullElseGet(dateInstance,
+                () -> new FullyQualifiedJavaType("java.util.Date")); //$NON-NLS-1$
         return dateInstance;
     }
 
     public static FullyQualifiedJavaType getCriteriaInstance() {
-        if (criteriaInstance == null) {
-            criteriaInstance = new FullyQualifiedJavaType("Criteria"); //$NON-NLS-1$
-        }
-
+        criteriaInstance = Objects.requireNonNullElseGet(criteriaInstance,
+                () -> new FullyQualifiedJavaType("Criteria")); //$NON-NLS-1$
         return criteriaInstance;
     }
 
     public static FullyQualifiedJavaType getGeneratedCriteriaInstance() {
-        if (generatedCriteriaInstance == null) {
-            generatedCriteriaInstance = new FullyQualifiedJavaType(
-                    "GeneratedCriteria"); //$NON-NLS-1$
-        }
-
+        generatedCriteriaInstance = Objects.requireNonNullElseGet(generatedCriteriaInstance,
+                () -> new FullyQualifiedJavaType("GeneratedCriteria")); //$NON-NLS-1$
         return generatedCriteriaInstance;
     }
 
@@ -377,8 +336,7 @@ public class FullyQualifiedJavaType implements Comparable<FullyQualifiedJavaType
         baseQualifiedName = typeSpecification.trim();
         if (baseQualifiedName.contains(".")) { //$NON-NLS-1$
             packageName = getPackage(baseQualifiedName);
-            baseShortName = baseQualifiedName
-                    .substring(packageName.length() + 1);
+            baseShortName = baseQualifiedName.substring(packageName.length() + 1);
             int index = baseShortName.lastIndexOf('.');
             if (index != -1) {
                 baseShortName = baseShortName.substring(index + 1);

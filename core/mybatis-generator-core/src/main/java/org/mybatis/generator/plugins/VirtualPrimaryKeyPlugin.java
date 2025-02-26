@@ -34,17 +34,11 @@ import org.mybatis.generator.api.PluginAdapter;
  */
 public class VirtualPrimaryKeyPlugin extends PluginAdapter {
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.Plugin#validate(java.util.List)
-     */
     @Override
     public boolean validate(List<String> warnings) {
         return true;
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.PluginAdapter#initialized(org.mybatis.generator.api.IntrospectedTable)
-     */
     @Override
     public void initialized(IntrospectedTable introspectedTable) {
         String virtualKey = introspectedTable.getTableConfiguration()

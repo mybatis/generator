@@ -175,18 +175,15 @@ class XmlFileMergerTest {
 
         commentGenerator.addComment(answer);
 
-        StringBuilder insertClause = new StringBuilder();
-        StringBuilder valuesClause = new StringBuilder();
+        String insertClause = "insert into " +
+                "myschema.mytable" +
+                " (id, description)";
 
-        insertClause.append("insert into ");
-        insertClause.append("myschema.mytable");
-        insertClause.append(" (id, description)");
+        String valuesClause = "values (#{id}, #{description})";
 
-        valuesClause.append("values (#{id}, #{description})");
+        answer.addElement(new TextElement(insertClause));
 
-        answer.addElement(new TextElement(insertClause.toString()));
-
-        answer.addElement(new TextElement(valuesClause.toString()));
+        answer.addElement(new TextElement(valuesClause));
 
         parentElement.addElement(answer);
     }

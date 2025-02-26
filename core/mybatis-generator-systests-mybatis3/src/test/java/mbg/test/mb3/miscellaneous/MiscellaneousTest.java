@@ -911,9 +911,9 @@ public class MiscellaneousTest extends AbstractMiscellaneousTest {
             Anotherawfultable key = new Anotherawfultable();
             key.setId(5);
 
-            Anotherawfultable returnedRecord = (Anotherawfultable)
+            Anotherawfultable returnedRecord =
                     sqlSession.selectOne("mbg.test.mb3.generated.miscellaneous.xml.AnotherawfultableMapper.selectByPrimaryKey",
-                            key);
+                    key);
 
             assertEquals(record.getId(), returnedRecord.getId());
             assertEquals(record.getSelect(), returnedRecord.getSelect());

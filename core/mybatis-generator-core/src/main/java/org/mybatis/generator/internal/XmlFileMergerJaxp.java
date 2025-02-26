@@ -186,11 +186,8 @@ public class XmlFileMergerJaxp {
     private static boolean isOldFormatNode(Node node) {
         Element element = (Element) node;
         String id = element.getAttribute("id"); //$NON-NLS-1$
-        if (id != null) {
-            return MergeConstants.idStartsWithPrefix(id);
-        }
+        return MergeConstants.idStartsWithPrefix(id);
 
-        return false;
     }
 
     private static boolean isNewFormatNode(Node node) {

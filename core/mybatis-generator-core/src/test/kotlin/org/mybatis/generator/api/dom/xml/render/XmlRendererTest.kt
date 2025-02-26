@@ -43,13 +43,13 @@ class XmlRendererTest {
 
     @Test
     fun testSystemDoctypeAndEmptyRoot() {
-        val doc = Document("http://somedtd.com")
+        val doc = Document("https://somedtd.com")
         val root = XmlElement("root")
         doc.rootElement = root
 
         val expected = """
                 |<?xml version="1.0" encoding="UTF-8"?>
-                |<!DOCTYPE root SYSTEM "http://somedtd.com">
+                |<!DOCTYPE root SYSTEM "https://somedtd.com">
                 |<root />""".trimMargin()
 
         val formatter = DefaultXmlFormatter()
@@ -58,13 +58,13 @@ class XmlRendererTest {
 
     @Test
     fun testDoctypeAndEmptyRoot() {
-        val doc = Document("--/PublicId", "http://somedtd.com")
+        val doc = Document("--/PublicId", "https://somedtd.com")
         val root = XmlElement("root")
         doc.rootElement = root
 
         val expected = """
                 |<?xml version="1.0" encoding="UTF-8"?>
-                |<!DOCTYPE root PUBLIC "--/PublicId" "http://somedtd.com">
+                |<!DOCTYPE root PUBLIC "--/PublicId" "https://somedtd.com">
                 |<root />""".trimMargin()
 
         val formatter = DefaultXmlFormatter()
@@ -73,14 +73,14 @@ class XmlRendererTest {
 
     @Test
     fun testDoctypeAndRootWithAttribute() {
-        val doc = Document("--/PublicId", "http://somedtd.com")
+        val doc = Document("--/PublicId", "https://somedtd.com")
         val root = XmlElement("root")
         root.addAttribute(Attribute("name", "fred"))
         doc.rootElement = root
 
         val expected = """
                 |<?xml version="1.0" encoding="UTF-8"?>
-                |<!DOCTYPE root PUBLIC "--/PublicId" "http://somedtd.com">
+                |<!DOCTYPE root PUBLIC "--/PublicId" "https://somedtd.com">
                 |<root name="fred" />""".trimMargin()
 
         val formatter = DefaultXmlFormatter()
@@ -89,7 +89,7 @@ class XmlRendererTest {
 
     @Test
     fun testDoctypeAndRootWithAttributes() {
-        val doc = Document("--/PublicId", "http://somedtd.com")
+        val doc = Document("--/PublicId", "https://somedtd.com")
         val root = XmlElement("root")
         root.addAttribute(Attribute("firstName", "Fred"))
         root.addAttribute(Attribute("lastName", "Flintstone"))
@@ -97,7 +97,7 @@ class XmlRendererTest {
 
         val expected = """
                 |<?xml version="1.0" encoding="UTF-8"?>
-                |<!DOCTYPE root PUBLIC "--/PublicId" "http://somedtd.com">
+                |<!DOCTYPE root PUBLIC "--/PublicId" "https://somedtd.com">
                 |<root firstName="Fred" lastName="Flintstone" />""".trimMargin()
 
         val formatter = DefaultXmlFormatter()
@@ -106,7 +106,7 @@ class XmlRendererTest {
 
     @Test
     fun testDoctypeAndRootWithTextChild() {
-        val doc = Document("--/PublicId", "http://somedtd.com")
+        val doc = Document("--/PublicId", "https://somedtd.com")
         val root = XmlElement("root")
         root.addAttribute(Attribute("firstName", "Fred"))
         root.addAttribute(Attribute("lastName", "Flintstone"))
@@ -117,7 +117,7 @@ class XmlRendererTest {
 
         val expected = """
                 |<?xml version="1.0" encoding="UTF-8"?>
-                |<!DOCTYPE root PUBLIC "--/PublicId" "http://somedtd.com">
+                |<!DOCTYPE root PUBLIC "--/PublicId" "https://somedtd.com">
                 |<root firstName="Fred" lastName="Flintstone">
                 |  some content
                 |</root>""".trimMargin()
@@ -128,7 +128,7 @@ class XmlRendererTest {
 
     @Test
     fun testFullDocument() {
-        val doc = Document("--/PublicId", "http://somedtd.com")
+        val doc = Document("--/PublicId", "https://somedtd.com")
         val root = XmlElement("root")
         root.addAttribute(Attribute("firstName", "Fred"))
         root.addAttribute(Attribute("lastName", "Flintstone"))
@@ -155,7 +155,7 @@ class XmlRendererTest {
 
         val expected = """
                 |<?xml version="1.0" encoding="UTF-8"?>
-                |<!DOCTYPE root PUBLIC "--/PublicId" "http://somedtd.com">
+                |<!DOCTYPE root PUBLIC "--/PublicId" "https://somedtd.com">
                 |<root firstName="Fred" lastName="Flintstone">
                 |  some content
                 |  <child firstName="Pebbles" lastName="Flintstone" />

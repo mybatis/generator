@@ -46,14 +46,12 @@ public class RecordWithBLOBsGenerator extends AbstractJavaGenerator {
     public List<CompilationUnit> getCompilationUnits() {
         FullyQualifiedTable table = introspectedTable.getFullyQualifiedTable();
         progressCallback.startTask(getString("Progress.9", table.toString())); //$NON-NLS-1$
-        Plugin plugins = context.getPlugins();
         CommentGenerator commentGenerator = context.getCommentGenerator();
 
         TopLevelClass topLevelClass = new TopLevelClass(introspectedTable.getRecordWithBLOBsType());
         topLevelClass.setVisibility(JavaVisibility.PUBLIC);
         commentGenerator.addJavaFileComment(topLevelClass);
 
-        String rootClass = getRootClass();
         if (introspectedTable.getRules().generateBaseRecordClass()) {
             topLevelClass.setSuperClass(introspectedTable.getBaseRecordType());
         } else {
@@ -69,11 +67,13 @@ public class RecordWithBLOBsGenerator extends AbstractJavaGenerator {
             }
         }
 
+        String rootClass = getRootClass();
         for (IntrospectedColumn introspectedColumn : introspectedTable.getBLOBColumns()) {
             if (RootClassInfo.getInstance(rootClass, warnings).containsProperty(introspectedColumn)) {
                 continue;
             }
 
+            Plugin plugins = context.getPlugins();
             Field field = getJavaBeansField(introspectedColumn, context, introspectedTable);
             if (plugins.modelFieldGenerated(field, topLevelClass, introspectedColumn, introspectedTable,
                     Plugin.ModelClassType.RECORD_WITH_BLOBS)) {

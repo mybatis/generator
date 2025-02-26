@@ -258,7 +258,7 @@ class KotlinTypeTest {
                 .build()
 
         val renderedType = KotlinTypeRenderer().render(obj).stream()
-                .collect(Collectors.joining(System.getProperty("line.separator")))
+                .collect(Collectors.joining(System.lineSeparator()))
 
         assertThat(renderedType).isEqualToNormalizingNewlines("""
             |class Adder(
@@ -287,7 +287,7 @@ class KotlinTypeTest {
             .build()
 
         val renderedType = KotlinTypeRenderer().render(obj).stream()
-            .collect(Collectors.joining(System.getProperty("line.separator")))
+            .collect(Collectors.joining(System.lineSeparator()))
 
         assertThat(renderedType).isEqualToNormalizingNewlines("""
             |class Adder(
@@ -306,7 +306,7 @@ class KotlinTypeTest {
                 .build()
 
         val renderedType = KotlinTypeRenderer().render(obj).stream()
-                .collect(Collectors.joining(System.getProperty("line.separator")))
+                .collect(Collectors.joining(System.lineSeparator()))
 
         assertThat(renderedType).isEqualToNormalizingNewlines("""
             |class Adder
@@ -320,7 +320,7 @@ class KotlinTypeTest {
             .build()
 
         val renderedType = KotlinTypeRenderer().render(obj).stream()
-            .collect(Collectors.joining(System.getProperty("line.separator")))
+            .collect(Collectors.joining(System.lineSeparator()))
 
         assertThat(renderedType).isEqualToNormalizingNewlines("""
             |class Adder : Serializable
@@ -353,7 +353,7 @@ class KotlinTypeTest {
             .build()
 
         val renderedType = KotlinTypeRenderer().render(obj).stream()
-            .collect(Collectors.joining(System.getProperty("line.separator")))
+            .collect(Collectors.joining(System.lineSeparator()))
 
         assertThat(renderedType).isEqualToNormalizingNewlines("""
             |data class Adder(
@@ -397,7 +397,7 @@ class KotlinTypeTest {
             .build()
 
         val renderedType = KotlinTypeRenderer().render(obj).stream()
-            .collect(Collectors.joining(System.getProperty("line.separator")))
+            .collect(Collectors.joining(System.lineSeparator()))
 
         assertThat(renderedType).isEqualToNormalizingNewlines("""
             |class Adder(
@@ -442,7 +442,7 @@ class KotlinTypeTest {
             .build()
 
         val renderedType = KotlinTypeRenderer().render(obj).stream()
-            .collect(Collectors.joining(System.getProperty("line.separator")))
+            .collect(Collectors.joining(System.lineSeparator()))
 
         assertThat(renderedType).isEqualToNormalizingNewlines("""
             |class Adder(

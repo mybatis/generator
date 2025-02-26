@@ -87,26 +87,26 @@ public class UpdateByExampleTest extends AbstractTest {
                     dsl.where(fieldsonly.integerfield, isEqualTo(5)));
             assertEquals(1, answer.size());
             record = answer.get(0);
-            assertEquals(record.getDoublefield(), 11.22, 0.001);
-            assertEquals(record.getFloatfield(), 33.44, 0.001);
-            assertEquals(record.getIntegerfield().intValue(), 5);
+            assertEquals(11.22, record.getDoublefield(), 0.001);
+            assertEquals(33.44, record.getFloatfield(), 0.001);
+            assertEquals(5, record.getIntegerfield().intValue());
 
             answer = mapper.select(dsl ->
                     dsl.where(fieldsonly.integerfield, isEqualTo(8)));
 
             assertEquals(1, answer.size());
             record = answer.get(0);
-            assertEquals(record.getDoublefield(), 99d, 0.001);
-            assertEquals(record.getFloatfield(), 66.77, 0.001);
-            assertEquals(record.getIntegerfield().intValue(), 8);
+            assertEquals(99d, record.getDoublefield(), 0.001);
+            assertEquals(66.77, record.getFloatfield(), 0.001);
+            assertEquals(8, record.getIntegerfield().intValue());
 
             answer = mapper.select(dsl ->
                     dsl.where(fieldsonly.integerfield, isEqualTo(9)));
             assertEquals(1, answer.size());
             record = answer.get(0);
-            assertEquals(record.getDoublefield(), 99d, 0.001);
-            assertEquals(record.getFloatfield(), 100.111, 0.001);
-            assertEquals(record.getIntegerfield().intValue(), 9);
+            assertEquals(99d, record.getDoublefield(), 0.001);
+            assertEquals(100.111, record.getFloatfield(), 0.001);
+            assertEquals(9, record.getIntegerfield().intValue());
         }
     }
 
@@ -146,7 +146,7 @@ public class UpdateByExampleTest extends AbstractTest {
             record = answer.get(0);
             assertNull(record.getDoublefield());
             assertNull(record.getFloatfield());
-            assertEquals(record.getIntegerfield().intValue(), 22);
+            assertEquals(22, record.getIntegerfield().intValue());
         }
     }
 

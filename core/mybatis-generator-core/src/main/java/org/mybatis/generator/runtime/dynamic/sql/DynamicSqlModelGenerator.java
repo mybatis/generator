@@ -53,7 +53,6 @@ public class DynamicSqlModelGenerator extends AbstractJavaGenerator {
     public List<CompilationUnit> getCompilationUnits() {
         FullyQualifiedTable table = introspectedTable.getFullyQualifiedTable();
         progressCallback.startTask(getString("Progress.8", table.toString())); //$NON-NLS-1$
-        Plugin plugins = context.getPlugins();
         CommentGenerator commentGenerator = context.getCommentGenerator();
 
         FullyQualifiedJavaType type = new FullyQualifiedJavaType(
@@ -80,6 +79,7 @@ public class DynamicSqlModelGenerator extends AbstractJavaGenerator {
             }
         }
 
+        Plugin plugins = context.getPlugins();
         String rootClass = getRootClass();
         for (IntrospectedColumn introspectedColumn : introspectedColumns) {
             if (RootClassInfo.getInstance(rootClass, warnings)
@@ -89,7 +89,6 @@ public class DynamicSqlModelGenerator extends AbstractJavaGenerator {
 
             Field field = getJavaBeansFieldWithGeneratedAnnotation(introspectedColumn, context, introspectedTable,
                     topLevelClass);
-
             if (plugins.modelFieldGenerated(field, topLevelClass,
                     introspectedColumn, introspectedTable,
                     Plugin.ModelClassType.BASE_RECORD)) {

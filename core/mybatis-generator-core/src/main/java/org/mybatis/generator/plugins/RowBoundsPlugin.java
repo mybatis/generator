@@ -138,10 +138,10 @@ public class RowBoundsPlugin extends PluginAdapter {
         Iterator<Attribute> iterator = newElement.getAttributes().iterator();
         while (iterator.hasNext()) {
             Attribute attribute = iterator.next();
-            if ("id".equals(attribute.getName())) { //$NON-NLS-1$
+            if ("id".equals(attribute.name())) { //$NON-NLS-1$
                 iterator.remove();
                 Attribute newAttribute =
-                        new Attribute("id", attribute.getValue() + "WithRowbounds"); //$NON-NLS-1$ //$NON-NLS-2$
+                        new Attribute("id", attribute.value() + "WithRowbounds"); //$NON-NLS-1$ //$NON-NLS-2$
                 newElement.addAttribute(newAttribute);
                 break;
             }

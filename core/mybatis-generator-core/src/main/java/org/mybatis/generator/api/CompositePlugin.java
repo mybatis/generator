@@ -18,7 +18,6 @@ package org.mybatis.generator.api;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import java.util.stream.Collectors;
 
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.Interface;
@@ -77,7 +76,7 @@ public abstract class CompositePlugin implements Plugin {
         return plugins.stream()
                 .map(Plugin::contextGenerateAdditionalJavaFiles)
                 .flatMap(List::stream)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -85,7 +84,7 @@ public abstract class CompositePlugin implements Plugin {
         return plugins.stream()
                 .map(p -> p.contextGenerateAdditionalJavaFiles(introspectedTable))
                 .flatMap(List::stream)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -93,7 +92,7 @@ public abstract class CompositePlugin implements Plugin {
         return plugins.stream()
                         .map(Plugin::contextGenerateAdditionalKotlinFiles)
                 .flatMap(List::stream)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -101,7 +100,7 @@ public abstract class CompositePlugin implements Plugin {
         return plugins.stream()
                 .map(p -> p.contextGenerateAdditionalKotlinFiles(introspectedTable))
                 .flatMap(List::stream)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -109,7 +108,7 @@ public abstract class CompositePlugin implements Plugin {
         return plugins.stream()
                 .map(Plugin::contextGenerateAdditionalFiles)
                 .flatMap(List::stream)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -117,7 +116,7 @@ public abstract class CompositePlugin implements Plugin {
         return plugins.stream()
                 .map(p -> p.contextGenerateAdditionalFiles(introspectedTable))
                 .flatMap(List::stream)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -125,7 +124,7 @@ public abstract class CompositePlugin implements Plugin {
         return plugins.stream()
                 .map(Plugin::contextGenerateAdditionalXmlFiles)
                 .flatMap(List::stream)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -133,7 +132,7 @@ public abstract class CompositePlugin implements Plugin {
         return plugins.stream()
                 .map(p -> p.contextGenerateAdditionalXmlFiles(introspectedTable))
                 .flatMap(List::stream)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -1265,9 +1264,10 @@ public abstract class CompositePlugin implements Plugin {
     }
 
     @Override
-    public boolean shouldGenerate(IntrospectedTable introspectedTable) {
+    public boolean clientUpdateByPrimaryKeyMethodGenerated(Method method, Interface interfaze,
+            IntrospectedTable introspectedTable) {
         for (Plugin plugin : plugins) {
-            if (!plugin.shouldGenerate(introspectedTable)) {
+            if (!plugin.clientUpdateByPrimaryKeyMethodGenerated(method, interfaze, introspectedTable)) {
                 return false;
             }
         }
@@ -1276,10 +1276,9 @@ public abstract class CompositePlugin implements Plugin {
     }
 
     @Override
-    public boolean clientUpdateByPrimaryKeyMethodGenerated(Method method, Interface interfaze,
-            IntrospectedTable introspectedTable) {
+    public boolean shouldGenerate(IntrospectedTable introspectedTable) {
         for (Plugin plugin : plugins) {
-            if (!plugin.clientUpdateByPrimaryKeyMethodGenerated(method, interfaze, introspectedTable)) {
+            if (!plugin.shouldGenerate(introspectedTable)) {
                 return false;
             }
         }

@@ -63,15 +63,15 @@ different code generators than the versions supplied with MBG.  A good example o
 such an implementation would be a FreeMarker or Velocity template based
 implementation.  In most other instances, coding a plugin is the better way to go.</p>
 <p>If you choose to extend this class, you must supply code to generate Java and XML
-files.  You may choose to generated those files with the
+files.  You may choose to generate those files with the
 technology of your choice.  The base <code>IntrospectedTable</code> class holds an instance
 of <code>org.mybatis.generator.internal.rules.Rules</code> that can be queried
 to determine many of the rules for code generation.</p>
 <p>MBG supplies several implementations of introspected table.  The implementation is chosen
 based on the value of the <code>targetRuntime</code> attribute of the
 <code>&lt;context&gt;</code> element.  In many cases it will be far simpler
-to extend one of the built in implementations, rather than creating an implementation
-from scratch.  The following table shows the built in implementations:</p>
+to extend one of the built-in implementations, rather than creating an implementation
+from scratch.  The following table shows the built-in implementations:</p>
 <table cellspacing="0" cellpadding="5" border="1">
   <tr>
     <th>TargetRuntime</th>
@@ -141,7 +141,7 @@ attribute of the <code>&lt;context&gt;</code> element.</p>
 
 <h3>org.mybatis.generator.api.ProgressCallback</h3>
 <p>MBG calls methods in this interface to report progress during the
-   generation of files (a long running process).  The default implementation
+   generation of files (a long-running process).  The default implementation
    of this interface is
    <code>org.mybatis.generator.internal.NullProgressCallback</code>
    which simply ignores all progress messages.  You can provide an

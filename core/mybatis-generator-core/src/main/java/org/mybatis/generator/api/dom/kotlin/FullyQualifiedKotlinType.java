@@ -129,7 +129,7 @@ public class FullyQualifiedKotlinType {
             throw new RuntimeException(getString("RuntimeError.22", genericSpecification)); //$NON-NLS-1$
         }
         String argumentString = genericSpecification.substring(1, lastIndex);
-        // need to find "," outside of a <> bounds
+        // need to find "," outside a <> bounds
         StringTokenizer st = new StringTokenizer(argumentString, ",<>", true); //$NON-NLS-1$
         int openCount = 0;
         StringBuilder sb = new StringBuilder();
@@ -168,7 +168,7 @@ public class FullyQualifiedKotlinType {
      *
      * <p>This method calculates the package as the part of the fully qualified name up
      * to, but not including, the last element. Therefore, it does not support fully
-     * qualified inner classes. Not totally fool proof, but correct in most
+     * qualified inner classes. Not totally foolproof, but correct in most
      * instances.
      *
      * @param baseQualifiedName the base qualified name

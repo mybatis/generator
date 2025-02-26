@@ -60,5 +60,5 @@ class InitializationBlockRendererTest {
     }
 
     private fun toString(b: InitializationBlock) = InitializationBlockRenderer().render(b)
-                .joinToString(System.getProperty("line.separator"))
+                .joinToString(System.lineSeparator())
 }

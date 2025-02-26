@@ -53,9 +53,8 @@ public class UpdateByExampleTest extends AbstractMixedFlatTest {
 
     @Test
     public void testFieldsOnlyUpdateByExampleSelective() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             FieldsonlyMapper mapper = sqlSession.getMapper(FieldsonlyMapper.class);
             Fieldsonly record = new Fieldsonly();
             record.setDoublefield(11.22);
@@ -88,37 +87,34 @@ public class UpdateByExampleTest extends AbstractMixedFlatTest {
             List<Fieldsonly> answer = mapper.selectByExample(example);
             assertEquals(1, answer.size());
             record = answer.get(0);
-            assertEquals(record.getDoublefield(), 11.22, 0.001);
-            assertEquals(record.getFloatfield(), 33.44, 0.001);
-            assertEquals(record.getIntegerfield().intValue(), 5);
+            assertEquals(11.22, record.getDoublefield(), 0.001);
+            assertEquals(33.44, record.getFloatfield(), 0.001);
+            assertEquals(5, record.getIntegerfield().intValue());
 
             example.clear();
             example.createCriteria().andIntegerfieldEqualTo(8);
             answer = mapper.selectByExample(example);
             assertEquals(1, answer.size());
             record = answer.get(0);
-            assertEquals(record.getDoublefield(), 99d, 0.001);
-            assertEquals(record.getFloatfield(), 66.77, 0.001);
-            assertEquals(record.getIntegerfield().intValue(), 8);
+            assertEquals(99d, record.getDoublefield(), 0.001);
+            assertEquals(66.77, record.getFloatfield(), 0.001);
+            assertEquals(8, record.getIntegerfield().intValue());
 
             example.clear();
             example.createCriteria().andIntegerfieldEqualTo(9);
             answer = mapper.selectByExample(example);
             assertEquals(1, answer.size());
             record = answer.get(0);
-            assertEquals(record.getDoublefield(), 99d, 0.001);
-            assertEquals(record.getFloatfield(), 100.111, 0.001);
-            assertEquals(record.getIntegerfield().intValue(), 9);
-        } finally {
-            sqlSession.close();
+            assertEquals(99d, record.getDoublefield(), 0.001);
+            assertEquals(100.111, record.getFloatfield(), 0.001);
+            assertEquals(9, record.getIntegerfield().intValue());
         }
     }
 
     @Test
     public void testFieldsOnlyUpdateByExample() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             FieldsonlyMapper mapper = sqlSession.getMapper(FieldsonlyMapper.class);
             Fieldsonly record = new Fieldsonly();
             record.setDoublefield(11.22);
@@ -153,17 +149,14 @@ public class UpdateByExampleTest extends AbstractMixedFlatTest {
             record = answer.get(0);
             assertNull(record.getDoublefield());
             assertNull(record.getFloatfield());
-            assertEquals(record.getIntegerfield().intValue(), 22);
-        } finally {
-            sqlSession.close();
+            assertEquals(22, record.getIntegerfield().intValue());
         }
     }
 
     @Test
     public void testPKOnlyUpdateByExampleSelective() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkonlyMapper mapper = sqlSession.getMapper(PkonlyMapper.class);
             Pkonly key = new Pkonly();
             key.setId(1);
@@ -189,29 +182,26 @@ public class UpdateByExampleTest extends AbstractMixedFlatTest {
 
             example.clear();
             example.createCriteria()
-                .andIdEqualTo(5)
-                .andSeqNumEqualTo(3);
+                    .andIdEqualTo(5)
+                    .andSeqNumEqualTo(3);
 
             long returnedRows = mapper.countByExample(example);
             assertEquals(1, returnedRows);
 
             example.clear();
             example.createCriteria()
-                .andIdEqualTo(7)
-                .andSeqNumEqualTo(3);
+                    .andIdEqualTo(7)
+                    .andSeqNumEqualTo(3);
 
             returnedRows = mapper.countByExample(example);
             assertEquals(1, returnedRows);
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKOnlyUpdateByExample() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkonlyMapper mapper = sqlSession.getMapper(PkonlyMapper.class);
             Pkonly key = new Pkonly();
             key.setId(1);
@@ -230,7 +220,7 @@ public class UpdateByExampleTest extends AbstractMixedFlatTest {
 
             PkonlyExample example = new PkonlyExample();
             example.createCriteria()
-                .andIdEqualTo(7);
+                    .andIdEqualTo(7);
             key = new Pkonly();
             key.setSeqNum(3);
             key.setId(22);
@@ -239,21 +229,18 @@ public class UpdateByExampleTest extends AbstractMixedFlatTest {
 
             example.clear();
             example.createCriteria()
-                .andIdEqualTo(22)
-                .andSeqNumEqualTo(3);
+                    .andIdEqualTo(22)
+                    .andSeqNumEqualTo(3);
 
             long returnedRows = mapper.countByExample(example);
             assertEquals(1, returnedRows);
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsUpdateByExampleSelective() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
             Pkfields record = new Pkfields();
             record.setFirstname("Jeff");
@@ -279,23 +266,20 @@ public class UpdateByExampleTest extends AbstractMixedFlatTest {
 
             example.clear();
             example.createCriteria()
-                .andFirstnameEqualTo("Fred")
-                .andLastnameEqualTo("Jones")
-                .andId1EqualTo(3)
-                .andId2EqualTo(4);
+                    .andFirstnameEqualTo("Fred")
+                    .andLastnameEqualTo("Jones")
+                    .andId1EqualTo(3)
+                    .andId2EqualTo(4);
 
             long returnedRows = mapper.countByExample(example);
             assertEquals(1, returnedRows);
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsUpdateByExample() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
             Pkfields record = new Pkfields();
             record.setFirstname("Jeff");
@@ -318,31 +302,28 @@ public class UpdateByExampleTest extends AbstractMixedFlatTest {
             record.setId2(4);
             PkfieldsExample example = new PkfieldsExample();
             example.createCriteria()
-                .andId1EqualTo(3)
-                .andId2EqualTo(4);
+                    .andId1EqualTo(3)
+                    .andId2EqualTo(4);
 
             int rows = mapper.updateByExample(record, example);
             assertEquals(1, rows);
 
             example.clear();
             example.createCriteria()
-                .andFirstnameEqualTo("Fred")
-                .andLastnameIsNull()
-                .andId1EqualTo(3)
-                .andId2EqualTo(4);
+                    .andFirstnameEqualTo("Fred")
+                    .andLastnameIsNull()
+                    .andId1EqualTo(3)
+                    .andId2EqualTo(4);
 
             long returnedRows = mapper.countByExample(example);
             assertEquals(1, returnedRows);
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKBlobsUpdateByExampleSelective() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
             Pkblobs record = new Pkblobs();
             record.setId(3);
@@ -372,16 +353,13 @@ public class UpdateByExampleTest extends AbstractMixedFlatTest {
             assertEquals(6, returnedRecord.getId().intValue());
             assertTrue(blobsAreEqual(newRecord.getBlob1(), returnedRecord.getBlob1()));
             assertTrue(blobsAreEqual(record.getBlob2(), returnedRecord.getBlob2()));
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKBlobsUpdateByExampleWithoutBLOBs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
             Pkblobs record = new Pkblobs();
             record.setId(3);
@@ -411,16 +389,13 @@ public class UpdateByExampleTest extends AbstractMixedFlatTest {
             assertEquals(8, returnedRecord.getId().intValue());
             assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord.getBlob1()));
             assertTrue(blobsAreEqual(record.getBlob2(), returnedRecord.getBlob2()));
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKBlobsUpdateByExampleWithBLOBs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
             Pkblobs record = new Pkblobs();
             record.setId(3);
@@ -450,16 +425,13 @@ public class UpdateByExampleTest extends AbstractMixedFlatTest {
             assertEquals(8, returnedRecord.getId().intValue());
             assertNull(returnedRecord.getBlob1());
             assertNull(returnedRecord.getBlob2());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsBlobsUpdateByExampleSelective() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
             Pkfieldsblobs record = new Pkfieldsblobs();
             record.setId1(3);
@@ -495,16 +467,13 @@ public class UpdateByExampleTest extends AbstractMixedFlatTest {
             assertEquals(record.getLastname(), returnedRecord.getLastname());
             assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord.getBlob1()));
 
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsBlobsUpdateByExampleWithoutBLOBs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
             Pkfieldsblobs record = new Pkfieldsblobs();
             record.setId1(3);
@@ -542,16 +511,13 @@ public class UpdateByExampleTest extends AbstractMixedFlatTest {
             assertNull(returnedRecord.getLastname());
             assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord.getBlob1()));
 
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsBlobsUpdateByExampleWithBLOBs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsblobsMapper mapper = sqlSession.getMapper(PkfieldsblobsMapper.class);
             Pkfieldsblobs record = new Pkfieldsblobs();
             record.setId1(3);
@@ -589,16 +555,13 @@ public class UpdateByExampleTest extends AbstractMixedFlatTest {
             assertNull(returnedRecord.getLastname());
             assertNull(returnedRecord.getBlob1());
 
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testFieldsBlobsUpdateByExampleSelective() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             FieldsblobsMapper mapper = sqlSession.getMapper(FieldsblobsMapper.class);
             Fieldsblobs record = new Fieldsblobs();
             record.setFirstname("Jeff");
@@ -630,16 +593,13 @@ public class UpdateByExampleTest extends AbstractMixedFlatTest {
             assertEquals(newRecord.getLastname(), returnedRecord.getLastname());
             assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord.getBlob1()));
             assertTrue(blobsAreEqual(record.getBlob2(), returnedRecord.getBlob2()));
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testFieldsBlobsUpdateByExampleWithoutBLOBs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             FieldsblobsMapper mapper = sqlSession.getMapper(FieldsblobsMapper.class);
             Fieldsblobs record = new Fieldsblobs();
             record.setFirstname("Jeff");
@@ -672,16 +632,13 @@ public class UpdateByExampleTest extends AbstractMixedFlatTest {
             assertEquals(newRecord.getLastname(), returnedRecord.getLastname());
             assertTrue(blobsAreEqual(record.getBlob1(), returnedRecord.getBlob1()));
             assertTrue(blobsAreEqual(record.getBlob2(), returnedRecord.getBlob2()));
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testFieldsBlobsUpdateByExampleWithBLOBs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             FieldsblobsMapper mapper = sqlSession.getMapper(FieldsblobsMapper.class);
             Fieldsblobs record = new Fieldsblobs();
             record.setFirstname("Jeff");
@@ -714,16 +671,13 @@ public class UpdateByExampleTest extends AbstractMixedFlatTest {
             assertEquals(newRecord.getLastname(), returnedRecord.getLastname());
             assertNull(returnedRecord.getBlob1());
             assertNull(returnedRecord.getBlob2());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testAwfulTableUpdateByExampleSelective() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             AwfulTableMapper mapper = sqlSession.getMapper(AwfulTableMapper.class);
             AwfulTable record = new AwfulTable();
             record.seteMail("fred@fred.com");
@@ -780,16 +734,13 @@ public class UpdateByExampleTest extends AbstractMixedFlatTest {
             assertEquals(record.getSecondFirstName(), returnedRecord.getSecondFirstName());
             assertEquals(record.getThirdFirstName(), returnedRecord.getThirdFirstName());
 
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testAwfulTableUpdateByExample() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             AwfulTableMapper mapper = sqlSession.getMapper(AwfulTableMapper.class);
             AwfulTable record = new AwfulTable();
             record.seteMail("fred@fred.com");
@@ -853,8 +804,6 @@ public class UpdateByExampleTest extends AbstractMixedFlatTest {
             assertEquals(newRecord.getId7(), returnedRecord.getId7());
             assertNull(returnedRecord.getSecondFirstName());
             assertNull(returnedRecord.getThirdFirstName());
-        } finally {
-            sqlSession.close();
         }
     }
 }

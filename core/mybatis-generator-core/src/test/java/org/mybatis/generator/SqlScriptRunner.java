@@ -127,6 +127,6 @@ public class SqlScriptRunner {
 
         String s = sb.toString().trim();
 
-        return s.length() > 0 ? s : null;
+        return s.isEmpty() ? null : s;
     }
 }

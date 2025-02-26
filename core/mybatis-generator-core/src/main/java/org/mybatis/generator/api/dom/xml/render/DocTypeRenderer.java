@@ -24,16 +24,16 @@ public class DocTypeRenderer implements DocTypeVisitor<String> {
     @Override
     public String visit(PublicDocType docType) {
         return "PUBLIC \"" //$NON-NLS-1$
-                + docType.getDtdName()
+                + docType.dtdName()
                 + "\" \"" //$NON-NLS-1$
-                + docType.getDtdLocation()
+                + docType.dtdLocation()
                 + "\""; //$NON-NLS-1$
     }
 
     @Override
     public String visit(SystemDocType docType) {
         return "SYSTEM \"" //$NON-NLS-1$
-                + docType.getDtdLocation()
+                + docType.dtdLocation()
                 + "\""; //$NON-NLS-1$
     }
 }

@@ -21,7 +21,7 @@ import org.mybatis.generator.api.dom.xml.render.DocumentRenderer;
 import org.mybatis.generator.config.Context;
 
 /**
- * This class is the default formatter for generated XML. This class will use the built in document renderer.
+ * This class is the default formatter for generated XML. This class will use the built-in document renderer.
  *
  * @author Jeff Butler
  */

@@ -18,7 +18,6 @@ package org.mybatis.generator;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +34,6 @@ import org.mybatis.generator.internal.DefaultShellCallback;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 class XmlCodeGenerationTest {
@@ -81,7 +79,7 @@ class XmlCodeGenerationTest {
     static class TestEntityResolver implements EntityResolver {
 
         @Override
-        public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
+        public InputSource resolveEntity(String publicId, String systemId) {
             // just return an empty string. this should stop the parser from trying to access the network
             return new InputSource(new ByteArrayInputStream("".getBytes()));
         }
@@ -93,17 +91,17 @@ class XmlCodeGenerationTest {
         private final List<String> warnings = new ArrayList<>();
 
         @Override
-        public void warning(SAXParseException exception) throws SAXException {
+        public void warning(SAXParseException exception) {
             warnings.add(exception.getMessage());
         }
 
         @Override
-        public void error(SAXParseException exception) throws SAXException {
+        public void error(SAXParseException exception) {
             errors.add(exception.getMessage());
         }
 
         @Override
-        public void fatalError(SAXParseException exception) throws SAXException {
+        public void fatalError(SAXParseException exception) {
             errors.add(exception.getMessage());
         }
 

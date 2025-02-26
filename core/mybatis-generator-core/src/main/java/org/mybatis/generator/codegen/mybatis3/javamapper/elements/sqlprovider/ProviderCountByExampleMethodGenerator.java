@@ -17,8 +17,6 @@ package org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider;
 
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 
-import java.util.Set;
-
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
@@ -30,7 +28,6 @@ public class ProviderCountByExampleMethodGenerator extends AbstractJavaProviderM
     @Override
     public void addClassElements(TopLevelClass topLevelClass) {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getExampleType());
-        Set<FullyQualifiedJavaType> importedTypes = initializeImportedTypes(fqjt);
 
         Method method = new Method(introspectedTable.getCountByExampleStatementId());
         method.setVisibility(JavaVisibility.PUBLIC);
@@ -46,7 +43,7 @@ public class ProviderCountByExampleMethodGenerator extends AbstractJavaProviderM
         method.addBodyLine("return sql.toString();"); //$NON-NLS-1$
 
         if (context.getPlugins().providerCountByExampleMethodGenerated(method, topLevelClass, introspectedTable)) {
-            topLevelClass.addImportedTypes(importedTypes);
+            topLevelClass.addImportedTypes(initializeImportedTypes(fqjt));
             topLevelClass.addMethod(method);
         }
     }

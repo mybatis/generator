@@ -15,11 +15,13 @@
  */
 package org.mybatis.generator.exception;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MultiMessageException extends Exception {
 
+    @Serial
     private static final long serialVersionUID = -5358501949588130025L;
     private final List<String> errors = new ArrayList<>();
 

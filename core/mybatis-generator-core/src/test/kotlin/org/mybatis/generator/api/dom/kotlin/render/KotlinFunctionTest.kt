@@ -33,7 +33,7 @@ class KotlinFunctionTest {
                 .build()
 
         val renderedFunction = KotlinFunctionRenderer().render(kf).stream()
-                .collect(Collectors.joining(System.getProperty("line.separator")))
+                .collect(Collectors.joining(System.lineSeparator()))
 
         assertThat(renderedFunction).isEqualToNormalizingNewlines("""
             |fun add(a: Int, b: Int): Int {
@@ -54,7 +54,7 @@ class KotlinFunctionTest {
                 .build()
 
         val renderedFunction = KotlinFunctionRenderer().render(kf).stream()
-                .collect(Collectors.joining(System.getProperty("line.separator")))
+                .collect(Collectors.joining(System.lineSeparator()))
 
         assertThat(renderedFunction).isEqualToNormalizingNewlines("""
             |fun add(a: Int = 1, b: Int = 2): Int {
@@ -77,7 +77,7 @@ class KotlinFunctionTest {
                 .build()
 
         val renderedFunction = KotlinFunctionRenderer().render(kf).stream()
-                .collect(Collectors.joining(System.getProperty("line.separator")))
+                .collect(Collectors.joining(System.lineSeparator()))
 
         assertThat(renderedFunction).isEqualToNormalizingNewlines("""
             |fun add(@Param("a") a: Int = 1, b: Int = 2): Int {

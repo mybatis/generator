@@ -28,6 +28,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import org.mybatis.generator.codegen.RootClassInfo;
@@ -105,23 +106,15 @@ public class MyBatisGenerator {
             this.configuration = configuration;
         }
 
-        if (shellCallback == null) {
-            this.shellCallback = new DefaultShellCallback(false);
-        } else {
-            this.shellCallback = shellCallback;
-        }
+        this.shellCallback = Objects.requireNonNullElseGet(shellCallback, () -> new DefaultShellCallback(false));
 
-        if (warnings == null) {
-            this.warnings = new ArrayList<>();
-        } else {
-            this.warnings = warnings;
-        }
+        this.warnings = Objects.requireNonNullElseGet(warnings, ArrayList::new);
 
         this.configuration.validate();
     }
 
     /**
-     * This is the main method for generating code. This method is long running, but progress can be provided and the
+     * This is the main method for generating code. This method is long-running, but progress can be provided and the
      * method can be canceled through the ProgressCallback interface. This version of the method runs all configured
      * contexts.
      *
@@ -141,7 +134,7 @@ public class MyBatisGenerator {
     }
 
     /**
-     * This is the main method for generating code. This method is long running, but progress can be provided and the
+     * This is the main method for generating code. This method is long-running, but progress can be provided and the
      * method can be canceled through the ProgressCallback interface.
      *
      * @param callback
@@ -149,7 +142,7 @@ public class MyBatisGenerator {
      *            information
      * @param contextIds
      *            a set of Strings containing context ids to run. Only the contexts with an id specified in this list
-     *            will be run. If the list is null or empty, than all contexts are run.
+     *            will be run. If the list is null or empty, then all contexts are run.
      * @throws SQLException
      *             the SQL exception
      * @throws IOException
@@ -163,7 +156,7 @@ public class MyBatisGenerator {
     }
 
     /**
-     * This is the main method for generating code. This method is long running, but progress can be provided and the
+     * This is the main method for generating code. This method is long-running, but progress can be provided and the
      * method can be cancelled through the ProgressCallback interface.
      *
      * @param callback
@@ -171,7 +164,7 @@ public class MyBatisGenerator {
      *            information
      * @param contextIds
      *            a set of Strings containing context ids to run. Only the contexts with an id specified in this list
-     *            will be run. If the list is null or empty, than all contexts are run.
+     *            will be run. If the list is null or empty, then all contexts are run.
      * @param fullyQualifiedTableNames
      *            a set of table names to generate. The elements of the set must be Strings that exactly match what's
      *            specified in the configuration. For example, if table name = "foo" and schema = "bar", then the fully
@@ -191,7 +184,7 @@ public class MyBatisGenerator {
     }
 
     /**
-     * This is the main method for generating code. This method is long running, but progress can be provided and the
+     * This is the main method for generating code. This method is long-running, but progress can be provided and the
      * method can be cancelled through the ProgressCallback interface.
      *
      * @param callback
@@ -199,7 +192,7 @@ public class MyBatisGenerator {
      *            information
      * @param contextIds
      *            a set of Strings containing context ids to run. Only the contexts with an id specified in this list
-     *            will be run. If the list is null or empty, than all contexts are run.
+     *            will be run. If the list is null or empty, then all contexts are run.
      * @param fullyQualifiedTableNames
      *            a set of table names to generate. The elements of the set must be Strings that exactly match what's
      *            specified in the configuration. For example, if table name = "foo" and schema = "bar", then the fully

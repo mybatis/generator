@@ -126,7 +126,7 @@ public class DatabaseIntrospector {
         // actually exists in the table
         for (ColumnOverride columnOverride : tableConfiguration
                 .getColumnOverrides()) {
-            if (!introspectedTable.getColumn(columnOverride.getColumnName()).isPresent()) {
+            if (introspectedTable.getColumn(columnOverride.getColumnName()).isEmpty()) {
                 warnings.add(getString("Warning.3", //$NON-NLS-1$
                         columnOverride.getColumnName(), table.toString()));
             }
@@ -140,7 +140,7 @@ public class DatabaseIntrospector {
         }
 
         tableConfiguration.getGeneratedKey().ifPresent(generatedKey -> {
-            if (!introspectedTable.getColumn(generatedKey.getColumn()).isPresent()) {
+            if (introspectedTable.getColumn(generatedKey.getColumn()).isEmpty()) {
                 if (generatedKey.isIdentity()) {
                     warnings.add(getString("Warning.5", //$NON-NLS-1$
                             generatedKey.getColumn(), table.toString()));
@@ -588,7 +588,7 @@ public class DatabaseIntrospector {
             // specified on the table configuration. If something was returned
             // from the DB for these fields, but nothing was specified on the
             // table
-            // configuration, then some sort of DB default is being returned
+            // configuration, then some sort of DB default is being returned,
             // and we don't want that in our SQL
             FullyQualifiedTable table = new FullyQualifiedTable(
                     stringHasValue(tc.getCatalog()) ? atn.getCatalog() : null,

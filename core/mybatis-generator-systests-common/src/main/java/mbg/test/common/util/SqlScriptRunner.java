@@ -36,23 +36,23 @@ import java.sql.Statement;
  */
 public class SqlScriptRunner {
     private String driver;
-    private String url;
-    private String userid;
+    private final String url;
+    private final String userid;
     private String password;
-    private String sourceFile;
+    private final String sourceFile;
 
     public SqlScriptRunner(String sourceFile, String driver, String url,
             String userId, String password) throws Exception {
 
-        if (sourceFile == null || sourceFile.length() == 0) {
+        if (sourceFile == null || sourceFile.isEmpty()) {
             throw new Exception("SQL script file is required");
         }
 
-        if (driver == null || driver.length() == 0) {
+        if (driver == null || driver.isEmpty()) {
             throw new Exception("JDBC Driver is required");
         }
 
-        if (url == null || url.length() == 0) {
+        if (url == null || url.isEmpty()) {
             throw new Exception("JDBC URL is required");
         }
 
@@ -135,7 +135,7 @@ public class SqlScriptRunner {
                 continue;
             }
 
-            if (line.length() == 0) {
+            if (line.isEmpty()) {
                 continue;
             }
 
@@ -150,7 +150,7 @@ public class SqlScriptRunner {
 
         String s = sb.toString().trim();
 
-        return s.length() > 0 ? s : null;
+        return s.isEmpty() ? null : s;
     }
 
     private BufferedReader getScriptReader() throws Exception {

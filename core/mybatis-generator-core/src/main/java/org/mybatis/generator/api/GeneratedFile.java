@@ -32,7 +32,7 @@ public abstract class GeneratedFile {
      * Returns the entire contents of the generated file. Clients
      * can simply save the value returned from this method as the file contents.
      * Subclasses such as @see org.mybatis.generator.api.GeneratedJavaFile offer
-     * more fine grained access to file parts, but still implement this method
+     * more fine -rained access to file parts, but still implement this method
      * in the event that the entire contents are desired.
      *
      * @return Returns the content.
@@ -65,10 +65,6 @@ public abstract class GeneratedFile {
      */
     public abstract String getTargetPackage();
 
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
     @Override
     public String toString() {
         return getFileName();

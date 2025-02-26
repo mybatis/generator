@@ -33,8 +33,7 @@ public abstract class AbstractKotlinFunctionGenerator {
         tableFieldName = builder.tableFieldName;
     }
 
-    protected void acceptParts(KotlinFile kotlinFile, KotlinFunction kotlinFunction,
-            KotlinFunctionParts functionParts) {
+    protected void acceptParts(KotlinFunction kotlinFunction, KotlinFunctionParts functionParts) {
         for (KotlinArg argument : functionParts.getArguments()) {
             kotlinFunction.addArgument(argument);
         }
@@ -44,7 +43,6 @@ public abstract class AbstractKotlinFunctionGenerator {
         }
 
         kotlinFunction.addCodeLines(functionParts.getCodeLines());
-        kotlinFile.addImports(functionParts.getImports());
     }
 
     protected void acceptParts(KotlinFunctionAndImports functionAndImports, KotlinFunctionParts functionParts) {

@@ -37,7 +37,6 @@ public class TopLevelInterfaceRenderer {
         lines.addAll(renderImports(topLevelInterface));
         lines.addAll(renderInnerInterfaceNoIndent(topLevelInterface, topLevelInterface));
 
-        return lines.stream()
-                .collect(Collectors.joining(System.getProperty("line.separator"))); //$NON-NLS-1$
+        return lines.stream().collect(Collectors.joining(System.lineSeparator()));
     }
 }

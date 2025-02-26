@@ -35,7 +35,7 @@ public class JavaDomUtils {
     public static String calculateTypeName(CompilationUnit compilationUnit, FullyQualifiedJavaType fqjt) {
 
         if (fqjt.isArray()) {
-            // if array, then calculate the name of the base (non-array) type
+            // if this is an array, then calculate the name of the base (non-array) type
             // then add the array indicators back in
             String fqn = fqjt.getFullyQualifiedName();
             String typeName = calculateTypeName(compilationUnit,

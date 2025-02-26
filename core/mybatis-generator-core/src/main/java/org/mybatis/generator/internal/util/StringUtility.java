@@ -29,7 +29,7 @@ public class StringUtility {
     }
 
     public static boolean stringHasValue(String s) {
-        return s != null && s.length() > 0;
+        return s != null && !s.isEmpty();
     }
 
     public static String composeFullyQualifiedTableName(String catalog,
@@ -45,7 +45,7 @@ public class StringUtility {
             sb.append(schema);
             sb.append(separator);
         } else {
-            if (sb.length() > 0) {
+            if (!sb.isEmpty()) {
                 sb.append(separator);
             }
         }
@@ -118,7 +118,7 @@ public class StringUtility {
             StringTokenizer st = new StringTokenizer(in, ","); //$NON-NLS-1$
             while (st.hasMoreTokens()) {
                 String s = st.nextToken().trim();
-                if (s.length() > 0) {
+                if (!s.isEmpty()) {
                     answer.add(s);
                 }
             }

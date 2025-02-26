@@ -29,7 +29,7 @@ public class KotlinFunctionRenderer {
         answer.add(renderFirstLine(function));
 
         answer.addAll(function.getCodeLines().stream().map(KotlinRenderingUtilities::kotlinIndent)
-                .collect(Collectors.toList()));
+                        .toList());
 
         if (!function.getCodeLines().isEmpty() && !function.isOneLineFunction()) {
             answer.add("}"); //$NON-NLS-1$

@@ -115,7 +115,7 @@ public interface ShellCallback {
      * once for each unique project that was affected by the generation
      * run. This method is useful if your IDE needs to be informed that file
      * system objects have been created or updated. If you are running
-     * outside of an IDE, your implementation need not do anything in this
+     * outside an IDE, your implementation need not do anything in this
      * method.
      *
      * @param project

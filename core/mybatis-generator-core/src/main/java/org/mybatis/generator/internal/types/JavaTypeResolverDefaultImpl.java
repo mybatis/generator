@@ -143,7 +143,7 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
                 .get(introspectedColumn.getJdbcType());
 
         if (jdbcTypeInformation != null) {
-            answer = jdbcTypeInformation.getFullyQualifiedJavaType();
+            answer = jdbcTypeInformation.fullyQualifiedJavaType();
             answer = overrideDefaultType(introspectedColumn, answer);
         }
 
@@ -252,7 +252,7 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
                 .get(introspectedColumn.getJdbcType());
 
         if (jdbcTypeInformation != null) {
-            answer = jdbcTypeInformation.getJdbcTypeName();
+            answer = jdbcTypeInformation.jdbcTypeName();
         }
 
         return answer;
@@ -268,23 +268,5 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
         this.context = context;
     }
 
-    public static class JdbcTypeInformation {
-        private final String jdbcTypeName;
-
-        private final FullyQualifiedJavaType fullyQualifiedJavaType;
-
-        public JdbcTypeInformation(String jdbcTypeName,
-                FullyQualifiedJavaType fullyQualifiedJavaType) {
-            this.jdbcTypeName = jdbcTypeName;
-            this.fullyQualifiedJavaType = fullyQualifiedJavaType;
-        }
-
-        public String getJdbcTypeName() {
-            return jdbcTypeName;
-        }
-
-        public FullyQualifiedJavaType getFullyQualifiedJavaType() {
-            return fullyQualifiedJavaType;
-        }
-    }
+    public record JdbcTypeInformation(String jdbcTypeName, FullyQualifiedJavaType fullyQualifiedJavaType) { }
 }

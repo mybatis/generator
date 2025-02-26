@@ -18,7 +18,6 @@ package org.mybatis.generator.api.dom.kotlin.render;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.mybatis.generator.api.dom.java.render.RenderingUtilities;
 import org.mybatis.generator.api.dom.kotlin.KotlinNamedItem;
@@ -34,10 +33,11 @@ public class KotlinTypeRenderer {
         List<String> answer = new ArrayList<>(kotlinType.getAnnotations());
 
         String renderedModifiers = KotlinRenderingUtilities.renderModifiers(kotlinType.getModifiers())
-            + kotlinType.getType().getValue(); //$NON-NLS-1$
+                + kotlinType.getType().getValue(); //$NON-NLS-1$
 
         String renderedModifiersAndName;
-        if (kotlinType.getType() == KotlinType.Type.COMPANION_OBJECT && kotlinType.getName().equals(KotlinType.DEFAULT_COMPANION_OBJECT_NAME)) {
+        if (kotlinType.getType() == KotlinType.Type.COMPANION_OBJECT
+                && kotlinType.getName().equals(KotlinType.DEFAULT_COMPANION_OBJECT_NAME)) {
             renderedModifiersAndName = renderedModifiers;
         } else {
             renderedModifiersAndName = renderedModifiers + " " + kotlinType.getName(); //$NON-NLS-1$
@@ -67,7 +67,7 @@ public class KotlinTypeRenderer {
 
         for (KotlinNamedItem namedItem : kotlinType.getNamedItems()) {
             answer.addAll(renderer.render(namedItem).stream().map(KotlinRenderingUtilities::kotlinIndent)
-                    .collect(Collectors.toList()));
+                    .toList());
             answer.add(""); //$NON-NLS-1$
         }
 
@@ -87,7 +87,7 @@ public class KotlinTypeRenderer {
         Iterator<KotlinProperty> iter = kotlinType.getConstructorProperties().iterator();
         while (iter.hasNext()) {
             lines.addAll(renderer.render(iter.next()).stream().map(KotlinRenderingUtilities::kotlinIndent)
-                    .collect(Collectors.toList()));
+                    .toList());
             if (iter.hasNext()) {
                 lines.set(lines.size() - 1,
                         lines.get(lines.size() - 1) + ","); //$NON-NLS-1$

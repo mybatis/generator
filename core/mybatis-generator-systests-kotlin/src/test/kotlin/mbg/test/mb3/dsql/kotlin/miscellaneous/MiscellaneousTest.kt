@@ -445,10 +445,12 @@ class MiscellaneousTest : AbstractAnnotatedMiscellaneousTest() {
 
             val answer = mapper.select {
                 where {
-                    myObject.firstname isLike fn1
-                    and { myObject.id2 isEqualTo 3 }
+                    group {
+                        myObject.firstname isLike fn1
+                        and { myObject.id2 isEqualTo 3 }
+                    }
+                    or { myObject.firstname isLike fn2 }
                 }
-                or { myObject.firstname isLike fn2 }
                 orderBy(myObject.id1, myObject.id2)
             }
 

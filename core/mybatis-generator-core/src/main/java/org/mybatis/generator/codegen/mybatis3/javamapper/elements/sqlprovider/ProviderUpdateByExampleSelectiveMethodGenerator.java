@@ -77,7 +77,7 @@ public class ProviderUpdateByExampleSelectiveMethodGenerator extends AbstractJav
 
             method.addBodyLine(String.format("sql.SET(\"%s = %s\");", //$NON-NLS-1$
                     escapeStringForJava(getAliasedEscapedColumnName(introspectedColumn)),
-                    sb.toString()));
+                    sb));
 
             if (!introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {
                 method.addBodyLine("}"); //$NON-NLS-1$

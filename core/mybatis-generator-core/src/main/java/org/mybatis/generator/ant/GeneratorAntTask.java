@@ -70,7 +70,7 @@ import org.mybatis.generator.internal.DefaultShellCallback;
  * <li>"verbose" - if true, then the generator will log progress messages to the
  * Ant log. Default is false</li>
  * <li>"contextIds" - a comma delimited list of contaxtIds to use for this run</li>
- * <li>"fullyQualifiedTableNames" - a comma delimited list of fully qualified
+ * <li>"fullyQualifiedTableNames" - a comma-delimited list of fully qualified
  * table names to use for this run</li>
  * </ul>
  *
@@ -137,7 +137,7 @@ public class GeneratorAntTask extends Task {
             StringTokenizer st = new StringTokenizer(contextIds, ","); //$NON-NLS-1$
             while (st.hasMoreTokens()) {
                 String s = st.nextToken().trim();
-                if (s.length() > 0) {
+                if (!s.isEmpty()) {
                     contexts.add(s);
                 }
             }
@@ -152,7 +152,7 @@ public class GeneratorAntTask extends Task {
                     ","); //$NON-NLS-1$
             while (st.hasMoreTokens()) {
                 String s = st.nextToken().trim();
-                if (s.length() > 0) {
+                if (!s.isEmpty()) {
                     fullyqualifiedTables.add(s);
                 }
             }

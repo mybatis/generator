@@ -172,11 +172,9 @@ public class TableConfiguration extends PropertyHolder {
             return true;
         }
 
-        if (!(obj instanceof TableConfiguration)) {
+        if (!(obj instanceof TableConfiguration other)) {
             return false;
         }
-
-        TableConfiguration other = (TableConfiguration) obj;
 
         return Objects.equals(this.catalog, other.catalog)
                 && Objects.equals(this.schema, other.schema)

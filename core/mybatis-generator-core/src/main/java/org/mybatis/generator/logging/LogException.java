@@ -15,8 +15,11 @@
  */
 package org.mybatis.generator.logging;
 
+import java.io.Serial;
+
 public class LogException extends RuntimeException {
 
+    @Serial
     private static final long serialVersionUID = 7522435242386492002L;
 
     public LogException() {

@@ -30,9 +30,8 @@ public class GeneratedAlwaysNoUpdatesTest extends AbstractMiscellaneousTest {
 
     @Test
     public void testInsert() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             GeneratedalwaystestnoupdatesMapper mapper = sqlSession.getMapper(GeneratedalwaystestnoupdatesMapper.class);
 
             Generatedalwaystestnoupdates gaTest = new Generatedalwaystestnoupdates();
@@ -49,16 +48,13 @@ public class GeneratedAlwaysNoUpdatesTest extends AbstractMiscellaneousTest {
             assertEquals(1, returnedRecord.getId().intValue());
             assertEquals(2, returnedRecord.getIdPlus1().intValue());
             assertEquals(3, returnedRecord.getIdPlus2().intValue());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testInsertSelective() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             GeneratedalwaystestnoupdatesMapper mapper = sqlSession.getMapper(GeneratedalwaystestnoupdatesMapper.class);
 
             Generatedalwaystestnoupdates gaTest = new Generatedalwaystestnoupdates();
@@ -73,8 +69,6 @@ public class GeneratedAlwaysNoUpdatesTest extends AbstractMiscellaneousTest {
             assertEquals(1, returnedRecord.getId().intValue());
             assertEquals(2, returnedRecord.getIdPlus1().intValue());
             assertEquals(3, returnedRecord.getIdPlus2().intValue());
-        } finally {
-            sqlSession.close();
         }
     }
 

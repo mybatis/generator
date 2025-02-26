@@ -29,7 +29,7 @@ public class DocumentRenderer {
                 renderDocType(document),
                 renderRootElement(document))
                 .flatMap(Function.identity())
-                .collect(Collectors.joining(System.getProperty("line.separator"))); //$NON-NLS-1$
+                .collect(Collectors.joining(System.lineSeparator()));
     }
 
     private Stream<String> renderXmlHeader() {

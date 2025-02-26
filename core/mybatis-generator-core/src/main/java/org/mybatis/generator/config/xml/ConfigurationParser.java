@@ -24,8 +24,8 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
-
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -54,18 +54,18 @@ public class ConfigurationParser {
 
     /**
      * This constructor accepts a properties object which may be used to specify
-     * an additional property set.  Typically this property set will be Ant or Maven properties
+     * an additional property set.  Typically, this property set will be Ant or Maven properties
      * specified in the build.xml file or the POM.
      *
      * <p>If there are name collisions between the different property sets, they will be
      * resolved in this order:
      *
      * <ol>
-     *   <li>System properties take highest precedence</li>
+     *   <li>System properties take the highest precedence</li>
      *   <li>Properties specified in the &lt;properties&gt; configuration
      *       element are next</li>
      *   <li>Properties specified in this "extra" property set are
-     *       lowest precedence.</li>
+     *       the lowest precedence.</li>
      * </ol>
      *
      * @param extraProperties an (optional) set of properties used to resolve property
@@ -76,11 +76,7 @@ public class ConfigurationParser {
         super();
         this.extraProperties = extraProperties;
 
-        if (warnings == null) {
-            this.warnings = new ArrayList<>();
-        } else {
-            this.warnings = warnings;
-        }
+        this.warnings = Objects.requireNonNullElseGet(warnings, ArrayList::new);
 
         parseErrors = new ArrayList<>();
     }

@@ -51,9 +51,8 @@ public class UpdateByExampleTest extends AbstractConditionalImmutableTest {
 
     @Test
     public void testFieldsOnlyUpdateByExampleSelective() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             FieldsonlyMapper mapper = sqlSession
                     .getMapper(FieldsonlyMapper.class);
             Fieldsonly record = new Fieldsonly(5, 11.22, 33.44);
@@ -77,37 +76,34 @@ public class UpdateByExampleTest extends AbstractConditionalImmutableTest {
             List<Fieldsonly> answer = mapper.selectByExample(example);
             assertEquals(1, answer.size());
             record = answer.get(0);
-            assertEquals(record.getDoublefield(), 11.22, 0.001);
-            assertEquals(record.getFloatfield(), 33.44, 0.001);
-            assertEquals(record.getIntegerfield().intValue(), 5);
+            assertEquals(11.22, record.getDoublefield(), 0.001);
+            assertEquals(33.44, record.getFloatfield(), 0.001);
+            assertEquals(5, record.getIntegerfield().intValue());
 
             example.clear();
             example.createCriteria().andIntegerfieldEqualTo(8);
             answer = mapper.selectByExample(example);
             assertEquals(1, answer.size());
             record = answer.get(0);
-            assertEquals(record.getDoublefield(), 99d, 0.001);
-            assertEquals(record.getFloatfield(), 66.77, 0.001);
-            assertEquals(record.getIntegerfield().intValue(), 8);
+            assertEquals(99d, record.getDoublefield(), 0.001);
+            assertEquals(66.77, record.getFloatfield(), 0.001);
+            assertEquals(8, record.getIntegerfield().intValue());
 
             example.clear();
             example.createCriteria().andIntegerfieldEqualTo(9);
             answer = mapper.selectByExample(example);
             assertEquals(1, answer.size());
             record = answer.get(0);
-            assertEquals(record.getDoublefield(), 99d, 0.001);
-            assertEquals(record.getFloatfield(), 100.111, 0.001);
-            assertEquals(record.getIntegerfield().intValue(), 9);
-        } finally {
-            sqlSession.close();
+            assertEquals(99d, record.getDoublefield(), 0.001);
+            assertEquals(100.111, record.getFloatfield(), 0.001);
+            assertEquals(9, record.getIntegerfield().intValue());
         }
     }
 
     @Test
     public void testFieldsOnlyUpdateByExample() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             FieldsonlyMapper mapper = sqlSession
                     .getMapper(FieldsonlyMapper.class);
             Fieldsonly record = new Fieldsonly(5, 11.22, 33.44);
@@ -133,17 +129,14 @@ public class UpdateByExampleTest extends AbstractConditionalImmutableTest {
             record = answer.get(0);
             assertNull(record.getDoublefield());
             assertNull(record.getFloatfield());
-            assertEquals(record.getIntegerfield().intValue(), 22);
-        } finally {
-            sqlSession.close();
+            assertEquals(22, record.getIntegerfield().intValue());
         }
     }
 
     @Test
     public void testPKOnlyUpdateByExampleSelective() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkonlyMapper mapper = sqlSession.getMapper(PkonlyMapper.class);
             PkonlyKey key = new PkonlyKey(1, 3);
             mapper.insert(key);
@@ -171,16 +164,13 @@ public class UpdateByExampleTest extends AbstractConditionalImmutableTest {
 
             returnedRows = mapper.countByExample(example);
             assertEquals(1, returnedRows);
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKOnlyUpdateByExample() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkonlyMapper mapper = sqlSession.getMapper(PkonlyMapper.class);
             PkonlyKey key = new PkonlyKey(1, 3);
             mapper.insert(key);
@@ -202,16 +192,13 @@ public class UpdateByExampleTest extends AbstractConditionalImmutableTest {
 
             long returnedRows = mapper.countByExample(example);
             assertEquals(1, returnedRows);
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsUpdateByExampleSelective() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
             Pkfields record = new Pkfields();
             record.setFirstname("Jeff");
@@ -242,16 +229,13 @@ public class UpdateByExampleTest extends AbstractConditionalImmutableTest {
 
             long returnedRows = mapper.countByExample(example);
             assertEquals(1, returnedRows);
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsUpdateByExample() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsMapper mapper = sqlSession.getMapper(PkfieldsMapper.class);
             Pkfields record = new Pkfields();
             record.setFirstname("Jeff");
@@ -284,16 +268,13 @@ public class UpdateByExampleTest extends AbstractConditionalImmutableTest {
 
             long returnedRows = mapper.countByExample(example);
             assertEquals(1, returnedRows);
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKBlobsUpdateByExampleSelective() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
             Pkblobs record = new Pkblobs(3,
                     generateRandomBlob(), generateRandomBlob(), "Long String 1");
@@ -323,16 +304,13 @@ public class UpdateByExampleTest extends AbstractConditionalImmutableTest {
             assertTrue(blobsAreEqual(record.getBlob2(),
                     returnedRecord.getBlob2()));
             assertEquals(record.getCharacterlob(), returnedRecord.getCharacterlob());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKBlobsUpdateByExampleWithoutBLOBs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
             Pkblobs record = new Pkblobs(3,
                     generateRandomBlob(), generateRandomBlob(), "Long String 1");
@@ -361,16 +339,13 @@ public class UpdateByExampleTest extends AbstractConditionalImmutableTest {
             assertTrue(blobsAreEqual(record.getBlob2(),
                     returnedRecord.getBlob2()));
             assertEquals(record.getCharacterlob(), returnedRecord.getCharacterlob());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKBlobsUpdateByExampleWithBLOBs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkblobsMapper mapper = sqlSession.getMapper(PkblobsMapper.class);
             Pkblobs record = new Pkblobs(3,
                     generateRandomBlob(), generateRandomBlob(), "Long String 1");
@@ -397,16 +372,13 @@ public class UpdateByExampleTest extends AbstractConditionalImmutableTest {
             assertNull(returnedRecord.getBlob1());
             assertNull(returnedRecord.getBlob2());
             assertNull(returnedRecord.getCharacterlob());
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsBlobsUpdateByExampleSelective() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsblobsMapper mapper = sqlSession
                     .getMapper(PkfieldsblobsMapper.class);
             Pkfieldsblobs record = new Pkfieldsblobs(3, 4,
@@ -438,16 +410,13 @@ public class UpdateByExampleTest extends AbstractConditionalImmutableTest {
             assertTrue(blobsAreEqual(record.getBlob1(),
                     returnedRecord.getBlob1()));
 
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsBlobsUpdateByExampleWithoutBLOBs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsblobsMapper mapper = sqlSession
                     .getMapper(PkfieldsblobsMapper.class);
             Pkfieldsblobs record = new Pkfieldsblobs(3, 4,
@@ -478,16 +447,13 @@ public class UpdateByExampleTest extends AbstractConditionalImmutableTest {
             assertTrue(blobsAreEqual(record.getBlob1(),
                     returnedRecord.getBlob1()));
 
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testPKFieldsBlobsUpdateByExampleWithBLOBs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             PkfieldsblobsMapper mapper = sqlSession
                     .getMapper(PkfieldsblobsMapper.class);
             Pkfieldsblobs record = new Pkfieldsblobs(3, 4,
@@ -518,16 +484,13 @@ public class UpdateByExampleTest extends AbstractConditionalImmutableTest {
             assertNull(returnedRecord.getLastname());
             assertNull(returnedRecord.getBlob1());
 
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testFieldsBlobsUpdateByExampleSelective() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             FieldsblobsMapper mapper = sqlSession
                     .getMapper(FieldsblobsMapper.class);
             FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs("Jeff",
@@ -557,16 +520,13 @@ public class UpdateByExampleTest extends AbstractConditionalImmutableTest {
                     returnedRecord.getBlob1()));
             assertTrue(blobsAreEqual(record.getBlob2(),
                     returnedRecord.getBlob2()));
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testFieldsBlobsUpdateByExampleWithoutBLOBs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             FieldsblobsMapper mapper = sqlSession
                     .getMapper(FieldsblobsMapper.class);
             FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs("Jeff",
@@ -596,16 +556,13 @@ public class UpdateByExampleTest extends AbstractConditionalImmutableTest {
                     returnedRecord.getBlob1()));
             assertTrue(blobsAreEqual(record.getBlob2(),
                     returnedRecord.getBlob2()));
-        } finally {
-            sqlSession.close();
         }
     }
 
     @Test
     public void testFieldsBlobsUpdateByExampleWithBLOBs() {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        try {
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             FieldsblobsMapper mapper = sqlSession
                     .getMapper(FieldsblobsMapper.class);
             FieldsblobsWithBLOBs record = new FieldsblobsWithBLOBs("Jeff",
@@ -634,8 +591,6 @@ public class UpdateByExampleTest extends AbstractConditionalImmutableTest {
             assertEquals(newRecord.getLastname(), returnedRecord.getLastname());
             assertNull(returnedRecord.getBlob1());
             assertNull(returnedRecord.getBlob2());
-        } finally {
-            sqlSession.close();
         }
     }
 }

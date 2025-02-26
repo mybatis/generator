@@ -132,5 +132,5 @@ class InnerEnumRendererTest {
     }
 
     private fun toString(en: InnerEnum) = InnerEnumRenderer().render(en, null)
-        .joinToString(System.getProperty("line.separator"))
+        .joinToString(System.lineSeparator())
 }

@@ -6,6 +6,8 @@ defaults:
 
 on: [push, pull_request]
 
+permissions: read-all
+
 jobs:
   build:
     if: github.repository_owner == 'mybatis'

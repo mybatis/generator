@@ -15,7 +15,7 @@
  */
 package org.mybatis.generator.api.dom.java;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 

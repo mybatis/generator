@@ -25,7 +25,7 @@ jobs:
           distribution: temurin
           java-version: 21
       - name: Build site
-        run: ./mvnw install site site:stage -DskipTests -Dlicense.skip=true -B -V --no-transfer-progress --settings ./.mvn/settings.xml
+        run: ../.mvnw install site site:stage -DskipTests -Dlicense.skip=true -B -V --no-transfer-progress --settings ./.mvn/settings.xml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}

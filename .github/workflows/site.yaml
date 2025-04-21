@@ -2,7 +2,7 @@ name: Site
 
 defaults:
   run:
-    working-directory: core
+    working-directory: mybatis-generator-core
 
 on:
   push:
@@ -33,4 +33,4 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
-          folder: core/target/staging
+          folder: mybatis-generator-core/target/staging

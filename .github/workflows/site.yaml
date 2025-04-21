@@ -33,4 +33,4 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
-          folder: core/mybatis-generator-core/target/staging
+          folder: core/mybatis-generator-core/target/generator.git

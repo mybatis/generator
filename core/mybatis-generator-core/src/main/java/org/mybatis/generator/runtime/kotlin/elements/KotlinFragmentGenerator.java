@@ -22,6 +22,7 @@ import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.mybatis.generator.api.IntrospectedColumn;
@@ -31,6 +32,7 @@ import org.mybatis.generator.api.dom.kotlin.JavaToKotlinTypeConverter;
 import org.mybatis.generator.api.dom.kotlin.KotlinArg;
 import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 import org.mybatis.generator.config.GeneratedKey;
+import org.mybatis.generator.internal.util.StringUtility;
 import org.mybatis.generator.runtime.kotlin.KotlinDynamicSqlSupportClassGenerator;
 
 public class KotlinFragmentGenerator {
@@ -187,7 +189,9 @@ public class KotlinFragmentGenerator {
                 builder.withImport("org.apache.ibatis.annotations.Options"); //$NON-NLS-1$
                 sb.append("@Options(useGeneratedKeys=true,keyProperty=\"row."); //$NON-NLS-1$
                 sb.append(introspectedColumn.getJavaProperty());
-                sb.append("\")"); //$NON-NLS-1$
+                sb.append("\""); //$NON-NLS-1$
+                sb.append(String.format(", keyColumn=\"%s\"", Optional.ofNullable(gk.getColumn()).map(StringUtility::escapeStringForKotlin).orElse(""))); //$NON-NLS-1$ $NON-NLS-2$
+                sb.append(")"); //$NON-NLS-1$
                 builder.withAnnotation(sb.toString());
             } else {
                 builder.withImport("org.apache.ibatis.annotations.SelectKey"); //$NON-NLS-1$

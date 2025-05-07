@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,6 +33,7 @@ import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
+import org.mybatis.generator.internal.util.StringUtility;
 
 public class FragmentGenerator {
 
@@ -246,7 +248,9 @@ public class FragmentGenerator {
                 builder.withImport(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Options")); //$NON-NLS-1$
                 sb.append("@Options(useGeneratedKeys=true,keyProperty=\"row."); //$NON-NLS-1$
                 sb.append(introspectedColumn.getJavaProperty());
-                sb.append("\")"); //$NON-NLS-1$
+                sb.append("\""); //$NON-NLS-1$
+                sb.append(String.format(", keyColumn=\"%s\"", Optional.ofNullable(gk.getColumn()).map(StringUtility::escapeStringForJava).orElse(""))); //$NON-NLS-1$ $NON-NLS-2$
+                sb.append(")"); //$NON-NLS-1$
             } else {
                 builder.withImport(new FullyQualifiedJavaType("org.apache.ibatis.annotations.SelectKey")); //$NON-NLS-1$
                 FullyQualifiedJavaType fqjt = introspectedColumn.getFullyQualifiedJavaType();

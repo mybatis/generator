@@ -76,8 +76,8 @@ public class InnerClass extends AbstractJavaType {
         return isAbstract;
     }
 
-    public void setAbstract(boolean isAbtract) {
-        this.isAbstract = isAbtract;
+    public void setAbstract(boolean isAbstract) {
+        this.isAbstract = isAbstract;
     }
 
     public boolean isFinal() {

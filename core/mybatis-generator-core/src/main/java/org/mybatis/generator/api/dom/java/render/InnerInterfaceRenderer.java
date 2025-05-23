@@ -36,6 +36,7 @@ public class InnerInterfaceRenderer {
         lines.addAll(RenderingUtilities.renderInnerClasses(innerInterface.getInnerClasses(), compilationUnit));
         lines.addAll(RenderingUtilities.renderInnerInterfaces(innerInterface.getInnerInterfaces(), compilationUnit));
         lines.addAll(RenderingUtilities.renderInnerEnums(innerInterface.getInnerEnums(), compilationUnit));
+        lines.addAll(RenderingUtilities.renderInnerRecords(innerInterface.getInnerRecords(), compilationUnit));
 
         lines = RenderingUtilities.removeLastEmptyLine(lines);
 

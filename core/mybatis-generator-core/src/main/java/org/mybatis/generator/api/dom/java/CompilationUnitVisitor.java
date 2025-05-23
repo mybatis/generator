@@ -21,4 +21,6 @@ public interface CompilationUnitVisitor<R> {
     R visit(TopLevelEnumeration topLevelEnumeration);
 
     R visit(Interface topLevelInterface);
+
+    R visit(TopLevelRecord topLevelRecord);
 }

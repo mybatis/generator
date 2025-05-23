@@ -39,6 +39,7 @@ public class InnerEnumRenderer {
         lines.addAll(RenderingUtilities.renderInnerClasses(innerEnum.getInnerClasses(), compilationUnit));
         lines.addAll(RenderingUtilities.renderInnerInterfaces(innerEnum.getInnerInterfaces(), compilationUnit));
         lines.addAll(RenderingUtilities.renderInnerEnums(innerEnum.getInnerEnums(), compilationUnit));
+        lines.addAll(RenderingUtilities.renderInnerRecords(innerEnum.getInnerRecords(), compilationUnit));
 
         lines = RenderingUtilities.removeLastEmptyLine(lines);
 

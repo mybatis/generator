@@ -85,7 +85,7 @@
 <a class="jxr_linenumber" name="L77" href="#L77">77</a>          assertFalse(clazz.getSuperClass().isPresent());
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>          clazz.setSuperClass(<span class="jxr_string">"com.hoge.SuperClass"</span>);
 <a class="jxr_linenumber" name="L79" href="#L79">79</a>          assertNotNull(clazz.getSuperClass());
-<a class="jxr_linenumber" name="L80" href="#L80">80</a>          assertEquals(<span class="jxr_string">"com.hoge.SuperClass"</span>, clazz.getSuperClass().get().getFullyQualifiedName());
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>          assertEquals(<span class="jxr_string">"com.hoge.SuperClass"</span>, clazz.getSuperClass().orElseThrow().getFullyQualifiedName());
 <a class="jxr_linenumber" name="L81" href="#L81">81</a>      }
 <a class="jxr_linenumber" name="L82" href="#L82">82</a>  
 <a class="jxr_linenumber" name="L83" href="#L83">83</a>      @Test

@@ -25,59 +25,60 @@
 <a class="jxr_linenumber" name="L17" href="#L17">17</a>  
 <a class="jxr_linenumber" name="L18" href="#L18">18</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.mybatis.generator.internal.util.messages.Messages.getString;
 <a class="jxr_linenumber" name="L19" href="#L19">19</a>  
-<a class="jxr_linenumber" name="L20" href="#L20">20</a>  <strong class="jxr_keyword">import</strong> java.io.File;
-<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> java.net.MalformedURLException;
-<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> java.net.URL;
-<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> java.net.URLClassLoader;
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> java.util.ArrayList;
-<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> java.util.Collection;
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> java.util.List;
-<a class="jxr_linenumber" name="L27" href="#L27">27</a>  
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.logging.Log;
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.logging.LogFactory;
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>  
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <em class="jxr_javadoccomment"> * This class holds methods useful for constructing custom classloaders.</em>
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <em class="jxr_javadoccomment"> * @author Jeff Butler</em>
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L36" href="#L36">36</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="ClassloaderUtility" href="../../../../../org/mybatis/generator/internal/util/ClassloaderUtility.html#ClassloaderUtility">ClassloaderUtility</a> {
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>  
-<a class="jxr_linenumber" name="L38" href="#L38">38</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a name="Log" href="../../../../../org/mybatis/generator/logging/Log.html#Log">Log</a> LOG = LogFactory.getLog(ClassloaderUtility.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L39" href="#L39">39</a>  
-<a class="jxr_linenumber" name="L40" href="#L40">40</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <em class="jxr_javadoccomment">     * Utility Class - No Instances.</em>
-<a class="jxr_linenumber" name="L42" href="#L42">42</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L43" href="#L43">43</a>      <strong class="jxr_keyword">private</strong> <a name="ClassloaderUtility" href="../../../../../org/mybatis/generator/internal/util/ClassloaderUtility.html#ClassloaderUtility">ClassloaderUtility</a>() {
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>      }
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>  
-<a class="jxr_linenumber" name="L46" href="#L46">46</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> ClassLoader getCustomClassloader(Collection&lt;String&gt; entries) {
-<a class="jxr_linenumber" name="L47" href="#L47">47</a>          List&lt;URL&gt; urls = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>          File file;
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>  
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>          <strong class="jxr_keyword">if</strong> (entries != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>              <strong class="jxr_keyword">for</strong> (String classPathEntry : entries) {
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>                  file = <strong class="jxr_keyword">new</strong> File(classPathEntry);
-<a class="jxr_linenumber" name="L53" href="#L53">53</a>                  <strong class="jxr_keyword">if</strong> (!file.exists()) {
-<a class="jxr_linenumber" name="L54" href="#L54">54</a>                      LOG.warn(getString(<span class="jxr_string">"Warning.31"</span>, classPathEntry)); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L55" href="#L55">55</a>                      <strong class="jxr_keyword">continue</strong>;
-<a class="jxr_linenumber" name="L56" href="#L56">56</a>                  }
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>  
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>                  <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L59" href="#L59">59</a>                      urls.add(file.toURI().toURL());
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>                  } <strong class="jxr_keyword">catch</strong> (MalformedURLException e) {
-<a class="jxr_linenumber" name="L61" href="#L61">61</a>                      <em class="jxr_comment">// this shouldn't happen, but just in case...</em>
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>                      <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> RuntimeException(getString(
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>                              <span class="jxr_string">"RuntimeError.9"</span>, classPathEntry)); <em class="jxr_comment">//$NON-NLS-1$</em>
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>                  }
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>              }
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>          }
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>  
-<a class="jxr_linenumber" name="L68" href="#L68">68</a>          ClassLoader parent = Thread.currentThread().getContextClassLoader();
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>  
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> URLClassLoader(urls.toArray(<strong class="jxr_keyword">new</strong> URL[urls.size()]), parent);
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>      }
-<a class="jxr_linenumber" name="L72" href="#L72">72</a>  }
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>  <strong class="jxr_keyword">import</strong> java.net.MalformedURLException;
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> java.net.URL;
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> java.net.URLClassLoader;
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> java.nio.file.Files;
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> java.nio.file.Path;
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> java.util.ArrayList;
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> java.util.Collection;
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> java.util.List;
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.logging.Log;
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> org.mybatis.generator.logging.LogFactory;
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>  
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <em class="jxr_javadoccomment"> * This class holds methods useful for constructing custom classloaders.</em>
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <em class="jxr_javadoccomment"> * @author Jeff Butler</em>
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>  <em class="jxr_javadoccomment"> */</em>
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="ClassloaderUtility" href="../../../../../org/mybatis/generator/internal/util/ClassloaderUtility.html#ClassloaderUtility">ClassloaderUtility</a> {
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>  
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a name="Log" href="../../../../../org/mybatis/generator/logging/Log.html#Log">Log</a> LOG = LogFactory.getLog(ClassloaderUtility.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>  
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>  <em class="jxr_javadoccomment">     * Utility Class - No Instances.</em>
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>      <strong class="jxr_keyword">private</strong> <a name="ClassloaderUtility" href="../../../../../org/mybatis/generator/internal/util/ClassloaderUtility.html#ClassloaderUtility">ClassloaderUtility</a>() {
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>      }
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>  
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> ClassLoader getCustomClassloader(Collection&lt;String&gt; entries) {
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>          List&lt;URL&gt; urls = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>          Path file;
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>  
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>          <strong class="jxr_keyword">if</strong> (entries != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>              <strong class="jxr_keyword">for</strong> (String classPathEntry : entries) {
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>                  file = Path.of(classPathEntry);
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>                  <strong class="jxr_keyword">if</strong> (Files.notExists(file)) {
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>                      LOG.warn(getString(<span class="jxr_string">"Warning.31"</span>, classPathEntry)); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>                      <strong class="jxr_keyword">continue</strong>;
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>                  }
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>  
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>                  <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>                      urls.add(file.toUri().toURL());
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>                  } <strong class="jxr_keyword">catch</strong> (MalformedURLException e) {
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>                      <em class="jxr_comment">// this shouldn't happen, but just in case...</em>
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>                      <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> RuntimeException(getString(
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>                              <span class="jxr_string">"RuntimeError.9"</span>, classPathEntry)); <em class="jxr_comment">//$NON-NLS-1$</em>
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>                  }
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>              }
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>          }
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>  
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>          ClassLoader parent = Thread.currentThread().getContextClassLoader();
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>  
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> URLClassLoader(urls.toArray(<strong class="jxr_keyword">new</strong> URL[urls.size()]), parent);
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>      }
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>  }
 </pre>
 <hr/>
 <div id="footer">© 2006–2025 <a href="https://www.mybatis.org/">MyBatis.org</a></div>

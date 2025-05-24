@@ -173,7 +173,7 @@
 <a class="jxr_linenumber" name="L165" href="#L165">165</a>         assertFalse(method.getReturnType().isPresent());
 <a class="jxr_linenumber" name="L166" href="#L166">166</a> 
 <a class="jxr_linenumber" name="L167" href="#L167">167</a>         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
-<a class="jxr_linenumber" name="L168" href="#L168">168</a>         assertEquals(FullyQualifiedJavaType.getIntInstance(), method.getReturnType().get());
+<a class="jxr_linenumber" name="L168" href="#L168">168</a>         assertEquals(FullyQualifiedJavaType.getIntInstance(), method.getReturnType().orElseThrow());
 <a class="jxr_linenumber" name="L169" href="#L169">169</a>     }
 <a class="jxr_linenumber" name="L170" href="#L170">170</a> 
 <a class="jxr_linenumber" name="L171" href="#L171">171</a>     @Test

@@ -1,79 +1,38 @@
-.factorypath
-
-# /core/
-/core/.project
-/core/.settings
-/core/build.log
-/core/target
-
-# /core/mybatis-generator-core/
-/core/mybatis-generator-core/.classpath
-/core/mybatis-generator-core/.project
-/core/mybatis-generator-core/.settings
-/core/mybatis-generator-core/target
-
-# /core/mybatis-generator-maven-plugin/
-/core/mybatis-generator-maven-plugin/.classpath
-/core/mybatis-generator-maven-plugin/.project
-/core/mybatis-generator-maven-plugin/.settings
-/core/mybatis-generator-maven-plugin/target
-
-# /core/mybatis-generator-systests-common/
-/core/mybatis-generator-systests-common/.classpath
-/core/mybatis-generator-systests-common/.project
-/core/mybatis-generator-systests-common/.settings
-/core/mybatis-generator-systests-common/target
-
-# /core/mybatis-generator-systests-mybatis3/
-/core/mybatis-generator-systests-mybatis3/.classpath
-/core/mybatis-generator-systests-mybatis3/.project
-/core/mybatis-generator-systests-mybatis3/.settings
-/core/mybatis-generator-systests-mybatis3/target
-
-# /core/mybatis-generator-systests-mybatis3-java8/
-/core/mybatis-generator-systests-mybatis3-java8/.classpath
-/core/mybatis-generator-systests-mybatis3-java8/.project
-/core/mybatis-generator-systests-mybatis3-java8/.settings
-/core/mybatis-generator-systests-mybatis3-java8/target
-
-# /core/mybatis-generator-systests-domtests/
-/core/mybatis-generator-systests-domtests/.classpath
-/core/mybatis-generator-systests-domtests/.project
-/core/mybatis-generator-systests-domtests/.settings
-/core/mybatis-generator-systests-domtests/target
-
-# /core/mybatis-generator-systests-kotlin/
-/core/mybatis-generator-systests-kotlin/.classpath
-/core/mybatis-generator-systests-kotlin/.project
-/core/mybatis-generator-systests-kotlin/.settings
-/core/mybatis-generator-systests-kotlin/target
-
-/.project
+# Intellij
 .idea
 *.iml
-/core/.mvn/wrapper/maven-wrapper.jar
-**/.DS_Store
-
- *.ipr
+*.ipr
 *.iws
-*.iml
-.gradle/*
+
+# Eclipse
 .classpath
+.factorypath
+.settings
+.project
+target
+
+# Unwanted artifacts
+*.bak
+*.jar
+*.log
+*.log.*
+**/.polyglot.*
+
+# Release elements
+*.releaseBackup
+release.properties
+
+# Gradle
+.gradle
+
+# VSCode
+.vscode
+
+# Ant / Eclipse Plugin
+**/.DS_Store
 build/*
 classes/*
 out
-.gradle*
-.idea
-.idea/*
-.idea*
-.classpath
-.project
-.settings/
-*.log
-*.log.*
-*.bak
 bin/
 data/*
 *workspace.xml
-.vscode
-.github/keys

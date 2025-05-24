@@ -77,7 +77,7 @@ class InnerClassTest {
         assertFalse(clazz.getSuperClass().isPresent());
         clazz.setSuperClass("com.hoge.SuperClass");
         assertNotNull(clazz.getSuperClass());
-        assertEquals("com.hoge.SuperClass", clazz.getSuperClass().get().getFullyQualifiedName());
+        assertEquals("com.hoge.SuperClass", clazz.getSuperClass().orElseThrow().getFullyQualifiedName());
     }
 
     @Test

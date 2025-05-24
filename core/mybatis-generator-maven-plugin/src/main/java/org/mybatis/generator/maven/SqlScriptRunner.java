@@ -16,13 +16,13 @@
 package org.mybatis.generator.maven;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.SQLException;
@@ -206,11 +206,11 @@ public class SqlScriptRunner {
             }
             answer = new BufferedReader(new InputStreamReader(is));
         } else {
-            File file = new File(sourceFile);
-            if (!file.exists()) {
+            Path file = Path.of(sourceFile);
+            if (Files.notExists(file)) {
                 throw new MojoExecutionException("SQL script file does not exist");
             }
-            answer = new BufferedReader(new FileReader(file));
+            answer = Files.newBufferedReader(file);
         }
 
         return answer;

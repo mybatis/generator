@@ -17,9 +17,12 @@ package mbg.domtest;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -42,7 +45,7 @@ public class GenerateTestSourceFiles {
         GenerateTestSourceFiles app = new GenerateTestSourceFiles();
 
         try {
-            app.run(new File(outputDirectory));
+            app.run(Path.of(outputDirectory).toFile());
         } catch (Exception e) {
             throw new RuntimeException("Exception creating test classes", e);
         }
@@ -98,28 +101,29 @@ public class GenerateTestSourceFiles {
             sb.append(File.separatorChar);
         }
 
-        File directory = new File(rootDirectory, sb.toString());
+        Path directory = rootDirectory.toPath().resolve(sb.toString());
 
-        if (!directory.isDirectory()) {
-            boolean rc = directory.mkdirs();
-            if (!rc) {
+        if (!Files.isDirectory(directory)) {
+            try {
+                Files.createDirectories(directory);
+            } catch (IOException e) {
                 throw new IOException("can't create package directory");
             }
         }
 
         String fileName = cu.getType().getShortName() + ".java";
-        File targetFile = new File(directory, fileName);
+        Path targetFile = directory.resolve(fileName);
 
         DefaultJavaFormatter formatter = new DefaultJavaFormatter();
-        writeFile(targetFile, formatter.getFormattedContent(cu));
+        writeFile(targetFile.toFile(), formatter.getFormattedContent(cu));
     }
 
     private void writeFile(File file, String content) throws IOException {
-        FileOutputStream fos = new FileOutputStream(file, false);
+        OutputStream fos = Files.newOutputStream(file.toPath(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
         OutputStreamWriter osw = new OutputStreamWriter(fos);
 
-        BufferedWriter bw = new BufferedWriter(osw);
-        bw.write(content);
-        bw.close();
+        try (BufferedWriter bw = new BufferedWriter(osw)) {
+            bw.write(content);
+        }
     }
 }

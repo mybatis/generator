@@ -17,8 +17,9 @@ package org.mybatis.generator.api;
 
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -72,8 +73,8 @@ public class ShellRunner {
         List<String> warnings = new ArrayList<>();
 
         String configfile = arguments.get(CONFIG_FILE);
-        File configurationFile = new File(configfile);
-        if (!configurationFile.exists()) {
+        Path configurationFile = Path.of(configfile);
+        if (Files.notExists(configurationFile)) {
             writeLine(getString("RuntimeError.1", configfile)); //$NON-NLS-1$
             return;
         }
@@ -84,7 +85,7 @@ public class ShellRunner {
 
         try {
             ConfigurationParser cp = new ConfigurationParser(warnings);
-            Configuration config = cp.parseConfiguration(configurationFile);
+            Configuration config = cp.parseConfiguration(configurationFile.toFile());
 
             DefaultShellCallback shellCallback = new DefaultShellCallback(arguments.containsKey(OVERWRITE));
 

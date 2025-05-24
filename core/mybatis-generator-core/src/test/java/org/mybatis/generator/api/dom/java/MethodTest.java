@@ -165,7 +165,7 @@ class MethodTest {
         assertFalse(method.getReturnType().isPresent());
 
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
-        assertEquals(FullyQualifiedJavaType.getIntInstance(), method.getReturnType().get());
+        assertEquals(FullyQualifiedJavaType.getIntInstance(), method.getReturnType().orElseThrow());
     }
 
     @Test

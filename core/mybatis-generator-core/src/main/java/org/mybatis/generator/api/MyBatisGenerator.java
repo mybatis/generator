@@ -20,10 +20,13 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -299,28 +302,28 @@ public class MyBatisGenerator {
 
     private void writeGeneratedJavaFile(GeneratedJavaFile gjf, ProgressCallback callback)
             throws InterruptedException, IOException {
-        File targetFile;
+        Path targetFile;
         String source;
         try {
             File directory = shellCallback.getDirectory(gjf
                     .getTargetProject(), gjf.getTargetPackage());
-            targetFile = new File(directory, gjf.getFileName());
-            if (targetFile.exists()) {
+            targetFile = directory.toPath().resolve(gjf.getFileName());
+            if (Files.exists(targetFile)) {
                 if (shellCallback.isMergeSupported()) {
                     source = shellCallback.mergeJavaFile(gjf
-                            .getFormattedContent(), targetFile,
+                            .getFormattedContent(), targetFile.toFile(),
                             MergeConstants.getOldElementTags(),
                             gjf.getFileEncoding());
                 } else if (shellCallback.isOverwriteEnabled()) {
                     source = gjf.getFormattedContent();
                     warnings.add(getString("Warning.11", //$NON-NLS-1$
-                            targetFile.getAbsolutePath()));
+                            targetFile.toFile().getAbsolutePath()));
                 } else {
                     source = gjf.getFormattedContent();
                     targetFile = getUniqueFileName(directory, gjf
                             .getFileName());
                     warnings.add(getString(
-                            "Warning.2", targetFile.getAbsolutePath())); //$NON-NLS-1$
+                            "Warning.2", targetFile.toFile().getAbsolutePath())); //$NON-NLS-1$
                 }
             } else {
                 source = gjf.getFormattedContent();
@@ -328,8 +331,8 @@ public class MyBatisGenerator {
 
             callback.checkCancel();
             callback.startTask(getString(
-                    "Progress.15", targetFile.getName())); //$NON-NLS-1$
-            writeFile(targetFile, source, gjf.getFileEncoding());
+                    "Progress.15", targetFile.toString())); //$NON-NLS-1$
+            writeFile(targetFile.toFile(), source, gjf.getFileEncoding());
         } catch (ShellException e) {
             warnings.add(e.getMessage());
         }
@@ -337,23 +340,23 @@ public class MyBatisGenerator {
 
     private void writeGeneratedFile(GeneratedFile gf, ProgressCallback callback)
             throws InterruptedException, IOException {
-        File targetFile;
+        Path targetFile;
         String source;
         try {
             File directory = shellCallback.getDirectory(gf
                     .getTargetProject(), gf.getTargetPackage());
-            targetFile = new File(directory, gf.getFileName());
-            if (targetFile.exists()) {
+            targetFile = directory.toPath().resolve(gf.getFileName());
+            if (Files.exists(targetFile)) {
                 if (shellCallback.isOverwriteEnabled()) {
                     source = gf.getFormattedContent();
                     warnings.add(getString("Warning.11", //$NON-NLS-1$
-                            targetFile.getAbsolutePath()));
+                            targetFile.toFile().getAbsolutePath()));
                 } else {
                     source = gf.getFormattedContent();
                     targetFile = getUniqueFileName(directory, gf
                             .getFileName());
                     warnings.add(getString(
-                            "Warning.2", targetFile.getAbsolutePath())); //$NON-NLS-1$
+                            "Warning.2", targetFile.toFile().getAbsolutePath())); //$NON-NLS-1$
                 }
             } else {
                 source = gf.getFormattedContent();
@@ -361,8 +364,8 @@ public class MyBatisGenerator {
 
             callback.checkCancel();
             callback.startTask(getString(
-                    "Progress.15", targetFile.getName())); //$NON-NLS-1$
-            writeFile(targetFile, source, gf.getFileEncoding());
+                    "Progress.15", targetFile.toString())); //$NON-NLS-1$
+            writeFile(targetFile.toFile(), source, gf.getFileEncoding());
         } catch (ShellException e) {
             warnings.add(e.getMessage());
         }
@@ -370,26 +373,26 @@ public class MyBatisGenerator {
 
     private void writeGeneratedXmlFile(GeneratedXmlFile gxf, ProgressCallback callback)
             throws InterruptedException, IOException {
-        File targetFile;
+        Path targetFile;
         String source;
         try {
             File directory = shellCallback.getDirectory(gxf
                     .getTargetProject(), gxf.getTargetPackage());
-            targetFile = new File(directory, gxf.getFileName());
-            if (targetFile.exists()) {
+            targetFile = directory.toPath().resolve(gxf.getFileName());
+            if (Files.exists(targetFile)) {
                 if (gxf.isMergeable()) {
                     source = XmlFileMergerJaxp.getMergedSource(gxf,
-                            targetFile);
+                            targetFile.toFile());
                 } else if (shellCallback.isOverwriteEnabled()) {
                     source = gxf.getFormattedContent();
                     warnings.add(getString("Warning.11", //$NON-NLS-1$
-                            targetFile.getAbsolutePath()));
+                            targetFile.toFile().getAbsolutePath()));
                 } else {
                     source = gxf.getFormattedContent();
                     targetFile = getUniqueFileName(directory, gxf
                             .getFileName());
                     warnings.add(getString(
-                            "Warning.2", targetFile.getAbsolutePath())); //$NON-NLS-1$
+                            "Warning.2", targetFile.toFile().getAbsolutePath())); //$NON-NLS-1$
                 }
             } else {
                 source = gxf.getFormattedContent();
@@ -397,8 +400,8 @@ public class MyBatisGenerator {
 
             callback.checkCancel();
             callback.startTask(getString(
-                    "Progress.15", targetFile.getName())); //$NON-NLS-1$
-            writeFile(targetFile, source, gxf.getFileEncoding());
+                    "Progress.15", targetFile.toString())); //$NON-NLS-1$
+            writeFile(targetFile.toFile(), source, gxf.getFileEncoding());
         } catch (ShellException e) {
             warnings.add(e.getMessage());
         }
@@ -417,7 +420,7 @@ public class MyBatisGenerator {
      *             Signals that an I/O exception has occurred.
      */
     private void writeFile(File file, String content, String fileEncoding) throws IOException {
-        try (FileOutputStream fos = new FileOutputStream(file, false)) {
+        try (OutputStream fos = Files.newOutputStream(file.toPath(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
             OutputStreamWriter osw;
             if (fileEncoding == null) {
                 osw = new OutputStreamWriter(fos);
@@ -440,8 +443,8 @@ public class MyBatisGenerator {
      *            the file name
      * @return the unique file name
      */
-    private File getUniqueFileName(File directory, String fileName) {
-        File answer = null;
+    private Path getUniqueFileName(File directory, String fileName) {
+        Path answer = null;
 
         // try up to 1000 times to generate a unique file name
         StringBuilder sb = new StringBuilder();
@@ -451,8 +454,8 @@ public class MyBatisGenerator {
             sb.append('.');
             sb.append(i);
 
-            File testFile = new File(directory, sb.toString());
-            if (!testFile.exists()) {
+            Path testFile = directory.toPath().resolve(sb.toString());
+            if (Files.notExists(testFile)) {
                 answer = testFile;
                 break;
             }

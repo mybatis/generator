@@ -17,11 +17,12 @@ package org.mybatis.generator.config.xml;
 
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -84,7 +85,7 @@ public class ConfigurationParser {
     public Configuration parseConfiguration(File inputFile) throws IOException,
             XMLParserException {
 
-        FileReader fr = new FileReader(inputFile);
+        BufferedReader fr = Files.newBufferedReader(inputFile.toPath());
 
         return parseConfiguration(fr);
     }

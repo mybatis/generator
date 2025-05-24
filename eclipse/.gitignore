@@ -3,3 +3,6 @@
 !.project
 !.settings
 !*.jar
+
+# Ignore temp tycho consumer pom
+.tycho-consumer-pom.xml

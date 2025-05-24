@@ -62,7 +62,7 @@
           <configuration>
             <licenseSets>
               <licenseSet>
-                <header>${project.basedir}/license.txt</header>
+                <header>${project.basedir}/LICENSE_HEADER</header>
                 <excludes>
                   <exclude>**/*.ctrl</exclude>
                   <exclude>**/*.dat</exclude>

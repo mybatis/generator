@@ -1,0 +1,5 @@
+# Allow project files here
+!.classpath
+!.project
+!.settings
+!*.jar

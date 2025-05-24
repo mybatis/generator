@@ -85,9 +85,9 @@ public class ConfigurationParser {
     public Configuration parseConfiguration(File inputFile) throws IOException,
             XMLParserException {
 
-        BufferedReader fr = Files.newBufferedReader(inputFile.toPath());
-
-        return parseConfiguration(fr);
+        try (BufferedReader fr = Files.newBufferedReader(inputFile.toPath())) {
+            return parseConfiguration(fr);
+        }
     }
 
     public Configuration parseConfiguration(Reader reader) throws IOException,

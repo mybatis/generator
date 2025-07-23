@@ -40,6 +40,7 @@ import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.codegen.AbstractGenerator;
 import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 import org.mybatis.generator.config.GeneratedKey;
+import org.mybatis.generator.internal.util.StringUtility;
 
 public abstract class AbstractJavaMapperMethodGenerator extends AbstractGenerator {
     public abstract void addInterfaceElements(Interface interfaze);
@@ -97,7 +98,9 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractGenerato
         if (gk.isJdbcStandard()) {
             sb.append("@Options(useGeneratedKeys=true,keyProperty=\""); //$NON-NLS-1$
             sb.append(introspectedColumn.getJavaProperty());
-            sb.append("\")"); //$NON-NLS-1$
+            sb.append("\""); //$NON-NLS-1$
+            sb.append(String.format(", keyColumn=\"%s\"", Optional.ofNullable(gk.getColumn()).map(StringUtility::escapeStringForJava).orElse(""))); //$NON-NLS-1$ $NON-NLS-2$
+            sb.append(")"); //$NON-NLS-1$
         } else {
             sb.append("@SelectKey(statement=\""); //$NON-NLS-1$
             sb.append(gk.getRuntimeSqlStatement());

@@ -15,7 +15,7 @@
  */
 package org.mybatis.generator.internal.util;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mybatis.generator.internal.util.JavaBeansUtil.getGetterMethodName;
 import static org.mybatis.generator.internal.util.JavaBeansUtil.getSetterMethodName;
 import static org.mybatis.generator.internal.util.JavaBeansUtil.getValidPropertyName;

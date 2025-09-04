@@ -20,6 +20,8 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -166,12 +168,12 @@ public class GeneratorAntTask extends Task {
         }
 
 
-        File configurationFile = new File(configfile);
-        if (!configurationFile.exists()) {
+        Path configurationFile = Path.of(configfile);
+        if (Files.notExists(configurationFile)) {
             throw new BuildException(getString(
                     "RuntimeError.1", configfile)); //$NON-NLS-1$
         }
-        return configurationFile;
+        return configurationFile.toFile();
     }
 
     public String getConfigfile() {

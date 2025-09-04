@@ -22,6 +22,8 @@ defaults:
 
 on: [push, pull_request]
 
+permissions: read-all
+
 jobs:
   test:
     runs-on: ${{ matrix.os }}
@@ -35,7 +37,7 @@ jobs:
     name: Test JDK ${{ matrix.java }}, ${{ matrix.os }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Install Toolchain JDK
         uses: battila7/jdk-via-jabba@v1
         with:
@@ -61,7 +63,7 @@ jobs:
           </toolchains>
           EOF
       - name: Set up JDK
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version: ${{ matrix.java }}
           distribution: ${{ matrix.distribution }}

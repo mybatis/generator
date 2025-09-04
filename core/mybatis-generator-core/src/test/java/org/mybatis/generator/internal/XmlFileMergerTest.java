@@ -15,7 +15,7 @@
  */
 package org.mybatis.generator.internal;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.StringReader;
 import java.util.Properties;

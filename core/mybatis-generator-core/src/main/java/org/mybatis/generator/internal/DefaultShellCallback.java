@@ -18,6 +18,9 @@ package org.mybatis.generator.internal;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.StringTokenizer;
 
 import org.mybatis.generator.api.ShellCallback;
@@ -40,8 +43,8 @@ public class DefaultShellCallback implements ShellCallback {
         // format (with dots instead of slashes). The subdirectory will be
         // created if it does not already exist
 
-        File targetProjectDirectory = new File(targetProject);
-        if (!targetProjectDirectory.isDirectory()) {
+        Path targetProjectDirectory = Path.of(targetProject);
+        if (!Files.isDirectory(targetProjectDirectory)) {
             throw new ShellException(getString("Warning.9", //$NON-NLS-1$
                     targetProject));
         }
@@ -53,16 +56,17 @@ public class DefaultShellCallback implements ShellCallback {
             sb.append(File.separatorChar);
         }
 
-        File directory = new File(targetProjectDirectory, sb.toString());
-        if (!directory.isDirectory()) {
-            boolean rc = directory.mkdirs();
-            if (!rc) {
+        Path directory = targetProjectDirectory.resolve(sb.toString());
+        if (!Files.isDirectory(directory)) {
+            try {
+                Files.createDirectories(directory);
+            } catch (IOException e) {
                 throw new ShellException(getString("Warning.10", //$NON-NLS-1$
-                        directory.getAbsolutePath()));
+                        directory.toFile().getAbsolutePath()));
             }
         }
 
-        return directory;
+        return directory.toFile();
     }
 
     @Override

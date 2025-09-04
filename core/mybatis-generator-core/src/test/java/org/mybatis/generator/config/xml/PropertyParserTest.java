@@ -15,7 +15,7 @@
  */
 package org.mybatis.generator.config.xml;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import java.util.Properties;

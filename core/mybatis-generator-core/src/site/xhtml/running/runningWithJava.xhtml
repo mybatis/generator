@@ -36,9 +36,9 @@ Java.</p>
 <pre>
    List&lt;String&gt; warnings = new ArrayList&lt;String&gt;();
    boolean overwrite = true;
-   File configFile = new File("generatorConfig.xml");
+   Path configFile = Path.of("generatorConfig.xml");
    ConfigurationParser cp = new ConfigurationParser(warnings);
-   Configuration config = cp.parseConfiguration(configFile);
+   Configuration config = cp.parseConfiguration(configFile.toFile());
    DefaultShellCallback callback = new DefaultShellCallback(overwrite);
    MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
    myBatisGenerator.generate(null);

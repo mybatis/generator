@@ -15,7 +15,7 @@
  */
 package org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 

@@ -17,10 +17,11 @@ package org.mybatis.generator.internal.util;
 
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
-import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -45,18 +46,18 @@ public class ClassloaderUtility {
 
     public static ClassLoader getCustomClassloader(Collection<String> entries) {
         List<URL> urls = new ArrayList<>();
-        File file;
+        Path file;
 
         if (entries != null) {
             for (String classPathEntry : entries) {
-                file = new File(classPathEntry);
-                if (!file.exists()) {
+                file = Path.of(classPathEntry);
+                if (Files.notExists(file)) {
                     LOG.warn(getString("Warning.31", classPathEntry)); //$NON-NLS-1$
                     continue;
                 }
 
                 try {
-                    urls.add(file.toURI().toURL());
+                    urls.add(file.toUri().toURL());
                 } catch (MalformedURLException e) {
                     // this shouldn't happen, but just in case...
                     throw new RuntimeException(getString(

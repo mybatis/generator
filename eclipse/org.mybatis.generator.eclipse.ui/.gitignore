@@ -1,5 +1,3 @@
-/antbin/
-/bin/
-/target/
-/lib/
-/dtds/
+antbin/
+dtds/
+lib/

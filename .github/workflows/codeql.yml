@@ -2,10 +2,9 @@ name: "CodeQL"
 
 on:
   push:
-    branches: [ 'master' ]
+    branches: [ master ]
   pull_request:
-    # The branches below must be a subset of the branches above
-    branches: [ 'master' ]
+    branches: [ master ]
   schedule:
     - cron: '30 7 * * 5'
 
@@ -13,6 +12,7 @@ jobs:
   analyze:
     name: Analyze
     runs-on: ubuntu-latest
+    timeout-minutes: 360
     permissions:
       actions: read
       contents: read
@@ -22,68 +22,59 @@ jobs:
       fail-fast: false
       matrix:
         language: [ 'java' ]
-        # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby' ]
-        # Use only 'java' to analyze code written in Java, Kotlin or both
-        # Use only 'javascript' to analyze code written in JavaScript, TypeScript or both
-        # Learn more about CodeQL language support at https://aka.ms/codeql-docs/language-support
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v5
 
-    - name: Set up JDK
-      uses: actions/setup-java@v4
-      with:
-        java-version: 21
-        distribution: 'zulu'
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          cache: maven
+          distribution: 'zulu'
+          java-version: 21
 
-    - name: Install Toolchain JDK
-      uses: battila7/jdk-via-jabba@v1
-      with:
-        jdk: zulu@1.17.0-0
-        javaHomeEnvironmentVariable: TOOLCHAIN_JDK
+      - name: Install Toolchain JDK
+        uses: battila7/jdk-via-jabba@v1
+        with:
+          jdk: zulu@1.17.0-0
+          javaHomeEnvironmentVariable: TOOLCHAIN_JDK
 
-    - name: Set up Toolchain
-      shell: bash
-      run: |
-        mkdir -p $HOME/.m2 \
-        && cat << EOF > $HOME/.m2/toolchains.xml
-        <?xml version="1.0" encoding="UTF8"?>
-        <toolchains>
-          <toolchain>
-            <type>jdk</type>
-              <provides>
-                <version>17</version>
-                <vendor>zulu</vendor>
-              </provides>
-              <configuration>
-                <jdkHome>${{ env.TOOLCHAIN_JDK }}</jdkHome>
-              </configuration>
-          </toolchain>
-        </toolchains>
-        EOF
+      - name: Set up Toolchain
+        shell: bash
+        run: |
+          mkdir -p $HOME/.m2 \
+          && cat << EOF > $HOME/.m2/toolchains.xml
+          <?xml version="1.0" encoding="UTF8"?>
+          <toolchains>
+            <toolchain>
+              <type>jdk</type>
+                <provides>
+                  <version>17</version>
+                  <vendor>zulu</vendor>
+                </provides>
+                <configuration>
+                  <jdkHome>${{ env.TOOLCHAIN_JDK }}</jdkHome>
+                </configuration>
+            </toolchain>
+          </toolchains>
+          EOF
 
-    # Initializes the CodeQL tools for scanning.
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v3
-      with:
-        languages: ${{ matrix.language }}
-        # If you wish to specify custom queries, you can do so here or in a config file.
-        # By default, queries listed here will override any specified in a config file.
-        # Prefix the list here with "+" to use these queries and those in the config file.
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          queries: +security-and-quality
 
-        # For more details on CodeQL's query packs, refer to: https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
-        # queries: security-extended,security-and-quality
+      - name: Autobuild
+        working-directory: core
+        run: ./mvnw clean install -DskipTests
 
-    - name: Autobuild
-      working-directory: core
-      run: ./mvnw clean install -DskipTests
+      - name: Autobuild
+        working-directory: eclipse
+        run: ./mvnw clean install -DskipTests
 
-    - name: Autobuild
-      working-directory: eclipse
-      run: ./mvnw clean install -DskipTests
-
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v3
-      with:
-        category: "/language:${{matrix.language}}"
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{matrix.language}}"

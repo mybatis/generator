@@ -139,7 +139,7 @@ public class JavaFileMerger {
     private static boolean hasGeneratedJavadocTag(BodyDeclaration<?> member, String[] javadocTags) {
         // Check if the member has a comment and if it contains any of the javadoc tags
         if (member.getComment().isPresent()) {
-            String commentContent = member.getComment().get().getContent();
+            String commentContent = member.getComment().orElseThrow().getContent();
             for (String tag : javadocTags) {
                 if (commentContent.contains(tag)) {
                     return true;

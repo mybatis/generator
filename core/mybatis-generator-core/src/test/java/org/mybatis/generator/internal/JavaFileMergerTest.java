@@ -122,12 +122,12 @@ class JavaFileMergerTest {
             var expected = """
                 package com.example;
 
+                import java.sql.Connection;
+                import java.sql.PreparedStatement;
+                import java.util.Date;
                 import java.util.List;
                 import java.util.Map;
-                import java.util.Date;
-                import java.sql.PreparedStatement;
                 import java.util.Set;
-                import java.sql.Connection;
 
                 public class TestMapper {
 

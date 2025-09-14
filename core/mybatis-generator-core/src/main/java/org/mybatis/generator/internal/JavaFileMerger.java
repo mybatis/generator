@@ -31,7 +31,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
@@ -151,14 +151,59 @@ public class JavaFileMerger {
 
     private static void mergeImports(CompilationUnit existingCompilationUnit,
                                      CompilationUnit mergedCompilationUnit) {
-        Set<String> existingImports = mergedCompilationUnit.getImports().stream()
-                .map(NodeWithName::getNameAsString)
-                .collect(Collectors.toSet());
+        record ImportInfo(String name, boolean isStatic, boolean isAsterisk) implements Comparable<ImportInfo> {
+            @Override
+            public int compareTo(ImportInfo other) {
+                // Static imports come last
+                if (this.isStatic != other.isStatic) {
+                    return this.isStatic ? 1 : -1;
+                }
 
-        for (ImportDeclaration existingImport : existingCompilationUnit.getImports()) {
-            if (!existingImports.contains(existingImport.getNameAsString())) {
-                mergedCompilationUnit.addImport(existingImport.getNameAsString(), existingImport.isStatic(), existingImport.isAsterisk());
+                // Within the same category (static or non-static), sort by import order priority
+                int priorityThis = getImportPriority(this.name);
+                int priorityOther = getImportPriority(other.name);
+
+                if (priorityThis != priorityOther) {
+                    return Integer.compare(priorityThis, priorityOther);
+                }
+
+                // Within the same priority, use natural ordering (case-insensitive)
+                return String.CASE_INSENSITIVE_ORDER.compare(this.name, other.name);
             }
+        }
+
+        // Collect all imports from both compilation units
+        Set<ImportInfo> allImports = new LinkedHashSet<>();
+
+        // Add imports from new file
+        for (ImportDeclaration importDecl : mergedCompilationUnit.getImports()) {
+            allImports.add(new ImportInfo(importDecl.getNameAsString(), importDecl.isStatic(), importDecl.isAsterisk()));
+        }
+
+        // Add imports from existing file (avoiding duplicates)
+        for (ImportDeclaration importDecl : existingCompilationUnit.getImports()) {
+            allImports.add(new ImportInfo(importDecl.getNameAsString(), importDecl.isStatic(), importDecl.isAsterisk()));
+        }
+
+        // Clear existing imports and add sorted imports
+        mergedCompilationUnit.getImports().clear();
+
+        // Sort imports according to best practices and add them back
+        allImports.stream()
+                .sorted()
+                .forEach(importInfo -> mergedCompilationUnit.addImport(
+                        importInfo.name(), importInfo.isStatic(), importInfo.isAsterisk()));
+    }
+
+    private static int getImportPriority(String importName) {
+        if (importName.startsWith("java.")) {
+            return 10;
+        } else if (importName.startsWith("javax.")) {
+            return 20;
+        } else if (importName.startsWith("jakarta.")) {
+            return 30;
+        } else {
+            return 40; // Third-party and project imports
         }
     }
 

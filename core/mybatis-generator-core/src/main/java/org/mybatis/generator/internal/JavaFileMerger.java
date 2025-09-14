@@ -1,0 +1,203 @@
+/*
+ *    Copyright 2006-2025 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+package org.mybatis.generator.internal;
+
+import com.github.javaparser.JavaParser;
+import com.github.javaparser.ParseResult;
+import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.ImportDeclaration;
+import com.github.javaparser.ast.body.BodyDeclaration;
+import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
+import com.github.javaparser.ast.body.TypeDeclaration;
+import com.github.javaparser.ast.expr.AnnotationExpr;
+import com.github.javaparser.ast.nodeTypes.NodeWithName;
+import org.mybatis.generator.exception.ShellException;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
+/**
+ * This class handles the task of merging changes into an existing Java file using JavaParser.
+ * It supports merging by removing methods and fields that have specific JavaDoc tags or annotations.
+ *
+ * @author Freeman
+ */
+public class JavaFileMerger {
+
+    private JavaFileMerger() {
+    }
+
+    /**
+     * Merge a newly generated Java file with an existing Java file.
+     *
+     * @param newFileSource the source of the newly generated Java file
+     * @param existingFile the existing Java file
+     * @param javadocTags the JavaDoc tags that denote which methods and fields in the old file to delete
+     * @param fileEncoding the file encoding for reading existing Java files
+     * @return the merged source, properly formatted
+     * @throws ShellException if the file cannot be merged for some reason
+     */
+    public static String getMergedSource(String newFileSource, File existingFile,
+                                         String[] javadocTags, String fileEncoding) throws ShellException {
+        try {
+            String existingFileContent = readFileContent(existingFile, fileEncoding);
+            return getMergedSource(newFileSource, existingFileContent, javadocTags);
+        } catch (IOException e) {
+            throw new ShellException(getString("Warning.13", existingFile.getName()), e);
+        }
+    }
+
+    /**
+     * Merge a newly generated Java file with existing Java file content.
+     *
+     * @param newFileSource the source of the newly generated Java file
+     * @param existingFileContent the content of the existing Java file
+     * @param javadocTags the JavaDoc tags that denote which methods and fields in the old file to delete
+     * @return the merged source, properly formatted
+     * @throws ShellException if the file cannot be merged for some reason
+     */
+    public static String getMergedSource(String newFileSource, String existingFileContent,
+                                         String[] javadocTags) throws ShellException {
+        try {
+            JavaParser javaParser = new JavaParser();
+
+            // Parse the new file
+            ParseResult<CompilationUnit> newParseResult = javaParser.parse(newFileSource);
+            if (!newParseResult.isSuccessful()) {
+                throw new ShellException("Failed to parse new Java file: " + newParseResult.getProblems());
+            }
+            CompilationUnit newCompilationUnit = newParseResult.getResult().orElseThrow();
+
+            // Parse the existing file
+            ParseResult<CompilationUnit> existingParseResult = javaParser.parse(existingFileContent);
+            if (!existingParseResult.isSuccessful()) {
+                throw new ShellException("Failed to parse existing Java file: " + existingParseResult.getProblems());
+            }
+            CompilationUnit existingCompilationUnit = existingParseResult.getResult().orElseThrow();
+
+            // Perform the merge
+            CompilationUnit mergedCompilationUnit = performMerge(newCompilationUnit, existingCompilationUnit, javadocTags);
+
+            return mergedCompilationUnit.toString();
+        } catch (Exception e) {
+            throw new ShellException("Error merging Java files: " + e.getMessage(), e);
+        }
+    }
+
+    private static CompilationUnit performMerge(CompilationUnit newCompilationUnit,
+                                                CompilationUnit existingCompilationUnit,
+                                                String[] javadocTags) {
+        // Start with the new compilation unit as the base (to get new generated elements first)
+        CompilationUnit mergedCompilationUnit = newCompilationUnit.clone();
+
+        // Merge imports
+        mergeImports(existingCompilationUnit, mergedCompilationUnit);
+
+        // Add preserved (non-generated) elements from existing file at the end
+        addPreservedElements(existingCompilationUnit, mergedCompilationUnit, javadocTags);
+
+        return mergedCompilationUnit;
+    }
+
+    private static boolean isGeneratedElement(BodyDeclaration<?> member, String[] javadocTags) {
+        return hasGeneratedAnnotation(member) || hasGeneratedJavadocTag(member, javadocTags);
+    }
+
+    private static boolean hasGeneratedAnnotation(BodyDeclaration<?> member) {
+        for (AnnotationExpr annotation : member.getAnnotations()) {
+            String annotationName = annotation.getNameAsString();
+            // Check for @Generated annotation (both javax and jakarta packages)
+            if ("Generated".equals(annotationName) ||
+                "javax.annotation.Generated".equals(annotationName) ||
+                "jakarta.annotation.Generated".equals(annotationName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean hasGeneratedJavadocTag(BodyDeclaration<?> member, String[] javadocTags) {
+        // Check if the member has a comment and if it contains any of the javadoc tags
+        if (member.getComment().isPresent()) {
+            String commentContent = member.getComment().get().getContent();
+            for (String tag : javadocTags) {
+                if (commentContent.contains(tag)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private static void mergeImports(CompilationUnit existingCompilationUnit,
+                                     CompilationUnit mergedCompilationUnit) {
+        Set<String> existingImports = mergedCompilationUnit.getImports().stream()
+                .map(NodeWithName::getNameAsString)
+                .collect(Collectors.toSet());
+
+        for (ImportDeclaration existingImport : existingCompilationUnit.getImports()) {
+            if (!existingImports.contains(existingImport.getNameAsString())) {
+                mergedCompilationUnit.addImport(existingImport.getNameAsString(), existingImport.isStatic(), existingImport.isAsterisk());
+            }
+        }
+    }
+
+    private static void addPreservedElements(CompilationUnit existingCompilationUnit, CompilationUnit mergedCompilationUnit, String[] javadocTags) {
+        // Find the main type declarations
+        TypeDeclaration<?> existingTypeDeclaration = findMainTypeDeclaration(existingCompilationUnit);
+        TypeDeclaration<?> mergedTypeDeclaration = findMainTypeDeclaration(mergedCompilationUnit);
+
+        if (existingTypeDeclaration instanceof ClassOrInterfaceDeclaration existingClassDeclaration &&
+            mergedTypeDeclaration instanceof ClassOrInterfaceDeclaration mergedClassDeclaration) {
+
+            // Add only non-generated members from the existing class to the end of merged class
+            for (BodyDeclaration<?> member : existingClassDeclaration.getMembers()) {
+                if (!isGeneratedElement(member, javadocTags)) {
+                    mergedClassDeclaration.addMember(member.clone());
+                }
+            }
+        }
+    }
+
+    private static TypeDeclaration<?> findMainTypeDeclaration(CompilationUnit compilationUnit) {
+        // Return the first public type declaration, or the first type declaration if no public one exists
+        TypeDeclaration<?> firstType = null;
+        for (TypeDeclaration<?> typeDeclaration : compilationUnit.getTypes()) {
+            if (firstType == null) {
+                firstType = typeDeclaration;
+            }
+            if (typeDeclaration.isPublic()) {
+                return typeDeclaration;
+            }
+        }
+        return firstType;
+    }
+
+    private static String readFileContent(File file, String fileEncoding) throws IOException {
+        if (fileEncoding != null) {
+            return Files.readString(file.toPath(), Charset.forName(fileEncoding));
+        } else {
+            return Files.readString(file.toPath(), StandardCharsets.UTF_8);
+        }
+    }
+}

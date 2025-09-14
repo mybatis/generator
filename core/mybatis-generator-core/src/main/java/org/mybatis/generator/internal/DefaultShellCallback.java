@@ -73,4 +73,15 @@ public class DefaultShellCallback implements ShellCallback {
     public boolean isOverwriteEnabled() {
         return overwrite;
     }
+
+    @Override
+    public boolean isMergeSupported() {
+        return true;
+    }
+
+    @Override
+    public String mergeJavaFile(String newFileSource, File existingFile,
+                                String[] javadocTags, String fileEncoding) throws ShellException {
+        return JavaFileMerger.getMergedSource(newFileSource, existingFile, javadocTags, fileEncoding);
+    }
 }

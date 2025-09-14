@@ -23,7 +23,6 @@ import com.github.javaparser.ast.body.BodyDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.expr.AnnotationExpr;
-import com.github.javaparser.ast.nodeTypes.NodeWithName;
 import org.mybatis.generator.exception.ShellException;
 
 import java.io.File;
@@ -31,8 +30,8 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
@@ -51,9 +50,9 @@ public class JavaFileMerger {
      * Merge a newly generated Java file with an existing Java file.
      *
      * @param newFileSource the source of the newly generated Java file
-     * @param existingFile the existing Java file
-     * @param javadocTags the JavaDoc tags that denote which methods and fields in the old file to delete
-     * @param fileEncoding the file encoding for reading existing Java files
+     * @param existingFile  the existing Java file
+     * @param javadocTags   the JavaDoc tags that denote which methods and fields in the old file to delete
+     * @param fileEncoding  the file encoding for reading existing Java files
      * @return the merged source, properly formatted
      * @throws ShellException if the file cannot be merged for some reason
      */
@@ -70,9 +69,9 @@ public class JavaFileMerger {
     /**
      * Merge a newly generated Java file with existing Java file content.
      *
-     * @param newFileSource the source of the newly generated Java file
+     * @param newFileSource       the source of the newly generated Java file
      * @param existingFileContent the content of the existing Java file
-     * @param javadocTags the JavaDoc tags that denote which methods and fields in the old file to delete
+     * @param javadocTags         the JavaDoc tags that denote which methods and fields in the old file to delete
      * @return the merged source, properly formatted
      * @throws ShellException if the file cannot be merged for some reason
      */

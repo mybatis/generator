@@ -100,16 +100,13 @@ public class ServiceGeneratorPlugin extends PluginAdapter {
         serviceInterface.addImportedType(dtoType);
         serviceInterface.addImportedType(new FullyQualifiedJavaType("java.util.List"));
 
-        // Get primary key type (handle composite keys)
+        // Get primary key columns for method generation
         List<IntrospectedColumn> primaryKeyColumns = introspectedTable.getPrimaryKeyColumns();
-        FullyQualifiedJavaType primaryKeyType;
-        if (primaryKeyColumns.size() == 1) {
-            primaryKeyType = primaryKeyColumns.get(0).getFullyQualifiedJavaType();
-        } else {
-            // For composite keys, use the primary key class
-            primaryKeyType = new FullyQualifiedJavaType(introspectedTable.getPrimaryKeyType());
+
+        // Add imports for primary key types
+        for (IntrospectedColumn column : primaryKeyColumns) {
+            serviceInterface.addImportedType(column.getFullyQualifiedJavaType());
         }
-        serviceInterface.addImportedType(primaryKeyType);
 
         // Add interface comment
         serviceInterface.addJavaDocLine("/**");
@@ -118,13 +115,13 @@ public class ServiceGeneratorPlugin extends PluginAdapter {
         serviceInterface.addJavaDocLine(" */");
 
         // Add CRUD methods
-        addServiceInterfaceMethods(serviceInterface, dtoType, primaryKeyType, dtoClassName);
+        addServiceInterfaceMethods(serviceInterface, dtoType, primaryKeyColumns, dtoClassName);
 
         return serviceInterface;
     }
 
     private void addServiceInterfaceMethods(Interface serviceInterface, FullyQualifiedJavaType dtoType,
-                                            FullyQualifiedJavaType primaryKeyType, String dtoClassName) {
+                                            List<IntrospectedColumn> primaryKeyColumns, String dtoClassName) {
 
         // save method
         Method save = new Method("save");
@@ -173,11 +170,19 @@ public class ServiceGeneratorPlugin extends PluginAdapter {
         deleteById.setVisibility(JavaVisibility.PUBLIC);
         deleteById.setAbstract(true);
         deleteById.setReturnType(new FullyQualifiedJavaType("int"));
-        deleteById.addParameter(new Parameter(primaryKeyType, "id"));
+
+        // Add parameters for all primary key columns
+        for (IntrospectedColumn column : primaryKeyColumns) {
+            String paramName = column.getJavaProperty();
+            deleteById.addParameter(new Parameter(column.getFullyQualifiedJavaType(), paramName));
+        }
+
         deleteById.addJavaDocLine("/**");
         deleteById.addJavaDocLine(" * Delete entity by primary key");
         deleteById.addJavaDocLine(" *");
-        deleteById.addJavaDocLine(" * @param id primary key");
+        for (IntrospectedColumn column : primaryKeyColumns) {
+            deleteById.addJavaDocLine(" * @param " + column.getJavaProperty() + " " + column.getRemarks());
+        }
         deleteById.addJavaDocLine(" * @return number of affected rows, 1 for success, 0 for failure");
         deleteById.addJavaDocLine(" */");
         serviceInterface.addMethod(deleteById);
@@ -187,11 +192,19 @@ public class ServiceGeneratorPlugin extends PluginAdapter {
         findById.setVisibility(JavaVisibility.PUBLIC);
         findById.setAbstract(true);
         findById.setReturnType(dtoType);
-        findById.addParameter(new Parameter(primaryKeyType, "id"));
+
+        // Add parameters for all primary key columns
+        for (IntrospectedColumn column : primaryKeyColumns) {
+            String paramName = column.getJavaProperty();
+            findById.addParameter(new Parameter(column.getFullyQualifiedJavaType(), paramName));
+        }
+
         findById.addJavaDocLine("/**");
         findById.addJavaDocLine(" * Find entity by primary key");
         findById.addJavaDocLine(" *");
-        findById.addJavaDocLine(" * @param id primary key");
+        for (IntrospectedColumn column : primaryKeyColumns) {
+            findById.addJavaDocLine(" * @param " + column.getJavaProperty() + " " + column.getRemarks());
+        }
         findById.addJavaDocLine(" * @return DTO object, null if not found");
         findById.addJavaDocLine(" */");
         serviceInterface.addMethod(findById);
@@ -271,19 +284,16 @@ public class ServiceGeneratorPlugin extends PluginAdapter {
         // Add mapper fields
         addMapperFields(serviceImpl, originalMapperType, customerMapperType, originalMapperClassName, customerMapperClassName);
 
-        // Get primary key info (handle composite keys)
+        // Get primary key columns for method generation
         List<IntrospectedColumn> primaryKeyColumns = introspectedTable.getPrimaryKeyColumns();
-        FullyQualifiedJavaType primaryKeyType;
-        if (primaryKeyColumns.size() == 1) {
-            primaryKeyType = primaryKeyColumns.get(0).getFullyQualifiedJavaType();
-        } else {
-            // For composite keys, use the primary key class
-            primaryKeyType = new FullyQualifiedJavaType(introspectedTable.getPrimaryKeyType());
+
+        // Add imports for primary key types
+        for (IntrospectedColumn column : primaryKeyColumns) {
+            serviceImpl.addImportedType(column.getFullyQualifiedJavaType());
         }
-        serviceImpl.addImportedType(primaryKeyType);
 
         // Add service implementation methods
-        addServiceImplementationMethods(serviceImpl, dtoType, entityType, primaryKeyType, dtoClassName, entityClassName);
+        addServiceImplementationMethods(serviceImpl, dtoType, entityType, primaryKeyColumns, dtoClassName, entityClassName);
 
         return serviceImpl;
     }
@@ -305,7 +315,7 @@ public class ServiceGeneratorPlugin extends PluginAdapter {
     }
 
     private void addServiceImplementationMethods(TopLevelClass serviceImpl, FullyQualifiedJavaType dtoType,
-                                                 FullyQualifiedJavaType entityType, FullyQualifiedJavaType primaryKeyType,
+                                                 FullyQualifiedJavaType entityType, List<IntrospectedColumn> primaryKeyColumns,
                                                  String dtoClassName, String entityClassName) {
 
         String mapperFieldName = lowercaseFirstLetter(entityClassName) + "Mapper";
@@ -365,12 +375,29 @@ public class ServiceGeneratorPlugin extends PluginAdapter {
         deleteById.setVisibility(JavaVisibility.PUBLIC);
         deleteById.addAnnotation("@Override");
         deleteById.setReturnType(new FullyQualifiedJavaType("int"));
-        deleteById.addParameter(new Parameter(primaryKeyType, "id"));
-        deleteById.addBodyLine("if (id == null) {");
-        deleteById.addBodyLine("    return 0;");
-        deleteById.addBodyLine("}");
+
+        // Add parameters for all primary key columns
+        for (IntrospectedColumn column : primaryKeyColumns) {
+            String paramName = column.getJavaProperty();
+            deleteById.addParameter(new Parameter(column.getFullyQualifiedJavaType(), paramName));
+        }
+
+        // Add null checks for primary key parameters
+        for (IntrospectedColumn column : primaryKeyColumns) {
+            deleteById.addBodyLine("if (" + column.getJavaProperty() + " == null) {");
+            deleteById.addBodyLine("    return 0;");
+            deleteById.addBodyLine("}");
+        }
         deleteById.addBodyLine("");
-        deleteById.addBodyLine("return " + mapperFieldName + ".deleteByPrimaryKey(id);");
+
+        // Build method call with all primary key parameters
+        StringBuilder deleteMethodCall = new StringBuilder("return " + mapperFieldName + ".deleteByPrimaryKey(");
+        for (int i = 0; i < primaryKeyColumns.size(); i++) {
+            if (i > 0) deleteMethodCall.append(", ");
+            deleteMethodCall.append(primaryKeyColumns.get(i).getJavaProperty());
+        }
+        deleteMethodCall.append(");");
+        deleteById.addBodyLine(deleteMethodCall.toString());
         serviceImpl.addMethod(deleteById);
 
         // findById method
@@ -378,12 +405,29 @@ public class ServiceGeneratorPlugin extends PluginAdapter {
         findById.setVisibility(JavaVisibility.PUBLIC);
         findById.addAnnotation("@Override");
         findById.setReturnType(dtoType);
-        findById.addParameter(new Parameter(primaryKeyType, "id"));
-        findById.addBodyLine("if (id == null) {");
-        findById.addBodyLine("    return null;");
-        findById.addBodyLine("}");
+
+        // Add parameters for all primary key columns
+        for (IntrospectedColumn column : primaryKeyColumns) {
+            String paramName = column.getJavaProperty();
+            findById.addParameter(new Parameter(column.getFullyQualifiedJavaType(), paramName));
+        }
+
+        // Add null checks for primary key parameters
+        for (IntrospectedColumn column : primaryKeyColumns) {
+            findById.addBodyLine("if (" + column.getJavaProperty() + " == null) {");
+            findById.addBodyLine("    return null;");
+            findById.addBodyLine("}");
+        }
         findById.addBodyLine("");
-        findById.addBodyLine(entityClassName + " entity = " + mapperFieldName + ".selectByPrimaryKey(id).orElse(null);");
+
+        // Build method call with all primary key parameters
+        StringBuilder findMethodCall = new StringBuilder(entityClassName + " entity = " + mapperFieldName + ".selectByPrimaryKey(");
+        for (int i = 0; i < primaryKeyColumns.size(); i++) {
+            if (i > 0) findMethodCall.append(", ");
+            findMethodCall.append(primaryKeyColumns.get(i).getJavaProperty());
+        }
+        findMethodCall.append(").orElse(null);");
+        findById.addBodyLine(findMethodCall.toString());
         findById.addBodyLine("return entity != null ? " + dtoClassName + ".fromEntity(entity) : null;");
         serviceImpl.addMethod(findById);
 

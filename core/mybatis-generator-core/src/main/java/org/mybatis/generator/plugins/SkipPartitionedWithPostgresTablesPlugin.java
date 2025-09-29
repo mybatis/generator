@@ -52,8 +52,6 @@ import java.util.TreeSet;
  */
 public class SkipPartitionedWithPostgresTablesPlugin extends PluginAdapter {
 
-    private static final Logger log = LoggerFactory.getLogger(SkipPartitionedWithPostgresTablesPlugin.class);
-
     private Set<String> allowlist = null; // null until discovered
     private boolean caseInsensitive = false;
     private Set<String> allowlistNormalized = null; // used only when caseInsensitive
@@ -73,7 +71,6 @@ public class SkipPartitionedWithPostgresTablesPlugin extends PluginAdapter {
             Object jdbcCfg = f.get(context);
             return jdbcCfg != null;
         } catch (Exception e) {
-            log.debug("Failed to inspect JDBC configuration reflectively; proceeding as if present", e);
             return true;
         }
     }
@@ -89,7 +86,6 @@ public class SkipPartitionedWithPostgresTablesPlugin extends PluginAdapter {
 
         if (!hasConnectionConfiguration()) {
             String msg = "No JDBC or ConnectionFactory configuration present - cannot discover non-partitioned tables for SkipPartitionedWithPostgresTablesPlugin";
-            log.error(msg);
             throw new RuntimeException(msg);
         }
 
@@ -98,9 +94,7 @@ public class SkipPartitionedWithPostgresTablesPlugin extends PluginAdapter {
             if (caseInsensitive && allowlist != null) {
                 buildNormalizedAllowlist();
             }
-            log.info("Discovered non-partitioned tables/views: {}", allowlist.size());
         } catch (Exception e) { // fail-fast
-            log.error("Failed to discover non-partitioned tables/views", e);
             throw new RuntimeException("Failed to discover non-partitioned tables/views", e);
         }
 
@@ -114,9 +108,7 @@ public class SkipPartitionedWithPostgresTablesPlugin extends PluginAdapter {
                     Files.createDirectories(parent);
                 }
                 Files.write(output, new TreeSet<>(this.allowlist));
-                log.info("Wrote allowlist file: {} (caseInsensitive={})", output.toAbsolutePath(), caseInsensitive);
             } catch (IOException e) {
-                log.error("Failed to write allowlist file: {}", output.toAbsolutePath(), e);
                 throw new RuntimeException("Failed to write allowlist file: " + output.toAbsolutePath(), e);
             }
         }
@@ -190,9 +182,6 @@ public class SkipPartitionedWithPostgresTablesPlugin extends PluginAdapter {
             skip = key == null || !allowlistNormalized.contains(key);
         } else {
             skip = !allowlist.contains(tableName);
-        }
-        if (skip) {
-            log.debug("Skipping partitioned table: {} (caseInsensitive={})", tableName, caseInsensitive);
         }
         return skip;
     }

@@ -416,7 +416,20 @@ specified with the <a href="property.html">&lt;property&gt;</a> child element:</
       <p><b>Important:</b> MBG does not verify that the interface exists, or is a
        valid Java interface.</p>
       <p>If specified, the value of this property should be a fully qualified
-       interface name (like com.mycompany.MyRootInterface).</p></td>
+       interface name (like com.mycompany.MyRootInterface).</p>
+      <p><b>Generic Type Support:</b> If the root interface is a generic interface, you can
+       use a placeholder for the type parameter. The placeholder will be automatically
+       replaced with the actual record type for this table. For example:
+       <ul>
+         <li><code>com.mycompany.BaseMapper&lt;T&gt;</code> will become
+             <code>com.mycompany.BaseMapper&lt;com.example.User&gt;</code></li>
+         <li><code>com.mycompany.BaseMapper&lt;T extends Entity&gt;</code> will become
+             <code>com.mycompany.BaseMapper&lt;com.example.User&gt;</code></li>
+       </ul>
+       Placeholders are typically single uppercase letters (T, E, K, V, etc.) optionally
+       followed by " extends ..." or " super ...". If you specify a fully qualified type
+       (like <code>BaseMapper&lt;com.example.User&gt;</code>), it will be used as-is without
+       replacement.</p></td>
   </tr>
   <tr>
     <td valign="top">runtimeCatalog</td>

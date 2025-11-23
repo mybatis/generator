@@ -52,7 +52,8 @@ jobs:
       - name: Set up Toolchain
         shell: bash
         run: |
-          mkdir --parents $HOME/.m2 \
+          # Note: Cannot expand -p to --parents on macos
+          mkdir -p $HOME/.m2 \
           && cat << EOF > $HOME/.m2/toolchains.xml
           <?xml version="1.0" encoding="UTF-8"?>
           <toolchains>

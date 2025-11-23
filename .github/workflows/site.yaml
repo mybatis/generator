@@ -32,7 +32,7 @@ jobs:
       - name: Build site
         # Note: the mvnw executable is in the parent directory - not this working directory. We only do site on the
         # core project, not all the test projects.
-        run: ../mvnw site site:stage --batch-mode --no-transfer-progress --settings ./.mvn/settings.xml --show-version -Dlicense.skip=true -DskipTests
+        run: ../mvnw site site:stage --batch-mode --no-transfer-progress --settings ../.mvn/settings.xml --show-version -Dlicense.skip=true -DskipTests
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}

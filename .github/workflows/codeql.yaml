@@ -38,13 +38,13 @@ jobs:
         with:
           queries: +security-and-quality
 
-      - name: Autobuild
-        uses: github/codeql-action/autobuild@e12f0178983d466f2f6028f5cc7a6d786fd97f4b # v4
+      - name: Autobuild (manual core)
         working-directory: core
+        run: ./mvnw clean install -DskipTests
 
-      - name: Autobuild
-        uses: github/codeql-action/autobuild@e12f0178983d466f2f6028f5cc7a6d786fd97f4b # v4
+      - name: Autobuild (manual eclipse)
         working-directory: eclipse
+        run: ./mvnw clean install -DskipTests
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@e12f0178983d466f2f6028f5cc7a6d786fd97f4b # v4

@@ -39,12 +39,12 @@ jobs:
           queries: +security-and-quality
 
       - name: Autobuild
-        working-directory: core
         uses: github/codeql-action/autobuild@e12f0178983d466f2f6028f5cc7a6d786fd97f4b # v4
+        working-directory: core
 
       - name: Autobuild
-        working-directory: eclipse
         uses: github/codeql-action/autobuild@e12f0178983d466f2f6028f5cc7a6d786fd97f4b # v4
+        working-directory: eclipse
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@e12f0178983d466f2f6028f5cc7a6d786fd97f4b # v4

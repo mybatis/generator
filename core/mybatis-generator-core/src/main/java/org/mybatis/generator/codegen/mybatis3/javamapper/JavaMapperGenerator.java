@@ -75,7 +75,10 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
         }
 
         if (stringHasValue(rootInterface)) {
-            FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(rootInterface);
+            // Process rootInterface to replace generic placeholders with actual record type
+            String recordType = introspectedTable.getBaseRecordType();
+            String processedRootInterface = processRootInterfaceWithGenerics(rootInterface, recordType);
+            FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(processedRootInterface);
             interfaze.addSuperInterface(fqjt);
             interfaze.addImportedType(fqjt);
         }

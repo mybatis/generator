@@ -13,25 +13,19 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package mbg.domtest.generators.supers;
+package org.mybatis.generator.api.dom.java;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.mybatis.generator.api.dom.java.CompilationUnit;
-import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
-import org.mybatis.generator.api.dom.java.Interface;
-import org.mybatis.generator.api.dom.java.JavaVisibility;
-import org.mybatis.generator.api.dom.java.TopLevelClass;
-
-import mbg.domtest.CompilationUnitGenerator;
-
-public class SupersGenerator implements CompilationUnitGenerator {
+/**
+ * This test verifies that implementations can be in different packages from their super classes.
+ */
+public class SupersGenerator {
 
     private static final String BASE_PACKAGE = "mbg.domtest.generators.supers";
 
-    @Override
-    public List<CompilationUnit> generate() {
+    public static List<CompilationUnit> generateTestClasses() {
         List<CompilationUnit> answer = new ArrayList<>();
 
         TopLevelClass baseClass = getBaseClass();
@@ -51,7 +45,7 @@ public class SupersGenerator implements CompilationUnitGenerator {
         return answer;
     }
 
-    private TopLevelClass getSuperClass() {
+    private static TopLevelClass getSuperClass() {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(BASE_PACKAGE + ".sub.SuperClass");
         TopLevelClass tlc = new TopLevelClass(fqjt);
         tlc.setVisibility(JavaVisibility.PUBLIC);
@@ -59,7 +53,7 @@ public class SupersGenerator implements CompilationUnitGenerator {
         return tlc;
     }
 
-    private Interface getSuperInterface() {
+    private static Interface getSuperInterface() {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(BASE_PACKAGE + ".sub.SuperInterface");
         Interface ifc = new Interface(fqjt);
         ifc.setVisibility(JavaVisibility.PUBLIC);
@@ -67,7 +61,7 @@ public class SupersGenerator implements CompilationUnitGenerator {
         return ifc;
     }
 
-    private TopLevelClass getBaseClass() {
+    private static TopLevelClass getBaseClass() {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(BASE_PACKAGE + ".BaseClass");
         TopLevelClass tlc = new TopLevelClass(fqjt);
         tlc.setVisibility(JavaVisibility.PUBLIC);
@@ -75,12 +69,11 @@ public class SupersGenerator implements CompilationUnitGenerator {
         return tlc;
     }
 
-    private Interface getBaseInterface() {
+    private static Interface getBaseInterface() {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(BASE_PACKAGE + ".BaseInterface");
         Interface ifc = new Interface(fqjt);
         ifc.setVisibility(JavaVisibility.PUBLIC);
 
         return ifc;
     }
-
 }

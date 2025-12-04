@@ -54,10 +54,6 @@ public class InnerRecordRenderer {
 
         sb.append(innerRecord.getVisibility().getValue());
 
-        if (innerRecord.isStatic()) {
-            sb.append("static "); //$NON-NLS-1$
-        }
-
         sb.append("record "); //$NON-NLS-1$
         sb.append(innerRecord.getType().getShortName());
         sb.append(RenderingUtilities.renderTypeParameters(innerRecord.getTypeParameters(), compilationUnit));

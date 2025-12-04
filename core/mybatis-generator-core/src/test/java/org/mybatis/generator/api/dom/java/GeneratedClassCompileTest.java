@@ -36,6 +36,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.mybatis.generator.api.dom.java.render.TopLevelClassRenderer;
 import org.mybatis.generator.api.dom.java.render.TopLevelEnumerationRenderer;
 import org.mybatis.generator.api.dom.java.render.TopLevelInterfaceRenderer;
+import org.mybatis.generator.api.dom.java.render.TopLevelRecordRenderer;
 
 class GeneratedClassCompileTest {
 
@@ -59,7 +60,8 @@ class GeneratedClassCompileTest {
         return Stream.of(
                 Arguments.argumentSet("Complex Hierarchy", ComplexHierarchyGenerator.generateTestClasses()),
                 Arguments.argumentSet("Simple Interface", SimpleInterfaceGenerator.generateTestClasses()),
-                Arguments.argumentSet("Supers", SupersGenerator.generateTestClasses())
+                Arguments.argumentSet("Supers", SupersGenerator.generateTestClasses()),
+                Arguments.argumentSet("Records", RecordGenerator.generateTestClasses())
         );
     }
 
@@ -81,6 +83,7 @@ class GeneratedClassCompileTest {
         private final TopLevelClassRenderer tlcRenderer = new TopLevelClassRenderer();
         private final TopLevelInterfaceRenderer tliRenderer = new TopLevelInterfaceRenderer();
         private final TopLevelEnumerationRenderer tleRenderer = new TopLevelEnumerationRenderer();
+        private final TopLevelRecordRenderer tlrRenderer = new TopLevelRecordRenderer();
 
         @Override
         public String visit(TopLevelClass topLevelClass) {
@@ -95,6 +98,11 @@ class GeneratedClassCompileTest {
         @Override
         public String visit(Interface topLevelInterface) {
             return tliRenderer.render(topLevelInterface);
+        }
+
+        @Override
+        public String visit(TopLevelRecord topLevelRecord) {
+            return tlrRenderer.render(topLevelRecord);
         }
 
         private StringBasedJavaFileObject toJavaFileObject(CompilationUnit compilationUnit) {

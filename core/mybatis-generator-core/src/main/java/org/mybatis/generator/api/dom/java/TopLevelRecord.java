@@ -33,7 +33,7 @@ public class TopLevelRecord extends InnerRecord implements CompilationUnit {
     }
 
     public TopLevelRecord(String typeName) {
-        this(new FullyQualifiedJavaType(typeName));
+        super(typeName);
     }
 
     @Override

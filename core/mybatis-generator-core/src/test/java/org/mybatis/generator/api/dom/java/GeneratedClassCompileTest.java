@@ -37,8 +37,12 @@ import org.mybatis.generator.api.dom.java.render.TopLevelClassRenderer;
 import org.mybatis.generator.api.dom.java.render.TopLevelEnumerationRenderer;
 import org.mybatis.generator.api.dom.java.render.TopLevelInterfaceRenderer;
 import org.mybatis.generator.api.dom.java.render.TopLevelRecordRenderer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 class GeneratedClassCompileTest {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(GeneratedClassCompileTest.class);
 
     @ParameterizedTest
     @MethodSource("testVariations")
@@ -52,6 +56,13 @@ class GeneratedClassCompileTest {
         List<StringBasedJavaFileObject> files = new SimpleCompilationUnitRenderer().toJavaFileObjects(testClasses);
         JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager, diagnostics, null, null, files);
         boolean success = task.call();
+
+        if (!diagnostics.getDiagnostics().isEmpty()) {
+            for (var diagnostic : diagnostics.getDiagnostics()) {
+                LOGGER.error(diagnostic.toString());
+            }
+        }
+
         assertThat(success).isTrue();
         assertThat(diagnostics.getDiagnostics()).isEmpty();
     }

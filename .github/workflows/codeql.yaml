@@ -6,33 +6,32 @@ on:
   pull_request:
     branches: [ master ]
   schedule:
-    - cron: '30 7 * * 5'
+    - cron: '43 10 * * 2'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   analyze:
     name: Analyze
-    runs-on: ubuntu-latest
-    timeout-minutes: 360
+    runs-on: 'ubuntu-latest'
+    timeout-minutes: 30
     permissions:
       actions: read
       contents: read
       security-events: write
 
-    strategy:
-      fail-fast: false
-      matrix:
-        language: [ 'java' ]
-
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
 
       - name: Setup Java
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@f2beeb24e141e01a676f977032f5a29d81c9e27e # v5
         with:
           cache: maven
-          distribution: 'zulu'
-          java-version: 21
+          distribution: 'temurin'
+          java-version: 25
 
       - name: Install Toolchain JDK
         uses: battila7/jdk-via-jabba@v1
@@ -43,9 +42,9 @@ jobs:
       - name: Set up Toolchain
         shell: bash
         run: |
-          mkdir -p $HOME/.m2 \
+          mkdir --parents $HOME/.m2 \
           && cat << EOF > $HOME/.m2/toolchains.xml
-          <?xml version="1.0" encoding="UTF8"?>
+          <?xml version="1.0" encoding="UTF-8"?>
           <toolchains>
             <toolchain>
               <type>jdk</type>
@@ -61,20 +60,17 @@ jobs:
           EOF
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
+        uses: github/codeql-action/init@fe4161a26a8629af62121b670040955b330f9af2 # v4
         with:
-          languages: ${{ matrix.language }}
           queries: +security-and-quality
 
-      - name: Autobuild
+      - name: Autobuild (manual core)
         working-directory: core
         run: ./mvnw clean install -DskipTests
 
-      - name: Autobuild
+      - name: Autobuild (manual eclipse)
         working-directory: eclipse
         run: ./mvnw clean install -DskipTests
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3
-        with:
-          category: "/language:${{matrix.language}}"
+        uses: github/codeql-action/analyze@fe4161a26a8629af62121b670040955b330f9af2 # v4

@@ -13,28 +13,19 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package mbg.domtest.generators.simple.interfaze;
+package org.mybatis.generator.api.dom.java;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.mybatis.generator.api.dom.java.CompilationUnit;
-import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
-import org.mybatis.generator.api.dom.java.Interface;
-import org.mybatis.generator.api.dom.java.JavaVisibility;
-import org.mybatis.generator.api.dom.java.TopLevelClass;
-
-import mbg.domtest.CompilationUnitGenerator;
-
 /**
- * This generator generates a simple interface and implementing class in different packages.
+ * This test verifies that a simple interface and implementing class in different packages compile.
  */
-public class SimpleInterfaceGenerator implements CompilationUnitGenerator {
+public class SimpleInterfaceGenerator {
 
     private static final String BASE_PACKAGE = "mbg.domtest.generators.simple.interfaze.output";
 
-    @Override
-    public List<CompilationUnit> generate() {
+    public static List<CompilationUnit> generateTestClasses() {
         List<CompilationUnit> answer = new ArrayList<>();
 
         Interface interfaze = generateInterface();
@@ -44,14 +35,14 @@ public class SimpleInterfaceGenerator implements CompilationUnitGenerator {
         return answer;
     }
 
-    private Interface generateInterface() {
+    private static Interface generateInterface() {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(BASE_PACKAGE + ".sub1.SimpleInterface");
         Interface interfaze = new Interface(fqjt);
         interfaze.setVisibility(JavaVisibility.PUBLIC);
         return interfaze;
     }
 
-    private TopLevelClass generateClass(Interface interfaze) {
+    private static TopLevelClass generateClass(Interface interfaze) {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(BASE_PACKAGE + "SimpleClass");
         TopLevelClass tlc = new TopLevelClass(fqjt);
         tlc.setVisibility(JavaVisibility.PUBLIC);

@@ -13,34 +13,23 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package mbg.domtest.generators.fieldtype1;
+package org.mybatis.generator.api.dom.java;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.mybatis.generator.api.dom.java.CompilationUnit;
-import org.mybatis.generator.api.dom.java.Field;
-import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
-import org.mybatis.generator.api.dom.java.JavaVisibility;
-import org.mybatis.generator.api.dom.java.Method;
-import org.mybatis.generator.api.dom.java.Parameter;
-import org.mybatis.generator.api.dom.java.TopLevelClass;
-
-import mbg.domtest.CompilationUnitGenerator;
-
 /**
- * This class generates a hierarchy with multiple classes that have the same name in
- * different packages.  It tests the ability of the generator to use fully qualified names
+ * This test verifies the ability of the generator to use fully qualified names
  * in code generation when the type is not explicitly imported.
  *
+ * <p>The test generates a hierarchy with multiple classes that have the same name in
+ * different packages.
  */
-// @IgnoreDomTest("Ignore until changes for issue #63 are committed")
-public class Test1Generator implements CompilationUnitGenerator {
+public class ComplexHierarchyGenerator {
 
     private static final String BASE_PACKAGE = "mbg.domtest.generators.fieldtype1.output";
 
-    @Override
-    public List<CompilationUnit> generate() {
+    public static List<CompilationUnit> generateTestClasses() {
         FullyQualifiedJavaType cls = new FullyQualifiedJavaType(BASE_PACKAGE + ".SomeClass");
 
         List<CompilationUnit> answer = new ArrayList<>();
@@ -130,7 +119,7 @@ public class Test1Generator implements CompilationUnitGenerator {
         return answer;
     }
 
-    private TopLevelClass generateFieldTypeMain() {
+    private static TopLevelClass generateFieldTypeMain() {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(BASE_PACKAGE + ".FieldType");
         TopLevelClass tlc = new TopLevelClass(fqjt);
         tlc.setVisibility(JavaVisibility.PUBLIC);
@@ -143,7 +132,7 @@ public class Test1Generator implements CompilationUnitGenerator {
         return tlc;
     }
 
-    private TopLevelClass generateFieldTypeSub1() {
+    private static TopLevelClass generateFieldTypeSub1() {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(BASE_PACKAGE + ".sub1.FieldType");
         TopLevelClass tlc = new TopLevelClass(fqjt);
         tlc.setVisibility(JavaVisibility.PUBLIC);
@@ -156,7 +145,7 @@ public class Test1Generator implements CompilationUnitGenerator {
         return tlc;
     }
 
-    private TopLevelClass generateTestClassSub1() {
+    private static TopLevelClass generateTestClassSub1() {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(BASE_PACKAGE + ".sub1.SomeClass");
         TopLevelClass tlc = new TopLevelClass(fqjt);
         tlc.setVisibility(JavaVisibility.PUBLIC);
@@ -169,7 +158,7 @@ public class Test1Generator implements CompilationUnitGenerator {
         return tlc;
     }
 
-    private TopLevelClass generateFieldTypeSub2() {
+    private static TopLevelClass generateFieldTypeSub2() {
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(BASE_PACKAGE + ".sub2.FieldType");
         TopLevelClass tlc = new TopLevelClass(fqjt);
         tlc.setVisibility(JavaVisibility.PUBLIC);

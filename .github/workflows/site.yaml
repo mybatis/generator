@@ -37,7 +37,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
       - name: Deploy Site to gh-pages
-        uses: JamesIves/github-pages-deploy-action@4a3abc783e1a24aeb44c16e869ad83caf6b4cc23 # v4
+        uses: JamesIves/github-pages-deploy-action@4ef313c6a410f0883308623d45510e4a11625465 # v4
         with:
           branch: gh-pages
           folder: core/mybatis-generator-core/target/generator.git

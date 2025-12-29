@@ -32,7 +32,7 @@ public class RecordGenerator {
         return topLevelRecord;
     }
 
-    private static CompilationUnit complexRecord() {
+    public static CompilationUnit complexRecord() {
         FullyQualifiedJavaType recordType = new FullyQualifiedJavaType("mbg.domtest.generators.records.ComplexRecord");
         TopLevelRecord topLevelRecord = new TopLevelRecord(recordType);
         topLevelRecord.addTypeParameter(new TypeParameter("T"));

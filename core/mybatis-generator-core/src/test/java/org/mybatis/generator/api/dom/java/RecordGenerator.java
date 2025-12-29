@@ -1,68 +1,23 @@
+/*
+ *    Copyright 2006-2025 the original author or authors.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *       https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
 package org.mybatis.generator.api.dom.java;
 
 import java.util.List;
 
-/**
- * Allowed:
- *   super interfaces
- *   inner classes
- *   inner interfaces
- *   inner records
- *   inner enums
- *   methods
- *   constructors
- *   static initialization blocks
- *   static fields
- *   type parameters
- *
- * <p>Not allowed:
- *   super classes
- *   abstract
- *   static (even on inner records)
- *   instance fields
- *
- *
- *
- */
 public class RecordGenerator {
-
-//    public record ComplexRecord<T>(int id, String description, T theT) implements Serializable {
-//        private static final int f;
-//
-//        static {
-//            f = 22;
-//        }
-//
-//        public ComplexRecord(int id, String description) {
-//            this(id, description, null);
-//        }
-//
-//        public static int ff() {
-//            return f;
-//        }
-//
-//        public int add(int a, int b) {
-//            return a + b + f;
-//        }
-//
-//        public String sayIt() {
-//            return id + " " + description;
-//        }
-//
-//        public static class Fred implements Flintstone {
-//
-//        }
-//
-//        public interface Flintstone {
-//
-//        }
-//
-//        public enum MyEnum {
-//            A, B, C
-//        }
-//
-//        public record InnerRecord(int id, String description) {}
-//    }
 
     public static List<CompilationUnit> generateTestClasses() {
         return List.of(simpleRecord(), complexRecord());
@@ -82,10 +37,15 @@ public class RecordGenerator {
         TopLevelRecord topLevelRecord = new TopLevelRecord(recordType);
         topLevelRecord.addTypeParameter(new TypeParameter("T"));
         topLevelRecord.addSuperInterface(new FullyQualifiedJavaType("java.io.Serializable"));
+        topLevelRecord.addImportedType("java.io.Serializable");
         topLevelRecord.setVisibility(JavaVisibility.PUBLIC);
         topLevelRecord.addParameter(new Parameter(new FullyQualifiedJavaType("int"), "id"));
         topLevelRecord.addParameter(new Parameter(new FullyQualifiedJavaType("String"), "description"));
         topLevelRecord.addParameter(new Parameter(new FullyQualifiedJavaType("T"), "theT"));
+        topLevelRecord.addFileCommentLine("/**");
+        topLevelRecord.addFileCommentLine(" * A complex record");
+        topLevelRecord.addFileCommentLine(" */");
+        topLevelRecord.addStaticImport("java.lang.Math.PI");
 
         Field field = new Field("f", new FullyQualifiedJavaType("int"));
         field.setFinal(true);

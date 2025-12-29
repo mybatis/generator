@@ -33,16 +33,14 @@ import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.mybatis.generator.api.dom.java.render.TopLevelClassRenderer;
-import org.mybatis.generator.api.dom.java.render.TopLevelEnumerationRenderer;
-import org.mybatis.generator.api.dom.java.render.TopLevelInterfaceRenderer;
-import org.mybatis.generator.api.dom.java.render.TopLevelRecordRenderer;
+import org.mybatis.generator.api.dom.DefaultJavaFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 class GeneratedClassCompileTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GeneratedClassCompileTest.class);
+    private final DefaultJavaFormatter javaFormatter = new DefaultJavaFormatter();
 
     @ParameterizedTest
     @MethodSource("testVariations")
@@ -53,7 +51,9 @@ class GeneratedClassCompileTest {
         StandardJavaFileManager fileManager = compiler.getStandardFileManager(diagnostics, null, null);
         fileManager.setLocation(StandardLocation.CLASS_OUTPUT, List.of(Path.of("target").toFile()));
 
-        List<StringBasedJavaFileObject> files = new SimpleCompilationUnitRenderer().toJavaFileObjects(testClasses);
+        List<StringBasedJavaFileObject> files = testClasses.stream()
+                .map(this::toJavaFileObject).toList();
+
         JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager, diagnostics, null, null, files);
         boolean success = task.call();
 
@@ -76,6 +76,11 @@ class GeneratedClassCompileTest {
         );
     }
 
+    private StringBasedJavaFileObject toJavaFileObject(CompilationUnit compilationUnit) {
+        String source = javaFormatter.getFormattedContent(compilationUnit);
+        return new StringBasedJavaFileObject(compilationUnit.getType().getFullyQualifiedNameWithoutTypeParameters(), source);
+    }
+
     public static class StringBasedJavaFileObject extends SimpleJavaFileObject {
         final String renderedContent;
 
@@ -87,42 +92,6 @@ class GeneratedClassCompileTest {
         @Override
         public CharSequence getCharContent(boolean ignoreEncodingErrors) {
             return renderedContent;
-        }
-    }
-
-    public static class SimpleCompilationUnitRenderer implements CompilationUnitVisitor<String> {
-        private final TopLevelClassRenderer tlcRenderer = new TopLevelClassRenderer();
-        private final TopLevelInterfaceRenderer tliRenderer = new TopLevelInterfaceRenderer();
-        private final TopLevelEnumerationRenderer tleRenderer = new TopLevelEnumerationRenderer();
-        private final TopLevelRecordRenderer tlrRenderer = new TopLevelRecordRenderer();
-
-        @Override
-        public String visit(TopLevelClass topLevelClass) {
-            return tlcRenderer.render(topLevelClass);
-        }
-
-        @Override
-        public String visit(TopLevelEnumeration topLevelEnumeration) {
-            return tleRenderer.render(topLevelEnumeration);
-        }
-
-        @Override
-        public String visit(Interface topLevelInterface) {
-            return tliRenderer.render(topLevelInterface);
-        }
-
-        @Override
-        public String visit(TopLevelRecord topLevelRecord) {
-            return tlrRenderer.render(topLevelRecord);
-        }
-
-        private StringBasedJavaFileObject toJavaFileObject(CompilationUnit compilationUnit) {
-            String source = compilationUnit.accept(this);
-            return new StringBasedJavaFileObject(compilationUnit.getType().getFullyQualifiedNameWithoutTypeParameters(), source);
-        }
-
-        public List<StringBasedJavaFileObject> toJavaFileObjects(List<CompilationUnit> compilationUnits) {
-            return compilationUnits.stream().map(this::toJavaFileObject).toList();
         }
     }
 }

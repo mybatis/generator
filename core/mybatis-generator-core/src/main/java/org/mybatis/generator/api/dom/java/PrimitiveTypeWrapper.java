@@ -61,6 +61,11 @@ public class PrimitiveTypeWrapper extends FullyQualifiedJavaType {
         return getFullyQualifiedName().equals(other.getFullyQualifiedName());
     }
 
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
     public static PrimitiveTypeWrapper getBooleanInstance() {
         booleanInstance = Objects.requireNonNullElseGet(booleanInstance,
                 () -> new PrimitiveTypeWrapper("java.lang.Boolean", //$NON-NLS-1$

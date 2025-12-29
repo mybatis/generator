@@ -48,6 +48,8 @@
     <module.name>org.mybatis.generator</module.name>
     <sonar.sources>pom.xml,src/main/java</sonar.sources>
     <sonar.tests>src/test/java,src/test/kotlin</sonar.tests>
+    <sonar.host.url>http://localhost:9000</sonar.host.url>
+    <sonar.organization>MyBatis</sonar.organization>
   </properties>
 
   <dependencies>

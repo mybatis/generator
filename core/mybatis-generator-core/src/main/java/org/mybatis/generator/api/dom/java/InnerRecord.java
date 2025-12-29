@@ -17,43 +17,26 @@ package org.mybatis.generator.api.dom.java;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
- * This class encapsulates the idea of an inner class - it has methods that make it easy to generate inner classes.
+ * This class encapsulates the idea of an inner record - it has methods that make it easy to generate inner records.
  *
  * @author Jeff Butler
  */
-public class InnerClass extends AbstractJavaType {
+public class InnerRecord extends AbstractJavaType {
+
+    private final List<Parameter> parameters = new ArrayList<>();
 
     private final List<TypeParameter> typeParameters = new ArrayList<>();
 
-    private FullyQualifiedJavaType superClass;
-
-    private boolean isAbstract;
-
     private final List<InitializationBlock> initializationBlocks = new ArrayList<>();
 
-    private boolean isFinal;
-
-    public InnerClass(FullyQualifiedJavaType type) {
+    public InnerRecord(FullyQualifiedJavaType type) {
         super(type);
     }
 
-    public InnerClass(String type) {
+    public InnerRecord(String type) {
         super(type);
-    }
-
-    public Optional<FullyQualifiedJavaType> getSuperClass() {
-        return Optional.ofNullable(superClass);
-    }
-
-    public void setSuperClass(FullyQualifiedJavaType superClass) {
-        this.superClass = superClass;
-    }
-
-    public void setSuperClass(String superClassType) {
-        this.superClass = new FullyQualifiedJavaType(superClassType);
     }
 
     public List<TypeParameter> getTypeParameters() {
@@ -72,19 +55,11 @@ public class InnerClass extends AbstractJavaType {
         initializationBlocks.add(initializationBlock);
     }
 
-    public boolean isAbstract() {
-        return isAbstract;
+    public List<Parameter> getParameters() {
+        return parameters;
     }
 
-    public void setAbstract(boolean isAbstract) {
-        this.isAbstract = isAbstract;
-    }
-
-    public boolean isFinal() {
-        return isFinal;
-    }
-
-    public void setFinal(boolean isFinal) {
-        this.isFinal = isFinal;
+    public void addParameter(Parameter parameter) {
+        this.parameters.add(parameter);
     }
 }

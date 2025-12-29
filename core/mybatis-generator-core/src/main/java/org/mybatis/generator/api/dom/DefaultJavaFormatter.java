@@ -21,9 +21,11 @@ import org.mybatis.generator.api.dom.java.CompilationUnitVisitor;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.api.dom.java.TopLevelEnumeration;
+import org.mybatis.generator.api.dom.java.TopLevelRecord;
 import org.mybatis.generator.api.dom.java.render.TopLevelClassRenderer;
 import org.mybatis.generator.api.dom.java.render.TopLevelEnumerationRenderer;
 import org.mybatis.generator.api.dom.java.render.TopLevelInterfaceRenderer;
+import org.mybatis.generator.api.dom.java.render.TopLevelRecordRenderer;
 import org.mybatis.generator.config.Context;
 
 /**
@@ -57,5 +59,10 @@ public class DefaultJavaFormatter implements JavaFormatter, CompilationUnitVisit
     @Override
     public String visit(Interface topLevelInterface) {
         return new TopLevelInterfaceRenderer().render(topLevelInterface);
+    }
+
+    @Override
+    public String visit(TopLevelRecord topLevelRecord) {
+        return new TopLevelRecordRenderer().render(topLevelRecord);
     }
 }

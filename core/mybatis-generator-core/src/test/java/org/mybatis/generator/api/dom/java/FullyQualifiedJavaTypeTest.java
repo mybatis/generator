@@ -343,4 +343,11 @@ class FullyQualifiedJavaTypeTest {
         String out = parameter.toString();
         assertThat(out).isEqualTo("Class<? extends HttpMessageConverter<?>> converterType");
     }
+
+    @Test
+    void testPrimitiveTypeWrapper() {
+        PrimitiveTypeWrapper ptw = PrimitiveTypeWrapper.getBooleanInstance();
+
+        assertThat(ptw.hashCode()).hasSameHashCodeAs("java.lang.Boolean");
+    }
 }

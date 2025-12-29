@@ -33,6 +33,7 @@ import org.mybatis.generator.api.dom.java.InitializationBlock;
 import org.mybatis.generator.api.dom.java.InnerClass;
 import org.mybatis.generator.api.dom.java.InnerEnum;
 import org.mybatis.generator.api.dom.java.InnerInterface;
+import org.mybatis.generator.api.dom.java.InnerRecord;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.TypeParameter;
 import org.mybatis.generator.internal.util.CustomCollectors;
@@ -49,6 +50,7 @@ public class RenderingUtilities {
     private static final InnerClassRenderer innerClassRenderer = new InnerClassRenderer();
     private static final InnerInterfaceRenderer innerInterfaceRenderer = new InnerInterfaceRenderer();
     private static final InnerEnumRenderer innerEnumRenderer = new InnerEnumRenderer();
+    private static final InnerRecordRenderer innerRecordRenderer = new InnerRecordRenderer();
 
     // should return an empty string if no type parameters
     public static String renderTypeParameters(List<TypeParameter> typeParameters, CompilationUnit compilationUnit) {
@@ -145,6 +147,21 @@ public class RenderingUtilities {
 
     private static Stream<String> renderInnerEnum(InnerEnum innerEnum, CompilationUnit compilationUnit) {
         return addEmptyLine(innerEnumRenderer.render(innerEnum, compilationUnit).stream()
+                .map(RenderingUtilities::javaIndent));
+    }
+
+    public static List<String> renderInnerRecordNoIndent(InnerRecord innerRecord, CompilationUnit compilationUnit) {
+        return innerRecordRenderer.render(innerRecord, compilationUnit);
+    }
+
+    public static List<String> renderInnerRecords(List<InnerRecord> innerRecords, CompilationUnit compilationUnit) {
+        return innerRecords.stream()
+                .flatMap(ir -> renderInnerRecord(ir, compilationUnit))
+                .toList();
+    }
+
+    private static Stream<String> renderInnerRecord(InnerRecord innerRecord, CompilationUnit compilationUnit) {
+        return addEmptyLine(innerRecordRenderer.render(innerRecord, compilationUnit).stream()
                 .map(RenderingUtilities::javaIndent));
     }
 

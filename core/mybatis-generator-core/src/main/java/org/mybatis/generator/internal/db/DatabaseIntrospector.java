@@ -590,19 +590,20 @@ public class DatabaseIntrospector {
             // table
             // configuration, then some sort of DB default is being returned,
             // and we don't want that in our SQL
-            FullyQualifiedTable table = new FullyQualifiedTable(
-                    stringHasValue(tc.getCatalog()) ? atn.getCatalog() : null,
-                    stringHasValue(tc.getSchema()) ? atn.getSchema() : null,
-                    atn.getTableName(),
-                    tc.getDomainObjectName(),
-                    tc.getAlias(),
-                    isTrue(tc.getProperty(PropertyRegistry.TABLE_IGNORE_QUALIFIERS_AT_RUNTIME)),
-                    tc.getProperty(PropertyRegistry.TABLE_RUNTIME_CATALOG),
-                    tc.getProperty(PropertyRegistry.TABLE_RUNTIME_SCHEMA),
-                    tc.getProperty(PropertyRegistry.TABLE_RUNTIME_TABLE_NAME),
-                    delimitIdentifiers,
-                    tc.getDomainObjectRenamingRule(),
-                    context);
+            FullyQualifiedTable table = new FullyQualifiedTable.Builder()
+                    .withIntrospectedCatalog(stringHasValue(tc.getCatalog()) ? atn.getCatalog() : null)
+                    .withIntrospectedSchema(stringHasValue(tc.getSchema()) ? atn.getSchema() : null)
+                    .withIntrospectedTableName(atn.getTableName())
+                    .withDomainObjectName(tc.getDomainObjectName())
+                    .withAlias(tc.getAlias())
+                    .withIgnoreQualifiersAtRuntime(isTrue(tc.getProperty(PropertyRegistry.TABLE_IGNORE_QUALIFIERS_AT_RUNTIME)))
+                    .withRuntimeCatalog(tc.getProperty(PropertyRegistry.TABLE_RUNTIME_CATALOG))
+                    .withRuntimeSchema(tc.getProperty(PropertyRegistry.TABLE_RUNTIME_SCHEMA))
+                    .withRuntimeTableName(tc.getProperty(PropertyRegistry.TABLE_RUNTIME_TABLE_NAME))
+                    .withDelimitIdentifiers(delimitIdentifiers)
+                    .withDomainObjectRenamingRule(tc.getDomainObjectRenamingRule())
+                    .withContext(context)
+                    .build();
 
             IntrospectedTable introspectedTable = ObjectFactory
                     .createIntrospectedTable(tc, table, context);

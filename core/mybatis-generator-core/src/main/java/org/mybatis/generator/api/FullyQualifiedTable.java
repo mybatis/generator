@@ -87,43 +87,35 @@ public class FullyQualifiedTable {
      * @param context
      *            the context
      */
-    public FullyQualifiedTable(String introspectedCatalog,
-            String introspectedSchema, String introspectedTableName,
-            String domainObjectName, String alias,
-            boolean ignoreQualifiersAtRuntime, String runtimeCatalog,
-            String runtimeSchema, String runtimeTableName,
-            boolean delimitIdentifiers, DomainObjectRenamingRule domainObjectRenamingRule,
-            Context context) {
+    public FullyQualifiedTable(Builder builder) {
         super();
-        this.introspectedCatalog = introspectedCatalog;
-        this.introspectedSchema = introspectedSchema;
-        this.introspectedTableName = introspectedTableName;
-        this.ignoreQualifiersAtRuntime = ignoreQualifiersAtRuntime;
-        this.runtimeCatalog = runtimeCatalog;
-        this.runtimeSchema = runtimeSchema;
-        this.runtimeTableName = runtimeTableName;
-        this.domainObjectRenamingRule = domainObjectRenamingRule;
+        this.introspectedCatalog = builder.introspectedCatalog;
+        this.introspectedSchema = builder.introspectedSchema;
+        this.introspectedTableName = builder.introspectedTableName;
+        this.ignoreQualifiersAtRuntime = builder.ignoreQualifiersAtRuntime;
+        this.runtimeCatalog = builder.runtimeCatalog;
+        this.runtimeSchema = builder.runtimeSchema;
+        this.runtimeTableName = builder.runtimeTableName;
+        this.domainObjectRenamingRule = builder.domainObjectRenamingRule;
 
-        if (stringHasValue(domainObjectName)) {
-            int index = domainObjectName.lastIndexOf('.');
+        if (stringHasValue(builder.domainObjectName)) {
+            int index = builder.domainObjectName.lastIndexOf('.');
             if (index == -1) {
-                this.domainObjectName = domainObjectName;
+                this.domainObjectName = builder.domainObjectName;
             } else {
-                this.domainObjectName = domainObjectName.substring(index + 1);
-                this.domainObjectSubPackage = domainObjectName.substring(0, index);
+                this.domainObjectName = builder.domainObjectName.substring(index + 1);
+                this.domainObjectSubPackage = builder.domainObjectName.substring(0, index);
             }
         }
 
-        if (alias == null) {
+        if (builder.alias == null) {
             this.alias = null;
         } else {
-            this.alias = alias.trim();
+            this.alias = builder.alias.trim();
         }
 
-        beginningDelimiter = delimitIdentifiers ? context
-                .getBeginningDelimiter() : ""; //$NON-NLS-1$
-        endingDelimiter = delimitIdentifiers ? context.getEndingDelimiter()
-                : ""; //$NON-NLS-1$
+        beginningDelimiter = builder.delimitIdentifiers ? builder.context.getBeginningDelimiter() : ""; //$NON-NLS-1$
+        endingDelimiter = builder.delimitIdentifiers ? builder.context.getEndingDelimiter() : ""; //$NON-NLS-1$
     }
 
     public String getIntrospectedCatalog() {
@@ -314,5 +306,83 @@ public class FullyQualifiedTable {
 
     public String getDomainObjectSubPackage() {
         return domainObjectSubPackage;
+    }
+
+    public static class Builder {
+        private String introspectedCatalog;
+        private String introspectedSchema;
+        private String introspectedTableName;
+        private String runtimeCatalog;
+        private String runtimeSchema;
+        private String runtimeTableName;
+        private String domainObjectName;
+        private String alias;
+        private boolean ignoreQualifiersAtRuntime;
+        private boolean delimitIdentifiers;
+        private DomainObjectRenamingRule domainObjectRenamingRule;
+        private Context context;
+
+        public Builder withIntrospectedCatalog(String introspectedCatalog) {
+            this.introspectedCatalog = introspectedCatalog;
+            return this;
+        }
+
+        public Builder withIntrospectedSchema(String introspectedSchema) {
+            this.introspectedSchema = introspectedSchema;
+            return this;
+        }
+
+        public Builder withIntrospectedTableName(String introspectedTableName) {
+            this.introspectedTableName = introspectedTableName;
+            return this;
+        }
+        public Builder withRuntimeCatalog(String runtimeCatalog) {
+            this.runtimeCatalog = runtimeCatalog;
+            return this;
+        }
+
+        public Builder withRuntimeSchema(String runtimeSchema) {
+            this.runtimeSchema = runtimeSchema;
+            return this;
+        }
+
+        public Builder withRuntimeTableName(String runtimeTableName) {
+            this.runtimeTableName = runtimeTableName;
+            return this;
+        }
+
+        public Builder withDomainObjectName(String domainObjectName) {
+            this.domainObjectName = domainObjectName;
+            return this;
+        }
+
+        public Builder withAlias(String alias) {
+            this.alias = alias;
+            return this;
+        }
+
+        public Builder withIgnoreQualifiersAtRuntime(boolean ignoreQualifiersAtRuntime) {
+            this.ignoreQualifiersAtRuntime = ignoreQualifiersAtRuntime;
+            return this;
+        }
+
+        public Builder withDelimitIdentifiers(boolean delimitIdentifiers) {
+            this.delimitIdentifiers = delimitIdentifiers;
+            return this;
+        }
+
+        public Builder withDomainObjectRenamingRule(DomainObjectRenamingRule domainObjectRenamingRule) {
+            this.domainObjectRenamingRule = domainObjectRenamingRule;
+            return this;
+        }
+
+        public Builder withContext(Context context) {
+            this.context = context;
+            return this;
+        }
+
+        public FullyQualifiedTable build() {
+            return new FullyQualifiedTable(this);
+        }
     }
 }

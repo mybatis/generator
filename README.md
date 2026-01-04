@@ -1,11 +1,10 @@
 MyBatis Generator (MBG)
 =======================
 
-[![Build Status](https://github.com/mybatis/generator/workflows/Java%20CI/badge.svg?branch=master)](https://github.com/mybatis/generator/actions?query=workflow%3A%22Java+CI%22)
-[![Coverage Status](https://coveralls.io/repos/mybatis/generator/badge.svg?branch=master&service=github)](https://coveralls.io/github/mybatis/generator?branch=master)
-[![Maven central](https://maven-badges.herokuapp.com/maven-central/org.mybatis.generator/mybatis-generator/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.mybatis.generator/mybatis-generator)
-[![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/https/oss.sonatype.org/org.mybatis.generator/mybatis-generator.svg)](https://oss.sonatype.org/content/repositories/snapshots/org/mybatis/generator/mybatis-generator/)
-[![License](https://img.shields.io/:license-apache-brightgreen.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
+[![Build Status](https://github.com/mybatis/generator/actions/workflows/ci.yaml/badge.svg)](https://github.com/mybatis/generator/actions/workflows/ci.yaml)
+[![Coverage](https://coveralls.io/repos/github/mybatis/generator/badge.svg?branch=master)](https://coveralls.io/github/mybatis/generator?branch=master)
+[![Maven Central](https://img.shields.io/maven-central/v/org.mybatis.generator/mybatis-generator)](https://search.maven.org/artifact/org.mybatis.generator/mybatis-generator)
+[![License](https://img.shields.io/github/license/mybatis/generator)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=mybatis_generator&metric=alert_status)](https://sonarcloud.io/dashboard?id=mybatis_generator)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=mybatis_generator&metric=security_rating)](https://sonarcloud.io/dashboard?id=mybatis_generator)
 

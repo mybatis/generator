@@ -4,7 +4,7 @@ MyBatis Generator (MBG)
 [![Build Status](https://github.com/mybatis/generator/actions/workflows/ci.yaml/badge.svg)](https://github.com/mybatis/generator/actions/workflows/ci.yaml)
 [![Coverage](https://coveralls.io/repos/github/mybatis/generator/badge.svg?branch=master)](https://coveralls.io/github/mybatis/generator?branch=master)
 [![Maven Central](https://img.shields.io/maven-central/v/org.mybatis.generator/mybatis-generator)](https://central.sonatype.com/artifact/org.mybatis.generator/mybatis-generator)
-[![License](https://img.shields.io/:license-apache-brightgreen.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
+[![License](https://img.shields.io/github/license/mybatis/generator)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=mybatis_generator&metric=alert_status)](https://sonarcloud.io/dashboard?id=mybatis_generator)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=mybatis_generator&metric=security_rating)](https://sonarcloud.io/dashboard?id=mybatis_generator)
 

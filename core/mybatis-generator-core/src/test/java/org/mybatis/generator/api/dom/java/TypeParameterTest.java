@@ -54,23 +54,11 @@ class TypeParameterTest {
         FullyQualifiedJavaType compare = new FullyQualifiedJavaType("java.util.Comparator");
 
         TypeParameter typeParameter = new TypeParameter("T", Arrays.asList(list, compare));
-        assertNotNull(typeParameter);
-        assertEquals("T extends List & Comparator", renderer.render(typeParameter, null));
 
         TopLevelClass compilationUnit = new TopLevelClass("java.util.Test");
         assertEquals("T extends List & Comparator", renderer.render(typeParameter, compilationUnit));
 
         TopLevelClass compilationUnit2 = new TopLevelClass("java.lang.Test");
         assertEquals("T extends java.util.List & java.util.Comparator", renderer.render(typeParameter, compilationUnit2));
-    }
-
-    @Test
-    void testToString() {
-        FullyQualifiedJavaType list = FullyQualifiedJavaType.getNewListInstance();
-        FullyQualifiedJavaType compare = new FullyQualifiedJavaType("java.util.Comparator");
-
-        TypeParameter typeParameter = new TypeParameter("T", Arrays.asList(list, compare));
-        assertNotNull(typeParameter);
-        assertEquals("T extends List & Comparator", typeParameter.toString());
     }
 }

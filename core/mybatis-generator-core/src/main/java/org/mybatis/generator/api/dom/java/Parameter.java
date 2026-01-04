@@ -18,8 +18,6 @@ package org.mybatis.generator.api.dom.java;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.mybatis.generator.api.dom.java.render.ParameterRenderer;
-
 public class Parameter {
     private final String name;
     private final FullyQualifiedJavaType type;
@@ -61,11 +59,6 @@ public class Parameter {
 
     public void addAnnotation(String annotation) {
         annotations.add(annotation);
-    }
-
-    @Override
-    public String toString() {
-        return new ParameterRenderer().render(this, null);
     }
 
     public boolean isVarargs() {

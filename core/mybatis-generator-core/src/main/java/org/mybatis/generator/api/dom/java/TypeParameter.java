@@ -18,8 +18,6 @@ package org.mybatis.generator.api.dom.java;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.mybatis.generator.api.dom.java.render.TypeParameterRenderer;
-
 public class TypeParameter {
 
     private final String name;
@@ -43,10 +41,5 @@ public class TypeParameter {
 
     public List<FullyQualifiedJavaType> getExtendsTypes() {
         return extendsTypes;
-    }
-
-    @Override
-    public String toString() {
-        return new TypeParameterRenderer().render(this, null);
     }
 }

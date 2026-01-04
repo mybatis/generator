@@ -34,17 +34,13 @@ import org.mybatis.generator.config.Context;
  * @author Jeff Butler
  */
 public class DefaultJavaFormatter implements JavaFormatter, CompilationUnitVisitor<String> {
-    protected Context context;
-
     @Override
     public String getFormattedContent(CompilationUnit compilationUnit) {
         return compilationUnit.accept(this);
     }
 
     @Override
-    public void setContext(Context context) {
-        this.context = context;
-    }
+    public void setContext(Context context) {}
 
     @Override
     public String visit(TopLevelClass topLevelClass) {

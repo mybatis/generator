@@ -228,7 +228,12 @@ class MethodTest {
                         + "}";
 
         MethodRenderer renderer = new MethodRenderer();
-        String rendered = String.join(LINE_SEPARATOR, renderer.render(method, false, null));
+        TopLevelClass topLevelClass = new TopLevelClass("foo.Bar");
+        topLevelClass.addImportedType(comparatorType);
+        topLevelClass.addImportedType(functionType);
+        topLevelClass.addImportedType(listType);
+
+        String rendered = String.join(LINE_SEPARATOR, renderer.render(method, false, topLevelClass));
         assertEquals(excepted, rendered);
     }
 }

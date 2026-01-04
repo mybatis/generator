@@ -30,19 +30,21 @@ import org.mybatis.generator.api.dom.java.TopLevelEnumeration
 class InnerEnumRendererTest {
     @Test
     fun testSimpleEnum() {
-        val outerEnum = InnerEnum("com.foo.Bar")
+        val outerEnum = TopLevelEnumeration("com.foo.Bar")
         outerEnum.visibility = JavaVisibility.PUBLIC
         outerEnum.addEnumConstant("ONE")
         outerEnum.addEnumConstant("TWO")
         outerEnum.addEnumConstant("THREE")
 
-        assertThat(toString(outerEnum)).isEqualToNormalizingNewlines("""
-                |public enum Bar {
-                |    ONE,
-                |    TWO,
-                |    THREE;
-                |}
-                """.trimMargin())
+        assertThat(TopLevelEnumerationRenderer().render(outerEnum)).isEqualToNormalizingNewlines("""
+            |package com.foo;
+            |
+            |public enum Bar {
+            |    ONE,
+            |    TWO,
+            |    THREE;
+            |}
+            """.trimMargin())
     }
 
     @Test
@@ -95,42 +97,39 @@ class InnerEnumRendererTest {
         outerEnum.addInnerInterface(innerInterface)
 
         assertThat(TopLevelEnumerationRenderer().render(outerEnum)).isEqualToNormalizingNewlines("""
-                |package com.foo;
-                |
-                |public enum Bar {
-                |    ONE("One"),
-                |    TWO("Two"),
-                |    THREE("Three");
-                |
-                |    private String value;
-                |
-                |    private Bar(String value) {
-                |        this.value = value;
-                |    }
-                |
-                |    public String getValue() {
-                |        return value;
-                |    }
-                |
-                |    public static class InnerClass {
-                |        private String fred;
-                |    }
-                |
-                |    public static interface InnerInterface {
-                |        default String getName() {
-                |            return "Fred";
-                |        }
-                |    }
-                |
-                |    public static enum InnerEnum {
-                |        FOUR,
-                |        FIVE,
-                |        SIX;
-                |    }
-                |}
-                """.trimMargin())
+            |package com.foo;
+            |
+            |public enum Bar {
+            |    ONE("One"),
+            |    TWO("Two"),
+            |    THREE("Three");
+            |
+            |    private String value;
+            |
+            |    private Bar(String value) {
+            |        this.value = value;
+            |    }
+            |
+            |    public String getValue() {
+            |        return value;
+            |    }
+            |
+            |    public static class InnerClass {
+            |        private String fred;
+            |    }
+            |
+            |    public static interface InnerInterface {
+            |        default String getName() {
+            |            return "Fred";
+            |        }
+            |    }
+            |
+            |    public static enum InnerEnum {
+            |        FOUR,
+            |        FIVE,
+            |        SIX;
+            |    }
+            |}
+            """.trimMargin())
     }
-
-    private fun toString(en: InnerEnum) = InnerEnumRenderer().render(en, null)
-        .joinToString(System.lineSeparator())
 }

@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
+import org.mybatis.generator.api.dom.java.render.ParameterRenderer;
 import org.mybatis.generator.api.dom.java.render.TopLevelInterfaceRenderer;
 
 /**
@@ -340,7 +341,9 @@ class FullyQualifiedJavaTypeTest {
         assertThat(fqjt.getFullyQualifiedName()).isEqualTo("Class<? extends HttpMessageConverter<?>>");
 
         Parameter parameter = new Parameter(fqjt, "converterType");
-        String out = parameter.toString();
+        ParameterRenderer pr = new ParameterRenderer();
+        TopLevelClass tlc = new TopLevelClass("foo.Bar");
+        String out = pr.render(parameter, tlc);
         assertThat(out).isEqualTo("Class<? extends HttpMessageConverter<?>> converterType");
     }
 

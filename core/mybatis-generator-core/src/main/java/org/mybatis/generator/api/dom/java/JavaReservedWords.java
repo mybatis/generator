@@ -87,15 +87,7 @@ public class JavaReservedWords {
     }
 
     public static boolean containsWord(String word) {
-        boolean rc;
-
-        if (word == null) {
-            rc = false;
-        } else {
-            rc = reservedWords.contains(word);
-        }
-
-        return rc;
+        return reservedWords.contains(word);
     }
 
     /**

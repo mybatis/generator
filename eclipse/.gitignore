@@ -6,3 +6,5 @@
 
 # Ignore temp tycho consumer pom
 .tycho-consumer-pom.xml
+
+.mvn/wrapper/maven-wrapper.jar

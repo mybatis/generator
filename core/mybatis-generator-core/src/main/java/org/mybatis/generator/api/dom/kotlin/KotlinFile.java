@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
  */
 package org.mybatis.generator.api.dom.kotlin;
 
+import org.jspecify.annotations.Nullable;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -27,7 +29,7 @@ public class KotlinFile {
     private final String fileName;
     private final List<String> fileCommentLines = new ArrayList<>();
     private final Set<String> imports = new TreeSet<>();
-    private String packageDefinition;
+    private @Nullable String packageDefinition;
     private final List<KotlinNamedItem> namedItems = new ArrayList<>();
 
     public KotlinFile(String fileName) {
@@ -48,8 +50,8 @@ public class KotlinFile {
         return fileCommentLines;
     }
 
-    public void addFileCommentLine(String fileComentLine) {
-        fileCommentLines.add(fileComentLine);
+    public void addFileCommentLine(String fileCommentLine) {
+        fileCommentLines.add(fileCommentLine);
     }
 
     public Set<String> getImports() {

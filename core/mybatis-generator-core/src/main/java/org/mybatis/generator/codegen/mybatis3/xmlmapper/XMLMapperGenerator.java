@@ -235,8 +235,7 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
     @Override
     public Document getDocument() {
         Document document = new Document(XmlConstants.MYBATIS3_MAPPER_PUBLIC_ID,
-                XmlConstants.MYBATIS3_MAPPER_SYSTEM_ID);
-        document.setRootElement(getSqlMapElement());
+                XmlConstants.MYBATIS3_MAPPER_SYSTEM_ID, getSqlMapElement());
 
         if (!context.getPlugins().sqlMapDocumentGenerated(document, introspectedTable)) {
             document = null;

@@ -152,11 +152,9 @@ public class NewConfigFileWizard extends Wizard implements INewWizard {
      */
     private InputStream openContentStream() {
 
-        Document document = new Document(XmlConstants.MYBATIS_GENERATOR_CONFIG_PUBLIC_ID,
-                XmlConstants.MYBATIS_GENERATOR_CONFIG_SYSTEM_ID);
-
         XmlElement generatorConfiguration = new XmlElement("generatorConfiguration"); //$NON-NLS-1$
-        document.setRootElement(generatorConfiguration);
+        Document document = new Document(XmlConstants.MYBATIS_GENERATOR_CONFIG_PUBLIC_ID,
+                XmlConstants.MYBATIS_GENERATOR_CONFIG_SYSTEM_ID, generatorConfiguration);
 
         XmlElement context = new XmlElement("context"); //$NON-NLS-1$
         context.addAttribute(new Attribute("id", "context1")); //$NON-NLS-1$ //$NON-NLS-2$

@@ -50,8 +50,7 @@ class XmlFileMergerTest {
         commentGenerator.addConfigurationProperties(p);
 
         Document document = new Document(XmlConstants.MYBATIS3_MAPPER_PUBLIC_ID,
-                XmlConstants.MYBATIS3_MAPPER_SYSTEM_ID);
-        document.setRootElement(getSqlMapElement(commentGenerator));
+                XmlConstants.MYBATIS3_MAPPER_SYSTEM_ID, getSqlMapElement(commentGenerator));
 
         GeneratedXmlFile generatedFile1 = new GeneratedXmlFile(document, "TestMapper.xml", "org.mybatis.test", "src",
                 true, xmlFormatter);
@@ -69,10 +68,9 @@ class XmlFileMergerTest {
     @Test
     void testThatOldElementsAreDeleted() throws Exception {
 
-        Document existingDocument = new Document(XmlConstants.MYBATIS3_MAPPER_PUBLIC_ID,
-                XmlConstants.MYBATIS3_MAPPER_SYSTEM_ID);
         XmlElement root = new XmlElement("mapper");
-        existingDocument.setRootElement(root);
+        Document existingDocument = new Document(XmlConstants.MYBATIS3_MAPPER_PUBLIC_ID,
+                XmlConstants.MYBATIS3_MAPPER_SYSTEM_ID, root);
 
         XmlElement element = new XmlElement("select");
         element.addAttribute(new Attribute("id", "abatorgenerated_select"));
@@ -107,20 +105,18 @@ class XmlFileMergerTest {
         element.addAttribute(new Attribute("id", "customSelect"));
         root.addElement(element);
 
-        Document newDocument = new Document(XmlConstants.MYBATIS3_MAPPER_PUBLIC_ID,
-                XmlConstants.MYBATIS3_MAPPER_SYSTEM_ID);
         root = new XmlElement("mapper");
-        newDocument.setRootElement(root);
+        Document newDocument = new Document(XmlConstants.MYBATIS3_MAPPER_PUBLIC_ID,
+                XmlConstants.MYBATIS3_MAPPER_SYSTEM_ID, root);
 
         element = new XmlElement("select");
         element.addAttribute(new Attribute("id", "newway"));
         element.addElement(new TextElement("<!-- @mbg.generated -->"));
         root.addElement(element);
 
-        Document expectedDocument = new Document(XmlConstants.MYBATIS3_MAPPER_PUBLIC_ID,
-                XmlConstants.MYBATIS3_MAPPER_SYSTEM_ID);
         root = new XmlElement("mapper");
-        expectedDocument.setRootElement(root);
+        Document expectedDocument = new Document(XmlConstants.MYBATIS3_MAPPER_PUBLIC_ID,
+                XmlConstants.MYBATIS3_MAPPER_SYSTEM_ID, root);
 
         element = new XmlElement("select");
         element.addAttribute(new Attribute("id", "newway"));

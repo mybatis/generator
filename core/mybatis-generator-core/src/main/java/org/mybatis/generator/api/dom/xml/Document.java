@@ -15,32 +15,32 @@
  */
 package org.mybatis.generator.api.dom.xml;
 
+import org.jspecify.annotations.Nullable;
+
 import java.util.Optional;
 
 public class Document {
 
-    private DocType docType;
+    private @Nullable DocType docType;
 
-    private XmlElement rootElement;
+    private final XmlElement rootElement;
 
-    public Document(String publicId, String systemId) {
+    public Document(String publicId, String systemId, XmlElement rootElement) {
+        this(rootElement);
         docType = new PublicDocType(publicId, systemId);
     }
 
-    public Document(String systemId) {
+    public Document(String systemId, XmlElement rootElement) {
+        this(rootElement);
         docType = new SystemDocType(systemId);
     }
 
-    public Document() {
-        super();
+    public Document(XmlElement rootElement) {
+        this.rootElement = rootElement;
     }
 
     public XmlElement getRootElement() {
         return rootElement;
-    }
-
-    public void setRootElement(XmlElement rootElement) {
-        this.rootElement = rootElement;
     }
 
     public Optional<DocType> getDocType() {

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -32,6 +32,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.codegen.XmlConstants;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.exception.XMLParserException;
@@ -47,7 +48,7 @@ public class ConfigurationParser {
 
     private final List<String> warnings;
     private final List<String> parseErrors;
-    private final Properties extraProperties;
+    private final @Nullable Properties extraProperties;
 
     public ConfigurationParser(List<String> warnings) {
         this(null, warnings);
@@ -73,8 +74,7 @@ public class ConfigurationParser {
      *     references in the configuration file
      * @param warnings any warnings are added to this array
      */
-    public ConfigurationParser(Properties extraProperties, List<String> warnings) {
-        super();
+    public ConfigurationParser(@Nullable Properties extraProperties, List<String> warnings) {
         this.extraProperties = extraProperties;
 
         this.warnings = Objects.requireNonNullElseGet(warnings, ArrayList::new);
@@ -164,8 +164,7 @@ public class ConfigurationParser {
 
     private Configuration parseMyBatisGeneratorConfiguration(Element rootNode)
             throws XMLParserException {
-        MyBatisGeneratorConfigurationParser parser = new MyBatisGeneratorConfigurationParser(
-                extraProperties);
+        MyBatisGeneratorConfigurationParser parser = new MyBatisGeneratorConfigurationParser(extraProperties);
         return parser.parseConfiguration(rootNode);
     }
 }

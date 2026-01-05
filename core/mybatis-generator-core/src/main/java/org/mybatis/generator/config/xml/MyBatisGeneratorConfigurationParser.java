@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.config.ColumnOverride;
 import org.mybatis.generator.config.ColumnRenamingRule;
 import org.mybatis.generator.config.CommentGeneratorConfiguration;
@@ -63,7 +64,7 @@ public class MyBatisGeneratorConfigurationParser {
     private final Properties extraProperties;
     private final Properties configurationProperties;
 
-    public MyBatisGeneratorConfigurationParser(Properties extraProperties) {
+    public MyBatisGeneratorConfigurationParser(@Nullable Properties extraProperties) {
         super();
         this.extraProperties = Objects.requireNonNullElseGet(extraProperties, Properties::new);
         configurationProperties = new Properties();
@@ -96,19 +97,16 @@ public class MyBatisGeneratorConfigurationParser {
         return configuration;
     }
 
-    protected void parseProperties(Node node)
-            throws XMLParserException {
+    protected void parseProperties(Node node) throws XMLParserException {
         Properties attributes = parseAttributes(node);
         String resource = attributes.getProperty("resource"); //$NON-NLS-1$
         String url = attributes.getProperty("url"); //$NON-NLS-1$
 
-        if (!stringHasValue(resource)
-                && !stringHasValue(url)) {
+        if (!stringHasValue(resource) && !stringHasValue(url)) {
             throw new XMLParserException(getString("RuntimeError.14")); //$NON-NLS-1$
         }
 
-        if (stringHasValue(resource)
-                && stringHasValue(url)) {
+        if (stringHasValue(resource) && stringHasValue(url)) {
             throw new XMLParserException(getString("RuntimeError.14")); //$NON-NLS-1$
         }
 
@@ -504,15 +502,7 @@ public class MyBatisGeneratorConfigurationParser {
         String searchString = attributes.getProperty("searchString"); //$NON-NLS-1$
         String replaceString = attributes.getProperty("replaceString"); //$NON-NLS-1$
 
-        DomainObjectRenamingRule dorr = new DomainObjectRenamingRule();
-
-        dorr.setSearchString(searchString);
-
-        if (stringHasValue(replaceString)) {
-            dorr.setReplaceString(replaceString);
-        }
-
-        tc.setDomainObjectRenamingRule(dorr);
+        tc.setDomainObjectRenamingRule(new DomainObjectRenamingRule(searchString, replaceString));
     }
 
     private void parseColumnRenamingRule(TableConfiguration tc, Node node) {
@@ -520,15 +510,7 @@ public class MyBatisGeneratorConfigurationParser {
         String searchString = attributes.getProperty("searchString"); //$NON-NLS-1$
         String replaceString = attributes.getProperty("replaceString"); //$NON-NLS-1$
 
-        ColumnRenamingRule crr = new ColumnRenamingRule();
-
-        crr.setSearchString(searchString);
-
-        if (stringHasValue(replaceString)) {
-            crr.setReplaceString(replaceString);
-        }
-
-        tc.setColumnRenamingRule(crr);
+        tc.setColumnRenamingRule(new ColumnRenamingRule(searchString, replaceString));
     }
 
     protected void parseJavaTypeResolver(Context context, Node node) {

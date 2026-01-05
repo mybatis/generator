@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -319,7 +319,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         criteriaLists.add("criteria"); //$NON-NLS-1$
 
         for (IntrospectedColumn introspectedColumn : introspectedTable.getNonBLOBColumns()) {
-            if (stringHasValue(introspectedColumn.getTypeHandler())) {
+            if (introspectedColumn.getTypeHandler().isPresent()) {
                 String name = addTypeHandledObjectsAndMethods(introspectedColumn, method, answer);
                 criteriaLists.add(name);
             }
@@ -652,7 +652,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
             sb.append("addCriterionForJDBCDate(\""); //$NON-NLS-1$
         } else if (introspectedColumn.isJDBCTimeColumn()) {
             sb.append("addCriterionForJDBCTime(\""); //$NON-NLS-1$
-        } else if (stringHasValue(introspectedColumn.getTypeHandler())) {
+        } else if (introspectedColumn.getTypeHandler().isPresent()) {
             sb.append("add"); //$NON-NLS-1$
             sb.append(introspectedColumn.getJavaProperty());
             sb.setCharAt(3, Character.toUpperCase(sb.charAt(3)));
@@ -828,7 +828,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 
         method.addBodyLine(
                 String.format("%s.add(new Criterion(condition, value, \"%s\"));", //$NON-NLS-1$
-                        field.getName(), introspectedColumn.getTypeHandler()));
+                        field.getName(), introspectedColumn.getTypeHandler().orElseThrow()));
         method.addBodyLine("allCriteria = null;"); //$NON-NLS-1$
         innerClass.addMethod(method);
 
@@ -854,7 +854,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 
         method.addBodyLine(
                 String.format("%s.add(new Criterion(condition, value1, value2, \"%s\"));", //$NON-NLS-1$
-                        field.getName(), introspectedColumn.getTypeHandler()));
+                        field.getName(), introspectedColumn.getTypeHandler().orElseThrow()));
 
         method.addBodyLine("allCriteria = null;"); //$NON-NLS-1$
         innerClass.addMethod(method);

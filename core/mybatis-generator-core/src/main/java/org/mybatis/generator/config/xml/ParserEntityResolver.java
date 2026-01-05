@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@ package org.mybatis.generator.config.xml;
 
 import java.io.InputStream;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.codegen.XmlConstants;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
@@ -28,7 +29,7 @@ public class ParserEntityResolver implements EntityResolver {
     }
 
     @Override
-    public InputSource resolveEntity(String publicId, String systemId) {
+    public @Nullable InputSource resolveEntity(String publicId, String systemId) {
         if (XmlConstants.MYBATIS_GENERATOR_CONFIG_PUBLIC_ID
                 .equalsIgnoreCase(publicId)) {
             InputStream is = getClass()

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -27,10 +27,12 @@ import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Objects;
 import java.util.Properties;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.internal.ObjectFactory;
 import org.mybatis.generator.internal.util.StringUtility;
 import org.mybatis.generator.internal.util.messages.Messages;
@@ -46,13 +48,16 @@ import org.mybatis.generator.internal.util.messages.Messages;
 public class SqlScriptRunner {
     private String driver;
     private final String url;
-    private final String userid;
-    private String password;
+    private final @Nullable String userid;
+    private @Nullable String password;
     private final String sourceFile;
-    private Log log;
+    /**
+     * Not null in practice - setLog must be called before use.
+     */
+    private @Nullable Log log;
 
     public SqlScriptRunner(String sourceFile, String driver, String url,
-            String userId, String password) throws MojoExecutionException {
+            @Nullable String userId, @Nullable String password) throws MojoExecutionException {
 
         if (!StringUtility.stringHasValue(sourceFile)) {
             throw new MojoExecutionException("SQL script file is required");
@@ -129,7 +134,7 @@ public class SqlScriptRunner {
         this.driver = driver;
     }
 
-    public String getPassword() {
+    public @Nullable String getPassword() {
         return password;
     }
 
@@ -137,27 +142,27 @@ public class SqlScriptRunner {
         this.password = password;
     }
 
-    private void closeConnection(Connection connection) {
+    private void closeConnection(@Nullable Connection connection) {
         if (connection != null) {
             try {
                 connection.close();
             } catch (SQLException e) {
-                log.debug("SQLException on close connection", e);
+                getLog().debug("SQLException on close connection", e);
             }
         }
     }
 
-    private void closeStatement(Statement statement) {
+    private void closeStatement(@Nullable Statement statement) {
         if (statement != null) {
             try {
                 statement.close();
             } catch (SQLException e) {
-                log.debug("SQLException on close statement", e);
+                getLog().debug("SQLException on close statement", e);
             }
         }
     }
 
-    private String readStatement(BufferedReader br) throws IOException {
+    private @Nullable String readStatement(BufferedReader br) throws IOException {
         StringBuilder sb = new StringBuilder();
 
         String line;
@@ -184,7 +189,7 @@ public class SqlScriptRunner {
         String s = sb.toString().trim();
 
         if (!s.isEmpty()) {
-            log.debug(Messages.getString("Progress.13", s)); //$NON-NLS-1$
+            getLog().debug(Messages.getString("Progress.13", s)); //$NON-NLS-1$
         }
 
         return s.isEmpty() ? null : s;
@@ -214,5 +219,9 @@ public class SqlScriptRunner {
         }
 
         return answer;
+    }
+
+    private Log getLog() {
+        return Objects.requireNonNull(log);
     }
 }

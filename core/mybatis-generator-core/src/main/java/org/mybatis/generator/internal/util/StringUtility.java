@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
  */
 package org.mybatis.generator.internal.util;
 
+import org.jspecify.annotations.Nullable;
+
 import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -28,12 +30,12 @@ public class StringUtility {
         super();
     }
 
-    public static boolean stringHasValue(String s) {
+    public static boolean stringHasValue(@Nullable String s) {
         return s != null && !s.isEmpty();
     }
 
-    public static String composeFullyQualifiedTableName(String catalog,
-            String schema, String tableName, char separator) {
+    public static String composeFullyQualifiedTableName(@Nullable String catalog,
+            @Nullable String schema, String tableName, char separator) {
         StringBuilder sb = new StringBuilder();
 
         if (stringHasValue(catalog)) {
@@ -55,7 +57,7 @@ public class StringUtility {
         return sb.toString();
     }
 
-    public static boolean stringContainsSpace(String s) {
+    public static boolean stringContainsSpace(@Nullable String s) {
         return s != null && s.indexOf(' ') != -1;
     }
 
@@ -91,11 +93,11 @@ public class StringUtility {
         return sb.toString();
     }
 
-    public static boolean isTrue(String s) {
+    public static boolean isTrue(@Nullable String s) {
         return "true".equalsIgnoreCase(s); //$NON-NLS-1$
     }
 
-    public static boolean stringContainsSQLWildcard(String s) {
+    public static boolean stringContainsSQLWildcard(@Nullable String s) {
         if (s == null) {
             return false;
         }

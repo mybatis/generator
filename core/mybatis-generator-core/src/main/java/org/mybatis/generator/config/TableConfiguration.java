@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.internal.util.messages.Messages;
 
 public class TableConfiguration extends PropertyHolder {
@@ -64,7 +65,7 @@ public class TableConfiguration extends PropertyHolder {
 
     private String domainObjectName;
 
-    private String alias;
+    private @Nullable String alias;
 
     private ModelType modelType;
 
@@ -74,7 +75,7 @@ public class TableConfiguration extends PropertyHolder {
 
     private DomainObjectRenamingRule domainObjectRenamingRule;
 
-    private ColumnRenamingRule columnRenamingRule;
+    private @Nullable ColumnRenamingRule columnRenamingRule;
 
     private boolean isAllColumnDelimitingEnabled;
 
@@ -261,8 +262,8 @@ public class TableConfiguration extends PropertyHolder {
         this.generatedKey = generatedKey;
     }
 
-    public String getAlias() {
-        return alias;
+    public Optional<String> getAlias() {
+        return Optional.ofNullable(alias);
     }
 
     public void setAlias(String alias) {
@@ -430,8 +431,8 @@ public class TableConfiguration extends PropertyHolder {
         this.domainObjectRenamingRule = domainObjectRenamingRule;
     }
 
-    public ColumnRenamingRule getColumnRenamingRule() {
-        return columnRenamingRule;
+    public Optional<ColumnRenamingRule> getColumnRenamingRule() {
+        return Optional.ofNullable(columnRenamingRule);
     }
 
     public void setColumnRenamingRule(ColumnRenamingRule columnRenamingRule) {

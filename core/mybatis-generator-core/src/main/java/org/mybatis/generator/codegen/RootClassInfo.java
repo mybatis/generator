@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -67,10 +67,6 @@ public class RootClassInfo {
         this.className = className;
         this.warnings = warnings;
 
-        if (className == null) {
-            return;
-        }
-
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(className);
         String nameWithoutGenerics = fqjt.getFullyQualifiedNameWithoutTypeParameters();
         if (!nameWithoutGenerics.equals(className)) {
@@ -82,13 +78,13 @@ public class RootClassInfo {
             BeanInfo bi = Introspector.getBeanInfo(clazz);
             propertyDescriptors = bi.getPropertyDescriptors();
         } catch (Exception e) {
-            propertyDescriptors = null;
+            propertyDescriptors = new PropertyDescriptor[0];
             warnings.add(getString("Warning.20", className)); //$NON-NLS-1$
         }
     }
 
     public boolean containsProperty(IntrospectedColumn introspectedColumn) {
-        if (propertyDescriptors == null) {
+        if (propertyDescriptors.length == 0) {
             return false;
         }
 

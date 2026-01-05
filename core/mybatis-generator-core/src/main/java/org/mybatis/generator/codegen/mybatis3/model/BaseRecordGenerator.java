@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.FullyQualifiedTable;
@@ -55,11 +56,11 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
         topLevelClass.setVisibility(JavaVisibility.PUBLIC);
         commentGenerator.addJavaFileComment(topLevelClass);
 
-        FullyQualifiedJavaType superClass = getSuperClass();
-        if (superClass != null) {
-            topLevelClass.setSuperClass(superClass);
-            topLevelClass.addImportedType(superClass);
-        }
+        getSuperClass().ifPresent(sc -> {
+            topLevelClass.setSuperClass(sc);
+            topLevelClass.addImportedType(sc);
+        });
+
         commentGenerator.addModelClassComment(topLevelClass, introspectedTable);
 
         List<IntrospectedColumn> introspectedColumns = getColumnsInThisClass();
@@ -77,9 +78,9 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
         }
 
         Plugin plugins = context.getPlugins();
-        String rootClass = getRootClass();
+        Optional<RootClassInfo> rootClassInfo = getRootClass().map(rc -> RootClassInfo.getInstance(rc, warnings));
         for (IntrospectedColumn introspectedColumn : introspectedColumns) {
-            if (RootClassInfo.getInstance(rootClass, warnings).containsProperty(introspectedColumn)) {
+            if (rootClassInfo.map(rci -> rci.containsProperty(introspectedColumn)).orElse(false)) {
                 continue;
             }
 
@@ -112,17 +113,12 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
         return answer;
     }
 
-    private FullyQualifiedJavaType getSuperClass() {
-        FullyQualifiedJavaType superClass;
+    private Optional<FullyQualifiedJavaType> getSuperClass() {
+        Optional<FullyQualifiedJavaType> superClass;
         if (introspectedTable.getRules().generatePrimaryKeyClass()) {
-            superClass = new FullyQualifiedJavaType(introspectedTable.getPrimaryKeyType());
+            superClass = Optional.of(new FullyQualifiedJavaType(introspectedTable.getPrimaryKeyType()));
         } else {
-            String rootClass = getRootClass();
-            if (rootClass != null) {
-                superClass = new FullyQualifiedJavaType(rootClass);
-            } else {
-                superClass = null;
-            }
+            superClass = getRootClass().map(FullyQualifiedJavaType::new);
         }
 
         return superClass;

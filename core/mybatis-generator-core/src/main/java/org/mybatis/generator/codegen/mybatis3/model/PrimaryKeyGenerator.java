@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.FullyQualifiedTable;
@@ -29,7 +30,6 @@ import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.Plugin;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.Field;
-import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
@@ -53,12 +53,10 @@ public class PrimaryKeyGenerator extends AbstractJavaGenerator {
         topLevelClass.setVisibility(JavaVisibility.PUBLIC);
         commentGenerator.addJavaFileComment(topLevelClass);
 
-        String rootClass = getRootClass();
-        if (rootClass != null) {
-            FullyQualifiedJavaType rootType = new FullyQualifiedJavaType(rootClass);
-            topLevelClass.setSuperClass(rootType);
-            topLevelClass.addImportedType(rootType);
-        }
+        getRootClass().ifPresent(rc -> {
+            topLevelClass.setSuperClass(rc);
+            topLevelClass.addImportedType(rc);
+        });
 
         if (introspectedTable.isConstructorBased()) {
             addParameterizedConstructor(topLevelClass);
@@ -70,8 +68,9 @@ public class PrimaryKeyGenerator extends AbstractJavaGenerator {
 
         commentGenerator.addModelClassComment(topLevelClass, introspectedTable);
 
+        Optional<RootClassInfo> rootClassInfo = getRootClass().map(rc -> RootClassInfo.getInstance(rc, warnings));
         for (IntrospectedColumn introspectedColumn : introspectedTable.getPrimaryKeyColumns()) {
-            if (RootClassInfo.getInstance(rootClass, warnings).containsProperty(introspectedColumn)) {
+            if (rootClassInfo.map(rci -> rci.containsProperty(introspectedColumn)).orElse(false)) {
                 continue;
             }
 

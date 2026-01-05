@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,79 +19,36 @@ import static org.mybatis.generator.internal.util.StringUtility.composeFullyQual
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.DomainObjectRenamingRule;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
 
 public class FullyQualifiedTable {
 
-    private final String introspectedCatalog;
-    private final String introspectedSchema;
+    private final @Nullable String introspectedCatalog;
+    private final @Nullable String introspectedSchema;
     private final String introspectedTableName;
-    private final String runtimeCatalog;
-    private final String runtimeSchema;
-    private final String runtimeTableName;
-    private String domainObjectName;
-    private String domainObjectSubPackage;
-    private final String alias;
+    private final @Nullable String runtimeCatalog;
+    private final @Nullable String runtimeSchema;
+    private final @Nullable String runtimeTableName;
+    private @Nullable String configuredDomainObjectName;
+    private @Nullable String domainObjectSubPackage;
+    private final @Nullable String alias;
     private final boolean ignoreQualifiersAtRuntime;
     private final String beginningDelimiter;
     private final String endingDelimiter;
-    private final DomainObjectRenamingRule domainObjectRenamingRule;
+    private final @Nullable DomainObjectRenamingRule domainObjectRenamingRule;
 
-    /**
-     * This object is used to hold information related to the table itself, not the columns in the
-     * table.
-     *
-     * @param introspectedCatalog
-     *            the actual catalog of the table as returned from DatabaseMetaData. This value
-     *            should only be set if the user configured a catalog. Otherwise, the
-     *            DatabaseMetaData is reporting some database default that we don't want in the
-     *            generated code.
-     * @param introspectedSchema
-     *            the actual schema of the table as returned from DatabaseMetaData. This value
-     *            should only be set if the user configured a schema. Otherwise, the
-     *            DatabaseMetaData is reporting some database default that we don't want in the
-     *            generated code.
-     * @param introspectedTableName
-     *            the actual table name as returned from DatabaseMetaData
-     * @param domainObjectName
-     *            the configured domain object name for this table. If nothing is configured, we'll build the domain
-     *            object named based on the tableName or runtimeTableName.
-     * @param alias
-     *            a configured alias for the table. This alias will be added to the table name in the SQL
-     * @param ignoreQualifiersAtRuntime
-     *            if true, then the catalog and schema qualifiers will be ignored when composing fully qualified names
-     *            in the generated SQL. This is used, for example, when the user needs to specify a specific schema for
-     *            generating code but does not want the schema in the generated SQL
-     * @param runtimeCatalog
-     *            this is used to "rename" the catalog in the generated SQL. This is useful, for example, when
-     *            generating code against one catalog that should run with a different catalog.
-     * @param runtimeSchema
-     *            this is used to "rename" the schema in the generated SQL. This is useful, for example, when generating
-     *            code against one schema that should run with a different schema.
-     * @param runtimeTableName
-     *            this is used to "rename" the table in the generated SQL. This is useful, for example, when generating
-     *            code to run with an Oracle synonym. The user would have to specify the actual table name and schema
-     *            for generation, but would want to use the synonym name in the generated SQL
-     * @param delimitIdentifiers
-     *            if true, then the table identifiers will be delimited at runtime. The delimiter characters are
-     *            obtained from the Context.
-     * @param domainObjectRenamingRule
-     *            If domainObjectName is not configured, we'll build the domain object named based on the tableName
-     *            or runtimeTableName.
-     *            And then we use the domain object renaming rule to generate the final domain object name.
-     * @param context
-     *            the context
-     */
     public FullyQualifiedTable(Builder builder) {
         super();
         this.introspectedCatalog = builder.introspectedCatalog;
         this.introspectedSchema = builder.introspectedSchema;
-        this.introspectedTableName = builder.introspectedTableName;
+        this.introspectedTableName = Objects.requireNonNull(builder.introspectedTableName);
         this.ignoreQualifiersAtRuntime = builder.ignoreQualifiersAtRuntime;
         this.runtimeCatalog = builder.runtimeCatalog;
         this.runtimeSchema = builder.runtimeSchema;
@@ -101,9 +58,9 @@ public class FullyQualifiedTable {
         if (stringHasValue(builder.domainObjectName)) {
             int index = builder.domainObjectName.lastIndexOf('.');
             if (index == -1) {
-                this.domainObjectName = builder.domainObjectName;
+                this.configuredDomainObjectName = builder.domainObjectName;
             } else {
-                this.domainObjectName = builder.domainObjectName.substring(index + 1);
+                this.configuredDomainObjectName = builder.domainObjectName.substring(index + 1);
                 this.domainObjectSubPackage = builder.domainObjectName.substring(0, index);
             }
         }
@@ -118,12 +75,12 @@ public class FullyQualifiedTable {
         endingDelimiter = builder.delimitIdentifiers ? builder.context.getEndingDelimiter() : ""; //$NON-NLS-1$
     }
 
-    public String getIntrospectedCatalog() {
-        return introspectedCatalog;
+    public Optional<String> getIntrospectedCatalog() {
+        return Optional.ofNullable(introspectedCatalog);
     }
 
-    public String getIntrospectedSchema() {
-        return introspectedSchema;
+    public Optional<String> getIntrospectedSchema() {
+        return Optional.ofNullable(introspectedSchema);
     }
 
     public String getIntrospectedTableName() {
@@ -182,8 +139,8 @@ public class FullyQualifiedTable {
     }
 
     public String getDomainObjectName() {
-        if (stringHasValue(domainObjectName)) {
-            return domainObjectName;
+        if (stringHasValue(configuredDomainObjectName)) {
+            return configuredDomainObjectName;
         }
 
         String finalDomainObjectName;
@@ -194,9 +151,8 @@ public class FullyQualifiedTable {
         }
 
         if (domainObjectRenamingRule != null) {
-            Pattern pattern = Pattern.compile(domainObjectRenamingRule.getSearchString());
-            String replaceString = domainObjectRenamingRule.getReplaceString();
-            replaceString = replaceString == null ? "" : replaceString; //$NON-NLS-1$
+            Pattern pattern = domainObjectRenamingRule.pattern();
+            String replaceString = domainObjectRenamingRule.replaceString();
             Matcher matcher = pattern.matcher(finalDomainObjectName);
             finalDomainObjectName = JavaBeansUtil.getFirstCharacterUppercase(matcher.replaceAll(replaceString));
         }
@@ -230,8 +186,8 @@ public class FullyQualifiedTable {
                 '.');
     }
 
-    public String getAlias() {
-        return alias;
+    public Optional<String> getAlias() {
+        return Optional.ofNullable(alias);
     }
 
     /**
@@ -304,73 +260,169 @@ public class FullyQualifiedTable {
         }
     }
 
-    public String getDomainObjectSubPackage() {
-        return domainObjectSubPackage;
+    public Optional<String> getDomainObjectSubPackage() {
+        return Optional.ofNullable(domainObjectSubPackage);
     }
 
     public static class Builder {
-        private String introspectedCatalog;
-        private String introspectedSchema;
-        private String introspectedTableName;
-        private String runtimeCatalog;
-        private String runtimeSchema;
-        private String runtimeTableName;
-        private String domainObjectName;
-        private String alias;
+        private @Nullable String introspectedCatalog;
+        private @Nullable String introspectedSchema;
+        private @Nullable String introspectedTableName;
+        private @Nullable String runtimeCatalog;
+        private @Nullable String runtimeSchema;
+        private @Nullable String runtimeTableName;
+        private @Nullable String domainObjectName;
+        private @Nullable String alias;
         private boolean ignoreQualifiersAtRuntime;
         private boolean delimitIdentifiers;
-        private DomainObjectRenamingRule domainObjectRenamingRule;
-        private Context context;
+        private @Nullable DomainObjectRenamingRule domainObjectRenamingRule;
+        private @Nullable Context context;
 
-        public Builder withIntrospectedCatalog(String introspectedCatalog) {
+        /**
+         * Sets the actual catalog of the table as returned from DatabaseMetaData.
+         *
+         * <p>This value should only be set if the user configured a catalog. Otherwise, the
+         * DatabaseMetaData is reporting some database default that we don't want in the generated code.
+         *
+         * @param introspectedCatalog the introspected catalog
+         * @return this builder
+         */
+        public Builder withIntrospectedCatalog(@Nullable String introspectedCatalog) {
             this.introspectedCatalog = introspectedCatalog;
             return this;
         }
 
-        public Builder withIntrospectedSchema(String introspectedSchema) {
+        /**
+         * Sets the actual schema of the table as returned from DatabaseMetaData.
+         *
+         * <p>This value should only be set if the user configured a schema. Otherwise, the
+         * DatabaseMetaData is reporting some database default that we don't want in the generated code.
+         *
+         * @param introspectedSchema the introspected schema
+         * @return this builder
+         */
+        public Builder withIntrospectedSchema(@Nullable String introspectedSchema) {
             this.introspectedSchema = introspectedSchema;
             return this;
         }
 
+        /**
+         * Sets the actual table name as returned from DatabaseMetaData.
+         *
+         * @param introspectedTableName the introspected table name
+         * @return this builder
+         */
         public Builder withIntrospectedTableName(String introspectedTableName) {
             this.introspectedTableName = introspectedTableName;
             return this;
         }
+
+        /**
+         * Sets the runtime catalog.
+         *
+         * <p>This is used to "rename" the catalog in the generated SQL. This is useful, for example, when
+         *    generating code against one catalog that should run with a different catalog.
+         *
+         * @param runtimeCatalog the runtime catalog
+         * @return this builder
+         */
         public Builder withRuntimeCatalog(String runtimeCatalog) {
             this.runtimeCatalog = runtimeCatalog;
             return this;
         }
 
+        /**
+         * Sets the runtime schema.
+         *
+         * <p>This is used to "rename" the schema in the generated SQL. This is useful, for example, when
+         *    generating code against one schema that should run with a different schema.
+         *
+         * @param runtimeSchema the runtime schema
+         * @return this builder
+         */
         public Builder withRuntimeSchema(String runtimeSchema) {
             this.runtimeSchema = runtimeSchema;
             return this;
         }
 
+        /**
+         * Sets the runtime table name.
+         *
+         * <p>This is used to "rename" the table in the generated SQL. This is useful, for example, when generating
+         *    code to run with an Oracle synonym. The user would have to specify the actual table name and schema
+         *    for generation, but would want to use the synonym name in the generated SQL
+         *
+         * @param runtimeTableName the runtime table name
+         * @return this builder
+         */
         public Builder withRuntimeTableName(String runtimeTableName) {
             this.runtimeTableName = runtimeTableName;
             return this;
         }
 
+        /**
+         * Set the configured domain object name for this table.
+         *
+         * <p>If nothing is configured, we'll build the domain object named based on the tableName or runtimeTableName.
+         *
+         * @param domainObjectName the domain object name
+         * @return this builder
+         */
         public Builder withDomainObjectName(String domainObjectName) {
             this.domainObjectName = domainObjectName;
             return this;
         }
 
-        public Builder withAlias(String alias) {
+        /**
+         * Sets a configured alias for the table. This alias will be added to the table name in the SQL.
+         *
+         * @param alias the alias
+         * @return this builder
+         */
+        public Builder withAlias(@Nullable String alias) {
             this.alias = alias;
             return this;
         }
 
+        /**
+         * If true, then the catalog and schema qualifiers will be ignored when composing fully qualified names
+         * in the generated SQL.
+         *
+         * <p>This is used, for example, when the user needs to specify a specific schema for
+         * generating code but does not want the schema in the generated SQL
+         *
+         * @param ignoreQualifiersAtRuntime whether to ignore qualifiers at runtime
+         * @return this builder
+         */
         public Builder withIgnoreQualifiersAtRuntime(boolean ignoreQualifiersAtRuntime) {
             this.ignoreQualifiersAtRuntime = ignoreQualifiersAtRuntime;
             return this;
         }
 
+        /**
+         * If true, then the table identifiers will be delimited at runtime.
+         *
+         * <p>The delimiter characters are obtained from the Context.
+         *
+         * @param delimitIdentifiers whether to delimit identifiers at runtime
+         * @return this builder
+         */
         public Builder withDelimitIdentifiers(boolean delimitIdentifiers) {
             this.delimitIdentifiers = delimitIdentifiers;
             return this;
         }
 
+        /**
+         * Sets a domain object renaming rule.
+         *
+         * <p>This is ignored is a domain object name is configured.
+         *
+         * <p>If a domain object name is not configured, we'll build the domain object named based on the tableName
+         * or runtimeTableName, and then we use the domain object renaming rule to generate the final domain object name.
+         *
+         * @param domainObjectRenamingRule the domain object renaming rule
+         * @return this builder
+         */
         public Builder withDomainObjectRenamingRule(DomainObjectRenamingRule domainObjectRenamingRule) {
             this.domainObjectRenamingRule = domainObjectRenamingRule;
             return this;

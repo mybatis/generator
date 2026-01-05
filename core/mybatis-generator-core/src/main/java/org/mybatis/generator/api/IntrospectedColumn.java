@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,8 +17,10 @@ package org.mybatis.generator.api;
 
 import java.sql.Types;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Properties;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.internal.util.StringUtility;
@@ -29,16 +31,21 @@ import org.mybatis.generator.internal.util.StringUtility;
  * @author Jeff Butler
  */
 public class IntrospectedColumn {
-    protected String actualColumnName;
+    /**
+     * Only nullable because instances of this class are built through introspection. Not null in practice.
+     */
+    protected @Nullable String actualColumnName;
 
     protected int jdbcType;
 
     /**
      * The platform specific data type name as reported from DatabaseMetadata.getColumns().
+     *
+     * <p>Only nullable because instances of this class are built through introspection. Not null in practice.
      */
-    protected String actualTypeName;
+    protected @Nullable String actualTypeName;
 
-    protected String jdbcTypeName;
+    protected @Nullable String jdbcTypeName;
 
     protected boolean nullable;
 
@@ -50,26 +57,38 @@ public class IntrospectedColumn {
 
     protected boolean isSequenceColumn;
 
-    protected String javaProperty;
+    /**
+     * Only nullable because instances of this class are built through introspection. Not null in practice.
+     */
+    protected @Nullable String javaProperty;
 
-    protected FullyQualifiedJavaType fullyQualifiedJavaType;
+    /**
+     * Only nullable because instances of this class are built through introspection. Not null in practice.
+     */
+    protected @Nullable FullyQualifiedJavaType fullyQualifiedJavaType;
 
-    protected String tableAlias;
+    protected @Nullable String tableAlias;
 
-    protected String typeHandler;
+    protected @Nullable String typeHandler;
 
-    protected Context context;
+    /**
+     * Only nullable because instances of this class are built through introspection. Not null in practice.
+     */
+    protected @Nullable Context context;
 
     protected boolean isColumnNameDelimited;
 
-    protected IntrospectedTable introspectedTable;
+    /**
+     * Only nullable because instances of this class are built through introspection. Not null in practice.
+     */
+    protected @Nullable IntrospectedTable introspectedTable;
 
     protected final Properties properties;
 
     // any database comment associated with this column. May be null
-    protected String remarks;
+    protected @Nullable String remarks;
 
-    protected String defaultValue;
+    protected @Nullable String defaultValue;
 
     /**
      * true if the JDBC driver reports that this column is auto-increment.
@@ -91,7 +110,6 @@ public class IntrospectedColumn {
      * about a column that is required to generate Java objects and SQL maps;
      */
     public IntrospectedColumn() {
-        super();
         properties = new Properties();
     }
 
@@ -134,7 +152,7 @@ public class IntrospectedColumn {
     @Override
     public String toString() {
         return "Actual Column Name: " //$NON-NLS-1$
-                + actualColumnName
+                + getActualColumnName()
                 + ", JDBC Type: " //$NON-NLS-1$
                 + jdbcType
                 + ", Nullable: " //$NON-NLS-1$
@@ -149,8 +167,7 @@ public class IntrospectedColumn {
 
     public void setActualColumnName(String actualColumnName) {
         this.actualColumnName = actualColumnName;
-        isColumnNameDelimited = StringUtility
-                .stringContainsSpace(actualColumnName);
+        isColumnNameDelimited = StringUtility.stringContainsSpace(actualColumnName);
     }
 
     public boolean isIdentity() {
@@ -171,8 +188,7 @@ public class IntrospectedColumn {
     }
 
     public boolean isStringColumn() {
-        return fullyQualifiedJavaType.equals(FullyQualifiedJavaType
-                .getStringInstance());
+        return getFullyQualifiedJavaType().equals(FullyQualifiedJavaType.getStringInstance());
     }
 
     public boolean isJdbcCharacterColumn() {
@@ -186,12 +202,13 @@ public class IntrospectedColumn {
         return getJavaProperty(null);
     }
 
-    public String getJavaProperty(String prefix) {
+    public String getJavaProperty(@Nullable String prefix) {
+        String baseProperty = Objects.requireNonNull(javaProperty);
         if (prefix == null) {
-            return javaProperty;
+            return baseProperty;
         }
 
-        return prefix + javaProperty;
+        return prefix + baseProperty;
     }
 
     public void setJavaProperty(String javaProperty) {
@@ -199,19 +216,17 @@ public class IntrospectedColumn {
     }
 
     public boolean isJDBCDateColumn() {
-        return fullyQualifiedJavaType.equals(FullyQualifiedJavaType
-                .getDateInstance())
+        return getFullyQualifiedJavaType().equals(FullyQualifiedJavaType.getDateInstance())
                 && "DATE".equalsIgnoreCase(jdbcTypeName); //$NON-NLS-1$
     }
 
     public boolean isJDBCTimeColumn() {
-        return fullyQualifiedJavaType.equals(FullyQualifiedJavaType
-                .getDateInstance())
+        return getFullyQualifiedJavaType().equals(FullyQualifiedJavaType.getDateInstance())
                 && "TIME".equalsIgnoreCase(jdbcTypeName); //$NON-NLS-1$
     }
 
-    public String getTypeHandler() {
-        return typeHandler;
+    public Optional<String> getTypeHandler() {
+        return Optional.ofNullable(typeHandler);
     }
 
     public void setTypeHandler(String typeHandler) {
@@ -219,7 +234,7 @@ public class IntrospectedColumn {
     }
 
     public String getActualColumnName() {
-        return actualColumnName;
+        return Objects.requireNonNull(actualColumnName);
     }
 
     public void setColumnNameDelimited(boolean isColumnNameDelimited) {
@@ -234,29 +249,28 @@ public class IntrospectedColumn {
         return Objects.requireNonNullElse(jdbcTypeName, "OTHER");//$NON-NLS-1$
     }
 
-    public void setJdbcTypeName(String jdbcTypeName) {
+    public void setJdbcTypeName(@Nullable String jdbcTypeName) {
         this.jdbcTypeName = jdbcTypeName;
     }
 
     public FullyQualifiedJavaType getFullyQualifiedJavaType() {
-        return fullyQualifiedJavaType;
+        return Objects.requireNonNull(fullyQualifiedJavaType);
     }
 
-    public void setFullyQualifiedJavaType(
-            FullyQualifiedJavaType fullyQualifiedJavaType) {
+    public void setFullyQualifiedJavaType(FullyQualifiedJavaType fullyQualifiedJavaType) {
         this.fullyQualifiedJavaType = fullyQualifiedJavaType;
     }
 
-    public String getTableAlias() {
-        return tableAlias;
+    public Optional<String> getTableAlias() {
+        return Optional.ofNullable(tableAlias);
     }
 
-    public void setTableAlias(String tableAlias) {
+    public void setTableAlias(@Nullable String tableAlias) {
         this.tableAlias = tableAlias;
     }
 
     public Context getContext() {
-        return context;
+        return Objects.requireNonNull(context);
     }
 
     public void setContext(Context context) {
@@ -264,7 +278,7 @@ public class IntrospectedColumn {
     }
 
     public IntrospectedTable getIntrospectedTable() {
-        return introspectedTable;
+        return Objects.requireNonNull(introspectedTable);
     }
 
     public void setIntrospectedTable(IntrospectedTable introspectedTable) {
@@ -279,19 +293,19 @@ public class IntrospectedColumn {
         this.properties.putAll(properties);
     }
 
-    public String getRemarks() {
-        return remarks;
+    public Optional<String> getRemarks() {
+        return Optional.ofNullable(remarks);
     }
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
     }
 
-    public String getDefaultValue() {
-        return defaultValue;
+    public Optional<String> getDefaultValue() {
+        return Optional.ofNullable(defaultValue);
     }
 
-    public void setDefaultValue(String defaultValue) {
+    public void setDefaultValue(@Nullable String defaultValue) {
         this.defaultValue = defaultValue;
     }
 
@@ -335,7 +349,7 @@ public class IntrospectedColumn {
      * @return the platform specific type name as reported by the JDBC driver
      */
     public String getActualTypeName() {
-        return actualTypeName;
+        return Objects.requireNonNull(actualTypeName);
     }
 
     public void setActualTypeName(String actualTypeName) {

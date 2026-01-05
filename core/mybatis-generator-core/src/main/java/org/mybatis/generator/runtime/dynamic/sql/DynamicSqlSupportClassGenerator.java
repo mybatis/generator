@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -161,12 +161,9 @@ public class DynamicSqlSupportClassGenerator {
                 escapeStringForJava(getEscapedColumnName(column)),
                 column.getJdbcTypeName()));
 
-        if (StringUtility.stringHasValue(column.getTypeHandler())) {
-            initializationString.append(String.format(", \"%s\")", column.getTypeHandler())); //$NON-NLS-1$
-        } else {
-            initializationString.append(')'); //$NON-NLS-1$
-        }
-
+        column.getTypeHandler().ifPresentOrElse(
+                th -> initializationString.append(String.format(", \"%s\")", th)), //$NON-NLS-1$
+                () -> initializationString.append(')'));
 
         if (StringUtility.isTrue(
                 column.getProperties().getProperty(PropertyRegistry.COLUMN_OVERRIDE_FORCE_JAVA_TYPE))) {

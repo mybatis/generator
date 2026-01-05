@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -74,7 +74,7 @@ public class ExampleWhereClauseElementGenerator extends AbstractXmlElementGenera
         trimElement.addElement(getMiddleForEachElement(null));
 
         for (IntrospectedColumn introspectedColumn : introspectedTable.getNonBLOBColumns()) {
-            if (stringHasValue(introspectedColumn.getTypeHandler())) {
+            if (introspectedColumn.getTypeHandler().isPresent()) {
                 trimElement.addElement(getMiddleForEachElement(introspectedColumn));
             }
         }
@@ -102,10 +102,8 @@ public class ExampleWhereClauseElementGenerator extends AbstractXmlElementGenera
 
             typeHandled = true;
 
-            sb.setLength(0);
-            sb.append(",typeHandler="); //$NON-NLS-1$
-            sb.append(introspectedColumn.getTypeHandler());
-            typeHandlerString = sb.toString();
+            typeHandlerString = introspectedColumn.getTypeHandler().map(th -> ",typeHandler=" + th) //$NON-NLS-1$
+            .orElse(""); //$NON-NLS-1$
         }
 
         XmlElement middleForEachElement = new XmlElement("foreach"); //$NON-NLS-1$

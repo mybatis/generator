@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -37,6 +37,7 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.FullyQualifiedTable;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
@@ -44,6 +45,7 @@ import org.mybatis.generator.api.JavaTypeResolver;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.JavaReservedWords;
 import org.mybatis.generator.config.ColumnOverride;
+import org.mybatis.generator.config.ColumnRenamingRule;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.config.PropertyRegistry;
@@ -82,9 +84,9 @@ public class DatabaseIntrospector {
 
         try {
             rs = databaseMetaData.getPrimaryKeys(
-                    table.getIntrospectedCatalog(), table
-                            .getIntrospectedSchema(), table
-                            .getIntrospectedTableName());
+                    table.getIntrospectedCatalog().orElse(null),
+                    table.getIntrospectedSchema().orElse(null),
+                    table.getIntrospectedTableName());
         } catch (SQLException e) {
             warnings.add(getString("Warning.15")); //$NON-NLS-1$
             return;
@@ -109,7 +111,7 @@ public class DatabaseIntrospector {
         }
     }
 
-    private void closeResultSet(ResultSet rs) {
+    private void closeResultSet(@Nullable ResultSet rs) {
         if (rs != null) {
             try {
                 rs.close();
@@ -247,41 +249,25 @@ public class DatabaseIntrospector {
     private void calculateExtraColumnInformation(TableConfiguration tc,
             Map<ActualTableName, List<IntrospectedColumn>> columns) {
         StringBuilder sb = new StringBuilder();
-        Pattern pattern = null;
-        String replaceString = null;
-        if (tc.getColumnRenamingRule() != null) {
-            pattern = Pattern.compile(tc.getColumnRenamingRule()
-                    .getSearchString());
-            replaceString = tc.getColumnRenamingRule().getReplaceString();
-            replaceString = replaceString == null ? "" : replaceString; //$NON-NLS-1$
-        }
 
-        for (Map.Entry<ActualTableName, List<IntrospectedColumn>> entry : columns
-                .entrySet()) {
+        for (Map.Entry<ActualTableName, List<IntrospectedColumn>> entry : columns.entrySet()) {
             for (IntrospectedColumn introspectedColumn : entry.getValue()) {
-                String calculatedColumnName;
-                if (pattern == null) {
-                    calculatedColumnName = introspectedColumn
-                            .getActualColumnName();
-                } else {
-                    Matcher matcher = pattern.matcher(introspectedColumn
-                            .getActualColumnName());
-                    calculatedColumnName = matcher.replaceAll(replaceString);
-                }
+                String calculatedColumnName = tc.getColumnRenamingRule().map(rr -> {
+                    Matcher matcher = rr.pattern().matcher(introspectedColumn.getActualColumnName());
+                    return matcher.replaceAll(rr.replaceString());
+                }).orElseGet(introspectedColumn::getActualColumnName);
 
-                if (isTrue(tc
-                        .getProperty(PropertyRegistry.TABLE_USE_ACTUAL_COLUMN_NAMES))) {
-                    introspectedColumn.setJavaProperty(
-                            JavaBeansUtil.getValidPropertyName(calculatedColumnName));
-                } else if (isTrue(tc
-                                .getProperty(PropertyRegistry.TABLE_USE_COMPOUND_PROPERTY_NAMES))) {
+                if (isTrue(tc.getProperty(PropertyRegistry.TABLE_USE_ACTUAL_COLUMN_NAMES))) {
+                    introspectedColumn
+                            .setJavaProperty(JavaBeansUtil.getValidPropertyName(calculatedColumnName));
+                } else if (isTrue(tc.getProperty(PropertyRegistry.TABLE_USE_COMPOUND_PROPERTY_NAMES))) {
                     sb.setLength(0);
                     sb.append(calculatedColumnName);
-                    sb.append('_');
-                    sb.append(JavaBeansUtil.getCamelCaseString(
-                            introspectedColumn.getRemarks(), true));
-                    introspectedColumn.setJavaProperty(
-                            JavaBeansUtil.getValidPropertyName(sb.toString()));
+                    introspectedColumn.getRemarks().ifPresent(r -> {
+                        sb.append('_');
+                        sb.append(JavaBeansUtil.getCamelCaseString(r, true));
+                    });
+                    introspectedColumn.setJavaProperty(JavaBeansUtil.getValidPropertyName(sb.toString()));
                 } else {
                     introspectedColumn.setJavaProperty(
                             JavaBeansUtil.getCamelCaseString(calculatedColumnName, false));
@@ -468,8 +454,7 @@ public class DatabaseIntrospector {
             logger.debug(getString("Tracing.1", fullTableName)); //$NON-NLS-1$
         }
 
-        ResultSet rs = databaseMetaData.getColumns(localCatalog, localSchema,
-                localTableName, "%"); //$NON-NLS-1$
+        ResultSet rs = databaseMetaData.getColumns(localCatalog, localSchema, localTableName, "%"); //$NON-NLS-1$
 
         boolean supportsIsAutoIncrement = false;
         boolean supportsIsGeneratedColumn = false;
@@ -485,10 +470,9 @@ public class DatabaseIntrospector {
         }
 
         while (rs.next()) {
-            IntrospectedColumn introspectedColumn = ObjectFactory
-                    .createIntrospectedColumn(context);
+            IntrospectedColumn introspectedColumn = ObjectFactory.createIntrospectedColumn(context);
 
-            introspectedColumn.setTableAlias(tc.getAlias());
+            introspectedColumn.setTableAlias(tc.getAlias().orElse(null));
             introspectedColumn.setJdbcType(rs.getInt("DATA_TYPE")); //$NON-NLS-1$
             introspectedColumn.setActualTypeName(rs.getString("TYPE_NAME")); //$NON-NLS-1$
             introspectedColumn.setLength(rs.getInt("COLUMN_SIZE")); //$NON-NLS-1$
@@ -595,7 +579,7 @@ public class DatabaseIntrospector {
                     .withIntrospectedSchema(stringHasValue(tc.getSchema()) ? atn.getSchema() : null)
                     .withIntrospectedTableName(atn.getTableName())
                     .withDomainObjectName(tc.getDomainObjectName())
-                    .withAlias(tc.getAlias())
+                    .withAlias(tc.getAlias().orElse(null))
                     .withIgnoreQualifiersAtRuntime(isTrue(tc.getProperty(PropertyRegistry.TABLE_IGNORE_QUALIFIERS_AT_RUNTIME)))
                     .withRuntimeCatalog(tc.getProperty(PropertyRegistry.TABLE_RUNTIME_CATALOG))
                     .withRuntimeSchema(tc.getProperty(PropertyRegistry.TABLE_RUNTIME_SCHEMA))
@@ -634,7 +618,8 @@ public class DatabaseIntrospector {
         try {
             FullyQualifiedTable fqt = introspectedTable.getFullyQualifiedTable();
 
-            ResultSet rs = databaseMetaData.getTables(fqt.getIntrospectedCatalog(), fqt.getIntrospectedSchema(),
+            ResultSet rs = databaseMetaData.getTables(fqt.getIntrospectedCatalog().orElse(null),
+                    fqt.getIntrospectedSchema().orElse(null),
                     fqt.getIntrospectedTableName(), null);
             if (rs.next()) {
                 String remarks = rs.getString("REMARKS"); //$NON-NLS-1$

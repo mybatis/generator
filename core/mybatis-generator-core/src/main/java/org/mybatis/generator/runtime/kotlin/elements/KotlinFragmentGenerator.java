@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -159,14 +159,12 @@ public class KotlinFragmentGenerator {
         sb.append(introspectedColumn.getJavaProperty());
         sb.append('\"');
 
-        if (stringHasValue(introspectedColumn.getTypeHandler())) {
-            FullyQualifiedKotlinType fqjt =
-                    new FullyQualifiedKotlinType(introspectedColumn.getTypeHandler());
-            imports.add(introspectedColumn.getTypeHandler());
+        introspectedColumn.getTypeHandler().ifPresent(th -> {
+            imports.add(th);
             sb.append(", typeHandler="); //$NON-NLS-1$
-            sb.append(fqjt.getShortNameWithoutTypeArguments());
+            sb.append(new FullyQualifiedKotlinType(th).getShortNameWithoutTypeArguments());
             sb.append("::class"); //$NON-NLS-1$
-        }
+        });
 
         sb.append(", jdbcType=JdbcType."); //$NON-NLS-1$
         sb.append(introspectedColumn.getJdbcTypeName());

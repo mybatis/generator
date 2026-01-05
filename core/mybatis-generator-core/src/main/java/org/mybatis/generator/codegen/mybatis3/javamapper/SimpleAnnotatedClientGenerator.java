@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 package org.mybatis.generator.codegen.mybatis3.javamapper;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.codegen.AbstractXmlGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.AbstractJavaMapperMethodGenerator;
@@ -71,7 +72,7 @@ public class SimpleAnnotatedClientGenerator extends SimpleJavaClientGenerator {
     }
 
     @Override
-    public AbstractXmlGenerator getMatchedXMLGenerator() {
+    public @Nullable AbstractXmlGenerator getMatchedXMLGenerator() {
         return null;
     }
 }

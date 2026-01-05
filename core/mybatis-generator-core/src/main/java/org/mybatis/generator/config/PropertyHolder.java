@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@ package org.mybatis.generator.config;
 
 import java.util.Properties;
 
+import org.jspecify.annotations.Nullable;
+
 public abstract class PropertyHolder {
     private final Properties properties;
 
@@ -29,7 +31,7 @@ public abstract class PropertyHolder {
         properties.setProperty(name, value);
     }
 
-    public String getProperty(String name) {
+    public @Nullable String getProperty(String name) {
         return properties.getProperty(name);
     }
 

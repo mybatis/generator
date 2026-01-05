@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -180,10 +180,8 @@ public class KotlinDynamicSqlSupportClassGenerator {
                 escapeStringForKotlin(getEscapedColumnName(column)),
                 column.getJdbcTypeName()));
 
-        if (StringUtility.stringHasValue(column.getTypeHandler())) {
-            initializationString.append(
-                    String.format(", typeHandler = \"%s\"", column.getTypeHandler())); //$NON-NLS-1$
-        }
+        column.getTypeHandler().ifPresent(
+                th -> initializationString.append(String.format(", typeHandler = \"%s\"", th))); //$NON-NLS-1$
 
         if (StringUtility.isTrue(
                 column.getProperties().getProperty(PropertyRegistry.COLUMN_OVERRIDE_FORCE_JAVA_TYPE))) {

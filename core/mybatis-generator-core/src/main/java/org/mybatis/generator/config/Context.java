@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.ConnectionFactory;
 import org.mybatis.generator.api.GeneratedFile;
@@ -102,7 +103,7 @@ public class Context extends PropertyHolder {
         tableConfigurations.add(tc);
     }
 
-    public JavaClientGeneratorConfiguration getJavaClientGeneratorConfiguration() {
+    public @Nullable JavaClientGeneratorConfiguration getJavaClientGeneratorConfiguration() {
         return javaClientGeneratorConfiguration;
     }
 
@@ -114,7 +115,7 @@ public class Context extends PropertyHolder {
         return javaTypeResolverConfiguration;
     }
 
-    public SqlMapGeneratorConfiguration getSqlMapGeneratorConfiguration() {
+    public @Nullable SqlMapGeneratorConfiguration getSqlMapGeneratorConfiguration() {
         return sqlMapGeneratorConfiguration;
     }
 
@@ -370,7 +371,7 @@ public class Context extends PropertyHolder {
      *             if the progress callback reports a cancel
      */
     public void introspectTables(ProgressCallback callback,
-            List<String> warnings, Set<String> fullyQualifiedTableNames)
+            List<String> warnings, @Nullable Set<String> fullyQualifiedTableNames)
             throws SQLException, InterruptedException {
 
         introspectedTables.clear();

@@ -226,6 +226,7 @@
           <artifactId>maven-javadoc-plugin</artifactId>
           <configuration>
             <quiet>true</quiet>
+            <doclint>all,-missing</doclint>
             <tags>
               <tag>
                 <name>mbg.generated</name>

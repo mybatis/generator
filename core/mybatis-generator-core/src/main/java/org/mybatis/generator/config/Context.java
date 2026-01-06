@@ -30,7 +30,6 @@ import java.util.Set;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.CommentGenerator;
-import org.mybatis.generator.api.ConnectionFactory;
 import org.mybatis.generator.api.GeneratedFile;
 import org.mybatis.generator.api.GeneratedJavaFile;
 import org.mybatis.generator.api.GeneratedKotlinFile;
@@ -479,14 +478,12 @@ public class Context extends PropertyHolder {
      * @throws SQLException if any error occurs while creating the connection
      */
     public Connection getConnection() throws SQLException {
-        ConnectionFactory connectionFactory;
         if (jdbcConnectionConfiguration != null) {
-            connectionFactory = new JDBCConnectionFactory(jdbcConnectionConfiguration);
+            return new JDBCConnectionFactory(jdbcConnectionConfiguration).getConnection();
         } else {
-            connectionFactory = ObjectFactory.createConnectionFactory(this);
+            return ObjectFactory.createConnectionFactory(Objects.requireNonNull(connectionFactoryConfiguration))
+                    .getConnection();
         }
-
-        return connectionFactory.getConnection();
     }
 
     /**

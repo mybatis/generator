@@ -222,17 +222,13 @@ public class ObjectFactory {
         return answer;
     }
 
-    public static ConnectionFactory createConnectionFactory(Context context) {
+    public static ConnectionFactory createConnectionFactory(ConnectionFactoryConfiguration config) {
         ConnectionFactory answer;
 
-        String type = context.getConnectionFactoryConfiguration()
-                .map(ConnectionFactoryConfiguration::getImplementationType)
-                .orElse(JDBCConnectionFactory.class.getName());
+        String type = config.getImplementationType();
 
         answer = createInternalObject(type, ConnectionFactory.class);
-
-        context.getConnectionFactoryConfiguration()
-                .ifPresent(c -> answer.addConfigurationProperties(c.getProperties()));
+        answer.addConfigurationProperties(config.getProperties());
 
         return answer;
     }

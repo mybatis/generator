@@ -21,6 +21,7 @@ import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.List;
+import java.util.Optional;
 
 public class JDBCConnectionConfiguration extends PropertyHolder {
     private final String driverClass;
@@ -40,12 +41,12 @@ public class JDBCConnectionConfiguration extends PropertyHolder {
         return connectionURL;
     }
 
-    public String getPassword() {
-        return password;
+    public Optional<String> getPassword() {
+        return Optional.ofNullable(password);
     }
 
-    public String getUserId() {
-        return userId;
+    public Optional<String> getUserId() {
+        return Optional.ofNullable(userId);
     }
 
     public String getDriverClass() {

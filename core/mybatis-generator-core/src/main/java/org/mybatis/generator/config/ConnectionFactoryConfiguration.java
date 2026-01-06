@@ -20,7 +20,7 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 import java.util.List;
 
 import org.jspecify.annotations.Nullable;
-import org.mybatis.generator.internal.JDBCConnectionFactory;
+import org.mybatis.generator.internal.GenericConnectionFactory;
 import org.mybatis.generator.internal.util.StringUtility;
 
 public class ConnectionFactoryConfiguration extends TypedPropertyHolder {
@@ -48,7 +48,7 @@ public class ConnectionFactoryConfiguration extends TypedPropertyHolder {
 
     public String getImplementationType() {
         if (configurationType == null || "DEFAULT".equals(configurationType)) { //$NON-NLS-1$
-            return JDBCConnectionFactory.class.getName();
+            return GenericConnectionFactory.class.getName();
         } else {
             return configurationType;
         }

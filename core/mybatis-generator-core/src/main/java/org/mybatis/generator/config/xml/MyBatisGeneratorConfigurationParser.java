@@ -121,8 +121,7 @@ public class MyBatisGeneratorConfigurationParser {
                 resourceUrl = new URL(url);
             }
 
-            InputStream inputStream = resourceUrl.openConnection()
-                    .getInputStream();
+            InputStream inputStream = resourceUrl.openConnection().getInputStream();
 
             configurationProperties.load(inputStream);
             inputStream.close();
@@ -504,7 +503,6 @@ public class MyBatisGeneratorConfigurationParser {
     }
 
     protected void parseJdbcConnection(Context context, Node node) {
-
         Properties attributes = parseAttributes(node);
         String driverClass = attributes.getProperty("driverClass"); //$NON-NLS-1$
         String connectionURL = attributes.getProperty("connectionURL"); //$NON-NLS-1$

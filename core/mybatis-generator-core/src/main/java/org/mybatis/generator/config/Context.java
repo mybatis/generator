@@ -25,6 +25,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import org.jspecify.annotations.Nullable;
@@ -52,11 +53,11 @@ public class Context extends PropertyHolder {
 
     private JDBCConnectionConfiguration jdbcConnectionConfiguration;
 
-    private ConnectionFactoryConfiguration connectionFactoryConfiguration;
+    private @Nullable ConnectionFactoryConfiguration connectionFactoryConfiguration;
 
     private SqlMapGeneratorConfiguration sqlMapGeneratorConfiguration;
 
-    private JavaTypeResolverConfiguration javaTypeResolverConfiguration;
+    private @Nullable JavaTypeResolverConfiguration javaTypeResolverConfiguration;
 
     private JavaModelGeneratorConfiguration javaModelGeneratorConfiguration;
 
@@ -70,7 +71,7 @@ public class Context extends PropertyHolder {
 
     private String endingDelimiter = "\""; //$NON-NLS-1$
 
-    private CommentGeneratorConfiguration commentGeneratorConfiguration;
+    private @Nullable CommentGeneratorConfiguration commentGeneratorConfiguration;
 
     private CommentGenerator commentGenerator;
 
@@ -90,9 +91,7 @@ public class Context extends PropertyHolder {
 
     private XmlFormatter xmlFormatter;
 
-    public Context(ModelType defaultModelType) {
-        super();
-
+    public Context(@Nullable ModelType defaultModelType) {
         this.defaultModelType = Objects.requireNonNullElse(defaultModelType, ModelType.CONDITIONAL);
 
         tableConfigurations = new ArrayList<>();
@@ -111,8 +110,8 @@ public class Context extends PropertyHolder {
         return javaModelGeneratorConfiguration;
     }
 
-    public JavaTypeResolverConfiguration getJavaTypeResolverConfiguration() {
-        return javaTypeResolverConfiguration;
+    public Optional<JavaTypeResolverConfiguration> getJavaTypeResolverConfiguration() {
+        return Optional.ofNullable(javaTypeResolverConfiguration);
     }
 
     public @Nullable SqlMapGeneratorConfiguration getSqlMapGeneratorConfiguration() {
@@ -279,8 +278,8 @@ public class Context extends PropertyHolder {
         return xmlFormatter;
     }
 
-    public CommentGeneratorConfiguration getCommentGeneratorConfiguration() {
-        return commentGeneratorConfiguration;
+    public Optional<CommentGeneratorConfiguration> getCommentGeneratorConfiguration() {
+        return Optional.ofNullable(commentGeneratorConfiguration);
     }
 
     public void setCommentGeneratorConfiguration(
@@ -437,13 +436,12 @@ public class Context extends PropertyHolder {
 
         pluginAggregator = new PluginAggregator();
         for (PluginConfiguration pluginConfiguration : pluginConfigurations) {
-            Plugin plugin = ObjectFactory.createPlugin(this,
-                    pluginConfiguration);
+            Plugin plugin = ObjectFactory.createPlugin(this, pluginConfiguration);
             if (plugin.validate(warnings)) {
                 pluginAggregator.addPlugin(plugin);
             } else {
                 warnings.add(getString("Warning.24", //$NON-NLS-1$
-                        pluginConfiguration.getConfigurationType(), id));
+                        pluginConfiguration.getConfigurationType().orElse("Unknown Plugin Type"), id)); //$NON-NLS-1$
             }
         }
 
@@ -530,8 +528,8 @@ public class Context extends PropertyHolder {
                 && autoDelimitKeywords;
     }
 
-    public ConnectionFactoryConfiguration getConnectionFactoryConfiguration() {
-        return connectionFactoryConfiguration;
+    public Optional<ConnectionFactoryConfiguration> getConnectionFactoryConfiguration() {
+        return Optional.ofNullable(connectionFactoryConfiguration);
     }
 
     public void setConnectionFactoryConfiguration(ConnectionFactoryConfiguration connectionFactoryConfiguration) {

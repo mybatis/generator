@@ -23,7 +23,6 @@ public abstract class PropertyHolder {
     private final Properties properties;
 
     protected PropertyHolder() {
-        super();
         properties = new Properties();
     }
 

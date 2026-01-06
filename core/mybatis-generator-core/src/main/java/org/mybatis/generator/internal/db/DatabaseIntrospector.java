@@ -287,8 +287,7 @@ public class DatabaseIntrospector {
 
                     ColumnOverride co = tc.getColumnOverride(introspectedColumn
                             .getActualColumnName());
-                    if (co != null
-                            && stringHasValue(co.getJavaType())) {
+                    if (co != null && co.getJavaType().isPresent()) {
                         warn = false;
                     }
 
@@ -364,30 +363,11 @@ public class DatabaseIntrospector {
                                         .getKey().toString()));
                     }
 
-                    if (stringHasValue(columnOverride
-                            .getJavaProperty())) {
-                        introspectedColumn.setJavaProperty(columnOverride
-                                .getJavaProperty());
-                    }
-
-                    if (stringHasValue(columnOverride
-                            .getJavaType())) {
-                        introspectedColumn
-                                .setFullyQualifiedJavaType(new FullyQualifiedJavaType(
-                                        columnOverride.getJavaType()));
-                    }
-
-                    if (stringHasValue(columnOverride
-                            .getJdbcType())) {
-                        introspectedColumn.setJdbcTypeName(columnOverride
-                                .getJdbcType());
-                    }
-
-                    if (stringHasValue(columnOverride
-                            .getTypeHandler())) {
-                        introspectedColumn.setTypeHandler(columnOverride
-                                .getTypeHandler());
-                    }
+                    columnOverride.getJavaProperty().ifPresent(introspectedColumn::setJavaProperty);
+                    columnOverride.getJavaType().ifPresent(
+                            jt -> introspectedColumn.setFullyQualifiedJavaType(new FullyQualifiedJavaType(jt)));
+                    columnOverride.getJdbcType().ifPresent(introspectedColumn::setJdbcTypeName);
+                    columnOverride.getTypeHandler().ifPresent(introspectedColumn::setTypeHandler);
 
                     if (columnOverride.isColumnNameDelimited()) {
                         introspectedColumn.setColumnNameDelimited(true);

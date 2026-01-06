@@ -116,8 +116,7 @@ public class MyBatisGeneratorConfigurationParser {
             if (stringHasValue(resource)) {
                 resourceUrl = ObjectFactory.getResource(resource);
                 if (resourceUrl == null) {
-                    throw new XMLParserException(getString(
-                            "RuntimeError.15", resource)); //$NON-NLS-1$
+                    throw new XMLParserException(getString("RuntimeError.15", resource)); //$NON-NLS-1$
                 }
             } else {
                 resourceUrl = new URL(url);
@@ -801,7 +800,7 @@ public class MyBatisGeneratorConfigurationParser {
      * @return the resolved property.  This method will return null if the property is
      *     undefined in any of the sources.
      */
-    private String resolveProperty(String key) {
+    private @Nullable String resolveProperty(String key) {
         String property = System.getProperty(key);
 
         if (property == null) {

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.ConnectionFactory;
 import org.mybatis.generator.api.FullyQualifiedTable;
@@ -87,8 +88,7 @@ public class ObjectFactory {
      * @param classLoader
      *            the class loader
      */
-    public static synchronized void addExternalClassLoader(
-            ClassLoader classLoader) {
+    public static synchronized void addExternalClassLoader(ClassLoader classLoader) {
         ObjectFactory.externalClassLoaders.add(classLoader);
     }
 
@@ -103,9 +103,7 @@ public class ObjectFactory {
      * @throws ClassNotFoundException
      *             the class not found exception
      */
-    public static Class<?> externalClassForName(String type)
-            throws ClassNotFoundException {
-
+    public static Class<?> externalClassForName(String type) throws ClassNotFoundException {
         Class<?> clazz;
 
         for (ClassLoader classLoader : externalClassLoaders) {
@@ -134,8 +132,7 @@ public class ObjectFactory {
         return answer;
     }
 
-    public static Class<?> internalClassForName(String type)
-            throws ClassNotFoundException {
+    public static Class<?> internalClassForName(String type) throws ClassNotFoundException {
         Class<?> clazz = null;
 
         try {
@@ -152,7 +149,7 @@ public class ObjectFactory {
         return clazz;
     }
 
-    public static URL getResource(String resource) {
+    public static @Nullable URL getResource(String resource) {
         URL url;
 
         for (ClassLoader classLoader : externalClassLoaders) {
@@ -180,90 +177,62 @@ public class ObjectFactory {
 
             answer = clazz.getConstructor().newInstance();
         } catch (Exception e) {
-            throw new RuntimeException(getString(
-                    "RuntimeError.6", type), e); //$NON-NLS-1$
+            throw new RuntimeException(getString("RuntimeError.6", type), e); //$NON-NLS-1$
 
         }
 
         return answer;
     }
 
-    public static JavaTypeResolver createJavaTypeResolver(Context context,
-            List<String> warnings) {
-        JavaTypeResolverConfiguration config = context
-                .getJavaTypeResolverConfiguration();
-        String type;
-
-        if (config != null && config.getConfigurationType() != null) {
-            type = config.getConfigurationType();
-            if ("DEFAULT".equalsIgnoreCase(type)) { //$NON-NLS-1$
-                type = JavaTypeResolverDefaultImpl.class.getName();
-            }
-        } else {
-            type = JavaTypeResolverDefaultImpl.class.getName();
-        }
+    public static JavaTypeResolver createJavaTypeResolver(Context context, List<String> warnings) {
+        String type = context.getJavaTypeResolverConfiguration()
+                .map(JavaTypeResolverConfiguration::getImplementationType)
+                .orElse(JavaTypeResolverDefaultImpl.class.getName());
 
         JavaTypeResolver answer = (JavaTypeResolver) createInternalObject(type);
         answer.setWarnings(warnings);
 
-        if (config != null) {
-            answer.addConfigurationProperties(config.getProperties());
-        }
+        context.getJavaTypeResolverConfiguration()
+                .ifPresent(c -> answer.addConfigurationProperties(c.getProperties()));
 
         answer.setContext(context);
 
         return answer;
     }
 
-    public static Plugin createPlugin(Context context,
-            PluginConfiguration pluginConfiguration) {
-        Plugin plugin = (Plugin) createInternalObject(pluginConfiguration
-                .getConfigurationType());
+    public static Plugin createPlugin(Context context, PluginConfiguration pluginConfiguration) {
+        Plugin plugin = (Plugin) createInternalObject(pluginConfiguration.getConfigurationType().orElseThrow());
         plugin.setContext(context);
         plugin.setProperties(pluginConfiguration.getProperties());
         return plugin;
     }
 
     public static CommentGenerator createCommentGenerator(Context context) {
-
-        CommentGeneratorConfiguration config = context
-                .getCommentGeneratorConfiguration();
         CommentGenerator answer;
 
-        String type;
-        if (config == null || config.getConfigurationType() == null) {
-            type = DefaultCommentGenerator.class.getName();
-        } else {
-            type = config.getConfigurationType();
-        }
+        String type = context.getCommentGeneratorConfiguration()
+                .map(CommentGeneratorConfiguration::getImplementationType)
+                .orElse(DefaultCommentGenerator.class.getName());
 
         answer = (CommentGenerator) createInternalObject(type);
 
-        if (config != null) {
-            answer.addConfigurationProperties(config.getProperties());
-        }
+        context.getCommentGeneratorConfiguration()
+                .ifPresent(c -> answer.addConfigurationProperties(c.getProperties()));
 
         return answer;
     }
 
     public static ConnectionFactory createConnectionFactory(Context context) {
-
-        ConnectionFactoryConfiguration config = context
-                .getConnectionFactoryConfiguration();
         ConnectionFactory answer;
 
-        String type;
-        if (config == null || config.getConfigurationType() == null) {
-            type = JDBCConnectionFactory.class.getName();
-        } else {
-            type = config.getConfigurationType();
-        }
+        String type = context.getConnectionFactoryConfiguration()
+                .map(ConnectionFactoryConfiguration::getImplementationType)
+                .orElse(JDBCConnectionFactory.class.getName());
 
         answer = (ConnectionFactory) createInternalObject(type);
 
-        if (config != null) {
-            answer.addConfigurationProperties(config.getProperties());
-        }
+        context.getConnectionFactoryConfiguration()
+                .ifPresent(c -> answer.addConfigurationProperties(c.getProperties()));
 
         return answer;
     }
@@ -307,10 +276,9 @@ public class ObjectFactory {
         return answer;
     }
 
-    public static IntrospectedTable createIntrospectedTable(
-            TableConfiguration tableConfiguration, FullyQualifiedTable table,
-            Context context) {
-
+    public static IntrospectedTable createIntrospectedTable(TableConfiguration tableConfiguration,
+                                                            FullyQualifiedTable table,
+                                                            Context context) {
         IntrospectedTable answer = createIntrospectedTableForValidation(context);
         answer.setFullyQualifiedTable(table);
         answer.setTableConfiguration(tableConfiguration);

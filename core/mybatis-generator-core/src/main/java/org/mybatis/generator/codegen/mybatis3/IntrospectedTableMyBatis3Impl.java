@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -108,23 +108,19 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
             return null;
         }
 
-        String type = context.getJavaClientGeneratorConfiguration()
-                .getConfigurationType();
-
-        AbstractJavaClientGenerator javaGenerator;
-        if ("XMLMAPPER".equalsIgnoreCase(type)) { //$NON-NLS-1$
-            javaGenerator = new JavaMapperGenerator(getClientProject());
-        } else if ("MIXEDMAPPER".equalsIgnoreCase(type)) { //$NON-NLS-1$
-            javaGenerator = new MixedClientGenerator(getClientProject());
-        } else if ("ANNOTATEDMAPPER".equalsIgnoreCase(type)) { //$NON-NLS-1$
-            javaGenerator = new AnnotatedClientGenerator(getClientProject());
-        } else if ("MAPPER".equalsIgnoreCase(type)) { //$NON-NLS-1$
-            javaGenerator = new JavaMapperGenerator(getClientProject());
-        } else {
-            javaGenerator = (AbstractJavaClientGenerator) ObjectFactory.createInternalObject(type);
-        }
-
-        return javaGenerator;
+        return context.getJavaClientGeneratorConfiguration().getConfigurationType().map(t -> {
+            if ("XMLMAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
+                return new JavaMapperGenerator(getClientProject());
+            } else if ("MIXEDMAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
+                return new MixedClientGenerator(getClientProject());
+            } else if ("ANNOTATEDMAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
+                return new AnnotatedClientGenerator(getClientProject());
+            } else if ("MAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
+                return new JavaMapperGenerator(getClientProject());
+            } else {
+                return (AbstractJavaClientGenerator) ObjectFactory.createInternalObject(t);
+            }
+        }).orElseThrow(() -> new IllegalArgumentException("JavaClientGenerator must have a specified type"));
     }
 
     protected void calculateJavaModelGenerators(List<String> warnings,

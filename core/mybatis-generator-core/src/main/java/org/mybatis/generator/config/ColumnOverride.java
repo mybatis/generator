@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,18 +20,21 @@ import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.List;
+import java.util.Optional;
+
+import org.jspecify.annotations.Nullable;
 
 public class ColumnOverride extends PropertyHolder {
 
     private final String columnName;
 
-    private String javaProperty;
+    private @Nullable String javaProperty;
 
-    private String jdbcType;
+    private @Nullable String jdbcType;
 
-    private String javaType;
+    private @Nullable String javaType;
 
-    private String typeHandler;
+    private @Nullable String typeHandler;
 
     private boolean isColumnNameDelimited;
 
@@ -42,8 +45,6 @@ public class ColumnOverride extends PropertyHolder {
     private boolean isGeneratedAlways;
 
     public ColumnOverride(String columnName) {
-        super();
-
         this.columnName = columnName;
         isColumnNameDelimited = stringContainsSpace(columnName);
     }
@@ -52,32 +53,32 @@ public class ColumnOverride extends PropertyHolder {
         return columnName;
     }
 
-    public String getJavaProperty() {
-        return javaProperty;
+    public Optional<String> getJavaProperty() {
+        return Optional.ofNullable(javaProperty);
     }
 
     public void setJavaProperty(String javaProperty) {
         this.javaProperty = javaProperty;
     }
 
-    public String getJavaType() {
-        return javaType;
+    public Optional<String> getJavaType() {
+        return Optional.ofNullable(javaType);
     }
 
     public void setJavaType(String javaType) {
         this.javaType = javaType;
     }
 
-    public String getJdbcType() {
-        return jdbcType;
+    public Optional<String> getJdbcType() {
+        return Optional.ofNullable(jdbcType);
     }
 
     public void setJdbcType(String jdbcType) {
         this.jdbcType = jdbcType;
     }
 
-    public String getTypeHandler() {
-        return typeHandler;
+    public Optional<String> getTypeHandler() {
+        return Optional.ofNullable( typeHandler);
     }
 
     public void setTypeHandler(String typeHandler) {

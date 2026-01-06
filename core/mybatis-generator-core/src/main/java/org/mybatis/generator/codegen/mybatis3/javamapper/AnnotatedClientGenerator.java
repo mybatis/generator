@@ -16,8 +16,8 @@
 package org.mybatis.generator.codegen.mybatis3.javamapper;
 
 import java.util.List;
+import java.util.Optional;
 
-import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.codegen.AbstractXmlGenerator;
@@ -172,8 +172,8 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
     }
 
     @Override
-    public @Nullable AbstractXmlGenerator getMatchedXMLGenerator() {
+    public Optional<AbstractXmlGenerator> getMatchedXMLGenerator() {
         // No XML required by the annotated client
-        return null;
+        return Optional.empty();
     }
 }

@@ -20,6 +20,7 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.mybatis.generator.api.dom.java.CompilationUnit;
@@ -147,11 +148,11 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
         interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Mapper")); //$NON-NLS-1$
         interfaze.addAnnotation("@Mapper"); //$NON-NLS-1$
 
-        String rootInterface = introspectedTable
-                .getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
+        String rootInterface = introspectedTable.getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
         if (!stringHasValue(rootInterface)) {
             rootInterface = context.getJavaClientGeneratorConfiguration()
-                    .get().getProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
+                    .map(c -> c.getProperty(PropertyRegistry.ANY_ROOT_INTERFACE))
+                    .orElse(null);
         }
 
         if (stringHasValue(rootInterface)) {
@@ -449,7 +450,7 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
     }
 
     @Override
-    public AbstractXmlGenerator getMatchedXMLGenerator() {
-        return null;
+    public Optional<AbstractXmlGenerator> getMatchedXMLGenerator() {
+        return Optional.empty();
     }
 }

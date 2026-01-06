@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -24,6 +24,8 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated.Anno
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated.AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated.AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.MixedMapperGenerator;
+
+import java.util.Optional;
 
 /**
  * This class overrides the base mapper to provide annotated methods for the
@@ -81,7 +83,7 @@ public class MixedClientGenerator extends JavaMapperGenerator {
     }
 
     @Override
-    public AbstractXmlGenerator getMatchedXMLGenerator() {
-        return new MixedMapperGenerator();
+    public Optional<AbstractXmlGenerator> getMatchedXMLGenerator() {
+        return Optional.of(new MixedMapperGenerator());
     }
 }

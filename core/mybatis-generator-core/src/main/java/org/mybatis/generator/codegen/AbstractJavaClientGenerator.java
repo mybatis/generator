@@ -15,7 +15,7 @@
  */
 package org.mybatis.generator.codegen;
 
-import org.jspecify.annotations.Nullable;
+import java.util.Optional;
 
 /**
  * This class exists to that Java client generators can specify whether
@@ -47,8 +47,7 @@ public abstract class AbstractJavaClientGenerator extends AbstractJavaGenerator 
      * Returns an instance of the XML generator associated
      * with this client generator.
      *
-     * @return the matched XML generator.  May return null if no
-     *     XML is required by this generator
+     * @return the matched XML generator if any.
      */
-    public abstract @Nullable AbstractXmlGenerator getMatchedXMLGenerator();
+    public abstract Optional<AbstractXmlGenerator> getMatchedXMLGenerator();
 }

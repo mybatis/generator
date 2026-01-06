@@ -15,7 +15,6 @@
  */
 package org.mybatis.generator.codegen.mybatis3.javamapper;
 
-import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.codegen.AbstractXmlGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.AbstractJavaMapperMethodGenerator;
@@ -24,6 +23,8 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated.Anno
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated.AnnotatedSelectAllMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated.AnnotatedSelectByPrimaryKeyMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated.AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator;
+
+import java.util.Optional;
 
 public class SimpleAnnotatedClientGenerator extends SimpleJavaClientGenerator {
 
@@ -72,7 +73,7 @@ public class SimpleAnnotatedClientGenerator extends SimpleJavaClientGenerator {
     }
 
     @Override
-    public @Nullable AbstractXmlGenerator getMatchedXMLGenerator() {
-        return null;
+    public Optional<AbstractXmlGenerator> getMatchedXMLGenerator() {
+        return Optional.empty();
     }
 }

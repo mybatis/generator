@@ -21,8 +21,8 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
-import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
@@ -62,8 +62,9 @@ public class SimpleJavaClientGenerator extends AbstractJavaClientGenerator {
 
         String rootInterface = introspectedTable.getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
         if (!stringHasValue(rootInterface)) {
-            rootInterface = context.getJavaClientGeneratorConfiguration().get()
-                    .getProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
+            rootInterface = context.getJavaClientGeneratorConfiguration()
+                    .map(c -> c.getProperty(PropertyRegistry.ANY_ROOT_INTERFACE))
+                    .orElse(null);
         }
 
         if (stringHasValue(rootInterface)) {
@@ -138,7 +139,7 @@ public class SimpleJavaClientGenerator extends AbstractJavaClientGenerator {
     }
 
     @Override
-    public @Nullable AbstractXmlGenerator getMatchedXMLGenerator() {
-        return new SimpleXMLMapperGenerator();
+    public Optional<AbstractXmlGenerator> getMatchedXMLGenerator() {
+        return Optional.of(new SimpleXMLMapperGenerator());
     }
 }

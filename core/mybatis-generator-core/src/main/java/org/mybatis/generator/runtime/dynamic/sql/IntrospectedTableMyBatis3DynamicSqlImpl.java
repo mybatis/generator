@@ -16,6 +16,7 @@
 package org.mybatis.generator.runtime.dynamic.sql;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
@@ -37,18 +38,13 @@ public class IntrospectedTableMyBatis3DynamicSqlImpl extends IntrospectedTableMy
     }
 
     @Override
-    protected AbstractJavaClientGenerator createJavaClientGenerator() {
-        if (getContext().getJavaClientGeneratorConfiguration().isEmpty()) {
-            return null;
-        }
-
-        return new DynamicSqlMapperGenerator(getClientProject());
+    protected Optional<AbstractJavaClientGenerator> createJavaClientGenerator() {
+        return getContext().getJavaClientGeneratorConfiguration()
+                .map(c -> new DynamicSqlMapperGenerator(getClientProject()));
     }
 
     @Override
-    protected void calculateJavaModelGenerators(List<String> warnings,
-            ProgressCallback progressCallback) {
-
+    protected void calculateJavaModelGenerators(List<String> warnings, ProgressCallback progressCallback) {
         AbstractJavaGenerator javaGenerator = new DynamicSqlModelGenerator(getModelProject());
         initializeAbstractGenerator(javaGenerator, warnings,
                 progressCallback);

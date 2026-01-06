@@ -16,7 +16,9 @@
 package org.mybatis.generator.codegen.mybatis3;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
@@ -24,6 +26,7 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.SimpleAnnotatedClientGe
 import org.mybatis.generator.codegen.mybatis3.javamapper.SimpleJavaClientGenerator;
 import org.mybatis.generator.codegen.mybatis3.model.SimpleModelGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.SimpleXMLMapperGenerator;
+import org.mybatis.generator.config.TypedPropertyHolder;
 import org.mybatis.generator.internal.ObjectFactory;
 
 /**
@@ -39,41 +42,37 @@ public class IntrospectedTableMyBatis3SimpleImpl extends IntrospectedTableMyBati
     }
 
     @Override
-    protected void calculateXmlMapperGenerator(AbstractJavaClientGenerator javaClientGenerator, List<String> warnings,
-            ProgressCallback progressCallback) {
+    protected void calculateXmlMapperGenerator(@Nullable AbstractJavaClientGenerator javaClientGenerator, List<String> warnings,
+                                               ProgressCallback progressCallback) {
         if (javaClientGenerator == null) {
-            if (context.getSqlMapGeneratorConfiguration() != null) {
+            if (getContext().getSqlMapGeneratorConfiguration() != null) {
                 xmlMapperGenerator = new SimpleXMLMapperGenerator();
             }
         } else {
-            xmlMapperGenerator = javaClientGenerator.getMatchedXMLGenerator();
+            xmlMapperGenerator = javaClientGenerator.getMatchedXMLGenerator().orElse(null);
         }
 
         initializeAbstractGenerator(xmlMapperGenerator, warnings, progressCallback);
     }
 
     @Override
-    protected AbstractJavaClientGenerator createJavaClientGenerator() {
-        if (getContext().getJavaClientGeneratorConfiguration().isEmpty()) {
-            return null;
-        }
-
-        return getContext().getJavaClientGeneratorConfiguration().get().getConfigurationType().map(t -> {
-            if ("XMLMAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
-                return new SimpleJavaClientGenerator(getClientProject());
-            } else if ("ANNOTATEDMAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
-                return new SimpleAnnotatedClientGenerator(getClientProject());
-            } else if ("MAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
-                return new SimpleJavaClientGenerator(getClientProject());
-            } else {
-                return ObjectFactory.createInternalObject(t, AbstractJavaClientGenerator.class);
-            }
-        }).orElseThrow(() -> new IllegalArgumentException("JavaClientGenerator must have a specified type"));
+    protected Optional<AbstractJavaClientGenerator> createJavaClientGenerator() {
+        return getContext().getJavaClientGeneratorConfiguration().flatMap(TypedPropertyHolder::getConfigurationType)
+                .map(t -> {
+                    if ("XMLMAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
+                        return new SimpleJavaClientGenerator(getClientProject());
+                    } else if ("ANNOTATEDMAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
+                        return new SimpleAnnotatedClientGenerator(getClientProject());
+                    } else if ("MAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
+                        return new SimpleJavaClientGenerator(getClientProject());
+                    } else {
+                        return ObjectFactory.createInternalObject(t, AbstractJavaClientGenerator.class);
+                    }
+                });
     }
 
     @Override
     protected void calculateJavaModelGenerators(List<String> warnings, ProgressCallback progressCallback) {
-
         AbstractJavaGenerator javaGenerator = new SimpleModelGenerator(getModelProject());
         initializeAbstractGenerator(javaGenerator, warnings, progressCallback);
         javaGenerators.add(javaGenerator);

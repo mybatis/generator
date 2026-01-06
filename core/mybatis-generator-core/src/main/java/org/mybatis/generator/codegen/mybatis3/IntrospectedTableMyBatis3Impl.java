@@ -17,7 +17,9 @@ package org.mybatis.generator.codegen.mybatis3;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.GeneratedJavaFile;
 import org.mybatis.generator.api.GeneratedKotlinFile;
 import org.mybatis.generator.api.GeneratedXmlFile;
@@ -40,6 +42,7 @@ import org.mybatis.generator.codegen.mybatis3.model.PrimaryKeyGenerator;
 import org.mybatis.generator.codegen.mybatis3.model.RecordWithBLOBsGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.XMLMapperGenerator;
 import org.mybatis.generator.config.PropertyRegistry;
+import org.mybatis.generator.config.TypedPropertyHolder;
 import org.mybatis.generator.internal.ObjectFactory;
 import org.mybatis.generator.internal.util.StringUtility;
 
@@ -54,77 +57,68 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
 
     protected final List<AbstractKotlinGenerator> kotlinGenerators = new ArrayList<>();
 
-    protected AbstractXmlGenerator xmlMapperGenerator;
+    protected @Nullable AbstractXmlGenerator xmlMapperGenerator;
 
     public IntrospectedTableMyBatis3Impl() {
         super(TargetRuntime.MYBATIS3);
     }
 
     @Override
-    public void calculateGenerators(List<String> warnings,
-            ProgressCallback progressCallback) {
+    public void calculateGenerators(List<String> warnings, ProgressCallback progressCallback) {
         calculateJavaModelGenerators(warnings, progressCallback);
 
         AbstractJavaClientGenerator javaClientGenerator =
-                calculateClientGenerators(warnings, progressCallback);
+                calculateClientGenerators(warnings, progressCallback).orElse(null);
 
         calculateXmlMapperGenerator(javaClientGenerator, warnings, progressCallback);
     }
 
-    protected void calculateXmlMapperGenerator(AbstractJavaClientGenerator javaClientGenerator,
+    protected void calculateXmlMapperGenerator(@Nullable AbstractJavaClientGenerator javaClientGenerator,
             List<String> warnings,
             ProgressCallback progressCallback) {
         if (javaClientGenerator == null) {
-            if (context.getSqlMapGeneratorConfiguration() != null) {
+            if (getContext().getSqlMapGeneratorConfiguration() != null) {
                 xmlMapperGenerator = new XMLMapperGenerator();
             }
         } else {
-            xmlMapperGenerator = javaClientGenerator.getMatchedXMLGenerator();
+            xmlMapperGenerator = javaClientGenerator.getMatchedXMLGenerator().orElse(null);
         }
 
-        initializeAbstractGenerator(xmlMapperGenerator, warnings,
-                progressCallback);
+        initializeAbstractGenerator(xmlMapperGenerator, warnings, progressCallback);
     }
 
-    protected AbstractJavaClientGenerator calculateClientGenerators(List<String> warnings,
+    protected Optional<AbstractJavaClientGenerator> calculateClientGenerators(List<String> warnings,
             ProgressCallback progressCallback) {
         if (!getRules().generateJavaClient()) {
-            return null;
+            return Optional.empty();
         }
 
-        AbstractJavaClientGenerator javaGenerator = createJavaClientGenerator();
-        if (javaGenerator == null) {
-            return null;
-        }
-
-        initializeAbstractGenerator(javaGenerator, warnings, progressCallback);
-        javaGenerators.add(javaGenerator);
-
-        return javaGenerator;
+        return createJavaClientGenerator().map(g -> {
+            initializeAbstractGenerator(g, warnings, progressCallback);
+            javaGenerators.add(g);
+            return g;
+        });
     }
 
-    protected AbstractJavaClientGenerator createJavaClientGenerator() {
-        if (getContext().getJavaClientGeneratorConfiguration().isEmpty()) {
-            return null;
-        }
-
-        return getContext().getJavaClientGeneratorConfiguration().get().getConfigurationType().map(t -> {
-            if ("XMLMAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
-                return new JavaMapperGenerator(getClientProject());
-            } else if ("MIXEDMAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
-                return new MixedClientGenerator(getClientProject());
-            } else if ("ANNOTATEDMAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
-                return new AnnotatedClientGenerator(getClientProject());
-            } else if ("MAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
-                return new JavaMapperGenerator(getClientProject());
-            } else {
-                return ObjectFactory.createInternalObject(t, AbstractJavaClientGenerator.class);
-            }
-        }).orElseThrow(() -> new IllegalArgumentException("JavaClientGenerator must have a specified type"));
+    protected Optional<AbstractJavaClientGenerator> createJavaClientGenerator() {
+        return getContext().getJavaClientGeneratorConfiguration()
+                .flatMap(TypedPropertyHolder::getConfigurationType)
+                .map(t -> {
+                    if ("XMLMAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
+                        return new JavaMapperGenerator(getClientProject());
+                    } else if ("MIXEDMAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
+                        return new MixedClientGenerator(getClientProject());
+                    } else if ("ANNOTATEDMAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
+                        return new AnnotatedClientGenerator(getClientProject());
+                    } else if ("MAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
+                        return new JavaMapperGenerator(getClientProject());
+                    } else {
+                        return ObjectFactory.createInternalObject(t, AbstractJavaClientGenerator.class);
+                    }
+                });
     }
 
-    protected void calculateJavaModelGenerators(List<String> warnings,
-            ProgressCallback progressCallback) {
+    protected void calculateJavaModelGenerators(List<String> warnings, ProgressCallback progressCallback) {
         if (getRules().generateExampleClass()) {
             AbstractJavaGenerator javaGenerator = new ExampleGenerator(getExampleProject());
             initializeAbstractGenerator(javaGenerator, warnings, progressCallback);
@@ -150,7 +144,7 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
         }
     }
 
-    protected void initializeAbstractGenerator(AbstractGenerator abstractGenerator, List<String> warnings,
+    protected void initializeAbstractGenerator(@Nullable AbstractGenerator abstractGenerator, List<String> warnings,
                                                ProgressCallback progressCallback) {
         if (abstractGenerator == null) {
             return;
@@ -198,7 +192,7 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
     }
 
     protected String getClientProject() {
-        return getContext().getJavaClientGeneratorConfiguration().get().getTargetProject();
+        return getContext().getJavaClientGeneratorConfiguration().orElseThrow().getTargetProject();
     }
 
     protected String getModelProject() {
@@ -241,12 +235,8 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
 
     @Override
     public boolean requiresXMLGenerator() {
-        AbstractJavaClientGenerator javaClientGenerator = createJavaClientGenerator();
-
-        if (javaClientGenerator == null) {
-            return false;
-        } else {
-            return javaClientGenerator.requiresXMLGenerator();
-        }
+        return createJavaClientGenerator()
+                .map(AbstractJavaClientGenerator::requiresXMLGenerator)
+                .orElse(false);
     }
 }

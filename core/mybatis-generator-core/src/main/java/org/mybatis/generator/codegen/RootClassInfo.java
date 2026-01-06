@@ -74,7 +74,7 @@ public class RootClassInfo {
         }
 
         try {
-            Class<?> clazz = ObjectFactory.externalClassForName(nameWithoutGenerics);
+            Class<?> clazz = ObjectFactory.externalClassForName(nameWithoutGenerics, Class.class);
             BeanInfo bi = Introspector.getBeanInfo(clazz);
             propertyDescriptors = bi.getPropertyDescriptors();
         } catch (Exception e) {

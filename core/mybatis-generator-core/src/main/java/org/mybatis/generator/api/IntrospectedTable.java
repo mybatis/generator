@@ -33,7 +33,6 @@ import java.util.stream.Stream;
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.GeneratedKey;
-import org.mybatis.generator.config.JavaClientGeneratorConfiguration;
 import org.mybatis.generator.config.JavaModelGeneratorConfiguration;
 import org.mybatis.generator.config.ModelType;
 import org.mybatis.generator.config.PropertyHolder;
@@ -672,32 +671,27 @@ public abstract class IntrospectedTable {
         return isTrue(propertyHolder.getProperty(PropertyRegistry.ANY_ENABLE_SUB_PACKAGES));
     }
 
-    protected String calculateJavaClientInterfacePackage() {
-        JavaClientGeneratorConfiguration config = getContext().getJavaClientGeneratorConfiguration();
-        if (config == null) {
-            return null;
-        }
-
-        return config.getTargetPackage()
-                + getFullyQualifiedTable().getSubPackageForClientOrSqlMap(isSubPackagesEnabled(config));
+    protected @Nullable String calculateJavaClientInterfacePackage() {
+        return getContext().getJavaClientGeneratorConfiguration()
+                .map(c -> c.getTargetPackage()
+                        + getFullyQualifiedTable().getSubPackageForClientOrSqlMap(isSubPackagesEnabled(c)))
+                .orElse(null);
     }
 
-    protected String calculateDynamicSqlSupportPackage() {
-        JavaClientGeneratorConfiguration config = getContext().getJavaClientGeneratorConfiguration();
-        if (config == null) {
-            return null;
-        }
-
-        String packkage = config.getProperty(PropertyRegistry.CLIENT_DYNAMIC_SQL_SUPPORT_PACKAGE);
-        if (stringHasValue(packkage)) {
-            return packkage + getFullyQualifiedTable().getSubPackageForClientOrSqlMap(isSubPackagesEnabled(config));
-        } else {
-            return calculateJavaClientInterfacePackage();
-        }
+    protected @Nullable String calculateDynamicSqlSupportPackage() {
+        return getContext().getJavaClientGeneratorConfiguration()
+                .map(c -> {
+                    String packkage = c.getProperty(PropertyRegistry.CLIENT_DYNAMIC_SQL_SUPPORT_PACKAGE);
+                    if (stringHasValue(packkage)) {
+                        return packkage + getFullyQualifiedTable().getSubPackageForClientOrSqlMap(isSubPackagesEnabled(c));
+                    } else {
+                        return calculateJavaClientInterfacePackage();
+                    }
+                }).orElse(null);
     }
 
     protected void calculateJavaClientAttributes() {
-        if (getContext().getJavaClientGeneratorConfiguration() == null) {
+        if (getContext().getJavaClientGeneratorConfiguration().isEmpty()) {
             return;
         }
 

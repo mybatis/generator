@@ -114,10 +114,8 @@ public class MyBatisGeneratorConfigurationParser {
 
         try {
             if (stringHasValue(resource)) {
-                resourceUrl = ObjectFactory.getResource(resource);
-                if (resourceUrl == null) {
-                    throw new XMLParserException(getString("RuntimeError.15", resource)); //$NON-NLS-1$
-                }
+                resourceUrl = ObjectFactory.getResource(resource)
+                        .orElseThrow(() -> new XMLParserException(getString("RuntimeError.15", resource)));
             } else {
                 resourceUrl = new URL(url);
             }

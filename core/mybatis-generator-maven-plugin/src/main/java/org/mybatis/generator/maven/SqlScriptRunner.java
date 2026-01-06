@@ -20,7 +20,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
@@ -83,8 +82,8 @@ public class SqlScriptRunner {
         Connection connection = null;
 
         try {
-            Class<?> driverClass = ObjectFactory.externalClassForName(driver);
-            Driver theDriver = (Driver) driverClass.getDeclaredConstructor().newInstance();
+            Class<Driver> driverClass = ObjectFactory.externalClassForName(driver, Driver.class);
+            Driver theDriver = driverClass.getDeclaredConstructor().newInstance();
 
             Properties properties = new Properties();
             if (userid != null) {
@@ -204,8 +203,9 @@ public class SqlScriptRunner {
 
         if (sourceFile.startsWith("classpath:")) {
             String resource = sourceFile.substring("classpath:".length());
-            URL url = ObjectFactory.getResource(resource);
-            InputStream is = url.openStream();
+            InputStream is = ObjectFactory.getResource(resource)
+                    .orElseThrow(() -> new MojoExecutionException("SQL script file does not exist: " + resource))
+                    .openStream();
             if (is == null) {
                 throw new MojoExecutionException("SQL script file does not exist: " + resource);
             }

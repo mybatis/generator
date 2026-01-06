@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -151,7 +151,7 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
                 .getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
         if (!stringHasValue(rootInterface)) {
             rootInterface = context.getJavaClientGeneratorConfiguration()
-                    .getProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
+                    .get().getProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
         }
 
         if (stringHasValue(rootInterface)) {

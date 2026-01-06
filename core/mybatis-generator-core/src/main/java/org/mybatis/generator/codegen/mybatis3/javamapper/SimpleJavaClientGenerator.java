@@ -62,7 +62,7 @@ public class SimpleJavaClientGenerator extends AbstractJavaClientGenerator {
 
         String rootInterface = introspectedTable.getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
         if (!stringHasValue(rootInterface)) {
-            rootInterface = context.getJavaClientGeneratorConfiguration()
+            rootInterface = context.getJavaClientGeneratorConfiguration().get()
                     .getProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
         }
 

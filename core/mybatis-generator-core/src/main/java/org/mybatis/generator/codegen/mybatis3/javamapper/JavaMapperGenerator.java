@@ -71,7 +71,7 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
 
         String rootInterface = introspectedTable.getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
         if (!stringHasValue(rootInterface)) {
-            rootInterface = context.getJavaClientGeneratorConfiguration().getProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
+            rootInterface = context.getJavaClientGeneratorConfiguration().get().getProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
         }
 
         if (stringHasValue(rootInterface)) {

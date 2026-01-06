@@ -54,11 +54,11 @@ public class IntrospectedTableMyBatis3SimpleImpl extends IntrospectedTableMyBati
 
     @Override
     protected AbstractJavaClientGenerator createJavaClientGenerator() {
-        if (context.getJavaClientGeneratorConfiguration() == null) {
+        if (getContext().getJavaClientGeneratorConfiguration().isEmpty()) {
             return null;
         }
 
-        return context.getJavaClientGeneratorConfiguration().getConfigurationType().map(t -> {
+        return getContext().getJavaClientGeneratorConfiguration().get().getConfigurationType().map(t -> {
             if ("XMLMAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
                 return new SimpleJavaClientGenerator(getClientProject());
             } else if ("ANNOTATEDMAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
@@ -66,7 +66,7 @@ public class IntrospectedTableMyBatis3SimpleImpl extends IntrospectedTableMyBati
             } else if ("MAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
                 return new SimpleJavaClientGenerator(getClientProject());
             } else {
-                return (AbstractJavaClientGenerator) ObjectFactory.createInternalObject(t);
+                return ObjectFactory.createInternalObject(t, AbstractJavaClientGenerator.class);
             }
         }).orElseThrow(() -> new IllegalArgumentException("JavaClientGenerator must have a specified type"));
     }

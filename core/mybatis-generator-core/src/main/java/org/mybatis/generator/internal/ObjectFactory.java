@@ -21,8 +21,8 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.ConnectionFactory;
 import org.mybatis.generator.api.FullyQualifiedTable;
@@ -103,59 +103,60 @@ public class ObjectFactory {
      * @throws ClassNotFoundException
      *             the class not found exception
      */
-    public static Class<?> externalClassForName(String type) throws ClassNotFoundException {
-        Class<?> clazz;
+    @SuppressWarnings("unchecked")
+    public static <T> Class<T> externalClassForName(String type, Class<T> t) throws ClassNotFoundException {
+        Class<T> clazz;
 
         for (ClassLoader classLoader : externalClassLoaders) {
             try {
-                clazz = Class.forName(type, true, classLoader);
+                clazz = (Class<T>) Class.forName(type, true, classLoader);
                 return clazz;
             } catch (Exception e) {
                 // ignore - fail safe below
             }
         }
 
-        return internalClassForName(type);
+        return internalClassForName(type, t);
     }
 
-    public static Object createExternalObject(String type) {
-        Object answer;
+    public static <T> T createExternalObject(String type, Class<T> t) {
+        T answer;
 
         try {
-            Class<?> clazz = externalClassForName(type);
+            Class<T> clazz = externalClassForName(type, t);
             answer = clazz.getConstructor().newInstance();
         } catch (Exception e) {
-            throw new RuntimeException(getString(
-                    "RuntimeError.6", type), e); //$NON-NLS-1$
+            throw new RuntimeException(getString("RuntimeError.6", type), e); //$NON-NLS-1$
         }
 
         return answer;
     }
 
-    public static Class<?> internalClassForName(String type) throws ClassNotFoundException {
-        Class<?> clazz = null;
+    @SuppressWarnings("unchecked")
+    public static <T> Class<T> internalClassForName(String type, Class<T> t) throws ClassNotFoundException {
+        Class<T> clazz = null;
 
         try {
             ClassLoader cl = Thread.currentThread().getContextClassLoader();
-            clazz = Class.forName(type, true, cl);
+            clazz = (Class<T>) Class.forName(type, true, cl);
         } catch (Exception e) {
             // ignore - failsafe below
         }
 
         if (clazz == null) {
-            clazz = Class.forName(type, true, ObjectFactory.class.getClassLoader());
+            clazz = (Class<T>) Class.forName(type, true, ObjectFactory.class.getClassLoader());
         }
 
         return clazz;
     }
 
-    public static @Nullable URL getResource(String resource) {
+    public static Optional<URL> getResource(String resource) {
         URL url;
 
         for (ClassLoader classLoader : externalClassLoaders) {
             url = classLoader.getResource(resource);
             if (url != null) {
-                return url;
+                return Optional.of(url);
             }
         }
 
@@ -166,15 +167,14 @@ public class ObjectFactory {
             url = ObjectFactory.class.getClassLoader().getResource(resource);
         }
 
-        return url;
+        return Optional.ofNullable(url);
     }
 
-    public static Object createInternalObject(String type) {
-        Object answer;
+    public static <T> T createInternalObject(String type, Class<T> t) {
+        T answer;
 
         try {
-            Class<?> clazz = internalClassForName(type);
-
+            Class<T> clazz = internalClassForName(type, t);
             answer = clazz.getConstructor().newInstance();
         } catch (Exception e) {
             throw new RuntimeException(getString("RuntimeError.6", type), e); //$NON-NLS-1$
@@ -189,7 +189,7 @@ public class ObjectFactory {
                 .map(JavaTypeResolverConfiguration::getImplementationType)
                 .orElse(JavaTypeResolverDefaultImpl.class.getName());
 
-        JavaTypeResolver answer = (JavaTypeResolver) createInternalObject(type);
+        JavaTypeResolver answer = createInternalObject(type, JavaTypeResolver.class);
         answer.setWarnings(warnings);
 
         context.getJavaTypeResolverConfiguration()
@@ -201,7 +201,7 @@ public class ObjectFactory {
     }
 
     public static Plugin createPlugin(Context context, PluginConfiguration pluginConfiguration) {
-        Plugin plugin = (Plugin) createInternalObject(pluginConfiguration.getConfigurationType().orElseThrow());
+        Plugin plugin = createInternalObject(pluginConfiguration.getConfigurationType().orElseThrow(), Plugin.class);
         plugin.setContext(context);
         plugin.setProperties(pluginConfiguration.getProperties());
         return plugin;
@@ -214,7 +214,7 @@ public class ObjectFactory {
                 .map(CommentGeneratorConfiguration::getImplementationType)
                 .orElse(DefaultCommentGenerator.class.getName());
 
-        answer = (CommentGenerator) createInternalObject(type);
+        answer = createInternalObject(type, CommentGenerator.class);
 
         context.getCommentGeneratorConfiguration()
                 .ifPresent(c -> answer.addConfigurationProperties(c.getProperties()));
@@ -229,7 +229,7 @@ public class ObjectFactory {
                 .map(ConnectionFactoryConfiguration::getImplementationType)
                 .orElse(JDBCConnectionFactory.class.getName());
 
-        answer = (ConnectionFactory) createInternalObject(type);
+        answer = createInternalObject(type, ConnectionFactory.class);
 
         context.getConnectionFactoryConfiguration()
                 .ifPresent(c -> answer.addConfigurationProperties(c.getProperties()));
@@ -243,7 +243,7 @@ public class ObjectFactory {
             type = DefaultJavaFormatter.class.getName();
         }
 
-        JavaFormatter answer = (JavaFormatter) createInternalObject(type);
+        JavaFormatter answer = createInternalObject(type, JavaFormatter.class);
 
         answer.setContext(context);
 
@@ -256,7 +256,7 @@ public class ObjectFactory {
             type = DefaultKotlinFormatter.class.getName();
         }
 
-        KotlinFormatter answer = (KotlinFormatter) createInternalObject(type);
+        KotlinFormatter answer = createInternalObject(type, KotlinFormatter.class);
 
         answer.setContext(context);
 
@@ -269,7 +269,7 @@ public class ObjectFactory {
             type = DefaultXmlFormatter.class.getName();
         }
 
-        XmlFormatter answer = (XmlFormatter) createInternalObject(type);
+        XmlFormatter answer = createInternalObject(type, XmlFormatter.class);
 
         answer.setContext(context);
 
@@ -308,7 +308,7 @@ public class ObjectFactory {
             type = IntrospectedTableKotlinImpl.class.getName();
         }
 
-        IntrospectedTable answer = (IntrospectedTable) createInternalObject(type);
+        IntrospectedTable answer = createInternalObject(type, IntrospectedTable.class);
         answer.setContext(context);
 
         return answer;
@@ -320,7 +320,7 @@ public class ObjectFactory {
             type = IntrospectedColumn.class.getName();
         }
 
-        IntrospectedColumn answer = (IntrospectedColumn) createInternalObject(type);
+        IntrospectedColumn answer = createInternalObject(type, IntrospectedColumn.class);
         answer.setContext(context);
 
         return answer;

@@ -102,8 +102,8 @@ public class Context extends PropertyHolder {
         tableConfigurations.add(tc);
     }
 
-    public @Nullable JavaClientGeneratorConfiguration getJavaClientGeneratorConfiguration() {
-        return javaClientGeneratorConfiguration;
+    public Optional<JavaClientGeneratorConfiguration> getJavaClientGeneratorConfiguration() {
+        return Optional.ofNullable(javaClientGeneratorConfiguration);
     }
 
     public JavaModelGeneratorConfiguration getJavaModelGeneratorConfiguration() {

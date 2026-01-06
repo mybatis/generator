@@ -19,13 +19,15 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
+
 public class PluginConfiguration extends TypedPropertyHolder {
-    public PluginConfiguration() {
-        super();
+    public PluginConfiguration(@Nullable String configurationType) {
+        super(configurationType);
     }
 
     public void validate(List<String> errors, String contextId) {
-        if (getConfigurationType().isEmpty()) {
+        if (configurationType == null) {
             errors.add(getString("ValidationError.17", contextId)); //$NON-NLS-1$
         }
     }

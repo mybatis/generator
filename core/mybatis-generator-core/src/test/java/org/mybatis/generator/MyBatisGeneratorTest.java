@@ -77,8 +77,9 @@ class MyBatisGeneratorTest {
         Context context = new Context(ModelType.HIERARCHICAL);
         context.setId("MyContext");
         context.setTargetRuntime("MyBatis3Simple");
-        context.setConnectionFactoryConfiguration(new ConnectionFactoryConfiguration());
-        context.setJdbcConnectionConfiguration(new JDBCConnectionConfiguration());
+        context.setConnectionFactoryConfiguration(new ConnectionFactoryConfiguration(null));
+        context.setJdbcConnectionConfiguration(new JDBCConnectionConfiguration("", "",
+                null, null));
         config.addContext(context);
 
         DefaultShellCallback shellCallback = new DefaultShellCallback(true);

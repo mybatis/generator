@@ -30,6 +30,15 @@ public class StringUtility {
         super();
     }
 
+    public static @Nullable String trimToNull(@Nullable String s) {
+        if (s == null) {
+            return null;
+        } else {
+            var d = s.trim();
+            return d.isEmpty() ? null : d;
+        }
+    }
+
     public static boolean stringHasValue(@Nullable String s) {
         return s != null && !s.isEmpty();
     }

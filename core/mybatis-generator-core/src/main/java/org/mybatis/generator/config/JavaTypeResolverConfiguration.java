@@ -15,12 +15,13 @@
  */
 package org.mybatis.generator.config;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl;
 
 public class JavaTypeResolverConfiguration extends TypedPropertyHolder {
 
-    public JavaTypeResolverConfiguration() {
-        super();
+    public JavaTypeResolverConfiguration(@Nullable String configurationType) {
+        super(configurationType);
     }
 
     public String getImplementationType() {

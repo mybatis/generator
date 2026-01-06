@@ -19,17 +19,18 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.internal.JDBCConnectionFactory;
 import org.mybatis.generator.internal.util.StringUtility;
 
 public class ConnectionFactoryConfiguration extends TypedPropertyHolder {
 
-    public ConnectionFactoryConfiguration() {
-        super();
+    public ConnectionFactoryConfiguration(@Nullable String configurationType) {
+        super(configurationType);
     }
 
     public void validate(List<String> errors) {
-        if ("DEFAULT".equals(getConfigurationType().orElse("DEFAULT"))) { //$NON-NLS-1$ //$NON-NLS-2$
+        if (configurationType == null || "DEFAULT".equals(configurationType)) { //$NON-NLS-1$
             // configuration is empty or DEFAULT
             if (!StringUtility.stringHasValue(getProperty("driverClass"))) { //$NON-NLS-1$
                 errors.add(getString("ValidationError.18", //$NON-NLS-1$

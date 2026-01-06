@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,28 +22,20 @@ import java.util.List;
 
 public class JavaModelGeneratorConfiguration extends PropertyHolder {
 
-    private String targetPackage;
+    private final String targetPackage;
+    private final String targetProject;
 
-    private String targetProject;
-
-    public JavaModelGeneratorConfiguration() {
-        super();
+    public JavaModelGeneratorConfiguration(String targetPackage, String targetProject) {
+        this.targetPackage = targetPackage;
+        this.targetProject = targetProject;
     }
 
     public String getTargetProject() {
         return targetProject;
     }
 
-    public void setTargetProject(String targetProject) {
-        this.targetProject = targetProject;
-    }
-
     public String getTargetPackage() {
         return targetPackage;
-    }
-
-    public void setTargetPackage(String targetPackage) {
-        this.targetPackage = targetPackage;
     }
 
     public void validate(List<String> errors, String contextId) {

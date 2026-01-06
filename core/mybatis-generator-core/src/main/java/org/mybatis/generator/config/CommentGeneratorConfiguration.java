@@ -15,12 +15,13 @@
  */
 package org.mybatis.generator.config;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.internal.DefaultCommentGenerator;
 
 public class CommentGeneratorConfiguration extends TypedPropertyHolder {
 
-    public CommentGeneratorConfiguration() {
-        super();
+    public CommentGeneratorConfiguration(@Nullable String configurationType) {
+        super(configurationType);
     }
 
     public String getImplementationType() {

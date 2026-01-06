@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,55 +15,41 @@
  */
 package org.mybatis.generator.config;
 
+import org.jspecify.annotations.Nullable;
+
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.List;
 
 public class JDBCConnectionConfiguration extends PropertyHolder {
+    private final String driverClass;
+    private final String connectionURL;
+    private final @Nullable String userId;
+    private final @Nullable String password;
 
-    private String driverClass;
-
-    private String connectionURL;
-
-    private String userId;
-
-    private String password;
-
-    public JDBCConnectionConfiguration() {
-        super();
+    public JDBCConnectionConfiguration(String driverClass, String connectionURL,
+                                       @Nullable String userId, @Nullable String password) {
+        this.driverClass = driverClass;
+        this.connectionURL = connectionURL;
+        this.userId = userId;
+        this.password = password;
     }
 
     public String getConnectionURL() {
         return connectionURL;
     }
 
-    public void setConnectionURL(String connectionURL) {
-        this.connectionURL = connectionURL;
-    }
-
     public String getPassword() {
         return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     public String getDriverClass() {
         return driverClass;
-    }
-
-    public void setDriverClass(String driverClass) {
-        this.driverClass = driverClass;
     }
 
     public void validate(List<String> errors) {

@@ -23,22 +23,18 @@ public abstract class TypedPropertyHolder extends PropertyHolder {
 
     protected @Nullable String configurationType;
 
-    protected TypedPropertyHolder() {
-        super();
-    }
-
-    public Optional<String> getConfigurationType() {
-        return Optional.ofNullable(configurationType);
-    }
-
     /**
      * Sets the value of the type specified in the configuration. If the special
      * value DEFAULT is specified, then the value will be ignored.
      *
-     * @param configurationType
-     *            the type specified in the configuration
+     * @param configurationType the value of the type specified in the configuration. For some
+     *      subclasses, if the special value DEFAULT is specified, then the value will be ignored.
      */
-    public void setConfigurationType(String configurationType) {
+    protected TypedPropertyHolder(@Nullable String configurationType) {
         this.configurationType = configurationType;
+    }
+
+    public Optional<String> getConfigurationType() {
+        return Optional.ofNullable(configurationType);
     }
 }

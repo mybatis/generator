@@ -15,7 +15,7 @@
  */
 package org.mybatis.generator.internal.db;
 
-import org.jspecify.annotations.Nullable;
+import java.util.Optional;
 
 /**
  * Typesafe enum of known database dialects.
@@ -53,7 +53,7 @@ public enum DatabaseDialects {
      * @return the database dialect for the selected database. May return null if there is no known dialect for the
      *         selected db
      */
-    public static @Nullable DatabaseDialects getDatabaseDialect(String database) {
+    public static Optional<DatabaseDialects> getDatabaseDialect(String database) {
         DatabaseDialects returnValue = null;
 
         if ("DB2".equalsIgnoreCase(database)) { //$NON-NLS-1$
@@ -76,6 +76,6 @@ public enum DatabaseDialects {
             returnValue = INFORMIX;
         }
 
-        return returnValue;
+        return Optional.ofNullable(returnValue);
     }
 }

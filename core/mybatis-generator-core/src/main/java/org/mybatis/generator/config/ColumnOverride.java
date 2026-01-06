@@ -57,7 +57,7 @@ public class ColumnOverride extends PropertyHolder {
         return Optional.ofNullable(javaProperty);
     }
 
-    public void setJavaProperty(String javaProperty) {
+    public void setJavaProperty(@Nullable String javaProperty) {
         this.javaProperty = javaProperty;
     }
 
@@ -65,7 +65,7 @@ public class ColumnOverride extends PropertyHolder {
         return Optional.ofNullable(javaType);
     }
 
-    public void setJavaType(String javaType) {
+    public void setJavaType(@Nullable String javaType) {
         this.javaType = javaType;
     }
 
@@ -73,7 +73,7 @@ public class ColumnOverride extends PropertyHolder {
         return Optional.ofNullable(jdbcType);
     }
 
-    public void setJdbcType(String jdbcType) {
+    public void setJdbcType(@Nullable String jdbcType) {
         this.jdbcType = jdbcType;
     }
 
@@ -81,7 +81,7 @@ public class ColumnOverride extends PropertyHolder {
         return Optional.ofNullable( typeHandler);
     }
 
-    public void setTypeHandler(String typeHandler) {
+    public void setTypeHandler(@Nullable String typeHandler) {
         this.typeHandler = typeHandler;
     }
 

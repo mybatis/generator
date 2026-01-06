@@ -344,7 +344,7 @@ public abstract class BaseRules implements Rules {
      */
     @Override
     public boolean generateExampleClass() {
-        if (introspectedTable.getContext().getSqlMapGeneratorConfiguration() == null
+        if (introspectedTable.getContext().getSqlMapGeneratorConfiguration().isEmpty()
                 && introspectedTable.getContext().getJavaClientGeneratorConfiguration().isEmpty()) {
             // this is a model only context - don't generate the example class
             return false;

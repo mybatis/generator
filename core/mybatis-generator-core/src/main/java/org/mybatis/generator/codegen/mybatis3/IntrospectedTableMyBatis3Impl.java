@@ -77,7 +77,7 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
             List<String> warnings,
             ProgressCallback progressCallback) {
         if (javaClientGenerator == null) {
-            if (getContext().getSqlMapGeneratorConfiguration() != null) {
+            if (getContext().getSqlMapGeneratorConfiguration().isPresent()) {
                 xmlMapperGenerator = new XMLMapperGenerator();
             }
         } else {
@@ -218,7 +218,7 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
             Document document = xmlMapperGenerator.getDocument();
             GeneratedXmlFile gxf = new GeneratedXmlFile(document,
                     getMyBatis3XmlMapperFileName(), getMyBatis3XmlMapperPackage(),
-                    getContext().getSqlMapGeneratorConfiguration().getTargetProject(),
+                    getContext().getSqlMapGeneratorConfiguration().orElseThrow().getTargetProject(),
                     true, getContext().getXmlFormatter());
             if (getContext().getPlugins().sqlMapGenerated(gxf, this)) {
                 answer.add(gxf);

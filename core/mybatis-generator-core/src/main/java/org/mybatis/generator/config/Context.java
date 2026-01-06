@@ -55,7 +55,7 @@ public class Context extends PropertyHolder {
 
     private @Nullable ConnectionFactoryConfiguration connectionFactoryConfiguration;
 
-    private SqlMapGeneratorConfiguration sqlMapGeneratorConfiguration;
+    private @Nullable SqlMapGeneratorConfiguration sqlMapGeneratorConfiguration;
 
     private @Nullable JavaTypeResolverConfiguration javaTypeResolverConfiguration;
 
@@ -114,8 +114,8 @@ public class Context extends PropertyHolder {
         return Optional.ofNullable(javaTypeResolverConfiguration);
     }
 
-    public @Nullable SqlMapGeneratorConfiguration getSqlMapGeneratorConfiguration() {
-        return sqlMapGeneratorConfiguration;
+    public Optional<SqlMapGeneratorConfiguration> getSqlMapGeneratorConfiguration() {
+        return Optional.ofNullable(sqlMapGeneratorConfiguration);
     }
 
     public void addPluginConfiguration(

@@ -37,7 +37,6 @@ import org.mybatis.generator.config.JavaModelGeneratorConfiguration;
 import org.mybatis.generator.config.ModelType;
 import org.mybatis.generator.config.PropertyHolder;
 import org.mybatis.generator.config.PropertyRegistry;
-import org.mybatis.generator.config.SqlMapGeneratorConfiguration;
 import org.mybatis.generator.config.TableConfiguration;
 import org.mybatis.generator.internal.rules.ConditionalModelRules;
 import org.mybatis.generator.internal.rules.FlatModelRules;
@@ -800,10 +799,8 @@ public abstract class IntrospectedTable {
 
     protected String calculateSqlMapPackage() {
         StringBuilder sb = new StringBuilder();
-        SqlMapGeneratorConfiguration config = getContext().getSqlMapGeneratorConfiguration();
-
         // config can be null if the Java client does not require XML
-        if (config != null) {
+        getContext().getSqlMapGeneratorConfiguration().ifPresent(config -> {
             sb.append(config.getTargetPackage());
             sb.append(getFullyQualifiedTable().getSubPackageForClientOrSqlMap(isSubPackagesEnabled(config)));
             if (stringHasValue(getTableConfiguration().getMapperName())) {
@@ -815,7 +812,7 @@ public abstract class IntrospectedTable {
             } else {
                 getFullyQualifiedTable().getDomainObjectSubPackage().ifPresent(sp -> sb.append('.').append(sp));
             }
-        }
+        });
 
         return sb.toString();
     }

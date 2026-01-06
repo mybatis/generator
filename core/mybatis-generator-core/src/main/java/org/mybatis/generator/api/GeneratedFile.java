@@ -15,7 +15,7 @@
  */
 package org.mybatis.generator.api;
 
-import org.jspecify.annotations.Nullable;
+import java.util.Optional;
 
 /**
  * Abstract class that holds information common to all generated files.
@@ -79,5 +79,5 @@ public abstract class GeneratedFile {
      */
     public abstract boolean isMergeable();
 
-    public abstract @Nullable String getFileEncoding();
+    public abstract Optional<String> getFileEncoding();
 }

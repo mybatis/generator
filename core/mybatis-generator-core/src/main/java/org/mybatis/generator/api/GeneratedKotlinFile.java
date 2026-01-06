@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,19 +15,19 @@
  */
 package org.mybatis.generator.api;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 
+import java.util.Optional;
+
 public class GeneratedKotlinFile extends GeneratedFile {
-
     private final KotlinFile kotlinFile;
-
-    private final String fileEncoding;
-
+    private final @Nullable String fileEncoding;
     private final KotlinFormatter kotlinFormatter;
 
     public GeneratedKotlinFile(KotlinFile kotlinFile,
             String targetProject,
-            String fileEncoding,
+            @Nullable String fileEncoding,
             KotlinFormatter kotlinFormatter) {
         super(targetProject);
         this.kotlinFile = kotlinFile;
@@ -56,7 +56,7 @@ public class GeneratedKotlinFile extends GeneratedFile {
     }
 
     @Override
-    public String getFileEncoding() {
-        return fileEncoding;
+    public Optional<String> getFileEncoding() {
+        return Optional.ofNullable(fileEncoding);
     }
 }

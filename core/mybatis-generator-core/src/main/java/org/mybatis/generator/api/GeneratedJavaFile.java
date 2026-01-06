@@ -18,6 +18,8 @@ package org.mybatis.generator.api;
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 
+import java.util.Optional;
+
 public class GeneratedJavaFile extends GeneratedFile {
 
     private final CompilationUnit compilationUnit;
@@ -80,7 +82,7 @@ public class GeneratedJavaFile extends GeneratedFile {
     }
 
     @Override
-    public @Nullable String getFileEncoding() {
-        return fileEncoding;
+    public Optional<String> getFileEncoding() {
+        return Optional.ofNullable(fileEncoding);
     }
 }

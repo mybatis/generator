@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 package org.mybatis.generator.api;
 
 import org.mybatis.generator.api.dom.xml.Document;
+
+import java.util.Optional;
 
 public class GeneratedXmlFile extends GeneratedFile {
 
@@ -65,7 +67,7 @@ public class GeneratedXmlFile extends GeneratedFile {
     }
 
     @Override
-    public String getFileEncoding() {
-        return "UTF-8"; //$NON-NLS-1$
+    public Optional<String> getFileEncoding() {
+        return Optional.of("UTF-8"); //$NON-NLS-1$
     }
 }

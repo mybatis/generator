@@ -312,7 +312,7 @@ public class MyBatisGenerator {
                     source = shellCallback.mergeJavaFile(gjf
                             .getFormattedContent(), targetFile.toFile(),
                             MergeConstants.getOldElementTags(),
-                            gjf.getFileEncoding());
+                            gjf.getFileEncoding().orElse(null));
                 } else if (shellCallback.isOverwriteEnabled()) {
                     source = gjf.getFormattedContent();
                     warnings.add(getString("Warning.11", //$NON-NLS-1$
@@ -331,7 +331,7 @@ public class MyBatisGenerator {
             callback.checkCancel();
             callback.startTask(getString(
                     "Progress.15", targetFile.toString())); //$NON-NLS-1$
-            writeFile(targetFile.toFile(), source, gjf.getFileEncoding());
+            writeFile(targetFile.toFile(), source, gjf.getFileEncoding().orElse(null));
         } catch (ShellException e) {
             warnings.add(e.getMessage());
         }
@@ -364,7 +364,7 @@ public class MyBatisGenerator {
             callback.checkCancel();
             callback.startTask(getString(
                     "Progress.15", targetFile.toString())); //$NON-NLS-1$
-            writeFile(targetFile.toFile(), source, gf.getFileEncoding());
+            writeFile(targetFile.toFile(), source, gf.getFileEncoding().orElse(null));
         } catch (ShellException e) {
             warnings.add(e.getMessage());
         }
@@ -400,7 +400,7 @@ public class MyBatisGenerator {
             callback.checkCancel();
             callback.startTask(getString(
                     "Progress.15", targetFile.toString())); //$NON-NLS-1$
-            writeFile(targetFile.toFile(), source, gxf.getFileEncoding());
+            writeFile(targetFile.toFile(), source, gxf.getFileEncoding().orElse(null));
         } catch (ShellException e) {
             warnings.add(e.getMessage());
         }

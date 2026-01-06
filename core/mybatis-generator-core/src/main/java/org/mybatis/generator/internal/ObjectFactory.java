@@ -295,18 +295,19 @@ public class ObjectFactory {
      * @return the introspected table
      */
     public static IntrospectedTable createIntrospectedTableForValidation(Context context) {
-        String type = context.getTargetRuntime();
-        if (!stringHasValue(type)) {
-            type = IntrospectedTableMyBatis3DynamicSqlImpl.class.getName();
-        } else if ("MyBatis3".equalsIgnoreCase(type)) { //$NON-NLS-1$
-            type = IntrospectedTableMyBatis3Impl.class.getName();
-        } else if ("MyBatis3Simple".equalsIgnoreCase(type)) { //$NON-NLS-1$
-            type = IntrospectedTableMyBatis3SimpleImpl.class.getName();
-        } else if ("MyBatis3DynamicSql".equalsIgnoreCase(type)) { //$NON-NLS-1$
-            type = IntrospectedTableMyBatis3DynamicSqlImpl.class.getName();
-        } else if ("MyBatis3Kotlin".equalsIgnoreCase(type)) { //$NON-NLS-1$
-            type = IntrospectedTableKotlinImpl.class.getName();
-        }
+        String type = context.getTargetRuntime().map(t -> {
+            if ("MyBatis3".equalsIgnoreCase(t)) { //$NON-NLS-1$
+                return IntrospectedTableMyBatis3Impl.class.getName();
+            } else if ("MyBatis3Simple".equalsIgnoreCase(t)) { //$NON-NLS-1$
+                return IntrospectedTableMyBatis3SimpleImpl.class.getName();
+            } else if ("MyBatis3DynamicSql".equalsIgnoreCase(t)) { //$NON-NLS-1$
+                return IntrospectedTableMyBatis3DynamicSqlImpl.class.getName();
+            } else if ("MyBatis3Kotlin".equalsIgnoreCase(t)) { //$NON-NLS-1$
+                return IntrospectedTableKotlinImpl.class.getName();
+            } else {
+                return t;
+            }
+        }).orElse(IntrospectedTableMyBatis3DynamicSqlImpl.class.getName());
 
         IntrospectedTable answer = createInternalObject(type, IntrospectedTable.class);
         answer.setContext(context);
@@ -315,11 +316,7 @@ public class ObjectFactory {
     }
 
     public static IntrospectedColumn createIntrospectedColumn(Context context) {
-        String type = context.getIntrospectedColumnImpl();
-        if (!stringHasValue(type)) {
-            type = IntrospectedColumn.class.getName();
-        }
-
+        String type = context.getIntrospectedColumnImpl().orElse(IntrospectedColumn.class.getName());
         IntrospectedColumn answer = createInternalObject(type, IntrospectedColumn.class);
         answer.setContext(context);
 

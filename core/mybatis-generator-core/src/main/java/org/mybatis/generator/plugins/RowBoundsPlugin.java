@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -49,7 +49,8 @@ public class RowBoundsPlugin extends PluginAdapter {
 
     @Override
     public boolean validate(List<String> warnings) {
-        if ("MyBatis3DynamicSql".equalsIgnoreCase(context.getTargetRuntime())) { //$NON-NLS-1$
+        String targetRuntime = context.getTargetRuntime().orElse("MyBatis3DynamicSql"); //$NON-NLS-1$
+        if ("MyBatis3DynamicSql".equalsIgnoreCase(targetRuntime)) { //$NON-NLS-1$
             warnings.add(Messages.getString("Warning.30")); //$NON-NLS-1$
             return false;
         }

@@ -170,9 +170,7 @@ public class DatabaseIntrospector {
      * @throws SQLException
      *             if any errors in introspection
      */
-    public List<IntrospectedTable> introspectTables(TableConfiguration tc)
-            throws SQLException {
-
+    public List<IntrospectedTable> introspectTables(TableConfiguration tc) throws SQLException {
         // get the raw columns from the DB
         Map<ActualTableName, List<IntrospectedColumn>> columns = getColumns(tc);
 
@@ -187,8 +185,7 @@ public class DatabaseIntrospector {
         applyColumnOverrides(tc, columns);
         calculateIdentityColumns(tc, columns);
 
-        List<IntrospectedTable> introspectedTables = calculateIntrospectedTables(
-                tc, columns);
+        List<IntrospectedTable> introspectedTables = calculateIntrospectedTables(tc, columns);
 
         // now introspectedTables has all the columns from all the
         // tables in the configuration. Do some validation...

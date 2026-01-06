@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -57,6 +57,7 @@ class MyBatisGeneratorTest {
         Configuration config = new Configuration();
         Context context = new Context(ModelType.HIERARCHICAL);
         context.setId("MyContext");
+        context.setTargetRuntime("MyBatis3Simple");
         config.addContext(context);
 
         DefaultShellCallback shellCallback = new DefaultShellCallback(true);
@@ -75,6 +76,7 @@ class MyBatisGeneratorTest {
         Configuration config = new Configuration();
         Context context = new Context(ModelType.HIERARCHICAL);
         context.setId("MyContext");
+        context.setTargetRuntime("MyBatis3Simple");
         context.setConnectionFactoryConfiguration(new ConnectionFactoryConfiguration());
         context.setJdbcConnectionConfiguration(new JDBCConnectionConfiguration());
         config.addContext(context);

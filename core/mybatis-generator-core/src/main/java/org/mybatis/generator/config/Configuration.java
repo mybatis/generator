@@ -21,6 +21,7 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.exception.InvalidConfigurationException;
 
 public class Configuration {
@@ -32,8 +33,10 @@ public class Configuration {
         classPathEntries = new ArrayList<>();
     }
 
-    public void addClasspathEntry(String entry) {
-        classPathEntries.add(entry);
+    public void addClasspathEntry(@Nullable String entry) {
+        if (entry != null) {
+            classPathEntries.add(entry);
+        }
     }
 
     public List<String> getClassPathEntries() {

@@ -54,7 +54,7 @@ import org.jspecify.annotations.Nullable;
  *
  */
 public class ColumnRenamingRule extends AbstractRenamingRule {
-    public ColumnRenamingRule(String searchString, @Nullable String replaceString) {
+    public ColumnRenamingRule(@Nullable String searchString, @Nullable String replaceString) {
         super(searchString, replaceString);
     }
 

@@ -20,16 +20,16 @@ import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.List;
+import java.util.Objects;
+
+import org.jspecify.annotations.Nullable;
 
 public class IgnoredColumn {
-
     protected final String columnName;
+    private final boolean isColumnNameDelimited;
 
-    private boolean isColumnNameDelimited;
-
-    public IgnoredColumn(String columnName, boolean isColumnNameDelimited) {
-        super();
-        this.columnName = columnName;
+    public IgnoredColumn(@Nullable String columnName, boolean isColumnNameDelimited) {
+        this.columnName = Objects.requireNonNull(columnName);
         this.isColumnNameDelimited = isColumnNameDelimited || stringContainsSpace(columnName);
     }
 
@@ -53,8 +53,7 @@ public class IgnoredColumn {
 
     public void validate(List<String> errors, String tableName) {
         if (!stringHasValue(columnName)) {
-            errors.add(getString("ValidationError.21", //$NON-NLS-1$
-                    tableName));
+            errors.add(getString("ValidationError.21", tableName)); //$NON-NLS-1$
         }
     }
 

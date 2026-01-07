@@ -53,7 +53,7 @@ import org.jspecify.annotations.Nullable;
  *
  */
 public class DomainObjectRenamingRule extends AbstractRenamingRule {
-    public DomainObjectRenamingRule(String searchString, @Nullable String replaceString) {
+    public DomainObjectRenamingRule(@Nullable String searchString, @Nullable String replaceString) {
         super(searchString, replaceString);
     }
 

@@ -93,26 +93,26 @@ public class ColumnOverride extends PropertyHolder {
         private @Nullable Boolean isColumnNameDelimited;
         private boolean isGeneratedAlways;
 
-        public Builder withColumnName(String columnName) {
+        public Builder withColumnName(@Nullable String columnName) {
             this.columnName = columnName;
             return this;
         }
 
-        public Builder withJavaProperty(String javaProperty) {
+        public Builder withJavaProperty(@Nullable String javaProperty) {
             this.javaProperty = javaProperty;
             return this;
         }
 
-        public Builder withJdbcType(String jdbcType) {
+        public Builder withJdbcType(@Nullable String jdbcType) {
             this.jdbcType = jdbcType;
             return this;
         }
-        public Builder withJavaType(String javaType) {
+        public Builder withJavaType(@Nullable String javaType) {
             this.javaType = javaType;
             return this;
         }
 
-        public Builder withTypeHandler(String typeHandler) {
+        public Builder withTypeHandler(@Nullable String typeHandler) {
             this.typeHandler = typeHandler;
             return this;
         }

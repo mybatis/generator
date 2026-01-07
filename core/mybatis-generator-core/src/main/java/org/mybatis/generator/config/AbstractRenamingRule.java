@@ -26,8 +26,8 @@ public abstract class AbstractRenamingRule {
     protected final String replaceString;
     protected final Pattern pattern;
 
-    public AbstractRenamingRule(String searchString, @Nullable String replaceString) {
-        this.searchString = searchString;
+    public AbstractRenamingRule(@Nullable String searchString, @Nullable String replaceString) {
+        this.searchString = Objects.requireNonNull(searchString);
         this.replaceString = Objects.requireNonNullElse(replaceString, ""); //$NON-NLS-1$
         pattern = Pattern.compile(searchString);
     }

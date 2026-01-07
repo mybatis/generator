@@ -15,23 +15,35 @@
  */
 package org.mybatis.generator.config;
 
-import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
-import static org.mybatis.generator.internal.util.messages.Messages.getString;
-
-import java.util.List;
-
 import org.jspecify.annotations.Nullable;
 
-public class IgnoredColumnException extends IgnoredColumn {
+import java.util.HashMap;
+import java.util.Map;
 
-    public IgnoredColumnException(@Nullable String columnName, boolean isDelimited) {
-        super(columnName, isDelimited);
+/**
+ * NullableProperties is a utility class for handling properties that may be null.
+ *
+ */
+public class NullableProperties {
+    private final Map<String, String> properties = new HashMap<>();
+
+    public @Nullable String getProperty(String key) {
+        if (properties.containsKey(key)) {
+            return properties.get(key);
+        } else {
+            return null;
+        }
     }
 
-    @Override
-    public void validate(List<String> errors, String tableName) {
-        if (!stringHasValue(columnName)) {
-            errors.add(getString("ValidationError.26", tableName)); //$NON-NLS-1$
+    /**
+     * Stores the value only if the value is non-null.
+     *
+     * @param key
+     * @param value
+     */
+    public void put(String key, @Nullable String value) {
+        if (value != null) {
+            properties.put(key, value);
         }
     }
 }

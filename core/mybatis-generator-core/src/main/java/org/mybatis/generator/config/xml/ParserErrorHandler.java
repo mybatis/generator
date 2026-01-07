@@ -29,7 +29,6 @@ public class ParserErrorHandler implements ErrorHandler {
     private final List<String> errors;
 
     public ParserErrorHandler(List<String> warnings, List<String> errors) {
-        super();
         this.warnings = warnings;
         this.errors = errors;
     }

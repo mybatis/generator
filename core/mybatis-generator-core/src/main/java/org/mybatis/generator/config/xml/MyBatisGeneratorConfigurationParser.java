@@ -46,7 +46,7 @@ import org.mybatis.generator.config.JavaModelGeneratorConfiguration;
 import org.mybatis.generator.config.JavaTypeResolverConfiguration;
 import org.mybatis.generator.config.ModelType;
 import org.mybatis.generator.config.PluginConfiguration;
-import org.mybatis.generator.config.PropertyHolder;
+import org.mybatis.generator.config.Property;
 import org.mybatis.generator.config.SqlMapGeneratorConfiguration;
 import org.mybatis.generator.config.TableConfiguration;
 import org.mybatis.generator.exception.XMLParserException;
@@ -66,7 +66,6 @@ public class MyBatisGeneratorConfigurationParser {
     private final Properties configurationProperties;
 
     public MyBatisGeneratorConfigurationParser(@Nullable Properties extraProperties) {
-        super();
         this.extraProperties = Objects.requireNonNullElseGet(extraProperties, Properties::new);
         configurationProperties = new Properties();
     }
@@ -86,11 +85,11 @@ public class MyBatisGeneratorConfigurationParser {
 
             switch (childNode.getNodeName()) {
             case "properties" ->  //$NON-NLS-1$
-                    parseProperties(childNode);
+                    parsePropertiesElement(childNode);
             case "classPathEntry" ->  //$NON-NLS-1$
-                    parseClassPathEntry(configuration, childNode);
+                    configuration.addClasspathEntry(parseClassPathEntry(childNode));
             case "context" ->  //$NON-NLS-1$
-                    parseContext(configuration, childNode);
+                    configuration.addContext(parseContext(childNode));
             default -> { }
             }
         }
@@ -98,7 +97,7 @@ public class MyBatisGeneratorConfigurationParser {
         return configuration;
     }
 
-    protected void parseProperties(Node node) throws XMLParserException {
+    protected void parsePropertiesElement(Node node) throws XMLParserException {
         Properties attributes = parseAttributes(node);
         String resource = attributes.getProperty("resource"); //$NON-NLS-1$
         String url = attributes.getProperty("url"); //$NON-NLS-1$
@@ -127,16 +126,14 @@ public class MyBatisGeneratorConfigurationParser {
             inputStream.close();
         } catch (IOException e) {
             if (stringHasValue(resource)) {
-                throw new XMLParserException(getString(
-                        "RuntimeError.16", resource)); //$NON-NLS-1$
+                throw new XMLParserException(getString("RuntimeError.16", resource)); //$NON-NLS-1$
             } else {
-                throw new XMLParserException(getString(
-                        "RuntimeError.17", url)); //$NON-NLS-1$
+                throw new XMLParserException(getString("RuntimeError.17", url)); //$NON-NLS-1$
             }
         }
     }
 
-    private void parseContext(Configuration configuration, Node node) {
+    private Context parseContext(Node node) {
 
         Properties attributes = parseAttributes(node);
         String defaultModelType = attributes.getProperty("defaultModelType"); //$NON-NLS-1$
@@ -145,19 +142,15 @@ public class MyBatisGeneratorConfigurationParser {
                 .getProperty("introspectedColumnImpl"); //$NON-NLS-1$
         String id = attributes.getProperty("id"); //$NON-NLS-1$
 
-        ModelType mt = defaultModelType == null ? null : ModelType
-                .getModelType(defaultModelType);
+        ModelType mt = defaultModelType == null ? null : ModelType.getModelType(defaultModelType);
 
-        Context context = new Context(mt);
-        context.setId(id);
+        Context context = new Context(id, mt);
         if (stringHasValue(introspectedColumnImpl)) {
             context.setIntrospectedColumnImpl(introspectedColumnImpl);
         }
         if (stringHasValue(targetRuntime)) {
             context.setTargetRuntime(targetRuntime);
         }
-
-        configuration.addContext(context);
 
         NodeList nodeList = node.getChildNodes();
         for (int i = 0; i < nodeList.getLength(); i++) {
@@ -169,42 +162,45 @@ public class MyBatisGeneratorConfigurationParser {
 
             switch (childNode.getNodeName()) {
             case "property" ->  //$NON-NLS-1$
-                    parseProperty(context, childNode);
+                    context.addProperty(parseProperty(childNode));
             case "plugin" ->  //$NON-NLS-1$
-                    parsePlugin(context, childNode);
+                    context.addPluginConfiguration(parsePlugin(childNode));
             case "commentGenerator" ->  //$NON-NLS-1$
-                    parseCommentGenerator(context, childNode);
+                    context.setCommentGeneratorConfiguration(parseCommentGenerator(childNode));
             case "jdbcConnection" ->  //$NON-NLS-1$
-                    parseJdbcConnection(context, childNode);
+                    context.setJdbcConnectionConfiguration(parseJdbcConnection(childNode));
             case "connectionFactory" ->  //$NON-NLS-1$
-                    parseConnectionFactory(context, childNode);
+                    context.setConnectionFactoryConfiguration(parseConnectionFactory(childNode));
             case "javaModelGenerator" ->  //$NON-NLS-1$
-                    parseJavaModelGenerator(context, childNode);
+                    context.setJavaModelGeneratorConfiguration(parseJavaModelGenerator(childNode));
             case "javaTypeResolver" ->  //$NON-NLS-1$
-                    parseJavaTypeResolver(context, childNode);
+                    context.setJavaTypeResolverConfiguration(parseJavaTypeResolver(childNode));
             case "sqlMapGenerator" ->  //$NON-NLS-1$
-                    parseSqlMapGenerator(context, childNode);
+                    context.setSqlMapGeneratorConfiguration(parseSqlMapGenerator(childNode));
             case "javaClientGenerator" ->  //$NON-NLS-1$
-                    parseJavaClientGenerator(context, childNode);
+                    context.setJavaClientGeneratorConfiguration(parseJavaClientGenerator(childNode));
             case "table" ->  //$NON-NLS-1$
-                        parseTable(context, childNode);
+                    context.addTableConfiguration(parseTable(context, childNode));
             default -> { }
             }
         }
+
+        return context;
     }
 
-    protected void parseSqlMapGenerator(Context context, Node node) {
+    protected SqlMapGeneratorConfiguration parseSqlMapGenerator(Node node) {
         Properties attributes = parseAttributes(node);
         String targetPackage = attributes.getProperty("targetPackage"); //$NON-NLS-1$
         String targetProject = attributes.getProperty("targetProject"); //$NON-NLS-1$
-        SqlMapGeneratorConfiguration sqlMapGeneratorConfiguration = new SqlMapGeneratorConfiguration(targetPackage, targetProject);
-        context.setSqlMapGeneratorConfiguration(sqlMapGeneratorConfiguration);
-        parseProperties(node.getChildNodes(), sqlMapGeneratorConfiguration);
+        SqlMapGeneratorConfiguration sqlMapGeneratorConfiguration =
+                new SqlMapGeneratorConfiguration(targetPackage, targetProject);
+        Properties p = parseProperties(node.getChildNodes());
+        sqlMapGeneratorConfiguration.addProperties(p);
+        return sqlMapGeneratorConfiguration;
     }
 
-    protected void parseTable(Context context, Node node) {
+    protected TableConfiguration parseTable(Context context, Node node) {
         TableConfiguration tc = new TableConfiguration(context);
-        context.addTableConfiguration(tc);
 
         Properties attributes = parseAttributes(node);
 
@@ -340,7 +336,7 @@ public class MyBatisGeneratorConfigurationParser {
 
             switch (childNode.getNodeName()) {
             case "property" ->  //$NON-NLS-1$
-                    parseProperty(tc, childNode);
+                    tc.addProperty(parseProperty(childNode));
             case "columnOverride" ->  //$NON-NLS-1$
                     parseColumnOverride(tc, childNode);
             case "ignoreColumn" ->  //$NON-NLS-1$
@@ -356,6 +352,8 @@ public class MyBatisGeneratorConfigurationParser {
             default -> { }
             }
         }
+
+        return tc;
     }
 
     private void parseColumnOverride(TableConfiguration tc, Node node) {
@@ -386,7 +384,8 @@ public class MyBatisGeneratorConfigurationParser {
             co.setGeneratedAlways(Boolean.parseBoolean(isGeneratedAlways));
         }
 
-        parseProperties(node.getChildNodes(), co);
+        Properties properties = parseProperties(node.getChildNodes());
+        co.addProperties(properties);
         tc.addColumnOverride(co);
     }
 
@@ -462,47 +461,49 @@ public class MyBatisGeneratorConfigurationParser {
         tc.setColumnRenamingRule(new ColumnRenamingRule(searchString, replaceString));
     }
 
-    protected void parseJavaTypeResolver(Context context, Node node) {
+    protected JavaTypeResolverConfiguration parseJavaTypeResolver(Node node) {
         Properties attributes = parseAttributes(node);
         String type = attributes.getProperty("type"); //$NON-NLS-1$
         JavaTypeResolverConfiguration javaTypeResolverConfiguration =
                 new JavaTypeResolverConfiguration(trimToNull(type));
-        context.setJavaTypeResolverConfiguration(javaTypeResolverConfiguration);
-        parseProperties(node.getChildNodes(), javaTypeResolverConfiguration);
+        Properties properties = parseProperties(node.getChildNodes());
+        javaTypeResolverConfiguration.addProperties(properties);
+        return javaTypeResolverConfiguration;
     }
 
-    private void parsePlugin(Context context, Node node) {
+    private PluginConfiguration parsePlugin(Node node) {
         Properties attributes = parseAttributes(node);
         String type = attributes.getProperty("type"); //$NON-NLS-1$
         PluginConfiguration pluginConfiguration = new PluginConfiguration(trimToNull(type));
-        context.addPluginConfiguration(pluginConfiguration);
-        parseProperties(node.getChildNodes(), pluginConfiguration);
+        Properties properties = parseProperties(node.getChildNodes());
+        pluginConfiguration.addProperties(properties);
+        return pluginConfiguration;
     }
 
-    protected void parseJavaModelGenerator(Context context, Node node) {
+    protected JavaModelGeneratorConfiguration parseJavaModelGenerator(Node node) {
         Properties attributes = parseAttributes(node);
         String targetPackage = attributes.getProperty("targetPackage"); //$NON-NLS-1$
         String targetProject = attributes.getProperty("targetProject"); //$NON-NLS-1$
         JavaModelGeneratorConfiguration javaModelGeneratorConfiguration =
                 new JavaModelGeneratorConfiguration(targetPackage, targetProject);
-        context.setJavaModelGeneratorConfiguration(javaModelGeneratorConfiguration);
-
-        parseProperties(node.getChildNodes(), javaModelGeneratorConfiguration);
+        Properties properties = parseProperties(node.getChildNodes());
+        javaModelGeneratorConfiguration.addProperties(properties);
+        return javaModelGeneratorConfiguration;
     }
 
-    private void parseJavaClientGenerator(Context context, Node node) {
+    private JavaClientGeneratorConfiguration parseJavaClientGenerator(Node node) {
         Properties attributes = parseAttributes(node);
         String type = attributes.getProperty("type"); //$NON-NLS-1$
         String targetPackage = attributes.getProperty("targetPackage"); //$NON-NLS-1$
         String targetProject = attributes.getProperty("targetProject"); //$NON-NLS-1$
         JavaClientGeneratorConfiguration javaClientGeneratorConfiguration =
                 new JavaClientGeneratorConfiguration(trimToNull(type), targetPackage, targetProject);
-        context.setJavaClientGeneratorConfiguration(javaClientGeneratorConfiguration);
-
-        parseProperties(node.getChildNodes(), javaClientGeneratorConfiguration);
+        Properties properties = parseProperties(node.getChildNodes());
+        javaClientGeneratorConfiguration.addProperties(properties);
+        return javaClientGeneratorConfiguration;
     }
 
-    protected void parseJdbcConnection(Context context, Node node) {
+    protected JDBCConnectionConfiguration parseJdbcConnection(Node node) {
         Properties attributes = parseAttributes(node);
         String driverClass = attributes.getProperty("driverClass"); //$NON-NLS-1$
         String connectionURL = attributes.getProperty("connectionURL"); //$NON-NLS-1$
@@ -510,17 +511,18 @@ public class MyBatisGeneratorConfigurationParser {
         String password = attributes.getProperty("password"); //$NON-NLS-1$
         JDBCConnectionConfiguration jdbcConnectionConfiguration = new JDBCConnectionConfiguration(driverClass,
                 connectionURL, trimToNull(userId), trimToNull(password));
-        context.setJdbcConnectionConfiguration(jdbcConnectionConfiguration);
-        parseProperties(node.getChildNodes(), jdbcConnectionConfiguration);
+        Properties properties = parseProperties(node.getChildNodes());
+        jdbcConnectionConfiguration.addProperties(properties);
+        return jdbcConnectionConfiguration;
     }
 
-    protected void parseClassPathEntry(Configuration configuration, Node node) {
+    protected String parseClassPathEntry(Node node) {
         Properties attributes = parseAttributes(node);
-
-        configuration.addClasspathEntry(attributes.getProperty("location")); //$NON-NLS-1$
+        return attributes.getProperty("location"); //$NON-NLS-1$
     }
 
-    protected void parseProperties(NodeList nodeList, PropertyHolder propertyHolder) {
+    protected Properties parseProperties(NodeList nodeList) {
+        Properties properties = new Properties();
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node childNode = nodeList.item(i);
 
@@ -529,18 +531,19 @@ public class MyBatisGeneratorConfigurationParser {
             }
 
             if ("property".equals(childNode.getNodeName())) { //$NON-NLS-1$
-                parseProperty(propertyHolder, childNode);
+                Property property = parseProperty(childNode);
+                properties.setProperty(property.name(), property.value());
             }
         }
+        return properties;
     }
 
-    protected void parseProperty(PropertyHolder propertyHolder, Node node) {
+    protected Property parseProperty(Node node) {
         Properties attributes = parseAttributes(node);
 
         String name = attributes.getProperty("name"); //$NON-NLS-1$
         String value = attributes.getProperty("value"); //$NON-NLS-1$
-
-        propertyHolder.addProperty(name, value);
+        return new Property(name, value);
     }
 
     protected Properties parseAttributes(Node node) {
@@ -611,22 +614,24 @@ public class MyBatisGeneratorConfigurationParser {
         return String.join("", answer);
     }
 
-    protected void parseCommentGenerator(Context context, Node node) {
+    protected CommentGeneratorConfiguration parseCommentGenerator(Node node) {
         Properties attributes = parseAttributes(node);
         String type = attributes.getProperty("type"); //$NON-NLS-1$
         CommentGeneratorConfiguration commentGeneratorConfiguration =
                 new CommentGeneratorConfiguration(trimToNull(type));
-        context.setCommentGeneratorConfiguration(commentGeneratorConfiguration);
-        parseProperties(node.getChildNodes(), commentGeneratorConfiguration);
+        Properties properties = parseProperties(node.getChildNodes());
+        commentGeneratorConfiguration.addProperties(properties);
+        return commentGeneratorConfiguration;
     }
 
-    protected void parseConnectionFactory(Context context, Node node) {
+    protected ConnectionFactoryConfiguration parseConnectionFactory(Node node) {
         Properties attributes = parseAttributes(node);
         String type = attributes.getProperty("type"); //$NON-NLS-1$
         ConnectionFactoryConfiguration connectionFactoryConfiguration =
                 new ConnectionFactoryConfiguration(trimToNull(type));
-        context.setConnectionFactoryConfiguration(connectionFactoryConfiguration);
-        parseProperties(node.getChildNodes(), connectionFactoryConfiguration);
+        Properties properties = parseProperties(node.getChildNodes());
+        connectionFactoryConfiguration.addProperties(properties);
+        return connectionFactoryConfiguration;
     }
 
     /**

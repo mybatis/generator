@@ -15,31 +15,4 @@
  */
 package org.mybatis.generator.config;
 
-import java.util.Map;
-import java.util.Properties;
-
-import org.jspecify.annotations.Nullable;
-
-public abstract class PropertyHolder {
-    private final Properties properties;
-
-    protected PropertyHolder() {
-        properties = new Properties();
-    }
-
-    public void addProperty(Property property) {
-        properties.setProperty(property.name(), property.value());
-    }
-
-    public @Nullable String getProperty(String name) {
-        return properties.getProperty(name);
-    }
-
-    public Properties getProperties() {
-        return properties;
-    }
-
-    public void addProperties(Map<Object, Object> properties) {
-        this.properties.putAll(properties);
-    }
-}
+public record Property(String name, String value) { }

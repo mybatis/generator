@@ -48,10 +48,7 @@ import org.mybatis.generator.internal.db.DatabaseIntrospector;
 
 public class Context extends PropertyHolder {
 
-    /**
-     * Only nullable because the configuration may not be set when the object is created. Non null in practice
-     */
-    private @Nullable String id;
+    private final String id;
 
     private @Nullable JDBCConnectionConfiguration jdbcConnectionConfiguration;
 
@@ -99,8 +96,9 @@ public class Context extends PropertyHolder {
 
     private @Nullable XmlFormatter xmlFormatter;
 
-    public Context(@Nullable ModelType defaultModelType) {
+    public Context(String id,@Nullable ModelType defaultModelType) {
         this.defaultModelType = Objects.requireNonNullElse(defaultModelType, ModelType.CONDITIONAL);
+        this.id = id;
 
         tableConfigurations = new ArrayList<>();
         pluginConfigurations = new ArrayList<>();
@@ -145,10 +143,10 @@ public class Context extends PropertyHolder {
 
         if (jdbcConnectionConfiguration == null && connectionFactoryConfiguration == null) {
             // must specify one
-            errors.add(getString("ValidationError.10", getId())); //$NON-NLS-1$
+            errors.add(getString("ValidationError.10", id)); //$NON-NLS-1$
         } else if (jdbcConnectionConfiguration != null && connectionFactoryConfiguration != null) {
             // must not specify both
-            errors.add(getString("ValidationError.10", getId())); //$NON-NLS-1$
+            errors.add(getString("ValidationError.10", id)); //$NON-NLS-1$
         } else if (jdbcConnectionConfiguration != null) {
             jdbcConnectionConfiguration.validate(errors);
         } else {
@@ -156,32 +154,32 @@ public class Context extends PropertyHolder {
         }
 
         if (javaModelGeneratorConfiguration == null) {
-            errors.add(getString("ValidationError.8", getId())); //$NON-NLS-1$
+            errors.add(getString("ValidationError.8", id)); //$NON-NLS-1$
         } else {
-            javaModelGeneratorConfiguration.validate(errors, getId());
+            javaModelGeneratorConfiguration.validate(errors, id);
         }
 
         if (javaClientGeneratorConfiguration != null) {
-            javaClientGeneratorConfiguration.validate(errors, getId());
+            javaClientGeneratorConfiguration.validate(errors, id);
         }
 
         IntrospectedTable it = null;
         try {
             it = ObjectFactory.createIntrospectedTableForValidation(this);
         } catch (Exception e) {
-            errors.add(getString("ValidationError.25", getId())); //$NON-NLS-1$
+            errors.add(getString("ValidationError.25", id)); //$NON-NLS-1$
         }
 
         if (it != null && it.requiresXMLGenerator()) {
             if (sqlMapGeneratorConfiguration == null) {
-                errors.add(getString("ValidationError.9", getId())); //$NON-NLS-1$
+                errors.add(getString("ValidationError.9", id)); //$NON-NLS-1$
             } else {
-                sqlMapGeneratorConfiguration.validate(errors, getId());
+                sqlMapGeneratorConfiguration.validate(errors, id);
             }
         }
 
         if (tableConfigurations.isEmpty()) {
-            errors.add(getString("ValidationError.3", getId())); //$NON-NLS-1$
+            errors.add(getString("ValidationError.3", id)); //$NON-NLS-1$
         } else {
             for (int i = 0; i < tableConfigurations.size(); i++) {
                 TableConfiguration tc = tableConfigurations.get(i);
@@ -191,16 +189,12 @@ public class Context extends PropertyHolder {
         }
 
         for (PluginConfiguration pluginConfiguration : pluginConfigurations) {
-            pluginConfiguration.validate(errors, getId());
+            pluginConfiguration.validate(errors, id);
         }
     }
 
     public String getId() {
-        return Objects.requireNonNull(id);
-    }
-
-    public void setId(String id) {
-        this.id = id;
+        return id;
     }
 
     public void setJavaClientGeneratorConfiguration(JavaClientGeneratorConfiguration javaClientGeneratorConfiguration) {
@@ -236,16 +230,16 @@ public class Context extends PropertyHolder {
     }
 
     @Override
-    public void addProperty(String name, String value) {
-        super.addProperty(name, value);
+    public void addProperty(Property property) {
+        super.addProperty(property);
 
-        if (PropertyRegistry.CONTEXT_BEGINNING_DELIMITER.equals(name)) {
-            beginningDelimiter = value;
-        } else if (PropertyRegistry.CONTEXT_ENDING_DELIMITER.equals(name)) {
-            endingDelimiter = value;
-        } else if (PropertyRegistry.CONTEXT_AUTO_DELIMIT_KEYWORDS.equals(name)
-                && stringHasValue(value)) {
-            autoDelimitKeywords = isTrue(value);
+        if (PropertyRegistry.CONTEXT_BEGINNING_DELIMITER.equals(property.name())) {
+            beginningDelimiter = property.value();
+        } else if (PropertyRegistry.CONTEXT_ENDING_DELIMITER.equals(property.name())) {
+            endingDelimiter = property.value();
+        } else if (PropertyRegistry.CONTEXT_AUTO_DELIMIT_KEYWORDS.equals(property.name())
+                && stringHasValue(property.value())) {
+            autoDelimitKeywords = isTrue(property.value());
         }
     }
 
@@ -277,8 +271,7 @@ public class Context extends PropertyHolder {
         return Optional.ofNullable(commentGeneratorConfiguration);
     }
 
-    public void setCommentGeneratorConfiguration(
-            CommentGeneratorConfiguration commentGeneratorConfiguration) {
+    public void setCommentGeneratorConfiguration(CommentGeneratorConfiguration commentGeneratorConfiguration) {
         this.commentGeneratorConfiguration = commentGeneratorConfiguration;
     }
 
@@ -433,7 +426,7 @@ public class Context extends PropertyHolder {
             } else {
                 warnings.add(getString("Warning.24", //$NON-NLS-1$
                         pluginConfiguration.getConfigurationType()
-                                .orElse("Unknown Plugin Type"), getId())); //$NON-NLS-1$
+                                .orElse("Unknown Plugin Type"), id)); //$NON-NLS-1$
             }
         }
 

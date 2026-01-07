@@ -18,6 +18,7 @@ package org.mybatis.generator;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +39,9 @@ class MyBatisGeneratorTest {
     void testGenerateMyBatis3WithInvalidConfig() throws Exception {
         List<String> warnings = new ArrayList<>();
         ConfigurationParser cp = new ConfigurationParser(warnings);
-        Configuration config = cp.parseConfiguration(this.getClass().getClassLoader().getResourceAsStream("generatorConfigMyBatis3_badConfig.xml"));
+        InputStream is = getClass().getClassLoader().getResourceAsStream("generatorConfigMyBatis3_badConfig.xml");
+        assert is != null;
+        Configuration config = cp.parseConfiguration(is);
 
         DefaultShellCallback shellCallback = new DefaultShellCallback(true);
 
@@ -55,8 +58,7 @@ class MyBatisGeneratorTest {
     void testGenerateInvalidConfigWithNoConnectionSources() {
         List<String> warnings = new ArrayList<>();
         Configuration config = new Configuration();
-        Context context = new Context(ModelType.HIERARCHICAL);
-        context.setId("MyContext");
+        Context context = new Context("MyContext", ModelType.HIERARCHICAL);
         context.setTargetRuntime("MyBatis3Simple");
         config.addContext(context);
 
@@ -74,8 +76,7 @@ class MyBatisGeneratorTest {
     void testGenerateInvalidConfigWithTwoConnectionSources() {
         List<String> warnings = new ArrayList<>();
         Configuration config = new Configuration();
-        Context context = new Context(ModelType.HIERARCHICAL);
-        context.setId("MyContext");
+        Context context = new Context("MyContext", ModelType.HIERARCHICAL);
         context.setTargetRuntime("MyBatis3Simple");
         context.setConnectionFactoryConfiguration(new ConnectionFactoryConfiguration(null));
         context.setJdbcConnectionConfiguration(new JDBCConnectionConfiguration("", "",

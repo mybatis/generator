@@ -82,32 +82,23 @@ public class ConfigurationParser {
         parseErrors = new ArrayList<>();
     }
 
-    public Configuration parseConfiguration(File inputFile) throws IOException,
-            XMLParserException {
-
+    public Configuration parseConfiguration(File inputFile) throws IOException, XMLParserException {
         try (BufferedReader fr = Files.newBufferedReader(inputFile.toPath())) {
             return parseConfiguration(fr);
         }
     }
 
-    public Configuration parseConfiguration(Reader reader) throws IOException,
-            XMLParserException {
-
+    public Configuration parseConfiguration(Reader reader) throws IOException, XMLParserException {
         InputSource is = new InputSource(reader);
-
         return parseConfiguration(is);
     }
 
-    public Configuration parseConfiguration(InputStream inputStream)
-            throws IOException, XMLParserException {
-
+    public Configuration parseConfiguration(InputStream inputStream) throws IOException, XMLParserException {
         InputSource is = new InputSource(inputStream);
-
         return parseConfiguration(is);
     }
 
-    private Configuration parseConfiguration(InputSource inputSource)
-            throws IOException, XMLParserException {
+    private Configuration parseConfiguration(InputSource inputSource) throws IOException, XMLParserException {
         parseErrors.clear();
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
@@ -144,8 +135,7 @@ public class ConfigurationParser {
             Element rootNode = document.getDocumentElement();
             DocumentType docType = document.getDoctype();
             if (rootNode.getNodeType() == Node.ELEMENT_NODE
-                    && docType.getPublicId().equals(
-                            XmlConstants.MYBATIS_GENERATOR_CONFIG_PUBLIC_ID)) {
+                    && docType.getPublicId().equals(XmlConstants.MYBATIS_GENERATOR_CONFIG_PUBLIC_ID)) {
                 config = parseMyBatisGeneratorConfiguration(rootNode);
             } else {
                 throw new XMLParserException(getString("RuntimeError.5")); //$NON-NLS-1$
@@ -162,8 +152,7 @@ public class ConfigurationParser {
         }
     }
 
-    private Configuration parseMyBatisGeneratorConfiguration(Element rootNode)
-            throws XMLParserException {
+    private Configuration parseMyBatisGeneratorConfiguration(Element rootNode) throws XMLParserException {
         MyBatisGeneratorConfigurationParser parser = new MyBatisGeneratorConfigurationParser(extraProperties);
         return parser.parseConfiguration(rootNode);
     }

@@ -44,7 +44,6 @@ public class JDBCConnectionFactory {
      *            the configuration
      */
     public JDBCConnectionFactory(JDBCConnectionConfiguration config) {
-        super();
         this.config = config;
     }
 

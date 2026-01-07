@@ -15,13 +15,13 @@
  */
 package org.mybatis.generator.config;
 
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.List;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.internal.GenericConnectionFactory;
-import org.mybatis.generator.internal.util.StringUtility;
 
 public class ConnectionFactoryConfiguration extends TypedPropertyHolder {
 
@@ -31,14 +31,13 @@ public class ConnectionFactoryConfiguration extends TypedPropertyHolder {
 
     public void validate(List<String> errors) {
         if (configurationType == null || "DEFAULT".equals(configurationType)) { //$NON-NLS-1$
-            // configuration is empty or DEFAULT
-            if (!StringUtility.stringHasValue(getProperty("driverClass"))) { //$NON-NLS-1$
+            if (!stringHasValue(getProperty("driverClass"))) { //$NON-NLS-1$
                 errors.add(getString("ValidationError.18", //$NON-NLS-1$
                         "connectionFactory", //$NON-NLS-1$
                         "driverClass")); //$NON-NLS-1$
             }
 
-            if (!StringUtility.stringHasValue(getProperty("connectionURL"))) { //$NON-NLS-1$
+            if (!stringHasValue(getProperty("connectionURL"))) { //$NON-NLS-1$
                 errors.add(getString("ValidationError.18", //$NON-NLS-1$
                         "connectionFactory", //$NON-NLS-1$
                         "connectionURL")); //$NON-NLS-1$

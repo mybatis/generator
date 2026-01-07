@@ -317,8 +317,7 @@ public class TableConfiguration extends PropertyHolder {
     public List<String> getIgnoredColumnsInError() {
         List<String> answer = new ArrayList<>();
 
-        for (Map.Entry<IgnoredColumn, Boolean> entry : ignoredColumns
-                .entrySet()) {
+        for (Map.Entry<IgnoredColumn, Boolean> entry : ignoredColumns.entrySet()) {
             if (Boolean.FALSE.equals(entry.getValue())) {
                 answer.add(entry.getKey().getColumnName());
             }
@@ -345,8 +344,7 @@ public class TableConfiguration extends PropertyHolder {
 
     @Override
     public String toString() {
-        return composeFullyQualifiedTableName(catalog, schema,
-                tableName, '.');
+        return composeFullyQualifiedTableName(catalog, schema, tableName, '.');
     }
 
     public boolean isDelimitIdentifiers() {

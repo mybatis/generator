@@ -39,6 +39,10 @@ public class StringUtility {
         }
     }
 
+    public static @Nullable Boolean parseNullableBoolean(@Nullable String s) {
+        return s == null ? null : Boolean.valueOf(s);
+    }
+
     public static boolean stringHasValue(@Nullable String s) {
         return s != null && !s.isEmpty();
     }

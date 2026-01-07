@@ -20,33 +20,34 @@ import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.jspecify.annotations.Nullable;
 
 public class ColumnOverride extends PropertyHolder {
-
     private final String columnName;
-
-    private @Nullable String javaProperty;
-
-    private @Nullable String jdbcType;
-
-    private @Nullable String javaType;
-
-    private @Nullable String typeHandler;
-
-    private boolean isColumnNameDelimited;
+    private final @Nullable String javaProperty;
+    private final @Nullable String jdbcType;
+    private final @Nullable String javaType;
+    private final @Nullable String typeHandler;
+    private final boolean isColumnNameDelimited;
 
     /**
      * If true, the column is a GENERATED ALWAYS column which means
      * that it should not be used in insert or update statements.
      */
-    private boolean isGeneratedAlways;
+    private final boolean isGeneratedAlways;
 
-    public ColumnOverride(String columnName) {
-        this.columnName = columnName;
-        isColumnNameDelimited = stringContainsSpace(columnName);
+    protected ColumnOverride(Builder builder) {
+        columnName = Objects.requireNonNull(builder.columnName);
+        javaProperty = builder.javaProperty;
+        jdbcType = builder.jdbcType;
+        javaType = builder.javaType;
+        typeHandler = builder.typeHandler;
+        isGeneratedAlways = builder.isGeneratedAlways;
+        isColumnNameDelimited = Objects.requireNonNullElseGet(builder.isColumnNameDelimited,
+                () -> stringContainsSpace(columnName));
     }
 
     public String getColumnName() {
@@ -57,54 +58,77 @@ public class ColumnOverride extends PropertyHolder {
         return Optional.ofNullable(javaProperty);
     }
 
-    public void setJavaProperty(@Nullable String javaProperty) {
-        this.javaProperty = javaProperty;
-    }
-
     public Optional<String> getJavaType() {
         return Optional.ofNullable(javaType);
-    }
-
-    public void setJavaType(@Nullable String javaType) {
-        this.javaType = javaType;
     }
 
     public Optional<String> getJdbcType() {
         return Optional.ofNullable(jdbcType);
     }
 
-    public void setJdbcType(@Nullable String jdbcType) {
-        this.jdbcType = jdbcType;
-    }
-
     public Optional<String> getTypeHandler() {
         return Optional.ofNullable( typeHandler);
-    }
-
-    public void setTypeHandler(@Nullable String typeHandler) {
-        this.typeHandler = typeHandler;
     }
 
     public boolean isColumnNameDelimited() {
         return isColumnNameDelimited;
     }
 
-    public void setColumnNameDelimited(boolean isColumnNameDelimited) {
-        this.isColumnNameDelimited = isColumnNameDelimited;
-    }
-
-    public void validate(List<String> errors, String tableName) {
-        if (!stringHasValue(columnName)) {
-            errors.add(getString("ValidationError.22", //$NON-NLS-1$
-                    tableName));
-        }
-    }
-
     public boolean isGeneratedAlways() {
         return isGeneratedAlways;
     }
 
-    public void setGeneratedAlways(boolean isGeneratedAlways) {
-        this.isGeneratedAlways = isGeneratedAlways;
+    public void validate(List<String> errors, String tableName) {
+        if (!stringHasValue(columnName)) {
+            errors.add(getString("ValidationError.22", tableName)); //$NON-NLS-1$
+        }
+    }
+
+    public static class Builder {
+        private @Nullable String columnName;
+        private @Nullable String javaProperty;
+        private @Nullable String jdbcType;
+        private @Nullable String javaType;
+        private @Nullable String typeHandler;
+        private @Nullable Boolean isColumnNameDelimited;
+        private boolean isGeneratedAlways;
+
+        public Builder withColumnName(String columnName) {
+            this.columnName = columnName;
+            return this;
+        }
+
+        public Builder withJavaProperty(String javaProperty) {
+            this.javaProperty = javaProperty;
+            return this;
+        }
+
+        public Builder withJdbcType(String jdbcType) {
+            this.jdbcType = jdbcType;
+            return this;
+        }
+        public Builder withJavaType(String javaType) {
+            this.javaType = javaType;
+            return this;
+        }
+
+        public Builder withTypeHandler(String typeHandler) {
+            this.typeHandler = typeHandler;
+            return this;
+        }
+
+        public Builder withColumnNameDelimited(@Nullable Boolean isColumnNameDelimited) {
+            this.isColumnNameDelimited = isColumnNameDelimited;
+            return this;
+        }
+
+        public Builder withGeneratedAlways(boolean isGeneratedAlways) {
+            this.isGeneratedAlways = isGeneratedAlways;
+            return this;
+        }
+
+        public ColumnOverride build() {
+            return new ColumnOverride(this);
+        }
     }
 }

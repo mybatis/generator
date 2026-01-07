@@ -16,6 +16,7 @@
 package org.mybatis.generator.config.xml;
 
 import static org.mybatis.generator.internal.util.StringUtility.isTrue;
+import static org.mybatis.generator.internal.util.StringUtility.parseNullableBoolean;
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 import static org.mybatis.generator.internal.util.StringUtility.trimToNull;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
@@ -134,12 +135,10 @@ public class MyBatisGeneratorConfigurationParser {
     }
 
     private Context parseContext(Node node) {
-
         Properties attributes = parseAttributes(node);
         String defaultModelType = attributes.getProperty("defaultModelType"); //$NON-NLS-1$
         String targetRuntime = attributes.getProperty("targetRuntime"); //$NON-NLS-1$
-        String introspectedColumnImpl = attributes
-                .getProperty("introspectedColumnImpl"); //$NON-NLS-1$
+        String introspectedColumnImpl = attributes.getProperty("introspectedColumnImpl"); //$NON-NLS-1$
         String id = attributes.getProperty("id"); //$NON-NLS-1$
 
         ModelType mt = defaultModelType == null ? null : ModelType.getModelType(defaultModelType);
@@ -234,65 +233,48 @@ public class MyBatisGeneratorConfigurationParser {
             tc.setInsertStatementEnabled(isTrue(enableInsert));
         }
 
-        String enableSelectByPrimaryKey = attributes
-                .getProperty("enableSelectByPrimaryKey"); //$NON-NLS-1$
+        String enableSelectByPrimaryKey = attributes.getProperty("enableSelectByPrimaryKey"); //$NON-NLS-1$
         if (stringHasValue(enableSelectByPrimaryKey)) {
-            tc.setSelectByPrimaryKeyStatementEnabled(
-                    isTrue(enableSelectByPrimaryKey));
+            tc.setSelectByPrimaryKeyStatementEnabled(isTrue(enableSelectByPrimaryKey));
         }
 
-        String enableSelectByExample = attributes
-                .getProperty("enableSelectByExample"); //$NON-NLS-1$
+        String enableSelectByExample = attributes.getProperty("enableSelectByExample"); //$NON-NLS-1$
         if (stringHasValue(enableSelectByExample)) {
-            tc.setSelectByExampleStatementEnabled(
-                    isTrue(enableSelectByExample));
+            tc.setSelectByExampleStatementEnabled(isTrue(enableSelectByExample));
         }
 
-        String enableUpdateByPrimaryKey = attributes
-                .getProperty("enableUpdateByPrimaryKey"); //$NON-NLS-1$
+        String enableUpdateByPrimaryKey = attributes.getProperty("enableUpdateByPrimaryKey"); //$NON-NLS-1$
         if (stringHasValue(enableUpdateByPrimaryKey)) {
-            tc.setUpdateByPrimaryKeyStatementEnabled(
-                    isTrue(enableUpdateByPrimaryKey));
+            tc.setUpdateByPrimaryKeyStatementEnabled(isTrue(enableUpdateByPrimaryKey));
         }
 
-        String enableDeleteByPrimaryKey = attributes
-                .getProperty("enableDeleteByPrimaryKey"); //$NON-NLS-1$
+        String enableDeleteByPrimaryKey = attributes.getProperty("enableDeleteByPrimaryKey"); //$NON-NLS-1$
         if (stringHasValue(enableDeleteByPrimaryKey)) {
-            tc.setDeleteByPrimaryKeyStatementEnabled(
-                    isTrue(enableDeleteByPrimaryKey));
+            tc.setDeleteByPrimaryKeyStatementEnabled(isTrue(enableDeleteByPrimaryKey));
         }
 
-        String enableDeleteByExample = attributes
-                .getProperty("enableDeleteByExample"); //$NON-NLS-1$
+        String enableDeleteByExample = attributes.getProperty("enableDeleteByExample"); //$NON-NLS-1$
         if (stringHasValue(enableDeleteByExample)) {
-            tc.setDeleteByExampleStatementEnabled(
-                    isTrue(enableDeleteByExample));
+            tc.setDeleteByExampleStatementEnabled(isTrue(enableDeleteByExample));
         }
 
-        String enableCountByExample = attributes
-                .getProperty("enableCountByExample"); //$NON-NLS-1$
+        String enableCountByExample = attributes.getProperty("enableCountByExample"); //$NON-NLS-1$
         if (stringHasValue(enableCountByExample)) {
-            tc.setCountByExampleStatementEnabled(
-                    isTrue(enableCountByExample));
+            tc.setCountByExampleStatementEnabled(isTrue(enableCountByExample));
         }
 
-        String enableUpdateByExample = attributes
-                .getProperty("enableUpdateByExample"); //$NON-NLS-1$
+        String enableUpdateByExample = attributes.getProperty("enableUpdateByExample"); //$NON-NLS-1$
         if (stringHasValue(enableUpdateByExample)) {
-            tc.setUpdateByExampleStatementEnabled(
-                    isTrue(enableUpdateByExample));
+            tc.setUpdateByExampleStatementEnabled(isTrue(enableUpdateByExample));
         }
 
-        String selectByPrimaryKeyQueryId = attributes
-                .getProperty("selectByPrimaryKeyQueryId"); //$NON-NLS-1$
+        String selectByPrimaryKeyQueryId = attributes.getProperty("selectByPrimaryKeyQueryId"); //$NON-NLS-1$
         if (stringHasValue(selectByPrimaryKeyQueryId)) {
             tc.setSelectByPrimaryKeyQueryId(selectByPrimaryKeyQueryId);
         }
 
-        String selectByExampleQueryId = attributes
-                .getProperty("selectByExampleQueryId"); //$NON-NLS-1$
-        if (stringHasValue(selectByExampleQueryId)) {
-            tc.setSelectByExampleQueryId(selectByExampleQueryId);
+        String selectByExampleQueryId = attributes.getProperty("selectByExampleQueryId"); //$NON-NLS-1$
+        if (stringHasValue(selectByExampleQueryId)) {tc.setSelectByExampleQueryId(selectByExampleQueryId);
         }
 
         String modelType = attributes.getProperty("modelType"); //$NON-NLS-1$
@@ -305,8 +287,7 @@ public class MyBatisGeneratorConfigurationParser {
             tc.setWildcardEscapingEnabled(isTrue(escapeWildcards));
         }
 
-        String delimitIdentifiers = attributes
-                .getProperty("delimitIdentifiers"); //$NON-NLS-1$
+        String delimitIdentifiers = attributes.getProperty("delimitIdentifiers"); //$NON-NLS-1$
         if (stringHasValue(delimitIdentifiers)) {
             tc.setDelimitIdentifiers(isTrue(delimitIdentifiers));
         }
@@ -338,17 +319,17 @@ public class MyBatisGeneratorConfigurationParser {
             case "property" ->  //$NON-NLS-1$
                     tc.addProperty(parseProperty(childNode));
             case "columnOverride" ->  //$NON-NLS-1$
-                    parseColumnOverride(tc, childNode);
+                    tc.addColumnOverride(parseColumnOverride(childNode));
             case "ignoreColumn" ->  //$NON-NLS-1$
-                    parseIgnoreColumn(tc, childNode);
+                    tc.addIgnoredColumn(parseIgnoreColumn(childNode));
             case "ignoreColumnsByRegex" ->  //$NON-NLS-1$
-                    parseIgnoreColumnByRegex(tc, childNode);
+                    tc.addIgnoredColumnPattern(parseIgnoreColumnByRegex(childNode));
             case "generatedKey" ->  //$NON-NLS-1$
-                    parseGeneratedKey(tc, childNode);
+                    tc.setGeneratedKey(parseGeneratedKey(childNode));
             case "domainObjectRenamingRule" ->  //$NON-NLS-1$
-                    parseDomainObjectRenamingRule(tc, childNode);
+                    tc.setDomainObjectRenamingRule(parseDomainObjectRenamingRule(childNode));
             case "columnRenamingRule" ->  //$NON-NLS-1$
-                    parseColumnRenamingRule(tc, childNode);
+                    tc.setColumnRenamingRule(parseColumnRenamingRule(childNode));
             default -> { }
             }
         }
@@ -356,40 +337,33 @@ public class MyBatisGeneratorConfigurationParser {
         return tc;
     }
 
-    private void parseColumnOverride(TableConfiguration tc, Node node) {
+    private ColumnOverride parseColumnOverride(Node node) {
         Properties attributes = parseAttributes(node);
         String column = attributes.getProperty("column"); //$NON-NLS-1$
-
-        ColumnOverride co = new ColumnOverride(column);
-
-        String property = attributes.getProperty("property"); //$NON-NLS-1$
-        co.setJavaProperty(trimToNull(property));
-
+        String javaProperty = attributes.getProperty("property"); //$NON-NLS-1$
         String javaType = attributes.getProperty("javaType"); //$NON-NLS-1$
-        co.setJavaType(trimToNull(javaType));
-
         String jdbcType = attributes.getProperty("jdbcType"); //$NON-NLS-1$
-        co.setJdbcType(trimToNull(jdbcType));
-
         String typeHandler = attributes.getProperty("typeHandler"); //$NON-NLS-1$
-        co.setTypeHandler(trimToNull(typeHandler));
-
         String delimitedColumnName = attributes.getProperty("delimitedColumnName"); //$NON-NLS-1$
-        if (stringHasValue(delimitedColumnName)) {
-            co.setColumnNameDelimited(isTrue(delimitedColumnName));
-        }
 
         String isGeneratedAlways = attributes.getProperty("isGeneratedAlways"); //$NON-NLS-1$
-        if (stringHasValue(isGeneratedAlways)) {
-            co.setGeneratedAlways(Boolean.parseBoolean(isGeneratedAlways));
-        }
+
+        ColumnOverride co = new ColumnOverride.Builder()
+                .withColumnName(column)
+                .withJavaProperty(javaProperty)
+                .withJavaType(javaType)
+                .withJdbcType(jdbcType)
+                .withTypeHandler(typeHandler)
+                .withColumnNameDelimited(parseNullableBoolean(delimitedColumnName))
+                .withGeneratedAlways(isTrue(isGeneratedAlways))
+                .build();
 
         Properties properties = parseProperties(node.getChildNodes());
         co.addProperties(properties);
-        tc.addColumnOverride(co);
+        return co;
     }
 
-    private void parseGeneratedKey(TableConfiguration tc, Node node) {
+    private GeneratedKey parseGeneratedKey(Node node) {
         Properties attributes = parseAttributes(node);
 
         String column = attributes.getProperty("column"); //$NON-NLS-1$
@@ -398,22 +372,17 @@ public class MyBatisGeneratorConfigurationParser {
         String sqlStatement = attributes.getProperty("sqlStatement"); //$NON-NLS-1$
         String type = attributes.getProperty("type"); //$NON-NLS-1$
 
-        GeneratedKey gk = new GeneratedKey(column, sqlStatement, identity, type);
-
-        tc.setGeneratedKey(gk);
+        return new GeneratedKey(column, sqlStatement, identity, type);
     }
 
-    private void parseIgnoreColumn(TableConfiguration tc, Node node) {
+    private IgnoredColumn parseIgnoreColumn(Node node) {
         Properties attributes = parseAttributes(node);
         String column = attributes.getProperty("column"); //$NON-NLS-1$
         String delimitedColumnName = attributes.getProperty("delimitedColumnName"); //$NON-NLS-1$
-
-        IgnoredColumn ic = new IgnoredColumn(column, isTrue(delimitedColumnName));
-
-        tc.addIgnoredColumn(ic);
+        return new IgnoredColumn(column, isTrue(delimitedColumnName));
     }
 
-    private void parseIgnoreColumnByRegex(TableConfiguration tc, Node node) {
+    private IgnoredColumnPattern parseIgnoreColumnByRegex(Node node) {
         Properties attributes = parseAttributes(node);
         String pattern = attributes.getProperty("pattern"); //$NON-NLS-1$
 
@@ -432,7 +401,7 @@ public class MyBatisGeneratorConfigurationParser {
             }
         }
 
-        tc.addIgnoredColumnPattern(icPattern);
+        return icPattern;
     }
 
     private void parseException(IgnoredColumnPattern icPattern, Node node) {
@@ -445,20 +414,19 @@ public class MyBatisGeneratorConfigurationParser {
         icPattern.addException(exception);
     }
 
-    private void parseDomainObjectRenamingRule(TableConfiguration tc, Node node) {
+    private DomainObjectRenamingRule parseDomainObjectRenamingRule(Node node) {
         Properties attributes = parseAttributes(node);
         String searchString = attributes.getProperty("searchString"); //$NON-NLS-1$
         String replaceString = attributes.getProperty("replaceString"); //$NON-NLS-1$
 
-        tc.setDomainObjectRenamingRule(new DomainObjectRenamingRule(searchString, replaceString));
+        return new DomainObjectRenamingRule(searchString, replaceString);
     }
 
-    private void parseColumnRenamingRule(TableConfiguration tc, Node node) {
+    private ColumnRenamingRule parseColumnRenamingRule(Node node) {
         Properties attributes = parseAttributes(node);
         String searchString = attributes.getProperty("searchString"); //$NON-NLS-1$
         String replaceString = attributes.getProperty("replaceString"); //$NON-NLS-1$
-
-        tc.setColumnRenamingRule(new ColumnRenamingRule(searchString, replaceString));
+        return new ColumnRenamingRule(searchString, replaceString);
     }
 
     protected JavaTypeResolverConfiguration parseJavaTypeResolver(Node node) {
@@ -546,13 +514,24 @@ public class MyBatisGeneratorConfigurationParser {
         return new Property(name, value);
     }
 
+    /**
+     * Parses node attributes.
+     *
+     * <p>Any attribut with an empty value (defined as missing, or blank string) will be dropped.
+     *
+     * @param node the node
+     * @return properties containing all non-empty attributes
+     */
     protected Properties parseAttributes(Node node) {
         Properties attributes = new Properties();
         NamedNodeMap nnm = node.getAttributes();
         for (int i = 0; i < nnm.getLength(); i++) {
             Node attribute = nnm.item(i);
             String value = parsePropertyTokens(attribute.getNodeValue());
-            attributes.put(attribute.getNodeName(), value);
+            value = trimToNull(value);
+            if (value != null) {
+                attributes.put(attribute.getNodeName(), value);
+            }
         }
 
         return attributes;

@@ -16,8 +16,10 @@
 package org.mybatis.generator.runtime.dynamic.sql.elements;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
@@ -32,9 +34,9 @@ public class BasicSelectOneMethodGenerator extends AbstractMethodGenerator {
 
     private BasicSelectOneMethodGenerator(Builder builder) {
         super(builder);
-        recordType = builder.recordType;
-        resultMapId = builder.resultMapId;
-        fragmentGenerator = builder.fragmentGenerator;
+        recordType = Objects.requireNonNull(builder.recordType);
+        resultMapId = Objects.requireNonNull(builder.resultMapId);
+        fragmentGenerator = Objects.requireNonNull(builder.fragmentGenerator);
         reuseResultMap = builder.reuseResultMap;
     }
 
@@ -97,9 +99,9 @@ public class BasicSelectOneMethodGenerator extends AbstractMethodGenerator {
 
     public static class Builder extends BaseBuilder<Builder> {
 
-        private FullyQualifiedJavaType recordType;
-        private String resultMapId;
-        private FragmentGenerator fragmentGenerator;
+        private @Nullable FullyQualifiedJavaType recordType;
+        private @Nullable String resultMapId;
+        private @Nullable FragmentGenerator fragmentGenerator;
         private boolean reuseResultMap;
 
         public Builder withRecordType(FullyQualifiedJavaType recordType) {

@@ -164,8 +164,12 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
     }
 
     protected TopLevelClass getSupportClass() {
-        return DynamicSqlSupportClassGenerator.of(
-                introspectedTable, context.getCommentGenerator(), warnings).generate();
+        return new DynamicSqlSupportClassGenerator.Builder()
+                .withIntrospectedTable(introspectedTable)
+                .withCommentGenerator(context.getCommentGenerator())
+                .withWarnings(warnings)
+                .build()
+                .generate();
     }
 
     protected void addInsertOneMethod(Interface interfaze) {
@@ -258,7 +262,7 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
 
         FieldAndImports fieldAndImports = generator.generateFieldAndImports();
 
-        if (fieldAndImports != null && generator.callPlugins(fieldAndImports.getField(), interfaze)) {
+        if (generator.callPlugins(fieldAndImports.getField(), interfaze)) {
             interfaze.addField(fieldAndImports.getField());
             interfaze.addImportedTypes(fieldAndImports.getImports());
         }

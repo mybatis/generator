@@ -17,13 +17,14 @@ package org.mybatis.generator.runtime.kotlin.elements;
 
 import static org.mybatis.generator.api.dom.OutputUtilities.kotlinIndent;
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForKotlin;
-import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
@@ -41,10 +42,10 @@ public class KotlinFragmentGenerator {
     private final String tableFieldName;
 
     private KotlinFragmentGenerator(Builder builder) {
-        introspectedTable = builder.introspectedTable;
-        resultMapId = builder.resultMapId;
-        supportObjectImport = builder.supportObjectImport;
-        tableFieldName = builder.tableFieldName;
+        introspectedTable = Objects.requireNonNull(builder.introspectedTable);
+        resultMapId = Objects.requireNonNull(builder.resultMapId);
+        supportObjectImport = Objects.requireNonNull(builder.supportObjectImport);
+        tableFieldName = Objects.requireNonNull(builder.tableFieldName);
     }
 
     public KotlinFunctionParts getPrimaryKeyWhereClauseAndParameters(boolean forUpdate) {
@@ -245,10 +246,10 @@ public class KotlinFragmentGenerator {
     }
 
     public static class Builder {
-        private IntrospectedTable introspectedTable;
-        private String resultMapId;
-        private String supportObjectImport;
-        private String tableFieldName;
+        private @Nullable IntrospectedTable introspectedTable;
+        private @Nullable String resultMapId;
+        private @Nullable String supportObjectImport;
+        private @Nullable String tableFieldName;
 
         public Builder withIntrospectedTable(IntrospectedTable introspectedTable) {
             this.introspectedTable = introspectedTable;

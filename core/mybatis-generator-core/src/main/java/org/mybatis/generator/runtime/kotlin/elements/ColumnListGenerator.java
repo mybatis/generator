@@ -20,6 +20,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
@@ -81,10 +82,10 @@ public class ColumnListGenerator {
     }
 
     public static class Builder {
-        private Context context;
-        private IntrospectedTable introspectedTable;
-        private String supportObjectImport;
-        private String tableFieldName;
+        private @Nullable Context context;
+        private @Nullable IntrospectedTable introspectedTable;
+        private @Nullable String supportObjectImport;
+        private @Nullable String tableFieldName;
 
         public Builder withSupportObjectImport(String supportObjectImport) {
             this.supportObjectImport = supportObjectImport;

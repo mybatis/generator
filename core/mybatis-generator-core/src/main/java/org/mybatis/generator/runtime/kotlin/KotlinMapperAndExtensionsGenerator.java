@@ -307,7 +307,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
 
         KotlinPropertyAndImports propertyAndImports = generator.generatePropertyAndImports();
 
-        if (propertyAndImports != null && generator.callPlugins(propertyAndImports.getProperty(), kotlinFile)) {
+        if (generator.callPlugins(propertyAndImports.getProperty(), kotlinFile)) {
             kotlinFile.addNamedItem(propertyAndImports.getProperty());
             kotlinFile.addImports(propertyAndImports.getImports());
         }

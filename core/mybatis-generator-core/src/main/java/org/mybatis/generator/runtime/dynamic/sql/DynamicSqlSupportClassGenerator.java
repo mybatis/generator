@@ -19,7 +19,9 @@ import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 
 import java.util.List;
+import java.util.Objects;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
@@ -35,12 +37,14 @@ import org.mybatis.generator.internal.util.StringUtility;
 import org.mybatis.generator.internal.util.messages.Messages;
 
 public class DynamicSqlSupportClassGenerator {
-    private IntrospectedTable introspectedTable;
-    private CommentGenerator commentGenerator;
-    private List<String> warnings;
+    private final IntrospectedTable introspectedTable;
+    private final CommentGenerator commentGenerator;
+    private final List<String> warnings;
 
-    private DynamicSqlSupportClassGenerator() {
-        super();
+    private DynamicSqlSupportClassGenerator(Builder builder) {
+        introspectedTable = Objects.requireNonNull(builder.introspectedTable);
+        commentGenerator = Objects.requireNonNull(builder.commentGenerator);
+        warnings = Objects.requireNonNull(builder.warnings);
     }
 
     public TopLevelClass generate() {
@@ -175,12 +179,28 @@ public class DynamicSqlSupportClassGenerator {
         return initializationString.toString();
     }
 
-    public static DynamicSqlSupportClassGenerator of(IntrospectedTable introspectedTable,
-            CommentGenerator commentGenerator, List<String> warnings) {
-        DynamicSqlSupportClassGenerator generator = new DynamicSqlSupportClassGenerator();
-        generator.introspectedTable = introspectedTable;
-        generator.commentGenerator = commentGenerator;
-        generator.warnings = warnings;
-        return generator;
+    public static class Builder {
+        private @Nullable IntrospectedTable introspectedTable;
+        private @Nullable CommentGenerator commentGenerator;
+        private @Nullable List<String> warnings;
+
+        public Builder withIntrospectedTable(IntrospectedTable introspectedTable) {
+            this.introspectedTable = introspectedTable;
+            return this;
+        }
+
+        public Builder withCommentGenerator(CommentGenerator commentGenerator) {
+            this.commentGenerator = commentGenerator;
+            return this;
+        }
+
+        public Builder withWarnings(List<String> warnings) {
+            this.warnings = warnings;
+            return this;
+        }
+
+        public DynamicSqlSupportClassGenerator build() {
+            return new DynamicSqlSupportClassGenerator(this);
+        }
     }
 }

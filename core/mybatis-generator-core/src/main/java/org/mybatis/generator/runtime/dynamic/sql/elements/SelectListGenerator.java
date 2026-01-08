@@ -19,6 +19,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
@@ -58,9 +59,9 @@ public class SelectListGenerator {
     }
 
     public static class Builder {
-        private FragmentGenerator fragmentGenerator;
-        private Context context;
-        private IntrospectedTable introspectedTable;
+        private @Nullable FragmentGenerator fragmentGenerator;
+        private @Nullable Context context;
+        private @Nullable IntrospectedTable introspectedTable;
 
         public Builder withFragmentGenerator(FragmentGenerator fragmentGenerator) {
             this.fragmentGenerator = fragmentGenerator;

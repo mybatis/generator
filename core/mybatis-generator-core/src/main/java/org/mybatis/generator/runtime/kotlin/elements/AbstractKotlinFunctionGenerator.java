@@ -15,6 +15,9 @@
  */
 package org.mybatis.generator.runtime.kotlin.elements;
 
+import java.util.Objects;
+
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.kotlin.KotlinArg;
@@ -28,9 +31,9 @@ public abstract class AbstractKotlinFunctionGenerator {
     protected final String tableFieldName;
 
     protected AbstractKotlinFunctionGenerator(BaseBuilder<?> builder) {
-        context = builder.context;
-        introspectedTable = builder.introspectedTable;
-        tableFieldName = builder.tableFieldName;
+        context = Objects.requireNonNull(builder.context);
+        introspectedTable = Objects.requireNonNull(builder.introspectedTable);
+        tableFieldName = Objects.requireNonNull(builder.tableFieldName);
     }
 
     protected void acceptParts(KotlinFunction kotlinFunction, KotlinFunctionParts functionParts) {
@@ -65,39 +68,28 @@ public abstract class AbstractKotlinFunctionGenerator {
 
     public static FieldNameAndImport calculateFieldNameAndImport(String tableFieldName, String supportObjectImport,
                                                      IntrospectedColumn column) {
-        FieldNameAndImport answer = new FieldNameAndImport();
-        answer.fieldName = column.getJavaProperty();
-        if (answer.fieldName.equals(tableFieldName)) {
+        String fieldName = column.getJavaProperty();
+        String importString;
+        if (fieldName.equals(tableFieldName)) {
             // name collision, no shortcut generated
-            answer.fieldName = tableFieldName + "." + answer.fieldName; //$NON-NLS-1$
-            answer.importString = supportObjectImport + "." + tableFieldName; //$NON-NLS-1$
+            fieldName = tableFieldName + "." + fieldName; //$NON-NLS-1$
+            importString = supportObjectImport + "." + tableFieldName; //$NON-NLS-1$
         } else {
-            answer.importString = supportObjectImport + "." + answer.fieldName; //$NON-NLS-1$
+            importString = supportObjectImport + "." + fieldName; //$NON-NLS-1$
         }
-        return answer;
+        return new FieldNameAndImport(fieldName, importString);
     }
 
-    public static class FieldNameAndImport {
-        private String fieldName;
-        private String importString;
+    public record FieldNameAndImport(String fieldName, String importString) { }
 
-        public String fieldName() {
-            return fieldName;
-        }
-
-        public String importString() {
-            return importString;
-        }
-    }
-
-    public abstract KotlinFunctionAndImports generateMethodAndImports();
+    public abstract @Nullable KotlinFunctionAndImports generateMethodAndImports();
 
     public abstract boolean callPlugins(KotlinFunction method, KotlinFile kotlinFile);
 
     public abstract static class BaseBuilder<T extends BaseBuilder<T>> {
-        private Context context;
-        private IntrospectedTable introspectedTable;
-        private String tableFieldName;
+        private @Nullable Context context;
+        private @Nullable IntrospectedTable introspectedTable;
+        private @Nullable String tableFieldName;
 
         public T withContext(Context context) {
             this.context = context;

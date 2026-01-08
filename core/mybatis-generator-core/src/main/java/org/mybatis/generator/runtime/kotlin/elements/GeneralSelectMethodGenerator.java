@@ -15,6 +15,9 @@
  */
 package org.mybatis.generator.runtime.kotlin.elements;
 
+import java.util.Objects;
+
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.kotlin.KotlinArg;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
@@ -24,7 +27,7 @@ public class GeneralSelectMethodGenerator extends AbstractKotlinFunctionGenerato
 
     private GeneralSelectMethodGenerator(Builder builder) {
         super(builder);
-        mapperName = builder.mapperName;
+        mapperName = Objects.requireNonNull(builder.mapperName);
     }
 
     @Override
@@ -51,7 +54,7 @@ public class GeneralSelectMethodGenerator extends AbstractKotlinFunctionGenerato
     }
 
     public static class Builder extends BaseBuilder<Builder> {
-        private String mapperName;
+        private @Nullable String mapperName;
 
         public Builder withMapperName(String mapperName) {
             this.mapperName = mapperName;

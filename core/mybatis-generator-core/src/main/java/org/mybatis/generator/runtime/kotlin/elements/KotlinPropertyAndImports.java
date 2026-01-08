@@ -16,8 +16,10 @@
 package org.mybatis.generator.runtime.kotlin.elements;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.kotlin.KotlinProperty;
 
 public class KotlinPropertyAndImports {
@@ -26,7 +28,7 @@ public class KotlinPropertyAndImports {
     private final Set<String> imports;
 
     private KotlinPropertyAndImports(Builder builder) {
-        property = builder.property;
+        property = Objects.requireNonNull(builder.property);
         imports = builder.imports;
     }
 
@@ -43,7 +45,7 @@ public class KotlinPropertyAndImports {
     }
 
     public static class Builder {
-        private KotlinProperty property;
+        private @Nullable KotlinProperty property;
         private final Set<String> imports = new HashSet<>();
 
         public Builder withProperty(KotlinProperty property) {

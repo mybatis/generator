@@ -15,6 +15,9 @@
  */
 package org.mybatis.generator.runtime.kotlin.elements;
 
+import java.util.Objects;
+
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
 import org.mybatis.generator.api.dom.kotlin.KotlinArg;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
@@ -27,8 +30,8 @@ public class BasicInsertMethodGenerator extends AbstractKotlinFunctionGenerator 
 
     private BasicInsertMethodGenerator(Builder builder) {
         super(builder);
-        recordType = builder.recordType;
-        fragmentGenerator = builder.fragmentGenerator;
+        recordType = Objects.requireNonNull(builder.recordType);
+        fragmentGenerator = Objects.requireNonNull(builder.fragmentGenerator);
     }
 
     @Override
@@ -69,9 +72,8 @@ public class BasicInsertMethodGenerator extends AbstractKotlinFunctionGenerator 
     }
 
     public static class Builder extends BaseBuilder<Builder> {
-
-        private FullyQualifiedKotlinType recordType;
-        private KotlinFragmentGenerator fragmentGenerator;
+        private @Nullable FullyQualifiedKotlinType recordType;
+        private @Nullable KotlinFragmentGenerator fragmentGenerator;
 
         public Builder withRecordType(FullyQualifiedKotlinType recordType) {
             this.recordType = recordType;

@@ -15,6 +15,9 @@
  */
 package org.mybatis.generator.runtime.dynamic.sql.elements;
 
+import java.util.Objects;
+
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.Interface;
@@ -28,9 +31,9 @@ public abstract class AbstractMethodGenerator {
     protected final String tableFieldName;
 
     protected AbstractMethodGenerator(BaseBuilder<?> builder) {
-        context = builder.context;
-        introspectedTable = builder.introspectedTable;
-        tableFieldName = builder.tableFieldName;
+        context = Objects.requireNonNull(builder.context);
+        introspectedTable = Objects.requireNonNull(builder.introspectedTable);
+        tableFieldName = Objects.requireNonNull(builder.tableFieldName);
     }
 
     protected String calculateFieldName(IntrospectedColumn column) {
@@ -59,14 +62,14 @@ public abstract class AbstractMethodGenerator {
         builder.withImports(methodParts.getImports());
     }
 
-    public abstract MethodAndImports generateMethodAndImports();
+    public abstract @Nullable MethodAndImports generateMethodAndImports();
 
     public abstract boolean callPlugins(Method method, Interface interfaze);
 
     public abstract static class BaseBuilder<T extends BaseBuilder<T>> {
-        private Context context;
-        private IntrospectedTable introspectedTable;
-        private String tableFieldName;
+        private @Nullable Context context;
+        private @Nullable IntrospectedTable introspectedTable;
+        private @Nullable String tableFieldName;
 
         public T withContext(Context context) {
             this.context = context;

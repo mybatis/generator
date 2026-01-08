@@ -18,6 +18,7 @@ package org.mybatis.generator.runtime.dynamic.sql;
 import java.util.List;
 import java.util.Optional;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
@@ -30,7 +31,7 @@ public class IntrospectedTableMyBatis3DynamicSqlImpl extends IntrospectedTableMy
     }
 
     @Override
-    protected void calculateXmlMapperGenerator(AbstractJavaClientGenerator javaClientGenerator,
+    protected void calculateXmlMapperGenerator(@Nullable AbstractJavaClientGenerator javaClientGenerator,
             List<String> warnings,
             ProgressCallback progressCallback) {
         // no XML with dynamic SQL support

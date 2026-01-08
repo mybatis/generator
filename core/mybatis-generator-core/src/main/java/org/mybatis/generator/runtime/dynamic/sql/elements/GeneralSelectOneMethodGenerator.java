@@ -16,8 +16,10 @@
 package org.mybatis.generator.runtime.dynamic.sql.elements;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
@@ -28,7 +30,7 @@ public class GeneralSelectOneMethodGenerator extends AbstractMethodGenerator {
 
     private GeneralSelectOneMethodGenerator(Builder builder) {
         super(builder);
-        recordType = builder.recordType;
+        recordType = Objects.requireNonNull(builder.recordType);
     }
 
     @Override
@@ -67,7 +69,7 @@ public class GeneralSelectOneMethodGenerator extends AbstractMethodGenerator {
     }
 
     public static class Builder extends BaseBuilder<Builder> {
-        private FullyQualifiedJavaType recordType;
+        private @Nullable FullyQualifiedJavaType recordType;
 
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
             this.recordType = recordType;

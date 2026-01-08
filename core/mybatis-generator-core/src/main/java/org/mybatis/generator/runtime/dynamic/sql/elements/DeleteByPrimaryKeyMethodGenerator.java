@@ -16,8 +16,10 @@
 package org.mybatis.generator.runtime.dynamic.sql.elements;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
@@ -29,11 +31,11 @@ public class DeleteByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
 
     private DeleteByPrimaryKeyMethodGenerator(Builder builder) {
         super(builder);
-        fragmentGenerator = builder.fragmentGenerator;
+        fragmentGenerator = Objects.requireNonNull(builder.fragmentGenerator);
     }
 
     @Override
-    public MethodAndImports generateMethodAndImports() {
+    public @Nullable MethodAndImports generateMethodAndImports() {
         if (!Utils.generateDeleteByPrimaryKey(introspectedTable)) {
             return null;
         }
@@ -69,8 +71,7 @@ public class DeleteByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
     }
 
     public static class Builder extends BaseBuilder<Builder> {
-
-        private FragmentGenerator fragmentGenerator;
+        private @Nullable FragmentGenerator fragmentGenerator;
 
         public Builder withFragmentGenerator(FragmentGenerator fragmentGenerator) {
             this.fragmentGenerator = fragmentGenerator;

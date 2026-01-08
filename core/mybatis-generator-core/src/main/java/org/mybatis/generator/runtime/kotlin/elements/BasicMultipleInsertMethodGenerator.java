@@ -15,6 +15,9 @@
  */
 package org.mybatis.generator.runtime.kotlin.elements;
 
+import java.util.Objects;
+
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
 import org.mybatis.generator.api.dom.kotlin.KotlinArg;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
@@ -28,11 +31,11 @@ public class BasicMultipleInsertMethodGenerator extends AbstractKotlinFunctionGe
 
     private BasicMultipleInsertMethodGenerator(Builder builder) {
         super(builder);
-        recordType = builder.recordType;
+        recordType = Objects.requireNonNull(builder.recordType);
     }
 
     @Override
-    public KotlinFunctionAndImports generateMethodAndImports() {
+    public @Nullable KotlinFunctionAndImports generateMethodAndImports() {
         if (!Utils.generateMultipleRowInsert(introspectedTable)) {
             return null;
         }
@@ -97,8 +100,7 @@ public class BasicMultipleInsertMethodGenerator extends AbstractKotlinFunctionGe
     }
 
     public static class Builder extends BaseBuilder<Builder> {
-
-        private FullyQualifiedKotlinType recordType;
+        private @Nullable FullyQualifiedKotlinType recordType;
 
         public Builder withRecordType(FullyQualifiedKotlinType recordType) {
             this.recordType = recordType;

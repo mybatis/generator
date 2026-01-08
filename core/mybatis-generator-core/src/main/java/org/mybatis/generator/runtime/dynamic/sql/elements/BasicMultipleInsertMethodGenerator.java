@@ -16,8 +16,10 @@
 package org.mybatis.generator.runtime.dynamic.sql.elements;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
@@ -30,11 +32,11 @@ public class BasicMultipleInsertMethodGenerator extends AbstractMethodGenerator 
 
     private BasicMultipleInsertMethodGenerator(Builder builder) {
         super(builder);
-        recordType = builder.recordType;
+        recordType = Objects.requireNonNull(builder.recordType);
     }
 
     @Override
-    public MethodAndImports generateMethodAndImports() {
+    public @Nullable MethodAndImports generateMethodAndImports() {
         if (!Utils.generateMultipleRowInsert(introspectedTable)) {
             return null;
         }
@@ -102,7 +104,7 @@ public class BasicMultipleInsertMethodGenerator extends AbstractMethodGenerator 
 
     public static class Builder extends BaseBuilder<Builder> {
 
-        private FullyQualifiedJavaType recordType;
+        private @Nullable FullyQualifiedJavaType recordType;
 
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
             this.recordType = recordType;

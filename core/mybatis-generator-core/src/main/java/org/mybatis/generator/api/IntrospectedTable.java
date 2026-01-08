@@ -400,12 +400,16 @@ public abstract class IntrospectedTable {
         calculateModelAttributes();
         calculateXmlAttributes();
 
-        if (getTableConfiguration().getModelType() == ModelType.HIERARCHICAL) {
-            rules = new HierarchicalModelRules(this);
-        } else if (getTableConfiguration().getModelType() == ModelType.FLAT) {
-            rules = new FlatModelRules(this);
-        } else {
-            rules = new ConditionalModelRules(this);
+        switch (getTableConfiguration().getModelType()) {
+            case HIERARCHICAL:
+                rules = new HierarchicalModelRules(this);
+                break;
+            case FLAT:
+                rules = new FlatModelRules(this);
+                break;
+            case CONDITIONAL:
+                rules = new ConditionalModelRules(this);
+                break;
         }
 
         getContext().getPlugins().initialized(this);

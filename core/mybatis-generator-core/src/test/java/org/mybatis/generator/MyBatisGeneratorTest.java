@@ -28,6 +28,8 @@ import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.ConnectionFactoryConfiguration;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.JDBCConnectionConfiguration;
+import org.mybatis.generator.config.JavaClientGeneratorConfiguration;
+import org.mybatis.generator.config.JavaModelGeneratorConfiguration;
 import org.mybatis.generator.config.ModelType;
 import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.exception.InvalidConfigurationException;
@@ -58,8 +60,15 @@ class MyBatisGeneratorTest {
     void testGenerateInvalidConfigWithNoConnectionSources() {
         List<String> warnings = new ArrayList<>();
         Configuration config = new Configuration();
-        Context context = new Context("MyContext", ModelType.HIERARCHICAL);
-        context.setTargetRuntime("MyBatis3Simple");
+        Context context = new Context.Builder()
+                .withId("MyContext")
+                .withDefaultModelType(ModelType.HIERARCHICAL)
+                .withTargetRuntime("MyBatis3Simple")
+                .withJavaModelGeneratorConfiguration(new JavaModelGeneratorConfiguration.Builder()
+                        .withTargetPackage("foo.bar")
+                        .withTargetProject("MyProject")
+                        .build())
+                .build();
         config.addContext(context);
 
         DefaultShellCallback shellCallback = new DefaultShellCallback(true);
@@ -69,18 +78,23 @@ class MyBatisGeneratorTest {
                     MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, shellCallback, warnings);
                     myBatisGenerator.generate(null, null, null, false);
                 });
-        assertEquals(3, e.getErrors().size());
+        assertEquals(2, e.getErrors().size());
     }
 
     @Test
     void testGenerateInvalidConfigWithTwoConnectionSources() {
         List<String> warnings = new ArrayList<>();
         Configuration config = new Configuration();
-        Context context = new Context("MyContext", ModelType.HIERARCHICAL);
-        context.setTargetRuntime("MyBatis3Simple");
-        context.setConnectionFactoryConfiguration(new ConnectionFactoryConfiguration(null));
-        context.setJdbcConnectionConfiguration(new JDBCConnectionConfiguration("", "",
-                null, null));
+        Context context = new Context.Builder()
+                .withId("MyContext")
+                .withDefaultModelType(ModelType.HIERARCHICAL)
+                .withTargetRuntime("MyBatis3Simple")
+                .withConnectionFactoryConfiguration(new ConnectionFactoryConfiguration.Builder().build())
+                .withJavaModelGeneratorConfiguration(new JavaModelGeneratorConfiguration.Builder()
+                        .withTargetPackage("foo.bar")
+                        .withTargetProject("MyProject")
+                        .build())
+                .build();
         config.addContext(context);
 
         DefaultShellCallback shellCallback = new DefaultShellCallback(true);

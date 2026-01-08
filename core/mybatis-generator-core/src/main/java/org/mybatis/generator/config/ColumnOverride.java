@@ -40,6 +40,7 @@ public class ColumnOverride extends PropertyHolder {
     private final boolean isGeneratedAlways;
 
     protected ColumnOverride(Builder builder) {
+        super(builder);
         columnName = Objects.requireNonNull(builder.columnName);
         javaProperty = builder.javaProperty;
         jdbcType = builder.jdbcType;
@@ -84,7 +85,7 @@ public class ColumnOverride extends PropertyHolder {
         }
     }
 
-    public static class Builder {
+    public static class Builder extends AbstractBuilder<Builder> {
         private @Nullable String columnName;
         private @Nullable String javaProperty;
         private @Nullable String jdbcType;
@@ -129,6 +130,11 @@ public class ColumnOverride extends PropertyHolder {
 
         public ColumnOverride build() {
             return new ColumnOverride(this);
+        }
+
+        @Override
+        protected Builder getThis() {
+            return this;
         }
     }
 }

@@ -19,6 +19,7 @@ import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.jspecify.annotations.Nullable;
 
@@ -26,11 +27,10 @@ public class JavaClientGeneratorConfiguration extends TypedPropertyHolder {
     private final String targetPackage;
     private final String targetProject;
 
-    public JavaClientGeneratorConfiguration(@Nullable String configurationType, String targetPackage,
-                                            String targetProject) {
-        super(configurationType);
-        this.targetPackage = targetPackage;
-        this.targetProject = targetProject;
+    protected JavaClientGeneratorConfiguration(Builder builder) {
+        super(builder);
+        this.targetPackage = Objects.requireNonNull(builder.targetPackage);
+        this.targetProject = Objects.requireNonNull(builder.targetProject);
     }
 
     public String getTargetProject() {
@@ -49,6 +49,30 @@ public class JavaClientGeneratorConfiguration extends TypedPropertyHolder {
         if (!stringHasValue(targetPackage)) {
             errors.add(getString("ValidationError.12", //$NON-NLS-1$
                     "javaClientGenerator", contextId)); //$NON-NLS-1$
+        }
+    }
+
+    public static class Builder extends TypedBuilder<Builder> {
+        private @Nullable String targetPackage;
+        private @Nullable String targetProject;
+
+        public Builder withTargetPackage(@Nullable String targetPackage) {
+            this.targetPackage = targetPackage;
+            return this;
+        }
+
+        public Builder withTargetProject(@Nullable String targetProject) {
+            this.targetProject = targetProject;
+            return this;
+        }
+
+        public JavaClientGeneratorConfiguration build() {
+            return new JavaClientGeneratorConfiguration(this);
+        }
+
+        @Override
+        protected Builder getThis() {
+            return this;
         }
     }
 }

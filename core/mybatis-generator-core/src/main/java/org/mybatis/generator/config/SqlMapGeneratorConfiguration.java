@@ -15,18 +15,22 @@
  */
 package org.mybatis.generator.config;
 
+import org.jspecify.annotations.Nullable;
+
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.List;
+import java.util.Objects;
 
 public class SqlMapGeneratorConfiguration extends PropertyHolder {
     private final String targetPackage;
     private final String targetProject;
 
-    public SqlMapGeneratorConfiguration(String targetPackage, String targetProject) {
-        this.targetPackage = targetPackage;
-        this.targetProject = targetProject;
+    protected SqlMapGeneratorConfiguration(Builder builder) {
+        super(builder);
+        this.targetPackage = Objects.requireNonNull(builder.targetPackage);
+        this.targetProject = Objects.requireNonNull(builder.targetProject);
     }
 
     public String getTargetProject() {
@@ -45,6 +49,29 @@ public class SqlMapGeneratorConfiguration extends PropertyHolder {
         if (!stringHasValue(targetPackage)) {
             errors.add(getString("ValidationError.12", //$NON-NLS-1$
                     "SQLMapGenerator", contextId)); //$NON-NLS-1$
+        }
+    }
+
+    public static class Builder extends AbstractBuilder<Builder> {
+        private @Nullable String targetPackage;
+        private @Nullable String targetProject;
+
+        public Builder withTargetPackage(@Nullable String targetPackage) {
+            this.targetPackage = targetPackage;
+            return this;
+        }
+
+        public Builder withTargetProject(@Nullable String targetProject) {
+            this.targetProject = targetProject;
+            return this;
+        }
+
+        public SqlMapGeneratorConfiguration build() {
+            return new SqlMapGeneratorConfiguration(this);
+        }
+        @Override
+        protected Builder getThis() {
+            return this;
         }
     }
 }

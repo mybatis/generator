@@ -15,20 +15,28 @@
  */
 package org.mybatis.generator.config;
 
-import org.jspecify.annotations.Nullable;
-import org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl;
-
 public class JavaTypeResolverConfiguration extends TypedPropertyHolder {
 
-    public JavaTypeResolverConfiguration(@Nullable String configurationType) {
-        super(configurationType);
+    protected JavaTypeResolverConfiguration(Builder builder) {
+        super(builder);
     }
 
     public String getImplementationType() {
         if (configurationType == null || "DEFAULT".equals(configurationType)) { //$NON-NLS-1$
-            return JavaTypeResolverDefaultImpl.class.getName();
+            return Defaults.DEFAULT_JAVA_TYPE_RESOLVER;
         } else {
             return configurationType;
+        }
+    }
+
+    public static class Builder extends TypedBuilder<Builder> {
+        public JavaTypeResolverConfiguration build() {
+            return new JavaTypeResolverConfiguration(this);
+        }
+
+        @Override
+        protected Builder getThis() {
+            return this;
         }
     }
 }

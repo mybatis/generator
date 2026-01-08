@@ -19,16 +19,26 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.List;
 
-import org.jspecify.annotations.Nullable;
-
 public class PluginConfiguration extends TypedPropertyHolder {
-    public PluginConfiguration(@Nullable String configurationType) {
-        super(configurationType);
+    protected PluginConfiguration(Builder builder) {
+        super(builder);
     }
 
     public void validate(List<String> errors, String contextId) {
         if (configurationType == null) {
             errors.add(getString("ValidationError.17", contextId)); //$NON-NLS-1$
+        }
+    }
+
+    public static class Builder extends TypedBuilder<Builder> {
+
+        public PluginConfiguration build() {
+            return new PluginConfiguration(this);
+        }
+
+        @Override
+        protected Builder getThis() {
+            return this;
         }
     }
 }

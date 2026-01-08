@@ -33,19 +33,16 @@ import org.mybatis.generator.api.JavaTypeResolver;
 import org.mybatis.generator.api.KotlinFormatter;
 import org.mybatis.generator.api.Plugin;
 import org.mybatis.generator.api.XmlFormatter;
-import org.mybatis.generator.api.dom.DefaultJavaFormatter;
-import org.mybatis.generator.api.dom.DefaultKotlinFormatter;
-import org.mybatis.generator.api.dom.DefaultXmlFormatter;
 import org.mybatis.generator.codegen.mybatis3.IntrospectedTableMyBatis3Impl;
 import org.mybatis.generator.codegen.mybatis3.IntrospectedTableMyBatis3SimpleImpl;
 import org.mybatis.generator.config.CommentGeneratorConfiguration;
 import org.mybatis.generator.config.ConnectionFactoryConfiguration;
 import org.mybatis.generator.config.Context;
+import org.mybatis.generator.config.Defaults;
 import org.mybatis.generator.config.JavaTypeResolverConfiguration;
 import org.mybatis.generator.config.PluginConfiguration;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.config.TableConfiguration;
-import org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl;
 import org.mybatis.generator.runtime.dynamic.sql.IntrospectedTableMyBatis3DynamicSqlImpl;
 import org.mybatis.generator.runtime.kotlin.IntrospectedTableKotlinImpl;
 
@@ -187,7 +184,7 @@ public class ObjectFactory {
     public static JavaTypeResolver createJavaTypeResolver(Context context, List<String> warnings) {
         String type = context.getJavaTypeResolverConfiguration()
                 .map(JavaTypeResolverConfiguration::getImplementationType)
-                .orElse(JavaTypeResolverDefaultImpl.class.getName());
+                .orElse(Defaults.DEFAULT_JAVA_TYPE_RESOLVER);
 
         JavaTypeResolver answer = createInternalObject(type, JavaTypeResolver.class);
         answer.setWarnings(warnings);
@@ -212,7 +209,7 @@ public class ObjectFactory {
 
         String type = context.getCommentGeneratorConfiguration()
                 .map(CommentGeneratorConfiguration::getImplementationType)
-                .orElse(DefaultCommentGenerator.class.getName());
+                .orElse(Defaults.DEFAULT_COMMENT_GENERATOR);
 
         answer = createInternalObject(type, CommentGenerator.class);
 
@@ -236,7 +233,7 @@ public class ObjectFactory {
     public static JavaFormatter createJavaFormatter(Context context) {
         String type = context.getProperty(PropertyRegistry.CONTEXT_JAVA_FORMATTER);
         if (!stringHasValue(type)) {
-            type = DefaultJavaFormatter.class.getName();
+            type = Defaults.DEFAULT_JAVA_FORMATTER;
         }
 
         JavaFormatter answer = createInternalObject(type, JavaFormatter.class);
@@ -249,7 +246,7 @@ public class ObjectFactory {
     public static KotlinFormatter createKotlinFormatter(Context context) {
         String type = context.getProperty(PropertyRegistry.CONTEXT_KOTLIN_FORMATTER);
         if (!stringHasValue(type)) {
-            type = DefaultKotlinFormatter.class.getName();
+            type = Defaults.DEFAULT_KOTLIN_FORMATTER;
         }
 
         KotlinFormatter answer = createInternalObject(type, KotlinFormatter.class);
@@ -262,7 +259,7 @@ public class ObjectFactory {
     public static XmlFormatter createXmlFormatter(Context context) {
         String type = context.getProperty(PropertyRegistry.CONTEXT_XML_FORMATTER);
         if (!stringHasValue(type)) {
-            type = DefaultXmlFormatter.class.getName();
+            type = Defaults.DEFAULT_XML_FORMATTER;
         }
 
         XmlFormatter answer = createInternalObject(type, XmlFormatter.class);

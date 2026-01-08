@@ -23,6 +23,7 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -47,65 +48,63 @@ import org.mybatis.generator.internal.PluginAggregator;
 import org.mybatis.generator.internal.db.DatabaseIntrospector;
 
 public class Context extends PropertyHolder {
-
     private final String id;
-
-    private @Nullable JDBCConnectionConfiguration jdbcConnectionConfiguration;
-
-    private @Nullable ConnectionFactoryConfiguration connectionFactoryConfiguration;
-
-    private @Nullable SqlMapGeneratorConfiguration sqlMapGeneratorConfiguration;
-
-    private @Nullable JavaTypeResolverConfiguration javaTypeResolverConfiguration;
-
-    /**
-     * Only nullable because the configuration may not be set when the object is created. Non null in practice
-     */
-    private @Nullable JavaModelGeneratorConfiguration javaModelGeneratorConfiguration;
-
-    private @Nullable JavaClientGeneratorConfiguration javaClientGeneratorConfiguration;
-
-    private final ArrayList<TableConfiguration> tableConfigurations;
-
+    private final @Nullable JDBCConnectionConfiguration jdbcConnectionConfiguration;
+    private final @Nullable ConnectionFactoryConfiguration connectionFactoryConfiguration;
+    private final @Nullable SqlMapGeneratorConfiguration sqlMapGeneratorConfiguration;
+    private final @Nullable JavaTypeResolverConfiguration javaTypeResolverConfiguration;
+    private final JavaModelGeneratorConfiguration javaModelGeneratorConfiguration;
+    private final @Nullable JavaClientGeneratorConfiguration javaClientGeneratorConfiguration;
+    private final List<TableConfiguration> tableConfigurations;
     private final ModelType defaultModelType;
+    private final String beginningDelimiter;
+    private final String endingDelimiter;
+    private final @Nullable Boolean autoDelimitKeywords;
+    private final @Nullable CommentGeneratorConfiguration commentGeneratorConfiguration;
+    private final List<PluginConfiguration> pluginConfigurations;
+    private final @Nullable String targetRuntime;
+    private final @Nullable String introspectedColumnImpl;
 
-    private String beginningDelimiter = "\""; //$NON-NLS-1$
-
-    private String endingDelimiter = "\""; //$NON-NLS-1$
-
-    private @Nullable CommentGeneratorConfiguration commentGeneratorConfiguration;
-
-    private @Nullable CommentGenerator commentGenerator;
-
-    /**
-     * This is timing-dependent. The aggregator should be built before anyone calls it.
-     */
+    // the following are not really configurations, they are used in the code generation phase.
+    // Ultimately, they should be moved out of this class and into the classes executing the generation
+    private final JavaFormatter javaFormatter;
+    private final KotlinFormatter kotlinFormatter;
+    private final XmlFormatter xmlFormatter;
+    private final CommentGenerator commentGenerator;
+    // This is timing-dependent. The aggregator should be built before anyone calls it.
     private @Nullable PluginAggregator pluginAggregator;
 
-    private final List<PluginConfiguration> pluginConfigurations;
 
-    private @Nullable String targetRuntime;
+    protected Context(Builder builder) {
+        super(builder);
+        id = Objects.requireNonNull(builder.id, getString("ValidationError.16")); //$NON-NLS-1$);
+        defaultModelType = Objects.requireNonNull(builder.defaultModelType);
+        tableConfigurations = Collections.unmodifiableList(builder.tableConfigurations);
+        pluginConfigurations = Collections.unmodifiableList(builder.pluginConfigurations);
+        commentGeneratorConfiguration = builder.commentGeneratorConfiguration;
+        jdbcConnectionConfiguration = builder.jdbcConnectionConfiguration;
+        connectionFactoryConfiguration = builder.connectionFactoryConfiguration;
+        sqlMapGeneratorConfiguration = builder.sqlMapGeneratorConfiguration;
+        javaTypeResolverConfiguration = builder.javaTypeResolverConfiguration;
+        introspectedColumnImpl = builder.introspectedColumnImpl;
+        javaModelGeneratorConfiguration = Objects.requireNonNull(builder.javaModelGeneratorConfiguration,
+                getString("ValidationError.8", id)); //$NON-NLS-1$
+        javaClientGeneratorConfiguration = builder.javaClientGeneratorConfiguration;
+        targetRuntime = builder.targetRuntime;
 
-    private @Nullable String introspectedColumnImpl;
+        String property = getProperty(PropertyRegistry.CONTEXT_BEGINNING_DELIMITER);
+        beginningDelimiter = property == null ? Defaults.DEFAULT_BEGINNING_DELIMITER : property;
 
-    private @Nullable Boolean autoDelimitKeywords;
+        property = getProperty(PropertyRegistry.CONTEXT_ENDING_DELIMITER);
+        endingDelimiter = property == null ? Defaults.DEFAULT_ENDING_DELIMITER : property;
 
-    private @Nullable JavaFormatter javaFormatter;
+        property = getProperty(PropertyRegistry.CONTEXT_AUTO_DELIMIT_KEYWORDS);
+        autoDelimitKeywords = isTrue(property);
 
-    private @Nullable KotlinFormatter kotlinFormatter;
-
-    private @Nullable XmlFormatter xmlFormatter;
-
-    public Context(String id,@Nullable ModelType defaultModelType) {
-        this.defaultModelType = Objects.requireNonNullElse(defaultModelType, ModelType.CONDITIONAL);
-        this.id = id;
-
-        tableConfigurations = new ArrayList<>();
-        pluginConfigurations = new ArrayList<>();
-    }
-
-    public void addTableConfiguration(TableConfiguration tc) {
-        tableConfigurations.add(tc);
+        javaFormatter = ObjectFactory.createJavaFormatter(this);
+        kotlinFormatter = ObjectFactory.createKotlinFormatter(this);
+        xmlFormatter = ObjectFactory.createXmlFormatter(this);
+        commentGenerator = ObjectFactory.createCommentGenerator(this);
     }
 
     public Optional<JavaClientGeneratorConfiguration> getJavaClientGeneratorConfiguration() {
@@ -122,11 +121,6 @@ public class Context extends PropertyHolder {
 
     public Optional<SqlMapGeneratorConfiguration> getSqlMapGeneratorConfiguration() {
         return Optional.ofNullable(sqlMapGeneratorConfiguration);
-    }
-
-    public void addPluginConfiguration(
-            PluginConfiguration pluginConfiguration) {
-        pluginConfigurations.add(pluginConfiguration);
     }
 
     /**
@@ -153,11 +147,7 @@ public class Context extends PropertyHolder {
             connectionFactoryConfiguration.validate(errors);
         }
 
-        if (javaModelGeneratorConfiguration == null) {
-            errors.add(getString("ValidationError.8", id)); //$NON-NLS-1$
-        } else {
-            javaModelGeneratorConfiguration.validate(errors, id);
-        }
+        javaModelGeneratorConfiguration.validate(errors, id);
 
         if (javaClientGeneratorConfiguration != null) {
             javaClientGeneratorConfiguration.validate(errors, id);
@@ -197,26 +187,6 @@ public class Context extends PropertyHolder {
         return id;
     }
 
-    public void setJavaClientGeneratorConfiguration(JavaClientGeneratorConfiguration javaClientGeneratorConfiguration) {
-        this.javaClientGeneratorConfiguration = javaClientGeneratorConfiguration;
-    }
-
-    public void setJavaModelGeneratorConfiguration(JavaModelGeneratorConfiguration javaModelGeneratorConfiguration) {
-        this.javaModelGeneratorConfiguration = javaModelGeneratorConfiguration;
-    }
-
-    public void setJavaTypeResolverConfiguration(JavaTypeResolverConfiguration javaTypeResolverConfiguration) {
-        this.javaTypeResolverConfiguration = javaTypeResolverConfiguration;
-    }
-
-    public void setJdbcConnectionConfiguration(JDBCConnectionConfiguration jdbcConnectionConfiguration) {
-        this.jdbcConnectionConfiguration = jdbcConnectionConfiguration;
-    }
-
-    public void setSqlMapGeneratorConfiguration(SqlMapGeneratorConfiguration sqlMapGeneratorConfiguration) {
-        this.sqlMapGeneratorConfiguration = sqlMapGeneratorConfiguration;
-    }
-
     public ModelType getDefaultModelType() {
         return defaultModelType;
     }
@@ -229,50 +199,24 @@ public class Context extends PropertyHolder {
         return endingDelimiter;
     }
 
-    @Override
-    public void addProperty(Property property) {
-        super.addProperty(property);
-
-        if (PropertyRegistry.CONTEXT_BEGINNING_DELIMITER.equals(property.name())) {
-            beginningDelimiter = property.value();
-        } else if (PropertyRegistry.CONTEXT_ENDING_DELIMITER.equals(property.name())) {
-            endingDelimiter = property.value();
-        } else if (PropertyRegistry.CONTEXT_AUTO_DELIMIT_KEYWORDS.equals(property.name())
-                && stringHasValue(property.value())) {
-            autoDelimitKeywords = isTrue(property.value());
-        }
-    }
-
     public CommentGenerator getCommentGenerator() {
-        commentGenerator = Objects.requireNonNullElseGet(commentGenerator,
-                () -> ObjectFactory.createCommentGenerator(this));
         return commentGenerator;
     }
 
     public JavaFormatter getJavaFormatter() {
-        javaFormatter = Objects.requireNonNullElseGet(javaFormatter,
-                () -> ObjectFactory.createJavaFormatter(this));
         return javaFormatter;
     }
 
     public KotlinFormatter getKotlinFormatter() {
-        kotlinFormatter = Objects.requireNonNullElseGet(kotlinFormatter,
-                () -> ObjectFactory.createKotlinFormatter(this));
         return kotlinFormatter;
     }
 
     public XmlFormatter getXmlFormatter() {
-        xmlFormatter = Objects.requireNonNullElseGet(xmlFormatter,
-                () -> ObjectFactory.createXmlFormatter(this));
         return xmlFormatter;
     }
 
     public Optional<CommentGeneratorConfiguration> getCommentGeneratorConfiguration() {
         return Optional.ofNullable(commentGeneratorConfiguration);
-    }
-
-    public void setCommentGeneratorConfiguration(CommentGeneratorConfiguration commentGeneratorConfiguration) {
-        this.commentGeneratorConfiguration = commentGeneratorConfiguration;
     }
 
     public Plugin getPlugins() {
@@ -283,16 +227,8 @@ public class Context extends PropertyHolder {
         return Optional.ofNullable(targetRuntime);
     }
 
-    public void setTargetRuntime(String targetRuntime) {
-        this.targetRuntime = targetRuntime;
-    }
-
     public Optional<String> getIntrospectedColumnImpl() {
         return Optional.ofNullable(introspectedColumnImpl);
-    }
-
-    public void setIntrospectedColumnImpl(String introspectedColumnImpl) {
-        this.introspectedColumnImpl = introspectedColumnImpl;
     }
 
     // methods related to code generation.
@@ -410,12 +346,9 @@ public class Context extends PropertyHolder {
         return steps;
     }
 
-    public void generateFiles(ProgressCallback callback,
-            List<GeneratedJavaFile> generatedJavaFiles,
-            List<GeneratedXmlFile> generatedXmlFiles,
-            List<GeneratedKotlinFile> generatedKotlinFiles,
-            List<GeneratedFile> otherGeneratedFiles,
-            List<String> warnings)
+    public void generateFiles(ProgressCallback callback, List<GeneratedJavaFile> generatedJavaFiles,
+                              List<GeneratedXmlFile> generatedXmlFiles, List<GeneratedKotlinFile> generatedKotlinFiles,
+                              List<GeneratedFile> otherGeneratedFiles, List<String> warnings)
             throws InterruptedException {
 
         pluginAggregator = new PluginAggregator();
@@ -503,7 +436,100 @@ public class Context extends PropertyHolder {
         return Optional.ofNullable(connectionFactoryConfiguration);
     }
 
-    public void setConnectionFactoryConfiguration(ConnectionFactoryConfiguration connectionFactoryConfiguration) {
-        this.connectionFactoryConfiguration = connectionFactoryConfiguration;
+    public static class Builder extends AbstractBuilder<Builder> {
+        private @Nullable String id;
+        private @Nullable ModelType defaultModelType;
+        private @Nullable String targetRuntime;
+        private @Nullable String introspectedColumnImpl;
+        private final List<PluginConfiguration> pluginConfigurations = new ArrayList<>();
+        private final ArrayList<TableConfiguration> tableConfigurations = new ArrayList<>();
+        private @Nullable CommentGeneratorConfiguration commentGeneratorConfiguration;
+        private @Nullable JDBCConnectionConfiguration jdbcConnectionConfiguration;
+        private @Nullable ConnectionFactoryConfiguration connectionFactoryConfiguration;
+        private @Nullable SqlMapGeneratorConfiguration sqlMapGeneratorConfiguration;
+        private @Nullable JavaTypeResolverConfiguration javaTypeResolverConfiguration;
+        private @Nullable JavaModelGeneratorConfiguration javaModelGeneratorConfiguration;
+        private @Nullable JavaClientGeneratorConfiguration javaClientGeneratorConfiguration;
+
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        public Context build() {
+            return new Context(this);
+        }
+
+        public Builder withId(@Nullable String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder withDefaultModelType(ModelType defaultModelType) {
+            this.defaultModelType = defaultModelType;
+            return this;
+        }
+
+        public Builder withTargetRuntime(@Nullable String targetRuntime) {
+            this.targetRuntime = targetRuntime;
+            return this;
+        }
+
+        public Builder withIntrospectedColumnImpl(@Nullable String introspectedColumnImpl) {
+            this.introspectedColumnImpl = introspectedColumnImpl;
+            return this;
+        }
+
+        @SuppressWarnings("UnusedReturnValue")
+        public Builder withPluginConfiguration(PluginConfiguration pluginConfiguration) {
+            pluginConfigurations.add(pluginConfiguration);
+            return this;
+        }
+
+        @SuppressWarnings("UnusedReturnValue")
+        public Builder withTableConfiguration(TableConfiguration tableConfiguration) {
+            tableConfigurations.add(tableConfiguration);
+            return this;
+        }
+
+        @SuppressWarnings("UnusedReturnValue")
+        public Builder withCommentGeneratorConfiguration(CommentGeneratorConfiguration commentGeneratorConfiguration) {
+            this.commentGeneratorConfiguration = commentGeneratorConfiguration;
+            return this;
+        }
+
+        @SuppressWarnings("UnusedReturnValue")
+        public Builder withJdbcConnectionConfiguration(JDBCConnectionConfiguration jdbcConnectionConfiguration) {
+            this.jdbcConnectionConfiguration = jdbcConnectionConfiguration;
+            return this;
+        }
+
+        @SuppressWarnings("UnusedReturnValue")
+        public Builder withSqlMapGeneratorConfiguration(SqlMapGeneratorConfiguration sqlMapGeneratorConfiguration) {
+            this.sqlMapGeneratorConfiguration = sqlMapGeneratorConfiguration;
+            return this;
+        }
+
+        public Builder withConnectionFactoryConfiguration(ConnectionFactoryConfiguration connectionFactoryConfiguration) {
+            this.connectionFactoryConfiguration = connectionFactoryConfiguration;
+            return this;
+        }
+
+        @SuppressWarnings("UnusedReturnValue")
+        public Builder withJavaTypeResolverConfiguration(JavaTypeResolverConfiguration javaTypeResolverConfiguration) {
+            this.javaTypeResolverConfiguration = javaTypeResolverConfiguration;
+            return this;
+        }
+
+        public Builder withJavaModelGeneratorConfiguration(JavaModelGeneratorConfiguration javaModelGeneratorConfiguration) {
+            this.javaModelGeneratorConfiguration = javaModelGeneratorConfiguration;
+            return this;
+        }
+
+        @SuppressWarnings("UnusedReturnValue")
+        public Builder withJavaClientGeneratorConfiguration(JavaClientGeneratorConfiguration javaClientGeneratorConfiguration) {
+            this.javaClientGeneratorConfiguration = javaClientGeneratorConfiguration;
+            return this;
+        }
     }
 }

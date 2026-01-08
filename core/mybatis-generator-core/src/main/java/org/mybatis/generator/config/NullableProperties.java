@@ -28,18 +28,14 @@ public class NullableProperties {
     private final Map<String, String> properties = new HashMap<>();
 
     public @Nullable String getProperty(String key) {
-        if (properties.containsKey(key)) {
-            return properties.get(key);
-        } else {
-            return null;
-        }
+        return properties.getOrDefault(key, null);
     }
 
     /**
      * Stores the value only if the value is non-null.
      *
-     * @param key
-     * @param value
+     * @param key property key or name
+     * @param value property value
      */
     public void put(String key, @Nullable String value) {
         if (value != null) {

@@ -67,6 +67,7 @@ public class IgnoredColumnPattern {
             return this;
         }
 
+        @SuppressWarnings("UnusedReturnValue")
         public Builder addException(IgnoredColumnException exception) {
             exceptions.add(exception);
             return this;

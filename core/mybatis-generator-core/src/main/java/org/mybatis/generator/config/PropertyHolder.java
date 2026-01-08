@@ -23,12 +23,9 @@ import org.jspecify.annotations.Nullable;
 public abstract class PropertyHolder {
     private final Properties properties;
 
-    protected PropertyHolder() {
+    protected PropertyHolder(AbstractBuilder<?> builder) {
         properties = new Properties();
-    }
-
-    public void addProperty(Property property) {
-        properties.setProperty(property.name(), property.value());
+        properties.putAll(builder.properties);
     }
 
     public @Nullable String getProperty(String name) {
@@ -39,7 +36,20 @@ public abstract class PropertyHolder {
         return properties;
     }
 
-    public void addProperties(Map<Object, Object> properties) {
-        this.properties.putAll(properties);
+    public abstract static class AbstractBuilder<T extends AbstractBuilder<T>> {
+        private final Properties properties = new Properties();
+
+        @SuppressWarnings("UnusedReturnValue")
+        public T withProperty(Property property) {
+            properties.setProperty(property.name(), property.value());
+            return getThis();
+        }
+
+        public T withProperties(Map<Object, Object> properties) {
+            this.properties.putAll(properties);
+            return getThis();
+        }
+
+        protected abstract T getThis();
     }
 }

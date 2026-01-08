@@ -20,13 +20,10 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.List;
 
-import org.jspecify.annotations.Nullable;
-import org.mybatis.generator.internal.GenericConnectionFactory;
-
 public class ConnectionFactoryConfiguration extends TypedPropertyHolder {
 
-    public ConnectionFactoryConfiguration(@Nullable String configurationType) {
-        super(configurationType);
+    protected ConnectionFactoryConfiguration(Builder builder) {
+        super(builder);
     }
 
     public void validate(List<String> errors) {
@@ -47,9 +44,20 @@ public class ConnectionFactoryConfiguration extends TypedPropertyHolder {
 
     public String getImplementationType() {
         if (configurationType == null || "DEFAULT".equals(configurationType)) { //$NON-NLS-1$
-            return GenericConnectionFactory.class.getName();
+            return Defaults.DEFAULT_GENERIC_CONNECTION_FACTORY;
         } else {
             return configurationType;
+        }
+    }
+
+    public static class Builder extends TypedBuilder<Builder> {
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        public ConnectionFactoryConfiguration build() {
+            return new ConnectionFactoryConfiguration(this);
         }
     }
 }

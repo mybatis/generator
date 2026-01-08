@@ -15,13 +15,14 @@
  */
 package org.mybatis.generator.config;
 
-import org.jspecify.annotations.Nullable;
-
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+
+import org.jspecify.annotations.Nullable;
 
 public class JDBCConnectionConfiguration extends PropertyHolder {
     private final String driverClass;
@@ -29,12 +30,12 @@ public class JDBCConnectionConfiguration extends PropertyHolder {
     private final @Nullable String userId;
     private final @Nullable String password;
 
-    public JDBCConnectionConfiguration(String driverClass, String connectionURL,
-                                       @Nullable String userId, @Nullable String password) {
-        this.driverClass = driverClass;
-        this.connectionURL = connectionURL;
-        this.userId = userId;
-        this.password = password;
+    protected JDBCConnectionConfiguration(Builder builder) {
+        super(builder);
+        this.driverClass = Objects.requireNonNull(builder.driverClass);
+        this.connectionURL = Objects.requireNonNull(builder.connectionURL);
+        this.userId = builder.userId;
+        this.password = builder.password;
     }
 
     public String getConnectionURL() {
@@ -60,6 +61,41 @@ public class JDBCConnectionConfiguration extends PropertyHolder {
 
         if (!stringHasValue(connectionURL)) {
             errors.add(getString("ValidationError.5")); //$NON-NLS-1$
+        }
+    }
+
+    public static class Builder extends AbstractBuilder<Builder> {
+        private @Nullable String driverClass;
+        private @Nullable String connectionURL;
+        private @Nullable String userId;
+        private @Nullable String password;
+
+        public Builder withDriverClass(@Nullable String driverClass) {
+            this.driverClass = driverClass;
+            return this;
+        }
+
+        public Builder withConnectionURL(@Nullable String connectionURL) {
+            this.connectionURL = connectionURL;
+            return this;
+        }
+        public Builder withUserId(@Nullable String userId) {
+            this.userId = userId;
+            return this;
+        }
+
+        public Builder withPassword(@Nullable String password) {
+            this.password = password;
+            return this;
+        }
+
+        public JDBCConnectionConfiguration build() {
+            return new JDBCConnectionConfiguration(this);
+        }
+
+        @Override
+        protected Builder getThis() {
+            return this;
         }
     }
 }

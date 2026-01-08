@@ -155,11 +155,11 @@ public abstract class IntrospectedTable {
         return Objects.requireNonNull(fullyQualifiedTable);
     }
 
-    public String getSelectByExampleQueryId() {
+    public Optional<String> getSelectByExampleQueryId() {
         return getTableConfiguration().getSelectByExampleQueryId();
     }
 
-    public String getSelectByPrimaryKeyQueryId() {
+    public Optional<String> getSelectByPrimaryKeyQueryId() {
         return getTableConfiguration().getSelectByPrimaryKeyQueryId();
     }
 

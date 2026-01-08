@@ -20,6 +20,7 @@ import static org.mybatis.generator.internal.util.StringUtility.isTrue;
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +40,9 @@ public class TableConfiguration extends PropertyHolder {
     private final boolean countByExampleStatementEnabled;
     private final boolean updateByExampleStatementEnabled;
     private final List<ColumnOverride> columnOverrides;
-    private final Map<IgnoredColumn, Boolean> ignoredColumns;  // TODO Why is this a Map and not a Set?
+    // this is a Map for validation purposes. Initially, all items will be FALSE. When accessed, an item will
+    // be made TRUE. This allows us to generate warning for columns configured to be ignored but not found.
+    private final Map<IgnoredColumn, Boolean> ignoredColumns;
     private final @Nullable GeneratedKey generatedKey;
     private final @Nullable String selectByPrimaryKeyQueryId;
     private final @Nullable String selectByExampleQueryId;
@@ -82,12 +85,12 @@ public class TableConfiguration extends PropertyHolder {
         selectByExampleQueryId = builder.selectByExampleQueryId;
         mapperName = builder.mapperName;
         sqlProviderName = builder.sqlProviderName;
-        columnOverrides = builder.columnOverrides; // TODO Immutable?
-        ignoredColumns = builder.ignoredColumns; // TODO Immutable?
+        columnOverrides = Collections.unmodifiableList(builder.columnOverrides);
+        ignoredColumns = builder.ignoredColumns;
         generatedKey = builder.generatedKey;
         domainObjectRenamingRule = builder.domainObjectRenamingRule;
         columnRenamingRule = builder.columnRenamingRule;
-        ignoredColumnPatterns = builder.ignoredColumnPatterns; // TODO Immutable?
+        ignoredColumnPatterns = Collections.unmodifiableList(builder.ignoredColumnPatterns);
     }
 
     public boolean isDeleteByPrimaryKeyStatementEnabled() {
@@ -107,8 +110,7 @@ public class TableConfiguration extends PropertyHolder {
     }
 
     public boolean isColumnIgnored(String columnName) {
-        for (Map.Entry<IgnoredColumn, Boolean> entry : ignoredColumns
-                .entrySet()) {
+        for (Map.Entry<IgnoredColumn, Boolean> entry : ignoredColumns.entrySet()) {
             if (entry.getKey().matches(columnName)) {
                 entry.setValue(Boolean.TRUE);
                 return true;
@@ -155,32 +157,32 @@ public class TableConfiguration extends PropertyHolder {
      *            the column name
      * @return the column override (if any) related to this column
      */
-    public ColumnOverride getColumnOverride(String columnName) {
+    public Optional<ColumnOverride> getColumnOverride(String columnName) {
         for (ColumnOverride co : columnOverrides) {
             if (co.isColumnNameDelimited()) {
                 if (columnName.equals(co.getColumnName())) {
-                    return co;
+                    return Optional.of(co);
                 }
             } else {
                 if (columnName.equalsIgnoreCase(co.getColumnName())) {
-                    return co;
+                    return Optional.of(co);
                 }
             }
         }
 
-        return null;
+        return Optional.empty();
     }
 
     public Optional<GeneratedKey> getGeneratedKey() {
         return Optional.ofNullable(generatedKey);
     }
 
-    public String getSelectByExampleQueryId() {
-        return selectByExampleQueryId;
+    public Optional<String> getSelectByExampleQueryId() {
+        return Optional.ofNullable(selectByExampleQueryId);
     }
 
-    public String getSelectByPrimaryKeyQueryId() {
-        return selectByPrimaryKeyQueryId;
+    public Optional<String> getSelectByPrimaryKeyQueryId() {
+        return Optional.ofNullable(selectByPrimaryKeyQueryId);
     }
 
     public boolean isDeleteByExampleStatementEnabled() {
@@ -197,19 +199,19 @@ public class TableConfiguration extends PropertyHolder {
                 || updateByExampleStatementEnabled;
     }
 
-    public Optional<String> getAlias() {
-        return Optional.ofNullable(alias);
+    public @Nullable String getAlias() {
+        return alias;
     }
 
-    public String getCatalog() {
+    public @Nullable String getCatalog() {
         return catalog;
     }
 
-    public String getDomainObjectName() {
+    public @Nullable String getDomainObjectName() {
         return domainObjectName;
     }
 
-    public String getSchema() {
+    public @Nullable String getSchema() {
         return schema;
     }
 
@@ -233,7 +235,7 @@ public class TableConfiguration extends PropertyHolder {
         List<String> answer = new ArrayList<>();
 
         for (Map.Entry<IgnoredColumn, Boolean> entry : ignoredColumns.entrySet()) {
-            if (Boolean.FALSE.equals(entry.getValue())) {
+            if (!entry.getValue()) {
                 answer.add(entry.getKey().getColumnName());
             }
         }
@@ -314,7 +316,7 @@ public class TableConfiguration extends PropertyHolder {
         }
     }
 
-    public DomainObjectRenamingRule getDomainObjectRenamingRule() {
+    public @Nullable DomainObjectRenamingRule getDomainObjectRenamingRule() {
         return domainObjectRenamingRule;
     }
 
@@ -326,19 +328,19 @@ public class TableConfiguration extends PropertyHolder {
         return isAllColumnDelimitingEnabled;
     }
 
-    public String getMapperName() {
+    public @Nullable String getMapperName() {
         return mapperName;
     }
 
-    public String getSqlProviderName() {
+    public @Nullable String getSqlProviderName() {
         return sqlProviderName;
     }
 
-    public String getDynamicSqlSupportClassName() {
+    public @Nullable String getDynamicSqlSupportClassName() {
         return getProperty(PropertyRegistry.TABLE_DYNAMIC_SQL_SUPPORT_CLASS_NAME);
     }
 
-    public String getDynamicSqlTableObjectName() {
+    public @Nullable String getDynamicSqlTableObjectName() {
         return getProperty(PropertyRegistry.TABLE_DYNAMIC_SQL_TABLE_OBJECT_NAME);
     }
 

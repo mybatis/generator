@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@ package org.mybatis.generator.internal.db;
 
 import static org.mybatis.generator.internal.util.StringUtility.composeFullyQualifiedTableName;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * This class holds the actual catalog, schema, and table name returned from the
  * database introspection.
@@ -26,23 +28,22 @@ import static org.mybatis.generator.internal.util.StringUtility.composeFullyQual
 public class ActualTableName {
 
     private final String tableName;
-    private final String catalog;
-    private final String schema;
+    private final @Nullable String catalog;
+    private final @Nullable String schema;
     private final String fullName;
 
-    public ActualTableName(String catalog, String schema, String tableName) {
+    public ActualTableName(@Nullable String catalog, @Nullable String schema, String tableName) {
         this.catalog = catalog;
         this.schema = schema;
         this.tableName = tableName;
-        fullName = composeFullyQualifiedTableName(catalog,
-                schema, tableName, '.');
+        fullName = composeFullyQualifiedTableName(catalog, schema, tableName, '.');
     }
 
-    public String getCatalog() {
+    public @Nullable String getCatalog() {
         return catalog;
     }
 
-    public String getSchema() {
+    public @Nullable String getSchema() {
         return schema;
     }
 

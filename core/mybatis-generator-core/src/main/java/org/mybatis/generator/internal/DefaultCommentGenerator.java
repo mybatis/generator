@@ -24,6 +24,7 @@ import java.util.Date;
 import java.util.Properties;
 import java.util.Set;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
@@ -54,7 +55,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
     /** If suppressAllComments is true, this option is ignored. */
     private boolean addRemarkComments;
 
-    private SimpleDateFormat dateFormat;
+    private @Nullable SimpleDateFormat dateFormat;
 
     private FullyQualifiedJavaType generatedImport =
             new FullyQualifiedJavaType("jakarta.annotation.Generated"); //$NON-NLS-1$
@@ -151,7 +152,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
      *
      * @return a string representing the current timestamp, or null
      */
-    protected String getDateString() {
+    protected @Nullable String getDateString() {
         if (suppressDate) {
             return null;
         } else if (dateFormat != null) {

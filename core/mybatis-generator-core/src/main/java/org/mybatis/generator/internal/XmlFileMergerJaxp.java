@@ -173,13 +173,11 @@ public class XmlFileMergerJaxp {
     }
 
     private static String prettyPrint(Document document) throws ShellException {
-        DomWriter dw = new DomWriter();
-        return dw.toString(document);
+        return new DomWriter(document).getFormattedDocument();
     }
 
     private static boolean isGeneratedNode(Node node) {
-        return node != null
-                && node.getNodeType() == Node.ELEMENT_NODE
+        return node.getNodeType() == Node.ELEMENT_NODE
                 && (isOldFormatNode(node) || isNewFormatNode(node));
     }
 
@@ -211,7 +209,7 @@ public class XmlFileMergerJaxp {
     private static boolean isWhiteSpace(Node node) {
         boolean rc = false;
 
-        if (node != null && node.getNodeType() == Node.TEXT_NODE) {
+        if (node.getNodeType() == Node.TEXT_NODE) {
             Text tn = (Text) node;
             if (tn.getData().trim().isEmpty()) {
                 rc = true;

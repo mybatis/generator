@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -46,12 +46,13 @@ public class SelectByExampleWithoutBLOBsElementGenerator extends AbstractXmlElem
         answer.addElement(ifElement);
 
         StringBuilder sb = new StringBuilder();
-        if (stringHasValue(introspectedTable.getSelectByExampleQueryId())) {
+        introspectedTable.getSelectByExampleQueryId().ifPresent(s -> {
             sb.append('\'');
-            sb.append(introspectedTable.getSelectByExampleQueryId());
+            sb.append(s);
             sb.append("' as QUERYID,"); //$NON-NLS-1$
             answer.addElement(new TextElement(sb.toString()));
-        }
+        });
+
         answer.addElement(getBaseColumnListElement());
 
         sb.setLength(0);

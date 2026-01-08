@@ -326,7 +326,7 @@ public class FullyQualifiedTable {
          * @param runtimeCatalog the runtime catalog
          * @return this builder
          */
-        public Builder withRuntimeCatalog(String runtimeCatalog) {
+        public Builder withRuntimeCatalog(@Nullable String runtimeCatalog) {
             this.runtimeCatalog = runtimeCatalog;
             return this;
         }
@@ -340,7 +340,7 @@ public class FullyQualifiedTable {
          * @param runtimeSchema the runtime schema
          * @return this builder
          */
-        public Builder withRuntimeSchema(String runtimeSchema) {
+        public Builder withRuntimeSchema(@Nullable String runtimeSchema) {
             this.runtimeSchema = runtimeSchema;
             return this;
         }
@@ -355,7 +355,7 @@ public class FullyQualifiedTable {
          * @param runtimeTableName the runtime table name
          * @return this builder
          */
-        public Builder withRuntimeTableName(String runtimeTableName) {
+        public Builder withRuntimeTableName(@Nullable String runtimeTableName) {
             this.runtimeTableName = runtimeTableName;
             return this;
         }
@@ -368,7 +368,7 @@ public class FullyQualifiedTable {
          * @param domainObjectName the domain object name
          * @return this builder
          */
-        public Builder withDomainObjectName(String domainObjectName) {
+        public Builder withDomainObjectName(@Nullable String domainObjectName) {
             this.domainObjectName = domainObjectName;
             return this;
         }
@@ -423,7 +423,7 @@ public class FullyQualifiedTable {
          * @param domainObjectRenamingRule the domain object renaming rule
          * @return this builder
          */
-        public Builder withDomainObjectRenamingRule(DomainObjectRenamingRule domainObjectRenamingRule) {
+        public Builder withDomainObjectRenamingRule(@Nullable DomainObjectRenamingRule domainObjectRenamingRule) {
             this.domainObjectRenamingRule = domainObjectRenamingRule;
             return this;
         }

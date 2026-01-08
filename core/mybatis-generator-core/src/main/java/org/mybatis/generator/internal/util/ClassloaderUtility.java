@@ -48,26 +48,23 @@ public class ClassloaderUtility {
         List<URL> urls = new ArrayList<>();
         Path file;
 
-        if (entries != null) {
-            for (String classPathEntry : entries) {
-                file = Path.of(classPathEntry);
-                if (Files.notExists(file)) {
-                    LOG.warn(getString("Warning.31", classPathEntry)); //$NON-NLS-1$
-                    continue;
-                }
+        for (String classPathEntry : entries) {
+            file = Path.of(classPathEntry);
+            if (Files.notExists(file)) {
+                LOG.warn(getString("Warning.31", classPathEntry)); //$NON-NLS-1$
+                continue;
+            }
 
-                try {
-                    urls.add(file.toUri().toURL());
-                } catch (MalformedURLException e) {
-                    // this shouldn't happen, but just in case...
-                    throw new RuntimeException(getString(
-                            "RuntimeError.9", classPathEntry)); //$NON-NLS-1$
-                }
+            try {
+                urls.add(file.toUri().toURL());
+            } catch (MalformedURLException e) {
+                // this shouldn't happen, but just in case...
+                throw new RuntimeException(getString("RuntimeError.9", classPathEntry)); //$NON-NLS-1$
             }
         }
 
         ClassLoader parent = Thread.currentThread().getContextClassLoader();
 
-        return new URLClassLoader(urls.toArray(new URL[urls.size()]), parent);
+        return new URLClassLoader(urls.toArray(new URL[0]), parent);
     }
 }

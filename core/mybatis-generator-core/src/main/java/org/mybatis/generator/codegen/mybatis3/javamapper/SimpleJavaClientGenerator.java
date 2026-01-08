@@ -84,10 +84,7 @@ public class SimpleJavaClientGenerator extends AbstractJavaClientGenerator {
             answer.add(interfaze);
         }
 
-        List<CompilationUnit> extraCompilationUnits = getExtraCompilationUnits();
-        if (extraCompilationUnits != null) {
-            answer.addAll(extraCompilationUnits);
-        }
+        answer.addAll(getExtraCompilationUnits());
 
         return answer;
     }

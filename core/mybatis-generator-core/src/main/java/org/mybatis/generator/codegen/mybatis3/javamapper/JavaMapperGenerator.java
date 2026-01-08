@@ -102,10 +102,7 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
             answer.add(interfaze);
         }
 
-        List<CompilationUnit> extraCompilationUnits = getExtraCompilationUnits();
-        if (extraCompilationUnits != null) {
-            answer.addAll(extraCompilationUnits);
-        }
+        answer.addAll(getExtraCompilationUnits());
 
         return answer;
     }
@@ -209,7 +206,7 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
     }
 
     protected void initializeAndExecuteGenerator(AbstractJavaMapperMethodGenerator methodGenerator,
-            Interface interfaze) {
+                                                 Interface interfaze) {
         methodGenerator.setContext(context);
         methodGenerator.setIntrospectedTable(introspectedTable);
         methodGenerator.setProgressCallback(progressCallback);

@@ -15,6 +15,7 @@
  */
 package org.mybatis.generator.codegen;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.xml.Document;
 
 public abstract class AbstractXmlGenerator extends AbstractGenerator {
@@ -22,7 +23,7 @@ public abstract class AbstractXmlGenerator extends AbstractGenerator {
         super(builder);
     }
 
-    public abstract Document getDocument();
+    public abstract @Nullable Document getDocument();
 
     public abstract static class AbstractXmlGeneratorBuilder<T extends AbstractXmlGeneratorBuilder<T>>
             extends AbstractGeneratorBuilder<T> {

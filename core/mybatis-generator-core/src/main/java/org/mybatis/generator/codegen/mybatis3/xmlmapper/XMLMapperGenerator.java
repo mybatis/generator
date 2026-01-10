@@ -17,6 +17,7 @@ package org.mybatis.generator.codegen.mybatis3.xmlmapper;
 
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.FullyQualifiedTable;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.Document;
@@ -235,7 +236,7 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
     }
 
     @Override
-    public Document getDocument() {
+    public @Nullable Document getDocument() {
         Document document = new Document(XmlConstants.MYBATIS3_MAPPER_PUBLIC_ID,
                 XmlConstants.MYBATIS3_MAPPER_SYSTEM_ID, getSqlMapElement());
 

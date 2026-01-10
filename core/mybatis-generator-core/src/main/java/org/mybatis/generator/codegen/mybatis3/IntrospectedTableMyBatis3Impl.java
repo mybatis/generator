@@ -239,12 +239,14 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
 
         if (xmlMapperGenerator != null) {
             Document document = xmlMapperGenerator.getDocument();
-            GeneratedXmlFile gxf = new GeneratedXmlFile(document,
-                    getMyBatis3XmlMapperFileName(), getMyBatis3XmlMapperPackage(),
-                    getContext().getSqlMapGeneratorConfiguration().orElseThrow().getTargetProject(),
-                    true, getContext().getXmlFormatter());
-            if (getContext().getPlugins().sqlMapGenerated(gxf, this)) {
-                answer.add(gxf);
+            if (document != null) {
+                GeneratedXmlFile gxf = new GeneratedXmlFile(document,
+                        getMyBatis3XmlMapperFileName(), getMyBatis3XmlMapperPackage(),
+                        getContext().getSqlMapGeneratorConfiguration().orElseThrow().getTargetProject(),
+                        true, getContext().getXmlFormatter());
+                if (getContext().getPlugins().sqlMapGenerated(gxf, this)) {
+                    answer.add(gxf);
+                }
             }
         }
 

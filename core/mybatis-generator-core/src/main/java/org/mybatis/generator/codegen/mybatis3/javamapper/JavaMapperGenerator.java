@@ -221,6 +221,14 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
 
     @Override
     public Optional<AbstractXmlGenerator> getMatchedXMLGenerator() {
-        return Optional.of(new XMLMapperGenerator());
+        // TODO - this has duplicated code from above
+        var generator = new XMLMapperGenerator.Builder()
+                .withContext(context)
+                .withIntrospectedTable(introspectedTable)
+                .withProgressCallback(progressCallback)
+                .withWarnings(warnings)
+                .build();
+
+        return Optional.of(generator);
     }
 }

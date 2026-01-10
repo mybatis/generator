@@ -139,6 +139,13 @@ public class SimpleJavaClientGenerator extends AbstractJavaClientGenerator {
 
     @Override
     public Optional<AbstractXmlGenerator> getMatchedXMLGenerator() {
-        return Optional.of(new SimpleXMLMapperGenerator());
+        // TODO - this has duplicated code from above
+        var generator = new SimpleXMLMapperGenerator.Builder()
+                .withContext(context)
+                .withIntrospectedTable(introspectedTable)
+                .withProgressCallback(progressCallback)
+                .withWarnings(warnings)
+                .build();
+        return Optional.of(generator);
     }
 }

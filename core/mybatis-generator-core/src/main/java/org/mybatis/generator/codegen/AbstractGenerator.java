@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,7 +16,9 @@
 package org.mybatis.generator.codegen;
 
 import java.util.List;
+import java.util.Objects;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.config.Context;
@@ -27,8 +29,16 @@ public abstract class AbstractGenerator {
     protected List<String> warnings;
     protected ProgressCallback progressCallback;
 
+    // TODO - remove once we change the build method for JavaClientGenerators
     protected AbstractGenerator() {
         super();
+    }
+
+    protected AbstractGenerator(AbstractGeneratorBuilder<?> builder) {
+        this.context = Objects.requireNonNull(builder.context);
+        this.introspectedTable = Objects.requireNonNull(builder.introspectedTable);
+        this.warnings = Objects.requireNonNull(builder.warnings);
+        this.progressCallback = Objects.requireNonNull(builder.progressCallback);
     }
 
     public void setContext(Context context) {
@@ -45,5 +55,34 @@ public abstract class AbstractGenerator {
 
     public void setProgressCallback(ProgressCallback progressCallback) {
         this.progressCallback = progressCallback;
+    }
+
+    public abstract static class AbstractGeneratorBuilder<T extends AbstractGeneratorBuilder<T>> {
+        private @Nullable Context context;
+        private @Nullable IntrospectedTable introspectedTable;
+        private @Nullable List<String> warnings;
+        private @Nullable ProgressCallback progressCallback;
+
+        public T withContext(Context context) {
+            this.context = context;
+            return getThis();
+        }
+
+        public T withIntrospectedTable(IntrospectedTable introspectedTable) {
+            this.introspectedTable = introspectedTable;
+            return getThis();
+        }
+
+        public T withWarnings(List<String> warnings) {
+            this.warnings = warnings;
+            return getThis();
+        }
+
+        public T withProgressCallback(ProgressCallback progressCallback) {
+            this.progressCallback = progressCallback;
+            return getThis();
+        }
+
+        protected abstract T getThis();
     }
 }

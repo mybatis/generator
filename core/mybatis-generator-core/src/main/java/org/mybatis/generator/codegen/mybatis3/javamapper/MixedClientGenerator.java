@@ -17,7 +17,6 @@ package org.mybatis.generator.codegen.mybatis3.javamapper;
 
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.codegen.AbstractXmlGenerator;
-import org.mybatis.generator.codegen.mybatis3.javamapper.elements.AbstractJavaMapperMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated.AnnotatedDeleteByPrimaryKeyMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated.AnnotatedInsertMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated.AnnotatedSelectByPrimaryKeyMethodGenerator;
@@ -83,6 +82,12 @@ public class MixedClientGenerator extends JavaMapperGenerator {
 
     @Override
     public Optional<AbstractXmlGenerator> getMatchedXMLGenerator() {
-        return Optional.of(new MixedMapperGenerator());
+        var generator = new MixedMapperGenerator.Builder()
+                .withContext(context)
+                .withIntrospectedTable(introspectedTable)
+                .withProgressCallback(progressCallback)
+                .withWarnings(warnings)
+                .build();
+        return Optional.of(generator);
     }
 }

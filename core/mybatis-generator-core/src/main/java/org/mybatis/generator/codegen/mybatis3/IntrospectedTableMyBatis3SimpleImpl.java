@@ -46,13 +46,16 @@ public class IntrospectedTableMyBatis3SimpleImpl extends IntrospectedTableMyBati
                                                ProgressCallback progressCallback) {
         if (javaClientGenerator == null) {
             if (getContext().getSqlMapGeneratorConfiguration().isPresent()) {
-                xmlMapperGenerator = new SimpleXMLMapperGenerator();
+                xmlMapperGenerator = new SimpleXMLMapperGenerator.Builder()
+                        .withContext(getContext())
+                        .withIntrospectedTable(this)
+                        .withProgressCallback(progressCallback)
+                        .withWarnings(warnings)
+                        .build();
             }
         } else {
             xmlMapperGenerator = javaClientGenerator.getMatchedXMLGenerator().orElse(null);
         }
-
-        initializeAbstractGenerator(xmlMapperGenerator, warnings, progressCallback);
     }
 
     @Override

@@ -33,8 +33,8 @@ import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.UpdateByPrimary
 
 public class SimpleXMLMapperGenerator extends AbstractXmlGenerator {
 
-    public SimpleXMLMapperGenerator() {
-        super();
+    protected SimpleXMLMapperGenerator(Builder builder) {
+        super(builder);
     }
 
     protected XmlElement getSqlMapElement() {
@@ -116,5 +116,17 @@ public class SimpleXMLMapperGenerator extends AbstractXmlGenerator {
         }
 
         return document;
+    }
+
+    public static class Builder extends AbstractXmlGeneratorBuilder<Builder> {
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        @Override
+        public SimpleXMLMapperGenerator build() {
+            return new SimpleXMLMapperGenerator(this);
+        }
     }
 }

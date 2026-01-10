@@ -78,13 +78,16 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
             ProgressCallback progressCallback) {
         if (javaClientGenerator == null) {
             if (getContext().getSqlMapGeneratorConfiguration().isPresent()) {
-                xmlMapperGenerator = new XMLMapperGenerator();
+                xmlMapperGenerator = new XMLMapperGenerator.Builder()
+                        .withContext(getContext())
+                        .withIntrospectedTable(this)
+                        .withWarnings(warnings)
+                        .withProgressCallback(progressCallback)
+                        .build();
             }
         } else {
             xmlMapperGenerator = javaClientGenerator.getMatchedXMLGenerator().orElse(null);
         }
-
-        initializeAbstractGenerator(xmlMapperGenerator, warnings, progressCallback);
     }
 
     protected Optional<AbstractJavaClientGenerator> calculateClientGenerators(List<String> warnings,

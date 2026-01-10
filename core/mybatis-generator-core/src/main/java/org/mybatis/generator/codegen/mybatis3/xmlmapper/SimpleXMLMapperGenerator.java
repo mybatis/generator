@@ -58,51 +58,52 @@ public class SimpleXMLMapperGenerator extends AbstractXmlGenerator {
 
     protected void addResultMapElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateBaseResultMap()) {
-            AbstractXmlElementGenerator elementGenerator = new ResultMapWithoutBLOBsElementGenerator(true);
-            initializeAndExecuteGenerator(elementGenerator, parentElement);
+            var builder = new ResultMapWithoutBLOBsElementGenerator.Builder().isSimple(true);
+            initializeAndExecuteGenerator(builder, parentElement);
         }
     }
 
     protected void addSelectByPrimaryKeyElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateSelectByPrimaryKey()) {
-            AbstractXmlElementGenerator elementGenerator = new SimpleSelectByPrimaryKeyElementGenerator();
-            initializeAndExecuteGenerator(elementGenerator, parentElement);
+            var builder = new SimpleSelectByPrimaryKeyElementGenerator.Builder();
+            initializeAndExecuteGenerator(builder, parentElement);
         }
     }
 
     protected void addSelectAllElement(XmlElement parentElement) {
-        AbstractXmlElementGenerator elementGenerator = new SimpleSelectAllElementGenerator();
-        initializeAndExecuteGenerator(elementGenerator, parentElement);
+        var builder = new SimpleSelectAllElementGenerator.Builder();
+        initializeAndExecuteGenerator(builder, parentElement);
     }
 
     protected void addDeleteByPrimaryKeyElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateDeleteByPrimaryKey()) {
-            AbstractXmlElementGenerator elementGenerator = new DeleteByPrimaryKeyElementGenerator(true);
-            initializeAndExecuteGenerator(elementGenerator, parentElement);
+            var builder = new DeleteByPrimaryKeyElementGenerator.Builder().isSimple(true);
+            initializeAndExecuteGenerator(builder, parentElement);
         }
     }
 
     protected void addInsertElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateInsert()) {
-            AbstractXmlElementGenerator elementGenerator = new InsertElementGenerator(true);
-            initializeAndExecuteGenerator(elementGenerator, parentElement);
+            var builder = new InsertElementGenerator.Builder().isSimple(true);
+            initializeAndExecuteGenerator(builder, parentElement);
         }
     }
 
     protected void addUpdateByPrimaryKeyElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateUpdateByPrimaryKeySelective()) {
-            AbstractXmlElementGenerator elementGenerator = new UpdateByPrimaryKeyWithoutBLOBsElementGenerator(true);
-            initializeAndExecuteGenerator(elementGenerator, parentElement);
+            var builder = new UpdateByPrimaryKeyWithoutBLOBsElementGenerator.Builder().isSimple(true);
+            initializeAndExecuteGenerator(builder, parentElement);
         }
     }
 
-    protected void initializeAndExecuteGenerator(AbstractXmlElementGenerator elementGenerator,
+    protected void initializeAndExecuteGenerator(AbstractXmlElementGenerator.AbstractXmlElementGeneratorBuilder<?> builder,
                                                  XmlElement parentElement) {
-        elementGenerator.setContext(context);
-        elementGenerator.setIntrospectedTable(introspectedTable);
-        elementGenerator.setProgressCallback(progressCallback);
-        elementGenerator.setWarnings(warnings);
-        elementGenerator.addElements(parentElement);
+        builder.withContext(context)
+                .withIntrospectedTable(introspectedTable)
+                .withProgressCallback(progressCallback)
+                .withWarnings(warnings)
+                .build()
+                .addElements(parentElement);
     }
 
     @Override

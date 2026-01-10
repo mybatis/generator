@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -24,6 +24,10 @@ import org.mybatis.generator.api.dom.java.Method;
 
 public class UpdateByExampleSelectiveMethodGenerator extends AbstractJavaMapperMethodGenerator {
 
+    protected UpdateByExampleSelectiveMethodGenerator(Builder builder) {
+        super(builder);
+    }
+
     @Override
     public void addInterfaceElements(Interface interfaze) {
         String statementId = introspectedTable.getUpdateByExampleSelectiveStatementId();
@@ -47,5 +51,17 @@ public class UpdateByExampleSelectiveMethodGenerator extends AbstractJavaMapperM
 
     public void addExtraImports(Interface interfaze) {
         // extension point for subclasses
+    }
+
+    public static class Builder extends AbstractMethodGeneratorBuilder<Builder> {
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        @Override
+        public UpdateByExampleSelectiveMethodGenerator build() {
+            return new UpdateByExampleSelectiveMethodGenerator(this);
+        }
     }
 }

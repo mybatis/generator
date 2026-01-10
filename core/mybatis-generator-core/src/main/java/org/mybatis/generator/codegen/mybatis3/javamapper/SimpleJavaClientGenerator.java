@@ -91,44 +91,46 @@ public class SimpleJavaClientGenerator extends AbstractJavaClientGenerator {
 
     protected void addDeleteByPrimaryKeyMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateDeleteByPrimaryKey()) {
-            AbstractJavaMapperMethodGenerator methodGenerator = new DeleteByPrimaryKeyMethodGenerator(true);
-            initializeAndExecuteGenerator(methodGenerator, interfaze);
+            var builder = new DeleteByPrimaryKeyMethodGenerator.Builder().isSimple(true);
+            initializeAndExecuteGenerator(builder, interfaze);
         }
     }
 
     protected void addInsertMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateInsert()) {
-            AbstractJavaMapperMethodGenerator methodGenerator = new InsertMethodGenerator(true);
-            initializeAndExecuteGenerator(methodGenerator, interfaze);
+            var builder = new InsertMethodGenerator.Builder().isSimple(true);
+            initializeAndExecuteGenerator(builder, interfaze);
         }
     }
 
     protected void addSelectByPrimaryKeyMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateSelectByPrimaryKey()) {
-            AbstractJavaMapperMethodGenerator methodGenerator = new SelectByPrimaryKeyMethodGenerator(true);
-            initializeAndExecuteGenerator(methodGenerator, interfaze);
+            var builder = new SelectByPrimaryKeyMethodGenerator.Builder().isSimple(true);
+            initializeAndExecuteGenerator(builder, interfaze);
         }
     }
 
     protected void addSelectAllMethod(Interface interfaze) {
-        AbstractJavaMapperMethodGenerator methodGenerator = new SelectAllMethodGenerator();
-        initializeAndExecuteGenerator(methodGenerator, interfaze);
+        var builder = new SelectAllMethodGenerator.Builder();
+        initializeAndExecuteGenerator(builder, interfaze);
     }
 
     protected void addUpdateByPrimaryKeyMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateUpdateByPrimaryKeySelective()) {
-            AbstractJavaMapperMethodGenerator methodGenerator = new UpdateByPrimaryKeyWithoutBLOBsMethodGenerator();
-            initializeAndExecuteGenerator(methodGenerator, interfaze);
+            var builder = new UpdateByPrimaryKeyWithoutBLOBsMethodGenerator.Builder();
+            initializeAndExecuteGenerator(builder, interfaze);
         }
     }
 
-    protected void initializeAndExecuteGenerator(AbstractJavaMapperMethodGenerator methodGenerator,
+    protected void initializeAndExecuteGenerator(
+            AbstractJavaMapperMethodGenerator.AbstractMethodGeneratorBuilder<?> builder,
             Interface interfaze) {
-        methodGenerator.setContext(context);
-        methodGenerator.setIntrospectedTable(introspectedTable);
-        methodGenerator.setProgressCallback(progressCallback);
-        methodGenerator.setWarnings(warnings);
-        methodGenerator.addInterfaceElements(interfaze);
+        builder.withContext(context)
+                .withIntrospectedTable(introspectedTable)
+                .withProgressCallback(progressCallback)
+                .withWarnings(warnings)
+                .build()
+                .addInterfaceElements(interfaze);
     }
 
     public List<CompilationUnit> getExtraCompilationUnits() {

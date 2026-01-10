@@ -35,40 +35,40 @@ public class SimpleAnnotatedClientGenerator extends SimpleJavaClientGenerator {
     @Override
     protected void addDeleteByPrimaryKeyMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateDeleteByPrimaryKey()) {
-            AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedDeleteByPrimaryKeyMethodGenerator(true);
-            initializeAndExecuteGenerator(methodGenerator, interfaze);
+            var builder = new AnnotatedDeleteByPrimaryKeyMethodGenerator.Builder().isSimple(true);
+            initializeAndExecuteGenerator(builder, interfaze);
         }
     }
 
     @Override
     protected void addInsertMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateInsert()) {
-            AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedInsertMethodGenerator(true);
-            initializeAndExecuteGenerator(methodGenerator, interfaze);
+            var builder = new AnnotatedInsertMethodGenerator.Builder().isSimple(true);
+            initializeAndExecuteGenerator(builder, interfaze);
         }
     }
 
     @Override
     protected void addSelectByPrimaryKeyMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateSelectByPrimaryKey()) {
-            AbstractJavaMapperMethodGenerator methodGenerator =
-                    new AnnotatedSelectByPrimaryKeyMethodGenerator(false, true);
-            initializeAndExecuteGenerator(methodGenerator, interfaze);
+            var builder = new AnnotatedSelectByPrimaryKeyMethodGenerator.Builder()
+                    .useResultMapIfAvailable(false)
+                    .isSimple(true);
+            initializeAndExecuteGenerator(builder, interfaze);
         }
     }
 
     @Override
     protected void addSelectAllMethod(Interface interfaze) {
-        AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedSelectAllMethodGenerator();
-        initializeAndExecuteGenerator(methodGenerator, interfaze);
+        var builder = new AnnotatedSelectAllMethodGenerator.Builder();
+        initializeAndExecuteGenerator(builder, interfaze);
     }
 
     @Override
     protected void addUpdateByPrimaryKeyMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateUpdateByPrimaryKeySelective()) {
-            AbstractJavaMapperMethodGenerator methodGenerator =
-                    new AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator(true);
-            initializeAndExecuteGenerator(methodGenerator, interfaze);
+            var builder = new AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator.Builder().isSimple(true);
+            initializeAndExecuteGenerator(builder, interfaze);
         }
     }
 

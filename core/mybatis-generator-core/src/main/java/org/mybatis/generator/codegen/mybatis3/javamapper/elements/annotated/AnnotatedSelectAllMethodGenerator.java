@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -27,8 +27,8 @@ import org.mybatis.generator.internal.util.StringUtility;
 
 public class AnnotatedSelectAllMethodGenerator extends SelectAllMethodGenerator {
 
-    public AnnotatedSelectAllMethodGenerator() {
-        super();
+    protected AnnotatedSelectAllMethodGenerator(Builder builder) {
+        super(builder);
     }
 
     @Override
@@ -68,5 +68,17 @@ public class AnnotatedSelectAllMethodGenerator extends SelectAllMethodGenerator 
     @Override
     public void addExtraImports(Interface interfaze) {
         addAnnotatedSelectImports(interfaze);
+    }
+
+    public static class Builder extends SelectAllMethodGenerator.Builder {
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        @Override
+        public AnnotatedSelectAllMethodGenerator build() {
+            return new AnnotatedSelectAllMethodGenerator(this);
+        }
     }
 }

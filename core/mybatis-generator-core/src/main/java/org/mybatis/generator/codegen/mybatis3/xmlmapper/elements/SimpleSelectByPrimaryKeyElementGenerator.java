@@ -21,8 +21,8 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
 
 public class SimpleSelectByPrimaryKeyElementGenerator extends AbstractXmlElementGenerator {
 
-    public SimpleSelectByPrimaryKeyElementGenerator() {
-        super();
+    protected SimpleSelectByPrimaryKeyElementGenerator(Builder builder) {
+        super(builder);
     }
 
     @Override
@@ -68,6 +68,18 @@ public class SimpleSelectByPrimaryKeyElementGenerator extends AbstractXmlElement
 
         if (context.getPlugins().sqlMapSelectByPrimaryKeyElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
+        }
+    }
+
+    public static class Builder extends AbstractXmlElementGeneratorBuilder<Builder> {
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        @Override
+        public SimpleSelectByPrimaryKeyElementGenerator build() {
+            return new SimpleSelectByPrimaryKeyElementGenerator(this);
         }
     }
 }

@@ -15,16 +15,14 @@
  */
 package org.mybatis.generator.codegen.mybatis3.xmlmapper.elements;
 
-import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
-
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
 public class SelectByExampleWithoutBLOBsElementGenerator extends AbstractXmlElementGenerator {
 
-    public SelectByExampleWithoutBLOBsElementGenerator() {
-        super();
+    protected SelectByExampleWithoutBLOBsElementGenerator(Builder builder) {
+        super(builder);
     }
 
     @Override
@@ -68,6 +66,18 @@ public class SelectByExampleWithoutBLOBsElementGenerator extends AbstractXmlElem
 
         if (context.getPlugins().sqlMapSelectByExampleWithoutBLOBsElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
+        }
+    }
+
+    public static class Builder extends AbstractXmlElementGeneratorBuilder<Builder> {
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        @Override
+        public SelectByExampleWithoutBLOBsElementGenerator build() {
+            return new SelectByExampleWithoutBLOBsElementGenerator(this);
         }
     }
 }

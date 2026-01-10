@@ -21,8 +21,8 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
 
 public class SelectByExampleWithBLOBsElementGenerator extends AbstractXmlElementGenerator {
 
-    public SelectByExampleWithBLOBsElementGenerator() {
-        super();
+    protected SelectByExampleWithBLOBsElementGenerator(Builder builder) {
+        super(builder);
     }
 
     @Override
@@ -68,6 +68,18 @@ public class SelectByExampleWithBLOBsElementGenerator extends AbstractXmlElement
 
         if (context.getPlugins().sqlMapSelectByExampleWithBLOBsElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
+        }
+    }
+
+    public static class Builder extends AbstractXmlElementGeneratorBuilder<Builder> {
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        @Override
+        public SelectByExampleWithBLOBsElementGenerator build() {
+            return new SelectByExampleWithBLOBsElementGenerator(this);
         }
     }
 }

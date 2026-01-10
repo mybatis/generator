@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -30,9 +30,9 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
 
     private final boolean isSimple;
 
-    public InsertElementGenerator(boolean isSimple) {
-        super();
-        this.isSimple = isSimple;
+    protected InsertElementGenerator(Builder builder) {
+        super(builder);
+        this.isSimple = builder.isSimple;
     }
 
     @Override
@@ -90,6 +90,25 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
 
         if (context.getPlugins().sqlMapInsertElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
+        }
+    }
+
+    public static class Builder extends AbstractXmlElementGeneratorBuilder<Builder> {
+        private boolean isSimple;
+
+        public Builder isSimple(boolean isSimple) {
+            this.isSimple = isSimple;
+            return this;
+        }
+
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        @Override
+        public InsertElementGenerator build() {
+            return new InsertElementGenerator(this);
         }
     }
 }

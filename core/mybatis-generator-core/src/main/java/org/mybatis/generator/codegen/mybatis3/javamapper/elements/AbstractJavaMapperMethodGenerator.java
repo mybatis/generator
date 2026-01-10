@@ -30,10 +30,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.IntrospectedColumn;
-import org.mybatis.generator.api.IntrospectedTable;
-import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
@@ -41,18 +38,13 @@ import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.codegen.AbstractGenerator;
 import org.mybatis.generator.codegen.mybatis3.ListUtilities;
-import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.GeneratedKey;
 
 public abstract class AbstractJavaMapperMethodGenerator extends AbstractGenerator {
     public abstract void addInterfaceElements(Interface interfaze);
 
     protected AbstractJavaMapperMethodGenerator(AbstractMethodGeneratorBuilder<?> builder) {
-        // TODO - shim
-        setContext(builder.context);
-        setIntrospectedTable(builder.introspectedTable);
-        setProgressCallback(builder.progressCallback);
-        setWarnings(builder.warnings);
+        super(builder);
     }
 
     protected static String getResultAnnotation(Interface interfaze, IntrospectedColumn introspectedColumn,
@@ -379,36 +371,8 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractGenerato
         return answer;
     }
 
-    public static abstract class AbstractMethodGeneratorBuilder<T extends AbstractMethodGeneratorBuilder<T>> {
-        // TODO - this is a shim so we can do a more limited refactoring. Ultimately this should move to an abstract
-        //  builder in the AbstractGenerator
-        private @Nullable Context context;
-        private @Nullable IntrospectedTable introspectedTable;
-        private @Nullable List<String> warnings;
-        private @Nullable ProgressCallback progressCallback;
-
-        public T withContext(Context context) {
-            this.context = context;
-            return getThis();
-        }
-
-        public T withIntrospectedTable(IntrospectedTable introspectedTable) {
-            this.introspectedTable = introspectedTable;
-            return getThis();
-        }
-
-        public T withWarnings(List<String> warnings) {
-            this.warnings = warnings;
-            return getThis();
-        }
-
-        public T withProgressCallback(ProgressCallback progressCallback) {
-            this.progressCallback = progressCallback;
-            return getThis();
-        }
-
-        protected abstract T getThis();
-
+    public static abstract class AbstractMethodGeneratorBuilder<T extends AbstractMethodGeneratorBuilder<T>>
+            extends AbstractGeneratorBuilder<T> {
         public abstract AbstractJavaMapperMethodGenerator build();
     }
 }

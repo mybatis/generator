@@ -51,24 +51,16 @@ import org.mybatis.generator.runtime.kotlin.elements.UpdateByPrimaryKeySelective
 import org.mybatis.generator.runtime.kotlin.elements.UpdateSelectiveColumnsMethodGenerator;
 
 public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator {
-
     // record type for insert, select, update
-    protected FullyQualifiedKotlinType recordType;
-
+    protected final FullyQualifiedKotlinType recordType;
     // id to use for the common result map
-    protected String resultMapId;
+    protected final String resultMapId;
+    protected final KotlinFragmentGenerator fragmentGenerator;
+    protected final KotlinDynamicSqlSupportClassGenerator supportClassGenerator;
+    protected final boolean hasGeneratedKeys;
 
-    protected KotlinFragmentGenerator fragmentGenerator;
-
-    protected KotlinDynamicSqlSupportClassGenerator supportClassGenerator;
-
-    protected boolean hasGeneratedKeys;
-
-    public KotlinMapperAndExtensionsGenerator(String project) {
-        super(project);
-    }
-
-    protected void preCalculate() {
+    public KotlinMapperAndExtensionsGenerator(Builder builder) {
+        super(builder);
         supportClassGenerator = new KotlinDynamicSqlSupportClassGenerator(context, introspectedTable, warnings);
         recordType = new FullyQualifiedKotlinType(introspectedTable.getKotlinRecordType());
         resultMapId = recordType.getShortNameWithoutTypeArguments() + "Result"; //$NON-NLS-1$
@@ -83,8 +75,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
     }
 
     protected KotlinFile createMapperInterfaceFile() {
-        FullyQualifiedKotlinType type = new FullyQualifiedKotlinType(
-                introspectedTable.getMyBatis3JavaMapperType());
+        FullyQualifiedKotlinType type = new FullyQualifiedKotlinType(introspectedTable.getMyBatis3JavaMapperType());
 
         KotlinFile kf = new KotlinFile(type.getShortNameWithoutTypeArguments());
         kf.setPackage(type.getPackageName());
@@ -157,7 +148,6 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
     public List<KotlinFile> getKotlinFiles() {
         progressCallback.startTask(getString("Progress.17", //$NON-NLS-1$
                 introspectedTable.getFullyQualifiedTable().toString()));
-        preCalculate();
 
         KotlinFile mapperFile = createMapperInterfaceFile();
         KotlinType mapper = createMapperInterface(mapperFile);
@@ -464,5 +454,17 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .build();
 
         generate(kotlinFile, generator);
+    }
+
+    public static class Builder extends AbstractKotlinGeneratorBuilder<Builder> {
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        @Override
+        public KotlinMapperAndExtensionsGenerator build() {
+            return new KotlinMapperAndExtensionsGenerator(this);
+        }
     }
 }

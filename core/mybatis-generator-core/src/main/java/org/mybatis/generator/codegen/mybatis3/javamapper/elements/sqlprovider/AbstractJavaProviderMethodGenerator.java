@@ -15,17 +15,12 @@
  */
 package org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider;
 
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.jspecify.annotations.Nullable;
-import org.mybatis.generator.api.IntrospectedTable;
-import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.codegen.AbstractGenerator;
-import org.mybatis.generator.config.Context;
 
 public abstract class AbstractJavaProviderMethodGenerator extends AbstractGenerator {
 
@@ -33,11 +28,7 @@ public abstract class AbstractJavaProviderMethodGenerator extends AbstractGenera
             new FullyQualifiedJavaType("org.apache.ibatis.jdbc.SQL"); //$NON-NLS-1$
 
     protected AbstractJavaProviderMethodGenerator(AbstractJavaProviderMethodGeneratorBuilder<?> builder) {
-        // TODO - shim
-        setContext(builder.context);
-        setIntrospectedTable(builder.introspectedTable);
-        setProgressCallback(builder.progressCallback);
-        setWarnings(builder.warnings);
+        super(builder);
     }
 
     protected Set<FullyQualifiedJavaType> initializeImportedTypes() {
@@ -63,36 +54,7 @@ public abstract class AbstractJavaProviderMethodGenerator extends AbstractGenera
     public abstract void addClassElements(TopLevelClass topLevelClass);
 
     public abstract static class AbstractJavaProviderMethodGeneratorBuilder
-            <T extends AbstractJavaProviderMethodGeneratorBuilder<T>> {
-        // TODO - this is a shim so we can do a more limited refactoring. Ultimately this should move to an abstract
-        //  builder in the AbstractGenerator
-        private @Nullable Context context;
-        private @Nullable IntrospectedTable introspectedTable;
-        private @Nullable List<String> warnings;
-        private @Nullable ProgressCallback progressCallback;
-
-        public T withContext(Context context) {
-            this.context = context;
-            return getThis();
-        }
-
-        public T withIntrospectedTable(IntrospectedTable introspectedTable) {
-            this.introspectedTable = introspectedTable;
-            return getThis();
-        }
-
-        public T withWarnings(List<String> warnings) {
-            this.warnings = warnings;
-            return getThis();
-        }
-
-        public T withProgressCallback(ProgressCallback progressCallback) {
-            this.progressCallback = progressCallback;
-            return getThis();
-        }
-
-        protected abstract T getThis();
-
+            <T extends AbstractJavaProviderMethodGeneratorBuilder<T>> extends AbstractGeneratorBuilder<T> {
         public abstract AbstractJavaProviderMethodGenerator build();
     }
 }

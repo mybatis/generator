@@ -42,16 +42,25 @@ public class IntrospectedTableKotlinImpl extends IntrospectedTableMyBatis3Impl {
 
     protected void calculateKotlinMapperAndExtensionsGenerator(List<String> warnings,
             ProgressCallback progressCallback) {
-        AbstractKotlinGenerator kotlinGenerator = new KotlinMapperAndExtensionsGenerator(getClientProject());
-        initializeAbstractGenerator(kotlinGenerator, warnings,
-                progressCallback);
+        AbstractKotlinGenerator kotlinGenerator = new KotlinMapperAndExtensionsGenerator.Builder()
+                .withProject(getModelProject())
+                .withContext(getContext())
+                .withIntrospectedTable(this)
+                .withProgressCallback(progressCallback)
+                .withWarnings(warnings)
+                .build();
         kotlinGenerators.add(kotlinGenerator);
     }
 
     protected void calculateKotlinDataClassGenerator(List<String> warnings,
             ProgressCallback progressCallback) {
-        AbstractKotlinGenerator kotlinGenerator = new KotlinDataClassGenerator(getModelProject());
-        initializeAbstractGenerator(kotlinGenerator, warnings, progressCallback);
+        AbstractKotlinGenerator kotlinGenerator = new KotlinDataClassGenerator.Builder()
+                .withProject(getModelProject())
+                .withContext(getContext())
+                .withIntrospectedTable(this)
+                .withProgressCallback(progressCallback)
+                .withWarnings(warnings)
+                .build();
         kotlinGenerators.add(kotlinGenerator);
     }
 

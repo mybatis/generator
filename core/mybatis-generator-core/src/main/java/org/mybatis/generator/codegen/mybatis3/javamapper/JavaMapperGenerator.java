@@ -205,14 +205,9 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
         }
     }
 
-    protected void initializeAndExecuteGenerator(
-            AbstractJavaMapperMethodGenerator.AbstractMethodGeneratorBuilder<?> builder, Interface interfaze) {
-        builder.withContext(context)
-                .withIntrospectedTable(introspectedTable)
-                .withProgressCallback(progressCallback)
-                .withWarnings(warnings)
-                .build()
-                .addInterfaceElements(interfaze);
+    protected <T extends AbstractJavaMapperMethodGenerator.AbstractMethodGeneratorBuilder<T>>
+    void initializeAndExecuteGenerator(T builder, Interface interfaze) {
+        initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
     }
 
     public List<CompilationUnit> getExtraCompilationUnits() {
@@ -221,13 +216,7 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
 
     @Override
     public Optional<AbstractXmlGenerator> getMatchedXMLGenerator() {
-        // TODO - this has duplicated code from above
-        var generator = new XMLMapperGenerator.Builder()
-                .withContext(context)
-                .withIntrospectedTable(introspectedTable)
-                .withProgressCallback(progressCallback)
-                .withWarnings(warnings)
-                .build();
+        var generator = initializeSubBuilder(new XMLMapperGenerator.Builder()).build();
 
         return Optional.of(generator);
     }

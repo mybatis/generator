@@ -167,12 +167,8 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
         }
     }
 
-    protected void initializeAbstractGenerator(@Nullable AbstractGenerator abstractGenerator, List<String> warnings,
+    protected void initializeAbstractGenerator(AbstractGenerator abstractGenerator, List<String> warnings,
                                                ProgressCallback progressCallback) {
-        if (abstractGenerator == null) {
-            return;
-        }
-
         abstractGenerator.setContext(getContext());
         abstractGenerator.setIntrospectedTable(this);
         abstractGenerator.setProgressCallback(progressCallback);

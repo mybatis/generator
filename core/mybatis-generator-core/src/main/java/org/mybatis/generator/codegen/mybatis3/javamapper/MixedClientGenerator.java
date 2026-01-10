@@ -82,12 +82,7 @@ public class MixedClientGenerator extends JavaMapperGenerator {
 
     @Override
     public Optional<AbstractXmlGenerator> getMatchedXMLGenerator() {
-        var generator = new MixedMapperGenerator.Builder()
-                .withContext(context)
-                .withIntrospectedTable(introspectedTable)
-                .withProgressCallback(progressCallback)
-                .withWarnings(warnings)
-                .build();
+        var generator = initializeSubBuilder(new MixedMapperGenerator.Builder()).build();
         return Optional.of(generator);
     }
 }

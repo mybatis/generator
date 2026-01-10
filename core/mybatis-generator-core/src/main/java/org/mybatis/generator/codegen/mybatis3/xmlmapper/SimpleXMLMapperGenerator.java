@@ -97,14 +97,9 @@ public class SimpleXMLMapperGenerator extends AbstractXmlGenerator {
         }
     }
 
-    protected void initializeAndExecuteGenerator(AbstractXmlElementGenerator.AbstractXmlElementGeneratorBuilder<?> builder,
-                                                 XmlElement parentElement) {
-        builder.withContext(context)
-                .withIntrospectedTable(introspectedTable)
-                .withProgressCallback(progressCallback)
-                .withWarnings(warnings)
-                .build()
-                .addElements(parentElement);
+    protected <T extends AbstractXmlElementGenerator.AbstractXmlElementGeneratorBuilder<T>>
+            void initializeAndExecuteGenerator(T builder, XmlElement parentElement) {
+        initializeSubBuilder(builder).build().addElements(parentElement);
     }
 
     @Override

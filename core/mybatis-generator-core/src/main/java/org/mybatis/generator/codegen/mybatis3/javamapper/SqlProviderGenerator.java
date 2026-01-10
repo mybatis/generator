@@ -176,15 +176,9 @@ public class SqlProviderGenerator extends AbstractJavaGenerator {
         initializeAndExecuteGenerator(builder, topLevelClass);
     }
 
-    protected void initializeAndExecuteGenerator(
-            AbstractJavaProviderMethodGenerator.AbstractJavaProviderMethodGeneratorBuilder<?> builder,
-            TopLevelClass topLevelClass) {
-        builder.withContext(context)
-                .withIntrospectedTable(introspectedTable)
-                .withProgressCallback(progressCallback)
-                .withWarnings(warnings)
-                .build()
-                .addClassElements(topLevelClass);
+    protected <T extends AbstractJavaProviderMethodGenerator.AbstractJavaProviderMethodGeneratorBuilder<T>>
+            void initializeAndExecuteGenerator(T builder, TopLevelClass topLevelClass) {
+        initializeSubBuilder(builder).build().addClassElements(topLevelClass);
     }
 
     public static class Builder extends AbstractJavaGeneratorBuilder<Builder> {

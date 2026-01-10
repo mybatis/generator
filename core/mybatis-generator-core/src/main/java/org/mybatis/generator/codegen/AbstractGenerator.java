@@ -57,6 +57,13 @@ public abstract class AbstractGenerator {
         this.progressCallback = progressCallback;
     }
 
+    protected <T extends AbstractGeneratorBuilder<T>> T initializeSubBuilder(T builder) {
+        return builder.withContext(context)
+                .withIntrospectedTable(introspectedTable)
+                .withWarnings(warnings)
+                .withProgressCallback(progressCallback);
+    }
+
     public abstract static class AbstractGeneratorBuilder<T extends AbstractGeneratorBuilder<T>> {
         private @Nullable Context context;
         private @Nullable IntrospectedTable introspectedTable;

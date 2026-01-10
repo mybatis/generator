@@ -156,12 +156,14 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
 
     @Override
     public List<CompilationUnit> getExtraCompilationUnits() {
-        SqlProviderGenerator sqlProviderGenerator = new SqlProviderGenerator(getProject());
-        sqlProviderGenerator.setContext(context);
-        sqlProviderGenerator.setIntrospectedTable(introspectedTable);
-        sqlProviderGenerator.setProgressCallback(progressCallback);
-        sqlProviderGenerator.setWarnings(warnings);
-        return sqlProviderGenerator.getCompilationUnits();
+        return new SqlProviderGenerator.Builder()
+                .withProject(getProject())
+                .withContext(context)
+                .withIntrospectedTable(introspectedTable)
+                .withProgressCallback(progressCallback)
+                .withWarnings(warnings)
+                .build()
+                .getCompilationUnits();
     }
 
     @Override

@@ -76,8 +76,14 @@ public class IntrospectedTableMyBatis3SimpleImpl extends IntrospectedTableMyBati
 
     @Override
     protected void calculateJavaModelGenerators(List<String> warnings, ProgressCallback progressCallback) {
-        AbstractJavaGenerator javaGenerator = new SimpleModelGenerator(getModelProject());
-        initializeAbstractGenerator(javaGenerator, warnings, progressCallback);
+        AbstractJavaGenerator javaGenerator = new SimpleModelGenerator.Builder()
+                .withProject(getModelProject())
+                .withContext(getContext())
+                .withIntrospectedTable(this)
+                .withProgressCallback(progressCallback)
+                .withWarnings(warnings)
+                .build();
+
         javaGenerators.add(javaGenerator);
     }
 }

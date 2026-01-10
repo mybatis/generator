@@ -39,8 +39,8 @@ import org.mybatis.generator.codegen.RootClassInfo;
 
 public class RecordWithBLOBsGenerator extends AbstractJavaGenerator {
 
-    public RecordWithBLOBsGenerator(String project) {
-        super(project);
+    protected RecordWithBLOBsGenerator(Builder builder) {
+        super(builder);
     }
 
     @Override
@@ -141,5 +141,17 @@ public class RecordWithBLOBsGenerator extends AbstractJavaGenerator {
         }
 
         topLevelClass.addMethod(method);
+    }
+
+    public static class Builder extends AbstractJavaGeneratorBuilder<Builder> {
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        @Override
+        public RecordWithBLOBsGenerator build() {
+            return new RecordWithBLOBsGenerator(this);
+        }
     }
 }

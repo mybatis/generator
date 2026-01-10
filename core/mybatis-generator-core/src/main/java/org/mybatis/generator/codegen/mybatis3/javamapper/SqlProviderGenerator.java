@@ -40,8 +40,8 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider.Pr
 
 public class SqlProviderGenerator extends AbstractJavaGenerator {
 
-    public SqlProviderGenerator(String project) {
-        super(project);
+    public SqlProviderGenerator(Builder builder) {
+        super(builder);
     }
 
     @Override
@@ -185,5 +185,17 @@ public class SqlProviderGenerator extends AbstractJavaGenerator {
                 .withWarnings(warnings)
                 .build()
                 .addClassElements(topLevelClass);
+    }
+
+    public static class Builder extends AbstractJavaGeneratorBuilder<Builder> {
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        @Override
+        public SqlProviderGenerator build() {
+            return new SqlProviderGenerator(this);
+        }
     }
 }

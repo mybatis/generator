@@ -123,26 +123,46 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
 
     protected void calculateJavaModelGenerators(List<String> warnings, ProgressCallback progressCallback) {
         if (getRules().generateExampleClass()) {
-            AbstractJavaGenerator javaGenerator = new ExampleGenerator(getExampleProject());
-            initializeAbstractGenerator(javaGenerator, warnings, progressCallback);
+            AbstractJavaGenerator javaGenerator = new ExampleGenerator.Builder()
+                    .withProject(getModelProject())
+                    .withContext(getContext())
+                    .withIntrospectedTable(this)
+                    .withProgressCallback(progressCallback)
+                    .withWarnings(warnings)
+                    .build();
             javaGenerators.add(javaGenerator);
         }
 
         if (getRules().generatePrimaryKeyClass()) {
-            AbstractJavaGenerator javaGenerator = new PrimaryKeyGenerator(getModelProject());
-            initializeAbstractGenerator(javaGenerator, warnings, progressCallback);
+            AbstractJavaGenerator javaGenerator = new PrimaryKeyGenerator.Builder()
+                    .withProject(getModelProject())
+                    .withContext(getContext())
+                    .withIntrospectedTable(this)
+                    .withProgressCallback(progressCallback)
+                    .withWarnings(warnings)
+                    .build();
             javaGenerators.add(javaGenerator);
         }
 
         if (getRules().generateBaseRecordClass()) {
-            AbstractJavaGenerator javaGenerator = new BaseRecordGenerator(getModelProject());
-            initializeAbstractGenerator(javaGenerator, warnings, progressCallback);
+            AbstractJavaGenerator javaGenerator = new BaseRecordGenerator.Builder()
+                    .withProject(getModelProject())
+                    .withContext(getContext())
+                    .withIntrospectedTable(this)
+                    .withProgressCallback(progressCallback)
+                    .withWarnings(warnings)
+                    .build();
             javaGenerators.add(javaGenerator);
         }
 
         if (getRules().generateRecordWithBLOBsClass()) {
-            AbstractJavaGenerator javaGenerator = new RecordWithBLOBsGenerator(getModelProject());
-            initializeAbstractGenerator(javaGenerator, warnings, progressCallback);
+            AbstractJavaGenerator javaGenerator = new RecordWithBLOBsGenerator.Builder()
+                    .withProject(getModelProject())
+                    .withContext(getContext())
+                    .withIntrospectedTable(this)
+                    .withProgressCallback(progressCallback)
+                    .withWarnings(warnings)
+                    .build();
             javaGenerators.add(javaGenerator);
         }
     }

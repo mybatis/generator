@@ -16,7 +16,6 @@
 package org.mybatis.generator.codegen.mybatis3.model;
 
 import static org.mybatis.generator.internal.util.JavaBeansUtil.getGetterMethodName;
-import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.ArrayList;
@@ -40,8 +39,8 @@ import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 
 public class ExampleGenerator extends AbstractJavaGenerator {
 
-    public ExampleGenerator(String project) {
-        super(project);
+    public ExampleGenerator(Builder builder) {
+        super(builder);
     }
 
     @Override
@@ -860,5 +859,17 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         innerClass.addMethod(method);
 
         return answer;
+    }
+
+    public static class Builder extends AbstractJavaGenerator.AbstractJavaGeneratorBuilder<Builder> {
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        @Override
+        public ExampleGenerator build() {
+            return new ExampleGenerator(this);
+        }
     }
 }

@@ -41,8 +41,8 @@ import org.mybatis.generator.codegen.RootClassInfo;
 
 public class BaseRecordGenerator extends AbstractJavaGenerator {
 
-    public BaseRecordGenerator(String project) {
-        super(project);
+    protected BaseRecordGenerator(Builder builder) {
+        super(builder);
     }
 
     @Override
@@ -194,5 +194,17 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
         }
 
         return introspectedColumns;
+    }
+
+    public static class Builder extends AbstractJavaGeneratorBuilder<Builder> {
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        @Override
+        public BaseRecordGenerator build() {
+            return new BaseRecordGenerator(this);
+        }
     }
 }

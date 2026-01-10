@@ -46,8 +46,8 @@ import org.mybatis.generator.codegen.RootClassInfo;
  */
 public class DynamicSqlModelGenerator extends AbstractJavaGenerator {
 
-    public DynamicSqlModelGenerator(String project) {
-        super(project);
+    public DynamicSqlModelGenerator(Builder builder) {
+        super(builder);
     }
 
     @Override
@@ -155,5 +155,17 @@ public class DynamicSqlModelGenerator extends AbstractJavaGenerator {
         }
 
         topLevelClass.addMethod(method);
+    }
+
+    public static class Builder extends AbstractJavaGeneratorBuilder<Builder> {
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        @Override
+        public DynamicSqlModelGenerator build() {
+            return new DynamicSqlModelGenerator(this);
+        }
     }
 }

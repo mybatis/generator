@@ -40,8 +40,8 @@ import org.mybatis.generator.codegen.RootClassInfo;
 
 public class SimpleModelGenerator extends AbstractJavaGenerator {
 
-    public SimpleModelGenerator(String project) {
-        super(project);
+    public SimpleModelGenerator(Builder builder) {
+        super(builder);
     }
 
     @Override
@@ -138,5 +138,17 @@ public class SimpleModelGenerator extends AbstractJavaGenerator {
         }
 
         topLevelClass.addMethod(method);
+    }
+
+    public static class Builder extends AbstractJavaGeneratorBuilder<Builder> {
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        @Override
+        public SimpleModelGenerator build() {
+            return new SimpleModelGenerator(this);
+        }
     }
 }

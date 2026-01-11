@@ -24,7 +24,6 @@ import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.AbstractXmlGenerator;
 import org.mybatis.generator.codegen.XmlConstants;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.AbstractXmlElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.DeleteByPrimaryKeyElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.InsertElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.ResultMapWithoutBLOBsElementGenerator;
@@ -59,47 +58,42 @@ public class SimpleXMLMapperGenerator extends AbstractXmlGenerator {
 
     protected void addResultMapElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateBaseResultMap()) {
-            var builder = new ResultMapWithoutBLOBsElementGenerator.Builder().isSimple(true);
-            initializeAndExecuteGenerator(builder, parentElement);
+            initializeSubBuilder(new ResultMapWithoutBLOBsElementGenerator.Builder().isSimple(true))
+                    .build().addElements(parentElement);
         }
     }
 
     protected void addSelectByPrimaryKeyElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateSelectByPrimaryKey()) {
-            var builder = new SimpleSelectByPrimaryKeyElementGenerator.Builder();
-            initializeAndExecuteGenerator(builder, parentElement);
+            initializeSubBuilder(new SimpleSelectByPrimaryKeyElementGenerator.Builder())
+                    .build().addElements(parentElement);
         }
     }
 
     protected void addSelectAllElement(XmlElement parentElement) {
-        var builder = new SimpleSelectAllElementGenerator.Builder();
-        initializeAndExecuteGenerator(builder, parentElement);
+        initializeSubBuilder(new SimpleSelectAllElementGenerator.Builder())
+                .build().addElements(parentElement);
     }
 
     protected void addDeleteByPrimaryKeyElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateDeleteByPrimaryKey()) {
-            var builder = new DeleteByPrimaryKeyElementGenerator.Builder().isSimple(true);
-            initializeAndExecuteGenerator(builder, parentElement);
+            initializeSubBuilder(new DeleteByPrimaryKeyElementGenerator.Builder().isSimple(true))
+                    .build().addElements(parentElement);
         }
     }
 
     protected void addInsertElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateInsert()) {
-            var builder = new InsertElementGenerator.Builder().isSimple(true);
-            initializeAndExecuteGenerator(builder, parentElement);
+            initializeSubBuilder(new InsertElementGenerator.Builder().isSimple(true))
+                    .build().addElements(parentElement);
         }
     }
 
     protected void addUpdateByPrimaryKeyElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateUpdateByPrimaryKeySelective()) {
-            var builder = new UpdateByPrimaryKeyWithoutBLOBsElementGenerator.Builder().isSimple(true);
-            initializeAndExecuteGenerator(builder, parentElement);
+            initializeSubBuilder(new UpdateByPrimaryKeyWithoutBLOBsElementGenerator.Builder().isSimple(true))
+                    .build().addElements(parentElement);
         }
-    }
-
-    protected <T extends AbstractXmlElementGenerator.AbstractXmlElementGeneratorBuilder<T>>
-            void initializeAndExecuteGenerator(T builder, XmlElement parentElement) {
-        initializeSubBuilder(builder).build().addElements(parentElement);
     }
 
     @Override

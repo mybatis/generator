@@ -46,7 +46,7 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
     protected void addCountByExampleMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateCountByExample()) {
             var builder = new AnnotatedCountByExampleMethodGenerator.Builder();
-            initializeAndExecuteGenerator(builder, interfaze);
+            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
         }
     }
 
@@ -54,7 +54,7 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
     protected void addDeleteByExampleMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateDeleteByExample()) {
             var builder = new AnnotatedDeleteByExampleMethodGenerator.Builder();
-            initializeAndExecuteGenerator(builder, interfaze);
+            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
         }
     }
 
@@ -62,7 +62,7 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
     protected void addDeleteByPrimaryKeyMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateDeleteByPrimaryKey()) {
             var builder = new AnnotatedDeleteByPrimaryKeyMethodGenerator.Builder().isSimple(false);
-            initializeAndExecuteGenerator(builder, interfaze);
+            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
         }
     }
 
@@ -70,7 +70,7 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
     protected void addInsertMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateInsert()) {
             var builder = new AnnotatedInsertMethodGenerator.Builder().isSimple(false);
-            initializeAndExecuteGenerator(builder, interfaze);
+            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
         }
     }
 
@@ -78,7 +78,7 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
     protected void addInsertSelectiveMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateInsertSelective()) {
             var builder = new AnnotatedInsertSelectiveMethodGenerator.Builder();
-            initializeAndExecuteGenerator(builder, interfaze);
+            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
         }
     }
 
@@ -86,7 +86,7 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
     protected void addSelectByExampleWithBLOBsMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateSelectByExampleWithBLOBs()) {
             var builder = new AnnotatedSelectByExampleWithBLOBsMethodGenerator.Builder();
-            initializeAndExecuteGenerator(builder, interfaze);
+            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
         }
     }
 
@@ -94,7 +94,7 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
     protected void addSelectByExampleWithoutBLOBsMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateSelectByExampleWithoutBLOBs()) {
             var builder = new AnnotatedSelectByExampleWithoutBLOBsMethodGenerator.Builder();
-            initializeAndExecuteGenerator(builder, interfaze);
+            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
         }
     }
 
@@ -102,7 +102,7 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
     protected void addSelectByPrimaryKeyMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateSelectByPrimaryKey()) {
             var builder = new AnnotatedSelectByPrimaryKeyMethodGenerator.Builder();
-            initializeAndExecuteGenerator(builder, interfaze);
+            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
         }
     }
 
@@ -110,7 +110,7 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
     protected void addUpdateByExampleSelectiveMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateUpdateByExampleSelective()) {
             var builder = new AnnotatedUpdateByExampleSelectiveMethodGenerator.Builder();
-            initializeAndExecuteGenerator(builder, interfaze);
+            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
         }
     }
 
@@ -118,7 +118,7 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
     protected void addUpdateByExampleWithBLOBsMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateUpdateByExampleWithBLOBs()) {
             var builder = new AnnotatedUpdateByExampleWithBLOBsMethodGenerator.Builder();
-            initializeAndExecuteGenerator(builder, interfaze);
+            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
         }
     }
 
@@ -126,7 +126,7 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
     protected void addUpdateByExampleWithoutBLOBsMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateUpdateByExampleWithoutBLOBs()) {
             var builder = new AnnotatedUpdateByExampleWithoutBLOBsMethodGenerator.Builder();
-            initializeAndExecuteGenerator(builder, interfaze);
+            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
         }
     }
 
@@ -134,7 +134,7 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
     protected void addUpdateByPrimaryKeySelectiveMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateUpdateByPrimaryKeySelective()) {
             var builder = new AnnotatedUpdateByPrimaryKeySelectiveMethodGenerator.Builder();
-            initializeAndExecuteGenerator(builder, interfaze);
+            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
         }
     }
 
@@ -142,7 +142,7 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
     protected void addUpdateByPrimaryKeyWithBLOBsMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateUpdateByPrimaryKeyWithBLOBs()) {
             var builder = new AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator.Builder();
-            initializeAndExecuteGenerator(builder, interfaze);
+            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
         }
     }
 
@@ -150,7 +150,7 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
     protected void addUpdateByPrimaryKeyWithoutBLOBsMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateUpdateByPrimaryKeyWithoutBLOBs()) {
             var builder = new AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator.Builder().isSimple(false);
-            initializeAndExecuteGenerator(builder, interfaze);
+            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
         }
     }
 

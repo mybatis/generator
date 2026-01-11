@@ -42,7 +42,7 @@ public class MixedClientGenerator extends JavaMapperGenerator {
     protected void addDeleteByPrimaryKeyMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateDeleteByPrimaryKey()) {
             var builder = new AnnotatedDeleteByPrimaryKeyMethodGenerator.Builder().isSimple(false);
-            initializeAndExecuteGenerator(builder, interfaze);
+            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
         }
     }
 
@@ -50,7 +50,7 @@ public class MixedClientGenerator extends JavaMapperGenerator {
     protected void addInsertMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateInsert()) {
             var builder = new AnnotatedInsertMethodGenerator.Builder().isSimple(false);
-            initializeAndExecuteGenerator(builder, interfaze);
+            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
         }
     }
 
@@ -60,7 +60,7 @@ public class MixedClientGenerator extends JavaMapperGenerator {
             var builder = new AnnotatedSelectByPrimaryKeyMethodGenerator.Builder()
                     .useResultMapIfAvailable(true)
                     .isSimple(false);
-            initializeAndExecuteGenerator(builder, interfaze);
+            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
         }
     }
 
@@ -68,7 +68,7 @@ public class MixedClientGenerator extends JavaMapperGenerator {
     protected void addUpdateByPrimaryKeyWithBLOBsMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateUpdateByPrimaryKeyWithBLOBs()) {
             var builder = new AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator.Builder();
-            initializeAndExecuteGenerator(builder, interfaze);
+            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
         }
     }
 
@@ -76,7 +76,7 @@ public class MixedClientGenerator extends JavaMapperGenerator {
     protected void addUpdateByPrimaryKeyWithoutBLOBsMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateUpdateByPrimaryKeyWithoutBLOBs()) {
             var builder = new AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator.Builder().isSimple(false);
-            initializeAndExecuteGenerator(builder, interfaze);
+            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
         }
     }
 

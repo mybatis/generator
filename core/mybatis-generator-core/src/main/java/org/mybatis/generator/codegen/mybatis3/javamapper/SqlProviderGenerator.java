@@ -26,7 +26,6 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
-import org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider.AbstractJavaProviderMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider.ProviderApplyWhereMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider.ProviderCountByExampleMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.sqlprovider.ProviderDeleteByExampleMethodGenerator;
@@ -83,8 +82,8 @@ public class SqlProviderGenerator extends AbstractJavaGenerator {
     protected boolean addCountByExampleMethod(TopLevelClass topLevelClass) {
         boolean rc = false;
         if (introspectedTable.getRules().generateCountByExample()) {
-            var builder = new ProviderCountByExampleMethodGenerator.Builder();
-            initializeAndExecuteGenerator(builder, topLevelClass);
+            initializeSubBuilder(new ProviderCountByExampleMethodGenerator.Builder())
+                    .build().addClassElements(topLevelClass);
             rc = true;
         }
 
@@ -94,8 +93,8 @@ public class SqlProviderGenerator extends AbstractJavaGenerator {
     protected boolean addDeleteByExampleMethod(TopLevelClass topLevelClass) {
         boolean rc = false;
         if (introspectedTable.getRules().generateDeleteByExample()) {
-            var builder = new ProviderDeleteByExampleMethodGenerator.Builder();
-            initializeAndExecuteGenerator(builder, topLevelClass);
+            initializeSubBuilder(new ProviderDeleteByExampleMethodGenerator.Builder())
+                    .build().addClassElements(topLevelClass);
             rc = true;
         }
 
@@ -104,16 +103,16 @@ public class SqlProviderGenerator extends AbstractJavaGenerator {
 
     protected void addInsertSelectiveMethod(TopLevelClass topLevelClass) {
         if (introspectedTable.getRules().generateInsertSelective()) {
-            var builder = new ProviderInsertSelectiveMethodGenerator.Builder();
-            initializeAndExecuteGenerator(builder, topLevelClass);
+            initializeSubBuilder(new ProviderInsertSelectiveMethodGenerator.Builder())
+                    .build().addClassElements(topLevelClass);
         }
     }
 
     protected boolean addSelectByExampleWithBLOBsMethod(TopLevelClass topLevelClass) {
         boolean rc = false;
         if (introspectedTable.getRules().generateSelectByExampleWithBLOBs()) {
-            var builder = new ProviderSelectByExampleWithBLOBsMethodGenerator.Builder();
-            initializeAndExecuteGenerator(builder, topLevelClass);
+            initializeSubBuilder(new ProviderSelectByExampleWithBLOBsMethodGenerator.Builder())
+                    .build().addClassElements(topLevelClass);
             rc = true;
         }
 
@@ -123,8 +122,8 @@ public class SqlProviderGenerator extends AbstractJavaGenerator {
     protected boolean addSelectByExampleWithoutBLOBsMethod(TopLevelClass topLevelClass) {
         boolean rc = false;
         if (introspectedTable.getRules().generateSelectByExampleWithoutBLOBs()) {
-            var builder = new ProviderSelectByExampleWithoutBLOBsMethodGenerator.Builder();
-            initializeAndExecuteGenerator(builder, topLevelClass);
+            initializeSubBuilder(new ProviderSelectByExampleWithoutBLOBsMethodGenerator.Builder())
+                    .build().addClassElements(topLevelClass);
             rc = true;
         }
 
@@ -134,8 +133,8 @@ public class SqlProviderGenerator extends AbstractJavaGenerator {
     protected boolean addUpdateByExampleSelectiveMethod(TopLevelClass topLevelClass) {
         boolean rc = false;
         if (introspectedTable.getRules().generateUpdateByExampleSelective()) {
-            var builder = new ProviderUpdateByExampleSelectiveMethodGenerator.Builder();
-            initializeAndExecuteGenerator(builder, topLevelClass);
+            initializeSubBuilder(new ProviderUpdateByExampleSelectiveMethodGenerator.Builder())
+                    .build().addClassElements(topLevelClass);
             rc = true;
         }
 
@@ -145,8 +144,8 @@ public class SqlProviderGenerator extends AbstractJavaGenerator {
     protected boolean addUpdateByExampleWithBLOBsMethod(TopLevelClass topLevelClass) {
         boolean rc = false;
         if (introspectedTable.getRules().generateUpdateByExampleWithBLOBs()) {
-            var builder = new ProviderUpdateByExampleWithBLOBsMethodGenerator.Builder();
-            initializeAndExecuteGenerator(builder, topLevelClass);
+            initializeSubBuilder(new ProviderUpdateByExampleWithBLOBsMethodGenerator.Builder())
+                    .build().addClassElements(topLevelClass);
             rc = true;
         }
 
@@ -156,8 +155,8 @@ public class SqlProviderGenerator extends AbstractJavaGenerator {
     protected boolean addUpdateByExampleWithoutBLOBsMethod(TopLevelClass topLevelClass) {
         boolean rc = false;
         if (introspectedTable.getRules().generateUpdateByExampleWithoutBLOBs()) {
-            var builder = new ProviderUpdateByExampleWithoutBLOBsMethodGenerator.Builder();
-            initializeAndExecuteGenerator(builder, topLevelClass);
+            initializeSubBuilder(new ProviderUpdateByExampleWithoutBLOBsMethodGenerator.Builder())
+                    .build().addClassElements(topLevelClass);
             rc = true;
         }
 
@@ -166,19 +165,14 @@ public class SqlProviderGenerator extends AbstractJavaGenerator {
 
     protected void addUpdateByPrimaryKeySelectiveMethod(TopLevelClass topLevelClass) {
         if (introspectedTable.getRules().generateUpdateByPrimaryKeySelective()) {
-            var builder = new ProviderUpdateByPrimaryKeySelectiveMethodGenerator.Builder();
-            initializeAndExecuteGenerator(builder, topLevelClass);
+            initializeSubBuilder(new ProviderUpdateByPrimaryKeySelectiveMethodGenerator.Builder())
+                    .build().addClassElements(topLevelClass);
         }
     }
 
     protected void addApplyWhereMethod(TopLevelClass topLevelClass) {
-        var builder = new ProviderApplyWhereMethodGenerator.Builder();
-        initializeAndExecuteGenerator(builder, topLevelClass);
-    }
-
-    protected <T extends AbstractJavaProviderMethodGenerator.AbstractJavaProviderMethodGeneratorBuilder<T>>
-            void initializeAndExecuteGenerator(T builder, TopLevelClass topLevelClass) {
-        initializeSubBuilder(builder).build().addClassElements(topLevelClass);
+        initializeSubBuilder(new ProviderApplyWhereMethodGenerator.Builder())
+                .build().addClassElements(topLevelClass);
     }
 
     public static class Builder extends AbstractJavaGeneratorBuilder<Builder> {

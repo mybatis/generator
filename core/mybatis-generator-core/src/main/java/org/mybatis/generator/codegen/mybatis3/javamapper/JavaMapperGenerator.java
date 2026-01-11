@@ -30,7 +30,6 @@ import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
 import org.mybatis.generator.codegen.AbstractXmlGenerator;
-import org.mybatis.generator.codegen.mybatis3.javamapper.elements.AbstractJavaMapperMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.CountByExampleMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.DeleteByExampleMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.DeleteByPrimaryKeyMethodGenerator;
@@ -109,105 +108,100 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
 
     protected void addCountByExampleMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateCountByExample()) {
-            var builder = new CountByExampleMethodGenerator.Builder();
-            initializeAndExecuteGenerator(builder, interfaze);
+            initializeSubBuilder(new CountByExampleMethodGenerator.Builder())
+                    .build().addInterfaceElements(interfaze);
         }
     }
 
     protected void addDeleteByExampleMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateDeleteByExample()) {
             var builder = new DeleteByExampleMethodGenerator.Builder();
-            initializeAndExecuteGenerator(builder, interfaze);
+            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
         }
     }
 
     protected void addDeleteByPrimaryKeyMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateDeleteByPrimaryKey()) {
             var builder = new DeleteByPrimaryKeyMethodGenerator.Builder().isSimple(false);
-            initializeAndExecuteGenerator(builder, interfaze);
+            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
         }
     }
 
     protected void addInsertMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateInsert()) {
             var builder = new InsertMethodGenerator.Builder().isSimple(false);
-            initializeAndExecuteGenerator(builder, interfaze);
+            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
         }
     }
 
     protected void addInsertSelectiveMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateInsertSelective()) {
             var builder = new InsertSelectiveMethodGenerator.Builder();
-            initializeAndExecuteGenerator(builder, interfaze);
+            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
         }
     }
 
     protected void addSelectByExampleWithBLOBsMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateSelectByExampleWithBLOBs()) {
             var builder = new SelectByExampleWithBLOBsMethodGenerator.Builder();
-            initializeAndExecuteGenerator(builder, interfaze);
+            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
         }
     }
 
     protected void addSelectByExampleWithoutBLOBsMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateSelectByExampleWithoutBLOBs()) {
             var builder = new SelectByExampleWithoutBLOBsMethodGenerator.Builder();
-            initializeAndExecuteGenerator(builder, interfaze);
+            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
         }
     }
 
     protected void addSelectByPrimaryKeyMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateSelectByPrimaryKey()) {
             var builder = new SelectByPrimaryKeyMethodGenerator.Builder().isSimple(false);
-            initializeAndExecuteGenerator(builder, interfaze);
+            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
         }
     }
 
     protected void addUpdateByExampleSelectiveMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateUpdateByExampleSelective()) {
             var builder = new UpdateByExampleSelectiveMethodGenerator.Builder();
-            initializeAndExecuteGenerator(builder, interfaze);
+            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
         }
     }
 
     protected void addUpdateByExampleWithBLOBsMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateUpdateByExampleWithBLOBs()) {
             var builder = new UpdateByExampleWithBLOBsMethodGenerator.Builder();
-            initializeAndExecuteGenerator(builder, interfaze);
+            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
         }
     }
 
     protected void addUpdateByExampleWithoutBLOBsMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateUpdateByExampleWithoutBLOBs()) {
             var builder = new UpdateByExampleWithoutBLOBsMethodGenerator.Builder();
-            initializeAndExecuteGenerator(builder, interfaze);
+            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
         }
     }
 
     protected void addUpdateByPrimaryKeySelectiveMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateUpdateByPrimaryKeySelective()) {
             var builder = new UpdateByPrimaryKeySelectiveMethodGenerator.Builder();
-            initializeAndExecuteGenerator(builder, interfaze);
+            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
         }
     }
 
     protected void addUpdateByPrimaryKeyWithBLOBsMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateUpdateByPrimaryKeyWithBLOBs()) {
             var builder = new UpdateByPrimaryKeyWithBLOBsMethodGenerator.Builder();
-            initializeAndExecuteGenerator(builder, interfaze);
+            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
         }
     }
 
     protected void addUpdateByPrimaryKeyWithoutBLOBsMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateUpdateByPrimaryKeyWithoutBLOBs()) {
             var builder = new UpdateByPrimaryKeyWithoutBLOBsMethodGenerator.Builder();
-            initializeAndExecuteGenerator(builder, interfaze);
+            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
         }
-    }
-
-    protected <T extends AbstractJavaMapperMethodGenerator.AbstractMethodGeneratorBuilder<T>>
-    void initializeAndExecuteGenerator(T builder, Interface interfaze) {
-        initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
     }
 
     public List<CompilationUnit> getExtraCompilationUnits() {

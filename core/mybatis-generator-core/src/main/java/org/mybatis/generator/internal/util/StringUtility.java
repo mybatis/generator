@@ -15,11 +15,11 @@
  */
 package org.mybatis.generator.internal.util;
 
-import org.jspecify.annotations.Nullable;
-
 import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
+
+import org.jspecify.annotations.Nullable;
 
 public class StringUtility {
 

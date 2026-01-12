@@ -487,6 +487,7 @@ public class TableConfiguration extends PropertyHolder {
             this.selectByExampleQueryId = selectByExampleQueryId;
             return this;
         }
+
         public Builder withMapperName(@Nullable String mapperName) {
             this.mapperName = mapperName;
             return this;

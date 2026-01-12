@@ -15,11 +15,11 @@
  */
 package org.mybatis.generator.api.dom.kotlin;
 
-import org.jspecify.annotations.Nullable;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import org.jspecify.annotations.Nullable;
 
 public class KotlinFunction extends KotlinNamedItem {
     private final List<KotlinArg> arguments = new ArrayList<>();

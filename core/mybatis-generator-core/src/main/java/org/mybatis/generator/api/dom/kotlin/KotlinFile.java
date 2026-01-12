@@ -15,8 +15,6 @@
  */
 package org.mybatis.generator.api.dom.kotlin;
 
-import org.jspecify.annotations.Nullable;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -24,6 +22,8 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
+
+import org.jspecify.annotations.Nullable;
 
 public class KotlinFile {
     private final String fileName;

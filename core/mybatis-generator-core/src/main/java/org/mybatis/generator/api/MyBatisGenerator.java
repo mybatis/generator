@@ -419,7 +419,8 @@ public class MyBatisGenerator {
      *             Signals that an I/O exception has occurred.
      */
     private void writeFile(File file, String content, @Nullable String fileEncoding) throws IOException {
-        try (OutputStream fos = Files.newOutputStream(file.toPath(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
+        try (OutputStream fos = Files.newOutputStream(file.toPath(), StandardOpenOption.CREATE,
+                StandardOpenOption.TRUNCATE_EXISTING)) {
             OutputStreamWriter osw;
             if (fileEncoding == null) {
                 osw = new OutputStreamWriter(fos);

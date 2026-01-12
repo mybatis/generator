@@ -15,9 +15,9 @@
  */
 package org.mybatis.generator.api.dom.xml;
 
-import org.jspecify.annotations.Nullable;
-
 import java.util.Optional;
+
+import org.jspecify.annotations.Nullable;
 
 public class Document {
 

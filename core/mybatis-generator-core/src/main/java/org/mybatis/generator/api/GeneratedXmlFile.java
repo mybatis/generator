@@ -15,9 +15,9 @@
  */
 package org.mybatis.generator.api;
 
-import org.mybatis.generator.api.dom.xml.Document;
-
 import java.util.Optional;
+
+import org.mybatis.generator.api.dom.xml.Document;
 
 public class GeneratedXmlFile extends GeneratedFile {
 

@@ -15,10 +15,10 @@
  */
 package org.mybatis.generator.api.dom.kotlin;
 
-import org.jspecify.annotations.Nullable;
-
 import java.util.Objects;
 import java.util.Optional;
+
+import org.jspecify.annotations.Nullable;
 
 public class KotlinProperty extends KotlinNamedItem {
 

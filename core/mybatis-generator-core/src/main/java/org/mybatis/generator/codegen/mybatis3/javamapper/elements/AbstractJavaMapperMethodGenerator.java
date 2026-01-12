@@ -371,7 +371,7 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractGenerato
         return answer;
     }
 
-    public static abstract class AbstractMethodGeneratorBuilder<T extends AbstractMethodGeneratorBuilder<T>>
+    public abstract static class AbstractMethodGeneratorBuilder<T extends AbstractMethodGeneratorBuilder<T>>
             extends AbstractGeneratorBuilder<T> {
         public abstract AbstractJavaMapperMethodGenerator build();
     }

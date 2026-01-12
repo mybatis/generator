@@ -401,15 +401,15 @@ public abstract class IntrospectedTable {
         calculateXmlAttributes();
 
         switch (getTableConfiguration().getModelType()) {
-            case HIERARCHICAL:
-                rules = new HierarchicalModelRules(this);
-                break;
-            case FLAT:
-                rules = new FlatModelRules(this);
-                break;
-            case CONDITIONAL:
-                rules = new ConditionalModelRules(this);
-                break;
+        case HIERARCHICAL:
+            rules = new HierarchicalModelRules(this);
+            break;
+        case FLAT:
+            rules = new FlatModelRules(this);
+            break;
+        case CONDITIONAL:
+            rules = new ConditionalModelRules(this);
+            break;
         }
 
         getContext().getPlugins().initialized(this);
@@ -639,7 +639,8 @@ public abstract class IntrospectedTable {
                 .map(c -> {
                     String packkage = c.getProperty(PropertyRegistry.CLIENT_DYNAMIC_SQL_SUPPORT_PACKAGE);
                     if (stringHasValue(packkage)) {
-                        return packkage + getFullyQualifiedTable().getSubPackageForClientOrSqlMap(isSubPackagesEnabled(c));
+                        return packkage
+                                + getFullyQualifiedTable().getSubPackageForClientOrSqlMap(isSubPackagesEnabled(c));
                     } else {
                         return calculateJavaClientInterfacePackage();
                     }

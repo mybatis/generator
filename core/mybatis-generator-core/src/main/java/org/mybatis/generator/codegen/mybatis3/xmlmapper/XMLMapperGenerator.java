@@ -197,8 +197,8 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
 
     protected void addUpdateByExampleWithoutBLOBsElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateUpdateByExampleWithoutBLOBs()) {
-           initializeSubBuilder(new UpdateByExampleWithoutBLOBsElementGenerator.Builder())
-                   .build().addElements(parentElement);
+            initializeSubBuilder(new UpdateByExampleWithoutBLOBsElementGenerator.Builder())
+                    .build().addElements(parentElement);
         }
     }
 

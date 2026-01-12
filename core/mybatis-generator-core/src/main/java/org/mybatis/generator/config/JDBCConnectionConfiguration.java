@@ -79,6 +79,7 @@ public class JDBCConnectionConfiguration extends PropertyHolder {
             this.connectionURL = connectionURL;
             return this;
         }
+
         public Builder withUserId(@Nullable String userId) {
             this.userId = userId;
             return this;

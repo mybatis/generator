@@ -510,7 +510,8 @@ public class Context extends PropertyHolder {
             return this;
         }
 
-        public Builder withConnectionFactoryConfiguration(ConnectionFactoryConfiguration connectionFactoryConfiguration) {
+        public Builder withConnectionFactoryConfiguration(
+                ConnectionFactoryConfiguration connectionFactoryConfiguration) {
             this.connectionFactoryConfiguration = connectionFactoryConfiguration;
             return this;
         }
@@ -521,13 +522,15 @@ public class Context extends PropertyHolder {
             return this;
         }
 
-        public Builder withJavaModelGeneratorConfiguration(JavaModelGeneratorConfiguration javaModelGeneratorConfiguration) {
+        public Builder withJavaModelGeneratorConfiguration(
+                JavaModelGeneratorConfiguration javaModelGeneratorConfiguration) {
             this.javaModelGeneratorConfiguration = javaModelGeneratorConfiguration;
             return this;
         }
 
         @SuppressWarnings("UnusedReturnValue")
-        public Builder withJavaClientGeneratorConfiguration(JavaClientGeneratorConfiguration javaClientGeneratorConfiguration) {
+        public Builder withJavaClientGeneratorConfiguration(
+                JavaClientGeneratorConfiguration javaClientGeneratorConfiguration) {
             this.javaClientGeneratorConfiguration = javaClientGeneratorConfiguration;
             return this;
         }

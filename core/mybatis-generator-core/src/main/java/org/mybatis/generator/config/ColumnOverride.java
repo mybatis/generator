@@ -68,7 +68,7 @@ public class ColumnOverride extends PropertyHolder {
     }
 
     public Optional<String> getTypeHandler() {
-        return Optional.ofNullable( typeHandler);
+        return Optional.ofNullable(typeHandler);
     }
 
     public boolean isColumnNameDelimited() {
@@ -108,6 +108,7 @@ public class ColumnOverride extends PropertyHolder {
             this.jdbcType = jdbcType;
             return this;
         }
+
         public Builder withJavaType(@Nullable String javaType) {
             this.javaType = javaType;
             return this;

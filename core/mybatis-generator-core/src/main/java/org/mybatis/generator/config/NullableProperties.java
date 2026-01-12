@@ -15,10 +15,10 @@
  */
 package org.mybatis.generator.config;
 
-import org.jspecify.annotations.Nullable;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import org.jspecify.annotations.Nullable;
 
 /**
  * NullableProperties is a utility class for handling properties that may be null.

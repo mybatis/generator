@@ -70,12 +70,12 @@ public class XmlFileMergerJaxp {
         }
     }
 
-    public static String getMergedSource(GeneratedXmlFile generatedXmlFile,
-            File existingFile) throws ShellException {
+    public static String getMergedSource(GeneratedXmlFile generatedXmlFile, File existingFile) throws ShellException {
 
         try {
             return getMergedSource(new InputSource(new StringReader(generatedXmlFile.getFormattedContent())),
-                new InputSource(new InputStreamReader(Files.newInputStream(existingFile.toPath()), StandardCharsets.UTF_8)),
+                new InputSource(new InputStreamReader(
+                        Files.newInputStream(existingFile.toPath()), StandardCharsets.UTF_8)),
                 existingFile.getName());
         } catch (IOException | SAXException | ParserConfigurationException e) {
             throw new ShellException(getString("Warning.13", //$NON-NLS-1$

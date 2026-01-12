@@ -15,13 +15,13 @@
  */
 package org.mybatis.generator.config;
 
-import org.jspecify.annotations.Nullable;
-
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.List;
 import java.util.Objects;
+
+import org.jspecify.annotations.Nullable;
 
 public class SqlMapGeneratorConfiguration extends PropertyHolder {
     private final String targetPackage;
@@ -69,6 +69,7 @@ public class SqlMapGeneratorConfiguration extends PropertyHolder {
         public SqlMapGeneratorConfiguration build() {
             return new SqlMapGeneratorConfiguration(this);
         }
+
         @Override
         protected Builder getThis() {
             return this;

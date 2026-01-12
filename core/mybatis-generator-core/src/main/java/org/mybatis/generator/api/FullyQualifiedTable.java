@@ -424,7 +424,8 @@ public class FullyQualifiedTable {
          * <p>This is ignored is a domain object name is configured.
          *
          * <p>If a domain object name is not configured, we'll build the domain object named based on the tableName
-         * or runtimeTableName, and then we use the domain object renaming rule to generate the final domain object name.
+         * or runtimeTableName, and then we use the domain object renaming rule to generate the final domain object
+         * name.
          *
          * @param domainObjectRenamingRule the domain object renaming rule
          * @return this builder

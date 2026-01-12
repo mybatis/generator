@@ -97,7 +97,7 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
         return calculateJavaClientGeneratorBuilderType().map(t -> {
             var builder = ObjectFactory.createInternalObject(t,
                     AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder.class);
-            var generator = initializeAbstractGenerator(builder, warnings, progressCallback).build();
+            var generator = initializeAbstractClientGenerator(builder, warnings, progressCallback).build();
             javaGenerators.add(generator);
             return generator;
         });
@@ -123,54 +123,49 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
 
     protected void calculateJavaModelGenerators(List<String> warnings, ProgressCallback progressCallback) {
         if (getRules().generateExampleClass()) {
-            AbstractJavaGenerator javaGenerator = new ExampleGenerator.Builder()
-                    .withProject(getModelProject())
-                    .withContext(getContext())
-                    .withIntrospectedTable(this)
-                    .withProgressCallback(progressCallback)
-                    .withWarnings(warnings)
+            var javaGenerator = initializeAbstractModelGenerator(new ExampleGenerator.Builder(), warnings,
+                    progressCallback)
                     .build();
             javaGenerators.add(javaGenerator);
         }
 
         if (getRules().generatePrimaryKeyClass()) {
-            AbstractJavaGenerator javaGenerator = new PrimaryKeyGenerator.Builder()
-                    .withProject(getModelProject())
-                    .withContext(getContext())
-                    .withIntrospectedTable(this)
-                    .withProgressCallback(progressCallback)
-                    .withWarnings(warnings)
+            var javaGenerator = initializeAbstractModelGenerator(new PrimaryKeyGenerator.Builder(), warnings,
+                    progressCallback)
                     .build();
             javaGenerators.add(javaGenerator);
         }
 
         if (getRules().generateBaseRecordClass()) {
-            AbstractJavaGenerator javaGenerator = new BaseRecordGenerator.Builder()
-                    .withProject(getModelProject())
-                    .withContext(getContext())
-                    .withIntrospectedTable(this)
-                    .withProgressCallback(progressCallback)
-                    .withWarnings(warnings)
+            var javaGenerator = initializeAbstractModelGenerator(new BaseRecordGenerator.Builder(), warnings,
+                    progressCallback)
                     .build();
             javaGenerators.add(javaGenerator);
         }
 
         if (getRules().generateRecordWithBLOBsClass()) {
-            AbstractJavaGenerator javaGenerator = new RecordWithBLOBsGenerator.Builder()
-                    .withProject(getModelProject())
-                    .withContext(getContext())
-                    .withIntrospectedTable(this)
-                    .withProgressCallback(progressCallback)
-                    .withWarnings(warnings)
+            var javaGenerator = initializeAbstractModelGenerator(new RecordWithBLOBsGenerator.Builder(), warnings,
+                    progressCallback)
                     .build();
             javaGenerators.add(javaGenerator);
         }
     }
 
-    protected AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder<?> initializeAbstractGenerator(
+    protected AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder<?> initializeAbstractClientGenerator(
             AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder<?> builder, List<String> warnings,
             ProgressCallback progressCallback) {
-        return builder.withProject(getClientProject())
+        return builder
+                .withProject(getClientProject())
+                .withContext(getContext())
+                .withIntrospectedTable(this)
+                .withProgressCallback(progressCallback)
+                .withWarnings(warnings);
+    }
+
+    protected <T extends AbstractJavaGenerator.AbstractJavaGeneratorBuilder<T>> T initializeAbstractModelGenerator(
+            T builder, List<String> warnings, ProgressCallback progressCallback) {
+        return builder
+                .withProject(getModelProject())
                 .withContext(getContext())
                 .withIntrospectedTable(this)
                 .withProgressCallback(progressCallback)
@@ -258,11 +253,14 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
 
     @Override
     public boolean requiresXMLGenerator() {
+        // for validation only, so we can build a dummy version.
+        // we build this only to ask if an XML generator is required.
         return calculateJavaClientGeneratorBuilderType()
                 .map(t -> {
                     var builder = ObjectFactory.createInternalObject(t,
                             AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder.class);
-                    return initializeAbstractGenerator(builder, Collections.emptyList(), new VerboseProgressCallback()).build();
+                    return initializeAbstractClientGenerator(builder, Collections.emptyList(),
+                            new VerboseProgressCallback()).build();
                 })
                 .map(AbstractJavaClientGenerator::requiresXMLGenerator)
                 .orElse(false);

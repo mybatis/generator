@@ -21,7 +21,6 @@ import java.util.Optional;
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
-import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.codegen.mybatis3.IntrospectedTableMyBatis3Impl;
 
 public class IntrospectedTableMyBatis3DynamicSqlImpl extends IntrospectedTableMyBatis3Impl {
@@ -46,13 +45,8 @@ public class IntrospectedTableMyBatis3DynamicSqlImpl extends IntrospectedTableMy
 
     @Override
     protected void calculateJavaModelGenerators(List<String> warnings, ProgressCallback progressCallback) {
-        AbstractJavaGenerator javaGenerator = new DynamicSqlModelGenerator.Builder()
-                .withProject(getModelProject())
-                .withContext(getContext())
-                .withIntrospectedTable(this)
-                .withProgressCallback(progressCallback)
-                .withWarnings(warnings)
-                .build();
+        var javaGenerator = initializeAbstractModelGenerator(new DynamicSqlModelGenerator.Builder(),
+                warnings, progressCallback).build();
         javaGenerators.add(javaGenerator);
     }
 

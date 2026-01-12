@@ -21,7 +21,6 @@ import java.util.Optional;
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
-import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.SimpleAnnotatedClientGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.SimpleJavaClientGenerator;
 import org.mybatis.generator.codegen.mybatis3.model.SimpleModelGenerator;
@@ -76,13 +75,8 @@ public class IntrospectedTableMyBatis3SimpleImpl extends IntrospectedTableMyBati
 
     @Override
     protected void calculateJavaModelGenerators(List<String> warnings, ProgressCallback progressCallback) {
-        AbstractJavaGenerator javaGenerator = new SimpleModelGenerator.Builder()
-                .withProject(getModelProject())
-                .withContext(getContext())
-                .withIntrospectedTable(this)
-                .withProgressCallback(progressCallback)
-                .withWarnings(warnings)
-                .build();
+        var javaGenerator = initializeAbstractModelGenerator(new SimpleModelGenerator.Builder(),
+                warnings, progressCallback).build();
 
         javaGenerators.add(javaGenerator);
     }

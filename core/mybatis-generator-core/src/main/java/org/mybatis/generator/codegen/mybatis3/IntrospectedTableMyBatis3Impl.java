@@ -66,7 +66,7 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
         calculateJavaModelGenerators(warnings, progressCallback);
 
         AbstractJavaClientGenerator javaClientGenerator =
-                calculateClientGenerators(warnings, progressCallback).orElse(null);
+                calculateClientGenerator(warnings, progressCallback).orElse(null);
 
         calculateXmlMapperGenerator(javaClientGenerator, warnings, progressCallback);
     }
@@ -88,7 +88,7 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
         }
     }
 
-    protected Optional<AbstractJavaClientGenerator> calculateClientGenerators(List<String> warnings,
+    protected Optional<AbstractJavaClientGenerator> calculateClientGenerator(List<String> warnings,
             ProgressCallback progressCallback) {
         if (!getRules().generateJavaClient()) {
             return Optional.empty();

@@ -40,7 +40,7 @@ public class InsertMultipleMethodGenerator extends AbstractKotlinFunctionGenerat
     }
 
     @Override
-    public KotlinFunctionAndImports generateMethodAndImports() {
+    public @Nullable KotlinFunctionAndImports generateMethodAndImports() {
         if (!Utils.generateMultipleRowInsert(introspectedTable)) {
             return null;
         }

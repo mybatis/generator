@@ -71,8 +71,14 @@ public class FullyQualifiedTable {
             this.alias = builder.alias.trim();
         }
 
-        beginningDelimiter = builder.delimitIdentifiers ? builder.context.getBeginningDelimiter() : ""; //$NON-NLS-1$
-        endingDelimiter = builder.delimitIdentifiers ? builder.context.getEndingDelimiter() : ""; //$NON-NLS-1$
+        if (builder.delimitIdentifiers && builder.context != null) {
+            beginningDelimiter =  builder.context.getBeginningDelimiter();
+            endingDelimiter = builder.context.getEndingDelimiter();
+        } else {
+            beginningDelimiter = ""; //$NON-NLS-1$
+            endingDelimiter = ""; //$NON-NLS-1$
+
+        }
     }
 
     public Optional<String> getIntrospectedCatalog() {

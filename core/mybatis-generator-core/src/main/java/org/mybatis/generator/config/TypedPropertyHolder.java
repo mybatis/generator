@@ -21,7 +21,7 @@ import org.jspecify.annotations.Nullable;
 
 public abstract class TypedPropertyHolder extends PropertyHolder {
 
-    protected @Nullable String configurationType;
+    protected final @Nullable String configurationType;
 
     protected TypedPropertyHolder(TypedBuilder<?> builder) {
         super(builder);

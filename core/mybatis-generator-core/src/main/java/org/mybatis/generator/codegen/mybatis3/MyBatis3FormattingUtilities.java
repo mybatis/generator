@@ -16,8 +16,8 @@
 package org.mybatis.generator.codegen.mybatis3;
 
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
-import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.IntrospectedColumn;
 
 public class MyBatis3FormattingUtilities {
@@ -30,7 +30,7 @@ public class MyBatis3FormattingUtilities {
         return getParameterClause(introspectedColumn, null);
     }
 
-    public static String getParameterClause(IntrospectedColumn introspectedColumn, String prefix) {
+    public static String getParameterClause(IntrospectedColumn introspectedColumn, @Nullable String prefix) {
         StringBuilder sb = new StringBuilder();
 
         sb.append("#{"); //$NON-NLS-1$

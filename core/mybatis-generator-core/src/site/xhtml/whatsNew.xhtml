@@ -51,7 +51,13 @@ recommended practice with JSpecify.</p>
 
 <h3>Potentially Breaking Changes</h3>
 <p>The <code>GeneratedKey</code> configuration class (and corresponding XML element) no longer support the "type"
-    attribute. This attribute was only used for iBatis2 runtimes which are no longer supported by the library.</p>
+attribute. This attribute was only used for iBatis2 runtimes which are no longer supported by the library.</p>
+<p>If you have created your own implementation of a Java client generator, then the API has changed. These
+classes are now built with Builders rather than directly. If you have created such a class, you must now provide
+an extension of <code>org.mybatis.generator.codegen.AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder</code>
+so the library can create your implementation. The <code>type</code> attribute of the &lt;javaClientGenerator&gt;
+XML configuration element now expects the fully qualified name of a builder class.
+</p>
 
 <h2>Version 1.4.2</h2>
 <p>This is a small maintenance release. The most visible change is the switch to the "jakarta" namespace

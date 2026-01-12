@@ -27,8 +27,8 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated.Anno
 
 public class SimpleAnnotatedClientGenerator extends SimpleJavaClientGenerator {
 
-    public SimpleAnnotatedClientGenerator(String project) {
-        super(project, false);
+    public SimpleAnnotatedClientGenerator(Builder builder) {
+        super(builder);
     }
 
     @Override
@@ -74,5 +74,22 @@ public class SimpleAnnotatedClientGenerator extends SimpleJavaClientGenerator {
     @Override
     public Optional<AbstractXmlGenerator> getMatchedXMLGenerator() {
         return Optional.empty();
+    }
+
+    public static class Builder extends SimpleJavaClientGenerator.Builder {
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        @Override
+        public SimpleAnnotatedClientGenerator build() {
+            return new SimpleAnnotatedClientGenerator(this);
+        }
+
+        @Override
+        protected boolean requiresXMLGenerator() {
+            return false;
+        }
     }
 }

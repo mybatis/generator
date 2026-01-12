@@ -39,9 +39,9 @@ public class IntrospectedTableMyBatis3DynamicSqlImpl extends IntrospectedTableMy
     }
 
     @Override
-    protected Optional<AbstractJavaClientGenerator> createJavaClientGenerator() {
+    protected Optional<String> calculateJavaClientGeneratorBuilderType() {
         return getContext().getJavaClientGeneratorConfiguration()
-                .map(c -> new DynamicSqlMapperGenerator(getClientProject()));
+                .map(c -> DynamicSqlMapperGenerator.Builder.class.getName());
     }
 
     @Override

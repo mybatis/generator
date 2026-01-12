@@ -27,7 +27,6 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.SimpleJavaClientGenerat
 import org.mybatis.generator.codegen.mybatis3.model.SimpleModelGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.SimpleXMLMapperGenerator;
 import org.mybatis.generator.config.TypedPropertyHolder;
-import org.mybatis.generator.internal.ObjectFactory;
 
 /**
  * Introspected table implementation for generating simple MyBatis3 artifacts.
@@ -60,17 +59,17 @@ public class IntrospectedTableMyBatis3SimpleImpl extends IntrospectedTableMyBati
     }
 
     @Override
-    protected Optional<AbstractJavaClientGenerator> createJavaClientGenerator() {
+    protected Optional<String> calculateJavaClientGeneratorBuilderType() {
         return getContext().getJavaClientGeneratorConfiguration().flatMap(TypedPropertyHolder::getConfigurationType)
                 .map(t -> {
                     if ("XMLMAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
-                        return new SimpleJavaClientGenerator(getClientProject());
+                        return SimpleJavaClientGenerator.Builder.class.getName();
                     } else if ("ANNOTATEDMAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
-                        return new SimpleAnnotatedClientGenerator(getClientProject());
+                        return SimpleAnnotatedClientGenerator.Builder.class.getName();
                     } else if ("MAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
-                        return new SimpleJavaClientGenerator(getClientProject());
+                        return SimpleJavaClientGenerator.Builder.class.getName();
                     } else {
-                        return ObjectFactory.createInternalObject(t, AbstractJavaClientGenerator.class);
+                        return t;
                     }
                 });
     }

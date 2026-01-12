@@ -38,8 +38,8 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated.Anno
 
 public class AnnotatedClientGenerator extends JavaMapperGenerator {
 
-    public AnnotatedClientGenerator(String project) {
-        super(project, false);
+    public AnnotatedClientGenerator(Builder builder) {
+        super(builder);
     }
 
     @Override
@@ -165,5 +165,22 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
     public Optional<AbstractXmlGenerator> getMatchedXMLGenerator() {
         // No XML required by the annotated client
         return Optional.empty();
+    }
+
+    public static class Builder extends JavaMapperGenerator.Builder {
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        @Override
+        public AnnotatedClientGenerator build() {
+            return new AnnotatedClientGenerator(this);
+        }
+
+        @Override
+        protected boolean requiresXMLGenerator() {
+            return false;
+        }
     }
 }

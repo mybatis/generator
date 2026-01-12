@@ -34,8 +34,8 @@ import org.mybatis.generator.codegen.mybatis3.xmlmapper.MixedMapperGenerator;
  */
 public class MixedClientGenerator extends JavaMapperGenerator {
 
-    public MixedClientGenerator(String project) {
-        super(project, true);
+    public MixedClientGenerator(Builder builder) {
+        super(builder);
     }
 
     @Override
@@ -84,5 +84,17 @@ public class MixedClientGenerator extends JavaMapperGenerator {
     public Optional<AbstractXmlGenerator> getMatchedXMLGenerator() {
         var generator = initializeSubBuilder(new MixedMapperGenerator.Builder()).build();
         return Optional.of(generator);
+    }
+
+    public static class Builder extends JavaMapperGenerator.Builder {
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        @Override
+        public MixedClientGenerator build() {
+            return new MixedClientGenerator(this);
+        }
     }
 }

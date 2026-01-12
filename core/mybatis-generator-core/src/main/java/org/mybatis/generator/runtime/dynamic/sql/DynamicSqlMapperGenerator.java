@@ -164,18 +164,13 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
     }
 
     protected TopLevelClass getSupportClass() {
-        return new DynamicSqlSupportClassGenerator.Builder()
-                .withIntrospectedTable(introspectedTable)
-                .withCommentGenerator(context.getCommentGenerator())
-                .withWarnings(warnings)
+        return initializeSubBuilder(new DynamicSqlSupportClassGenerator.Builder())
                 .build()
                 .generate();
     }
 
     protected void addInsertOneMethod(Interface interfaze) {
-        InsertMethodGenerator generator = new InsertMethodGenerator.Builder()
-                .withContext(context)
-                .withIntrospectedTable(introspectedTable)
+        var generator = initializeSubBuilder(new InsertMethodGenerator.Builder())
                 .withTableFieldName(tableFieldName)
                 .withRecordType(recordType)
                 .build();
@@ -197,9 +192,7 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
     }
 
     protected void addBasicInsertMultipleMethod(Interface interfaze) {
-        BasicMultipleInsertMethodGenerator generator = new BasicMultipleInsertMethodGenerator.Builder()
-                .withContext(context)
-                .withIntrospectedTable(introspectedTable)
+        var generator = initializeSubBuilder(new BasicMultipleInsertMethodGenerator.Builder())
                 .withTableFieldName(tableFieldName)
                 .withRecordType(recordType)
                 .build();
@@ -208,9 +201,7 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
     }
 
     protected void addInsertMultipleMethod(Interface interfaze) {
-        InsertMultipleMethodGenerator generator = new InsertMultipleMethodGenerator.Builder()
-                .withContext(context)
-                .withIntrospectedTable(introspectedTable)
+        var generator = initializeSubBuilder(new InsertMultipleMethodGenerator.Builder())
                 .withTableFieldName(tableFieldName)
                 .withRecordType(recordType)
                 .build();
@@ -222,9 +213,7 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
     }
 
     protected void addGeneralCountMethod(Interface interfaze) {
-        GeneralCountMethodGenerator generator = new GeneralCountMethodGenerator.Builder()
-                .withContext(context)
-                .withIntrospectedTable(introspectedTable)
+        var generator = initializeSubBuilder(new GeneralCountMethodGenerator.Builder())
                 .withTableFieldName(tableFieldName)
                 .build();
 
@@ -238,9 +227,7 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
     }
 
     protected void addGeneralDeleteMethod(Interface interfaze) {
-        GeneralDeleteMethodGenerator generator = new GeneralDeleteMethodGenerator.Builder()
-                .withContext(context)
-                .withIntrospectedTable(introspectedTable)
+        var generator = initializeSubBuilder(new GeneralDeleteMethodGenerator.Builder())
                 .withTableFieldName(tableFieldName)
                 .build();
 
@@ -254,10 +241,8 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
     }
 
     protected void addSelectListField(Interface interfaze) {
-        SelectListGenerator generator = new SelectListGenerator.Builder()
-                .withContext(context)
+        var generator = initializeSubBuilder(new SelectListGenerator.Builder())
                 .withFragmentGenerator(fragmentGenerator)
-                .withIntrospectedTable(introspectedTable)
                 .build();
 
         FieldAndImports fieldAndImports = generator.generateFieldAndImports();
@@ -270,9 +255,7 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
 
     protected void addGeneralSelectMethod(Interface interfaze) {
         addGeneralSelectOneMethod(interfaze);
-        GeneralSelectMethodGenerator generator = new GeneralSelectMethodGenerator.Builder()
-                .withContext(context)
-                .withIntrospectedTable(introspectedTable)
+        var generator = initializeSubBuilder(new GeneralSelectMethodGenerator.Builder())
                 .withTableFieldName(tableFieldName)
                 .withRecordType(recordType)
                 .build();
@@ -281,9 +264,7 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
     }
 
     protected void addSelectDistinctMethod(Interface interfaze) {
-        GeneralSelectDistinctMethodGenerator generator = new GeneralSelectDistinctMethodGenerator.Builder()
-                .withContext(context)
-                .withIntrospectedTable(introspectedTable)
+        var generator = initializeSubBuilder(new GeneralSelectDistinctMethodGenerator.Builder())
                 .withTableFieldName(tableFieldName)
                 .withRecordType(recordType)
                 .build();
@@ -292,9 +273,7 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
     }
 
     protected void addGeneralSelectOneMethod(Interface interfaze) {
-        GeneralSelectOneMethodGenerator generator = new GeneralSelectOneMethodGenerator.Builder()
-                .withContext(context)
-                .withIntrospectedTable(introspectedTable)
+        var generator = initializeSubBuilder(new GeneralSelectOneMethodGenerator.Builder())
                 .withTableFieldName(tableFieldName)
                 .withRecordType(recordType)
                 .build();
@@ -303,9 +282,7 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
     }
 
     protected void addGeneralUpdateMethod(Interface interfaze) {
-        GeneralUpdateMethodGenerator generator = new GeneralUpdateMethodGenerator.Builder()
-                .withContext(context)
-                .withIntrospectedTable(introspectedTable)
+        var generator = initializeSubBuilder(new GeneralUpdateMethodGenerator.Builder())
                 .withTableFieldName(tableFieldName)
                 .build();
 
@@ -319,9 +296,7 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
     }
 
     protected void addUpdateAllMethod(Interface interfaze) {
-        UpdateAllColumnsMethodGenerator generator = new UpdateAllColumnsMethodGenerator.Builder()
-                .withContext(context)
-                .withIntrospectedTable(introspectedTable)
+        var generator = initializeSubBuilder(new UpdateAllColumnsMethodGenerator.Builder())
                 .withTableFieldName(tableFieldName)
                 .withFragmentGenerator(fragmentGenerator)
                 .withRecordType(recordType)
@@ -331,9 +306,7 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
     }
 
     protected void addUpdateSelectiveMethod(Interface interfaze) {
-        UpdateSelectiveColumnsMethodGenerator generator = new UpdateSelectiveColumnsMethodGenerator.Builder()
-                .withContext(context)
-                .withIntrospectedTable(introspectedTable)
+        var generator = initializeSubBuilder(new UpdateSelectiveColumnsMethodGenerator.Builder())
                 .withTableFieldName(tableFieldName)
                 .withFragmentGenerator(fragmentGenerator)
                 .withRecordType(recordType)
@@ -343,10 +316,8 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
     }
 
     protected void addBasicSelectOneMethod(Interface interfaze, boolean reuseResultMap) {
-        BasicSelectOneMethodGenerator generator = new BasicSelectOneMethodGenerator.Builder()
-                .withContext(context)
+        var generator = initializeSubBuilder(new BasicSelectOneMethodGenerator.Builder())
                 .withFragmentGenerator(fragmentGenerator)
-                .withIntrospectedTable(introspectedTable)
                 .withTableFieldName(tableFieldName)
                 .withRecordType(recordType)
                 .withResultMapId(resultMapId)
@@ -357,9 +328,7 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
     }
 
     protected void addDeleteByPrimaryKeyMethod(Interface interfaze) {
-        DeleteByPrimaryKeyMethodGenerator generator = new DeleteByPrimaryKeyMethodGenerator.Builder()
-                .withContext(context)
-                .withIntrospectedTable(introspectedTable)
+        var generator = initializeSubBuilder(new DeleteByPrimaryKeyMethodGenerator.Builder())
                 .withFragmentGenerator(fragmentGenerator)
                 .withTableFieldName(tableFieldName)
                 .build();
@@ -368,9 +337,7 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
     }
 
     protected void addInsertSelectiveMethod(Interface interfaze) {
-        InsertSelectiveMethodGenerator generator = new InsertSelectiveMethodGenerator.Builder()
-                .withContext(context)
-                .withIntrospectedTable(introspectedTable)
+        var generator = initializeSubBuilder(new InsertSelectiveMethodGenerator.Builder())
                 .withTableFieldName(tableFieldName)
                 .withRecordType(recordType)
                 .build();
@@ -382,10 +349,8 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
     }
 
     protected void addSelectByPrimaryKeyMethod(Interface interfaze) {
-        SelectByPrimaryKeyMethodGenerator generator = new SelectByPrimaryKeyMethodGenerator.Builder()
-                .withContext(context)
+        var generator = initializeSubBuilder(new SelectByPrimaryKeyMethodGenerator.Builder())
                 .withFragmentGenerator(fragmentGenerator)
-                .withIntrospectedTable(introspectedTable)
                 .withTableFieldName(tableFieldName)
                 .withRecordType(recordType)
                 .build();
@@ -394,10 +359,8 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
     }
 
     protected void addUpdateByPrimaryKeyMethod(Interface interfaze) {
-        UpdateByPrimaryKeyMethodGenerator generator = new UpdateByPrimaryKeyMethodGenerator.Builder()
-                .withContext(context)
+        var generator = initializeSubBuilder(new UpdateByPrimaryKeyMethodGenerator.Builder())
                 .withFragmentGenerator(fragmentGenerator)
-                .withIntrospectedTable(introspectedTable)
                 .withTableFieldName(tableFieldName)
                 .withRecordType(recordType)
                 .build();
@@ -406,11 +369,8 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
     }
 
     protected void addUpdateByPrimaryKeySelectiveMethod(Interface interfaze) {
-        UpdateByPrimaryKeySelectiveMethodGenerator generator =
-                new UpdateByPrimaryKeySelectiveMethodGenerator.Builder()
-                .withContext(context)
+        var generator = initializeSubBuilder(new UpdateByPrimaryKeySelectiveMethodGenerator.Builder())
                 .withFragmentGenerator(fragmentGenerator)
-                .withIntrospectedTable(introspectedTable)
                 .withTableFieldName(tableFieldName)
                 .withRecordType(recordType)
                 .build();
@@ -419,10 +379,8 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
     }
 
     protected void addBasicInsertMethod(Interface interfaze) {
-        BasicInsertMethodGenerator generator = new BasicInsertMethodGenerator.Builder()
-                .withContext(context)
+        var generator = initializeSubBuilder(new BasicInsertMethodGenerator.Builder())
                 .withFragmentGenerator(fragmentGenerator)
-                .withIntrospectedTable(introspectedTable)
                 .withTableFieldName(tableFieldName)
                 .withRecordType(recordType)
                 .build();
@@ -431,10 +389,8 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
     }
 
     protected boolean addBasicSelectManyMethod(Interface interfaze) {
-        BasicSelectManyMethodGenerator generator = new BasicSelectManyMethodGenerator.Builder()
-                .withContext(context)
+        var generator = initializeSubBuilder(new BasicSelectManyMethodGenerator.Builder())
                 .withFragmentGenerator(fragmentGenerator)
-                .withIntrospectedTable(introspectedTable)
                 .withTableFieldName(tableFieldName)
                 .withRecordType(recordType)
                 .build();

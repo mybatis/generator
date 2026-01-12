@@ -20,22 +20,18 @@ import java.util.Objects;
 import java.util.Set;
 
 import org.jspecify.annotations.Nullable;
-import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
-import org.mybatis.generator.config.Context;
+import org.mybatis.generator.codegen.AbstractGenerator;
 
-public class SelectListGenerator {
+public class SelectListGenerator extends AbstractGenerator {
 
     private final FragmentGenerator fragmentGenerator;
-    private final Context context;
-    private final IntrospectedTable introspectedTable;
 
     private SelectListGenerator(Builder builder) {
+        super(builder);
         this.fragmentGenerator = Objects.requireNonNull(builder.fragmentGenerator);
-        this.context = Objects.requireNonNull(builder.context);
-        this.introspectedTable = Objects.requireNonNull(builder.introspectedTable);
     }
 
     public FieldAndImports generateFieldAndImports() {
@@ -58,23 +54,16 @@ public class SelectListGenerator {
         return context.getPlugins().clientSelectListFieldGenerated(field, interfaze, introspectedTable);
     }
 
-    public static class Builder {
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
         private @Nullable FragmentGenerator fragmentGenerator;
-        private @Nullable Context context;
-        private @Nullable IntrospectedTable introspectedTable;
 
         public Builder withFragmentGenerator(FragmentGenerator fragmentGenerator) {
             this.fragmentGenerator = fragmentGenerator;
             return this;
         }
 
-        public Builder withContext(Context context) {
-            this.context = context;
-            return this;
-        }
-
-        public Builder withIntrospectedTable(IntrospectedTable introspectedTable) {
-            this.introspectedTable = introspectedTable;
+        @Override
+        protected Builder getThis() {
             return this;
         }
 

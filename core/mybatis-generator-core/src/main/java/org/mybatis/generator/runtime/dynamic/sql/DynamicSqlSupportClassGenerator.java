@@ -19,32 +19,23 @@ import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 
 import java.util.List;
-import java.util.Objects;
 
-import org.jspecify.annotations.Nullable;
-import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.IntrospectedColumn;
-import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.InnerClass;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.codegen.AbstractGenerator;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
 import org.mybatis.generator.internal.util.StringUtility;
 import org.mybatis.generator.internal.util.messages.Messages;
 
-public class DynamicSqlSupportClassGenerator {
-    private final IntrospectedTable introspectedTable;
-    private final CommentGenerator commentGenerator;
-    private final List<String> warnings;
-
+public class DynamicSqlSupportClassGenerator extends AbstractGenerator {
     private DynamicSqlSupportClassGenerator(Builder builder) {
-        introspectedTable = Objects.requireNonNull(builder.introspectedTable);
-        commentGenerator = Objects.requireNonNull(builder.commentGenerator);
-        warnings = Objects.requireNonNull(builder.warnings);
+        super(builder);
     }
 
     public TopLevelClass generate() {
@@ -94,7 +85,8 @@ public class DynamicSqlSupportClassGenerator {
                 + ");"); //$NON-NLS-1$
         innerClass.addMethod(method);
 
-        commentGenerator.addClassAnnotation(innerClass, introspectedTable, topLevelClass.getImportedTypes());
+        context.getCommentGenerator()
+                .addClassAnnotation(innerClass, introspectedTable, topLevelClass.getImportedTypes());
 
         return innerClass;
     }
@@ -105,7 +97,7 @@ public class DynamicSqlSupportClassGenerator {
         String fieldName =
                 JavaBeansUtil.getValidPropertyName(introspectedTable.getMyBatisDynamicSQLTableObjectName());
         Field field = new Field(fieldName, fqjt);
-        commentGenerator.addFieldAnnotation(field, introspectedTable, topLevelClass.getImportedTypes());
+        context.getCommentGenerator().addFieldAnnotation(field, introspectedTable, topLevelClass.getImportedTypes());
         field.setVisibility(JavaVisibility.PUBLIC);
         field.setStatic(true);
         field.setFinal(true);
@@ -142,7 +134,8 @@ public class DynamicSqlSupportClassGenerator {
             field.setStatic(true);
             field.setFinal(true);
             field.setInitializationString(tableFieldName + "." + fieldName); //$NON-NLS-1$
-            commentGenerator.addFieldAnnotation(field, introspectedTable, column, topLevelClass.getImportedTypes());
+            context.getCommentGenerator()
+                    .addFieldAnnotation(field, introspectedTable, column, topLevelClass.getImportedTypes());
             topLevelClass.addField(field);
         }
 
@@ -179,23 +172,9 @@ public class DynamicSqlSupportClassGenerator {
         return initializationString.toString();
     }
 
-    public static class Builder {
-        private @Nullable IntrospectedTable introspectedTable;
-        private @Nullable CommentGenerator commentGenerator;
-        private @Nullable List<String> warnings;
-
-        public Builder withIntrospectedTable(IntrospectedTable introspectedTable) {
-            this.introspectedTable = introspectedTable;
-            return this;
-        }
-
-        public Builder withCommentGenerator(CommentGenerator commentGenerator) {
-            this.commentGenerator = commentGenerator;
-            return this;
-        }
-
-        public Builder withWarnings(List<String> warnings) {
-            this.warnings = warnings;
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
+        @Override
+        protected Builder getThis() {
             return this;
         }
 

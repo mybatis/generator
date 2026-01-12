@@ -19,36 +19,28 @@ import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForKotlin;
 
 import java.util.List;
-import java.util.Objects;
 
 import org.mybatis.generator.api.IntrospectedColumn;
-import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
 import org.mybatis.generator.api.dom.kotlin.JavaToKotlinTypeConverter;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinProperty;
 import org.mybatis.generator.api.dom.kotlin.KotlinType;
-import org.mybatis.generator.config.Context;
+import org.mybatis.generator.codegen.AbstractGenerator;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
 import org.mybatis.generator.internal.util.StringUtility;
 import org.mybatis.generator.internal.util.messages.Messages;
 
-public class KotlinDynamicSqlSupportClassGenerator {
-    private final IntrospectedTable introspectedTable;
-    private final Context context;
-    private final List<String> warnings;
+public class KotlinDynamicSqlSupportClassGenerator extends AbstractGenerator {
     private KotlinFile kotlinFile;
     private KotlinType innerClass;
     private KotlinType outerObject;
     private KotlinProperty tableProperty;
 
-    public KotlinDynamicSqlSupportClassGenerator(Context context, IntrospectedTable introspectedTable,
-                                                 List<String> warnings) {
-        this.introspectedTable = Objects.requireNonNull(introspectedTable);
-        this.context = Objects.requireNonNull(context);
-        this.warnings = Objects.requireNonNull(warnings);
+    public KotlinDynamicSqlSupportClassGenerator(Builder builder) {
+        super(builder);
         generate();
     }
 
@@ -192,5 +184,16 @@ public class KotlinDynamicSqlSupportClassGenerator {
         initializationString.append(')'); //$NON-NLS-1$
 
         return initializationString.toString();
+    }
+
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        public KotlinDynamicSqlSupportClassGenerator build() {
+            return new KotlinDynamicSqlSupportClassGenerator(this);
+        }
     }
 }

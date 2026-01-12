@@ -19,20 +19,16 @@ import java.util.Objects;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.IntrospectedColumn;
-import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.kotlin.KotlinArg;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
-import org.mybatis.generator.config.Context;
+import org.mybatis.generator.codegen.AbstractGenerator;
 
-public abstract class AbstractKotlinFunctionGenerator {
-    protected final Context context;
-    protected final IntrospectedTable introspectedTable;
+public abstract class AbstractKotlinFunctionGenerator extends AbstractGenerator {
     protected final String tableFieldName;
 
     protected AbstractKotlinFunctionGenerator(BaseBuilder<?> builder) {
-        context = Objects.requireNonNull(builder.context);
-        introspectedTable = Objects.requireNonNull(builder.introspectedTable);
+        super(builder);
         tableFieldName = Objects.requireNonNull(builder.tableFieldName);
     }
 
@@ -86,26 +82,12 @@ public abstract class AbstractKotlinFunctionGenerator {
 
     public abstract boolean callPlugins(KotlinFunction method, KotlinFile kotlinFile);
 
-    public abstract static class BaseBuilder<T extends BaseBuilder<T>> {
-        private @Nullable Context context;
-        private @Nullable IntrospectedTable introspectedTable;
+    public abstract static class BaseBuilder<T extends BaseBuilder<T>> extends AbstractGeneratorBuilder<T> {
         private @Nullable String tableFieldName;
-
-        public T withContext(Context context) {
-            this.context = context;
-            return getThis();
-        }
 
         public T withTableFieldName(String tableFieldName) {
             this.tableFieldName = tableFieldName;
             return getThis();
         }
-
-        public T withIntrospectedTable(IntrospectedTable introspectedTable) {
-            this.introspectedTable = introspectedTable;
-            return getThis();
-        }
-
-        public abstract T getThis();
     }
 }

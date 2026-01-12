@@ -45,8 +45,13 @@ public class IntrospectedTableMyBatis3DynamicSqlImpl extends IntrospectedTableMy
 
     @Override
     protected void calculateJavaModelGenerators(List<String> warnings, ProgressCallback progressCallback) {
-        var javaGenerator = initializeAbstractModelGenerator(new DynamicSqlModelGenerator.Builder(),
-                warnings, progressCallback).build();
+        var javaGenerator = new DynamicSqlModelGenerator.Builder()
+                .withProject(getModelProject())
+                .withContext(getContext())
+                .withIntrospectedTable(this)
+                .withProgressCallback(progressCallback)
+                .withWarnings(warnings)
+                .build();
         javaGenerators.add(javaGenerator);
     }
 

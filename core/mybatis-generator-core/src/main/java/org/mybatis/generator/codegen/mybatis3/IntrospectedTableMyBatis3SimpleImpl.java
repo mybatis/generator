@@ -18,13 +18,10 @@ package org.mybatis.generator.codegen.mybatis3;
 import java.util.List;
 import java.util.Optional;
 
-import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.ProgressCallback;
-import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.SimpleAnnotatedClientGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.SimpleJavaClientGenerator;
 import org.mybatis.generator.codegen.mybatis3.model.SimpleModelGenerator;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.SimpleXMLMapperGenerator;
 import org.mybatis.generator.config.TypedPropertyHolder;
 
 /**
@@ -37,24 +34,6 @@ import org.mybatis.generator.config.TypedPropertyHolder;
 public class IntrospectedTableMyBatis3SimpleImpl extends IntrospectedTableMyBatis3Impl {
     public IntrospectedTableMyBatis3SimpleImpl() {
         super();
-    }
-
-    @Override
-    protected void calculateXmlMapperGenerator(@Nullable AbstractJavaClientGenerator javaClientGenerator,
-                                               List<String> warnings,
-                                               ProgressCallback progressCallback) {
-        if (javaClientGenerator == null) {
-            if (getContext().getSqlMapGeneratorConfiguration().isPresent()) {
-                xmlMapperGenerator = new SimpleXMLMapperGenerator.Builder()
-                        .withContext(getContext())
-                        .withIntrospectedTable(this)
-                        .withProgressCallback(progressCallback)
-                        .withWarnings(warnings)
-                        .build();
-            }
-        } else {
-            xmlMapperGenerator = javaClientGenerator.getMatchedXMLGenerator().orElse(null);
-        }
     }
 
     @Override

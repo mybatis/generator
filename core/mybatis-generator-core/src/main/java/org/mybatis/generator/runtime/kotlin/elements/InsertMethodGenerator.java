@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,7 +16,9 @@
 package org.mybatis.generator.runtime.kotlin.elements;
 
 import java.util.List;
+import java.util.Objects;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
 import org.mybatis.generator.api.dom.kotlin.KotlinArg;
@@ -31,9 +33,9 @@ public class InsertMethodGenerator extends AbstractKotlinFunctionGenerator {
 
     private InsertMethodGenerator(Builder builder) {
         super(builder);
-        recordType = builder.recordType;
-        mapperName = builder.mapperName;
-        supportObjectImport = builder.supportObjectImport;
+        recordType = Objects.requireNonNull(builder.recordType);
+        mapperName = Objects.requireNonNull(builder.mapperName);
+        supportObjectImport = Objects.requireNonNull(builder.supportObjectImport);
     }
 
     @Override
@@ -79,9 +81,9 @@ public class InsertMethodGenerator extends AbstractKotlinFunctionGenerator {
     }
 
     public static class Builder extends BaseBuilder<Builder> {
-        private FullyQualifiedKotlinType recordType;
-        private String mapperName;
-        private String supportObjectImport;
+        private @Nullable FullyQualifiedKotlinType recordType;
+        private @Nullable String mapperName;
+        private @Nullable String supportObjectImport;
 
         public Builder withRecordType(FullyQualifiedKotlinType recordType) {
             this.recordType = recordType;

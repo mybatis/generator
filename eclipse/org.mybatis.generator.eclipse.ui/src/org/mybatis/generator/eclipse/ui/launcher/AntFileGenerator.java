@@ -44,8 +44,7 @@ public class AntFileGenerator implements GeneratorLaunchConstants {
 
     public String getAntFileContent() {
 
-        Document document = new Document();
-        document.setRootElement(getProjectElement());
+        Document document = new Document(getProjectElement());
 
         return new DefaultXmlFormatter().getFormattedContent(document);
     }

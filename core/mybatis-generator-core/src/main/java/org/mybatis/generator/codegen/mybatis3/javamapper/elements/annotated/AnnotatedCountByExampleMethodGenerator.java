@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,8 +22,8 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.CountByExample
 
 public class AnnotatedCountByExampleMethodGenerator extends CountByExampleMethodGenerator {
 
-    public AnnotatedCountByExampleMethodGenerator() {
-        super();
+    protected AnnotatedCountByExampleMethodGenerator(Builder builder) {
+        super(builder);
     }
 
     @Override
@@ -42,5 +42,17 @@ public class AnnotatedCountByExampleMethodGenerator extends CountByExampleMethod
     public void addExtraImports(Interface interfaze) {
         interfaze.addImportedType(
                 new FullyQualifiedJavaType("org.apache.ibatis.annotations.SelectProvider")); //$NON-NLS-1$
+    }
+
+    public static class Builder extends CountByExampleMethodGenerator.Builder {
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        @Override
+        public AnnotatedCountByExampleMethodGenerator build() {
+            return new AnnotatedCountByExampleMethodGenerator(this);
+        }
     }
 }

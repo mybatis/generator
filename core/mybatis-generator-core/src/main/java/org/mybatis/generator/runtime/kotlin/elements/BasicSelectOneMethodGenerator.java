@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,6 +15,9 @@
  */
 package org.mybatis.generator.runtime.kotlin.elements;
 
+import java.util.Objects;
+
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
 import org.mybatis.generator.api.dom.kotlin.KotlinArg;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
@@ -29,9 +32,9 @@ public class BasicSelectOneMethodGenerator extends AbstractKotlinFunctionGenerat
 
     private BasicSelectOneMethodGenerator(Builder builder) {
         super(builder);
-        recordType = builder.recordType;
-        resultMapId = builder.resultMapId;
-        fragmentGenerator = builder.fragmentGenerator;
+        recordType = Objects.requireNonNull(builder.recordType);
+        resultMapId = Objects.requireNonNull(builder.resultMapId);
+        fragmentGenerator = Objects.requireNonNull(builder.fragmentGenerator);
         reuseResultMap = builder.reuseResultMap;
     }
 
@@ -74,9 +77,9 @@ public class BasicSelectOneMethodGenerator extends AbstractKotlinFunctionGenerat
 
     public static class Builder extends BaseBuilder<Builder> {
 
-        private FullyQualifiedKotlinType recordType;
-        private String resultMapId;
-        private KotlinFragmentGenerator fragmentGenerator;
+        private @Nullable FullyQualifiedKotlinType recordType;
+        private @Nullable String resultMapId;
+        private @Nullable KotlinFragmentGenerator fragmentGenerator;
         private boolean reuseResultMap;
 
         public Builder withRecordType(FullyQualifiedKotlinType recordType) {

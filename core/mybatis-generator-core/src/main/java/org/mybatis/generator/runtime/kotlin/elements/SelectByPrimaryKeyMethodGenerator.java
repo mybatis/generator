@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,6 +15,9 @@
  */
 package org.mybatis.generator.runtime.kotlin.elements;
 
+import java.util.Objects;
+
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 import org.mybatis.generator.runtime.dynamic.sql.elements.Utils;
@@ -25,12 +28,12 @@ public class SelectByPrimaryKeyMethodGenerator extends AbstractKotlinFunctionGen
 
     private SelectByPrimaryKeyMethodGenerator(Builder builder) {
         super(builder);
-        mapperName = builder.mapperName;
-        fragmentGenerator = builder.fragmentGenerator;
+        mapperName = Objects.requireNonNull(builder.mapperName);
+        fragmentGenerator = Objects.requireNonNull(builder.fragmentGenerator);
     }
 
     @Override
-    public KotlinFunctionAndImports generateMethodAndImports() {
+    public @Nullable KotlinFunctionAndImports generateMethodAndImports() {
         if (!Utils.generateSelectByPrimaryKey(introspectedTable)) {
             return null;
         }
@@ -57,8 +60,8 @@ public class SelectByPrimaryKeyMethodGenerator extends AbstractKotlinFunctionGen
     }
 
     public static class Builder extends BaseBuilder<Builder> {
-        private String mapperName;
-        private KotlinFragmentGenerator fragmentGenerator;
+        private @Nullable String mapperName;
+        private @Nullable KotlinFragmentGenerator fragmentGenerator;
 
         public Builder withMapperName(String mapperName) {
             this.mapperName = mapperName;

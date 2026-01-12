@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,7 +17,26 @@ package org.mybatis.generator.config;
 
 public class JavaTypeResolverConfiguration extends TypedPropertyHolder {
 
-    public JavaTypeResolverConfiguration() {
-        super();
+    protected JavaTypeResolverConfiguration(Builder builder) {
+        super(builder);
+    }
+
+    public String getImplementationType() {
+        if (configurationType == null || "DEFAULT".equals(configurationType)) { //$NON-NLS-1$
+            return Defaults.DEFAULT_JAVA_TYPE_RESOLVER;
+        } else {
+            return configurationType;
+        }
+    }
+
+    public static class Builder extends TypedBuilder<Builder> {
+        public JavaTypeResolverConfiguration build() {
+            return new JavaTypeResolverConfiguration(this);
+        }
+
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
     }
 }

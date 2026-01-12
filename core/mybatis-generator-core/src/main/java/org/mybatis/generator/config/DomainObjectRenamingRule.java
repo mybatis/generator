@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,8 +20,10 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
+
 /**
- * This class is used to specify a renaming rule for table's domain object name.
+ * This record is used to specify a renaming rule for table's domain object name.
  * If domainObjectName is not configured, we'll build the domain object named
  * based on the tableName or runtimeTableName. And then we use the domain object
  * renaming rule to generate the final domain object name.
@@ -50,26 +52,12 @@ import java.util.List;
  * @author liuzh
  *
  */
-public class DomainObjectRenamingRule {
-    private String searchString;
-    private String replaceString;
-
-    public String getReplaceString() {
-        return replaceString;
+public class DomainObjectRenamingRule extends AbstractRenamingRule {
+    public DomainObjectRenamingRule(@Nullable String searchString, @Nullable String replaceString) {
+        super(searchString, replaceString);
     }
 
-    public void setReplaceString(String replaceString) {
-        this.replaceString = replaceString;
-    }
-
-    public String getSearchString() {
-        return searchString;
-    }
-
-    public void setSearchString(String searchString) {
-        this.searchString = searchString;
-    }
-
+    @Override
     public void validate(List<String> errors, String tableName) {
         if (!stringHasValue(searchString)) {
             errors.add(getString("ValidationError.28", tableName)); //$NON-NLS-1$

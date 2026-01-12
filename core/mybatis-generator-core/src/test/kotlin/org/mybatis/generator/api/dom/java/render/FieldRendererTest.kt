@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Test
 import org.mybatis.generator.api.dom.java.Field
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType
 import org.mybatis.generator.api.dom.java.JavaVisibility
+import org.mybatis.generator.api.dom.java.TopLevelClass
 
 class FieldRendererTest {
     @Test
@@ -83,6 +84,9 @@ class FieldRendererTest {
                 """.trimMargin())
     }
 
-    private fun toString(f: Field) = FieldRenderer().render(f, null)
-                .joinToString(System.lineSeparator())
+    private fun toString(f: Field): String {
+        val tlc = TopLevelClass("Foo")
+        return FieldRenderer().render(f, tlc)
+            .joinToString(System.lineSeparator())
+    }
 }

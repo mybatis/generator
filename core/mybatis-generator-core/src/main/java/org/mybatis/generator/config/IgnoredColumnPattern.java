@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,21 +20,21 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Pattern;
+
+import org.jspecify.annotations.Nullable;
 
 public class IgnoredColumnPattern {
 
     private final String patternRegex;
     private final Pattern pattern;
-    private final List<IgnoredColumnException> exceptions = new ArrayList<>();
+    private final List<IgnoredColumnException> exceptions;
 
-    public IgnoredColumnPattern(String patternRegex) {
-        this.patternRegex = patternRegex;
+    protected IgnoredColumnPattern(Builder builder) {
+        this.patternRegex = Objects.requireNonNull(builder.pattern);
         pattern = Pattern.compile(patternRegex);
-    }
-
-    public void addException(IgnoredColumnException exception) {
-        exceptions.add(exception);
+        exceptions = builder.exceptions;
     }
 
     public boolean matches(String columnName) {
@@ -54,8 +54,27 @@ public class IgnoredColumnPattern {
 
     public void validate(List<String> errors, String tableName) {
         if (!stringHasValue(patternRegex)) {
-            errors.add(getString("ValidationError.27", //$NON-NLS-1$
-                    tableName));
+            errors.add(getString("ValidationError.27", tableName)); //$NON-NLS-1$
+        }
+    }
+
+    public static class Builder {
+        private @Nullable String pattern;
+        private final List<IgnoredColumnException> exceptions = new ArrayList<>();
+
+        public Builder withPattern(@Nullable String pattern) {
+            this.pattern = pattern;
+            return this;
+        }
+
+        @SuppressWarnings("UnusedReturnValue")
+        public Builder addException(IgnoredColumnException exception) {
+            exceptions.add(exception);
+            return this;
+        }
+
+        public IgnoredColumnPattern build() {
+            return new IgnoredColumnPattern(this);
         }
     }
 }

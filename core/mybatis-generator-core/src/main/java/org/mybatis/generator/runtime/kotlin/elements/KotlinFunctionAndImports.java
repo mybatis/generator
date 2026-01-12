@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,8 +16,10 @@
 package org.mybatis.generator.runtime.kotlin.elements;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 
 public class KotlinFunctionAndImports {
@@ -26,7 +28,7 @@ public class KotlinFunctionAndImports {
     private final Set<String> imports;
 
     private KotlinFunctionAndImports(Builder builder) {
-        function = builder.function;
+        function = Objects.requireNonNull(builder.function);
         imports = builder.imports;
     }
 
@@ -43,7 +45,7 @@ public class KotlinFunctionAndImports {
     }
 
     public static class Builder {
-        private KotlinFunction function;
+        private @Nullable KotlinFunction function;
         private final Set<String> imports = new HashSet<>();
 
         public Builder withFunction(KotlinFunction function) {

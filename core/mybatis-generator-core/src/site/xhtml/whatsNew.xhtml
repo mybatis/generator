@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2025 the original author or authors.
+       Copyright 2006-2026 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -25,13 +25,21 @@
 </head>
 <body>
 <h1>What's New in MyBatis Generator</h1>
-<h2>Version 1.4.3</h2>
-<p>
-  This is a relatively minor release.
-  In this release we have updated the minimum Java version to 17.
-  See the GitHub page for milestone 1.4.3 for details other changes in this release:
-  <a target="_blank" href="https://github.com/mybatis/generator/issues?q=milestone%3A1.4.3">Milestone 1.4.3</a>.
+<h2>Version 2.0.0</h2>
+<p>In this release we have adopted JSpecify to fully document the null handling capabilities of the library.
+Proper use of JSpecify pushes a codebase towards immutability - which is a good thing in general. This has caused
+some potentially breaking changes to the API (detailed below). It has also given us an opportunity to do a general
+cleanup and modernization of the code base. For many users, these changes should be transparent.
 </p>
+
+<p>See the GitHub page for milestone 2.0.0 for details other changes in this release:
+  <a target="_blank" href="https://github.com/mybatis/generator/issues?q=milestone%3A2.0.0">Milestone 2.0.0</a>.
+</p>
+
+<h3>Adoption of JSpecify</h3>
+<p>Following the lead of many other projects (including The Spring Framework), we have adopted JSpecify to fully
+document the null handling properties of this library. JSpecify is now a runtime dependency - as is
+recommended practice with JSpecify.</p>
 
 <h3>Enhancements/Fixes</h3>
 <ul>
@@ -40,6 +48,10 @@
   <li>Fixed a rendering bug when Java types have wildcard bounds</li>
   <li>Added a missing plugin method for the Dynamic SQL runtime</li>
 </ul>
+
+<h3>Potentially Breaking Changes</h3>
+<p>The <code>GeneratedKey</code> configuration class (and corresponding XML element) no longer support the "type"
+    attribute. This attribute was only used for iBatis2 runtimes which are no longer supported by the library.</p>
 
 <h2>Version 1.4.2</h2>
 <p>This is a small maintenance release. The most visible change is the switch to the "jakarta" namespace

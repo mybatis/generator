@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -27,9 +27,9 @@ public class AnnotatedSelectByPrimaryKeyMethodGenerator extends SelectByPrimaryK
 
     private final boolean useResultMapIfAvailable;
 
-    public AnnotatedSelectByPrimaryKeyMethodGenerator(boolean useResultMapIfAvailable, boolean isSimple) {
-        super(isSimple);
-        this.useResultMapIfAvailable = useResultMapIfAvailable;
+    protected AnnotatedSelectByPrimaryKeyMethodGenerator(Builder builder) {
+        super(builder);
+        this.useResultMapIfAvailable = builder.useResultMapIfAvailable;
     }
 
     @Override
@@ -89,5 +89,24 @@ public class AnnotatedSelectByPrimaryKeyMethodGenerator extends SelectByPrimaryK
 
     private void addAnnotationImports(Interface interfaze) {
         addAnnotatedSelectImports(interfaze);
+    }
+
+    public static class Builder extends SelectByPrimaryKeyMethodGenerator.Builder {
+        private boolean useResultMapIfAvailable;
+
+        public Builder useResultMapIfAvailable(boolean useResultMapIfAvailable) {
+            this.useResultMapIfAvailable = useResultMapIfAvailable;
+            return this;
+        }
+
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        @Override
+        public AnnotatedSelectByPrimaryKeyMethodGenerator build() {
+            return new AnnotatedSelectByPrimaryKeyMethodGenerator(this);
+        }
     }
 }

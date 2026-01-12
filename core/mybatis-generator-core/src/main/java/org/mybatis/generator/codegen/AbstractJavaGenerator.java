@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,8 +18,11 @@ package org.mybatis.generator.codegen;
 import static org.mybatis.generator.internal.util.JavaBeansUtil.getGetterMethodName;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.Properties;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
@@ -28,12 +31,16 @@ import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.config.PropertyRegistry;
 
 public abstract class AbstractJavaGenerator extends AbstractGenerator {
-    public abstract List<CompilationUnit> getCompilationUnits();
-
     private final String project;
 
+    // TODO - remove once we figure out how to build Java client generators
     protected AbstractJavaGenerator(String project) {
         this.project = project;
+    }
+
+    protected AbstractJavaGenerator(AbstractJavaGeneratorBuilder<?> builder) {
+        super(builder);
+        this.project = Objects.requireNonNull(builder.project);
     }
 
     public String getProject() {
@@ -50,14 +57,14 @@ public abstract class AbstractJavaGenerator extends AbstractGenerator {
         return method;
     }
 
-    public String getRootClass() {
+    public Optional<String> getRootClass() {
         String rootClass = introspectedTable.getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_CLASS);
         if (rootClass == null) {
             Properties properties = context.getJavaModelGeneratorConfiguration().getProperties();
             rootClass = properties.getProperty(PropertyRegistry.ANY_ROOT_CLASS);
         }
 
-        return rootClass;
+        return Optional.ofNullable(rootClass);
     }
 
     protected void addDefaultConstructor(TopLevelClass topLevelClass) {
@@ -95,5 +102,19 @@ public abstract class AbstractJavaGenerator extends AbstractGenerator {
     private void addGeneratedAnnotation(Method method, TopLevelClass topLevelClass) {
         context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable,
                 topLevelClass.getImportedTypes());
+    }
+
+    public abstract List<CompilationUnit> getCompilationUnits();
+
+    public abstract static class AbstractJavaGeneratorBuilder<T extends AbstractJavaGeneratorBuilder<T>>
+            extends AbstractGeneratorBuilder<T> {
+        protected @Nullable String project;
+
+        public T withProject(String project) {
+            this.project = project;
+            return getThis();
+        }
+
+        public abstract AbstractJavaGenerator build();
     }
 }

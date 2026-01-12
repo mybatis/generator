@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package org.mybatis.generator;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +28,8 @@ import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.ConnectionFactoryConfiguration;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.JDBCConnectionConfiguration;
+import org.mybatis.generator.config.JavaClientGeneratorConfiguration;
+import org.mybatis.generator.config.JavaModelGeneratorConfiguration;
 import org.mybatis.generator.config.ModelType;
 import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.exception.InvalidConfigurationException;
@@ -38,7 +41,9 @@ class MyBatisGeneratorTest {
     void testGenerateMyBatis3WithInvalidConfig() throws Exception {
         List<String> warnings = new ArrayList<>();
         ConfigurationParser cp = new ConfigurationParser(warnings);
-        Configuration config = cp.parseConfiguration(this.getClass().getClassLoader().getResourceAsStream("generatorConfigMyBatis3_badConfig.xml"));
+        InputStream is = getClass().getClassLoader().getResourceAsStream("generatorConfigMyBatis3_badConfig.xml");
+        assert is != null;
+        Configuration config = cp.parseConfiguration(is);
 
         DefaultShellCallback shellCallback = new DefaultShellCallback(true);
 
@@ -55,8 +60,15 @@ class MyBatisGeneratorTest {
     void testGenerateInvalidConfigWithNoConnectionSources() {
         List<String> warnings = new ArrayList<>();
         Configuration config = new Configuration();
-        Context context = new Context(ModelType.HIERARCHICAL);
-        context.setId("MyContext");
+        Context context = new Context.Builder()
+                .withId("MyContext")
+                .withDefaultModelType(ModelType.HIERARCHICAL)
+                .withTargetRuntime("MyBatis3Simple")
+                .withJavaModelGeneratorConfiguration(new JavaModelGeneratorConfiguration.Builder()
+                        .withTargetPackage("foo.bar")
+                        .withTargetProject("MyProject")
+                        .build())
+                .build();
         config.addContext(context);
 
         DefaultShellCallback shellCallback = new DefaultShellCallback(true);
@@ -66,17 +78,23 @@ class MyBatisGeneratorTest {
                     MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, shellCallback, warnings);
                     myBatisGenerator.generate(null, null, null, false);
                 });
-        assertEquals(3, e.getErrors().size());
+        assertEquals(2, e.getErrors().size());
     }
 
     @Test
     void testGenerateInvalidConfigWithTwoConnectionSources() {
         List<String> warnings = new ArrayList<>();
         Configuration config = new Configuration();
-        Context context = new Context(ModelType.HIERARCHICAL);
-        context.setId("MyContext");
-        context.setConnectionFactoryConfiguration(new ConnectionFactoryConfiguration());
-        context.setJdbcConnectionConfiguration(new JDBCConnectionConfiguration());
+        Context context = new Context.Builder()
+                .withId("MyContext")
+                .withDefaultModelType(ModelType.HIERARCHICAL)
+                .withTargetRuntime("MyBatis3Simple")
+                .withConnectionFactoryConfiguration(new ConnectionFactoryConfiguration.Builder().build())
+                .withJavaModelGeneratorConfiguration(new JavaModelGeneratorConfiguration.Builder()
+                        .withTargetPackage("foo.bar")
+                        .withTargetProject("MyProject")
+                        .build())
+                .build();
         config.addContext(context);
 
         DefaultShellCallback shellCallback = new DefaultShellCallback(true);

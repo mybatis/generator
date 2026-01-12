@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -157,22 +157,25 @@ class InnerClassTest {
 
     @Test
     void testGetFormattedContent() {
-        InnerClass innerClass = new InnerClass("com.foo.UserClass");
-        innerClass.addField(new Field("test", FullyQualifiedJavaType.getStringInstance()));
-        innerClass.setSuperClass("com.hoge.SuperClass");
-        innerClass.addInnerClass(new InnerClass("InnerUserClass"));
-        innerClass.addInnerEnum(new InnerEnum(new FullyQualifiedJavaType("TestEnum")));
-        innerClass.addTypeParameter(new TypeParameter("T"));
-        innerClass.addTypeParameter(new TypeParameter("U"));
-        innerClass.addInitializationBlock(new InitializationBlock(false));
-        innerClass.addSuperInterface(new FullyQualifiedJavaType("com.hoge.UserInterface"));
+        TopLevelClass topLevelClass = new TopLevelClass("com.foo.UserClass");
+        topLevelClass.addField(new Field("test", FullyQualifiedJavaType.getStringInstance()));
+        topLevelClass.setSuperClass("com.hoge.SuperClass");
+        topLevelClass.addInnerClass(new InnerClass("InnerUserClass"));
+        topLevelClass.addInnerEnum(new InnerEnum(new FullyQualifiedJavaType("TestEnum")));
+        topLevelClass.addTypeParameter(new TypeParameter("T"));
+        topLevelClass.addTypeParameter(new TypeParameter("U"));
+        topLevelClass.addInitializationBlock(new InitializationBlock(false));
+        topLevelClass.addSuperInterface(new FullyQualifiedJavaType("com.hoge.UserInterface"));
 
         Method method = new Method("method1");
         method.setAbstract(true);
-        innerClass.addMethod(method);
-        innerClass.setAbstract(true);
+        topLevelClass.addMethod(method);
+        topLevelClass.setAbstract(true);
 
-        String excepted = "abstract class UserClass<T, U>  extends SuperClass implements UserInterface {" + LF
+        topLevelClass.addImportedType("com.hoge.UserInterface");
+        topLevelClass.addImportedType("com.hoge.SuperClass");
+
+        String expected = "abstract class UserClass<T, U>  extends SuperClass implements UserInterface {" + LF
                 + "    String test;" + LF
                 + LF
                 + "    {" + LF
@@ -188,7 +191,7 @@ class InnerClassTest {
                 + "}";
 
         InnerClassRenderer renderer = new InnerClassRenderer();
-        String rendered = String.join(LF, renderer.render(innerClass, null));
-        assertEquals(excepted, rendered);
+        String rendered = String.join(LF, renderer.render(topLevelClass, topLevelClass));
+        assertEquals(expected, rendered);
     }
 }

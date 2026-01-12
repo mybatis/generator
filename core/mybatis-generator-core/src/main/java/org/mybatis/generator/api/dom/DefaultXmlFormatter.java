@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -26,15 +26,11 @@ import org.mybatis.generator.config.Context;
  * @author Jeff Butler
  */
 public class DefaultXmlFormatter implements XmlFormatter {
-    protected Context context;
-
     @Override
     public String getFormattedContent(Document document) {
         return new DocumentRenderer().render(document);
     }
 
     @Override
-    public void setContext(Context context) {
-        this.context = context;
-    }
+    public void setContext(Context context) {}
 }

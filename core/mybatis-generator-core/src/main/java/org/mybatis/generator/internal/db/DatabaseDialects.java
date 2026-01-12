@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -14,6 +14,8 @@
  *    limitations under the License.
  */
 package org.mybatis.generator.internal.db;
+
+import java.util.Optional;
 
 /**
  * Typesafe enum of known database dialects.
@@ -51,7 +53,7 @@ public enum DatabaseDialects {
      * @return the database dialect for the selected database. May return null if there is no known dialect for the
      *         selected db
      */
-    public static DatabaseDialects getDatabaseDialect(String database) {
+    public static Optional<DatabaseDialects> getDatabaseDialect(String database) {
         DatabaseDialects returnValue = null;
 
         if ("DB2".equalsIgnoreCase(database)) { //$NON-NLS-1$
@@ -74,6 +76,6 @@ public enum DatabaseDialects {
             returnValue = INFORMIX;
         }
 
-        return returnValue;
+        return Optional.ofNullable(returnValue);
     }
 }

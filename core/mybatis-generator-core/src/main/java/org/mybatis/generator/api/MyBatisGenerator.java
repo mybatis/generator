@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.codegen.RootClassInfo;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.Context;
@@ -100,9 +101,8 @@ public class MyBatisGenerator {
      * @throws InvalidConfigurationException
      *             if the specified configuration is invalid
      */
-    public MyBatisGenerator(Configuration configuration, ShellCallback shellCallback,
-            List<String> warnings) throws InvalidConfigurationException {
-        super();
+    public MyBatisGenerator(Configuration configuration, @Nullable ShellCallback shellCallback,
+            @Nullable List<String> warnings) throws InvalidConfigurationException {
         if (configuration == null) {
             throw new IllegalArgumentException(getString("RuntimeError.2")); //$NON-NLS-1$
         } else {
@@ -180,8 +180,8 @@ public class MyBatisGenerator {
      * @throws InterruptedException
      *             if the method is canceled through the ProgressCallback
      */
-    public void generate(ProgressCallback callback, Set<String> contextIds,
-            Set<String> fullyQualifiedTableNames) throws SQLException,
+    public void generate(@Nullable ProgressCallback callback, @Nullable Set<String> contextIds,
+            @Nullable Set<String> fullyQualifiedTableNames) throws SQLException,
             IOException, InterruptedException {
         generate(callback, contextIds, fullyQualifiedTableNames, true);
     }
@@ -211,8 +211,8 @@ public class MyBatisGenerator {
      * @throws InterruptedException
      *             if the method is canceled through the ProgressCallback
      */
-    public void generate(ProgressCallback callback, Set<String> contextIds,
-            Set<String> fullyQualifiedTableNames, boolean writeFiles) throws SQLException,
+    public void generate(@Nullable ProgressCallback callback, @Nullable Set<String> contextIds,
+                         @Nullable Set<String> fullyQualifiedTableNames, boolean writeFiles) throws SQLException,
             IOException, InterruptedException {
 
         if (callback == null) {
@@ -251,8 +251,7 @@ public class MyBatisGenerator {
         callback.introspectionStarted(totalSteps);
 
         for (Context context : contextsToRun) {
-            context.introspectTables(callback, warnings,
-                    fullyQualifiedTableNames);
+            context.introspectTables(callback, warnings, fullyQualifiedTableNames);
         }
 
         // now run the generates
@@ -313,7 +312,7 @@ public class MyBatisGenerator {
                     source = shellCallback.mergeJavaFile(gjf
                             .getFormattedContent(), targetFile.toFile(),
                             MergeConstants.getOldElementTags(),
-                            gjf.getFileEncoding());
+                            gjf.getFileEncoding().orElse(null));
                 } else if (shellCallback.isOverwriteEnabled()) {
                     source = gjf.getFormattedContent();
                     warnings.add(getString("Warning.11", //$NON-NLS-1$
@@ -332,7 +331,7 @@ public class MyBatisGenerator {
             callback.checkCancel();
             callback.startTask(getString(
                     "Progress.15", targetFile.toString())); //$NON-NLS-1$
-            writeFile(targetFile.toFile(), source, gjf.getFileEncoding());
+            writeFile(targetFile.toFile(), source, gjf.getFileEncoding().orElse(null));
         } catch (ShellException e) {
             warnings.add(e.getMessage());
         }
@@ -365,7 +364,7 @@ public class MyBatisGenerator {
             callback.checkCancel();
             callback.startTask(getString(
                     "Progress.15", targetFile.toString())); //$NON-NLS-1$
-            writeFile(targetFile.toFile(), source, gf.getFileEncoding());
+            writeFile(targetFile.toFile(), source, gf.getFileEncoding().orElse(null));
         } catch (ShellException e) {
             warnings.add(e.getMessage());
         }
@@ -401,7 +400,7 @@ public class MyBatisGenerator {
             callback.checkCancel();
             callback.startTask(getString(
                     "Progress.15", targetFile.toString())); //$NON-NLS-1$
-            writeFile(targetFile.toFile(), source, gxf.getFileEncoding());
+            writeFile(targetFile.toFile(), source, gxf.getFileEncoding().orElse(null));
         } catch (ShellException e) {
             warnings.add(e.getMessage());
         }
@@ -419,8 +418,9 @@ public class MyBatisGenerator {
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    private void writeFile(File file, String content, String fileEncoding) throws IOException {
-        try (OutputStream fos = Files.newOutputStream(file.toPath(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
+    private void writeFile(File file, String content, @Nullable String fileEncoding) throws IOException {
+        try (OutputStream fos = Files.newOutputStream(file.toPath(), StandardOpenOption.CREATE,
+                StandardOpenOption.TRUNCATE_EXISTING)) {
             OutputStreamWriter osw;
             if (fileEncoding == null) {
                 osw = new OutputStreamWriter(fos);

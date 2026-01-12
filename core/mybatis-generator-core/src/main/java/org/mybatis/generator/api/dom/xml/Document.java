@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,30 +17,30 @@ package org.mybatis.generator.api.dom.xml;
 
 import java.util.Optional;
 
+import org.jspecify.annotations.Nullable;
+
 public class Document {
 
-    private DocType docType;
+    private @Nullable DocType docType;
 
-    private XmlElement rootElement;
+    private final XmlElement rootElement;
 
-    public Document(String publicId, String systemId) {
+    public Document(String publicId, String systemId, XmlElement rootElement) {
+        this(rootElement);
         docType = new PublicDocType(publicId, systemId);
     }
 
-    public Document(String systemId) {
+    public Document(String systemId, XmlElement rootElement) {
+        this(rootElement);
         docType = new SystemDocType(systemId);
     }
 
-    public Document() {
-        super();
+    public Document(XmlElement rootElement) {
+        this.rootElement = rootElement;
     }
 
     public XmlElement getRootElement() {
         return rootElement;
-    }
-
-    public void setRootElement(XmlElement rootElement) {
-        this.rootElement = rootElement;
     }
 
     public Optional<DocType> getDocType() {

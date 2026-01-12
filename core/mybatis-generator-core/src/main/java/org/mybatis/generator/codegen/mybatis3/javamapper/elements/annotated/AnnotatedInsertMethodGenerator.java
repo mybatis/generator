@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -33,8 +33,8 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.InsertMethodGe
 
 public class AnnotatedInsertMethodGenerator extends InsertMethodGenerator {
 
-    public AnnotatedInsertMethodGenerator(boolean isSimple) {
-        super(isSimple);
+    protected AnnotatedInsertMethodGenerator(Builder builder) {
+        super(builder);
     }
 
     @Override
@@ -115,5 +115,17 @@ public class AnnotatedInsertMethodGenerator extends InsertMethodGenerator {
     public void addExtraImports(Interface interfaze) {
         interfaze.addImportedTypes(buildGeneratedKeyImportsIfRequired());
         interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Insert")); //$NON-NLS-1$
+    }
+
+    public static class Builder extends InsertMethodGenerator.Builder {
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        @Override
+        public AnnotatedInsertMethodGenerator build() {
+            return new AnnotatedInsertMethodGenerator(this);
+        }
     }
 }

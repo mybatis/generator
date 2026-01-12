@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -24,39 +24,41 @@ import java.util.Objects;
 import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 
+import org.jspecify.annotations.Nullable;
+
 public class FullyQualifiedJavaType implements Comparable<FullyQualifiedJavaType> {
 
     private static final String JAVA_LANG = "java.lang"; //$NON-NLS-1$
 
-    private static FullyQualifiedJavaType intInstance = null;
+    private static @Nullable FullyQualifiedJavaType intInstance = null;
 
-    private static FullyQualifiedJavaType stringInstance = null;
+    private static @Nullable FullyQualifiedJavaType stringInstance = null;
 
-    private static FullyQualifiedJavaType booleanPrimitiveInstance = null;
+    private static @Nullable FullyQualifiedJavaType booleanPrimitiveInstance = null;
 
-    private static FullyQualifiedJavaType objectInstance = null;
+    private static @Nullable FullyQualifiedJavaType objectInstance = null;
 
-    private static FullyQualifiedJavaType dateInstance = null;
+    private static @Nullable FullyQualifiedJavaType dateInstance = null;
 
-    private static FullyQualifiedJavaType criteriaInstance = null;
+    private static @Nullable FullyQualifiedJavaType criteriaInstance = null;
 
-    private static FullyQualifiedJavaType generatedCriteriaInstance = null;
+    private static @Nullable FullyQualifiedJavaType generatedCriteriaInstance = null;
 
     /** The short name without any generic arguments. */
-    private String baseShortName;
+    private String baseShortName = ""; //$NON-NLS-1$
 
     /** The fully qualified name without any generic arguments. */
-    private String baseQualifiedName;
+    private String baseQualifiedName = ""; //$NON-NLS-1$
 
     private boolean explicitlyImported;
 
-    private String packageName;
+    private String packageName = ""; //$NON-NLS-1$
 
     private boolean primitive;
 
     private boolean isArray;
 
-    private PrimitiveTypeWrapper primitiveTypeWrapper;
+    private @Nullable PrimitiveTypeWrapper primitiveTypeWrapper;
 
     private final List<FullyQualifiedJavaType> typeArguments;
 
@@ -216,7 +218,7 @@ public class FullyQualifiedJavaType implements Comparable<FullyQualifiedJavaType
     }
 
     public PrimitiveTypeWrapper getPrimitiveTypeWrapper() {
-        return primitiveTypeWrapper;
+        return Objects.requireNonNull(primitiveTypeWrapper);
     }
 
     public static FullyQualifiedJavaType getIntInstance() {

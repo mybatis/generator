@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -28,9 +28,9 @@ public class InsertMethodGenerator extends AbstractJavaMapperMethodGenerator {
 
     private final boolean isSimple;
 
-    public InsertMethodGenerator(boolean isSimple) {
-        super();
-        this.isSimple = isSimple;
+    protected InsertMethodGenerator(Builder builder) {
+        super(builder);
+        isSimple = builder.isSimple;
     }
 
     @Override
@@ -69,5 +69,24 @@ public class InsertMethodGenerator extends AbstractJavaMapperMethodGenerator {
 
     public void addExtraImports(Interface interfaze) {
         // extension point for subclasses
+    }
+
+    public static class Builder extends AbstractMethodGeneratorBuilder<Builder> {
+        private boolean isSimple;
+
+        public Builder isSimple(boolean isSimple) {
+            this.isSimple = isSimple;
+            return this;
+        }
+
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        @Override
+        public InsertMethodGenerator build() {
+            return new InsertMethodGenerator(this);
+        }
     }
 }

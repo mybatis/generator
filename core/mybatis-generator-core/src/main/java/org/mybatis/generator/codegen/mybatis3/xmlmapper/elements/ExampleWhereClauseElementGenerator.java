@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,8 +15,7 @@
  */
 package org.mybatis.generator.codegen.mybatis3.xmlmapper.elements;
 
-import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
-
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
@@ -26,9 +25,9 @@ public class ExampleWhereClauseElementGenerator extends AbstractXmlElementGenera
 
     private final boolean isForUpdateByExample;
 
-    public ExampleWhereClauseElementGenerator(boolean isForUpdateByExample) {
-        super();
-        this.isForUpdateByExample = isForUpdateByExample;
+    public ExampleWhereClauseElementGenerator(Builder builder) {
+        super(builder);
+        this.isForUpdateByExample = builder.isForUpdateByExample;
     }
 
     @Override
@@ -74,7 +73,7 @@ public class ExampleWhereClauseElementGenerator extends AbstractXmlElementGenera
         trimElement.addElement(getMiddleForEachElement(null));
 
         for (IntrospectedColumn introspectedColumn : introspectedTable.getNonBLOBColumns()) {
-            if (stringHasValue(introspectedColumn.getTypeHandler())) {
+            if (introspectedColumn.getTypeHandler().isPresent()) {
                 trimElement.addElement(getMiddleForEachElement(introspectedColumn));
             }
         }
@@ -84,7 +83,7 @@ public class ExampleWhereClauseElementGenerator extends AbstractXmlElementGenera
         }
     }
 
-    private XmlElement getMiddleForEachElement(IntrospectedColumn introspectedColumn) {
+    private XmlElement getMiddleForEachElement(@Nullable IntrospectedColumn introspectedColumn) {
         StringBuilder sb = new StringBuilder();
         String criteriaAttribute;
         boolean typeHandled;
@@ -102,10 +101,8 @@ public class ExampleWhereClauseElementGenerator extends AbstractXmlElementGenera
 
             typeHandled = true;
 
-            sb.setLength(0);
-            sb.append(",typeHandler="); //$NON-NLS-1$
-            sb.append(introspectedColumn.getTypeHandler());
-            typeHandlerString = sb.toString();
+            typeHandlerString = introspectedColumn.getTypeHandler().map(th -> ",typeHandler=" + th) //$NON-NLS-1$
+            .orElse(""); //$NON-NLS-1$
         }
 
         XmlElement middleForEachElement = new XmlElement("foreach"); //$NON-NLS-1$
@@ -167,5 +164,23 @@ public class ExampleWhereClauseElementGenerator extends AbstractXmlElementGenera
         chooseElement.addElement(when);
 
         return middleForEachElement;
+    }
+
+    public static class Builder extends AbstractXmlElementGeneratorBuilder<Builder> {
+        private boolean isForUpdateByExample;
+
+        public Builder isForUpdateByExample(boolean isForUpdateByExample) {
+            this.isForUpdateByExample = isForUpdateByExample;
+            return this;
+        }
+
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        public ExampleWhereClauseElementGenerator build() {
+            return new ExampleWhereClauseElementGenerator(this);
+        }
     }
 }

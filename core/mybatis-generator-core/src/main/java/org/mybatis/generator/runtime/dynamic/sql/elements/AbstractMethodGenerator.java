@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,22 +15,21 @@
  */
 package org.mybatis.generator.runtime.dynamic.sql.elements;
 
+import java.util.Objects;
+
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.IntrospectedColumn;
-import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
-import org.mybatis.generator.config.Context;
+import org.mybatis.generator.codegen.AbstractGenerator;
 
-public abstract class AbstractMethodGenerator {
-    protected final Context context;
-    protected final IntrospectedTable introspectedTable;
+public abstract class AbstractMethodGenerator extends AbstractGenerator {
     protected final String tableFieldName;
 
     protected AbstractMethodGenerator(BaseBuilder<?> builder) {
-        context = builder.context;
-        introspectedTable = builder.introspectedTable;
-        tableFieldName = builder.tableFieldName;
+        super(builder);
+        tableFieldName = Objects.requireNonNull(builder.tableFieldName);
     }
 
     protected String calculateFieldName(IntrospectedColumn column) {
@@ -59,24 +58,12 @@ public abstract class AbstractMethodGenerator {
         builder.withImports(methodParts.getImports());
     }
 
-    public abstract MethodAndImports generateMethodAndImports();
+    public abstract @Nullable MethodAndImports generateMethodAndImports();
 
     public abstract boolean callPlugins(Method method, Interface interfaze);
 
-    public abstract static class BaseBuilder<T extends BaseBuilder<T>> {
-        private Context context;
-        private IntrospectedTable introspectedTable;
-        private String tableFieldName;
-
-        public T withContext(Context context) {
-            this.context = context;
-            return getThis();
-        }
-
-        public T withIntrospectedTable(IntrospectedTable introspectedTable) {
-            this.introspectedTable = introspectedTable;
-            return getThis();
-        }
+    public abstract static class BaseBuilder<T extends BaseBuilder<T>> extends AbstractGeneratorBuilder<T> {
+        private @Nullable String tableFieldName;
 
         public T withTableFieldName(String tableFieldName) {
             this.tableFieldName = tableFieldName;

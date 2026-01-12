@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,8 +16,10 @@
 package org.mybatis.generator.runtime.dynamic.sql.elements;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 
@@ -27,7 +29,7 @@ public class FieldAndImports {
     private final Set<FullyQualifiedJavaType> imports;
 
     private FieldAndImports(Builder builder) {
-        field = builder.field;
+        field = Objects.requireNonNull(builder.field);
         imports = builder.imports;
     }
 
@@ -44,7 +46,7 @@ public class FieldAndImports {
     }
 
     public static class Builder {
-        private Field field;
+        private @Nullable Field field;
         private final Set<FullyQualifiedJavaType> imports = new HashSet<>();
 
         public Builder withField(Field field) {

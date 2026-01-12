@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.FullyQualifiedTable;
@@ -38,8 +39,8 @@ import org.mybatis.generator.codegen.RootClassInfo;
 
 public class RecordWithBLOBsGenerator extends AbstractJavaGenerator {
 
-    public RecordWithBLOBsGenerator(String project) {
-        super(project);
+    protected RecordWithBLOBsGenerator(Builder builder) {
+        super(builder);
     }
 
     @Override
@@ -67,9 +68,9 @@ public class RecordWithBLOBsGenerator extends AbstractJavaGenerator {
             }
         }
 
-        String rootClass = getRootClass();
+        Optional<RootClassInfo> rootClassInfo = getRootClass().map(rc -> RootClassInfo.getInstance(rc, warnings));
         for (IntrospectedColumn introspectedColumn : introspectedTable.getBLOBColumns()) {
-            if (RootClassInfo.getInstance(rootClass, warnings).containsProperty(introspectedColumn)) {
+            if (rootClassInfo.map(rci -> rci.containsProperty(introspectedColumn)).orElse(false)) {
                 continue;
             }
 
@@ -140,5 +141,17 @@ public class RecordWithBLOBsGenerator extends AbstractJavaGenerator {
         }
 
         topLevelClass.addMethod(method);
+    }
+
+    public static class Builder extends AbstractJavaGeneratorBuilder<Builder> {
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        @Override
+        public RecordWithBLOBsGenerator build() {
+            return new RecordWithBLOBsGenerator(this);
+        }
     }
 }

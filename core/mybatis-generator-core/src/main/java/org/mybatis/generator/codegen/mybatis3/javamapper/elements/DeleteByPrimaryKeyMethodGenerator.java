@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -27,9 +27,9 @@ public class DeleteByPrimaryKeyMethodGenerator extends AbstractJavaMapperMethodG
 
     private final boolean isSimple;
 
-    public DeleteByPrimaryKeyMethodGenerator(boolean isSimple) {
-        super();
-        this.isSimple = isSimple;
+    public DeleteByPrimaryKeyMethodGenerator(Builder builder) {
+        super(builder);
+        this.isSimple = builder.isSimple;
     }
 
     @Override
@@ -59,5 +59,24 @@ public class DeleteByPrimaryKeyMethodGenerator extends AbstractJavaMapperMethodG
 
     public void addExtraImports(Interface interfaze) {
         // extension point for subclasses
+    }
+
+    public static class Builder extends AbstractMethodGeneratorBuilder<Builder> {
+        private boolean isSimple;
+
+        public Builder isSimple(boolean isSimple) {
+            this.isSimple = isSimple;
+            return this;
+        }
+
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        @Override
+        public DeleteByPrimaryKeyMethodGenerator build() {
+            return new DeleteByPrimaryKeyMethodGenerator(this);
+        }
     }
 }

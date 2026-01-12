@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,8 +19,8 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
 
 public class UpdateByExampleWithBLOBsElementGenerator extends AbstractXmlElementGenerator {
 
-    public UpdateByExampleWithBLOBsElementGenerator() {
-        super();
+    protected UpdateByExampleWithBLOBsElementGenerator(Builder builder) {
+        super(builder);
     }
 
     @Override
@@ -30,6 +30,18 @@ public class UpdateByExampleWithBLOBsElementGenerator extends AbstractXmlElement
 
         if (context.getPlugins().sqlMapUpdateByExampleWithBLOBsElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
+        }
+    }
+
+    public static class Builder extends AbstractXmlElementGeneratorBuilder<Builder> {
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        @Override
+        public UpdateByExampleWithBLOBsElementGenerator build() {
+            return new UpdateByExampleWithBLOBsElementGenerator(this);
         }
     }
 }

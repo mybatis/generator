@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -24,8 +24,8 @@ import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 
 public class UpdateByPrimaryKeySelectiveElementGenerator extends AbstractXmlElementGenerator {
 
-    public UpdateByPrimaryKeySelectiveElementGenerator() {
-        super();
+    protected UpdateByPrimaryKeySelectiveElementGenerator(Builder builder) {
+        super(builder);
     }
 
     @Override
@@ -78,6 +78,18 @@ public class UpdateByPrimaryKeySelectiveElementGenerator extends AbstractXmlElem
 
         if (context.getPlugins().sqlMapUpdateByPrimaryKeySelectiveElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
+        }
+    }
+
+    public static class Builder extends AbstractXmlElementGeneratorBuilder<Builder> {
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        @Override
+        public UpdateByPrimaryKeySelectiveElementGenerator build() {
+            return new UpdateByPrimaryKeySelectiveElementGenerator(this);
         }
     }
 }

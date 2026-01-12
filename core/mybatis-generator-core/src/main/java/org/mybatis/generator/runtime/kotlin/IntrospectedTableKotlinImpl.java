@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -31,27 +31,36 @@ public class IntrospectedTableKotlinImpl extends IntrospectedTableMyBatis3Impl {
     @Override
     public void calculateGenerators(List<String> warnings, ProgressCallback progressCallback) {
         calculateKotlinDataClassGenerator(warnings, progressCallback);
-        if (contextHasClientConfiguration() && rules.generateJavaClient()) {
+        if (contextHasClientConfiguration() && getRules().generateJavaClient()) {
             calculateKotlinMapperAndExtensionsGenerator(warnings, progressCallback);
         }
     }
 
     private boolean contextHasClientConfiguration() {
-        return context.getJavaClientGeneratorConfiguration() != null;
+        return getContext().getJavaClientGeneratorConfiguration().isPresent();
     }
 
     protected void calculateKotlinMapperAndExtensionsGenerator(List<String> warnings,
             ProgressCallback progressCallback) {
-        AbstractKotlinGenerator kotlinGenerator = new KotlinMapperAndExtensionsGenerator(getClientProject());
-        initializeAbstractGenerator(kotlinGenerator, warnings,
-                progressCallback);
+        AbstractKotlinGenerator kotlinGenerator = new KotlinMapperAndExtensionsGenerator.Builder()
+                .withProject(getModelProject())
+                .withContext(getContext())
+                .withIntrospectedTable(this)
+                .withProgressCallback(progressCallback)
+                .withWarnings(warnings)
+                .build();
         kotlinGenerators.add(kotlinGenerator);
     }
 
     protected void calculateKotlinDataClassGenerator(List<String> warnings,
             ProgressCallback progressCallback) {
-        AbstractKotlinGenerator kotlinGenerator = new KotlinDataClassGenerator(getModelProject());
-        initializeAbstractGenerator(kotlinGenerator, warnings, progressCallback);
+        AbstractKotlinGenerator kotlinGenerator = new KotlinDataClassGenerator.Builder()
+                .withProject(getModelProject())
+                .withContext(getContext())
+                .withIntrospectedTable(this)
+                .withProgressCallback(progressCallback)
+                .withWarnings(warnings)
+                .build();
         kotlinGenerators.add(kotlinGenerator);
     }
 

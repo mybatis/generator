@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -24,6 +24,10 @@ import org.mybatis.generator.api.dom.java.TopLevelClass;
 public class ProviderSelectByExampleWithBLOBsMethodGenerator
         extends ProviderSelectByExampleWithoutBLOBsMethodGenerator {
 
+    protected ProviderSelectByExampleWithBLOBsMethodGenerator(Builder builder) {
+        super(builder);
+    }
+
     @Override
     public List<IntrospectedColumn> getColumns() {
         return introspectedTable.getAllColumns();
@@ -38,5 +42,17 @@ public class ProviderSelectByExampleWithBLOBsMethodGenerator
     public boolean callPlugins(Method method, TopLevelClass topLevelClass) {
         return context.getPlugins()
                 .providerSelectByExampleWithBLOBsMethodGenerated(method, topLevelClass, introspectedTable);
+    }
+
+    public static class Builder extends ProviderSelectByExampleWithoutBLOBsMethodGenerator.Builder {
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        @Override
+        public ProviderSelectByExampleWithBLOBsMethodGenerator build() {
+            return new ProviderSelectByExampleWithBLOBsMethodGenerator(this);
+        }
     }
 }

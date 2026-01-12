@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,7 +15,6 @@
  */
 package org.mybatis.generator.internal;
 
-import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.sql.Connection;
@@ -23,7 +22,6 @@ import java.sql.Driver;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import org.mybatis.generator.api.ConnectionFactory;
 import org.mybatis.generator.config.JDBCConnectionConfiguration;
 
 /**
@@ -34,13 +32,9 @@ import org.mybatis.generator.config.JDBCConnectionConfiguration;
  *
  * @author Jeff Butler
  */
-public class JDBCConnectionFactory implements ConnectionFactory {
+public class JDBCConnectionFactory {
 
-    private String userId;
-    private String password;
-    private String connectionURL;
-    private String driverClass;
-    private Properties otherProperties;
+    private final JDBCConnectionConfiguration config;
 
     /**
      * This constructor is called when there is a JDBCConnectionConfiguration
@@ -50,39 +44,19 @@ public class JDBCConnectionFactory implements ConnectionFactory {
      *            the configuration
      */
     public JDBCConnectionFactory(JDBCConnectionConfiguration config) {
-        super();
-        userId = config.getUserId();
-        password = config.getPassword();
-        connectionURL = config.getConnectionURL();
-        driverClass = config.getDriverClass();
-        otherProperties = config.getProperties();
+        this.config = config;
     }
 
-    /**
-     * This constructor is called when this connection factory is specified
-     * as the type in a ConnectionFactory configuration element.
-     */
-    public JDBCConnectionFactory() {
-        super();
-    }
-
-    @Override
     public Connection getConnection() throws SQLException {
 
         Properties props = new Properties();
 
-        if (stringHasValue(userId)) {
-            props.setProperty("user", userId); //$NON-NLS-1$
-        }
-
-        if (stringHasValue(password)) {
-            props.setProperty("password", password); //$NON-NLS-1$
-        }
-
-        props.putAll(otherProperties);
+        config.getUserId().ifPresent(s -> props.setProperty("user", s)); //$NON-NLS-1$
+        config.getPassword().ifPresent(s -> props.setProperty("password", s)); //$NON-NLS-1$
+        props.putAll(config.getProperties());
 
         Driver driver = getDriver();
-        Connection conn = driver.connect(connectionURL, props);
+        Connection conn = driver.connect(config.getConnectionURL(), props);
 
         if (conn == null) {
             throw new SQLException(getString("RuntimeError.7")); //$NON-NLS-1$
@@ -95,31 +69,12 @@ public class JDBCConnectionFactory implements ConnectionFactory {
         Driver driver;
 
         try {
-            Class<?> clazz = ObjectFactory.externalClassForName(driverClass);
-            driver = (Driver) clazz.getConstructor().newInstance();
+            Class<Driver> clazz = ObjectFactory.externalClassForName(config.getDriverClass(), Driver.class);
+            driver = clazz.getConstructor().newInstance();
         } catch (Exception e) {
             throw new RuntimeException(getString("RuntimeError.8"), e); //$NON-NLS-1$
         }
 
         return driver;
-    }
-
-    @Override
-    public void addConfigurationProperties(Properties properties) {
-        // this should only be called when this connection factory is
-        // specified in a ConnectionFactory configuration
-        userId = properties.getProperty("userId"); //$NON-NLS-1$
-        password = properties.getProperty("password"); //$NON-NLS-1$
-        connectionURL = properties.getProperty("connectionURL"); //$NON-NLS-1$
-        driverClass = properties.getProperty("driverClass"); //$NON-NLS-1$
-
-        otherProperties = new Properties();
-        otherProperties.putAll(properties);
-
-        // remove all the properties that we have specific attributes for
-        otherProperties.remove("userId"); //$NON-NLS-1$
-        otherProperties.remove("password"); //$NON-NLS-1$
-        otherProperties.remove("connectionURL"); //$NON-NLS-1$
-        otherProperties.remove("driverClass"); //$NON-NLS-1$
     }
 }

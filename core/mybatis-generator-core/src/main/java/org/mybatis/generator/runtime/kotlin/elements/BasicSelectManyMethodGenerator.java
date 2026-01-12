@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,6 +15,9 @@
  */
 package org.mybatis.generator.runtime.kotlin.elements;
 
+import java.util.Objects;
+
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
 import org.mybatis.generator.api.dom.kotlin.KotlinArg;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
@@ -26,8 +29,8 @@ public class BasicSelectManyMethodGenerator extends AbstractKotlinFunctionGenera
 
     private BasicSelectManyMethodGenerator(Builder builder) {
         super(builder);
-        recordType = builder.recordType;
-        fragmentGenerator = builder.fragmentGenerator;
+        recordType = Objects.requireNonNull(builder.recordType);
+        fragmentGenerator = Objects.requireNonNull(builder.fragmentGenerator);
     }
 
     @Override
@@ -62,8 +65,8 @@ public class BasicSelectManyMethodGenerator extends AbstractKotlinFunctionGenera
     }
 
     public static class Builder extends BaseBuilder<Builder> {
-        private FullyQualifiedKotlinType recordType;
-        private KotlinFragmentGenerator fragmentGenerator;
+        private @Nullable FullyQualifiedKotlinType recordType;
+        private @Nullable KotlinFragmentGenerator fragmentGenerator;
 
         public Builder withRecordType(FullyQualifiedKotlinType recordType) {
             this.recordType = recordType;

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,28 +15,36 @@
  */
 package org.mybatis.generator.config;
 
+import java.util.Optional;
+
+import org.jspecify.annotations.Nullable;
+
 public abstract class TypedPropertyHolder extends PropertyHolder {
 
-    private String configurationType;
+    protected final @Nullable String configurationType;
 
-    protected TypedPropertyHolder() {
-        super();
+    protected TypedPropertyHolder(TypedBuilder<?> builder) {
+        super(builder);
+        this.configurationType = builder.configurationType;
     }
 
-    public String getConfigurationType() {
-        return configurationType;
+    public Optional<String> getConfigurationType() {
+        return Optional.ofNullable(configurationType);
     }
 
-    /**
-     * Sets the value of the type specified in the configuration. If the special
-     * value DEFAULT is specified, then the value will be ignored.
-     *
-     * @param configurationType
-     *            the type specified in the configuration
-     */
-    public void setConfigurationType(String configurationType) {
-        if (!"DEFAULT".equalsIgnoreCase(configurationType)) { //$NON-NLS-1$
+    public abstract static class TypedBuilder<T extends TypedBuilder<T>> extends AbstractBuilder<T> {
+        protected @Nullable String configurationType;
+
+        /**
+         * Sets the value of the type specified in the configuration. If the special
+         * value DEFAULT is specified, then the value will be ignored.
+         *
+         * @param configurationType the value of the type specified in the configuration. For some
+         *      subclasses, if the special value DEFAULT is specified, then the value will be ignored.
+         */
+        public T withConfigurationType(@Nullable String configurationType) {
             this.configurationType = configurationType;
+            return getThis();
         }
     }
 }

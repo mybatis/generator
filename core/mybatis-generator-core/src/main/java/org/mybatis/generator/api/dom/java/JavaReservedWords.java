@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -64,6 +64,7 @@ public class JavaReservedWords {
                 "private", //$NON-NLS-1$
                 "protected", //$NON-NLS-1$
                 "public", //$NON-NLS-1$
+                "record", //$NON-NLS-1$
                 "return", //$NON-NLS-1$
                 "short", //$NON-NLS-1$
                 "static", //$NON-NLS-1$
@@ -76,6 +77,7 @@ public class JavaReservedWords {
                 "throws", //$NON-NLS-1$
                 "transient", //$NON-NLS-1$
                 "try", //$NON-NLS-1$
+                "var", //$NON-NLS-1$
                 "void", //$NON-NLS-1$
                 "volatile", //$NON-NLS-1$
                 "while" //$NON-NLS-1$
@@ -87,15 +89,7 @@ public class JavaReservedWords {
     }
 
     public static boolean containsWord(String word) {
-        boolean rc;
-
-        if (word == null) {
-            rc = false;
-        } else {
-            rc = reservedWords.contains(word);
-        }
-
-        return rc;
+        return reservedWords.contains(word);
     }
 
     /**

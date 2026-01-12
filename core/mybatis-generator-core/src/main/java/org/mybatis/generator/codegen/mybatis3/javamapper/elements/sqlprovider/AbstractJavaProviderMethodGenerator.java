@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -27,8 +27,8 @@ public abstract class AbstractJavaProviderMethodGenerator extends AbstractGenera
     protected static final FullyQualifiedJavaType BUILDER_IMPORT =
             new FullyQualifiedJavaType("org.apache.ibatis.jdbc.SQL"); //$NON-NLS-1$
 
-    protected AbstractJavaProviderMethodGenerator() {
-        super();
+    protected AbstractJavaProviderMethodGenerator(AbstractJavaProviderMethodGeneratorBuilder<?> builder) {
+        super(builder);
     }
 
     protected Set<FullyQualifiedJavaType> initializeImportedTypes() {
@@ -52,4 +52,9 @@ public abstract class AbstractJavaProviderMethodGenerator extends AbstractGenera
     }
 
     public abstract void addClassElements(TopLevelClass topLevelClass);
+
+    public abstract static class AbstractJavaProviderMethodGeneratorBuilder
+            <T extends AbstractJavaProviderMethodGeneratorBuilder<T>> extends AbstractGeneratorBuilder<T> {
+        public abstract AbstractJavaProviderMethodGenerator build();
+    }
 }

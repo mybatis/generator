@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,24 +20,21 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.IntrospectedColumn;
-import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinModifier;
 import org.mybatis.generator.api.dom.kotlin.KotlinProperty;
-import org.mybatis.generator.config.Context;
+import org.mybatis.generator.codegen.AbstractGenerator;
 import org.mybatis.generator.runtime.kotlin.elements.AbstractKotlinFunctionGenerator.FieldNameAndImport;
 
-public class ColumnListGenerator {
+public class ColumnListGenerator extends AbstractGenerator {
 
-    private final Context context;
-    private final IntrospectedTable introspectedTable;
     private final String supportObjectImport;
     private final String tableFieldName;
 
     private ColumnListGenerator(Builder builder) {
-        this.context = Objects.requireNonNull(builder.context);
-        this.introspectedTable = Objects.requireNonNull(builder.introspectedTable);
+        super(builder);
         this.supportObjectImport = Objects.requireNonNull(builder.supportObjectImport);
         this.tableFieldName = Objects.requireNonNull(builder.tableFieldName);
     }
@@ -80,24 +77,12 @@ public class ColumnListGenerator {
         return context.getPlugins().clientColumnListPropertyGenerated(kotlinProperty, kotlinFile, introspectedTable);
     }
 
-    public static class Builder {
-        private Context context;
-        private IntrospectedTable introspectedTable;
-        private String supportObjectImport;
-        private String tableFieldName;
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
+        private @Nullable String supportObjectImport;
+        private @Nullable String tableFieldName;
 
         public Builder withSupportObjectImport(String supportObjectImport) {
             this.supportObjectImport = supportObjectImport;
-            return this;
-        }
-
-        public Builder withContext(Context context) {
-            this.context = context;
-            return this;
-        }
-
-        public Builder withIntrospectedTable(IntrospectedTable introspectedTable) {
-            this.introspectedTable = introspectedTable;
             return this;
         }
 
@@ -108,6 +93,11 @@ public class ColumnListGenerator {
 
         public ColumnListGenerator build() {
             return new ColumnListGenerator(this);
+        }
+
+        @Override
+        protected Builder getThis() {
+            return this;
         }
     }
 }

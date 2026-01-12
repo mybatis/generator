@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,8 +22,8 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.InsertSelectiv
 
 public class AnnotatedInsertSelectiveMethodGenerator extends InsertSelectiveMethodGenerator {
 
-    public AnnotatedInsertSelectiveMethodGenerator() {
-        super();
+    protected AnnotatedInsertSelectiveMethodGenerator(Builder builder) {
+        super(builder);
     }
 
     @Override
@@ -45,5 +45,17 @@ public class AnnotatedInsertSelectiveMethodGenerator extends InsertSelectiveMeth
         interfaze.addImportedTypes(buildGeneratedKeyImportsIfRequired());
         interfaze.addImportedType(
                 new FullyQualifiedJavaType("org.apache.ibatis.annotations.InsertProvider")); //$NON-NLS-1$
+    }
+
+    public static class Builder extends InsertSelectiveMethodGenerator.Builder {
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        @Override
+        public AnnotatedInsertSelectiveMethodGenerator build() {
+            return new AnnotatedInsertSelectiveMethodGenerator(this);
+        }
     }
 }

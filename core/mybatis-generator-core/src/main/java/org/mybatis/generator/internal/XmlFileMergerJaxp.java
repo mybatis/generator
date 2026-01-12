@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -30,6 +30,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.GeneratedXmlFile;
 import org.mybatis.generator.config.MergeConstants;
 import org.mybatis.generator.exception.ShellException;
@@ -69,12 +70,12 @@ public class XmlFileMergerJaxp {
         }
     }
 
-    public static String getMergedSource(GeneratedXmlFile generatedXmlFile,
-            File existingFile) throws ShellException {
+    public static String getMergedSource(GeneratedXmlFile generatedXmlFile, File existingFile) throws ShellException {
 
         try {
             return getMergedSource(new InputSource(new StringReader(generatedXmlFile.getFormattedContent())),
-                new InputSource(new InputStreamReader(Files.newInputStream(existingFile.toPath()), StandardCharsets.UTF_8)),
+                new InputSource(new InputStreamReader(
+                        Files.newInputStream(existingFile.toPath()), StandardCharsets.UTF_8)),
                 existingFile.getName());
         } catch (IOException | SAXException | ParserConfigurationException e) {
             throw new ShellException(getString("Warning.13", //$NON-NLS-1$
@@ -173,11 +174,10 @@ public class XmlFileMergerJaxp {
     }
 
     private static String prettyPrint(Document document) throws ShellException {
-        DomWriter dw = new DomWriter();
-        return dw.toString(document);
+        return new DomWriter(document).getFormattedDocument();
     }
 
-    private static boolean isGeneratedNode(Node node) {
+    private static boolean isGeneratedNode(@Nullable Node node) {
         return node != null
                 && node.getNodeType() == Node.ELEMENT_NODE
                 && (isOldFormatNode(node) || isNewFormatNode(node));
@@ -211,7 +211,7 @@ public class XmlFileMergerJaxp {
     private static boolean isWhiteSpace(Node node) {
         boolean rc = false;
 
-        if (node != null && node.getNodeType() == Node.TEXT_NODE) {
+        if (node.getNodeType() == Node.TEXT_NODE) {
             Text tn = (Text) node;
             if (tn.getData().trim().isEmpty()) {
                 rc = true;

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -29,6 +29,10 @@ import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 
 public class ProviderInsertSelectiveMethodGenerator extends AbstractJavaProviderMethodGenerator {
+
+    protected ProviderInsertSelectiveMethodGenerator(Builder builder) {
+        super(builder);
+    }
 
     @Override
     public void addClassElements(TopLevelClass topLevelClass) {
@@ -72,6 +76,17 @@ public class ProviderInsertSelectiveMethodGenerator extends AbstractJavaProvider
         if (context.getPlugins().providerInsertSelectiveMethodGenerated(method, topLevelClass, introspectedTable)) {
             topLevelClass.addImportedTypes(initializeImportedTypes(fqjt));
             topLevelClass.addMethod(method);
+        }
+    }
+
+    public static class Builder extends AbstractJavaProviderMethodGeneratorBuilder<Builder> {
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        public ProviderInsertSelectiveMethodGenerator build() {
+            return new ProviderInsertSelectiveMethodGenerator(this);
         }
     }
 }

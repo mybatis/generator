@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,31 +19,27 @@ import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.List;
+import java.util.Objects;
+
+import org.jspecify.annotations.Nullable;
 
 public class JavaModelGeneratorConfiguration extends PropertyHolder {
 
-    private String targetPackage;
+    private final String targetPackage;
+    private final String targetProject;
 
-    private String targetProject;
-
-    public JavaModelGeneratorConfiguration() {
-        super();
+    protected JavaModelGeneratorConfiguration(Builder builder) {
+        super(builder);
+        this.targetPackage = Objects.requireNonNull(builder.targetPackage);
+        this.targetProject = Objects.requireNonNull(builder.targetProject);
     }
 
     public String getTargetProject() {
         return targetProject;
     }
 
-    public void setTargetProject(String targetProject) {
-        this.targetProject = targetProject;
-    }
-
     public String getTargetPackage() {
         return targetPackage;
-    }
-
-    public void setTargetPackage(String targetPackage) {
-        this.targetPackage = targetPackage;
     }
 
     public void validate(List<String> errors, String contextId) {
@@ -54,6 +50,30 @@ public class JavaModelGeneratorConfiguration extends PropertyHolder {
         if (!stringHasValue(targetPackage)) {
             errors.add(getString("ValidationError.12", //$NON-NLS-1$
                     "JavaModelGenerator", contextId)); //$NON-NLS-1$
+        }
+    }
+
+    public static class Builder extends AbstractBuilder<Builder> {
+        private @Nullable String targetPackage;
+        private @Nullable String targetProject;
+
+        public Builder withTargetPackage(@Nullable String targetPackage) {
+            this.targetPackage = targetPackage;
+            return this;
+        }
+
+        public Builder withTargetProject(@Nullable String targetProject) {
+            this.targetProject = targetProject;
+            return this;
+        }
+
+        public JavaModelGeneratorConfiguration build() {
+            return new JavaModelGeneratorConfiguration(this);
+        }
+
+        @Override
+        protected Builder getThis() {
+            return this;
         }
     }
 }

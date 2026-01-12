@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -28,9 +28,8 @@ class XmlRendererTest {
 
     @Test
     fun testNoDoctypeAndEmptyRoot() {
-        val doc = Document()
         val root = XmlElement("root")
-        doc.rootElement = root
+        val doc = Document(root)
 
         val expected = """
                 |<?xml version="1.0" encoding="UTF-8"?>
@@ -43,9 +42,8 @@ class XmlRendererTest {
 
     @Test
     fun testSystemDoctypeAndEmptyRoot() {
-        val doc = Document("https://somedtd.com")
         val root = XmlElement("root")
-        doc.rootElement = root
+        val doc = Document("https://somedtd.com", root)
 
         val expected = """
                 |<?xml version="1.0" encoding="UTF-8"?>
@@ -58,9 +56,8 @@ class XmlRendererTest {
 
     @Test
     fun testDoctypeAndEmptyRoot() {
-        val doc = Document("--/PublicId", "https://somedtd.com")
         val root = XmlElement("root")
-        doc.rootElement = root
+        val doc = Document("--/PublicId", "https://somedtd.com", root)
 
         val expected = """
                 |<?xml version="1.0" encoding="UTF-8"?>
@@ -73,10 +70,9 @@ class XmlRendererTest {
 
     @Test
     fun testDoctypeAndRootWithAttribute() {
-        val doc = Document("--/PublicId", "https://somedtd.com")
         val root = XmlElement("root")
         root.addAttribute(Attribute("name", "fred"))
-        doc.rootElement = root
+        val doc = Document("--/PublicId", "https://somedtd.com", root)
 
         val expected = """
                 |<?xml version="1.0" encoding="UTF-8"?>
@@ -89,11 +85,10 @@ class XmlRendererTest {
 
     @Test
     fun testDoctypeAndRootWithAttributes() {
-        val doc = Document("--/PublicId", "https://somedtd.com")
         val root = XmlElement("root")
         root.addAttribute(Attribute("firstName", "Fred"))
         root.addAttribute(Attribute("lastName", "Flintstone"))
-        doc.rootElement = root
+        val doc = Document("--/PublicId", "https://somedtd.com", root)
 
         val expected = """
                 |<?xml version="1.0" encoding="UTF-8"?>
@@ -106,14 +101,13 @@ class XmlRendererTest {
 
     @Test
     fun testDoctypeAndRootWithTextChild() {
-        val doc = Document("--/PublicId", "https://somedtd.com")
         val root = XmlElement("root")
         root.addAttribute(Attribute("firstName", "Fred"))
         root.addAttribute(Attribute("lastName", "Flintstone"))
 
         root.addElement(TextElement("some content"))
 
-        doc.rootElement = root
+        val doc = Document("--/PublicId", "https://somedtd.com", root)
 
         val expected = """
                 |<?xml version="1.0" encoding="UTF-8"?>
@@ -128,7 +122,6 @@ class XmlRendererTest {
 
     @Test
     fun testFullDocument() {
-        val doc = Document("--/PublicId", "https://somedtd.com")
         val root = XmlElement("root")
         root.addAttribute(Attribute("firstName", "Fred"))
         root.addAttribute(Attribute("lastName", "Flintstone"))
@@ -151,7 +144,7 @@ class XmlRendererTest {
 
         root.addElement(pet)
 
-        doc.rootElement = root
+        val doc = Document("--/PublicId", "https://somedtd.com", root)
 
         val expected = """
                 |<?xml version="1.0" encoding="UTF-8"?>

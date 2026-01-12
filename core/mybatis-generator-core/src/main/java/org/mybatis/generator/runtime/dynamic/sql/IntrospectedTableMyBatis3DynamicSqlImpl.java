@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,7 +16,9 @@
 package org.mybatis.generator.runtime.dynamic.sql;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
@@ -29,7 +31,7 @@ public class IntrospectedTableMyBatis3DynamicSqlImpl extends IntrospectedTableMy
     }
 
     @Override
-    protected void calculateXmlMapperGenerator(AbstractJavaClientGenerator javaClientGenerator,
+    protected void calculateXmlMapperGenerator(@Nullable AbstractJavaClientGenerator javaClientGenerator,
             List<String> warnings,
             ProgressCallback progressCallback) {
         // no XML with dynamic SQL support
@@ -37,21 +39,20 @@ public class IntrospectedTableMyBatis3DynamicSqlImpl extends IntrospectedTableMy
     }
 
     @Override
-    protected AbstractJavaClientGenerator createJavaClientGenerator() {
-        if (context.getJavaClientGeneratorConfiguration() == null) {
-            return null;
-        }
-
-        return new DynamicSqlMapperGenerator(getClientProject());
+    protected Optional<AbstractJavaClientGenerator> createJavaClientGenerator() {
+        return getContext().getJavaClientGeneratorConfiguration()
+                .map(c -> new DynamicSqlMapperGenerator(getClientProject()));
     }
 
     @Override
-    protected void calculateJavaModelGenerators(List<String> warnings,
-            ProgressCallback progressCallback) {
-
-        AbstractJavaGenerator javaGenerator = new DynamicSqlModelGenerator(getModelProject());
-        initializeAbstractGenerator(javaGenerator, warnings,
-                progressCallback);
+    protected void calculateJavaModelGenerators(List<String> warnings, ProgressCallback progressCallback) {
+        AbstractJavaGenerator javaGenerator = new DynamicSqlModelGenerator.Builder()
+                .withProject(getModelProject())
+                .withContext(getContext())
+                .withIntrospectedTable(this)
+                .withProgressCallback(progressCallback)
+                .withWarnings(warnings)
+                .build();
         javaGenerators.add(javaGenerator);
     }
 

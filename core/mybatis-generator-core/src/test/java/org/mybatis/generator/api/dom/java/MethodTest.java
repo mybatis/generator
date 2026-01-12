@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -228,7 +228,12 @@ class MethodTest {
                         + "}";
 
         MethodRenderer renderer = new MethodRenderer();
-        String rendered = String.join(LINE_SEPARATOR, renderer.render(method, false, null));
+        TopLevelClass topLevelClass = new TopLevelClass("foo.Bar");
+        topLevelClass.addImportedType(comparatorType);
+        topLevelClass.addImportedType(functionType);
+        topLevelClass.addImportedType(listType);
+
+        String rendered = String.join(LINE_SEPARATOR, renderer.render(method, false, topLevelClass));
         assertEquals(excepted, rendered);
     }
 }

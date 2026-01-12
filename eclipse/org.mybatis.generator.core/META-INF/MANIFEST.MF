@@ -45,3 +45,5 @@ Export-Package: org.mybatis.generator.ant,
  org.mybatis.generator.runtime.kotlin,
  org.mybatis.generator.runtime.kotlin.elements
 Automatic-Module-Name: org.mybatis.generator.core
+Bundle-ClassPath: lib/jspecify-1.0.0.jar,
+ .

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.exception.ShellException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.CDATASection;
@@ -42,25 +43,23 @@ import org.w3c.dom.Text;
  * @author Jeff Butler (derivation)
  */
 public class DomWriter {
-
-    protected PrintWriter printWriter;
-
+    protected final PrintWriter printWriter;
+    protected final StringWriter sw;
+    protected final Document document;
     protected boolean isXML11;
 
-    public DomWriter() {
-        super();
+    public DomWriter(Document document) {
+        sw = new StringWriter();
+        printWriter = new PrintWriter(sw);
+        this.document = document;
     }
 
-    public synchronized String toString(Document document)
-            throws ShellException {
-        StringWriter sw = new StringWriter();
-        printWriter = new PrintWriter(sw);
+    public synchronized String getFormattedDocument() throws ShellException {
         write(document);
         return sw.toString();
     }
 
-    protected Attr[] sortAttributes(NamedNodeMap attrs) {
-
+    protected Attr[] sortAttributes(@Nullable NamedNodeMap attrs) {
         int len = (attrs != null) ? attrs.getLength() : 0;
         Attr[] array = new Attr[len];
         for (int i = 0; i < len; i++) {
@@ -84,11 +83,9 @@ public class DomWriter {
         }
 
         return array;
-
     }
 
-    protected void normalizeAndPrint(String s, boolean isAttValue) {
-
+    protected void normalizeAndPrint(@Nullable String s, boolean isAttValue) {
         int len = (s != null) ? s.length() : 0;
         for (int i = 0; i < len; i++) {
             char c = s.charAt(i);
@@ -192,19 +189,10 @@ public class DomWriter {
      * @return the version
      */
     protected String getVersion(Document document) {
-        if (document == null) {
-            return null;
-        }
-
         return document.getXmlVersion();
     }
 
     protected void writeAnyNode(Node node) throws ShellException {
-        // is there anything to do?
-        if (node == null) {
-            return;
-        }
-
         short type = node.getNodeType();
         switch (type) {
         case Node.DOCUMENT_NODE:
@@ -240,8 +228,7 @@ public class DomWriter {
             break;
 
         default:
-            throw new ShellException(getString(
-                    "RuntimeError.18", Short.toString(type))); //$NON-NLS-1$
+            throw new ShellException(getString("RuntimeError.18", Short.toString(type))); //$NON-NLS-1$
         }
     }
 

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,8 +16,10 @@
 package org.mybatis.generator.runtime.dynamic.sql.elements;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
@@ -29,12 +31,12 @@ public class UpdateByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
 
     private UpdateByPrimaryKeyMethodGenerator(Builder builder) {
         super(builder);
-        recordType = builder.recordType;
-        fragmentGenerator = builder.fragmentGenerator;
+        recordType = Objects.requireNonNull(builder.recordType);
+        fragmentGenerator = Objects.requireNonNull(builder.fragmentGenerator);
     }
 
     @Override
-    public MethodAndImports generateMethodAndImports() {
+    public @Nullable MethodAndImports generateMethodAndImports() {
         if (!Utils.generateUpdateByPrimaryKey(introspectedTable)) {
             return null;
         }
@@ -69,8 +71,8 @@ public class UpdateByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
     }
 
     public static class Builder extends BaseBuilder<Builder> {
-        private FullyQualifiedJavaType recordType;
-        private FragmentGenerator fragmentGenerator;
+        private @Nullable FullyQualifiedJavaType recordType;
+        private @Nullable FragmentGenerator fragmentGenerator;
 
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
             this.recordType = recordType;

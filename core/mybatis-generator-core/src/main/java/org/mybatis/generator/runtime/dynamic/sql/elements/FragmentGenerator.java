@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,15 +16,16 @@
 package org.mybatis.generator.runtime.dynamic.sql.elements;
 
 import static org.mybatis.generator.api.dom.OutputUtilities.javaIndent;
-import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
@@ -40,9 +41,9 @@ public class FragmentGenerator {
     private final String tableFieldName;
 
     private FragmentGenerator(Builder builder) {
-        this.introspectedTable = builder.introspectedTable;
-        this.resultMapId = builder.resultMapId;
-        tableFieldName = builder.tableFieldName;
+        this.introspectedTable = Objects.requireNonNull(builder.introspectedTable);
+        this.resultMapId = Objects.requireNonNull(builder.resultMapId);
+        tableFieldName = Objects.requireNonNull(builder.tableFieldName);
     }
 
     public String getSelectList() {
@@ -219,14 +220,12 @@ public class FragmentGenerator {
                                            boolean idColumn) {
         StringBuilder sb = new StringBuilder();
 
-        if (stringHasValue(introspectedColumn.getTypeHandler())) {
-            FullyQualifiedJavaType fqjt =
-                    new FullyQualifiedJavaType(introspectedColumn.getTypeHandler());
-            imports.add(fqjt);
+        introspectedColumn.getTypeHandler().map(FullyQualifiedJavaType::new).ifPresent(th -> {
+            imports.add(th);
             sb.append(", typeHandler="); //$NON-NLS-1$
-            sb.append(fqjt.getShortName());
+            sb.append(th.getShortName());
             sb.append(".class"); //$NON-NLS-1$
-        }
+        });
 
         sb.append(", jdbcType=JdbcType."); //$NON-NLS-1$
         sb.append(introspectedColumn.getJdbcTypeName());
@@ -318,9 +317,9 @@ public class FragmentGenerator {
     }
 
     public static class Builder {
-        private IntrospectedTable introspectedTable;
-        private String resultMapId;
-        private String tableFieldName;
+        private @Nullable IntrospectedTable introspectedTable;
+        private @Nullable String resultMapId;
+        private @Nullable String tableFieldName;
 
         public Builder withIntrospectedTable(IntrospectedTable introspectedTable) {
             this.introspectedTable = introspectedTable;

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,16 +15,14 @@
  */
 package org.mybatis.generator.codegen.mybatis3.xmlmapper.elements;
 
-import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
-
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
 public class SelectByPrimaryKeyElementGenerator extends AbstractXmlElementGenerator {
 
-    public SelectByPrimaryKeyElementGenerator() {
-        super();
+    protected SelectByPrimaryKeyElementGenerator(Builder builder) {
+        super(builder);
     }
 
     @Override
@@ -61,11 +59,12 @@ public class SelectByPrimaryKeyElementGenerator extends AbstractXmlElementGenera
         StringBuilder sb = new StringBuilder();
         sb.append("select "); //$NON-NLS-1$
 
-        if (stringHasValue(introspectedTable.getSelectByPrimaryKeyQueryId())) {
+        introspectedTable.getSelectByPrimaryKeyQueryId().ifPresent(s -> {
             sb.append('\'');
-            sb.append(introspectedTable.getSelectByPrimaryKeyQueryId());
+            sb.append(s);
             sb.append("' as QUERYID,"); //$NON-NLS-1$
-        }
+        });
+
         answer.addElement(new TextElement(sb.toString()));
         answer.addElement(getBaseColumnListElement());
         if (introspectedTable.hasBLOBColumns()) {
@@ -82,6 +81,18 @@ public class SelectByPrimaryKeyElementGenerator extends AbstractXmlElementGenera
 
         if (context.getPlugins().sqlMapSelectByPrimaryKeyElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
+        }
+    }
+
+    public static class Builder extends AbstractXmlElementGeneratorBuilder<Builder> {
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        @Override
+        public SelectByPrimaryKeyElementGenerator build() {
+            return new SelectByPrimaryKeyElementGenerator(this);
         }
     }
 }

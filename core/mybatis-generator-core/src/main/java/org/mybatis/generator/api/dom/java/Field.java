@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,10 +17,12 @@ package org.mybatis.generator.api.dom.java;
 
 import java.util.Optional;
 
+import org.jspecify.annotations.Nullable;
+
 public class Field extends JavaElement {
     private FullyQualifiedJavaType type;
     private String name;
-    private String initializationString;
+    private @Nullable String initializationString;
     private boolean isTransient;
     private boolean isVolatile;
     private boolean isFinal;

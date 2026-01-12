@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 package org.mybatis.generator.codegen.mybatis3.model;
 
 import static org.mybatis.generator.internal.util.JavaBeansUtil.getGetterMethodName;
-import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.ArrayList;
@@ -40,8 +39,8 @@ import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 
 public class ExampleGenerator extends AbstractJavaGenerator {
 
-    public ExampleGenerator(String project) {
-        super(project);
+    public ExampleGenerator(Builder builder) {
+        super(builder);
     }
 
     @Override
@@ -319,7 +318,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         criteriaLists.add("criteria"); //$NON-NLS-1$
 
         for (IntrospectedColumn introspectedColumn : introspectedTable.getNonBLOBColumns()) {
-            if (stringHasValue(introspectedColumn.getTypeHandler())) {
+            if (introspectedColumn.getTypeHandler().isPresent()) {
                 String name = addTypeHandledObjectsAndMethods(introspectedColumn, method, answer);
                 criteriaLists.add(name);
             }
@@ -652,7 +651,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
             sb.append("addCriterionForJDBCDate(\""); //$NON-NLS-1$
         } else if (introspectedColumn.isJDBCTimeColumn()) {
             sb.append("addCriterionForJDBCTime(\""); //$NON-NLS-1$
-        } else if (stringHasValue(introspectedColumn.getTypeHandler())) {
+        } else if (introspectedColumn.getTypeHandler().isPresent()) {
             sb.append("add"); //$NON-NLS-1$
             sb.append(introspectedColumn.getJavaProperty());
             sb.setCharAt(3, Character.toUpperCase(sb.charAt(3)));
@@ -828,7 +827,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 
         method.addBodyLine(
                 String.format("%s.add(new Criterion(condition, value, \"%s\"));", //$NON-NLS-1$
-                        field.getName(), introspectedColumn.getTypeHandler()));
+                        field.getName(), introspectedColumn.getTypeHandler().orElseThrow()));
         method.addBodyLine("allCriteria = null;"); //$NON-NLS-1$
         innerClass.addMethod(method);
 
@@ -854,11 +853,23 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 
         method.addBodyLine(
                 String.format("%s.add(new Criterion(condition, value1, value2, \"%s\"));", //$NON-NLS-1$
-                        field.getName(), introspectedColumn.getTypeHandler()));
+                        field.getName(), introspectedColumn.getTypeHandler().orElseThrow()));
 
         method.addBodyLine("allCriteria = null;"); //$NON-NLS-1$
         innerClass.addMethod(method);
 
         return answer;
+    }
+
+    public static class Builder extends AbstractJavaGenerator.AbstractJavaGeneratorBuilder<Builder> {
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        @Override
+        public ExampleGenerator build() {
+            return new ExampleGenerator(this);
+        }
     }
 }

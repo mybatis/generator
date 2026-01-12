@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@ package org.mybatis.generator.logging;
 
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.logging.commons.JakartaCommonsLoggingLogFactory;
 import org.mybatis.generator.logging.jdk14.Jdk14LoggingLogFactory;
 import org.mybatis.generator.logging.log4j2.Log4j2LoggingLogFactory;
@@ -29,7 +30,7 @@ import org.mybatis.generator.logging.slf4j.Slf4jLoggingLogFactory;
  * @author Jeff Butler
  */
 public class LogFactory {
-    private static AbstractLogFactory theFactory;
+    private static @Nullable AbstractLogFactory theFactory;
     public static final String MARKER = "MYBATIS-GENERATOR"; //$NON-NLS-1$
 
     static {
@@ -44,6 +45,11 @@ public class LogFactory {
     }
 
     public static Log getLog(Class<?> clazz) {
+        if (theFactory == null) {
+            throw new RuntimeException(getString("RuntimeError.21", //$NON-NLS-1$
+                    clazz.getName(), "LogFactory Not Initialized"));
+        }
+
         try {
             return theFactory.getLog(clazz);
         } catch (Exception t) {

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,7 +21,6 @@ import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities
 import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getRenamedColumnNameForResultMap;
 import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getSelectListPhrase;
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
-import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -44,8 +43,8 @@ import org.mybatis.generator.config.GeneratedKey;
 public abstract class AbstractJavaMapperMethodGenerator extends AbstractGenerator {
     public abstract void addInterfaceElements(Interface interfaze);
 
-    protected AbstractJavaMapperMethodGenerator() {
-        super();
+    protected AbstractJavaMapperMethodGenerator(AbstractMethodGeneratorBuilder<?> builder) {
+        super(builder);
     }
 
     protected static String getResultAnnotation(Interface interfaze, IntrospectedColumn introspectedColumn,
@@ -66,13 +65,12 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractGenerato
             sb.append('\"');
         }
 
-        if (stringHasValue(introspectedColumn.getTypeHandler())) {
-            FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedColumn.getTypeHandler());
-            interfaze.addImportedType(fqjt);
+        introspectedColumn.getTypeHandler().map(FullyQualifiedJavaType::new).ifPresent(th -> {
+            interfaze.addImportedType(th);
             sb.append(", typeHandler="); //$NON-NLS-1$
-            sb.append(fqjt.getShortName());
+            sb.append(th.getShortName());
             sb.append(".class"); //$NON-NLS-1$
-        }
+        });
 
         sb.append(", jdbcType=JdbcType."); //$NON-NLS-1$
         sb.append(introspectedColumn.getJdbcTypeName());
@@ -371,5 +369,10 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractGenerato
         }
 
         return answer;
+    }
+
+    public abstract static class AbstractMethodGeneratorBuilder<T extends AbstractMethodGeneratorBuilder<T>>
+            extends AbstractGeneratorBuilder<T> {
+        public abstract AbstractJavaMapperMethodGenerator build();
     }
 }

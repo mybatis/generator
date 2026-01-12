@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@ package org.mybatis.generator.runtime.kotlin.elements;
 
 import java.util.Objects;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.kotlin.KotlinArg;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
@@ -56,8 +57,8 @@ public class GeneralCountMethodGenerator extends AbstractKotlinFunctionGenerator
     }
 
     public static class Builder extends BaseBuilder<Builder> {
-        private String mapperName;
-        private String tableFieldImport;
+        private @Nullable String mapperName;
+        private @Nullable String tableFieldImport;
 
         public Builder withTableFieldImport(String tableFieldImport) {
             this.tableFieldImport = tableFieldImport;

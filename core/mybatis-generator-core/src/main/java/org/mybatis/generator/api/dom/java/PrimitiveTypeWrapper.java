@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,15 +17,17 @@ package org.mybatis.generator.api.dom.java;
 
 import java.util.Objects;
 
+import org.jspecify.annotations.Nullable;
+
 public class PrimitiveTypeWrapper extends FullyQualifiedJavaType {
-    private static PrimitiveTypeWrapper booleanInstance;
-    private static PrimitiveTypeWrapper byteInstance;
-    private static PrimitiveTypeWrapper characterInstance;
-    private static PrimitiveTypeWrapper doubleInstance;
-    private static PrimitiveTypeWrapper floatInstance;
-    private static PrimitiveTypeWrapper integerInstance;
-    private static PrimitiveTypeWrapper longInstance;
-    private static PrimitiveTypeWrapper shortInstance;
+    private static @Nullable PrimitiveTypeWrapper booleanInstance;
+    private static @Nullable PrimitiveTypeWrapper byteInstance;
+    private static @Nullable PrimitiveTypeWrapper characterInstance;
+    private static @Nullable PrimitiveTypeWrapper doubleInstance;
+    private static @Nullable PrimitiveTypeWrapper floatInstance;
+    private static @Nullable PrimitiveTypeWrapper integerInstance;
+    private static @Nullable PrimitiveTypeWrapper longInstance;
+    private static @Nullable PrimitiveTypeWrapper shortInstance;
 
     private final String toPrimitiveMethod;
 

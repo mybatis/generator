@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@ package org.mybatis.generator.runtime.kotlin.elements;
 
 import java.util.Objects;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinFunction;
 import org.mybatis.generator.runtime.dynamic.sql.elements.Utils;
@@ -28,12 +29,12 @@ public class DeleteByPrimaryKeyMethodGenerator extends AbstractKotlinFunctionGen
 
     private DeleteByPrimaryKeyMethodGenerator(Builder builder) {
         super(builder);
-        fragmentGenerator = builder.fragmentGenerator;
+        fragmentGenerator = Objects.requireNonNull(builder.fragmentGenerator);
         mapperName = Objects.requireNonNull(builder.mapperName);
     }
 
     @Override
-    public KotlinFunctionAndImports generateMethodAndImports() {
+    public @Nullable KotlinFunctionAndImports generateMethodAndImports() {
         if (!Utils.generateDeleteByPrimaryKey(introspectedTable)) {
             return null;
         }
@@ -60,9 +61,8 @@ public class DeleteByPrimaryKeyMethodGenerator extends AbstractKotlinFunctionGen
     }
 
     public static class Builder extends BaseBuilder<Builder> {
-
-        private KotlinFragmentGenerator fragmentGenerator;
-        private String mapperName;
+        private @Nullable KotlinFragmentGenerator fragmentGenerator;
+        private @Nullable String mapperName;
 
         public Builder withFragmentGenerator(KotlinFragmentGenerator fragmentGenerator) {
             this.fragmentGenerator = fragmentGenerator;

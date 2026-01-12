@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,9 +15,10 @@
  */
 package org.mybatis.generator.codegen.mybatis3.javamapper;
 
+import java.util.Optional;
+
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.codegen.AbstractXmlGenerator;
-import org.mybatis.generator.codegen.mybatis3.javamapper.elements.AbstractJavaMapperMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated.AnnotatedDeleteByPrimaryKeyMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated.AnnotatedInsertMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated.AnnotatedSelectByPrimaryKeyMethodGenerator;
@@ -40,48 +41,48 @@ public class MixedClientGenerator extends JavaMapperGenerator {
     @Override
     protected void addDeleteByPrimaryKeyMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateDeleteByPrimaryKey()) {
-            AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedDeleteByPrimaryKeyMethodGenerator(false);
-            initializeAndExecuteGenerator(methodGenerator, interfaze);
+            var builder = new AnnotatedDeleteByPrimaryKeyMethodGenerator.Builder().isSimple(false);
+            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
         }
     }
 
     @Override
     protected void addInsertMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateInsert()) {
-            AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedInsertMethodGenerator(false);
-            initializeAndExecuteGenerator(methodGenerator, interfaze);
+            var builder = new AnnotatedInsertMethodGenerator.Builder().isSimple(false);
+            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
         }
     }
 
     @Override
     protected void addSelectByPrimaryKeyMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateSelectByPrimaryKey()) {
-            AbstractJavaMapperMethodGenerator methodGenerator =
-                    new AnnotatedSelectByPrimaryKeyMethodGenerator(true, false);
-            initializeAndExecuteGenerator(methodGenerator, interfaze);
+            var builder = new AnnotatedSelectByPrimaryKeyMethodGenerator.Builder()
+                    .useResultMapIfAvailable(true)
+                    .isSimple(false);
+            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
         }
     }
 
     @Override
     protected void addUpdateByPrimaryKeyWithBLOBsMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateUpdateByPrimaryKeyWithBLOBs()) {
-            AbstractJavaMapperMethodGenerator methodGenerator =
-                    new AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator();
-            initializeAndExecuteGenerator(methodGenerator, interfaze);
+            var builder = new AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator.Builder();
+            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
         }
     }
 
     @Override
     protected void addUpdateByPrimaryKeyWithoutBLOBsMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateUpdateByPrimaryKeyWithoutBLOBs()) {
-            AbstractJavaMapperMethodGenerator methodGenerator =
-                    new AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator(false);
-            initializeAndExecuteGenerator(methodGenerator, interfaze);
+            var builder = new AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator.Builder().isSimple(false);
+            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
         }
     }
 
     @Override
-    public AbstractXmlGenerator getMatchedXMLGenerator() {
-        return new MixedMapperGenerator();
+    public Optional<AbstractXmlGenerator> getMatchedXMLGenerator() {
+        var generator = initializeSubBuilder(new MixedMapperGenerator.Builder()).build();
+        return Optional.of(generator);
     }
 }

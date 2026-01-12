@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 package org.mybatis.generator.internal.util;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
@@ -43,5 +44,45 @@ class StringUtilityTest {
     void testTableOnly() {
         String answer = StringUtility.composeFullyQualifiedTableName(null, null, "table", '.');
         assertEquals("table", answer);
+    }
+
+    @Test
+    void testToCamelCaseNormal() {
+        String answer = StringUtility.convertCamelCaseToSnakeCase("userName");
+        assertThat(answer).isEqualTo("USER_NAME");
+    }
+
+    @Test
+    void testToCamelCaseEmail() {
+        String answer = JavaBeansUtil.getValidPropertyName("eMailAddress");
+        answer = StringUtility.convertCamelCaseToSnakeCase(answer);
+        assertThat(answer).isEqualTo("E_MAIL_ADDRESS");
+    }
+
+    @Test
+    void testToCamelCaseURL() {
+        String answer = JavaBeansUtil.getValidPropertyName("URL");
+        answer = StringUtility.convertCamelCaseToSnakeCase(answer);
+        assertThat(answer).isEqualTo("URL");
+    }
+
+    @Test
+    void testToCamelCaseXAxis() {
+        String answer = JavaBeansUtil.getValidPropertyName("XAxis");
+        answer = StringUtility.convertCamelCaseToSnakeCase(answer);
+        assertThat(answer).isEqualTo("X_AXIS");
+    }
+
+    @Test
+    void testToCamelCaseYaxis() {
+        String answer = JavaBeansUtil.getValidPropertyName("Yaxis");
+        answer = StringUtility.convertCamelCaseToSnakeCase(answer);
+        assertThat(answer).isEqualTo("YAXIS");
+    }
+
+    @Test
+    void testIsTrueWithNull() {
+        boolean answer = StringUtility.isTrue(null);
+        assertThat(answer).isFalse();
     }
 }

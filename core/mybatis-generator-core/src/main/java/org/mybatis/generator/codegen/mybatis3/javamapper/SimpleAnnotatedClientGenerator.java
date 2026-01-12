@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,9 +15,10 @@
  */
 package org.mybatis.generator.codegen.mybatis3.javamapper;
 
+import java.util.Optional;
+
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.codegen.AbstractXmlGenerator;
-import org.mybatis.generator.codegen.mybatis3.javamapper.elements.AbstractJavaMapperMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated.AnnotatedDeleteByPrimaryKeyMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated.AnnotatedInsertMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.annotated.AnnotatedSelectAllMethodGenerator;
@@ -33,45 +34,45 @@ public class SimpleAnnotatedClientGenerator extends SimpleJavaClientGenerator {
     @Override
     protected void addDeleteByPrimaryKeyMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateDeleteByPrimaryKey()) {
-            AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedDeleteByPrimaryKeyMethodGenerator(true);
-            initializeAndExecuteGenerator(methodGenerator, interfaze);
+            initializeSubBuilder(new AnnotatedDeleteByPrimaryKeyMethodGenerator.Builder().isSimple(true))
+                    .build().addInterfaceElements(interfaze);
         }
     }
 
     @Override
     protected void addInsertMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateInsert()) {
-            AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedInsertMethodGenerator(true);
-            initializeAndExecuteGenerator(methodGenerator, interfaze);
+            initializeSubBuilder(new AnnotatedInsertMethodGenerator.Builder().isSimple(true))
+                    .build().addInterfaceElements(interfaze);
         }
     }
 
     @Override
     protected void addSelectByPrimaryKeyMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateSelectByPrimaryKey()) {
-            AbstractJavaMapperMethodGenerator methodGenerator =
-                    new AnnotatedSelectByPrimaryKeyMethodGenerator(false, true);
-            initializeAndExecuteGenerator(methodGenerator, interfaze);
+            initializeSubBuilder(new AnnotatedSelectByPrimaryKeyMethodGenerator.Builder()
+                    .useResultMapIfAvailable(false)
+                    .isSimple(true))
+                    .build().addInterfaceElements(interfaze);
         }
     }
 
     @Override
     protected void addSelectAllMethod(Interface interfaze) {
-        AbstractJavaMapperMethodGenerator methodGenerator = new AnnotatedSelectAllMethodGenerator();
-        initializeAndExecuteGenerator(methodGenerator, interfaze);
+        initializeSubBuilder(new AnnotatedSelectAllMethodGenerator.Builder())
+                    .build().addInterfaceElements(interfaze);
     }
 
     @Override
     protected void addUpdateByPrimaryKeyMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateUpdateByPrimaryKeySelective()) {
-            AbstractJavaMapperMethodGenerator methodGenerator =
-                    new AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator(true);
-            initializeAndExecuteGenerator(methodGenerator, interfaze);
+            initializeSubBuilder(new AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator.Builder().isSimple(true))
+                    .build().addInterfaceElements(interfaze);
         }
     }
 
     @Override
-    public AbstractXmlGenerator getMatchedXMLGenerator() {
-        return null;
+    public Optional<AbstractXmlGenerator> getMatchedXMLGenerator() {
+        return Optional.empty();
     }
 }

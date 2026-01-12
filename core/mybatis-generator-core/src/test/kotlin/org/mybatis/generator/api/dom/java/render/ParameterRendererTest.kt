@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -24,24 +24,27 @@ import org.mybatis.generator.api.dom.java.TopLevelClass
 class ParameterRendererTest {
     @Test
     fun testBasicParameter() {
+        val cu = TopLevelClass("com.foo.Baz")
         val renderer = ParameterRenderer()
         val parameter = Parameter(FullyQualifiedJavaType.getStringInstance(), "firstName")
-        assertThat(renderer.render(parameter, null)).isEqualTo("String firstName")
+        assertThat(renderer.render(parameter, cu)).isEqualTo("String firstName")
     }
 
     @Test
     fun testBasicParameterWithAnnotation() {
+        val cu = TopLevelClass("com.foo.Baz")
         val renderer = ParameterRenderer()
         val parameter = Parameter(FullyQualifiedJavaType.getStringInstance(), "firstName")
         parameter.addAnnotation("""@Param("firstName")""")
-        assertThat(renderer.render(parameter, null)).isEqualTo("""@Param("firstName") String firstName""")
+        assertThat(renderer.render(parameter, cu)).isEqualTo("""@Param("firstName") String firstName""")
     }
 
     @Test
     fun testBasicVarargsParameter() {
+        val cu = TopLevelClass("com.foo.Baz")
         val renderer = ParameterRenderer()
         val parameter = Parameter(FullyQualifiedJavaType.getStringInstance(), "names", true)
-        assertThat(renderer.render(parameter, null)).isEqualTo("String ... names")
+        assertThat(renderer.render(parameter, cu)).isEqualTo("String ... names")
     }
 
     @Test

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
@@ -29,7 +30,6 @@ import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
 import org.mybatis.generator.codegen.AbstractXmlGenerator;
-import org.mybatis.generator.codegen.mybatis3.javamapper.elements.AbstractJavaMapperMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.DeleteByPrimaryKeyMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.InsertMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.SelectAllMethodGenerator;
@@ -62,7 +62,8 @@ public class SimpleJavaClientGenerator extends AbstractJavaClientGenerator {
         String rootInterface = introspectedTable.getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
         if (!stringHasValue(rootInterface)) {
             rootInterface = context.getJavaClientGeneratorConfiguration()
-                    .getProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
+                    .map(c -> c.getProperty(PropertyRegistry.ANY_ROOT_INTERFACE))
+                    .orElse(null);
         }
 
         if (stringHasValue(rootInterface)) {
@@ -82,54 +83,42 @@ public class SimpleJavaClientGenerator extends AbstractJavaClientGenerator {
             answer.add(interfaze);
         }
 
-        List<CompilationUnit> extraCompilationUnits = getExtraCompilationUnits();
-        if (extraCompilationUnits != null) {
-            answer.addAll(extraCompilationUnits);
-        }
+        answer.addAll(getExtraCompilationUnits());
 
         return answer;
     }
 
     protected void addDeleteByPrimaryKeyMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateDeleteByPrimaryKey()) {
-            AbstractJavaMapperMethodGenerator methodGenerator = new DeleteByPrimaryKeyMethodGenerator(true);
-            initializeAndExecuteGenerator(methodGenerator, interfaze);
+            initializeSubBuilder(new DeleteByPrimaryKeyMethodGenerator.Builder().isSimple(true))
+                    .build().addInterfaceElements(interfaze);
         }
     }
 
     protected void addInsertMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateInsert()) {
-            AbstractJavaMapperMethodGenerator methodGenerator = new InsertMethodGenerator(true);
-            initializeAndExecuteGenerator(methodGenerator, interfaze);
+            initializeSubBuilder(new InsertMethodGenerator.Builder().isSimple(true))
+                    .build().addInterfaceElements(interfaze);
         }
     }
 
     protected void addSelectByPrimaryKeyMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateSelectByPrimaryKey()) {
-            AbstractJavaMapperMethodGenerator methodGenerator = new SelectByPrimaryKeyMethodGenerator(true);
-            initializeAndExecuteGenerator(methodGenerator, interfaze);
+            initializeSubBuilder(new SelectByPrimaryKeyMethodGenerator.Builder().isSimple(true))
+                    .build().addInterfaceElements(interfaze);
         }
     }
 
     protected void addSelectAllMethod(Interface interfaze) {
-        AbstractJavaMapperMethodGenerator methodGenerator = new SelectAllMethodGenerator();
-        initializeAndExecuteGenerator(methodGenerator, interfaze);
+        initializeSubBuilder(new SelectAllMethodGenerator.Builder())
+                    .build().addInterfaceElements(interfaze);
     }
 
     protected void addUpdateByPrimaryKeyMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateUpdateByPrimaryKeySelective()) {
-            AbstractJavaMapperMethodGenerator methodGenerator = new UpdateByPrimaryKeyWithoutBLOBsMethodGenerator();
-            initializeAndExecuteGenerator(methodGenerator, interfaze);
+            initializeSubBuilder(new UpdateByPrimaryKeyWithoutBLOBsMethodGenerator.Builder())
+                    .build().addInterfaceElements(interfaze);
         }
-    }
-
-    protected void initializeAndExecuteGenerator(AbstractJavaMapperMethodGenerator methodGenerator,
-            Interface interfaze) {
-        methodGenerator.setContext(context);
-        methodGenerator.setIntrospectedTable(introspectedTable);
-        methodGenerator.setProgressCallback(progressCallback);
-        methodGenerator.setWarnings(warnings);
-        methodGenerator.addInterfaceElements(interfaze);
     }
 
     public List<CompilationUnit> getExtraCompilationUnits() {
@@ -137,7 +126,8 @@ public class SimpleJavaClientGenerator extends AbstractJavaClientGenerator {
     }
 
     @Override
-    public AbstractXmlGenerator getMatchedXMLGenerator() {
-        return new SimpleXMLMapperGenerator();
+    public Optional<AbstractXmlGenerator> getMatchedXMLGenerator() {
+        var generator = initializeSubBuilder(new SimpleXMLMapperGenerator.Builder()).build();
+        return Optional.of(generator);
     }
 }

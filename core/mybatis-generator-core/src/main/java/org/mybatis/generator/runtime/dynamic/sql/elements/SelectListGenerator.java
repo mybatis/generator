@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,22 +19,19 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import org.mybatis.generator.api.IntrospectedTable;
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
-import org.mybatis.generator.config.Context;
+import org.mybatis.generator.codegen.AbstractGenerator;
 
-public class SelectListGenerator {
+public class SelectListGenerator extends AbstractGenerator {
 
     private final FragmentGenerator fragmentGenerator;
-    private final Context context;
-    private final IntrospectedTable introspectedTable;
 
     private SelectListGenerator(Builder builder) {
+        super(builder);
         this.fragmentGenerator = Objects.requireNonNull(builder.fragmentGenerator);
-        this.context = Objects.requireNonNull(builder.context);
-        this.introspectedTable = Objects.requireNonNull(builder.introspectedTable);
     }
 
     public FieldAndImports generateFieldAndImports() {
@@ -57,23 +54,16 @@ public class SelectListGenerator {
         return context.getPlugins().clientSelectListFieldGenerated(field, interfaze, introspectedTable);
     }
 
-    public static class Builder {
-        private FragmentGenerator fragmentGenerator;
-        private Context context;
-        private IntrospectedTable introspectedTable;
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
+        private @Nullable FragmentGenerator fragmentGenerator;
 
         public Builder withFragmentGenerator(FragmentGenerator fragmentGenerator) {
             this.fragmentGenerator = fragmentGenerator;
             return this;
         }
 
-        public Builder withContext(Context context) {
-            this.context = context;
-            return this;
-        }
-
-        public Builder withIntrospectedTable(IntrospectedTable introspectedTable) {
-            this.introspectedTable = introspectedTable;
+        @Override
+        protected Builder getThis() {
             return this;
         }
 

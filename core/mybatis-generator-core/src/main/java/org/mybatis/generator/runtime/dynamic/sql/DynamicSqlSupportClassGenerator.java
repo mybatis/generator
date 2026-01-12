@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -20,27 +20,22 @@ import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJ
 
 import java.util.List;
 
-import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.IntrospectedColumn;
-import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.InnerClass;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.codegen.AbstractGenerator;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
 import org.mybatis.generator.internal.util.StringUtility;
 import org.mybatis.generator.internal.util.messages.Messages;
 
-public class DynamicSqlSupportClassGenerator {
-    private IntrospectedTable introspectedTable;
-    private CommentGenerator commentGenerator;
-    private List<String> warnings;
-
-    private DynamicSqlSupportClassGenerator() {
-        super();
+public class DynamicSqlSupportClassGenerator extends AbstractGenerator {
+    private DynamicSqlSupportClassGenerator(Builder builder) {
+        super(builder);
     }
 
     public TopLevelClass generate() {
@@ -90,7 +85,8 @@ public class DynamicSqlSupportClassGenerator {
                 + ");"); //$NON-NLS-1$
         innerClass.addMethod(method);
 
-        commentGenerator.addClassAnnotation(innerClass, introspectedTable, topLevelClass.getImportedTypes());
+        context.getCommentGenerator()
+                .addClassAnnotation(innerClass, introspectedTable, topLevelClass.getImportedTypes());
 
         return innerClass;
     }
@@ -101,7 +97,7 @@ public class DynamicSqlSupportClassGenerator {
         String fieldName =
                 JavaBeansUtil.getValidPropertyName(introspectedTable.getMyBatisDynamicSQLTableObjectName());
         Field field = new Field(fieldName, fqjt);
-        commentGenerator.addFieldAnnotation(field, introspectedTable, topLevelClass.getImportedTypes());
+        context.getCommentGenerator().addFieldAnnotation(field, introspectedTable, topLevelClass.getImportedTypes());
         field.setVisibility(JavaVisibility.PUBLIC);
         field.setStatic(true);
         field.setFinal(true);
@@ -138,7 +134,8 @@ public class DynamicSqlSupportClassGenerator {
             field.setStatic(true);
             field.setFinal(true);
             field.setInitializationString(tableFieldName + "." + fieldName); //$NON-NLS-1$
-            commentGenerator.addFieldAnnotation(field, introspectedTable, column, topLevelClass.getImportedTypes());
+            context.getCommentGenerator()
+                    .addFieldAnnotation(field, introspectedTable, column, topLevelClass.getImportedTypes());
             topLevelClass.addField(field);
         }
 
@@ -161,12 +158,9 @@ public class DynamicSqlSupportClassGenerator {
                 escapeStringForJava(getEscapedColumnName(column)),
                 column.getJdbcTypeName()));
 
-        if (StringUtility.stringHasValue(column.getTypeHandler())) {
-            initializationString.append(String.format(", \"%s\")", column.getTypeHandler())); //$NON-NLS-1$
-        } else {
-            initializationString.append(')'); //$NON-NLS-1$
-        }
-
+        column.getTypeHandler().ifPresentOrElse(
+                th -> initializationString.append(String.format(", \"%s\")", th)), //$NON-NLS-1$
+                () -> initializationString.append(')'));
 
         if (StringUtility.isTrue(
                 column.getProperties().getProperty(PropertyRegistry.COLUMN_OVERRIDE_FORCE_JAVA_TYPE))) {
@@ -178,12 +172,14 @@ public class DynamicSqlSupportClassGenerator {
         return initializationString.toString();
     }
 
-    public static DynamicSqlSupportClassGenerator of(IntrospectedTable introspectedTable,
-            CommentGenerator commentGenerator, List<String> warnings) {
-        DynamicSqlSupportClassGenerator generator = new DynamicSqlSupportClassGenerator();
-        generator.introspectedTable = introspectedTable;
-        generator.commentGenerator = commentGenerator;
-        generator.warnings = warnings;
-        return generator;
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        public DynamicSqlSupportClassGenerator build() {
+            return new DynamicSqlSupportClassGenerator(this);
+        }
     }
 }

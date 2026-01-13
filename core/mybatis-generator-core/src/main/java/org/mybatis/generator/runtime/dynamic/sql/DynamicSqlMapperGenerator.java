@@ -58,29 +58,35 @@ import org.mybatis.generator.runtime.dynamic.sql.elements.UpdateByPrimaryKeySele
 import org.mybatis.generator.runtime.dynamic.sql.elements.UpdateSelectiveColumnsMethodGenerator;
 
 public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
-
     // record type for insert, select, update
-    protected FullyQualifiedJavaType recordType;
-
+    protected final FullyQualifiedJavaType recordType;
     // id to use for the common result map
-    protected String resultMapId;
-
+    protected final String resultMapId;
     // name of the field containing the table in the support class
-    protected String tableFieldName;
+    protected final String tableFieldName;
+    protected final FragmentGenerator fragmentGenerator;
+    protected final boolean hasGeneratedKeys;
 
-    protected FragmentGenerator fragmentGenerator;
+    public DynamicSqlMapperGenerator(Builder builder) {
+        super(builder);
 
-    protected boolean hasGeneratedKeys;
+        recordType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
+        resultMapId = recordType.getShortNameWithoutTypeArguments() + "Result"; //$NON-NLS-1$
+        tableFieldName =
+                JavaBeansUtil.getValidPropertyName(introspectedTable.getMyBatisDynamicSQLTableObjectName());
+        fragmentGenerator = new FragmentGenerator.Builder()
+                .withIntrospectedTable(introspectedTable)
+                .withResultMapId(resultMapId)
+                .withTableFieldName(tableFieldName)
+                .build();
 
-    public DynamicSqlMapperGenerator(String project) {
-        super(project, false);
+        hasGeneratedKeys = introspectedTable.getGeneratedKey().isPresent();
     }
 
     @Override
     public List<CompilationUnit> getCompilationUnits() {
         progressCallback.startTask(getString("Progress.17", //$NON-NLS-1$
                 introspectedTable.getFullyQualifiedTable().toString()));
-        preCalculate();
 
         Interface interfaze = createBasicInterface();
 
@@ -123,20 +129,6 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
         }
 
         return answer;
-    }
-
-    protected void preCalculate() {
-        recordType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
-        resultMapId = recordType.getShortNameWithoutTypeArguments() + "Result"; //$NON-NLS-1$
-        tableFieldName =
-                JavaBeansUtil.getValidPropertyName(introspectedTable.getMyBatisDynamicSQLTableObjectName());
-        fragmentGenerator = new FragmentGenerator.Builder()
-                .withIntrospectedTable(introspectedTable)
-                .withResultMapId(resultMapId)
-                .withTableFieldName(tableFieldName)
-                .build();
-
-        hasGeneratedKeys = introspectedTable.getGeneratedKey().isPresent();
     }
 
     protected Interface createBasicInterface() {
@@ -412,5 +404,22 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
     @Override
     public Optional<AbstractXmlGenerator> getMatchedXMLGenerator() {
         return Optional.empty();
+    }
+
+    public static class Builder extends AbstractJavaClientGeneratorBuilder<Builder> {
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        @Override
+        protected boolean requiresXMLGenerator() {
+            return false;
+        }
+
+        @Override
+        public DynamicSqlMapperGenerator build() {
+            return new DynamicSqlMapperGenerator(this);
+        }
     }
 }

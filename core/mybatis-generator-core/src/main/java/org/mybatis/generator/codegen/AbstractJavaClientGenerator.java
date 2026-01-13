@@ -29,9 +29,9 @@ public abstract class AbstractJavaClientGenerator extends AbstractJavaGenerator 
 
     private final boolean requiresXMLGenerator;
 
-    protected AbstractJavaClientGenerator(String project, boolean requiresXMLGenerator) {
-        super(project);
-        this.requiresXMLGenerator = requiresXMLGenerator;
+    protected AbstractJavaClientGenerator(AbstractJavaClientGeneratorBuilder<?> builder) {
+        super(builder);
+        this.requiresXMLGenerator = builder.requiresXMLGenerator();
     }
 
     /**
@@ -50,4 +50,12 @@ public abstract class AbstractJavaClientGenerator extends AbstractJavaGenerator 
      * @return the matched XML generator if any.
      */
     public abstract Optional<AbstractXmlGenerator> getMatchedXMLGenerator();
+
+    public abstract static class AbstractJavaClientGeneratorBuilder<T extends AbstractJavaClientGeneratorBuilder<T>>
+        extends AbstractJavaGeneratorBuilder<T> {
+
+        protected abstract boolean requiresXMLGenerator();
+
+        public abstract AbstractJavaClientGenerator build();
+    }
 }

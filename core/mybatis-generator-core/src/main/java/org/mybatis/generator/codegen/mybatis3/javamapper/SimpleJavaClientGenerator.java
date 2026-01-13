@@ -40,12 +40,8 @@ import org.mybatis.generator.config.PropertyRegistry;
 
 public class SimpleJavaClientGenerator extends AbstractJavaClientGenerator {
 
-    public SimpleJavaClientGenerator(String project) {
-        this(project, true);
-    }
-
-    public SimpleJavaClientGenerator(String project, boolean requiresMatchedXMLGenerator) {
-        super(project, requiresMatchedXMLGenerator);
+    public SimpleJavaClientGenerator(Builder builder) {
+        super(builder);
     }
 
     @Override
@@ -129,5 +125,22 @@ public class SimpleJavaClientGenerator extends AbstractJavaClientGenerator {
     public Optional<AbstractXmlGenerator> getMatchedXMLGenerator() {
         var generator = initializeSubBuilder(new SimpleXMLMapperGenerator.Builder()).build();
         return Optional.of(generator);
+    }
+
+    public static class Builder extends AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder<Builder> {
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        @Override
+        public SimpleJavaClientGenerator build() {
+            return new SimpleJavaClientGenerator(this);
+        }
+
+        @Override
+        protected boolean requiresXMLGenerator() {
+            return true;
+        }
     }
 }

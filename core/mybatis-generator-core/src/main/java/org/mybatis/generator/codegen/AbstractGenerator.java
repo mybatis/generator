@@ -24,37 +24,16 @@ import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.config.Context;
 
 public abstract class AbstractGenerator {
-    protected Context context;
-    protected IntrospectedTable introspectedTable;
-    protected List<String> warnings;
-    protected ProgressCallback progressCallback;
-
-    // TODO - remove once we change the build method for JavaClientGenerators
-    protected AbstractGenerator() {
-        super();
-    }
+    protected final Context context;
+    protected final IntrospectedTable introspectedTable;
+    protected final List<String> warnings;
+    protected final ProgressCallback progressCallback;
 
     protected AbstractGenerator(AbstractGeneratorBuilder<?> builder) {
         this.context = Objects.requireNonNull(builder.context);
         this.introspectedTable = Objects.requireNonNull(builder.introspectedTable);
         this.warnings = Objects.requireNonNull(builder.warnings);
         this.progressCallback = Objects.requireNonNull(builder.progressCallback);
-    }
-
-    public void setContext(Context context) {
-        this.context = context;
-    }
-
-    public void setIntrospectedTable(IntrospectedTable introspectedTable) {
-        this.introspectedTable = introspectedTable;
-    }
-
-    public void setWarnings(List<String> warnings) {
-        this.warnings = warnings;
-    }
-
-    public void setProgressCallback(ProgressCallback progressCallback) {
-        this.progressCallback = progressCallback;
     }
 
     protected <T extends AbstractGeneratorBuilder<T>> T initializeSubBuilder(T builder) {

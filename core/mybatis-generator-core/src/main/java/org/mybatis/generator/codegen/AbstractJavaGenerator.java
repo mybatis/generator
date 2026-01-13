@@ -33,11 +33,6 @@ import org.mybatis.generator.config.PropertyRegistry;
 public abstract class AbstractJavaGenerator extends AbstractGenerator {
     private final String project;
 
-    // TODO - remove once we figure out how to build Java client generators
-    protected AbstractJavaGenerator(String project) {
-        this.project = project;
-    }
-
     protected AbstractJavaGenerator(AbstractJavaGeneratorBuilder<?> builder) {
         super(builder);
         this.project = Objects.requireNonNull(builder.project);

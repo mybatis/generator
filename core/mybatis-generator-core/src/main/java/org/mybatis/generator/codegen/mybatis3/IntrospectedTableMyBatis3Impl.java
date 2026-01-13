@@ -16,6 +16,7 @@
 package org.mybatis.generator.codegen.mybatis3;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,10 +26,10 @@ import org.mybatis.generator.api.GeneratedKotlinFile;
 import org.mybatis.generator.api.GeneratedXmlFile;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.ProgressCallback;
+import org.mybatis.generator.api.VerboseProgressCallback;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.xml.Document;
-import org.mybatis.generator.codegen.AbstractGenerator;
 import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.codegen.AbstractKotlinGenerator;
@@ -52,11 +53,8 @@ import org.mybatis.generator.internal.util.StringUtility;
  * @author Jeff Butler
  */
 public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
-
     protected final List<AbstractJavaGenerator> javaGenerators = new ArrayList<>();
-
     protected final List<AbstractKotlinGenerator> kotlinGenerators = new ArrayList<>();
-
     protected @Nullable AbstractXmlGenerator xmlMapperGenerator;
 
     public IntrospectedTableMyBatis3Impl() {
@@ -68,7 +66,7 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
         calculateJavaModelGenerators(warnings, progressCallback);
 
         AbstractJavaClientGenerator javaClientGenerator =
-                calculateClientGenerators(warnings, progressCallback).orElse(null);
+                calculateClientGenerator(warnings, progressCallback).orElse(null);
 
         calculateXmlMapperGenerator(javaClientGenerator, warnings, progressCallback);
     }
@@ -90,41 +88,43 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
         }
     }
 
-    protected Optional<AbstractJavaClientGenerator> calculateClientGenerators(List<String> warnings,
+    protected Optional<AbstractJavaClientGenerator> calculateClientGenerator(List<String> warnings,
             ProgressCallback progressCallback) {
         if (!getRules().generateJavaClient()) {
             return Optional.empty();
         }
 
-        return createJavaClientGenerator().map(g -> {
-            initializeAbstractGenerator(g, warnings, progressCallback);
-            javaGenerators.add(g);
-            return g;
+        return calculateJavaClientGeneratorBuilderType().map(t -> {
+            var builder = ObjectFactory.createInternalObject(t,
+                    AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder.class);
+            var generator = initializeAbstractClientGenerator(builder, warnings, progressCallback).build();
+            javaGenerators.add(generator);
+            return generator;
         });
     }
 
-    protected Optional<AbstractJavaClientGenerator> createJavaClientGenerator() {
+    protected Optional<String> calculateJavaClientGeneratorBuilderType() {
         return getContext().getJavaClientGeneratorConfiguration()
                 .flatMap(TypedPropertyHolder::getConfigurationType)
                 .map(t -> {
                     if ("XMLMAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
-                        return new JavaMapperGenerator(getClientProject());
+                        return JavaMapperGenerator.Builder.class.getName();
                     } else if ("MIXEDMAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
-                        return new MixedClientGenerator(getClientProject());
+                        return MixedClientGenerator.Builder.class.getName();
                     } else if ("ANNOTATEDMAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
-                        return new AnnotatedClientGenerator(getClientProject());
+                        return AnnotatedClientGenerator.Builder.class.getName();
                     } else if ("MAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
-                        return new JavaMapperGenerator(getClientProject());
+                        return JavaMapperGenerator.Builder.class.getName();
                     } else {
-                        return ObjectFactory.createInternalObject(t, AbstractJavaClientGenerator.class);
+                        return t;
                     }
                 });
     }
 
     protected void calculateJavaModelGenerators(List<String> warnings, ProgressCallback progressCallback) {
         if (getRules().generateExampleClass()) {
-            AbstractJavaGenerator javaGenerator = new ExampleGenerator.Builder()
-                    .withProject(getModelProject())
+            var javaGenerator = new ExampleGenerator.Builder()
+                    .withProject(getExampleProject())
                     .withContext(getContext())
                     .withIntrospectedTable(this)
                     .withProgressCallback(progressCallback)
@@ -134,7 +134,7 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
         }
 
         if (getRules().generatePrimaryKeyClass()) {
-            AbstractJavaGenerator javaGenerator = new PrimaryKeyGenerator.Builder()
+            var javaGenerator = new PrimaryKeyGenerator.Builder()
                     .withProject(getModelProject())
                     .withContext(getContext())
                     .withIntrospectedTable(this)
@@ -145,7 +145,7 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
         }
 
         if (getRules().generateBaseRecordClass()) {
-            AbstractJavaGenerator javaGenerator = new BaseRecordGenerator.Builder()
+            var javaGenerator = new BaseRecordGenerator.Builder()
                     .withProject(getModelProject())
                     .withContext(getContext())
                     .withIntrospectedTable(this)
@@ -156,7 +156,7 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
         }
 
         if (getRules().generateRecordWithBLOBsClass()) {
-            AbstractJavaGenerator javaGenerator = new RecordWithBLOBsGenerator.Builder()
+            var javaGenerator = new RecordWithBLOBsGenerator.Builder()
                     .withProject(getModelProject())
                     .withContext(getContext())
                     .withIntrospectedTable(this)
@@ -167,12 +167,15 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
         }
     }
 
-    protected void initializeAbstractGenerator(AbstractGenerator abstractGenerator, List<String> warnings,
-                                               ProgressCallback progressCallback) {
-        abstractGenerator.setContext(getContext());
-        abstractGenerator.setIntrospectedTable(this);
-        abstractGenerator.setProgressCallback(progressCallback);
-        abstractGenerator.setWarnings(warnings);
+    protected AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder<?> initializeAbstractClientGenerator(
+            AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder<?> builder, List<String> warnings,
+            ProgressCallback progressCallback) {
+        return builder
+                .withProject(getClientProject())
+                .withContext(getContext())
+                .withIntrospectedTable(this)
+                .withProgressCallback(progressCallback)
+                .withWarnings(warnings);
     }
 
     @Override
@@ -256,7 +259,15 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
 
     @Override
     public boolean requiresXMLGenerator() {
-        return createJavaClientGenerator()
+        // for validation only, so we can build a dummy version.
+        // we build this only to ask if an XML generator is required.
+        return calculateJavaClientGeneratorBuilderType()
+                .map(t -> {
+                    var builder = ObjectFactory.createInternalObject(t,
+                            AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder.class);
+                    return initializeAbstractClientGenerator(builder, Collections.emptyList(),
+                            new VerboseProgressCallback()).build();
+                })
                 .map(AbstractJavaClientGenerator::requiresXMLGenerator)
                 .orElse(false);
     }

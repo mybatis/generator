@@ -17,11 +17,16 @@ package org.mybatis.generator.codegen;
 
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.CommentGenerator;
+import org.mybatis.generator.api.GeneratedJavaFile;
+import org.mybatis.generator.api.GeneratedKotlinFile;
+import org.mybatis.generator.api.GeneratedXmlFile;
+import org.mybatis.generator.api.GenericGeneratedFile;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.Plugin;
 import org.mybatis.generator.api.ProgressCallback;
@@ -55,16 +60,17 @@ public class GenerationEngine {
                                 .orElse("Unknown Plugin Type"), context.getId())); //$NON-NLS-1$
             }
         });
-    }
 
-    public void generateFiles(ContextResults.GeneratedFiles generatedFiles) throws InterruptedException {
         // initialize everything first before generating. This allows plugins to know about other
         // items in the configuration.
         for (IntrospectedTable introspectedTable : introspectedTables) {
-            progressCallback.checkCancel();
             introspectedTable.initialize(pluginAggregator, commentGenerator);
             introspectedTable.calculateGenerators(warnings, progressCallback);
         }
+    }
+
+    public List<GeneratedJavaFile> generateJavaFiles() throws InterruptedException {
+        List<GeneratedJavaFile> generatedJavaFiles = new ArrayList<>();
 
         for (IntrospectedTable introspectedTable : introspectedTables) {
             progressCallback.checkCancel();
@@ -73,20 +79,67 @@ public class GenerationEngine {
                 continue;
             }
 
-            generatedFiles.addGeneratedJavaFiles(introspectedTable.getGeneratedJavaFiles());
-            generatedFiles.addGeneratedXmlFiles(introspectedTable.getGeneratedXmlFiles());
-            generatedFiles.addGeneratedKotlinFiles(introspectedTable.getGeneratedKotlinFiles());
-
-            generatedFiles.addGeneratedJavaFiles(pluginAggregator.contextGenerateAdditionalJavaFiles(introspectedTable));
-            generatedFiles.addGeneratedXmlFiles(pluginAggregator.contextGenerateAdditionalXmlFiles(introspectedTable));
-            generatedFiles.addGeneratedKotlinFiles(pluginAggregator.contextGenerateAdditionalKotlinFiles(introspectedTable));
-            generatedFiles.addOtherGeneratedFiles(pluginAggregator.contextGenerateAdditionalFiles(introspectedTable));
+            generatedJavaFiles.addAll(introspectedTable.getGeneratedJavaFiles());
+            generatedJavaFiles.addAll(pluginAggregator.contextGenerateAdditionalJavaFiles(introspectedTable));
         }
 
-        generatedFiles.addGeneratedJavaFiles(pluginAggregator.contextGenerateAdditionalJavaFiles());
-        generatedFiles.addGeneratedXmlFiles(pluginAggregator.contextGenerateAdditionalXmlFiles());
-        generatedFiles.addGeneratedKotlinFiles(pluginAggregator.contextGenerateAdditionalKotlinFiles());
-        generatedFiles.addOtherGeneratedFiles(pluginAggregator.contextGenerateAdditionalFiles());
+        generatedJavaFiles.addAll(pluginAggregator.contextGenerateAdditionalJavaFiles());
+
+        return generatedJavaFiles;
+    }
+
+    public List<GeneratedXmlFile> generateXmlFiles() throws InterruptedException {
+        List<GeneratedXmlFile> generatedXmlFiles = new ArrayList<>();
+
+        for (IntrospectedTable introspectedTable : introspectedTables) {
+            progressCallback.checkCancel();
+
+            if (!pluginAggregator.shouldGenerate(introspectedTable)) {
+                continue;
+            }
+
+            generatedXmlFiles.addAll(introspectedTable.getGeneratedXmlFiles());
+            generatedXmlFiles.addAll(pluginAggregator.contextGenerateAdditionalXmlFiles(introspectedTable));
+        }
+
+        generatedXmlFiles.addAll(pluginAggregator.contextGenerateAdditionalXmlFiles());
+
+        return generatedXmlFiles;
+    }
+
+    public List<GeneratedKotlinFile> generateKotlinFiles() throws InterruptedException {
+        List<GeneratedKotlinFile> generatedKotlinFiles = new ArrayList<>();
+
+        for (IntrospectedTable introspectedTable : introspectedTables) {
+            progressCallback.checkCancel();
+
+            if (!pluginAggregator.shouldGenerate(introspectedTable)) {
+                continue;
+            }
+
+            generatedKotlinFiles.addAll(introspectedTable.getGeneratedKotlinFiles());
+            generatedKotlinFiles.addAll(pluginAggregator.contextGenerateAdditionalKotlinFiles(introspectedTable));
+        }
+
+        generatedKotlinFiles.addAll(pluginAggregator.contextGenerateAdditionalKotlinFiles());
+        return generatedKotlinFiles;
+    }
+
+    public List<GenericGeneratedFile> generateGenericFiles() throws InterruptedException {
+        List<GenericGeneratedFile> genericGeneratedFiles = new ArrayList<>();
+
+        for (IntrospectedTable introspectedTable : introspectedTables) {
+            progressCallback.checkCancel();
+
+            if (!pluginAggregator.shouldGenerate(introspectedTable)) {
+                continue;
+            }
+
+            genericGeneratedFiles.addAll(pluginAggregator.contextGenerateAdditionalFiles(introspectedTable));
+        }
+
+        genericGeneratedFiles.addAll(pluginAggregator.contextGenerateAdditionalFiles());
+        return genericGeneratedFiles;
     }
 
     public static class Builder {

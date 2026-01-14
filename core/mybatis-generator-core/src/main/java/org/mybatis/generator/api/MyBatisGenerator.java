@@ -29,6 +29,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -244,7 +245,8 @@ public class MyBatisGenerator {
 
             List<IntrospectedTable> introspectedTables = new IntrospectionEngine.Builder()
                     .withContext(context)
-                    .withFullyQualifiedTableNames(fullyQualifiedTableNames == null ? Collections.emptySet() : fullyQualifiedTableNames)
+                    .withFullyQualifiedTableNames(
+                            fullyQualifiedTableNames == null ? Collections.emptySet() : fullyQualifiedTableNames)
                     .withWarnings(warnings)
                     .withProgressCallback(callback)
                     .withCommentGenerator(contextResults.commentGenerator())
@@ -262,14 +264,18 @@ public class MyBatisGenerator {
         callback.generationStarted(totalSteps);
 
         for (ContextResults contextResults : this.contextResultList) {
-            new GenerationEngine.Builder()
+            var generationEngine = new GenerationEngine.Builder()
                     .withContext(contextResults.context())
                     .withProgressCallback(callback)
                     .withWarnings(warnings)
                     .withIntrospectedTables(contextResults.introspectedTables())
                     .withCommentGenerator(contextResults.commentGenerator())
-                    .build()
-                    .generateFiles(contextResults.generatedFiles());
+                    .build();
+
+            contextResults.addGeneratedJavaFiles(generationEngine.generateJavaFiles());
+            contextResults.addGeneratedXmlFiles(generationEngine.generateXmlFiles());
+            contextResults.addGeneratedKotlinFiles(generationEngine.generateKotlinFiles());
+            contextResults.addGeneratedGenericFiles(generationEngine.generateGenericFiles());
         }
 
         // now save the files
@@ -281,24 +287,24 @@ public class MyBatisGenerator {
             callback.saveStarted(totalSteps);
 
             for (ContextResults contextResults : this.contextResultList) {
-                for (GeneratedXmlFile gxf : contextResults.generatedFiles().generatedXmlFiles()) {
+                for (GeneratedXmlFile gxf : contextResults.generatedXmlFiles()) {
                     projects.add(gxf.getTargetProject());
                     writeGeneratedXmlFile(gxf, contextResults.xmlFormatter(), callback);
                 }
 
-                for (GeneratedJavaFile gjf : contextResults.generatedFiles().generatedJavaFiles()) {
+                for (GeneratedJavaFile gjf : contextResults.generatedJavaFiles()) {
                     projects.add(gjf.getTargetProject());
                     writeGeneratedJavaFile(gjf, contextResults.javaFormatter(), contextResults.javaFileEncoding(),
                             callback);
                 }
 
-                for (GeneratedKotlinFile gkf : contextResults.generatedFiles().generatedKotlinFiles()) {
+                for (GeneratedKotlinFile gkf : contextResults.generatedKotlinFiles()) {
                     projects.add(gkf.getTargetProject());
                     writeGeneratedKotlinFile(gkf, contextResults.kotlinFormatter(), contextResults.kotlinFileEncoding(),
                             callback);
                 }
 
-                for (GenericGeneratedFile gf : contextResults.generatedFiles().otherGeneratedFiles()) {
+                for (GenericGeneratedFile gf : contextResults.generatedGenericFiles()) {
                     projects.add(gf.getTargetProject());
                     writeGenericGeneratedFile(gf, callback);
                 }
@@ -504,7 +510,8 @@ public class MyBatisGenerator {
      */
     public List<GeneratedJavaFile> getGeneratedJavaFiles() {
         return contextResultList.stream()
-                .flatMap(ContextResults::generatedJavaFiles)
+                .map(ContextResults::generatedJavaFiles)
+                .flatMap(Collection::stream)
                 .collect(Collectors.toList());
     }
 
@@ -517,7 +524,8 @@ public class MyBatisGenerator {
      */
     public List<GeneratedKotlinFile> getGeneratedKotlinFiles() {
         return contextResultList.stream()
-                .flatMap(ContextResults::generatedKotlinFiles)
+                .map(ContextResults::generatedKotlinFiles)
+                .flatMap(Collection::stream)
                 .collect(Collectors.toList());
     }
 
@@ -530,7 +538,8 @@ public class MyBatisGenerator {
      */
     public List<GeneratedXmlFile> getGeneratedXmlFiles() {
         return contextResultList.stream()
-                .flatMap(ContextResults::generatedXmlFiles)
+                .map(ContextResults::generatedXmlFiles)
+                .flatMap(Collection::stream)
                 .collect(Collectors.toList());
     }
 }

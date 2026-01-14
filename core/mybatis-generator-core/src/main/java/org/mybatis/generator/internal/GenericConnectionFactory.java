@@ -31,9 +31,6 @@ public class GenericConnectionFactory implements ConnectionFactory {
     private @Nullable String driverClass;
     private final Properties otherProperties = new Properties();
 
-    public GenericConnectionFactory() {
-    }
-
     @Override
     public Connection getConnection() throws SQLException {
 

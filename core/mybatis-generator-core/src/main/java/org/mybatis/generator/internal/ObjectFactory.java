@@ -131,20 +131,20 @@ public class ObjectFactory {
 
     @SuppressWarnings("unchecked")
     public static <T> Class<T> internalClassForName(String type, Class<T> t) throws ClassNotFoundException {
-        Class<T> clazz = null;
+        Class<?> clazz = null;
 
         try {
             ClassLoader cl = Thread.currentThread().getContextClassLoader();
-            clazz = (Class<T>) Class.forName(type, true, cl);
+            clazz = Class.forName(type, true, cl);
         } catch (Exception e) {
             // ignore - failsafe below
         }
 
         if (clazz == null) {
-            clazz = (Class<T>) Class.forName(type, true, ObjectFactory.class.getClassLoader());
+            clazz = Class.forName(type, true, ObjectFactory.class.getClassLoader());
         }
 
-        return clazz;
+        return (Class<T>) clazz;
     }
 
     public static Optional<URL> getResource(String resource) {

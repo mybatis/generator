@@ -24,7 +24,11 @@ import org.mybatis.generator.config.JDBCConnectionConfiguration;
 import org.mybatis.generator.internal.JDBCConnectionFactory;
 import org.mybatis.generator.internal.ObjectFactory;
 
-public class ConnectionUtility {
+public final class ConnectionUtility {
+    private ConnectionUtility() {
+        // utility class - no instances
+    }
+
     /**
      * This method creates a new JDBC connection from the values specified in the configuration file.
      *

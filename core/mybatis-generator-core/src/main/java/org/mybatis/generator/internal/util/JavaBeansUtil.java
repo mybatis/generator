@@ -107,14 +107,7 @@ public class JavaBeansUtil {
             char c = inputString.charAt(i);
 
             switch (c) {
-            case '_':
-            case '-':
-            case '@':
-            case '$':
-            case '#':
-            case ' ':
-            case '/':
-            case '&':
+            case '_', '-', '@', '$', '#', ' ', '/', '&':
                 if (!sb.isEmpty()) {
                     nextUpperCase = true;
                 }

@@ -157,8 +157,7 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
         case Types.DATE:
             answer = calculateDateType(column, defaultType);
             break;
-        case Types.DECIMAL:
-        case Types.NUMERIC:
+        case Types.DECIMAL, Types.NUMERIC:
             answer = calculateBigDecimalReplacement(column, defaultType);
             break;
         case Types.TIME:

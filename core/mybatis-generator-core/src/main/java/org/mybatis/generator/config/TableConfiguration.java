@@ -235,7 +235,7 @@ public class TableConfiguration extends PropertyHolder {
         List<String> answer = new ArrayList<>();
 
         for (Map.Entry<IgnoredColumn, Boolean> entry : ignoredColumns.entrySet()) {
-            if (!entry.getValue()) {
+            if (Boolean.FALSE.equals(entry.getValue())) {
                 answer.add(entry.getKey().getColumnName());
             }
         }

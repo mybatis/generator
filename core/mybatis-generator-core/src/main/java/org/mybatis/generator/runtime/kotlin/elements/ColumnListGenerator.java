@@ -42,7 +42,7 @@ public class ColumnListGenerator extends AbstractGenerator {
     public KotlinPropertyAndImports generatePropertyAndImports() {
         List<FieldNameAndImport> fieldsAndImports = introspectedTable.getAllColumns().stream()
                 .map(this::calculateFieldAndImport)
-                .collect(Collectors.toList());
+                .toList();
 
         KotlinPropertyAndImports propertyAndImports = KotlinPropertyAndImports.withProperty(
                 KotlinProperty.newVal("columnList") //$NON-NLS-1$

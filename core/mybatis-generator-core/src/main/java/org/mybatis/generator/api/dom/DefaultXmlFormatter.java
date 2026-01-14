@@ -32,5 +32,7 @@ public class DefaultXmlFormatter implements XmlFormatter {
     }
 
     @Override
-    public void setContext(Context context) {}
+    public void setContext(Context context) {
+        // context is not used in the default formatter
+    }
 }

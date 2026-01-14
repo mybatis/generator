@@ -37,12 +37,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.codegen.ContextResults;
 import org.mybatis.generator.codegen.RootClassInfo;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.MergeConstants;
-import org.mybatis.generator.engine.GenerationEngine;
-import org.mybatis.generator.engine.IntrospectionEngine;
+import org.mybatis.generator.codegen.GenerationEngine;
+import org.mybatis.generator.codegen.IntrospectionEngine;
 import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.exception.ShellException;
 import org.mybatis.generator.internal.DefaultShellCallback;

@@ -13,13 +13,22 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.generator.api;
+package org.mybatis.generator.codegen;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
 import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.api.CommentGenerator;
+import org.mybatis.generator.api.GeneratedJavaFile;
+import org.mybatis.generator.api.GeneratedKotlinFile;
+import org.mybatis.generator.api.GeneratedXmlFile;
+import org.mybatis.generator.api.GenericGeneratedFile;
+import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.JavaFormatter;
+import org.mybatis.generator.api.KotlinFormatter;
+import org.mybatis.generator.api.XmlFormatter;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.internal.ObjectFactory;

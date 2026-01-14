@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.generator.engine;
+package org.mybatis.generator.codegen;
 
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
@@ -22,7 +22,6 @@ import java.util.Objects;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.CommentGenerator;
-import org.mybatis.generator.api.ContextResults;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.Plugin;
 import org.mybatis.generator.api.ProgressCallback;

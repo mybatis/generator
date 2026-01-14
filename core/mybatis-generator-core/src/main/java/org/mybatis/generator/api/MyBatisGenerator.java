@@ -239,7 +239,10 @@ public class MyBatisGenerator {
         callback.introspectionStarted(totalSteps);
 
         for (Context context : contextsToRun) {
-            ContextResults contextResults = new ContextResults(context);
+            ContextResults contextResults = new ContextResults.Builder()
+                    .withContext(context)
+                    .withWarnings(warnings)
+                    .build();
             this.contextResultList.add(contextResults);
 
             List<IntrospectedTable> introspectedTables = new IntrospectionEngine.Builder()
@@ -248,9 +251,8 @@ public class MyBatisGenerator {
                             fullyQualifiedTableNames == null ? Collections.emptySet() : fullyQualifiedTableNames)
                     .withWarnings(warnings)
                     .withProgressCallback(callback)
-                    .withCommentGenerator(contextResults.commentGenerator())
                     .build()
-                    .introspectTables();
+                    .introspectTables(contextResults.knownRuntime(), contextResults.pluginAggregator());
 
             contextResults.addIntrospectedTables(introspectedTables);
         }
@@ -269,6 +271,8 @@ public class MyBatisGenerator {
                     .withWarnings(warnings)
                     .withIntrospectedTables(contextResults.introspectedTables())
                     .withCommentGenerator(contextResults.commentGenerator())
+                    .withPluginAggregator(contextResults.pluginAggregator())
+                    .withRuntimeBuilderClassName(contextResults.runtimeBuilderClassName())
                     .build();
 
             contextResults.addGeneratedJavaFiles(generationEngine.generateJavaFiles());

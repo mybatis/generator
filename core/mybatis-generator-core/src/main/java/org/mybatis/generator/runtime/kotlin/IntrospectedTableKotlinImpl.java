@@ -15,37 +15,40 @@
  */
 package org.mybatis.generator.runtime.kotlin;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import org.mybatis.generator.api.GeneratedJavaFile;
+import org.mybatis.generator.api.GeneratedKotlinFile;
+import org.mybatis.generator.api.GeneratedXmlFile;
 import org.mybatis.generator.api.ProgressCallback;
+import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.codegen.AbstractKotlinGenerator;
+import org.mybatis.generator.codegen.AbstractRuntime;
 import org.mybatis.generator.codegen.mybatis3.IntrospectedTableMyBatis3Impl;
 
-public class IntrospectedTableKotlinImpl extends IntrospectedTableMyBatis3Impl {
+public class IntrospectedTableKotlinImpl extends AbstractRuntime {
+    protected final List<AbstractKotlinGenerator> kotlinGenerators = new ArrayList<>();
 
-    public IntrospectedTableKotlinImpl() {
-        super();
-        targetRuntime = TargetRuntime.MYBATIS3_DSQL;
-    }
-
-    @Override
-    public void calculateGenerators(List<String> warnings, ProgressCallback progressCallback) {
+    public IntrospectedTableKotlinImpl(Builder builder) {
+        super(builder);
         calculateKotlinDataClassGenerator(warnings, progressCallback);
-        if (contextHasClientConfiguration() && getRules().generateJavaClient()) {
+        if (contextHasClientConfiguration() && introspectedTable.getRules().generateJavaClient()) {
             calculateKotlinMapperAndExtensionsGenerator(warnings, progressCallback);
         }
     }
 
     private boolean contextHasClientConfiguration() {
-        return getContext().getJavaClientGeneratorConfiguration().isPresent();
+        return context.getJavaClientGeneratorConfiguration().isPresent();
     }
 
     protected void calculateKotlinMapperAndExtensionsGenerator(List<String> warnings,
             ProgressCallback progressCallback) {
         AbstractKotlinGenerator kotlinGenerator = new KotlinMapperAndExtensionsGenerator.Builder()
                 .withProject(getModelProject())
-                .withContext(getContext())
-                .withIntrospectedTable(this)
+                .withContext(context)
+                .withIntrospectedTable(introspectedTable)
                 .withProgressCallback(progressCallback)
                 .withWarnings(warnings)
                 .withCommentGenerator(commentGenerator)
@@ -58,8 +61,8 @@ public class IntrospectedTableKotlinImpl extends IntrospectedTableMyBatis3Impl {
             ProgressCallback progressCallback) {
         AbstractKotlinGenerator kotlinGenerator = new KotlinDataClassGenerator.Builder()
                 .withProject(getModelProject())
-                .withContext(getContext())
-                .withIntrospectedTable(this)
+                .withContext(context)
+                .withIntrospectedTable(introspectedTable)
                 .withProgressCallback(progressCallback)
                 .withWarnings(warnings)
                 .withCommentGenerator(commentGenerator)
@@ -68,8 +71,49 @@ public class IntrospectedTableKotlinImpl extends IntrospectedTableMyBatis3Impl {
         kotlinGenerators.add(kotlinGenerator);
     }
 
+    protected String getModelProject() {
+        return context.getJavaModelGeneratorConfiguration().getTargetProject();
+    }
+
     @Override
-    public boolean requiresXMLGenerator() {
-        return false;
+    public List<GeneratedJavaFile> getGeneratedJavaFiles() {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public List<GeneratedXmlFile> getGeneratedXmlFiles() {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public List<GeneratedKotlinFile> getGeneratedKotlinFiles() {
+        List<GeneratedKotlinFile> answer = new ArrayList<>();
+
+        for (AbstractKotlinGenerator kotlinGenerator : kotlinGenerators) {
+            List<KotlinFile> kotlinFiles = kotlinGenerator.getKotlinFiles();
+            for (KotlinFile kotlinFile : kotlinFiles) {
+                GeneratedKotlinFile gjf = new GeneratedKotlinFile(kotlinFile, kotlinGenerator.getProject());
+                answer.add(gjf);
+            }
+        }
+
+        return answer;
+    }
+
+    @Override
+    public int getGenerationSteps() {
+        return kotlinGenerators.size();
+    }
+
+    public static class Builder extends AbstractRuntimeBuilder<Builder> {
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        @Override
+        public IntrospectedTableKotlinImpl build() {
+            return new IntrospectedTableKotlinImpl(this);
+        }
     }
 }

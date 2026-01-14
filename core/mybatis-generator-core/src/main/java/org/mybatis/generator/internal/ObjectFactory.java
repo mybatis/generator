@@ -25,16 +25,12 @@ import java.util.Optional;
 
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.ConnectionFactory;
-import org.mybatis.generator.api.FullyQualifiedTable;
 import org.mybatis.generator.api.IntrospectedColumn;
-import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.JavaFormatter;
 import org.mybatis.generator.api.JavaTypeResolver;
 import org.mybatis.generator.api.KotlinFormatter;
 import org.mybatis.generator.api.Plugin;
 import org.mybatis.generator.api.XmlFormatter;
-import org.mybatis.generator.codegen.mybatis3.IntrospectedTableMyBatis3Impl;
-import org.mybatis.generator.codegen.mybatis3.IntrospectedTableMyBatis3SimpleImpl;
 import org.mybatis.generator.config.CommentGeneratorConfiguration;
 import org.mybatis.generator.config.ConnectionFactoryConfiguration;
 import org.mybatis.generator.config.Context;
@@ -42,9 +38,6 @@ import org.mybatis.generator.config.Defaults;
 import org.mybatis.generator.config.JavaTypeResolverConfiguration;
 import org.mybatis.generator.config.PluginConfiguration;
 import org.mybatis.generator.config.PropertyRegistry;
-import org.mybatis.generator.config.TableConfiguration;
-import org.mybatis.generator.runtime.dynamic.sql.IntrospectedTableMyBatis3DynamicSqlImpl;
-import org.mybatis.generator.runtime.kotlin.IntrospectedTableKotlinImpl;
 
 /**
  * This class creates the different objects needed by the generator.
@@ -266,46 +259,6 @@ public class ObjectFactory {
 
         XmlFormatter answer = createInternalObject(type, XmlFormatter.class);
 
-        answer.setContext(context);
-
-        return answer;
-    }
-
-    public static IntrospectedTable createIntrospectedTable(TableConfiguration tableConfiguration,
-                                                            FullyQualifiedTable table,
-                                                            Context context, CommentGenerator commentGenerator) {
-        IntrospectedTable answer = createIntrospectedTableForValidation(context);
-        answer.setFullyQualifiedTable(table);
-        answer.setTableConfiguration(tableConfiguration);
-        answer.setCommentGenerator(commentGenerator);
-
-        return answer;
-    }
-
-    /**
-     * Creates an introspected table implementation that is only usable for validation .
-     *
-     *
-     * @param context
-     *            the context
-     * @return the introspected table
-     */
-    public static IntrospectedTable createIntrospectedTableForValidation(Context context) {
-        String type = context.getTargetRuntime().map(t -> {
-            if ("MyBatis3".equalsIgnoreCase(t)) { //$NON-NLS-1$
-                return IntrospectedTableMyBatis3Impl.class.getName();
-            } else if ("MyBatis3Simple".equalsIgnoreCase(t)) { //$NON-NLS-1$
-                return IntrospectedTableMyBatis3SimpleImpl.class.getName();
-            } else if ("MyBatis3DynamicSql".equalsIgnoreCase(t)) { //$NON-NLS-1$
-                return IntrospectedTableMyBatis3DynamicSqlImpl.class.getName();
-            } else if ("MyBatis3Kotlin".equalsIgnoreCase(t)) { //$NON-NLS-1$
-                return IntrospectedTableKotlinImpl.class.getName();
-            } else {
-                return t;
-            }
-        }).orElse(IntrospectedTableMyBatis3DynamicSqlImpl.class.getName());
-
-        IntrospectedTable answer = createInternalObject(type, IntrospectedTable.class);
         answer.setContext(context);
 
         return answer;

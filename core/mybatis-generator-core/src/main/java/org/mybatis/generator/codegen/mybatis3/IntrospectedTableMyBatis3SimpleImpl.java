@@ -35,8 +35,8 @@ import org.mybatis.generator.config.TypedPropertyHolder;
  * @author Jeff Butler
  */
 public class IntrospectedTableMyBatis3SimpleImpl extends IntrospectedTableMyBatis3Impl {
-    public IntrospectedTableMyBatis3SimpleImpl() {
-        super();
+    protected IntrospectedTableMyBatis3SimpleImpl(Builder builder) {
+        super(builder);
     }
 
     @Override
@@ -44,10 +44,10 @@ public class IntrospectedTableMyBatis3SimpleImpl extends IntrospectedTableMyBati
                                                List<String> warnings,
                                                ProgressCallback progressCallback) {
         if (javaClientGenerator == null) {
-            if (getContext().getSqlMapGeneratorConfiguration().isPresent()) {
+            if (context.getSqlMapGeneratorConfiguration().isPresent()) {
                 xmlMapperGenerator = new SimpleXMLMapperGenerator.Builder()
-                        .withContext(getContext())
-                        .withIntrospectedTable(this)
+                        .withContext(context)
+                        .withIntrospectedTable(introspectedTable)
                         .withProgressCallback(progressCallback)
                         .withWarnings(warnings)
                         .build();
@@ -59,7 +59,7 @@ public class IntrospectedTableMyBatis3SimpleImpl extends IntrospectedTableMyBati
 
     @Override
     protected Optional<String> calculateJavaClientGeneratorBuilderType() {
-        return getContext().getJavaClientGeneratorConfiguration().flatMap(TypedPropertyHolder::getConfigurationType)
+        return context.getJavaClientGeneratorConfiguration().flatMap(TypedPropertyHolder::getConfigurationType)
                 .map(t -> {
                     if ("XMLMAPPER".equalsIgnoreCase(t)) { //$NON-NLS-1$
                         return SimpleJavaClientGenerator.Builder.class.getName();
@@ -77,13 +77,25 @@ public class IntrospectedTableMyBatis3SimpleImpl extends IntrospectedTableMyBati
     protected void calculateJavaModelGenerators(List<String> warnings, ProgressCallback progressCallback) {
         var javaGenerator = new SimpleModelGenerator.Builder()
                 .withProject(getModelProject())
-                .withContext(getContext())
-                .withIntrospectedTable(this)
+                .withContext(context)
+                .withIntrospectedTable(introspectedTable)
                 .withProgressCallback(progressCallback)
                 .withWarnings(warnings)
                 .withCommentGenerator(commentGenerator)
                 .withPluginAggregator(pluginAggregator)
                 .build();
         javaGenerators.add(javaGenerator);
+    }
+
+    public static class Builder extends IntrospectedTableMyBatis3Impl.Builder {
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        @Override
+        public IntrospectedTableMyBatis3SimpleImpl build() {
+            return new IntrospectedTableMyBatis3SimpleImpl(this);
+        }
     }
 }

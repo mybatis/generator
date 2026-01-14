@@ -28,6 +28,7 @@ import java.util.stream.Stream;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.KnownRuntime;
 import org.mybatis.generator.internal.ObjectFactory;
 
 public class Context extends PropertyHolder {
@@ -121,19 +122,22 @@ public class Context extends PropertyHolder {
             javaClientGeneratorConfiguration.validate(errors, id);
         }
 
-        IntrospectedTable it = null;
-        try {
-            it = ObjectFactory.createIntrospectedTableForValidation(this);
-        } catch (Exception e) {
-            errors.add(getString("ValidationError.25", id)); //$NON-NLS-1$
+        // this will either be a successful lookup by alias, or UNKNOWN
+        KnownRuntime knownRuntime = KnownRuntime.getByAlias(targetRuntime);
+        if (knownRuntime == KnownRuntime.MYBATIS3 || knownRuntime == KnownRuntime.MYBATIS3_SIMPLE) {
+            if (javaClientGeneratorConfiguration != null && sqlMapGeneratorConfiguration == null) {
+                if ("XMLMAPPER".equalsIgnoreCase(javaClientGeneratorConfiguration.configurationType)) {
+                    errors.add(getString("ValidationError.9", id)); //$NON-NLS-1$
+                }
+
+                if ("MIXEDMAPPER".equalsIgnoreCase(javaClientGeneratorConfiguration.configurationType)) {
+                    errors.add(getString("ValidationError.9", id)); //$NON-NLS-1$
+                }
+            }
         }
 
-        if (it != null && it.requiresXMLGenerator()) {
-            if (sqlMapGeneratorConfiguration == null) {
-                errors.add(getString("ValidationError.9", id)); //$NON-NLS-1$
-            } else {
-                sqlMapGeneratorConfiguration.validate(errors, id);
-            }
+        if (sqlMapGeneratorConfiguration != null) {
+            sqlMapGeneratorConfiguration.validate(errors, id);
         }
 
         if (tableConfigurations.isEmpty()) {

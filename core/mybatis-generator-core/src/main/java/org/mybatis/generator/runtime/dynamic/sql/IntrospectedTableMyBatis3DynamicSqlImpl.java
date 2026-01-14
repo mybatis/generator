@@ -25,8 +25,8 @@ import org.mybatis.generator.codegen.mybatis3.IntrospectedTableMyBatis3Impl;
 
 public class IntrospectedTableMyBatis3DynamicSqlImpl extends IntrospectedTableMyBatis3Impl {
 
-    public IntrospectedTableMyBatis3DynamicSqlImpl() {
-        targetRuntime = TargetRuntime.MYBATIS3_DSQL;
+    protected IntrospectedTableMyBatis3DynamicSqlImpl(Builder builder) {
+        super(builder);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class IntrospectedTableMyBatis3DynamicSqlImpl extends IntrospectedTableMy
 
     @Override
     protected Optional<String> calculateJavaClientGeneratorBuilderType() {
-        return getContext().getJavaClientGeneratorConfiguration()
+        return context.getJavaClientGeneratorConfiguration()
                 .map(c -> DynamicSqlMapperGenerator.Builder.class.getName());
     }
 
@@ -47,8 +47,8 @@ public class IntrospectedTableMyBatis3DynamicSqlImpl extends IntrospectedTableMy
     protected void calculateJavaModelGenerators(List<String> warnings, ProgressCallback progressCallback) {
         var javaGenerator = new DynamicSqlModelGenerator.Builder()
                 .withProject(getModelProject())
-                .withContext(getContext())
-                .withIntrospectedTable(this)
+                .withContext(context)
+                .withIntrospectedTable(introspectedTable)
                 .withProgressCallback(progressCallback)
                 .withWarnings(warnings)
                 .withCommentGenerator(commentGenerator)
@@ -57,8 +57,14 @@ public class IntrospectedTableMyBatis3DynamicSqlImpl extends IntrospectedTableMy
         javaGenerators.add(javaGenerator);
     }
 
-    @Override
-    public boolean requiresXMLGenerator() {
-        return false;
+    public static class Builder extends IntrospectedTableMyBatis3Impl.Builder {
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
+
+        public IntrospectedTableMyBatis3DynamicSqlImpl build() {
+            return new IntrospectedTableMyBatis3DynamicSqlImpl(this);
+        }
     }
 }

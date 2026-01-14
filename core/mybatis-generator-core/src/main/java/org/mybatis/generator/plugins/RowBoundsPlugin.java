@@ -23,8 +23,8 @@ import java.util.Map;
 
 import org.mybatis.generator.api.FullyQualifiedTable;
 import org.mybatis.generator.api.IntrospectedTable;
-import org.mybatis.generator.api.IntrospectedTable.TargetRuntime;
 import org.mybatis.generator.api.PluginAdapter;
+import org.mybatis.generator.api.PluginUtilities;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
@@ -60,7 +60,7 @@ public class RowBoundsPlugin extends PluginAdapter {
     @Override
     public boolean clientSelectByExampleWithBLOBsMethodGenerated(Method method,
             Interface interfaze, IntrospectedTable introspectedTable) {
-        if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3) {
+        if (PluginUtilities.isLegacyMyBatis3(introspectedTable)) {
             copyAndAddMethod(method, interfaze);
         }
         return true;
@@ -70,7 +70,7 @@ public class RowBoundsPlugin extends PluginAdapter {
     public boolean clientSelectByExampleWithoutBLOBsMethodGenerated(
             Method method, Interface interfaze,
             IntrospectedTable introspectedTable) {
-        if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3) {
+        if (PluginUtilities.isLegacyMyBatis3(introspectedTable)) {
             copyAndAddMethod(method, interfaze);
         }
         return true;
@@ -79,7 +79,7 @@ public class RowBoundsPlugin extends PluginAdapter {
     @Override
     public boolean sqlMapSelectByExampleWithoutBLOBsElementGenerated(
             XmlElement element, IntrospectedTable introspectedTable) {
-        if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3) {
+        if (PluginUtilities.isLegacyMyBatis3(introspectedTable)) {
             copyAndSaveElement(element, introspectedTable.getFullyQualifiedTable());
         }
         return true;
@@ -88,7 +88,7 @@ public class RowBoundsPlugin extends PluginAdapter {
     @Override
     public boolean sqlMapSelectByExampleWithBLOBsElementGenerated(
             XmlElement element, IntrospectedTable introspectedTable) {
-        if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3) {
+        if (PluginUtilities.isLegacyMyBatis3(introspectedTable)) {
             copyAndSaveElement(element, introspectedTable.getFullyQualifiedTable());
         }
         return true;

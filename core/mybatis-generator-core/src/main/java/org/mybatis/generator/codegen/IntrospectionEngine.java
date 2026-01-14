@@ -26,13 +26,14 @@ import java.util.Objects;
 import java.util.Set;
 
 import org.jspecify.annotations.Nullable;
-import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.JavaTypeResolver;
+import org.mybatis.generator.api.KnownRuntime;
 import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.TableConfiguration;
 import org.mybatis.generator.internal.ObjectFactory;
+import org.mybatis.generator.internal.PluginAggregator;
 import org.mybatis.generator.internal.db.DatabaseIntrospector;
 
 public class IntrospectionEngine {
@@ -40,14 +41,12 @@ public class IntrospectionEngine {
     private final ProgressCallback progressCallback;
     private final List<String> warnings;
     private final Set<String> fullyQualifiedTableNames;
-    private final CommentGenerator commentGenerator;
 
     protected IntrospectionEngine(Builder builder) {
         context = Objects.requireNonNull(builder.context);
         progressCallback = Objects.requireNonNull(builder.progressCallback);
         warnings = Objects.requireNonNull(builder.warnings);
         fullyQualifiedTableNames = Objects.requireNonNull(builder.fullyQualifiedTableNames);
-        commentGenerator = Objects.requireNonNull(builder.commentGenerator);
     }
 
     /**
@@ -64,7 +63,7 @@ public class IntrospectionEngine {
      * @throws InterruptedException
      *             if the progress callback reports a cancel
      */
-    public List<IntrospectedTable> introspectTables() throws SQLException, InterruptedException {
+    public List<IntrospectedTable> introspectTables(@Nullable KnownRuntime knownRuntime, PluginAggregator pluginAggregator) throws SQLException, InterruptedException {
 
         List<IntrospectedTable> introspectedTables = new ArrayList<>();
         JavaTypeResolver javaTypeResolver = ObjectFactory.createJavaTypeResolver(context, warnings);
@@ -73,7 +72,7 @@ public class IntrospectionEngine {
             progressCallback.startTask(getString("Progress.0")); //$NON-NLS-1$
 
             DatabaseIntrospector databaseIntrospector = new DatabaseIntrospector(
-                    context, connection.getMetaData(), javaTypeResolver, warnings, commentGenerator);
+                    context, connection.getMetaData(), javaTypeResolver, warnings);
 
             // TODO - awkward toList here
             for (TableConfiguration tc : context.tableConfigurations().toList()) {
@@ -90,7 +89,7 @@ public class IntrospectionEngine {
                 }
 
                 progressCallback.startTask(getString("Progress.1", tableName)); //$NON-NLS-1$
-                List<IntrospectedTable> tables = databaseIntrospector.introspectTables(tc);
+                List<IntrospectedTable> tables = databaseIntrospector.introspectTables(tc, knownRuntime, pluginAggregator);
                 introspectedTables.addAll(tables);
 
                 progressCallback.checkCancel();
@@ -117,7 +116,6 @@ public class IntrospectionEngine {
         private @Nullable ProgressCallback progressCallback;
         private @Nullable List<String> warnings;
         private @Nullable Set<String> fullyQualifiedTableNames;
-        private @Nullable CommentGenerator commentGenerator;
 
         public Builder withContext(Context context) {
             this.context = context;
@@ -150,11 +148,6 @@ public class IntrospectionEngine {
          */
         public Builder withFullyQualifiedTableNames(Set<String> fullyQualifiedTableNames) {
             this.fullyQualifiedTableNames = fullyQualifiedTableNames;
-            return this;
-        }
-
-        public Builder withCommentGenerator(CommentGenerator commentGenerator) {
-            this.commentGenerator = commentGenerator;
             return this;
         }
 

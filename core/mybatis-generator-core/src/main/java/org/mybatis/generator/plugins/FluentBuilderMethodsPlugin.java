@@ -19,8 +19,8 @@ import java.util.List;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
-import org.mybatis.generator.api.IntrospectedTable.TargetRuntime;
 import org.mybatis.generator.api.PluginAdapter;
+import org.mybatis.generator.api.PluginUtilities;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
@@ -55,7 +55,7 @@ public class FluentBuilderMethodsPlugin extends PluginAdapter {
         fluentMethod.setReturnType(topLevelClass.getType());
         fluentMethod.getParameters().addAll(method.getParameters());
 
-        if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3_DSQL) {
+        if (PluginUtilities.isDynamicSql(introspectedTable)) {
             commentGenerator.addGeneralMethodAnnotation(fluentMethod, introspectedTable,
                     topLevelClass.getImportedTypes());
         } else {

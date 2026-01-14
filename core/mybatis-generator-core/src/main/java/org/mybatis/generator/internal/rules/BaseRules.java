@@ -16,7 +16,7 @@
 package org.mybatis.generator.internal.rules;
 
 import org.mybatis.generator.api.IntrospectedTable;
-import org.mybatis.generator.api.IntrospectedTable.TargetRuntime;
+import org.mybatis.generator.api.KnownRuntime;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 import org.mybatis.generator.config.PropertyRegistry;
@@ -31,15 +31,11 @@ import org.mybatis.generator.internal.util.StringUtility;
  * @author Jeff Butler
  */
 public abstract class BaseRules implements Rules {
-
     protected final TableConfiguration tableConfiguration;
-
     protected final IntrospectedTable introspectedTable;
-
     protected final boolean isModelOnly;
 
     protected BaseRules(IntrospectedTable introspectedTable) {
-        super();
         this.introspectedTable = introspectedTable;
         this.tableConfiguration = introspectedTable.getTableConfiguration();
         String modelOnly = tableConfiguration.getProperty(PropertyRegistry.TABLE_MODEL_ONLY);
@@ -277,8 +273,11 @@ public abstract class BaseRules implements Rules {
             return false;
         }
 
-        return introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3
-                && tableConfiguration.isUpdateByExampleStatementEnabled();
+        boolean isLegacyMybatis3 = introspectedTable.getKnownRuntime()
+                .map(KnownRuntime::isDynamicSqlBased)
+                .map(b -> !b)
+                .orElse(false);
+        return isLegacyMybatis3 && tableConfiguration.isUpdateByExampleStatementEnabled();
     }
 
     /**

@@ -17,6 +17,7 @@ package org.mybatis.generator.codegen;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.CommentGenerator;
@@ -26,14 +27,20 @@ import org.mybatis.generator.api.GeneratedXmlFile;
 import org.mybatis.generator.api.GenericGeneratedFile;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.JavaFormatter;
+import org.mybatis.generator.api.KnownRuntime;
 import org.mybatis.generator.api.KotlinFormatter;
+import org.mybatis.generator.api.Plugin;
 import org.mybatis.generator.api.XmlFormatter;
 import org.mybatis.generator.config.Context;
+import org.mybatis.generator.config.Defaults;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.internal.ObjectFactory;
+import org.mybatis.generator.internal.PluginAggregator;
+
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 /**
- * This class holds the intermediate results of the generator.
+ * This class holds the intermediate results of the generator, as well as many pre-calculated objects.
  *
  */
 public class ContextResults {
@@ -49,15 +56,41 @@ public class ContextResults {
     private final List<GeneratedXmlFile> generatedXmlFiles = new ArrayList<>();
     private final List<GeneratedKotlinFile> generatedKotlinFiles = new ArrayList<>();
     private final List<GenericGeneratedFile> generatedGenericFiles = new ArrayList<>();
+    private final PluginAggregator pluginAggregator;
+    private final KnownRuntime knownRuntime;
+    private final String runtimeBuilderClassName;
 
-    public ContextResults(Context context) {
-        this.context = context;
+    protected ContextResults(Builder builder) {
+        context = Objects.requireNonNull(builder.context);
         javaFormatter = ObjectFactory.createJavaFormatter(context);
         kotlinFormatter = ObjectFactory.createKotlinFormatter(context);
         xmlFormatter = ObjectFactory.createXmlFormatter(context);
         commentGenerator = ObjectFactory.createCommentGenerator(context);
         javaFileEncoding = context.getProperty(PropertyRegistry.CONTEXT_JAVA_FILE_ENCODING);
         kotlinFileEncoding = context.getProperty(PropertyRegistry.CONTEXT_KOTLIN_FILE_ENCODING);
+        Objects.requireNonNull(builder.warnings);
+
+        pluginAggregator = new PluginAggregator();
+        context.pluginConfigurations().forEach(pluginConfiguration -> {
+            Plugin plugin = ObjectFactory.createPlugin(context, pluginConfiguration, commentGenerator);
+            if (plugin.validate(builder.warnings)) {
+                pluginAggregator.addPlugin(plugin);
+            } else {
+                builder.warnings.add(getString("Warning.24", //$NON-NLS-1$
+                        pluginConfiguration.getConfigurationType()
+                                .orElse("Unknown Plugin Type"), context.getId())); //$NON-NLS-1$
+            }
+        });
+
+        // this will either be the alias entered in the configuration, or the default if nothing was specified
+        String builderAlias = context.getTargetRuntime().orElse(Defaults.DEFAULT_RUNTIME.getAlias());
+        // this will either be a successful lookup by alias, or UNKNOWN
+        knownRuntime = KnownRuntime.getByAlias(builderAlias);
+        if (knownRuntime == KnownRuntime.UNKNOWN) {
+            runtimeBuilderClassName = builderAlias;
+        } else {
+            runtimeBuilderClassName = knownRuntime.getBuilderClassName();
+        }
     }
 
     public Context context() {
@@ -88,8 +121,20 @@ public class ContextResults {
         return kotlinFileEncoding;
     }
 
+    public PluginAggregator pluginAggregator() {
+        return pluginAggregator;
+    }
+
     public void addIntrospectedTables(List<IntrospectedTable> introspectedTables) {
         this.introspectedTables.addAll(introspectedTables);
+    }
+
+    public KnownRuntime knownRuntime() {
+        return knownRuntime;
+    }
+
+    public String runtimeBuilderClassName() {
+        return runtimeBuilderClassName;
     }
 
     public List<IntrospectedTable> introspectedTables() {
@@ -99,7 +144,8 @@ public class ContextResults {
     public int getGenerationSteps() {
         int totalSteps = 0;
         for (IntrospectedTable introspectedTable : introspectedTables) {
-            totalSteps += introspectedTable.getGenerationSteps();
+            // TODO - fix
+//            totalSteps += introspectedTable.getGenerationSteps();
         }
         return totalSteps;
     }
@@ -141,5 +187,24 @@ public class ContextResults {
 
     public void addGeneratedGenericFiles(List<GenericGeneratedFile> generatedGenericFiles) {
         this.generatedGenericFiles.addAll(generatedGenericFiles);
+    }
+
+    public static class Builder {
+        private @Nullable Context context;
+        private @Nullable List<String> warnings;
+
+        public Builder withContext(Context context) {
+            this.context = context;
+            return this;
+        }
+
+        public Builder withWarnings(List<String> warnings) {
+            this.warnings = warnings;
+            return this;
+        }
+
+        public ContextResults build() {
+            return new ContextResults(this);
+        }
     }
 }

@@ -50,14 +50,30 @@ recommended practice with JSpecify.</p>
 </ul>
 
 <h3>Potentially Breaking Changes</h3>
-<p>The <code>GeneratedKey</code> configuration class (and corresponding XML element) no longer support the "type"
-attribute. This attribute was only used for iBatis2 runtimes which are no longer supported by the library.</p>
-<p>If you have created your own implementation of a Java client generator, then the API has changed. These
-classes are now built with Builders rather than directly. If you have created such a class, you must now provide
-an extension of <code>org.mybatis.generator.codegen.AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder</code>
-so the library can create your implementation. The <code>type</code> attribute of the &lt;javaClientGenerator&gt;
-XML configuration element now expects the fully qualified name of a builder class.
-</p>
+<p>The following are potentially breaking changes:</p>
+<ul>
+    <li>The <code>GeneratedKey</code> configuration class (and corresponding XML element) no longer support the "type"
+        attribute. This attribute was only used for iBatis2 runtimes which are no longer supported by the library.
+    </li>
+    <li>If you have created your own implementation of a Java client generator, then the API has changed. These
+        classes are now built with Builders rather than directly. If you have created such a class, you must now provide
+        an extension of <code>org.mybatis.generator.codegen.AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder</code>
+        so the library can create your implementation. The <code>type</code> attribute of the &lt;javaClientGenerator&gt;
+        XML configuration element now expects the fully qualified name of a builder class.
+    </li>
+    <li>The <code>Context</code> class has changed and it now only holds configuration information. This may impact
+        you if you were relying on methods in that class in a Plugin. We have added CommentGenerator to all plugins
+        as this was used in several of the internal plugins. Please let us know if you need access to other classes
+        in a plugin.
+    </li>
+    <li>The plugin methods <code>contextGenerateAdditionalFiles()</code> and
+        <code>contextGenerateAdditionalFiles(IntrospectedTable introspectedTable)</code> have changed their return types.
+        They now return <code>List&lt;GenericGeneratedFile&gt;</code>
+    </li>
+    <li>If you are generating extra Java, Kotlin, or XML files in a plugin, you no longer need to set the formatter
+        or file encoding. The library will automatically use the values configured in the context
+    </li>
+</ul>
 
 <h2>Version 1.4.2</h2>
 <p>This is a small maintenance release. The most visible change is the switch to the "jakarta" namespace

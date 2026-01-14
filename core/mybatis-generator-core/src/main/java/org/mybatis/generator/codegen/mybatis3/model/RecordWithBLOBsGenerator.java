@@ -80,15 +80,15 @@ public class RecordWithBLOBsGenerator extends AbstractJavaGenerator {
             }
 
             Method method = getJavaBeansGetter(introspectedColumn, commentGenerator, introspectedTable);
-            if (pluginAggregator.modelGetterMethodGenerated(method, topLevelClass, introspectedColumn, introspectedTable,
-                    Plugin.ModelClassType.RECORD_WITH_BLOBS)) {
+            if (pluginAggregator.modelGetterMethodGenerated(method, topLevelClass, introspectedColumn,
+                    introspectedTable, Plugin.ModelClassType.RECORD_WITH_BLOBS)) {
                 topLevelClass.addMethod(method);
             }
 
             if (!introspectedTable.isImmutable()) {
                 method = getJavaBeansSetter(introspectedColumn, commentGenerator, introspectedTable);
-                if (pluginAggregator.modelSetterMethodGenerated(method, topLevelClass, introspectedColumn, introspectedTable,
-                        Plugin.ModelClassType.RECORD_WITH_BLOBS)) {
+                if (pluginAggregator.modelSetterMethodGenerated(method, topLevelClass, introspectedColumn,
+                        introspectedTable, Plugin.ModelClassType.RECORD_WITH_BLOBS)) {
                     topLevelClass.addMethod(method);
                 }
             }

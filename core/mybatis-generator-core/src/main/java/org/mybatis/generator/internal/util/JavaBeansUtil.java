@@ -259,7 +259,8 @@ public class JavaBeansUtil {
     }
 
     private static void addGeneratedJavaDoc(Field field, CommentGenerator commentGenerator,
-                                            IntrospectedColumn introspectedColumn, IntrospectedTable introspectedTable) {
+                                            IntrospectedColumn introspectedColumn,
+                                            IntrospectedTable introspectedTable) {
         commentGenerator.addFieldComment(field, introspectedTable, introspectedColumn);
     }
 
@@ -267,7 +268,8 @@ public class JavaBeansUtil {
                                                IntrospectedColumn introspectedColumn,
                                                IntrospectedTable introspectedTable,
                                                CompilationUnit compilationUnit) {
-        commentGenerator.addFieldAnnotation(field, introspectedTable, introspectedColumn, compilationUnit.getImportedTypes());
+        commentGenerator.addFieldAnnotation(field, introspectedTable, introspectedColumn,
+                compilationUnit.getImportedTypes());
     }
 
     public static Method getJavaBeansSetter(IntrospectedColumn introspectedColumn,

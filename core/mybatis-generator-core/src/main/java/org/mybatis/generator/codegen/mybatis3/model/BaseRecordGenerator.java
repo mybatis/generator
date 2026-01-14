@@ -89,8 +89,8 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
             }
 
             Method method = getJavaBeansGetter(introspectedColumn, commentGenerator, introspectedTable);
-            if (pluginAggregator.modelGetterMethodGenerated(method, topLevelClass, introspectedColumn, introspectedTable,
-                    Plugin.ModelClassType.BASE_RECORD)) {
+            if (pluginAggregator.modelGetterMethodGenerated(method, topLevelClass, introspectedColumn,
+                    introspectedTable, Plugin.ModelClassType.BASE_RECORD)) {
                 topLevelClass.addMethod(method);
             }
 

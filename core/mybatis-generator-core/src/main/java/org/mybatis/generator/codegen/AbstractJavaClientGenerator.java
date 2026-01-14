@@ -52,7 +52,7 @@ public abstract class AbstractJavaClientGenerator extends AbstractJavaGenerator 
     public abstract Optional<AbstractXmlGenerator> getMatchedXMLGenerator();
 
     public abstract static class AbstractJavaClientGeneratorBuilder<T extends AbstractJavaClientGeneratorBuilder<T>>
-        extends AbstractJavaGeneratorBuilder<T> {
+            extends AbstractJavaGeneratorBuilder<T> {
 
         protected abstract boolean requiresXMLGenerator();
 

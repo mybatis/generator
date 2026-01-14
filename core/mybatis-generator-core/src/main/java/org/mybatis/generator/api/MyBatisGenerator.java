@@ -39,12 +39,12 @@ import java.util.stream.Collectors;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.codegen.ContextResults;
+import org.mybatis.generator.codegen.GenerationEngine;
+import org.mybatis.generator.codegen.IntrospectionEngine;
 import org.mybatis.generator.codegen.RootClassInfo;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.MergeConstants;
-import org.mybatis.generator.codegen.GenerationEngine;
-import org.mybatis.generator.codegen.IntrospectionEngine;
 import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.exception.ShellException;
 import org.mybatis.generator.internal.DefaultShellCallback;
@@ -328,7 +328,8 @@ public class MyBatisGenerator {
             targetFile = directory.toPath().resolve(gjf.getFileName());
             if (Files.exists(targetFile)) {
                 if (shellCallback.isMergeSupported()) {
-                    source = shellCallback.mergeJavaFile(javaFormatter.getFormattedContent(gjf.getCompilationUnit()), targetFile.toFile(),
+                    source = shellCallback.mergeJavaFile(
+                            javaFormatter.getFormattedContent(gjf.getCompilationUnit()), targetFile.toFile(),
                             MergeConstants.getOldElementTags(), javaFileEncoding);
                 } else if (shellCallback.isOverwriteEnabled()) {
                     source = javaFormatter.getFormattedContent(gjf.getCompilationUnit());

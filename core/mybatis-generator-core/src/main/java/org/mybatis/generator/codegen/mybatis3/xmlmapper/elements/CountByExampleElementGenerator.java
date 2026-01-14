@@ -34,14 +34,14 @@ public class CountByExampleElementGenerator extends AbstractXmlElementGenerator 
         answer.addAttribute(new Attribute("parameterType", introspectedTable.getExampleType())); //$NON-NLS-1$
         answer.addAttribute(new Attribute("resultType", "java.lang.Long")); //$NON-NLS-1$ //$NON-NLS-2$
 
-        context.getCommentGenerator().addComment(answer);
+        commentGenerator.addComment(answer);
 
         String s = "select count(*) from " //$NON-NLS-1$
                 + introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime();
         answer.addElement(new TextElement(s));
         answer.addElement(getExampleIncludeElement());
 
-        if (context.getPlugins().sqlMapCountByExampleElementGenerated(answer, introspectedTable)) {
+        if (pluginAggregator.sqlMapCountByExampleElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

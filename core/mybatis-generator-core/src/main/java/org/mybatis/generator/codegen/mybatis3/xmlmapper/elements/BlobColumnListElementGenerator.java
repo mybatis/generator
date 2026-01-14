@@ -30,11 +30,11 @@ public class BlobColumnListElementGenerator extends AbstractXmlElementGenerator 
 
         answer.addAttribute(new Attribute("id", introspectedTable.getBlobColumnListId())); //$NON-NLS-1$
 
-        context.getCommentGenerator().addComment(answer);
+        commentGenerator.addComment(answer);
 
         buildSelectList(introspectedTable.getBLOBColumns()).forEach(answer::addElement);
 
-        if (context.getPlugins().sqlMapBlobColumnListElementGenerated(answer, introspectedTable)) {
+        if (pluginAggregator.sqlMapBlobColumnListElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

@@ -95,6 +95,13 @@ public interface Plugin {
     void setProperties(Properties properties);
 
     /**
+     * Set the comment generator for the current context.
+     *
+     * @param commentGenerator the comment generator
+     */
+    void setCommentGenerator(CommentGenerator commentGenerator);
+
+    /**
      * This method is called just before the getGeneratedXXXFiles methods are called on the introspected table. Plugins
      * can implement this method to override any of the default attributes, or change the results of database
      * introspection, before any code generation activities occur. Attributes are listed as static Strings with the
@@ -164,11 +171,11 @@ public interface Plugin {
         return Collections.emptyList();
     }
 
-    default List<GeneratedFile> contextGenerateAdditionalFiles() {
+    default List<GenericGeneratedFile> contextGenerateAdditionalFiles() {
         return Collections.emptyList();
     }
 
-    default List<GeneratedFile> contextGenerateAdditionalFiles(IntrospectedTable introspectedTable) {
+    default List<GenericGeneratedFile> contextGenerateAdditionalFiles(IntrospectedTable introspectedTable) {
         return Collections.emptyList();
     }
 

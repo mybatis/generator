@@ -49,7 +49,7 @@ public class InsertMultipleMethodGenerator extends AbstractMethodGenerator {
 
         Method method = new Method("insertMultiple"); //$NON-NLS-1$
         method.setDefault(true);
-        context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
+        commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, imports);
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
 
         FullyQualifiedJavaType parameterType = new FullyQualifiedJavaType("java.util.Collection"); //$NON-NLS-1$
@@ -96,7 +96,7 @@ public class InsertMultipleMethodGenerator extends AbstractMethodGenerator {
 
     @Override
     public boolean callPlugins(Method method, Interface interfaze) {
-        return context.getPlugins().clientInsertMultipleMethodGenerated(method, interfaze, introspectedTable);
+        return pluginAggregator.clientInsertMultipleMethodGenerated(method, interfaze, introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder> {

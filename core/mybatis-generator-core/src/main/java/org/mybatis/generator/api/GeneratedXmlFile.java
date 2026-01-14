@@ -15,8 +15,6 @@
  */
 package org.mybatis.generator.api;
 
-import java.util.Optional;
-
 import org.mybatis.generator.api.dom.xml.Document;
 
 public class GeneratedXmlFile extends GeneratedFile {
@@ -29,22 +27,13 @@ public class GeneratedXmlFile extends GeneratedFile {
 
     private boolean isMergeable;
 
-    private final XmlFormatter xmlFormatter;
-
     public GeneratedXmlFile(Document document, String fileName,
-            String targetPackage, String targetProject, boolean isMergeable,
-            XmlFormatter xmlFormatter) {
+            String targetPackage, String targetProject, boolean isMergeable) {
         super(targetProject);
         this.document = document;
         this.fileName = fileName;
         this.targetPackage = targetPackage;
         this.isMergeable = isMergeable;
-        this.xmlFormatter = xmlFormatter;
-    }
-
-    @Override
-    public String getFormattedContent() {
-        return xmlFormatter.getFormattedContent(document);
     }
 
     @Override
@@ -62,12 +51,11 @@ public class GeneratedXmlFile extends GeneratedFile {
         return isMergeable;
     }
 
-    public void setMergeable(boolean isMergeable) {
-        this.isMergeable = isMergeable;
+    public Document getDocument() {
+        return document;
     }
 
-    @Override
-    public Optional<String> getFileEncoding() {
-        return Optional.of("UTF-8"); //$NON-NLS-1$
+    public void setMergeable(boolean isMergeable) {
+        this.isMergeable = isMergeable;
     }
 }

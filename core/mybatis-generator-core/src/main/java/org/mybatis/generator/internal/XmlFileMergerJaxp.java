@@ -31,7 +31,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.jspecify.annotations.Nullable;
-import org.mybatis.generator.api.GeneratedXmlFile;
 import org.mybatis.generator.config.MergeConstants;
 import org.mybatis.generator.exception.ShellException;
 import org.w3c.dom.Comment;
@@ -70,10 +69,9 @@ public class XmlFileMergerJaxp {
         }
     }
 
-    public static String getMergedSource(GeneratedXmlFile generatedXmlFile, File existingFile) throws ShellException {
-
+    public static String getMergedSource(String generatedXmlFile, File existingFile) throws ShellException {
         try {
-            return getMergedSource(new InputSource(new StringReader(generatedXmlFile.getFormattedContent())),
+            return getMergedSource(new InputSource(new StringReader(generatedXmlFile)),
                 new InputSource(new InputStreamReader(
                         Files.newInputStream(existingFile.toPath()), StandardCharsets.UTF_8)),
                 existingFile.getName());

@@ -36,7 +36,7 @@ public class SimpleSelectAllElementGenerator extends AbstractXmlElementGenerator
         answer.addAttribute(new Attribute("resultMap", //$NON-NLS-1$
                 introspectedTable.getBaseResultMapId()));
 
-        context.getCommentGenerator().addComment(answer);
+        commentGenerator.addComment(answer);
 
         buildSelectList("select ", introspectedTable.getAllColumns()).forEach(answer::addElement); //$NON-NLS-1$
 
@@ -55,7 +55,7 @@ public class SimpleSelectAllElementGenerator extends AbstractXmlElementGenerator
             answer.addElement(new TextElement(sb.toString()));
         }
 
-        if (context.getPlugins().sqlMapSelectAllElementGenerated(answer, introspectedTable)) {
+        if (pluginAggregator.sqlMapSelectAllElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

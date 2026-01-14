@@ -98,7 +98,7 @@ public class InsertMultipleMethodGenerator extends AbstractKotlinFunctionGenerat
 
     @Override
     public boolean callPlugins(KotlinFunction kotlinFunction, KotlinFile kotlinFile) {
-        return context.getPlugins().clientInsertMultipleMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
+        return pluginAggregator.clientInsertMultipleMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder> {

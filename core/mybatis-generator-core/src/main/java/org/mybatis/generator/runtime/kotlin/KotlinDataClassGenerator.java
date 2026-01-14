@@ -20,7 +20,6 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 import java.util.Collections;
 import java.util.List;
 
-import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.FullyQualifiedTable;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
@@ -41,9 +40,7 @@ public class KotlinDataClassGenerator extends AbstractKotlinGenerator {
     public List<KotlinFile> getKotlinFiles() {
         FullyQualifiedTable table = introspectedTable.getFullyQualifiedTable();
         progressCallback.startTask(getString("Progress.8", table.toString())); //$NON-NLS-1$
-        CommentGenerator commentGenerator = context.getCommentGenerator();
-        FullyQualifiedKotlinType type = new FullyQualifiedKotlinType(
-                introspectedTable.getKotlinRecordType());
+        FullyQualifiedKotlinType type = new FullyQualifiedKotlinType(introspectedTable.getKotlinRecordType());
 
         KotlinFile kf = new KotlinFile(type.getShortNameWithoutTypeArguments());
         kf.setPackage(type.getPackageName());
@@ -73,7 +70,7 @@ public class KotlinDataClassGenerator extends AbstractKotlinGenerator {
             kf.addImports(kotlinType.getImportList());
         }
 
-        if (context.getPlugins().kotlinDataClassGenerated(kf, dataClass, introspectedTable)) {
+        if (pluginAggregator.kotlinDataClassGenerated(kf, dataClass, introspectedTable)) {
             return listOf(kf);
         } else {
             return Collections.emptyList();

@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.FullyQualifiedTable;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.OutputUtilities;
@@ -47,7 +46,6 @@ public class ExampleGenerator extends AbstractJavaGenerator {
     public List<CompilationUnit> getCompilationUnits() {
         FullyQualifiedTable table = introspectedTable.getFullyQualifiedTable();
         progressCallback.startTask(getString("Progress.6", table.toString())); //$NON-NLS-1$
-        CommentGenerator commentGenerator = context.getCommentGenerator();
 
         FullyQualifiedJavaType type = new FullyQualifiedJavaType(introspectedTable.getExampleType());
         TopLevelClass topLevelClass = new TopLevelClass(type);
@@ -170,7 +168,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         topLevelClass.addInnerClass(getCriterionInnerClass());
 
         List<CompilationUnit> answer = new ArrayList<>();
-        if (context.getPlugins().modelExampleClassGenerated(topLevelClass, introspectedTable)) {
+        if (pluginAggregator.modelExampleClassGenerated(topLevelClass, introspectedTable)) {
             answer.add(topLevelClass);
         }
         return answer;
@@ -180,7 +178,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         InnerClass answer = new InnerClass(new FullyQualifiedJavaType("Criterion")); //$NON-NLS-1$
         answer.setVisibility(JavaVisibility.PUBLIC);
         answer.setStatic(true);
-        context.getCommentGenerator().addClassComment(answer, introspectedTable);
+        commentGenerator.addClassComment(answer, introspectedTable);
 
         Field field = new Field("condition", FullyQualifiedJavaType.getStringInstance()); //$NON-NLS-1$
         field.setVisibility(JavaVisibility.PRIVATE);
@@ -288,7 +286,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         answer.setStatic(true);
         answer.setSuperClass(FullyQualifiedJavaType.getGeneratedCriteriaInstance());
 
-        context.getCommentGenerator().addClassComment(answer, introspectedTable, true);
+        commentGenerator.addClassComment(answer, introspectedTable, true);
 
         Method method = new Method("Criteria"); //$NON-NLS-1$
         method.setVisibility(JavaVisibility.PROTECTED);
@@ -305,7 +303,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         answer.setVisibility(JavaVisibility.PROTECTED);
         answer.setStatic(true);
         answer.setAbstract(true);
-        context.getCommentGenerator().addClassComment(answer, introspectedTable);
+        commentGenerator.addClassComment(answer, introspectedTable);
 
         Method method = new Method("GeneratedCriteria"); //$NON-NLS-1$
         method.setVisibility(JavaVisibility.PROTECTED);

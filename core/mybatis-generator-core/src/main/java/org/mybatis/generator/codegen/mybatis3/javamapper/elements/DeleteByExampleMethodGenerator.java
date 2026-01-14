@@ -42,11 +42,11 @@ public class DeleteByExampleMethodGenerator extends AbstractJavaMapperMethodGene
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
         method.addParameter(new Parameter(type, "example")); //$NON-NLS-1$
 
-        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
+        commentGenerator.addGeneralMethodComment(method, introspectedTable);
 
         addMapperAnnotations(method);
 
-        if (context.getPlugins().clientDeleteByExampleMethodGenerated(method, interfaze, introspectedTable)) {
+        if (pluginAggregator.clientDeleteByExampleMethodGenerated(method, interfaze, introspectedTable)) {
             addExtraImports(interfaze);
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);

@@ -81,6 +81,8 @@ public class IntrospectedTableMyBatis3SimpleImpl extends IntrospectedTableMyBati
                 .withIntrospectedTable(this)
                 .withProgressCallback(progressCallback)
                 .withWarnings(warnings)
+                .withCommentGenerator(commentGenerator)
+                .withPluginAggregator(pluginAggregator)
                 .build();
         javaGenerators.add(javaGenerator);
     }

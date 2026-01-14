@@ -88,7 +88,7 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
             answer.addElement(new TextElement(clause));
         }
 
-        if (context.getPlugins().sqlMapInsertElementGenerated(answer, introspectedTable)) {
+        if (pluginAggregator.sqlMapInsertElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

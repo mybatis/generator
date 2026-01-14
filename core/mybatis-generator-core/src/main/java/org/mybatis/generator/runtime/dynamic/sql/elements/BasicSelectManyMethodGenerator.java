@@ -60,7 +60,7 @@ public class BasicSelectManyMethodGenerator extends AbstractMethodGenerator {
         method.setAbstract(true);
         method.setReturnType(returnType);
         method.addParameter(new Parameter(parameterType, "selectStatement")); //$NON-NLS-1$
-        context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
+        commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, imports);
         method.addAnnotation("@SelectProvider(type=SqlProviderAdapter.class, method=\"select\")"); //$NON-NLS-1$
 
         MethodAndImports.Builder builder = MethodAndImports.withMethod(method)
@@ -79,7 +79,7 @@ public class BasicSelectManyMethodGenerator extends AbstractMethodGenerator {
 
     @Override
     public boolean callPlugins(Method method, Interface interfaze) {
-        return context.getPlugins().clientBasicSelectManyMethodGenerated(method, interfaze, introspectedTable);
+        return pluginAggregator.clientBasicSelectManyMethodGenerated(method, interfaze, introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder> {

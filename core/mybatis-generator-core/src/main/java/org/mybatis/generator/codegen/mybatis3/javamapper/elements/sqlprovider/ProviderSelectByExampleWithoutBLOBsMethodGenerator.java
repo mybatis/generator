@@ -42,7 +42,7 @@ public class ProviderSelectByExampleWithoutBLOBsMethodGenerator extends Abstract
         method.setReturnType(FullyQualifiedJavaType.getStringInstance());
         method.addParameter(new Parameter(fqjt, "example")); //$NON-NLS-1$
 
-        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
+        commentGenerator.addGeneralMethodComment(method, introspectedTable);
 
         method.addBodyLine("SQL sql = new SQL();"); //$NON-NLS-1$
 
@@ -91,7 +91,7 @@ public class ProviderSelectByExampleWithoutBLOBsMethodGenerator extends Abstract
     }
 
     public boolean callPlugins(Method method, TopLevelClass topLevelClass) {
-        return context.getPlugins()
+        return pluginAggregator
                 .providerSelectByExampleWithoutBLOBsMethodGenerated(method, topLevelClass, introspectedTable);
     }
 

@@ -49,7 +49,7 @@ public class GeneralUpdateMethodGenerator extends AbstractKotlinFunctionGenerato
 
     @Override
     public boolean callPlugins(KotlinFunction kotlinFunction, KotlinFile kotlinFile) {
-        return context.getPlugins().clientGeneralUpdateMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
+        return pluginAggregator.clientGeneralUpdateMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder> {

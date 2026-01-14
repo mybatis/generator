@@ -50,7 +50,7 @@ public class GeneralDeleteMethodGenerator extends AbstractKotlinFunctionGenerato
 
     @Override
     public boolean callPlugins(KotlinFunction kotlinFunction, KotlinFile kotlinFile) {
-        return context.getPlugins().clientGeneralDeleteMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
+        return pluginAggregator.clientGeneralDeleteMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder> {

@@ -69,7 +69,7 @@ public class UpdateByPrimaryKeySelectiveMethodGenerator extends AbstractKotlinFu
 
     @Override
     public boolean callPlugins(KotlinFunction kotlinFunction, KotlinFile kotlinFile) {
-        return context.getPlugins()
+        return pluginAggregator
                 .clientUpdateByPrimaryKeySelectiveMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
     }
 

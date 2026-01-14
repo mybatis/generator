@@ -37,7 +37,7 @@ public class UpdateByPrimaryKeyWithBLOBsElementGenerator extends AbstractXmlElem
                 parameterType,
                 introspectedTable.getNonPrimaryKeyColumns());
 
-        if (context.getPlugins().sqlMapUpdateByPrimaryKeyWithBLOBsElementGenerated(answer, introspectedTable)) {
+        if (pluginAggregator.sqlMapUpdateByPrimaryKeyWithBLOBsElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

@@ -56,8 +56,7 @@ public class DeleteByPrimaryKeyMethodGenerator extends AbstractKotlinFunctionGen
 
     @Override
     public boolean callPlugins(KotlinFunction kotlinFunction, KotlinFile kotlinFile) {
-        return context.getPlugins().clientDeleteByPrimaryKeyMethodGenerated(kotlinFunction, kotlinFile,
-                introspectedTable);
+        return pluginAggregator.clientDeleteByPrimaryKeyMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder> {

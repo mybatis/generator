@@ -52,7 +52,7 @@ public class GeneralSelectDistinctMethodGenerator extends AbstractMethodGenerato
         method.setDefault(true);
         method.addParameter(new Parameter(parameterType, "completer")); //$NON-NLS-1$
 
-        context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
+        commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, imports);
 
         method.setReturnType(returnType);
         method.addBodyLine("return MyBatis3Utils.selectDistinct(this::selectMany, selectList, " //$NON-NLS-1$
@@ -65,7 +65,7 @@ public class GeneralSelectDistinctMethodGenerator extends AbstractMethodGenerato
 
     @Override
     public boolean callPlugins(Method method, Interface interfaze) {
-        return context.getPlugins().clientGeneralSelectDistinctMethodGenerated(method, interfaze, introspectedTable);
+        return pluginAggregator.clientGeneralSelectDistinctMethodGenerated(method, interfaze, introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder> {

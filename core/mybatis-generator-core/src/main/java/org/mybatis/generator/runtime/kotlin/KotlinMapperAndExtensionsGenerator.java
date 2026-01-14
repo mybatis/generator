@@ -94,7 +94,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
         kotlinFile.addImport("org.apache.ibatis.annotations.Mapper"); //$NON-NLS-1$
         kotlinFile.addNamedItem(intf);
 
-        context.getCommentGenerator().addFileComment(kotlinFile);
+        commentGenerator.addFileComment(kotlinFile);
 
         return intf;
     }
@@ -178,14 +178,14 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
         KotlinFile supportFile = supportClassGenerator.getKotlinFile();
 
         List<KotlinFile> answer = new ArrayList<>();
-        if (context.getPlugins().dynamicSqlSupportGenerated(supportFile,
+        if (pluginAggregator.dynamicSqlSupportGenerated(supportFile,
                 supportClassGenerator.getOuterObject(),
                 supportClassGenerator.getInnerClass(),
                 introspectedTable)) {
             answer.add(supportFile);
         }
 
-        if (context.getPlugins().mapperGenerated(mapperFile, mapper, introspectedTable)) {
+        if (pluginAggregator.mapperGenerated(mapperFile, mapper, introspectedTable)) {
             answer.add(mapperFile);
         }
 

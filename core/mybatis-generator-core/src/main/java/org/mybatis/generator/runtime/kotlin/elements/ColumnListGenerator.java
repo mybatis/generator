@@ -52,7 +52,7 @@ public class ColumnListGenerator extends AbstractGenerator {
                 .withImports(getImports(fieldsAndImports))
                 .build();
 
-        context.getCommentGenerator().addGeneralPropertyComment(propertyAndImports.getProperty(), introspectedTable,
+        commentGenerator.addGeneralPropertyComment(propertyAndImports.getProperty(), introspectedTable,
                 propertyAndImports.getImports());
         return propertyAndImports;
     }
@@ -74,7 +74,7 @@ public class ColumnListGenerator extends AbstractGenerator {
     }
 
     public boolean callPlugins(KotlinProperty kotlinProperty, KotlinFile kotlinFile) {
-        return context.getPlugins().clientColumnListPropertyGenerated(kotlinProperty, kotlinFile, introspectedTable);
+        return pluginAggregator.clientColumnListPropertyGenerated(kotlinProperty, kotlinFile, introspectedTable);
     }
 
     public static class Builder extends AbstractGeneratorBuilder<Builder> {

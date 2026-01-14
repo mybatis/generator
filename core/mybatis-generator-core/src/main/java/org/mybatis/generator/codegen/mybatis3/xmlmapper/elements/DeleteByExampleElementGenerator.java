@@ -32,13 +32,13 @@ public class DeleteByExampleElementGenerator extends AbstractXmlElementGenerator
         answer.addAttribute(new Attribute("id", introspectedTable.getDeleteByExampleStatementId())); //$NON-NLS-1$
         answer.addAttribute(new Attribute("parameterType", introspectedTable.getExampleType())); //$NON-NLS-1$
 
-        context.getCommentGenerator().addComment(answer);
+        commentGenerator.addComment(answer);
 
         String s = "delete from " + introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime(); //$NON-NLS-1$
         answer.addElement(new TextElement(s));
         answer.addElement(getExampleIncludeElement());
 
-        if (context.getPlugins().sqlMapDeleteByExampleElementGenerated(answer, introspectedTable)) {
+        if (pluginAggregator.sqlMapDeleteByExampleElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

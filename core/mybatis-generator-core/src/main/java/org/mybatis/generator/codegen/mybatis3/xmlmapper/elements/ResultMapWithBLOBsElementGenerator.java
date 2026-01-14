@@ -47,7 +47,7 @@ public class ResultMapWithBLOBsElementGenerator extends AbstractXmlElementGenera
                     introspectedTable.getBaseResultMapId()));
         }
 
-        context.getCommentGenerator().addComment(answer);
+        commentGenerator.addComment(answer);
 
         if (introspectedTable.isConstructorBased()) {
             addResultMapConstructorElements(answer);
@@ -55,7 +55,7 @@ public class ResultMapWithBLOBsElementGenerator extends AbstractXmlElementGenera
             addResultMapElements(answer);
         }
 
-        if (context.getPlugins().sqlMapResultMapWithBLOBsElementGenerated(answer, introspectedTable)) {
+        if (pluginAggregator.sqlMapResultMapWithBLOBsElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

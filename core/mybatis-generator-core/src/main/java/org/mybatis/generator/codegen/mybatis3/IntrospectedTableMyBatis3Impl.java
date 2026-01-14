@@ -16,7 +16,6 @@
 package org.mybatis.generator.codegen.mybatis3;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,8 +42,11 @@ import org.mybatis.generator.codegen.mybatis3.model.PrimaryKeyGenerator;
 import org.mybatis.generator.codegen.mybatis3.model.RecordWithBLOBsGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.XMLMapperGenerator;
 import org.mybatis.generator.config.PropertyRegistry;
+import org.mybatis.generator.config.SqlMapGeneratorConfiguration;
 import org.mybatis.generator.config.TypedPropertyHolder;
+import org.mybatis.generator.internal.DefaultCommentGenerator;
 import org.mybatis.generator.internal.ObjectFactory;
+import org.mybatis.generator.internal.PluginAggregator;
 import org.mybatis.generator.internal.util.StringUtility;
 
 /**
@@ -81,6 +83,8 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
                         .withIntrospectedTable(this)
                         .withWarnings(warnings)
                         .withProgressCallback(progressCallback)
+                        .withCommentGenerator(commentGenerator)
+                        .withPluginAggregator(pluginAggregator)
                         .build();
             }
         } else {
@@ -129,6 +133,8 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
                     .withIntrospectedTable(this)
                     .withProgressCallback(progressCallback)
                     .withWarnings(warnings)
+                    .withCommentGenerator(commentGenerator)
+                    .withPluginAggregator(pluginAggregator)
                     .build();
             javaGenerators.add(javaGenerator);
         }
@@ -140,6 +146,8 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
                     .withIntrospectedTable(this)
                     .withProgressCallback(progressCallback)
                     .withWarnings(warnings)
+                    .withCommentGenerator(commentGenerator)
+                    .withPluginAggregator(pluginAggregator)
                     .build();
             javaGenerators.add(javaGenerator);
         }
@@ -151,6 +159,8 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
                     .withIntrospectedTable(this)
                     .withProgressCallback(progressCallback)
                     .withWarnings(warnings)
+                    .withCommentGenerator(commentGenerator)
+                    .withPluginAggregator(pluginAggregator)
                     .build();
             javaGenerators.add(javaGenerator);
         }
@@ -162,6 +172,8 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
                     .withIntrospectedTable(this)
                     .withProgressCallback(progressCallback)
                     .withWarnings(warnings)
+                    .withCommentGenerator(commentGenerator)
+                    .withPluginAggregator(pluginAggregator)
                     .build();
             javaGenerators.add(javaGenerator);
         }
@@ -175,7 +187,9 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
                 .withContext(getContext())
                 .withIntrospectedTable(this)
                 .withProgressCallback(progressCallback)
-                .withWarnings(warnings);
+                .withWarnings(warnings)
+                .withCommentGenerator(commentGenerator)
+                .withPluginAggregator(pluginAggregator);
     }
 
     @Override
@@ -185,9 +199,7 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
         for (AbstractJavaGenerator javaGenerator : javaGenerators) {
             List<CompilationUnit> compilationUnits = javaGenerator.getCompilationUnits();
             for (CompilationUnit compilationUnit : compilationUnits) {
-                GeneratedJavaFile gjf = new GeneratedJavaFile(compilationUnit, javaGenerator.getProject(),
-                        getContext().getProperty(PropertyRegistry.CONTEXT_JAVA_FILE_ENCODING),
-                        getContext().getJavaFormatter());
+                GeneratedJavaFile gjf = new GeneratedJavaFile(compilationUnit, javaGenerator.getProject());
                 answer.add(gjf);
             }
         }
@@ -202,10 +214,7 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
         for (AbstractKotlinGenerator kotlinGenerator : kotlinGenerators) {
             List<KotlinFile> kotlinFiles = kotlinGenerator.getKotlinFiles();
             for (KotlinFile kotlinFile : kotlinFiles) {
-                GeneratedKotlinFile gjf = new GeneratedKotlinFile(kotlinFile,
-                                kotlinGenerator.getProject(),
-                        getContext().getProperty(PropertyRegistry.CONTEXT_KOTLIN_FILE_ENCODING),
-                        getContext().getKotlinFormatter());
+                GeneratedKotlinFile gjf = new GeneratedKotlinFile(kotlinFile, kotlinGenerator.getProject());
                 answer.add(gjf);
             }
         }
@@ -239,11 +248,12 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
         if (xmlMapperGenerator != null) {
             Document document = xmlMapperGenerator.getDocument();
             if (document != null) {
-                GeneratedXmlFile gxf = new GeneratedXmlFile(document,
-                        getMyBatis3XmlMapperFileName(), getMyBatis3XmlMapperPackage(),
-                        getContext().getSqlMapGeneratorConfiguration().orElseThrow().getTargetProject(),
-                        true, getContext().getXmlFormatter());
-                if (getContext().getPlugins().sqlMapGenerated(gxf, this)) {
+                GeneratedXmlFile gxf = new GeneratedXmlFile(document, getMyBatis3XmlMapperFileName(),
+                        getMyBatis3XmlMapperPackage(),
+                        getContext().getSqlMapGeneratorConfiguration()
+                                .map(SqlMapGeneratorConfiguration::getTargetProject).orElse(""),
+                        true);
+                if (pluginAggregator.sqlMapGenerated(gxf, this)) {
                     answer.add(gxf);
                 }
             }
@@ -263,10 +273,18 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
         // we build this only to ask if an XML generator is required.
         return calculateJavaClientGeneratorBuilderType()
                 .map(t -> {
-                    var builder = ObjectFactory.createInternalObject(t,
+                    AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder<?> builder =
+                            ObjectFactory.createInternalObject(t,
                             AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder.class);
-                    return initializeAbstractClientGenerator(builder, Collections.emptyList(),
-                            new VerboseProgressCallback()).build();
+
+                    return builder.withProject(getClientProject())
+                            .withContext(getContext())
+                            .withIntrospectedTable(this)
+                            .withProgressCallback(new VerboseProgressCallback())
+                            .withCommentGenerator(new DefaultCommentGenerator())
+                            .withPluginAggregator(new PluginAggregator())
+                            .withWarnings(new ArrayList<>())
+                            .build();
                 })
                 .map(AbstractJavaClientGenerator::requiresXMLGenerator)
                 .orElse(false);

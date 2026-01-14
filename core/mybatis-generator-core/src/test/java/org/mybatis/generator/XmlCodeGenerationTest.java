@@ -29,6 +29,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mybatis.generator.api.GeneratedXmlFile;
 import org.mybatis.generator.api.MyBatisGenerator;
+import org.mybatis.generator.api.dom.DefaultXmlFormatter;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.internal.DefaultShellCallback;
@@ -42,8 +43,9 @@ class XmlCodeGenerationTest {
     @ParameterizedTest
     @MethodSource("xmlFileGenerator")
     void testXmlParse(GeneratedXmlFile generatedXmlFile) {
-        ByteArrayInputStream is = new ByteArrayInputStream(
-                generatedXmlFile.getFormattedContent().getBytes());
+        DefaultXmlFormatter formatter = new DefaultXmlFormatter();
+        ByteArrayInputStream is = new ByteArrayInputStream(formatter
+                .getFormattedContent(generatedXmlFile.getDocument()).getBytes());
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             factory.setValidating(true);

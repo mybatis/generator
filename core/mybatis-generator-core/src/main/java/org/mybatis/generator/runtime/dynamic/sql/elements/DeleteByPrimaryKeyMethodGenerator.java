@@ -47,7 +47,7 @@ public class DeleteByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
 
         Method method = new Method("deleteByPrimaryKey"); //$NON-NLS-1$
         method.setDefault(true);
-        context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
+        commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, imports);
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
 
         method.addBodyLine("return delete(c -> "); //$NON-NLS-1$
@@ -67,7 +67,7 @@ public class DeleteByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
 
     @Override
     public boolean callPlugins(Method method, Interface interfaze) {
-        return context.getPlugins().clientDeleteByPrimaryKeyMethodGenerated(method, interfaze, introspectedTable);
+        return pluginAggregator.clientDeleteByPrimaryKeyMethodGenerated(method, interfaze, introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder> {

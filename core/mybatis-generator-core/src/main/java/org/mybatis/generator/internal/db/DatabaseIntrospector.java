@@ -38,6 +38,7 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 
 import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.FullyQualifiedTable;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
@@ -59,14 +60,17 @@ public class DatabaseIntrospector {
     private final JavaTypeResolver javaTypeResolver;
     private final List<String> warnings;
     private final Context context;
+    private final CommentGenerator commentGenerator;
     private final Log logger;
 
     public DatabaseIntrospector(Context context, DatabaseMetaData databaseMetaData,
-                                JavaTypeResolver javaTypeResolver, List<String> warnings) {
+                                JavaTypeResolver javaTypeResolver, List<String> warnings,
+                                CommentGenerator commentGenerator) {
         this.context = context;
         this.databaseMetaData = databaseMetaData;
         this.javaTypeResolver = javaTypeResolver;
         this.warnings = warnings;
+        this.commentGenerator = commentGenerator;
         logger = LogFactory.getLog(getClass());
     }
 
@@ -531,7 +535,8 @@ public class DatabaseIntrospector {
                     .withContext(context)
                     .build();
 
-            IntrospectedTable introspectedTable = ObjectFactory.createIntrospectedTable(tc, table, context);
+            IntrospectedTable introspectedTable = ObjectFactory.createIntrospectedTable(tc, table, context,
+                    commentGenerator);
 
             for (IntrospectedColumn introspectedColumn : entry.getValue()) {
                 introspectedTable.addColumn(introspectedColumn);

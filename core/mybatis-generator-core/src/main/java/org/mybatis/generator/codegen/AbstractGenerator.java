@@ -19,28 +19,36 @@ import java.util.List;
 import java.util.Objects;
 
 import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.config.Context;
+import org.mybatis.generator.internal.PluginAggregator;
 
 public abstract class AbstractGenerator {
     protected final Context context;
     protected final IntrospectedTable introspectedTable;
     protected final List<String> warnings;
     protected final ProgressCallback progressCallback;
+    protected final CommentGenerator commentGenerator;
+    protected final PluginAggregator pluginAggregator;
 
     protected AbstractGenerator(AbstractGeneratorBuilder<?> builder) {
         this.context = Objects.requireNonNull(builder.context);
         this.introspectedTable = Objects.requireNonNull(builder.introspectedTable);
         this.warnings = Objects.requireNonNull(builder.warnings);
         this.progressCallback = Objects.requireNonNull(builder.progressCallback);
+        this.commentGenerator = Objects.requireNonNull(builder.commentGenerator);
+        this.pluginAggregator = Objects.requireNonNull(builder.pluginAggregator);
     }
 
     protected <T extends AbstractGeneratorBuilder<T>> T initializeSubBuilder(T builder) {
         return builder.withContext(context)
                 .withIntrospectedTable(introspectedTable)
                 .withWarnings(warnings)
-                .withProgressCallback(progressCallback);
+                .withProgressCallback(progressCallback)
+                .withCommentGenerator(commentGenerator)
+                .withPluginAggregator(pluginAggregator);
     }
 
     public abstract static class AbstractGeneratorBuilder<T extends AbstractGeneratorBuilder<T>> {
@@ -48,6 +56,8 @@ public abstract class AbstractGenerator {
         private @Nullable IntrospectedTable introspectedTable;
         private @Nullable List<String> warnings;
         private @Nullable ProgressCallback progressCallback;
+        private @Nullable CommentGenerator commentGenerator;
+        private @Nullable PluginAggregator pluginAggregator;
 
         public T withContext(Context context) {
             this.context = context;
@@ -66,6 +76,16 @@ public abstract class AbstractGenerator {
 
         public T withProgressCallback(ProgressCallback progressCallback) {
             this.progressCallback = progressCallback;
+            return getThis();
+        }
+
+        public T withCommentGenerator(CommentGenerator commentGenerator) {
+            this.commentGenerator = commentGenerator;
+            return getThis();
+        }
+
+        public T withPluginAggregator(PluginAggregator pluginAggregator) {
+            this.pluginAggregator = pluginAggregator;
             return getThis();
         }
 

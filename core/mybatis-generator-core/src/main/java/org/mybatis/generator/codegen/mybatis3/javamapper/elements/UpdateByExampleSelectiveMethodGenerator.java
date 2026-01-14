@@ -38,7 +38,7 @@ public class UpdateByExampleSelectiveMethodGenerator extends AbstractJavaMapperM
 
         addMapperAnnotations(method);
 
-        if (context.getPlugins().clientUpdateByExampleSelectiveMethodGenerated(method, interfaze, introspectedTable)) {
+        if (pluginAggregator.clientUpdateByExampleSelectiveMethodGenerated(method, interfaze, introspectedTable)) {
             addExtraImports(interfaze);
             interfaze.addImportedTypes(importedTypes);
             interfaze.addMethod(method);

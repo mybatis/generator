@@ -197,10 +197,12 @@ public class ObjectFactory {
         return answer;
     }
 
-    public static Plugin createPlugin(Context context, PluginConfiguration pluginConfiguration) {
+    public static Plugin createPlugin(Context context, PluginConfiguration pluginConfiguration,
+                                      CommentGenerator commentGenerator) {
         Plugin plugin = createInternalObject(pluginConfiguration.getConfigurationType().orElseThrow(), Plugin.class);
         plugin.setContext(context);
         plugin.setProperties(pluginConfiguration.getProperties());
+        plugin.setCommentGenerator(commentGenerator);
         return plugin;
     }
 
@@ -271,10 +273,11 @@ public class ObjectFactory {
 
     public static IntrospectedTable createIntrospectedTable(TableConfiguration tableConfiguration,
                                                             FullyQualifiedTable table,
-                                                            Context context) {
+                                                            Context context, CommentGenerator commentGenerator) {
         IntrospectedTable answer = createIntrospectedTableForValidation(context);
         answer.setFullyQualifiedTable(table);
         answer.setTableConfiguration(tableConfiguration);
+        answer.setCommentGenerator(commentGenerator);
 
         return answer;
     }

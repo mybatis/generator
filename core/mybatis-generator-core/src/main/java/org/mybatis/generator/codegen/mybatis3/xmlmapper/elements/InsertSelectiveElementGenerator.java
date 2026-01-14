@@ -100,7 +100,7 @@ public class InsertSelectiveElementGenerator extends AbstractXmlElementGenerator
             valuesTrimElement.addElement(valuesNotNullElement);
         }
 
-        if (context.getPlugins().sqlMapInsertSelectiveElementGenerated(answer, introspectedTable)) {
+        if (pluginAggregator.sqlMapInsertSelectiveElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

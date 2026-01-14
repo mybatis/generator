@@ -34,10 +34,10 @@ import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.config.JavaModelGeneratorConfiguration;
-import org.mybatis.generator.config.ModelType;
 import org.mybatis.generator.config.PropertyHolder;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.config.TableConfiguration;
+import org.mybatis.generator.internal.PluginAggregator;
 import org.mybatis.generator.internal.rules.ConditionalModelRules;
 import org.mybatis.generator.internal.rules.FlatModelRules;
 import org.mybatis.generator.internal.rules.HierarchicalModelRules;
@@ -111,6 +111,16 @@ public abstract class IntrospectedTable {
      * Only nullable because instances of this class are built through introspection. Not null in practice.
      */
     protected @Nullable Context context;
+
+    /**
+     * Only nullable because instances of this class are built through introspection. Not null in practice.
+     */
+    protected @Nullable CommentGenerator commentGenerator;
+
+    /**
+     * Only nullable because instances of this class are calculated on initialization. Not null in practice.
+     */
+    protected @Nullable PluginAggregator pluginAggregator;
 
     /**
      * Only nullable because instances of this class are calculated on initialization. Not null in practice.
@@ -341,6 +351,10 @@ public abstract class IntrospectedTable {
         this.fullyQualifiedTable = fullyQualifiedTable;
     }
 
+    public void setCommentGenerator(CommentGenerator commentGenerator) {
+        this.commentGenerator = commentGenerator;
+    }
+
     public void setContext(Context context) {
         this.context = context;
     }
@@ -395,7 +409,9 @@ public abstract class IntrospectedTable {
         attributes.put(name, value);
     }
 
-    public void initialize() {
+    public void initialize(PluginAggregator pluginAggregator, CommentGenerator commentGenerator) {
+        this.pluginAggregator = pluginAggregator;
+        this.commentGenerator = commentGenerator;
         calculateJavaClientAttributes();
         calculateModelAttributes();
         calculateXmlAttributes();
@@ -412,7 +428,7 @@ public abstract class IntrospectedTable {
             break;
         }
 
-        getContext().getPlugins().initialized(this);
+        pluginAggregator.initialized(this);
     }
 
     protected void calculateXmlAttributes() {

@@ -50,7 +50,7 @@ public class GeneralSelectOneMethodGenerator extends AbstractKotlinFunctionGener
 
     @Override
     public boolean callPlugins(KotlinFunction kotlinFunction, KotlinFile kotlinFile) {
-        return context.getPlugins().clientSelectOneMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
+        return pluginAggregator.clientSelectOneMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder> {

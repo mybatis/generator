@@ -48,7 +48,7 @@ public class SelectByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
 
         Method method = new Method("selectByPrimaryKey"); //$NON-NLS-1$
         method.setDefault(true);
-        context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
+        commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, imports);
         method.setReturnType(returnType);
 
         method.addBodyLine("return selectOne(c ->"); //$NON-NLS-1$
@@ -65,7 +65,7 @@ public class SelectByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
 
     @Override
     public boolean callPlugins(Method method, Interface interfaze) {
-        return context.getPlugins().clientSelectByPrimaryKeyMethodGenerated(method, interfaze, introspectedTable);
+        return pluginAggregator.clientSelectByPrimaryKeyMethodGenerated(method, interfaze, introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder> {

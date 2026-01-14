@@ -56,7 +56,7 @@ public class InsertMultipleVarargMethodGenerator extends AbstractKotlinFunctionG
 
     @Override
     public boolean callPlugins(KotlinFunction kotlinFunction, KotlinFile kotlinFile) {
-        return context.getPlugins().clientInsertMultipleVarargMethodGenerated(kotlinFunction, kotlinFile,
+        return pluginAggregator.clientInsertMultipleVarargMethodGenerated(kotlinFunction, kotlinFile,
                 introspectedTable);
     }
 

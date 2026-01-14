@@ -47,7 +47,7 @@ public class UpdateByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
 
         Method method = new Method("updateByPrimaryKey"); //$NON-NLS-1$
         method.setDefault(true);
-        context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
+        commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, imports);
 
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
         method.addParameter(new Parameter(recordType, "row")); //$NON-NLS-1$
@@ -66,7 +66,7 @@ public class UpdateByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
 
     @Override
     public boolean callPlugins(Method method, Interface interfaze) {
-        return context.getPlugins().clientUpdateByPrimaryKeyMethodGenerated(method,
+        return pluginAggregator.clientUpdateByPrimaryKeyMethodGenerated(method,
                 interfaze, introspectedTable);
     }
 

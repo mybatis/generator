@@ -53,16 +53,17 @@ class XmlFileMergerTest {
                 XmlConstants.MYBATIS3_MAPPER_SYSTEM_ID, getSqlMapElement(commentGenerator));
 
         GeneratedXmlFile generatedFile1 = new GeneratedXmlFile(document, "TestMapper.xml", "org.mybatis.test", "src",
-                true, xmlFormatter);
-        InputSource is1 = new InputSource(new StringReader(generatedFile1.getFormattedContent()));
+                true);
+        String formattedFile1 = xmlFormatter.getFormattedContent(generatedFile1.getDocument());
+        InputSource is1 = new InputSource(new StringReader(formattedFile1));
 
         GeneratedXmlFile generatedFile2 = new GeneratedXmlFile(document, "TestMapper.xml", "org.mybatis.test", "src",
-                true, xmlFormatter);
-        InputSource is2 = new InputSource(new StringReader(generatedFile2.getFormattedContent()));
+                true);
+        InputSource is2 = new InputSource(new StringReader(xmlFormatter.getFormattedContent(generatedFile2.getDocument())));
 
         String mergedSource = XmlFileMergerJaxp.getMergedSource(is1, is2, "TestMapper.xml");
 
-        assertEquals(generatedFile1.getFormattedContent(), mergedSource);
+        assertEquals(formattedFile1, mergedSource);
     }
 
     @Test
@@ -129,19 +130,19 @@ class XmlFileMergerTest {
 
         DefaultXmlFormatter xmlFormatter = new DefaultXmlFormatter();
         GeneratedXmlFile existingGeneratedFile = new GeneratedXmlFile(existingDocument, "TestMapper.xml", "org.mybatis.test", "src",
-                true, xmlFormatter);
-        InputSource existingFileInputSource = new InputSource(new StringReader(existingGeneratedFile.getFormattedContent()));
+                true);
+        InputSource existingFileInputSource = new InputSource(new StringReader(xmlFormatter.getFormattedContent(existingGeneratedFile.getDocument())));
 
         GeneratedXmlFile newGeneratedFile = new GeneratedXmlFile(newDocument, "TestMapper.xml", "org.mybatis.test", "src",
-                true, xmlFormatter);
-        InputSource newFileInputSource = new InputSource(new StringReader(newGeneratedFile.getFormattedContent()));
+                true);
+        InputSource newFileInputSource = new InputSource(new StringReader(xmlFormatter.getFormattedContent(newGeneratedFile.getDocument())));
 
         GeneratedXmlFile expectedGeneratedFile = new GeneratedXmlFile(expectedDocument, "TestMapper.xml", "org.mybatis.test", "src",
-                true, xmlFormatter);
+                true);
 
         String mergedSource = XmlFileMergerJaxp.getMergedSource(newFileInputSource, existingFileInputSource, "TestMapper.xml");
 
-        assertEquals(expectedGeneratedFile.getFormattedContent(), mergedSource);
+        assertEquals(xmlFormatter.getFormattedContent(expectedGeneratedFile.getDocument()), mergedSource);
     }
 
     private XmlElement getSqlMapElement(CommentGenerator commentGenerator) {

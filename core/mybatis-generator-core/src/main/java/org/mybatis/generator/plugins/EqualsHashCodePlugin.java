@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -134,11 +134,9 @@ public class EqualsHashCodePlugin extends PluginAdapter {
         method.addAnnotation("@Override"); //$NON-NLS-1$
 
         if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3_DSQL) {
-            context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable,
-                    topLevelClass.getImportedTypes());
+            commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, topLevelClass.getImportedTypes());
         } else {
-            context.getCommentGenerator().addGeneralMethodComment(method,
-                    introspectedTable);
+            commentGenerator.addGeneralMethodComment(method, introspectedTable);
         }
 
         method.addBodyLine("if (this == that) {"); //$NON-NLS-1$
@@ -245,11 +243,9 @@ public class EqualsHashCodePlugin extends PluginAdapter {
         method.addAnnotation("@Override"); //$NON-NLS-1$
 
         if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3_DSQL) {
-            context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable,
-                    topLevelClass.getImportedTypes());
+            commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, topLevelClass.getImportedTypes());
         } else {
-            context.getCommentGenerator().addGeneralMethodComment(method,
-                    introspectedTable);
+            commentGenerator.addGeneralMethodComment(method, introspectedTable);
         }
 
         method.addBodyLine("final int prime = 31;"); //$NON-NLS-1$

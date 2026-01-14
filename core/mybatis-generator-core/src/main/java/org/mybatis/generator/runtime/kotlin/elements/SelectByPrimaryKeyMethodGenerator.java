@@ -55,8 +55,7 @@ public class SelectByPrimaryKeyMethodGenerator extends AbstractKotlinFunctionGen
 
     @Override
     public boolean callPlugins(KotlinFunction kotlinFunction, KotlinFile kotlinFile) {
-        return context.getPlugins().clientSelectByPrimaryKeyMethodGenerated(kotlinFunction, kotlinFile,
-                introspectedTable);
+        return pluginAggregator.clientSelectByPrimaryKeyMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder> {

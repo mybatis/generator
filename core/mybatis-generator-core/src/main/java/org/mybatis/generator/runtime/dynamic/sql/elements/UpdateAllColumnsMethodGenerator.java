@@ -49,7 +49,7 @@ public class UpdateAllColumnsMethodGenerator extends AbstractMethodGenerator {
 
         Method method = new Method("updateAllColumns"); //$NON-NLS-1$
         method.setStatic(true);
-        context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
+        commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, imports);
 
         method.setReturnType(parameterAndReturnType);
         method.addParameter(new Parameter(recordType, "row")); //$NON-NLS-1$
@@ -65,7 +65,7 @@ public class UpdateAllColumnsMethodGenerator extends AbstractMethodGenerator {
 
     @Override
     public boolean callPlugins(Method method, Interface interfaze) {
-        return context.getPlugins().clientUpdateAllColumnsMethodGenerated(method, interfaze, introspectedTable);
+        return pluginAggregator.clientUpdateAllColumnsMethodGenerated(method, interfaze, introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder> {

@@ -58,7 +58,7 @@ public abstract class AbstractKotlinFunctionGenerator extends AbstractGenerator 
     }
 
     protected void addFunctionComment(KotlinFunctionAndImports functionAndImports) {
-        context.getCommentGenerator().addGeneralFunctionComment(functionAndImports.getFunction(), introspectedTable,
+        commentGenerator.addGeneralFunctionComment(functionAndImports.getFunction(), introspectedTable,
                 functionAndImports.getImports());
     }
 

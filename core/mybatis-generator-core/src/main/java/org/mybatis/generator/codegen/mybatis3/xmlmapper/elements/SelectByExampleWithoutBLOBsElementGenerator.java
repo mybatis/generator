@@ -35,7 +35,7 @@ public class SelectByExampleWithoutBLOBsElementGenerator extends AbstractXmlElem
                 "resultMap", introspectedTable.getBaseResultMapId())); //$NON-NLS-1$
         answer.addAttribute(new Attribute("parameterType", introspectedTable.getExampleType())); //$NON-NLS-1$
 
-        context.getCommentGenerator().addComment(answer);
+        commentGenerator.addComment(answer);
 
         answer.addElement(new TextElement("select")); //$NON-NLS-1$
         XmlElement ifElement = new XmlElement("if"); //$NON-NLS-1$
@@ -64,7 +64,7 @@ public class SelectByExampleWithoutBLOBsElementGenerator extends AbstractXmlElem
         ifElement.addElement(new TextElement("order by ${orderByClause}")); //$NON-NLS-1$
         answer.addElement(ifElement);
 
-        if (context.getPlugins().sqlMapSelectByExampleWithoutBLOBsElementGenerated(answer, introspectedTable)) {
+        if (pluginAggregator.sqlMapSelectByExampleWithoutBLOBsElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

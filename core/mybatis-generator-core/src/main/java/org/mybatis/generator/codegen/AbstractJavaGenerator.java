@@ -91,11 +91,11 @@ public abstract class AbstractJavaGenerator extends AbstractGenerator {
     }
 
     private void addGeneratedJavaDoc(Method method) {
-        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
+        commentGenerator.addGeneralMethodComment(method, introspectedTable);
     }
 
     private void addGeneratedAnnotation(Method method, TopLevelClass topLevelClass) {
-        context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable,
+        commentGenerator.addGeneralMethodAnnotation(method, introspectedTable,
                 topLevelClass.getImportedTypes());
     }
 

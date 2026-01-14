@@ -85,8 +85,7 @@ public class DynamicSqlSupportClassGenerator extends AbstractGenerator {
                 + ");"); //$NON-NLS-1$
         innerClass.addMethod(method);
 
-        context.getCommentGenerator()
-                .addClassAnnotation(innerClass, introspectedTable, topLevelClass.getImportedTypes());
+        commentGenerator.addClassAnnotation(innerClass, introspectedTable, topLevelClass.getImportedTypes());
 
         return innerClass;
     }
@@ -97,7 +96,7 @@ public class DynamicSqlSupportClassGenerator extends AbstractGenerator {
         String fieldName =
                 JavaBeansUtil.getValidPropertyName(introspectedTable.getMyBatisDynamicSQLTableObjectName());
         Field field = new Field(fieldName, fqjt);
-        context.getCommentGenerator().addFieldAnnotation(field, introspectedTable, topLevelClass.getImportedTypes());
+        commentGenerator.addFieldAnnotation(field, introspectedTable, topLevelClass.getImportedTypes());
         field.setVisibility(JavaVisibility.PUBLIC);
         field.setStatic(true);
         field.setFinal(true);
@@ -134,8 +133,7 @@ public class DynamicSqlSupportClassGenerator extends AbstractGenerator {
             field.setStatic(true);
             field.setFinal(true);
             field.setInitializationString(tableFieldName + "." + fieldName); //$NON-NLS-1$
-            context.getCommentGenerator()
-                    .addFieldAnnotation(field, introspectedTable, column, topLevelClass.getImportedTypes());
+            commentGenerator.addFieldAnnotation(field, introspectedTable, column, topLevelClass.getImportedTypes());
             topLevelClass.addField(field);
         }
 

@@ -23,7 +23,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
@@ -48,7 +47,6 @@ public class SimpleJavaClientGenerator extends AbstractJavaClientGenerator {
     public List<CompilationUnit> getCompilationUnits() {
         progressCallback.startTask(getString("Progress.17", //$NON-NLS-1$
                 introspectedTable.getFullyQualifiedTable().toString()));
-        CommentGenerator commentGenerator = context.getCommentGenerator();
 
         FullyQualifiedJavaType type = new FullyQualifiedJavaType(introspectedTable.getMyBatis3JavaMapperType());
         Interface interfaze = new Interface(type);
@@ -75,7 +73,7 @@ public class SimpleJavaClientGenerator extends AbstractJavaClientGenerator {
         addUpdateByPrimaryKeyMethod(interfaze);
 
         List<CompilationUnit> answer = new ArrayList<>();
-        if (context.getPlugins().clientGenerated(interfaze, introspectedTable)) {
+        if (pluginAggregator.clientGenerated(interfaze, introspectedTable)) {
             answer.add(interfaze);
         }
 

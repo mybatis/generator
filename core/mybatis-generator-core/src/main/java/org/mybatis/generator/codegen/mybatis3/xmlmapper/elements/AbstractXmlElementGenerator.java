@@ -152,7 +152,7 @@ public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
 
         answer.addAttribute(new Attribute("parameterType", parameterType.getFullyQualifiedName())); //$NON-NLS-1$
 
-        context.getCommentGenerator().addComment(answer);
+        commentGenerator.addComment(answer);
 
         introspectedTable.getGeneratedKey().ifPresent(gk ->
                 introspectedTable.getColumn(gk.getColumn()).ifPresent(introspectedColumn -> {
@@ -268,7 +268,7 @@ public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
         answer.addAttribute(new Attribute("id", statementId)); //$NON-NLS-1$
 
         answer.addAttribute(new Attribute("parameterType", "map")); //$NON-NLS-1$ //$NON-NLS-2$
-        context.getCommentGenerator().addComment(answer);
+        commentGenerator.addComment(answer);
 
         StringBuilder sb = new StringBuilder();
         sb.append("update "); //$NON-NLS-1$
@@ -311,7 +311,7 @@ public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
         answer.addAttribute(new Attribute("id", statementId)); //$NON-NLS-1$
         answer.addAttribute(new Attribute("parameterType", parameterType)); //$NON-NLS-1$
 
-        context.getCommentGenerator().addComment(answer);
+        commentGenerator.addComment(answer);
 
         StringBuilder sb = new StringBuilder();
         sb.append("update "); //$NON-NLS-1$

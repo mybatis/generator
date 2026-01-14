@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.FullyQualifiedTable;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.Plugin;
@@ -48,7 +47,6 @@ public class SimpleModelGenerator extends AbstractJavaGenerator {
     public List<CompilationUnit> getCompilationUnits() {
         FullyQualifiedTable table = introspectedTable.getFullyQualifiedTable();
         progressCallback.startTask(getString("Progress.8", table.toString())); //$NON-NLS-1$
-        CommentGenerator commentGenerator = context.getCommentGenerator();
 
         FullyQualifiedJavaType type = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
         TopLevelClass topLevelClass = new TopLevelClass(type);
@@ -72,37 +70,36 @@ public class SimpleModelGenerator extends AbstractJavaGenerator {
             }
         }
 
-        Plugin plugins = context.getPlugins();
         Optional<RootClassInfo> rootClassInfo = getRootClass().map(rc -> RootClassInfo.getInstance(rc, warnings));
         for (IntrospectedColumn introspectedColumn : introspectedColumns) {
             if (rootClassInfo.map(rci -> rci.containsProperty(introspectedColumn)).orElse(false)) {
                 continue;
             }
 
-            Field field = getJavaBeansField(introspectedColumn, context, introspectedTable);
-            if (plugins.modelFieldGenerated(field, topLevelClass, introspectedColumn, introspectedTable,
+            Field field = getJavaBeansField(introspectedColumn, commentGenerator, introspectedTable);
+            if (pluginAggregator.modelFieldGenerated(field, topLevelClass, introspectedColumn, introspectedTable,
                     Plugin.ModelClassType.BASE_RECORD)) {
                 topLevelClass.addField(field);
                 topLevelClass.addImportedType(field.getType());
             }
 
-            Method method = getJavaBeansGetter(introspectedColumn, context, introspectedTable);
-            if (plugins.modelGetterMethodGenerated(method, topLevelClass, introspectedColumn, introspectedTable,
-                    Plugin.ModelClassType.BASE_RECORD)) {
+            Method method = getJavaBeansGetter(introspectedColumn, commentGenerator, introspectedTable);
+            if (pluginAggregator.modelGetterMethodGenerated(method, topLevelClass, introspectedColumn,
+                    introspectedTable, Plugin.ModelClassType.BASE_RECORD)) {
                 topLevelClass.addMethod(method);
             }
 
             if (!introspectedTable.isImmutable()) {
-                method = getJavaBeansSetter(introspectedColumn, context, introspectedTable);
-                if (plugins.modelSetterMethodGenerated(method, topLevelClass, introspectedColumn, introspectedTable,
-                        Plugin.ModelClassType.BASE_RECORD)) {
+                method = getJavaBeansSetter(introspectedColumn, commentGenerator, introspectedTable);
+                if (pluginAggregator.modelSetterMethodGenerated(method, topLevelClass, introspectedColumn,
+                        introspectedTable, Plugin.ModelClassType.BASE_RECORD)) {
                     topLevelClass.addMethod(method);
                 }
             }
         }
 
         List<CompilationUnit> answer = new ArrayList<>();
-        if (context.getPlugins().modelBaseRecordClassGenerated(topLevelClass, introspectedTable)) {
+        if (pluginAggregator.modelBaseRecordClassGenerated(topLevelClass, introspectedTable)) {
             answer.add(topLevelClass);
         }
         return answer;
@@ -116,7 +113,7 @@ public class SimpleModelGenerator extends AbstractJavaGenerator {
         Method method = new Method(topLevelClass.getType().getShortName());
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setConstructor(true);
-        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
+        commentGenerator.addGeneralMethodComment(method, introspectedTable);
 
         List<IntrospectedColumn> constructorColumns = introspectedTable.getAllColumns();
 

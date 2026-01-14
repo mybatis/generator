@@ -15,38 +15,15 @@
  */
 package org.mybatis.generator.api;
 
-import java.util.Optional;
-
-import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 
 public class GeneratedJavaFile extends GeneratedFile {
 
     private final CompilationUnit compilationUnit;
 
-    private final @Nullable String fileEncoding;
-
-    private final JavaFormatter javaFormatter;
-
-    public GeneratedJavaFile(CompilationUnit compilationUnit,
-            String targetProject,
-            @Nullable String fileEncoding,
-            JavaFormatter javaFormatter) {
+    public GeneratedJavaFile(CompilationUnit compilationUnit, String targetProject) {
         super(targetProject);
         this.compilationUnit = compilationUnit;
-        this.fileEncoding = fileEncoding;
-        this.javaFormatter = javaFormatter;
-    }
-
-    public GeneratedJavaFile(CompilationUnit compilationUnit,
-            String targetProject,
-            JavaFormatter javaFormatter) {
-        this(compilationUnit, targetProject, null, javaFormatter);
-    }
-
-    @Override
-    public String getFormattedContent() {
-        return javaFormatter.getFormattedContent(compilationUnit);
     }
 
     @Override
@@ -79,10 +56,5 @@ public class GeneratedJavaFile extends GeneratedFile {
     @Override
     public boolean isMergeable() {
         return true;
-    }
-
-    @Override
-    public Optional<String> getFileEncoding() {
-        return Optional.ofNullable(fileEncoding);
     }
 }

@@ -66,7 +66,7 @@ public class UpdateSelectiveColumnsMethodGenerator extends AbstractKotlinFunctio
 
     @Override
     public boolean callPlugins(KotlinFunction kotlinFunction, KotlinFile kotlinFile) {
-        return context.getPlugins().clientUpdateSelectiveColumnsMethodGenerated(kotlinFunction, kotlinFile,
+        return pluginAggregator.clientUpdateSelectiveColumnsMethodGenerated(kotlinFunction, kotlinFile,
                 introspectedTable);
     }
 

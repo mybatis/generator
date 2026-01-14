@@ -68,7 +68,7 @@ public class BasicInsertMethodGenerator extends AbstractKotlinFunctionGenerator 
 
     @Override
     public boolean callPlugins(KotlinFunction function, KotlinFile kotlinFile) {
-        return context.getPlugins().clientBasicInsertMethodGenerated(function, kotlinFile, introspectedTable);
+        return pluginAggregator.clientBasicInsertMethodGenerated(function, kotlinFile, introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder> {

@@ -45,7 +45,7 @@ public class UpdateByPrimaryKeySelectiveElementGenerator extends AbstractXmlElem
 
         answer.addAttribute(new Attribute("parameterType", parameterType)); //$NON-NLS-1$
 
-        context.getCommentGenerator().addComment(answer);
+        commentGenerator.addComment(answer);
 
         StringBuilder sb = new StringBuilder();
 
@@ -76,7 +76,7 @@ public class UpdateByPrimaryKeySelectiveElementGenerator extends AbstractXmlElem
 
         buildPrimaryKeyWhereClause().forEach(answer::addElement);
 
-        if (context.getPlugins().sqlMapUpdateByPrimaryKeySelectiveElementGenerated(answer, introspectedTable)) {
+        if (pluginAggregator.sqlMapUpdateByPrimaryKeySelectiveElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

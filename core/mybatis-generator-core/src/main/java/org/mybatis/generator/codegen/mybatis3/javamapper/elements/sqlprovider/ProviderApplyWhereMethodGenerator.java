@@ -56,11 +56,11 @@ public class ProviderApplyWhereMethodGenerator extends AbstractJavaProviderMetho
         method.addParameter(new Parameter(FullyQualifiedJavaType.getBooleanPrimitiveInstance(),
                 "includeExamplePhrase")); //$NON-NLS-1$
 
-        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
+        commentGenerator.addGeneralMethodComment(method, introspectedTable);
 
         METHOD_LINES.forEach(method::addBodyLine);
 
-        if (context.getPlugins().providerApplyWhereMethodGenerated(method, topLevelClass, introspectedTable)) {
+        if (pluginAggregator.providerApplyWhereMethodGenerated(method, topLevelClass, introspectedTable)) {
             topLevelClass.addImportedTypes(importedTypes);
             topLevelClass.addMethod(method);
         }

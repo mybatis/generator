@@ -15,8 +15,6 @@
  */
 package org.mybatis.generator.api;
 
-import java.util.Optional;
-
 /**
  * Abstract class that holds information common to all generated files.
  *
@@ -29,17 +27,6 @@ public abstract class GeneratedFile {
     protected GeneratedFile(String targetProject) {
         this.targetProject = targetProject;
     }
-
-    /**
-     * Returns the entire contents of the generated file. Clients
-     * can simply save the value returned from this method as the file contents.
-     * Subclasses such as @see org.mybatis.generator.api.GeneratedJavaFile offer
-     * more fine -rained access to file parts, but still implement this method
-     * in the event that the entire contents are desired.
-     *
-     * @return Returns the content.
-     */
-    public abstract String getFormattedContent();
 
     /**
      * Get the file name (without any path). Clients should use this method to
@@ -78,6 +65,4 @@ public abstract class GeneratedFile {
      * @return true, if is mergeable
      */
     public abstract boolean isMergeable();
-
-    public abstract Optional<String> getFileEncoding();
 }

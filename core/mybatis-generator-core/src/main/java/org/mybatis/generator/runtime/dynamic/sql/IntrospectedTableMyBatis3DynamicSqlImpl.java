@@ -51,6 +51,8 @@ public class IntrospectedTableMyBatis3DynamicSqlImpl extends IntrospectedTableMy
                 .withIntrospectedTable(this)
                 .withProgressCallback(progressCallback)
                 .withWarnings(warnings)
+                .withCommentGenerator(commentGenerator)
+                .withPluginAggregator(pluginAggregator)
                 .build();
         javaGenerators.add(javaGenerator);
     }

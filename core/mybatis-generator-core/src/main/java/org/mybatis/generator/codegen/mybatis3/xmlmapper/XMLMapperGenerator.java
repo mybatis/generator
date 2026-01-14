@@ -57,7 +57,7 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
         String namespace = introspectedTable.getMyBatis3SqlMapNamespace();
         answer.addAttribute(new Attribute("namespace", namespace)); //$NON-NLS-1$
 
-        context.getCommentGenerator().addRootComment(answer);
+        commentGenerator.addRootComment(answer);
 
         addResultMapWithoutBLOBsElement(answer);
         addResultMapWithBLOBsElement(answer);
@@ -228,7 +228,7 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
         Document document = new Document(XmlConstants.MYBATIS3_MAPPER_PUBLIC_ID,
                 XmlConstants.MYBATIS3_MAPPER_SYSTEM_ID, getSqlMapElement());
 
-        if (!context.getPlugins().sqlMapDocumentGenerated(document, introspectedTable)) {
+        if (!pluginAggregator.sqlMapDocumentGenerated(document, introspectedTable)) {
             document = null;
         }
 

@@ -47,7 +47,7 @@ public class UpdateByPrimaryKeySelectiveMethodGenerator extends AbstractMethodGe
 
         Method method = new Method("updateByPrimaryKeySelective"); //$NON-NLS-1$
         method.setDefault(true);
-        context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
+        commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, imports);
 
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
         method.addParameter(new Parameter(recordType, "row")); //$NON-NLS-1$
@@ -67,8 +67,7 @@ public class UpdateByPrimaryKeySelectiveMethodGenerator extends AbstractMethodGe
 
     @Override
     public boolean callPlugins(Method method, Interface interfaze) {
-        return context.getPlugins()
-                .clientUpdateByPrimaryKeySelectiveMethodGenerated(method, interfaze, introspectedTable);
+        return pluginAggregator.clientUpdateByPrimaryKeySelectiveMethodGenerated(method, interfaze, introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder> {

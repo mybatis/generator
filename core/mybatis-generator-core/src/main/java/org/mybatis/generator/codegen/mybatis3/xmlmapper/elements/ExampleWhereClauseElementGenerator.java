@@ -42,7 +42,7 @@ public class ExampleWhereClauseElementGenerator extends AbstractXmlElementGenera
                     "id", introspectedTable.getExampleWhereClauseId())); //$NON-NLS-1$
         }
 
-        context.getCommentGenerator().addComment(answer);
+        commentGenerator.addComment(answer);
 
         XmlElement whereElement = new XmlElement("where"); //$NON-NLS-1$
         answer.addElement(whereElement);
@@ -78,7 +78,7 @@ public class ExampleWhereClauseElementGenerator extends AbstractXmlElementGenera
             }
         }
 
-        if (context.getPlugins().sqlMapExampleWhereClauseElementGenerated(answer, introspectedTable)) {
+        if (pluginAggregator.sqlMapExampleWhereClauseElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

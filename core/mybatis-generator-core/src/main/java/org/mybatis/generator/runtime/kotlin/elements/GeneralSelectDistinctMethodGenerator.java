@@ -50,7 +50,7 @@ public class GeneralSelectDistinctMethodGenerator extends AbstractKotlinFunction
 
     @Override
     public boolean callPlugins(KotlinFunction kotlinFunction, KotlinFile kotlinFile) {
-        return context.getPlugins().clientGeneralSelectDistinctMethodGenerated(kotlinFunction, kotlinFile,
+        return pluginAggregator.clientGeneralSelectDistinctMethodGenerated(kotlinFunction, kotlinFile,
                 introspectedTable);
     }
 

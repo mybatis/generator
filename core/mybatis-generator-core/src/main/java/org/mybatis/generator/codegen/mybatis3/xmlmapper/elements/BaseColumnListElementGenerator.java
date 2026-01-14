@@ -30,11 +30,11 @@ public class BaseColumnListElementGenerator extends AbstractXmlElementGenerator 
 
         answer.addAttribute(new Attribute("id", introspectedTable.getBaseColumnListId())); //$NON-NLS-1$
 
-        context.getCommentGenerator().addComment(answer);
+        commentGenerator.addComment(answer);
 
         buildSelectList(introspectedTable.getNonBLOBColumns()).forEach(answer::addElement);
 
-        if (context.getPlugins().sqlMapBaseColumnListElementGenerated(answer, introspectedTable)) {
+        if (pluginAggregator.sqlMapBaseColumnListElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

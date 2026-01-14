@@ -37,7 +37,7 @@ public class UpdateByExampleSelectiveElementGenerator extends AbstractXmlElement
 
         answer.addAttribute(new Attribute("parameterType", "map")); //$NON-NLS-1$ //$NON-NLS-2$
 
-        context.getCommentGenerator().addComment(answer);
+        commentGenerator.addComment(answer);
 
         StringBuilder sb = new StringBuilder();
         sb.append("update "); //$NON-NLS-1$
@@ -67,7 +67,7 @@ public class UpdateByExampleSelectiveElementGenerator extends AbstractXmlElement
 
         answer.addElement(getUpdateByExampleIncludeElement());
 
-        if (context.getPlugins().sqlMapUpdateByExampleSelectiveElementGenerated(answer, introspectedTable)) {
+        if (pluginAggregator.sqlMapUpdateByExampleSelectiveElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

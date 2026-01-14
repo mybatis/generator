@@ -43,7 +43,7 @@ public class ProviderInsertSelectiveMethodGenerator extends AbstractJavaProvider
         method.setReturnType(FullyQualifiedJavaType.getStringInstance());
         method.addParameter(new Parameter(fqjt, "row")); //$NON-NLS-1$
 
-        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
+        commentGenerator.addGeneralMethodComment(method, introspectedTable);
 
         method.addBodyLine("SQL sql = new SQL();"); //$NON-NLS-1$
 
@@ -73,7 +73,7 @@ public class ProviderInsertSelectiveMethodGenerator extends AbstractJavaProvider
         method.addBodyLine(""); //$NON-NLS-1$
         method.addBodyLine("return sql.toString();"); //$NON-NLS-1$
 
-        if (context.getPlugins().providerInsertSelectiveMethodGenerated(method, topLevelClass, introspectedTable)) {
+        if (pluginAggregator.providerInsertSelectiveMethodGenerated(method, topLevelClass, introspectedTable)) {
             topLevelClass.addImportedTypes(initializeImportedTypes(fqjt));
             topLevelClass.addMethod(method);
         }

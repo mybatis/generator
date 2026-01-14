@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.FullyQualifiedTable;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.Plugin;
@@ -47,7 +46,6 @@ public class PrimaryKeyGenerator extends AbstractJavaGenerator {
     public List<CompilationUnit> getCompilationUnits() {
         FullyQualifiedTable table = introspectedTable.getFullyQualifiedTable();
         progressCallback.startTask(getString("Progress.7", table.toString())); //$NON-NLS-1$
-        CommentGenerator commentGenerator = context.getCommentGenerator();
 
         TopLevelClass topLevelClass = new TopLevelClass(introspectedTable.getPrimaryKeyType());
         topLevelClass.setVisibility(JavaVisibility.PUBLIC);
@@ -74,31 +72,30 @@ public class PrimaryKeyGenerator extends AbstractJavaGenerator {
                 continue;
             }
 
-            Plugin plugins = context.getPlugins();
-            Field field = getJavaBeansField(introspectedColumn, context, introspectedTable);
-            if (plugins.modelFieldGenerated(field, topLevelClass, introspectedColumn, introspectedTable,
+            Field field = getJavaBeansField(introspectedColumn, commentGenerator, introspectedTable);
+            if (pluginAggregator.modelFieldGenerated(field, topLevelClass, introspectedColumn, introspectedTable,
                     Plugin.ModelClassType.PRIMARY_KEY)) {
                 topLevelClass.addField(field);
                 topLevelClass.addImportedType(field.getType());
             }
 
-            Method method = getJavaBeansGetter(introspectedColumn, context, introspectedTable);
-            if (plugins.modelGetterMethodGenerated(method, topLevelClass, introspectedColumn, introspectedTable,
-                    Plugin.ModelClassType.PRIMARY_KEY)) {
+            Method method = getJavaBeansGetter(introspectedColumn, commentGenerator, introspectedTable);
+            if (pluginAggregator.modelGetterMethodGenerated(method, topLevelClass, introspectedColumn,
+                    introspectedTable, Plugin.ModelClassType.PRIMARY_KEY)) {
                 topLevelClass.addMethod(method);
             }
 
             if (!introspectedTable.isImmutable()) {
-                method = getJavaBeansSetter(introspectedColumn, context, introspectedTable);
-                if (plugins.modelSetterMethodGenerated(method, topLevelClass, introspectedColumn, introspectedTable,
-                        Plugin.ModelClassType.PRIMARY_KEY)) {
+                method = getJavaBeansSetter(introspectedColumn, commentGenerator, introspectedTable);
+                if (pluginAggregator.modelSetterMethodGenerated(method, topLevelClass, introspectedColumn,
+                        introspectedTable, Plugin.ModelClassType.PRIMARY_KEY)) {
                     topLevelClass.addMethod(method);
                 }
             }
         }
 
         List<CompilationUnit> answer = new ArrayList<>();
-        if (context.getPlugins().modelPrimaryKeyClassGenerated(topLevelClass, introspectedTable)) {
+        if (pluginAggregator.modelPrimaryKeyClassGenerated(topLevelClass, introspectedTable)) {
             answer.add(topLevelClass);
         }
 
@@ -109,7 +106,7 @@ public class PrimaryKeyGenerator extends AbstractJavaGenerator {
         Method method = new Method(topLevelClass.getType().getShortName());
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setConstructor(true);
-        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
+        commentGenerator.addGeneralMethodComment(method, introspectedTable);
 
         StringBuilder sb = new StringBuilder();
         for (IntrospectedColumn introspectedColumn : introspectedTable.getPrimaryKeyColumns()) {

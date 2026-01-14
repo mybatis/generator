@@ -120,11 +120,11 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
         addUpdateByPrimaryKeySelectiveMethod(interfaze);
 
         List<CompilationUnit> answer = new ArrayList<>();
-        if (context.getPlugins().clientGenerated(interfaze, introspectedTable)) {
+        if (pluginAggregator.clientGenerated(interfaze, introspectedTable)) {
             answer.add(interfaze);
         }
 
-        if (context.getPlugins().dynamicSqlSupportGenerated(supportClass, introspectedTable)) {
+        if (pluginAggregator.dynamicSqlSupportGenerated(supportClass, introspectedTable)) {
             answer.add(supportClass);
         }
 
@@ -136,7 +136,7 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
                 introspectedTable.getMyBatis3JavaMapperType());
         Interface interfaze = new Interface(type);
         interfaze.setVisibility(JavaVisibility.PUBLIC);
-        context.getCommentGenerator().addJavaFileComment(interfaze);
+        commentGenerator.addJavaFileComment(interfaze);
         interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Mapper")); //$NON-NLS-1$
         interfaze.addAnnotation("@Mapper"); //$NON-NLS-1$
 

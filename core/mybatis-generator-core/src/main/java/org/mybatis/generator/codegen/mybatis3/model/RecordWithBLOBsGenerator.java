@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.FullyQualifiedTable;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.Plugin;
@@ -47,7 +46,6 @@ public class RecordWithBLOBsGenerator extends AbstractJavaGenerator {
     public List<CompilationUnit> getCompilationUnits() {
         FullyQualifiedTable table = introspectedTable.getFullyQualifiedTable();
         progressCallback.startTask(getString("Progress.9", table.toString())); //$NON-NLS-1$
-        CommentGenerator commentGenerator = context.getCommentGenerator();
 
         TopLevelClass topLevelClass = new TopLevelClass(introspectedTable.getRecordWithBLOBsType());
         topLevelClass.setVisibility(JavaVisibility.PUBLIC);
@@ -74,31 +72,30 @@ public class RecordWithBLOBsGenerator extends AbstractJavaGenerator {
                 continue;
             }
 
-            Plugin plugins = context.getPlugins();
-            Field field = getJavaBeansField(introspectedColumn, context, introspectedTable);
-            if (plugins.modelFieldGenerated(field, topLevelClass, introspectedColumn, introspectedTable,
+            Field field = getJavaBeansField(introspectedColumn, commentGenerator, introspectedTable);
+            if (pluginAggregator.modelFieldGenerated(field, topLevelClass, introspectedColumn, introspectedTable,
                     Plugin.ModelClassType.RECORD_WITH_BLOBS)) {
                 topLevelClass.addField(field);
                 topLevelClass.addImportedType(field.getType());
             }
 
-            Method method = getJavaBeansGetter(introspectedColumn, context, introspectedTable);
-            if (plugins.modelGetterMethodGenerated(method, topLevelClass, introspectedColumn, introspectedTable,
-                    Plugin.ModelClassType.RECORD_WITH_BLOBS)) {
+            Method method = getJavaBeansGetter(introspectedColumn, commentGenerator, introspectedTable);
+            if (pluginAggregator.modelGetterMethodGenerated(method, topLevelClass, introspectedColumn,
+                    introspectedTable, Plugin.ModelClassType.RECORD_WITH_BLOBS)) {
                 topLevelClass.addMethod(method);
             }
 
             if (!introspectedTable.isImmutable()) {
-                method = getJavaBeansSetter(introspectedColumn, context, introspectedTable);
-                if (plugins.modelSetterMethodGenerated(method, topLevelClass, introspectedColumn, introspectedTable,
-                        Plugin.ModelClassType.RECORD_WITH_BLOBS)) {
+                method = getJavaBeansSetter(introspectedColumn, commentGenerator, introspectedTable);
+                if (pluginAggregator.modelSetterMethodGenerated(method, topLevelClass, introspectedColumn,
+                        introspectedTable, Plugin.ModelClassType.RECORD_WITH_BLOBS)) {
                     topLevelClass.addMethod(method);
                 }
             }
         }
 
         List<CompilationUnit> answer = new ArrayList<>();
-        if (context.getPlugins().modelRecordWithBLOBsClassGenerated(topLevelClass, introspectedTable)) {
+        if (pluginAggregator.modelRecordWithBLOBsClassGenerated(topLevelClass, introspectedTable)) {
             answer.add(topLevelClass);
         }
         return answer;
@@ -108,7 +105,7 @@ public class RecordWithBLOBsGenerator extends AbstractJavaGenerator {
         Method method = new Method(topLevelClass.getType().getShortName());
         method.setVisibility(JavaVisibility.PUBLIC);
         method.setConstructor(true);
-        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
+        commentGenerator.addGeneralMethodComment(method, introspectedTable);
 
         for (IntrospectedColumn introspectedColumn : introspectedTable.getAllColumns()) {
             method.addParameter(new Parameter(introspectedColumn.getFullyQualifiedJavaType(),

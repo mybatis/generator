@@ -84,7 +84,7 @@ public class InsertSelectiveMethodGenerator extends AbstractKotlinFunctionGenera
 
     @Override
     public boolean callPlugins(KotlinFunction kotlinFunction, KotlinFile kotlinFile) {
-        return context.getPlugins().clientInsertSelectiveMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
+        return pluginAggregator.clientInsertSelectiveMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder> {

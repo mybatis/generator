@@ -52,7 +52,7 @@ public class GeneralSelectOneMethodGenerator extends AbstractMethodGenerator {
         method.setDefault(true);
         method.addParameter(new Parameter(parameterType, "completer")); //$NON-NLS-1$
 
-        context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
+        commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, imports);
 
         method.setReturnType(returnType);
         method.addBodyLine("return MyBatis3Utils.selectOne(this::selectOne, selectList, " //$NON-NLS-1$
@@ -65,7 +65,7 @@ public class GeneralSelectOneMethodGenerator extends AbstractMethodGenerator {
 
     @Override
     public boolean callPlugins(Method method, Interface interfaze) {
-        return context.getPlugins().clientSelectOneMethodGenerated(method, interfaze, introspectedTable);
+        return pluginAggregator.clientSelectOneMethodGenerated(method, interfaze, introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder> {

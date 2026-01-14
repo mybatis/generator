@@ -45,7 +45,7 @@ public class ProviderUpdateByExampleWithoutBLOBsMethodGenerator extends Abstract
                 new FullyQualifiedJavaType("java.util.Map<java.lang.String, java.lang.Object>"), //$NON-NLS-1$
                 "parameter")); //$NON-NLS-1$
 
-        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
+        commentGenerator.addGeneralMethodComment(method, introspectedTable);
 
         method.addBodyLine("SQL sql = new SQL();"); //$NON-NLS-1$
 
@@ -88,7 +88,7 @@ public class ProviderUpdateByExampleWithoutBLOBsMethodGenerator extends Abstract
     }
 
     public boolean callPlugins(Method method, TopLevelClass topLevelClass) {
-        return context.getPlugins()
+        return pluginAggregator
                 .providerUpdateByExampleWithoutBLOBsMethodGenerated(method, topLevelClass, introspectedTable);
     }
 

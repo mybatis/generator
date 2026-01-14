@@ -61,7 +61,7 @@ public class BasicSelectManyMethodGenerator extends AbstractKotlinFunctionGenera
 
     @Override
     public boolean callPlugins(KotlinFunction kotlinFunction, KotlinFile kotlinFile) {
-        return context.getPlugins().clientBasicSelectManyMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
+        return pluginAggregator.clientBasicSelectManyMethodGenerated(kotlinFunction, kotlinFile, introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder> {

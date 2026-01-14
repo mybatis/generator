@@ -49,7 +49,7 @@ public class UpdateSelectiveColumnsMethodGenerator extends AbstractMethodGenerat
 
         Method method = new Method("updateSelectiveColumns"); //$NON-NLS-1$
         method.setStatic(true);
-        context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
+        commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, imports);
 
         method.setReturnType(parameterAndReturnType);
         method.addParameter(new Parameter(recordType, "row")); //$NON-NLS-1$
@@ -65,7 +65,7 @@ public class UpdateSelectiveColumnsMethodGenerator extends AbstractMethodGenerat
 
     @Override
     public boolean callPlugins(Method method, Interface interfaze) {
-        return context.getPlugins().clientUpdateSelectiveColumnsMethodGenerated(method, interfaze, introspectedTable);
+        return pluginAggregator.clientUpdateSelectiveColumnsMethodGenerated(method, interfaze, introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder> {

@@ -57,7 +57,7 @@ public class ProviderUpdateByExampleSelectiveMethodGenerator extends AbstractJav
         method.addBodyLine(String.format("%s example = (%s) parameter.get(\"example\");", //$NON-NLS-1$
                 example.getShortName(), example.getShortName()));
 
-        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
+        commentGenerator.addGeneralMethodComment(method, introspectedTable);
 
         method.addBodyLine(""); //$NON-NLS-1$
 
@@ -93,7 +93,7 @@ public class ProviderUpdateByExampleSelectiveMethodGenerator extends AbstractJav
         method.addBodyLine("applyWhere(sql, example, true);"); //$NON-NLS-1$
         method.addBodyLine("return sql.toString();"); //$NON-NLS-1$
 
-        if (context.getPlugins()
+        if (pluginAggregator
                 .providerUpdateByExampleSelectiveMethodGenerated(method, topLevelClass, introspectedTable)) {
             topLevelClass.addImportedTypes(importedTypes);
             topLevelClass.addMethod(method);

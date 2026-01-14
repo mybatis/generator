@@ -28,7 +28,7 @@ public class UpdateByExampleWithBLOBsElementGenerator extends AbstractXmlElement
         XmlElement answer = buildUpdateByExampleElement(introspectedTable.getUpdateByExampleWithBLOBsStatementId(),
                 introspectedTable.getAllColumns());
 
-        if (context.getPlugins().sqlMapUpdateByExampleWithBLOBsElementGenerated(answer, introspectedTable)) {
+        if (pluginAggregator.sqlMapUpdateByExampleWithBLOBsElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

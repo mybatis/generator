@@ -48,7 +48,7 @@ public class ResultMapWithoutBLOBsElementGenerator extends AbstractXmlElementGen
 
         answer.addAttribute(new Attribute("type", returnType)); //$NON-NLS-1$
 
-        context.getCommentGenerator().addComment(answer);
+        commentGenerator.addComment(answer);
 
         if (introspectedTable.isConstructorBased()) {
             addResultMapConstructorElements(answer);
@@ -56,7 +56,7 @@ public class ResultMapWithoutBLOBsElementGenerator extends AbstractXmlElementGen
             addResultMapElements(answer);
         }
 
-        if (context.getPlugins().sqlMapResultMapWithoutBLOBsElementGenerated(answer, introspectedTable)) {
+        if (pluginAggregator.sqlMapResultMapWithoutBLOBsElementGenerated(answer, introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

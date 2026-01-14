@@ -43,7 +43,7 @@ public class SelectListGenerator extends AbstractGenerator {
         Field field = new Field("selectList", fieldType); //$NON-NLS-1$
         field.setInitializationString("BasicColumn.columnList(" //$NON-NLS-1$
                 + fragmentGenerator.getSelectList() + ")"); //$NON-NLS-1$
-        context.getCommentGenerator().addFieldAnnotation(field, introspectedTable, imports);
+        commentGenerator.addFieldAnnotation(field, introspectedTable, imports);
 
         return FieldAndImports.withField(field)
                 .withImports(imports)
@@ -51,7 +51,7 @@ public class SelectListGenerator extends AbstractGenerator {
     }
 
     public boolean callPlugins(Field field, Interface interfaze) {
-        return context.getPlugins().clientSelectListFieldGenerated(field, interfaze, introspectedTable);
+        return pluginAggregator.clientSelectListFieldGenerated(field, interfaze, introspectedTable);
     }
 
     public static class Builder extends AbstractGeneratorBuilder<Builder> {

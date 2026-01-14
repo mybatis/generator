@@ -95,7 +95,7 @@ public class KotlinDynamicSqlSupportClassGenerator extends AbstractGenerator {
     private KotlinFile buildBasicFile(FullyQualifiedJavaType type) {
         KotlinFile kf = new KotlinFile(type.getShortNameWithoutTypeArguments());
         kf.setPackage(type.getPackageName());
-        context.getCommentGenerator().addFileComment(kf);
+        commentGenerator.addFileComment(kf);
 
         return kf;
     }

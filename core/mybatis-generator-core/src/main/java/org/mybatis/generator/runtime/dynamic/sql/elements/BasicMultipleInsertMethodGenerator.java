@@ -66,7 +66,7 @@ public class BasicMultipleInsertMethodGenerator extends AbstractMethodGenerator 
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
         method.addParameter(parm1);
         method.addParameter(parm2);
-        context.getCommentGenerator().addGeneralMethodAnnotation(method, introspectedTable, imports);
+        commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, imports);
         method.addAnnotation("@InsertProvider(type=SqlProviderAdapter.class, " //$NON-NLS-1$
                 + "method=\"insertMultipleWithGeneratedKeys\")"); //$NON-NLS-1$
 
@@ -99,7 +99,7 @@ public class BasicMultipleInsertMethodGenerator extends AbstractMethodGenerator 
 
     @Override
     public boolean callPlugins(Method method, Interface interfaze) {
-        return context.getPlugins().clientBasicInsertMultipleMethodGenerated(method, interfaze, introspectedTable);
+        return pluginAggregator.clientBasicInsertMultipleMethodGenerated(method, interfaze, introspectedTable);
     }
 
     public static class Builder extends BaseBuilder<Builder> {

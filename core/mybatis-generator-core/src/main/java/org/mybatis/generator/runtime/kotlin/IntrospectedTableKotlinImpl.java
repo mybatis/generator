@@ -48,6 +48,8 @@ public class IntrospectedTableKotlinImpl extends IntrospectedTableMyBatis3Impl {
                 .withIntrospectedTable(this)
                 .withProgressCallback(progressCallback)
                 .withWarnings(warnings)
+                .withCommentGenerator(commentGenerator)
+                .withPluginAggregator(pluginAggregator)
                 .build();
         kotlinGenerators.add(kotlinGenerator);
     }
@@ -60,6 +62,8 @@ public class IntrospectedTableKotlinImpl extends IntrospectedTableMyBatis3Impl {
                 .withIntrospectedTable(this)
                 .withProgressCallback(progressCallback)
                 .withWarnings(warnings)
+                .withCommentGenerator(commentGenerator)
+                .withPluginAggregator(pluginAggregator)
                 .build();
         kotlinGenerators.add(kotlinGenerator);
     }

@@ -20,7 +20,6 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
@@ -47,7 +46,6 @@ public class SqlProviderGenerator extends AbstractJavaGenerator {
     public List<CompilationUnit> getCompilationUnits() {
         progressCallback.startTask(getString("Progress.18", //$NON-NLS-1$
                 introspectedTable.getFullyQualifiedTable().toString()));
-        CommentGenerator commentGenerator = context.getCommentGenerator();
 
         FullyQualifiedJavaType type = new FullyQualifiedJavaType(introspectedTable.getMyBatis3SqlProviderType());
         TopLevelClass topLevelClass = new TopLevelClass(type);
@@ -72,7 +70,7 @@ public class SqlProviderGenerator extends AbstractJavaGenerator {
         List<CompilationUnit> answer = new ArrayList<>();
 
         if (!topLevelClass.getMethods().isEmpty()
-                && context.getPlugins().providerGenerated(topLevelClass, introspectedTable)) {
+                && pluginAggregator.providerGenerated(topLevelClass, introspectedTable)) {
             answer.add(topLevelClass);
         }
 

@@ -48,14 +48,14 @@ public class DeleteByPrimaryKeyElementGenerator extends AbstractXmlElementGenera
         }
         answer.addAttribute(new Attribute("parameterType", parameterClass)); //$NON-NLS-1$
 
-        context.getCommentGenerator().addComment(answer);
+        commentGenerator.addComment(answer);
 
         String sb = "delete from " + introspectedTable.getFullyQualifiedTableNameAtRuntime(); //$NON-NLS-1$
         answer.addElement(new TextElement(sb));
 
         buildPrimaryKeyWhereClause().forEach(answer::addElement);
 
-        if (context.getPlugins().sqlMapDeleteByPrimaryKeyElementGenerated(answer,introspectedTable)) {
+        if (pluginAggregator.sqlMapDeleteByPrimaryKeyElementGenerated(answer,introspectedTable)) {
             parentElement.addElement(answer);
         }
     }

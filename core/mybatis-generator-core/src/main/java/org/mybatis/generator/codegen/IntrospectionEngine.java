@@ -30,11 +30,8 @@ import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.JavaTypeResolver;
 import org.mybatis.generator.api.ProgressCallback;
-import org.mybatis.generator.config.ConnectionFactoryConfiguration;
 import org.mybatis.generator.config.Context;
-import org.mybatis.generator.config.JDBCConnectionConfiguration;
 import org.mybatis.generator.config.TableConfiguration;
-import org.mybatis.generator.internal.JDBCConnectionFactory;
 import org.mybatis.generator.internal.ObjectFactory;
 import org.mybatis.generator.internal.db.DatabaseIntrospector;
 
@@ -72,7 +69,7 @@ public class IntrospectionEngine {
         List<IntrospectedTable> introspectedTables = new ArrayList<>();
         JavaTypeResolver javaTypeResolver = ObjectFactory.createJavaTypeResolver(context, warnings);
 
-        try (Connection connection = getConnection()) {
+        try (Connection connection = ConnectionUtility.getConnection(context)) {
             progressCallback.startTask(getString("Progress.0")); //$NON-NLS-1$
 
             DatabaseIntrospector databaseIntrospector = new DatabaseIntrospector(
@@ -113,30 +110,6 @@ public class IntrospectionEngine {
         }
 
         return fullyQualifiedTableNames.contains(tableName);
-    }
-
-    /**
-     * This method creates a new JDBC connection from the values specified in the configuration file.
-     *
-     * @return a new connection created from the values in the configuration file
-     *
-     * @throws SQLException if any error occurs while creating the connection
-     */
-    private Connection getConnection() throws SQLException {
-        // if both configs are null, it is an internal error - we should have caught this with validation
-
-        JDBCConnectionConfiguration jdbcConfig = context.getJDBCConnectionConfiguration();
-        if (jdbcConfig != null) {
-            return new JDBCConnectionFactory(jdbcConfig).getConnection();
-        } else {
-            ConnectionFactoryConfiguration config = context.getConnectionFactoryConfiguration();
-            if (config == null) {
-                throw new RuntimeException("Internal Error - no connection configured in context: "
-                        + context.getId());
-            }
-
-            return ObjectFactory.createConnectionFactory(config).getConnection();
-        }
     }
 
     public static class Builder {

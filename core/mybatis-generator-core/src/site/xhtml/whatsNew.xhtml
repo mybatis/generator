@@ -62,9 +62,9 @@ recommended practice with JSpecify.</p>
         XML configuration element now expects the fully qualified name of a builder class.
     </li>
     <li>The <code>Context</code> class has changed and it now only holds configuration information. This may impact
-        you if you were relying on methods in that class in a Plugin. We have added CommentGenerator to all plugins
-        as this was used in several of the internal plugins. Please let us know if you need access to other classes
-        in a plugin.
+        you if you were relying on methods in that class in a Plugin. We have added <code>CommentGenerator</code> to
+        all plugins as this was used in several of the internal plugins. Please let us know if you need access to other
+        classes in a plugin.
     </li>
     <li>The plugin methods <code>contextGenerateAdditionalFiles()</code> and
         <code>contextGenerateAdditionalFiles(IntrospectedTable introspectedTable)</code> have changed their return types.
@@ -72,6 +72,9 @@ recommended practice with JSpecify.</p>
     </li>
     <li>If you are generating extra Java, Kotlin, or XML files in a plugin, you no longer need to set the formatter
         or file encoding. The library will automatically use the values configured in the context
+    </li>
+    <li>The <code>Context</code> class no longer has a <code>getConnection()</code> method. If your plugin needs to
+        connect to the database, you can use <code>ConnectionUtility.getConnection(Context)</code>
     </li>
 </ul>
 

@@ -35,7 +35,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.codegen.ContextResults;
@@ -513,7 +512,7 @@ public class MyBatisGenerator {
         return contextResultList.stream()
                 .map(ContextResults::generatedJavaFiles)
                 .flatMap(Collection::stream)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     /**
@@ -527,7 +526,7 @@ public class MyBatisGenerator {
         return contextResultList.stream()
                 .map(ContextResults::generatedKotlinFiles)
                 .flatMap(Collection::stream)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     /**
@@ -541,6 +540,6 @@ public class MyBatisGenerator {
         return contextResultList.stream()
                 .map(ContextResults::generatedXmlFiles)
                 .flatMap(Collection::stream)
-                .collect(Collectors.toList());
+                .toList();
     }
 }

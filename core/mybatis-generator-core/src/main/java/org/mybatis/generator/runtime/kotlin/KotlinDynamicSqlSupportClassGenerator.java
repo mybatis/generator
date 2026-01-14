@@ -101,14 +101,13 @@ public class KotlinDynamicSqlSupportClassGenerator extends AbstractGenerator {
     }
 
     private KotlinType buildOuterObject(KotlinFile kotlinFile, FullyQualifiedJavaType type) {
-        KotlinType outerObject = KotlinType.newObject(type.getShortNameWithoutTypeArguments())
-                .build();
+        KotlinType answer = KotlinType.newObject(type.getShortNameWithoutTypeArguments()).build();
 
         kotlinFile.addImport("org.mybatis.dynamic.sql.AliasableSqlTable"); //$NON-NLS-1$
         kotlinFile.addImport("org.mybatis.dynamic.sql.util.kotlin.elements.column"); //$NON-NLS-1$
         kotlinFile.addImport("java.sql.JDBCType"); //$NON-NLS-1$
-        kotlinFile.addNamedItem(outerObject);
-        return outerObject;
+        kotlinFile.addNamedItem(answer);
+        return answer;
     }
 
 

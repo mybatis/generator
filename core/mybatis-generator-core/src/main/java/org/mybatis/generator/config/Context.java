@@ -48,11 +48,9 @@ public class Context extends PropertyHolder {
     private final @Nullable String targetRuntime;
     private final @Nullable String introspectedColumnImpl;
 
-
-
     protected Context(Builder builder) {
         super(builder);
-        id = Objects.requireNonNull(builder.id, getString("ValidationError.16")); //$NON-NLS-1$);
+        id = Objects.requireNonNull(builder.id, getString("ValidationError.16")); //$NON-NLS-1$
         defaultModelType = Objects.requireNonNull(builder.defaultModelType);
         tableConfigurations = Collections.unmodifiableList(builder.tableConfigurations);
         pluginConfigurations = Collections.unmodifiableList(builder.pluginConfigurations);

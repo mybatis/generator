@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -57,12 +57,9 @@ public class SqlScriptRunner {
     }
 
     public void executeScript() throws Exception {
+        Class.forName(driver);
 
-        Connection connection = null;
-
-        try {
-            Class.forName(driver);
-            connection = DriverManager.getConnection(url, userid, password);
+        try (Connection connection = DriverManager.getConnection(url, userid, password)) {
 
             Statement statement = connection.createStatement();
 
@@ -77,18 +74,6 @@ public class SqlScriptRunner {
             closeStatement(statement);
             connection.commit();
             br.close();
-        } finally {
-            closeConnection(connection);
-        }
-    }
-
-    private void closeConnection(Connection connection) {
-        if (connection != null) {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                // ignore
-            }
         }
     }
 

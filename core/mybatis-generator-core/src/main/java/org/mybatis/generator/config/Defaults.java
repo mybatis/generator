@@ -22,14 +22,18 @@ import org.mybatis.generator.internal.DefaultCommentGenerator;
 import org.mybatis.generator.internal.GenericConnectionFactory;
 import org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl;
 
-public interface Defaults {
-    ModelType DEFAULT_MODEL_TYPE = ModelType.CONDITIONAL;
-    String DEFAULT_BEGINNING_DELIMITER = "\"";
-    String DEFAULT_ENDING_DELIMITER = "\"";
-    String DEFAULT_COMMENT_GENERATOR = DefaultCommentGenerator.class.getName();
-    String DEFAULT_KOTLIN_FORMATTER = DefaultKotlinFormatter.class.getName();
-    String DEFAULT_XML_FORMATTER = DefaultXmlFormatter.class.getName();
-    String DEFAULT_JAVA_FORMATTER = DefaultJavaFormatter.class.getName();
-    String DEFAULT_GENERIC_CONNECTION_FACTORY = GenericConnectionFactory.class.getName();
-    String DEFAULT_JAVA_TYPE_RESOLVER = JavaTypeResolverDefaultImpl.class.getName();
+public final class Defaults {
+    private Defaults() {
+        // utility class - no instances
+    }
+
+    public static ModelType DEFAULT_MODEL_TYPE = ModelType.CONDITIONAL;
+    public static  String DEFAULT_BEGINNING_DELIMITER = "\"";
+    public static  String DEFAULT_ENDING_DELIMITER = "\"";
+    public static String DEFAULT_COMMENT_GENERATOR = DefaultCommentGenerator.class.getName();
+    public static String DEFAULT_KOTLIN_FORMATTER = DefaultKotlinFormatter.class.getName();
+    public static String DEFAULT_XML_FORMATTER = DefaultXmlFormatter.class.getName();
+    public static String DEFAULT_JAVA_FORMATTER = DefaultJavaFormatter.class.getName();
+    public static String DEFAULT_GENERIC_CONNECTION_FACTORY = GenericConnectionFactory.class.getName();
+    public static String DEFAULT_JAVA_TYPE_RESOLVER = JavaTypeResolverDefaultImpl.class.getName();
 }

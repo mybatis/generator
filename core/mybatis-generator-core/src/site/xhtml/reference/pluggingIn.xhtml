@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-       Copyright 2006-2025 the original author or authors.
+       Copyright 2006-2026 the original author or authors.
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ interface methods (similar to Swing adapter classes).</p>
 
 <p>MyBatis Generator supplies several plugins (all are in the package
 <code>org.mybatis.generator.plugins</code>).  The supplied plugins demonstrate
-different types of tasks that can be accomplished with plugins.  Source
+different types of tasks that can be achieved with plugins.  Source
 code for the plugins is available with the downloads, or can be viewed
 online
 <a target="_blank" href="https://github.com/mybatis/generator/tree/master/core/mybatis-generator-core/src/main/java/org/mybatis/generator/plugins">
@@ -50,6 +50,7 @@ list shows the basic lifecycle of a plugin:</p>
   <li>Plugin created through the default constructor</li>
   <li><code>setContext</code> method called</li>
   <li><code>setProperties</code> method called</li>
+  <li><code>setCommentGenerator</code> method called</li>
   <li><code>validate</code> method called.  If this method returns <code>false</code>,
       then no further methods in the plugin will be called</li>
   <li>For each table in the configuration:
@@ -113,7 +114,7 @@ plugins are:</p>
 </ul>
 
 <p>The <code>contextXXX</code> methods will always be called.  Other methods are called
-by the packaged code generators - and only if the rules for a table would
+by the packaged code generators - and only if the rules for a table
 cause the generation of a particular element.  For example, the
 <code>modelPrimaryKeyClassGenerated(TopLevelClass, IntrospectedTable)</code>
 method will not be called if the table does not have a primary key.</p>

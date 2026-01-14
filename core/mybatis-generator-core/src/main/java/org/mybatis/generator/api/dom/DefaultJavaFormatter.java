@@ -40,7 +40,9 @@ public class DefaultJavaFormatter implements JavaFormatter, CompilationUnitVisit
     }
 
     @Override
-    public void setContext(Context context) {}
+    public void setContext(Context context) {
+        // context is not used in the default formatter
+    }
 
     @Override
     public String visit(TopLevelClass topLevelClass) {

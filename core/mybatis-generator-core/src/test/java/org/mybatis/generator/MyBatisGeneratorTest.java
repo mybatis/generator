@@ -27,8 +27,6 @@ import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.ConnectionFactoryConfiguration;
 import org.mybatis.generator.config.Context;
-import org.mybatis.generator.config.JDBCConnectionConfiguration;
-import org.mybatis.generator.config.JavaClientGeneratorConfiguration;
 import org.mybatis.generator.config.JavaModelGeneratorConfiguration;
 import org.mybatis.generator.config.ModelType;
 import org.mybatis.generator.config.xml.ConfigurationParser;

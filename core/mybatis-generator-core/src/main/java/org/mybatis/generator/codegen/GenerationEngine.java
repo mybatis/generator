@@ -15,72 +15,80 @@
  */
 package org.mybatis.generator.codegen;
 
-import static org.mybatis.generator.internal.util.messages.Messages.getString;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.api.AbstractRuntime;
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.GeneratedJavaFile;
 import org.mybatis.generator.api.GeneratedKotlinFile;
 import org.mybatis.generator.api.GeneratedXmlFile;
 import org.mybatis.generator.api.GenericGeneratedFile;
 import org.mybatis.generator.api.IntrospectedTable;
-import org.mybatis.generator.api.Plugin;
 import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.internal.ObjectFactory;
 import org.mybatis.generator.internal.PluginAggregator;
 
 public class GenerationEngine {
-    private final Context context;
-    private final List<String> warnings;
+    private final CalculatedContextValues contextValues;
     private final ProgressCallback progressCallback;
-    private final List<IntrospectedTable> introspectedTables;
-    private final CommentGenerator commentGenerator;
-    private final PluginAggregator pluginAggregator;
+    private final List<AbstractRuntime> runtimes;
 
     protected GenerationEngine(Builder builder) {
-        context = Objects.requireNonNull(builder.context);
-        warnings = Objects.requireNonNull(builder.warnings);
+        contextValues = Objects.requireNonNull(builder.contextValues);
         progressCallback = Objects.requireNonNull(builder.progressCallback);
-        introspectedTables = Objects.requireNonNull(builder.introspectedTables);
-        commentGenerator = Objects.requireNonNull(builder.commentGenerator);
 
-        pluginAggregator = new PluginAggregator();
-        context.pluginConfigurations().forEach(pluginConfiguration -> {
-            Plugin plugin = ObjectFactory.createPlugin(context, pluginConfiguration, commentGenerator);
-            if (plugin.validate(warnings)) {
-                pluginAggregator.addPlugin(plugin);
-            } else {
-                warnings.add(getString("Warning.24", //$NON-NLS-1$
-                        pluginConfiguration.getConfigurationType()
-                                .orElse("Unknown Plugin Type"), context.getId())); //$NON-NLS-1$
-            }
-        });
+        Context context = contextValues.context();
+        List<String> warnings = Objects.requireNonNull(builder.warnings);
+        CommentGenerator commentGenerator = contextValues.commentGenerator();
 
         // initialize everything first before generating. This allows plugins to know about other
         // items in the configuration.
-        for (IntrospectedTable introspectedTable : introspectedTables) {
-            introspectedTable.initialize(pluginAggregator, commentGenerator);
-            introspectedTable.calculateGenerators(warnings, progressCallback);
-        }
+        runtimes = builder.introspectedTables.stream().map(introspectedTable -> {
+            AbstractRuntime.AbstractRuntimeBuilder<?> runtimeBuilder = ObjectFactory.createInternalObject(
+                    contextValues.runtimeBuilderClassName(), AbstractRuntime.AbstractRuntimeBuilder.class);
+            return runtimeBuilder
+                    .withIntrospectedTable(introspectedTable)
+                    .withContext(context)
+                    .withCommentGenerator(commentGenerator)
+                    .withPluginAggregator(contextValues.pluginAggregator())
+                    .withProgressCallback(progressCallback)
+                    .withWarnings(warnings)
+                    .build();
+        }).toList();
     }
 
-    public List<GeneratedJavaFile> generateJavaFiles() throws InterruptedException {
+    public int getGenerationSteps() {
+        return runtimes.stream().mapToInt(AbstractRuntime::getGenerationSteps).sum();
+    }
+
+    public GenerationResults generate() throws InterruptedException {
+        return new GenerationResults.Builder()
+                .withContextValues(contextValues)
+                .withGeneratedJavaFiles(generateJavaFiles())
+                .withGeneratedKotlinFiles(generateKotlinFiles())
+                .withGeneratedXmlFiles(generateXmlFiles())
+                .withGeneratedGenericFiles(generateGenericFiles())
+                .build();
+    }
+
+    private List<GeneratedJavaFile> generateJavaFiles() throws InterruptedException {
+        PluginAggregator pluginAggregator = contextValues.pluginAggregator();
         List<GeneratedJavaFile> generatedJavaFiles = new ArrayList<>();
 
-        for (IntrospectedTable introspectedTable : introspectedTables) {
+        for (AbstractRuntime runtime : runtimes) {
             progressCallback.checkCancel();
 
-            if (!pluginAggregator.shouldGenerate(introspectedTable)) {
+            if (!pluginAggregator.shouldGenerate(runtime.getIntrospectedTable())) {
                 continue;
             }
 
-            generatedJavaFiles.addAll(introspectedTable.getGeneratedJavaFiles());
-            generatedJavaFiles.addAll(pluginAggregator.contextGenerateAdditionalJavaFiles(introspectedTable));
+            generatedJavaFiles.addAll(runtime.getGeneratedJavaFiles());
+            generatedJavaFiles.addAll(
+                    pluginAggregator.contextGenerateAdditionalJavaFiles(runtime.getIntrospectedTable()));
         }
 
         generatedJavaFiles.addAll(pluginAggregator.contextGenerateAdditionalJavaFiles());
@@ -88,18 +96,20 @@ public class GenerationEngine {
         return generatedJavaFiles;
     }
 
-    public List<GeneratedXmlFile> generateXmlFiles() throws InterruptedException {
+    private List<GeneratedXmlFile> generateXmlFiles() throws InterruptedException {
+        PluginAggregator pluginAggregator = contextValues.pluginAggregator();
         List<GeneratedXmlFile> generatedXmlFiles = new ArrayList<>();
 
-        for (IntrospectedTable introspectedTable : introspectedTables) {
+        for (AbstractRuntime runtime : runtimes) {
             progressCallback.checkCancel();
 
-            if (!pluginAggregator.shouldGenerate(introspectedTable)) {
+            if (!pluginAggregator.shouldGenerate(runtime.getIntrospectedTable())) {
                 continue;
             }
 
-            generatedXmlFiles.addAll(introspectedTable.getGeneratedXmlFiles());
-            generatedXmlFiles.addAll(pluginAggregator.contextGenerateAdditionalXmlFiles(introspectedTable));
+            generatedXmlFiles.addAll(runtime.getGeneratedXmlFiles());
+            generatedXmlFiles.addAll(
+                    pluginAggregator.contextGenerateAdditionalXmlFiles(runtime.getIntrospectedTable()));
         }
 
         generatedXmlFiles.addAll(pluginAggregator.contextGenerateAdditionalXmlFiles());
@@ -107,35 +117,39 @@ public class GenerationEngine {
         return generatedXmlFiles;
     }
 
-    public List<GeneratedKotlinFile> generateKotlinFiles() throws InterruptedException {
+    private List<GeneratedKotlinFile> generateKotlinFiles() throws InterruptedException {
+        PluginAggregator pluginAggregator = contextValues.pluginAggregator();
         List<GeneratedKotlinFile> generatedKotlinFiles = new ArrayList<>();
 
-        for (IntrospectedTable introspectedTable : introspectedTables) {
+        for (AbstractRuntime runtime : runtimes) {
             progressCallback.checkCancel();
 
-            if (!pluginAggregator.shouldGenerate(introspectedTable)) {
+            if (!pluginAggregator.shouldGenerate(runtime.getIntrospectedTable())) {
                 continue;
             }
 
-            generatedKotlinFiles.addAll(introspectedTable.getGeneratedKotlinFiles());
-            generatedKotlinFiles.addAll(pluginAggregator.contextGenerateAdditionalKotlinFiles(introspectedTable));
+            generatedKotlinFiles.addAll(runtime.getGeneratedKotlinFiles());
+            generatedKotlinFiles.addAll(
+                    pluginAggregator.contextGenerateAdditionalKotlinFiles(runtime.getIntrospectedTable()));
         }
 
         generatedKotlinFiles.addAll(pluginAggregator.contextGenerateAdditionalKotlinFiles());
         return generatedKotlinFiles;
     }
 
-    public List<GenericGeneratedFile> generateGenericFiles() throws InterruptedException {
+    private List<GenericGeneratedFile> generateGenericFiles() throws InterruptedException {
+        PluginAggregator pluginAggregator = contextValues.pluginAggregator();
         List<GenericGeneratedFile> genericGeneratedFiles = new ArrayList<>();
 
-        for (IntrospectedTable introspectedTable : introspectedTables) {
+        for (AbstractRuntime runtime : runtimes) {
             progressCallback.checkCancel();
 
-            if (!pluginAggregator.shouldGenerate(introspectedTable)) {
+            if (!pluginAggregator.shouldGenerate(runtime.getIntrospectedTable())) {
                 continue;
             }
 
-            genericGeneratedFiles.addAll(pluginAggregator.contextGenerateAdditionalFiles(introspectedTable));
+            genericGeneratedFiles.addAll(
+                    pluginAggregator.contextGenerateAdditionalFiles(runtime.getIntrospectedTable()));
         }
 
         genericGeneratedFiles.addAll(pluginAggregator.contextGenerateAdditionalFiles());
@@ -143,19 +157,13 @@ public class GenerationEngine {
     }
 
     public static class Builder {
-        private @Nullable Context context;
+        private @Nullable CalculatedContextValues contextValues;
         private @Nullable ProgressCallback progressCallback;
-        private @Nullable List<IntrospectedTable> introspectedTables;
         private @Nullable List<String> warnings;
-        private @Nullable CommentGenerator commentGenerator;
+        private final List<IntrospectedTable> introspectedTables = new ArrayList<>();
 
-        public Builder withContext(Context context) {
-            this.context = context;
-            return this;
-        }
-
-        public Builder withIntrospectedTables(List<IntrospectedTable> introspectedTables) {
-            this.introspectedTables = introspectedTables;
+        public Builder withContextValues(CalculatedContextValues contextValues) {
+            this.contextValues = contextValues;
             return this;
         }
 
@@ -169,8 +177,8 @@ public class GenerationEngine {
             return this;
         }
 
-        public Builder withCommentGenerator(CommentGenerator commentGenerator) {
-            this.commentGenerator = commentGenerator;
+        public Builder withIntrospectedTables(List<IntrospectedTable> introspectedTables) {
+            this.introspectedTables.addAll(introspectedTables);
             return this;
         }
 

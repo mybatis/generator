@@ -76,6 +76,18 @@ recommended practice with JSpecify.</p>
     <li>The <code>Context</code> class no longer has a <code>getConnection()</code> method. If your plugin needs to
         connect to the database, you can use <code>ConnectionUtility.getConnection(Context)</code>
     </li>
+    <li>The extension point for creating a new target runtime has changed. It is extremely unlikely that this will
+        impact anyone. However, if you have created a fully custom code generator, you must now provide
+        the fully qualified name of class that extends
+        <code>org.mybatis.generator.api.AbstractRuntime.AbstractRuntimeBuilder</code> in the XML configuration
+        for a &lt;context&gt;.
+    </li>
+    <li>The <code>IntrospectedTable.getTargetRuntime()</code> method has been removed. It is replaced by
+        <code>IntrospectedTable.getKnownRuntime()</code>. Plugins might use these methods to function differently
+        for different runtimes. The new return value has much more information than the previous value. Additionally,
+        there are new utility methods <code>PluginUtilities.isDynamicSQL(IntrospectedTable)</code> and
+        <code>PluginUtilities.isLegacyMybatis(IntrospectedTable)</code> that may be helpful.
+    </li>
 </ul>
 
 <h2>Version 1.4.2</h2>

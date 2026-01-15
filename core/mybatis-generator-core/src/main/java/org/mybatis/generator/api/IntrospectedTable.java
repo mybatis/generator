@@ -50,13 +50,7 @@ import org.mybatis.generator.internal.rules.Rules;
  *
  * @author Jeff Butler
  */
-public abstract class IntrospectedTable {
-
-    public enum TargetRuntime {
-        MYBATIS3,
-        MYBATIS3_DSQL
-    }
-
+public class IntrospectedTable {
     protected enum InternalAttribute {
         ATTR_PRIMARY_KEY_TYPE,
         ATTR_BASE_RECORD_TYPE,
@@ -97,43 +91,14 @@ public abstract class IntrospectedTable {
         ATTR_MYBATIS_DYNAMIC_SQL_TABLE_OBJECT_NAME
     }
 
-    /**
-     * Only nullable because instances of this class are built through introspection. Not null in practice.
-     */
-    protected @Nullable TableConfiguration tableConfiguration;
-
-    /**
-     * Only nullable because instances of this class are built through introspection. Not null in practice.
-     */
-    protected @Nullable FullyQualifiedTable fullyQualifiedTable;
-
-    /**
-     * Only nullable because instances of this class are built through introspection. Not null in practice.
-     */
-    protected @Nullable Context context;
-
-    /**
-     * Only nullable because instances of this class are built through introspection. Not null in practice.
-     */
-    protected @Nullable CommentGenerator commentGenerator;
-
-    /**
-     * Only nullable because instances of this class are calculated on initialization. Not null in practice.
-     */
-    protected @Nullable PluginAggregator pluginAggregator;
-
-    /**
-     * Only nullable because instances of this class are calculated on initialization. Not null in practice.
-     */
-    protected @Nullable Rules rules;
-
+    protected final TableConfiguration tableConfiguration;
+    protected final FullyQualifiedTable fullyQualifiedTable;
+    protected final Context context;
+    protected Rules rules;
     protected final List<IntrospectedColumn> primaryKeyColumns = new ArrayList<>();
-
     protected final List<IntrospectedColumn> baseColumns = new ArrayList<>();
-
     protected final List<IntrospectedColumn> blobColumns = new ArrayList<>();
-
-    protected TargetRuntime targetRuntime;
+    protected final KnownRuntime knownRuntime;
 
     /**
      * Attributes may be used by plugins to capture table related state between
@@ -157,8 +122,32 @@ public abstract class IntrospectedTable {
      */
     protected @Nullable String tableType;
 
-    protected IntrospectedTable(TargetRuntime targetRuntime) {
-        this.targetRuntime = targetRuntime;
+    protected IntrospectedTable(Builder builder) {
+        this.knownRuntime = Objects.requireNonNull(builder.knownRuntime);
+        this.tableConfiguration = Objects.requireNonNull(builder.tableConfiguration);
+        this.fullyQualifiedTable = Objects.requireNonNull(builder.fullyQualifiedTable);
+        this.context = Objects.requireNonNull(builder.context);
+        Objects.requireNonNull(builder.pluginAggregator);
+
+        calculateJavaClientAttributes();
+        calculateModelAttributes();
+        calculateXmlAttributes();
+
+        switch (getTableConfiguration().getModelType()) {
+        case HIERARCHICAL:
+            rules = new HierarchicalModelRules(this);
+            break;
+        case FLAT:
+            rules = new FlatModelRules(this);
+            break;
+        case CONDITIONAL:
+            rules = new ConditionalModelRules(this);
+            break;
+        default:
+            throw new IllegalArgumentException("Unknown model type: " + getTableConfiguration().getModelType());
+        }
+
+        builder.pluginAggregator.initialized(this);
     }
 
     public FullyQualifiedTable getFullyQualifiedTable() {
@@ -343,22 +332,6 @@ public abstract class IntrospectedTable {
         return hasPrimaryKeyColumns() || hasBaseColumns() || hasBLOBColumns();
     }
 
-    public void setTableConfiguration(TableConfiguration tableConfiguration) {
-        this.tableConfiguration = tableConfiguration;
-    }
-
-    public void setFullyQualifiedTable(FullyQualifiedTable fullyQualifiedTable) {
-        this.fullyQualifiedTable = fullyQualifiedTable;
-    }
-
-    public void setCommentGenerator(CommentGenerator commentGenerator) {
-        this.commentGenerator = commentGenerator;
-    }
-
-    public void setContext(Context context) {
-        this.context = context;
-    }
-
     public void addColumn(IntrospectedColumn introspectedColumn) {
         if (introspectedColumn.isBLOBColumn()) {
             blobColumns.add(introspectedColumn);
@@ -407,28 +380,6 @@ public abstract class IntrospectedTable {
 
     public void setAttribute(String name, Object value) {
         attributes.put(name, value);
-    }
-
-    public void initialize(PluginAggregator pluginAggregator, CommentGenerator commentGenerator) {
-        this.pluginAggregator = pluginAggregator;
-        this.commentGenerator = commentGenerator;
-        calculateJavaClientAttributes();
-        calculateModelAttributes();
-        calculateXmlAttributes();
-
-        switch (getTableConfiguration().getModelType()) {
-        case HIERARCHICAL:
-            rules = new HierarchicalModelRules(this);
-            break;
-        case FLAT:
-            rules = new FlatModelRules(this);
-            break;
-        case CONDITIONAL:
-            rules = new ConditionalModelRules(this);
-            break;
-        }
-
-        pluginAggregator.initialized(this);
     }
 
     protected void calculateXmlAttributes() {
@@ -644,14 +595,14 @@ public abstract class IntrospectedTable {
     }
 
     protected @Nullable String calculateJavaClientInterfacePackage() {
-        return getContext().getJavaClientGeneratorConfiguration()
+        return context.getJavaClientGeneratorConfiguration()
                 .map(c -> c.getTargetPackage()
                         + getFullyQualifiedTable().getSubPackageForClientOrSqlMap(isSubPackagesEnabled(c)))
                 .orElse(null);
     }
 
     protected @Nullable String calculateDynamicSqlSupportPackage() {
-        return getContext().getJavaClientGeneratorConfiguration()
+        return context.getJavaClientGeneratorConfiguration()
                 .map(c -> {
                     String packkage = c.getProperty(PropertyRegistry.CLIENT_DYNAMIC_SQL_SUPPORT_PACKAGE);
                     if (stringHasValue(packkage)) {
@@ -664,7 +615,7 @@ public abstract class IntrospectedTable {
     }
 
     protected void calculateJavaClientAttributes() {
-        if (getContext().getJavaClientGeneratorConfiguration().isEmpty()) {
+        if (context.getJavaClientGeneratorConfiguration().isEmpty()) {
             return;
         }
 
@@ -712,7 +663,7 @@ public abstract class IntrospectedTable {
     }
 
     protected String calculateJavaModelPackage() {
-        JavaModelGeneratorConfiguration config = getContext().getJavaModelGeneratorConfiguration();
+        JavaModelGeneratorConfiguration config = context.getJavaModelGeneratorConfiguration();
 
         return config.getTargetPackage() + getFullyQualifiedTable().getSubPackageForModel(isSubPackagesEnabled(config));
     }
@@ -762,7 +713,7 @@ public abstract class IntrospectedTable {
      * @return the calculated package
      */
     protected String calculateJavaModelExamplePackage() {
-        JavaModelGeneratorConfiguration config = getContext().getJavaModelGeneratorConfiguration();
+        JavaModelGeneratorConfiguration config = context.getJavaModelGeneratorConfiguration();
         String exampleTargetPackage = config.getProperty(PropertyRegistry.MODEL_GENERATOR_EXAMPLE_PACKAGE);
         if (!stringHasValue(exampleTargetPackage)) {
             return calculateJavaModelPackage();
@@ -774,7 +725,7 @@ public abstract class IntrospectedTable {
     protected String calculateSqlMapPackage() {
         StringBuilder sb = new StringBuilder();
         // config can be null if the Java client does not require XML
-        getContext().getSqlMapGeneratorConfiguration().ifPresent(config -> {
+        context.getSqlMapGeneratorConfiguration().ifPresent(config -> {
             sb.append(config.getTargetPackage());
             sb.append(getFullyQualifiedTable().getSubPackageForClientOrSqlMap(isSubPackagesEnabled(config)));
             if (stringHasValue(getTableConfiguration().getMapperName())) {
@@ -837,53 +788,6 @@ public abstract class IntrospectedTable {
     public String getAliasedFullyQualifiedTableNameAtRuntime() {
         return internalAttributes.get(InternalAttribute.ATTR_ALIASED_FULLY_QUALIFIED_TABLE_NAME_AT_RUNTIME);
     }
-
-    /**
-     * This method can be used to initialize the generators before they will be called.
-     *
-     * <p>This method is called after all the setX methods, but before getNumberOfSubtasks(), getGeneratedJavaFiles, and
-     * getGeneratedXmlFiles.
-     *
-     * @param warnings
-     *            the warnings
-     * @param progressCallback
-     *            the progress callback
-     */
-    public abstract void calculateGenerators(List<String> warnings, ProgressCallback progressCallback);
-
-    /**
-     * This method should return a list of generated Java files related to this
-     * table. This list could include various types of model classes, as well as
-     * DAO classes.
-     *
-     * @return the list of generated Java files for this table
-     */
-    public abstract List<GeneratedJavaFile> getGeneratedJavaFiles();
-
-    /**
-     * This method should return a list of generated XML files related to this
-     * table. Most implementations will only return one file - the generated
-     * SqlMap file.
-     *
-     * @return the list of generated XML files for this table
-     */
-    public abstract List<GeneratedXmlFile> getGeneratedXmlFiles();
-
-    /**
-     * This method should return a list of generated Kotlin files related to this
-     * table. This list could include a data classes, a mapper interface, extension methods, etc.
-     *
-     * @return the list of generated Kotlin files for this table
-     */
-    public abstract List<GeneratedKotlinFile> getGeneratedKotlinFiles();
-
-    /**
-     * This method should return the number of progress messages that will be
-     * sent during the generation phase.
-     *
-     * @return the number of progress messages
-     */
-    public abstract int getGenerationSteps();
 
     /**
      * This method exists to give plugins the opportunity to replace the calculated rules if necessary.
@@ -973,8 +877,8 @@ public abstract class IntrospectedTable {
         internalAttributes.put(InternalAttribute.ATTR_MYBATIS_DYNAMIC_SQL_SUPPORT_TYPE, s);
     }
 
-    public TargetRuntime getTargetRuntime() {
-        return targetRuntime;
+    public KnownRuntime getKnownRuntime() {
+        return knownRuntime;
     }
 
     public boolean isImmutable() {
@@ -983,7 +887,7 @@ public abstract class IntrospectedTable {
         if (getTableConfiguration().getProperties().containsKey(PropertyRegistry.ANY_IMMUTABLE)) {
             properties = getTableConfiguration().getProperties();
         } else {
-            properties = getContext().getJavaModelGeneratorConfiguration().getProperties();
+            properties = context.getJavaModelGeneratorConfiguration().getProperties();
         }
 
         return isTrue(properties.getProperty(PropertyRegistry.ANY_IMMUTABLE));
@@ -999,23 +903,14 @@ public abstract class IntrospectedTable {
         if (getTableConfiguration().getProperties().containsKey(PropertyRegistry.ANY_CONSTRUCTOR_BASED)) {
             properties = getTableConfiguration().getProperties();
         } else {
-            properties = getContext().getJavaModelGeneratorConfiguration().getProperties();
+            properties = context.getJavaModelGeneratorConfiguration().getProperties();
         }
 
         return isTrue(properties.getProperty(PropertyRegistry.ANY_CONSTRUCTOR_BASED));
     }
 
-    /**
-     * Should return true if an XML generator is required for this table. This method will be called during validation
-     * of the configuration, so it should not rely on database introspection. This method simply tells the validator if
-     * an XML configuration is normally required for this implementation.
-     *
-     * @return true, if successful
-     */
-    public abstract boolean requiresXMLGenerator();
-
     public Context getContext() {
-        return Objects.requireNonNull(context);
+        return context;
     }
 
     public Optional<String> getRemarks() {
@@ -1032,5 +927,42 @@ public abstract class IntrospectedTable {
 
     public void setTableType(String tableType) {
         this.tableType = tableType;
+    }
+
+    public static class Builder {
+        private @Nullable KnownRuntime knownRuntime;
+        private @Nullable TableConfiguration tableConfiguration;
+        private @Nullable FullyQualifiedTable fullyQualifiedTable;
+        private @Nullable Context context;
+        private @Nullable PluginAggregator pluginAggregator;
+
+        public Builder withKnownRuntime(KnownRuntime knownRuntime) {
+            this.knownRuntime = knownRuntime;
+            return this;
+        }
+
+        public Builder withTableConfiguration(TableConfiguration tableConfiguration) {
+            this.tableConfiguration = tableConfiguration;
+            return this;
+        }
+
+        public Builder withFullyQualifiedTable(FullyQualifiedTable fullyQualifiedTable) {
+            this.fullyQualifiedTable = fullyQualifiedTable;
+            return this;
+        }
+
+        public Builder withContext(Context context) {
+            this.context = context;
+            return this;
+        }
+
+        public Builder withPluginAggregator(PluginAggregator pluginAggregator) {
+            this.pluginAggregator = pluginAggregator;
+            return this;
+        }
+
+        public IntrospectedTable build() {
+            return new IntrospectedTable(this);
+        }
     }
 }

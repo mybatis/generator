@@ -30,9 +30,9 @@ import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Parameter;
-import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
+import org.mybatis.generator.runtime.mybatis3.ListUtilities;
 
 public class FragmentGenerator {
 

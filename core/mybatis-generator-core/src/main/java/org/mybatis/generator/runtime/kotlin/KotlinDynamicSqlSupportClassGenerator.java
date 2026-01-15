@@ -15,8 +15,8 @@
  */
 package org.mybatis.generator.runtime.kotlin;
 
-import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getEscapedColumnName;
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForKotlin;
+import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getEscapedColumnName;
 
 import java.util.List;
 
@@ -124,8 +124,7 @@ public class KotlinDynamicSqlSupportClassGenerator extends AbstractGenerator {
 
     private KotlinProperty calculateTableProperty() {
         String tableType = introspectedTable.getMyBatisDynamicSQLTableObjectName();
-        String fieldName =
-                JavaBeansUtil.getValidPropertyName(introspectedTable.getMyBatisDynamicSQLTableObjectName());
+        String fieldName = JavaBeansUtil.getValidPropertyName(introspectedTable.getMyBatisDynamicSQLTableObjectName());
 
         return KotlinProperty.newVal(fieldName)
                 .withInitializationString(tableType + "()") //$NON-NLS-1$

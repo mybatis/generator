@@ -38,11 +38,11 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 
 import org.jspecify.annotations.Nullable;
-import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.FullyQualifiedTable;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.JavaTypeResolver;
+import org.mybatis.generator.api.KnownRuntime;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.JavaReservedWords;
 import org.mybatis.generator.config.ColumnOverride;
@@ -51,6 +51,7 @@ import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.config.TableConfiguration;
 import org.mybatis.generator.internal.ObjectFactory;
+import org.mybatis.generator.internal.PluginAggregator;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
 import org.mybatis.generator.logging.Log;
 import org.mybatis.generator.logging.LogFactory;
@@ -60,17 +61,14 @@ public class DatabaseIntrospector {
     private final JavaTypeResolver javaTypeResolver;
     private final List<String> warnings;
     private final Context context;
-    private final CommentGenerator commentGenerator;
     private final Log logger;
 
     public DatabaseIntrospector(Context context, DatabaseMetaData databaseMetaData,
-                                JavaTypeResolver javaTypeResolver, List<String> warnings,
-                                CommentGenerator commentGenerator) {
+                                JavaTypeResolver javaTypeResolver, List<String> warnings) {
         this.context = context;
         this.databaseMetaData = databaseMetaData;
         this.javaTypeResolver = javaTypeResolver;
         this.warnings = warnings;
-        this.commentGenerator = commentGenerator;
         logger = LogFactory.getLog(getClass());
     }
 
@@ -163,7 +161,8 @@ public class DatabaseIntrospector {
      * @throws SQLException
      *             if any errors in introspection
      */
-    public List<IntrospectedTable> introspectTables(TableConfiguration tc) throws SQLException {
+    public List<IntrospectedTable> introspectTables(TableConfiguration tc, KnownRuntime knownRuntime,
+                                                    PluginAggregator pluginAggregator) throws SQLException {
         // get the raw columns from the DB
         Map<ActualTableName, List<IntrospectedColumn>> columns = getColumns(tc);
 
@@ -180,7 +179,8 @@ public class DatabaseIntrospector {
         applyColumnOverrides(tc, columns);
         calculateIdentityColumns(tc, columns);
 
-        List<IntrospectedTable> introspectedTables = calculateIntrospectedTables(tc, columns);
+        List<IntrospectedTable> introspectedTables =
+                calculateIntrospectedTables(tc, columns, knownRuntime, pluginAggregator);
 
         // now introspectedTables has all the columns from all the
         // tables in the configuration. Do some validation...
@@ -501,7 +501,8 @@ public class DatabaseIntrospector {
     }
 
     private List<IntrospectedTable> calculateIntrospectedTables(TableConfiguration tc,
-            Map<ActualTableName, List<IntrospectedColumn>> columns) {
+            Map<ActualTableName, List<IntrospectedColumn>> columns, KnownRuntime knownRuntime,
+                                                                PluginAggregator pluginAggregator) {
         boolean delimitIdentifiers = tc.isDelimitIdentifiers()
                 || stringContainsSpace(tc.getCatalog())
                 || stringContainsSpace(tc.getSchema())
@@ -535,8 +536,13 @@ public class DatabaseIntrospector {
                     .withContext(context)
                     .build();
 
-            IntrospectedTable introspectedTable = ObjectFactory.createIntrospectedTable(tc, table, context,
-                    commentGenerator);
+            IntrospectedTable introspectedTable = new IntrospectedTable.Builder()
+                    .withTableConfiguration(tc)
+                    .withFullyQualifiedTable(table)
+                    .withContext(context)
+                    .withKnownRuntime(knownRuntime)
+                    .withPluginAggregator(pluginAggregator)
+                    .build();
 
             for (IntrospectedColumn introspectedColumn : entry.getValue()) {
                 introspectedTable.addColumn(introspectedColumn);

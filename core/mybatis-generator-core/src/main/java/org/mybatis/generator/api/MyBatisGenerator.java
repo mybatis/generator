@@ -37,8 +37,9 @@ import java.util.Objects;
 import java.util.Set;
 
 import org.jspecify.annotations.Nullable;
-import org.mybatis.generator.codegen.ContextResults;
+import org.mybatis.generator.codegen.CalculatedContextValues;
 import org.mybatis.generator.codegen.GenerationEngine;
+import org.mybatis.generator.codegen.GenerationResults;
 import org.mybatis.generator.codegen.IntrospectionEngine;
 import org.mybatis.generator.codegen.RootClassInfo;
 import org.mybatis.generator.config.Configuration;
@@ -68,8 +69,7 @@ public class MyBatisGenerator {
     private final Configuration configuration;
     private final ShellCallback shellCallback;
     private final List<String> warnings;
-    private final Set<String> projects = new HashSet<>();
-    private final List<ContextResults> contextResultList = new ArrayList<>();
+    private final List<GenerationResults> generationResultsList = new ArrayList<>();
 
     /**
      * Constructs a MyBatisGenerator object.
@@ -99,9 +99,7 @@ public class MyBatisGenerator {
         }
 
         this.shellCallback = Objects.requireNonNullElseGet(shellCallback, () -> new DefaultShellCallback(false));
-
         this.warnings = Objects.requireNonNullElseGet(warnings, ArrayList::new);
-
         this.configuration.validate();
     }
 
@@ -179,7 +177,7 @@ public class MyBatisGenerator {
      * This is the main method for generating code. This method is long-running, but progress can be provided and the
      * method can be cancelled through the ProgressCallback interface.
      *
-     * @param callback
+     * @param progressCallback
      *            an instance of the ProgressCallback interface, or <code>null</code> if you do not require progress
      *            information
      * @param contextIds
@@ -200,150 +198,186 @@ public class MyBatisGenerator {
      * @throws InterruptedException
      *             if the method is canceled through the ProgressCallback
      */
-    public void generate(@Nullable ProgressCallback callback, @Nullable Set<String> contextIds,
+    public void generate(@Nullable ProgressCallback progressCallback, @Nullable Set<String> contextIds,
                          @Nullable Set<String> fullyQualifiedTableNames, boolean writeFiles) throws SQLException,
             IOException, InterruptedException {
 
-        if (callback == null) {
-            callback = NULL_PROGRESS_CALLBACK;
-        }
-
-        contextResultList.clear();
+        generationResultsList.clear();
         ObjectFactory.reset();
         RootClassInfo.reset();
 
-        // calculate the contexts to run
-        List<Context> contextsToRun;
-        if (contextIds == null || contextIds.isEmpty()) {
-            contextsToRun = configuration.getContexts();
-        } else {
-            contextsToRun = new ArrayList<>();
-            for (Context context : configuration.getContexts()) {
-                if (contextIds.contains(context.getId())) {
-                    contextsToRun.add(context);
-                }
-            }
+        setupCustomClassloader();
+
+        ProgressCallback localProgressCallback = Objects.requireNonNullElse(progressCallback, NULL_PROGRESS_CALLBACK);
+        Set<String> localFullyQualifiedTableNames =
+                Objects.requireNonNullElse(fullyQualifiedTableNames, Collections.emptySet());
+        Set<String> localContextIds = Objects.requireNonNullElse(contextIds, Collections.emptySet());
+
+        List<Context> contextsToRun = calculateContextsToRun(localFullyQualifiedTableNames, localContextIds);
+
+        List<CalculatedContextValues> contextValuesList = calculateContextValues(contextsToRun);
+
+        runAllIntrospections(contextValuesList, localFullyQualifiedTableNames, localProgressCallback);
+
+        List<GenerationEngine> generationEngines = createGenerationEngines(contextValuesList, localProgressCallback);
+
+        runGenerationEngines(generationEngines, localProgressCallback);
+
+        if (writeFiles) {
+            writeGeneratedFiles(localProgressCallback);
         }
 
-        // setup custom classloader if required
+        localProgressCallback.done();
+    }
+
+    private void setupCustomClassloader() {
         if (!configuration.getClassPathEntries().isEmpty()) {
             ClassLoader classLoader = getCustomClassloader(configuration.getClassPathEntries());
             ObjectFactory.addExternalClassLoader(classLoader);
         }
+    }
 
-        // now run the introspections...
-        int totalSteps = 0;
-        for (Context context : contextsToRun) {
-            totalSteps += context.getIntrospectionSteps();
-        }
-        callback.introspectionStarted(totalSteps);
-
-        for (Context context : contextsToRun) {
-            ContextResults contextResults = new ContextResults(context);
-            this.contextResultList.add(contextResults);
-
-            List<IntrospectedTable> introspectedTables = new IntrospectionEngine.Builder()
-                    .withContext(context)
-                    .withFullyQualifiedTableNames(
-                            fullyQualifiedTableNames == null ? Collections.emptySet() : fullyQualifiedTableNames)
-                    .withWarnings(warnings)
-                    .withProgressCallback(callback)
-                    .withCommentGenerator(contextResults.commentGenerator())
-                    .build()
-                    .introspectTables();
-
-            contextResults.addIntrospectedTables(introspectedTables);
+    private List<Context> calculateContextsToRun(Set<String> fullyQualifiedTableNames, Set<String> contextIds) {
+        List<Context> contextsToRun;
+        if (fullyQualifiedTableNames.isEmpty()) {
+            contextsToRun = configuration.getContexts();
+        } else {
+            contextsToRun = configuration.getContexts().stream()
+                    .filter(c -> contextIds.contains(c.getId()))
+                    .toList();
         }
 
-        // now run the generates
-        totalSteps = 0;
-        for (ContextResults contextResults : this.contextResultList) {
-            totalSteps += contextResults.getGenerationSteps();
+        return contextsToRun;
+    }
+
+    private List<CalculatedContextValues> calculateContextValues(List<Context> contextsToRun) {
+        return contextsToRun.stream()
+                .map(this::createContextValues)
+                .toList();
+    }
+
+    private CalculatedContextValues createContextValues(Context context) {
+        return new CalculatedContextValues.Builder()
+                .withContext(context)
+                .withWarnings(warnings)
+                .build();
+    }
+
+    private void runAllIntrospections(List<CalculatedContextValues> contextValuesList,
+                                      Set<String> fullyQualifiedTableNames, ProgressCallback progressCallback)
+            throws SQLException, InterruptedException {
+        int totalSteps = contextValuesList.stream()
+                .map(CalculatedContextValues::context)
+                .mapToInt(Context::getIntrospectionSteps)
+                .sum();
+        progressCallback.introspectionStarted(totalSteps);
+
+        for (CalculatedContextValues contextValues : contextValuesList) {
+            contextValues.addIntrospectedTables(
+                    runContextIntrospection(fullyQualifiedTableNames, contextValues, progressCallback));
         }
-        callback.generationStarted(totalSteps);
+    }
 
-        for (ContextResults contextResults : this.contextResultList) {
-            var generationEngine = new GenerationEngine.Builder()
-                    .withContext(contextResults.context())
-                    .withProgressCallback(callback)
-                    .withWarnings(warnings)
-                    .withIntrospectedTables(contextResults.introspectedTables())
-                    .withCommentGenerator(contextResults.commentGenerator())
-                    .build();
+    private List<IntrospectedTable> runContextIntrospection(Set<String> fullyQualifiedTableNames,
+                                                            CalculatedContextValues contextValues,
+                                                            ProgressCallback progressCallback)
+            throws SQLException, InterruptedException {
+        return new IntrospectionEngine.Builder()
+                .withContextValues(contextValues)
+                .withFullyQualifiedTableNames(fullyQualifiedTableNames)
+                .withWarnings(warnings)
+                .withProgressCallback(progressCallback)
+                .build()
+                .introspectTables();
+    }
 
-            contextResults.addGeneratedJavaFiles(generationEngine.generateJavaFiles());
-            contextResults.addGeneratedXmlFiles(generationEngine.generateXmlFiles());
-            contextResults.addGeneratedKotlinFiles(generationEngine.generateKotlinFiles());
-            contextResults.addGeneratedGenericFiles(generationEngine.generateGenericFiles());
+    private List<GenerationEngine> createGenerationEngines(List<CalculatedContextValues> contextValuesList,
+                                                           ProgressCallback progressCallback) {
+        return contextValuesList.stream()
+                .map(cv -> createGenerationEngine(cv, progressCallback))
+                .toList();
+    }
+
+    private GenerationEngine createGenerationEngine(CalculatedContextValues contextValues,
+                                                    ProgressCallback progressCallback) {
+        return new GenerationEngine.Builder()
+                .withContextValues(contextValues)
+                .withProgressCallback(progressCallback)
+                .withWarnings(warnings)
+                .withIntrospectedTables(contextValues.introspectedTables())
+                .build();
+    }
+
+    private void runGenerationEngines(List<GenerationEngine> generationEngines, ProgressCallback progressCallback)
+            throws InterruptedException {
+        // calculate the number of steps
+        int totalSteps = generationEngines.stream().mapToInt(GenerationEngine::getGenerationSteps).sum();
+        progressCallback.generationStarted(totalSteps);
+
+        // now run the generators
+        for (GenerationEngine generationEngine: generationEngines) {
+            var generationResults = generationEngine.generate();
+            generationResultsList.add(generationResults);
         }
+    }
 
-        // now save the files
-        if (writeFiles) {
-            totalSteps = 0;
-            for (ContextResults contextResults : this.contextResultList) {
-                totalSteps += contextResults.getNumberOfGeneratedFiles();
+    private void writeGeneratedFiles(ProgressCallback progressCallback) throws IOException, InterruptedException {
+        Set<String> projects = new HashSet<>();
+        int totalSteps = generationResultsList.stream().mapToInt(GenerationResults::getNumberOfGeneratedFiles).sum();
+        progressCallback.saveStarted(totalSteps);
+
+        for (GenerationResults generationResults : generationResultsList) {
+            for (GeneratedXmlFile gxf : generationResults.generatedXmlFiles()) {
+                projects.add(gxf.getTargetProject());
+                writeGeneratedXmlFile(gxf, generationResults.xmlFormatter(), progressCallback);
             }
-            callback.saveStarted(totalSteps);
 
-            for (ContextResults contextResults : this.contextResultList) {
-                for (GeneratedXmlFile gxf : contextResults.generatedXmlFiles()) {
-                    projects.add(gxf.getTargetProject());
-                    writeGeneratedXmlFile(gxf, contextResults.xmlFormatter(), callback);
-                }
-
-                for (GeneratedJavaFile gjf : contextResults.generatedJavaFiles()) {
-                    projects.add(gjf.getTargetProject());
-                    writeGeneratedJavaFile(gjf, contextResults.javaFormatter(), contextResults.javaFileEncoding(),
-                            callback);
-                }
-
-                for (GeneratedKotlinFile gkf : contextResults.generatedKotlinFiles()) {
-                    projects.add(gkf.getTargetProject());
-                    writeGeneratedKotlinFile(gkf, contextResults.kotlinFormatter(), contextResults.kotlinFileEncoding(),
-                            callback);
-                }
-
-                for (GenericGeneratedFile gf : contextResults.generatedGenericFiles()) {
-                    projects.add(gf.getTargetProject());
-                    writeGenericGeneratedFile(gf, callback);
-                }
+            for (GeneratedJavaFile gjf : generationResults.generatedJavaFiles()) {
+                projects.add(gjf.getTargetProject());
+                writeGeneratedJavaFile(gjf, generationResults.javaFormatter(), generationResults.javaFileEncoding(),
+                        progressCallback);
             }
 
-            for (String project : projects) {
-                shellCallback.refreshProject(project);
+            for (GeneratedKotlinFile gkf : generationResults.generatedKotlinFiles()) {
+                projects.add(gkf.getTargetProject());
+                writeGeneratedKotlinFile(gkf, generationResults.kotlinFormatter(),
+                        generationResults.kotlinFileEncoding(),
+                        progressCallback);
+            }
+
+            for (GenericGeneratedFile gf : generationResults.generatedGenericFiles()) {
+                projects.add(gf.getTargetProject());
+                writeGenericGeneratedFile(gf, progressCallback);
             }
         }
 
-        callback.done();
+        for (String project : projects) {
+            shellCallback.refreshProject(project);
+        }
     }
 
     private void writeGeneratedJavaFile(GeneratedJavaFile gjf, JavaFormatter javaFormatter,
-                                        @Nullable String javaFileEncoding, ProgressCallback callback)
+                                        @Nullable String javaFileEncoding, ProgressCallback progressCallback)
             throws InterruptedException, IOException {
         Path targetFile;
-        String source;
+        String source = javaFormatter.getFormattedContent(gjf.getCompilationUnit());
         try {
             File directory = shellCallback.getDirectory(gjf.getTargetProject(), gjf.getTargetPackage());
             targetFile = directory.toPath().resolve(gjf.getFileName());
             if (Files.exists(targetFile)) {
                 if (shellCallback.isMergeSupported()) {
-                    source = shellCallback.mergeJavaFile(
-                            javaFormatter.getFormattedContent(gjf.getCompilationUnit()), targetFile.toFile(),
+                    source = shellCallback.mergeJavaFile(source, targetFile.toFile(),
                             MergeConstants.getOldElementTags(), javaFileEncoding);
                 } else if (shellCallback.isOverwriteEnabled()) {
-                    source = javaFormatter.getFormattedContent(gjf.getCompilationUnit());
                     warnings.add(getString("Warning.11", targetFile.toFile().getAbsolutePath())); //$NON-NLS-1$
                 } else {
-                    source = javaFormatter.getFormattedContent(gjf.getCompilationUnit());
                     targetFile = getUniqueFileName(directory, gjf.getFileName());
                     warnings.add(getString("Warning.2", targetFile.toFile().getAbsolutePath())); //$NON-NLS-1$
                 }
-            } else {
-                source = javaFormatter.getFormattedContent(gjf.getCompilationUnit());
             }
 
-            callback.checkCancel();
-            callback.startTask(getString("Progress.15", targetFile.toString())); //$NON-NLS-1$
+            progressCallback.checkCancel();
+            progressCallback.startTask(getString("Progress.15", targetFile.toString())); //$NON-NLS-1$
             writeFile(targetFile.toFile(), source, javaFileEncoding);
         } catch (ShellException e) {
             warnings.add(e.getMessage());
@@ -351,87 +385,75 @@ public class MyBatisGenerator {
     }
 
     private void writeGeneratedKotlinFile(GeneratedKotlinFile gf, KotlinFormatter kotlinFormatter,
-                                          @Nullable String kotlinFileEncoding, ProgressCallback callback)
+                                          @Nullable String kotlinFileEncoding, ProgressCallback progressCallback)
             throws InterruptedException, IOException {
         Path targetFile;
-        String source;
+        String source = kotlinFormatter.getFormattedContent(gf.getKotlinFile());
         try {
             File directory = shellCallback.getDirectory(gf.getTargetProject(), gf.getTargetPackage());
             targetFile = directory.toPath().resolve(gf.getFileName());
             if (Files.exists(targetFile)) {
                 if (shellCallback.isOverwriteEnabled()) {
-                    source = kotlinFormatter.getFormattedContent(gf.getKotlinFile());
                     warnings.add(getString("Warning.11", targetFile.toFile().getAbsolutePath())); //$NON-NLS-1$
                 } else {
-                    source = kotlinFormatter.getFormattedContent(gf.getKotlinFile());
                     targetFile = getUniqueFileName(directory, gf.getFileName());
                     warnings.add(getString("Warning.2", targetFile.toFile().getAbsolutePath())); //$NON-NLS-1$
                 }
-            } else {
-                source = kotlinFormatter.getFormattedContent(gf.getKotlinFile());
             }
 
-            callback.checkCancel();
-            callback.startTask(getString("Progress.15", targetFile.toString())); //$NON-NLS-1$
+            progressCallback.checkCancel();
+            progressCallback.startTask(getString("Progress.15", targetFile.toString())); //$NON-NLS-1$
             writeFile(targetFile.toFile(), source, kotlinFileEncoding);
         } catch (ShellException e) {
             warnings.add(e.getMessage());
         }
     }
 
-    private void writeGenericGeneratedFile(GenericGeneratedFile gf, ProgressCallback callback)
+    private void writeGenericGeneratedFile(GenericGeneratedFile gf, ProgressCallback progressCallback)
             throws InterruptedException, IOException {
         Path targetFile;
-        String source;
+        String source = gf.getFormattedContent();
         try {
             File directory = shellCallback.getDirectory(gf.getTargetProject(), gf.getTargetPackage());
             targetFile = directory.toPath().resolve(gf.getFileName());
             if (Files.exists(targetFile)) {
                 if (shellCallback.isOverwriteEnabled()) {
-                    source = gf.getFormattedContent();
                     warnings.add(getString("Warning.11", targetFile.toFile().getAbsolutePath())); //$NON-NLS-1$
                 } else {
-                    source = gf.getFormattedContent();
                     targetFile = getUniqueFileName(directory, gf.getFileName());
                     warnings.add(getString("Warning.2", targetFile.toFile().getAbsolutePath())); //$NON-NLS-1$
                 }
-            } else {
-                source = gf.getFormattedContent();
             }
 
-            callback.checkCancel();
-            callback.startTask(getString("Progress.15", targetFile.toString())); //$NON-NLS-1$
+            progressCallback.checkCancel();
+            progressCallback.startTask(getString("Progress.15", targetFile.toString())); //$NON-NLS-1$
             writeFile(targetFile.toFile(), source, gf.getFileEncoding().orElse(null));
         } catch (ShellException e) {
             warnings.add(e.getMessage());
         }
     }
 
-    private void writeGeneratedXmlFile(GeneratedXmlFile gxf, XmlFormatter xmlFormatter, ProgressCallback callback)
+    private void writeGeneratedXmlFile(GeneratedXmlFile gxf, XmlFormatter xmlFormatter,
+                                       ProgressCallback progressCallback)
             throws InterruptedException, IOException {
         Path targetFile;
-        String source;
+        String source = xmlFormatter.getFormattedContent(gxf.getDocument());
         try {
             File directory = shellCallback.getDirectory(gxf.getTargetProject(), gxf.getTargetPackage());
             targetFile = directory.toPath().resolve(gxf.getFileName());
             if (Files.exists(targetFile)) {
                 if (gxf.isMergeable()) {
-                    source = XmlFileMergerJaxp.getMergedSource(xmlFormatter.getFormattedContent(gxf.getDocument()),
-                            targetFile.toFile());
+                    source = XmlFileMergerJaxp.getMergedSource(source, targetFile.toFile());
                 } else if (shellCallback.isOverwriteEnabled()) {
-                    source = xmlFormatter.getFormattedContent(gxf.getDocument());
                     warnings.add(getString("Warning.11", targetFile.toFile().getAbsolutePath())); //$NON-NLS-1$
                 } else {
-                    source = xmlFormatter.getFormattedContent(gxf.getDocument());
                     targetFile = getUniqueFileName(directory, gxf.getFileName());
                     warnings.add(getString("Warning.2", targetFile.toFile().getAbsolutePath())); //$NON-NLS-1$
                 }
-            } else {
-                source = xmlFormatter.getFormattedContent(gxf.getDocument());
             }
 
-            callback.checkCancel();
-            callback.startTask(getString("Progress.15", targetFile.toString())); //$NON-NLS-1$
+            progressCallback.checkCancel();
+            progressCallback.startTask(getString("Progress.15", targetFile.toString())); //$NON-NLS-1$
             writeFile(targetFile.toFile(), source, "UTF-8"); //$NON-NLS-1$
         } catch (ShellException e) {
             warnings.add(e.getMessage());
@@ -509,8 +531,8 @@ public class MyBatisGenerator {
      * @return the list of generated Java files
      */
     public List<GeneratedJavaFile> getGeneratedJavaFiles() {
-        return contextResultList.stream()
-                .map(ContextResults::generatedJavaFiles)
+        return generationResultsList.stream()
+                .map(GenerationResults::generatedJavaFiles)
                 .flatMap(Collection::stream)
                 .toList();
     }
@@ -523,8 +545,8 @@ public class MyBatisGenerator {
      * @return the list of generated Kotlin files
      */
     public List<GeneratedKotlinFile> getGeneratedKotlinFiles() {
-        return contextResultList.stream()
-                .map(ContextResults::generatedKotlinFiles)
+        return generationResultsList.stream()
+                .map(GenerationResults::generatedKotlinFiles)
                 .flatMap(Collection::stream)
                 .toList();
     }
@@ -537,8 +559,25 @@ public class MyBatisGenerator {
      * @return the list of generated XML files
      */
     public List<GeneratedXmlFile> getGeneratedXmlFiles() {
-        return contextResultList.stream()
-                .map(ContextResults::generatedXmlFiles)
+        return generationResultsList.stream()
+                .map(GenerationResults::generatedXmlFiles)
+                .flatMap(Collection::stream)
+                .toList();
+    }
+
+    /**
+     * Returns the list of generated generic files after a call to one of the generate methods.
+     * This is useful if you prefer to process the generated files yourself and do not want
+     * the generator to write them to disk.
+     *
+     * <p>The list will be empty unless you have used a plugin that generates generic files
+     * or are using a custom runtime.
+     *
+     * @return the list of generated generic files
+     */
+    public List<GenericGeneratedFile> getGeneratedGenericFiles() {
+        return generationResultsList.stream()
+                .map(GenerationResults::generatedGenericFiles)
                 .flatMap(Collection::stream)
                 .toList();
     }

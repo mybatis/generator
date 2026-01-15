@@ -24,8 +24,8 @@ import java.util.Properties;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
-import org.mybatis.generator.api.IntrospectedTable.TargetRuntime;
 import org.mybatis.generator.api.PluginAdapter;
+import org.mybatis.generator.api.PluginUtilities;
 import org.mybatis.generator.api.dom.OutputUtilities;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
@@ -133,7 +133,7 @@ public class EqualsHashCodePlugin extends PluginAdapter {
                 .getObjectInstance(), "that")); //$NON-NLS-1$
         method.addAnnotation("@Override"); //$NON-NLS-1$
 
-        if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3_DSQL) {
+        if (PluginUtilities.isDynamicSql(introspectedTable)) {
             commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, topLevelClass.getImportedTypes());
         } else {
             commentGenerator.addGeneralMethodComment(method, introspectedTable);
@@ -242,7 +242,7 @@ public class EqualsHashCodePlugin extends PluginAdapter {
         method.setReturnType(FullyQualifiedJavaType.getIntInstance());
         method.addAnnotation("@Override"); //$NON-NLS-1$
 
-        if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3_DSQL) {
+        if (PluginUtilities.isDynamicSql(introspectedTable)) {
             commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, topLevelClass.getImportedTypes());
         } else {
             commentGenerator.addGeneralMethodComment(method, introspectedTable);

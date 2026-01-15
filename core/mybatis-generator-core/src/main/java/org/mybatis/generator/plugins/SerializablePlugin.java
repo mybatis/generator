@@ -19,8 +19,8 @@ import java.util.List;
 import java.util.Properties;
 
 import org.mybatis.generator.api.IntrospectedTable;
-import org.mybatis.generator.api.IntrospectedTable.TargetRuntime;
 import org.mybatis.generator.api.PluginAdapter;
+import org.mybatis.generator.api.PluginUtilities;
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
@@ -105,7 +105,7 @@ public class SerializablePlugin extends PluginAdapter {
             field.setStatic(true);
             field.setVisibility(JavaVisibility.PRIVATE);
 
-            if (introspectedTable.getTargetRuntime() == TargetRuntime.MYBATIS3_DSQL) {
+            if (PluginUtilities.isDynamicSql(introspectedTable)) {
                 commentGenerator.addFieldAnnotation(field, introspectedTable, topLevelClass.getImportedTypes());
             } else {
                 commentGenerator.addFieldComment(field, introspectedTable);

@@ -27,8 +27,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.jspecify.annotations.Nullable;
-import org.mybatis.generator.api.IntrospectedTable;
-import org.mybatis.generator.internal.ObjectFactory;
+import org.mybatis.generator.api.KnownRuntime;
 
 public class Context extends PropertyHolder {
     private final String id;
@@ -121,19 +120,22 @@ public class Context extends PropertyHolder {
             javaClientGeneratorConfiguration.validate(errors, id);
         }
 
-        IntrospectedTable it = null;
-        try {
-            it = ObjectFactory.createIntrospectedTableForValidation(this);
-        } catch (Exception e) {
-            errors.add(getString("ValidationError.25", id)); //$NON-NLS-1$
+        // this will either be a successful lookup by alias, or UNKNOWN
+        KnownRuntime knownRuntime = KnownRuntime.getByAlias(targetRuntime);
+        if (knownRuntime == KnownRuntime.MYBATIS3 || knownRuntime == KnownRuntime.MYBATIS3_SIMPLE) {
+            if (javaClientGeneratorConfiguration != null && sqlMapGeneratorConfiguration == null) {
+                if ("XMLMAPPER".equalsIgnoreCase(javaClientGeneratorConfiguration.configurationType)) {
+                    errors.add(getString("ValidationError.9", id)); //$NON-NLS-1$
+                }
+
+                if ("MIXEDMAPPER".equalsIgnoreCase(javaClientGeneratorConfiguration.configurationType)) {
+                    errors.add(getString("ValidationError.9", id)); //$NON-NLS-1$
+                }
+            }
         }
 
-        if (it != null && it.requiresXMLGenerator()) {
-            if (sqlMapGeneratorConfiguration == null) {
-                errors.add(getString("ValidationError.9", id)); //$NON-NLS-1$
-            } else {
-                sqlMapGeneratorConfiguration.validate(errors, id);
-            }
+        if (sqlMapGeneratorConfiguration != null) {
+            sqlMapGeneratorConfiguration.validate(errors, id);
         }
 
         if (tableConfigurations.isEmpty()) {
@@ -198,8 +200,8 @@ public class Context extends PropertyHolder {
         return pluginConfigurations.stream();
     }
 
-    public Stream<TableConfiguration> tableConfigurations() {
-        return tableConfigurations.stream();
+    public List<TableConfiguration> tableConfigurations() {
+        return tableConfigurations;
     }
 
     public boolean autoDelimitKeywords() {

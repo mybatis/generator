@@ -22,15 +22,14 @@ import org.mybatis.generator.runtime.mybatis3.LegacyJavaRuntime;
 import org.mybatis.generator.runtime.mybatis3.LegacySimpleJavaRuntime;
 
 public enum KnownRuntime {
-    MYBATIS3("MyBatis3", LegacyJavaRuntime.Builder.class.getName(), true, false),
-    MYBATIS3_SIMPLE("MyBatis3Simple", LegacySimpleJavaRuntime.Builder.class.getName(), true, false),
-    MYBATIS3_DYNAMIC_SQL("MyBatis3DynamicSql", JavaDynamicSqlRuntime.Builder.class.getName(), false, true),
-    MYBATIS3_KOTLIN("MyBatis3Kotlin", KotlinDynamicSqlRuntime.Builder.class.getName(), false, true),
-    UNKNOWN("Unknown", "Unknown", false, false);
+    MYBATIS3("MyBatis3", LegacyJavaRuntime.Builder.class.getName(), false),
+    MYBATIS3_SIMPLE("MyBatis3Simple", LegacySimpleJavaRuntime.Builder.class.getName(), false),
+    MYBATIS3_DYNAMIC_SQL("MyBatis3DynamicSql", JavaDynamicSqlRuntime.Builder.class.getName(), true),
+    MYBATIS3_KOTLIN("MyBatis3Kotlin", KotlinDynamicSqlRuntime.Builder.class.getName(), true),
+    UNKNOWN("Unknown", "Unknown", false);
 
     private final String alias;
     private final String builderClassName;
-    private final boolean requiresXMLGenerator;
     private final boolean isDynamicSqlBased;
 
     public String getBuilderClassName() {
@@ -41,19 +40,13 @@ public enum KnownRuntime {
         return alias;
     }
 
-    public boolean requiresXMLGenerator() {
-        return requiresXMLGenerator;
-    }
-
     public boolean isDynamicSqlBased() {
         return isDynamicSqlBased;
     }
 
-    KnownRuntime(String alias, String builderClassName, boolean requiresXMLGenerator,
-                 boolean isDynamicSqlBased) {
+    KnownRuntime(String alias, String builderClassName, boolean isDynamicSqlBased) {
         this.alias = alias;
         this.builderClassName = builderClassName;
-        this.requiresXMLGenerator = requiresXMLGenerator;
         this.isDynamicSqlBased = isDynamicSqlBased;
     }
 

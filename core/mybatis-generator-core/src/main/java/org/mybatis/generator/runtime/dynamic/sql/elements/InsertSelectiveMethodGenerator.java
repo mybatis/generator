@@ -26,7 +26,7 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
-import org.mybatis.generator.codegen.mybatis3.ListUtilities;
+import org.mybatis.generator.runtime.mybatis3.ListUtilities;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
 
 public class InsertSelectiveMethodGenerator extends AbstractMethodGenerator {

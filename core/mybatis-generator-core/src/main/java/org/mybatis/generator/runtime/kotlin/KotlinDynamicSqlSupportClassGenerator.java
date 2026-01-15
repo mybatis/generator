@@ -15,7 +15,7 @@
  */
 package org.mybatis.generator.runtime.kotlin;
 
-import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getEscapedColumnName;
+import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getEscapedColumnName;
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForKotlin;
 
 import java.util.List;

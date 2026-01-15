@@ -30,7 +30,7 @@ import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
 import org.mybatis.generator.api.dom.kotlin.JavaToKotlinTypeConverter;
 import org.mybatis.generator.api.dom.kotlin.KotlinArg;
-import org.mybatis.generator.codegen.mybatis3.ListUtilities;
+import org.mybatis.generator.runtime.mybatis3.ListUtilities;
 import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.runtime.kotlin.KotlinDynamicSqlSupportClassGenerator;
 

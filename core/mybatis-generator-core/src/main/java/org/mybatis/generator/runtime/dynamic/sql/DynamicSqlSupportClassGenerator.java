@@ -15,7 +15,7 @@
  */
 package org.mybatis.generator.runtime.dynamic.sql;
 
-import static org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities.getEscapedColumnName;
+import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getEscapedColumnName;
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 
 import java.util.List;

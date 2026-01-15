@@ -27,9 +27,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.jspecify.annotations.Nullable;
-import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.KnownRuntime;
-import org.mybatis.generator.internal.ObjectFactory;
 
 public class Context extends PropertyHolder {
     private final String id;
@@ -202,8 +200,8 @@ public class Context extends PropertyHolder {
         return pluginConfigurations.stream();
     }
 
-    public Stream<TableConfiguration> tableConfigurations() {
-        return tableConfigurations.stream();
+    public List<TableConfiguration> tableConfigurations() {
+        return tableConfigurations;
     }
 
     public boolean autoDelimitKeywords() {

@@ -40,7 +40,6 @@ public class GenerationEngine {
     protected GenerationEngine(Builder builder) {
         contextValues = Objects.requireNonNull(builder.contextValues);
         progressCallback = Objects.requireNonNull(builder.progressCallback);
-        runtimes = new ArrayList<>();
 
         Context context = contextValues.context();
         List<String> warnings = Objects.requireNonNull(builder.warnings);
@@ -48,26 +47,22 @@ public class GenerationEngine {
 
         // initialize everything first before generating. This allows plugins to know about other
         // items in the configuration.
-        for (IntrospectedTable introspectedTable : builder.introspectedTables) {
+        runtimes = builder.introspectedTables.stream().map(introspectedTable -> {
             AbstractRuntime.AbstractRuntimeBuilder<?> runtimeBuilder = ObjectFactory.createInternalObject(
                     contextValues.runtimeBuilderClassName(), AbstractRuntime.AbstractRuntimeBuilder.class);
-            runtimes.add(runtimeBuilder
+            return runtimeBuilder
                     .withIntrospectedTable(introspectedTable)
                     .withContext(context)
                     .withCommentGenerator(commentGenerator)
                     .withPluginAggregator(contextValues.pluginAggregator())
                     .withProgressCallback(progressCallback)
                     .withWarnings(warnings)
-                    .build());
-        }
+                    .build();
+        }).toList();
     }
 
     public int getGenerationSteps() {
-        int totalSteps = 0;
-        for (AbstractRuntime runtime : runtimes) {
-            totalSteps += runtime.getGenerationSteps();
-        }
-        return totalSteps;
+        return runtimes.stream().mapToInt(AbstractRuntime::getGenerationSteps).sum();
     }
 
     public GenerationResults generate() throws InterruptedException {

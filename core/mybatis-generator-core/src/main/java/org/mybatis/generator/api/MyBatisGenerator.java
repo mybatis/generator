@@ -211,27 +211,13 @@ public class MyBatisGenerator {
         ObjectFactory.reset();
         RootClassInfo.reset();
 
-        // setup custom classloader if required
-        if (!configuration.getClassPathEntries().isEmpty()) {
-            ClassLoader classLoader = getCustomClassloader(configuration.getClassPathEntries());
-            ObjectFactory.addExternalClassLoader(classLoader);
-        }
+        setupCustomClassloader();
 
-        // calculate the contexts to run
-        List<Context> contextsToRun;
-        if (localFullyQualifiedTableNames.isEmpty()) {
-            contextsToRun = configuration.getContexts();
-        } else {
-            contextsToRun = configuration.getContexts().stream()
-                    .filter(c -> localContextIds.contains(c.getId()))
-                    .toList();
-        }
+        List<Context> contextsToRun = calculateContextsToRun(localFullyQualifiedTableNames, localContextIds);
 
-        List<CalculatedContextValues> contextValuesList = contextsToRun.stream()
-                .map(this::createContextValues)
-                .toList();
+        List<CalculatedContextValues> contextValuesList = calculateContextValues(contextsToRun);
 
-        runIntrospection(contextValuesList, localFullyQualifiedTableNames, localProgressCallback);
+        runAllIntrospections(contextValuesList, localFullyQualifiedTableNames, localProgressCallback);
 
         List<GenerationEngine> generationEngines = createGenerationEngines(contextValuesList, localProgressCallback);
 
@@ -244,6 +230,32 @@ public class MyBatisGenerator {
         localProgressCallback.done();
     }
 
+    private void setupCustomClassloader() {
+        if (!configuration.getClassPathEntries().isEmpty()) {
+            ClassLoader classLoader = getCustomClassloader(configuration.getClassPathEntries());
+            ObjectFactory.addExternalClassLoader(classLoader);
+        }
+    }
+
+    private List<Context> calculateContextsToRun(Set<String> fullyQualifiedTableNames, Set<String> contextIds) {
+        List<Context> contextsToRun;
+        if (fullyQualifiedTableNames.isEmpty()) {
+            contextsToRun = configuration.getContexts();
+        } else {
+            contextsToRun = configuration.getContexts().stream()
+                    .filter(c -> contextIds.contains(c.getId()))
+                    .toList();
+        }
+
+        return contextsToRun;
+    }
+
+    private List<CalculatedContextValues> calculateContextValues(List<Context> contextsToRun) {
+        return contextsToRun.stream()
+                .map(this::createContextValues)
+                .toList();
+    }
+
     private CalculatedContextValues createContextValues(Context context) {
         return new CalculatedContextValues.Builder()
                 .withContext(context)
@@ -251,8 +263,8 @@ public class MyBatisGenerator {
                 .build();
     }
 
-    private void runIntrospection(List<CalculatedContextValues> contextValuesList,
-                                  Set<String> fullyQualifiedTableNames, ProgressCallback progressCallback)
+    private void runAllIntrospections(List<CalculatedContextValues> contextValuesList,
+                                      Set<String> fullyQualifiedTableNames, ProgressCallback progressCallback)
             throws SQLException, InterruptedException {
         int totalSteps = contextValuesList.stream()
                 .map(CalculatedContextValues::context)
@@ -262,13 +274,13 @@ public class MyBatisGenerator {
 
         for (CalculatedContextValues contextValues : contextValuesList) {
             contextValues.addIntrospectedTables(
-                    runContextIntrospector(fullyQualifiedTableNames, contextValues, progressCallback));
+                    runContextIntrospection(fullyQualifiedTableNames, contextValues, progressCallback));
         }
     }
 
-    private List<IntrospectedTable> runContextIntrospector(Set<String> fullyQualifiedTableNames,
-                                                           CalculatedContextValues contextValues,
-                                                           ProgressCallback progressCallback)
+    private List<IntrospectedTable> runContextIntrospection(Set<String> fullyQualifiedTableNames,
+                                                            CalculatedContextValues contextValues,
+                                                            ProgressCallback progressCallback)
             throws SQLException, InterruptedException {
         return new IntrospectionEngine.Builder()
                 .withContextValues(contextValues)
@@ -348,25 +360,20 @@ public class MyBatisGenerator {
                                         @Nullable String javaFileEncoding, ProgressCallback progressCallback)
             throws InterruptedException, IOException {
         Path targetFile;
-        String source;
+        String source = javaFormatter.getFormattedContent(gjf.getCompilationUnit());
         try {
             File directory = shellCallback.getDirectory(gjf.getTargetProject(), gjf.getTargetPackage());
             targetFile = directory.toPath().resolve(gjf.getFileName());
             if (Files.exists(targetFile)) {
                 if (shellCallback.isMergeSupported()) {
-                    source = shellCallback.mergeJavaFile(
-                            javaFormatter.getFormattedContent(gjf.getCompilationUnit()), targetFile.toFile(),
+                    source = shellCallback.mergeJavaFile(source, targetFile.toFile(),
                             MergeConstants.getOldElementTags(), javaFileEncoding);
                 } else if (shellCallback.isOverwriteEnabled()) {
-                    source = javaFormatter.getFormattedContent(gjf.getCompilationUnit());
                     warnings.add(getString("Warning.11", targetFile.toFile().getAbsolutePath())); //$NON-NLS-1$
                 } else {
-                    source = javaFormatter.getFormattedContent(gjf.getCompilationUnit());
                     targetFile = getUniqueFileName(directory, gjf.getFileName());
                     warnings.add(getString("Warning.2", targetFile.toFile().getAbsolutePath())); //$NON-NLS-1$
                 }
-            } else {
-                source = javaFormatter.getFormattedContent(gjf.getCompilationUnit());
             }
 
             progressCallback.checkCancel();
@@ -381,21 +388,17 @@ public class MyBatisGenerator {
                                           @Nullable String kotlinFileEncoding, ProgressCallback progressCallback)
             throws InterruptedException, IOException {
         Path targetFile;
-        String source;
+        String source = kotlinFormatter.getFormattedContent(gf.getKotlinFile());
         try {
             File directory = shellCallback.getDirectory(gf.getTargetProject(), gf.getTargetPackage());
             targetFile = directory.toPath().resolve(gf.getFileName());
             if (Files.exists(targetFile)) {
                 if (shellCallback.isOverwriteEnabled()) {
-                    source = kotlinFormatter.getFormattedContent(gf.getKotlinFile());
                     warnings.add(getString("Warning.11", targetFile.toFile().getAbsolutePath())); //$NON-NLS-1$
                 } else {
-                    source = kotlinFormatter.getFormattedContent(gf.getKotlinFile());
                     targetFile = getUniqueFileName(directory, gf.getFileName());
                     warnings.add(getString("Warning.2", targetFile.toFile().getAbsolutePath())); //$NON-NLS-1$
                 }
-            } else {
-                source = kotlinFormatter.getFormattedContent(gf.getKotlinFile());
             }
 
             progressCallback.checkCancel();
@@ -409,21 +412,17 @@ public class MyBatisGenerator {
     private void writeGenericGeneratedFile(GenericGeneratedFile gf, ProgressCallback progressCallback)
             throws InterruptedException, IOException {
         Path targetFile;
-        String source;
+        String source = gf.getFormattedContent();
         try {
             File directory = shellCallback.getDirectory(gf.getTargetProject(), gf.getTargetPackage());
             targetFile = directory.toPath().resolve(gf.getFileName());
             if (Files.exists(targetFile)) {
                 if (shellCallback.isOverwriteEnabled()) {
-                    source = gf.getFormattedContent();
                     warnings.add(getString("Warning.11", targetFile.toFile().getAbsolutePath())); //$NON-NLS-1$
                 } else {
-                    source = gf.getFormattedContent();
                     targetFile = getUniqueFileName(directory, gf.getFileName());
                     warnings.add(getString("Warning.2", targetFile.toFile().getAbsolutePath())); //$NON-NLS-1$
                 }
-            } else {
-                source = gf.getFormattedContent();
             }
 
             progressCallback.checkCancel();
@@ -437,24 +436,19 @@ public class MyBatisGenerator {
     private void writeGeneratedXmlFile(GeneratedXmlFile gxf, XmlFormatter xmlFormatter, ProgressCallback progressCallback)
             throws InterruptedException, IOException {
         Path targetFile;
-        String source;
+        String source = xmlFormatter.getFormattedContent(gxf.getDocument());
         try {
             File directory = shellCallback.getDirectory(gxf.getTargetProject(), gxf.getTargetPackage());
             targetFile = directory.toPath().resolve(gxf.getFileName());
             if (Files.exists(targetFile)) {
                 if (gxf.isMergeable()) {
-                    source = XmlFileMergerJaxp.getMergedSource(xmlFormatter.getFormattedContent(gxf.getDocument()),
-                            targetFile.toFile());
+                    source = XmlFileMergerJaxp.getMergedSource(source, targetFile.toFile());
                 } else if (shellCallback.isOverwriteEnabled()) {
-                    source = xmlFormatter.getFormattedContent(gxf.getDocument());
                     warnings.add(getString("Warning.11", targetFile.toFile().getAbsolutePath())); //$NON-NLS-1$
                 } else {
-                    source = xmlFormatter.getFormattedContent(gxf.getDocument());
                     targetFile = getUniqueFileName(directory, gxf.getFileName());
                     warnings.add(getString("Warning.2", targetFile.toFile().getAbsolutePath())); //$NON-NLS-1$
                 }
-            } else {
-                source = xmlFormatter.getFormattedContent(gxf.getDocument());
             }
 
             progressCallback.checkCancel();

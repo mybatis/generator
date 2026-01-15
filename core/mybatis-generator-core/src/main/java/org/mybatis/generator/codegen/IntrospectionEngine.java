@@ -72,10 +72,9 @@ public class IntrospectionEngine {
             DatabaseIntrospector databaseIntrospector = new DatabaseIntrospector(
                     contextValues.context(), connection.getMetaData(), javaTypeResolver, warnings);
 
-            // TODO - awkward toList here
-            for (TableConfiguration tc : contextValues.context().tableConfigurations().toList()) {
-                String tableName = composeFullyQualifiedTableName(tc.getCatalog(), tc
-                                .getSchema(), tc.getTableName(), '.');
+            for (TableConfiguration tc : contextValues.context().tableConfigurations()) {
+                String tableName = composeFullyQualifiedTableName(tc.getCatalog(), tc.getSchema(),
+                        tc.getTableName(), '.');
 
                 if (isTableExcluded(tableName)) {
                     continue;

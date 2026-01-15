@@ -17,6 +17,7 @@ package org.mybatis.generator.api;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
@@ -26,6 +27,7 @@ import org.mybatis.generator.codegen.AbstractGenerator;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.codegen.AbstractKotlinGenerator;
 import org.mybatis.generator.codegen.AbstractXmlGenerator;
+import org.mybatis.generator.config.JavaClientGeneratorConfiguration;
 import org.mybatis.generator.config.SqlMapGeneratorConfiguration;
 
 public abstract class AbstractRuntime extends AbstractGenerator {
@@ -35,11 +37,11 @@ public abstract class AbstractRuntime extends AbstractGenerator {
 
     protected AbstractRuntime(AbstractRuntimeBuilder<?> builder) {
         super(builder);
+        calculateGenerators();
     }
 
-    protected String getClientProject() {
-        // TODO - should return optional
-        return context.getJavaClientGeneratorConfiguration().orElseThrow().getTargetProject();
+    protected Optional<String> getClientProject() {
+        return context.getJavaClientGeneratorConfiguration().map(JavaClientGeneratorConfiguration::getTargetProject);
     }
 
     protected String getModelProject() {
@@ -127,6 +129,12 @@ public abstract class AbstractRuntime extends AbstractGenerator {
     public IntrospectedTable getIntrospectedTable() {
         return introspectedTable;
     }
+
+    /**
+     * This method will be called in constructor. Subclasses should calculate generators for their runtimes and add
+     * them to the various lists contained in this class.
+     */
+    protected abstract void calculateGenerators();
 
     public abstract static class AbstractRuntimeBuilder<T extends AbstractRuntimeBuilder<T>>
             extends AbstractGeneratorBuilder<T> {

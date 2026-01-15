@@ -43,9 +43,9 @@ import org.mybatis.generator.runtime.mybatis3.xmlmapper.XMLMapperGenerator;
 public class LegacyJavaRuntime extends AbstractRuntime {
     protected LegacyJavaRuntime(Builder builder) {
         super(builder);
-        calculateGenerators();
     }
 
+    @Override
     protected void calculateGenerators() {
         calculateJavaModelGenerators(warnings, progressCallback);
 
@@ -85,7 +85,9 @@ public class LegacyJavaRuntime extends AbstractRuntime {
                     ObjectFactory.createInternalObject(t,
                     AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder.class);
             var generator = builder
-                    .withProject(getClientProject())
+                    .withProject(getClientProject().orElseThrow(() -> new IllegalArgumentException(
+                            "Internal Error: No client project exists when a client generator configuration exists.")
+                    ))
                     .withContext(context)
                     .withIntrospectedTable(introspectedTable)
                     .withProgressCallback(progressCallback)

@@ -24,20 +24,22 @@ import org.mybatis.generator.codegen.AbstractKotlinGenerator;
 public class KotlinDynamicSqlRuntime extends AbstractRuntime {
     public KotlinDynamicSqlRuntime(Builder builder) {
         super(builder);
+    }
+
+    @Override
+    protected void calculateGenerators() {
         calculateKotlinDataClassGenerator(warnings, progressCallback);
-        if (contextHasClientConfiguration() && introspectedTable.getRules().generateJavaClient()) {
-            calculateKotlinMapperAndExtensionsGenerator(warnings, progressCallback);
-        }
+        context.getJavaClientGeneratorConfiguration().ifPresent(config -> {
+            if (introspectedTable.getRules().generateJavaClient()) {
+                calculateKotlinMapperAndExtensionsGenerator(config.getTargetProject(), warnings, progressCallback);
+            }
+        });
     }
 
-    private boolean contextHasClientConfiguration() {
-        return context.getJavaClientGeneratorConfiguration().isPresent();
-    }
-
-    protected void calculateKotlinMapperAndExtensionsGenerator(List<String> warnings,
+    protected void calculateKotlinMapperAndExtensionsGenerator(String clientProject, List<String> warnings,
             ProgressCallback progressCallback) {
         AbstractKotlinGenerator kotlinGenerator = new KotlinMapperAndExtensionsGenerator.Builder()
-                .withProject(getClientProject())
+                .withProject(clientProject)
                 .withContext(context)
                 .withIntrospectedTable(introspectedTable)
                 .withProgressCallback(progressCallback)

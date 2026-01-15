@@ -21,11 +21,11 @@ import java.util.Optional;
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
+import org.mybatis.generator.config.TypedPropertyHolder;
 import org.mybatis.generator.runtime.mybatis3.javamapper.SimpleAnnotatedClientGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.SimpleJavaClientGenerator;
 import org.mybatis.generator.runtime.mybatis3.model.SimpleModelGenerator;
 import org.mybatis.generator.runtime.mybatis3.xmlmapper.SimpleXMLMapperGenerator;
-import org.mybatis.generator.config.TypedPropertyHolder;
 
 /**
  * Introspected table implementation for generating simple MyBatis3 artifacts.

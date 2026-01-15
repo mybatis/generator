@@ -63,7 +63,9 @@ public class IntrospectionEngine {
      * @throws InterruptedException
      *             if the progress callback reports a cancel
      */
-    public List<IntrospectedTable> introspectTables(@Nullable KnownRuntime knownRuntime, PluginAggregator pluginAggregator) throws SQLException, InterruptedException {
+    public List<IntrospectedTable> introspectTables(@Nullable KnownRuntime knownRuntime,
+                                                    PluginAggregator pluginAggregator)
+            throws SQLException, InterruptedException {
 
         List<IntrospectedTable> introspectedTables = new ArrayList<>();
         JavaTypeResolver javaTypeResolver = ObjectFactory.createJavaTypeResolver(context, warnings);
@@ -89,7 +91,8 @@ public class IntrospectionEngine {
                 }
 
                 progressCallback.startTask(getString("Progress.1", tableName)); //$NON-NLS-1$
-                List<IntrospectedTable> tables = databaseIntrospector.introspectTables(tc, knownRuntime, pluginAggregator);
+                List<IntrospectedTable> tables = databaseIntrospector.introspectTables(tc, knownRuntime,
+                        pluginAggregator);
                 introspectedTables.addAll(tables);
 
                 progressCallback.checkCancel();

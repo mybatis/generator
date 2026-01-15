@@ -134,17 +134,17 @@ public class IntrospectedTable {
         calculateXmlAttributes();
 
         switch (getTableConfiguration().getModelType()) {
-            case HIERARCHICAL:
-                rules = new HierarchicalModelRules(this);
-                break;
-            case FLAT:
-                rules = new FlatModelRules(this);
-                break;
-            case CONDITIONAL:
-                rules = new ConditionalModelRules(this);
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown model type: " + getTableConfiguration().getModelType());
+        case HIERARCHICAL:
+            rules = new HierarchicalModelRules(this);
+            break;
+        case FLAT:
+            rules = new FlatModelRules(this);
+            break;
+        case CONDITIONAL:
+            rules = new ConditionalModelRules(this);
+            break;
+        default:
+            throw new IllegalArgumentException("Unknown model type: " + getTableConfiguration().getModelType());
         }
 
         builder.pluginAggregator.initialized(this);

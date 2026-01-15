@@ -16,9 +16,9 @@
 package org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated;
 
 import static org.mybatis.generator.api.dom.OutputUtilities.javaIndent;
+import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getEscapedColumnName;
 import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getParameterClause;
-import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 
 import java.util.ArrayList;
 import java.util.Iterator;

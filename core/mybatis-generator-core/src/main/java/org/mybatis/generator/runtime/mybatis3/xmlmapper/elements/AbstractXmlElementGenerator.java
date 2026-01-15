@@ -26,9 +26,9 @@ import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.AbstractGenerator;
+import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.runtime.mybatis3.ListUtilities;
 import org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities;
-import org.mybatis.generator.config.GeneratedKey;
 
 public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
     protected AbstractXmlElementGenerator(AbstractXmlElementGeneratorBuilder<?> builder) {

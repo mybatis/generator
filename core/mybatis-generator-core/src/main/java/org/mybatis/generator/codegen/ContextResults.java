@@ -15,6 +15,8 @@
  */
 package org.mybatis.generator.codegen;
 
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -36,8 +38,6 @@ import org.mybatis.generator.config.Defaults;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.internal.ObjectFactory;
 import org.mybatis.generator.internal.PluginAggregator;
-
-import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 /**
  * This class holds the intermediate results of the generator, as well as many pre-calculated objects.

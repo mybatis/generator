@@ -16,8 +16,8 @@
 package org.mybatis.generator.runtime.dynamic.sql.elements;
 
 import org.mybatis.generator.api.IntrospectedTable;
-import org.mybatis.generator.runtime.mybatis3.ListUtilities;
 import org.mybatis.generator.config.GeneratedKey;
+import org.mybatis.generator.runtime.mybatis3.ListUtilities;
 
 public class Utils {
     private Utils() {

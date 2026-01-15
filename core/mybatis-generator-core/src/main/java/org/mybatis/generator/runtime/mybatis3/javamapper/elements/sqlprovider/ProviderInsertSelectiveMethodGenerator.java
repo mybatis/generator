@@ -15,10 +15,10 @@
  */
 package org.mybatis.generator.runtime.mybatis3.javamapper.elements.sqlprovider;
 
-import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getEscapedColumnName;
-import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getParameterClause;
 import static org.mybatis.generator.internal.util.JavaBeansUtil.getGetterMethodName;
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
+import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getEscapedColumnName;
+import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getParameterClause;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;

@@ -39,22 +39,21 @@ public class GenerationEngine {
     private final List<AbstractRuntime> runtimes;
 
     protected GenerationEngine(Builder builder) {
-        Context context = Objects.requireNonNull(builder.context);
-        List<String> warnings = Objects.requireNonNull(builder.warnings);
         progressCallback = Objects.requireNonNull(builder.progressCallback);
         introspectedTables = Objects.requireNonNull(builder.introspectedTables);
-        CommentGenerator commentGenerator = Objects.requireNonNull(builder.commentGenerator);
         pluginAggregator = Objects.requireNonNull(builder.pluginAggregator);
         runtimes = new ArrayList<>();
         Objects.requireNonNull(builder.runtimeBuilderClassName);
 
-
+        Context context = Objects.requireNonNull(builder.context);
+        List<String> warnings = Objects.requireNonNull(builder.warnings);
+        CommentGenerator commentGenerator = Objects.requireNonNull(builder.commentGenerator);
 
         // initialize everything first before generating. This allows plugins to know about other
         // items in the configuration.
         for (IntrospectedTable introspectedTable : introspectedTables) {
-            AbstractRuntime.AbstractRuntimeBuilder<?> runtimeBuilder =
-                    ObjectFactory.createInternalObject(builder.runtimeBuilderClassName, AbstractRuntime.AbstractRuntimeBuilder.class);
+            AbstractRuntime.AbstractRuntimeBuilder<?> runtimeBuilder = ObjectFactory.createInternalObject(
+                    builder.runtimeBuilderClassName, AbstractRuntime.AbstractRuntimeBuilder.class);
             runtimes.add(runtimeBuilder
                     .withIntrospectedTable(introspectedTable)
                     .withContext(context)
@@ -77,7 +76,8 @@ public class GenerationEngine {
             }
 
             generatedJavaFiles.addAll(runtime.getGeneratedJavaFiles());
-            generatedJavaFiles.addAll(pluginAggregator.contextGenerateAdditionalJavaFiles(runtime.getIntrospectedTable()));
+            generatedJavaFiles.addAll(
+                    pluginAggregator.contextGenerateAdditionalJavaFiles(runtime.getIntrospectedTable()));
         }
 
         generatedJavaFiles.addAll(pluginAggregator.contextGenerateAdditionalJavaFiles());
@@ -96,7 +96,8 @@ public class GenerationEngine {
             }
 
             generatedXmlFiles.addAll(runtime.getGeneratedXmlFiles());
-            generatedXmlFiles.addAll(pluginAggregator.contextGenerateAdditionalXmlFiles(runtime.getIntrospectedTable()));
+            generatedXmlFiles.addAll(
+                    pluginAggregator.contextGenerateAdditionalXmlFiles(runtime.getIntrospectedTable()));
         }
 
         generatedXmlFiles.addAll(pluginAggregator.contextGenerateAdditionalXmlFiles());
@@ -115,7 +116,8 @@ public class GenerationEngine {
             }
 
             generatedKotlinFiles.addAll(runtime.getGeneratedKotlinFiles());
-            generatedKotlinFiles.addAll(pluginAggregator.contextGenerateAdditionalKotlinFiles(runtime.getIntrospectedTable()));
+            generatedKotlinFiles.addAll(
+                    pluginAggregator.contextGenerateAdditionalKotlinFiles(runtime.getIntrospectedTable()));
         }
 
         generatedKotlinFiles.addAll(pluginAggregator.contextGenerateAdditionalKotlinFiles());

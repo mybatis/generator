@@ -19,13 +19,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.mybatis.generator.api.AbstractRuntime;
 import org.mybatis.generator.api.GeneratedJavaFile;
 import org.mybatis.generator.api.GeneratedKotlinFile;
 import org.mybatis.generator.api.GeneratedXmlFile;
 import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.codegen.AbstractKotlinGenerator;
-import org.mybatis.generator.api.AbstractRuntime;
 
 public class KotlinDynamicSqlRuntime extends AbstractRuntime {
     protected final List<AbstractKotlinGenerator> kotlinGenerators = new ArrayList<>();

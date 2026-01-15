@@ -29,13 +29,13 @@ import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
 import org.mybatis.generator.codegen.AbstractXmlGenerator;
+import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.DeleteByPrimaryKeyMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.InsertMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.SelectAllMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.SelectByPrimaryKeyMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.UpdateByPrimaryKeyWithoutBLOBsMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.xmlmapper.SimpleXMLMapperGenerator;
-import org.mybatis.generator.config.PropertyRegistry;
 
 public class SimpleJavaClientGenerator extends AbstractJavaClientGenerator {
 

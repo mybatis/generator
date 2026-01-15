@@ -29,6 +29,7 @@ import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
 import org.mybatis.generator.codegen.AbstractXmlGenerator;
+import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.CountByExampleMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.DeleteByExampleMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.DeleteByPrimaryKeyMethodGenerator;
@@ -44,7 +45,6 @@ import org.mybatis.generator.runtime.mybatis3.javamapper.elements.UpdateByPrimar
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.UpdateByPrimaryKeyWithBLOBsMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.UpdateByPrimaryKeyWithoutBLOBsMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.xmlmapper.XMLMapperGenerator;
-import org.mybatis.generator.config.PropertyRegistry;
 
 public class JavaMapperGenerator extends AbstractJavaClientGenerator {
 

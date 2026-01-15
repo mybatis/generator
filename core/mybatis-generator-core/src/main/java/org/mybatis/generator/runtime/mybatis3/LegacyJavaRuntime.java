@@ -21,16 +21,21 @@ import java.util.List;
 import java.util.Optional;
 
 import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.api.AbstractRuntime;
 import org.mybatis.generator.api.GeneratedJavaFile;
 import org.mybatis.generator.api.GeneratedKotlinFile;
 import org.mybatis.generator.api.GeneratedXmlFile;
 import org.mybatis.generator.api.ProgressCallback;
-import org.mybatis.generator.api.AbstractRuntime;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.codegen.AbstractXmlGenerator;
+import org.mybatis.generator.config.PropertyRegistry;
+import org.mybatis.generator.config.SqlMapGeneratorConfiguration;
+import org.mybatis.generator.config.TypedPropertyHolder;
+import org.mybatis.generator.internal.ObjectFactory;
+import org.mybatis.generator.internal.util.StringUtility;
 import org.mybatis.generator.runtime.mybatis3.javamapper.AnnotatedClientGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.JavaMapperGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.MixedClientGenerator;
@@ -39,11 +44,6 @@ import org.mybatis.generator.runtime.mybatis3.model.ExampleGenerator;
 import org.mybatis.generator.runtime.mybatis3.model.PrimaryKeyGenerator;
 import org.mybatis.generator.runtime.mybatis3.model.RecordWithBLOBsGenerator;
 import org.mybatis.generator.runtime.mybatis3.xmlmapper.XMLMapperGenerator;
-import org.mybatis.generator.config.PropertyRegistry;
-import org.mybatis.generator.config.SqlMapGeneratorConfiguration;
-import org.mybatis.generator.config.TypedPropertyHolder;
-import org.mybatis.generator.internal.ObjectFactory;
-import org.mybatis.generator.internal.util.StringUtility;
 
 /**
  * Introspected table implementation for generating MyBatis3 artifacts.

@@ -16,11 +16,11 @@
 package org.mybatis.generator.runtime.mybatis3.javamapper.elements;
 
 import static org.mybatis.generator.api.dom.OutputUtilities.javaIndent;
+import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getEscapedColumnName;
 import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getParameterClause;
 import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getRenamedColumnNameForResultMap;
 import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getSelectListPhrase;
-import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,8 +37,8 @@ import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.codegen.AbstractGenerator;
-import org.mybatis.generator.runtime.mybatis3.ListUtilities;
 import org.mybatis.generator.config.GeneratedKey;
+import org.mybatis.generator.runtime.mybatis3.ListUtilities;
 
 public abstract class AbstractJavaMapperMethodGenerator extends AbstractGenerator {
     public abstract void addInterfaceElements(Interface interfaze);

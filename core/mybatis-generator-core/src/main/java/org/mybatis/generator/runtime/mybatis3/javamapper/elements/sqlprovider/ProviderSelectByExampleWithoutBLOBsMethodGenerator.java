@@ -15,8 +15,8 @@
  */
 package org.mybatis.generator.runtime.mybatis3.javamapper.elements.sqlprovider;
 
-import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getSelectListPhrase;
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
+import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getSelectListPhrase;
 
 import java.util.List;
 

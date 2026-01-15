@@ -180,7 +180,8 @@ public class DatabaseIntrospector {
         applyColumnOverrides(tc, columns);
         calculateIdentityColumns(tc, columns);
 
-        List<IntrospectedTable> introspectedTables = calculateIntrospectedTables(tc, columns, knownRuntime, pluginAggregator);
+        List<IntrospectedTable> introspectedTables =
+                calculateIntrospectedTables(tc, columns, knownRuntime, pluginAggregator);
 
         // now introspectedTables has all the columns from all the
         // tables in the configuration. Do some validation...

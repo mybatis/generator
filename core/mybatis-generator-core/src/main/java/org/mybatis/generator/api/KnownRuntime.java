@@ -16,10 +16,10 @@
 package org.mybatis.generator.api;
 
 import org.jspecify.annotations.Nullable;
-import org.mybatis.generator.runtime.mybatis3.LegacyJavaRuntime;
-import org.mybatis.generator.runtime.mybatis3.LegacySimpleJavaRuntime;
 import org.mybatis.generator.runtime.dynamic.sql.JavaDynamicSqlRuntime;
 import org.mybatis.generator.runtime.kotlin.KotlinDynamicSqlRuntime;
+import org.mybatis.generator.runtime.mybatis3.LegacyJavaRuntime;
+import org.mybatis.generator.runtime.mybatis3.LegacySimpleJavaRuntime;
 
 public enum KnownRuntime {
     MYBATIS3("MyBatis3", LegacyJavaRuntime.Builder.class.getName(), true, false),

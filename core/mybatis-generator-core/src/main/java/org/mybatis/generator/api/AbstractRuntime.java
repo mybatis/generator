@@ -62,7 +62,8 @@ public abstract class AbstractRuntime extends AbstractGenerator {
         return introspectedTable;
     }
 
-    public abstract static class AbstractRuntimeBuilder<T extends AbstractRuntimeBuilder<T>> extends AbstractGeneratorBuilder<T> {
+    public abstract static class AbstractRuntimeBuilder<T extends AbstractRuntimeBuilder<T>>
+            extends AbstractGeneratorBuilder<T> {
         public abstract AbstractRuntime build();
     }
 }

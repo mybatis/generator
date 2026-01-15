@@ -18,10 +18,10 @@ package org.mybatis.generator.internal.rules;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.KnownRuntime;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
-import org.mybatis.generator.runtime.mybatis3.ListUtilities;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.config.TableConfiguration;
 import org.mybatis.generator.internal.util.StringUtility;
+import org.mybatis.generator.runtime.mybatis3.ListUtilities;
 
 /**
  * This class centralizes all the rules related to code generation - including

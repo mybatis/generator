@@ -15,13 +15,45 @@
  */
 package org.mybatis.generator.api;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.api.dom.java.CompilationUnit;
+import org.mybatis.generator.api.dom.kotlin.KotlinFile;
+import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.codegen.AbstractGenerator;
+import org.mybatis.generator.codegen.AbstractJavaGenerator;
+import org.mybatis.generator.codegen.AbstractKotlinGenerator;
+import org.mybatis.generator.codegen.AbstractXmlGenerator;
+import org.mybatis.generator.config.SqlMapGeneratorConfiguration;
 
 public abstract class AbstractRuntime extends AbstractGenerator {
+    protected final List<AbstractKotlinGenerator> kotlinGenerators = new ArrayList<>();
+    protected final List<AbstractJavaGenerator> javaGenerators = new ArrayList<>();
+    protected @Nullable AbstractXmlGenerator xmlMapperGenerator;
+
     protected AbstractRuntime(AbstractRuntimeBuilder<?> builder) {
         super(builder);
+    }
+
+    protected String getClientProject() {
+        // TODO - should return optional
+        return context.getJavaClientGeneratorConfiguration().orElseThrow().getTargetProject();
+    }
+
+    protected String getModelProject() {
+        return context.getJavaModelGeneratorConfiguration().getTargetProject();
+    }
+
+    /**
+     * This method should return the number of progress messages that will be
+     * sent during the generation phase.
+     *
+     * @return the number of progress messages
+     */
+    public int getGenerationSteps() {
+        return javaGenerators.size() + kotlinGenerators.size() + (xmlMapperGenerator == null ? 0 : 1);
     }
 
     /**
@@ -31,7 +63,19 @@ public abstract class AbstractRuntime extends AbstractGenerator {
      *
      * @return the list of generated Java files for this table
      */
-    public abstract List<GeneratedJavaFile> getGeneratedJavaFiles();
+    public List<GeneratedJavaFile> getGeneratedJavaFiles() {
+        List<GeneratedJavaFile> answer = new ArrayList<>();
+
+        for (AbstractJavaGenerator javaGenerator : javaGenerators) {
+            List<CompilationUnit> compilationUnits = javaGenerator.getCompilationUnits();
+            for (CompilationUnit compilationUnit : compilationUnits) {
+                GeneratedJavaFile gjf = new GeneratedJavaFile(compilationUnit, javaGenerator.getProject());
+                answer.add(gjf);
+            }
+        }
+
+        return answer;
+    }
 
     /**
      * This method should return a list of generated XML files related to this
@@ -40,7 +84,25 @@ public abstract class AbstractRuntime extends AbstractGenerator {
      *
      * @return the list of generated XML files for this table
      */
-    public abstract List<GeneratedXmlFile> getGeneratedXmlFiles();
+    public List<GeneratedXmlFile> getGeneratedXmlFiles() {
+        List<GeneratedXmlFile> answer = new ArrayList<>();
+
+        if (xmlMapperGenerator != null) {
+            Document document = xmlMapperGenerator.getDocument();
+            if (document != null) {
+                GeneratedXmlFile gxf = new GeneratedXmlFile(document, introspectedTable.getMyBatis3XmlMapperFileName(),
+                        introspectedTable.getMyBatis3XmlMapperPackage(),
+                        context.getSqlMapGeneratorConfiguration()
+                                .map(SqlMapGeneratorConfiguration::getTargetProject).orElse(""),
+                        true);
+                if (pluginAggregator.sqlMapGenerated(gxf, introspectedTable)) {
+                    answer.add(gxf);
+                }
+            }
+        }
+
+        return answer;
+    }
 
     /**
      * This method should return a list of generated Kotlin files related to this
@@ -48,15 +110,19 @@ public abstract class AbstractRuntime extends AbstractGenerator {
      *
      * @return the list of generated Kotlin files for this table
      */
-    public abstract List<GeneratedKotlinFile> getGeneratedKotlinFiles();
+    public List<GeneratedKotlinFile> getGeneratedKotlinFiles() {
+        List<GeneratedKotlinFile> answer = new ArrayList<>();
 
-    /**
-     * This method should return the number of progress messages that will be
-     * sent during the generation phase.
-     *
-     * @return the number of progress messages
-     */
-    public abstract int getGenerationSteps();
+        for (AbstractKotlinGenerator kotlinGenerator : kotlinGenerators) {
+            List<KotlinFile> kotlinFiles = kotlinGenerator.getKotlinFiles();
+            for (KotlinFile kotlinFile : kotlinFiles) {
+                GeneratedKotlinFile gjf = new GeneratedKotlinFile(kotlinFile, kotlinGenerator.getProject());
+                answer.add(gjf);
+            }
+        }
+
+        return answer;
+    }
 
     public IntrospectedTable getIntrospectedTable() {
         return introspectedTable;

@@ -15,24 +15,14 @@
  */
 package org.mybatis.generator.runtime.mybatis3;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.AbstractRuntime;
-import org.mybatis.generator.api.GeneratedJavaFile;
-import org.mybatis.generator.api.GeneratedKotlinFile;
-import org.mybatis.generator.api.GeneratedXmlFile;
 import org.mybatis.generator.api.ProgressCallback;
-import org.mybatis.generator.api.dom.java.CompilationUnit;
-import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
-import org.mybatis.generator.codegen.AbstractJavaGenerator;
-import org.mybatis.generator.codegen.AbstractXmlGenerator;
 import org.mybatis.generator.config.PropertyRegistry;
-import org.mybatis.generator.config.SqlMapGeneratorConfiguration;
 import org.mybatis.generator.config.TypedPropertyHolder;
 import org.mybatis.generator.internal.ObjectFactory;
 import org.mybatis.generator.internal.util.StringUtility;
@@ -51,9 +41,6 @@ import org.mybatis.generator.runtime.mybatis3.xmlmapper.XMLMapperGenerator;
  * @author Jeff Butler
  */
 public class LegacyJavaRuntime extends AbstractRuntime {
-    protected final List<AbstractJavaGenerator> javaGenerators = new ArrayList<>();
-    protected @Nullable AbstractXmlGenerator xmlMapperGenerator;
-
     protected LegacyJavaRuntime(Builder builder) {
         super(builder);
         calculateGenerators();
@@ -94,9 +81,19 @@ public class LegacyJavaRuntime extends AbstractRuntime {
         }
 
         return calculateJavaClientGeneratorBuilderType().map(t -> {
-            var builder = ObjectFactory.createInternalObject(t,
+            AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder<?> builder =
+                    ObjectFactory.createInternalObject(t,
                     AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder.class);
-            var generator = initializeAbstractClientGenerator(builder, warnings, progressCallback).build();
+            var generator = builder
+                    .withProject(getClientProject())
+                    .withContext(context)
+                    .withIntrospectedTable(introspectedTable)
+                    .withProgressCallback(progressCallback)
+                    .withWarnings(warnings)
+                    .withCommentGenerator(commentGenerator)
+                    .withPluginAggregator(pluginAggregator)
+                    .build();
+
             javaGenerators.add(generator);
             return generator;
         });
@@ -174,47 +171,6 @@ public class LegacyJavaRuntime extends AbstractRuntime {
         }
     }
 
-    protected AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder<?> initializeAbstractClientGenerator(
-            AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder<?> builder, List<String> warnings,
-            ProgressCallback progressCallback) {
-        return builder
-                .withProject(getClientProject())
-                .withContext(context)
-                .withIntrospectedTable(introspectedTable)
-                .withProgressCallback(progressCallback)
-                .withWarnings(warnings)
-                .withCommentGenerator(commentGenerator)
-                .withPluginAggregator(pluginAggregator);
-    }
-
-    @Override
-    public List<GeneratedJavaFile> getGeneratedJavaFiles() {
-        List<GeneratedJavaFile> answer = new ArrayList<>();
-
-        for (AbstractJavaGenerator javaGenerator : javaGenerators) {
-            List<CompilationUnit> compilationUnits = javaGenerator.getCompilationUnits();
-            for (CompilationUnit compilationUnit : compilationUnits) {
-                GeneratedJavaFile gjf = new GeneratedJavaFile(compilationUnit, javaGenerator.getProject());
-                answer.add(gjf);
-            }
-        }
-
-        return answer;
-    }
-
-    @Override
-    public List<GeneratedKotlinFile> getGeneratedKotlinFiles() {
-        return Collections.emptyList();
-    }
-
-    protected String getClientProject() {
-        return context.getJavaClientGeneratorConfiguration().orElseThrow().getTargetProject();
-    }
-
-    protected String getModelProject() {
-        return context.getJavaModelGeneratorConfiguration().getTargetProject();
-    }
-
     protected String getExampleProject() {
         String project = context.getJavaModelGeneratorConfiguration().getProperty(
                 PropertyRegistry.MODEL_GENERATOR_EXAMPLE_PROJECT);
@@ -224,32 +180,6 @@ public class LegacyJavaRuntime extends AbstractRuntime {
         } else {
             return getModelProject();
         }
-    }
-
-    @Override
-    public List<GeneratedXmlFile> getGeneratedXmlFiles() {
-        List<GeneratedXmlFile> answer = new ArrayList<>();
-
-        if (xmlMapperGenerator != null) {
-            Document document = xmlMapperGenerator.getDocument();
-            if (document != null) {
-                GeneratedXmlFile gxf = new GeneratedXmlFile(document, introspectedTable.getMyBatis3XmlMapperFileName(),
-                        introspectedTable.getMyBatis3XmlMapperPackage(),
-                        context.getSqlMapGeneratorConfiguration()
-                                .map(SqlMapGeneratorConfiguration::getTargetProject).orElse(""),
-                        true);
-                if (pluginAggregator.sqlMapGenerated(gxf, introspectedTable)) {
-                    answer.add(gxf);
-                }
-            }
-        }
-
-        return answer;
-    }
-
-    @Override
-    public int getGenerationSteps() {
-        return javaGenerators.size() + (xmlMapperGenerator == null ? 0 : 1);
     }
 
     public static class Builder extends AbstractRuntimeBuilder<Builder> {

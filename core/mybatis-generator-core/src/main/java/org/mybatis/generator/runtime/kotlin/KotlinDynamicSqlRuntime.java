@@ -15,21 +15,13 @@
  */
 package org.mybatis.generator.runtime.kotlin;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.mybatis.generator.api.AbstractRuntime;
-import org.mybatis.generator.api.GeneratedJavaFile;
-import org.mybatis.generator.api.GeneratedKotlinFile;
-import org.mybatis.generator.api.GeneratedXmlFile;
 import org.mybatis.generator.api.ProgressCallback;
-import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.codegen.AbstractKotlinGenerator;
 
 public class KotlinDynamicSqlRuntime extends AbstractRuntime {
-    protected final List<AbstractKotlinGenerator> kotlinGenerators = new ArrayList<>();
-
     public KotlinDynamicSqlRuntime(Builder builder) {
         super(builder);
         calculateKotlinDataClassGenerator(warnings, progressCallback);
@@ -45,7 +37,7 @@ public class KotlinDynamicSqlRuntime extends AbstractRuntime {
     protected void calculateKotlinMapperAndExtensionsGenerator(List<String> warnings,
             ProgressCallback progressCallback) {
         AbstractKotlinGenerator kotlinGenerator = new KotlinMapperAndExtensionsGenerator.Builder()
-                .withProject(getModelProject())
+                .withProject(getClientProject())
                 .withContext(context)
                 .withIntrospectedTable(introspectedTable)
                 .withProgressCallback(progressCallback)
@@ -68,40 +60,6 @@ public class KotlinDynamicSqlRuntime extends AbstractRuntime {
                 .withPluginAggregator(pluginAggregator)
                 .build();
         kotlinGenerators.add(kotlinGenerator);
-    }
-
-    protected String getModelProject() {
-        return context.getJavaModelGeneratorConfiguration().getTargetProject();
-    }
-
-    @Override
-    public List<GeneratedJavaFile> getGeneratedJavaFiles() {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public List<GeneratedXmlFile> getGeneratedXmlFiles() {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public List<GeneratedKotlinFile> getGeneratedKotlinFiles() {
-        List<GeneratedKotlinFile> answer = new ArrayList<>();
-
-        for (AbstractKotlinGenerator kotlinGenerator : kotlinGenerators) {
-            List<KotlinFile> kotlinFiles = kotlinGenerator.getKotlinFiles();
-            for (KotlinFile kotlinFile : kotlinFiles) {
-                GeneratedKotlinFile gjf = new GeneratedKotlinFile(kotlinFile, kotlinGenerator.getProject());
-                answer.add(gjf);
-            }
-        }
-
-        return answer;
-    }
-
-    @Override
-    public int getGenerationSteps() {
-        return kotlinGenerators.size();
     }
 
     public static class Builder extends AbstractRuntimeBuilder<Builder> {

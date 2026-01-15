@@ -393,7 +393,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
     public void addGeneralMethodAnnotation(Method method, IntrospectedTable introspectedTable,
             Set<FullyQualifiedJavaType> imports) {
         imports.add(generatedImport);
-        String comment = "Source Table: " + introspectedTable.getFullyQualifiedTable().toString(); //$NON-NLS-1$
+        String comment = "Source Table: " + introspectedTable.getFullyQualifiedTable(); //$NON-NLS-1$
         method.addAnnotation(getGeneratedAnnotation(comment));
     }
 
@@ -402,7 +402,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
             IntrospectedColumn introspectedColumn, Set<FullyQualifiedJavaType> imports) {
         imports.add(generatedImport);
         String comment = "Source field: " //$NON-NLS-1$
-                + introspectedTable.getFullyQualifiedTable().toString() + "." //$NON-NLS-1$
+                + introspectedTable.getFullyQualifiedTable() + "." //$NON-NLS-1$
                 + introspectedColumn.getActualColumnName();
         method.addAnnotation(getGeneratedAnnotation(comment));
     }
@@ -411,7 +411,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
     public void addFieldAnnotation(Field field, IntrospectedTable introspectedTable,
             Set<FullyQualifiedJavaType> imports) {
         imports.add(generatedImport);
-        String comment = "Source Table: " + introspectedTable.getFullyQualifiedTable().toString(); //$NON-NLS-1$
+        String comment = "Source Table: " + introspectedTable.getFullyQualifiedTable(); //$NON-NLS-1$
         field.addAnnotation(getGeneratedAnnotation(comment));
     }
 
@@ -420,7 +420,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
             IntrospectedColumn introspectedColumn, Set<FullyQualifiedJavaType> imports) {
         imports.add(generatedImport);
         String comment = "Source field: " //$NON-NLS-1$
-                + introspectedTable.getFullyQualifiedTable().toString() + "." //$NON-NLS-1$
+                + introspectedTable.getFullyQualifiedTable() + "." //$NON-NLS-1$
                 + introspectedColumn.getActualColumnName();
         field.addAnnotation(getGeneratedAnnotation(comment));
 
@@ -441,7 +441,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
     public void addClassAnnotation(InnerClass innerClass, IntrospectedTable introspectedTable,
             Set<FullyQualifiedJavaType> imports) {
         imports.add(generatedImport);
-        String comment = "Source Table: " + introspectedTable.getFullyQualifiedTable().toString(); //$NON-NLS-1$
+        String comment = "Source Table: " + introspectedTable.getFullyQualifiedTable(); //$NON-NLS-1$
         innerClass.addAnnotation(getGeneratedAnnotation(comment));
     }
 

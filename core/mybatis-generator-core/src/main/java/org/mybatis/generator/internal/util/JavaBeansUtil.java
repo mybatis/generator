@@ -20,7 +20,6 @@ import static org.mybatis.generator.internal.util.StringUtility.isTrue;
 import java.util.Locale;
 import java.util.Properties;
 
-import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
@@ -159,12 +158,10 @@ public class JavaBeansUtil {
      *            the input string
      * @return the valid property name
      */
-    public static @Nullable String getValidPropertyName(@Nullable String inputString) {
+    public static String getValidPropertyName(String inputString) {
         String answer;
 
-        if (inputString == null) {
-            answer = null;
-        } else if (inputString.length() < 2) {
+        if (inputString.length() < 2) {
             answer = inputString.toLowerCase(Locale.US);
         } else {
             if (Character.isUpperCase(inputString.charAt(0))

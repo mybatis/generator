@@ -124,8 +124,7 @@ public class KotlinDynamicSqlSupportClassGenerator extends AbstractGenerator {
 
     private KotlinProperty calculateTableProperty() {
         String tableType = introspectedTable.getMyBatisDynamicSQLTableObjectName();
-        String fieldName =
-                JavaBeansUtil.getValidPropertyName(introspectedTable.getMyBatisDynamicSQLTableObjectName());
+        String fieldName = JavaBeansUtil.getValidPropertyName(introspectedTable.getMyBatisDynamicSQLTableObjectName());
 
         return KotlinProperty.newVal(fieldName)
                 .withInitializationString(tableType + "()") //$NON-NLS-1$

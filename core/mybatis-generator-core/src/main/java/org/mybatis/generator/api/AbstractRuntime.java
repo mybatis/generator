@@ -13,14 +13,11 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.generator.codegen;
+package org.mybatis.generator.api;
 
 import java.util.List;
 
-import org.mybatis.generator.api.GeneratedJavaFile;
-import org.mybatis.generator.api.GeneratedKotlinFile;
-import org.mybatis.generator.api.GeneratedXmlFile;
-import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.codegen.AbstractGenerator;
 
 public abstract class AbstractRuntime extends AbstractGenerator {
     protected AbstractRuntime(AbstractRuntimeBuilder<?> builder) {

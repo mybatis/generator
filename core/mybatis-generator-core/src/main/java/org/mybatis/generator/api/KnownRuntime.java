@@ -16,16 +16,16 @@
 package org.mybatis.generator.api;
 
 import org.jspecify.annotations.Nullable;
-import org.mybatis.generator.codegen.mybatis3.IntrospectedTableMyBatis3Impl;
-import org.mybatis.generator.codegen.mybatis3.IntrospectedTableMyBatis3SimpleImpl;
-import org.mybatis.generator.runtime.dynamic.sql.IntrospectedTableMyBatis3DynamicSqlImpl;
-import org.mybatis.generator.runtime.kotlin.IntrospectedTableKotlinImpl;
+import org.mybatis.generator.codegen.mybatis3.LegacyJavaRuntime;
+import org.mybatis.generator.codegen.mybatis3.LegacySimpleJavaRuntime;
+import org.mybatis.generator.runtime.dynamic.sql.JavaDynamicSqlRuntime;
+import org.mybatis.generator.runtime.kotlin.KotlinDynamicSqlRuntime;
 
 public enum KnownRuntime {
-    MYBATIS3("MyBatis3", IntrospectedTableMyBatis3Impl.Builder.class.getName(), true, false),
-    MYBATIS3_SIMPLE("MyBatis3Simple",IntrospectedTableMyBatis3SimpleImpl.Builder.class.getName(), true, false),
-    MYBATIS3_DYNAMIC_SQL("MyBatis3DynamicSql", IntrospectedTableMyBatis3DynamicSqlImpl.Builder.class.getName(), false, true),
-    MYBATIS3_KOTLIN("MyBatis3Kotlin", IntrospectedTableKotlinImpl.Builder.class.getName(), false, true),
+    MYBATIS3("MyBatis3", LegacyJavaRuntime.Builder.class.getName(), true, false),
+    MYBATIS3_SIMPLE("MyBatis3Simple", LegacySimpleJavaRuntime.Builder.class.getName(), true, false),
+    MYBATIS3_DYNAMIC_SQL("MyBatis3DynamicSql", JavaDynamicSqlRuntime.Builder.class.getName(), false, true),
+    MYBATIS3_KOTLIN("MyBatis3Kotlin", KotlinDynamicSqlRuntime.Builder.class.getName(), false, true),
     UNKNOWN("Unknown", "Unknown", false, false);
 
     private final String alias;

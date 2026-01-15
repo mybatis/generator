@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Objects;
 
 import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.api.AbstractRuntime;
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.GeneratedJavaFile;
 import org.mybatis.generator.api.GeneratedKotlinFile;

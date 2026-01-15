@@ -21,11 +21,11 @@ import java.util.Optional;
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
-import org.mybatis.generator.codegen.mybatis3.IntrospectedTableMyBatis3Impl;
+import org.mybatis.generator.codegen.mybatis3.LegacyJavaRuntime;
 
-public class IntrospectedTableMyBatis3DynamicSqlImpl extends IntrospectedTableMyBatis3Impl {
+public class JavaDynamicSqlRuntime extends LegacyJavaRuntime {
 
-    protected IntrospectedTableMyBatis3DynamicSqlImpl(Builder builder) {
+    protected JavaDynamicSqlRuntime(Builder builder) {
         super(builder);
     }
 
@@ -57,14 +57,14 @@ public class IntrospectedTableMyBatis3DynamicSqlImpl extends IntrospectedTableMy
         javaGenerators.add(javaGenerator);
     }
 
-    public static class Builder extends IntrospectedTableMyBatis3Impl.Builder {
+    public static class Builder extends LegacyJavaRuntime.Builder {
         @Override
         protected Builder getThis() {
             return this;
         }
 
-        public IntrospectedTableMyBatis3DynamicSqlImpl build() {
-            return new IntrospectedTableMyBatis3DynamicSqlImpl(this);
+        public JavaDynamicSqlRuntime build() {
+            return new JavaDynamicSqlRuntime(this);
         }
     }
 }

@@ -25,13 +25,12 @@ import org.mybatis.generator.api.GeneratedXmlFile;
 import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.codegen.AbstractKotlinGenerator;
-import org.mybatis.generator.codegen.AbstractRuntime;
-import org.mybatis.generator.codegen.mybatis3.IntrospectedTableMyBatis3Impl;
+import org.mybatis.generator.api.AbstractRuntime;
 
-public class IntrospectedTableKotlinImpl extends AbstractRuntime {
+public class KotlinDynamicSqlRuntime extends AbstractRuntime {
     protected final List<AbstractKotlinGenerator> kotlinGenerators = new ArrayList<>();
 
-    public IntrospectedTableKotlinImpl(Builder builder) {
+    public KotlinDynamicSqlRuntime(Builder builder) {
         super(builder);
         calculateKotlinDataClassGenerator(warnings, progressCallback);
         if (contextHasClientConfiguration() && introspectedTable.getRules().generateJavaClient()) {
@@ -112,8 +111,8 @@ public class IntrospectedTableKotlinImpl extends AbstractRuntime {
         }
 
         @Override
-        public IntrospectedTableKotlinImpl build() {
-            return new IntrospectedTableKotlinImpl(this);
+        public KotlinDynamicSqlRuntime build() {
+            return new KotlinDynamicSqlRuntime(this);
         }
     }
 }

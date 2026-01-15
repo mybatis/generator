@@ -25,7 +25,7 @@ import org.mybatis.generator.api.GeneratedJavaFile;
 import org.mybatis.generator.api.GeneratedKotlinFile;
 import org.mybatis.generator.api.GeneratedXmlFile;
 import org.mybatis.generator.api.ProgressCallback;
-import org.mybatis.generator.codegen.AbstractRuntime;
+import org.mybatis.generator.api.AbstractRuntime;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
@@ -50,11 +50,11 @@ import org.mybatis.generator.internal.util.StringUtility;
  *
  * @author Jeff Butler
  */
-public class IntrospectedTableMyBatis3Impl extends AbstractRuntime {
+public class LegacyJavaRuntime extends AbstractRuntime {
     protected final List<AbstractJavaGenerator> javaGenerators = new ArrayList<>();
     protected @Nullable AbstractXmlGenerator xmlMapperGenerator;
 
-    protected IntrospectedTableMyBatis3Impl(Builder builder) {
+    protected LegacyJavaRuntime(Builder builder) {
         super(builder);
         calculateGenerators();
     }
@@ -259,8 +259,8 @@ public class IntrospectedTableMyBatis3Impl extends AbstractRuntime {
         }
 
         @Override
-        public IntrospectedTableMyBatis3Impl build() {
-            return new IntrospectedTableMyBatis3Impl(this);
+        public LegacyJavaRuntime build() {
+            return new LegacyJavaRuntime(this);
         }
     }
 }

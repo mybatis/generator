@@ -34,8 +34,8 @@ import org.mybatis.generator.config.TypedPropertyHolder;
  *
  * @author Jeff Butler
  */
-public class IntrospectedTableMyBatis3SimpleImpl extends IntrospectedTableMyBatis3Impl {
-    protected IntrospectedTableMyBatis3SimpleImpl(Builder builder) {
+public class LegacySimpleJavaRuntime extends LegacyJavaRuntime {
+    protected LegacySimpleJavaRuntime(Builder builder) {
         super(builder);
     }
 
@@ -87,15 +87,15 @@ public class IntrospectedTableMyBatis3SimpleImpl extends IntrospectedTableMyBati
         javaGenerators.add(javaGenerator);
     }
 
-    public static class Builder extends IntrospectedTableMyBatis3Impl.Builder {
+    public static class Builder extends LegacyJavaRuntime.Builder {
         @Override
         protected Builder getThis() {
             return this;
         }
 
         @Override
-        public IntrospectedTableMyBatis3SimpleImpl build() {
-            return new IntrospectedTableMyBatis3SimpleImpl(this);
+        public LegacySimpleJavaRuntime build() {
+            return new LegacySimpleJavaRuntime(this);
         }
     }
 }

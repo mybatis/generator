@@ -25,12 +25,13 @@
 </head>
 <body>
 <h1>Extending MyBatis Generator</h1>
-<p>MyBatis Generator (MBG) is designed for extensibility.  All code generation is performed using a
-simple DOM representation of Java and XML elements.</p>
+<p>MyBatis Generator (MBG) is designed for extensibility. All code generation activities are performed using a
+simple DOM representation of Java, Kotlin, and XML elements.</p>
 <p>The Java DOM is included in the package <code>org.mybatis.generator.api.dom.java</code></p>
+<p>The Kotlin DOM is included in the package <code>org.mybatis.generator.api.dom.kotlin</code></p>
 <p>The XML DOM is included in the package <code>org.mybatis.generator.api.dom.xml</code></p>
 <p>These classes are not sufficient for every conceivable code generation possibility, but they are quite
-useful for generating simple to moderately complex Java and XML code.</p>
+useful for generating simple to moderately complex Java, Kotlin, and XML code.</p>
 
 <p>Using options in the configuration file, you can provide your own implementations
 of many of the key code generation interfaces.  You can also subclass any of the provided implementations
@@ -44,8 +45,8 @@ support mailing list at
 <p>Although there are a number of different extension points shown on this
 page, in most cases it will be far easier to extend MBG through the use of a plugin.  See the
 <a href="pluggingIn.html">Implementing Plugins</a> reference page for more information.</p>
-<p>The primary extension point for code generation is
-<code>org.mybatis.generator.api.IntrospectedTable</code>.  Implementing a code generator
+<p>The primary extension point for creating a code generator is
+<code>org.mybatis.generator.api.AbstractRuntime</code>.  Implementing a code generator
 is a non-trivial task and should only be contemplated when you want to completely replace
 the code generation activities of MBG.  In the years since the original release of Abator,
 very few enhancement requests have appeared that could not be handled by a plugin.</p>
@@ -53,38 +54,52 @@ very few enhancement requests have appeared that could not be handled by a plugi
 <h2>Extension Points</h2>
 <p>MBG provides a number of different extension points.  The following sections
 list the different methods of extending MBG, and describe the types of
-activities that can be accomplished with the different extensions.  If you
+activities that can be achieved with the different extensions.  If you
 need some help understanding the different options, feel free to ask a question
 on the user mailing list.</p>
 
-<h3>org.mybatis.generator.api.IntrospectedTable</h3>
-<p><code>IntrospectedTable</code> is an abstract class that can be extended to supply
+<h3>Runtimes</h3>
+<p><code>org.mybatis.generator.api.AbstractRuntime</code> is an abstract class that can be extended to supply
 different code generators than the versions supplied with MBG.  A good example of
-such an implementation would be a FreeMarker or Velocity template based
-implementation.  In most other instances, coding a plugin is the better way to go.</p>
-<p>If you choose to extend this class, you must supply code to generate Java and XML
-files.  You may choose to generate those files with the
-technology of your choice.  The base <code>IntrospectedTable</code> class holds an instance
-of <code>org.mybatis.generator.internal.rules.Rules</code> that can be queried
+such an implementation would be a FreeMarker or Velocity template-based
+implementation.  In most other instances, coding a plugin is the simpler way to go.</p>
+<p>If you choose to extend this class, you must supply code to generate files based on the generator's introspection
+operations.  You may choose to generate those files with the
+technology of your choice.  The base <code>AbstractRuntime</code> class holds an instance of
+<code>org.mybatis.generator.api.IntrospectedTable</code> which holds the introspection results for a single table.
+That class holds an instance of <code>org.mybatis.generator.internal.rules.Rules</code> that can be queried
 to determine many of the rules for code generation.</p>
-<p>MBG supplies several implementations of introspected table.  The implementation is chosen
+<p>MBG supplies several implementations of a runtime.  The implementation is chosen
 based on the value of the <code>targetRuntime</code> attribute of the
 <code>&lt;context&gt;</code> element.  In many cases it will be far simpler
-to extend one of the built-in implementations, rather than creating an implementation
+to extend one of the built-in implementations rather than creating an implementation
 from scratch.  The following table shows the built-in implementations:</p>
 <table cellspacing="0" cellpadding="5" border="1">
-  <tr>
-    <th>TargetRuntime</th>
-    <th>Implementation</th>
-  </tr>
-  <tr>
-    <td>MyBatis3 (default)</td>
-    <td><code>org.mybatis.generator.codegen.mybatis3.IntrospectedTableMyBatis3Impl</code></td>
-  </tr>
+    <tr>
+      <th>TargetRuntime</th>
+      <th>Implementation</th>
+    </tr>
+    <tr>
+        <td>MyBatis3DynamicSql (default)</td>
+        <td><code>org.mybatis.generator.runtime.dynamic.sql.JavaDynamicSqlRuntime</code></td>
+    </tr>
+    <tr>
+        <td>MyBatis3Kotlin</td>
+        <td><code>org.mybatis.generator.runtime.kotlin.KotlinDynamicSqlRuntime</code></td>
+    </tr>
+    <tr>
+      <td>MyBatis3</td>
+      <td><code>org.mybatis.generator.codegen.mybatis3.LegacyJavaRuntime</code></td>
+    </tr>
+    <tr>
+        <td>MyBatis3Simple</td>
+        <td><code>org.mybatis.generator.codegen.mybatis3.LegacySimpleJavaRuntime</code></td>
+    </tr>
 </table>
 
 <p>If you choose to implement this extension point, specify the fully qualified
-class name of your implementation with the <code>targetRuntime</code>
+class name of a builder that extends <code>org.mybatis.generator.api.AbstractRuntime.AbstractRuntimeBuilder</code>
+in the <code>targetRuntime</code>
 attribute of the <code>&lt;context&gt;</code> element.</p>
 
 <h3>org.mybatis.generator.api.IntrospectedColumn</h3>

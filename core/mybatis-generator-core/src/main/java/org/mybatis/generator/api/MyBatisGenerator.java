@@ -202,16 +202,16 @@ public class MyBatisGenerator {
                          @Nullable Set<String> fullyQualifiedTableNames, boolean writeFiles) throws SQLException,
             IOException, InterruptedException {
 
-        ProgressCallback localProgressCallback = Objects.requireNonNullElse(progressCallback, NULL_PROGRESS_CALLBACK);
-        Set<String> localFullyQualifiedTableNames =
-                Objects.requireNonNullElse(fullyQualifiedTableNames, Collections.emptySet());
-        Set<String> localContextIds = Objects.requireNonNullElse(contextIds, Collections.emptySet());
-
         generationResultsList.clear();
         ObjectFactory.reset();
         RootClassInfo.reset();
 
         setupCustomClassloader();
+
+        ProgressCallback localProgressCallback = Objects.requireNonNullElse(progressCallback, NULL_PROGRESS_CALLBACK);
+        Set<String> localFullyQualifiedTableNames =
+                Objects.requireNonNullElse(fullyQualifiedTableNames, Collections.emptySet());
+        Set<String> localContextIds = Objects.requireNonNullElse(contextIds, Collections.emptySet());
 
         List<Context> contextsToRun = calculateContextsToRun(localFullyQualifiedTableNames, localContextIds);
 
@@ -433,7 +433,8 @@ public class MyBatisGenerator {
         }
     }
 
-    private void writeGeneratedXmlFile(GeneratedXmlFile gxf, XmlFormatter xmlFormatter, ProgressCallback progressCallback)
+    private void writeGeneratedXmlFile(GeneratedXmlFile gxf, XmlFormatter xmlFormatter,
+                                       ProgressCallback progressCallback)
             throws InterruptedException, IOException {
         Path targetFile;
         String source = xmlFormatter.getFormattedContent(gxf.getDocument());

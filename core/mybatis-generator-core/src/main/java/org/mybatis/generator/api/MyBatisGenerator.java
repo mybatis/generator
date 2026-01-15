@@ -37,7 +37,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import org.jspecify.annotations.Nullable;
-import org.mybatis.generator.codegen.ContextResults;
+import org.mybatis.generator.codegen.CalculatedContextValues;
 import org.mybatis.generator.codegen.GenerationEngine;
 import org.mybatis.generator.codegen.GenerationResults;
 import org.mybatis.generator.codegen.IntrospectionEngine;
@@ -70,7 +70,7 @@ public class MyBatisGenerator {
     private final ShellCallback shellCallback;
     private final List<String> warnings;
     private final Set<String> projects = new HashSet<>();
-    private final List<ContextResults> contextResultList = new ArrayList<>();
+    private final List<CalculatedContextValues> contextValuesList = new ArrayList<>();
     private final List<GenerationResults> generationResultsList = new ArrayList<>();
 
     /**
@@ -206,11 +206,9 @@ public class MyBatisGenerator {
                          @Nullable Set<String> fullyQualifiedTableNames, boolean writeFiles) throws SQLException,
             IOException, InterruptedException {
 
-        if (callback == null) {
-            callback = NULL_PROGRESS_CALLBACK;
-        }
+        final ProgressCallback progressCallBack = Objects.requireNonNullElse(callback, NULL_PROGRESS_CALLBACK);
 
-        contextResultList.clear();
+        contextValuesList.clear();
         ObjectFactory.reset();
         RootClassInfo.reset();
 
@@ -238,59 +236,44 @@ public class MyBatisGenerator {
         for (Context context : contextsToRun) {
             totalSteps += context.getIntrospectionSteps();
         }
-        callback.introspectionStarted(totalSteps);
+        progressCallBack.introspectionStarted(totalSteps);
 
         for (Context context : contextsToRun) {
-            ContextResults contextResults = new ContextResults.Builder()
+            CalculatedContextValues contextResults = new CalculatedContextValues.Builder()
                     .withContext(context)
                     .withWarnings(warnings)
                     .build();
-            this.contextResultList.add(contextResults);
+            this.contextValuesList.add(contextResults);
 
             List<IntrospectedTable> introspectedTables = new IntrospectionEngine.Builder()
                     .withContext(context)
                     .withFullyQualifiedTableNames(
                             fullyQualifiedTableNames == null ? Collections.emptySet() : fullyQualifiedTableNames)
                     .withWarnings(warnings)
-                    .withProgressCallback(callback)
+                    .withProgressCallback(progressCallBack)
                     .build()
                     .introspectTables(contextResults.knownRuntime(), contextResults.pluginAggregator());
 
             contextResults.addIntrospectedTables(introspectedTables);
         }
 
-        // now run the generates
-        totalSteps = 0;
-        for (ContextResults contextResults : this.contextResultList) {
-            totalSteps += contextResults.getGenerationSteps();
-        }
-        callback.generationStarted(totalSteps);
+        // create the generation engines
+        List<GenerationEngine> generationEngines = contextValuesList.stream().map(cv ->
+                new GenerationEngine.Builder()
+                        .withContextValues(cv)
+                        .withProgressCallback(progressCallBack)
+                        .withWarnings(warnings)
+                        .build()
+        ).toList();
 
-        for (ContextResults contextResults : this.contextResultList) {
-            // TODO - perhaps Generation Engine should return a GenerationResults object directly
-            var generationEngine = new GenerationEngine.Builder()
-                    .withContext(contextResults.context())
-                    .withProgressCallback(callback)
-                    .withWarnings(warnings)
-                    .withIntrospectedTables(contextResults.introspectedTables())
-                    .withCommentGenerator(contextResults.commentGenerator())
-                    .withPluginAggregator(contextResults.pluginAggregator())
-                    .withRuntimeBuilderClassName(contextResults.runtimeBuilderClassName())
-                    .build();
+        // calculate the number of steps
+        totalSteps = generationEngines.stream().mapToInt(GenerationEngine::getGenerationSteps).sum();
+        progressCallBack.generationStarted(totalSteps);
 
-            GenerationResults generationResults = new GenerationResults.Builder()
-                    .withJavaFormatter(contextResults.javaFormatter())
-                    .withKotlinFormatter(contextResults.kotlinFormatter())
-                    .withXmlFormatter(contextResults.xmlFormatter())
-                    .withJavaFileEncoding(contextResults.javaFileEncoding())
-                    .withKotlinFileEncoding(contextResults.kotlinFileEncoding())
-                    .build();
-
+        // now run the generators
+        for (GenerationEngine generationEngine: generationEngines) {
+            var generationResults = generationEngine.generate();
             generationResultsList.add(generationResults);
-            generationResults.addGeneratedJavaFiles(generationEngine.generateJavaFiles());
-            generationResults.addGeneratedXmlFiles(generationEngine.generateXmlFiles());
-            generationResults.addGeneratedKotlinFiles(generationEngine.generateKotlinFiles());
-            generationResults.addGeneratedGenericFiles(generationEngine.generateGenericFiles());
         }
 
         // now save the files
@@ -299,29 +282,29 @@ public class MyBatisGenerator {
             for (GenerationResults generationResults : generationResultsList) {
                 totalSteps += generationResults.getNumberOfGeneratedFiles();
             }
-            callback.saveStarted(totalSteps);
+            progressCallBack.saveStarted(totalSteps);
 
             for (GenerationResults generationResults : generationResultsList) {
                 for (GeneratedXmlFile gxf : generationResults.generatedXmlFiles()) {
                     projects.add(gxf.getTargetProject());
-                    writeGeneratedXmlFile(gxf, generationResults.xmlFormatter(), callback);
+                    writeGeneratedXmlFile(gxf, generationResults.xmlFormatter(), progressCallBack);
                 }
 
                 for (GeneratedJavaFile gjf : generationResults.generatedJavaFiles()) {
                     projects.add(gjf.getTargetProject());
                     writeGeneratedJavaFile(gjf, generationResults.javaFormatter(), generationResults.javaFileEncoding(),
-                            callback);
+                            progressCallBack);
                 }
 
                 for (GeneratedKotlinFile gkf : generationResults.generatedKotlinFiles()) {
                     projects.add(gkf.getTargetProject());
                     writeGeneratedKotlinFile(gkf, generationResults.kotlinFormatter(), generationResults.kotlinFileEncoding(),
-                            callback);
+                            progressCallBack);
                 }
 
                 for (GenericGeneratedFile gf : generationResults.generatedGenericFiles()) {
                     projects.add(gf.getTargetProject());
-                    writeGenericGeneratedFile(gf, callback);
+                    writeGenericGeneratedFile(gf, progressCallBack);
                 }
             }
 
@@ -330,7 +313,7 @@ public class MyBatisGenerator {
             }
         }
 
-        callback.done();
+        progressCallBack.done();
     }
 
     private void writeGeneratedJavaFile(GeneratedJavaFile gjf, JavaFormatter javaFormatter,

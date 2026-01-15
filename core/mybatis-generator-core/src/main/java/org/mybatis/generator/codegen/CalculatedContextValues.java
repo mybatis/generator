@@ -39,7 +39,7 @@ import org.mybatis.generator.internal.PluginAggregator;
  * This class holds the intermediate results of the generator, as well as many pre-calculated objects.
  *
  */
-public class ContextResults {
+public class CalculatedContextValues {
     private final Context context;
     private final List<IntrospectedTable> introspectedTables = new ArrayList<>();
     private final JavaFormatter javaFormatter;
@@ -52,7 +52,7 @@ public class ContextResults {
     private final KnownRuntime knownRuntime;
     private final String runtimeBuilderClassName;
 
-    protected ContextResults(Builder builder) {
+    protected CalculatedContextValues(Builder builder) {
         context = Objects.requireNonNull(builder.context);
         javaFormatter = ObjectFactory.createJavaFormatter(context);
         kotlinFormatter = ObjectFactory.createKotlinFormatter(context);
@@ -133,15 +133,6 @@ public class ContextResults {
         return introspectedTables;
     }
 
-    public int getGenerationSteps() {
-        int totalSteps = 0;
-        for (IntrospectedTable introspectedTable : introspectedTables) {
-            // TODO - fix
-//            totalSteps += introspectedTable.getGenerationSteps();
-        }
-        return totalSteps;
-    }
-
     public static class Builder {
         private @Nullable Context context;
         private @Nullable List<String> warnings;
@@ -156,8 +147,8 @@ public class ContextResults {
             return this;
         }
 
-        public ContextResults build() {
-            return new ContextResults(this);
+        public CalculatedContextValues build() {
+            return new CalculatedContextValues(this);
         }
     }
 }

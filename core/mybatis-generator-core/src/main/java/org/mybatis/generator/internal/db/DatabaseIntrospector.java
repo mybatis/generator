@@ -38,7 +38,6 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 
 import org.jspecify.annotations.Nullable;
-import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.FullyQualifiedTable;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
@@ -503,7 +502,7 @@ public class DatabaseIntrospector {
 
     private List<IntrospectedTable> calculateIntrospectedTables(TableConfiguration tc,
             Map<ActualTableName, List<IntrospectedColumn>> columns, @Nullable KnownRuntime knownRuntime,
-                                                                PluginAggregator pluginAggretator) {
+                                                                PluginAggregator pluginAggregator) {
         boolean delimitIdentifiers = tc.isDelimitIdentifiers()
                 || stringContainsSpace(tc.getCatalog())
                 || stringContainsSpace(tc.getSchema())
@@ -542,7 +541,7 @@ public class DatabaseIntrospector {
                     .withFullyQualifiedTable(table)
                     .withContext(context)
                     .withKnownRuntime(knownRuntime)
-                    .withPluginAggregator(pluginAggretator)
+                    .withPluginAggregator(pluginAggregator)
                     .build();
 
             for (IntrospectedColumn introspectedColumn : entry.getValue()) {

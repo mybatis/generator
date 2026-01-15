@@ -69,7 +69,6 @@ public class MyBatisGenerator {
     private final Configuration configuration;
     private final ShellCallback shellCallback;
     private final List<String> warnings;
-    private final Set<String> projects = new HashSet<>();
     private final List<CalculatedContextValues> contextValuesList = new ArrayList<>();
     private final List<GenerationResults> generationResultsList = new ArrayList<>();
 
@@ -101,9 +100,7 @@ public class MyBatisGenerator {
         }
 
         this.shellCallback = Objects.requireNonNullElseGet(shellCallback, () -> new DefaultShellCallback(false));
-
         this.warnings = Objects.requireNonNullElseGet(warnings, ArrayList::new);
-
         this.configuration.validate();
     }
 
@@ -181,7 +178,7 @@ public class MyBatisGenerator {
      * This is the main method for generating code. This method is long-running, but progress can be provided and the
      * method can be cancelled through the ProgressCallback interface.
      *
-     * @param callback
+     * @param progressCallback
      *            an instance of the ProgressCallback interface, or <code>null</code> if you do not require progress
      *            information
      * @param contextIds
@@ -202,28 +199,18 @@ public class MyBatisGenerator {
      * @throws InterruptedException
      *             if the method is canceled through the ProgressCallback
      */
-    public void generate(@Nullable ProgressCallback callback, @Nullable Set<String> contextIds,
+    public void generate(@Nullable ProgressCallback progressCallback, @Nullable Set<String> contextIds,
                          @Nullable Set<String> fullyQualifiedTableNames, boolean writeFiles) throws SQLException,
             IOException, InterruptedException {
 
-        final ProgressCallback progressCallBack = Objects.requireNonNullElse(callback, NULL_PROGRESS_CALLBACK);
+        ProgressCallback localProgressCallback = Objects.requireNonNullElse(progressCallback, NULL_PROGRESS_CALLBACK);
+        Set<String> localFullyQualifiedTableNames =
+                Objects.requireNonNullElse(fullyQualifiedTableNames, Collections.emptySet());
+        Set<String> localContextIds = Objects.requireNonNullElse(contextIds, Collections.emptySet());
 
         contextValuesList.clear();
         ObjectFactory.reset();
         RootClassInfo.reset();
-
-        // calculate the contexts to run
-        List<Context> contextsToRun;
-        if (contextIds == null || contextIds.isEmpty()) {
-            contextsToRun = configuration.getContexts();
-        } else {
-            contextsToRun = new ArrayList<>();
-            for (Context context : configuration.getContexts()) {
-                if (contextIds.contains(context.getId())) {
-                    contextsToRun.add(context);
-                }
-            }
-        }
 
         // setup custom classloader if required
         if (!configuration.getClassPathEntries().isEmpty()) {
@@ -231,93 +218,113 @@ public class MyBatisGenerator {
             ObjectFactory.addExternalClassLoader(classLoader);
         }
 
-        // now run the introspections...
-        int totalSteps = 0;
-        for (Context context : contextsToRun) {
-            totalSteps += context.getIntrospectionSteps();
+        // calculate the contexts to run
+        List<Context> contextsToRun;
+        if (localFullyQualifiedTableNames.isEmpty()) {
+            contextsToRun = configuration.getContexts();
+        } else {
+            contextsToRun = configuration.getContexts().stream()
+                    .filter(c -> localContextIds.contains(c.getId()))
+                    .toList();
         }
-        progressCallBack.introspectionStarted(totalSteps);
+
+        // now run the introspections...
+        runIntrospection(contextsToRun, localFullyQualifiedTableNames, localProgressCallback);
+
+        runGenerators(localProgressCallback);
+
+        // now save the files
+        if (writeFiles) {
+            writeGeneratedFiles(localProgressCallback);
+        }
+
+        localProgressCallback.done();
+    }
+
+    private void runIntrospection(List<Context> contextsToRun, Set<String> fullyQualifiedTableNames,
+                                  ProgressCallback progressCallback) throws SQLException, InterruptedException {
+        int totalSteps = contextsToRun.stream().mapToInt(Context::getIntrospectionSteps).sum();
+        progressCallback.introspectionStarted(totalSteps);
 
         for (Context context : contextsToRun) {
             CalculatedContextValues contextResults = new CalculatedContextValues.Builder()
                     .withContext(context)
                     .withWarnings(warnings)
                     .build();
-            this.contextValuesList.add(contextResults);
+            contextValuesList.add(contextResults);
 
             List<IntrospectedTable> introspectedTables = new IntrospectionEngine.Builder()
                     .withContext(context)
-                    .withFullyQualifiedTableNames(
-                            fullyQualifiedTableNames == null ? Collections.emptySet() : fullyQualifiedTableNames)
+                    .withFullyQualifiedTableNames(fullyQualifiedTableNames)
                     .withWarnings(warnings)
-                    .withProgressCallback(progressCallBack)
+                    .withProgressCallback(progressCallback)
                     .build()
                     .introspectTables(contextResults.knownRuntime(), contextResults.pluginAggregator());
 
             contextResults.addIntrospectedTables(introspectedTables);
         }
+    }
 
+    private void runGenerators(ProgressCallback progressCallback) throws InterruptedException {
         // create the generation engines
-        List<GenerationEngine> generationEngines = contextValuesList.stream().map(cv ->
-                new GenerationEngine.Builder()
-                        .withContextValues(cv)
-                        .withProgressCallback(progressCallBack)
-                        .withWarnings(warnings)
-                        .build()
-        ).toList();
+        List<GenerationEngine> generationEngines = contextValuesList.stream()
+                .map(cv ->
+                        new GenerationEngine.Builder()
+                            .withContextValues(cv)
+                            .withProgressCallback(progressCallback)
+                            .withWarnings(warnings)
+                            .withIntrospectedTables(cv.introspectedTables())
+                            .build())
+                .toList();
 
         // calculate the number of steps
-        totalSteps = generationEngines.stream().mapToInt(GenerationEngine::getGenerationSteps).sum();
-        progressCallBack.generationStarted(totalSteps);
+        int totalSteps = generationEngines.stream().mapToInt(GenerationEngine::getGenerationSteps).sum();
+        progressCallback.generationStarted(totalSteps);
 
         // now run the generators
         for (GenerationEngine generationEngine: generationEngines) {
             var generationResults = generationEngine.generate();
             generationResultsList.add(generationResults);
         }
+    }
 
-        // now save the files
-        if (writeFiles) {
-            totalSteps = 0;
-            for (GenerationResults generationResults : generationResultsList) {
-                totalSteps += generationResults.getNumberOfGeneratedFiles();
-            }
-            progressCallBack.saveStarted(totalSteps);
+    private void writeGeneratedFiles(ProgressCallback progressCallback) throws IOException, InterruptedException {
+        Set<String> projects = new HashSet<>();
+        int totalSteps = generationResultsList.stream().mapToInt(GenerationResults::getNumberOfGeneratedFiles).sum();
+        progressCallback.saveStarted(totalSteps);
 
-            for (GenerationResults generationResults : generationResultsList) {
-                for (GeneratedXmlFile gxf : generationResults.generatedXmlFiles()) {
-                    projects.add(gxf.getTargetProject());
-                    writeGeneratedXmlFile(gxf, generationResults.xmlFormatter(), progressCallBack);
-                }
-
-                for (GeneratedJavaFile gjf : generationResults.generatedJavaFiles()) {
-                    projects.add(gjf.getTargetProject());
-                    writeGeneratedJavaFile(gjf, generationResults.javaFormatter(), generationResults.javaFileEncoding(),
-                            progressCallBack);
-                }
-
-                for (GeneratedKotlinFile gkf : generationResults.generatedKotlinFiles()) {
-                    projects.add(gkf.getTargetProject());
-                    writeGeneratedKotlinFile(gkf, generationResults.kotlinFormatter(), generationResults.kotlinFileEncoding(),
-                            progressCallBack);
-                }
-
-                for (GenericGeneratedFile gf : generationResults.generatedGenericFiles()) {
-                    projects.add(gf.getTargetProject());
-                    writeGenericGeneratedFile(gf, progressCallBack);
-                }
+        for (GenerationResults generationResults : generationResultsList) {
+            for (GeneratedXmlFile gxf : generationResults.generatedXmlFiles()) {
+                projects.add(gxf.getTargetProject());
+                writeGeneratedXmlFile(gxf, generationResults.xmlFormatter(), progressCallback);
             }
 
-            for (String project : projects) {
-                shellCallback.refreshProject(project);
+            for (GeneratedJavaFile gjf : generationResults.generatedJavaFiles()) {
+                projects.add(gjf.getTargetProject());
+                writeGeneratedJavaFile(gjf, generationResults.javaFormatter(), generationResults.javaFileEncoding(),
+                        progressCallback);
+            }
+
+            for (GeneratedKotlinFile gkf : generationResults.generatedKotlinFiles()) {
+                projects.add(gkf.getTargetProject());
+                writeGeneratedKotlinFile(gkf, generationResults.kotlinFormatter(),
+                        generationResults.kotlinFileEncoding(),
+                        progressCallback);
+            }
+
+            for (GenericGeneratedFile gf : generationResults.generatedGenericFiles()) {
+                projects.add(gf.getTargetProject());
+                writeGenericGeneratedFile(gf, progressCallback);
             }
         }
 
-        progressCallBack.done();
+        for (String project : projects) {
+            shellCallback.refreshProject(project);
+        }
     }
 
     private void writeGeneratedJavaFile(GeneratedJavaFile gjf, JavaFormatter javaFormatter,
-                                        @Nullable String javaFileEncoding, ProgressCallback callback)
+                                        @Nullable String javaFileEncoding, ProgressCallback progressCallback)
             throws InterruptedException, IOException {
         Path targetFile;
         String source;
@@ -341,8 +348,8 @@ public class MyBatisGenerator {
                 source = javaFormatter.getFormattedContent(gjf.getCompilationUnit());
             }
 
-            callback.checkCancel();
-            callback.startTask(getString("Progress.15", targetFile.toString())); //$NON-NLS-1$
+            progressCallback.checkCancel();
+            progressCallback.startTask(getString("Progress.15", targetFile.toString())); //$NON-NLS-1$
             writeFile(targetFile.toFile(), source, javaFileEncoding);
         } catch (ShellException e) {
             warnings.add(e.getMessage());
@@ -350,7 +357,7 @@ public class MyBatisGenerator {
     }
 
     private void writeGeneratedKotlinFile(GeneratedKotlinFile gf, KotlinFormatter kotlinFormatter,
-                                          @Nullable String kotlinFileEncoding, ProgressCallback callback)
+                                          @Nullable String kotlinFileEncoding, ProgressCallback progressCallback)
             throws InterruptedException, IOException {
         Path targetFile;
         String source;
@@ -370,15 +377,15 @@ public class MyBatisGenerator {
                 source = kotlinFormatter.getFormattedContent(gf.getKotlinFile());
             }
 
-            callback.checkCancel();
-            callback.startTask(getString("Progress.15", targetFile.toString())); //$NON-NLS-1$
+            progressCallback.checkCancel();
+            progressCallback.startTask(getString("Progress.15", targetFile.toString())); //$NON-NLS-1$
             writeFile(targetFile.toFile(), source, kotlinFileEncoding);
         } catch (ShellException e) {
             warnings.add(e.getMessage());
         }
     }
 
-    private void writeGenericGeneratedFile(GenericGeneratedFile gf, ProgressCallback callback)
+    private void writeGenericGeneratedFile(GenericGeneratedFile gf, ProgressCallback progressCallback)
             throws InterruptedException, IOException {
         Path targetFile;
         String source;
@@ -398,15 +405,15 @@ public class MyBatisGenerator {
                 source = gf.getFormattedContent();
             }
 
-            callback.checkCancel();
-            callback.startTask(getString("Progress.15", targetFile.toString())); //$NON-NLS-1$
+            progressCallback.checkCancel();
+            progressCallback.startTask(getString("Progress.15", targetFile.toString())); //$NON-NLS-1$
             writeFile(targetFile.toFile(), source, gf.getFileEncoding().orElse(null));
         } catch (ShellException e) {
             warnings.add(e.getMessage());
         }
     }
 
-    private void writeGeneratedXmlFile(GeneratedXmlFile gxf, XmlFormatter xmlFormatter, ProgressCallback callback)
+    private void writeGeneratedXmlFile(GeneratedXmlFile gxf, XmlFormatter xmlFormatter, ProgressCallback progressCallback)
             throws InterruptedException, IOException {
         Path targetFile;
         String source;
@@ -429,8 +436,8 @@ public class MyBatisGenerator {
                 source = xmlFormatter.getFormattedContent(gxf.getDocument());
             }
 
-            callback.checkCancel();
-            callback.startTask(getString("Progress.15", targetFile.toString())); //$NON-NLS-1$
+            progressCallback.checkCancel();
+            progressCallback.startTask(getString("Progress.15", targetFile.toString())); //$NON-NLS-1$
             writeFile(targetFile.toFile(), source, "UTF-8"); //$NON-NLS-1$
         } catch (ShellException e) {
             warnings.add(e.getMessage());

@@ -33,42 +33,38 @@ import org.mybatis.generator.api.XmlFormatter;
  * Also includes information needed for writing those files to disk.
  */
 public class GenerationResults {
-    private final JavaFormatter javaFormatter;
-    private final KotlinFormatter kotlinFormatter;
-    private final XmlFormatter xmlFormatter;
-    private final @Nullable String javaFileEncoding;
-    private final @Nullable String kotlinFileEncoding;
-    private final List<GeneratedJavaFile> generatedJavaFiles = new ArrayList<>();
-    private final List<GeneratedXmlFile> generatedXmlFiles = new ArrayList<>();
-    private final List<GeneratedKotlinFile> generatedKotlinFiles = new ArrayList<>();
-    private final List<GenericGeneratedFile> generatedGenericFiles = new ArrayList<>();
+    private final CalculatedContextValues contextValues;
+    private final List<GeneratedJavaFile> generatedJavaFiles;
+    private final List<GeneratedXmlFile> generatedXmlFiles;
+    private final List<GeneratedKotlinFile> generatedKotlinFiles;
+    private final List<GenericGeneratedFile> generatedGenericFiles;
 
     protected GenerationResults(Builder builder) {
-        javaFormatter = Objects.requireNonNull(builder.javaFormatter);
-        kotlinFormatter = Objects.requireNonNull(builder.kotlinFormatter);
-        xmlFormatter = Objects.requireNonNull(builder.xmlFormatter);
-        javaFileEncoding = builder.javaFileEncoding;
-        kotlinFileEncoding = builder.kotlinFileEncoding;
+        contextValues = Objects.requireNonNull(builder.contextValues);
+        generatedJavaFiles = builder.generatedJavaFiles;
+        generatedXmlFiles = builder.generatedXmlFiles;
+        generatedKotlinFiles = builder.generatedKotlinFiles;
+        generatedGenericFiles = builder.generatedGenericFiles;
     }
 
     public JavaFormatter javaFormatter() {
-        return javaFormatter;
+        return contextValues.javaFormatter();
     }
 
     public KotlinFormatter kotlinFormatter() {
-        return kotlinFormatter;
+        return contextValues.kotlinFormatter();
     }
 
     public XmlFormatter xmlFormatter() {
-        return xmlFormatter;
+        return contextValues.xmlFormatter();
     }
 
     public @Nullable String javaFileEncoding() {
-        return javaFileEncoding;
+        return contextValues.javaFileEncoding();
     }
 
     public @Nullable String kotlinFileEncoding() {
-        return kotlinFileEncoding;
+        return contextValues.kotlinFileEncoding();
     }
 
     public List<GeneratedJavaFile> generatedJavaFiles() {
@@ -87,22 +83,6 @@ public class GenerationResults {
         return generatedGenericFiles;
     }
 
-    public void addGeneratedJavaFiles(List<GeneratedJavaFile> generatedJavaFiles) {
-        this.generatedJavaFiles.addAll(generatedJavaFiles);
-    }
-
-    public void addGeneratedXmlFiles(List<GeneratedXmlFile> generatedXmlFiles) {
-        this.generatedXmlFiles.addAll(generatedXmlFiles);
-    }
-
-    public void addGeneratedKotlinFiles(List<GeneratedKotlinFile> generatedKotlinFiles) {
-        this.generatedKotlinFiles.addAll(generatedKotlinFiles);
-    }
-
-    public void addGeneratedGenericFiles(List<GenericGeneratedFile> generatedGenericFiles) {
-        this.generatedGenericFiles.addAll(generatedGenericFiles);
-    }
-
     public int getNumberOfGeneratedFiles() {
         return generatedJavaFiles().size()
                 + generatedXmlFiles().size()
@@ -111,34 +91,34 @@ public class GenerationResults {
     }
 
     public static class Builder {
-        private @Nullable JavaFormatter javaFormatter;
-        private @Nullable KotlinFormatter kotlinFormatter;
-        private @Nullable XmlFormatter xmlFormatter;
-        private @Nullable String javaFileEncoding;
-        private @Nullable String kotlinFileEncoding;
+        private @Nullable CalculatedContextValues contextValues;
+        private final List<GeneratedJavaFile> generatedJavaFiles = new ArrayList<>();
+        private final List<GeneratedXmlFile> generatedXmlFiles = new ArrayList<>();
+        private final List<GeneratedKotlinFile> generatedKotlinFiles = new ArrayList<>();
+        private final List<GenericGeneratedFile> generatedGenericFiles = new ArrayList<>();
 
-        public Builder withJavaFormatter(JavaFormatter javaFormatter) {
-            this.javaFormatter = javaFormatter;
+        public Builder withContextValues(CalculatedContextValues contextValues) {
+            this.contextValues = contextValues;
             return this;
         }
 
-        public Builder withKotlinFormatter(KotlinFormatter kotlinFormatter) {
-            this.kotlinFormatter = kotlinFormatter;
+        public Builder withGeneratedJavaFiles(List<GeneratedJavaFile> generatedJavaFiles) {
+            this.generatedJavaFiles.addAll(generatedJavaFiles);
             return this;
         }
 
-        public Builder withXmlFormatter(XmlFormatter xmlFormatter) {
-            this.xmlFormatter = xmlFormatter;
+        public Builder withGeneratedKotlinFiles(List<GeneratedKotlinFile> generatedKotlinFiles) {
+            this.generatedKotlinFiles.addAll(generatedKotlinFiles);
             return this;
         }
 
-        public Builder withJavaFileEncoding(@Nullable String javaFileEncoding) {
-            this.javaFileEncoding = javaFileEncoding;
+        public Builder withGeneratedXmlFiles(List<GeneratedXmlFile> generatedXmlFiles) {
+            this.generatedXmlFiles.addAll(generatedXmlFiles);
             return this;
         }
 
-        public Builder withKotlinFileEncoding(@Nullable String kotlinFileEncoding) {
-            this.kotlinFileEncoding = kotlinFileEncoding;
+        public Builder withGeneratedGenericFiles(List<GenericGeneratedFile> generatedGenericFiles) {
+            this.generatedGenericFiles.addAll(generatedGenericFiles);
             return this;
         }
 

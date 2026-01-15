@@ -23,10 +23,6 @@ import java.util.Objects;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.CommentGenerator;
-import org.mybatis.generator.api.GeneratedJavaFile;
-import org.mybatis.generator.api.GeneratedKotlinFile;
-import org.mybatis.generator.api.GeneratedXmlFile;
-import org.mybatis.generator.api.GenericGeneratedFile;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.JavaFormatter;
 import org.mybatis.generator.api.KnownRuntime;
@@ -52,10 +48,6 @@ public class ContextResults {
     private final CommentGenerator commentGenerator;
     private final @Nullable String javaFileEncoding;
     private final @Nullable String kotlinFileEncoding;
-    private final List<GeneratedJavaFile> generatedJavaFiles = new ArrayList<>();
-    private final List<GeneratedXmlFile> generatedXmlFiles = new ArrayList<>();
-    private final List<GeneratedKotlinFile> generatedKotlinFiles = new ArrayList<>();
-    private final List<GenericGeneratedFile> generatedGenericFiles = new ArrayList<>();
     private final PluginAggregator pluginAggregator;
     private final KnownRuntime knownRuntime;
     private final String runtimeBuilderClassName;
@@ -148,45 +140,6 @@ public class ContextResults {
 //            totalSteps += introspectedTable.getGenerationSteps();
         }
         return totalSteps;
-    }
-
-    public int getNumberOfGeneratedFiles() {
-        return generatedJavaFiles().size()
-                + generatedXmlFiles().size()
-                + generatedKotlinFiles().size()
-                + generatedGenericFiles().size();
-    }
-
-    public List<GeneratedJavaFile> generatedJavaFiles() {
-        return generatedJavaFiles;
-    }
-
-    public List<GeneratedXmlFile> generatedXmlFiles() {
-        return generatedXmlFiles;
-    }
-
-    public List<GeneratedKotlinFile> generatedKotlinFiles() {
-        return generatedKotlinFiles;
-    }
-
-    public List<GenericGeneratedFile> generatedGenericFiles() {
-        return generatedGenericFiles;
-    }
-
-    public void addGeneratedJavaFiles(List<GeneratedJavaFile> generatedJavaFiles) {
-        this.generatedJavaFiles.addAll(generatedJavaFiles);
-    }
-
-    public void addGeneratedXmlFiles(List<GeneratedXmlFile> generatedXmlFiles) {
-        this.generatedXmlFiles.addAll(generatedXmlFiles);
-    }
-
-    public void addGeneratedKotlinFiles(List<GeneratedKotlinFile> generatedKotlinFiles) {
-        this.generatedKotlinFiles.addAll(generatedKotlinFiles);
-    }
-
-    public void addGeneratedGenericFiles(List<GenericGeneratedFile> generatedGenericFiles) {
-        this.generatedGenericFiles.addAll(generatedGenericFiles);
     }
 
     public static class Builder {

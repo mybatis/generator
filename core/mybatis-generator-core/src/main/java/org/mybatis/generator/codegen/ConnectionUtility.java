@@ -15,12 +15,15 @@
  */
 package org.mybatis.generator.codegen;
 
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.mybatis.generator.config.ConnectionFactoryConfiguration;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.JDBCConnectionConfiguration;
+import org.mybatis.generator.exception.InternalException;
 import org.mybatis.generator.internal.JDBCConnectionFactory;
 import org.mybatis.generator.internal.ObjectFactory;
 
@@ -49,8 +52,7 @@ public final class ConnectionUtility {
         } else {
             ConnectionFactoryConfiguration config = context.getConnectionFactoryConfiguration();
             if (config == null) {
-                throw new RuntimeException("Internal Error - no connection configured in context: "
-                        + context.getId());
+                throw new InternalException(getString("RuntimeError.23", context.getId())); //$NON-NLS-1$
             }
 
             return ObjectFactory.createConnectionFactory(config).getConnection();

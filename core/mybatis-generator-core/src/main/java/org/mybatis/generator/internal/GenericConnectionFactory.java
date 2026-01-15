@@ -25,6 +25,7 @@ import java.util.Properties;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.ConnectionFactory;
+import org.mybatis.generator.exception.InternalException;
 
 public class GenericConnectionFactory implements ConnectionFactory {
     private @Nullable String connectionURL;
@@ -67,7 +68,7 @@ public class GenericConnectionFactory implements ConnectionFactory {
             Class<Driver> clazz = ObjectFactory.externalClassForName(Objects.requireNonNull(driverClass), Driver.class);
             driver = clazz.getConstructor().newInstance();
         } catch (Exception e) {
-            throw new RuntimeException(getString("RuntimeError.8"), e); //$NON-NLS-1$
+            throw new InternalException(getString("RuntimeError.8"), e); //$NON-NLS-1$
         }
 
         return driver;

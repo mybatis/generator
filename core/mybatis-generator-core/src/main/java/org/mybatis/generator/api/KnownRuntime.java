@@ -22,15 +22,16 @@ import org.mybatis.generator.runtime.mybatis3.LegacyJavaRuntime;
 import org.mybatis.generator.runtime.mybatis3.LegacySimpleJavaRuntime;
 
 public enum KnownRuntime {
-    MYBATIS3("MyBatis3", LegacyJavaRuntime.Builder.class.getName(), false),
-    MYBATIS3_SIMPLE("MyBatis3Simple", LegacySimpleJavaRuntime.Builder.class.getName(), false),
-    MYBATIS3_DYNAMIC_SQL("MyBatis3DynamicSql", JavaDynamicSqlRuntime.Builder.class.getName(), true),
-    MYBATIS3_KOTLIN("MyBatis3Kotlin", KotlinDynamicSqlRuntime.Builder.class.getName(), true),
-    UNKNOWN("Unknown", "Unknown", false);
+    MYBATIS3("MyBatis3", LegacyJavaRuntime.Builder.class.getName(), false, true),
+    MYBATIS3_SIMPLE("MyBatis3Simple", LegacySimpleJavaRuntime.Builder.class.getName(), false, true),
+    MYBATIS3_DYNAMIC_SQL("MyBatis3DynamicSql", JavaDynamicSqlRuntime.Builder.class.getName(), true, false),
+    MYBATIS3_KOTLIN("MyBatis3Kotlin", KotlinDynamicSqlRuntime.Builder.class.getName(), true, false),
+    UNKNOWN("Unknown", "Unknown", false, false);
 
     private final String alias;
     private final String builderClassName;
     private final boolean isDynamicSqlBased;
+    private final boolean isLegacyMyBatis3Based;
 
     public String getBuilderClassName() {
         return builderClassName;
@@ -44,10 +45,15 @@ public enum KnownRuntime {
         return isDynamicSqlBased;
     }
 
-    KnownRuntime(String alias, String builderClassName, boolean isDynamicSqlBased) {
+    public boolean isLegacyMyBatis3Based() {
+        return isLegacyMyBatis3Based;
+    }
+
+    KnownRuntime(String alias, String builderClassName, boolean isDynamicSqlBased, boolean isLegacyMyBatis3Based) {
         this.alias = alias;
         this.builderClassName = builderClassName;
         this.isDynamicSqlBased = isDynamicSqlBased;
+        this.isLegacyMyBatis3Based = isLegacyMyBatis3Based;
     }
 
     public static KnownRuntime getByAlias(@Nullable String alias) {

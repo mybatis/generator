@@ -98,7 +98,7 @@ public class IntrospectedTable {
     protected final List<IntrospectedColumn> primaryKeyColumns = new ArrayList<>();
     protected final List<IntrospectedColumn> baseColumns = new ArrayList<>();
     protected final List<IntrospectedColumn> blobColumns = new ArrayList<>();
-    protected final @Nullable KnownRuntime knownRuntime;
+    protected final KnownRuntime knownRuntime;
 
     /**
      * Attributes may be used by plugins to capture table related state between
@@ -123,7 +123,7 @@ public class IntrospectedTable {
     protected @Nullable String tableType;
 
     protected IntrospectedTable(Builder builder) {
-        this.knownRuntime = builder.knownRuntime;
+        this.knownRuntime = Objects.requireNonNull(builder.knownRuntime);
         this.tableConfiguration = Objects.requireNonNull(builder.tableConfiguration);
         this.fullyQualifiedTable = Objects.requireNonNull(builder.fullyQualifiedTable);
         this.context = Objects.requireNonNull(builder.context);
@@ -877,8 +877,8 @@ public class IntrospectedTable {
         internalAttributes.put(InternalAttribute.ATTR_MYBATIS_DYNAMIC_SQL_SUPPORT_TYPE, s);
     }
 
-    public Optional<KnownRuntime> getKnownRuntime() {
-        return Optional.ofNullable(knownRuntime);
+    public KnownRuntime getKnownRuntime() {
+        return knownRuntime;
     }
 
     public boolean isImmutable() {
@@ -936,7 +936,7 @@ public class IntrospectedTable {
         private @Nullable Context context;
         private @Nullable PluginAggregator pluginAggregator;
 
-        public Builder withKnownRuntime(@Nullable KnownRuntime knownRuntime) {
+        public Builder withKnownRuntime(KnownRuntime knownRuntime) {
             this.knownRuntime = knownRuntime;
             return this;
         }

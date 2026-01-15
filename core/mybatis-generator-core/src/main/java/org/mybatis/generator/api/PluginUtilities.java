@@ -21,10 +21,10 @@ public class PluginUtilities {
     }
 
     public static boolean isLegacyMyBatis3(IntrospectedTable introspectedTable) {
-        return !isDynamicSql(introspectedTable);
+        return introspectedTable.getKnownRuntime().isLegacyMyBatis3Based();
     }
 
     public static boolean isDynamicSql(IntrospectedTable introspectedTable) {
-        return introspectedTable.getKnownRuntime().map(KnownRuntime::isDynamicSqlBased).orElse(false);
+        return introspectedTable.getKnownRuntime().isDynamicSqlBased();
     }
 }

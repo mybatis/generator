@@ -16,7 +16,7 @@
 package org.mybatis.generator.internal.rules;
 
 import org.mybatis.generator.api.IntrospectedTable;
-import org.mybatis.generator.api.KnownRuntime;
+import org.mybatis.generator.api.PluginUtilities;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.config.TableConfiguration;
@@ -273,10 +273,7 @@ public abstract class BaseRules implements Rules {
             return false;
         }
 
-        boolean isLegacyMybatis3 = introspectedTable.getKnownRuntime()
-                .map(KnownRuntime::isDynamicSqlBased)
-                .map(b -> !b)
-                .orElse(false);
+        boolean isLegacyMybatis3 = PluginUtilities.isLegacyMyBatis3(introspectedTable);
         return isLegacyMybatis3 && tableConfiguration.isUpdateByExampleStatementEnabled();
     }
 

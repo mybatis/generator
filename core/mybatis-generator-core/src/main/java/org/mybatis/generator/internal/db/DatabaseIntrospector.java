@@ -161,7 +161,7 @@ public class DatabaseIntrospector {
      * @throws SQLException
      *             if any errors in introspection
      */
-    public List<IntrospectedTable> introspectTables(TableConfiguration tc, @Nullable KnownRuntime knownRuntime,
+    public List<IntrospectedTable> introspectTables(TableConfiguration tc, KnownRuntime knownRuntime,
                                                     PluginAggregator pluginAggregator) throws SQLException {
         // get the raw columns from the DB
         Map<ActualTableName, List<IntrospectedColumn>> columns = getColumns(tc);
@@ -501,7 +501,7 @@ public class DatabaseIntrospector {
     }
 
     private List<IntrospectedTable> calculateIntrospectedTables(TableConfiguration tc,
-            Map<ActualTableName, List<IntrospectedColumn>> columns, @Nullable KnownRuntime knownRuntime,
+            Map<ActualTableName, List<IntrospectedColumn>> columns, KnownRuntime knownRuntime,
                                                                 PluginAggregator pluginAggregator) {
         boolean delimitIdentifiers = tc.isDelimitIdentifiers()
                 || stringContainsSpace(tc.getCatalog())

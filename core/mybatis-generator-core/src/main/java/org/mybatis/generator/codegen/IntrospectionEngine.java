@@ -28,22 +28,19 @@ import java.util.Set;
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.JavaTypeResolver;
-import org.mybatis.generator.api.KnownRuntime;
 import org.mybatis.generator.api.ProgressCallback;
-import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.TableConfiguration;
 import org.mybatis.generator.internal.ObjectFactory;
-import org.mybatis.generator.internal.PluginAggregator;
 import org.mybatis.generator.internal.db.DatabaseIntrospector;
 
 public class IntrospectionEngine {
-    private final Context context;
+    private final CalculatedContextValues contextValues;
     private final ProgressCallback progressCallback;
     private final List<String> warnings;
     private final Set<String> fullyQualifiedTableNames;
 
     protected IntrospectionEngine(Builder builder) {
-        context = Objects.requireNonNull(builder.context);
+        contextValues = Objects.requireNonNull(builder.contextValues);
         progressCallback = Objects.requireNonNull(builder.progressCallback);
         warnings = Objects.requireNonNull(builder.warnings);
         fullyQualifiedTableNames = Objects.requireNonNull(builder.fullyQualifiedTableNames);
@@ -63,21 +60,20 @@ public class IntrospectionEngine {
      * @throws InterruptedException
      *             if the progress callback reports a cancel
      */
-    public List<IntrospectedTable> introspectTables(@Nullable KnownRuntime knownRuntime,
-                                                    PluginAggregator pluginAggregator)
+    public List<IntrospectedTable> introspectTables()
             throws SQLException, InterruptedException {
 
         List<IntrospectedTable> introspectedTables = new ArrayList<>();
-        JavaTypeResolver javaTypeResolver = ObjectFactory.createJavaTypeResolver(context, warnings);
+        JavaTypeResolver javaTypeResolver = ObjectFactory.createJavaTypeResolver(contextValues.context(), warnings);
 
-        try (Connection connection = ConnectionUtility.getConnection(context)) {
+        try (Connection connection = ConnectionUtility.getConnection(contextValues.context())) {
             progressCallback.startTask(getString("Progress.0")); //$NON-NLS-1$
 
             DatabaseIntrospector databaseIntrospector = new DatabaseIntrospector(
-                    context, connection.getMetaData(), javaTypeResolver, warnings);
+                    contextValues.context(), connection.getMetaData(), javaTypeResolver, warnings);
 
             // TODO - awkward toList here
-            for (TableConfiguration tc : context.tableConfigurations().toList()) {
+            for (TableConfiguration tc : contextValues.context().tableConfigurations().toList()) {
                 String tableName = composeFullyQualifiedTableName(tc.getCatalog(), tc
                                 .getSchema(), tc.getTableName(), '.');
 
@@ -91,8 +87,8 @@ public class IntrospectionEngine {
                 }
 
                 progressCallback.startTask(getString("Progress.1", tableName)); //$NON-NLS-1$
-                List<IntrospectedTable> tables = databaseIntrospector.introspectTables(tc, knownRuntime,
-                        pluginAggregator);
+                List<IntrospectedTable> tables = databaseIntrospector
+                        .introspectTables(tc, contextValues.knownRuntime(), contextValues.pluginAggregator());
                 introspectedTables.addAll(tables);
 
                 progressCallback.checkCancel();
@@ -115,13 +111,13 @@ public class IntrospectionEngine {
     }
 
     public static class Builder {
-        private @Nullable Context context;
+        private @Nullable CalculatedContextValues contextValues;
         private @Nullable ProgressCallback progressCallback;
         private @Nullable List<String> warnings;
         private @Nullable Set<String> fullyQualifiedTableNames;
 
-        public Builder withContext(Context context) {
-            this.context = context;
+        public Builder withContextValues(CalculatedContextValues contextValues) {
+            this.contextValues = contextValues;
             return this;
         }
 

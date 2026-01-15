@@ -69,7 +69,6 @@ public class MyBatisGenerator {
     private final Configuration configuration;
     private final ShellCallback shellCallback;
     private final List<String> warnings;
-    private final List<CalculatedContextValues> contextValuesList = new ArrayList<>();
     private final List<GenerationResults> generationResultsList = new ArrayList<>();
 
     /**
@@ -208,7 +207,7 @@ public class MyBatisGenerator {
                 Objects.requireNonNullElse(fullyQualifiedTableNames, Collections.emptySet());
         Set<String> localContextIds = Objects.requireNonNullElse(contextIds, Collections.emptySet());
 
-        contextValuesList.clear();
+        generationResultsList.clear();
         ObjectFactory.reset();
         RootClassInfo.reset();
 
@@ -228,12 +227,16 @@ public class MyBatisGenerator {
                     .toList();
         }
 
-        // now run the introspections...
-        runIntrospection(contextsToRun, localFullyQualifiedTableNames, localProgressCallback);
+        List<CalculatedContextValues> contextValuesList = contextsToRun.stream()
+                .map(this::createContextValues)
+                .toList();
 
-        runGenerators(localProgressCallback);
+        runIntrospection(contextValuesList, localFullyQualifiedTableNames, localProgressCallback);
 
-        // now save the files
+        List<GenerationEngine> generationEngines = createGenerationEngines(contextValuesList, localProgressCallback);
+
+        runGenerationEngines(generationEngines, localProgressCallback);
+
         if (writeFiles) {
             writeGeneratedFiles(localProgressCallback);
         }
@@ -241,42 +244,60 @@ public class MyBatisGenerator {
         localProgressCallback.done();
     }
 
-    private void runIntrospection(List<Context> contextsToRun, Set<String> fullyQualifiedTableNames,
-                                  ProgressCallback progressCallback) throws SQLException, InterruptedException {
-        int totalSteps = contextsToRun.stream().mapToInt(Context::getIntrospectionSteps).sum();
+    private CalculatedContextValues createContextValues(Context context) {
+        return new CalculatedContextValues.Builder()
+                .withContext(context)
+                .withWarnings(warnings)
+                .build();
+    }
+
+    private void runIntrospection(List<CalculatedContextValues> contextValuesList,
+                                  Set<String> fullyQualifiedTableNames, ProgressCallback progressCallback)
+            throws SQLException, InterruptedException {
+        int totalSteps = contextValuesList.stream()
+                .map(CalculatedContextValues::context)
+                .mapToInt(Context::getIntrospectionSteps)
+                .sum();
         progressCallback.introspectionStarted(totalSteps);
 
-        for (Context context : contextsToRun) {
-            CalculatedContextValues contextResults = new CalculatedContextValues.Builder()
-                    .withContext(context)
-                    .withWarnings(warnings)
-                    .build();
-            contextValuesList.add(contextResults);
-
-            List<IntrospectedTable> introspectedTables = new IntrospectionEngine.Builder()
-                    .withContext(context)
-                    .withFullyQualifiedTableNames(fullyQualifiedTableNames)
-                    .withWarnings(warnings)
-                    .withProgressCallback(progressCallback)
-                    .build()
-                    .introspectTables(contextResults.knownRuntime(), contextResults.pluginAggregator());
-
-            contextResults.addIntrospectedTables(introspectedTables);
+        for (CalculatedContextValues contextValues : contextValuesList) {
+            contextValues.addIntrospectedTables(
+                    runContextIntrospector(fullyQualifiedTableNames, contextValues, progressCallback));
         }
     }
 
-    private void runGenerators(ProgressCallback progressCallback) throws InterruptedException {
-        // create the generation engines
-        List<GenerationEngine> generationEngines = contextValuesList.stream()
-                .map(cv ->
-                        new GenerationEngine.Builder()
-                            .withContextValues(cv)
-                            .withProgressCallback(progressCallback)
-                            .withWarnings(warnings)
-                            .withIntrospectedTables(cv.introspectedTables())
-                            .build())
-                .toList();
+    private List<IntrospectedTable> runContextIntrospector(Set<String> fullyQualifiedTableNames,
+                                                           CalculatedContextValues contextValues,
+                                                           ProgressCallback progressCallback)
+            throws SQLException, InterruptedException {
+        return new IntrospectionEngine.Builder()
+                .withContextValues(contextValues)
+                .withFullyQualifiedTableNames(fullyQualifiedTableNames)
+                .withWarnings(warnings)
+                .withProgressCallback(progressCallback)
+                .build()
+                .introspectTables();
+    }
 
+    private List<GenerationEngine> createGenerationEngines(List<CalculatedContextValues> contextValuesList,
+                                                           ProgressCallback progressCallback) {
+        return contextValuesList.stream()
+                .map(cv -> createGenerationEngine(cv, progressCallback))
+                .toList();
+    }
+
+    private GenerationEngine createGenerationEngine(CalculatedContextValues contextValues,
+                                                    ProgressCallback progressCallback) {
+        return new GenerationEngine.Builder()
+                .withContextValues(contextValues)
+                .withProgressCallback(progressCallback)
+                .withWarnings(warnings)
+                .withIntrospectedTables(contextValues.introspectedTables())
+                .build();
+    }
+
+    private void runGenerationEngines(List<GenerationEngine> generationEngines, ProgressCallback progressCallback)
+            throws InterruptedException {
         // calculate the number of steps
         int totalSteps = generationEngines.stream().mapToInt(GenerationEngine::getGenerationSteps).sum();
         progressCallback.generationStarted(totalSteps);
@@ -545,6 +566,23 @@ public class MyBatisGenerator {
     public List<GeneratedXmlFile> getGeneratedXmlFiles() {
         return generationResultsList.stream()
                 .map(GenerationResults::generatedXmlFiles)
+                .flatMap(Collection::stream)
+                .toList();
+    }
+
+    /**
+     * Returns the list of generated generic files after a call to one of the generate methods.
+     * This is useful if you prefer to process the generated files yourself and do not want
+     * the generator to write them to disk.
+     *
+     * <p>The list will be empty unless you have used a plugin that generates generic files
+     * or are using a custom runtime.
+     *
+     * @return the list of generated generic files
+     */
+    public List<GenericGeneratedFile> getGeneratedGenericFiles() {
+        return generationResultsList.stream()
+                .map(GenerationResults::generatedGenericFiles)
                 .flatMap(Collection::stream)
                 .toList();
     }

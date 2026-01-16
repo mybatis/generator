@@ -88,13 +88,13 @@ public class MyBatisGenerator {
      * the disk. The generated objects can be retrieved from the getGeneratedJavaFiles(), getGeneratedKotlinFiles(),
      * getGeneratedXmlFiles(), and getGeneratedGenericFiles() methods.
      *
+     * @return any warnings created during the generation process
      * @throws SQLException
      *             the SQL exception
      * @throws InterruptedException
      *             if the method is canceled through the ProgressCallback
      * @throws InvalidConfigurationException
      *             if the specified configuration is invalid
-     * @return any warnings created during the generation process
      */
     public List<String> generateOnly() throws SQLException, InterruptedException, InvalidConfigurationException {
         List<String> warnings = new ArrayList<>();
@@ -108,6 +108,7 @@ public class MyBatisGenerator {
      * and the method can be canceled through the ProgressCallback interface. This method will write results to
      * the disk.
      *
+     * @return any warnings created during the generation process
      * @throws SQLException
      *             the SQL exception
      * @throws IOException
@@ -116,7 +117,6 @@ public class MyBatisGenerator {
      *             if the method is canceled through the ProgressCallback
      * @throws InvalidConfigurationException
      *             if the specified configuration is invalid
-     * @return any warnings created during the generation process
      */
     public List<String> generateAndWrite() throws SQLException, IOException, InterruptedException,
             InvalidConfigurationException {

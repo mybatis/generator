@@ -15,8 +15,6 @@
  */
 package org.mybatis.generator.api.dom.kotlin;
 
-import org.mybatis.generator.exception.TypeParsingException;
-
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
@@ -29,6 +27,8 @@ import java.util.StringTokenizer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import org.mybatis.generator.exception.TypeParsingException;
 
 public class FullyQualifiedKotlinType {
 

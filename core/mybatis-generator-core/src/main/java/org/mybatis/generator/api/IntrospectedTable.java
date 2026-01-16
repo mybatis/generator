@@ -123,10 +123,10 @@ public class IntrospectedTable {
     protected @Nullable String tableType;
 
     protected IntrospectedTable(Builder builder) {
-        this.knownRuntime = Objects.requireNonNull(builder.knownRuntime);
-        this.tableConfiguration = Objects.requireNonNull(builder.tableConfiguration);
-        this.fullyQualifiedTable = Objects.requireNonNull(builder.fullyQualifiedTable);
-        this.context = Objects.requireNonNull(builder.context);
+        knownRuntime = Objects.requireNonNull(builder.knownRuntime);
+        tableConfiguration = Objects.requireNonNull(builder.tableConfiguration);
+        fullyQualifiedTable = Objects.requireNonNull(builder.fullyQualifiedTable);
+        context = Objects.requireNonNull(builder.context);
         Objects.requireNonNull(builder.pluginAggregator);
 
         calculateJavaClientAttributes();

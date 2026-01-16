@@ -18,17 +18,13 @@ package org.mybatis.generator.api;
 import org.mybatis.generator.api.dom.xml.Document;
 
 public class GeneratedXmlFile extends GeneratedFile {
-
     private final Document document;
-
     private final String fileName;
-
     private final String targetPackage;
-
     private boolean isMergeable;
 
-    public GeneratedXmlFile(Document document, String fileName,
-            String targetPackage, String targetProject, boolean isMergeable) {
+    public GeneratedXmlFile(Document document, String fileName, String targetPackage, String targetProject,
+                            boolean isMergeable) {
         super(targetProject);
         this.document = document;
         this.fileName = fileName;

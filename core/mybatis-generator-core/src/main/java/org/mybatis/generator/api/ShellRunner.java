@@ -84,9 +84,9 @@ public class ShellRunner {
         Set<String> contexts = StringUtility.tokenize(arguments.get(CONTEXT_IDS));
 
         try {
-            ConfigurationParser cp = new ConfigurationParser(warnings);
+            ConfigurationParser cp = new ConfigurationParser();
             Configuration config = cp.parseConfiguration(configurationFile.toFile());
-
+            warnings.addAll(cp.getWarnings());
             DefaultShellCallback shellCallback = new DefaultShellCallback(arguments.containsKey(OVERWRITE));
 
             ProgressCallback progressCallback = arguments.containsKey(VERBOSE) ? new VerboseProgressCallback()

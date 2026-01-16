@@ -192,8 +192,9 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
         List<String> warnings = new ArrayList<>();
 
         try {
-            ConfigurationParser cp = new ConfigurationParser(project.getProperties(), warnings);
+            ConfigurationParser cp = new ConfigurationParser(project.getProperties());
             Configuration config = cp.parseConfiguration(configurationFile);
+            warnings.addAll(cp.getWarnings());
 
             ShellCallback callback = new MavenShellCallback(this, overwrite);
 

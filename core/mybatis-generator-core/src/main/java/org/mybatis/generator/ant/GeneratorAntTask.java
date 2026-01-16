@@ -99,8 +99,9 @@ public class GeneratorAntTask extends Task {
         try {
             Properties p = propertyset == null ? null : propertyset.getProperties();
 
-            ConfigurationParser cp = new ConfigurationParser(p, warnings);
+            ConfigurationParser cp = new ConfigurationParser(p);
             Configuration config = cp.parseConfiguration(configurationFile);
+            warnings.addAll(cp.getWarnings());
 
             DefaultShellCallback callback = new DefaultShellCallback(overwrite);
 

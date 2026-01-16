@@ -53,8 +53,7 @@ class KotlinCodeGenerationTest {
     }
 
     static List<GeneratedKotlinFile> generateKotlinFiles(String configFile) throws Exception {
-        List<String> warnings = new ArrayList<>();
-        ConfigurationParser cp = new ConfigurationParser(warnings);
+        ConfigurationParser cp = new ConfigurationParser();
         InputStream is = KotlinCodeGenerationTest.class.getResourceAsStream(configFile);
         if (is == null) {
             throw new RuntimeException("Cannot load configFile: " + configFile);

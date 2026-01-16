@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 import org.mybatis.generator.config.JDBCConnectionConfiguration;
+import org.mybatis.generator.exception.InternalException;
 
 /**
  * This class assumes that classes are cached elsewhere for performance reasons,
@@ -72,7 +73,7 @@ public class JDBCConnectionFactory {
             Class<Driver> clazz = ObjectFactory.externalClassForName(config.getDriverClass(), Driver.class);
             driver = clazz.getConstructor().newInstance();
         } catch (Exception e) {
-            throw new RuntimeException(getString("RuntimeError.8"), e); //$NON-NLS-1$
+            throw new InternalException(getString("RuntimeError.8"), e); //$NON-NLS-1$
         }
 
         return driver;

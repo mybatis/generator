@@ -99,33 +99,8 @@ public class ConfigurationParser {
     }
 
     private Configuration parseConfiguration(InputSource inputSource) throws IOException, XMLParserException {
-        parseErrors.clear();
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
-        factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
-        factory.setValidating(true);
-
         try {
-            factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            builder.setEntityResolver(new ParserEntityResolver());
-
-            ParserErrorHandler handler = new ParserErrorHandler(warnings,
-                    parseErrors);
-            builder.setErrorHandler(handler);
-
-            Document document = null;
-            try {
-                document = builder.parse(inputSource);
-            } catch (SAXParseException e) {
-                throw new XMLParserException(parseErrors);
-            } catch (SAXException e) {
-                if (e.getException() == null) {
-                    parseErrors.add(e.getMessage());
-                } else {
-                    parseErrors.add(e.getException().getMessage());
-                }
-            }
+            Document document = basicParse(inputSource);
 
             if (document == null || !parseErrors.isEmpty()) {
                 throw new XMLParserException(parseErrors);
@@ -150,6 +125,36 @@ public class ConfigurationParser {
             parseErrors.add(e.getMessage());
             throw new XMLParserException(parseErrors);
         }
+    }
+
+    private @Nullable Document basicParse(InputSource inputSource) throws IOException, ParserConfigurationException, XMLParserException {
+        parseErrors.clear();
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, ""); //$NON-NLS-1$
+        factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, ""); //$NON-NLS-1$
+        factory.setValidating(true);
+
+        factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        builder.setEntityResolver(new ParserEntityResolver());
+
+        ParserErrorHandler handler = new ParserErrorHandler(warnings, parseErrors);
+        builder.setErrorHandler(handler);
+
+        Document document = null;
+        try {
+            document = builder.parse(inputSource);
+        } catch (SAXParseException e) {
+            throw new XMLParserException(parseErrors);
+        } catch (SAXException e) {
+            if (e.getException() == null) {
+                parseErrors.add(e.getMessage());
+            } else {
+                parseErrors.add(e.getException().getMessage());
+            }
+        }
+
+        return document;
     }
 
     private Configuration parseMyBatisGeneratorConfiguration(Element rootNode) throws XMLParserException {

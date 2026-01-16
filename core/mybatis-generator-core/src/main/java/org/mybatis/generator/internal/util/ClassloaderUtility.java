@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.mybatis.generator.exception.InternalException;
 import org.mybatis.generator.logging.Log;
 import org.mybatis.generator.logging.LogFactory;
 
@@ -59,7 +60,7 @@ public class ClassloaderUtility {
                 urls.add(file.toUri().toURL());
             } catch (MalformedURLException e) {
                 // this shouldn't happen, but just in case...
-                throw new RuntimeException(getString("RuntimeError.9", classPathEntry)); //$NON-NLS-1$
+                throw new InternalException(getString("RuntimeError.9", classPathEntry)); //$NON-NLS-1$
             }
         }
 

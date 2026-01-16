@@ -38,6 +38,7 @@ import org.mybatis.generator.config.Defaults;
 import org.mybatis.generator.config.JavaTypeResolverConfiguration;
 import org.mybatis.generator.config.PluginConfiguration;
 import org.mybatis.generator.config.PropertyRegistry;
+import org.mybatis.generator.exception.InternalException;
 
 /**
  * This class creates the different objects needed by the generator.
@@ -116,7 +117,7 @@ public class ObjectFactory {
             Class<T> clazz = externalClassForName(type, t);
             answer = clazz.getConstructor().newInstance();
         } catch (Exception e) {
-            throw new RuntimeException(getString("RuntimeError.6", type), e); //$NON-NLS-1$
+            throw new InternalException(getString("RuntimeError.6", type), e); //$NON-NLS-1$
         }
 
         return answer;
@@ -167,8 +168,7 @@ public class ObjectFactory {
             Class<T> clazz = internalClassForName(type, t);
             answer = clazz.getConstructor().newInstance();
         } catch (Exception e) {
-            throw new RuntimeException(getString("RuntimeError.6", type), e); //$NON-NLS-1$
-
+            throw new InternalException(getString("RuntimeError.6", type), e); //$NON-NLS-1$
         }
 
         return answer;

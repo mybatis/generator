@@ -25,6 +25,7 @@ import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 
 import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.exception.TypeParsingException;
 
 public class FullyQualifiedJavaType implements Comparable<FullyQualifiedJavaType> {
 
@@ -320,8 +321,7 @@ public class FullyQualifiedJavaType implements Comparable<FullyQualifiedJavaType
                 simpleParse(fullTypeSpecification.substring(0, index));
                 int endIndex = fullTypeSpecification.lastIndexOf('>');
                 if (endIndex == -1) {
-                    throw new RuntimeException(getString(
-                            "RuntimeError.22", fullTypeSpecification)); //$NON-NLS-1$
+                    throw new TypeParsingException(getString("RuntimeError.22", fullTypeSpecification)); //$NON-NLS-1$
                 }
                 genericParse(fullTypeSpecification.substring(index, endIndex + 1));
             }
@@ -396,8 +396,7 @@ public class FullyQualifiedJavaType implements Comparable<FullyQualifiedJavaType
         int lastIndex = genericSpecification.lastIndexOf('>');
         if (lastIndex == -1) {
             // shouldn't happen - should be caught already, but just in case...
-            throw new RuntimeException(getString(
-                    "RuntimeError.22", genericSpecification)); //$NON-NLS-1$
+            throw new TypeParsingException(getString("RuntimeError.22", genericSpecification)); //$NON-NLS-1$
         }
         String argumentString = genericSpecification.substring(1, lastIndex);
         // need to find "," outside a <> bounds
@@ -426,8 +425,7 @@ public class FullyQualifiedJavaType implements Comparable<FullyQualifiedJavaType
         }
 
         if (openCount != 0) {
-            throw new RuntimeException(getString(
-                    "RuntimeError.22", genericSpecification)); //$NON-NLS-1$
+            throw new TypeParsingException(getString("RuntimeError.22", genericSpecification)); //$NON-NLS-1$
         }
 
         String finalType = sb.toString();

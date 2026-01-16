@@ -29,6 +29,7 @@ import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.exception.InternalException;
 
 public class ProviderApplyWhereMethodGenerator extends AbstractJavaProviderMethodGenerator {
 
@@ -82,7 +83,7 @@ public class ProviderApplyWhereMethodGenerator extends AbstractJavaProviderMetho
                 }
             }
         } catch (IOException e) {
-            throw new RuntimeException("IOException reading ApplyWhere method lines", e); //$NON-NLS-1$
+            throw new InternalException("IOException reading ApplyWhere method lines", e); //$NON-NLS-1$
         }
 
         return answer;

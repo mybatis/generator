@@ -63,6 +63,7 @@ public class JavaDynamicSqlRuntime extends LegacyJavaRuntime {
             return this;
         }
 
+        @Override
         public JavaDynamicSqlRuntime build() {
             return new JavaDynamicSqlRuntime(this);
         }

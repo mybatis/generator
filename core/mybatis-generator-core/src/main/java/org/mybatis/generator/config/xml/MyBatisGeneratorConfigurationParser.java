@@ -93,7 +93,9 @@ public class MyBatisGeneratorConfigurationParser {
                     configuration.addClasspathEntry(parseClassPathEntry(childNode));
             case "context" ->  //$NON-NLS-1$
                     configuration.addContext(parseContext(childNode));
-            default -> { }
+            default -> {
+                // Ignore unrecognized elements
+            }
             }
         }
 
@@ -187,7 +189,9 @@ public class MyBatisGeneratorConfigurationParser {
                     builder.withJavaClientGeneratorConfiguration(parseJavaClientGenerator(childNode));
             case "table" ->  //$NON-NLS-1$
                     builder.withTableConfiguration(parseTable(dmt, childNode));
-            default -> { }
+            default -> {
+                // Ignore unrecognized elements
+            }
             }
         }
 
@@ -309,7 +313,9 @@ public class MyBatisGeneratorConfigurationParser {
                     builder.withDomainObjectRenamingRule(parseDomainObjectRenamingRule(childNode));
             case "columnRenamingRule" ->  //$NON-NLS-1$
                     builder.withColumnRenamingRule(parseColumnRenamingRule(childNode));
-            default -> { }
+            default -> {
+                // Ignore unrecognized elements
+            }
             }
         }
 

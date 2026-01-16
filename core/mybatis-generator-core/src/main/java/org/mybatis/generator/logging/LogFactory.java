@@ -18,6 +18,7 @@ package org.mybatis.generator.logging;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import org.jspecify.annotations.Nullable;
+import org.mybatis.generator.exception.InternalException;
 import org.mybatis.generator.logging.commons.JakartaCommonsLoggingLogFactory;
 import org.mybatis.generator.logging.jdk14.Jdk14LoggingLogFactory;
 import org.mybatis.generator.logging.log4j2.Log4j2LoggingLogFactory;
@@ -46,14 +47,14 @@ public class LogFactory {
 
     public static Log getLog(Class<?> clazz) {
         if (theFactory == null) {
-            throw new RuntimeException(getString("RuntimeError.21", //$NON-NLS-1$
+            throw new InternalException(getString("RuntimeError.21", //$NON-NLS-1$
                     clazz.getName(), "LogFactory Not Initialized"));
         }
 
         try {
             return theFactory.getLog(clazz);
         } catch (Exception t) {
-            throw new RuntimeException(getString("RuntimeError.21", //$NON-NLS-1$
+            throw new InternalException(getString("RuntimeError.21", //$NON-NLS-1$
                     clazz.getName(), t.getMessage()), t);
         }
     }
@@ -107,7 +108,7 @@ public class LogFactory {
                 log.debug("Logging initialized using '" + factory + "' adapter."); //$NON-NLS-1$ //$NON-NLS-2$
             }
             theFactory = factory;
-        } catch (Throwable t) {
+        } catch (Exception t) {
             throw new LogException("Error setting Log implementation.  Cause: " + t.getMessage(), t); //$NON-NLS-1$
         }
     }

@@ -28,14 +28,14 @@ public final class Defaults {
         // utility class - no instances
     }
 
-    public static ModelType DEFAULT_MODEL_TYPE = ModelType.CONDITIONAL;
-    public static String DEFAULT_BEGINNING_DELIMITER = "\"";
-    public static String DEFAULT_ENDING_DELIMITER = "\"";
-    public static String DEFAULT_COMMENT_GENERATOR = DefaultCommentGenerator.class.getName();
-    public static String DEFAULT_KOTLIN_FORMATTER = DefaultKotlinFormatter.class.getName();
-    public static String DEFAULT_XML_FORMATTER = DefaultXmlFormatter.class.getName();
-    public static String DEFAULT_JAVA_FORMATTER = DefaultJavaFormatter.class.getName();
-    public static String DEFAULT_GENERIC_CONNECTION_FACTORY = GenericConnectionFactory.class.getName();
-    public static String DEFAULT_JAVA_TYPE_RESOLVER = JavaTypeResolverDefaultImpl.class.getName();
-    public static KnownRuntime DEFAULT_RUNTIME = KnownRuntime.MYBATIS3_DYNAMIC_SQL;
+    public static final ModelType DEFAULT_MODEL_TYPE = ModelType.CONDITIONAL;
+    public static final String DEFAULT_BEGINNING_DELIMITER = "\"";
+    public static final String DEFAULT_ENDING_DELIMITER = "\"";
+    public static final String DEFAULT_COMMENT_GENERATOR = DefaultCommentGenerator.class.getName();
+    public static final String DEFAULT_KOTLIN_FORMATTER = DefaultKotlinFormatter.class.getName();
+    public static final String DEFAULT_XML_FORMATTER = DefaultXmlFormatter.class.getName();
+    public static final String DEFAULT_JAVA_FORMATTER = DefaultJavaFormatter.class.getName();
+    public static final String DEFAULT_GENERIC_CONNECTION_FACTORY = GenericConnectionFactory.class.getName();
+    public static final String DEFAULT_JAVA_TYPE_RESOLVER = JavaTypeResolverDefaultImpl.class.getName();
+    public static final KnownRuntime DEFAULT_RUNTIME = KnownRuntime.MYBATIS3_DYNAMIC_SQL;
 }

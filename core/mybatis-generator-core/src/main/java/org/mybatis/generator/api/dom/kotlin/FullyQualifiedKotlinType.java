@@ -15,6 +15,8 @@
  */
 package org.mybatis.generator.api.dom.kotlin;
 
+import org.mybatis.generator.exception.TypeParsingException;
+
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
@@ -103,7 +105,7 @@ public class FullyQualifiedKotlinType {
             simpleParse(fullTypeSpecification.substring(0, index));
             int endIndex = fullTypeSpecification.lastIndexOf('>');
             if (endIndex == -1) {
-                throw new RuntimeException(getString("RuntimeError.22", fullTypeSpecification)); //$NON-NLS-1$
+                throw new TypeParsingException(getString("RuntimeError.22", fullTypeSpecification)); //$NON-NLS-1$
             }
             genericParse(fullTypeSpecification.substring(index, endIndex + 1));
         }
@@ -126,7 +128,7 @@ public class FullyQualifiedKotlinType {
         int lastIndex = genericSpecification.lastIndexOf('>');
         if (lastIndex == -1) {
             // shouldn't happen - should be caught already, but just in case...
-            throw new RuntimeException(getString("RuntimeError.22", genericSpecification)); //$NON-NLS-1$
+            throw new TypeParsingException(getString("RuntimeError.22", genericSpecification)); //$NON-NLS-1$
         }
         String argumentString = genericSpecification.substring(1, lastIndex);
         // need to find "," outside a <> bounds
@@ -154,7 +156,7 @@ public class FullyQualifiedKotlinType {
         }
 
         if (openCount != 0) {
-            throw new RuntimeException(getString("RuntimeError.22", genericSpecification)); //$NON-NLS-1$
+            throw new TypeParsingException(getString("RuntimeError.22", genericSpecification)); //$NON-NLS-1$
         }
 
         String finalType = sb.toString();

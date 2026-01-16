@@ -45,18 +45,19 @@ class MyBatisGeneratorTest {
 
         DefaultShellCallback shellCallback = new DefaultShellCallback(true);
 
+        MyBatisGenerator myBatisGenerator = new MyBatisGenerator.Builder()
+                .withConfiguration(config)
+                .withShellCallback(shellCallback)
+                .build();
+
         InvalidConfigurationException e =
-                assertThrows(InvalidConfigurationException.class, () -> {
-                    MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, shellCallback, warnings);
-                    myBatisGenerator.generate(null, null, null, false);
-                });
+                assertThrows(InvalidConfigurationException.class, myBatisGenerator::generateOnly);
 
         assertEquals(2, e.getErrors().size());
     }
 
     @Test
     void testGenerateInvalidConfigWithNoConnectionSources() {
-        List<String> warnings = new ArrayList<>();
         Configuration config = new Configuration();
         Context context = new Context.Builder()
                 .withId("MyContext")
@@ -71,17 +72,18 @@ class MyBatisGeneratorTest {
 
         DefaultShellCallback shellCallback = new DefaultShellCallback(true);
 
+        MyBatisGenerator myBatisGenerator = new MyBatisGenerator.Builder()
+                .withConfiguration(config)
+                .withShellCallback(shellCallback)
+                .build();
+
         InvalidConfigurationException e =
-                assertThrows(InvalidConfigurationException.class, () -> {
-                    MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, shellCallback, warnings);
-                    myBatisGenerator.generate(null, null, null, false);
-                });
+                assertThrows(InvalidConfigurationException.class, myBatisGenerator::generateOnly);
         assertEquals(2, e.getErrors().size());
     }
 
     @Test
     void testGenerateInvalidConfigWithTwoConnectionSources() {
-        List<String> warnings = new ArrayList<>();
         Configuration config = new Configuration();
         Context context = new Context.Builder()
                 .withId("MyContext")
@@ -97,11 +99,13 @@ class MyBatisGeneratorTest {
 
         DefaultShellCallback shellCallback = new DefaultShellCallback(true);
 
+        MyBatisGenerator myBatisGenerator = new MyBatisGenerator.Builder()
+                .withConfiguration(config)
+                .withShellCallback(shellCallback)
+                .build();
+
         InvalidConfigurationException e =
-                assertThrows(InvalidConfigurationException.class, () -> {
-                    MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, shellCallback, warnings);
-                    myBatisGenerator.generate(null, null, null, false);
-                });
+                assertThrows(InvalidConfigurationException.class, myBatisGenerator::generateOnly);
         assertEquals(3, e.getErrors().size());
     }
 }

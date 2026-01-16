@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -197,10 +197,15 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
 
             ShellCallback callback = new MavenShellCallback(this, overwrite);
 
-            MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
+            MyBatisGenerator myBatisGenerator = new MyBatisGenerator.Builder()
+                    .withConfiguration(config)
+                    .withShellCallback(callback)
+                    .withProgressCallback(new MavenProgressCallback(getLog(), verbose))
+                    .withContextIds(contextsToRun)
+                    .withFullyQualifiedTableNames(fullyQualifiedTables)
+                    .build();
 
-            myBatisGenerator.generate(new MavenProgressCallback(getLog(), verbose), contextsToRun, fullyQualifiedTables);
-
+            warnings.addAll(myBatisGenerator.generateAndWrite());
         } catch (XMLParserException | InvalidConfigurationException e) {
             for (String error : e.getErrors()) {
                 getLog().error(error);

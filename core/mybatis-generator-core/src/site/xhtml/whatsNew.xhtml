@@ -88,6 +88,10 @@ recommended practice with JSpecify.</p>
         there are new utility methods <code>PluginUtilities.isDynamicSQL(IntrospectedTable)</code> and
         <code>PluginUtilities.isLegacyMybatis(IntrospectedTable)</code> that may be helpful.
     </li>
+    <li>If you run the generator directly from Java code (i.e. not from Maven, Ant, Eclipse, or the command line runner)
+        then you will notice that the interface to the <code>MyBatisGenerator</code> class has changed. The class now
+        uses a Builder to build instances, and the generate methods have changed.
+    </li>
 </ul>
 
 <h2>Version 1.4.2</h2>

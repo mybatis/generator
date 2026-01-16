@@ -30,7 +30,6 @@ import java.nio.file.StandardOpenOption;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -69,166 +68,78 @@ public class MyBatisGenerator {
     private static final ProgressCallback NULL_PROGRESS_CALLBACK = new ProgressCallback() { };
     private final Configuration configuration;
     private final ShellCallback shellCallback;
-    private final List<String> warnings;
+    private final ProgressCallback progressCallback;
+    private final Set<String> contextIds;
+    private final Set<String> fullyQualifiedTableNames;
+
     private final List<GenerationResults> generationResultsList = new ArrayList<>();
 
+    private MyBatisGenerator(Builder builder) {
+        configuration = Objects.requireNonNull(builder.configuration, getString("RuntimeError.2")); //$NON-NLS-1$
+        shellCallback = Objects.requireNonNullElseGet(builder.shellCallback, () -> new DefaultShellCallback(false));
+        progressCallback = Objects.requireNonNullElse(builder.progressCallback, NULL_PROGRESS_CALLBACK);
+        fullyQualifiedTableNames = builder.fullyQualifiedTableNames;
+        contextIds = builder.contextIds;
+    }
+
     /**
-     * Constructs a MyBatisGenerator object.
+     * This is one of the main methods for generating code. This method is long-running, but progress can be provided
+     * and the method can be canceled through the ProgressCallback interface. This method will not write results to
+     * the disk. The generated objects can be retrieved from the getGeneratedJavaFiles(), getGeneratedKotlinFiles(),
+     * getGeneratedXmlFiles(), and getGeneratedGenericFiles() methods.
      *
-     * @param configuration
-     *            The configuration for this invocation
-     * @param shellCallback
-     *            an instance of a ShellCallback interface. You may specify
-     *            <code>null</code> in which case the DefaultShellCallback will
-     *            be used.
-     * @param warnings
-     *            Any warnings generated during execution will be added to this
-     *            list. Warnings do not affect the running of the tool, but they
-     *            may affect the results. A typical warning is an unsupported
-     *            data type. In that case, the column will be ignored and
-     *            generation will continue. You may specify <code>null</code> if
-     *            you do not want warnings returned.
+     * @throws SQLException
+     *             the SQL exception
+     * @throws InterruptedException
+     *             if the method is canceled through the ProgressCallback
      * @throws InvalidConfigurationException
      *             if the specified configuration is invalid
+     * @return any warnings created during the generation process
      */
-    public MyBatisGenerator(Configuration configuration, @Nullable ShellCallback shellCallback,
-            @Nullable List<String> warnings) throws InvalidConfigurationException {
-        if (configuration == null) {
-            throw new IllegalArgumentException(getString("RuntimeError.2")); //$NON-NLS-1$
-        } else {
-            this.configuration = configuration;
-        }
-
-        this.shellCallback = Objects.requireNonNullElseGet(shellCallback, () -> new DefaultShellCallback(false));
-        this.warnings = Objects.requireNonNullElseGet(warnings, ArrayList::new);
-        this.configuration.validate();
+    public List<String> generateOnly() throws SQLException, InterruptedException, InvalidConfigurationException {
+        List<String> warnings = new ArrayList<>();
+        generateFiles(warnings);
+        progressCallback.done();
+        return warnings;
     }
 
     /**
-     * This is the main method for generating code. This method is long-running, but progress can be provided and the
-     * method can be canceled through the ProgressCallback interface. This version of the method runs all configured
-     * contexts.
+     * This is one of the main methods for generating code. This method is long-running, but progress can be provided
+     * and the method can be canceled through the ProgressCallback interface. This method will write results to
+     * the disk.
      *
-     * @param callback
-     *            an instance of the ProgressCallback interface, or <code>null</code> if you do not require progress
-     *            information
      * @throws SQLException
      *             the SQL exception
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      * @throws InterruptedException
      *             if the method is canceled through the ProgressCallback
+     * @throws InvalidConfigurationException
+     *             if the specified configuration is invalid
+     * @return any warnings created during the generation process
      */
-    public void generate(ProgressCallback callback) throws SQLException,
-            IOException, InterruptedException {
-        generate(callback, null, null, true);
+    public List<String> generateAndWrite() throws SQLException, IOException, InterruptedException,
+            InvalidConfigurationException {
+        List<String> warnings = new ArrayList<>();
+        generateFiles(warnings);
+        writeGeneratedFiles(warnings);
+        progressCallback.done();
+        return warnings;
     }
 
-    /**
-     * This is the main method for generating code. This method is long-running, but progress can be provided and the
-     * method can be canceled through the ProgressCallback interface.
-     *
-     * @param callback
-     *            an instance of the ProgressCallback interface, or <code>null</code> if you do not require progress
-     *            information
-     * @param contextIds
-     *            a set of Strings containing context ids to run. Only the contexts with an id specified in this list
-     *            will be run. If the list is null or empty, then all contexts are run.
-     * @throws SQLException
-     *             the SQL exception
-     * @throws IOException
-     *             Signals that an I/O exception has occurred.
-     * @throws InterruptedException
-     *             if the method is canceled through the ProgressCallback
-     */
-    public void generate(ProgressCallback callback, Set<String> contextIds)
-            throws SQLException, IOException, InterruptedException {
-        generate(callback, contextIds, null, true);
-    }
-
-    /**
-     * This is the main method for generating code. This method is long-running, but progress can be provided and the
-     * method can be cancelled through the ProgressCallback interface.
-     *
-     * @param callback
-     *            an instance of the ProgressCallback interface, or <code>null</code> if you do not require progress
-     *            information
-     * @param contextIds
-     *            a set of Strings containing context ids to run. Only the contexts with an id specified in this list
-     *            will be run. If the list is null or empty, then all contexts are run.
-     * @param fullyQualifiedTableNames
-     *            a set of table names to generate. The elements of the set must be Strings that exactly match what's
-     *            specified in the configuration. For example, if table name = "foo" and schema = "bar", then the fully
-     *            qualified table name is "foo.bar". If the Set is null or empty, then all tables in the configuration
-     *            will be used for code generation.
-     * @throws SQLException
-     *             the SQL exception
-     * @throws IOException
-     *             Signals that an I/O exception has occurred.
-     * @throws InterruptedException
-     *             if the method is canceled through the ProgressCallback
-     */
-    public void generate(@Nullable ProgressCallback callback, @Nullable Set<String> contextIds,
-            @Nullable Set<String> fullyQualifiedTableNames) throws SQLException,
-            IOException, InterruptedException {
-        generate(callback, contextIds, fullyQualifiedTableNames, true);
-    }
-
-    /**
-     * This is the main method for generating code. This method is long-running, but progress can be provided and the
-     * method can be cancelled through the ProgressCallback interface.
-     *
-     * @param progressCallback
-     *            an instance of the ProgressCallback interface, or <code>null</code> if you do not require progress
-     *            information
-     * @param contextIds
-     *            a set of Strings containing context ids to run. Only the contexts with an id specified in this list
-     *            will be run. If the list is null or empty, then all contexts are run.
-     * @param fullyQualifiedTableNames
-     *            a set of table names to generate. The elements of the set must be Strings that exactly match what's
-     *            specified in the configuration. For example, if table name = "foo" and schema = "bar", then the fully
-     *            qualified table name is "foo.bar". If the Set is null or empty, then all tables in the configuration
-     *            will be used for code generation.
-     * @param writeFiles
-     *            if true, then the generated files will be written to disk.  If false,
-     *            then the generator runs but nothing is written
-     * @throws SQLException
-     *             the SQL exception
-     * @throws IOException
-     *             Signals that an I/O exception has occurred.
-     * @throws InterruptedException
-     *             if the method is canceled through the ProgressCallback
-     */
-    public void generate(@Nullable ProgressCallback progressCallback, @Nullable Set<String> contextIds,
-                         @Nullable Set<String> fullyQualifiedTableNames, boolean writeFiles) throws SQLException,
-            IOException, InterruptedException {
-
+    private void generateFiles(List<String> warnings) throws SQLException, InterruptedException,
+            InvalidConfigurationException {
+        configuration.validate();
         generationResultsList.clear();
         ObjectFactory.reset();
         RootClassInfo.reset();
 
         setupCustomClassloader();
-
-        ProgressCallback localProgressCallback = Objects.requireNonNullElse(progressCallback, NULL_PROGRESS_CALLBACK);
-        Set<String> localFullyQualifiedTableNames =
-                Objects.requireNonNullElse(fullyQualifiedTableNames, Collections.emptySet());
-        Set<String> localContextIds = Objects.requireNonNullElse(contextIds, Collections.emptySet());
-
-        List<Context> contextsToRun = calculateContextsToRun(localFullyQualifiedTableNames, localContextIds);
-
-        List<CalculatedContextValues> contextValuesList = calculateContextValues(contextsToRun);
-
-        runAllIntrospections(contextValuesList, localFullyQualifiedTableNames, localProgressCallback);
-
-        List<GenerationEngine> generationEngines = createGenerationEngines(contextValuesList, localProgressCallback);
-
-        runGenerationEngines(generationEngines, localProgressCallback);
-
-        if (writeFiles) {
-            writeGeneratedFiles(localProgressCallback);
-        }
-
-        localProgressCallback.done();
+        List<Context> contextsToRun = calculateContextsToRun();
+        List<CalculatedContextValues> contextValuesList = calculateContextValues(contextsToRun, warnings);
+        runAllIntrospections(contextValuesList, warnings);
+        List<GenerationEngine> generationEngines = createGenerationEngines(contextValuesList, warnings);
+        runGenerationEngines(generationEngines);
     }
 
     private void setupCustomClassloader() {
@@ -238,7 +149,7 @@ public class MyBatisGenerator {
         }
     }
 
-    private List<Context> calculateContextsToRun(Set<String> fullyQualifiedTableNames, Set<String> contextIds) {
+    private List<Context> calculateContextsToRun() {
         List<Context> contextsToRun;
         if (fullyQualifiedTableNames.isEmpty()) {
             contextsToRun = configuration.getContexts();
@@ -251,21 +162,20 @@ public class MyBatisGenerator {
         return contextsToRun;
     }
 
-    private List<CalculatedContextValues> calculateContextValues(List<Context> contextsToRun) {
+    private List<CalculatedContextValues> calculateContextValues(List<Context> contextsToRun, List<String> warnings) {
         return contextsToRun.stream()
-                .map(this::createContextValues)
+                .map(c -> createContextValues(c, warnings))
                 .toList();
     }
 
-    private CalculatedContextValues createContextValues(Context context) {
+    private CalculatedContextValues createContextValues(Context context, List<String> warnings) {
         return new CalculatedContextValues.Builder()
                 .withContext(context)
                 .withWarnings(warnings)
                 .build();
     }
 
-    private void runAllIntrospections(List<CalculatedContextValues> contextValuesList,
-                                      Set<String> fullyQualifiedTableNames, ProgressCallback progressCallback)
+    private void runAllIntrospections(List<CalculatedContextValues> contextValuesList, List<String> warnings)
             throws SQLException, InterruptedException {
         int totalSteps = contextValuesList.stream()
                 .map(CalculatedContextValues::context)
@@ -275,13 +185,13 @@ public class MyBatisGenerator {
 
         for (CalculatedContextValues contextValues : contextValuesList) {
             contextValues.addIntrospectedTables(
-                    runContextIntrospection(fullyQualifiedTableNames, contextValues, progressCallback));
+                    runContextIntrospection(fullyQualifiedTableNames, contextValues, warnings));
         }
     }
 
     private List<IntrospectedTable> runContextIntrospection(Set<String> fullyQualifiedTableNames,
                                                             CalculatedContextValues contextValues,
-                                                            ProgressCallback progressCallback)
+                                                            List<String> warnings)
             throws SQLException, InterruptedException {
         return new IntrospectionEngine.Builder()
                 .withContextValues(contextValues)
@@ -293,14 +203,13 @@ public class MyBatisGenerator {
     }
 
     private List<GenerationEngine> createGenerationEngines(List<CalculatedContextValues> contextValuesList,
-                                                           ProgressCallback progressCallback) {
+                                                           List<String> warnings) {
         return contextValuesList.stream()
-                .map(cv -> createGenerationEngine(cv, progressCallback))
+                .map(c -> createGenerationEngine(c, warnings))
                 .toList();
     }
 
-    private GenerationEngine createGenerationEngine(CalculatedContextValues contextValues,
-                                                    ProgressCallback progressCallback) {
+    private GenerationEngine createGenerationEngine(CalculatedContextValues contextValues, List<String> warnings) {
         return new GenerationEngine.Builder()
                 .withContextValues(contextValues)
                 .withProgressCallback(progressCallback)
@@ -309,8 +218,7 @@ public class MyBatisGenerator {
                 .build();
     }
 
-    private void runGenerationEngines(List<GenerationEngine> generationEngines, ProgressCallback progressCallback)
-            throws InterruptedException {
+    private void runGenerationEngines(List<GenerationEngine> generationEngines) throws InterruptedException {
         // calculate the number of steps
         int totalSteps = generationEngines.stream().mapToInt(GenerationEngine::getGenerationSteps).sum();
         progressCallback.generationStarted(totalSteps);
@@ -322,7 +230,7 @@ public class MyBatisGenerator {
         }
     }
 
-    private void writeGeneratedFiles(ProgressCallback progressCallback) throws IOException, InterruptedException {
+    private void writeGeneratedFiles(List<String> warnings) throws IOException, InterruptedException {
         Set<String> projects = new HashSet<>();
         int totalSteps = generationResultsList.stream().mapToInt(GenerationResults::getNumberOfGeneratedFiles).sum();
         progressCallback.saveStarted(totalSteps);
@@ -330,25 +238,24 @@ public class MyBatisGenerator {
         for (GenerationResults generationResults : generationResultsList) {
             for (GeneratedXmlFile gxf : generationResults.generatedXmlFiles()) {
                 projects.add(gxf.getTargetProject());
-                writeGeneratedXmlFile(gxf, generationResults.xmlFormatter(), progressCallback);
+                writeGeneratedXmlFile(gxf, generationResults.xmlFormatter(), warnings);
             }
 
             for (GeneratedJavaFile gjf : generationResults.generatedJavaFiles()) {
                 projects.add(gjf.getTargetProject());
                 writeGeneratedJavaFile(gjf, generationResults.javaFormatter(), generationResults.javaFileEncoding(),
-                        progressCallback);
+                        warnings);
             }
 
             for (GeneratedKotlinFile gkf : generationResults.generatedKotlinFiles()) {
                 projects.add(gkf.getTargetProject());
                 writeGeneratedKotlinFile(gkf, generationResults.kotlinFormatter(),
-                        generationResults.kotlinFileEncoding(),
-                        progressCallback);
+                        generationResults.kotlinFileEncoding(), warnings);
             }
 
             for (GenericGeneratedFile gf : generationResults.generatedGenericFiles()) {
                 projects.add(gf.getTargetProject());
-                writeGenericGeneratedFile(gf, progressCallback);
+                writeGenericGeneratedFile(gf, warnings);
             }
         }
 
@@ -358,7 +265,7 @@ public class MyBatisGenerator {
     }
 
     private void writeGeneratedJavaFile(GeneratedJavaFile gjf, JavaFormatter javaFormatter,
-                                        @Nullable String javaFileEncoding, ProgressCallback progressCallback)
+                                        @Nullable String javaFileEncoding, List<String> warnings)
             throws InterruptedException, IOException {
         Path targetFile;
         String source = javaFormatter.getFormattedContent(gjf.getCompilationUnit());
@@ -386,7 +293,7 @@ public class MyBatisGenerator {
     }
 
     private void writeGeneratedKotlinFile(GeneratedKotlinFile gf, KotlinFormatter kotlinFormatter,
-                                          @Nullable String kotlinFileEncoding, ProgressCallback progressCallback)
+                                          @Nullable String kotlinFileEncoding, List<String> warnings)
             throws InterruptedException, IOException {
         Path targetFile;
         String source = kotlinFormatter.getFormattedContent(gf.getKotlinFile());
@@ -410,7 +317,7 @@ public class MyBatisGenerator {
         }
     }
 
-    private void writeGenericGeneratedFile(GenericGeneratedFile gf, ProgressCallback progressCallback)
+    private void writeGenericGeneratedFile(GenericGeneratedFile gf, List<String> warnings)
             throws InterruptedException, IOException {
         Path targetFile;
         String source = gf.getFormattedContent();
@@ -434,8 +341,7 @@ public class MyBatisGenerator {
         }
     }
 
-    private void writeGeneratedXmlFile(GeneratedXmlFile gxf, XmlFormatter xmlFormatter,
-                                       ProgressCallback progressCallback)
+    private void writeGeneratedXmlFile(GeneratedXmlFile gxf, XmlFormatter xmlFormatter, List<String> warnings)
             throws InterruptedException, IOException {
         Path targetFile;
         String source = xmlFormatter.getFormattedContent(gxf.getDocument());
@@ -580,5 +486,62 @@ public class MyBatisGenerator {
                 .map(GenerationResults::generatedGenericFiles)
                 .flatMap(Collection::stream)
                 .toList();
+    }
+
+    public static class Builder {
+        private @Nullable Configuration configuration;
+        private @Nullable ShellCallback shellCallback;
+        private @Nullable ProgressCallback progressCallback;
+        private final Set<String> contextIds = new HashSet<>();
+        private final Set<String> fullyQualifiedTableNames = new HashSet<>();
+
+        public Builder withConfiguration(Configuration configuration) {
+            this.configuration = configuration;
+            return this;
+        }
+
+        public Builder withShellCallback(ShellCallback shellCallback) {
+            this.shellCallback = shellCallback;
+            return this;
+        }
+
+        public Builder withProgressCallback(@Nullable ProgressCallback progressCallback) {
+            this.progressCallback = progressCallback;
+            return this;
+        }
+
+        /**
+         * Set of context IDs to use in generation. Only the contexts with an id specified in this set will run.
+         * If the set is empty, then all contexts are run.
+         *
+         * @param contextIds
+         *            a set of contextIds to use in code generation
+         *
+         * @return this builder
+         */
+        public Builder withContextIds(Set<String> contextIds) {
+            this.contextIds.addAll(contextIds);
+            return this;
+        }
+
+        /**
+         *  Set of table names to generate. The elements of the set must be Strings that exactly match what's
+         *  specified in the configuration. For example, if a table name = "foo" and schema = "bar", then the fully
+         *  qualified table name is "foo.bar". If the Set is empty, then all tables in the configuration
+         *  will be used for code generation.
+         *
+         * @param fullyQualifiedTableNames
+         *            a set of table names to use in code generation
+         *
+         * @return this builder
+         */
+        public Builder withFullyQualifiedTableNames(Set<String> fullyQualifiedTableNames) {
+            this.fullyQualifiedTableNames.addAll(fullyQualifiedTableNames);
+            return this;
+        }
+
+        public MyBatisGenerator build() {
+            return new MyBatisGenerator(this);
+        }
     }
 }

@@ -40,8 +40,11 @@ Java.</p>
    ConfigurationParser cp = new ConfigurationParser(warnings);
    Configuration config = cp.parseConfiguration(configFile.toFile());
    DefaultShellCallback callback = new DefaultShellCallback(overwrite);
-   MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
-   myBatisGenerator.generate(null);
+   MyBatisGenerator myBatisGenerator = new MyBatisGenerator.Builder()
+       .withConfiguration(config)
+       .withShellCallback(callback)
+       .build();
+   warnings.addAll(myBatisGenerator.generateAndWrite());
 </pre>
 
 <p>Notes:</p>
@@ -72,8 +75,11 @@ Java.</p>
    //   ... fill out the config object as appropriate...
 
    DefaultShellCallback callback = new DefaultShellCallback(overwrite);
-   MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
-   myBatisGenerator.generate(null);
+   MyBatisGenerator myBatisGenerator = new MyBatisGenerator.Builder()
+       .withConfiguration(config)
+       .withShellCallback(callback)
+       .build();
+   warnings.addAll(myBatisGenerator.generateAndWrite());
 </pre>
 
 </body>

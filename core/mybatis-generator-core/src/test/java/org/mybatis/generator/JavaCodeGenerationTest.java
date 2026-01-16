@@ -78,8 +78,11 @@ class JavaCodeGenerationTest {
 
         DefaultShellCallback shellCallback = new DefaultShellCallback(true);
 
-        MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, shellCallback, warnings);
-        myBatisGenerator.generate(null, null, null, false);
+        MyBatisGenerator myBatisGenerator = new MyBatisGenerator.Builder()
+                .withConfiguration(config)
+                .withShellCallback(shellCallback)
+                .build();
+        myBatisGenerator.generateOnly();
         return myBatisGenerator.getGeneratedJavaFiles();
     }
 

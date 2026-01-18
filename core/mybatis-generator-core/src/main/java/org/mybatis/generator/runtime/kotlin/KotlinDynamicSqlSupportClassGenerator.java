@@ -19,7 +19,9 @@ import static org.mybatis.generator.internal.util.StringUtility.escapeStringForK
 import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getEscapedColumnName;
 
 import java.util.List;
+import java.util.Objects;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
@@ -38,15 +40,16 @@ public class KotlinDynamicSqlSupportClassGenerator extends AbstractGenerator {
     private KotlinType innerClass;
     private KotlinType outerObject;
     private KotlinProperty tableProperty;
+    private final String myBatisDynamicSqlSupportType;
 
     public KotlinDynamicSqlSupportClassGenerator(Builder builder) {
         super(builder);
+        myBatisDynamicSqlSupportType = Objects.requireNonNull(builder.myBatisDynamicSqlSupportType);
         generate();
     }
 
     private void generate() {
-        FullyQualifiedJavaType type =
-                new FullyQualifiedJavaType(introspectedTable.getMyBatisDynamicSqlSupportType());
+        FullyQualifiedJavaType type = new FullyQualifiedJavaType(myBatisDynamicSqlSupportType);
 
         kotlinFile = buildBasicFile(type);
 
@@ -185,6 +188,13 @@ public class KotlinDynamicSqlSupportClassGenerator extends AbstractGenerator {
     }
 
     public static class Builder extends AbstractGeneratorBuilder<Builder> {
+        private @Nullable String myBatisDynamicSqlSupportType;
+
+        public Builder withMyBatisDynamicSqlSupportType(String myBatisDynamicSqlSupportType) {
+            this.myBatisDynamicSqlSupportType = myBatisDynamicSqlSupportType;
+            return this;
+        }
+
         @Override
         protected Builder getThis() {
             return this;

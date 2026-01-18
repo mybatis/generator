@@ -26,6 +26,7 @@ import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinType;
 import org.mybatis.generator.codegen.AbstractKotlinGenerator;
+import org.mybatis.generator.exception.InternalException;
 import org.mybatis.generator.runtime.kotlin.elements.AbstractKotlinFunctionGenerator;
 import org.mybatis.generator.runtime.kotlin.elements.BasicInsertMethodGenerator;
 import org.mybatis.generator.runtime.kotlin.elements.BasicMultipleInsertMethodGenerator;
@@ -64,7 +65,12 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
 
     public KotlinMapperAndExtensionsGenerator(Builder builder) {
         super(builder);
-        supportClassGenerator = initializeSubBuilder(new KotlinDynamicSqlSupportClassGenerator.Builder()).build();
+        supportClassGenerator = initializeSubBuilder(new KotlinDynamicSqlSupportClassGenerator.Builder())
+                .withMyBatisDynamicSqlSupportType(
+                        introspectedTable.getMyBatisDynamicSqlSupportType().orElseThrow(() ->
+                                new InternalException(getString("RuntimeError.27", context.getId()))) //$NON-NLS-1$
+                )
+                .build();
         recordType = new FullyQualifiedKotlinType(introspectedTable.getKotlinRecordType());
         resultMapId = recordType.getShortNameWithoutTypeArguments() + "Result"; //$NON-NLS-1$
         fragmentGenerator = new KotlinFragmentGenerator.Builder()

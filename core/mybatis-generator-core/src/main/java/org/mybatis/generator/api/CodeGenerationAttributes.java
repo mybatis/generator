@@ -35,9 +35,10 @@ import org.mybatis.generator.config.TableConfiguration;
 import org.mybatis.generator.internal.rules.Rules;
 
 /**
- * Base class for all code generator implementations. This class provides many
- * of the housekeeping methods needed to implement a code generator, with only
- * the actual code generation methods left unimplemented.
+ * This class holds calculated attributes for all code generator implementations. The class
+ * is intended to be a super class of IntrospectedTable and is matched one-to-one with that
+ * class (for purposes of preserving compatibility with the exissting plugin methods). It is a separate class
+ * because there are different responsibilities between IntrospectedTable and this class.
  *
  * @author Jeff Butler
  */

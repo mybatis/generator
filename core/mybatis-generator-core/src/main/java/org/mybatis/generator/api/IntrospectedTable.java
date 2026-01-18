@@ -31,9 +31,9 @@ import org.mybatis.generator.internal.rules.HierarchicalModelRules;
 import org.mybatis.generator.internal.rules.Rules;
 
 /**
- * Base class for all code generator implementations. This class provides many
- * of the housekeeping methods needed to implement a code generator, with only
- * the actual code generation methods left unimplemented.
+ * This class holds the results of database introspection - namely the different columns associated with the table.
+ * The class is a subclass of CodeGenerationAttributes for purposes of preserving compatibility with existing plugin
+ * methods.
  *
  * @author Jeff Butler
  */

@@ -32,6 +32,7 @@ import org.mybatis.generator.config.JavaModelGeneratorConfiguration;
 import org.mybatis.generator.config.PropertyHolder;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.config.TableConfiguration;
+import org.mybatis.generator.internal.rules.Rules;
 
 /**
  * Base class for all code generator implementations. This class provides many
@@ -79,6 +80,7 @@ public abstract class CodeGenerationAttributes {
     private String primaryKeyType;
     private String recordWithBLOBsType;
     private String resultMapWithBLOBsId;
+    private Rules rules;
     private String selectAllStatementId;
     private String selectByExampleStatementId;
     private String selectByExampleWithBLOBsStatementId;
@@ -89,6 +91,8 @@ public abstract class CodeGenerationAttributes {
     private String updateByPrimaryKeySelectiveStatementId;
     private String updateByPrimaryKeyStatementId;
     private String updateByPrimaryKeyWithBLOBsStatementId;
+
+    protected abstract Rules calculateRules();
 
     protected CodeGenerationAttributes(AbstractBuilder<?> builder) {
         this.knownRuntime = Objects.requireNonNull(builder.knownRuntime);
@@ -118,6 +122,7 @@ public abstract class CodeGenerationAttributes {
         primaryKeyType = calculatePrimaryKeyType(javaModelPackage);
         recordWithBLOBsType = calculateRecordWithBLOBsType(javaModelPackage);
         resultMapWithBLOBsId = "ResultMapWithBLOBs"; //$NON-NLS-1$
+        rules = calculateRules();
         selectAllStatementId = "selectAll"; //$NON-NLS-1$
         selectByExampleStatementId = "selectByExample"; //$NON-NLS-1$
         selectByExampleWithBLOBsStatementId = "selectByExampleWithBLOBs"; //$NON-NLS-1$
@@ -366,12 +371,6 @@ public abstract class CodeGenerationAttributes {
         this.recordWithBLOBsType = recordWithBLOBsType;
     }
 
-    /**
-     * Gets the record with blobs type.
-     *
-     * @return the type for the record with BLOBs class. Note that the value will be calculated regardless of whether
-     *         the table has BLOB columns or not.
-     */
     public String getRecordWithBLOBsType() {
         return recordWithBLOBsType;
     }
@@ -382,6 +381,20 @@ public abstract class CodeGenerationAttributes {
 
     public String getResultMapWithBLOBsId() {
         return resultMapWithBLOBsId;
+    }
+
+    /**
+     * This method exists to give plugins the opportunity to replace the calculated rules if necessary.
+     *
+     * @param rules
+     *            the new rules
+     */
+    public void setRules(Rules rules) {
+        this.rules = rules;
+    }
+
+    public Rules getRules() {
+        return Objects.requireNonNull(rules);
     }
 
     public void setSelectAllStatementId(String selectAllStatementId) {

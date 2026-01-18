@@ -38,7 +38,6 @@ import org.mybatis.generator.internal.rules.Rules;
  * @author Jeff Butler
  */
 public class IntrospectedTable extends CodeGenerationAttributes{
-    protected Rules rules;
     protected final List<IntrospectedColumn> primaryKeyColumns = new ArrayList<>();
     protected final List<IntrospectedColumn> baseColumns = new ArrayList<>();
     protected final List<IntrospectedColumn> blobColumns = new ArrayList<>();
@@ -57,21 +56,6 @@ public class IntrospectedTable extends CodeGenerationAttributes{
 
     protected IntrospectedTable(Builder builder) {
         super(builder);
-
-        switch (getTableConfiguration().getModelType()) {
-        case HIERARCHICAL:
-            rules = new HierarchicalModelRules(this);
-            break;
-        case FLAT:
-            rules = new FlatModelRules(this);
-            break;
-        case CONDITIONAL:
-            rules = new ConditionalModelRules(this);
-            break;
-        default:
-            throw new IllegalArgumentException("Unknown model type: " + getTableConfiguration().getModelType());
-        }
-
         Objects.requireNonNull(builder.pluginAggregator);
         builder.pluginAggregator.initialized(this);
     }
@@ -179,10 +163,6 @@ public class IntrospectedTable extends CodeGenerationAttributes{
         return !baseColumns.isEmpty();
     }
 
-    public Rules getRules() {
-        return Objects.requireNonNull(rules);
-    }
-
     public boolean hasAnyColumns() {
         return hasPrimaryKeyColumns() || hasBaseColumns() || hasBLOBColumns();
     }
@@ -225,17 +205,6 @@ public class IntrospectedTable extends CodeGenerationAttributes{
         }
     }
 
-    /**
-     * This method exists to give plugins the opportunity to replace the calculated rules if necessary.
-     *
-     * @param rules
-     *            the new rules
-     */
-    public void setRules(Rules rules) {
-        this.rules = rules;
-    }
-
-
     public Optional<String> getRemarks() {
         return Optional.ofNullable(remarks);
     }
@@ -250,6 +219,15 @@ public class IntrospectedTable extends CodeGenerationAttributes{
 
     public void setTableType(String tableType) {
         this.tableType = tableType;
+    }
+
+    @Override
+    protected Rules calculateRules() {
+        return switch (getTableConfiguration().getModelType()) {
+            case HIERARCHICAL -> new HierarchicalModelRules(this);
+            case FLAT -> new FlatModelRules(this);
+            case CONDITIONAL -> new ConditionalModelRules(this);
+        };
     }
 
     public static class Builder extends AbstractBuilder<Builder> {

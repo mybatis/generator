@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -60,7 +60,6 @@ class DynamicSqlTest : AbstractTest() {
                 assertThat(integerfield).isEqualTo(5)
                 assertThat(doublefield).isEqualTo(11.22)
                 assertThat(floatfield).isEqualTo(33.44)
-
             }
         }
     }
@@ -936,8 +935,7 @@ class DynamicSqlTest : AbstractTest() {
             assertEquals(record.id2!!, returnedRecord.id2)
             assertEquals(record.firstname, returnedRecord.firstname)
             assertEquals(record.lastname, returnedRecord.lastname)
-            assertTrue(blobsAreEqual(record.blob1, returnedRecord
-                    .blob1))
+            assertTrue(blobsAreEqual(record.blob1, returnedRecord.blob1))
         }
     }
 
@@ -1225,10 +1223,8 @@ class DynamicSqlTest : AbstractTest() {
             val returnedRecord = answer[0]
             assertEquals(record.firstname, returnedRecord.firstname)
             assertEquals(record.lastname, returnedRecord.lastname)
-            assertTrue(blobsAreEqual(record.blob1, returnedRecord
-                    .blob1))
-            assertTrue(blobsAreEqual(record.blob2, returnedRecord
-                    .blob2))
+            assertTrue(blobsAreEqual(record.blob1, returnedRecord.blob1))
+            assertTrue(blobsAreEqual(record.blob2, returnedRecord.blob2))
         }
     }
 
@@ -1403,10 +1399,9 @@ class DynamicSqlTest : AbstractTest() {
 
             mapper.insert(record)
             val generatedCustomerId = record.customerId
-            assertEquals(57, generatedCustomerId!!.toInt())
+            assertEquals(57, generatedCustomerId!!)
 
-            val returnedRecord = mapper
-                    .selectByPrimaryKey(generatedCustomerId)
+            val returnedRecord = mapper.selectByPrimaryKey(generatedCustomerId)
 
             assertThat(returnedRecord).isNotNull
             if (returnedRecord != null) {
@@ -1452,10 +1447,9 @@ class DynamicSqlTest : AbstractTest() {
 
             mapper.insertSelective(record)
             val generatedCustomerId = record.customerId
-            assertEquals(57, generatedCustomerId!!.toInt())
+            assertEquals(57, generatedCustomerId!!)
 
-            val returnedRecord = mapper
-                    .selectByPrimaryKey(generatedCustomerId)
+            val returnedRecord = mapper.selectByPrimaryKey(generatedCustomerId)
 
             assertThat(returnedRecord).isNotNull
             if (returnedRecord != null) {

@@ -47,9 +47,13 @@ public class JavaClientGeneratorConfiguration extends TypedPropertyHolder {
         }
 
         if (!stringHasValue(targetPackage)) {
-            errors.add(getString("ValidationError.12", //$NON-NLS-1$
-                    "javaClientGenerator", contextId)); //$NON-NLS-1$
+            errors.add(getString("ValidationError.12", "javaClientGenerator", contextId)); //$NON-NLS-1$ //$NON-NLS-2$
         }
+    }
+
+    public boolean requiresXmlMapper() {
+        return "XMLMAPPER".equalsIgnoreCase(configurationType) //$NON-NLS-1$
+                || "MIXEDMAPPER".equalsIgnoreCase(configurationType); //$NON-NLS-1$
     }
 
     public static class Builder extends TypedBuilder<Builder> {

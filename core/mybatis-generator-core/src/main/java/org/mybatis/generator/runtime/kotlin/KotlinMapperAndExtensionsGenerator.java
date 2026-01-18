@@ -19,7 +19,9 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinType;
@@ -58,6 +60,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
     protected final KotlinFragmentGenerator fragmentGenerator;
     protected final KotlinDynamicSqlSupportClassGenerator supportClassGenerator;
     protected final boolean hasGeneratedKeys;
+    protected final String kotlinMapperType;
 
     public KotlinMapperAndExtensionsGenerator(Builder builder) {
         super(builder);
@@ -72,10 +75,11 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .build();
 
         hasGeneratedKeys = introspectedTable.getGeneratedKey().isPresent();
+        kotlinMapperType = Objects.requireNonNull(builder.kotlinMapperType);
     }
 
     protected KotlinFile createMapperInterfaceFile() {
-        FullyQualifiedKotlinType type = new FullyQualifiedKotlinType(introspectedTable.getMyBatis3JavaMapperType());
+        FullyQualifiedKotlinType type = new FullyQualifiedKotlinType(kotlinMapperType);
 
         KotlinFile kf = new KotlinFile(type.getShortNameWithoutTypeArguments());
         kf.setPackage(type.getPackageName());
@@ -84,8 +88,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
     }
 
     protected KotlinType createMapperInterface(KotlinFile kotlinFile) {
-        FullyQualifiedKotlinType type = new FullyQualifiedKotlinType(
-                introspectedTable.getMyBatis3JavaMapperType());
+        FullyQualifiedKotlinType type = new FullyQualifiedKotlinType(kotlinMapperType);
 
         KotlinType intf = KotlinType.newInterface(type.getShortNameWithoutTypeArguments())
                 .withAnnotation("@Mapper") //$NON-NLS-1$
@@ -414,6 +417,13 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
     }
 
     public static class Builder extends AbstractKotlinGeneratorBuilder<Builder> {
+        private @Nullable String kotlinMapperType;
+
+        public Builder withKotlinMapperType(@Nullable String kotlinMapperType) {
+            this.kotlinMapperType = kotlinMapperType;
+            return this;
+        }
+
         @Override
         protected Builder getThis() {
             return this;

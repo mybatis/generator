@@ -86,6 +86,11 @@ public class LegacyJavaRuntime extends AbstractRuntime {
                     .withWarnings(warnings)
                     .withCommentGenerator(commentGenerator)
                     .withPluginAggregator(pluginAggregator)
+                    .withMyBatis3JavaMapperType(
+                            introspectedTable.getMyBatis3JavaMapperType().orElseThrow(() ->
+                                    new InternalException(
+                                            getString("RuntimeError.25", context.getId()))) //$NON-NLS-1$
+                    )
                     .build();
 
             javaGenerators.add(generator);

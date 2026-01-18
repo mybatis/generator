@@ -15,9 +15,11 @@
  */
 package org.mybatis.generator.runtime;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.codegen.AbstractXmlGenerator;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -29,9 +31,11 @@ import java.util.Optional;
  * @author Jeff Butler
  */
 public abstract class AbstractJavaClientGenerator extends AbstractJavaGenerator {
+    protected final String myBatis3JavaMapperType;
 
     protected AbstractJavaClientGenerator(AbstractJavaClientGeneratorBuilder<?> builder) {
         super(builder);
+        myBatis3JavaMapperType = Objects.requireNonNull(builder.myBatis3JavaMapperType);
     }
 
     /**
@@ -44,6 +48,13 @@ public abstract class AbstractJavaClientGenerator extends AbstractJavaGenerator 
 
     public abstract static class AbstractJavaClientGeneratorBuilder<T extends AbstractJavaClientGeneratorBuilder<T>>
             extends AbstractJavaGeneratorBuilder<T> {
+        private @Nullable String myBatis3JavaMapperType;
+
+        public T withMyBatis3JavaMapperType(String myBatis3JavaMapperType) {
+            this.myBatis3JavaMapperType = myBatis3JavaMapperType;
+            return getThis();
+        }
+
         public abstract AbstractJavaClientGenerator build();
     }
 }

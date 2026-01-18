@@ -30,6 +30,7 @@ import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
 import org.mybatis.generator.codegen.AbstractXmlGenerator;
 import org.mybatis.generator.config.PropertyRegistry;
+import org.mybatis.generator.exception.InternalException;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.CountByExampleMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.DeleteByExampleMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.DeleteByPrimaryKeyMethodGenerator;
@@ -204,7 +205,10 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
 
     @Override
     public Optional<AbstractXmlGenerator> getMatchedXMLGenerator() {
-        var generator = initializeSubBuilder(new XMLMapperGenerator.Builder()).build();
+        var generator = initializeSubBuilder(new XMLMapperGenerator.Builder())
+                .withMyBatis3SqlMapNamespace(introspectedTable.getMyBatis3SqlMapNamespace().orElseThrow(
+                        () -> new InternalException(getString("RuntimeError.24", context.getId())))) //$NON-NLS-1$
+                .build();
 
         return Optional.of(generator);
     }

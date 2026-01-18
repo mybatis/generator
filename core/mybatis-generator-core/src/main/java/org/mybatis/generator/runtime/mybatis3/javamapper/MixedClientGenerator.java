@@ -19,12 +19,15 @@ import java.util.Optional;
 
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.codegen.AbstractXmlGenerator;
+import org.mybatis.generator.exception.InternalException;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated.AnnotatedDeleteByPrimaryKeyMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated.AnnotatedInsertMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated.AnnotatedSelectByPrimaryKeyMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated.AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated.AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.xmlmapper.MixedMapperGenerator;
+
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 /**
  * This class overrides the base mapper to provide annotated methods for the
@@ -82,7 +85,10 @@ public class MixedClientGenerator extends JavaMapperGenerator {
 
     @Override
     public Optional<AbstractXmlGenerator> getMatchedXMLGenerator() {
-        var generator = initializeSubBuilder(new MixedMapperGenerator.Builder()).build();
+        var generator = initializeSubBuilder(new MixedMapperGenerator.Builder())
+                .withMyBatis3SqlMapNamespace(introspectedTable.getMyBatis3SqlMapNamespace().orElseThrow(
+                        () -> new InternalException(getString("RuntimeError.24", context.getId())))) //$NON-NLS-1$
+                .build();
         return Optional.of(generator);
     }
 

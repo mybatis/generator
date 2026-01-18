@@ -15,10 +15,7 @@
  */
 package org.mybatis.generator.runtime.kotlin;
 
-import java.util.List;
-
 import org.mybatis.generator.api.AbstractRuntime;
-import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.codegen.AbstractKotlinGenerator;
 
 public class KotlinDynamicSqlRuntime extends AbstractRuntime {
@@ -28,38 +25,25 @@ public class KotlinDynamicSqlRuntime extends AbstractRuntime {
 
     @Override
     protected void calculateGenerators() {
-        calculateKotlinDataClassGenerator(warnings, progressCallback);
+        calculateKotlinDataClassGenerator();
         context.getJavaClientGeneratorConfiguration().ifPresent(config -> {
             if (introspectedTable.getRules().generateJavaClient()) {
-                calculateKotlinMapperAndExtensionsGenerator(config.getTargetProject(), warnings, progressCallback);
+                calculateKotlinMapperAndExtensionsGenerator(config.getTargetProject());
             }
         });
     }
 
-    protected void calculateKotlinMapperAndExtensionsGenerator(String clientProject, List<String> warnings,
-            ProgressCallback progressCallback) {
-        AbstractKotlinGenerator kotlinGenerator = new KotlinMapperAndExtensionsGenerator.Builder()
+    protected void calculateKotlinMapperAndExtensionsGenerator(String clientProject) {
+        AbstractKotlinGenerator kotlinGenerator =
+                initializeSubBuilder(new KotlinMapperAndExtensionsGenerator.Builder())
                 .withProject(clientProject)
-                .withContext(context)
-                .withIntrospectedTable(introspectedTable)
-                .withProgressCallback(progressCallback)
-                .withWarnings(warnings)
-                .withCommentGenerator(commentGenerator)
-                .withPluginAggregator(pluginAggregator)
                 .build();
         kotlinGenerators.add(kotlinGenerator);
     }
 
-    protected void calculateKotlinDataClassGenerator(List<String> warnings,
-            ProgressCallback progressCallback) {
-        AbstractKotlinGenerator kotlinGenerator = new KotlinDataClassGenerator.Builder()
+    protected void calculateKotlinDataClassGenerator() {
+        AbstractKotlinGenerator kotlinGenerator = initializeSubBuilder(new KotlinDataClassGenerator.Builder())
                 .withProject(getModelProject())
-                .withContext(context)
-                .withIntrospectedTable(introspectedTable)
-                .withProgressCallback(progressCallback)
-                .withWarnings(warnings)
-                .withCommentGenerator(commentGenerator)
-                .withPluginAggregator(pluginAggregator)
                 .build();
         kotlinGenerators.add(kotlinGenerator);
     }

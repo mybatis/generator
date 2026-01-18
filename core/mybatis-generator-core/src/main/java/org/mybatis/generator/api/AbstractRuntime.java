@@ -15,6 +15,8 @@
  */
 package org.mybatis.generator.api;
 
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +31,7 @@ import org.mybatis.generator.codegen.AbstractKotlinGenerator;
 import org.mybatis.generator.codegen.AbstractXmlGenerator;
 import org.mybatis.generator.config.JavaClientGeneratorConfiguration;
 import org.mybatis.generator.config.SqlMapGeneratorConfiguration;
+import org.mybatis.generator.exception.InternalException;
 
 public abstract class AbstractRuntime extends AbstractGenerator {
     protected final List<AbstractKotlinGenerator> kotlinGenerators = new ArrayList<>();
@@ -93,7 +96,7 @@ public abstract class AbstractRuntime extends AbstractGenerator {
             Document document = xmlMapperGenerator.getDocument();
             if (document != null) {
                 GeneratedXmlFile gxf = new GeneratedXmlFile(document, introspectedTable.getMyBatis3XmlMapperFileName(),
-                        introspectedTable.getMyBatis3XmlMapperPackage(),
+                        getXmlMapperPackage(),
                         context.getSqlMapGeneratorConfiguration()
                                 .map(SqlMapGeneratorConfiguration::getTargetProject).orElse(""),
                         true);
@@ -104,6 +107,11 @@ public abstract class AbstractRuntime extends AbstractGenerator {
         }
 
         return answer;
+    }
+
+    private String getXmlMapperPackage() {
+        return introspectedTable.getMyBatis3XmlMapperPackage().orElseThrow(
+                () -> new InternalException(getString("RuntimeError.24", context.getId()))); //$NON-NLS-1$
     }
 
     /**

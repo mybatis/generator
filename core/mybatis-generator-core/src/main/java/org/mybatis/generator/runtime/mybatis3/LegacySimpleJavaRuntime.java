@@ -15,17 +15,18 @@
  */
 package org.mybatis.generator.runtime.mybatis3;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.jspecify.annotations.Nullable;
-import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
 import org.mybatis.generator.config.TypedPropertyHolder;
+import org.mybatis.generator.exception.InternalException;
 import org.mybatis.generator.runtime.mybatis3.javamapper.SimpleAnnotatedClientGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.SimpleJavaClientGenerator;
 import org.mybatis.generator.runtime.mybatis3.model.SimpleModelGenerator;
 import org.mybatis.generator.runtime.mybatis3.xmlmapper.SimpleXMLMapperGenerator;
+
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 /**
  * Introspected table implementation for generating simple MyBatis3 artifacts.
@@ -40,16 +41,13 @@ public class LegacySimpleJavaRuntime extends LegacyJavaRuntime {
     }
 
     @Override
-    protected void calculateXmlMapperGenerator(@Nullable AbstractJavaClientGenerator javaClientGenerator,
-                                               List<String> warnings,
-                                               ProgressCallback progressCallback) {
+    protected void calculateXmlMapperGenerator(@Nullable AbstractJavaClientGenerator javaClientGenerator) {
         if (javaClientGenerator == null) {
             if (context.getSqlMapGeneratorConfiguration().isPresent()) {
-                xmlMapperGenerator = new SimpleXMLMapperGenerator.Builder()
-                        .withContext(context)
-                        .withIntrospectedTable(introspectedTable)
-                        .withProgressCallback(progressCallback)
-                        .withWarnings(warnings)
+                xmlMapperGenerator = initializeSubBuilder(new SimpleXMLMapperGenerator.Builder())
+                        .withMyBatis3SqlMapNamespace(introspectedTable.getMyBatis3SqlMapNamespace().orElseThrow(
+                                () -> new InternalException(
+                                        getString("RuntimeError.24", context.getId())))) //$NON-NLS-1$
                         .build();
             }
         } else {
@@ -74,15 +72,9 @@ public class LegacySimpleJavaRuntime extends LegacyJavaRuntime {
     }
 
     @Override
-    protected void calculateJavaModelGenerators(List<String> warnings, ProgressCallback progressCallback) {
-        var javaGenerator = new SimpleModelGenerator.Builder()
+    protected void calculateJavaModelGenerators() {
+        var javaGenerator = initializeSubBuilder(new SimpleModelGenerator.Builder())
                 .withProject(getModelProject())
-                .withContext(context)
-                .withIntrospectedTable(introspectedTable)
-                .withProgressCallback(progressCallback)
-                .withWarnings(warnings)
-                .withCommentGenerator(commentGenerator)
-                .withPluginAggregator(pluginAggregator)
                 .build();
         javaGenerators.add(javaGenerator);
     }

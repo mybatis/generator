@@ -294,12 +294,13 @@ public class DatabaseIntrospector {
         }
     }
 
-    private void calculateIdentityColumns(TableConfiguration tc, Map<ActualTableName,
-            List<IntrospectedColumn>> columns) {
+    private void calculateIdentityColumns(TableConfiguration tc,
+                                          Map<ActualTableName, List<IntrospectedColumn>> columns) {
         tc.getGeneratedKey().ifPresent(gk -> {
-            for (Map.Entry<ActualTableName, List<IntrospectedColumn>> entry : columns.entrySet()) {
-                for (IntrospectedColumn introspectedColumn : entry.getValue()) {
-                    if (isMatchedColumn(introspectedColumn, gk)) {
+            columns.values().stream()
+                    .flatMap(List::stream)
+                    .filter(introspectedColumn -> isMatchedColumn(introspectedColumn, gk))
+                    .forEach(introspectedColumn -> {
                         if (gk.isIdentity() || gk.isJdbcStandard()) {
                             introspectedColumn.setIdentity(true);
                             introspectedColumn.setSequenceColumn(false);
@@ -307,9 +308,7 @@ public class DatabaseIntrospector {
                             introspectedColumn.setIdentity(false);
                             introspectedColumn.setSequenceColumn(true);
                         }
-                    }
-                }
-            }
+                    });
         });
     }
 

@@ -57,7 +57,7 @@ recommended practice with JSpecify.</p>
     </li>
     <li>If you have created your own implementation of a Java client generator, then the API has changed. These
         classes are now built with Builders rather than directly. If you have created such a class, you must now provide
-        an extension of <code>org.mybatis.generator.codegen.AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder</code>
+        an extension of <code>org.mybatis.generator.runtime.AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder</code>
         so the library can create your implementation. The <code>type</code> attribute of the &lt;javaClientGenerator&gt;
         XML configuration element now expects the fully qualified name of a builder class.
     </li>

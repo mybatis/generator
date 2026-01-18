@@ -15,13 +15,11 @@
  */
 package org.mybatis.generator.runtime.mybatis3;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.AbstractRuntime;
-import org.mybatis.generator.api.ProgressCallback;
-import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
+import org.mybatis.generator.runtime.AbstractJavaClientGenerator;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.config.TypedPropertyHolder;
 import org.mybatis.generator.exception.InternalException;

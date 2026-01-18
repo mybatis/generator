@@ -27,7 +27,7 @@ import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
-import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
+import org.mybatis.generator.runtime.AbstractJavaClientGenerator;
 import org.mybatis.generator.codegen.AbstractXmlGenerator;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.exception.InternalException;

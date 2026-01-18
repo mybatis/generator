@@ -13,7 +13,10 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.generator.codegen;
+package org.mybatis.generator.runtime;
+
+import org.mybatis.generator.codegen.AbstractJavaGenerator;
+import org.mybatis.generator.codegen.AbstractXmlGenerator;
 
 import java.util.Optional;
 

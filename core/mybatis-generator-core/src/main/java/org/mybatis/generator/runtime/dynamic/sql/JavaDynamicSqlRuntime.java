@@ -18,7 +18,7 @@ package org.mybatis.generator.runtime.dynamic.sql;
 import java.util.Optional;
 
 import org.jspecify.annotations.Nullable;
-import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
+import org.mybatis.generator.runtime.AbstractJavaClientGenerator;
 import org.mybatis.generator.runtime.mybatis3.LegacyJavaRuntime;
 
 public class JavaDynamicSqlRuntime extends LegacyJavaRuntime {

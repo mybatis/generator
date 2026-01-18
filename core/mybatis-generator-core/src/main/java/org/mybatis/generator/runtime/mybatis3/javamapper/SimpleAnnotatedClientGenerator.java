@@ -86,10 +86,5 @@ public class SimpleAnnotatedClientGenerator extends SimpleJavaClientGenerator {
         public SimpleAnnotatedClientGenerator build() {
             return new SimpleAnnotatedClientGenerator(this);
         }
-
-        @Override
-        protected boolean requiresXMLGenerator() {
-            return false;
-        }
     }
 }

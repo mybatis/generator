@@ -223,10 +223,5 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
         public JavaMapperGenerator build() {
             return new JavaMapperGenerator(this);
         }
-
-        @Override
-        protected boolean requiresXMLGenerator() {
-            return true;
-        }
     }
 }

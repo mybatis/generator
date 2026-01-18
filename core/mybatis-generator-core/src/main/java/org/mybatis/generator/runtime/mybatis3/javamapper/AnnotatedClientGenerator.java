@@ -177,10 +177,5 @@ public class AnnotatedClientGenerator extends JavaMapperGenerator {
         public AnnotatedClientGenerator build() {
             return new AnnotatedClientGenerator(this);
         }
-
-        @Override
-        protected boolean requiresXMLGenerator() {
-            return false;
-        }
     }
 }

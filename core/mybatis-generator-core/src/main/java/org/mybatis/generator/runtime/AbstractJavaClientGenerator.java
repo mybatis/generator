@@ -30,20 +30,8 @@ import java.util.Optional;
  */
 public abstract class AbstractJavaClientGenerator extends AbstractJavaGenerator {
 
-    private final boolean requiresXMLGenerator;
-
     protected AbstractJavaClientGenerator(AbstractJavaClientGeneratorBuilder<?> builder) {
         super(builder);
-        this.requiresXMLGenerator = builder.requiresXMLGenerator();
-    }
-
-    /**
-     * Returns true is a matching XML generator is required.
-     *
-     * @return true if matching XML is generator required
-     */
-    public boolean requiresXMLGenerator() {
-        return requiresXMLGenerator;
     }
 
     /**
@@ -56,9 +44,6 @@ public abstract class AbstractJavaClientGenerator extends AbstractJavaGenerator 
 
     public abstract static class AbstractJavaClientGeneratorBuilder<T extends AbstractJavaClientGeneratorBuilder<T>>
             extends AbstractJavaGeneratorBuilder<T> {
-
-        protected abstract boolean requiresXMLGenerator();
-
         public abstract AbstractJavaClientGenerator build();
     }
 }

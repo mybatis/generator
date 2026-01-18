@@ -139,10 +139,5 @@ public class SimpleJavaClientGenerator extends AbstractJavaClientGenerator {
         public SimpleJavaClientGenerator build() {
             return new SimpleJavaClientGenerator(this);
         }
-
-        @Override
-        protected boolean requiresXMLGenerator() {
-            return true;
-        }
     }
 }

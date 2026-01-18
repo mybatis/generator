@@ -412,11 +412,6 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
         }
 
         @Override
-        protected boolean requiresXMLGenerator() {
-            return false;
-        }
-
-        @Override
         public DynamicSqlMapperGenerator build() {
             return new DynamicSqlMapperGenerator(this);
         }

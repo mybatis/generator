@@ -21,7 +21,6 @@ package org.mybatis.generator.api;
  * @author Jeff Butler
  */
 public abstract class GeneratedFile {
-
     protected final String targetProject;
 
     protected GeneratedFile(String targetProject) {

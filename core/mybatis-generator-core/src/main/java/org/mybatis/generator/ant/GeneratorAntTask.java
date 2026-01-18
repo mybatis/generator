@@ -89,10 +89,6 @@ public class GeneratorAntTask extends Task {
     private @Nullable String contextIds;
     private @Nullable String fullyQualifiedTableNames;
 
-    public GeneratorAntTask() {
-        super();
-    }
-
     @Override
     public void execute() {
         File configurationFile = calculateConfigurationFile();
@@ -101,19 +97,23 @@ public class GeneratorAntTask extends Task {
 
         List<String> warnings = new ArrayList<>();
         try {
-            Properties p = propertyset == null ? null : propertyset
-                    .getProperties();
+            Properties p = propertyset == null ? null : propertyset.getProperties();
 
-            ConfigurationParser cp = new ConfigurationParser(p, warnings);
+            ConfigurationParser cp = new ConfigurationParser(p);
             Configuration config = cp.parseConfiguration(configurationFile);
+            warnings.addAll(cp.getWarnings());
 
             DefaultShellCallback callback = new DefaultShellCallback(overwrite);
 
-            MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
+            MyBatisGenerator myBatisGenerator = new MyBatisGenerator.Builder()
+                    .withConfiguration(config)
+                    .withShellCallback(callback)
+                    .withProgressCallback(new AntProgressCallback(this, verbose))
+                    .withContextIds(contexts)
+                    .withFullyQualifiedTableNames(fullyQualifiedTables)
+                    .build();
 
-            myBatisGenerator.generate(new AntProgressCallback(this, verbose), contexts,
-                    fullyQualifiedTables);
-
+            warnings.addAll(myBatisGenerator.generateAndWrite());
         } catch (XMLParserException | InvalidConfigurationException e) {
             for (String error : e.getErrors()) {
                 log(error, Project.MSG_ERR);
@@ -151,8 +151,7 @@ public class GeneratorAntTask extends Task {
     private Set<String> calculateTables() {
         Set<String> fullyqualifiedTables = new HashSet<>();
         if (stringHasValue(fullyQualifiedTableNames)) {
-            StringTokenizer st = new StringTokenizer(fullyQualifiedTableNames,
-                    ","); //$NON-NLS-1$
+            StringTokenizer st = new StringTokenizer(fullyQualifiedTableNames, ","); //$NON-NLS-1$
             while (st.hasMoreTokens()) {
                 String s = st.nextToken().trim();
                 if (!s.isEmpty()) {
@@ -171,8 +170,7 @@ public class GeneratorAntTask extends Task {
 
         Path configurationFile = Path.of(configfile);
         if (Files.notExists(configurationFile)) {
-            throw new BuildException(getString(
-                    "RuntimeError.1", configfile)); //$NON-NLS-1$
+            throw new BuildException(getString("RuntimeError.1", configfile)); //$NON-NLS-1$
         }
         return configurationFile.toFile();
     }

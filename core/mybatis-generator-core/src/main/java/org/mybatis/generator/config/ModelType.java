@@ -15,9 +15,9 @@
  */
 package org.mybatis.generator.config;
 
-import org.mybatis.generator.exception.InternalException;
-
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
+import org.mybatis.generator.exception.InternalException;
 
 /**
  * Typesafe enum of different model types.

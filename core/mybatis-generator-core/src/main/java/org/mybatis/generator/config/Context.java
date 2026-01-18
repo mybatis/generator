@@ -120,18 +120,12 @@ public class Context extends PropertyHolder {
             javaClientGeneratorConfiguration.validate(errors, id);
         }
 
-        // this will either be a successful lookup by alias, or UNKNOWN
         KnownRuntime knownRuntime = KnownRuntime.getByAlias(targetRuntime);
-        if (knownRuntime == KnownRuntime.MYBATIS3 || knownRuntime == KnownRuntime.MYBATIS3_SIMPLE) {
-            if (javaClientGeneratorConfiguration != null && sqlMapGeneratorConfiguration == null) {
-                if ("XMLMAPPER".equalsIgnoreCase(javaClientGeneratorConfiguration.configurationType)) {
-                    errors.add(getString("ValidationError.9", id)); //$NON-NLS-1$
-                }
-
-                if ("MIXEDMAPPER".equalsIgnoreCase(javaClientGeneratorConfiguration.configurationType)) {
-                    errors.add(getString("ValidationError.9", id)); //$NON-NLS-1$
-                }
-            }
+        if (knownRuntime.isLegacyMyBatis3Based()
+                && javaClientGeneratorConfiguration != null
+                && javaClientGeneratorConfiguration.requiresXmlMapper()
+                && sqlMapGeneratorConfiguration == null) {
+            errors.add(getString("ValidationError.9", id)); //$NON-NLS-1$
         }
 
         if (sqlMapGeneratorConfiguration != null) {

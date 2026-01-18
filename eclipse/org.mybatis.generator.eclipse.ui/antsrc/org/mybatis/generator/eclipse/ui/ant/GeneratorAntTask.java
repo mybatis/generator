@@ -77,8 +77,6 @@ public class GeneratorAntTask extends Task {
             throw new BuildException("configfile is a required parameter");
         }
 
-        List<String> warnings = new ArrayList<>();
-
         File configurationFile = new File(configfile);
         if (!configurationFile.exists()) {
             throw new BuildException("configfile " + configfile
@@ -114,6 +112,8 @@ public class GeneratorAntTask extends Task {
             monitor = new NullProgressMonitor();
         }
         
+        List<String> warnings = new ArrayList<>();
+
         try {
             SubMonitor subMonitor = SubMonitor.convert(monitor, 1000);
             subMonitor.beginTask("Generating MyBatis Artifacts:", 1000);
@@ -122,20 +122,24 @@ public class GeneratorAntTask extends Task {
             Properties p = propertyset == null ? new Properties() : propertyset.getProperties();
             p.putAll(getProject().getUserProperties());
             
-            ConfigurationParser cp = new ConfigurationParser(p,
-                    warnings);
-            Configuration config = cp
-                    .parseConfiguration(configurationFile);
+            ConfigurationParser cp = new ConfigurationParser(p);
+            Configuration config = cp.parseConfiguration(configurationFile);
+            warnings.addAll(cp.getWarnings());
 
             subMonitor.worked(50);
             monitor.subTask("Generating Files from Database Tables");
             
-            MyBatisGenerator generator = new MyBatisGenerator(config, new EclipseShellCallback(),
-                    warnings);
-
             EclipseProgressCallback progressCallback = new EclipseProgressCallback(subMonitor.newChild(950));
 
-            generator.generate(progressCallback, contexts, fullyqualifiedTables);
+            MyBatisGenerator generator = new MyBatisGenerator.Builder()
+            		.withConfiguration(config)
+            		.withShellCallback(new EclipseShellCallback())
+            		.withProgressCallback(progressCallback)
+            		.withContextIds(contexts)
+            		.withFullyQualifiedTableNames(fullyqualifiedTables)
+            		.build();
+
+            warnings.addAll(generator.generateAndWrite());
 
         } catch (XMLParserException e) {
             for (String error : e.getErrors()) {

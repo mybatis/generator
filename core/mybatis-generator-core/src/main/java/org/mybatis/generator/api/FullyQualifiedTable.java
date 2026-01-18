@@ -29,7 +29,6 @@ import org.mybatis.generator.config.DomainObjectRenamingRule;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
 
 public class FullyQualifiedTable {
-
     private final @Nullable String introspectedCatalog;
     private final @Nullable String introspectedSchema;
     private final String introspectedTableName;
@@ -45,7 +44,6 @@ public class FullyQualifiedTable {
     private final @Nullable DomainObjectRenamingRule domainObjectRenamingRule;
 
     public FullyQualifiedTable(Builder builder) {
-        super();
         this.introspectedCatalog = builder.introspectedCatalog;
         this.introspectedSchema = builder.introspectedSchema;
         this.introspectedTableName = Objects.requireNonNull(builder.introspectedTableName);
@@ -126,9 +124,8 @@ public class FullyQualifiedTable {
         }
         addDelimiters(localTableName);
 
-        return composeFullyQualifiedTableName(localCatalog
-                .toString(), localSchema.toString(), localTableName.toString(),
-                '.');
+        return composeFullyQualifiedTableName(localCatalog.toString(), localSchema.toString(),
+                localTableName.toString(), '.');
     }
 
     public String getAliasedFullyQualifiedTableNameAtRuntime() {

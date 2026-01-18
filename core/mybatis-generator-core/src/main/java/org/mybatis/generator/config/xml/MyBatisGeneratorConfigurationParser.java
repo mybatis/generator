@@ -73,9 +73,7 @@ public class MyBatisGeneratorConfigurationParser {
         configurationProperties = new Properties();
     }
 
-    public Configuration parseConfiguration(Element rootNode)
-            throws XMLParserException {
-
+    public Configuration parseConfiguration(Element rootNode) throws XMLParserException {
         Configuration configuration = new Configuration();
 
         NodeList nodeList = rootNode.getChildNodes();
@@ -151,8 +149,8 @@ public class MyBatisGeneratorConfigurationParser {
         String targetRuntime = attributes.getProperty("targetRuntime"); //$NON-NLS-1$
         String introspectedColumnImpl = attributes.getProperty("introspectedColumnImpl"); //$NON-NLS-1$
         String id = attributes.getProperty("id"); //$NON-NLS-1$
-        ModelType dmt = defaultModelType
-                == null ? Defaults.DEFAULT_MODEL_TYPE : ModelType.getModelType(defaultModelType);
+        ModelType dmt =
+                defaultModelType == null ? Defaults.DEFAULT_MODEL_TYPE : ModelType.getModelType(defaultModelType);
 
         Context.Builder builder = new Context.Builder()
                 .withId(id)

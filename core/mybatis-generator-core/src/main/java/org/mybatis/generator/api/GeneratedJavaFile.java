@@ -18,7 +18,6 @@ package org.mybatis.generator.api;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 
 public class GeneratedJavaFile extends GeneratedFile {
-
     private final CompilationUnit compilationUnit;
 
     public GeneratedJavaFile(CompilationUnit compilationUnit, String targetProject) {

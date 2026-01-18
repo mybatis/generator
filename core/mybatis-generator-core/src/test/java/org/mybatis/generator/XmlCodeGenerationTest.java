@@ -68,8 +68,7 @@ class XmlCodeGenerationTest {
     }
 
     static List<GeneratedXmlFile> generateXmlFiles(String configFile) throws Exception {
-        List<String> warnings = new ArrayList<>();
-        ConfigurationParser cp = new ConfigurationParser(warnings);
+        ConfigurationParser cp = new ConfigurationParser();
         InputStream is = JavaCodeGenerationTest.class.getResourceAsStream(configFile);
         if (is == null) {
             throw new RuntimeException("Cannot load configFile: " + configFile);
@@ -78,8 +77,11 @@ class XmlCodeGenerationTest {
 
         DefaultShellCallback shellCallback = new DefaultShellCallback(true);
 
-        MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, shellCallback, warnings);
-        myBatisGenerator.generate(null, null, null, false);
+        MyBatisGenerator myBatisGenerator = new MyBatisGenerator.Builder()
+                .withConfiguration(config)
+                .withShellCallback(shellCallback)
+                .build();
+        myBatisGenerator.generateOnly();
         return myBatisGenerator.getGeneratedXmlFiles();
     }
 

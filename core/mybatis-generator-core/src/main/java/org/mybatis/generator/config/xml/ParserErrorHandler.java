@@ -23,9 +23,7 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXParseException;
 
 public class ParserErrorHandler implements ErrorHandler {
-
     private final List<String> warnings;
-
     private final List<String> errors;
 
     public ParserErrorHandler(List<String> warnings, List<String> errors) {

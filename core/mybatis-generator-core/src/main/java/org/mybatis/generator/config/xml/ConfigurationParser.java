@@ -24,8 +24,8 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.Properties;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
@@ -45,13 +45,12 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 public class ConfigurationParser {
-
-    private final List<String> warnings;
-    private final List<String> parseErrors;
+    private final List<String> warnings = new ArrayList<>();
+    private final List<String> parseErrors = new ArrayList<>();
     private final @Nullable Properties extraProperties;
 
-    public ConfigurationParser(List<String> warnings) {
-        this(null, warnings);
+    public ConfigurationParser() {
+        this(null);
     }
 
     /**
@@ -72,14 +71,13 @@ public class ConfigurationParser {
      *
      * @param extraProperties an (optional) set of properties used to resolve property
      *     references in the configuration file
-     * @param warnings any warnings are added to this array
      */
-    public ConfigurationParser(@Nullable Properties extraProperties, List<String> warnings) {
+    public ConfigurationParser(@Nullable Properties extraProperties) {
         this.extraProperties = extraProperties;
+    }
 
-        this.warnings = Objects.requireNonNullElseGet(warnings, ArrayList::new);
-
-        parseErrors = new ArrayList<>();
+    public List<String> getWarnings() {
+        return Collections.unmodifiableList(warnings);
     }
 
     public Configuration parseConfiguration(File inputFile) throws IOException, XMLParserException {
@@ -99,6 +97,9 @@ public class ConfigurationParser {
     }
 
     private Configuration parseConfiguration(InputSource inputSource) throws IOException, XMLParserException {
+        parseErrors.clear();
+        warnings.clear();
+
         try {
             Document document = basicParse(inputSource);
 
@@ -127,8 +128,8 @@ public class ConfigurationParser {
         }
     }
 
-    private @Nullable Document basicParse(InputSource inputSource) throws IOException, ParserConfigurationException, XMLParserException {
-        parseErrors.clear();
+    private @Nullable Document basicParse(InputSource inputSource) throws IOException, ParserConfigurationException,
+            XMLParserException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, ""); //$NON-NLS-1$
         factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, ""); //$NON-NLS-1$

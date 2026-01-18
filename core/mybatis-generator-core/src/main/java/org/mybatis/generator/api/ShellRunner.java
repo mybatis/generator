@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -84,18 +84,23 @@ public class ShellRunner {
         Set<String> contexts = StringUtility.tokenize(arguments.get(CONTEXT_IDS));
 
         try {
-            ConfigurationParser cp = new ConfigurationParser(warnings);
+            ConfigurationParser cp = new ConfigurationParser();
             Configuration config = cp.parseConfiguration(configurationFile.toFile());
-
+            warnings.addAll(cp.getWarnings());
             DefaultShellCallback shellCallback = new DefaultShellCallback(arguments.containsKey(OVERWRITE));
-
-            MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, shellCallback, warnings);
 
             ProgressCallback progressCallback = arguments.containsKey(VERBOSE) ? new VerboseProgressCallback()
                     : null;
 
-            myBatisGenerator.generate(progressCallback, contexts, fullyQualifiedTables);
+            MyBatisGenerator myBatisGenerator = new MyBatisGenerator.Builder()
+                    .withConfiguration(config)
+                    .withShellCallback(shellCallback)
+                    .withProgressCallback(progressCallback)
+                    .withContextIds(contexts)
+                    .withFullyQualifiedTableNames(fullyQualifiedTables)
+                    .build();
 
+            warnings.addAll(myBatisGenerator.generateAndWrite());
         } catch (XMLParserException e) {
             writeLine(getString("Progress.3")); //$NON-NLS-1$
             writeLine();

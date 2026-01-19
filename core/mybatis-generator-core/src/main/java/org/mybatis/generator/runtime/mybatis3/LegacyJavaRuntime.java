@@ -63,27 +63,21 @@ public class LegacyJavaRuntime extends AbstractRuntime {
         }
     }
 
-    protected Optional<AbstractJavaClientGenerator> calculateClientGenerator() {
+    protected <T extends AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder<T>>
+            Optional<AbstractJavaClientGenerator> calculateClientGenerator() {
         if (!introspectedTable.getRules().generateJavaClient()) {
             return Optional.empty();
         }
 
         return calculateJavaClientGeneratorBuilderType().map(t -> {
-            AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder<?> builder =
-                    ObjectFactory.createInternalObject(t,
-                    AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder.class);
+            @SuppressWarnings("unchecked")
+            T builder = (T) ObjectFactory.createInternalObject(t,
+                            AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder.class);
 
-            AbstractJavaClientGenerator generator = builder
+            AbstractJavaClientGenerator generator = initializeSubBuilder(builder)
                     .withProject(getClientProject().orElseThrow(() ->
                             new InternalException(getString("RuntimeError.25", context.getId()))) //$NON-NLS-1$
                     )
-                    // TODO - why can't we use initializeSubBuilder here?
-                    .withContext(context)
-                    .withIntrospectedTable(introspectedTable)
-                    .withProgressCallback(progressCallback)
-                    .withWarnings(warnings)
-                    .withCommentGenerator(commentGenerator)
-                    .withPluginAggregator(pluginAggregator)
                     .build();
 
             javaGenerators.add(generator);

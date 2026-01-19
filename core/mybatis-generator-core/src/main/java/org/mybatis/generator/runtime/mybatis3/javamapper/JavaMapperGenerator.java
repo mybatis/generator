@@ -30,7 +30,6 @@ import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.runtime.AbstractJavaClientGenerator;
 import org.mybatis.generator.codegen.AbstractXmlGenerator;
 import org.mybatis.generator.config.PropertyRegistry;
-import org.mybatis.generator.exception.InternalException;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.CountByExampleMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.DeleteByExampleMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.DeleteByPrimaryKeyMethodGenerator;
@@ -58,7 +57,7 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
         progressCallback.startTask(getString("Progress.17", //$NON-NLS-1$
                 introspectedTable.getFullyQualifiedTable().toString()));
 
-        FullyQualifiedJavaType type = new FullyQualifiedJavaType(myBatis3JavaMapperType);
+        FullyQualifiedJavaType type = new FullyQualifiedJavaType(introspectedTable.getMyBatis3JavaMapperType());
         Interface interfaze = new Interface(type);
         interfaze.setVisibility(JavaVisibility.PUBLIC);
         commentGenerator.addJavaFileComment(interfaze);
@@ -205,10 +204,7 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
 
     @Override
     public Optional<AbstractXmlGenerator> getMatchedXMLGenerator() {
-        var generator = initializeSubBuilder(new XMLMapperGenerator.Builder())
-                .withMyBatis3SqlMapNamespace(introspectedTable.getMyBatis3SqlMapNamespace().orElseThrow(
-                        () -> new InternalException(getString("RuntimeError.24", context.getId())))) //$NON-NLS-1$
-                .build();
+        var generator = initializeSubBuilder(new XMLMapperGenerator.Builder()).build();
 
         return Optional.of(generator);
     }

@@ -19,9 +19,7 @@ import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJ
 import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getEscapedColumnName;
 
 import java.util.List;
-import java.util.Objects;
 
-import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
@@ -36,11 +34,8 @@ import org.mybatis.generator.internal.util.StringUtility;
 import org.mybatis.generator.internal.util.messages.Messages;
 
 public class DynamicSqlSupportClassGenerator extends AbstractGenerator {
-    private final String myBatisDynamicSqlSupportType;
-
     private DynamicSqlSupportClassGenerator(Builder builder) {
         super(builder);
-        myBatisDynamicSqlSupportType = Objects.requireNonNull(builder.myBatisDynamicSqlSupportType);
     }
 
     public TopLevelClass generate() {
@@ -61,7 +56,7 @@ public class DynamicSqlSupportClassGenerator extends AbstractGenerator {
     }
 
     private TopLevelClass buildBasicClass() {
-        TopLevelClass topLevelClass = new TopLevelClass(myBatisDynamicSqlSupportType);
+        TopLevelClass topLevelClass = new TopLevelClass(introspectedTable.getMyBatisDynamicSqlSupportType());
         topLevelClass.setVisibility(JavaVisibility.PUBLIC);
         topLevelClass.setFinal(true);
         topLevelClass.addImportedType(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.SqlColumn")); //$NON-NLS-1$
@@ -176,13 +171,6 @@ public class DynamicSqlSupportClassGenerator extends AbstractGenerator {
     }
 
     public static class Builder extends AbstractGeneratorBuilder<Builder> {
-        private @Nullable String myBatisDynamicSqlSupportType;
-
-        public Builder withMyBatisDynamicSqlSupportType(String myBatisDynamicSqlSupportType) {
-            this.myBatisDynamicSqlSupportType = myBatisDynamicSqlSupportType;
-            return this;
-        }
-
         @Override
         protected Builder getThis() {
             return this;

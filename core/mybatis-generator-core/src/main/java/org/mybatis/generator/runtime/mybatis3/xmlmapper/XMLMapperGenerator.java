@@ -44,21 +44,16 @@ import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.UpdateByPrimary
 import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.UpdateByPrimaryKeyWithBLOBsElementGenerator;
 import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.UpdateByPrimaryKeyWithoutBLOBsElementGenerator;
 
-import java.util.Objects;
-
 public class XMLMapperGenerator extends AbstractXmlGenerator {
-    private final String myBatis3SqlMapNamespace;
-
     protected XMLMapperGenerator(Builder builder) {
         super(builder);
-        myBatis3SqlMapNamespace = Objects.requireNonNull(builder.myBatis3SqlMapNamespace);
     }
 
     protected XmlElement getSqlMapElement() {
         FullyQualifiedTable table = introspectedTable.getFullyQualifiedTable();
         progressCallback.startTask(getString("Progress.12", table.toString())); //$NON-NLS-1$
         XmlElement answer = new XmlElement("mapper"); //$NON-NLS-1$
-        answer.addAttribute(new Attribute("namespace", myBatis3SqlMapNamespace)); //$NON-NLS-1$
+        answer.addAttribute(new Attribute("namespace", introspectedTable.getMyBatis3SqlMapNamespace())); //$NON-NLS-1$
 
         commentGenerator.addRootComment(answer);
 
@@ -239,13 +234,6 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
     }
 
     public static class Builder extends AbstractXmlGeneratorBuilder<Builder> {
-        private @Nullable String myBatis3SqlMapNamespace;
-
-        public Builder withMyBatis3SqlMapNamespace(String myBatis3SqlMapNamespace) {
-            this.myBatis3SqlMapNamespace = myBatis3SqlMapNamespace;
-            return this;
-        }
-
         @Override
         protected Builder getThis() {
             return this;

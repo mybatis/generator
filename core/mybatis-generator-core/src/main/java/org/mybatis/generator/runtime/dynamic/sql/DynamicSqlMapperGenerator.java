@@ -28,7 +28,6 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
-import org.mybatis.generator.exception.InternalException;
 import org.mybatis.generator.runtime.AbstractJavaClientGenerator;
 import org.mybatis.generator.codegen.AbstractXmlGenerator;
 import org.mybatis.generator.config.PropertyRegistry;
@@ -133,7 +132,7 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
     }
 
     protected Interface createBasicInterface() {
-        FullyQualifiedJavaType type = new FullyQualifiedJavaType(myBatis3JavaMapperType);
+        FullyQualifiedJavaType type = new FullyQualifiedJavaType(introspectedTable.getMyBatis3JavaMapperType());
         Interface interfaze = new Interface(type);
         interfaze.setVisibility(JavaVisibility.PUBLIC);
         commentGenerator.addJavaFileComment(interfaze);
@@ -157,10 +156,6 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
 
     protected TopLevelClass getSupportClass() {
         return initializeSubBuilder(new DynamicSqlSupportClassGenerator.Builder())
-                .withMyBatisDynamicSqlSupportType(
-                        introspectedTable.getMyBatisDynamicSqlSupportType().orElseThrow(() ->
-                                new InternalException(getString("RuntimeError.28", context.getId()))) //$NON-NLS-1$
-                )
                 .build()
                 .generate();
     }

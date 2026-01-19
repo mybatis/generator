@@ -34,8 +34,6 @@ import org.mybatis.generator.runtime.mybatis3.model.PrimaryKeyGenerator;
 import org.mybatis.generator.runtime.mybatis3.model.RecordWithBLOBsGenerator;
 import org.mybatis.generator.runtime.mybatis3.xmlmapper.XMLMapperGenerator;
 
-import static org.mybatis.generator.internal.util.messages.Messages.getString;
-
 /**
  * Introspected table implementation for generating MyBatis3 artifacts.
  *
@@ -56,11 +54,7 @@ public class LegacyJavaRuntime extends AbstractRuntime {
     protected void calculateXmlMapperGenerator(@Nullable AbstractJavaClientGenerator javaClientGenerator) {
         if (javaClientGenerator == null) {
             if (context.getSqlMapGeneratorConfiguration().isPresent()) {
-                xmlMapperGenerator = initializeSubBuilder(new XMLMapperGenerator.Builder())
-                        .withMyBatis3SqlMapNamespace(introspectedTable.getMyBatis3SqlMapNamespace().orElseThrow(
-                                () -> new InternalException(
-                                        getString("RuntimeError.24", context.getId())))) //$NON-NLS-1$
-                        .build();
+                xmlMapperGenerator = initializeSubBuilder(new XMLMapperGenerator.Builder()).build();
             }
         } else {
             xmlMapperGenerator = javaClientGenerator.getMatchedXMLGenerator().orElse(null);
@@ -86,11 +80,6 @@ public class LegacyJavaRuntime extends AbstractRuntime {
                     .withWarnings(warnings)
                     .withCommentGenerator(commentGenerator)
                     .withPluginAggregator(pluginAggregator)
-                    .withMyBatis3JavaMapperType(
-                            introspectedTable.getMyBatis3JavaMapperType().orElseThrow(() ->
-                                    new InternalException(
-                                            getString("RuntimeError.25", context.getId()))) //$NON-NLS-1$
-                    )
                     .build();
 
             javaGenerators.add(generator);

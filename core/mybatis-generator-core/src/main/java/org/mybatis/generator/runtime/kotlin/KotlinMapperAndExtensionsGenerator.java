@@ -19,14 +19,11 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.kotlin.FullyQualifiedKotlinType;
 import org.mybatis.generator.api.dom.kotlin.KotlinFile;
 import org.mybatis.generator.api.dom.kotlin.KotlinType;
 import org.mybatis.generator.codegen.AbstractKotlinGenerator;
-import org.mybatis.generator.exception.InternalException;
 import org.mybatis.generator.runtime.kotlin.elements.AbstractKotlinFunctionGenerator;
 import org.mybatis.generator.runtime.kotlin.elements.BasicInsertMethodGenerator;
 import org.mybatis.generator.runtime.kotlin.elements.BasicMultipleInsertMethodGenerator;
@@ -61,15 +58,10 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
     protected final KotlinFragmentGenerator fragmentGenerator;
     protected final KotlinDynamicSqlSupportClassGenerator supportClassGenerator;
     protected final boolean hasGeneratedKeys;
-    protected final String kotlinMapperType;
 
     public KotlinMapperAndExtensionsGenerator(Builder builder) {
         super(builder);
         supportClassGenerator = initializeSubBuilder(new KotlinDynamicSqlSupportClassGenerator.Builder())
-                .withMyBatisDynamicSqlSupportType(
-                        introspectedTable.getMyBatisDynamicSqlSupportType().orElseThrow(() ->
-                                new InternalException(getString("RuntimeError.27", context.getId()))) //$NON-NLS-1$
-                )
                 .build();
         recordType = new FullyQualifiedKotlinType(introspectedTable.getKotlinRecordType());
         resultMapId = recordType.getShortNameWithoutTypeArguments() + "Result"; //$NON-NLS-1$
@@ -81,11 +73,10 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
                 .build();
 
         hasGeneratedKeys = introspectedTable.getGeneratedKey().isPresent();
-        kotlinMapperType = Objects.requireNonNull(builder.kotlinMapperType);
     }
 
     protected KotlinFile createMapperInterfaceFile() {
-        FullyQualifiedKotlinType type = new FullyQualifiedKotlinType(kotlinMapperType);
+        FullyQualifiedKotlinType type = new FullyQualifiedKotlinType(introspectedTable.getMyBatis3JavaMapperType());
 
         KotlinFile kf = new KotlinFile(type.getShortNameWithoutTypeArguments());
         kf.setPackage(type.getPackageName());
@@ -94,7 +85,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
     }
 
     protected KotlinType createMapperInterface(KotlinFile kotlinFile) {
-        FullyQualifiedKotlinType type = new FullyQualifiedKotlinType(kotlinMapperType);
+        FullyQualifiedKotlinType type = new FullyQualifiedKotlinType(introspectedTable.getMyBatis3JavaMapperType());
 
         KotlinType intf = KotlinType.newInterface(type.getShortNameWithoutTypeArguments())
                 .withAnnotation("@Mapper") //$NON-NLS-1$
@@ -423,13 +414,6 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
     }
 
     public static class Builder extends AbstractKotlinGeneratorBuilder<Builder> {
-        private @Nullable String kotlinMapperType;
-
-        public Builder withKotlinMapperType(@Nullable String kotlinMapperType) {
-            this.kotlinMapperType = kotlinMapperType;
-            return this;
-        }
-
         @Override
         protected Builder getThis() {
             return this;

@@ -15,11 +15,8 @@
  */
 package org.mybatis.generator.runtime.kotlin;
 
-import static org.mybatis.generator.internal.util.messages.Messages.getString;
-
 import org.mybatis.generator.api.AbstractRuntime;
 import org.mybatis.generator.codegen.AbstractKotlinGenerator;
-import org.mybatis.generator.exception.InternalException;
 
 public class KotlinDynamicSqlRuntime extends AbstractRuntime {
     public KotlinDynamicSqlRuntime(Builder builder) {
@@ -40,10 +37,6 @@ public class KotlinDynamicSqlRuntime extends AbstractRuntime {
         AbstractKotlinGenerator kotlinGenerator =
                 initializeSubBuilder(new KotlinMapperAndExtensionsGenerator.Builder())
                 .withProject(clientProject)
-                .withKotlinMapperType(
-                        introspectedTable.getMyBatis3JavaMapperType().orElseThrow(() ->
-                                new InternalException(getString("RuntimeError.26", context.getId()))) //$NON-NLS-1$
-                )
                 .build();
         kotlinGenerators.add(kotlinGenerator);
     }

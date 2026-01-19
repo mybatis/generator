@@ -31,7 +31,9 @@ import org.mybatis.generator.config.JavaClientGeneratorConfiguration;
 import org.mybatis.generator.config.JavaModelGeneratorConfiguration;
 import org.mybatis.generator.config.PropertyHolder;
 import org.mybatis.generator.config.PropertyRegistry;
+import org.mybatis.generator.config.SqlMapGeneratorConfiguration;
 import org.mybatis.generator.config.TableConfiguration;
+import org.mybatis.generator.exception.InternalException;
 import org.mybatis.generator.internal.rules.Rules;
 
 /**
@@ -135,10 +137,13 @@ public abstract class CodeGenerationAttributes {
         updateByPrimaryKeyStatementId = "updateByPrimaryKey"; //$NON-NLS-1$
         updateByPrimaryKeyWithBLOBsStatementId = "updateByPrimaryKeyWithBLOBs"; //$NON-NLS-1$
 
+        context.getSqlMapGeneratorConfiguration().ifPresent(config -> {
+            myBatis3XmlMapperPackage = calculateSqlMapPackage(config);
+        });
+
         context.getJavaClientGeneratorConfiguration().ifPresent(config -> {
             myBatis3JavaMapperType = calculateMyBatis3JavaMapperType(config);
             myBatis3SqlProviderType = calculateMyBatis3SqlProviderType(config);
-            myBatis3XmlMapperPackage = calculateSqlMapPackage(config);
             myBatisDynamicSqlSupportType = calculateMyBatisDynamicSqlSupportType(config);
         });
 
@@ -299,8 +304,14 @@ public abstract class CodeGenerationAttributes {
         this.myBatis3JavaMapperType = myBatis3JavaMapperType;
     }
 
-    public Optional<String> getMyBatis3JavaMapperType() {
-        return Optional.ofNullable(myBatis3JavaMapperType);
+    public String getMyBatis3JavaMapperType() {
+        if (myBatis3JavaMapperType == null) {
+            // TODO
+            throw new InternalException("TODO");
+
+        }
+
+        return myBatis3JavaMapperType;
     }
 
     public void setMyBatis3SqlProviderType(String myBatis3SqlProviderType) {
@@ -312,12 +323,22 @@ public abstract class CodeGenerationAttributes {
 
     }
 
-    public Optional<String> getMyBatis3SqlMapNamespace() {
-        return Optional.ofNullable(myBatis3SqlMapNamespace);
+    public String getMyBatis3SqlMapNamespace() {
+        if (myBatis3SqlMapNamespace == null) {
+            // TODO
+            throw new InternalException("TODO");
+        }
+
+        return myBatis3SqlMapNamespace;
     }
 
-    public Optional<String> getMyBatis3SqlProviderType() {
-        return Optional.ofNullable(myBatis3SqlProviderType);
+    public String getMyBatis3SqlProviderType() {
+        if (myBatis3SqlProviderType == null) {
+            // TODO
+            throw new InternalException("TODO");
+        }
+
+        return myBatis3SqlProviderType;
     }
 
     public void setMyBatis3UpdateByExampleWhereClauseId(String myBatis3UpdateByExampleWhereClauseId) {
@@ -340,16 +361,26 @@ public abstract class CodeGenerationAttributes {
         this.myBatis3XmlMapperPackage = myBatis3XmlMapperPackage;
     }
 
-    public Optional<String> getMyBatis3XmlMapperPackage() {
-        return Optional.ofNullable(myBatis3XmlMapperPackage);
+    public String getMyBatis3XmlMapperPackage() {
+        if (myBatis3XmlMapperPackage == null) {
+            // TODO
+            throw new InternalException("TODO");
+        }
+
+        return myBatis3XmlMapperPackage;
     }
 
     public void setMyBatisDynamicSqlSupportType(String myBatisDynamicSqlSupportType) {
         this.myBatisDynamicSqlSupportType = myBatisDynamicSqlSupportType;
     }
 
-    public Optional<String> getMyBatisDynamicSqlSupportType() {
-        return Optional.ofNullable(myBatisDynamicSqlSupportType);
+    public String getMyBatisDynamicSqlSupportType() {
+        if (myBatisDynamicSqlSupportType == null) {
+            // TODO
+            throw new InternalException("TODO");
+        }
+
+        return myBatisDynamicSqlSupportType;
     }
 
     public void setMyBatisDynamicSQLTableObjectName(String myBatisDynamicSQLTableObjectName) {
@@ -602,7 +633,7 @@ public abstract class CodeGenerationAttributes {
         return exampleTargetPackage + getFullyQualifiedTable().getSubPackageForModel(isSubPackagesEnabled(config));
     }
 
-    private String calculateSqlMapPackage(JavaClientGeneratorConfiguration config) {
+    private String calculateSqlMapPackage(SqlMapGeneratorConfiguration config) {
         StringBuilder sb = new StringBuilder();
         sb.append(config.getTargetPackage());
         sb.append(getFullyQualifiedTable().getSubPackageForClientOrSqlMap(isSubPackagesEnabled(config)));

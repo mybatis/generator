@@ -137,8 +137,8 @@ public class MyBatisGenerator {
         setupCustomClassloader();
         List<Context> contextsToRun = calculateContextsToRun();
         List<CalculatedContextValues> contextValuesList = calculateContextValues(contextsToRun, warnings);
-        runAllIntrospections(contextValuesList, warnings);
-        List<GenerationEngine> generationEngines = createGenerationEngines(contextValuesList, warnings);
+        List<ContextValuesAndTables> contextValuesAndTablesList = runAllIntrospections(contextValuesList, warnings);
+        List<GenerationEngine> generationEngines = createGenerationEngines(contextValuesAndTablesList, warnings);
         runGenerationEngines(generationEngines);
     }
 
@@ -175,7 +175,8 @@ public class MyBatisGenerator {
                 .build();
     }
 
-    private void runAllIntrospections(List<CalculatedContextValues> contextValuesList, List<String> warnings)
+    private List<ContextValuesAndTables> runAllIntrospections(List<CalculatedContextValues> contextValuesList,
+                                                              List<String> warnings)
             throws SQLException, InterruptedException {
         int totalSteps = contextValuesList.stream()
                 .map(CalculatedContextValues::context)
@@ -183,10 +184,13 @@ public class MyBatisGenerator {
                 .sum();
         progressCallback.introspectionStarted(totalSteps);
 
+        List<ContextValuesAndTables> contextValuesAndTablesList = new ArrayList<>();
         for (CalculatedContextValues contextValues : contextValuesList) {
-            contextValues.addIntrospectedTables(
-                    runContextIntrospection(fullyQualifiedTableNames, contextValues, warnings));
+            contextValuesAndTablesList.add(new ContextValuesAndTables(contextValues,
+                    runContextIntrospection(fullyQualifiedTableNames, contextValues, warnings)));
         }
+
+        return contextValuesAndTablesList;
     }
 
     private List<IntrospectedTable> runContextIntrospection(Set<String> fullyQualifiedTableNames,
@@ -202,19 +206,20 @@ public class MyBatisGenerator {
                 .introspectTables();
     }
 
-    private List<GenerationEngine> createGenerationEngines(List<CalculatedContextValues> contextValuesList,
+    private List<GenerationEngine> createGenerationEngines(List<ContextValuesAndTables> contextValuesAndTablesListList,
                                                            List<String> warnings) {
-        return contextValuesList.stream()
+        return contextValuesAndTablesListList.stream()
                 .map(c -> createGenerationEngine(c, warnings))
                 .toList();
     }
 
-    private GenerationEngine createGenerationEngine(CalculatedContextValues contextValues, List<String> warnings) {
+    private GenerationEngine createGenerationEngine(ContextValuesAndTables contextValuesAndTables,
+                                                    List<String> warnings) {
         return new GenerationEngine.Builder()
-                .withContextValues(contextValues)
+                .withContextValues(contextValuesAndTables.contextValues())
                 .withProgressCallback(progressCallback)
                 .withWarnings(warnings)
-                .withIntrospectedTables(contextValues.introspectedTables())
+                .withIntrospectedTables(contextValuesAndTables.introspectedTables())
                 .build();
     }
 
@@ -487,6 +492,9 @@ public class MyBatisGenerator {
                 .flatMap(Collection::stream)
                 .toList();
     }
+
+    private record ContextValuesAndTables(CalculatedContextValues contextValues,
+                                          List<IntrospectedTable> introspectedTables) { }
 
     public static class Builder {
         private @Nullable Configuration configuration;

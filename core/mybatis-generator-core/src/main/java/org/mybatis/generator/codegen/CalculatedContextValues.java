@@ -17,13 +17,11 @@ package org.mybatis.generator.codegen;
 
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.CommentGenerator;
-import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.JavaFormatter;
 import org.mybatis.generator.api.KnownRuntime;
 import org.mybatis.generator.api.KotlinFormatter;
@@ -36,12 +34,10 @@ import org.mybatis.generator.internal.ObjectFactory;
 import org.mybatis.generator.internal.PluginAggregator;
 
 /**
- * This class holds the intermediate results of the generator, as well as many pre-calculated objects.
- *
+ * This class holds common objects in a context that can be pre-calculated before code generation runs.
  */
 public class CalculatedContextValues {
     private final Context context;
-    private final List<IntrospectedTable> introspectedTables = new ArrayList<>();
     private final JavaFormatter javaFormatter;
     private final KotlinFormatter kotlinFormatter;
     private final XmlFormatter xmlFormatter;
@@ -117,20 +113,12 @@ public class CalculatedContextValues {
         return pluginAggregator;
     }
 
-    public void addIntrospectedTables(List<IntrospectedTable> introspectedTables) {
-        this.introspectedTables.addAll(introspectedTables);
-    }
-
     public KnownRuntime knownRuntime() {
         return knownRuntime;
     }
 
     public String runtimeBuilderClassName() {
         return runtimeBuilderClassName;
-    }
-
-    public List<IntrospectedTable> introspectedTables() {
-        return introspectedTables;
     }
 
     public static class Builder {

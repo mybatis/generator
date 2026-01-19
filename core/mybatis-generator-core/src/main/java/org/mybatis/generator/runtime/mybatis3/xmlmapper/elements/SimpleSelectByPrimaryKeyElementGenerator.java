@@ -61,7 +61,7 @@ public class SimpleSelectByPrimaryKeyElementGenerator extends AbstractXmlElement
 
         sb.setLength(0);
         sb.append("from "); //$NON-NLS-1$
-        sb.append(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime());
+        sb.append(introspectedTable.getAliasedFullyQualifiedRuntimeTableName());
         answer.addElement(new TextElement(sb.toString()));
 
         buildPrimaryKeyWhereClause().forEach(answer::addElement);

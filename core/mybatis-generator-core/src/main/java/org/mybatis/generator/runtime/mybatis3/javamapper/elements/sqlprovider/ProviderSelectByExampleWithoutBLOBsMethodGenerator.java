@@ -65,7 +65,7 @@ public class ProviderSelectByExampleWithoutBLOBsMethodGenerator extends Abstract
         }
 
         method.addBodyLine(String.format("sql.FROM(\"%s\");", //$NON-NLS-1$
-                escapeStringForJava(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime())));
+                escapeStringForJava(introspectedTable.getAliasedFullyQualifiedRuntimeTableName())));
         method.addBodyLine("applyWhere(sql, example, false);"); //$NON-NLS-1$
 
         method.addBodyLine(""); //$NON-NLS-1$

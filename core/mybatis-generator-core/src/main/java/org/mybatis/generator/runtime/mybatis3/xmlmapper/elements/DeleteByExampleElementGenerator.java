@@ -34,7 +34,7 @@ public class DeleteByExampleElementGenerator extends AbstractXmlElementGenerator
 
         commentGenerator.addComment(answer);
 
-        String s = "delete from " + introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime(); //$NON-NLS-1$
+        String s = "delete from " + introspectedTable.getAliasedFullyQualifiedRuntimeTableName(); //$NON-NLS-1$
         answer.addElement(new TextElement(s));
         answer.addElement(getExampleIncludeElement());
 

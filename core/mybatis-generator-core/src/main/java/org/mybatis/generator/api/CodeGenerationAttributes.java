@@ -52,7 +52,7 @@ public abstract class CodeGenerationAttributes {
     protected final KnownRuntime knownRuntime;
 
     /**
-     * Attributes may be used by plugins to capture table related state between
+     * Plugins may use attributes to capture table-related state between
      * the different plugin calls.
      */
     protected final Map<String, Object> attributes = new HashMap<>();
@@ -170,12 +170,12 @@ public abstract class CodeGenerationAttributes {
         return getTableConfiguration().getProperty(property);
     }
 
-    public Object getAttribute(String name) {
+    public @Nullable Object getAttribute(String name) {
         return attributes.get(name);
     }
 
-    public void removeAttribute(String name) {
-        attributes.remove(name);
+    public Object removeAttribute(String name) {
+        return attributes.remove(name);
     }
 
     public void setAttribute(String name, Object value) {
@@ -186,7 +186,7 @@ public abstract class CodeGenerationAttributes {
         this.aliasedFullyQualifiedRuntimeTableName = aliasedFullyQualifiedRuntimeTableName;
     }
 
-    public String getAliasedFullyQualifiedTableNameAtRuntime() {
+    public String getAliasedFullyQualifiedRuntimeTableName() {
         return aliasedFullyQualifiedRuntimeTableName;
     }
 
@@ -268,7 +268,7 @@ public abstract class CodeGenerationAttributes {
         return exampleWhereClauseId;
     }
 
-    public void setFullyQualifiedRuntimeTableName(String fullyQualifiedTableNameAtRuntime) {
+    public void setFullyQualifiedTableNameAtRuntime(String fullyQualifiedTableNameAtRuntime) {
         this.fullyQualifiedTableNameAtRuntime = fullyQualifiedTableNameAtRuntime;
     }
 
@@ -598,8 +598,8 @@ public abstract class CodeGenerationAttributes {
     }
 
     /**
-     * If property exampleTargetPackage specified for example use the specified value, else
-     * use default value (targetPackage).
+     * If property exampleTargetPackage specified, for example, use the specified value, else
+     * use the default value (targetPackage).
      *
      * @return the calculated package
      */

@@ -50,7 +50,7 @@ public class ProviderUpdateByExampleWithoutBLOBsMethodGenerator extends Abstract
         method.addBodyLine("SQL sql = new SQL();"); //$NON-NLS-1$
 
         method.addBodyLine(String.format("sql.UPDATE(\"%s\");", //$NON-NLS-1$
-                escapeStringForJava(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime())));
+                escapeStringForJava(introspectedTable.getAliasedFullyQualifiedRuntimeTableName())));
         method.addBodyLine(""); //$NON-NLS-1$
 
         for (IntrospectedColumn introspectedColumn : ListUtilities.removeGeneratedAlwaysColumns(getColumns())) {

@@ -42,7 +42,7 @@ public class SimpleSelectAllElementGenerator extends AbstractXmlElementGenerator
 
         StringBuilder sb = new StringBuilder();
         sb.append("from "); //$NON-NLS-1$
-        sb.append(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime());
+        sb.append(introspectedTable.getAliasedFullyQualifiedRuntimeTableName());
         answer.addElement(new TextElement(sb.toString()));
 
         String orderByClause = introspectedTable.getTableConfigurationProperty(

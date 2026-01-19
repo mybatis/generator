@@ -70,10 +70,13 @@ public class LegacyJavaRuntime extends AbstractRuntime {
             AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder<?> builder =
                     ObjectFactory.createInternalObject(t,
                     AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder.class);
-            var generator = builder
+
+            AbstractJavaClientGenerator generator = builder
+                    // TODO - Externalize Message
                     .withProject(getClientProject().orElseThrow(() -> new InternalException(
                             "Internal Error: No client project exists when a client generator configuration exists.")
                     ))
+                    // TODO - why can't we use initializeSubBuilder here?
                     .withContext(context)
                     .withIntrospectedTable(introspectedTable)
                     .withProgressCallback(progressCallback)

@@ -42,7 +42,7 @@ public class ProviderCountByExampleMethodGenerator extends AbstractJavaProviderM
 
         method.addBodyLine("SQL sql = new SQL();"); //$NON-NLS-1$
         method.addBodyLine(String.format("sql.SELECT(\"count(*)\").FROM(\"%s\");", //$NON-NLS-1$
-                escapeStringForJava(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime())));
+                escapeStringForJava(introspectedTable.getAliasedFullyQualifiedRuntimeTableName())));
         method.addBodyLine("applyWhere(sql, example, false);"); //$NON-NLS-1$
         method.addBodyLine("return sql.toString();"); //$NON-NLS-1$
 

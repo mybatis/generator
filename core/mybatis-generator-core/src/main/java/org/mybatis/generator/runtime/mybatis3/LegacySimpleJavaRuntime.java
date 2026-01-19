@@ -41,8 +41,7 @@ public class LegacySimpleJavaRuntime extends LegacyJavaRuntime {
     protected void calculateXmlMapperGenerator(@Nullable AbstractJavaClientGenerator javaClientGenerator) {
         if (javaClientGenerator == null) {
             if (context.getSqlMapGeneratorConfiguration().isPresent()) {
-                xmlMapperGenerator = initializeSubBuilder(new SimpleXMLMapperGenerator.Builder())
-                        .build();
+                xmlMapperGenerator = initializeSubBuilder(new SimpleXMLMapperGenerator.Builder()).build();
             }
         } else {
             xmlMapperGenerator = javaClientGenerator.getMatchedXMLGenerator().orElse(null);

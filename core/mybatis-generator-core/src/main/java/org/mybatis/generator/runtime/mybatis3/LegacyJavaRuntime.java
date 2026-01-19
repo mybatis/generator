@@ -63,26 +63,29 @@ public class LegacyJavaRuntime extends AbstractRuntime {
         }
     }
 
-    protected <T extends AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder<T>>
-            Optional<AbstractJavaClientGenerator> calculateClientGenerator() {
+    protected Optional<AbstractJavaClientGenerator> calculateClientGenerator() {
         if (!introspectedTable.getRules().generateJavaClient()) {
             return Optional.empty();
         }
 
         return calculateJavaClientGeneratorBuilderType().map(t -> {
-            @SuppressWarnings("unchecked")
-            T builder = (T) ObjectFactory.createInternalObject(t,
-                            AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder.class);
-
-            AbstractJavaClientGenerator generator = initializeSubBuilder(builder)
-                    .withProject(getClientProject().orElseThrow(() ->
-                            new InternalException(getString("RuntimeError.25", context.getId()))) //$NON-NLS-1$
-                    )
-                    .build();
-
+            var generator = buildClientGenerator(t);
             javaGenerators.add(generator);
             return generator;
         });
+    }
+
+    private <T extends AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder<T>>
+            AbstractJavaClientGenerator buildClientGenerator(String builderType) {
+        @SuppressWarnings("unchecked")
+        T builder = (T) ObjectFactory.createInternalObject(builderType,
+                AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder.class);
+
+        return initializeSubBuilder(builder)
+                .withProject(getClientProject().orElseThrow(() ->
+                        new InternalException(getString("RuntimeError.25", context.getId()))) //$NON-NLS-1$
+                )
+                .build();
     }
 
     protected Optional<String> calculateJavaClientGeneratorBuilderType() {

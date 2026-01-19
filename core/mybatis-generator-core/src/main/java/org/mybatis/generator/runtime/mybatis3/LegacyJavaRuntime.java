@@ -15,6 +15,8 @@
  */
 package org.mybatis.generator.runtime.mybatis3;
 
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 import java.util.Optional;
 
 import org.jspecify.annotations.Nullable;
@@ -72,10 +74,9 @@ public class LegacyJavaRuntime extends AbstractRuntime {
                     AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder.class);
 
             AbstractJavaClientGenerator generator = builder
-                    // TODO - Externalize Message
-                    .withProject(getClientProject().orElseThrow(() -> new InternalException(
-                            "Internal Error: No client project exists when a client generator configuration exists.")
-                    ))
+                    .withProject(getClientProject().orElseThrow(() ->
+                            new InternalException(getString("RuntimeError.25", context.getId()))) //$NON-NLS-1$
+                    )
                     // TODO - why can't we use initializeSubBuilder here?
                     .withContext(context)
                     .withIntrospectedTable(introspectedTable)

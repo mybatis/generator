@@ -17,6 +17,7 @@ package org.mybatis.generator.api;
 
 import static org.mybatis.generator.internal.util.StringUtility.isTrue;
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -137,9 +138,8 @@ public abstract class CodeGenerationAttributes {
         updateByPrimaryKeyStatementId = "updateByPrimaryKey"; //$NON-NLS-1$
         updateByPrimaryKeyWithBLOBsStatementId = "updateByPrimaryKeyWithBLOBs"; //$NON-NLS-1$
 
-        context.getSqlMapGeneratorConfiguration().ifPresent(config -> {
-            myBatis3XmlMapperPackage = calculateSqlMapPackage(config);
-        });
+        context.getSqlMapGeneratorConfiguration().ifPresent(config ->
+                myBatis3XmlMapperPackage = calculateSqlMapPackage(config));
 
         context.getJavaClientGeneratorConfiguration().ifPresent(config -> {
             myBatis3JavaMapperType = calculateMyBatis3JavaMapperType(config);
@@ -305,17 +305,8 @@ public abstract class CodeGenerationAttributes {
     }
 
     public String getMyBatis3JavaMapperType() {
-        if (myBatis3JavaMapperType == null) {
-            // TODO
-            throw new InternalException("TODO");
-
-        }
-
-        return myBatis3JavaMapperType;
-    }
-
-    public void setMyBatis3SqlProviderType(String myBatis3SqlProviderType) {
-        this.myBatis3SqlProviderType = myBatis3SqlProviderType;
+        return requireNonNullElseInternalError(myBatis3JavaMapperType,
+                getString("RuntimeError.25", context.getId())); //$NON-NLS-1$
     }
 
     public void setMyBatis3SqlMapNamespace(String myBatis3SqlMapNamespace) {
@@ -324,21 +315,17 @@ public abstract class CodeGenerationAttributes {
     }
 
     public String getMyBatis3SqlMapNamespace() {
-        if (myBatis3SqlMapNamespace == null) {
-            // TODO
-            throw new InternalException("TODO");
-        }
+        return requireNonNullElseInternalError(myBatis3SqlMapNamespace,
+                getString("RuntimeError.24", context.getId())); //$NON-NLS-1$
+    }
 
-        return myBatis3SqlMapNamespace;
+    public void setMyBatis3SqlProviderType(String myBatis3SqlProviderType) {
+        this.myBatis3SqlProviderType = myBatis3SqlProviderType;
     }
 
     public String getMyBatis3SqlProviderType() {
-        if (myBatis3SqlProviderType == null) {
-            // TODO
-            throw new InternalException("TODO");
-        }
-
-        return myBatis3SqlProviderType;
+        return requireNonNullElseInternalError(myBatis3SqlProviderType,
+                getString("RuntimeError.27", context.getId())); //$NON-NLS-1$
     }
 
     public void setMyBatis3UpdateByExampleWhereClauseId(String myBatis3UpdateByExampleWhereClauseId) {
@@ -362,12 +349,9 @@ public abstract class CodeGenerationAttributes {
     }
 
     public String getMyBatis3XmlMapperPackage() {
-        if (myBatis3XmlMapperPackage == null) {
-            // TODO
-            throw new InternalException("TODO");
-        }
+        return requireNonNullElseInternalError(myBatis3XmlMapperPackage,
+                getString("RuntimeError.24", context.getId())); //$NON-NLS-1$
 
-        return myBatis3XmlMapperPackage;
     }
 
     public void setMyBatisDynamicSqlSupportType(String myBatisDynamicSqlSupportType) {
@@ -375,12 +359,8 @@ public abstract class CodeGenerationAttributes {
     }
 
     public String getMyBatisDynamicSqlSupportType() {
-        if (myBatisDynamicSqlSupportType == null) {
-            // TODO
-            throw new InternalException("TODO");
-        }
-
-        return myBatisDynamicSqlSupportType;
+        return requireNonNullElseInternalError(myBatisDynamicSqlSupportType,
+                getString("RuntimeError.26", context.getId())); //$NON-NLS-1$
     }
 
     public void setMyBatisDynamicSQLTableObjectName(String myBatisDynamicSQLTableObjectName) {
@@ -728,6 +708,11 @@ public abstract class CodeGenerationAttributes {
         }
 
         return isTrue(properties.getProperty(PropertyRegistry.ANY_CONSTRUCTOR_BASED));
+    }
+
+    private <T> T requireNonNullElseInternalError(@Nullable T obj, String message) {
+        if (obj == null) throw new InternalException(message);
+        return obj;
     }
 
     public Context getContext() {

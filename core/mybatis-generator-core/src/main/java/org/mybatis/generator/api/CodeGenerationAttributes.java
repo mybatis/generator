@@ -565,36 +565,24 @@ public abstract class CodeGenerationAttributes {
     }
 
     private String calculatePrimaryKeyType(String javaModelPackage) {
-        return javaModelPackage +
-                '.' +
-                getFullyQualifiedTable().getDomainObjectName() +
-                "Key"; //$NON-NLS-1$
+        return javaModelPackage + '.' + getFullyQualifiedTable().getDomainObjectName() + "Key"; //$NON-NLS-1$
     }
 
     private String calculateBaseRecordType(String javaModelPackage) {
-        return javaModelPackage +
-                '.' +
-                getFullyQualifiedTable().getDomainObjectName();
+        return javaModelPackage + '.' + getFullyQualifiedTable().getDomainObjectName();
     }
 
     private String calculateKotlinRecordType(String javaModelPackage) {
-        return javaModelPackage +
-                '.' +
-                getFullyQualifiedTable().getDomainObjectName();
+        return javaModelPackage + '.' + getFullyQualifiedTable().getDomainObjectName();
     }
 
     private String calculateRecordWithBLOBsType(String javaModelPackage) {
-        return javaModelPackage +
-                '.' +
-                getFullyQualifiedTable().getDomainObjectName() +
-                "WithBLOBs"; //$NON-NLS-1$
+        return javaModelPackage + '.' + getFullyQualifiedTable().getDomainObjectName() + "WithBLOBs"; //$NON-NLS-1$
     }
 
     private String calculateExampleType(String javaModelPackage) {
-        return calculateJavaModelExamplePackage(javaModelPackage) +
-                '.' +
-                getFullyQualifiedTable().getDomainObjectName() +
-                "Example"; //$NON-NLS-1$
+        return calculateJavaModelExamplePackage(javaModelPackage) + '.'
+                + getFullyQualifiedTable().getDomainObjectName() + "Example"; //$NON-NLS-1$
     }
 
     /**
@@ -711,7 +699,10 @@ public abstract class CodeGenerationAttributes {
     }
 
     private <T> T requireNonNullElseInternalError(@Nullable T obj, String message) {
-        if (obj == null) throw new InternalException(message);
+        if (obj == null) {
+            throw new InternalException(message);
+        }
+
         return obj;
     }
 

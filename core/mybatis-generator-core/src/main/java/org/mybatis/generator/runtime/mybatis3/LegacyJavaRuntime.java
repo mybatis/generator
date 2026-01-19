@@ -19,12 +19,12 @@ import java.util.Optional;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.AbstractRuntime;
-import org.mybatis.generator.runtime.AbstractJavaClientGenerator;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.config.TypedPropertyHolder;
 import org.mybatis.generator.exception.InternalException;
 import org.mybatis.generator.internal.ObjectFactory;
 import org.mybatis.generator.internal.util.StringUtility;
+import org.mybatis.generator.runtime.AbstractJavaClientGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.AnnotatedClientGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.JavaMapperGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.MixedClientGenerator;

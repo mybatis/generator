@@ -18,8 +18,8 @@ package org.mybatis.generator.runtime.mybatis3;
 import java.util.Optional;
 
 import org.jspecify.annotations.Nullable;
-import org.mybatis.generator.runtime.AbstractJavaClientGenerator;
 import org.mybatis.generator.config.TypedPropertyHolder;
+import org.mybatis.generator.runtime.AbstractJavaClientGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.SimpleAnnotatedClientGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.SimpleJavaClientGenerator;
 import org.mybatis.generator.runtime.mybatis3.model.SimpleModelGenerator;

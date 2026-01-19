@@ -37,7 +37,7 @@ import org.mybatis.generator.internal.rules.Rules;
  *
  * @author Jeff Butler
  */
-public class IntrospectedTable extends CodeGenerationAttributes{
+public class IntrospectedTable extends CodeGenerationAttributes {
     protected final List<IntrospectedColumn> primaryKeyColumns = new ArrayList<>();
     protected final List<IntrospectedColumn> baseColumns = new ArrayList<>();
     protected final List<IntrospectedColumn> blobColumns = new ArrayList<>();
@@ -224,9 +224,9 @@ public class IntrospectedTable extends CodeGenerationAttributes{
     @Override
     protected Rules calculateRules() {
         return switch (getTableConfiguration().getModelType().orElseGet(context::getDefaultModelType)) {
-            case HIERARCHICAL -> new HierarchicalModelRules(this);
-            case FLAT -> new FlatModelRules(this);
-            case CONDITIONAL -> new ConditionalModelRules(this);
+        case HIERARCHICAL -> new HierarchicalModelRules(this);
+        case FLAT -> new FlatModelRules(this);
+        case CONDITIONAL -> new ConditionalModelRules(this);
         };
     }
 

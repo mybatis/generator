@@ -223,7 +223,7 @@ public class IntrospectedTable extends CodeGenerationAttributes{
 
     @Override
     protected Rules calculateRules() {
-        return switch (getTableConfiguration().getModelType()) {
+        return switch (getTableConfiguration().getModelType().orElseGet(context::getDefaultModelType)) {
             case HIERARCHICAL -> new HierarchicalModelRules(this);
             case FLAT -> new FlatModelRules(this);
             case CONDITIONAL -> new ConditionalModelRules(this);

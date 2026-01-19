@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.JavaClientGeneratorConfiguration;
 import org.mybatis.generator.config.JavaModelGeneratorConfiguration;
-import org.mybatis.generator.config.ModelType;
 import org.mybatis.generator.config.SqlMapGeneratorConfiguration;
 import org.mybatis.generator.config.TableConfiguration;
 import org.mybatis.generator.exception.InternalException;
@@ -408,20 +407,16 @@ class CodeGenerationAttributesTest {
 
         Context context = new Context.Builder()
                 .withId("test")
-                .withDefaultModelType(ModelType.CONDITIONAL)
                 .withJavaModelGeneratorConfiguration(javaModelGeneratorConfiguration)
                 .build();
 
         FullyQualifiedTable fullyQualifiedTable = new FullyQualifiedTable.Builder()
-                // TODO - why does this need context?
                 .withContext(context)
                 .withIntrospectedTableName(TABLE_NAME)
                 .build();
 
         TableConfiguration tableConfiguration = new TableConfiguration.Builder()
                 .withTableName(TABLE_NAME)
-                // TODO - why both here:
-                .withModelType(ModelType.CONDITIONAL, "conditional")
                 .build();
 
         return new IntrospectedTable.Builder()
@@ -446,21 +441,17 @@ class CodeGenerationAttributesTest {
 
         Context context = new Context.Builder()
                 .withId("test")
-                .withDefaultModelType(ModelType.CONDITIONAL)
                 .withJavaModelGeneratorConfiguration(javaModelGeneratorConfiguration)
                 .withSqlMapGeneratorConfiguration(sqlMapGeneratorConfiguration)
                 .build();
 
         FullyQualifiedTable fullyQualifiedTable = new FullyQualifiedTable.Builder()
-                // TODO - why does this need context?
                 .withContext(context)
                 .withIntrospectedTableName(TABLE_NAME)
                 .build();
 
         TableConfiguration tableConfiguration = new TableConfiguration.Builder()
                 .withTableName(TABLE_NAME)
-                // TODO - why both here:
-                .withModelType(ModelType.CONDITIONAL, "conditional")
                 .build();
 
         return new IntrospectedTable.Builder()
@@ -490,22 +481,18 @@ class CodeGenerationAttributesTest {
 
         Context context = new Context.Builder()
                 .withId("test")
-                .withDefaultModelType(ModelType.CONDITIONAL)
                 .withJavaModelGeneratorConfiguration(javaModelGeneratorConfiguration)
                 .withSqlMapGeneratorConfiguration(sqlMapGeneratorConfiguration)
                 .withJavaClientGeneratorConfiguration(javaClientGeneratorConfiguration)
                 .build();
 
         FullyQualifiedTable fullyQualifiedTable = new FullyQualifiedTable.Builder()
-                // TODO - why does this need context?
                 .withContext(context)
                 .withIntrospectedTableName(TABLE_NAME)
                 .build();
 
         TableConfiguration tableConfiguration = new TableConfiguration.Builder()
                 .withTableName(TABLE_NAME)
-                // TODO - why both here:
-                .withModelType(ModelType.CONDITIONAL, "conditional")
                 .build();
 
         return new IntrospectedTable.Builder()

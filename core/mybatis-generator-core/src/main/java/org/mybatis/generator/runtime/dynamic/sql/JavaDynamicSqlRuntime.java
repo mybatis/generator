@@ -15,39 +15,40 @@
  */
 package org.mybatis.generator.runtime.dynamic.sql;
 
-import java.util.Optional;
+import org.mybatis.generator.api.AbstractRuntime;
+import org.mybatis.generator.codegen.AbstractJavaGenerator;
 
-import org.jspecify.annotations.Nullable;
-import org.mybatis.generator.runtime.AbstractJavaClientGenerator;
-import org.mybatis.generator.runtime.mybatis3.LegacyJavaRuntime;
-
-public class JavaDynamicSqlRuntime extends LegacyJavaRuntime {
+public class JavaDynamicSqlRuntime extends AbstractRuntime {
 
     protected JavaDynamicSqlRuntime(Builder builder) {
         super(builder);
     }
 
     @Override
-    protected void calculateXmlMapperGenerator(@Nullable AbstractJavaClientGenerator javaClientGenerator) {
-        // no XML with dynamic SQL support
-        xmlMapperGenerator = null;
+    protected void calculateGenerators() {
+        calculateJavaModelGenerator();
+        context.getJavaClientGeneratorConfiguration().ifPresent(config -> {
+            if (introspectedTable.getRules().generateJavaClient()) {
+                calculateJavaClientGenerator(config.getTargetProject());
+            }
+        });
     }
 
-    @Override
-    protected Optional<String> calculateJavaClientGeneratorBuilderType() {
-        return context.getJavaClientGeneratorConfiguration()
-                .map(c -> DynamicSqlMapperGenerator.Builder.class.getName());
+    protected void calculateJavaClientGenerator(String clientProject) {
+        AbstractJavaGenerator javaGenerator = initializeSubBuilder(new DynamicSqlMapperGenerator.Builder())
+                .withProject(clientProject)
+                .build();
+        javaGenerators.add(javaGenerator);
     }
 
-    @Override
-    protected void calculateJavaModelGenerators() {
+    protected void calculateJavaModelGenerator() {
         var javaGenerator = initializeSubBuilder(new DynamicSqlModelGenerator.Builder())
                 .withProject(getModelProject())
                 .build();
         javaGenerators.add(javaGenerator);
     }
 
-    public static class Builder extends LegacyJavaRuntime.Builder {
+    public static class Builder extends AbstractRuntimeBuilder<Builder> {
         @Override
         protected Builder getThis() {
             return this;

@@ -92,7 +92,8 @@ public abstract class AbstractRuntime extends AbstractGenerator {
         if (xmlMapperGenerator != null) {
             Document document = xmlMapperGenerator.getDocument();
             if (document != null) {
-                GeneratedXmlFile gxf = new GeneratedXmlFile(document, introspectedTable.getMyBatis3XmlMapperFileName(),
+                GeneratedXmlFile gxf = new GeneratedXmlFile(document,
+                        introspectedTable.getMyBatis3XmlMapperFileName(),
                         introspectedTable.getMyBatis3XmlMapperPackage(),
                         context.getSqlMapGeneratorConfiguration()
                                 .map(SqlMapGeneratorConfiguration::getTargetProject).orElse(""),

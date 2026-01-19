@@ -50,7 +50,7 @@ public class Context extends PropertyHolder {
     protected Context(Builder builder) {
         super(builder);
         id = Objects.requireNonNull(builder.id, getString("ValidationError.16")); //$NON-NLS-1$
-        defaultModelType = Objects.requireNonNull(builder.defaultModelType);
+        defaultModelType = Objects.requireNonNullElse(builder.defaultModelType, Defaults.DEFAULT_MODEL_TYPE);
         tableConfigurations = Collections.unmodifiableList(builder.tableConfigurations);
         pluginConfigurations = Collections.unmodifiableList(builder.pluginConfigurations);
         commentGeneratorConfiguration = builder.commentGeneratorConfiguration;
@@ -239,7 +239,7 @@ public class Context extends PropertyHolder {
             return this;
         }
 
-        public Builder withDefaultModelType(ModelType defaultModelType) {
+        public Builder withDefaultModelType(@Nullable ModelType defaultModelType) {
             this.defaultModelType = defaultModelType;
             return this;
         }

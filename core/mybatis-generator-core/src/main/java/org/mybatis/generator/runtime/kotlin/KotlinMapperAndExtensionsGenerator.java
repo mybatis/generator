@@ -61,7 +61,8 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
 
     public KotlinMapperAndExtensionsGenerator(Builder builder) {
         super(builder);
-        supportClassGenerator = initializeSubBuilder(new KotlinDynamicSqlSupportClassGenerator.Builder()).build();
+        supportClassGenerator = initializeSubBuilder(new KotlinDynamicSqlSupportClassGenerator.Builder())
+                .build();
         recordType = new FullyQualifiedKotlinType(introspectedTable.getKotlinRecordType());
         resultMapId = recordType.getShortNameWithoutTypeArguments() + "Result"; //$NON-NLS-1$
         fragmentGenerator = new KotlinFragmentGenerator.Builder()
@@ -84,8 +85,7 @@ public class KotlinMapperAndExtensionsGenerator extends AbstractKotlinGenerator 
     }
 
     protected KotlinType createMapperInterface(KotlinFile kotlinFile) {
-        FullyQualifiedKotlinType type = new FullyQualifiedKotlinType(
-                introspectedTable.getMyBatis3JavaMapperType());
+        FullyQualifiedKotlinType type = new FullyQualifiedKotlinType(introspectedTable.getMyBatis3JavaMapperType());
 
         KotlinType intf = KotlinType.newInterface(type.getShortNameWithoutTypeArguments())
                 .withAnnotation("@Mapper") //$NON-NLS-1$

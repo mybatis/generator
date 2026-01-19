@@ -272,7 +272,7 @@ public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
 
         StringBuilder sb = new StringBuilder();
         sb.append("update "); //$NON-NLS-1$
-        sb.append(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime());
+        sb.append(introspectedTable.getAliasedFullyQualifiedRuntimeTableName());
         answer.addElement(new TextElement(sb.toString()));
 
         // set up for first column

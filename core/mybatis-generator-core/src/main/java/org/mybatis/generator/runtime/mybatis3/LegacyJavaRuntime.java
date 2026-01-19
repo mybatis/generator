@@ -15,17 +15,18 @@
  */
 package org.mybatis.generator.runtime.mybatis3;
 
-import java.util.List;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
+
 import java.util.Optional;
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.AbstractRuntime;
-import org.mybatis.generator.api.ProgressCallback;
-import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.config.TypedPropertyHolder;
+import org.mybatis.generator.exception.InternalException;
 import org.mybatis.generator.internal.ObjectFactory;
 import org.mybatis.generator.internal.util.StringUtility;
+import org.mybatis.generator.runtime.AbstractJavaClientGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.AnnotatedClientGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.JavaMapperGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.MixedClientGenerator;
@@ -47,53 +48,36 @@ public class LegacyJavaRuntime extends AbstractRuntime {
 
     @Override
     protected void calculateGenerators() {
-        calculateJavaModelGenerators(warnings, progressCallback);
-
-        AbstractJavaClientGenerator javaClientGenerator =
-                calculateClientGenerator(warnings, progressCallback).orElse(null);
-
-        calculateXmlMapperGenerator(javaClientGenerator, warnings, progressCallback);
+        calculateJavaModelGenerators();
+        AbstractJavaClientGenerator javaClientGenerator = calculateClientGenerator().orElse(null);
+        calculateXmlMapperGenerator(javaClientGenerator);
     }
 
-    protected void calculateXmlMapperGenerator(@Nullable AbstractJavaClientGenerator javaClientGenerator,
-            List<String> warnings,
-            ProgressCallback progressCallback) {
+    protected void calculateXmlMapperGenerator(@Nullable AbstractJavaClientGenerator javaClientGenerator) {
         if (javaClientGenerator == null) {
             if (context.getSqlMapGeneratorConfiguration().isPresent()) {
-                xmlMapperGenerator = new XMLMapperGenerator.Builder()
-                        .withContext(context)
-                        .withIntrospectedTable(introspectedTable)
-                        .withWarnings(warnings)
-                        .withProgressCallback(progressCallback)
-                        .withCommentGenerator(commentGenerator)
-                        .withPluginAggregator(pluginAggregator)
-                        .build();
+                xmlMapperGenerator = initializeSubBuilder(new XMLMapperGenerator.Builder()).build();
             }
         } else {
             xmlMapperGenerator = javaClientGenerator.getMatchedXMLGenerator().orElse(null);
         }
     }
 
-    protected Optional<AbstractJavaClientGenerator> calculateClientGenerator(List<String> warnings,
-            ProgressCallback progressCallback) {
+    protected <T extends AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder<T>>
+            Optional<AbstractJavaClientGenerator> calculateClientGenerator() {
         if (!introspectedTable.getRules().generateJavaClient()) {
             return Optional.empty();
         }
 
         return calculateJavaClientGeneratorBuilderType().map(t -> {
-            AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder<?> builder =
-                    ObjectFactory.createInternalObject(t,
-                    AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder.class);
-            var generator = builder
-                    .withProject(getClientProject().orElseThrow(() -> new IllegalArgumentException(
-                            "Internal Error: No client project exists when a client generator configuration exists.")
-                    ))
-                    .withContext(context)
-                    .withIntrospectedTable(introspectedTable)
-                    .withProgressCallback(progressCallback)
-                    .withWarnings(warnings)
-                    .withCommentGenerator(commentGenerator)
-                    .withPluginAggregator(pluginAggregator)
+            @SuppressWarnings("unchecked")
+            T builder = (T) ObjectFactory.createInternalObject(t,
+                            AbstractJavaClientGenerator.AbstractJavaClientGeneratorBuilder.class);
+
+            AbstractJavaClientGenerator generator = initializeSubBuilder(builder)
+                    .withProject(getClientProject().orElseThrow(() ->
+                            new InternalException(getString("RuntimeError.25", context.getId()))) //$NON-NLS-1$
+                    )
                     .build();
 
             javaGenerators.add(generator);
@@ -119,55 +103,31 @@ public class LegacyJavaRuntime extends AbstractRuntime {
                 });
     }
 
-    protected void calculateJavaModelGenerators(List<String> warnings, ProgressCallback progressCallback) {
+    protected void calculateJavaModelGenerators() {
         if (introspectedTable.getRules().generateExampleClass()) {
-            var javaGenerator = new ExampleGenerator.Builder()
+            var javaGenerator = initializeSubBuilder(new ExampleGenerator.Builder())
                     .withProject(getExampleProject())
-                    .withContext(context)
-                    .withIntrospectedTable(introspectedTable)
-                    .withProgressCallback(progressCallback)
-                    .withWarnings(warnings)
-                    .withCommentGenerator(commentGenerator)
-                    .withPluginAggregator(pluginAggregator)
                     .build();
             javaGenerators.add(javaGenerator);
         }
 
         if (introspectedTable.getRules().generatePrimaryKeyClass()) {
-            var javaGenerator = new PrimaryKeyGenerator.Builder()
+            var javaGenerator = initializeSubBuilder(new PrimaryKeyGenerator.Builder())
                     .withProject(getModelProject())
-                    .withContext(context)
-                    .withIntrospectedTable(introspectedTable)
-                    .withProgressCallback(progressCallback)
-                    .withWarnings(warnings)
-                    .withCommentGenerator(commentGenerator)
-                    .withPluginAggregator(pluginAggregator)
                     .build();
             javaGenerators.add(javaGenerator);
         }
 
         if (introspectedTable.getRules().generateBaseRecordClass()) {
-            var javaGenerator = new BaseRecordGenerator.Builder()
+            var javaGenerator = initializeSubBuilder(new BaseRecordGenerator.Builder())
                     .withProject(getModelProject())
-                    .withContext(context)
-                    .withIntrospectedTable(introspectedTable)
-                    .withProgressCallback(progressCallback)
-                    .withWarnings(warnings)
-                    .withCommentGenerator(commentGenerator)
-                    .withPluginAggregator(pluginAggregator)
                     .build();
             javaGenerators.add(javaGenerator);
         }
 
         if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {
-            var javaGenerator = new RecordWithBLOBsGenerator.Builder()
+            var javaGenerator = initializeSubBuilder(new RecordWithBLOBsGenerator.Builder())
                     .withProject(getModelProject())
-                    .withContext(context)
-                    .withIntrospectedTable(introspectedTable)
-                    .withProgressCallback(progressCallback)
-                    .withWarnings(warnings)
-                    .withCommentGenerator(commentGenerator)
-                    .withPluginAggregator(pluginAggregator)
                     .build();
             javaGenerators.add(javaGenerator);
         }

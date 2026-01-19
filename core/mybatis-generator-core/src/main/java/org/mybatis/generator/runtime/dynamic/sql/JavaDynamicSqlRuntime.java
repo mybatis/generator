@@ -15,12 +15,10 @@
  */
 package org.mybatis.generator.runtime.dynamic.sql;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.jspecify.annotations.Nullable;
-import org.mybatis.generator.api.ProgressCallback;
-import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
+import org.mybatis.generator.runtime.AbstractJavaClientGenerator;
 import org.mybatis.generator.runtime.mybatis3.LegacyJavaRuntime;
 
 public class JavaDynamicSqlRuntime extends LegacyJavaRuntime {
@@ -30,9 +28,7 @@ public class JavaDynamicSqlRuntime extends LegacyJavaRuntime {
     }
 
     @Override
-    protected void calculateXmlMapperGenerator(@Nullable AbstractJavaClientGenerator javaClientGenerator,
-            List<String> warnings,
-            ProgressCallback progressCallback) {
+    protected void calculateXmlMapperGenerator(@Nullable AbstractJavaClientGenerator javaClientGenerator) {
         // no XML with dynamic SQL support
         xmlMapperGenerator = null;
     }
@@ -44,15 +40,9 @@ public class JavaDynamicSqlRuntime extends LegacyJavaRuntime {
     }
 
     @Override
-    protected void calculateJavaModelGenerators(List<String> warnings, ProgressCallback progressCallback) {
-        var javaGenerator = new DynamicSqlModelGenerator.Builder()
+    protected void calculateJavaModelGenerators() {
+        var javaGenerator = initializeSubBuilder(new DynamicSqlModelGenerator.Builder())
                 .withProject(getModelProject())
-                .withContext(context)
-                .withIntrospectedTable(introspectedTable)
-                .withProgressCallback(progressCallback)
-                .withWarnings(warnings)
-                .withCommentGenerator(commentGenerator)
-                .withPluginAggregator(pluginAggregator)
                 .build();
         javaGenerators.add(javaGenerator);
     }

@@ -45,7 +45,6 @@ import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.UpdateByPrimary
 import org.mybatis.generator.runtime.mybatis3.xmlmapper.elements.UpdateByPrimaryKeyWithoutBLOBsElementGenerator;
 
 public class XMLMapperGenerator extends AbstractXmlGenerator {
-
     protected XMLMapperGenerator(Builder builder) {
         super(builder);
     }
@@ -54,8 +53,7 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
         FullyQualifiedTable table = introspectedTable.getFullyQualifiedTable();
         progressCallback.startTask(getString("Progress.12", table.toString())); //$NON-NLS-1$
         XmlElement answer = new XmlElement("mapper"); //$NON-NLS-1$
-        String namespace = introspectedTable.getMyBatis3SqlMapNamespace();
-        answer.addAttribute(new Attribute("namespace", namespace)); //$NON-NLS-1$
+        answer.addAttribute(new Attribute("namespace", introspectedTable.getMyBatis3SqlMapNamespace())); //$NON-NLS-1$
 
         commentGenerator.addRootComment(answer);
 

@@ -45,8 +45,7 @@ public class KotlinDynamicSqlSupportClassGenerator extends AbstractGenerator {
     }
 
     private void generate() {
-        FullyQualifiedJavaType type =
-                new FullyQualifiedJavaType(introspectedTable.getMyBatisDynamicSqlSupportType());
+        FullyQualifiedJavaType type = new FullyQualifiedJavaType(introspectedTable.getMyBatisDynamicSqlSupportType());
 
         kotlinFile = buildBasicFile(type);
 

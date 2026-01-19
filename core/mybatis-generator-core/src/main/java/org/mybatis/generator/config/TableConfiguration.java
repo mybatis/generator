@@ -51,7 +51,7 @@ public class TableConfiguration extends PropertyHolder {
     private final String tableName;
     private final @Nullable String domainObjectName;
     private final @Nullable String alias;
-    private final ModelType modelType;
+    private final @Nullable ModelType modelType;
     private final boolean wildcardEscapingEnabled;
     private final boolean delimitIdentifiers;
     private final @Nullable DomainObjectRenamingRule domainObjectRenamingRule;
@@ -69,7 +69,7 @@ public class TableConfiguration extends PropertyHolder {
         tableName = Objects.requireNonNull(builder.tableName);
         domainObjectName = builder.domainObjectName;
         alias = builder.alias;
-        modelType = Objects.requireNonNull(builder.modelType);
+        modelType = builder.modelType;
         insertStatementEnabled = builder.insertStatementEnabled;
         selectByPrimaryKeyStatementEnabled = builder.selectByPrimaryKeyStatementEnabled;
         selectByExampleStatementEnabled = builder.selectByExampleStatementEnabled;
@@ -243,8 +243,8 @@ public class TableConfiguration extends PropertyHolder {
         return answer;
     }
 
-    public ModelType getModelType() {
-        return modelType;
+    public Optional<ModelType> getModelType() {
+        return Optional.ofNullable(modelType);
     }
 
     public boolean isWildcardEscapingEnabled() {
@@ -382,8 +382,8 @@ public class TableConfiguration extends PropertyHolder {
             return this;
         }
 
-        public Builder withModelType(ModelType defaultModelType, @Nullable String tableModelType) {
-            this.modelType = tableModelType == null ? defaultModelType : ModelType.getModelType(tableModelType);
+        public Builder withModelType(@Nullable String tableModelType) {
+            this.modelType = tableModelType == null ? null : ModelType.getModelType(tableModelType);
             return getThis();
         }
 

@@ -37,7 +37,7 @@ public class CountByExampleElementGenerator extends AbstractXmlElementGenerator 
         commentGenerator.addComment(answer);
 
         String s = "select count(*) from " //$NON-NLS-1$
-                + introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime();
+                + introspectedTable.getAliasedFullyQualifiedRuntimeTableName();
         answer.addElement(new TextElement(s));
         answer.addElement(getExampleIncludeElement());
 

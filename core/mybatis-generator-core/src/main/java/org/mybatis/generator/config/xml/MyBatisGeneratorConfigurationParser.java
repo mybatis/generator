@@ -36,7 +36,6 @@ import org.mybatis.generator.config.CommentGeneratorConfiguration;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.ConnectionFactoryConfiguration;
 import org.mybatis.generator.config.Context;
-import org.mybatis.generator.config.Defaults;
 import org.mybatis.generator.config.DomainObjectRenamingRule;
 import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.config.IgnoredColumn;
@@ -150,7 +149,7 @@ public class MyBatisGeneratorConfigurationParser {
         String introspectedColumnImpl = attributes.getProperty("introspectedColumnImpl"); //$NON-NLS-1$
         String id = attributes.getProperty("id"); //$NON-NLS-1$
         ModelType dmt =
-                defaultModelType == null ? Defaults.DEFAULT_MODEL_TYPE : ModelType.getModelType(defaultModelType);
+                defaultModelType == null ? null : ModelType.getModelType(defaultModelType);
 
         Context.Builder builder = new Context.Builder()
                 .withId(id)
@@ -186,7 +185,7 @@ public class MyBatisGeneratorConfigurationParser {
             case "javaClientGenerator" ->  //$NON-NLS-1$
                     builder.withJavaClientGeneratorConfiguration(parseJavaClientGenerator(childNode));
             case "table" ->  //$NON-NLS-1$
-                    builder.withTableConfiguration(parseTable(dmt, childNode));
+                    builder.withTableConfiguration(parseTable(childNode));
             default -> {
                 // Ignore unrecognized elements
             }
@@ -208,7 +207,7 @@ public class MyBatisGeneratorConfigurationParser {
                 .build();
     }
 
-    protected TableConfiguration parseTable(ModelType defaultModelType, Node node) {
+    protected TableConfiguration parseTable(Node node) {
         NullableProperties attributes = parseAttributes(node);
         String catalog = attributes.getProperty("catalog"); //$NON-NLS-1$
         String schema = attributes.getProperty("schema"); //$NON-NLS-1$
@@ -222,7 +221,7 @@ public class MyBatisGeneratorConfigurationParser {
         String sqlProviderName = attributes.getProperty("sqlProviderName"); //$NON-NLS-1$
 
         TableConfiguration.Builder builder = new TableConfiguration.Builder()
-                .withModelType(defaultModelType, modelType)
+                .withModelType(modelType)
                 .withCatalog(catalog)
                 .withSchema(schema)
                 .withTableName(tableName)

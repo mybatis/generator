@@ -13,9 +13,12 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.generator.codegen;
+package org.mybatis.generator.runtime;
 
 import java.util.Optional;
+
+import org.mybatis.generator.codegen.AbstractJavaGenerator;
+import org.mybatis.generator.codegen.AbstractXmlGenerator;
 
 /**
  * This class exists to that Java client generators can specify whether
@@ -26,21 +29,8 @@ import java.util.Optional;
  * @author Jeff Butler
  */
 public abstract class AbstractJavaClientGenerator extends AbstractJavaGenerator {
-
-    private final boolean requiresXMLGenerator;
-
     protected AbstractJavaClientGenerator(AbstractJavaClientGeneratorBuilder<?> builder) {
         super(builder);
-        this.requiresXMLGenerator = builder.requiresXMLGenerator();
-    }
-
-    /**
-     * Returns true is a matching XML generator is required.
-     *
-     * @return true if matching XML is generator required
-     */
-    public boolean requiresXMLGenerator() {
-        return requiresXMLGenerator;
     }
 
     /**
@@ -53,9 +43,6 @@ public abstract class AbstractJavaClientGenerator extends AbstractJavaGenerator 
 
     public abstract static class AbstractJavaClientGeneratorBuilder<T extends AbstractJavaClientGeneratorBuilder<T>>
             extends AbstractJavaGeneratorBuilder<T> {
-
-        protected abstract boolean requiresXMLGenerator();
-
         public abstract AbstractJavaClientGenerator build();
     }
 }

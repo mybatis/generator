@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.mybatis.generator.api.FullyQualifiedTable;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.Plugin;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
@@ -36,6 +35,7 @@ import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.codegen.RootClassInfo;
+import org.mybatis.generator.runtime.CodeGenUtils;
 
 /**
  * This model generator builds a flat model with default constructor and getters/setters.
@@ -51,23 +51,19 @@ public class DynamicSqlModelGenerator extends AbstractJavaGenerator {
 
     @Override
     public List<CompilationUnit> getCompilationUnits() {
-        FullyQualifiedTable table = introspectedTable.getFullyQualifiedTable();
-        progressCallback.startTask(getString("Progress.8", table.toString())); //$NON-NLS-1$
+        progressCallback.startTask(getString("Progress.8", //$NON-NLS-1$
+                introspectedTable.getFullyQualifiedTable().toString()));
 
-        FullyQualifiedJavaType type = new FullyQualifiedJavaType(
-                introspectedTable.getBaseRecordType());
+        FullyQualifiedJavaType type = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
         TopLevelClass topLevelClass = new TopLevelClass(type);
         topLevelClass.setVisibility(JavaVisibility.PUBLIC);
         commentGenerator.addJavaFileComment(topLevelClass);
+        commentGenerator.addModelClassComment(topLevelClass, introspectedTable);
 
         getSuperClass().ifPresent(sc -> {
             topLevelClass.setSuperClass(sc);
             topLevelClass.addImportedType(sc);
         });
-
-        commentGenerator.addModelClassComment(topLevelClass, introspectedTable);
-
-        List<IntrospectedColumn> introspectedColumns = introspectedTable.getAllColumns();
 
         if (introspectedTable.isConstructorBased()) {
             addParameterizedConstructor(topLevelClass);
@@ -78,7 +74,7 @@ public class DynamicSqlModelGenerator extends AbstractJavaGenerator {
         }
 
         Optional<RootClassInfo> rootClassInfo = getRootClass().map(rc -> RootClassInfo.getInstance(rc, warnings));
-        for (IntrospectedColumn introspectedColumn : introspectedColumns) {
+        for (IntrospectedColumn introspectedColumn : introspectedTable.getAllColumns()) {
             if (rootClassInfo.map(rci -> rci.containsProperty(introspectedColumn)).orElse(false)) {
                 continue;
             }
@@ -128,25 +124,10 @@ public class DynamicSqlModelGenerator extends AbstractJavaGenerator {
         method.setConstructor(true);
         commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, topLevelClass.getImportedTypes());
 
-        List<IntrospectedColumn> constructorColumns = introspectedTable
-                .getAllColumns();
-
-        for (IntrospectedColumn introspectedColumn : constructorColumns) {
-            method.addParameter(new Parameter(introspectedColumn
-                    .getFullyQualifiedJavaType(), introspectedColumn
-                    .getJavaProperty()));
-        }
-
-        StringBuilder sb = new StringBuilder();
-        List<IntrospectedColumn> introspectedColumns = introspectedTable.getAllColumns();
-        for (IntrospectedColumn introspectedColumn : introspectedColumns) {
-            sb.setLength(0);
-            sb.append("this."); //$NON-NLS-1$
-            sb.append(introspectedColumn.getJavaProperty());
-            sb.append(" = "); //$NON-NLS-1$
-            sb.append(introspectedColumn.getJavaProperty());
-            sb.append(';');
-            method.addBodyLine(sb.toString());
+        for (IntrospectedColumn introspectedColumn : introspectedTable.getAllColumns()) {
+            method.addParameter(new Parameter(introspectedColumn.getFullyQualifiedJavaType(),
+                    introspectedColumn.getJavaProperty()));
+            method.addBodyLine(CodeGenUtils.generateFieldSetterForConstructor(introspectedColumn));
         }
 
         topLevelClass.addMethod(method);

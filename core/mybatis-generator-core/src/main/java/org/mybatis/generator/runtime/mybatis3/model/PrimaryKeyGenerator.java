@@ -35,6 +35,7 @@ import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.codegen.RootClassInfo;
+import org.mybatis.generator.runtime.CodeGenUtils;
 
 public class PrimaryKeyGenerator extends AbstractJavaGenerator {
 
@@ -108,17 +109,10 @@ public class PrimaryKeyGenerator extends AbstractJavaGenerator {
         method.setConstructor(true);
         commentGenerator.addGeneralMethodComment(method, introspectedTable);
 
-        StringBuilder sb = new StringBuilder();
         for (IntrospectedColumn introspectedColumn : introspectedTable.getPrimaryKeyColumns()) {
             method.addParameter(new Parameter(introspectedColumn.getFullyQualifiedJavaType(),
                     introspectedColumn.getJavaProperty()));
-            sb.setLength(0);
-            sb.append("this."); //$NON-NLS-1$
-            sb.append(introspectedColumn.getJavaProperty());
-            sb.append(" = "); //$NON-NLS-1$
-            sb.append(introspectedColumn.getJavaProperty());
-            sb.append(';');
-            method.addBodyLine(sb.toString());
+            method.addBodyLine(CodeGenUtils.generateFieldSetterForConstructor(introspectedColumn));
         }
 
         topLevelClass.addMethod(method);

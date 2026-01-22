@@ -24,6 +24,7 @@ import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.codegen.AbstractGenerator;
+import org.mybatis.generator.runtime.JavaFieldAndImports;
 
 public class SelectListGenerator extends AbstractGenerator {
 
@@ -34,7 +35,7 @@ public class SelectListGenerator extends AbstractGenerator {
         this.fragmentGenerator = Objects.requireNonNull(builder.fragmentGenerator);
     }
 
-    public FieldAndImports generateFieldAndImports() {
+    public JavaFieldAndImports generateFieldAndImports() {
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
 
         FullyQualifiedJavaType fieldType =
@@ -45,7 +46,7 @@ public class SelectListGenerator extends AbstractGenerator {
                 + fragmentGenerator.getSelectList() + ")"); //$NON-NLS-1$
         commentGenerator.addFieldAnnotation(field, introspectedTable, imports);
 
-        return FieldAndImports.withField(field)
+        return JavaFieldAndImports.withField(field)
                 .withImports(imports)
                 .build();
     }

@@ -27,18 +27,22 @@ import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
+import org.mybatis.generator.runtime.AbstractJavaMethodGenerator;
+import org.mybatis.generator.runtime.JavaMethodAndImports;
 import org.mybatis.generator.runtime.mybatis3.ListUtilities;
 
-public class InsertSelectiveMethodGenerator extends AbstractMethodGenerator {
+public class InsertSelectiveMethodGenerator extends AbstractJavaMethodGenerator {
     private final FullyQualifiedJavaType recordType;
+    private final String tableFieldName;
 
     private InsertSelectiveMethodGenerator(Builder builder) {
         super(builder);
         recordType = Objects.requireNonNull(builder.recordType);
+        tableFieldName = Objects.requireNonNull(builder.tableFieldName);
     }
 
     @Override
-    public MethodAndImports generateMethodAndImports() {
+    public JavaMethodAndImports generateMethodAndImports() {
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
 
         imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.util.mybatis3.MyBatis3Utils")); //$NON-NLS-1$
@@ -57,7 +61,7 @@ public class InsertSelectiveMethodGenerator extends AbstractMethodGenerator {
                 introspectedTable.getAllColumns());
         boolean first = true;
         for (IntrospectedColumn column : columns) {
-            String fieldName = calculateFieldName(column);
+            String fieldName = Utils.calculateFieldName(tableFieldName, column);
             if (column.isSequenceColumn()) {
                 if (first) {
                     method.addBodyLine("    c.map(" + fieldName //$NON-NLS-1$
@@ -90,7 +94,7 @@ public class InsertSelectiveMethodGenerator extends AbstractMethodGenerator {
 
         method.addBodyLine(");"); //$NON-NLS-1$
 
-        return MethodAndImports.withMethod(method)
+        return JavaMethodAndImports.withMethod(method)
                 .withImports(imports)
                 .build();
     }
@@ -100,14 +104,19 @@ public class InsertSelectiveMethodGenerator extends AbstractMethodGenerator {
         return pluginAggregator.clientInsertSelectiveMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder> {
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
         private @Nullable FullyQualifiedJavaType recordType;
+        private @Nullable String tableFieldName;
 
         public Builder withRecordType(FullyQualifiedJavaType recordType) {
             this.recordType = recordType;
             return this;
         }
 
+        public Builder withTableFieldName(String tableFieldName) {
+            this.tableFieldName = tableFieldName;
+            return this;
+        }
         @Override
         public Builder getThis() {
             return this;

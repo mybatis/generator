@@ -23,8 +23,11 @@ import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.runtime.AbstractJavaMethodGenerator;
+import org.mybatis.generator.runtime.JavaMethodAndImports;
+import org.mybatis.generator.runtime.JavaMethodParts;
 
-public class SelectByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
+public class SelectByPrimaryKeyMethodGenerator extends AbstractJavaMethodGenerator {
     private final FullyQualifiedJavaType recordType;
     private final FragmentGenerator fragmentGenerator;
 
@@ -35,7 +38,7 @@ public class SelectByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
     }
 
     @Override
-    public @Nullable MethodAndImports generateMethodAndImports() {
+    public @Nullable JavaMethodAndImports generateMethodAndImports() {
         if (!Utils.generateSelectByPrimaryKey(introspectedTable)) {
             return null;
         }
@@ -53,12 +56,12 @@ public class SelectByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
 
         method.addBodyLine("return selectOne(c ->"); //$NON-NLS-1$
 
-        MethodAndImports.Builder builder = MethodAndImports.withMethod(method)
+        JavaMethodAndImports.Builder builder = JavaMethodAndImports.withMethod(method)
                 .withStaticImport("org.mybatis.dynamic.sql.SqlBuilder.isEqualTo") //$NON-NLS-1$
                 .withImports(imports);
 
-        MethodParts methodParts = fragmentGenerator.getPrimaryKeyWhereClauseAndParameters();
-        acceptParts(builder, method, methodParts);
+        JavaMethodParts javaMethodParts = fragmentGenerator.getPrimaryKeyWhereClauseAndParameters();
+        acceptParts(builder, method, javaMethodParts);
 
         return builder.build();
     }
@@ -68,7 +71,7 @@ public class SelectByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
         return pluginAggregator.clientSelectByPrimaryKeyMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder> {
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
         private @Nullable FullyQualifiedJavaType recordType;
         private @Nullable FragmentGenerator fragmentGenerator;
 

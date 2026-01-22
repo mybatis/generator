@@ -16,21 +16,27 @@
 package org.mybatis.generator.runtime.dynamic.sql.elements;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
+import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.runtime.AbstractJavaMethodGenerator;
+import org.mybatis.generator.runtime.JavaMethodAndImports;
 
-public class GeneralDeleteMethodGenerator extends AbstractMethodGenerator {
+public class GeneralDeleteMethodGenerator extends AbstractJavaMethodGenerator {
+    private final String tableFieldName;
 
     private GeneralDeleteMethodGenerator(Builder builder) {
         super(builder);
+        tableFieldName = Objects.requireNonNull(builder.tableFieldName);
     }
 
     @Override
-    public MethodAndImports generateMethodAndImports() {
+    public JavaMethodAndImports generateMethodAndImports() {
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
 
         FullyQualifiedJavaType parameterType = new FullyQualifiedJavaType(
@@ -48,7 +54,7 @@ public class GeneralDeleteMethodGenerator extends AbstractMethodGenerator {
                 "return MyBatis3Utils.deleteFrom(this::delete, " + tableFieldName //$NON-NLS-1$
                         + ", completer);"); //$NON-NLS-1$
 
-        return MethodAndImports.withMethod(method)
+        return JavaMethodAndImports.withMethod(method)
                 .withImports(imports)
                 .build();
     }
@@ -58,7 +64,13 @@ public class GeneralDeleteMethodGenerator extends AbstractMethodGenerator {
         return pluginAggregator.clientGeneralDeleteMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder> {
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
+        private @Nullable String tableFieldName;
+
+        public Builder withTableFieldName(String tableFieldName) {
+            this.tableFieldName = tableFieldName;
+            return this;
+        }
 
         @Override
         public Builder getThis() {

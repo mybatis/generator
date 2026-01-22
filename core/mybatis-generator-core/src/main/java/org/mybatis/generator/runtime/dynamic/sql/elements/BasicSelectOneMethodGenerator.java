@@ -24,8 +24,11 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.runtime.AbstractJavaMethodGenerator;
+import org.mybatis.generator.runtime.JavaMethodAndImports;
+import org.mybatis.generator.runtime.JavaMethodParts;
 
-public class BasicSelectOneMethodGenerator extends AbstractMethodGenerator {
+public class BasicSelectOneMethodGenerator extends AbstractJavaMethodGenerator {
 
     private final FullyQualifiedJavaType recordType;
     private final String resultMapId;
@@ -41,7 +44,7 @@ public class BasicSelectOneMethodGenerator extends AbstractMethodGenerator {
     }
 
     @Override
-    public MethodAndImports generateMethodAndImports() {
+    public JavaMethodAndImports generateMethodAndImports() {
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
 
         FullyQualifiedJavaType parameterType =
@@ -71,12 +74,12 @@ public class BasicSelectOneMethodGenerator extends AbstractMethodGenerator {
         commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, imports);
         method.addAnnotation("@SelectProvider(type=SqlProviderAdapter.class, method=\"select\")"); //$NON-NLS-1$
 
-        MethodAndImports.Builder builder = MethodAndImports.withMethod(method)
+        JavaMethodAndImports.Builder builder = JavaMethodAndImports.withMethod(method)
                 .withImports(imports);
 
         if (introspectedTable.isConstructorBased()) {
-            MethodParts methodParts = fragmentGenerator.getAnnotatedConstructorArgs();
-            acceptParts(builder, method, methodParts);
+            JavaMethodParts javaMethodParts = fragmentGenerator.getAnnotatedConstructorArgs();
+            acceptParts(builder, method, javaMethodParts);
         } else {
             if (reuseResultMap) {
                 FullyQualifiedJavaType rmAnnotation =
@@ -84,8 +87,8 @@ public class BasicSelectOneMethodGenerator extends AbstractMethodGenerator {
                 builder.withImport(rmAnnotation);
                 method.addAnnotation("@ResultMap(\"" + resultMapId + "\")"); //$NON-NLS-1$ //$NON-NLS-2$
             } else {
-                MethodParts methodParts = fragmentGenerator.getAnnotatedResults();
-                acceptParts(builder, method, methodParts);
+                JavaMethodParts javaMethodParts = fragmentGenerator.getAnnotatedResults();
+                acceptParts(builder, method, javaMethodParts);
             }
         }
 
@@ -97,8 +100,7 @@ public class BasicSelectOneMethodGenerator extends AbstractMethodGenerator {
         return pluginAggregator.clientBasicSelectOneMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder> {
-
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
         private @Nullable FullyQualifiedJavaType recordType;
         private @Nullable String resultMapId;
         private @Nullable FragmentGenerator fragmentGenerator;

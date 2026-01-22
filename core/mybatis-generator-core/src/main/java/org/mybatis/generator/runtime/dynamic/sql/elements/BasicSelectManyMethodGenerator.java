@@ -24,8 +24,11 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.runtime.AbstractJavaMethodGenerator;
+import org.mybatis.generator.runtime.JavaMethodAndImports;
+import org.mybatis.generator.runtime.JavaMethodParts;
 
-public class BasicSelectManyMethodGenerator extends AbstractMethodGenerator {
+public class BasicSelectManyMethodGenerator extends AbstractJavaMethodGenerator {
     private final FullyQualifiedJavaType recordType;
     private final FragmentGenerator fragmentGenerator;
 
@@ -36,7 +39,7 @@ public class BasicSelectManyMethodGenerator extends AbstractMethodGenerator {
     }
 
     @Override
-    public MethodAndImports generateMethodAndImports() {
+    public JavaMethodAndImports generateMethodAndImports() {
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
 
         FullyQualifiedJavaType parameterType =
@@ -63,16 +66,16 @@ public class BasicSelectManyMethodGenerator extends AbstractMethodGenerator {
         commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, imports);
         method.addAnnotation("@SelectProvider(type=SqlProviderAdapter.class, method=\"select\")"); //$NON-NLS-1$
 
-        MethodAndImports.Builder builder = MethodAndImports.withMethod(method)
+        JavaMethodAndImports.Builder builder = JavaMethodAndImports.withMethod(method)
                 .withImports(imports);
 
-        MethodParts methodParts;
+        JavaMethodParts javaMethodParts;
         if (introspectedTable.isConstructorBased()) {
-            methodParts = fragmentGenerator.getAnnotatedConstructorArgs();
+            javaMethodParts = fragmentGenerator.getAnnotatedConstructorArgs();
         } else {
-            methodParts = fragmentGenerator.getAnnotatedResults();
+            javaMethodParts = fragmentGenerator.getAnnotatedResults();
         }
-        acceptParts(builder, method, methodParts);
+        acceptParts(builder, method, javaMethodParts);
 
         return builder.build();
     }
@@ -82,7 +85,7 @@ public class BasicSelectManyMethodGenerator extends AbstractMethodGenerator {
         return pluginAggregator.clientBasicSelectManyMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder> {
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
         private @Nullable FullyQualifiedJavaType recordType;
         private @Nullable FragmentGenerator fragmentGenerator;
 

@@ -25,8 +25,11 @@ import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.config.GeneratedKey;
+import org.mybatis.generator.runtime.AbstractJavaMethodGenerator;
+import org.mybatis.generator.runtime.JavaMethodAndImports;
+import org.mybatis.generator.runtime.JavaMethodParts;
 
-public class BasicMultipleInsertMethodGenerator extends AbstractMethodGenerator {
+public class BasicMultipleInsertMethodGenerator extends AbstractJavaMethodGenerator {
 
     private final FullyQualifiedJavaType recordType;
 
@@ -36,7 +39,7 @@ public class BasicMultipleInsertMethodGenerator extends AbstractMethodGenerator 
     }
 
     @Override
-    public @Nullable MethodAndImports generateMethodAndImports() {
+    public @Nullable JavaMethodAndImports generateMethodAndImports() {
         if (!Utils.generateMultipleRowInsert(introspectedTable)) {
             return null;
         }
@@ -44,7 +47,7 @@ public class BasicMultipleInsertMethodGenerator extends AbstractMethodGenerator 
         return introspectedTable.getGeneratedKey().map(this::generateMethodWithGeneratedKeys).orElse(null);
     }
 
-    private MethodAndImports generateMethodWithGeneratedKeys(GeneratedKey gk) {
+    private JavaMethodAndImports generateMethodWithGeneratedKeys(GeneratedKey gk) {
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
 
         imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.util.SqlProviderAdapter")); //$NON-NLS-1$)
@@ -70,17 +73,17 @@ public class BasicMultipleInsertMethodGenerator extends AbstractMethodGenerator 
         method.addAnnotation("@InsertProvider(type=SqlProviderAdapter.class, " //$NON-NLS-1$
                 + "method=\"insertMultipleWithGeneratedKeys\")"); //$NON-NLS-1$
 
-        MethodAndImports.Builder builder = MethodAndImports.withMethod(method)
+        JavaMethodAndImports.Builder builder = JavaMethodAndImports.withMethod(method)
                 .withImports(imports);
 
-        MethodParts methodParts = getGeneratedKeyAnnotation(gk);
-        acceptParts(builder, method, methodParts);
+        JavaMethodParts javaMethodParts = getGeneratedKeyAnnotation(gk);
+        acceptParts(builder, method, javaMethodParts);
 
         return builder.build();
     }
 
-    private MethodParts getGeneratedKeyAnnotation(GeneratedKey gk) {
-        MethodParts.Builder builder = new MethodParts.Builder();
+    private JavaMethodParts getGeneratedKeyAnnotation(GeneratedKey gk) {
+        JavaMethodParts.Builder builder = new JavaMethodParts.Builder();
 
         StringBuilder sb = new StringBuilder();
         introspectedTable.getColumn(gk.getColumn()).ifPresent(introspectedColumn -> {
@@ -102,7 +105,7 @@ public class BasicMultipleInsertMethodGenerator extends AbstractMethodGenerator 
         return pluginAggregator.clientBasicInsertMultipleMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder> {
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
 
         private @Nullable FullyQualifiedJavaType recordType;
 

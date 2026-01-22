@@ -24,8 +24,10 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.runtime.AbstractJavaMethodGenerator;
+import org.mybatis.generator.runtime.JavaMethodAndImports;
 
-public class UpdateByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
+public class UpdateByPrimaryKeyMethodGenerator extends AbstractJavaMethodGenerator {
     private final FullyQualifiedJavaType recordType;
     private final FragmentGenerator fragmentGenerator;
 
@@ -36,7 +38,7 @@ public class UpdateByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
     }
 
     @Override
-    public @Nullable MethodAndImports generateMethodAndImports() {
+    public @Nullable JavaMethodAndImports generateMethodAndImports() {
         if (!Utils.generateUpdateByPrimaryKey(introspectedTable)) {
             return null;
         }
@@ -59,7 +61,7 @@ public class UpdateByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
         method.addBodyLines(fragmentGenerator.getPrimaryKeyWhereClauseForUpdate("    ")); //$NON-NLS-1$
 
         method.addBodyLine(");"); //$NON-NLS-1$
-        return MethodAndImports.withMethod(method)
+        return JavaMethodAndImports.withMethod(method)
                 .withImports(imports)
                 .build();
     }
@@ -70,7 +72,7 @@ public class UpdateByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
                 interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder> {
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
         private @Nullable FullyQualifiedJavaType recordType;
         private @Nullable FragmentGenerator fragmentGenerator;
 

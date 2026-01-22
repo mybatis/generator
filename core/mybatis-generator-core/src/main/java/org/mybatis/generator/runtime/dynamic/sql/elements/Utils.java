@@ -15,6 +15,7 @@
  */
 package org.mybatis.generator.runtime.dynamic.sql.elements;
 
+import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.runtime.mybatis3.ListUtilities;
@@ -23,6 +24,16 @@ public class Utils {
     private Utils() {
         // utility class - no instances
     }
+
+    public static String calculateFieldName(String tableFieldName, IntrospectedColumn column) {
+        String fieldName = column.getJavaProperty();
+        if (fieldName.equals(tableFieldName)) {
+            // name collision, no shortcut generated
+            fieldName = tableFieldName + "." + fieldName; //$NON-NLS-1$
+        }
+        return fieldName;
+    }
+
 
     public static boolean generateDeleteByPrimaryKey(IntrospectedTable introspectedTable) {
         return introspectedTable.hasPrimaryKeyColumns();

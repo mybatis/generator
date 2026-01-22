@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.generator.runtime.dynamic.sql.elements;
+package org.mybatis.generator.runtime;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -23,13 +23,13 @@ import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Method;
 
-public class MethodAndImports {
+public class JavaMethodAndImports {
 
     private final Method method;
     private final Set<FullyQualifiedJavaType> imports;
     private final Set<String> staticImports;
 
-    private MethodAndImports(Builder builder) {
+    private JavaMethodAndImports(Builder builder) {
         method = Objects.requireNonNull(builder.method);
         imports = builder.imports;
         staticImports = builder.staticImports;
@@ -81,8 +81,8 @@ public class MethodAndImports {
             return this;
         }
 
-        public MethodAndImports build() {
-            return new MethodAndImports(this);
+        public JavaMethodAndImports build() {
+            return new JavaMethodAndImports(this);
         }
     }
 }

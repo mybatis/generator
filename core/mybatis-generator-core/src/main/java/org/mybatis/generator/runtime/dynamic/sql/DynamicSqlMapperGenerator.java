@@ -32,13 +32,14 @@ import org.mybatis.generator.codegen.AbstractXmlGenerator;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
 import org.mybatis.generator.runtime.AbstractJavaClientGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.AbstractMethodGenerator;
+import org.mybatis.generator.runtime.AbstractJavaMethodGenerator;
+import org.mybatis.generator.runtime.JavaFieldAndImports;
+import org.mybatis.generator.runtime.JavaMethodAndImports;
 import org.mybatis.generator.runtime.dynamic.sql.elements.BasicInsertMethodGenerator;
 import org.mybatis.generator.runtime.dynamic.sql.elements.BasicMultipleInsertMethodGenerator;
 import org.mybatis.generator.runtime.dynamic.sql.elements.BasicSelectManyMethodGenerator;
 import org.mybatis.generator.runtime.dynamic.sql.elements.BasicSelectOneMethodGenerator;
 import org.mybatis.generator.runtime.dynamic.sql.elements.DeleteByPrimaryKeyMethodGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.FieldAndImports;
 import org.mybatis.generator.runtime.dynamic.sql.elements.FragmentGenerator;
 import org.mybatis.generator.runtime.dynamic.sql.elements.GeneralCountMethodGenerator;
 import org.mybatis.generator.runtime.dynamic.sql.elements.GeneralDeleteMethodGenerator;
@@ -49,7 +50,6 @@ import org.mybatis.generator.runtime.dynamic.sql.elements.GeneralUpdateMethodGen
 import org.mybatis.generator.runtime.dynamic.sql.elements.InsertMethodGenerator;
 import org.mybatis.generator.runtime.dynamic.sql.elements.InsertMultipleMethodGenerator;
 import org.mybatis.generator.runtime.dynamic.sql.elements.InsertSelectiveMethodGenerator;
-import org.mybatis.generator.runtime.dynamic.sql.elements.MethodAndImports;
 import org.mybatis.generator.runtime.dynamic.sql.elements.SelectByPrimaryKeyMethodGenerator;
 import org.mybatis.generator.runtime.dynamic.sql.elements.SelectListGenerator;
 import org.mybatis.generator.runtime.dynamic.sql.elements.UpdateAllColumnsMethodGenerator;
@@ -184,7 +184,6 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
 
     protected void addBasicInsertMultipleMethod(Interface interfaze) {
         var generator = initializeSubBuilder(new BasicMultipleInsertMethodGenerator.Builder())
-                .withTableFieldName(tableFieldName)
                 .withRecordType(recordType)
                 .build();
 
@@ -236,11 +235,11 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
                 .withFragmentGenerator(fragmentGenerator)
                 .build();
 
-        FieldAndImports fieldAndImports = generator.generateFieldAndImports();
+        JavaFieldAndImports javaFieldAndImports = generator.generateFieldAndImports();
 
-        if (generator.callPlugins(fieldAndImports.getField(), interfaze)) {
-            interfaze.addField(fieldAndImports.getField());
-            interfaze.addImportedTypes(fieldAndImports.getImports());
+        if (generator.callPlugins(javaFieldAndImports.getField(), interfaze)) {
+            interfaze.addField(javaFieldAndImports.getField());
+            interfaze.addImportedTypes(javaFieldAndImports.getImports());
         }
     }
 
@@ -288,7 +287,6 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
 
     protected void addUpdateAllMethod(Interface interfaze) {
         var generator = initializeSubBuilder(new UpdateAllColumnsMethodGenerator.Builder())
-                .withTableFieldName(tableFieldName)
                 .withFragmentGenerator(fragmentGenerator)
                 .withRecordType(recordType)
                 .build();
@@ -298,7 +296,6 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
 
     protected void addUpdateSelectiveMethod(Interface interfaze) {
         var generator = initializeSubBuilder(new UpdateSelectiveColumnsMethodGenerator.Builder())
-                .withTableFieldName(tableFieldName)
                 .withFragmentGenerator(fragmentGenerator)
                 .withRecordType(recordType)
                 .build();
@@ -309,7 +306,6 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
     protected void addBasicSelectOneMethod(Interface interfaze, boolean reuseResultMap) {
         var generator = initializeSubBuilder(new BasicSelectOneMethodGenerator.Builder())
                 .withFragmentGenerator(fragmentGenerator)
-                .withTableFieldName(tableFieldName)
                 .withRecordType(recordType)
                 .withResultMapId(resultMapId)
                 .withReuseResultMap(reuseResultMap)
@@ -321,7 +317,6 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
     protected void addDeleteByPrimaryKeyMethod(Interface interfaze) {
         var generator = initializeSubBuilder(new DeleteByPrimaryKeyMethodGenerator.Builder())
                 .withFragmentGenerator(fragmentGenerator)
-                .withTableFieldName(tableFieldName)
                 .build();
 
         generate(interfaze, generator);
@@ -342,7 +337,6 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
     protected void addSelectByPrimaryKeyMethod(Interface interfaze) {
         var generator = initializeSubBuilder(new SelectByPrimaryKeyMethodGenerator.Builder())
                 .withFragmentGenerator(fragmentGenerator)
-                .withTableFieldName(tableFieldName)
                 .withRecordType(recordType)
                 .build();
 
@@ -352,7 +346,6 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
     protected void addUpdateByPrimaryKeyMethod(Interface interfaze) {
         var generator = initializeSubBuilder(new UpdateByPrimaryKeyMethodGenerator.Builder())
                 .withFragmentGenerator(fragmentGenerator)
-                .withTableFieldName(tableFieldName)
                 .withRecordType(recordType)
                 .build();
 
@@ -362,7 +355,6 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
     protected void addUpdateByPrimaryKeySelectiveMethod(Interface interfaze) {
         var generator = initializeSubBuilder(new UpdateByPrimaryKeySelectiveMethodGenerator.Builder())
                 .withFragmentGenerator(fragmentGenerator)
-                .withTableFieldName(tableFieldName)
                 .withRecordType(recordType)
                 .build();
 
@@ -372,7 +364,6 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
     protected void addBasicInsertMethod(Interface interfaze) {
         var generator = initializeSubBuilder(new BasicInsertMethodGenerator.Builder())
                 .withFragmentGenerator(fragmentGenerator)
-                .withTableFieldName(tableFieldName)
                 .withRecordType(recordType)
                 .build();
 
@@ -382,15 +373,14 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
     protected boolean addBasicSelectManyMethod(Interface interfaze) {
         var generator = initializeSubBuilder(new BasicSelectManyMethodGenerator.Builder())
                 .withFragmentGenerator(fragmentGenerator)
-                .withTableFieldName(tableFieldName)
                 .withRecordType(recordType)
                 .build();
 
         return generate(interfaze, generator);
     }
 
-    protected boolean generate(Interface interfaze, AbstractMethodGenerator generator) {
-        MethodAndImports mi = generator.generateMethodAndImports();
+    protected boolean generate(Interface interfaze, AbstractJavaMethodGenerator generator) {
+        JavaMethodAndImports mi = generator.generateMethodAndImports();
         if (mi != null && generator.callPlugins(mi.getMethod(), interfaze)) {
             interfaze.addMethod(mi.getMethod());
             interfaze.addImportedTypes(mi.getImports());

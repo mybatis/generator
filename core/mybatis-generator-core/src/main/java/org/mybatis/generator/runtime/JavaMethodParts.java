@@ -1,5 +1,5 @@
 /*
- *    Copyright 2006-2025 the original author or authors.
+ *    Copyright 2006-2026 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.generator.runtime.dynamic.sql.elements;
+package org.mybatis.generator.runtime;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -23,14 +23,14 @@ import java.util.Set;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Parameter;
 
-public class MethodParts {
+public class JavaMethodParts {
 
     private final List<String> annotations;
     private final List<String> bodyLines;
     private final Set<FullyQualifiedJavaType> imports;
     private final List<Parameter> parameters;
 
-    private MethodParts(Builder builder) {
+    private JavaMethodParts(Builder builder) {
         imports = builder.imports;
         bodyLines = builder.bodyLines;
         parameters = builder.parameters;
@@ -84,8 +84,8 @@ public class MethodParts {
             return this;
         }
 
-        public MethodParts build() {
-            return new MethodParts(this);
+        public JavaMethodParts build() {
+            return new JavaMethodParts(this);
         }
     }
 }

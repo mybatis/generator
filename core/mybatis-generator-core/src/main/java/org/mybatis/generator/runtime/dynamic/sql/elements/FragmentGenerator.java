@@ -32,6 +32,7 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
+import org.mybatis.generator.runtime.JavaMethodParts;
 import org.mybatis.generator.runtime.mybatis3.ListUtilities;
 
 public class FragmentGenerator {
@@ -48,16 +49,16 @@ public class FragmentGenerator {
 
     public String getSelectList() {
         return introspectedTable.getAllColumns().stream()
-                .map(c -> AbstractMethodGenerator.calculateFieldName(tableFieldName, c))
+                .map(c -> Utils.calculateFieldName(tableFieldName, c))
                 .collect(Collectors.joining(", ")); //$NON-NLS-1$
     }
 
-    public MethodParts getPrimaryKeyWhereClauseAndParameters() {
-        MethodParts.Builder builder = new MethodParts.Builder();
+    public JavaMethodParts getPrimaryKeyWhereClauseAndParameters() {
+        JavaMethodParts.Builder builder = new JavaMethodParts.Builder();
 
         boolean first = true;
         for (IntrospectedColumn column : introspectedTable.getPrimaryKeyColumns()) {
-            String fieldName = AbstractMethodGenerator.calculateFieldName(tableFieldName, column);
+            String fieldName = Utils.calculateFieldName(tableFieldName, column);
             builder.withImport(column.getFullyQualifiedJavaType());
             builder.withParameter(new Parameter(
                     column.getFullyQualifiedJavaType(), column.getJavaProperty() + "_")); //$NON-NLS-1$
@@ -82,7 +83,7 @@ public class FragmentGenerator {
 
         boolean first = true;
         for (IntrospectedColumn column : introspectedTable.getPrimaryKeyColumns()) {
-            String fieldName = AbstractMethodGenerator.calculateFieldName(tableFieldName, column);
+            String fieldName = Utils.calculateFieldName(tableFieldName, column);
             String methodName = JavaBeansUtil.getGetterMethodName(
                     column.getJavaProperty(), column.getFullyQualifiedJavaType());
             if (first) {
@@ -100,8 +101,8 @@ public class FragmentGenerator {
         return lines;
     }
 
-    public MethodParts getAnnotatedConstructorArgs() {
-        MethodParts.Builder builder = new MethodParts.Builder();
+    public JavaMethodParts getAnnotatedConstructorArgs() {
+        JavaMethodParts.Builder builder = new JavaMethodParts.Builder();
 
         builder.withImport(new FullyQualifiedJavaType("org.apache.ibatis.type.JdbcType")); //$NON-NLS-1$
         builder.withImport(new FullyQualifiedJavaType("org.apache.ibatis.annotations.ConstructorArgs")); //$NON-NLS-1$
@@ -146,8 +147,8 @@ public class FragmentGenerator {
         return builder.build();
     }
 
-    public MethodParts getAnnotatedResults() {
-        MethodParts.Builder builder = new MethodParts.Builder();
+    public JavaMethodParts getAnnotatedResults() {
+        JavaMethodParts.Builder builder = new JavaMethodParts.Builder();
 
         builder.withImport(new FullyQualifiedJavaType("org.apache.ibatis.type.JdbcType")); //$NON-NLS-1$
         builder.withImport(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Result")); //$NON-NLS-1$
@@ -236,8 +237,8 @@ public class FragmentGenerator {
         return sb.toString();
     }
 
-    public MethodParts getGeneratedKeyAnnotation(GeneratedKey gk) {
-        MethodParts.Builder builder = new MethodParts.Builder();
+    public JavaMethodParts getGeneratedKeyAnnotation(GeneratedKey gk) {
+        JavaMethodParts.Builder builder = new JavaMethodParts.Builder();
 
         StringBuilder sb = new StringBuilder();
         introspectedTable.getColumn(gk.getColumn()).ifPresent(introspectedColumn -> {
@@ -285,7 +286,7 @@ public class FragmentGenerator {
         boolean first = true;
         while (iter.hasNext()) {
             IntrospectedColumn column = iter.next();
-            String fieldName = AbstractMethodGenerator.calculateFieldName(tableFieldName, column);
+            String fieldName = Utils.calculateFieldName(tableFieldName, column);
             String methodName = JavaBeansUtil.getGetterMethodName(column.getJavaProperty(),
                     column.getFullyQualifiedJavaType());
 

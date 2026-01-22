@@ -24,8 +24,10 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.runtime.AbstractJavaMethodGenerator;
+import org.mybatis.generator.runtime.JavaMethodAndImports;
 
-public class UpdateSelectiveColumnsMethodGenerator extends AbstractMethodGenerator {
+public class UpdateSelectiveColumnsMethodGenerator extends AbstractJavaMethodGenerator {
     private final FullyQualifiedJavaType recordType;
     private final FragmentGenerator fragmentGenerator;
 
@@ -36,7 +38,7 @@ public class UpdateSelectiveColumnsMethodGenerator extends AbstractMethodGenerat
     }
 
     @Override
-    public MethodAndImports generateMethodAndImports() {
+    public JavaMethodAndImports generateMethodAndImports() {
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
 
         FullyQualifiedJavaType parameterAndReturnType = new FullyQualifiedJavaType(
@@ -58,7 +60,7 @@ public class UpdateSelectiveColumnsMethodGenerator extends AbstractMethodGenerat
         method.addBodyLines(fragmentGenerator.getSetEqualWhenPresentLines(introspectedTable.getAllColumns(),
                 "return dsl", "        ", true)); //$NON-NLS-1$ //$NON-NLS-2$
 
-        return MethodAndImports.withMethod(method)
+        return JavaMethodAndImports.withMethod(method)
                 .withImports(imports)
                 .build();
     }
@@ -68,7 +70,7 @@ public class UpdateSelectiveColumnsMethodGenerator extends AbstractMethodGenerat
         return pluginAggregator.clientUpdateSelectiveColumnsMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder> {
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
         private @Nullable FullyQualifiedJavaType recordType;
         private @Nullable FragmentGenerator fragmentGenerator;
 

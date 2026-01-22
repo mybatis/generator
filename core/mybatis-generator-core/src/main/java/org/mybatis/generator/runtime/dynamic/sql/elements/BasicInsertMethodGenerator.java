@@ -24,9 +24,11 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.runtime.AbstractJavaMethodGenerator;
+import org.mybatis.generator.runtime.JavaMethodAndImports;
+import org.mybatis.generator.runtime.JavaMethodParts;
 
-public class BasicInsertMethodGenerator extends AbstractMethodGenerator {
-
+public class BasicInsertMethodGenerator extends AbstractJavaMethodGenerator {
     private final FullyQualifiedJavaType recordType;
     private final FragmentGenerator fragmentGenerator;
 
@@ -37,7 +39,7 @@ public class BasicInsertMethodGenerator extends AbstractMethodGenerator {
     }
 
     @Override
-    public MethodAndImports generateMethodAndImports() {
+    public JavaMethodAndImports generateMethodAndImports() {
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
 
         FullyQualifiedJavaType adapter =
@@ -63,12 +65,12 @@ public class BasicInsertMethodGenerator extends AbstractMethodGenerator {
         commentGenerator.addGeneralMethodAnnotation(method, introspectedTable, imports);
         method.addAnnotation("@InsertProvider(type=SqlProviderAdapter.class, method=\"insert\")"); //$NON-NLS-1$
 
-        MethodAndImports.Builder builder = MethodAndImports.withMethod(method)
+        JavaMethodAndImports.Builder builder = JavaMethodAndImports.withMethod(method)
                 .withImports(imports);
 
         introspectedTable.getGeneratedKey().ifPresent(gk -> {
-            MethodParts methodParts = fragmentGenerator.getGeneratedKeyAnnotation(gk);
-            acceptParts(builder, method, methodParts);
+            JavaMethodParts javaMethodParts = fragmentGenerator.getGeneratedKeyAnnotation(gk);
+            acceptParts(builder, method, javaMethodParts);
         });
 
         return builder.build();
@@ -79,7 +81,7 @@ public class BasicInsertMethodGenerator extends AbstractMethodGenerator {
         return pluginAggregator.clientBasicInsertMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder> {
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
         private @Nullable FullyQualifiedJavaType recordType;
         private @Nullable FragmentGenerator fragmentGenerator;
 

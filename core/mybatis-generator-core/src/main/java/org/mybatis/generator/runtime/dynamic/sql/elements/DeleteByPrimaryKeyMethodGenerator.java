@@ -24,8 +24,11 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.runtime.AbstractJavaMethodGenerator;
+import org.mybatis.generator.runtime.JavaMethodAndImports;
+import org.mybatis.generator.runtime.JavaMethodParts;
 
-public class DeleteByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
+public class DeleteByPrimaryKeyMethodGenerator extends AbstractJavaMethodGenerator {
 
     private final FragmentGenerator fragmentGenerator;
 
@@ -35,7 +38,7 @@ public class DeleteByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
     }
 
     @Override
-    public @Nullable MethodAndImports generateMethodAndImports() {
+    public @Nullable JavaMethodAndImports generateMethodAndImports() {
         if (!Utils.generateDeleteByPrimaryKey(introspectedTable)) {
             return null;
         }
@@ -52,14 +55,14 @@ public class DeleteByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
 
         method.addBodyLine("return delete(c -> "); //$NON-NLS-1$
 
-        MethodParts methodParts = fragmentGenerator.getPrimaryKeyWhereClauseAndParameters();
-        for (Parameter parameter : methodParts.getParameters()) {
+        JavaMethodParts javaMethodParts = fragmentGenerator.getPrimaryKeyWhereClauseAndParameters();
+        for (Parameter parameter : javaMethodParts.getParameters()) {
             method.addParameter(parameter);
         }
-        method.addBodyLines(methodParts.getBodyLines());
-        imports.addAll(methodParts.getImports());
+        method.addBodyLines(javaMethodParts.getBodyLines());
+        imports.addAll(javaMethodParts.getImports());
 
-        return MethodAndImports.withMethod(method)
+        return JavaMethodAndImports.withMethod(method)
                 .withImports(imports)
                 .withStaticImports(staticImports)
                 .build();
@@ -70,7 +73,7 @@ public class DeleteByPrimaryKeyMethodGenerator extends AbstractMethodGenerator {
         return pluginAggregator.clientDeleteByPrimaryKeyMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public static class Builder extends BaseBuilder<Builder> {
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
         private @Nullable FragmentGenerator fragmentGenerator;
 
         public Builder withFragmentGenerator(FragmentGenerator fragmentGenerator) {

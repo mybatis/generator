@@ -26,7 +26,7 @@ import org.mybatis.generator.runtime.mybatis3.model.SimpleModelGenerator;
 import org.mybatis.generator.runtime.mybatis3.xmlmapper.SimpleXMLMapperGenerator;
 
 /**
- * Introspected table implementation for generating simple MyBatis3 artifacts.
+ * Runtime for generating simple MyBatis3 artifacts.
  *
  * <p>Simple means no "by example" methods, flat model, etc.
  *

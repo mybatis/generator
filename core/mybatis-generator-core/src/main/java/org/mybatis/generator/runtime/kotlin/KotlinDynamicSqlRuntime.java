@@ -25,27 +25,22 @@ public class KotlinDynamicSqlRuntime extends AbstractRuntime {
 
     @Override
     protected void calculateGenerators() {
-        calculateKotlinDataClassGenerator();
-        context.getJavaClientGeneratorConfiguration().ifPresent(config -> {
-            if (introspectedTable.getRules().generateJavaClient()) {
-                calculateKotlinMapperAndExtensionsGenerator(config.getTargetProject());
-            }
-        });
+        kotlinGenerators.add(calculateKotlinDataClassGenerator());
+        if (introspectedTable.getRules().generateJavaClient()) {
+            getClientProject().map(this::calculateKotlinMapperAndExtensionsGenerator).ifPresent(kotlinGenerators::add);
+        }
     }
 
-    protected void calculateKotlinMapperAndExtensionsGenerator(String clientProject) {
-        AbstractKotlinGenerator kotlinGenerator =
-                initializeSubBuilder(new KotlinMapperAndExtensionsGenerator.Builder())
+    protected AbstractKotlinGenerator calculateKotlinMapperAndExtensionsGenerator(String clientProject) {
+        return initializeSubBuilder(new KotlinMapperAndExtensionsGenerator.Builder())
                 .withProject(clientProject)
                 .build();
-        kotlinGenerators.add(kotlinGenerator);
     }
 
-    protected void calculateKotlinDataClassGenerator() {
-        AbstractKotlinGenerator kotlinGenerator = initializeSubBuilder(new KotlinDataClassGenerator.Builder())
+    protected AbstractKotlinGenerator calculateKotlinDataClassGenerator() {
+        return initializeSubBuilder(new KotlinDataClassGenerator.Builder())
                 .withProject(getModelProject())
                 .build();
-        kotlinGenerators.add(kotlinGenerator);
     }
 
     public static class Builder extends AbstractRuntimeBuilder<Builder> {

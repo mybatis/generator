@@ -26,26 +26,22 @@ public class JavaDynamicSqlRuntime extends AbstractRuntime {
 
     @Override
     protected void calculateGenerators() {
-        calculateJavaModelGenerator();
-        context.getJavaClientGeneratorConfiguration().ifPresent(config -> {
-            if (introspectedTable.getRules().generateJavaClient()) {
-                calculateJavaClientGenerator(config.getTargetProject());
-            }
-        });
+        javaGenerators.add(calculateJavaModelGenerator());
+        if (introspectedTable.getRules().generateJavaClient()) {
+            getClientProject().map(this::calculateJavaClientGenerator).ifPresent(javaGenerators::add);
+        }
     }
 
-    protected void calculateJavaClientGenerator(String clientProject) {
-        AbstractJavaGenerator javaGenerator = initializeSubBuilder(new DynamicSqlMapperGenerator.Builder())
+    protected AbstractJavaGenerator calculateJavaClientGenerator(String clientProject) {
+        return initializeSubBuilder(new DynamicSqlMapperGenerator.Builder())
                 .withProject(clientProject)
                 .build();
-        javaGenerators.add(javaGenerator);
     }
 
-    protected void calculateJavaModelGenerator() {
-        var javaGenerator = initializeSubBuilder(new DynamicSqlModelGenerator.Builder())
+    protected AbstractJavaGenerator calculateJavaModelGenerator() {
+        return initializeSubBuilder(new DynamicSqlModelGenerator.Builder())
                 .withProject(getModelProject())
                 .build();
-        javaGenerators.add(javaGenerator);
     }
 
     public static class Builder extends AbstractRuntimeBuilder<Builder> {

@@ -21,7 +21,7 @@ import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.codegen.AbstractXmlGenerator;
 
 /**
- * This class exists to that Java client generators can specify whether
+ * This class exists so that Java client generators can specify whether
  * an XML generator is required to match the methods in the
  * Java client.  For example, a Java client built entirely with
  * annotations does not need matching XML.

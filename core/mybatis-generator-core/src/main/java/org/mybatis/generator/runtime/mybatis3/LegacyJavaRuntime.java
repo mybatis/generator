@@ -37,7 +37,7 @@ import org.mybatis.generator.runtime.mybatis3.model.RecordWithBLOBsGenerator;
 import org.mybatis.generator.runtime.mybatis3.xmlmapper.XMLMapperGenerator;
 
 /**
- * Introspected table implementation for generating MyBatis3 artifacts.
+ * Runtime for generating MyBatis3 artifacts.
  *
  * @author Jeff Butler
  */
@@ -137,8 +137,8 @@ public class LegacyJavaRuntime extends AbstractRuntime {
     }
 
     protected String getExampleProject() {
-        String project = context.getJavaModelGeneratorConfiguration().getProperty(
-                PropertyRegistry.MODEL_GENERATOR_EXAMPLE_PROJECT);
+        String project = context.getJavaModelGeneratorConfiguration()
+                .getProperty(PropertyRegistry.MODEL_GENERATOR_EXAMPLE_PROJECT);
 
         if (StringUtility.stringHasValue(project)) {
             return project;

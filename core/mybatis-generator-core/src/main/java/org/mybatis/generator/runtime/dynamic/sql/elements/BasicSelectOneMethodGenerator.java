@@ -17,6 +17,7 @@ package org.mybatis.generator.runtime.dynamic.sql.elements;
 
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import org.jspecify.annotations.Nullable;
@@ -45,7 +46,7 @@ public class BasicSelectOneMethodGenerator extends AbstractJavaInterfaceMethodGe
     }
 
     @Override
-    public JavaMethodAndImports generateMethodAndImports() {
+    public Optional<JavaMethodAndImports> generateMethodAndImports() {
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
 
         FullyQualifiedJavaType parameterType =
@@ -93,7 +94,7 @@ public class BasicSelectOneMethodGenerator extends AbstractJavaInterfaceMethodGe
             }
         }
 
-        return builder.build();
+        return Optional.of(builder.build());
     }
 
     @Override

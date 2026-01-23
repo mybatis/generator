@@ -15,17 +15,18 @@
  */
 package org.mybatis.generator.runtime;
 
-import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.codegen.AbstractGenerator;
+
+import java.util.Optional;
 
 public abstract class AbstractJavaInterfaceMethodGenerator extends AbstractGenerator {
     protected AbstractJavaInterfaceMethodGenerator(AbstractGeneratorBuilder<?> builder) {
         super(builder);
     }
 
-    public abstract @Nullable JavaMethodAndImports generateMethodAndImports();
+    public abstract Optional<JavaMethodAndImports> generateMethodAndImports();
 
     public abstract boolean callPlugins(Method method, Interface interfaze);
 }

@@ -380,14 +380,15 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
     }
 
     protected boolean generate(Interface interfaze, AbstractJavaInterfaceMethodGenerator generator) {
-        JavaMethodAndImports mi = generator.generateMethodAndImports();
-        if (mi != null && generator.callPlugins(mi.getMethod(), interfaze)) {
-            interfaze.addMethod(mi.getMethod());
-            interfaze.addImportedTypes(mi.getImports());
-            interfaze.addStaticImports(mi.getStaticImports());
-            return true;
-        }
-        return false;
+        return generator.generateMethodAndImports()
+                .filter(mi -> generator.callPlugins(mi.getMethod(), interfaze))
+                .map(mi -> {
+                    interfaze.addMethod(mi.getMethod());
+                    interfaze.addImportedTypes(mi.getImports());
+                    interfaze.addStaticImports(mi.getStaticImports());
+                    return true;
+                })
+                .orElse(false);
     }
 
     @Override

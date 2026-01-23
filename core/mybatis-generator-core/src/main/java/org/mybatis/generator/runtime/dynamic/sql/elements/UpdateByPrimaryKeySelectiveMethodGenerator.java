@@ -17,6 +17,7 @@ package org.mybatis.generator.runtime.dynamic.sql.elements;
 
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import org.jspecify.annotations.Nullable;
@@ -38,9 +39,9 @@ public class UpdateByPrimaryKeySelectiveMethodGenerator extends AbstractJavaInte
     }
 
     @Override
-    public @Nullable JavaMethodAndImports generateMethodAndImports() {
+    public Optional<JavaMethodAndImports> generateMethodAndImports() {
         if (!Utils.generateUpdateByPrimaryKey(introspectedTable)) {
-            return null;
+            return Optional.empty();
         }
 
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
@@ -62,9 +63,11 @@ public class UpdateByPrimaryKeySelectiveMethodGenerator extends AbstractJavaInte
         method.addBodyLines(fragmentGenerator.getPrimaryKeyWhereClauseForUpdate("    ")); //$NON-NLS-1$
 
         method.addBodyLine(");"); //$NON-NLS-1$
-        return JavaMethodAndImports.withMethod(method)
+        JavaMethodAndImports answer = JavaMethodAndImports.withMethod(method)
                 .withImports(imports)
                 .build();
+
+        return Optional.of(answer);
     }
 
     @Override

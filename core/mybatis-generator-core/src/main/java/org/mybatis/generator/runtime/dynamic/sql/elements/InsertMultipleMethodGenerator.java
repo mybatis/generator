@@ -18,6 +18,7 @@ package org.mybatis.generator.runtime.dynamic.sql.elements;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import org.jspecify.annotations.Nullable;
@@ -41,9 +42,9 @@ public class InsertMultipleMethodGenerator extends AbstractJavaInterfaceMethodGe
     }
 
     @Override
-    public @Nullable JavaMethodAndImports generateMethodAndImports() {
+    public Optional<JavaMethodAndImports> generateMethodAndImports() {
         if (!Utils.generateMultipleRowInsert(introspectedTable)) {
-            return null;
+            return Optional.empty();
         }
 
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
@@ -93,9 +94,11 @@ public class InsertMultipleMethodGenerator extends AbstractJavaInterfaceMethodGe
 
         method.addBodyLine(");"); //$NON-NLS-1$
 
-        return JavaMethodAndImports.withMethod(method)
+        JavaMethodAndImports answer = JavaMethodAndImports.withMethod(method)
                 .withImports(imports)
                 .build();
+
+        return Optional.of(answer);
     }
 
     @Override

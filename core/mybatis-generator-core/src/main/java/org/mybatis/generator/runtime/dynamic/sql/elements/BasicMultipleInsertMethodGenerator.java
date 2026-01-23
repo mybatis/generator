@@ -17,6 +17,7 @@ package org.mybatis.generator.runtime.dynamic.sql.elements;
 
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import org.jspecify.annotations.Nullable;
@@ -40,17 +41,12 @@ public class BasicMultipleInsertMethodGenerator extends AbstractJavaInterfaceMet
     }
 
     @Override
-    public @Nullable JavaMethodAndImports generateMethodAndImports() {
+    public Optional<JavaMethodAndImports> generateMethodAndImports() {
         if (!Utils.generateMultipleRowInsert(introspectedTable)) {
-            return null;
+            return Optional.empty();
         }
 
-        return introspectedTable.getGeneratedKey().map(this::generateMethodWithGeneratedKeys).orElse(null);
-    }
-
-    private JavaMethodAndImports generateMethodWithGeneratedKeys(GeneratedKey gk) {
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
-
         imports.add(new FullyQualifiedJavaType("org.mybatis.dynamic.sql.util.SqlProviderAdapter")); //$NON-NLS-1$)
         imports.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.InsertProvider")); //$NON-NLS-1$
         imports.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param")); //$NON-NLS-1$
@@ -77,24 +73,23 @@ public class BasicMultipleInsertMethodGenerator extends AbstractJavaInterfaceMet
         JavaMethodAndImports.Builder builder = JavaMethodAndImports.withMethod(method)
                 .withImports(imports);
 
-        JavaMethodParts javaMethodParts = getGeneratedKeyAnnotation(gk);
-        CodeGenUtils.addPartsToMethod(builder, method, javaMethodParts);
+        introspectedTable.getGeneratedKey().map(this::getGeneratedKeyAnnotation).ifPresent(jmp ->
+                CodeGenUtils.addPartsToMethod(builder, method, jmp));
 
-        return builder.build();
+        return Optional.of(builder.build());
     }
 
     private JavaMethodParts getGeneratedKeyAnnotation(GeneratedKey gk) {
         JavaMethodParts.Builder builder = new JavaMethodParts.Builder();
 
-        StringBuilder sb = new StringBuilder();
         introspectedTable.getColumn(gk.getColumn()).ifPresent(introspectedColumn -> {
             if (gk.isJdbcStandard()) {
                 // only jdbc standard keys are supported for multiple insert
                 builder.withImport(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Options")); //$NON-NLS-1$
-                sb.append("@Options(useGeneratedKeys=true,keyProperty=\"records."); //$NON-NLS-1$
-                sb.append(introspectedColumn.getJavaProperty());
-                sb.append("\")"); //$NON-NLS-1$
-                builder.withAnnotation(sb.toString());
+                String annotation = "@Options(useGeneratedKeys=true,keyProperty=\"records." + //$NON-NLS-1$
+                        introspectedColumn.getJavaProperty() +
+                        "\")"; //$NON-NLS-1$
+                builder.withAnnotation(annotation);
             }
         });
 

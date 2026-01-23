@@ -17,6 +17,7 @@ package org.mybatis.generator.runtime.dynamic.sql.elements;
 
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import org.jspecify.annotations.Nullable;
@@ -36,7 +37,7 @@ public class GeneralUpdateMethodGenerator extends AbstractJavaInterfaceMethodGen
     }
 
     @Override
-    public JavaMethodAndImports generateMethodAndImports() {
+    public Optional<JavaMethodAndImports> generateMethodAndImports() {
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
 
         FullyQualifiedJavaType parameterType = new FullyQualifiedJavaType(
@@ -59,9 +60,11 @@ public class GeneralUpdateMethodGenerator extends AbstractJavaInterfaceMethodGen
         method.addBodyLine("return MyBatis3Utils.update(this::update, " //$NON-NLS-1$
                 + tableFieldName + ", completer);"); //$NON-NLS-1$
 
-        return JavaMethodAndImports.withMethod(method)
+        JavaMethodAndImports answer = JavaMethodAndImports.withMethod(method)
                 .withImports(imports)
                 .build();
+
+        return Optional.of(answer);
     }
 
     @Override

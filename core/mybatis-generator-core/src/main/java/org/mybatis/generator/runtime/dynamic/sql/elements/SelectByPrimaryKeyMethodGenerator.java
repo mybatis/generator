@@ -17,6 +17,7 @@ package org.mybatis.generator.runtime.dynamic.sql.elements;
 
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import org.jspecify.annotations.Nullable;
@@ -39,9 +40,9 @@ public class SelectByPrimaryKeyMethodGenerator extends AbstractJavaInterfaceMeth
     }
 
     @Override
-    public @Nullable JavaMethodAndImports generateMethodAndImports() {
+    public Optional<JavaMethodAndImports> generateMethodAndImports() {
         if (!Utils.generateSelectByPrimaryKey(introspectedTable)) {
-            return null;
+            return Optional.empty();
         }
 
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
@@ -64,7 +65,7 @@ public class SelectByPrimaryKeyMethodGenerator extends AbstractJavaInterfaceMeth
         JavaMethodParts javaMethodParts = fragmentGenerator.getPrimaryKeyWhereClauseAndParameters();
         CodeGenUtils.addPartsToMethod(builder, method, javaMethodParts);
 
-        return builder.build();
+        return Optional.of(builder.build());
     }
 
     @Override

@@ -17,8 +17,10 @@ package org.mybatis.generator.runtime.dynamic.sql.elements;
 
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
+import org.apache.tools.ant.taskdefs.Java;
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
@@ -36,7 +38,7 @@ public class GeneralDeleteMethodGenerator extends AbstractJavaInterfaceMethodGen
     }
 
     @Override
-    public JavaMethodAndImports generateMethodAndImports() {
+    public Optional<JavaMethodAndImports> generateMethodAndImports() {
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
 
         FullyQualifiedJavaType parameterType = new FullyQualifiedJavaType(
@@ -54,9 +56,11 @@ public class GeneralDeleteMethodGenerator extends AbstractJavaInterfaceMethodGen
                 "return MyBatis3Utils.deleteFrom(this::delete, " + tableFieldName //$NON-NLS-1$
                         + ", completer);"); //$NON-NLS-1$
 
-        return JavaMethodAndImports.withMethod(method)
+        JavaMethodAndImports answer = JavaMethodAndImports.withMethod(method)
                 .withImports(imports)
                 .build();
+
+        return Optional.of(answer);
     }
 
     @Override

@@ -17,6 +17,7 @@ package org.mybatis.generator.runtime.dynamic.sql.elements;
 
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import org.jspecify.annotations.Nullable;
@@ -38,9 +39,9 @@ public class DeleteByPrimaryKeyMethodGenerator extends AbstractJavaInterfaceMeth
     }
 
     @Override
-    public @Nullable JavaMethodAndImports generateMethodAndImports() {
+    public Optional<JavaMethodAndImports> generateMethodAndImports() {
         if (!Utils.generateDeleteByPrimaryKey(introspectedTable)) {
-            return null;
+            return Optional.empty();
         }
 
         Set<FullyQualifiedJavaType> imports = new HashSet<>();
@@ -62,10 +63,12 @@ public class DeleteByPrimaryKeyMethodGenerator extends AbstractJavaInterfaceMeth
         method.addBodyLines(javaMethodParts.getBodyLines());
         imports.addAll(javaMethodParts.getImports());
 
-        return JavaMethodAndImports.withMethod(method)
+        JavaMethodAndImports answer = JavaMethodAndImports.withMethod(method)
                 .withImports(imports)
                 .withStaticImports(staticImports)
                 .build();
+
+        return Optional.of(answer);
     }
 
     @Override

@@ -22,16 +22,30 @@ import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.runtime.AbstractJavaClassMethodGenerator;
+import org.mybatis.generator.runtime.JavaMethodAndImports;
+import org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities;
 
-public class ProviderCountByExampleMethodGenerator extends AbstractJavaProviderMethodGenerator {
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+
+public class ProviderCountByExampleMethodGenerator extends AbstractJavaClassMethodGenerator {
 
     protected ProviderCountByExampleMethodGenerator(Builder builder) {
         super(builder);
     }
 
     @Override
-    public void addClassElements(TopLevelClass topLevelClass) {
+    public Optional<JavaMethodAndImports> generateMethodAndImports() {
+        if (!introspectedTable.getRules().generateCountByExample()) {
+            return Optional.empty();
+        }
+
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getExampleType());
+        Set<FullyQualifiedJavaType> importedTypes = new HashSet<>();
+        importedTypes.add(MyBatis3FormattingUtilities.BUILDER_IMPORT);
+        importedTypes.add(fqjt);
 
         Method method = new Method(introspectedTable.getCountByExampleStatementId());
         method.setVisibility(JavaVisibility.PUBLIC);
@@ -46,19 +60,24 @@ public class ProviderCountByExampleMethodGenerator extends AbstractJavaProviderM
         method.addBodyLine("applyWhere(sql, example, false);"); //$NON-NLS-1$
         method.addBodyLine("return sql.toString();"); //$NON-NLS-1$
 
-        if (pluginAggregator.providerCountByExampleMethodGenerated(method, topLevelClass, introspectedTable)) {
-            topLevelClass.addImportedTypes(initializeImportedTypes(fqjt));
-            topLevelClass.addMethod(method);
-        }
+        JavaMethodAndImports answer = JavaMethodAndImports.withMethod(method)
+                .withImports(importedTypes)
+                .build();
+
+        return Optional.of(answer);
     }
 
-    public static class Builder extends AbstractJavaProviderMethodGeneratorBuilder<Builder> {
+    @Override
+    public boolean callPlugins(Method method, TopLevelClass topLevelClass) {
+        return pluginAggregator.providerCountByExampleMethodGenerated(method, topLevelClass, introspectedTable);
+    }
+
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
         @Override
         protected Builder getThis() {
             return this;
         }
 
-        @Override
         public ProviderCountByExampleMethodGenerator build() {
             return new ProviderCountByExampleMethodGenerator(this);
         }

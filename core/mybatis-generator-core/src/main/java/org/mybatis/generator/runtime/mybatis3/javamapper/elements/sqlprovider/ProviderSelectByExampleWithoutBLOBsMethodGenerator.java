@@ -18,7 +18,10 @@ package org.mybatis.generator.runtime.mybatis3.javamapper.elements.sqlprovider;
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getSelectListPhrase;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
@@ -26,16 +29,26 @@ import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.runtime.AbstractJavaClassMethodGenerator;
+import org.mybatis.generator.runtime.JavaMethodAndImports;
+import org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities;
 
-public class ProviderSelectByExampleWithoutBLOBsMethodGenerator extends AbstractJavaProviderMethodGenerator {
+public class ProviderSelectByExampleWithoutBLOBsMethodGenerator extends AbstractJavaClassMethodGenerator {
 
     protected ProviderSelectByExampleWithoutBLOBsMethodGenerator(Builder builder) {
         super(builder);
     }
 
     @Override
-    public void addClassElements(TopLevelClass topLevelClass) {
+    public Optional<JavaMethodAndImports> generateMethodAndImports() {
+        if (!shouldGenerate()) {
+            return Optional.empty();
+        }
+
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getExampleType());
+        Set<FullyQualifiedJavaType> importedTypes = new HashSet<>();
+        importedTypes.add(MyBatis3FormattingUtilities.BUILDER_IMPORT);
+        importedTypes.add(fqjt);
 
         Method method = new Method(getMethodName());
         method.setVisibility(JavaVisibility.PUBLIC);
@@ -76,32 +89,38 @@ public class ProviderSelectByExampleWithoutBLOBsMethodGenerator extends Abstract
         method.addBodyLine(""); //$NON-NLS-1$
         method.addBodyLine("return sql.toString();"); //$NON-NLS-1$
 
-        if (callPlugins(method, topLevelClass)) {
-            topLevelClass.addImportedTypes(initializeImportedTypes(fqjt));
-            topLevelClass.addMethod(method);
-        }
+        JavaMethodAndImports answer = JavaMethodAndImports.withMethod(method)
+                .withImports(importedTypes)
+                .build();
+
+        return Optional.of(answer);
     }
 
-    public List<IntrospectedColumn> getColumns() {
+    protected boolean shouldGenerate() {
+        return introspectedTable.getRules().generateSelectByExampleWithoutBLOBs();
+    }
+
+    protected List<IntrospectedColumn> getColumns() {
         return introspectedTable.getNonBLOBColumns();
     }
 
-    public String getMethodName() {
+    protected String getMethodName() {
         return introspectedTable.getSelectByExampleStatementId();
     }
 
+
+    @Override
     public boolean callPlugins(Method method, TopLevelClass topLevelClass) {
         return pluginAggregator
                 .providerSelectByExampleWithoutBLOBsMethodGenerated(method, topLevelClass, introspectedTable);
     }
 
-    public static class Builder extends AbstractJavaProviderMethodGeneratorBuilder<Builder> {
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
         @Override
         protected Builder getThis() {
             return this;
         }
 
-        @Override
         public ProviderSelectByExampleWithoutBLOBsMethodGenerator build() {
             return new ProviderSelectByExampleWithoutBLOBsMethodGenerator(this);
         }

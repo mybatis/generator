@@ -29,12 +29,12 @@ public class ProviderUpdateByExampleWithBLOBsMethodGenerator
     }
 
     @Override
-    public String getMethodName() {
+    protected String getMethodName() {
         return introspectedTable.getUpdateByExampleWithBLOBsStatementId();
     }
 
     @Override
-    public List<IntrospectedColumn> getColumns() {
+    protected List<IntrospectedColumn> getColumns() {
         return introspectedTable.getAllColumns();
     }
 
@@ -42,6 +42,11 @@ public class ProviderUpdateByExampleWithBLOBsMethodGenerator
     public boolean callPlugins(Method method, TopLevelClass topLevelClass) {
         return pluginAggregator
                 .providerUpdateByExampleWithBLOBsMethodGenerated(method, topLevelClass, introspectedTable);
+    }
+
+    @Override
+    protected boolean shouldGenerate() {
+        return introspectedTable.getRules().generateUpdateByExampleWithBLOBs();
     }
 
     public static class Builder extends ProviderUpdateByExampleWithoutBLOBsMethodGenerator.Builder {

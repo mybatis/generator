@@ -15,11 +15,11 @@
  */
 package org.mybatis.generator.runtime;
 
+import java.util.Optional;
+
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.codegen.AbstractGenerator;
-
-import java.util.Optional;
 
 public abstract class AbstractJavaInterfaceMethodGenerator extends AbstractGenerator {
     protected AbstractJavaInterfaceMethodGenerator(AbstractGeneratorBuilder<?> builder) {

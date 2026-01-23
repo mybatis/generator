@@ -20,6 +20,8 @@ import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJ
 import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getAliasedEscapedColumnName;
 import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getParameterClause;
 
+import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.mybatis.generator.api.IntrospectedColumn;
@@ -28,16 +30,23 @@ import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.runtime.AbstractJavaClassMethodGenerator;
+import org.mybatis.generator.runtime.JavaMethodAndImports;
 import org.mybatis.generator.runtime.mybatis3.ListUtilities;
+import org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities;
 
-public class ProviderUpdateByExampleSelectiveMethodGenerator extends AbstractJavaProviderMethodGenerator {
+public class ProviderUpdateByExampleSelectiveMethodGenerator extends AbstractJavaClassMethodGenerator {
 
     protected ProviderUpdateByExampleSelectiveMethodGenerator(Builder builder) {
         super(builder);
     }
 
     @Override
-    public void addClassElements(TopLevelClass topLevelClass) {
+    public Optional<JavaMethodAndImports> generateMethodAndImports() {
+        if (!introspectedTable.getRules().generateUpdateByExampleSelective()) {
+            return Optional.empty();
+        }
+
         Method method = new Method(introspectedTable.getUpdateByExampleSelectiveStatementId());
         method.setReturnType(FullyQualifiedJavaType.getStringInstance());
         method.setVisibility(JavaVisibility.PUBLIC);
@@ -45,7 +54,9 @@ public class ProviderUpdateByExampleSelectiveMethodGenerator extends AbstractJav
                 new FullyQualifiedJavaType("java.util.Map<java.lang.String, java.lang.Object>"), //$NON-NLS-1$
                 "parameter")); //$NON-NLS-1$
 
-        Set<FullyQualifiedJavaType> importedTypes = initializeImportedTypes("java.util.Map"); //$NON-NLS-1$
+        Set<FullyQualifiedJavaType> importedTypes = new HashSet<>();
+        importedTypes.add(MyBatis3FormattingUtilities.BUILDER_IMPORT);
+        importedTypes.add(new FullyQualifiedJavaType("java.util.Map")); //$NON-NLS-1$
 
         FullyQualifiedJavaType recordClass = introspectedTable.getRules().calculateAllFieldsClass();
         importedTypes.add(recordClass);
@@ -93,20 +104,25 @@ public class ProviderUpdateByExampleSelectiveMethodGenerator extends AbstractJav
         method.addBodyLine("applyWhere(sql, example, true);"); //$NON-NLS-1$
         method.addBodyLine("return sql.toString();"); //$NON-NLS-1$
 
-        if (pluginAggregator
-                .providerUpdateByExampleSelectiveMethodGenerated(method, topLevelClass, introspectedTable)) {
-            topLevelClass.addImportedTypes(importedTypes);
-            topLevelClass.addMethod(method);
-        }
+        JavaMethodAndImports answer = JavaMethodAndImports.withMethod(method)
+                .withImports(importedTypes)
+                .build();
+
+        return Optional.of(answer);
     }
 
-    public static class Builder extends AbstractJavaProviderMethodGeneratorBuilder<Builder> {
+    @Override
+    public boolean callPlugins(Method method, TopLevelClass topLevelClass) {
+        return pluginAggregator
+                .providerUpdateByExampleSelectiveMethodGenerated(method, topLevelClass, introspectedTable);
+    }
+
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
         @Override
         protected Builder getThis() {
             return this;
         }
 
-        @Override
         public ProviderUpdateByExampleSelectiveMethodGenerator build() {
             return new ProviderUpdateByExampleSelectiveMethodGenerator(this);
         }

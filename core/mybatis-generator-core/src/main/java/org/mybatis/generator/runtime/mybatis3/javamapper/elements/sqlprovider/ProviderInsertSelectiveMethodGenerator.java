@@ -26,17 +26,31 @@ import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.runtime.AbstractJavaClassMethodGenerator;
+import org.mybatis.generator.runtime.JavaMethodAndImports;
 import org.mybatis.generator.runtime.mybatis3.ListUtilities;
+import org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities;
 
-public class ProviderInsertSelectiveMethodGenerator extends AbstractJavaProviderMethodGenerator {
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+
+public class ProviderInsertSelectiveMethodGenerator extends AbstractJavaClassMethodGenerator {
 
     protected ProviderInsertSelectiveMethodGenerator(Builder builder) {
         super(builder);
     }
 
     @Override
-    public void addClassElements(TopLevelClass topLevelClass) {
+    public Optional<JavaMethodAndImports> generateMethodAndImports() {
+        if (!introspectedTable.getRules().generateInsertSelective()) {
+            return Optional.empty();
+        }
+
         FullyQualifiedJavaType fqjt = introspectedTable.getRules().calculateAllFieldsClass();
+        Set<FullyQualifiedJavaType> importedTypes = new HashSet<>();
+        importedTypes.add(MyBatis3FormattingUtilities.BUILDER_IMPORT);
+        importedTypes.add(fqjt);
 
         Method method = new Method(introspectedTable.getInsertSelectiveStatementId());
         method.setVisibility(JavaVisibility.PUBLIC);
@@ -73,13 +87,19 @@ public class ProviderInsertSelectiveMethodGenerator extends AbstractJavaProvider
         method.addBodyLine(""); //$NON-NLS-1$
         method.addBodyLine("return sql.toString();"); //$NON-NLS-1$
 
-        if (pluginAggregator.providerInsertSelectiveMethodGenerated(method, topLevelClass, introspectedTable)) {
-            topLevelClass.addImportedTypes(initializeImportedTypes(fqjt));
-            topLevelClass.addMethod(method);
-        }
+        JavaMethodAndImports answer = JavaMethodAndImports.withMethod(method)
+                .withImports(importedTypes)
+                .build();
+
+        return Optional.of(answer);
     }
 
-    public static class Builder extends AbstractJavaProviderMethodGeneratorBuilder<Builder> {
+    @Override
+    public boolean callPlugins(Method method, TopLevelClass topLevelClass) {
+        return pluginAggregator.providerInsertSelectiveMethodGenerated(method, topLevelClass, introspectedTable);
+    }
+
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
         @Override
         protected Builder getThis() {
             return this;

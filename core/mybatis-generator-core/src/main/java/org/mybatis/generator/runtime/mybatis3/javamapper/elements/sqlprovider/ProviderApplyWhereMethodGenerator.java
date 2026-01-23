@@ -23,9 +23,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
-import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
@@ -44,7 +44,7 @@ public class ProviderApplyWhereMethodGenerator extends AbstractJavaClassMethodGe
     }
 
     @Override
-    public @Nullable JavaMethodAndImports generateMethodAndImports() {
+    public Optional<JavaMethodAndImports> generateMethodAndImports() {
         Set<FullyQualifiedJavaType> importedTypes = new HashSet<>();
         importedTypes.add(MyBatis3FormattingUtilities.BUILDER_IMPORT);
         importedTypes.add(new FullyQualifiedJavaType("java.util.List")); //$NON-NLS-1$
@@ -67,9 +67,11 @@ public class ProviderApplyWhereMethodGenerator extends AbstractJavaClassMethodGe
 
         METHOD_LINES.forEach(method::addBodyLine);
 
-        return JavaMethodAndImports.withMethod(method)
+        JavaMethodAndImports answer = JavaMethodAndImports.withMethod(method)
                 .withImports(importedTypes)
                 .build();
+
+        return Optional.of(answer);
     }
 
     @Override

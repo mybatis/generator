@@ -15,7 +15,8 @@
  */
 package org.mybatis.generator.runtime;
 
-import org.jspecify.annotations.Nullable;
+import java.util.Optional;
+
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.codegen.AbstractGenerator;
@@ -25,7 +26,7 @@ public abstract class AbstractJavaClassMethodGenerator extends AbstractGenerator
         super(builder);
     }
 
-    public abstract @Nullable JavaMethodAndImports generateMethodAndImports();
+    public abstract Optional<JavaMethodAndImports> generateMethodAndImports();
 
     public abstract boolean callPlugins(Method method, TopLevelClass topLevelClass);
 }

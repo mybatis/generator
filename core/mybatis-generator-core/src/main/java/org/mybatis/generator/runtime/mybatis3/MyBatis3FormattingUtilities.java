@@ -19,12 +19,16 @@ import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJ
 
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 
 public class MyBatis3FormattingUtilities {
 
     private MyBatis3FormattingUtilities() {
         super();
     }
+
+    public static final FullyQualifiedJavaType BUILDER_IMPORT =
+            new FullyQualifiedJavaType("org.apache.ibatis.jdbc.SQL"); //$NON-NLS-1$
 
     public static String getParameterClause(IntrospectedColumn introspectedColumn) {
         return getParameterClause(introspectedColumn, null);

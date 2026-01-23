@@ -34,6 +34,7 @@ import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.exception.InternalException;
 import org.mybatis.generator.runtime.AbstractJavaClassMethodGenerator;
 import org.mybatis.generator.runtime.JavaMethodAndImports;
+import org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities;
 
 public class ProviderApplyWhereMethodGenerator extends AbstractJavaClassMethodGenerator {
     private static final List<String> METHOD_LINES = getMethodLines();
@@ -45,6 +46,7 @@ public class ProviderApplyWhereMethodGenerator extends AbstractJavaClassMethodGe
     @Override
     public @Nullable JavaMethodAndImports generateMethodAndImports() {
         Set<FullyQualifiedJavaType> importedTypes = new HashSet<>();
+        importedTypes.add(MyBatis3FormattingUtilities.BUILDER_IMPORT);
         importedTypes.add(new FullyQualifiedJavaType("java.util.List")); //$NON-NLS-1$
 
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getExampleType());
@@ -56,7 +58,7 @@ public class ProviderApplyWhereMethodGenerator extends AbstractJavaClassMethodGe
 
         Method method = new Method("applyWhere"); //$NON-NLS-1$
         method.setVisibility(JavaVisibility.PROTECTED);
-        method.addParameter(new Parameter(AbstractJavaProviderMethodGenerator.BUILDER_IMPORT, "sql")); //$NON-NLS-1$
+        method.addParameter(new Parameter(MyBatis3FormattingUtilities.BUILDER_IMPORT, "sql")); //$NON-NLS-1$
         method.addParameter(new Parameter(fqjt, "example")); //$NON-NLS-1$
         method.addParameter(new Parameter(FullyQualifiedJavaType.getBooleanPrimitiveInstance(),
                 "includeExamplePhrase")); //$NON-NLS-1$

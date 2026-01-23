@@ -21,11 +21,9 @@ import java.util.TreeSet;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.codegen.AbstractGenerator;
+import org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities;
 
 public abstract class AbstractJavaProviderMethodGenerator extends AbstractGenerator {
-
-    public static final FullyQualifiedJavaType BUILDER_IMPORT =
-            new FullyQualifiedJavaType("org.apache.ibatis.jdbc.SQL"); //$NON-NLS-1$
 
     protected AbstractJavaProviderMethodGenerator(AbstractJavaProviderMethodGeneratorBuilder<?> builder) {
         super(builder);
@@ -34,7 +32,7 @@ public abstract class AbstractJavaProviderMethodGenerator extends AbstractGenera
     protected Set<FullyQualifiedJavaType> initializeImportedTypes() {
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
 
-        importedTypes.add(BUILDER_IMPORT);
+        importedTypes.add(MyBatis3FormattingUtilities.BUILDER_IMPORT);
 
         return importedTypes;
     }

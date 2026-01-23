@@ -24,10 +24,10 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
-import org.mybatis.generator.runtime.AbstractJavaMethodGenerator;
+import org.mybatis.generator.runtime.AbstractJavaInterfaceMethodGenerator;
 import org.mybatis.generator.runtime.JavaMethodAndImports;
 
-public class GeneralUpdateMethodGenerator extends AbstractJavaMethodGenerator {
+public class GeneralUpdateMethodGenerator extends AbstractJavaInterfaceMethodGenerator {
     private final String tableFieldName;
 
     private GeneralUpdateMethodGenerator(Builder builder) {

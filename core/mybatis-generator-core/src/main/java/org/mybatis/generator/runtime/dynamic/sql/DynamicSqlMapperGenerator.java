@@ -32,7 +32,7 @@ import org.mybatis.generator.codegen.AbstractXmlGenerator;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
 import org.mybatis.generator.runtime.AbstractJavaClientGenerator;
-import org.mybatis.generator.runtime.AbstractJavaMethodGenerator;
+import org.mybatis.generator.runtime.AbstractJavaInterfaceMethodGenerator;
 import org.mybatis.generator.runtime.JavaFieldAndImports;
 import org.mybatis.generator.runtime.JavaMethodAndImports;
 import org.mybatis.generator.runtime.dynamic.sql.elements.BasicInsertMethodGenerator;
@@ -379,7 +379,7 @@ public class DynamicSqlMapperGenerator extends AbstractJavaClientGenerator {
         return generate(interfaze, generator);
     }
 
-    protected boolean generate(Interface interfaze, AbstractJavaMethodGenerator generator) {
+    protected boolean generate(Interface interfaze, AbstractJavaInterfaceMethodGenerator generator) {
         JavaMethodAndImports mi = generator.generateMethodAndImports();
         if (mi != null && generator.callPlugins(mi.getMethod(), interfaze)) {
             interfaze.addMethod(mi.getMethod());

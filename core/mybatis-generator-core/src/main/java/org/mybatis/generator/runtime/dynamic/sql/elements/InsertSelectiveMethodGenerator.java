@@ -27,11 +27,11 @@ import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
-import org.mybatis.generator.runtime.AbstractJavaMethodGenerator;
+import org.mybatis.generator.runtime.AbstractJavaInterfaceMethodGenerator;
 import org.mybatis.generator.runtime.JavaMethodAndImports;
 import org.mybatis.generator.runtime.mybatis3.ListUtilities;
 
-public class InsertSelectiveMethodGenerator extends AbstractJavaMethodGenerator {
+public class InsertSelectiveMethodGenerator extends AbstractJavaInterfaceMethodGenerator {
     private final FullyQualifiedJavaType recordType;
     private final String tableFieldName;
 

@@ -25,11 +25,12 @@ import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.config.GeneratedKey;
-import org.mybatis.generator.runtime.AbstractJavaMethodGenerator;
+import org.mybatis.generator.runtime.AbstractJavaInterfaceMethodGenerator;
+import org.mybatis.generator.runtime.CodeGenUtils;
 import org.mybatis.generator.runtime.JavaMethodAndImports;
 import org.mybatis.generator.runtime.JavaMethodParts;
 
-public class BasicMultipleInsertMethodGenerator extends AbstractJavaMethodGenerator {
+public class BasicMultipleInsertMethodGenerator extends AbstractJavaInterfaceMethodGenerator {
 
     private final FullyQualifiedJavaType recordType;
 
@@ -77,7 +78,7 @@ public class BasicMultipleInsertMethodGenerator extends AbstractJavaMethodGenera
                 .withImports(imports);
 
         JavaMethodParts javaMethodParts = getGeneratedKeyAnnotation(gk);
-        acceptParts(builder, method, javaMethodParts);
+        CodeGenUtils.addPartsToMethod(builder, method, javaMethodParts);
 
         return builder.build();
     }

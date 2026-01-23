@@ -16,6 +16,8 @@
 package org.mybatis.generator.runtime;
 
 import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.api.dom.java.Parameter;
 
 public class CodeGenUtils {
     private CodeGenUtils() {
@@ -29,4 +31,19 @@ public class CodeGenUtils {
                 + introspectedColumn.getJavaProperty()
                 + ';';
     }
+
+    public static void addPartsToMethod(JavaMethodAndImports.Builder builder, Method method,
+                                        JavaMethodParts javaMethodParts) {
+        for (Parameter parameter : javaMethodParts.getParameters()) {
+            method.addParameter(parameter);
+        }
+
+        for (String annotation : javaMethodParts.getAnnotations()) {
+            method.addAnnotation(annotation);
+        }
+
+        method.addBodyLines(javaMethodParts.getBodyLines());
+        builder.withImports(javaMethodParts.getImports());
+    }
+
 }

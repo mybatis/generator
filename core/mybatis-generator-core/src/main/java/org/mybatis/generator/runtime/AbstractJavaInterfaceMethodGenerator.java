@@ -18,25 +18,11 @@ package org.mybatis.generator.runtime;
 import org.jspecify.annotations.Nullable;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
-import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.codegen.AbstractGenerator;
 
-public abstract class AbstractJavaMethodGenerator extends AbstractGenerator {
-    protected AbstractJavaMethodGenerator(AbstractGeneratorBuilder<?> builder) {
+public abstract class AbstractJavaInterfaceMethodGenerator extends AbstractGenerator {
+    protected AbstractJavaInterfaceMethodGenerator(AbstractGeneratorBuilder<?> builder) {
         super(builder);
-    }
-
-    protected void acceptParts(JavaMethodAndImports.Builder builder, Method method, JavaMethodParts javaMethodParts) {
-        for (Parameter parameter : javaMethodParts.getParameters()) {
-            method.addParameter(parameter);
-        }
-
-        for (String annotation : javaMethodParts.getAnnotations()) {
-            method.addAnnotation(annotation);
-        }
-
-        method.addBodyLines(javaMethodParts.getBodyLines());
-        builder.withImports(javaMethodParts.getImports());
     }
 
     public abstract @Nullable JavaMethodAndImports generateMethodAndImports();

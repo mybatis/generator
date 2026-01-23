@@ -25,6 +25,8 @@ import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
+import org.mybatis.generator.runtime.AbstractJavaClassMethodGenerator;
+import org.mybatis.generator.runtime.JavaMethodAndImports;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.sqlprovider.ProviderApplyWhereMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.sqlprovider.ProviderCountByExampleMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.sqlprovider.ProviderDeleteByExampleMethodGenerator;
@@ -169,8 +171,21 @@ public class SqlProviderGenerator extends AbstractJavaGenerator {
     }
 
     protected void addApplyWhereMethod(TopLevelClass topLevelClass) {
-        initializeSubBuilder(new ProviderApplyWhereMethodGenerator.Builder())
-                .build().addClassElements(topLevelClass);
+        var generator = initializeSubBuilder(new ProviderApplyWhereMethodGenerator.Builder()).build();
+
+        generate(topLevelClass, generator);
+    }
+
+    // TODO - copied from DynamicSqlMapperGenerator
+    protected boolean generate(TopLevelClass topLevelClass, AbstractJavaClassMethodGenerator generator) {
+        JavaMethodAndImports mi = generator.generateMethodAndImports();
+        if (mi != null && generator.callPlugins(mi.getMethod(), topLevelClass)) {
+            topLevelClass.addMethod(mi.getMethod());
+            topLevelClass.addImportedTypes(mi.getImports());
+            topLevelClass.addStaticImports(mi.getStaticImports());
+            return true;
+        }
+        return false;
     }
 
     public static class Builder extends AbstractJavaGeneratorBuilder<Builder> {

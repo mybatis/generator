@@ -51,19 +51,19 @@ public class AnnotatedSelectByPrimaryKeyMethodGenerator extends SelectByPrimaryK
 
         annotations.add("})"); //$NON-NLS-1$
 
-        if (useResultMapIfAvailable) {
-            // TODO - combine with if above
-            if (introspectedTable.getRules().generateBaseResultMap()
-                    || introspectedTable.getRules().generateResultMapWithBLOBs()) {
-                annotations.add(getResultMapAnnotation());
-            } else {
-                annotations.addAll(getAnnotatedResultAnnotations(introspectedTable.getNonPrimaryKeyColumns()));
-            }
+        if (useResultMapAnnotation()) {
+            annotations.add(getResultMapAnnotation());
         } else {
             annotations.addAll(getAnnotatedResultAnnotations(introspectedTable.getNonPrimaryKeyColumns()));
         }
 
         return annotations;
+    }
+
+    private boolean useResultMapAnnotation() {
+        return useResultMapIfAvailable
+                && (introspectedTable.getRules().generateBaseResultMap()
+                || introspectedTable.getRules().generateResultMapWithBLOBs());
     }
 
     private String getResultMapAnnotation() {
@@ -78,17 +78,8 @@ public class AnnotatedSelectByPrimaryKeyMethodGenerator extends SelectByPrimaryK
         Set<FullyQualifiedJavaType> answer = new HashSet<>();
         answer.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Select")); //$NON-NLS-1$
 
-        if (useResultMapIfAvailable) {
-            // TODO - combine with if above
-            if (introspectedTable.getRules().generateBaseResultMap()
-                    || introspectedTable.getRules().generateResultMapWithBLOBs()) {
-                answer.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.ResultMap")); //$NON-NLS-1$
-            } else {
-                answer.addAll(getAnnotatedSelectImports());
-                for (IntrospectedColumn introspectedColumn : introspectedTable.getNonPrimaryKeyColumns()) {
-                    answer.addAll(getAnnotatedResultImports(introspectedColumn, introspectedTable.isConstructorBased()));
-                }
-            }
+        if (useResultMapAnnotation()) {
+            answer.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.ResultMap")); //$NON-NLS-1$
         } else {
             answer.addAll(getAnnotatedSelectImports());
             for (IntrospectedColumn introspectedColumn : introspectedTable.getNonPrimaryKeyColumns()) {

@@ -19,6 +19,7 @@ import java.util.Optional;
 
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.codegen.AbstractXmlGenerator;
+import org.mybatis.generator.runtime.CodeGenUtils;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated.AnnotatedDeleteByPrimaryKeyMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated.AnnotatedInsertMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated.AnnotatedSelectByPrimaryKeyMethodGenerator;
@@ -40,44 +41,47 @@ public class MixedClientGenerator extends JavaMapperGenerator {
 
     @Override
     protected void addDeleteByPrimaryKeyMethod(Interface interfaze) {
-        if (introspectedTable.getRules().generateDeleteByPrimaryKey()) {
-            var builder = new AnnotatedDeleteByPrimaryKeyMethodGenerator.Builder().isSimple(false);
-            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
-        }
+        var generator = initializeSubBuilder(new AnnotatedDeleteByPrimaryKeyMethodGenerator.Builder())
+                .isSimple(false)
+                .build();
+
+        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
     }
 
     @Override
     protected void addInsertMethod(Interface interfaze) {
-        if (introspectedTable.getRules().generateInsert()) {
-            var builder = new AnnotatedInsertMethodGenerator.Builder().isSimple(false);
-            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
-        }
+        var generator = initializeSubBuilder(new AnnotatedInsertMethodGenerator.Builder())
+                .isSimple(false)
+                .build();
+
+        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
     }
 
     @Override
     protected void addSelectByPrimaryKeyMethod(Interface interfaze) {
-        if (introspectedTable.getRules().generateSelectByPrimaryKey()) {
-            var builder = new AnnotatedSelectByPrimaryKeyMethodGenerator.Builder()
-                    .useResultMapIfAvailable(true)
-                    .isSimple(false);
-            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
-        }
+        var generator = initializeSubBuilder(new AnnotatedSelectByPrimaryKeyMethodGenerator.Builder())
+                .isSimple(false)
+                .useResultMapIfAvailable(true)
+                .build();
+
+        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
     }
 
     @Override
     protected void addUpdateByPrimaryKeyWithBLOBsMethod(Interface interfaze) {
-        if (introspectedTable.getRules().generateUpdateByPrimaryKeyWithBLOBs()) {
-            var builder = new AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator.Builder();
-            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
-        }
+        var generator = initializeSubBuilder(new AnnotatedUpdateByPrimaryKeyWithBLOBsMethodGenerator.Builder())
+                .build();
+
+        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
     }
 
     @Override
     protected void addUpdateByPrimaryKeyWithoutBLOBsMethod(Interface interfaze) {
-        if (introspectedTable.getRules().generateUpdateByPrimaryKeyWithoutBLOBs()) {
-            var builder = new AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator.Builder().isSimple(false);
-            initializeSubBuilder(builder).build().addInterfaceElements(interfaze);
-        }
+        var generator = initializeSubBuilder(new AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator.Builder())
+                .isSimple(false)
+                .build();
+
+        CodeGenUtils.executeInterfaceMethodGenerator(interfaze, generator);
     }
 
     @Override

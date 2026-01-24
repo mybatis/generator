@@ -15,6 +15,12 @@
  */
 package org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
@@ -27,7 +33,8 @@ public class AnnotatedSelectByExampleWithBLOBsMethodGenerator extends SelectByEx
     }
 
     @Override
-    public void addMapperAnnotations(Interface interfaze, Method method) {
+    protected List<String> extraMethodAnnotations() {
+        List<String> annotations = new ArrayList<>();
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getMyBatis3SqlProviderType());
 
         String s = "@SelectProvider(type=" //$NON-NLS-1$
@@ -35,16 +42,24 @@ public class AnnotatedSelectByExampleWithBLOBsMethodGenerator extends SelectByEx
                 + ".class, method=\"" //$NON-NLS-1$
                 + introspectedTable.getSelectByExampleWithBLOBsStatementId()
                 + "\")";//$NON-NLS-1$
-        method.addAnnotation(s);
+        annotations.add(s);
 
-        addAnnotatedResults(interfaze, method, introspectedTable.getNonPrimaryKeyColumns());
+        annotations.addAll(getAnnotatedResultAnnotations(introspectedTable.getNonPrimaryKeyColumns()));
+
+        return annotations;
     }
 
     @Override
-    public void addExtraImports(Interface interfaze) {
-        addAnnotatedSelectImports(interfaze);
-        interfaze.addImportedType(
-                new FullyQualifiedJavaType("org.apache.ibatis.annotations.SelectProvider")); //$NON-NLS-1$
+    protected Set<FullyQualifiedJavaType> extraImports() {
+        Set<FullyQualifiedJavaType> answer = new HashSet<>(getAnnotatedSelectImports());
+
+        for (IntrospectedColumn introspectedColumn : introspectedTable.getNonPrimaryKeyColumns()) {
+            answer.addAll(getAnnotatedResultImports(introspectedColumn, introspectedTable.isConstructorBased()));
+        }
+
+        answer.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.SelectProvider")); //$NON-NLS-1$
+
+        return answer;
     }
 
     public static class Builder extends SelectByExampleWithBLOBsMethodGenerator.Builder {

@@ -19,9 +19,13 @@ import static org.mybatis.generator.api.dom.OutputUtilities.javaIndent;
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
-import org.mybatis.generator.api.dom.java.Interface;
-import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.SelectAllMethodGenerator;
 
@@ -32,10 +36,8 @@ public class AnnotatedSelectAllMethodGenerator extends SelectAllMethodGenerator 
     }
 
     @Override
-    public void addMapperAnnotations(Interface interfaze, Method method) {
-        interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Select")); //$NON-NLS-1$
-
-        buildInitialSelectAnnotationStrings().forEach(method::addAnnotation);
+    protected List<String> extraMethodAnnotations() {
+        List<String> annotations = new ArrayList<>(buildInitialSelectAnnotationStrings());
 
         StringBuilder sb = new StringBuilder();
         javaIndent(sb, 1);
@@ -49,7 +51,7 @@ public class AnnotatedSelectAllMethodGenerator extends SelectAllMethodGenerator 
         if (hasOrderBy) {
             sb.append(',');
         }
-        method.addAnnotation(sb.toString());
+        annotations.add(sb.toString());
 
         if (hasOrderBy) {
             sb.setLength(0);
@@ -57,17 +59,26 @@ public class AnnotatedSelectAllMethodGenerator extends SelectAllMethodGenerator 
             sb.append("\"order by "); //$NON-NLS-1$
             sb.append(orderByClause);
             sb.append('\"');
-            method.addAnnotation(sb.toString());
+            annotations.add(sb.toString());
         }
 
-        method.addAnnotation("})"); //$NON-NLS-1$
+        annotations.add("})"); //$NON-NLS-1$
 
-        addAnnotatedResults(interfaze, method, introspectedTable.getNonPrimaryKeyColumns());
+        annotations.addAll(getAnnotatedResultAnnotations(introspectedTable.getNonPrimaryKeyColumns()));
+
+        return annotations;
     }
 
     @Override
-    public void addExtraImports(Interface interfaze) {
-        addAnnotatedSelectImports(interfaze);
+    protected Set<FullyQualifiedJavaType> extraImports() {
+        Set<FullyQualifiedJavaType> answer = new HashSet<>(getAnnotatedSelectImports());
+
+        for (IntrospectedColumn introspectedColumn : introspectedTable.getNonPrimaryKeyColumns()) {
+            answer.addAll(getAnnotatedResultImports(introspectedColumn, introspectedTable.isConstructorBased()));
+        }
+
+        answer.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Select")); //$NON-NLS-1$
+        return answer;
     }
 
     public static class Builder extends SelectAllMethodGenerator.Builder {

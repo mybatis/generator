@@ -21,13 +21,13 @@ import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities
 import static org.mybatis.generator.runtime.mybatis3.MyBatis3FormattingUtilities.getParameterClause;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
-import org.mybatis.generator.api.dom.java.Interface;
-import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.runtime.mybatis3.ListUtilities;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.InsertMethodGenerator;
 
@@ -38,9 +38,10 @@ public class AnnotatedInsertMethodGenerator extends InsertMethodGenerator {
     }
 
     @Override
-    public void addMapperAnnotations(Method method) {
+    protected List<String> extraMethodAnnotations() {
+        List<String> annotations = new ArrayList<>();
 
-        method.addAnnotation("@Insert({"); //$NON-NLS-1$
+        annotations.add("@Insert({"); //$NON-NLS-1$
         StringBuilder insertClause = new StringBuilder();
         StringBuilder valuesClause = new StringBuilder();
 
@@ -81,7 +82,7 @@ public class AnnotatedInsertMethodGenerator extends InsertMethodGenerator {
                     valuesClause.append(',');
                 }
 
-                method.addAnnotation(insertClause.toString());
+                annotations.add(insertClause.toString());
                 insertClause.setLength(0);
                 javaIndent(insertClause, 1);
                 insertClause.append('\"');
@@ -96,25 +97,26 @@ public class AnnotatedInsertMethodGenerator extends InsertMethodGenerator {
 
         if (hasFields) {
             insertClause.append(")\","); //$NON-NLS-1$
-            method.addAnnotation(insertClause.toString());
+            annotations.add(insertClause.toString());
 
             valuesClause.append(")\""); //$NON-NLS-1$
             valuesClauses.add(valuesClause.toString());
         }
 
-        for (String clause : valuesClauses) {
-            method.addAnnotation(clause);
-        }
+        annotations.addAll(valuesClauses);
 
-        method.addAnnotation("})"); //$NON-NLS-1$
+        annotations.add("})"); //$NON-NLS-1$
 
-        buildGeneratedKeyAnnotation().ifPresent(method::addAnnotation);
+        buildGeneratedKeyAnnotation().ifPresent(annotations::add);
+
+        return annotations;
     }
 
     @Override
-    public void addExtraImports(Interface interfaze) {
-        interfaze.addImportedTypes(buildGeneratedKeyImportsIfRequired());
-        interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Insert")); //$NON-NLS-1$
+    protected Set<FullyQualifiedJavaType> extraImports() {
+        Set<FullyQualifiedJavaType> imports = new HashSet<>(buildGeneratedKeyImportsIfRequired());
+        imports.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Insert")); //$NON-NLS-1$
+        return imports;
     }
 
     public static class Builder extends InsertMethodGenerator.Builder {

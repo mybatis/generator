@@ -32,26 +32,34 @@ import java.util.Set;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
-import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
-import org.mybatis.generator.codegen.AbstractGenerator;
 import org.mybatis.generator.config.GeneratedKey;
+import org.mybatis.generator.runtime.AbstractJavaInterfaceMethodGenerator;
 import org.mybatis.generator.runtime.mybatis3.ListUtilities;
 
-public abstract class AbstractJavaMapperMethodGenerator extends AbstractGenerator {
-    public abstract void addInterfaceElements(Interface interfaze);
-
-    protected AbstractJavaMapperMethodGenerator(AbstractMethodGeneratorBuilder<?> builder) {
+public abstract class AbstractJavaMapperMethodGenerator extends AbstractJavaInterfaceMethodGenerator {
+    protected AbstractJavaMapperMethodGenerator(AbstractGeneratorBuilder<?> builder) {
         super(builder);
     }
 
-    protected static String getResultAnnotation(Interface interfaze, IntrospectedColumn introspectedColumn,
-            boolean idColumn, boolean constructorBased) {
+    protected Set<FullyQualifiedJavaType> getAnnotatedResultImports(IntrospectedColumn introspectedColumn,
+                                                                    boolean isConstructorBased) {
+        Set<FullyQualifiedJavaType> answer = new HashSet<>();
+        if (isConstructorBased) {
+            answer.add(introspectedColumn.getFullyQualifiedJavaType());
+        }
+
+        introspectedColumn.getTypeHandler().map(FullyQualifiedJavaType::new).ifPresent(answer::add);
+
+        return answer;
+    }
+
+    protected static String getResultAnnotation(IntrospectedColumn introspectedColumn, boolean idColumn,
+                                                boolean constructorBased) {
         StringBuilder sb = new StringBuilder();
         if (constructorBased) {
-            interfaze.addImportedType(introspectedColumn.getFullyQualifiedJavaType());
             sb.append("@Arg(column=\""); //$NON-NLS-1$
             sb.append(getRenamedColumnNameForResultMap(introspectedColumn));
             sb.append("\", javaType="); //$NON-NLS-1$
@@ -66,7 +74,6 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractGenerato
         }
 
         introspectedColumn.getTypeHandler().map(FullyQualifiedJavaType::new).ifPresent(th -> {
-            interfaze.addImportedType(th);
             sb.append(", typeHandler="); //$NON-NLS-1$
             sb.append(th.getShortName());
             sb.append(".class"); //$NON-NLS-1$
@@ -133,19 +140,19 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractGenerato
         return answer;
     }
 
-    protected void addAnnotatedSelectImports(Interface interfaze) {
-        interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.type.JdbcType")); //$NON-NLS-1$
+    protected Set<FullyQualifiedJavaType> getAnnotatedSelectImports() {
+        Set<FullyQualifiedJavaType> answer = new HashSet<>();
+        answer.add(new FullyQualifiedJavaType("org.apache.ibatis.type.JdbcType")); //$NON-NLS-1$
 
         if (introspectedTable.isConstructorBased()) {
-            interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Arg")); //$NON-NLS-1$
-            interfaze.addImportedType(
-                    new FullyQualifiedJavaType("org.apache.ibatis.annotations.ConstructorArgs")); //$NON-NLS-1$
+            answer.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Arg")); //$NON-NLS-1$
+            answer.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.ConstructorArgs")); //$NON-NLS-1$
         } else {
-            interfaze.addImportedType(
-                    new FullyQualifiedJavaType("org.apache.ibatis.annotations.Result")); //$NON-NLS-1$
-            interfaze.addImportedType(
-                    new FullyQualifiedJavaType("org.apache.ibatis.annotations.Results")); //$NON-NLS-1$
+            answer.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Result")); //$NON-NLS-1$
+            answer.add(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Results")); //$NON-NLS-1$
         }
+
+        return answer;
     }
 
     protected List<String> buildByPrimaryKeyWhereClause() {
@@ -254,50 +261,6 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractGenerato
         }
     }
 
-    protected void addAnnotatedResults(Interface interfaze, Method method,
-            List<IntrospectedColumn> nonPrimaryKeyColumns) {
-
-        if (introspectedTable.isConstructorBased()) {
-            method.addAnnotation("@ConstructorArgs({"); //$NON-NLS-1$
-        } else {
-            method.addAnnotation("@Results({"); //$NON-NLS-1$
-        }
-
-        StringBuilder sb = new StringBuilder();
-
-        Iterator<IntrospectedColumn> iterPk = introspectedTable.getPrimaryKeyColumns().iterator();
-        Iterator<IntrospectedColumn> iterNonPk = nonPrimaryKeyColumns.iterator();
-        while (iterPk.hasNext()) {
-            IntrospectedColumn introspectedColumn = iterPk.next();
-            sb.setLength(0);
-            javaIndent(sb, 1);
-            sb.append(getResultAnnotation(interfaze, introspectedColumn, true,
-                    introspectedTable.isConstructorBased()));
-
-            if (iterPk.hasNext() || iterNonPk.hasNext()) {
-                sb.append(',');
-            }
-
-            method.addAnnotation(sb.toString());
-        }
-
-        while (iterNonPk.hasNext()) {
-            IntrospectedColumn introspectedColumn = iterNonPk.next();
-            sb.setLength(0);
-            javaIndent(sb, 1);
-            sb.append(getResultAnnotation(interfaze, introspectedColumn, false,
-                    introspectedTable.isConstructorBased()));
-
-            if (iterNonPk.hasNext()) {
-                sb.append(',');
-            }
-
-            method.addAnnotation(sb.toString());
-        }
-
-        method.addAnnotation("})"); //$NON-NLS-1$
-    }
-
     protected Method buildBasicUpdateByExampleMethod(String statementId, FullyQualifiedJavaType parameterType,
             Set<FullyQualifiedJavaType> importedTypes) {
         Method method = new Method(statementId);
@@ -318,6 +281,50 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractGenerato
         commentGenerator.addGeneralMethodComment(method, introspectedTable);
 
         return method;
+    }
+
+    protected List<String> getAnnotatedResultAnnotations(List<IntrospectedColumn> nonPrimaryKeyColumns) {
+        List<String> annotations = new ArrayList<>();
+
+        if (introspectedTable.isConstructorBased()) {
+            annotations.add("@ConstructorArgs({"); //$NON-NLS-1$
+        } else {
+            annotations.add("@Results({"); //$NON-NLS-1$
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        Iterator<IntrospectedColumn> iterPk = introspectedTable.getPrimaryKeyColumns().iterator();
+        Iterator<IntrospectedColumn> iterNonPk = nonPrimaryKeyColumns.iterator();
+        while (iterPk.hasNext()) {
+            IntrospectedColumn introspectedColumn = iterPk.next();
+            sb.setLength(0);
+            javaIndent(sb, 1);
+            sb.append(getResultAnnotation(introspectedColumn, true, introspectedTable.isConstructorBased()));
+
+            if (iterPk.hasNext() || iterNonPk.hasNext()) {
+                sb.append(',');
+            }
+
+            annotations.add(sb.toString());
+        }
+
+        while (iterNonPk.hasNext()) {
+            IntrospectedColumn introspectedColumn = iterNonPk.next();
+            sb.setLength(0);
+            javaIndent(sb, 1);
+            sb.append(getResultAnnotation(introspectedColumn, false, introspectedTable.isConstructorBased()));
+
+            if (iterNonPk.hasNext()) {
+                sb.append(',');
+            }
+
+            annotations.add(sb.toString());
+        }
+
+        annotations.add("})"); //$NON-NLS-1$
+
+        return annotations;
     }
 
     protected Method buildBasicUpdateByPrimaryKeyMethod(String statementId, FullyQualifiedJavaType parameterType) {
@@ -371,8 +378,13 @@ public abstract class AbstractJavaMapperMethodGenerator extends AbstractGenerato
         return answer;
     }
 
-    public abstract static class AbstractMethodGeneratorBuilder<T extends AbstractMethodGeneratorBuilder<T>>
-            extends AbstractGeneratorBuilder<T> {
-        public abstract AbstractJavaMapperMethodGenerator build();
+    protected List<String> extraMethodAnnotations() {
+        // extension point for annotated method generators
+        return Collections.emptyList();
+    }
+
+    protected Set<FullyQualifiedJavaType> extraImports() {
+        // extension point for annotated method generators
+        return Collections.emptySet();
     }
 }

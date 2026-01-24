@@ -15,6 +15,7 @@
  */
 package org.mybatis.generator.runtime.mybatis3.javamapper.elements;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -23,6 +24,7 @@ import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.runtime.JavaMethodAndImports;
 
 public class SelectByExampleWithBLOBsMethodGenerator extends AbstractJavaMapperMethodGenerator {
 
@@ -31,7 +33,11 @@ public class SelectByExampleWithBLOBsMethodGenerator extends AbstractJavaMapperM
     }
 
     @Override
-    public void addInterfaceElements(Interface interfaze) {
+    public Optional<JavaMethodAndImports> generateMethodAndImports() {
+        if (!introspectedTable.getRules().generateSelectByExampleWithBLOBs()) {
+            return Optional.empty();
+        }
+
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
         FullyQualifiedJavaType type = new FullyQualifiedJavaType(introspectedTable.getExampleType());
         importedTypes.add(type);
@@ -57,30 +63,27 @@ public class SelectByExampleWithBLOBsMethodGenerator extends AbstractJavaMapperM
 
         commentGenerator.addGeneralMethodComment(method, introspectedTable);
 
-        addMapperAnnotations(interfaze, method);
+        method.addAnnotations(extraMethodAnnotations());
 
-        if (pluginAggregator.clientSelectByExampleWithBLOBsMethodGenerated(method, interfaze, introspectedTable)) {
-            addExtraImports(interfaze);
-            interfaze.addImportedTypes(importedTypes);
-            interfaze.addMethod(method);
-        }
+        JavaMethodAndImports answer = JavaMethodAndImports.withMethod(method)
+                .withImports(importedTypes)
+                .withImports(extraImports())
+                .build();
+
+        return Optional.of(answer);
     }
 
-    public void addMapperAnnotations(Interface interfaze, Method method) {
-        // extension point for subclasses
+    @Override
+    public boolean callPlugins(Method method, Interface interfaze) {
+        return pluginAggregator.clientSelectByExampleWithBLOBsMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public void addExtraImports(Interface interfaze) {
-        // extension point for subclasses
-    }
-
-    public static class Builder extends AbstractMethodGeneratorBuilder<Builder> {
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
         @Override
         protected Builder getThis() {
             return this;
         }
 
-        @Override
         public SelectByExampleWithBLOBsMethodGenerator build() {
             return new SelectByExampleWithBLOBsMethodGenerator(this);
         }

@@ -15,12 +15,14 @@
  */
 package org.mybatis.generator.runtime.mybatis3.javamapper.elements;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.runtime.JavaMethodAndImports;
 
 public class UpdateByExampleWithBLOBsMethodGenerator extends AbstractJavaMapperMethodGenerator {
 
@@ -29,7 +31,11 @@ public class UpdateByExampleWithBLOBsMethodGenerator extends AbstractJavaMapperM
     }
 
     @Override
-    public void addInterfaceElements(Interface interfaze) {
+    public Optional<JavaMethodAndImports> generateMethodAndImports() {
+        if (!introspectedTable.getRules().generateUpdateByExampleWithBLOBs()) {
+            return Optional.empty();
+        }
+
         String statementId = introspectedTable.getUpdateByExampleWithBLOBsStatementId();
         FullyQualifiedJavaType parameterType;
         if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {
@@ -41,30 +47,27 @@ public class UpdateByExampleWithBLOBsMethodGenerator extends AbstractJavaMapperM
 
         Method method = buildBasicUpdateByExampleMethod(statementId, parameterType, importedTypes);
 
-        addMapperAnnotations(method);
+        method.addAnnotations(extraMethodAnnotations());
 
-        if (pluginAggregator.clientUpdateByExampleWithBLOBsMethodGenerated(method, interfaze, introspectedTable)) {
-            addExtraImports(interfaze);
-            interfaze.addImportedTypes(importedTypes);
-            interfaze.addMethod(method);
-        }
+        JavaMethodAndImports answer = JavaMethodAndImports.withMethod(method)
+                .withImports(importedTypes)
+                .withImports(extraImports())
+                .build();
+
+        return Optional.of(answer);
     }
 
-    public void addMapperAnnotations(Method method) {
-        // extension point for subclasses
+    @Override
+    public boolean callPlugins(Method method, Interface interfaze) {
+        return pluginAggregator.clientUpdateByExampleWithBLOBsMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public void addExtraImports(Interface interfaze) {
-        // extension point for subclasses
-    }
-
-    public static class Builder extends AbstractMethodGeneratorBuilder<Builder> {
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
         @Override
         protected Builder getThis() {
             return this;
         }
 
-        @Override
         public UpdateByExampleWithBLOBsMethodGenerator build() {
             return new UpdateByExampleWithBLOBsMethodGenerator(this);
         }

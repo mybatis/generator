@@ -15,6 +15,7 @@
  */
 package org.mybatis.generator.runtime.mybatis3.javamapper.elements;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -23,6 +24,7 @@ import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.runtime.JavaMethodAndImports;
 
 public class CountByExampleMethodGenerator extends AbstractJavaMapperMethodGenerator {
 
@@ -31,7 +33,11 @@ public class CountByExampleMethodGenerator extends AbstractJavaMapperMethodGener
     }
 
     @Override
-    public void addInterfaceElements(Interface interfaze) {
+    public Optional<JavaMethodAndImports> generateMethodAndImports() {
+        if (!introspectedTable.getRules().generateCountByExample()) {
+            return Optional.empty();
+        }
+
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(introspectedTable.getExampleType());
 
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
@@ -44,30 +50,26 @@ public class CountByExampleMethodGenerator extends AbstractJavaMapperMethodGener
         method.addParameter(new Parameter(fqjt, "example")); //$NON-NLS-1$
         commentGenerator.addGeneralMethodComment(method, introspectedTable);
 
-        addMapperAnnotations(method);
+        method.addAnnotations(extraMethodAnnotations());
+        JavaMethodAndImports answer = JavaMethodAndImports.withMethod(method)
+                .withImports(importedTypes)
+                .withImports(extraImports())
+                .build();
 
-        if (pluginAggregator.clientCountByExampleMethodGenerated(method, interfaze, introspectedTable)) {
-            addExtraImports(interfaze);
-            interfaze.addImportedTypes(importedTypes);
-            interfaze.addMethod(method);
-        }
+        return Optional.of(answer);
     }
 
-    public void addMapperAnnotations(Method method) {
-        // extension point for subclasses
+    @Override
+    public boolean callPlugins(Method method, Interface interfaze) {
+        return pluginAggregator.clientCountByExampleMethodGenerated(method, interfaze, introspectedTable);
     }
 
-    public void addExtraImports(Interface interfaze) {
-        // extension point for subclasses
-    }
-
-    public static class Builder extends AbstractMethodGeneratorBuilder<Builder> {
+    public static class Builder extends AbstractGeneratorBuilder<Builder> {
         @Override
         protected Builder getThis() {
             return this;
         }
 
-        @Override
         public CountByExampleMethodGenerator build() {
             return new CountByExampleMethodGenerator(this);
         }

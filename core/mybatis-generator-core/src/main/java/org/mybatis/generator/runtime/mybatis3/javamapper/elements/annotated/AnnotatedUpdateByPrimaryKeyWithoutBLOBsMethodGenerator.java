@@ -15,50 +15,39 @@
  */
 package org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated;
 
+import java.util.List;
+import java.util.Set;
+
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
-import org.mybatis.generator.api.dom.java.Interface;
-import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.UpdateByPrimaryKeyWithoutBLOBsMethodGenerator;
 
 public class AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator
         extends UpdateByPrimaryKeyWithoutBLOBsMethodGenerator {
 
-    private final boolean isSimple;
-
     protected AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator(Builder builder) {
         super(builder);
-        this.isSimple = builder.isSimple;
     }
 
     @Override
-    public void addMapperAnnotations(Method method) {
+    protected List<String> extraMethodAnnotations() {
         if (isSimple) {
-            buildUpdateByPrimaryKeyAnnotations(introspectedTable.getNonPrimaryKeyColumns())
-                    .forEach(method::addAnnotation);
+            return buildUpdateByPrimaryKeyAnnotations(introspectedTable.getNonPrimaryKeyColumns());
         } else {
-            buildUpdateByPrimaryKeyAnnotations(introspectedTable.getBaseColumns()).forEach(method::addAnnotation);
+            return buildUpdateByPrimaryKeyAnnotations(introspectedTable.getBaseColumns());
         }
     }
 
     @Override
-    public void addExtraImports(Interface interfaze) {
-        interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Update")); //$NON-NLS-1$
+    protected Set<FullyQualifiedJavaType> extraImports() {
+        return Set.of(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Update")); //$NON-NLS-1$
     }
 
     public static class Builder extends UpdateByPrimaryKeyWithoutBLOBsMethodGenerator.Builder {
-        private boolean isSimple;
-
-        public Builder isSimple(boolean isSimple) {
-            this.isSimple = isSimple;
-            return this;
-        }
-
         @Override
         protected Builder getThis() {
             return this;
         }
 
-        @Override
         public AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator build() {
             return new AnnotatedUpdateByPrimaryKeyWithoutBLOBsMethodGenerator(this);
         }

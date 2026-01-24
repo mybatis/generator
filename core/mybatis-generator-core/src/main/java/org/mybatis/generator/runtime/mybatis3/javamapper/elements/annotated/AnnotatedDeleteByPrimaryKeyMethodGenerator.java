@@ -18,9 +18,11 @@ package org.mybatis.generator.runtime.mybatis3.javamapper.elements.annotated;
 import static org.mybatis.generator.api.dom.OutputUtilities.javaIndent;
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
-import org.mybatis.generator.api.dom.java.Interface;
-import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.DeleteByPrimaryKeyMethodGenerator;
 
 public class AnnotatedDeleteByPrimaryKeyMethodGenerator extends DeleteByPrimaryKeyMethodGenerator {
@@ -30,25 +32,27 @@ public class AnnotatedDeleteByPrimaryKeyMethodGenerator extends DeleteByPrimaryK
     }
 
     @Override
-    public void addMapperAnnotations(Method method) {
-
-        method.addAnnotation("@Delete({"); //$NON-NLS-1$
+    protected List<String> extraMethodAnnotations() {
+        List<String> annotations = new ArrayList<>();
+        annotations.add("@Delete({"); //$NON-NLS-1$
 
         StringBuilder sb = new StringBuilder();
         javaIndent(sb, 1);
         sb.append("\"delete from "); //$NON-NLS-1$
         sb.append(escapeStringForJava(introspectedTable.getFullyQualifiedTableNameAtRuntime()));
         sb.append("\","); //$NON-NLS-1$
-        method.addAnnotation(sb.toString());
+        annotations.add(sb.toString());
 
-        buildByPrimaryKeyWhereClause().forEach(method::addAnnotation);
+        annotations.addAll(buildByPrimaryKeyWhereClause());
 
-        method.addAnnotation("})"); //$NON-NLS-1$
+        annotations.add("})"); //$NON-NLS-1$
+
+        return annotations;
     }
 
     @Override
-    public void addExtraImports(Interface interfaze) {
-        interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Delete")); //$NON-NLS-1$
+    protected Set<FullyQualifiedJavaType> extraImports() {
+        return Set.of(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Delete")); //$NON-NLS-1$
     }
 
     public static class Builder extends DeleteByPrimaryKeyMethodGenerator.Builder {

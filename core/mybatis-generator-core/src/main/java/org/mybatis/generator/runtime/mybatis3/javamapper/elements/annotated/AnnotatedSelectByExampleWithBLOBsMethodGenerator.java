@@ -22,8 +22,6 @@ import java.util.Set;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
-import org.mybatis.generator.api.dom.java.Interface;
-import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.runtime.mybatis3.javamapper.elements.SelectByExampleWithBLOBsMethodGenerator;
 
 public class AnnotatedSelectByExampleWithBLOBsMethodGenerator extends SelectByExampleWithBLOBsMethodGenerator {
